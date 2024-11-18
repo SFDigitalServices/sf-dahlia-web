@@ -16,7 +16,7 @@ export const ListingDetailsLotteryInfo = ({ listing }: ListingDetailsLotteryInfo
   return (
     <>
       <div className="border-b border-gray-400 md:border-b-0">
-        <SidebarBlock title={t("label.lottery")}>
+        <SidebarBlock title={t("label.lottery")} priority={2}>
           <p className="flex justify-between mb-4">
             <span>{localizedFormat(listing.Lottery_Date, "LL")}</span>
             <span className="font-bold">{localizedFormat(listing.Lottery_Date, "h:mm a")}</span>
@@ -34,7 +34,7 @@ export const ListingDetailsLotteryInfo = ({ listing }: ListingDetailsLotteryInfo
       </div>
 
       <div className="border-b border-gray-400 md:border-b-0">
-        <SidebarBlock title={t("lottery.lotteryResults")}>
+        <SidebarBlock title={t("lottery.lotteryResults")} priority={2}>
           <p className="mb-4">{localizedFormat(listing.Lottery_Results_Date, "LL")}</p>
           <p className="text-gray-700">{t("lottery.completeResultsWillBePosted")}</p>
         </SidebarBlock>

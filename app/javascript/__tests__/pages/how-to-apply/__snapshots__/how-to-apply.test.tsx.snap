@@ -295,37 +295,37 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
                     <div
                       class="py-10"
                     >
-                      <h3
+                      <h2
                         class="text-2xl font-alt-serif"
                       >
                         How long it takes
-                      </h3>
-                      <h4
+                      </h2>
+                      <h3
                         class="font-semibold font-alt-sans pt-6 pb-4"
                       >
                         Preparing your application
-                      </h4>
+                      </h3>
                       It depends on how easy it is for you to gather all your information and documents. It may take a few hours, or you may need to do it over several days. If you applied before, it might take you less time.
-                      <h4
+                      <h3
                         class="font-semibold font-alt-sans pt-6 pb-4"
                       >
                         Submitting your application
-                      </h4>
+                      </h3>
                       30 minutes or less
                     </div>
                     <div
                       class="pb-10"
                     >
-                      <h3
+                      <h2
                         class="text-2xl font-alt-serif"
                       >
                         Before you start
-                      </h3>
-                      <h4
+                      </h2>
+                      <h3
                         class="font-semibold font-alt-sans pt-6 pb-4"
                       >
                         Make sure you are eligible
-                      </h4>
+                      </h3>
                       <div>
                         To apply for this unit you must:
                       </div>
@@ -379,11 +379,11 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
                           </span>
                         </li>
                       </ul>
-                      <h4
+                      <h3
                         class="font-semibold font-alt-sans pt-6 pb-4"
                       >
                         See the unit in person
-                      </h4>
+                      </h3>
                       This is not required, but we encourage you to make sure the unit is right for you before applying.
                       <div
                         class="how-to-apply-dropdown pt-2"
@@ -397,11 +397,11 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
                         </button>
                       </div>
                     </div>
-                    <h3
+                    <h2
                       class="text-2xl font-alt-serif"
                     >
                       Apply to
-                    </h3>
+                    </h2>
                     <div
                       class="pt-4"
                       id="HowToApplySection"
@@ -410,11 +410,11 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
                         class="process-list"
                       >
                         <li>
-                          <h4
+                          <h3
                             class="font-semibold font-alt-sans pb-4"
                           >
                             Fill out PDF application
-                          </h4>
+                          </h3>
                           <div
                             class="text-base"
                           >
@@ -450,11 +450,11 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
                           </div>
                         </li>
                         <li>
-                          <h4
+                          <h3
                             class="font-semibold font-alt-sans pb-4"
                           >
                             Gather documents
-                          </h4>
+                          </h3>
                           <div
                             class="text-base"
                           >
@@ -478,11 +478,11 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
                           </div>
                         </li>
                         <li>
-                          <h4
+                          <h3
                             class="font-semibold font-alt-sans pb-4"
                           >
                             Combine everything into 1 PDF file
-                          </h4>
+                          </h3>
                           <div
                             class="text-base"
                           >
@@ -540,11 +540,11 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
                           </div>
                         </li>
                         <li>
-                          <h4
+                          <h3
                             class="font-semibold font-alt-sans pb-4"
                           >
                             Create a free account at Box.com
-                          </h4>
+                          </h3>
                           <div
                             class="text-base"
                           >
@@ -581,11 +581,11 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
                           </div>
                         </li>
                         <li>
-                          <h4
+                          <h3
                             class="font-semibold font-alt-sans pb-4"
                           >
                             Submit your application and get your place in line
-                          </h4>
+                          </h3>
                           <div
                             class="text-base"
                           >
@@ -663,11 +663,11 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
                         </li>
                       </ol>
                     </div>
-                    <h3
+                    <h2
                       class="text-2xl font-alt-serif"
                     >
                       What happens next
-                    </h3>
+                    </h2>
                     <div
                       class="pt-4"
                     >
@@ -705,11 +705,11 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
           <section
             class="aside-block w-full md:w-1/3 md:max-w-xs text-gray-950 md:border-l border-t md:border-t-0 border-gray-450 border-b-0 p-6 mx-0"
           >
-            <h4
+            <h2
               class="text__underline-weighted"
             >
               Need Help?
-            </h4>
+            </h2>
             <div
               class="text-sm text-gray-750"
             >
@@ -919,11 +919,11 @@ exports[`<HowToApply /> shows the correct leasing agent box for the listing 1`] 
         Email
       </a>
     </div>
-    <h1
+    <h3
       class="text-heading-sm"
     >
       Office hours
-    </h1>
+    </h3>
     <p
       class="text-sm"
     >

@@ -31,7 +31,11 @@ export interface ListingDetailsApplyProps {
 }
 
 const FcfsBmrSalesHowToApply = ({ listingId }: { listingId: string }) => (
-  <SidebarBlock className="fcfs-bmr-how-to-apply" title={t("listings.apply.howToApply")}>
+  <SidebarBlock
+    className="fcfs-bmr-how-to-apply"
+    title={t("listings.apply.howToApply")}
+    priority={2}
+  >
     <div className="fcfs-bmr-how-to-apply__list">
       <ol className="numbered-list text-black text-base">
         <li>{t("listings.fcfs.bmrSales.howToApply.step1")}</li>
@@ -52,7 +56,7 @@ const FcfsBmrSalesHowToApply = ({ listingId }: { listingId: string }) => (
 
 const ordinalHeader = (ordinal: number, title: string) => {
   return (
-    <Heading priority={4} className={"text-gray-950 text-xl -mt-2 mb-3"}>
+    <Heading priority={2} className={"text-gray-950 text-xl -mt-2 mb-3"}>
       <span className={"text-blue-500 mr-2"}>{ordinal}</span>
       {title}
     </Heading>
@@ -73,7 +77,7 @@ const StandardHowToApply = ({
   const [paperApplicationsOpen, setPaperApplicationsOpen] = useState(false)
 
   return (
-    <SidebarBlock title={t("listings.apply.howToApply")}>
+    <SidebarBlock title={t("listings.apply.howToApply")} priority={2}>
       {!isListingRental && (
         <>
           <p className={"mb-4"}>
@@ -176,7 +180,7 @@ export const ListingDetailsApply = ({ listing }: ListingDetailsApplyProps) => {
 
   const submitPaperApplicationBlocks = (
     <>
-      <SidebarBlock className={"bg-blue-100"}>
+      <SidebarBlock className={"bg-blue-100"} priority={2}>
         {ordinalHeader(2, t("listings.apply.submitAPaperApplication"))}
         {t("listings.apply.includeAnEnvelope")}
       </SidebarBlock>
@@ -184,6 +188,7 @@ export const ListingDetailsApply = ({ listing }: ListingDetailsApplyProps) => {
         className={"bg-blue-100"}
         styleType={"capsWeighted"}
         title={t("listings.apply.sendByUsMail")}
+        priority={2}
       >
         <div className={"mb-2 text-gray-950 text-base"}>
           <MultiLineAddress
@@ -198,7 +203,7 @@ export const ListingDetailsApply = ({ listing }: ListingDetailsApplyProps) => {
         </div>
         {t("listings.apply.applicationsMustBeReceivedByDeadline")}
       </SidebarBlock>
-      <SidebarBlock className={"bg-blue-100"}>
+      <SidebarBlock className={"bg-blue-100"} priority={2}>
         {t("listings.doNotApplyOneAndPaperOrMultiple")}
       </SidebarBlock>
     </>
