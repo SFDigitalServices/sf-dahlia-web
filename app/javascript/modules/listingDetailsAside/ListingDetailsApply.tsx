@@ -44,6 +44,7 @@ const FcfsBmrSalesHowToApply = ({ listingId }: { listingId: string }) => (
       className={"w-full"}
       transition={true}
       href={localizedPath(`listings/${listingId}/how-to-apply`)}
+      ariaLabel={t("listings.fcfs.bmrSales.howToApply.aria")}
     >
       {t("t.getStarted")}
     </LinkButton>

@@ -388,6 +388,7 @@ const WhatHappensNextSection = () => {
         className="underline"
         target="_blank"
         href={getSfGovUrl("https://www.sf.gov/node/14246", 14246)}
+        aria-label={t("listings.fcfs.bmrSales.noLotteryRequired.footer.aria")}
       >
         {t("listings.fcfs.bmrSales.noLotteryRequired.footer")}
       </a>
