@@ -5,7 +5,7 @@ import EmailFieldset, {
   handleEmailServerErrors,
 } from "../../pages/account/components/EmailFieldset"
 import { render, screen } from "@testing-library/react"
-import userEvent from "@testing-library/user-event"
+import { userEvent } from "@testing-library/user-event"
 import { useForm } from "react-hook-form"
 import { t } from "@bloom-housing/ui-components"
 import { ExpandedAccountAxiosError, getErrorMessage } from "../../pages/account/components/util"
@@ -58,7 +58,7 @@ describe("EmailFieldset", () => {
   })
 
   describe("handleEmailServerErrors", () => {
-    test("should set error to generalFormat when status is 422", () => {
+    it("should set error to generalFormat when status is 422", () => {
       const error = {
         response: {
           status: 422,
@@ -76,7 +76,7 @@ describe("EmailFieldset", () => {
       ])
     })
 
-    test("should set error to generic when status is not 422", () => {
+    it("should set error to generic when status is not 422", () => {
       const error = {
         response: {
           data: { errors: { full_messages: [] } },
@@ -93,7 +93,7 @@ describe("EmailFieldset", () => {
       ])
     })
 
-    test("should set error email duplicate error", () => {
+    it("should set error email duplicate error", () => {
       const error = {
         response: {
           status: 422,
@@ -167,7 +167,7 @@ describe("EmailFieldset", () => {
     ]
 
     testCases.forEach(({ key, abbreviated, expected }) => {
-      test(`returns correct error message for ${key} with abbreviated=${abbreviated}`, () => {
+      it(`returns correct error message for ${key} with abbreviated=${abbreviated}`, () => {
         expect(getErrorMessage(key, emailFieldsetErrors, abbreviated)).toBe(t(expected))
       })
     })

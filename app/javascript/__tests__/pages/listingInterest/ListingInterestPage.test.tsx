@@ -1,10 +1,14 @@
 import React from "react"
-import { render } from "@testing-library/react"
 import ListingInterestPage from "../../../../javascript/pages/listingInterest/listing-interest-page"
+import { renderAndLoadAsync } from "../../__util__/renderUtils"
 
 describe("Listing Interest Page", () => {
-  it("renders listing interest page with yes response", () => {
-    const { asFragment } = render(
+  beforeEach(() => {
+    document.documentElement.lang = "en"
+  })
+
+  it("renders listing interest page with yes response", async () => {
+    const { asFragment } = await renderAndLoadAsync(
       <ListingInterestPage
         assetPaths="/"
         urlParams={{ listing: "a0W0P00000DZYzVUAX", response: "y" }}
@@ -13,8 +17,8 @@ describe("Listing Interest Page", () => {
 
     expect(asFragment()).toMatchSnapshot()
   })
-  it("renders listing interest page with no response", () => {
-    const { asFragment } = render(
+  it("renders listing interest page with no response", async () => {
+    const { asFragment } = await renderAndLoadAsync(
       <ListingInterestPage
         assetPaths="/"
         urlParams={{ listing: "a0W0P00000DZYzVUAX", response: "n" }}
@@ -23,8 +27,8 @@ describe("Listing Interest Page", () => {
 
     expect(asFragment()).toMatchSnapshot()
   })
-  it("renders listing interest page with expired response", () => {
-    const { asFragment } = render(
+  it("renders listing interest page with expired response", async () => {
+    const { asFragment } = await renderAndLoadAsync(
       <ListingInterestPage
         assetPaths="/"
         urlParams={{ listing: "a0W0P00000DZYzVUAX", response: "x" }}
@@ -33,8 +37,8 @@ describe("Listing Interest Page", () => {
 
     expect(asFragment()).toMatchSnapshot()
   })
-  it("renders listing interest page with error response", () => {
-    const { asFragment } = render(
+  it("renders listing interest page with error response", async () => {
+    const { asFragment } = await renderAndLoadAsync(
       <ListingInterestPage
         assetPaths="/"
         urlParams={{ listing: "a0W0P00000DZYzVUAX", response: "e" }}

@@ -71,9 +71,11 @@ describe("<MyAccount />", () => {
 
   describe("when the user is not signed in", () => {
     let originalUseContext
+    let originalLocation: Location
 
     beforeEach(async () => {
       originalUseContext = React.useContext
+      originalLocation = window.location
       const mockContextValue: ContextProps = {
         profile: undefined,
         signIn: jest.fn(),
@@ -90,11 +92,23 @@ describe("<MyAccount />", () => {
         return originalUseContext(context)
       })
 
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      delete (window as any)?.location
+      ;(window as Window).location = {
+        ...originalLocation,
+        href: "http://dahlia.com",
+        assign: jest.fn(),
+        replace: jest.fn(),
+        reload: jest.fn(),
+        toString: jest.fn(),
+      }
+
       await renderAndLoadAsync(<MyAccount assetPaths={{}} />)
     })
 
     afterEach(() => {
       jest.restoreAllMocks()
+      window.location = originalLocation
     })
 
     it("redirects to the sign in page if the user is not signed in", () => {

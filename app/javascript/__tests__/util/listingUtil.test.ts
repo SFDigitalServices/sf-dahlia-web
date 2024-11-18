@@ -448,13 +448,13 @@ describe("groupAndSortUnitsByOccupancy", () => {
 })
 
 describe("getAmiChartDataFromUnits", () => {
-  test("returns empty array when given empty array of units", () => {
+  it("returns empty array when given empty array of units", () => {
     const units: Array<RailsUnit> = []
     const result = getAmiChartDataFromUnits(units)
     expect(result).toEqual([])
   })
 
-  test("returns unique chart data from array of units", () => {
+  it("returns unique chart data from array of units", () => {
     const result = getAmiChartDataFromUnits(units)
     expect(result).toEqual([
       { derivedFrom: "MaxAmi", year: 2021, type: "MOHCD", percent: 82 },
@@ -471,7 +471,7 @@ describe("getAmiChartDataFromUnits", () => {
 })
 
 describe("getPriorityTypeText", () => {
-  test.each`
+  it.each`
     priorityType                             | text
     ${"Vision impairments"}                  | ${"Vision Impairments"}
     ${"Hearing impairments"}                 | ${"Hearing Impairments"}
@@ -488,21 +488,21 @@ describe("getPriorityTypeText", () => {
 })
 
 describe("getTagContent", () => {
-  test("returns undefined for listing without a reserved community or custom listing type", () => {
+  it("returns undefined for listing without a reserved community or custom listing type", () => {
     expect(getTagContent(openSaleListing)).toBeUndefined()
   })
 
-  test("returns tag content for custom listing type", () => {
+  it("returns tag content for custom listing type", () => {
     expect(getTagContent(saleEducatorListing)).toStrictEqual([
       { text: "SF public schools employee housing" },
     ])
   })
 
-  test("returns tag content for reserved community type", () => {
+  it("returns tag content for reserved community type", () => {
     expect(getTagContent(habitatListing)).toStrictEqual([{ text: "Habitat Greater San Francisco" }])
   })
 
-  test("tag content gives custom listing type precedence over reserved community type", () => {
+  it("tag content gives custom listing type precedence over reserved community type", () => {
     expect(getTagContent(saleListingReservedAndCustom)).toStrictEqual([
       { text: "SF public schools employee housing" },
     ])
@@ -510,35 +510,35 @@ describe("getTagContent", () => {
 })
 
 describe("listingHasVeteransPreference", () => {
-  test("returns false for listings without Veterans-related preferences", () => {
+  it("returns false for listings without Veterans-related preferences", () => {
     expect(listingHasVeteransPreference(closedRentalListing)).toBe(false)
   })
 
-  test("returns true for listings with Veterans-related preferences", () => {
+  it("returns true for listings with Veterans-related preferences", () => {
     expect(listingHasVeteransPreference(rentalVeteranPreferenceListing)).toBe(true)
   })
 })
 
 describe("preferenceNameHasVeteran", () => {
-  test("returns true for strings that contain 'veteran'", () => {
+  it("returns true for strings that contain 'veteran'", () => {
     expect(preferenceNameHasVeteran("Veteran with Certificate of Preference (V-COP)")).toBe(true)
   })
 
-  test("returns false for strings that do not contain 'veteran'", () => {
+  it("returns false for strings that do not contain 'veteran'", () => {
     expect(preferenceNameHasVeteran("Certificate of Preference (COP)")).toBe(false)
   })
 })
 
 describe("first come, first served", () => {
-  test("returns false when listing is not fcfs", () => {
+  it("returns false when listing is not fcfs", () => {
     expect(isFcfsSalesListing(openSaleListing)).toBe(false)
   })
 
-  test("returns false when listing is rental fcfs", () => {
+  it("returns false when listing is rental fcfs", () => {
     expect(isFcfsSalesListing(openRentalFcfsListing)).toBe(false)
   })
 
-  test("returns true when listing is sales fcfs", () => {
+  it("returns true when listing is sales fcfs", () => {
     expect(isFcfsSalesListing(fcfsSaleListing)).toBe(true)
   })
 })
