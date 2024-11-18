@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import React from "react"
 import { render, screen } from "@testing-library/react"
-import userEvent from "@testing-library/user-event"
+import { userEvent } from "@testing-library/user-event"
 import PasswordFieldset, {
   handlePasswordServerErrors,
   passwordFieldsetErrors,
@@ -74,7 +74,7 @@ describe("Password Fieldset", () => {
   })
 
   describe("handleServerErrors", () => {
-    test("handleServerErrors sets currentPassword error for invalid current password", () => {
+    it("handleServerErrors sets currentPassword error for invalid current password", () => {
       const error = {
         response: {
           status: 422,
@@ -97,7 +97,7 @@ describe("Password Fieldset", () => {
       ])
     })
 
-    test("handleServerErrors sets password complexity error for password validation errors", () => {
+    it("handleServerErrors sets password complexity error for password validation errors", () => {
       const error = {
         response: {
           status: 422,
@@ -120,7 +120,7 @@ describe("Password Fieldset", () => {
       ])
     })
 
-    test("handleServerErrors sets generic password error for other errors", () => {
+    it("handleServerErrors sets generic password error for other errors", () => {
       const error = {
         response: {},
       } as ExpandedAccountAxiosError
@@ -191,7 +191,7 @@ describe("Password Fieldset", () => {
       },
     ]
     testCases.forEach(({ key, abbreviated, expected }) => {
-      test(`returns correct error message for ${key} with abbreviated=${abbreviated}`, () => {
+      it(`returns correct error message for ${key} with abbreviated=${abbreviated}`, () => {
         expect(getErrorMessage(key, passwordFieldsetErrors, abbreviated)).toBe(t(expected))
       })
     })

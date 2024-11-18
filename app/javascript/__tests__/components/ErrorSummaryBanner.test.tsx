@@ -13,13 +13,13 @@ import { passwordSortOrder } from "../../pages/account/components/PasswordFields
 window.HTMLElement.prototype.scrollIntoView = jest.fn()
 
 describe("ErrorSummaryBanner", () => {
-  test("displays no errors when errors is empty", () => {
+  it("displays no errors when errors is empty", () => {
     render(<ErrorSummaryBanner errors={{}} />)
     const errorItems = screen.queryAllByRole("listitem")
     expect(errorItems).toHaveLength(0)
   })
 
-  test("displays errors when present", () => {
+  it("displays errors when present", () => {
     render(
       <ErrorSummaryBanner
         errors={{
@@ -40,7 +40,7 @@ describe("ErrorSummaryBanner", () => {
     expect(errorItems).toHaveLength(2)
   })
 
-  test("should display errors in alignment with the fieldOrder", () => {
+  it("should display errors in alignment with the fieldOrder", () => {
     const fieldOrder = [...nameSortOrder, ...dobSortOrder, ...emailSortOrder, ...passwordSortOrder]
 
     const errors: DeepMap<FieldValues, FieldError> = {
@@ -64,7 +64,7 @@ describe("ErrorSummaryBanner", () => {
     ])
   })
 
-  test("will call messageMap if provided", () => {
+  it("will call messageMap if provided", () => {
     const messageMap = jest.fn((message) => message)
     render(
       <ErrorSummaryBanner

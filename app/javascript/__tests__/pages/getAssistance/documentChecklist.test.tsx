@@ -1,7 +1,7 @@
 import { renderAndLoadAsync } from "../../__util__/renderUtils"
 import DocumentChecklist from "../../../pages/getAssistance/document-checklist"
 import React from "react"
-import { within } from "@testing-library/dom"
+import { within } from "@testing-library/react"
 import { t } from "@bloom-housing/ui-components"
 
 describe("<DocumentChecklist />", () => {

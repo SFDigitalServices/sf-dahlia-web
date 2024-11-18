@@ -11,6 +11,57 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
         <div
           class="site-content"
         >
+          <title
+            class="notranslate"
+          >
+            Account Settings
+          </title>
+          <meta
+            charset="utf-8"
+          />
+          <meta
+            content="IE=edge"
+            http-equiv="X-UA-Compatible"
+          />
+          <meta
+            content="width=device-width, initial-scale=1"
+            name="viewport"
+          />
+          <meta
+            content="M1zcm6GGM6sHSF_jvkq254DbYAj94JYbFC7ArZDAXlg"
+            name="google-site-verification"
+          />
+          <meta
+            content="http://localhost/"
+            property="og:url"
+          />
+          <meta
+            content="website"
+            property="og:type"
+          />
+          <meta
+            content="Account Settings"
+            property="og:title"
+          />
+          <meta
+            content="DAHLIA San Francisco Housing Portal"
+            property="og:description"
+          />
+          <meta
+            content="DAHLIA San Francisco Housing Portal"
+            name="description"
+          />
+          <meta
+            property="og:image"
+          />
+          <meta
+            content="DAHLIA San Francisco Housing Portal"
+            property="og:site_name"
+          />
+          <meta
+            content="summary_large_image"
+            name="twitter:card"
+          />
           <header
             class="site-header"
           >
@@ -489,9 +540,11 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                           class="field pb-4"
                         >
                           <label
-                            class="label"
+                            class="label sr-only"
                             for="email"
-                          />
+                          >
+                            Email
+                          </label>
                           <div
                             class="control mt-1"
                           >
@@ -633,7 +686,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                           class="field mt-0 mb-4"
                         >
                           <label
-                            class="label hidden"
+                            class="label sr-only"
                             for="password"
                           >
                             password
@@ -824,6 +877,57 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
       <div
         class="site-content"
       >
+        <title
+          class="notranslate"
+        >
+          Account Settings
+        </title>
+        <meta
+          charset="utf-8"
+        />
+        <meta
+          content="IE=edge"
+          http-equiv="X-UA-Compatible"
+        />
+        <meta
+          content="width=device-width, initial-scale=1"
+          name="viewport"
+        />
+        <meta
+          content="M1zcm6GGM6sHSF_jvkq254DbYAj94JYbFC7ArZDAXlg"
+          name="google-site-verification"
+        />
+        <meta
+          content="http://localhost/"
+          property="og:url"
+        />
+        <meta
+          content="website"
+          property="og:type"
+        />
+        <meta
+          content="Account Settings"
+          property="og:title"
+        />
+        <meta
+          content="DAHLIA San Francisco Housing Portal"
+          property="og:description"
+        />
+        <meta
+          content="DAHLIA San Francisco Housing Portal"
+          name="description"
+        />
+        <meta
+          property="og:image"
+        />
+        <meta
+          content="DAHLIA San Francisco Housing Portal"
+          property="og:site_name"
+        />
+        <meta
+          content="summary_large_image"
+          name="twitter:card"
+        />
         <header
           class="site-header"
         >
@@ -1302,9 +1406,11 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                         class="field pb-4"
                       >
                         <label
-                          class="label"
+                          class="label sr-only"
                           for="email"
-                        />
+                        >
+                          Email
+                        </label>
                         <div
                           class="control mt-1"
                         >
@@ -1446,7 +1552,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                         class="field mt-0 mb-4"
                       >
                         <label
-                          class="label hidden"
+                          class="label sr-only"
                           for="password"
                         >
                           password
@@ -1694,6 +1800,57 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
         <div
           class="site-content"
         >
+          <title
+            class="notranslate"
+          >
+            Account Settings
+          </title>
+          <meta
+            charset="utf-8"
+          />
+          <meta
+            content="IE=edge"
+            http-equiv="X-UA-Compatible"
+          />
+          <meta
+            content="width=device-width, initial-scale=1"
+            name="viewport"
+          />
+          <meta
+            content="M1zcm6GGM6sHSF_jvkq254DbYAj94JYbFC7ArZDAXlg"
+            name="google-site-verification"
+          />
+          <meta
+            content="http://localhost/"
+            property="og:url"
+          />
+          <meta
+            content="website"
+            property="og:type"
+          />
+          <meta
+            content="Account Settings"
+            property="og:title"
+          />
+          <meta
+            content="DAHLIA San Francisco Housing Portal"
+            property="og:description"
+          />
+          <meta
+            content="DAHLIA San Francisco Housing Portal"
+            name="description"
+          />
+          <meta
+            property="og:image"
+          />
+          <meta
+            content="DAHLIA San Francisco Housing Portal"
+            property="og:site_name"
+          />
+          <meta
+            content="summary_large_image"
+            name="twitter:card"
+          />
           <header
             class="site-header"
           >
@@ -1798,59 +1955,35 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                   </a>
                 </div>
                 <div
-                  class="site-header__navbar-menu site-header__navbar-wrapped"
+                  class="site-header__navbar-menu "
                   id="site-header-links"
                 >
-                  <a
-                    class="site-header__link  "
-                    data-testid="Rent-0"
-                    href="/listings/for-rent"
-                    target="_self"
+                  <button
+                    class="site-header__mobile-menu-text-button"
                   >
-                    <div>
-                      Rent
+                    <div
+                      class="site-header__mobile-menu-text-button-content"
+                    >
+                      Menu
                     </div>
-                  </a>
-                  <a
-                    class="site-header__link  "
-                    data-testid="Buy-1"
-                    href="/listings/for-sale"
-                    target="_self"
-                  >
-                    <div>
-                      Buy
-                    </div>
-                  </a>
-                  <a
-                    class="site-header__link  "
-                    data-testid="My Favorites-2"
-                    href="/favorites"
-                    target="_self"
-                  >
-                    <div>
-                      My Favorites
-                    </div>
-                  </a>
-                  <a
-                    class="site-header__link  "
-                    data-testid="Get Assistance-3"
-                    href="/get-assistance"
-                    target="_self"
-                  >
-                    <div>
-                      Get Assistance
-                    </div>
-                  </a>
-                  <a
-                    class="site-header__link  "
-                    data-testid="Sign In-4"
-                    href="/sign-in"
-                    target="_self"
-                  >
-                    <div>
-                      Sign In
-                    </div>
-                  </a>
+                    <span
+                      class="ui-icon ui-base site-header__mobile-menu-icon"
+                    >
+                      <svg
+                        fill="currentColor"
+                        height="9"
+                        viewBox="0 0 9 9"
+                        width="9"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          clip-rule="evenodd"
+                          d="M8.61429 2.3625H0.385714C0.0309375 2.3625 0 2.086 0 1.74375C0 1.4015 0.0309375 1.125 0.385714 1.125H8.61429C8.96906 1.125 9 1.4015 9 1.74375C9 2.086 8.96906 2.3625 8.61429 2.3625ZM8.61429 3.6H0.385714C0.0309375 3.6 0 3.8765 0 4.21875C0 4.561 0.0309375 4.8375 0.385714 4.8375H8.61429C8.96906 4.8375 9 4.561 9 4.21875C9 3.8765 8.96906 3.6 8.61429 3.6ZM8.61429 6.075H0.385714C0.0309375 6.075 0 6.3515 0 6.69375C0 7.036 0.0309375 7.3125 0.385714 7.3125H8.61429C8.96906 7.3125 9 7.036 9 6.69375C9 6.3515 8.96906 6.075 8.61429 6.075Z"
+                          fill-rule="evenodd"
+                        />
+                      </svg>
+                    </span>
+                  </button>
                 </div>
               </div>
             </nav>
@@ -1926,7 +2059,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                   </header>
                   <div
                     class="seeds-card-section"
-                    data-divider="inset"
+                    data-divider="flush"
                   >
                     <form
                       class="p-2 md:py-2 md:px-10"
@@ -2036,7 +2169,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                   </div>
                   <div
                     class="seeds-card-section"
-                    data-divider="inset"
+                    data-divider="flush"
                   >
                     <form
                       class="p-2 md:py-2 md:px-10"
@@ -2154,7 +2287,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                   </div>
                   <div
                     class="seeds-card-section"
-                    data-divider="inset"
+                    data-divider="flush"
                   >
                     <form
                       class="p-2 md:py-2 md:px-10"
@@ -2172,9 +2305,11 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                           class="field pb-4"
                         >
                           <label
-                            class="label"
+                            class="label sr-only"
                             for="email"
-                          />
+                          >
+                            Email
+                          </label>
                           <div
                             class="control mt-1"
                           >
@@ -2210,7 +2345,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                   </div>
                   <div
                     class="seeds-card-section"
-                    data-divider="inset"
+                    data-divider="flush"
                   >
                     <form
                       class="p-2 md:py-2 md:px-10"
@@ -2316,7 +2451,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                           class="field mt-0 mb-4"
                         >
                           <label
-                            class="label hidden"
+                            class="label sr-only"
                             for="password"
                           >
                             password
@@ -2507,6 +2642,57 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
       <div
         class="site-content"
       >
+        <title
+          class="notranslate"
+        >
+          Account Settings
+        </title>
+        <meta
+          charset="utf-8"
+        />
+        <meta
+          content="IE=edge"
+          http-equiv="X-UA-Compatible"
+        />
+        <meta
+          content="width=device-width, initial-scale=1"
+          name="viewport"
+        />
+        <meta
+          content="M1zcm6GGM6sHSF_jvkq254DbYAj94JYbFC7ArZDAXlg"
+          name="google-site-verification"
+        />
+        <meta
+          content="http://localhost/"
+          property="og:url"
+        />
+        <meta
+          content="website"
+          property="og:type"
+        />
+        <meta
+          content="Account Settings"
+          property="og:title"
+        />
+        <meta
+          content="DAHLIA San Francisco Housing Portal"
+          property="og:description"
+        />
+        <meta
+          content="DAHLIA San Francisco Housing Portal"
+          name="description"
+        />
+        <meta
+          property="og:image"
+        />
+        <meta
+          content="DAHLIA San Francisco Housing Portal"
+          property="og:site_name"
+        />
+        <meta
+          content="summary_large_image"
+          name="twitter:card"
+        />
         <header
           class="site-header"
         >
@@ -2611,59 +2797,35 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                 </a>
               </div>
               <div
-                class="site-header__navbar-menu site-header__navbar-wrapped"
+                class="site-header__navbar-menu "
                 id="site-header-links"
               >
-                <a
-                  class="site-header__link  "
-                  data-testid="Rent-0"
-                  href="/listings/for-rent"
-                  target="_self"
+                <button
+                  class="site-header__mobile-menu-text-button"
                 >
-                  <div>
-                    Rent
+                  <div
+                    class="site-header__mobile-menu-text-button-content"
+                  >
+                    Menu
                   </div>
-                </a>
-                <a
-                  class="site-header__link  "
-                  data-testid="Buy-1"
-                  href="/listings/for-sale"
-                  target="_self"
-                >
-                  <div>
-                    Buy
-                  </div>
-                </a>
-                <a
-                  class="site-header__link  "
-                  data-testid="My Favorites-2"
-                  href="/favorites"
-                  target="_self"
-                >
-                  <div>
-                    My Favorites
-                  </div>
-                </a>
-                <a
-                  class="site-header__link  "
-                  data-testid="Get Assistance-3"
-                  href="/get-assistance"
-                  target="_self"
-                >
-                  <div>
-                    Get Assistance
-                  </div>
-                </a>
-                <a
-                  class="site-header__link  "
-                  data-testid="Sign In-4"
-                  href="/sign-in"
-                  target="_self"
-                >
-                  <div>
-                    Sign In
-                  </div>
-                </a>
+                  <span
+                    class="ui-icon ui-base site-header__mobile-menu-icon"
+                  >
+                    <svg
+                      fill="currentColor"
+                      height="9"
+                      viewBox="0 0 9 9"
+                      width="9"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        clip-rule="evenodd"
+                        d="M8.61429 2.3625H0.385714C0.0309375 2.3625 0 2.086 0 1.74375C0 1.4015 0.0309375 1.125 0.385714 1.125H8.61429C8.96906 1.125 9 1.4015 9 1.74375C9 2.086 8.96906 2.3625 8.61429 2.3625ZM8.61429 3.6H0.385714C0.0309375 3.6 0 3.8765 0 4.21875C0 4.561 0.0309375 4.8375 0.385714 4.8375H8.61429C8.96906 4.8375 9 4.561 9 4.21875C9 3.8765 8.96906 3.6 8.61429 3.6ZM8.61429 6.075H0.385714C0.0309375 6.075 0 6.3515 0 6.69375C0 7.036 0.0309375 7.3125 0.385714 7.3125H8.61429C8.96906 7.3125 9 7.036 9 6.69375C9 6.3515 8.96906 6.075 8.61429 6.075Z"
+                        fill-rule="evenodd"
+                      />
+                    </svg>
+                  </span>
+                </button>
               </div>
             </div>
           </nav>
@@ -2739,7 +2901,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                 </header>
                 <div
                   class="seeds-card-section"
-                  data-divider="inset"
+                  data-divider="flush"
                 >
                   <form
                     class="p-2 md:py-2 md:px-10"
@@ -2849,7 +3011,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                 </div>
                 <div
                   class="seeds-card-section"
-                  data-divider="inset"
+                  data-divider="flush"
                 >
                   <form
                     class="p-2 md:py-2 md:px-10"
@@ -2967,7 +3129,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                 </div>
                 <div
                   class="seeds-card-section"
-                  data-divider="inset"
+                  data-divider="flush"
                 >
                   <form
                     class="p-2 md:py-2 md:px-10"
@@ -2985,9 +3147,11 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                         class="field pb-4"
                       >
                         <label
-                          class="label"
+                          class="label sr-only"
                           for="email"
-                        />
+                        >
+                          Email
+                        </label>
                         <div
                           class="control mt-1"
                         >
@@ -3023,7 +3187,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                 </div>
                 <div
                   class="seeds-card-section"
-                  data-divider="inset"
+                  data-divider="flush"
                 >
                   <form
                     class="p-2 md:py-2 md:px-10"
@@ -3129,7 +3293,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                         class="field mt-0 mb-4"
                       >
                         <label
-                          class="label hidden"
+                          class="label sr-only"
                           for="password"
                         >
                           password

@@ -7,7 +7,7 @@ import { ExpandedAccountAxiosError, getErrorMessage } from "../../pages/account/
 
 describe("NameFieldset", () => {
   describe("handleNameServerErrors", () => {
-    test("should set error to genericServer", () => {
+    it("should set error to genericServer", () => {
       const error = {
         response: {
           status: 422,
@@ -26,7 +26,7 @@ describe("NameFieldset", () => {
       ])
     })
 
-    test("should set name missing error", () => {
+    it("should set name missing error", () => {
       const error = {
         response: {
           status: 422,
@@ -94,7 +94,7 @@ describe("NameFieldset", () => {
     ]
 
     testCases.forEach(({ key, abbreviated, expected }) => {
-      test(`returns correct error message for ${key} with abbreviated=${abbreviated}`, () => {
+      it(`returns correct error message for ${key} with abbreviated=${abbreviated}`, () => {
         expect(getErrorMessage(key, nameFieldsetErrors, abbreviated)).toBe(t(expected))
       })
     })
