@@ -2,7 +2,7 @@ import React from "react"
 
 import CreateAccountPage from "../../pages/account/create-account"
 import { renderAndLoadAsync } from "../__util__/renderUtils"
-import { screen, within, cleanup } from "@testing-library/react"
+import { screen, within, cleanup, waitFor } from "@testing-library/react"
 import { post } from "../../api/apiService"
 import { userEvent } from "@testing-library/user-event"
 
@@ -98,6 +98,80 @@ describe("<CreateAccount />", () => {
 
   it("shows the correct form text", () => {
     expect(screen.getAllByText("Create an account")).not.toBeNull()
+  })
+
+  it("correctly calls the redirect function", async () => {
+    const customLocation = {
+      ...window.location,
+      href: "http://dahlia.com",
+      assign: jest.fn(),
+      replace: jest.fn(),
+      reload: jest.fn(),
+      toString: jest.fn(),
+    }
+
+    Object.defineProperty(window, "location", {
+      configurable: true,
+      enumerable: true,
+      writable: true,
+      value: customLocation,
+    })
+
+    // Redefine the href setter to resolve relative URLs
+    Object.defineProperty(window.location, "href", {
+      configurable: true,
+      enumerable: true,
+      set: function (href: string) {
+        const base = "http://dahlia.com"
+        try {
+          const newUrl = new URL(href, base)
+          this._href = newUrl.href
+        } catch {
+          this._href = href
+        }
+      },
+      get: function () {
+        return this._href || "http://dahlia.com"
+      },
+    })
+
+    const mockUserData = {
+      data: {
+        id: 1,
+        email: "test@example.com",
+      },
+    }
+    const mockHeaders = {
+      "access-token": "mock-token",
+      client: "mock-client",
+      uid: "mock-uid",
+    }
+    ;(post as jest.Mock).mockResolvedValue({
+      data: mockUserData,
+      headers: mockHeaders,
+    })
+    const setItemMock = jest.spyOn(Storage.prototype, "setItem")
+    const replaceMock = jest.spyOn(window.location, "replace").mockImplementation(() => {})
+
+    const createAccountButton = screen.getByRole("button", {
+      name: /create account/i,
+    })
+
+    await fillCreateAccountForm(defaultFormValues)
+    await user.click(createAccountButton)
+
+    await waitFor(() => {
+      expect(post).toHaveBeenCalled()
+    })
+
+    await waitFor(() => {
+      expect(setItemMock).toHaveBeenCalledWith("redirect", "true")
+      expect(replaceMock).toHaveBeenCalledWith("/sign-in")
+    })
+
+    // Clean up mocks
+    setItemMock.mockRestore()
+    replaceMock.mockRestore()
   })
 
   it("creates a new account", async () => {
