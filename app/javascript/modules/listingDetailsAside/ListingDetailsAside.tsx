@@ -1,9 +1,15 @@
 import React from "react"
-import { LinkButton, ListingDetailItem, SidebarBlock, t } from "@bloom-housing/ui-components"
+import { ListingDetailItem, SidebarBlock, t } from "@bloom-housing/ui-components"
 import { RailsListing } from "../listings/SharedHelpers"
 import { ListingDetailsInfoSession } from "./ListingDetailsInfoSession"
 import { ListingDetailsProcess } from "./ListingDetailsProcess"
-import { isFcfsSalesListing, isOpen, isRental, isSale } from "../../util/listingUtil"
+import {
+  getFcfsSalesListingState,
+  isFcfsSalesListing,
+  isOpen,
+  isRental,
+  isSale,
+} from "../../util/listingUtil"
 import { ListingDetailsApply } from "./ListingDetailsApply"
 import { ListingDetailsApplicationDate } from "./ListingDetailsApplicationDate"
 import { ListingDetailsLotteryResults } from "../listingDetailsLottery/ListingDetailsLotteryResults"
@@ -13,8 +19,9 @@ import { ListingDetailsOpenHouses } from "./ListingDetailsOpenHouses"
 import { ListingDetailsSeeTheUnit } from "./ListingDetailsSeeTheUnit"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import { localizedFormat } from "../../util/languageUtil"
-import { getHousingCounselorsPath } from "../../util/routeUtil"
 import { fcfsNoLotteryRequired } from "../noLotteryRequired/fcfsNoLotteryRequired"
+import { ListingState } from "../listings/ListingState"
+import { NeedHelpBlock } from "./ListingDetailsNeedHelp"
 
 export interface ListingDetailsSidebarProps {
   listing: RailsListing
@@ -22,7 +29,9 @@ export interface ListingDetailsSidebarProps {
 }
 
 export const ListingDetailsAside = ({ listing, imageSrc }: ListingDetailsSidebarProps) => {
-  const isApplicationOpen = isOpen(listing)
+  const isApplicationOpen = isFcfsSalesListing(listing)
+    ? getFcfsSalesListingState(listing) !== ListingState.Closed
+    : isOpen(listing)
   const isSaleListing = isSale(listing)
   const isListingRental = isRental(listing)
 
@@ -33,7 +42,7 @@ export const ListingDetailsAside = ({ listing, imageSrc }: ListingDetailsSidebar
       {localizedFormat(listing.Expected_Move_in_Date, "MMMM YYYY")}
     </SidebarBlock>
   )
-
+  
   const needHelpBlock = (
     <SidebarBlock title={t("listings.apply.needHelp")} priority={2}>
       {isListingRental && (
@@ -82,7 +91,7 @@ export const ListingDetailsAside = ({ listing, imageSrc }: ListingDetailsSidebar
             {isApplicationOpen && <ListingDetailsWaitlist listing={listing} />}
             <ListingDetailsApply listing={listing} />
             {isSaleListing && isSalesFcfsEnabled && <ListingDetailsSeeTheUnit listing={listing} />}
-            {isApplicationOpen && needHelpBlock}
+            {isApplicationOpen && <NeedHelpBlock listing={listing} />}
             {isSaleListing && listing.Expected_Move_in_Date && expectedMoveInDateBlock}
             <ListingDetailsProcess listing={listing} isApplicationOpen={isApplicationOpen} />
           </div>

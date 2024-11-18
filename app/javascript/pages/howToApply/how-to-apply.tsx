@@ -8,6 +8,7 @@ import {
   getPathWithoutLanguagePrefix,
   getTranslatedString,
 } from "../../util/languageUtil"
+import { isValidUrl } from "../../util/urlUtil"
 import {
   Icon,
   t,
@@ -36,8 +37,11 @@ interface HowToApplyProps {
   assetPaths: unknown
 }
 
-const submissionUrl = (listingId: string) => {
-  return `https://sfmoh.tfaforms.net/20?ListingID=${listingId}`
+const generateSubmissionUrl = (listingId: string) => {
+  const formAssemblyUrl = process.env.FCFS_FORMASSEMBLY_URL
+  if (!isValidUrl(formAssemblyUrl)) return null
+
+  return `${formAssemblyUrl}?ListingID=${listingId}`
 }
 
 const applicationsNotYetOpen = (listing: RailsSaleListing) =>
@@ -310,6 +314,7 @@ const CreateBoxAccountStep = () => {
 
 const SubmitApplicationStep = ({ listing }: { listing: RailsSaleListing }) => {
   const datetime = listing.Application_Start_Date_Time
+  const submissionUrl = generateSubmissionUrl(listing.listingID)
 
   return (
     <HowToApplyListItem headerText={t("howToApplyPage.howToApplySection.step5.title")}>
@@ -336,12 +341,12 @@ const SubmitApplicationStep = ({ listing }: { listing: RailsSaleListing }) => {
           })}
         </div>
       )}
-      {applicationsOpen(listing) && (
+      {applicationsOpen(listing) && submissionUrl && (
         <Button
           className="mt-6"
           styleType={AppearanceStyleType.primary}
           onClick={() => {
-            window.open(submissionUrl(listing.listingID), "_blank")
+            window.open(submissionUrl, "_blank")
           }}
         >
           {t("howToApplyPage.howToApplySection.step5.button")}
