@@ -8,11 +8,11 @@ exports[`ListingDetailsProcess renders leasing agent section if exists 1`] = `
     <section
       class="aside-block"
     >
-      <h4
+      <h2
         class="text__underline-weighted"
       >
         What to Expect
-      </h4>
+      </h2>
       <div
         class="text-sm text-gray-750"
       >
@@ -42,11 +42,11 @@ exports[`ListingDetailsProcess renders leasing agent section if exists 1`] = `
     <section
       class="aside-block"
     >
-      <h4
+      <h2
         class="text__underline-weighted"
       >
         Contact
-      </h4>
+      </h2>
       <p
         class="text-xl"
       >

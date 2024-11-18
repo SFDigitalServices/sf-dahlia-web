@@ -42,28 +42,6 @@ export const ListingDetailsAside = ({ listing, imageSrc }: ListingDetailsSidebar
       {localizedFormat(listing.Expected_Move_in_Date, "MMMM YYYY")}
     </SidebarBlock>
   )
-  
-  const needHelpBlock = (
-    <SidebarBlock title={t("listings.apply.needHelp")} priority={2}>
-      {isListingRental && (
-        <div className={"mb-4"}>{t("listings.apply.visitAHousingCounselor")}</div>
-      )}
-      <LinkButton
-        transition={true}
-        newTab={true}
-        href={
-          !isListingRental
-            ? "https://www.homeownershipsf.org/buyerapplications/"
-            : getHousingCounselorsPath()
-        }
-        className={"w-full"}
-      >
-        {isListingRental
-          ? t("housingCounselor.findAHousingCounselor")
-          : t("listings.apply.visitHomeownershipSf")}
-      </LinkButton>
-    </SidebarBlock>
-  )
 
   return (
     <ul>

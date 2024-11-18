@@ -37,13 +37,13 @@ const WhatToExpect = ({
             <p className={"mt-2 mb-2"}>{t("label.whatToExpectApplicationChosen")}</p>
           </>
         }
-        // TODO: relies on uic fix priority={2}
         strings={{
           title: t("label.whatToExpect"),
           readMore: t("label.showMore"),
           readLess: t("label.showLess"),
           buttonAriaLabel: t("listings.whatToExpect.showMore.aria"),
         }}
+        priority={2}
       />
     </div>
   )
@@ -99,7 +99,7 @@ export const ListingDetailsProcess = ({
           <div className="border-b border-gray-400 md:border-b-0 last:border-b-0">
             <Contact
               sectionTitle={t("contactAgent.contact")}
-              // TODO: relies on uic fix priority={2}
+              priority={2}
               contactAddress={{
                 street: listing.Leasing_Agent_Street,
                 city: listing.Leasing_Agent_City,

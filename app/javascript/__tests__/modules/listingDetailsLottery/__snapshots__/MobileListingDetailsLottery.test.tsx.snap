@@ -50,11 +50,11 @@ exports[`MobileListingDetailsLottery does display when fcfs toggle is disabled 1
       <section
         class="aside-block "
       >
-        <h4
+        <h2
           class="text__underline-weighted"
         >
           Lottery
-        </h4>
+        </h2>
         <div
           class="text-sm text-gray-750"
         >
@@ -91,11 +91,11 @@ exports[`MobileListingDetailsLottery does display when fcfs toggle is disabled 1
       <section
         class="aside-block "
       >
-        <h4
+        <h2
           class="text__underline-weighted"
         >
           Lottery Results
-        </h4>
+        </h2>
         <div
           class="text-sm text-gray-750"
         >
@@ -198,11 +198,11 @@ exports[`MobileListingDetailsLottery does display when fcfs toggle is disabled 1
       <section
         class="aside-block"
       >
-        <h4
+        <h2
           class="text__underline-weighted"
         >
           What to Expect
-        </h4>
+        </h2>
         <div
           class="text-sm text-gray-750"
         >
@@ -232,11 +232,11 @@ exports[`MobileListingDetailsLottery does display when fcfs toggle is disabled 1
       <section
         class="aside-block"
       >
-        <h4
+        <h2
           class="text__underline-weighted"
         >
           Contact
-        </h4>
+        </h2>
         <p
           class="text-xl"
         >
@@ -361,11 +361,11 @@ exports[`MobileListingDetailsLottery does display when fcfs toggle is disabled 1
       <section
         class="aside-block "
       >
-        <h4
+        <h2
           class="text__underline-weighted"
         >
           Housing Program
-        </h4>
+        </h2>
         <div
           class="text-sm text-gray-750"
         >
@@ -459,11 +459,11 @@ exports[`MobileListingDetailsLottery does display when lottery listing is closed
       <section
         class="aside-block "
       >
-        <h4
+        <h2
           class="text__underline-weighted"
         >
           Lottery
-        </h4>
+        </h2>
         <div
           class="text-sm text-gray-750"
         >
@@ -514,11 +514,11 @@ exports[`MobileListingDetailsLottery does display when lottery listing is closed
       <section
         class="aside-block "
       >
-        <h4
+        <h2
           class="text__underline-weighted"
         >
           Lottery Results
-        </h4>
+        </h2>
         <div
           class="text-sm text-gray-750"
         >
@@ -590,11 +590,11 @@ exports[`MobileListingDetailsLottery does display when lottery listing is closed
       <section
         class="aside-block"
       >
-        <h4
+        <h2
           class="text__underline-weighted"
         >
           What to Expect
-        </h4>
+        </h2>
         <div
           class="text-sm text-gray-750"
         >
