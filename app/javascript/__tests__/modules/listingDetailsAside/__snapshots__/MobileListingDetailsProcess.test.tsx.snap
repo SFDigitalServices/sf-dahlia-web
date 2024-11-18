@@ -181,11 +181,11 @@ exports[`MobileListingDetailsProcess renders with listing with open application 
       <section
         class="aside-block"
       >
-        <h4
+        <h2
           class="text__underline-weighted"
         >
           What to Expect
-        </h4>
+        </h2>
         <div
           class="text-sm text-gray-750"
         >
@@ -215,11 +215,11 @@ exports[`MobileListingDetailsProcess renders with listing with open application 
       <section
         class="aside-block "
       >
-        <h4
+        <h2
           class="text__underline-weighted"
         >
           Housing Program
-        </h4>
+        </h2>
         <div
           class="text-sm text-gray-750"
         >

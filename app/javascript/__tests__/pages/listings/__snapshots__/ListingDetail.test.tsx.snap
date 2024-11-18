@@ -571,11 +571,11 @@ exports[`Listing Detail initializes Google Tag Manager for a sales listing 1`] =
                     <section
                       class="aside-block "
                     >
-                      <h4
+                      <h2
                         class="text__underline-weighted"
                       >
                         Lottery
-                      </h4>
+                      </h2>
                       <div
                         class="text-sm text-gray-750"
                       >
@@ -608,11 +608,11 @@ exports[`Listing Detail initializes Google Tag Manager for a sales listing 1`] =
                     <section
                       class="aside-block "
                     >
-                      <h4
+                      <h2
                         class="text__underline-weighted"
                       >
                         Lottery Results
-                      </h4>
+                      </h2>
                       <div
                         class="text-sm text-gray-750"
                       >
@@ -635,20 +635,20 @@ exports[`Listing Detail initializes Google Tag Manager for a sales listing 1`] =
                     <div
                       class="see-the-unit__heading"
                     >
-                      <h4
+                      <h2
                         class="text__underline-weighted"
                       >
                         See the Unit
-                      </h4>
+                      </h2>
                     </div>
                     <div
                       class="see-the-unit__subsection"
                     >
-                      <h1
+                      <h3
                         class="text-heading-md pb-3"
                       >
                         Make an appointment
-                      </h1>
+                      </h3>
                       <div>
                         <p
                           class="text-sm pb-3"
@@ -709,11 +709,11 @@ exports[`Listing Detail initializes Google Tag Manager for a sales listing 1`] =
                             </a>
                           </p>
                         </div>
-                        <h1
+                        <h3
                           class="text-heading-sm pb-1"
                         >
                           Office hours
-                        </h1>
+                        </h3>
                         <p
                           class="text-sm"
                         >
@@ -728,11 +728,11 @@ exports[`Listing Detail initializes Google Tag Manager for a sales listing 1`] =
                     <section
                       class="aside-block"
                     >
-                      <h4
+                      <h2
                         class="text__underline-weighted"
                       >
                         What to Expect
-                      </h4>
+                      </h2>
                       <div
                         class="text-sm text-gray-750"
                       >
@@ -762,11 +762,11 @@ exports[`Listing Detail initializes Google Tag Manager for a sales listing 1`] =
                     <section
                       class="aside-block "
                     >
-                      <h4
+                      <h2
                         class="text__underline-weighted"
                       >
                         Housing Program
-                      </h4>
+                      </h2>
                       <div
                         class="text-sm text-gray-750"
                       >
@@ -902,11 +902,11 @@ exports[`Listing Detail initializes Google Tag Manager for a sales listing 1`] =
                     <section
                       class="aside-block "
                     >
-                      <h4
+                      <h2
                         class="text__underline-weighted"
                       >
                         Lottery
-                      </h4>
+                      </h2>
                       <div
                         class="text-sm text-gray-750"
                       >
@@ -939,11 +939,11 @@ exports[`Listing Detail initializes Google Tag Manager for a sales listing 1`] =
                     <section
                       class="aside-block "
                     >
-                      <h4
+                      <h2
                         class="text__underline-weighted"
                       >
                         Lottery Results
-                      </h4>
+                      </h2>
                       <div
                         class="text-sm text-gray-750"
                       >
@@ -966,11 +966,11 @@ exports[`Listing Detail initializes Google Tag Manager for a sales listing 1`] =
                     <section
                       class="aside-block"
                     >
-                      <h4
+                      <h2
                         class="text__underline-weighted"
                       >
                         What to Expect
-                      </h4>
+                      </h2>
                       <div
                         class="text-sm text-gray-750"
                       >
@@ -1000,11 +1000,11 @@ exports[`Listing Detail initializes Google Tag Manager for a sales listing 1`] =
                     <section
                       class="aside-block "
                     >
-                      <h4
+                      <h2
                         class="text__underline-weighted"
                       >
                         Housing Program
-                      </h4>
+                      </h2>
                       <div
                         class="text-sm text-gray-750"
                       >
@@ -1040,11 +1040,11 @@ exports[`Listing Detail initializes Google Tag Manager for a sales listing 1`] =
                   <section
                     class="aside-block "
                   >
-                    <h4
+                    <h2
                       class="text__underline-weighted"
                     >
                       Lottery
-                    </h4>
+                    </h2>
                     <div
                       class="text-sm text-gray-750"
                     >
@@ -1077,11 +1077,11 @@ exports[`Listing Detail initializes Google Tag Manager for a sales listing 1`] =
                   <section
                     class="aside-block "
                   >
-                    <h4
+                    <h2
                       class="text__underline-weighted"
                     >
                       Lottery Results
-                    </h4>
+                    </h2>
                     <div
                       class="text-sm text-gray-750"
                     >
@@ -1104,11 +1104,11 @@ exports[`Listing Detail initializes Google Tag Manager for a sales listing 1`] =
                   <section
                     class="aside-block"
                   >
-                    <h4
+                    <h2
                       class="text__underline-weighted"
                     >
                       What to Expect
-                    </h4>
+                    </h2>
                     <div
                       class="text-sm text-gray-750"
                     >
@@ -1138,11 +1138,11 @@ exports[`Listing Detail initializes Google Tag Manager for a sales listing 1`] =
                   <section
                     class="aside-block "
                   >
-                    <h4
+                    <h2
                       class="text__underline-weighted"
                     >
                       Housing Program
-                    </h4>
+                    </h2>
                     <div
                       class="text-sm text-gray-750"
                     >
@@ -1219,11 +1219,11 @@ exports[`Listing Detail initializes Google Tag Manager for a sales listing 1`] =
                   <section
                     class="aside-block "
                   >
-                    <h4
+                    <h2
                       class="text__underline-weighted"
                     >
                       Lottery
-                    </h4>
+                    </h2>
                     <div
                       class="text-sm text-gray-750"
                     >
@@ -1256,11 +1256,11 @@ exports[`Listing Detail initializes Google Tag Manager for a sales listing 1`] =
                   <section
                     class="aside-block "
                   >
-                    <h4
+                    <h2
                       class="text__underline-weighted"
                     >
                       Lottery Results
-                    </h4>
+                    </h2>
                     <div
                       class="text-sm text-gray-750"
                     >
@@ -1283,11 +1283,11 @@ exports[`Listing Detail initializes Google Tag Manager for a sales listing 1`] =
                   <section
                     class="aside-block"
                   >
-                    <h4
+                    <h2
                       class="text__underline-weighted"
                     >
                       What to Expect
-                    </h4>
+                    </h2>
                     <div
                       class="text-sm text-gray-750"
                     >
@@ -1317,11 +1317,11 @@ exports[`Listing Detail initializes Google Tag Manager for a sales listing 1`] =
                   <section
                     class="aside-block "
                   >
-                    <h4
+                    <h2
                       class="text__underline-weighted"
                     >
                       Housing Program
-                    </h4>
+                    </h2>
                     <div
                       class="text-sm text-gray-750"
                     >
@@ -2264,20 +2264,20 @@ exports[`Listing Detail initializes Google Tag Manager for a sales listing 1`] =
                     <div
                       class="see-the-unit__heading"
                     >
-                      <h4
+                      <h2
                         class="text__underline-weighted"
                       >
                         See the Unit
-                      </h4>
+                      </h2>
                     </div>
                     <div
                       class="see-the-unit__subsection"
                     >
-                      <h1
+                      <h3
                         class="text-heading-md pb-3"
                       >
                         Make an appointment
-                      </h1>
+                      </h3>
                       <div>
                         <p
                           class="text-sm pb-3"
@@ -2338,11 +2338,11 @@ exports[`Listing Detail initializes Google Tag Manager for a sales listing 1`] =
                             </a>
                           </p>
                         </div>
-                        <h1
+                        <h3
                           class="text-heading-sm pb-1"
                         >
                           Office hours
-                        </h1>
+                        </h3>
                         <p
                           class="text-sm"
                         >
@@ -2358,20 +2358,20 @@ exports[`Listing Detail initializes Google Tag Manager for a sales listing 1`] =
                   <div
                     class="see-the-unit__heading"
                   >
-                    <h4
+                    <h2
                       class="text__underline-weighted"
                     >
                       See the Unit
-                    </h4>
+                    </h2>
                   </div>
                   <div
                     class="see-the-unit__subsection"
                   >
-                    <h1
+                    <h3
                       class="text-heading-md pb-3"
                     >
                       Make an appointment
-                    </h1>
+                    </h3>
                     <div>
                       <p
                         class="text-sm pb-3"
@@ -2432,11 +2432,11 @@ exports[`Listing Detail initializes Google Tag Manager for a sales listing 1`] =
                           </a>
                         </p>
                       </div>
-                      <h1
+                      <h3
                         class="text-heading-sm pb-1"
                       >
                         Office hours
-                      </h1>
+                      </h3>
                       <p
                         class="text-sm"
                       >
@@ -2491,20 +2491,20 @@ exports[`Listing Detail initializes Google Tag Manager for a sales listing 1`] =
                   <div
                     class="see-the-unit__heading"
                   >
-                    <h4
+                    <h2
                       class="text__underline-weighted"
                     >
                       See the Unit
-                    </h4>
+                    </h2>
                   </div>
                   <div
                     class="see-the-unit__subsection"
                   >
-                    <h1
+                    <h3
                       class="text-heading-md pb-3"
                     >
                       Make an appointment
-                    </h1>
+                    </h3>
                     <div>
                       <p
                         class="text-sm pb-3"
@@ -2565,11 +2565,11 @@ exports[`Listing Detail initializes Google Tag Manager for a sales listing 1`] =
                           </a>
                         </p>
                       </div>
-                      <h1
+                      <h3
                         class="text-heading-sm pb-1"
                       >
                         Office hours
-                      </h1>
+                      </h3>
                       <p
                         class="text-sm"
                       >
@@ -3703,11 +3703,11 @@ exports[`Listing Detail initializes Google Tag Manager for a sales listing 1`] =
                   <section
                     class="aside-block "
                   >
-                    <h4
+                    <h2
                       class="text__underline-weighted"
                     >
                       Lottery
-                    </h4>
+                    </h2>
                     <div
                       class="text-sm text-gray-750"
                     >
@@ -3740,11 +3740,11 @@ exports[`Listing Detail initializes Google Tag Manager for a sales listing 1`] =
                   <section
                     class="aside-block "
                   >
-                    <h4
+                    <h2
                       class="text__underline-weighted"
                     >
                       Lottery Results
-                    </h4>
+                    </h2>
                     <div
                       class="text-sm text-gray-750"
                     >
@@ -3767,11 +3767,11 @@ exports[`Listing Detail initializes Google Tag Manager for a sales listing 1`] =
                   <section
                     class="aside-block"
                   >
-                    <h4
+                    <h2
                       class="text__underline-weighted"
                     >
                       What to Expect
-                    </h4>
+                    </h2>
                     <div
                       class="text-sm text-gray-750"
                     >
@@ -3801,11 +3801,11 @@ exports[`Listing Detail initializes Google Tag Manager for a sales listing 1`] =
                   <section
                     class="aside-block "
                   >
-                    <h4
+                    <h2
                       class="text__underline-weighted"
                     >
                       Housing Program
-                    </h4>
+                    </h2>
                     <div
                       class="text-sm text-gray-750"
                     >
@@ -4141,20 +4141,20 @@ exports[`Listing Detail initializes Google Tag Manager for a sales listing 1`] =
                   <div
                     class="see-the-unit__heading"
                   >
-                    <h4
+                    <h2
                       class="text__underline-weighted"
                     >
                       See the Unit
-                    </h4>
+                    </h2>
                   </div>
                   <div
                     class="see-the-unit__subsection"
                   >
-                    <h1
+                    <h3
                       class="text-heading-md pb-3"
                     >
                       Make an appointment
-                    </h1>
+                    </h3>
                     <div>
                       <p
                         class="text-sm pb-3"
@@ -4215,11 +4215,11 @@ exports[`Listing Detail initializes Google Tag Manager for a sales listing 1`] =
                           </a>
                         </p>
                       </div>
-                      <h1
+                      <h3
                         class="text-heading-sm pb-1"
                       >
                         Office hours
-                      </h1>
+                      </h3>
                       <p
                         class="text-sm"
                       >
@@ -5391,11 +5391,11 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                     <section
                       class="aside-block "
                     >
-                      <h4
+                      <h2
                         class="text__underline-weighted"
                       >
                         Lottery
-                      </h4>
+                      </h2>
                       <div
                         class="text-sm text-gray-750"
                       >
@@ -5428,11 +5428,11 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                     <section
                       class="aside-block "
                     >
-                      <h4
+                      <h2
                         class="text__underline-weighted"
                       >
                         Lottery Results
-                      </h4>
+                      </h2>
                       <div
                         class="text-sm text-gray-750"
                       >
@@ -5455,20 +5455,20 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                     <div
                       class="see-the-unit__heading"
                     >
-                      <h4
+                      <h2
                         class="text__underline-weighted"
                       >
                         See the Unit
-                      </h4>
+                      </h2>
                     </div>
                     <div
                       class="see-the-unit__subsection"
                     >
-                      <h1
+                      <h3
                         class="text-heading-md pb-3"
                       >
                         Make an appointment
-                      </h1>
+                      </h3>
                       <div>
                         <p
                           class="text-sm pb-3"
@@ -5529,11 +5529,11 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                             </a>
                           </p>
                         </div>
-                        <h1
+                        <h3
                           class="text-heading-sm pb-1"
                         >
                           Office hours
-                        </h1>
+                        </h3>
                         <p
                           class="text-sm"
                         >
@@ -5548,11 +5548,11 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                     <section
                       class="aside-block"
                     >
-                      <h4
+                      <h2
                         class="text__underline-weighted"
                       >
                         What to Expect
-                      </h4>
+                      </h2>
                       <div
                         class="text-sm text-gray-750"
                       >
@@ -5582,11 +5582,11 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                     <section
                       class="aside-block "
                     >
-                      <h4
+                      <h2
                         class="text__underline-weighted"
                       >
                         Housing Program
-                      </h4>
+                      </h2>
                       <div
                         class="text-sm text-gray-750"
                       >
@@ -5722,11 +5722,11 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                     <section
                       class="aside-block "
                     >
-                      <h4
+                      <h2
                         class="text__underline-weighted"
                       >
                         Lottery
-                      </h4>
+                      </h2>
                       <div
                         class="text-sm text-gray-750"
                       >
@@ -5759,11 +5759,11 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                     <section
                       class="aside-block "
                     >
-                      <h4
+                      <h2
                         class="text__underline-weighted"
                       >
                         Lottery Results
-                      </h4>
+                      </h2>
                       <div
                         class="text-sm text-gray-750"
                       >
@@ -5786,11 +5786,11 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                     <section
                       class="aside-block"
                     >
-                      <h4
+                      <h2
                         class="text__underline-weighted"
                       >
                         What to Expect
-                      </h4>
+                      </h2>
                       <div
                         class="text-sm text-gray-750"
                       >
@@ -5820,11 +5820,11 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                     <section
                       class="aside-block "
                     >
-                      <h4
+                      <h2
                         class="text__underline-weighted"
                       >
                         Housing Program
-                      </h4>
+                      </h2>
                       <div
                         class="text-sm text-gray-750"
                       >
@@ -5860,11 +5860,11 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                   <section
                     class="aside-block "
                   >
-                    <h4
+                    <h2
                       class="text__underline-weighted"
                     >
                       Lottery
-                    </h4>
+                    </h2>
                     <div
                       class="text-sm text-gray-750"
                     >
@@ -5897,11 +5897,11 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                   <section
                     class="aside-block "
                   >
-                    <h4
+                    <h2
                       class="text__underline-weighted"
                     >
                       Lottery Results
-                    </h4>
+                    </h2>
                     <div
                       class="text-sm text-gray-750"
                     >
@@ -5924,11 +5924,11 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                   <section
                     class="aside-block"
                   >
-                    <h4
+                    <h2
                       class="text__underline-weighted"
                     >
                       What to Expect
-                    </h4>
+                    </h2>
                     <div
                       class="text-sm text-gray-750"
                     >
@@ -5958,11 +5958,11 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                   <section
                     class="aside-block "
                   >
-                    <h4
+                    <h2
                       class="text__underline-weighted"
                     >
                       Housing Program
-                    </h4>
+                    </h2>
                     <div
                       class="text-sm text-gray-750"
                     >
@@ -6039,11 +6039,11 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                   <section
                     class="aside-block "
                   >
-                    <h4
+                    <h2
                       class="text__underline-weighted"
                     >
                       Lottery
-                    </h4>
+                    </h2>
                     <div
                       class="text-sm text-gray-750"
                     >
@@ -6076,11 +6076,11 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                   <section
                     class="aside-block "
                   >
-                    <h4
+                    <h2
                       class="text__underline-weighted"
                     >
                       Lottery Results
-                    </h4>
+                    </h2>
                     <div
                       class="text-sm text-gray-750"
                     >
@@ -6103,11 +6103,11 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                   <section
                     class="aside-block"
                   >
-                    <h4
+                    <h2
                       class="text__underline-weighted"
                     >
                       What to Expect
-                    </h4>
+                    </h2>
                     <div
                       class="text-sm text-gray-750"
                     >
@@ -6137,11 +6137,11 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                   <section
                     class="aside-block "
                   >
-                    <h4
+                    <h2
                       class="text__underline-weighted"
                     >
                       Housing Program
-                    </h4>
+                    </h2>
                     <div
                       class="text-sm text-gray-750"
                     >
@@ -7084,20 +7084,20 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                     <div
                       class="see-the-unit__heading"
                     >
-                      <h4
+                      <h2
                         class="text__underline-weighted"
                       >
                         See the Unit
-                      </h4>
+                      </h2>
                     </div>
                     <div
                       class="see-the-unit__subsection"
                     >
-                      <h1
+                      <h3
                         class="text-heading-md pb-3"
                       >
                         Make an appointment
-                      </h1>
+                      </h3>
                       <div>
                         <p
                           class="text-sm pb-3"
@@ -7158,11 +7158,11 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                             </a>
                           </p>
                         </div>
-                        <h1
+                        <h3
                           class="text-heading-sm pb-1"
                         >
                           Office hours
-                        </h1>
+                        </h3>
                         <p
                           class="text-sm"
                         >
@@ -7178,20 +7178,20 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                   <div
                     class="see-the-unit__heading"
                   >
-                    <h4
+                    <h2
                       class="text__underline-weighted"
                     >
                       See the Unit
-                    </h4>
+                    </h2>
                   </div>
                   <div
                     class="see-the-unit__subsection"
                   >
-                    <h1
+                    <h3
                       class="text-heading-md pb-3"
                     >
                       Make an appointment
-                    </h1>
+                    </h3>
                     <div>
                       <p
                         class="text-sm pb-3"
@@ -7252,11 +7252,11 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                           </a>
                         </p>
                       </div>
-                      <h1
+                      <h3
                         class="text-heading-sm pb-1"
                       >
                         Office hours
-                      </h1>
+                      </h3>
                       <p
                         class="text-sm"
                       >
@@ -7311,20 +7311,20 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                   <div
                     class="see-the-unit__heading"
                   >
-                    <h4
+                    <h2
                       class="text__underline-weighted"
                     >
                       See the Unit
-                    </h4>
+                    </h2>
                   </div>
                   <div
                     class="see-the-unit__subsection"
                   >
-                    <h1
+                    <h3
                       class="text-heading-md pb-3"
                     >
                       Make an appointment
-                    </h1>
+                    </h3>
                     <div>
                       <p
                         class="text-sm pb-3"
@@ -7385,11 +7385,11 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                           </a>
                         </p>
                       </div>
-                      <h1
+                      <h3
                         class="text-heading-sm pb-1"
                       >
                         Office hours
-                      </h1>
+                      </h3>
                       <p
                         class="text-sm"
                       >
@@ -8523,11 +8523,11 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                   <section
                     class="aside-block "
                   >
-                    <h4
+                    <h2
                       class="text__underline-weighted"
                     >
                       Lottery
-                    </h4>
+                    </h2>
                     <div
                       class="text-sm text-gray-750"
                     >
@@ -8560,11 +8560,11 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                   <section
                     class="aside-block "
                   >
-                    <h4
+                    <h2
                       class="text__underline-weighted"
                     >
                       Lottery Results
-                    </h4>
+                    </h2>
                     <div
                       class="text-sm text-gray-750"
                     >
@@ -8587,11 +8587,11 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                   <section
                     class="aside-block"
                   >
-                    <h4
+                    <h2
                       class="text__underline-weighted"
                     >
                       What to Expect
-                    </h4>
+                    </h2>
                     <div
                       class="text-sm text-gray-750"
                     >
@@ -8621,11 +8621,11 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                   <section
                     class="aside-block "
                   >
-                    <h4
+                    <h2
                       class="text__underline-weighted"
                     >
                       Housing Program
-                    </h4>
+                    </h2>
                     <div
                       class="text-sm text-gray-750"
                     >
@@ -8961,20 +8961,20 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                   <div
                     class="see-the-unit__heading"
                   >
-                    <h4
+                    <h2
                       class="text__underline-weighted"
                     >
                       See the Unit
-                    </h4>
+                    </h2>
                   </div>
                   <div
                     class="see-the-unit__subsection"
                   >
-                    <h1
+                    <h3
                       class="text-heading-md pb-3"
                     >
                       Make an appointment
-                    </h1>
+                    </h3>
                     <div>
                       <p
                         class="text-sm pb-3"
@@ -9035,11 +9035,11 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                           </a>
                         </p>
                       </div>
-                      <h1
+                      <h3
                         class="text-heading-sm pb-1"
                       >
                         Office hours
-                      </h1>
+                      </h3>
                       <p
                         class="text-sm"
                       >
@@ -10091,11 +10091,11 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                     <section
                       class="aside-block "
                     >
-                      <h4
+                      <h2
                         class="text__underline-weighted"
                       >
                         Lottery
-                      </h4>
+                      </h2>
                       <div
                         class="text-sm text-gray-750"
                       >
@@ -10146,11 +10146,11 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                     <section
                       class="aside-block "
                     >
-                      <h4
+                      <h2
                         class="text__underline-weighted"
                       >
                         Lottery Results
-                      </h4>
+                      </h2>
                       <div
                         class="text-sm text-gray-750"
                       >
@@ -10222,11 +10222,11 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                     <section
                       class="aside-block"
                     >
-                      <h4
+                      <h2
                         class="text__underline-weighted"
                       >
                         What to Expect
-                      </h4>
+                      </h2>
                       <div
                         class="text-sm text-gray-750"
                       >
@@ -10372,11 +10372,11 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                     <section
                       class="aside-block "
                     >
-                      <h4
+                      <h2
                         class="text__underline-weighted"
                       >
                         Lottery
-                      </h4>
+                      </h2>
                       <div
                         class="text-sm text-gray-750"
                       >
@@ -10427,11 +10427,11 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                     <section
                       class="aside-block "
                     >
-                      <h4
+                      <h2
                         class="text__underline-weighted"
                       >
                         Lottery Results
-                      </h4>
+                      </h2>
                       <div
                         class="text-sm text-gray-750"
                       >
@@ -10503,11 +10503,11 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                     <section
                       class="aside-block"
                     >
-                      <h4
+                      <h2
                         class="text__underline-weighted"
                       >
                         What to Expect
-                      </h4>
+                      </h2>
                       <div
                         class="text-sm text-gray-750"
                       >
@@ -10553,11 +10553,11 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                   <section
                     class="aside-block "
                   >
-                    <h4
+                    <h2
                       class="text__underline-weighted"
                     >
                       Lottery
-                    </h4>
+                    </h2>
                     <div
                       class="text-sm text-gray-750"
                     >
@@ -10608,11 +10608,11 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                   <section
                     class="aside-block "
                   >
-                    <h4
+                    <h2
                       class="text__underline-weighted"
                     >
                       Lottery Results
-                    </h4>
+                    </h2>
                     <div
                       class="text-sm text-gray-750"
                     >
@@ -10684,11 +10684,11 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                   <section
                     class="aside-block"
                   >
-                    <h4
+                    <h2
                       class="text__underline-weighted"
                     >
                       What to Expect
-                    </h4>
+                    </h2>
                     <div
                       class="text-sm text-gray-750"
                     >
@@ -10775,11 +10775,11 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                   <section
                     class="aside-block "
                   >
-                    <h4
+                    <h2
                       class="text__underline-weighted"
                     >
                       Lottery
-                    </h4>
+                    </h2>
                     <div
                       class="text-sm text-gray-750"
                     >
@@ -10830,11 +10830,11 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                   <section
                     class="aside-block "
                   >
-                    <h4
+                    <h2
                       class="text__underline-weighted"
                     >
                       Lottery Results
-                    </h4>
+                    </h2>
                     <div
                       class="text-sm text-gray-750"
                     >
@@ -10906,11 +10906,11 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                   <section
                     class="aside-block"
                   >
-                    <h4
+                    <h2
                       class="text__underline-weighted"
                     >
                       What to Expect
-                    </h4>
+                    </h2>
                     <div
                       class="text-sm text-gray-750"
                     >
@@ -13376,11 +13376,11 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                   <section
                     class="aside-block "
                   >
-                    <h4
+                    <h2
                       class="text__underline-weighted"
                     >
                       Lottery
-                    </h4>
+                    </h2>
                     <div
                       class="text-sm text-gray-750"
                     >
@@ -13431,11 +13431,11 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                   <section
                     class="aside-block "
                   >
-                    <h4
+                    <h2
                       class="text__underline-weighted"
                     >
                       Lottery Results
-                    </h4>
+                    </h2>
                     <div
                       class="text-sm text-gray-750"
                     >
@@ -13507,11 +13507,11 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                   <section
                     class="aside-block"
                   >
-                    <h4
+                    <h2
                       class="text__underline-weighted"
                     >
                       What to Expect
-                    </h4>
+                    </h2>
                     <div
                       class="text-sm text-gray-750"
                     >
@@ -15014,11 +15014,11 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                     <section
                       class="aside-block "
                     >
-                      <h4
+                      <h2
                         class="text__underline-weighted"
                       >
                         Lottery
-                      </h4>
+                      </h2>
                       <div
                         class="text-sm text-gray-750"
                       >
@@ -15062,11 +15062,11 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                     <section
                       class="aside-block "
                     >
-                      <h4
+                      <h2
                         class="text__underline-weighted"
                       >
                         Lottery Results
-                      </h4>
+                      </h2>
                       <div
                         class="text-sm text-gray-750"
                       >
@@ -15089,11 +15089,11 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                     <section
                       class="aside-block"
                     >
-                      <h4
+                      <h2
                         class="text__underline-weighted"
                       >
                         What to Expect
-                      </h4>
+                      </h2>
                       <div
                         class="text-sm text-gray-750"
                       >
@@ -15123,11 +15123,11 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                     <section
                       class="aside-block "
                     >
-                      <h4
+                      <h2
                         class="text__underline-weighted"
                       >
                         Confirmed Neighborhood Resident Housing Preference (NRHP) List
-                      </h4>
+                      </h2>
                       <div
                         class="text-sm text-gray-750"
                       >
@@ -15152,11 +15152,11 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                     <section
                       class="aside-block"
                     >
-                      <h4
+                      <h2
                         class="text__underline-weighted"
                       >
                         Contact
-                      </h4>
+                      </h2>
                       <p
                         class="text-xl"
                       >
@@ -15361,11 +15361,11 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                     <section
                       class="aside-block "
                     >
-                      <h4
+                      <h2
                         class="text__underline-weighted"
                       >
                         Lottery
-                      </h4>
+                      </h2>
                       <div
                         class="text-sm text-gray-750"
                       >
@@ -15409,11 +15409,11 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                     <section
                       class="aside-block "
                     >
-                      <h4
+                      <h2
                         class="text__underline-weighted"
                       >
                         Lottery Results
-                      </h4>
+                      </h2>
                       <div
                         class="text-sm text-gray-750"
                       >
@@ -15436,11 +15436,11 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                     <section
                       class="aside-block"
                     >
-                      <h4
+                      <h2
                         class="text__underline-weighted"
                       >
                         What to Expect
-                      </h4>
+                      </h2>
                       <div
                         class="text-sm text-gray-750"
                       >
@@ -15470,11 +15470,11 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                     <section
                       class="aside-block"
                     >
-                      <h4
+                      <h2
                         class="text__underline-weighted"
                       >
                         Contact
-                      </h4>
+                      </h2>
                       <p
                         class="text-xl"
                       >
@@ -15579,11 +15579,11 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                   <section
                     class="aside-block "
                   >
-                    <h4
+                    <h2
                       class="text__underline-weighted"
                     >
                       Lottery
-                    </h4>
+                    </h2>
                     <div
                       class="text-sm text-gray-750"
                     >
@@ -15627,11 +15627,11 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                   <section
                     class="aside-block "
                   >
-                    <h4
+                    <h2
                       class="text__underline-weighted"
                     >
                       Lottery Results
-                    </h4>
+                    </h2>
                     <div
                       class="text-sm text-gray-750"
                     >
@@ -15654,11 +15654,11 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                   <section
                     class="aside-block"
                   >
-                    <h4
+                    <h2
                       class="text__underline-weighted"
                     >
                       What to Expect
-                    </h4>
+                    </h2>
                     <div
                       class="text-sm text-gray-750"
                     >
@@ -15688,11 +15688,11 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                   <section
                     class="aside-block"
                   >
-                    <h4
+                    <h2
                       class="text__underline-weighted"
                     >
                       Contact
-                    </h4>
+                    </h2>
                     <p
                       class="text-xl"
                     >
@@ -15838,11 +15838,11 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                   <section
                     class="aside-block "
                   >
-                    <h4
+                    <h2
                       class="text__underline-weighted"
                     >
                       Lottery
-                    </h4>
+                    </h2>
                     <div
                       class="text-sm text-gray-750"
                     >
@@ -15886,11 +15886,11 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                   <section
                     class="aside-block "
                   >
-                    <h4
+                    <h2
                       class="text__underline-weighted"
                     >
                       Lottery Results
-                    </h4>
+                    </h2>
                     <div
                       class="text-sm text-gray-750"
                     >
@@ -15913,11 +15913,11 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                   <section
                     class="aside-block"
                   >
-                    <h4
+                    <h2
                       class="text__underline-weighted"
                     >
                       What to Expect
-                    </h4>
+                    </h2>
                     <div
                       class="text-sm text-gray-750"
                     >
@@ -15947,11 +15947,11 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                   <section
                     class="aside-block"
                   >
-                    <h4
+                    <h2
                       class="text__underline-weighted"
                     >
                       Contact
-                    </h4>
+                    </h2>
                     <p
                       class="text-xl"
                     >
@@ -19531,11 +19531,11 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                   <section
                     class="aside-block "
                   >
-                    <h4
+                    <h2
                       class="text__underline-weighted"
                     >
                       Lottery
-                    </h4>
+                    </h2>
                     <div
                       class="text-sm text-gray-750"
                     >
@@ -19579,11 +19579,11 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                   <section
                     class="aside-block "
                   >
-                    <h4
+                    <h2
                       class="text__underline-weighted"
                     >
                       Lottery Results
-                    </h4>
+                    </h2>
                     <div
                       class="text-sm text-gray-750"
                     >
@@ -19606,11 +19606,11 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                   <section
                     class="aside-block"
                   >
-                    <h4
+                    <h2
                       class="text__underline-weighted"
                     >
                       What to Expect
-                    </h4>
+                    </h2>
                     <div
                       class="text-sm text-gray-750"
                     >
@@ -19640,11 +19640,11 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                   <section
                     class="aside-block"
                   >
-                    <h4
+                    <h2
                       class="text__underline-weighted"
                     >
                       Contact
-                    </h4>
+                    </h2>
                     <p
                       class="text-xl"
                     >

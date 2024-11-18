@@ -38,7 +38,7 @@ export const ListingDetailsAside = ({ listing, imageSrc }: ListingDetailsSidebar
   const { unleashFlag: isSalesFcfsEnabled } = useFeatureFlag("FCFS", false)
 
   const expectedMoveInDateBlock = (
-    <SidebarBlock title={t("listings.expectedMoveinDate")}>
+    <SidebarBlock title={t("listings.expectedMoveinDate")} priority={2}>
       {localizedFormat(listing.Expected_Move_in_Date, "MMMM YYYY")}
     </SidebarBlock>
   )
