@@ -911,6 +911,7 @@
   "listingDetails.applicationsDeadline.withDateTime": "Application deadline: %{date} at %{time} Pacific Time",
   "listingDetails.applicationsOpen": "Applications open",
   "listingDetails.applicationsOpen.withDateTime": "Applications open: %{date} at %{time} Pacific Time",
+  "listingDetails.sales.aside.needHelp": "Housing counselors can help with your application. Support is available in many languages.",
   "listingDirectory.listingStatusContent.applicationDeadline": "Application deadline",
   "listingDirectory.listingStatusContent.applicationsClosed": "Applications closed",
   "listingDirectory.listingStatusContent.applicationsOpen": "Applications open",

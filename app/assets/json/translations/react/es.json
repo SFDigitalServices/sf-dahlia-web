@@ -912,6 +912,7 @@
   "listingDetails.applicationsDeadline.withDateTime": "Fecha límite de solicitud: %{date} a las %{time} hora del Pacífico",
   "listingDetails.applicationsOpen": "Plazo de presentación de solicitudes vigente",
   "listingDetails.applicationsOpen.withDateTime": "Las solicitudes se abren: %{date} a las %{time} hora del Pacífico",
+  "listingDetails.sales.aside.needHelp": "Los asesores de vivienda pueden ayudarle con su solicitud. El soporte está disponible en muchos idiomas.",
   "listingDirectory.listingStatusContent.applicationDeadline": "Plazo para presentar la solicitud",
   "listingDirectory.listingStatusContent.applicationDeadline.withDateTime": "Fecha límite de solicitud: %{date} a las %{time}",
   "listingDirectory.listingStatusContent.applicationsClosed": "La recepción de solicitudes ha finalizado",

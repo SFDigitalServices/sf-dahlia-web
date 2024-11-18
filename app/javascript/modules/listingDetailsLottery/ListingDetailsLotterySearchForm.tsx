@@ -90,7 +90,10 @@ export const ListingDetailsLotterySearchForm = ({
           isEducatorOne={isEducatorOne(listing)}
         />
       ) : (
-        <ListingDetailsLotteryPreferences lotteryBucketsDetails={lotteryBucketDetails} />
+        <ListingDetailsLotteryPreferences
+          lotteryBucketsDetails={lotteryBucketDetails}
+          machineTranslations={listing.translations}
+        />
       )
       break
     }

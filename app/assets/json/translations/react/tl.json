@@ -912,6 +912,7 @@
   "listingDetails.applicationsDeadline.withDateTime": "Deadline ng aplikasyon: %{date} nang %{time} Pacific Time",
   "listingDetails.applicationsOpen": "Bukas ang Mga Aplikasyon",
   "listingDetails.applicationsOpen.withDateTime": "Bukas ang mga aplikasyon: %{date} nang %{time} Pacific Time",
+  "listingDetails.sales.aside.needHelp": "Makakatulong ang mga tagapayo sa pabahay sa iyong aplikasyon. Ang suporta sa maraming mga wika ay available.",
   "listingDirectory.listingStatusContent.applicationDeadline": "Deadline ng aplikasyon",
   "listingDirectory.listingStatusContent.applicationDeadline.withDateTime": "Deadline ng aplikasyon: %{date} sa %{time}",
   "listingDirectory.listingStatusContent.applicationsClosed": "Sarado ang mga aplikasyon",

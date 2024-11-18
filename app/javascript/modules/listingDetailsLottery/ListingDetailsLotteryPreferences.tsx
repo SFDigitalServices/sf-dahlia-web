@@ -1,15 +1,18 @@
 import React from "react"
 import { Heading, t } from "@bloom-housing/ui-components"
 import type { RailsLotteryResult } from "../../api/types/rails/listings/RailsLotteryResult"
-import { defaultIfNotTranslated, renderMarkup } from "../../util/languageUtil"
+import { defaultOrMachineTranslationIfNotTranslated, renderMarkup } from "../../util/languageUtil"
 import { LOTTERY_RANKING_VIDEO_URL } from "../constants"
+import { RailsTranslations } from "../../api/types/rails/listings/RailsTranslation"
 
 export interface ListingDetailsLotteryPreferencesProps {
   lotteryBucketsDetails: RailsLotteryResult
+  machineTranslations: RailsTranslations
 }
 
 export const ListingDetailsLotteryPreferences = ({
   lotteryBucketsDetails,
+  machineTranslations,
 }: ListingDetailsLotteryPreferencesProps) => {
   return (
     <div className="text-sm">
@@ -39,7 +42,8 @@ export const ListingDetailsLotteryPreferences = ({
                 className="font-sans font-semibold text-xs tracking-wide uppercase"
                 priority={3}
               >
-                {defaultIfNotTranslated(
+                {defaultOrMachineTranslationIfNotTranslated(
+                  machineTranslations,
                   `listings.lotteryPreference.${bucket.preferenceName}.title`,
                   bucket.preferenceName
                 )}

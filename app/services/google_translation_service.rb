@@ -4,8 +4,6 @@ require 'google/cloud/translate/v2'
 class GoogleTranslationService
   class TranslationError < StandardError; end
 
-  MAX_TRANSLATION_LOG_LENGTH = 128
-
   def initialize
     google_translation_logger('Connecting to Google Cloud Translate...')
     @translate = Google::Cloud::Translate::V2.new(

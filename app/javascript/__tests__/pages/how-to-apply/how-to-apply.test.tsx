@@ -4,6 +4,7 @@ import { renderAndLoadAsync } from "../../__util__/renderUtils"
 import HowToApply, { LeasingAgentBox } from "../../../pages/howToApply/how-to-apply"
 import { notYetOpenSaleFcfsListing } from "../../data/RailsSaleListing/listing-sale-fcfs-not-yet-open"
 import { fcfsSaleListing } from "../../data/RailsSaleListing/listing-sale-fcfs"
+import { openFcfsSaleListing } from "../../data/RailsSaleListing/listing-sale-fcfs-open"
 import { localizedFormat, formatTimeOfDay } from "../../../util/languageUtil"
 
 const axios = require("axios")
@@ -28,6 +29,20 @@ describe("<HowToApply />", () => {
     axios.get.mockResolvedValue({ data: { listing: fcfsSaleListing } })
     const { asFragment } = await renderAndLoadAsync(<HowToApply assetPaths={{}} />)
     expect(asFragment()).toMatchSnapshot()
+  })
+
+  it("shows 'SUBMIT APPLICATION' button if URL is present", async () => {
+    process.env.FCFS_FORMASSEMBLY_URL = "https://www.test.com"
+    axios.get.mockResolvedValue({ data: { listing: openFcfsSaleListing } })
+    const { queryByText } = await renderAndLoadAsync(<HowToApply assetPaths={{}} />)
+    expect(queryByText("Submit application")).not.toBeNull()
+  })
+
+  it("does not show 'SUBMIT APPLICATION' button if URL is missing", async () => {
+    process.env.FCFS_FORMASSEMBLY_URL = undefined
+    axios.get.mockResolvedValue({ data: { listing: openFcfsSaleListing } })
+    const { queryByText } = await renderAndLoadAsync(<HowToApply assetPaths={{}} />)
+    expect(queryByText("Submit application")).toBeNull()
   })
 
   it("shows the correct header text", async () => {
