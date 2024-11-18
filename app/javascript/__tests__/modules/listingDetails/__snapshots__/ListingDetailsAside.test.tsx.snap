@@ -167,11 +167,11 @@ exports[`ListingDetailsAside renders ListingDetailsAside component fcfs 1`] = `
             <section
               class="aside-block fcfs-bmr-how-to-apply"
             >
-              <h4
+              <h2
                 class="text__underline-weighted"
               >
                 How to Apply
-              </h4>
+              </h2>
               <div
                 class="text-sm text-gray-750"
               >
@@ -208,20 +208,20 @@ exports[`ListingDetailsAside renders ListingDetailsAside component fcfs 1`] = `
             <div
               class="see-the-unit__heading"
             >
-              <h4
+              <h2
                 class="text__underline-weighted"
               >
                 See the Unit
-              </h4>
+              </h2>
             </div>
             <div
               class="see-the-unit__subsection"
             >
-              <h1
+              <h3
                 class="text-heading-md pb-3"
               >
                 Open houses
-              </h1>
+              </h3>
               <div>
                 <div
                   class="open-houses"
@@ -303,11 +303,11 @@ exports[`ListingDetailsAside renders ListingDetailsAside component fcfs 1`] = `
             <div
               class="see-the-unit__subsection"
             >
-              <h1
+              <h3
                 class="text-heading-md pb-3"
               >
                 See details online
-              </h1>
+              </h3>
               <div>
                 <div
                   class="flex-row space-y-1"
@@ -326,11 +326,11 @@ exports[`ListingDetailsAside renders ListingDetailsAside component fcfs 1`] = `
             <div
               class="see-the-unit__subsection"
             >
-              <h1
+              <h3
                 class="text-heading-md pb-3"
               >
                 Make an appointment
-              </h1>
+              </h3>
               <div>
                 <p
                   class="text-sm pb-3"
@@ -398,11 +398,11 @@ exports[`ListingDetailsAside renders ListingDetailsAside component fcfs 1`] = `
                     </a>
                   </p>
                 </div>
-                <h1
+                <h3
                   class="text-heading-sm pb-1"
                 >
                   Office hours
-                </h1>
+                </h3>
                 <p
                   class="text-sm"
                 >
@@ -425,11 +425,11 @@ exports[`ListingDetailsAside renders ListingDetailsAside component fcfs 1`] = `
             <section
               class="aside-block listing-details-need-help"
             >
-              <h4
+              <h2
                 class="text__underline-weighted"
               >
                 Need Help?
-              </h4>
+              </h2>
               <div
                 class="text-sm text-gray-750"
               >
@@ -451,11 +451,11 @@ exports[`ListingDetailsAside renders ListingDetailsAside component fcfs 1`] = `
           <section
             class="aside-block "
           >
-            <h4
+            <h2
               class="text__underline-weighted"
             >
               Expected move-in date
-            </h4>
+            </h2>
             <div
               class="text-sm text-gray-750"
             >
@@ -468,11 +468,11 @@ exports[`ListingDetailsAside renders ListingDetailsAside component fcfs 1`] = `
             <section
               class="aside-block "
             >
-              <h4
+              <h2
                 class="text__underline-weighted"
               >
                 Housing Program
-              </h4>
+              </h2>
               <div
                 class="text-sm text-gray-750"
               >
@@ -595,11 +595,11 @@ exports[`ListingDetailsAside renders ListingDetailsAside component rental 1`] = 
             <section
               class="aside-block "
             >
-              <h4
+              <h2
                 class="text__underline-weighted"
               >
                 Lottery
-              </h4>
+              </h2>
               <div
                 class="text-sm text-gray-750"
               >
@@ -650,11 +650,11 @@ exports[`ListingDetailsAside renders ListingDetailsAside component rental 1`] = 
             <section
               class="aside-block "
             >
-              <h4
+              <h2
                 class="text__underline-weighted"
               >
                 Lottery Results
-              </h4>
+              </h2>
               <div
                 class="text-sm text-gray-750"
               >
@@ -726,11 +726,11 @@ exports[`ListingDetailsAside renders ListingDetailsAside component rental 1`] = 
             <section
               class="aside-block"
             >
-              <h4
+              <h2
                 class="text__underline-weighted"
               >
                 What to Expect
-              </h4>
+              </h2>
               <div
                 class="text-sm text-gray-750"
               >
@@ -897,11 +897,11 @@ exports[`ListingDetailsAside renders ListingDetailsAside component sales 1`] = `
             <section
               class="aside-block "
             >
-              <h4
+              <h2
                 class="text__underline-weighted"
               >
                 How to Apply
-              </h4>
+              </h2>
               <div
                 class="text-sm text-gray-750"
               >
@@ -940,20 +940,20 @@ exports[`ListingDetailsAside renders ListingDetailsAside component sales 1`] = `
             <div
               class="see-the-unit__heading"
             >
-              <h4
+              <h2
                 class="text__underline-weighted"
               >
                 See the Unit
-              </h4>
+              </h2>
             </div>
             <div
               class="see-the-unit__subsection"
             >
-              <h1
+              <h3
                 class="text-heading-md pb-3"
               >
                 Open houses
-              </h1>
+              </h3>
               <div>
                 <div
                   class="open-houses"
@@ -1035,11 +1035,11 @@ exports[`ListingDetailsAside renders ListingDetailsAside component sales 1`] = `
             <div
               class="see-the-unit__subsection"
             >
-              <h1
+              <h3
                 class="text-heading-md pb-3"
               >
                 See details online
-              </h1>
+              </h3>
               <div>
                 <div
                   class="flex-row space-y-1"
@@ -1058,11 +1058,11 @@ exports[`ListingDetailsAside renders ListingDetailsAside component sales 1`] = `
             <div
               class="see-the-unit__subsection"
             >
-              <h1
+              <h3
                 class="text-heading-md pb-3"
               >
                 Make an appointment
-              </h1>
+              </h3>
               <div>
                 <p
                   class="text-sm pb-3"
@@ -1130,11 +1130,11 @@ exports[`ListingDetailsAside renders ListingDetailsAside component sales 1`] = `
                     </a>
                   </p>
                 </div>
-                <h1
+                <h3
                   class="text-heading-sm pb-1"
                 >
                   Office hours
-                </h1>
+                </h3>
                 <p
                   class="text-sm"
                 >
@@ -1157,11 +1157,11 @@ exports[`ListingDetailsAside renders ListingDetailsAside component sales 1`] = `
             <section
               class="aside-block listing-details-need-help"
             >
-              <h4
+              <h2
                 class="text__underline-weighted"
               >
                 Need Help?
-              </h4>
+              </h2>
               <div
                 class="text-sm text-gray-750"
               >
@@ -1183,11 +1183,11 @@ exports[`ListingDetailsAside renders ListingDetailsAside component sales 1`] = `
           <section
             class="aside-block "
           >
-            <h4
+            <h2
               class="text__underline-weighted"
             >
               Expected move-in date
-            </h4>
+            </h2>
             <div
               class="text-sm text-gray-750"
             >
@@ -1200,11 +1200,11 @@ exports[`ListingDetailsAside renders ListingDetailsAside component sales 1`] = `
             <section
               class="aside-block"
             >
-              <h4
+              <h2
                 class="text__underline-weighted"
               >
                 What to Expect
-              </h4>
+              </h2>
               <div
                 class="text-sm text-gray-750"
               >
@@ -1234,11 +1234,11 @@ exports[`ListingDetailsAside renders ListingDetailsAside component sales 1`] = `
             <section
               class="aside-block "
             >
-              <h4
+              <h2
                 class="text__underline-weighted"
               >
                 Housing Program
-              </h4>
+              </h2>
               <div
                 class="text-sm text-gray-750"
               >

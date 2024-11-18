@@ -10,6 +10,7 @@ const GetHelpSidebarBlock = () => (
   <SidebarBlock
     className="w-full md:w-1/3 md:max-w-xs text-gray-950 md:border-l border-t md:border-t-0 border-gray-450 border-b-0 p-6 mx-0"
     title={t("listings.apply.needHelp")}
+    priority={2}
   >
     <HousingCounselorHelp />
     <LinkButton
