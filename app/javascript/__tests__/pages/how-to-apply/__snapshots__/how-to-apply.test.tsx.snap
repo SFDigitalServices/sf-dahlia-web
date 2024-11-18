@@ -691,6 +691,7 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
                       </span>
                     </div>
                     <a
+                      aria-label="Learn more about how it works to apply"
                       class="underline"
                       href="https://www.sf.gov/node/14246"
                       target="_blank"
