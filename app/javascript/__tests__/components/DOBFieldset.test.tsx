@@ -10,7 +10,7 @@ import { ExpandedAccountAxiosError, getErrorMessage } from "../../pages/account/
 
 describe("DOBFieldset", () => {
   describe("deduplicateDOBErrors", () => {
-    test("should consolidate errors with the same message", () => {
+    it("should consolidate errors with the same message", () => {
       const errors: DeepMap<DOBFieldValues, FieldError> = {
         birthDay: {
           message: "error:dob:missing",
@@ -38,7 +38,7 @@ describe("DOBFieldset", () => {
       expect(result.birthDay.type).toBe("required")
     })
 
-    test("should handle cases with unique messages", () => {
+    it("should handle cases with unique messages", () => {
       const errors: DeepMap<DOBFieldValues, FieldError> = {
         birthDay: {
           message: "error:dob:missing",
@@ -65,7 +65,7 @@ describe("DOBFieldset", () => {
       expect(result.birthYear).toBeDefined()
     })
 
-    test("should return an empty object when no errors are passed", () => {
+    it("should return an empty object when no errors are passed", () => {
       const errors: DeepMap<DOBFieldValues, FieldError> = {}
 
       const result = deduplicateDOBErrors(errors)
@@ -75,7 +75,7 @@ describe("DOBFieldset", () => {
   })
 
   describe("handleDOBServerErrors", () => {
-    test("sets age error for 422 status", () => {
+    it("sets age error for 422 status", () => {
       const error = {
         response: {
           status: 422,
@@ -94,7 +94,7 @@ describe("DOBFieldset", () => {
       ])
     })
 
-    test("sets generic error for non-422 status", () => {
+    it("sets generic error for non-422 status", () => {
       const error = {
         response: {
           status: 500,
@@ -158,7 +158,7 @@ describe("DOBFieldset", () => {
     ]
 
     testCases.forEach(({ key, abbreviated, expected }) => {
-      test(`returns correct error message for ${key} with abbreviated=${abbreviated}`, () => {
+      it(`returns correct error message for ${key} with abbreviated=${abbreviated}`, () => {
         expect(getErrorMessage(key, dobFieldsetErrors, abbreviated)).toBe(t(expected))
       })
     })
