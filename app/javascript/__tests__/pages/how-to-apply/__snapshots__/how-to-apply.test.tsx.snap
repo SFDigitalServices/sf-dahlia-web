@@ -296,7 +296,7 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
                       class="py-10"
                     >
                       <h2
-                        class="text-2xl font-alt-serif"
+                        class="text-2xl mb-0 font-alt-serif"
                       >
                         How long it takes
                       </h2>
@@ -317,7 +317,7 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
                       class="pb-10"
                     >
                       <h2
-                        class="text-2xl font-alt-serif"
+                        class="text-2xl mb-0 font-alt-serif"
                       >
                         Before you start
                       </h2>
@@ -398,7 +398,7 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
                       </div>
                     </div>
                     <h2
-                      class="text-2xl font-alt-serif"
+                      class="text-2xl mb-0 font-alt-serif"
                     >
                       Apply to
                     </h2>
@@ -664,7 +664,7 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
                       </ol>
                     </div>
                     <h2
-                      class="text-2xl font-alt-serif"
+                      class="text-2xl mb-0 font-alt-serif"
                     >
                       What happens next
                     </h2>
