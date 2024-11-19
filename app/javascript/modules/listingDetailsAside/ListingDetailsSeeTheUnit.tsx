@@ -81,7 +81,7 @@ export const ListingDetailsSeeTheUnit = ({ listing }: SeeTheUnitProps) => {
         SeeDetailsOnline(listing)}
       <SeeTheUnitSubsection title={t("seeTheUnit.makeAnAppointment")}>
         <p className="text-sm pb-3">{t("seeTheUnit.requestATour")}</p>
-        <p>{listing.Leasing_Agent_Name}</p>
+        <p className="notranslate">{listing.Leasing_Agent_Name}</p>
         <p className="text-gray-700 text-sm">
           {getTranslatedString(
             listing.Leasing_Agent_Title,
