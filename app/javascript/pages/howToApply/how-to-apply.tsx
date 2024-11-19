@@ -51,7 +51,7 @@ const applicationsOpen = (listing: RailsSaleListing) =>
   listing && getFcfsSalesListingState(listing) === ListingState.Open
 
 const Header = ({ headerText }: { headerText: string }) => {
-  return <h2 className="text-2xl font-alt-serif">{headerText}</h2>
+  return <h2 className="text-2xl mb-0 font-alt-serif">{headerText}</h2>
 }
 
 const SubHeader = ({ subHeaderText }: { subHeaderText: string }) => {
