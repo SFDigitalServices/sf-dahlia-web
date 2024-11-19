@@ -1451,6 +1451,7 @@
   "pageTitle.getAssistance": "Get Assistance",
   "pageTitle.housingCounselors": "Housing Counselors",
   "pageTitle.howToApply": "Apply to",
+  "pageTitle.howToApply.lowercase": "How to apply",
   "pageTitle.listingApplication": "%{listing} Application",
   "pageTitle.myAccount": "My Account",
   "pageTitle.myApplications": "My Applications",

@@ -368,7 +368,7 @@ const SubmitApplicationStep = ({ listing }: { listing: RailsSaleListing }) => {
 const HowToApplySection = ({ listing }: { listing: RailsSaleListing }) => {
   return (
     <>
-      <Header headerText={t("pageTitle.howToApply")} />
+      <Header headerText={t("pageTitle.howToApply.lowercase")} />
       <div className="pt-4" id="HowToApplySection">
         <ol className="process-list">
           <FillOutPdfAppStep />

@@ -400,7 +400,7 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
                     <h2
                       class="text-2xl mb-0 font-alt-serif"
                     >
-                      Apply to
+                      How to apply
                     </h2>
                     <div
                       class="pt-4"
