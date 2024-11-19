@@ -51,11 +51,15 @@ const applicationsOpen = (listing: RailsSaleListing) =>
   listing && getFcfsSalesListingState(listing) === ListingState.Open
 
 const Header = ({ headerText }: { headerText: string }) => {
-  return <h2 className="text-2xl font-alt-serif">{headerText}</h2>
+  return <h2 className="text-2xl mb-0 font-alt-serif">{headerText}</h2>
 }
 
 const SubHeader = ({ subHeaderText }: { subHeaderText: string }) => {
-  return <h3 className="font-semibold font-alt-sans pt-6 pb-4">{subHeaderText}</h3>
+  return (
+    <Heading size="xl" className="font-semibold font-alt-sans pt-6 pb-4" priority={3}>
+      {subHeaderText}
+    </Heading>
+  )
 }
 
 const InfoBox = ({ title, children }: { title: string; children: ReactNode }) => {
@@ -229,7 +233,9 @@ const HowToApplyListItem = ({
 }) => {
   return (
     <li>
-      <h3 className="font-semibold font-alt-sans pb-4">{headerText}</h3>
+      <Heading priority={3} size="xl" className="font-semibold font-alt-sans pb-4">
+        {headerText}
+      </Heading>
       <div className="text-base">{children}</div>
     </li>
   )

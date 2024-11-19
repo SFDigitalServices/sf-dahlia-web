@@ -296,18 +296,18 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
                       class="py-10"
                     >
                       <h2
-                        class="text-2xl font-alt-serif"
+                        class="text-2xl mb-0 font-alt-serif"
                       >
                         How long it takes
                       </h2>
                       <h3
-                        class="font-semibold font-alt-sans pt-6 pb-4"
+                        class="text-heading-xl font-semibold font-alt-sans pt-6 pb-4"
                       >
                         Preparing your application
                       </h3>
                       It depends on how easy it is for you to gather all your information and documents. It may take a few hours, or you may need to do it over several days. If you applied before, it might take you less time.
                       <h3
-                        class="font-semibold font-alt-sans pt-6 pb-4"
+                        class="text-heading-xl font-semibold font-alt-sans pt-6 pb-4"
                       >
                         Submitting your application
                       </h3>
@@ -317,12 +317,12 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
                       class="pb-10"
                     >
                       <h2
-                        class="text-2xl font-alt-serif"
+                        class="text-2xl mb-0 font-alt-serif"
                       >
                         Before you start
                       </h2>
                       <h3
-                        class="font-semibold font-alt-sans pt-6 pb-4"
+                        class="text-heading-xl font-semibold font-alt-sans pt-6 pb-4"
                       >
                         Make sure you are eligible
                       </h3>
@@ -380,7 +380,7 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
                         </li>
                       </ul>
                       <h3
-                        class="font-semibold font-alt-sans pt-6 pb-4"
+                        class="text-heading-xl font-semibold font-alt-sans pt-6 pb-4"
                       >
                         See the unit in person
                       </h3>
@@ -398,7 +398,7 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
                       </div>
                     </div>
                     <h2
-                      class="text-2xl font-alt-serif"
+                      class="text-2xl mb-0 font-alt-serif"
                     >
                       How to apply
                     </h2>
@@ -411,7 +411,7 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
                       >
                         <li>
                           <h3
-                            class="font-semibold font-alt-sans pb-4"
+                            class="text-heading-xl font-semibold font-alt-sans pb-4"
                           >
                             Fill out PDF application
                           </h3>
@@ -451,7 +451,7 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
                         </li>
                         <li>
                           <h3
-                            class="font-semibold font-alt-sans pb-4"
+                            class="text-heading-xl font-semibold font-alt-sans pb-4"
                           >
                             Gather documents
                           </h3>
@@ -479,7 +479,7 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
                         </li>
                         <li>
                           <h3
-                            class="font-semibold font-alt-sans pb-4"
+                            class="text-heading-xl font-semibold font-alt-sans pb-4"
                           >
                             Combine everything into 1 PDF file
                           </h3>
@@ -541,7 +541,7 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
                         </li>
                         <li>
                           <h3
-                            class="font-semibold font-alt-sans pb-4"
+                            class="text-heading-xl font-semibold font-alt-sans pb-4"
                           >
                             Create a free account at Box.com
                           </h3>
@@ -582,7 +582,7 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
                         </li>
                         <li>
                           <h3
-                            class="font-semibold font-alt-sans pb-4"
+                            class="text-heading-xl font-semibold font-alt-sans pb-4"
                           >
                             Submit your application and get your place in line
                           </h3>
@@ -664,7 +664,7 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
                       </ol>
                     </div>
                     <h2
-                      class="text-2xl font-alt-serif"
+                      class="text-2xl mb-0 font-alt-serif"
                     >
                       What happens next
                     </h2>
