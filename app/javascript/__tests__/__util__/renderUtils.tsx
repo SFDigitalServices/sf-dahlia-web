@@ -19,20 +19,3 @@ export const renderAndLoadAsync = async (
 
   return renderResponse
 }
-
-export const mockUiSeedsDialog = () => {
-  jest.mock("@bloom-housing/ui-seeds", () => {
-    const originalModule = jest.requireActual("@bloom-housing/ui-seeds")
-
-    const MockDialog = ({ children, isOpen }: { children: React.ReactNode; isOpen: boolean }) =>
-      isOpen ? <div data-testid="modalMock">{children}</div> : null
-    MockDialog.Header = ({ children }: { children: React.ReactNode }) => <div>{children}</div>
-    MockDialog.Content = ({ children }: { children: React.ReactNode }) => <div>{children}</div>
-
-    return {
-      __esModule: true,
-      ...originalModule,
-      Dialog: MockDialog,
-    }
-  })
-}

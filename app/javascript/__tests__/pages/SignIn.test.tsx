@@ -2,7 +2,7 @@
 import React from "react"
 
 import SignIn from "../../pages/sign-in"
-import { mockUiSeedsDialog, renderAndLoadAsync } from "../__util__/renderUtils"
+import { renderAndLoadAsync } from "../__util__/renderUtils"
 import { screen, waitFor } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
 import { post } from "../../api/apiService"
@@ -20,7 +20,21 @@ jest.mock("../../api/apiService", () => ({
   post: jest.fn(),
 }))
 
-mockUiSeedsDialog()
+jest.mock("@bloom-housing/ui-seeds", () => {
+  const originalModule = jest.requireActual("@bloom-housing/ui-seeds")
+
+  const MockDialog = ({ children, isOpen }) =>
+    isOpen ? <div data-testid="modalMock">{children}</div> : null
+  MockDialog.Header = ({ children }) => <div>{children}</div>
+  MockDialog.Content = ({ children }) => <div>{children}</div>
+  MockDialog.Footer = ({ children }) => <div>{children}</div>
+
+  return {
+    __esModule: true,
+    ...originalModule,
+    Dialog: MockDialog,
+  }
+})
 
 describe("<SignIn />", () => {
   it("alerts if redirect is true", async () => {
@@ -71,6 +85,8 @@ describe("<SignIn />", () => {
       expect(screen.getByText(/we sent a link to test@test\.com\./i)).not.toBeNull()
       expect(screen.queryByText("Email sent. Check your email.")).toBeNull()
     })
+
+    jest.resetAllMocks()
     ;(post as jest.Mock).mockResolvedValueOnce({
       response: {
         status: 200,
@@ -83,6 +99,12 @@ describe("<SignIn />", () => {
         name: /send email again/i,
       })
     )
+
+    // screen.logTestingPlaygroundURL()
+
+    await waitFor(() => {
+      expect(post).toHaveBeenCalledWith("/api/v1/auth/confirmation", { email: "test@test.com" })
+    })
 
     await waitFor(() => {
       expect(screen.getByText("Email sent. Check your email.")).not.toBeNull()

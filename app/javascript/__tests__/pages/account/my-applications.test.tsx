@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { mockUiSeedsDialog, renderAndLoadAsync } from "../../__util__/renderUtils"
+import { renderAndLoadAsync } from "../../__util__/renderUtils"
 import MyApplications, {
   determineApplicationItemList,
 } from "../../../pages/account/my-applications"
@@ -18,7 +18,21 @@ jest.mock("../../../api/apiService.ts", () => ({
   authenticatedDelete: jest.fn(),
 }))
 
-mockUiSeedsDialog()
+jest.mock("@bloom-housing/ui-seeds", () => {
+  const originalModule = jest.requireActual("@bloom-housing/ui-seeds")
+
+  const MockDialog = ({ children, isOpen }) =>
+    isOpen ? <div data-testid="modalMock">{children}</div> : null
+  MockDialog.Header = ({ children }) => <div>{children}</div>
+  MockDialog.Content = ({ children }) => <div>{children}</div>
+  MockDialog.Footer = ({ children }) => <div>{children}</div>
+
+  return {
+    __esModule: true,
+    ...originalModule,
+    Dialog: MockDialog,
+  }
+})
 
 describe("<MyApplications />", () => {
   let originalLocation
