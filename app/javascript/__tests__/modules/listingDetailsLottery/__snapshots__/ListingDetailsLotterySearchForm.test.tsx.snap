@@ -14,7 +14,7 @@ exports[`ListingDetailsLotteryModal displays initial view with form and listing 
         Lottery Results
       </h1>
       <h2
-        class="font-sans font-semibold text-xs uppercase"
+        class="font-sans font-semibold text-xs uppercase notranslate"
       >
         855 Brannan Units 318
       </h2>

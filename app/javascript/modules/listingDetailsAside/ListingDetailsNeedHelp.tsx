@@ -20,7 +20,11 @@ export const NeedHelpBlock = ({ listing }: { listing: RailsSaleListing | RailsRe
 
   return (
     <div className="md:px-0 px-2">
-      <SidebarBlock title={t("listings.apply.needHelp")} className="listing-details-need-help">
+      <SidebarBlock
+        title={t("listings.apply.needHelp")}
+        className="listing-details-need-help"
+        priority={2}
+      >
         {(isSalesFcfsEnabled || isListingRental) && (
           <div className={"mb-4"}>
             {isListingRental

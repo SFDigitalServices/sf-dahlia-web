@@ -137,7 +137,7 @@ export const ListingDetailsLotterySearchForm = ({
     <div className="lottery-search-form">
       <header className="pt-8 pb-4 text-center bg-white sticky top-0 z-50">
         <Heading>{t("lottery.lotteryResults")}</Heading>
-        <h2 className="font-sans font-semibold text-xs uppercase">{listing.Name}</h2>
+        <h2 className="font-sans font-semibold text-xs uppercase notranslate">{listing.Name}</h2>
       </header>
       <p className="px-8 pb-4 text-xs">{t("lottery.bucketsIntro")}</p>
       <form

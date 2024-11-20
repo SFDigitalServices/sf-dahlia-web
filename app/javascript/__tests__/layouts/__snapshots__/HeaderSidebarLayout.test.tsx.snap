@@ -252,11 +252,11 @@ exports[`<HeaderSidebarLayout /> Contact Bar renders Contact Information 1`] = `
           <section
             class="aside-block w-full md:w-1/3 md:max-w-xs text-gray-950 md:border-l border-t md:border-t-0 border-gray-450 border-b-0 p-6 mx-0"
           >
-            <h4
+            <h2
               class="text__underline-weighted"
             >
               Contact
-            </h4>
+            </h2>
             <div
               class="text-sm text-gray-750"
             >
