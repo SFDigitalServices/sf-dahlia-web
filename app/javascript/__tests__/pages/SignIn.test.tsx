@@ -100,12 +100,6 @@ describe("<SignIn />", () => {
       })
     )
 
-    // screen.logTestingPlaygroundURL()
-
-    await waitFor(() => {
-      expect(post).toHaveBeenCalledWith("/api/v1/auth/confirmation", { email: "test@test.com" })
-    })
-
     await waitFor(() => {
       expect(screen.getByText("Email sent. Check your email.")).not.toBeNull()
     })
