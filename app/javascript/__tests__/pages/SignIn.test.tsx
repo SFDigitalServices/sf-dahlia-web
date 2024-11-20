@@ -2,7 +2,7 @@
 import React from "react"
 
 import SignIn from "../../pages/sign-in"
-import { renderAndLoadAsync } from "../__util__/renderUtils"
+import { mockUiSeedsDialog, renderAndLoadAsync } from "../__util__/renderUtils"
 import { screen, waitFor } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
 import { post } from "../../api/apiService"
@@ -20,21 +20,7 @@ jest.mock("../../api/apiService", () => ({
   post: jest.fn(),
 }))
 
-jest.mock("@bloom-housing/ui-seeds", () => {
-  const originalModule = jest.requireActual("@bloom-housing/ui-seeds")
-
-  const MockDialog = ({ children, isOpen }) =>
-    isOpen ? <div data-testid="modalMock">{children}</div> : null
-  MockDialog.Header = ({ children }) => <div>{children}</div>
-  MockDialog.Content = ({ children }) => <div>{children}</div>
-  MockDialog.Footer = ({ children }) => <div>{children}</div>
-
-  return {
-    __esModule: true,
-    ...originalModule,
-    Dialog: MockDialog,
-  }
-})
+mockUiSeedsDialog()
 
 describe("<SignIn />", () => {
   it("alerts if redirect is true", async () => {
@@ -70,13 +56,13 @@ describe("<SignIn />", () => {
     await renderAndLoadAsync(<SignIn assetPaths={{}} />)
 
     await userEvent.type(screen.getByRole("textbox", { name: /email/i }), "test@test.com")
-    await userEvent.type(screen.getByLabelText(/^password$/i), "test")
+    await userEvent.type(screen.getByLabelText(/^password$/i), "Password1")
     await userEvent.click(screen.getByRole("button", { name: /sign in/i }))
 
     await waitFor(() => {
       expect(post).toHaveBeenCalledWith("/api/v1/auth/sign_in", {
         email: "test@test.com",
-        password: "test",
+        password: "Password1",
       })
     })
 
