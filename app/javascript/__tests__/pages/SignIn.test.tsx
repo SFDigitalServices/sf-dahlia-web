@@ -10,7 +10,17 @@ jest.mock("react-helmet-async", () => {
   }
 })
 
+jest.spyOn(window, "alert").mockImplementation(() => {})
+
 describe("<SignIn />", () => {
+  it("alerts if redirect is true", async () => {
+    window.sessionStorage.setItem("redirect", "true")
+
+    await renderAndLoadAsync(<SignIn assetPaths={{}} />)
+
+    expect(window.alert).toHaveBeenCalled()
+  })
+
   it("shows the correct form text", async () => {
     const { getAllByText, getByText, getByRole } = await renderAndLoadAsync(
       <SignIn assetPaths={{}} />
