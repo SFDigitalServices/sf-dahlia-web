@@ -42,7 +42,7 @@ const NotConfirmedModal: React.FC<{
     <Dialog isOpen={!!email} onClose={onClose}>
       <Dialog.Header>{t("signIn.newAccount.title")}</Dialog.Header>
       {emailSent && (
-        <Alert className="sign-in-banner" onClose={onClose}>
+        <Alert className="sign-in-banner">
           {t("signIn.newAccount.sendEmailAgainButton.confirmation")}
         </Alert>
       )}
