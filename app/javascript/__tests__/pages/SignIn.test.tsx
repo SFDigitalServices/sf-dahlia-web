@@ -16,6 +16,11 @@ jest.mock("react-helmet-async", () => {
 
 jest.spyOn(window, "alert").mockImplementation(() => {})
 
+jest.mock("@bloom-housing/ui-components", () => ({
+  ...jest.requireActual("@bloom-housing/ui-components"),
+  debounce: (fn) => fn,
+}))
+
 jest.mock("../../api/apiService", () => ({
   post: jest.fn(),
 }))
@@ -37,6 +42,10 @@ jest.mock("@bloom-housing/ui-seeds", () => {
 })
 
 describe("<SignIn />", () => {
+  beforeEach(() => {
+    jest.resetAllMocks()
+  })
+
   it("alerts if redirect is true", async () => {
     window.sessionStorage.setItem("redirect", "true")
 
@@ -57,6 +66,32 @@ describe("<SignIn />", () => {
     ).not.toBeNull()
     expect(getByText("Password")).not.toBeNull()
     expect(getByText("Create an account")).not.toBeNull()
+  })
+
+  it("shows the correct error message when bad credentials are entered", async () => {
+    ;(post as jest.Mock).mockRejectedValueOnce({
+      response: {
+        status: 401,
+        data: { error: "bad_credentials" },
+      },
+    })
+
+    await renderAndLoadAsync(<SignIn assetPaths={{}} />)
+
+    await userEvent.type(screen.getByRole("textbox", { name: /email/i }), "test@test.com")
+    await userEvent.type(screen.getByLabelText(/^password$/i), "Password1")
+    await userEvent.click(screen.getByRole("button", { name: /sign in/i }))
+
+    await waitFor(() => {
+      expect(post).toHaveBeenCalledWith("/api/v1/auth/sign_in", {
+        email: "test@test.com",
+        password: "Password1",
+      })
+    })
+
+    await waitFor(() => {
+      expect(screen.getByText(/invalid login credentials\. please try again\./i)).not.toBeNull()
+    })
   })
 
   it("shows the correct expired unconfirmed modal", async () => {
@@ -99,6 +134,10 @@ describe("<SignIn />", () => {
         name: /send email again/i,
       })
     )
+
+    await waitFor(() => {
+      expect(post).toHaveBeenCalledWith("/api/v1/auth/confirmation", { email: "test@test.com" })
+    })
 
     await waitFor(() => {
       expect(screen.getByText("Email sent. Check your email.")).not.toBeNull()
