@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 
 import {
   AppearanceStyleType,
@@ -87,6 +87,14 @@ const SignInForm = () => {
         }
       })
   }
+
+  useEffect(() => {
+    const newAccountEmail: string | null = window.sessionStorage.getItem("newAccount")
+    if (newAccountEmail) {
+      setNotConfirmed(newAccountEmail)
+      window.sessionStorage.removeItem("newAccount")
+    }
+  }, [])
 
   return (
     <>
