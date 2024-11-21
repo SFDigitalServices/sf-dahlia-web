@@ -165,7 +165,7 @@ describe("<CreateAccount />", () => {
     })
 
     await waitFor(() => {
-      expect(setItemMock).toHaveBeenCalledWith("redirect", "true")
+      expect(setItemMock).toHaveBeenCalledWith("newAccount", "test@test.com")
       expect(replaceMock).toHaveBeenCalledWith("/sign-in")
     })
 
