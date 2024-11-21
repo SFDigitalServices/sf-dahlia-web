@@ -14,8 +14,6 @@ jest.mock("react-helmet-async", () => {
   }
 })
 
-jest.spyOn(window, "alert").mockImplementation(() => {})
-
 jest.mock("@bloom-housing/ui-components", () => ({
   ...jest.requireActual("@bloom-housing/ui-components"),
   debounce: (fn) => fn,
@@ -47,11 +45,15 @@ describe("<SignIn />", () => {
   })
 
   it("alerts if redirect is true", async () => {
-    window.sessionStorage.setItem("redirect", "true")
+    window.sessionStorage.setItem("newAccount", "test@test.com")
 
     await renderAndLoadAsync(<SignIn assetPaths={{}} />)
 
-    expect(window.alert).toHaveBeenCalled()
+    await waitFor(() => {
+      expect(screen.getByText("Check your email to finish creating your account")).not.toBeNull()
+      expect(screen.getByText(/we sent a link to test@test\.com\./i)).not.toBeNull()
+      expect(screen.queryByText("Email sent. Check your email.")).toBeNull()
+    })
   })
 
   it("shows the correct form text", async () => {
