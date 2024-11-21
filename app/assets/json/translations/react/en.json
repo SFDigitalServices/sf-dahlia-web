@@ -1577,6 +1577,7 @@
   "signIn.newAccount.p2": "Follow the link in your email to finish creating your account. It expires after 24 hours.",
   "signIn.newAccount.sendEmailAgainButton": "Send email again",
   "signIn.newAccount.sendEmailAgainButton.confirmation": "Email sent. Check your email.",
+  "signIn.newAccount.sendEmailAgainButton.error": "Something went wrong. We could not send an email. Try sending it again or refreshing the page.",
   "t.ami": "AMI",
   "t.applicationClosed": "Applications Closed",
   "t.applicationDeadline": "Application Deadline",

@@ -27,14 +27,14 @@ const NotConfirmedModal: React.FC<{
   onClose: () => void
 }> = ({ email, onClose }) => {
   const [emailSent, setEmailSent] = useState(false)
-  const [, setEmailSentError] = useState(false)
+  const [emailSentError, setEmailSentError] = useState<string | null>(null)
   const requestEmail = debounce(() => {
     confirmEmail(email)
       .then(() => {
         setEmailSent(true)
       })
       .catch(() => {
-        setEmailSentError(true)
+        setEmailSentError(t("signIn.newAccount.sendEmailAgainButton.error"))
       })
   }, 1000)
 
@@ -42,8 +42,13 @@ const NotConfirmedModal: React.FC<{
     <Dialog isOpen={!!email} onClose={onClose}>
       <Dialog.Header>{t("signIn.newAccount.title")}</Dialog.Header>
       {emailSent && (
-        <Alert className="sign-in-banner">
+        <Alert className="sign-in-banner banner-background-color">
           {t("signIn.newAccount.sendEmailAgainButton.confirmation")}
+        </Alert>
+      )}
+      {emailSentError && (
+        <Alert variant="alert" className="sign-in-banner">
+          {emailSentError}
         </Alert>
       )}
       <Dialog.Content>{t("signIn.newAccount.p1", { email })}</Dialog.Content>
