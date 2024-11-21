@@ -22,6 +22,26 @@ import { confirmEmail } from "../api/authApiService"
 import UserContext from "./context/UserContext"
 import { SiteAlert } from "../components/SiteAlert"
 
+const AccountAlreadyConfirmedModal = ({
+  isOpen,
+  onClose,
+}: {
+  isOpen: boolean
+  onClose: () => void
+}) => {
+  return (
+    <Dialog isOpen={isOpen} onClose={onClose}>
+      <Dialog.Header>Account already confirmed</Dialog.Header>
+      <Dialog.Content>Sign in to continue</Dialog.Content>
+      <Dialog.Footer>
+        <Button type="submit" styleType={AppearanceStyleType.primary} onClick={onClose}>
+          {t("t.ok")}
+        </Button>
+      </Dialog.Footer>
+    </Dialog>
+  )
+}
+
 const NewAccountNotConfirmedModal = ({
   email,
   onClose,
@@ -140,6 +160,8 @@ const SignInForm = () => {
   const [showNewAccountNotConfirmedModal, setNewAccountNotConfirmedModal] = useState<string | null>(
     null
   )
+  const [accountAlreadyConfirmedModalOpen, setAccountAlreadyConfirmedModalOpen] = useState(null)
+
   const { signIn } = useContext(UserContext)
 
   const onSubmit = (data: { email: string; password: string }) => {
@@ -170,6 +192,10 @@ const SignInForm = () => {
 
   return (
     <>
+      <AccountAlreadyConfirmedModal
+        isOpen={accountAlreadyConfirmedModalOpen}
+        onClose={() => setAccountAlreadyConfirmedModalOpen(false)}
+      />
       <NewAccountNotConfirmedModal
         email={showNewAccountNotConfirmedModal}
         onClose={() => setNewAccountNotConfirmedModal(null)}
