@@ -145,6 +145,32 @@ describe("<SignIn />", () => {
       expect(screen.getByText("Email sent. Check your email.")).not.toBeNull()
     })
 
+    jest.resetAllMocks()
+    ;(post as jest.Mock).mockRejectedValueOnce({
+      response: {
+        status: 400,
+        data: { error: "Bad Request", message: "Invalid input" },
+      },
+    })
+
+    await userEvent.click(
+      screen.getByRole("button", {
+        name: /send email again/i,
+      })
+    )
+
+    await waitFor(() => {
+      expect(post).toHaveBeenCalledWith("/api/v1/auth/confirmation", { email: "test@test.com" })
+    })
+
+    await waitFor(() => {
+      expect(
+        screen.getByText(
+          "Something went wrong. We could not send an email. Try sending it again or refreshing the page."
+        )
+      ).not.toBeNull()
+    })
+
     await userEvent.click(
       screen.getByRole("button", {
         name: /ok/i,
