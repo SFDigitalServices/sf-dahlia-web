@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import React from "react"
 
 import SignIn from "../../pages/sign-in"
@@ -26,11 +25,11 @@ jest.mock("../../api/apiService", () => ({
 jest.mock("@bloom-housing/ui-seeds", () => {
   const originalModule = jest.requireActual("@bloom-housing/ui-seeds")
 
-  const MockDialog = ({ children, isOpen }) =>
+  const MockDialog = ({ children, isOpen }: { children: React.ReactNode; isOpen: boolean }) =>
     isOpen ? <div data-testid="modalMock">{children}</div> : null
-  MockDialog.Header = ({ children }) => <div>{children}</div>
-  MockDialog.Content = ({ children }) => <div>{children}</div>
-  MockDialog.Footer = ({ children }) => <div>{children}</div>
+  MockDialog.Header = ({ children }: { children: React.ReactNode }) => <div>{children}</div>
+  MockDialog.Content = ({ children }: { children: React.ReactNode }) => <div>{children}</div>
+  MockDialog.Footer = ({ children }: { children: React.ReactNode }) => <div>{children}</div>
 
   return {
     __esModule: true,

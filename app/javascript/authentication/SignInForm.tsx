@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useEffect, useState } from "react"
+import React, { Dispatch, SetStateAction, useContext, useEffect, useState } from "react"
 
 import {
   AppearanceStyleType,
@@ -20,12 +20,16 @@ import EmailFieldset from "../pages/account/components/EmailFieldset"
 import PasswordFieldset from "../pages/account/components/PasswordFieldset"
 import "../pages/account/styles/account.scss"
 import { AxiosError } from "axios"
-import { confirmEmail, signIn } from "../api/authApiService"
+import { confirmEmail } from "../api/authApiService"
+import UserContext from "./context/UserContext"
 
-const NotConfirmedModal: React.FC<{
+const NewAccountNotConfirmedModal = ({
+  email,
+  onClose,
+}: {
   email: string
   onClose: () => void
-}> = ({ email, onClose }) => {
+}) => {
   const [emailSent, setEmailSent] = useState(false)
   const [emailSentError, setEmailSentError] = useState<string | null>(null)
   const requestEmail = debounce(() => {
@@ -128,9 +132,14 @@ const SignInFormCard = ({
   )
 }
 
-const onSubmit =
-  (setNotConfirmed: (email: string) => void, setRequestError: (error: string) => void) =>
-  (data: { email: string; password: string }) => {
+const SignInForm = () => {
+  const [requestError, setRequestError] = useState<string>()
+  const [showNewAccountNotConfirmedModal, setNewAccountNotConfirmedModal] = useState<string | null>(
+    null
+  )
+  const { signIn } = useContext(UserContext)
+
+  const onSubmit = (data: { email: string; password: string }) => {
     const { email, password } = data
 
     signIn(email, password)
@@ -140,7 +149,7 @@ const onSubmit =
       })
       .catch((error: AxiosError<{ error: string; email: string }>) => {
         if (error.response.data.error === "not_confirmed") {
-          setNotConfirmed(error.response.data.email)
+          setNewAccountNotConfirmedModal(error.response.data.email)
         } else {
           // TODO: handle sign-in error states
           setRequestError(`${t("signIn.badCredentials")}`)
@@ -148,23 +157,22 @@ const onSubmit =
       })
   }
 
-const SignInForm = () => {
-  const [requestError, setRequestError] = useState<string>()
-  const [notConfirmed, setNotConfirmed] = useState<string | null>(null)
-
   useEffect(() => {
     const newAccountEmail: string | null = window.sessionStorage.getItem("newAccount")
     if (newAccountEmail) {
-      setNotConfirmed(newAccountEmail)
+      setNewAccountNotConfirmedModal(newAccountEmail)
       window.sessionStorage.removeItem("newAccount")
     }
   }, [])
 
   return (
     <>
-      <NotConfirmedModal email={notConfirmed} onClose={() => setNotConfirmed(null)} />
+      <NewAccountNotConfirmedModal
+        email={showNewAccountNotConfirmedModal}
+        onClose={() => setNewAccountNotConfirmedModal(null)}
+      />
       <SignInFormCard
-        onSubmit={onSubmit(setNotConfirmed, setRequestError)}
+        onSubmit={onSubmit}
         requestError={requestError}
         setRequestError={setRequestError}
       />
