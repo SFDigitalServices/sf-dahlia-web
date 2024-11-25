@@ -24,16 +24,13 @@ import { AccountAlreadyConfirmedModal } from "./components/AccountAlreadyConfirm
 import { SiteAlert } from "../components/SiteAlert"
 import { renderInlineMarkup } from "../util/languageUtil"
 
-const NewAccountNotConfirmedModal = ({
-  email,
-  onClose,
-}: {
-  email: string
-  onClose: () => void
-}) => {
-  const [emailSent, setEmailSent] = useState(false)
-  const [emailSentError, setEmailSentError] = useState<string | null>(null)
-  const requestEmail = () => {
+const requestEmail =
+  (
+    email: string,
+    setEmailSent: (value: boolean) => void,
+    setEmailSentError: (value: string | null) => void
+  ) =>
+  () => {
     confirmEmail(email)
       .then(() => {
         setEmailSent(true)
@@ -43,9 +40,15 @@ const NewAccountNotConfirmedModal = ({
       })
   }
 
+const EmailBanners = ({
+  emailSent,
+  emailSentError,
+}: {
+  emailSent: boolean
+  emailSentError: string
+}) => {
   return (
-    <Dialog isOpen={!!email} onClose={onClose}>
-      <Dialog.Header>{t("signIn.newAccount.title")}</Dialog.Header>
+    <>
       {emailSent && (
         <Alert className="sign-in-banner banner-background-color">
           {t("signIn.newAccount.sendEmailAgainButton.confirmation")}
@@ -56,13 +59,57 @@ const NewAccountNotConfirmedModal = ({
           {emailSentError}
         </Alert>
       )}
+    </>
+  )
+}
+
+const ExpiredUnconfirmedModal = ({ email, onClose }: { email: string; onClose: () => void }) => {
+  const [emailSent, setEmailSent] = useState(false)
+  const [emailSentError, setEmailSentError] = useState<string | null>(null)
+
+  return (
+    <Dialog isOpen={!!email} onClose={onClose}>
+      <Dialog.Header>{t("signIn.expiredUnconfirmed.title")}</Dialog.Header>
+      <EmailBanners emailSent={emailSent} emailSentError={emailSentError} />
+      <Dialog.Content>{t("signIn.expiredUnconfirmed.p1")}</Dialog.Content>
+      <Dialog.Content>{t("signIn.expiredUnconfirmed.p2")}</Dialog.Content>
+      <Dialog.Footer>
+        <Button
+          type="submit"
+          styleType={AppearanceStyleType.primary}
+          onClick={() => requestEmail(email, setEmailSent, setEmailSentError)}
+        >
+          {t("signIn.expiredUnconfirmed.sendNewLink")}
+        </Button>
+      </Dialog.Footer>
+    </Dialog>
+  )
+}
+
+const NewAccountNotConfirmedModal = ({
+  email,
+  onClose,
+}: {
+  email: string
+  onClose: () => void
+}) => {
+  const [emailSent, setEmailSent] = useState(false)
+  const [emailSentError, setEmailSentError] = useState<string | null>(null)
+
+  return (
+    <Dialog isOpen={!!email} onClose={onClose}>
+      <Dialog.Header>{t("signIn.newAccount.title")}</Dialog.Header>
+      <EmailBanners emailSent={emailSent} emailSentError={emailSentError} />
       <Dialog.Content>{t("signIn.newAccount.p1", { email })}</Dialog.Content>
       <Dialog.Content>{t("signIn.newAccount.p2")}</Dialog.Content>
       <Dialog.Footer>
         <Button type="submit" styleType={AppearanceStyleType.primary} onClick={onClose}>
           {t("t.ok")}
         </Button>
-        <Button styleType={AppearanceStyleType.secondary} onClick={requestEmail}>
+        <Button
+          styleType={AppearanceStyleType.secondary}
+          onClick={() => requestEmail(email, setEmailSent, setEmailSentError)}
+        >
           {t("signIn.newAccount.sendEmailAgainButton")}
         </Button>
       </Dialog.Footer>
@@ -143,11 +190,18 @@ const SignInFormCard = ({
   )
 }
 
+const getExpiredUnconfirmedEmail = () => {
+  const urlParams = new URLSearchParams(window.location.search)
+  const expiredUnconfirmedEmail = urlParams.get("expiredUnconfirmed")
+  return expiredUnconfirmedEmail
+}
+
 const SignInForm = () => {
   const [requestError, setRequestError] = useState<string>()
   const [showNewAccountNotConfirmedModal, setNewAccountNotConfirmedModal] = useState<string | null>(
     null
   )
+  const [showExpiredUnconfirmedModal, setExpiredUnconfirmedModal] = useState<string | null>(null)
   const [showAccountAlreadyConfirmedModal, setShowAccountAlreadyConfirmedModal] = useState(null)
 
   const { signIn } = useContext(UserContext)
@@ -182,16 +236,23 @@ const SignInForm = () => {
   useEffect(() => {
     const newAccountEmail: string | null = window.sessionStorage.getItem("newAccount")
     const expiredConfirmedEmail = getExpiredConfirmedEmail()
+    const expiredUnconfirmedEmail = getExpiredUnconfirmedEmail()
     if (newAccountEmail) {
       setNewAccountNotConfirmedModal(newAccountEmail)
       window.sessionStorage.removeItem("newAccount")
     } else if (expiredConfirmedEmail) {
       setShowAccountAlreadyConfirmedModal(true)
+    } else if (expiredUnconfirmedEmail) {
+      setExpiredUnconfirmedModal(expiredConfirmedEmail)
     }
   }, [])
 
   return (
     <>
+      <ExpiredUnconfirmedModal
+        email={showExpiredUnconfirmedModal}
+        onClose={() => setExpiredUnconfirmedModal(null)}
+      />
       <AccountAlreadyConfirmedModal
         isOpen={showAccountAlreadyConfirmedModal}
         onClose={() => setShowAccountAlreadyConfirmedModal(false)}
