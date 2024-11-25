@@ -1,3 +1,4 @@
+import { t } from "@bloom-housing/ui-components"
 import { AxiosHeaders } from "axios"
 const ACCESS_TOKEN_LOCAL_STORAGE_KEY = "auth_headers"
 
@@ -38,7 +39,12 @@ export const setAuthHeaders = (headers: AuthHeaders | AxiosHeaders) => {
 }
 
 export const getHeaders = (): AuthHeaders | AxiosHeaders | undefined => getAuthHeaders()
-export const clearHeaders = () => getStorage().removeItem(ACCESS_TOKEN_LOCAL_STORAGE_KEY)
+export const clearHeaders = () => {
+  if (getStorage().getItem(ACCESS_TOKEN_LOCAL_STORAGE_KEY)) {
+    getStorage().setItem("alert_message_success", t("signOut.alertMessage"))
+    getStorage().removeItem(ACCESS_TOKEN_LOCAL_STORAGE_KEY)
+  }
+}
 
 const getTokenTtl = (): number =>
   Number.parseInt(getAuthHeaders()?.expiry as string) * 1000 - Date.now()
