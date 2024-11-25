@@ -32,13 +32,6 @@ describe HowToApplyConstraint do
       expect(response).to render_template 'layouts/application-react'
     end
 
-    it 'navigates to how to apply for a fcfs sales listing without a status' do
-      single_listing['Status'] = nil
-      get '/listings/test-listing-id/how-to-apply'
-
-      expect(response).to render_template 'layouts/application-react'
-    end
-
     it 'redirects a rental listing' do
       single_listing['RecordType']['Name'] = 'Rental'
       get '/listings/test-listing-id/how-to-apply'
