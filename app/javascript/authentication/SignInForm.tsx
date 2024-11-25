@@ -31,8 +31,8 @@ const AccountAlreadyConfirmedModal = ({
 }) => {
   return (
     <Dialog isOpen={isOpen} onClose={onClose}>
-      <Dialog.Header>Account already confirmed</Dialog.Header>
-      <Dialog.Content>Sign in to continue</Dialog.Content>
+      <Dialog.Header>{t("signIn.accountAlreadyConfirmed.title")}</Dialog.Header>
+      <Dialog.Content>{t("signIn.accountAlreadyConfirmed.p1")}</Dialog.Content>
       <Dialog.Footer>
         <Button type="submit" styleType={AppearanceStyleType.primary} onClick={onClose}>
           {t("t.ok")}

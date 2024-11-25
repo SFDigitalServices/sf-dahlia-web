@@ -1564,6 +1564,8 @@
   "shortFormNav.qualify": "Qualify",
   "shortFormNav.review": "Review",
   "shortFormNav.you": "You",
+  "signIn.accountAlreadyConfirmed.p1": "Sign in to continue",
+  "signIn.accountAlreadyConfirmed.title": "Account already confirmed",
   "signIn.badCredentials": "Invalid login credentials. Please try again.",
   "signIn.dontHaveAccount": "Don't have an account?",
   "signIn.easilyCheckLottery": "Easily check lottery results",
