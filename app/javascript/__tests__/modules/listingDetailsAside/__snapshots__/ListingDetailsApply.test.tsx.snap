@@ -8,11 +8,11 @@ exports[`ListingDetailsApply displays habitat link for eligibility requirements 
     <section
       class="aside-block "
     >
-      <h4
+      <h2
         class="text__underline-weighted"
       >
         How to Apply
-      </h4>
+      </h2>
       <div
         class="text-sm text-gray-750"
       >
@@ -58,11 +58,11 @@ exports[`ListingDetailsApply renders if listing is open 1`] = `
     <section
       class="aside-block "
     >
-      <h4
+      <h2
         class="text__underline-weighted"
       >
         How to Apply
-      </h4>
+      </h2>
       <div
         class="text-sm text-gray-750"
       >

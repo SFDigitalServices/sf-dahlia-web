@@ -22,7 +22,7 @@ export interface SubsectionProps {
 const SeeTheUnitSubsection = ({ title, children, headingClass }: SubsectionProps) => {
   return (
     <div className="see-the-unit__subsection">
-      <HeadingSeeds size="md" className={headingClass ?? "pb-3"}>
+      <HeadingSeeds size="md" className={headingClass ?? "pb-3"} priority={3}>
         {title}
       </HeadingSeeds>
       <div>{children}</div>
@@ -68,7 +68,7 @@ export const ListingDetailsSeeTheUnit = ({ listing }: SeeTheUnitProps) => {
   return (
     <section className="aside-block see-the-unit translate">
       <div className="see-the-unit__heading">
-        <Heading priority={4} styleType="underlineWeighted">
+        <Heading priority={2} styleType="underlineWeighted">
           {t("label.seeTheUnit")}
         </Heading>
       </div>
@@ -113,7 +113,7 @@ export const ListingDetailsSeeTheUnit = ({ listing }: SeeTheUnitProps) => {
             </a>
           </p>
         </div>
-        <HeadingSeeds size="sm" className="pb-1">
+        <HeadingSeeds size="sm" className="pb-1" priority={3}>
           {t("contactAgent.officeHours.seeTheUnit")}
         </HeadingSeeds>
         <p className="text-sm">

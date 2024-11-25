@@ -8,11 +8,11 @@ exports[`ListingDetailsLotteryInfo displays when listing has upcoming lottery 1`
     <section
       class="aside-block "
     >
-      <h4
+      <h2
         class="text__underline-weighted"
       >
         Lottery
-      </h4>
+      </h2>
       <div
         class="text-sm text-gray-750"
       >
@@ -63,11 +63,11 @@ exports[`ListingDetailsLotteryInfo displays when listing has upcoming lottery 1`
     <section
       class="aside-block "
     >
-      <h4
+      <h2
         class="text__underline-weighted"
       >
         Lottery Results
-      </h4>
+      </h2>
       <div
         class="text-sm text-gray-750"
       >

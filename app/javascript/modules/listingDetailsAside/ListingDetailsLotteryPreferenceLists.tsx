@@ -33,6 +33,7 @@ export const ListingDetailsLotteryPreferenceLists = ({
                   `listings.lotteryPreference.${preference.Lottery_Preference.Name}.title`
                 ),
               })}
+              priority={2}
             >
               <LinkButton
                 styleType={AppearanceStyleType.primary}

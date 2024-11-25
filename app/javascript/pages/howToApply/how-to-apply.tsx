@@ -8,6 +8,7 @@ import {
   getPathWithoutLanguagePrefix,
   getTranslatedString,
 } from "../../util/languageUtil"
+import { isValidUrl } from "../../util/urlUtil"
 import {
   Icon,
   t,
@@ -36,8 +37,11 @@ interface HowToApplyProps {
   assetPaths: unknown
 }
 
-const submissionUrl = (listingId: string) => {
-  return `https://sfmoh.tfaforms.net/20?ListingID=${listingId}`
+const generateSubmissionUrl = (listingId: string) => {
+  const formAssemblyUrl = process.env.FCFS_FORMASSEMBLY_URL
+  if (!isValidUrl(formAssemblyUrl)) return null
+
+  return `${formAssemblyUrl}?ListingID=${listingId}`
 }
 
 const applicationsNotYetOpen = (listing: RailsSaleListing) =>
@@ -47,11 +51,15 @@ const applicationsOpen = (listing: RailsSaleListing) =>
   listing && getFcfsSalesListingState(listing) === ListingState.Open
 
 const Header = ({ headerText }: { headerText: string }) => {
-  return <h3 className="text-2xl font-alt-serif">{headerText}</h3>
+  return <h2 className="text-2xl mb-0 font-alt-serif">{headerText}</h2>
 }
 
 const SubHeader = ({ subHeaderText }: { subHeaderText: string }) => {
-  return <h4 className="font-semibold font-alt-sans pt-6 pb-4">{subHeaderText}</h4>
+  return (
+    <Heading size="xl" className="font-semibold font-alt-sans pt-6 pb-4" priority={3}>
+      {subHeaderText}
+    </Heading>
+  )
 }
 
 const InfoBox = ({ title, children }: { title: string; children: ReactNode }) => {
@@ -164,7 +172,9 @@ export const LeasingAgentBox = ({ listing }: { listing: RailsSaleListing }) => {
           {t("label.emailAddress")}
         </a>
       </div>
-      <Heading size="sm">{t("contactAgent.officeHours.seeTheUnit")}</Heading>
+      <Heading size="sm" priority={3}>
+        {t("contactAgent.officeHours.seeTheUnit")}
+      </Heading>
       <p className="text-sm">
         {getTranslatedString(listing.Office_Hours, "Office_Hours__c", listing.translations)}
       </p>
@@ -223,7 +233,9 @@ const HowToApplyListItem = ({
 }) => {
   return (
     <li>
-      <h4 className="font-semibold font-alt-sans pb-4">{headerText}</h4>
+      <Heading priority={3} size="xl" className="font-semibold font-alt-sans pb-4">
+        {headerText}
+      </Heading>
       <div className="text-base">{children}</div>
     </li>
   )
@@ -308,6 +320,7 @@ const CreateBoxAccountStep = () => {
 
 const SubmitApplicationStep = ({ listing }: { listing: RailsSaleListing }) => {
   const datetime = listing.Application_Start_Date_Time
+  const submissionUrl = generateSubmissionUrl(listing.listingID)
 
   return (
     <HowToApplyListItem headerText={t("howToApplyPage.howToApplySection.step5.title")}>
@@ -334,12 +347,12 @@ const SubmitApplicationStep = ({ listing }: { listing: RailsSaleListing }) => {
           })}
         </div>
       )}
-      {applicationsOpen(listing) && (
+      {applicationsOpen(listing) && submissionUrl && (
         <Button
           className="mt-6"
           styleType={AppearanceStyleType.primary}
           onClick={() => {
-            window.open(submissionUrl(listing.listingID), "_blank")
+            window.open(submissionUrl, "_blank")
           }}
         >
           {t("howToApplyPage.howToApplySection.step5.button")}
@@ -355,7 +368,7 @@ const SubmitApplicationStep = ({ listing }: { listing: RailsSaleListing }) => {
 const HowToApplySection = ({ listing }: { listing: RailsSaleListing }) => {
   return (
     <>
-      <Header headerText={t("pageTitle.howToApply")} />
+      <Header headerText={t("pageTitle.howToApply.lowercase")} />
       <div className="pt-4" id="HowToApplySection">
         <ol className="process-list">
           <FillOutPdfAppStep />
@@ -383,6 +396,7 @@ const WhatHappensNextSection = () => {
         className="underline"
         target="_blank"
         href={getSfGovUrl("https://www.sf.gov/node/14246", 14246)}
+        aria-label={t("listings.fcfs.bmrSales.noLotteryRequired.footer.aria")}
       >
         {t("listings.fcfs.bmrSales.noLotteryRequired.footer")}
       </a>

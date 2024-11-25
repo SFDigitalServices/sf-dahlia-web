@@ -3,7 +3,7 @@ import { render } from "@testing-library/react"
 import { ListingDetailsLotteryPreferencesEducator } from "../../../modules/listingDetailsLottery/ListingDetailsLotteryPreferencesEducator"
 import { lotteryResultRentalEducator } from "../../data/RailsLotteryResult/lottery-result-rental-educator"
 
-describe("ListingDetailsLotteryPreferencesEducatory", () => {
+describe("ListingDetailsLotteryPreferencesEducator", () => {
   it("displays 3 default preferences - COP, DTHP, L/W", () => {
     const { asFragment } = render(
       <ListingDetailsLotteryPreferencesEducator

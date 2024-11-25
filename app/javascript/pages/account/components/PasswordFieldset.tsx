@@ -214,7 +214,7 @@ const PasswordFieldset = ({
         describedBy={errors.password?.message ? undefined : "newPasswordInstructions"} // undefined will force the input to be described by the error message
         name="password"
         label="password"
-        labelClassName="hidden"
+        labelClassName="sr-only"
         className="mt-0 mb-4"
         validation={{
           required: "password:required",

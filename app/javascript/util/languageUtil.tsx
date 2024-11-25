@@ -274,3 +274,22 @@ export const getTranslatedString = (
   const translatedValue = translations[fieldName]?.[languageCode] as string
   return translatedValue || originalValue
 }
+
+/**
+ * Lottery bucket preference names *may* be missing
+ *   human translations, and *may* need to be machine translated
+ * This is a workaround to address that, ahead of a future project
+ *   to better integrate human and machine translations
+ */
+export function defaultOrMachineTranslationIfNotTranslated(
+  translations: RailsTranslations,
+  key: string,
+  value: string,
+  translationInterpolations?: TranslationInterpolations
+): string {
+  const translation = defaultIfNotTranslated(key, value, translationInterpolations)
+  if (value !== translation) return translation
+
+  // all keys are appended with '__c' because the current translation system expects for Salesforce field names as keys
+  return getTranslatedString(value, `${key}__c`, translations)
+}

@@ -1,10 +1,14 @@
 import { renderAndLoadAsync } from "../../__util__/renderUtils"
 import GetAssistance from "../../../pages/getAssistance/get-assistance"
 import React from "react"
-import { within } from "@testing-library/dom"
+import { within } from "@testing-library/react"
 import { t } from "@bloom-housing/ui-components"
 
 describe("<GetAssistance />", () => {
+  beforeEach(() => {
+    document.documentElement.lang = "en"
+  })
+
   it("shows the correct header text", async () => {
     const { getByTestId } = await renderAndLoadAsync(<GetAssistance assetPaths={{}} />)
     const mainContent = getByTestId("page-header")

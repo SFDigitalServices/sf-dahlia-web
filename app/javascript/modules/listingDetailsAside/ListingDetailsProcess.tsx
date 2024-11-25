@@ -44,6 +44,7 @@ const WhatToExpect = ({
           readLess: t("label.showLess"),
           buttonAriaLabel: t("listings.whatToExpect.showMore.aria"),
         }}
+        priority={2}
       />
     </div>
   )
@@ -99,6 +100,7 @@ export const ListingDetailsProcess = ({
           <div className="border-b border-gray-400 md:border-b-0 last:border-b-0">
             <Contact
               sectionTitle={t("contactAgent.contact")}
+              priority={2}
               contactAddress={{
                 street: listing.Leasing_Agent_Street,
                 city: listing.Leasing_Agent_City,
@@ -149,7 +151,7 @@ export const ListingDetailsProcess = ({
       <Desktop>
         {isListingSale && (
           <div className="border-b border-gray-400 md:border-b-0 last:border-b-0">
-            <SidebarBlock title={t("listings.housingProgram")}>
+            <SidebarBlock title={t("listings.housingProgram")} priority={2}>
               <a href={`https://sfmohcd.org/for-buyers`} target="_blank" className="text-base">
                 {t("listings.belowMarketRate")}
               </a>
@@ -158,7 +160,7 @@ export const ListingDetailsProcess = ({
         )}
         {isApplicationOpen && (
           <div className="border-b border-gray-400 md:border-b-0 last:border-b-0">
-            <SidebarBlock>
+            <SidebarBlock priority={2}>
               <p>{`${t("t.listingUpdated")}: ${localizedFormat(
                 listing.LastModifiedDate,
                 "LL"

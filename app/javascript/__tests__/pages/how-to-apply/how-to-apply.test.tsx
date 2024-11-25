@@ -1,9 +1,10 @@
 import React from "react"
-import { cleanup } from "@testing-library/react"
+import { cleanup, render } from "@testing-library/react"
 import { renderAndLoadAsync } from "../../__util__/renderUtils"
 import HowToApply, { LeasingAgentBox } from "../../../pages/howToApply/how-to-apply"
 import { notYetOpenSaleFcfsListing } from "../../data/RailsSaleListing/listing-sale-fcfs-not-yet-open"
 import { fcfsSaleListing } from "../../data/RailsSaleListing/listing-sale-fcfs"
+import { openFcfsSaleListing } from "../../data/RailsSaleListing/listing-sale-fcfs-open"
 import { localizedFormat, formatTimeOfDay } from "../../../util/languageUtil"
 
 const axios = require("axios")
@@ -30,6 +31,20 @@ describe("<HowToApply />", () => {
     expect(asFragment()).toMatchSnapshot()
   })
 
+  it("shows 'SUBMIT APPLICATION' button if URL is present", async () => {
+    process.env.FCFS_FORMASSEMBLY_URL = "https://www.test.com"
+    axios.get.mockResolvedValue({ data: { listing: openFcfsSaleListing } })
+    const { queryByText } = await renderAndLoadAsync(<HowToApply assetPaths={{}} />)
+    expect(queryByText("Submit application")).not.toBeNull()
+  })
+
+  it("does not show 'SUBMIT APPLICATION' button if URL is missing", async () => {
+    process.env.FCFS_FORMASSEMBLY_URL = undefined
+    axios.get.mockResolvedValue({ data: { listing: openFcfsSaleListing } })
+    const { queryByText } = await renderAndLoadAsync(<HowToApply assetPaths={{}} />)
+    expect(queryByText("Submit application")).toBeNull()
+  })
+
   it("shows the correct header text", async () => {
     const listingData = { data: { listing: fcfsSaleListing } }
     axios.get.mockResolvedValue(listingData)
@@ -37,9 +52,9 @@ describe("<HowToApply />", () => {
     expect(getAllByText(`Apply to ${listingData.data.listing.Name}`)).not.toBeNull()
   })
 
-  it("renders not-yet-open components", async () => {
+  it("renders not-yet-open components", () => {
     axios.get.mockResolvedValue({ data: { listing: notYetOpenSaleFcfsListing } })
-    const { findByText } = await renderAndLoadAsync(<HowToApply assetPaths={{}} />)
+    const { findByText } = render(<HowToApply assetPaths={{}} />)
     const datetime = notYetOpenSaleFcfsListing.Application_Start_Date_Time || ""
     const date = localizedFormat(datetime, "LL")
     const time = formatTimeOfDay(datetime)
@@ -49,9 +64,9 @@ describe("<HowToApply />", () => {
     ).toBeDefined()
   })
 
-  it("redirects to home page if listing not found", async () => {
+  it("redirects to home page if listing not found", () => {
     axios.get.mockResolvedValue({ data: { listing: null } })
-    await renderAndLoadAsync(<HowToApply assetPaths={{}} />)
+    render(<HowToApply assetPaths={{}} />)
     expect(window.location.pathname).toBe("/")
   })
 

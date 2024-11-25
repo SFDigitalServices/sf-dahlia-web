@@ -1099,10 +1099,10 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@bloom-housing/ui-components@^12.3.0":
-  version "12.3.0"
-  resolved "https://registry.yarnpkg.com/@bloom-housing/ui-components/-/ui-components-12.3.0.tgz#691a0c2ec2a834aa3dec1ea3bdc9610abca7c7f9"
-  integrity sha512-COC60MPbzkRj03+dInn2W38uVKz87WiTGbWsdYdlQZ+YLf47q4uO/y2L4t1leYJhbxtYVRxCWrVIDtDfXyEBdw==
+"@bloom-housing/ui-components@^12.5.0":
+  version "12.5.0"
+  resolved "https://registry.yarnpkg.com/@bloom-housing/ui-components/-/ui-components-12.5.0.tgz#d502ec876079a7b0494d385d669d44c0df923cb0"
+  integrity sha512-Q2wDGLuJsyuT4q3u3QZCP/zt2vLj/WK3qQ0nUPhqbCV3SRPN0LwRxYhwxfnFFlQPLn1/BOERDuOOVhMhtoiujA==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^6.1.1"
     "@fortawesome/free-regular-svg-icons" "^6.1.1"
@@ -1995,14 +1995,6 @@
     dom-accessibility-api "^0.6.3"
     lodash "^4.17.15"
     redent "^3.0.0"
-
-"@testing-library/react-hooks@^8.0.1":
-  version "8.0.1"
-  resolved "https://registry.yarnpkg.com/@testing-library/react-hooks/-/react-hooks-8.0.1.tgz#0924bbd5b55e0c0c0502d1754657ada66947ca12"
-  integrity sha512-Aqhl2IVmLt8IovEVarNDFuJDVWVvhnr9/GCU6UUnrYXwgDFF9h2L2o2P9KBni1AST5sT6riAyoukFLyjQUgD/g==
-  dependencies:
-    "@babel/runtime" "^7.12.5"
-    react-error-boundary "^3.1.0"
 
 "@testing-library/react@^14.1.2":
   version "14.1.2"
@@ -7695,6 +7687,11 @@ jest-environment-node@^29.7.0:
     jest-mock "^29.7.0"
     jest-util "^29.7.0"
 
+jest-fail-on-console@^3.3.1:
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/jest-fail-on-console/-/jest-fail-on-console-3.3.1.tgz#7d17e3a155cd0452b5be0d0906b6cb35e8594000"
+  integrity sha512-dmq/dmh5OBgJlD1MJdpznzwFQP8S7msf3ghTGWQLGhagWwHKzGtqXza76nuJUKOK7BdwqcTK6CCE49Xxv4ckUQ==
+
 jest-get-type@^29.6.3:
   version "29.6.3"
   resolved "https://registry.yarnpkg.com/jest-get-type/-/jest-get-type-29.6.3.tgz#36f499fdcea197c1045a127319c0481723908fd1"
@@ -10320,13 +10317,6 @@ react-dropzone@^11.3.2:
     attr-accept "^2.2.2"
     file-selector "^0.4.0"
     prop-types "^15.8.1"
-
-react-error-boundary@^3.1.0:
-  version "3.1.4"
-  resolved "https://registry.yarnpkg.com/react-error-boundary/-/react-error-boundary-3.1.4.tgz#255db92b23197108757a888b01e5b729919abde0"
-  integrity sha512-uM9uPzZJTF6wRQORmSrvOIgt4lJ9MC1sNgEOj2XGsDTRE4kmpWxg7ENK9EWNKJRMAOY9z0MuF4yIfl6gp4sotA==
-  dependencies:
-    "@babel/runtime" "^7.12.5"
 
 react-fast-compare@^3.2.0:
   version "3.2.2"

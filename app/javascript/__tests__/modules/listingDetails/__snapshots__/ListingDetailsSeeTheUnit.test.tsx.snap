@@ -8,20 +8,20 @@ exports[`ListingDetailsSeeTheUnit does not render SeeDetailsOnline when MLS and 
     <div
       class="see-the-unit__heading"
     >
-      <h4
+      <h2
         class="text__underline-weighted"
       >
         See the Unit
-      </h4>
+      </h2>
     </div>
     <div
       class="see-the-unit__subsection"
     >
-      <h1
+      <h3
         class="text-heading-md pb-3"
       >
         Make an appointment
-      </h1>
+      </h3>
       <div>
         <p
           class="text-sm pb-3"
@@ -82,11 +82,11 @@ exports[`ListingDetailsSeeTheUnit does not render SeeDetailsOnline when MLS and 
             </a>
           </p>
         </div>
-        <h1
+        <h3
           class="text-heading-sm pb-1"
         >
           Office hours
-        </h1>
+        </h3>
         <p
           class="text-sm"
         >
@@ -106,20 +106,20 @@ exports[`ListingDetailsSeeTheUnit renders SeeDetailsOnline when both MLS and Lis
     <div
       class="see-the-unit__heading"
     >
-      <h4
+      <h2
         class="text__underline-weighted"
       >
         See the Unit
-      </h4>
+      </h2>
     </div>
     <div
       class="see-the-unit__subsection"
     >
-      <h1
+      <h3
         class="text-heading-md pb-3"
       >
         Open houses
-      </h1>
+      </h3>
       <div>
         <div
           class="open-houses"
@@ -201,11 +201,11 @@ exports[`ListingDetailsSeeTheUnit renders SeeDetailsOnline when both MLS and Lis
     <div
       class="see-the-unit__subsection"
     >
-      <h1
+      <h3
         class="text-heading-md pb-3"
       >
         See details online
-      </h1>
+      </h3>
       <div>
         <div
           class="flex-row space-y-1"
@@ -232,11 +232,11 @@ exports[`ListingDetailsSeeTheUnit renders SeeDetailsOnline when both MLS and Lis
     <div
       class="see-the-unit__subsection"
     >
-      <h1
+      <h3
         class="text-heading-md pb-3"
       >
         Make an appointment
-      </h1>
+      </h3>
       <div>
         <p
           class="text-sm pb-3"
@@ -304,11 +304,11 @@ exports[`ListingDetailsSeeTheUnit renders SeeDetailsOnline when both MLS and Lis
             </a>
           </p>
         </div>
-        <h1
+        <h3
           class="text-heading-sm pb-1"
         >
           Office hours
-        </h1>
+        </h3>
         <p
           class="text-sm"
         >
@@ -336,20 +336,20 @@ exports[`ListingDetailsSeeTheUnit renders SeeDetailsOnline when only Listing_Onl
     <div
       class="see-the-unit__heading"
     >
-      <h4
+      <h2
         class="text__underline-weighted"
       >
         See the Unit
-      </h4>
+      </h2>
     </div>
     <div
       class="see-the-unit__subsection"
     >
-      <h1
+      <h3
         class="text-heading-md pb-3"
       >
         Open houses
-      </h1>
+      </h3>
       <div>
         <div
           class="open-houses"
@@ -431,11 +431,11 @@ exports[`ListingDetailsSeeTheUnit renders SeeDetailsOnline when only Listing_Onl
     <div
       class="see-the-unit__subsection"
     >
-      <h1
+      <h3
         class="text-heading-md pb-3"
       >
         See details online
-      </h1>
+      </h3>
       <div>
         <div
           class="flex-row space-y-1"
@@ -454,11 +454,11 @@ exports[`ListingDetailsSeeTheUnit renders SeeDetailsOnline when only Listing_Onl
     <div
       class="see-the-unit__subsection"
     >
-      <h1
+      <h3
         class="text-heading-md pb-3"
       >
         Make an appointment
-      </h1>
+      </h3>
       <div>
         <p
           class="text-sm pb-3"
@@ -526,11 +526,11 @@ exports[`ListingDetailsSeeTheUnit renders SeeDetailsOnline when only Listing_Onl
             </a>
           </p>
         </div>
-        <h1
+        <h3
           class="text-heading-sm pb-1"
         >
           Office hours
-        </h1>
+        </h3>
         <p
           class="text-sm"
         >
@@ -558,20 +558,20 @@ exports[`ListingDetailsSeeTheUnit renders SeeDetailsOnline when only MLS is set 
     <div
       class="see-the-unit__heading"
     >
-      <h4
+      <h2
         class="text__underline-weighted"
       >
         See the Unit
-      </h4>
+      </h2>
     </div>
     <div
       class="see-the-unit__subsection"
     >
-      <h1
+      <h3
         class="text-heading-md pb-3"
       >
         Open houses
-      </h1>
+      </h3>
       <div>
         <div
           class="open-houses"
@@ -653,11 +653,11 @@ exports[`ListingDetailsSeeTheUnit renders SeeDetailsOnline when only MLS is set 
     <div
       class="see-the-unit__subsection"
     >
-      <h1
+      <h3
         class="text-heading-md pb-3"
       >
         See details online
-      </h1>
+      </h3>
       <div>
         <div
           class="flex-row space-y-1"
@@ -676,11 +676,11 @@ exports[`ListingDetailsSeeTheUnit renders SeeDetailsOnline when only MLS is set 
     <div
       class="see-the-unit__subsection"
     >
-      <h1
+      <h3
         class="text-heading-md pb-3"
       >
         Make an appointment
-      </h1>
+      </h3>
       <div>
         <p
           class="text-sm pb-3"
@@ -748,11 +748,11 @@ exports[`ListingDetailsSeeTheUnit renders SeeDetailsOnline when only MLS is set 
             </a>
           </p>
         </div>
-        <h1
+        <h3
           class="text-heading-sm pb-1"
         >
           Office hours
-        </h1>
+        </h3>
         <p
           class="text-sm"
         >
