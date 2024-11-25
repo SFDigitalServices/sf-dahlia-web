@@ -95,7 +95,7 @@ exports[`ListingDetailsAside renders ListingDetailsAside component fcfs 1`] = `
               Your application will be considered in the order it comes in - first come, first served.
             </div>
             <footer
-              class="seeds-card-footer ml-6 mb-6 underline fcfs-no-lottery-section"
+              class="seeds-card-footer mx-6 mb-6 underline fcfs-no-lottery-section"
             >
               <a
                 aria-label="Learn more about how it works to apply"
