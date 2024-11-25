@@ -96,6 +96,7 @@ const SignInFormCard = ({
         </AlertBox>
       )}
       <SiteAlert type="notice" dismissable />
+      <SiteAlert type="success" dismissable />
       <div className="form-card__group pt-0 border-b">
         <Form id="sign-in" className="mt-10 relative" onSubmit={handleSubmit(onSubmit)}>
           <EmailFieldset register={register} errors={errors} />
