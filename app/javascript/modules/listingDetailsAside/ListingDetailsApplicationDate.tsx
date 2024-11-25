@@ -76,7 +76,7 @@ export const ListingDetailsApplicationDate = ({ listing }: ListingDetailsApplica
 
   return (
     <div className="w-full mb-8 md:mb-0">
-      {isSalesFcfsEnabled && isFcfsSalesListing(listing) ? (
+      {isSalesFcfsEnabled ? (
         <ListingDetailsStatus listing={listing} />
       ) : (
         <div className="w-full mb-8 md:mb-0">
