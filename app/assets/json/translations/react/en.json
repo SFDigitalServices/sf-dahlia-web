@@ -1578,7 +1578,7 @@
   "signIn.newAccount.sendEmailAgainButton": "Send email again",
   "signIn.newAccount.sendEmailAgainButton.confirmation": "Email sent. Check your email.",
   "signIn.newAccount.sendEmailAgainButton.error": "Something went wrong. We could not send an email. Try sending it again or refreshing the page.",
-  "signOut.alertMessage": "You are signed out.",
+  "signOut.alertMessage.confirmSignOut": "You are signed out.",
   "t.ami": "AMI",
   "t.applicationClosed": "Applications Closed",
   "t.applicationDeadline": "Application Deadline",
