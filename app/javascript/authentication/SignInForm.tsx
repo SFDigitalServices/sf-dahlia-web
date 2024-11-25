@@ -8,7 +8,6 @@ import {
   FormCard,
   Icon,
   AlertBox,
-  SiteAlert,
   LinkButton,
   debounce,
 } from "@bloom-housing/ui-components"
@@ -22,6 +21,7 @@ import "../pages/account/styles/account.scss"
 import { AxiosError } from "axios"
 import { confirmEmail } from "../api/authApiService"
 import UserContext from "./context/UserContext"
+import { SiteAlert } from "../components/SiteAlert"
 
 const NewAccountNotConfirmedModal = ({
   email,
@@ -95,8 +95,7 @@ const SignInFormCard = ({
           {requestError}
         </AlertBox>
       )}
-      <SiteAlert type="notice" dismissable />
-      <SiteAlert type="success" dismissable />
+      <SiteAlert type="success" />
       <div className="form-card__group pt-0 border-b">
         <Form id="sign-in" className="mt-10 relative" onSubmit={handleSubmit(onSubmit)}>
           <EmailFieldset register={register} errors={errors} />
