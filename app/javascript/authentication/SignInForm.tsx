@@ -160,7 +160,7 @@ const SignInForm = () => {
   const [showNewAccountNotConfirmedModal, setNewAccountNotConfirmedModal] = useState<string | null>(
     null
   )
-  const [accountAlreadyConfirmedModalOpen, setAccountAlreadyConfirmedModalOpen] = useState(null)
+  const [showAccountAlreadyConfirmedModal, setShowAccountAlreadyConfirmedModal] = useState(null)
 
   const { signIn } = useContext(UserContext)
 
@@ -193,8 +193,8 @@ const SignInForm = () => {
   return (
     <>
       <AccountAlreadyConfirmedModal
-        isOpen={accountAlreadyConfirmedModalOpen}
-        onClose={() => setAccountAlreadyConfirmedModalOpen(false)}
+        isOpen={showAccountAlreadyConfirmedModal}
+        onClose={() => setShowAccountAlreadyConfirmedModal(false)}
       />
       <NewAccountNotConfirmedModal
         email={showNewAccountNotConfirmedModal}
