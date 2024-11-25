@@ -637,6 +637,190 @@ exports[`MobileListingDetailsLottery does display when lottery listing is closed
 </DocumentFragment>
 `;
 
-exports[`MobileListingDetailsLottery does not display if listing is open 1`] = `<DocumentFragment />`;
+exports[`MobileListingDetailsLottery does not display if listing is open 1`] = `
+<DocumentFragment>
+  <li
+    class="responsive-content-item "
+  >
+    <header
+      class="detail-header "
+    >
+      <span
+        class="detail-header__image-container"
+      >
+        <img
+          alt=""
+          class="detail-header__image "
+          src=""
+        />
+      </span>
+      <hgroup
+        class="detail-header__hgroup"
+      >
+        <h2
+          class="detail-header__title"
+        >
+          Lottery
+        </h2>
+        <span
+          class="detail-header__subtitle"
+        >
+          Lottery selection, important dates and contact
+        </span>
+        <span
+          class="ui-icon ui-medium"
+        >
+          <svg
+            fill="currentColor"
+            viewBox="0 0 32 32"
+          >
+            <path
+              d="M28.267 6.133l-12.267 12.267-12.267-12.267-3.733 3.733 16 16 16-16z"
+            />
+          </svg>
+        </span>
+      </hgroup>
+    </header>
+    <div
+      class="open-houses border-b border-gray-400 md:border-b-0"
+    >
+      <section
+        class="aside-block"
+      >
+        <h4
+          class="text__underline-weighted"
+        >
+          Open Houses
+        </h4>
+        <div
+          class="pb-3"
+        >
+          <p
+            class="text text-gray-800 pb-2 flex justify-between items-center"
+          >
+            <span
+              class="inline-block text-sm uppercase normal-case"
+            >
+              December 3, 2019
+            </span>
+            <span
+              class="inline-block text-xs font-bold ml-5 font-alt-sans"
+            >
+              2:00 PM - 6:00 PM
+            </span>
+          </p>
+        </div>
+        <div
+          class="pb-3"
+        >
+          <p
+            class="text text-gray-800 pb-2 flex justify-between items-center"
+          >
+            <span
+              class="inline-block text-sm uppercase normal-case"
+            >
+              December 7, 2019
+            </span>
+            <span
+              class="inline-block text-xs font-bold ml-5 font-alt-sans"
+            >
+              10:00 AM - 12:00 PM
+            </span>
+          </p>
+          <div
+            class="text-sm text-gray-700 pb-3"
+          >
+            <div
+              class="flex flex-col"
+            >
+              <span
+                class="links-space translate"
+              >
+                <span>
+                  SFPL
+                </span>
+              </span>
+              <span>
+                1 Library Way, San Francisco
+              </span>
+            </div>
+          </div>
+        </div>
+        <div
+          class="false"
+        >
+          <p
+            class="text text-gray-800 pb-2 flex justify-between items-center"
+          >
+            <span
+              class="inline-block text-sm uppercase normal-case"
+            >
+              December 8, 2019
+            </span>
+          </p>
+        </div>
+      </section>
+    </div>
+    <div
+      class="border-b border-gray-400 md:border-b-0"
+    >
+      <section
+        class="aside-block"
+      >
+        <h2
+          class="text__underline-weighted"
+        >
+          What to Expect
+        </h2>
+        <div
+          class="text-sm text-gray-750"
+        >
+          <span>
+            Applicants will be contacted by the agent in lottery rank order until vacancies are filled.
+          </span>
+          <div
+            class="mt-2"
+          >
+            <div>
+              <button
+                aria-expanded="false"
+                aria-label="Show more about what to expect"
+                class="button is-unstyled m-0 no-underline has-toggle"
+                type="button"
+              >
+                Show more
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+    <div
+      class="border-b border-gray-400 md:border-b-0 last:border-b-0"
+    >
+      <section
+        class="aside-block "
+      >
+        <h2
+          class="text__underline-weighted"
+        >
+          Housing Program
+        </h2>
+        <div
+          class="text-sm text-gray-750"
+        >
+          <a
+            class="text-base"
+            href="https://sfmohcd.org/for-buyers"
+            target="_blank"
+          >
+            Below Market Rate
+          </a>
+        </div>
+      </section>
+    </div>
+  </li>
+</DocumentFragment>
+`;
 
 exports[`MobileListingDetailsLottery does not display when fcfs sale listing 1`] = `<DocumentFragment />`;
