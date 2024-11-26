@@ -637,6 +637,4 @@ exports[`MobileListingDetailsLottery does display when lottery listing is closed
 </DocumentFragment>
 `;
 
-exports[`MobileListingDetailsLottery does not display if listing is open 1`] = `<DocumentFragment />`;
-
 exports[`MobileListingDetailsLottery does not display when fcfs sale listing 1`] = `<DocumentFragment />`;

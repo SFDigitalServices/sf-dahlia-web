@@ -5,6 +5,19 @@ import { lotteryCompleteRentalListing } from "../../data/RailsRentalListing/list
 
 describe("ListingDetailsProcess", () => {
   it("renders leasing agent section if exists", () => {
+    window.matchMedia = jest.fn().mockImplementation((query) => {
+      return {
+        matches: true,
+        media: query,
+        onchange: null,
+        addListener: jest.fn(),
+        removeListener: jest.fn(),
+        addEventListener: jest.fn(),
+        removeEventListener: jest.fn(),
+        dispatchEvent: jest.fn(),
+      }
+    })
+
     const { asFragment } = render(
       <ListingDetailsProcess listing={lotteryCompleteRentalListing} isApplicationOpen={true} />
     )

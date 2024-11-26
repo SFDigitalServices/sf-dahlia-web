@@ -1,10 +1,10 @@
 import React from "react"
-import { LinkButton, ListingDetailItem, t } from "@bloom-housing/ui-components"
+import { LinkButton, ListingDetailItem, Mobile, t } from "@bloom-housing/ui-components"
 import { RailsListing } from "../listings/SharedHelpers"
 import { TextTruncate } from "../../components/TextTruncate"
-import { isFcfsSalesListing, isHabitatListing, isSale } from "../../util/listingUtil"
+import { isHabitatListing, isFcfsSalesListing, isOpen, isSale } from "../../util/listingUtil"
 import { stripMostTags } from "../../util/filterUtil"
-import { getTranslatedString } from "../../util/languageUtil"
+import { getTranslatedString, localizedFormat } from "../../util/languageUtil"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 
 export interface ListingDetailsAdditionalInformationProps {
@@ -16,6 +16,8 @@ export const ListingDetailsAdditionalInformation = ({
   listing,
   imageSrc,
 }: ListingDetailsAdditionalInformationProps) => {
+  const { unleashFlag: isSalesFcfsEnabled } = useFeatureFlag("FCFS", false)
+
   const getCommissionString = () => {
     return listing.Realtor_Commission_Unit === "percent"
       ? t("listings.realtorCommissionPercentage", {
@@ -23,8 +25,6 @@ export const ListingDetailsAdditionalInformation = ({
         })
       : `$${listing.Realtor_Commission_Amount.toLocaleString()}`
   }
-
-  const { unleashFlag: isSalesFcfsEnabled } = useFeatureFlag("FCFS", false)
 
   return (
     <ListingDetailItem
@@ -150,18 +150,6 @@ export const ListingDetailsAdditionalInformation = ({
             </div>
           </div>
         )}
-        {/* TODO: implement once we've established needs for sales listings
-              {listing.isSale && (
-                <div className="info-card bg-gray-100 border-0">
-                  <h3 className="text-serif-xl">For the Buyer's Realtor</h3>
-                  {listing.Allows_Realtor_Commission ? (
-                    display realtor_commission_header
-                    realtorComissionMessage
-                    {listing.Realtor_Commission_Info && realtor_commission_how_to}
-                  ) : display realtor_commission_not_eligible message}
-                </div>
-              )}
-            */}
         {listing.Repricing_Mechanism && (
           <div className="info-card bg-gray-100 border-0">
             <h3 className="text-serif-xl">{t("listings.rePricing")}</h3>
@@ -180,6 +168,31 @@ export const ListingDetailsAdditionalInformation = ({
             </div>
           </div>
         )}
+        <Mobile>
+          {isSale(listing) && (
+            <div className="info-card bg-gray-100 border-0">
+              <h3 className="text-serif-xl">{t("listings.housingProgram")}</h3>
+              <a href={`https://sfmohcd.org/for-buyers`} target="_blank" className="text-xs">
+                {t("listings.belowMarketRate")}
+              </a>
+            </div>
+          )}
+          {isOpen(listing) && (
+            <div className="info-card bg-gray-100 border-0">
+              <p className="text-xs">{`${t("t.listingUpdated")}: ${localizedFormat(
+                listing.LastModifiedDate,
+                "LL"
+              )}`}</p>
+              {!isSalesFcfsEnabled && listing.Multiple_Listing_Service_URL && (
+                <p className="mt-1">
+                  <a href={listing.Multiple_Listing_Service_URL} target="_blank">
+                    {t("listings.process.seeThisUnitOnMls")}
+                  </a>
+                </p>
+              )}
+            </div>
+          )}
+        </Mobile>
       </div>
     </ListingDetailItem>
   )
