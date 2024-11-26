@@ -93,7 +93,7 @@ const NotYetOpenMessage = ({ listing }: { listing: RailsSaleListing }) => {
 
 const HowLongItTakesSection = ({ listing }: { listing: RailsSaleListing }) => {
   return (
-    <div className="py-10">
+    <div>
       <Header headerText={t("howToApplyPage.howLongItTakesSection.title")} />
       <SubHeader subHeaderText={t("howToApplyPage.howLongItTakesSection.subtitle1")} />
       {t("howToApplyPage.howLongItTakesSection.p1")}
