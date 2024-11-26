@@ -325,7 +325,7 @@ const SubmitApplicationStep = ({ listing }: { listing: RailsSaleListing }) => {
   return (
     <HowToApplyListItem headerText={t("howToApplyPage.howToApplySection.step5.title")}>
       <div id="SubmitApplicationStep" className="text-base">
-        {t("howToApplyPage.howToApplySection.step5.p1")}
+        {t("howToApplyPage.howToApplySection.step5.p1.v2")}
       </div>
       <ul className="mb-0 pb-2">
         <li className="text-base">
@@ -333,8 +333,7 @@ const SubmitApplicationStep = ({ listing }: { listing: RailsSaleListing }) => {
             t("howToApplyPage.howToApplySection.step5.listItem1", { url: "#HowToApplySection" })
           )}
         </li>
-        <li className="text-base">{t("howToApplyPage.howToApplySection.step5.listItem2")}</li>
-        <li className="text-base">{t("howToApplyPage.howToApplySection.step5.listItem3")}</li>
+        <li className="text-base">{t("howToApplyPage.howToApplySection.step5.listItem2.v2")}</li>
       </ul>
       <div className="text-base">{t("howToApplyPage.howToApplySection.step5.p2")}</div>
       {applicationsNotYetOpen(listing) && (
