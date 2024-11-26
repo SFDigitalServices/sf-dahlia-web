@@ -42,7 +42,7 @@ export const setAuthHeaders = (headers: AuthHeaders | AxiosHeaders) => {
 export const getHeaders = (): AuthHeaders | AxiosHeaders | undefined => getAuthHeaders()
 export const clearHeaders = () => {
   if (getStorage().getItem(ACCESS_TOKEN_LOCAL_STORAGE_KEY)) {
-    setSiteAlertMessage(t("signOut.alertMessage"), "success")
+    setSiteAlertMessage(t("signOut.alertMessage.confirmSignOut"), "success")
     getStorage().removeItem(ACCESS_TOKEN_LOCAL_STORAGE_KEY)
   }
 }
