@@ -13,7 +13,7 @@ import {
 } from "@bloom-housing/ui-components"
 import { useForm } from "react-hook-form"
 
-import { getMyAccountPath } from "../util/routeUtil"
+import { getSignInRedirectUrl } from "../util/routeUtil"
 import UserContext from "./context/UserContext"
 import EmailFieldset from "../pages/account/components/EmailFieldset"
 import PasswordFieldset from "../pages/account/components/PasswordFieldset"
@@ -35,7 +35,7 @@ const SignInForm = () => {
 
     signIn(email, password)
       .then(() => {
-        window.location.href = getMyAccountPath()
+        window.location.href = getSignInRedirectUrl()
         window.scrollTo(0, 0)
       })
       .catch(() => {
