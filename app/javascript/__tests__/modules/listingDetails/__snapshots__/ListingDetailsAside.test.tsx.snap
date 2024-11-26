@@ -85,9 +85,13 @@ exports[`ListingDetailsAside renders ListingDetailsAside component fcfs 1`] = `
             data-spacing="base"
           >
             <header
-              class="seeds-card-header font-bold fcfs-no-lottery-header"
+              class="seeds-card-header"
             >
-              No lottery required
+              <h2
+                class="font-bold fcfs-no-lottery-header"
+              >
+                No lottery required
+              </h2>
             </header>
             <div
               class="seeds-card-section fcfs-no-lottery-section"

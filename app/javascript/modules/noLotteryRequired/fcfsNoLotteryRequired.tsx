@@ -13,8 +13,10 @@ export const fcfsNoLotteryRequired = () => {
   )
   return (
     <Card className="fcfs-no-lottery">
-      <CardHeader className="font-bold fcfs-no-lottery-header">
-        {t("listings.fcfs.bmrSales.noLotteryRequired.header")}
+      <CardHeader>
+        <h2 className="font-bold fcfs-no-lottery-header">
+          {t("listings.fcfs.bmrSales.noLotteryRequired.header")}
+        </h2>
       </CardHeader>
       <CardSection className="fcfs-no-lottery-section">
         {t("listings.fcfs.bmrSales.noLotteryRequired.section")}
