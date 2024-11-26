@@ -3457,6 +3457,22 @@ exports[`Listing Detail initializes Google Tag Manager for a sales listing 1`] =
                         Your realtor is not eligible for a commission on this unit
                       </div>
                     </div>
+                    <div
+                      class="info-card bg-gray-100 border-0"
+                    >
+                      <h3
+                        class="text-serif-xl"
+                      >
+                        Housing Program
+                      </h3>
+                      <a
+                        class="text-xs"
+                        href="https://sfmohcd.org/for-buyers"
+                        target="_blank"
+                      >
+                        Below Market Rate
+                      </a>
+                    </div>
                   </div>
                 </div>
                 <div
@@ -3495,6 +3511,22 @@ exports[`Listing Detail initializes Google Tag Manager for a sales listing 1`] =
                     >
                       Your realtor is not eligible for a commission on this unit
                     </div>
+                  </div>
+                  <div
+                    class="info-card bg-gray-100 border-0"
+                  >
+                    <h3
+                      class="text-serif-xl"
+                    >
+                      Housing Program
+                    </h3>
+                    <a
+                      class="text-xs"
+                      href="https://sfmohcd.org/for-buyers"
+                      target="_blank"
+                    >
+                      Below Market Rate
+                    </a>
                   </div>
                 </div>
               </div>
@@ -3575,6 +3607,22 @@ exports[`Listing Detail initializes Google Tag Manager for a sales listing 1`] =
                     >
                       Your realtor is not eligible for a commission on this unit
                     </div>
+                  </div>
+                  <div
+                    class="info-card bg-gray-100 border-0"
+                  >
+                    <h3
+                      class="text-serif-xl"
+                    >
+                      Housing Program
+                    </h3>
+                    <a
+                      class="text-xs"
+                      href="https://sfmohcd.org/for-buyers"
+                      target="_blank"
+                    >
+                      Below Market Rate
+                    </a>
                   </div>
                 </div>
               </li>
@@ -4498,6 +4546,22 @@ exports[`Listing Detail initializes Google Tag Manager for a sales listing 1`] =
                     >
                       Your realtor is not eligible for a commission on this unit
                     </div>
+                  </div>
+                  <div
+                    class="info-card bg-gray-100 border-0"
+                  >
+                    <h3
+                      class="text-serif-xl"
+                    >
+                      Housing Program
+                    </h3>
+                    <a
+                      class="text-xs"
+                      href="https://sfmohcd.org/for-buyers"
+                      target="_blank"
+                    >
+                      Below Market Rate
+                    </a>
                   </div>
                 </div>
               </li>
@@ -8225,6 +8289,22 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                         Your realtor is not eligible for a commission on this unit
                       </div>
                     </div>
+                    <div
+                      class="info-card bg-gray-100 border-0"
+                    >
+                      <h3
+                        class="text-serif-xl"
+                      >
+                        Housing Program
+                      </h3>
+                      <a
+                        class="text-xs"
+                        href="https://sfmohcd.org/for-buyers"
+                        target="_blank"
+                      >
+                        Below Market Rate
+                      </a>
+                    </div>
                   </div>
                 </div>
                 <div
@@ -8263,6 +8343,22 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                     >
                       Your realtor is not eligible for a commission on this unit
                     </div>
+                  </div>
+                  <div
+                    class="info-card bg-gray-100 border-0"
+                  >
+                    <h3
+                      class="text-serif-xl"
+                    >
+                      Housing Program
+                    </h3>
+                    <a
+                      class="text-xs"
+                      href="https://sfmohcd.org/for-buyers"
+                      target="_blank"
+                    >
+                      Below Market Rate
+                    </a>
                   </div>
                 </div>
               </div>
@@ -8343,6 +8439,22 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                     >
                       Your realtor is not eligible for a commission on this unit
                     </div>
+                  </div>
+                  <div
+                    class="info-card bg-gray-100 border-0"
+                  >
+                    <h3
+                      class="text-serif-xl"
+                    >
+                      Housing Program
+                    </h3>
+                    <a
+                      class="text-xs"
+                      href="https://sfmohcd.org/for-buyers"
+                      target="_blank"
+                    >
+                      Below Market Rate
+                    </a>
                   </div>
                 </div>
               </li>
@@ -9266,6 +9378,22 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                     >
                       Your realtor is not eligible for a commission on this unit
                     </div>
+                  </div>
+                  <div
+                    class="info-card bg-gray-100 border-0"
+                  >
+                    <h3
+                      class="text-serif-xl"
+                    >
+                      Housing Program
+                    </h3>
+                    <a
+                      class="text-xs"
+                      href="https://sfmohcd.org/for-buyers"
+                      target="_blank"
+                    >
+                      Below Market Rate
+                    </a>
                   </div>
                 </div>
               </li>
