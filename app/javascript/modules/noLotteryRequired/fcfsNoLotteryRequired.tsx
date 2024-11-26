@@ -7,10 +7,6 @@ import React from "react"
 import "./fcfsNoLotteryRequired.scss"
 
 export const fcfsNoLotteryRequired = () => {
-  const url = getSfGovUrl(
-    "https://www.sf.gov/step-by-step/buy-home-without-entering-lottery",
-    14246
-  )
   return (
     <Card className="fcfs-no-lottery">
       <CardHeader>
@@ -24,7 +20,10 @@ export const fcfsNoLotteryRequired = () => {
       <CardFooter className="ml-6 mb-6 underline fcfs-no-lottery-section">
         <Link
           newWindowTarget
-          href={url}
+          href={getSfGovUrl(
+            "https://www.sf.gov/step-by-step/buy-home-without-entering-lottery",
+            14246
+          )}
           hideExternalLinkIcon={true}
           ariaLabel={t("listings.fcfs.bmrSales.noLotteryRequired.footer.aria")}
         >
