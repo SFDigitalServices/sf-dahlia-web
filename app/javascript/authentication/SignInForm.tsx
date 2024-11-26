@@ -88,6 +88,12 @@ const NewAccountNotConfirmedModal = ({
   )
 }
 
+const getExpiredConfirmedEmail = () => {
+  const urlParams = new URLSearchParams(window.location.search)
+  const expiredUnconfirmedEmail = urlParams.get("expiredConfirmed")
+  return expiredUnconfirmedEmail
+}
+
 const SignInFormCard = ({
   onSubmit,
   requestError,
@@ -184,9 +190,12 @@ const SignInForm = () => {
 
   useEffect(() => {
     const newAccountEmail: string | null = window.sessionStorage.getItem("newAccount")
+    const expiredConfirmedEmail = getExpiredConfirmedEmail()
     if (newAccountEmail) {
       setNewAccountNotConfirmedModal(newAccountEmail)
       window.sessionStorage.removeItem("newAccount")
+    } else if (expiredConfirmedEmail) {
+      setShowAccountAlreadyConfirmedModal(true)
     }
   }, [])
 
