@@ -8,6 +8,7 @@ import {
   t,
   ExpandableSection,
   SidebarBlock,
+  Desktop,
 } from "@bloom-housing/ui-components"
 import { getTranslatedString, localizedFormat, renderInlineMarkup } from "../../util/languageUtil"
 import { ListingDetailsLotteryPreferenceLists } from "./ListingDetailsLotteryPreferenceLists"
@@ -147,29 +148,34 @@ export const ListingDetailsProcess = ({
             />
           </div>
         )}
-      {isListingSale && (
-        <div className="border-b border-gray-400 md:border-b-0 last:border-b-0">
-          <SidebarBlock title={t("listings.housingProgram")} priority={2}>
-            <a href={`https://sfmohcd.org/for-buyers`} target="_blank" className="text-base">
-              {t("listings.belowMarketRate")}
-            </a>
-          </SidebarBlock>
-        </div>
-      )}
-      {isApplicationOpen && (
-        <div className="border-b border-gray-400 md:border-b-0 last:border-b-0">
-          <SidebarBlock priority={2}>
-            <p>{`${t("t.listingUpdated")}: ${localizedFormat(listing.LastModifiedDate, "LL")}`}</p>
-            {!isSalesFcfsEnabled && listing.Multiple_Listing_Service_URL && (
-              <p className="mt-1">
-                <a href={listing.Multiple_Listing_Service_URL} target="_blank" className="">
-                  {t("listings.process.seeThisUnitOnMls")}
-                </a>
-              </p>
-            )}
-          </SidebarBlock>
-        </div>
-      )}
+      <Desktop>
+        {isListingSale && (
+          <div className="border-b border-gray-400 md:border-b-0 last:border-b-0">
+            <SidebarBlock title={t("listings.housingProgram")} priority={2}>
+              <a href={`https://sfmohcd.org/for-buyers`} target="_blank" className="text-base">
+                {t("listings.belowMarketRate")}
+              </a>
+            </SidebarBlock>
+          </div>
+        )}
+        {isApplicationOpen && (
+          <div className="border-b border-gray-400 md:border-b-0 last:border-b-0">
+            <SidebarBlock priority={2}>
+              <p>{`${t("t.listingUpdated")}: ${localizedFormat(
+                listing.LastModifiedDate,
+                "LL"
+              )}`}</p>
+              {!isSalesFcfsEnabled && listing.Multiple_Listing_Service_URL && (
+                <p className="mt-1">
+                  <a href={listing.Multiple_Listing_Service_URL} target="_blank" className="">
+                    {t("listings.process.seeThisUnitOnMls")}
+                  </a>
+                </p>
+              )}
+            </SidebarBlock>
+          </div>
+        )}
+      </Desktop>
     </>
   )
   /* TODO: Bloom prop changes <DownloadLotteryResults resultsDate={"January 1st, 2022"} pdfURL={""} /> */
