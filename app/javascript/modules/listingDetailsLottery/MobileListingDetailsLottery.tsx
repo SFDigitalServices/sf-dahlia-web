@@ -6,7 +6,6 @@ import { ListingDetailsProcess } from "../listingDetailsAside/ListingDetailsProc
 import { isFcfsSalesListing, isOpen } from "../../util/listingUtil"
 import { ListingDetailsLotteryInfo } from "./LotteryDetailsLotteryInfo"
 import { ListingDetailsWaitlist } from "../listingDetailsAside/ListingDetailsWaitlist"
-import { ListingDetailsOpenHouses } from "../listingDetailsAside/ListingDetailsOpenHouses"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 
 export interface ListingDetailsLotteryProps {
@@ -32,7 +31,6 @@ export const MobileListingDetailsLottery = ({ imageSrc, listing }: ListingDetail
           <ListingDetailsLotteryInfo listing={listing} />
           <ListingDetailsLotteryResults listing={listing} />
           <ListingDetailsWaitlist listing={listing} />
-          <ListingDetailsOpenHouses listing={listing} />
           <ListingDetailsProcess listing={listing} isApplicationOpen={shouldRenderComponent} />
         </ListingDetailItem>
       </Mobile>
