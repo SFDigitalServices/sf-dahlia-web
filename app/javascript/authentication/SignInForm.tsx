@@ -14,7 +14,7 @@ import {
 import { Dialog, Link, Heading, Alert } from "@bloom-housing/ui-seeds"
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form"
 
-import { getMyAccountPath } from "../util/routeUtil"
+import { getSignInRedirectUrl } from "../util/routeUtil"
 import EmailFieldset from "../pages/account/components/EmailFieldset"
 import PasswordFieldset from "../pages/account/components/PasswordFieldset"
 import "../pages/account/styles/account.scss"
@@ -143,7 +143,7 @@ const SignInForm = () => {
 
     signIn(email, password)
       .then(() => {
-        window.location.href = getMyAccountPath()
+        window.location.href = getSignInRedirectUrl()
         window.scrollTo(0, 0)
       })
       .catch((error: AxiosError<{ error: string; email: string }>) => {
