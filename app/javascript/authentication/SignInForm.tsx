@@ -31,13 +31,15 @@ const NewAccountNotConfirmedModal = ({
 }) => {
   const [emailSent, setEmailSent] = useState(false)
   const [emailSentError, setEmailSentError] = useState<string | null>(null)
-  const requestEmail = confirmEmail(email)
-    .then(() => {
-      setEmailSent(true)
-    })
-    .catch(() => {
-      setEmailSentError(t("signIn.newAccount.sendEmailAgainButton.error"))
-    })
+  const requestEmail = () => {
+    confirmEmail(email)
+      .then(() => {
+        setEmailSent(true)
+      })
+      .catch(() => {
+        setEmailSentError(t("signIn.newAccount.sendEmailAgainButton.error"))
+      })
+  }
 
   return (
     <Dialog isOpen={!!email} onClose={onClose}>
