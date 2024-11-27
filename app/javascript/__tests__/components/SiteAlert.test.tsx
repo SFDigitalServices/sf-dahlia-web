@@ -1,6 +1,6 @@
 import React from "react"
 import { render } from "@testing-library/react"
-import { SiteAlert, setSiteAlertMessage } from "../../components/SiteAlert"
+import { SiteAlert, clearSiteAlertMessage, setSiteAlertMessage } from "../../components/SiteAlert"
 
 const mockGetItem = jest.fn()
 const mockSetItem = jest.fn()
@@ -20,13 +20,25 @@ describe("<SiteAlert>", () => {
 
   it("can set an alert in session storage", () => {
     setSiteAlertMessage("Alert Message Goes Here", "success")
-    // eslint-disable-next-line @typescript-eslint/unbound-method
     expect(mockSetItem).toHaveBeenCalledWith("alert_message_success", "Alert Message Goes Here")
+  })
+
+  it("can clear an alert in session storage", () => {
+    clearSiteAlertMessage("success")
+    expect(mockRemoveItem).toHaveBeenCalledWith("alert_message_success")
   })
 
   it("can render an alert from session storage", () => {
     window.sessionStorage.setItem("alert_message_alert", "Alert Message Goes Here")
     render(<SiteAlert />)
     expect(mockGetItem).toHaveBeenCalledWith("alert_message_alert")
+  })
+
+  it("can render an alert from a parameter", () => {
+    const { getByText } = render(
+      <SiteAlert alertMessage={{ type: "alert", message: "Test alert message" }} />
+    )
+
+    expect(getByText("Test alert message")).toBeTruthy()
   })
 })
