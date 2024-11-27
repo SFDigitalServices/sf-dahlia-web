@@ -30,8 +30,11 @@ describe("<SiteAlert>", () => {
 
   it("can render an alert from session storage", () => {
     window.sessionStorage.setItem("alert_message_alert", "Alert Message Goes Here")
-    render(<SiteAlert />)
+    mockGetItem.mockImplementationOnce(() => "Alert Message Goes Here")
+    const { getByText } = render(<SiteAlert />)
+
     expect(mockGetItem).toHaveBeenCalledWith("alert_message_alert")
+    expect(getByText("Alert Message Goes Here")).toBeTruthy()
   })
 
   it("can render an alert from a parameter", () => {
