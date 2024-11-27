@@ -294,7 +294,7 @@ exports[`ListingDetailsAdditionalInformation displays additional information sec
           >
             Your Commission: 
           </span>
-          $undefined
+           3% of the sales price
           <div
             class="mt-4"
           >
