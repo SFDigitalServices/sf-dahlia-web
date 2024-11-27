@@ -17,7 +17,7 @@ export const fcfsNoLotteryRequired = () => {
       <CardSection className="fcfs-no-lottery-section">
         {t("listings.fcfs.bmrSales.noLotteryRequired.section")}
       </CardSection>
-      <CardFooter className="ml-6 mb-6 underline fcfs-no-lottery-section">
+      <CardFooter className="mx-6 mb-6 underline fcfs-no-lottery-section">
         <Link
           newWindowTarget
           href={getSfGovUrl(

@@ -707,16 +707,6 @@ exports[`Listing Detail initializes Google Tag Manager for a sales listing 1`] =
                             </a>
                           </p>
                         </div>
-                        <h3
-                          class="text-heading-sm pb-1"
-                        >
-                          Office hours
-                        </h3>
-                        <p
-                          class="text-sm"
-                        >
-                          <span />
-                        </p>
                       </div>
                     </div>
                   </section>
@@ -2336,16 +2326,6 @@ exports[`Listing Detail initializes Google Tag Manager for a sales listing 1`] =
                             </a>
                           </p>
                         </div>
-                        <h3
-                          class="text-heading-sm pb-1"
-                        >
-                          Office hours
-                        </h3>
-                        <p
-                          class="text-sm"
-                        >
-                          <span />
-                        </p>
                       </div>
                     </div>
                   </section>
@@ -2430,16 +2410,6 @@ exports[`Listing Detail initializes Google Tag Manager for a sales listing 1`] =
                           </a>
                         </p>
                       </div>
-                      <h3
-                        class="text-heading-sm pb-1"
-                      >
-                        Office hours
-                      </h3>
-                      <p
-                        class="text-sm"
-                      >
-                        <span />
-                      </p>
                     </div>
                   </div>
                 </section>
@@ -2563,16 +2533,6 @@ exports[`Listing Detail initializes Google Tag Manager for a sales listing 1`] =
                           </a>
                         </p>
                       </div>
-                      <h3
-                        class="text-heading-sm pb-1"
-                      >
-                        Office hours
-                      </h3>
-                      <p
-                        class="text-sm"
-                      >
-                        <span />
-                      </p>
                     </div>
                   </div>
                 </section>
@@ -4261,16 +4221,6 @@ exports[`Listing Detail initializes Google Tag Manager for a sales listing 1`] =
                           </a>
                         </p>
                       </div>
-                      <h3
-                        class="text-heading-sm pb-1"
-                      >
-                        Office hours
-                      </h3>
-                      <p
-                        class="text-sm"
-                      >
-                        <span />
-                      </p>
                     </div>
                   </div>
                 </section>
@@ -5589,16 +5539,6 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                             </a>
                           </p>
                         </div>
-                        <h3
-                          class="text-heading-sm pb-1"
-                        >
-                          Office hours
-                        </h3>
-                        <p
-                          class="text-sm"
-                        >
-                          <span />
-                        </p>
                       </div>
                     </div>
                   </section>
@@ -7218,16 +7158,6 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                             </a>
                           </p>
                         </div>
-                        <h3
-                          class="text-heading-sm pb-1"
-                        >
-                          Office hours
-                        </h3>
-                        <p
-                          class="text-sm"
-                        >
-                          <span />
-                        </p>
                       </div>
                     </div>
                   </section>
@@ -7312,16 +7242,6 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                           </a>
                         </p>
                       </div>
-                      <h3
-                        class="text-heading-sm pb-1"
-                      >
-                        Office hours
-                      </h3>
-                      <p
-                        class="text-sm"
-                      >
-                        <span />
-                      </p>
                     </div>
                   </div>
                 </section>
@@ -7445,16 +7365,6 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                           </a>
                         </p>
                       </div>
-                      <h3
-                        class="text-heading-sm pb-1"
-                      >
-                        Office hours
-                      </h3>
-                      <p
-                        class="text-sm"
-                      >
-                        <span />
-                      </p>
                     </div>
                   </div>
                 </section>
@@ -9143,16 +9053,6 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                           </a>
                         </p>
                       </div>
-                      <h3
-                        class="text-heading-sm pb-1"
-                      >
-                        Office hours
-                      </h3>
-                      <p
-                        class="text-sm"
-                      >
-                        <span />
-                      </p>
                     </div>
                   </div>
                 </section>
