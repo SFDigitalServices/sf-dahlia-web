@@ -21,7 +21,7 @@ export const MobileListingDetailsLottery = ({ imageSrc, listing }: ListingDetail
 
   return (
     listing &&
-    shouldRenderComponent && (
+    !shouldNotRenderForFcfs && (
       <Mobile>
         <ListingDetailItem
           imageAlt={""}

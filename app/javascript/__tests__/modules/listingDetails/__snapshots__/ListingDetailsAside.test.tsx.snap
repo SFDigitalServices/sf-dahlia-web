@@ -95,7 +95,7 @@ exports[`ListingDetailsAside renders ListingDetailsAside component fcfs 1`] = `
               Your application will be considered in the order it comes in - first come, first served.
             </div>
             <footer
-              class="seeds-card-footer ml-6 mb-6 underline fcfs-no-lottery-section"
+              class="seeds-card-footer mx-6 mb-6 underline fcfs-no-lottery-section"
             >
               <a
                 aria-label="Learn more about how it works to apply"
@@ -563,30 +563,29 @@ exports[`ListingDetailsAside renders ListingDetailsAside component rental 1`] = 
             class="w-full mb-8 md:mb-0"
           >
             <div
-              class="w-full mb-8 md:mb-0"
+              class="seeds-common-message is-fullwidth seeds-message justify-start leading-5"
+              data-variant="alert"
             >
-              <div
-                class="application-status text-xs text-gray-800 bg-alert-light place-content-center"
+              <span
+                class="ui-icon ui-medium"
               >
-                <span
-                  class="ui-icon ui-medium"
+                <svg
+                  fill="red-700"
+                  viewBox="0 0 32 32"
                 >
-                  <svg
-                    fill="var(--bloom-color-red-700)"
-                    viewBox="0 0 32 32"
-                  >
-                    <path
-                      d="M23.258 15.994h-7.251v-11.266c0-0.368-0.299-0.667-0.667-0.667s-0.667 0.299-0.667 0.667v11.931c0 0.368 0.299 0.667 0.667 0.667h7.917c0.368 0 0.667-0.299 0.667-0.667s-0.298-0.667-0.667-0.667z"
-                    />
-                    <path
-                      d="M16 0.333c-8.64 0-15.669 7.029-15.669 15.669s7.029 15.669 15.669 15.669c8.64 0 15.669-7.027 15.669-15.667s-7.029-15.67-15.669-15.67zM16 30.338c-7.906 0-14.336-6.43-14.336-14.334s6.43-14.338 14.336-14.338 14.336 6.43 14.336 14.336c0 7.904-6.43 14.336-14.336 14.336z"
-                    />
-                  </svg>
-                </span>
-                <span>
-                  Applications Closed Jan 1, 2000 at 1:00 AM
-                </span>
-              </div>
+                  <path
+                    d="M23.258 15.994h-7.251v-11.266c0-0.368-0.299-0.667-0.667-0.667s-0.667 0.299-0.667 0.667v11.931c0 0.368 0.299 0.667 0.667 0.667h7.917c0.368 0 0.667-0.299 0.667-0.667s-0.298-0.667-0.667-0.667z"
+                  />
+                  <path
+                    d="M16 0.333c-8.64 0-15.669 7.029-15.669 15.669s7.029 15.669 15.669 15.669c8.64 0 15.669-7.027 15.669-15.667s-7.029-15.67-15.669-15.67zM16 30.338c-7.906 0-14.336-6.43-14.336-14.334s6.43-14.338 14.336-14.338 14.336 6.43 14.336 14.336c0 7.904-6.43 14.336-14.336 14.336z"
+                  />
+                </svg>
+              </span>
+              <span
+                data-part="content"
+              >
+                Applications closed: January 1, 2000 at 1:00 AM Pacific Time
+              </span>
             </div>
           </div>
           <div
@@ -816,30 +815,29 @@ exports[`ListingDetailsAside renders ListingDetailsAside component sales 1`] = `
             class="w-full mb-8 md:mb-0"
           >
             <div
-              class="w-full mb-8 md:mb-0"
+              class="seeds-common-message is-fullwidth seeds-message justify-start leading-5"
+              data-variant="primary"
             >
-              <div
-                class="application-status text-xs text-gray-800 bg-primary-light place-content-center"
+              <span
+                class="ui-icon ui-medium"
               >
-                <span
-                  class="ui-icon ui-medium"
+                <svg
+                  fill="currentColor"
+                  viewBox="0 0 32 32"
                 >
-                  <svg
-                    fill="currentColor"
-                    viewBox="0 0 32 32"
-                  >
-                    <path
-                      d="M23.258 15.994h-7.251v-11.266c0-0.368-0.299-0.667-0.667-0.667s-0.667 0.299-0.667 0.667v11.931c0 0.368 0.299 0.667 0.667 0.667h7.917c0.368 0 0.667-0.299 0.667-0.667s-0.298-0.667-0.667-0.667z"
-                    />
-                    <path
-                      d="M16 0.333c-8.64 0-15.669 7.029-15.669 15.669s7.029 15.669 15.669 15.669c8.64 0 15.669-7.027 15.669-15.667s-7.029-15.67-15.669-15.67zM16 30.338c-7.906 0-14.336-6.43-14.336-14.334s6.43-14.338 14.336-14.338 14.336 6.43 14.336 14.336c0 7.904-6.43 14.336-14.336 14.336z"
-                    />
-                  </svg>
-                </span>
-                <span>
-                  Application Deadline Jan 1, 2050 at 1:00 AM
-                </span>
-              </div>
+                  <path
+                    d="M23.258 15.994h-7.251v-11.266c0-0.368-0.299-0.667-0.667-0.667s-0.667 0.299-0.667 0.667v11.931c0 0.368 0.299 0.667 0.667 0.667h7.917c0.368 0 0.667-0.299 0.667-0.667s-0.298-0.667-0.667-0.667z"
+                  />
+                  <path
+                    d="M16 0.333c-8.64 0-15.669 7.029-15.669 15.669s7.029 15.669 15.669 15.669c8.64 0 15.669-7.027 15.669-15.667s-7.029-15.67-15.669-15.67zM16 30.338c-7.906 0-14.336-6.43-14.336-14.334s6.43-14.338 14.336-14.338 14.336 6.43 14.336 14.336c0 7.904-6.43 14.336-14.336 14.336z"
+                  />
+                </svg>
+              </span>
+              <span
+                data-part="content"
+              >
+                Application deadline: January 1, 2050 at 1:00 AM Pacific Time
+              </span>
             </div>
           </div>
           <div

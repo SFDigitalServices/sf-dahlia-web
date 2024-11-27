@@ -163,7 +163,7 @@ const onSubmit = (setError: (name: string, error: ErrorOption) => void) => (data
   }
   createAccount(userData, contactData)
     .then(() => {
-      window.sessionStorage.setItem("redirect", "true")
+      window.sessionStorage.setItem("newAccount", userData.email)
       window.location.replace("/sign-in")
     })
     .catch(handleCreateAccountErrors(setError))

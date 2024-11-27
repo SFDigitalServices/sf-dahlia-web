@@ -14,6 +14,9 @@ export const signIn = async (email: string, password: string): Promise<User> =>
     return data.data
   })
 
+export const confirmEmail = async (email: string): Promise<{ success: boolean }> =>
+  post<{ success: boolean }>("/api/v1/auth/confirmation", { email }).then(({ data }) => data)
+
 export const createAccount = async (
   user: {
     email: string

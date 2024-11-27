@@ -342,6 +342,31 @@ exports[`ListingDetailsAdditionalInformation displays additional information sec
           </div>
         </div>
       </div>
+      <div
+        class="info-card bg-gray-100 border-0"
+      >
+        <h3
+          class="text-serif-xl"
+        >
+          Housing Program
+        </h3>
+        <a
+          class="text-xs"
+          href="https://sfmohcd.org/for-buyers"
+          target="_blank"
+        >
+          Below Market Rate
+        </a>
+      </div>
+      <div
+        class="info-card bg-gray-100 border-0"
+      >
+        <p
+          class="text-xs"
+        >
+          Listing Updated: April 11, 2022
+        </p>
+      </div>
     </div>
   </li>
 </DocumentFragment>

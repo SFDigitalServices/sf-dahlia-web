@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react"
+import React, { Dispatch, SetStateAction, useContext, useEffect, useState } from "react"
 
 import {
   AppearanceStyleType,
@@ -11,39 +11,78 @@ import {
   SiteAlert,
   LinkButton,
 } from "@bloom-housing/ui-components"
-import { useForm } from "react-hook-form"
+import { Dialog, Link, Heading, Alert } from "@bloom-housing/ui-seeds"
+import { FieldValues, SubmitHandler, useForm } from "react-hook-form"
 
-import { getSignInRedirectUrl } from "../util/routeUtil"
-import UserContext from "./context/UserContext"
+import { getMyAccountPath } from "../util/routeUtil"
 import EmailFieldset from "../pages/account/components/EmailFieldset"
 import PasswordFieldset from "../pages/account/components/PasswordFieldset"
-import { Link, Heading } from "@bloom-housing/ui-seeds"
 import "../pages/account/styles/account.scss"
+import { AxiosError } from "axios"
+import { confirmEmail } from "../api/authApiService"
+import UserContext from "./context/UserContext"
 
-const SignInForm = () => {
-  const { signIn } = useContext(UserContext)
+const NewAccountNotConfirmedModal = ({
+  email,
+  onClose,
+}: {
+  email: string
+  onClose: () => void
+}) => {
+  const [emailSent, setEmailSent] = useState(false)
+  const [emailSentError, setEmailSentError] = useState<string | null>(null)
+  const requestEmail = () => {
+    confirmEmail(email)
+      .then(() => {
+        setEmailSent(true)
+      })
+      .catch(() => {
+        setEmailSentError(t("signIn.newAccount.sendEmailAgainButton.error"))
+      })
+  }
+
+  return (
+    <Dialog isOpen={!!email} onClose={onClose}>
+      <Dialog.Header>{t("signIn.newAccount.title")}</Dialog.Header>
+      {emailSent && (
+        <Alert className="sign-in-banner banner-background-color">
+          {t("signIn.newAccount.sendEmailAgainButton.confirmation")}
+        </Alert>
+      )}
+      {emailSentError && (
+        <Alert variant="alert" className="sign-in-banner">
+          {emailSentError}
+        </Alert>
+      )}
+      <Dialog.Content>{t("signIn.newAccount.p1", { email })}</Dialog.Content>
+      <Dialog.Content>{t("signIn.newAccount.p2")}</Dialog.Content>
+      <Dialog.Footer>
+        <Button type="submit" styleType={AppearanceStyleType.primary} onClick={onClose}>
+          {t("t.ok")}
+        </Button>
+        <Button styleType={AppearanceStyleType.secondary} onClick={requestEmail}>
+          {t("signIn.newAccount.sendEmailAgainButton")}
+        </Button>
+      </Dialog.Footer>
+    </Dialog>
+  )
+}
+
+const SignInFormCard = ({
+  onSubmit,
+  requestError,
+  setRequestError,
+}: {
+  onSubmit: SubmitHandler<FieldValues>
+  requestError: string
+  setRequestError: Dispatch<SetStateAction<string>>
+}) => {
   /* Form Handler */
   // TODO(DAH-1575): Upgrade React-Hook-Form. Note: When you update to Version 7 of react-hook-form, "errors" becomes: "formState: { errors }""
   // This is causing a linting issue with unbound-method, see open issue as of 10/21/2020:
   // https://github.com/react-hook-form/react-hook-form/issues/2887
   // eslint-disable-next-line @typescript-eslint/unbound-method
   const { register, handleSubmit, errors, watch } = useForm()
-  const [requestError, setRequestError] = useState<string>()
-
-  const onSubmit = (data: { email: string; password: string }) => {
-    const { email, password } = data
-
-    signIn(email, password)
-      .then(() => {
-        window.location.href = getSignInRedirectUrl()
-        window.scrollTo(0, 0)
-      })
-      .catch(() => {
-        // TODO: handle sign-in error states
-        setRequestError(`${t("signIn.badCredentials")}`)
-      })
-  }
-
   return (
     <FormCard>
       <div className="form-card__lead text-center border-b mx-0">
@@ -72,13 +111,7 @@ const SignInForm = () => {
             passwordType="signIn"
           />
           <div className="text-center mt-4">
-            <Button
-              styleType={AppearanceStyleType.primary}
-              type="submit"
-              onClick={() => {
-                //
-              }}
-            >
+            <Button styleType={AppearanceStyleType.primary} type="submit">
               {t("pageTitle.signIn")}
             </Button>
           </div>
@@ -95,6 +128,54 @@ const SignInForm = () => {
         <LinkButton href="/create-account">{t("label.createAccount")}</LinkButton>
       </div>
     </FormCard>
+  )
+}
+
+const SignInForm = () => {
+  const [requestError, setRequestError] = useState<string>()
+  const [showNewAccountNotConfirmedModal, setNewAccountNotConfirmedModal] = useState<string | null>(
+    null
+  )
+  const { signIn } = useContext(UserContext)
+
+  const onSubmit = (data: { email: string; password: string }) => {
+    const { email, password } = data
+
+    signIn(email, password)
+      .then(() => {
+        window.location.href = getMyAccountPath()
+        window.scrollTo(0, 0)
+      })
+      .catch((error: AxiosError<{ error: string; email: string }>) => {
+        if (error.response.data.error === "not_confirmed") {
+          setNewAccountNotConfirmedModal(error.response.data.email)
+        } else {
+          // TODO: handle sign-in error states
+          setRequestError(`${t("signIn.badCredentials")}`)
+        }
+      })
+  }
+
+  useEffect(() => {
+    const newAccountEmail: string | null = window.sessionStorage.getItem("newAccount")
+    if (newAccountEmail) {
+      setNewAccountNotConfirmedModal(newAccountEmail)
+      window.sessionStorage.removeItem("newAccount")
+    }
+  }, [])
+
+  return (
+    <>
+      <NewAccountNotConfirmedModal
+        email={showNewAccountNotConfirmedModal}
+        onClose={() => setNewAccountNotConfirmedModal(null)}
+      />
+      <SignInFormCard
+        onSubmit={onSubmit}
+        requestError={requestError}
+        setRequestError={setRequestError}
+      />
+    </>
   )
 }
 
