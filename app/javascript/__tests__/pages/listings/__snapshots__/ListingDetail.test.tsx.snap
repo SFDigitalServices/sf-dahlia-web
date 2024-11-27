@@ -10471,6 +10471,55 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                     </section>
                   </div>
                   <div
+                    class="open-houses border-b border-gray-400 md:border-b-0"
+                  >
+                    <section
+                      class="aside-block"
+                    >
+                      <h4
+                        class="text__underline-weighted"
+                      >
+                        Open Houses
+                      </h4>
+                      <div
+                        class="false"
+                      >
+                        <p
+                          class="text text-gray-800 pb-2 flex justify-between items-center"
+                        >
+                          <span
+                            class="inline-block text-sm uppercase normal-case"
+                          >
+                            February 23, 2018
+                          </span>
+                          <span
+                            class="inline-block text-xs font-bold ml-5 font-alt-sans"
+                          >
+                            9:00AM - 12:00PM
+                          </span>
+                        </p>
+                        <div
+                          class="text-sm text-gray-700 false"
+                        >
+                          <div
+                            class="flex flex-col"
+                          >
+                            <span
+                              class="links-space translate"
+                            >
+                              <span>
+                                Library
+                              </span>
+                            </span>
+                            <span>
+                              123 Van ness, San Francisco
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                  <div
                     class="border-b border-gray-400 md:border-b-0"
                   >
                     <section
@@ -10599,6 +10648,55 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                       >
                         Complete lottery results will be posted on this date by 5 pm.
                       </p>
+                    </div>
+                  </section>
+                </div>
+                <div
+                  class="open-houses border-b border-gray-400 md:border-b-0"
+                >
+                  <section
+                    class="aside-block"
+                  >
+                    <h4
+                      class="text__underline-weighted"
+                    >
+                      Open Houses
+                    </h4>
+                    <div
+                      class="false"
+                    >
+                      <p
+                        class="text text-gray-800 pb-2 flex justify-between items-center"
+                      >
+                        <span
+                          class="inline-block text-sm uppercase normal-case"
+                        >
+                          February 23, 2018
+                        </span>
+                        <span
+                          class="inline-block text-xs font-bold ml-5 font-alt-sans"
+                        >
+                          9:00AM - 12:00PM
+                        </span>
+                      </p>
+                      <div
+                        class="text-sm text-gray-700 false"
+                      >
+                        <div
+                          class="flex flex-col"
+                        >
+                          <span
+                            class="links-space translate"
+                          >
+                            <span>
+                              Library
+                            </span>
+                          </span>
+                          <span>
+                            123 Van ness, San Francisco
+                          </span>
+                        </div>
+                      </div>
                     </div>
                   </section>
                 </div>
@@ -10772,6 +10870,55 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                       >
                         Complete lottery results will be posted on this date by 5 pm.
                       </p>
+                    </div>
+                  </section>
+                </div>
+                <div
+                  class="open-houses border-b border-gray-400 md:border-b-0"
+                >
+                  <section
+                    class="aside-block"
+                  >
+                    <h4
+                      class="text__underline-weighted"
+                    >
+                      Open Houses
+                    </h4>
+                    <div
+                      class="false"
+                    >
+                      <p
+                        class="text text-gray-800 pb-2 flex justify-between items-center"
+                      >
+                        <span
+                          class="inline-block text-sm uppercase normal-case"
+                        >
+                          February 23, 2018
+                        </span>
+                        <span
+                          class="inline-block text-xs font-bold ml-5 font-alt-sans"
+                        >
+                          9:00AM - 12:00PM
+                        </span>
+                      </p>
+                      <div
+                        class="text-sm text-gray-700 false"
+                      >
+                        <div
+                          class="flex flex-col"
+                        >
+                          <span
+                            class="links-space translate"
+                          >
+                            <span>
+                              Library
+                            </span>
+                          </span>
+                          <span>
+                            123 Van ness, San Francisco
+                          </span>
+                        </div>
+                      </div>
                     </div>
                   </section>
                 </div>
@@ -13324,6 +13471,55 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                       >
                         Complete lottery results will be posted on this date by 5 pm.
                       </p>
+                    </div>
+                  </section>
+                </div>
+                <div
+                  class="open-houses border-b border-gray-400 md:border-b-0"
+                >
+                  <section
+                    class="aside-block"
+                  >
+                    <h4
+                      class="text__underline-weighted"
+                    >
+                      Open Houses
+                    </h4>
+                    <div
+                      class="false"
+                    >
+                      <p
+                        class="text text-gray-800 pb-2 flex justify-between items-center"
+                      >
+                        <span
+                          class="inline-block text-sm uppercase normal-case"
+                        >
+                          February 23, 2018
+                        </span>
+                        <span
+                          class="inline-block text-xs font-bold ml-5 font-alt-sans"
+                        >
+                          9:00AM - 12:00PM
+                        </span>
+                      </p>
+                      <div
+                        class="text-sm text-gray-700 false"
+                      >
+                        <div
+                          class="flex flex-col"
+                        >
+                          <span
+                            class="links-space translate"
+                          >
+                            <span>
+                              Library
+                            </span>
+                          </span>
+                          <span>
+                            123 Van ness, San Francisco
+                          </span>
+                        </div>
+                      </div>
                     </div>
                   </section>
                 </div>
