@@ -24,21 +24,19 @@ import { AccountAlreadyConfirmedModal } from "./components/AccountAlreadyConfirm
 import { SiteAlert } from "../components/SiteAlert"
 import { renderInlineMarkup } from "../util/languageUtil"
 
-const requestEmail =
-  (
-    email: string,
-    setEmailSent: (value: boolean) => void,
-    setEmailSentError: (value: string | null) => void
-  ) =>
-  () => {
-    confirmEmail(email)
-      .then(() => {
-        setEmailSent(true)
-      })
-      .catch(() => {
-        setEmailSentError(t("signIn.newAccount.sendEmailAgainButton.error"))
-      })
-  }
+const requestEmail = (
+  email: string,
+  setEmailSent: (value: boolean) => void,
+  setEmailSentError: (value: string | null) => void
+) => {
+  confirmEmail(email)
+    .then(() => {
+      setEmailSent(true)
+    })
+    .catch(() => {
+      setEmailSentError(t("signIn.newAccount.sendEmailAgainButton.error"))
+    })
+}
 
 const EmailBanners = ({
   emailSent,
