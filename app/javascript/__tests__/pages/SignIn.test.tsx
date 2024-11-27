@@ -13,11 +13,6 @@ jest.mock("react-helmet-async", () => {
   }
 })
 
-jest.mock("@bloom-housing/ui-components", () => ({
-  ...jest.requireActual("@bloom-housing/ui-components"),
-  debounce: (fn) => fn,
-}))
-
 jest.mock("../../api/apiService", () => ({
   post: jest.fn(),
 }))

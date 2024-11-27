@@ -10,7 +10,6 @@ import {
   AlertBox,
   SiteAlert,
   LinkButton,
-  debounce,
 } from "@bloom-housing/ui-components"
 import { Dialog, Link, Heading, Alert } from "@bloom-housing/ui-seeds"
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form"
@@ -32,15 +31,13 @@ const NewAccountNotConfirmedModal = ({
 }) => {
   const [emailSent, setEmailSent] = useState(false)
   const [emailSentError, setEmailSentError] = useState<string | null>(null)
-  const requestEmail = debounce(() => {
-    confirmEmail(email)
-      .then(() => {
-        setEmailSent(true)
-      })
-      .catch(() => {
-        setEmailSentError(t("signIn.newAccount.sendEmailAgainButton.error"))
-      })
-  }, 1000)
+  const requestEmail = confirmEmail(email)
+    .then(() => {
+      setEmailSent(true)
+    })
+    .catch(() => {
+      setEmailSentError(t("signIn.newAccount.sendEmailAgainButton.error"))
+    })
 
   return (
     <Dialog isOpen={!!email} onClose={onClose}>
