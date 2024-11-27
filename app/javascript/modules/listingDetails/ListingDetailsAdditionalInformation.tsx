@@ -18,12 +18,14 @@ export const ListingDetailsAdditionalInformation = ({
 }: ListingDetailsAdditionalInformationProps) => {
   const { unleashFlag: isSalesFcfsEnabled } = useFeatureFlag("FCFS", false)
 
+  listing.Realtor_Commission_Unit = "test"
+  listing.Realtor_Commission_Amount = null
   const getCommissionString = () => {
     return listing.Realtor_Commission_Unit === "percent"
       ? t("listings.realtorCommissionPercentage", {
           percentage: listing.Realtor_Commission_Amount,
         })
-      : `$${listing.Realtor_Commission_Amount.toLocaleString()}`
+      : `$${listing.Realtor_Commission_Amount?.toLocaleString()}`
   }
 
   return (

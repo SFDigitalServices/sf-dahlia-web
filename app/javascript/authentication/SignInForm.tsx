@@ -10,7 +10,7 @@ import {
   AlertBox,
   LinkButton,
 } from "@bloom-housing/ui-components"
-import { Dialog, Link, Heading, Alert } from "@bloom-housing/ui-seeds"
+import { Link, Heading } from "@bloom-housing/ui-seeds"
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form"
 
 import { getMyAccountPath } from "../util/routeUtil"
@@ -18,75 +18,12 @@ import EmailFieldset from "../pages/account/components/EmailFieldset"
 import PasswordFieldset from "../pages/account/components/PasswordFieldset"
 import "../pages/account/styles/account.scss"
 import { AxiosError } from "axios"
-import { confirmEmail } from "../api/authApiService"
 import UserContext from "./context/UserContext"
+import {
+  AccountAlreadyConfirmedModal,
+  NewAccountNotConfirmedModal,
+} from "./components/SignInPageModals"
 import { SiteAlert } from "../components/SiteAlert"
-
-const AccountAlreadyConfirmedModal = ({
-  isOpen,
-  onClose,
-}: {
-  isOpen: boolean
-  onClose: () => void
-}) => {
-  return (
-    <Dialog isOpen={isOpen} onClose={onClose}>
-      <Dialog.Header>{t("signIn.accountAlreadyConfirmed.title")}</Dialog.Header>
-      <Dialog.Content>{t("signIn.accountAlreadyConfirmed.p1")}</Dialog.Content>
-      <Dialog.Footer>
-        <Button type="submit" styleType={AppearanceStyleType.primary} onClick={onClose}>
-          {t("t.ok")}
-        </Button>
-      </Dialog.Footer>
-    </Dialog>
-  )
-}
-
-const NewAccountNotConfirmedModal = ({
-  email,
-  onClose,
-}: {
-  email: string
-  onClose: () => void
-}) => {
-  const [emailSent, setEmailSent] = useState(false)
-  const [emailSentError, setEmailSentError] = useState<string | null>(null)
-  const requestEmail = () => {
-    confirmEmail(email)
-      .then(() => {
-        setEmailSent(true)
-      })
-      .catch(() => {
-        setEmailSentError(t("signIn.newAccount.sendEmailAgainButton.error"))
-      })
-  }
-
-  return (
-    <Dialog isOpen={!!email} onClose={onClose}>
-      <Dialog.Header>{t("signIn.newAccount.title")}</Dialog.Header>
-      {emailSent && (
-        <Alert className="sign-in-banner banner-background-color">
-          {t("signIn.newAccount.sendEmailAgainButton.confirmation")}
-        </Alert>
-      )}
-      {emailSentError && (
-        <Alert variant="alert" className="sign-in-banner">
-          {emailSentError}
-        </Alert>
-      )}
-      <Dialog.Content>{t("signIn.newAccount.p1", { email })}</Dialog.Content>
-      <Dialog.Content>{t("signIn.newAccount.p2")}</Dialog.Content>
-      <Dialog.Footer>
-        <Button type="submit" styleType={AppearanceStyleType.primary} onClick={onClose}>
-          {t("t.ok")}
-        </Button>
-        <Button styleType={AppearanceStyleType.secondary} onClick={requestEmail}>
-          {t("signIn.newAccount.sendEmailAgainButton")}
-        </Button>
-      </Dialog.Footer>
-    </Dialog>
-  )
-}
 
 const getExpiredConfirmedEmail = () => {
   const urlParams = new URLSearchParams(window.location.search)
