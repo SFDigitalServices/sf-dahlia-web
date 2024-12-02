@@ -1579,6 +1579,7 @@
   "signIn.newAccount.sendEmailAgainButton.confirmation": "Email sent. Check your email.",
   "signIn.newAccount.sendEmailAgainButton.error": "Something went wrong. We could not send an email. Try sending it again or refreshing the page.",
   "signOut.alertMessage.confirmSignOut": "You are signed out.",
+  "signOut.alertMessage.timeout": "You were inactive for more than 30 minutes, so we signed you out. We do this for your security. Sign in again to continue.",
   "t.ami": "AMI",
   "t.applicationClosed": "Applications Closed",
   "t.applicationDeadline": "Application Deadline",
