@@ -95,7 +95,11 @@ const SignInFormCard = ({
           {requestError}
         </AlertBox>
       )}
-      <SiteAlert type="success" />
+      {sessionStorage.getItem("alert_message_success") ? (
+        <SiteAlert type="success" />
+      ) : (
+        <SiteAlert type="secondary" />
+      )}
       <div className="form-card__group pt-0 border-b">
         <Form id="sign-in" className="mt-10 relative" onSubmit={handleSubmit(onSubmit)}>
           <EmailFieldset register={register} errors={errors} />
