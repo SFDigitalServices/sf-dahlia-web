@@ -32,7 +32,7 @@ const NewAccountNotConfirmedModal = ({
 }) => {
   const [emailSent, setEmailSent] = useState(false)
   const [emailSentError, setEmailSentError] = useState<string | null>(null)
-  const requestEmail = debounce(() => {
+  const requestEmail = () => {
     confirmEmail(email)
       .then(() => {
         setEmailSent(true)
@@ -40,7 +40,7 @@ const NewAccountNotConfirmedModal = ({
       .catch(() => {
         setEmailSentError(t("signIn.newAccount.sendEmailAgainButton.error"))
       })
-  }, 1000)
+  }
 
   return (
     <Dialog isOpen={!!email} onClose={onClose}>

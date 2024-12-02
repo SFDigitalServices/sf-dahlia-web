@@ -113,14 +113,18 @@ export const ListingDetailsSeeTheUnit = ({ listing }: SeeTheUnitProps) => {
             </a>
           </p>
         </div>
-        <HeadingSeeds size="sm" className="pb-1" priority={3}>
-          {t("contactAgent.officeHours.seeTheUnit")}
-        </HeadingSeeds>
-        <p className="text-sm">
-          {renderInlineMarkup(
-            getTranslatedString(listing.Office_Hours, "Office_Hours__c", listing.translations)
-          )}
-        </p>
+        {listing.Office_Hours && (
+          <>
+            <HeadingSeeds size="sm" className="pb-1" priority={3}>
+              {t("contactAgent.officeHours.seeTheUnit")}
+            </HeadingSeeds>
+            <p className="text-sm">
+              {renderInlineMarkup(
+                getTranslatedString(listing.Office_Hours, "Office_Hours__c", listing.translations)
+              )}
+            </p>
+          </>
+        )}
       </SeeTheUnitSubsection>
     </section>
   )
