@@ -1,3 +1,8 @@
+const setBirthYearAndVerifyError = (year: number, buttonText?: string) => {
+  cy.get('input[name="dobObject.birthYear"]').should("be.focused").clear().type(`${year}`)
+  buttonText && cy.contains("button", buttonText).click()
+}
+
 describe("Create Account Page", () => {
   beforeEach(() => {
     cy.intercept("POST", "/api/v1/auth", (req) => {
@@ -66,20 +71,9 @@ describe("Create Account Page", () => {
     cy.get('input[name="dobObject.birthYear"]').clear().type("1800")
     cy.contains("button", "Enter a valid date of birth").click()
     const currentYear = new Date().getFullYear()
-    cy.get('input[name="dobObject.birthYear"]')
-      .should("be.focused")
-      .clear()
-      .type(`${currentYear - 1}`)
-    cy.contains("button", "You must be 18 or older").click()
-    cy.get('input[name="dobObject.birthYear"]')
-      .should("be.focused")
-      .clear()
-      .type(`${currentYear + 2}`)
-    cy.contains("button", "Enter a valid date of birth").click()
-    cy.get('input[name="dobObject.birthYear"]')
-      .should("be.focused")
-      .clear()
-      .type(`${currentYear - 19}`)
+    setBirthYearAndVerifyError(currentYear - 1, "You must be 18 or older")
+    setBirthYearAndVerifyError(currentYear + 2, "Enter a valid date of birth")
+    setBirthYearAndVerifyError(currentYear - 19)
 
     cy.get('input[name="password"]').clear().type("password")
     cy.contains("button", "Choose a strong password").click()
