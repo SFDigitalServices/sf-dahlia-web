@@ -58,8 +58,62 @@ describe("Create Account Page", () => {
     cy.get('input[name="email"]').clear().type("john.doeexample.com")
     cy.contains("Email missing @ symbol. Enter email like: example@web.com").should("be.visible")
     cy.contains("button", "Email missing @ symbol").click()
-
     cy.get('input[name="email"]').should("be.focused").clear().type("john.doe@example.com")
     cy.contains("Email missing @ symbol. Enter email like: example@web.com").should("not.exist")
+
+    cy.get('input[name="dobObject.birthMonth"]').clear().type("01")
+    cy.get('input[name="dobObject.birthDay"]').clear().type("01")
+    cy.get('input[name="dobObject.birthYear"]').clear().type("1800")
+    cy.contains("button", "Enter a valid date of birth").click()
+    const currentYear = new Date().getFullYear()
+    cy.get('input[name="dobObject.birthYear"]')
+      .should("be.focused")
+      .clear()
+      .type(`${currentYear - 1}`)
+    cy.contains("button", "You must be 18 or older").click()
+    cy.get('input[name="dobObject.birthYear"]')
+      .should("be.focused")
+      .clear()
+      .type(`${currentYear + 2}`)
+    cy.contains("button", "Enter a valid date of birth").click()
+    cy.get('input[name="dobObject.birthYear"]')
+      .should("be.focused")
+      .clear()
+      .type(`${currentYear - 19}`)
+
+    cy.get('input[name="password"]').clear().type("password")
+    cy.contains("button", "Choose a strong password").click()
+    cy.get('input[name="password"]').should("be.focused").clear().type("password123")
+
+    cy.get('input[name="firstName"]').clear().type("John")
+    cy.get('input[name="lastName"]').clear().type("Doe")
+
+    cy.intercept("POST", "/api/v1/auth", (req) => {
+      console.log(req.body)
+      req.reply({
+        statusCode: 422,
+        body: {
+          status: "error",
+          data: {
+            id: "123",
+            email: req.body.contact.email,
+            firstName: req.body.contact.firstName,
+            lastName: req.body.contact.lastName,
+          },
+          errors: {
+            email: ["has already been taken", "has already been taken"],
+            full_messages: ["Email has already been taken", "Email has already been taken"],
+          },
+        },
+      })
+    }).as("createAccountError")
+
+    cy.get('button[type="submit"]').click()
+
+    cy.wait("@createAccountError")
+
+    cy.contains("button", "Email is already in use").click()
+    cy.get('input[name="email"]').should("be.focused")
+    cy.contains("a", "sign in to your account").should("have.attr", "href", "/sign-in")
   })
 })
