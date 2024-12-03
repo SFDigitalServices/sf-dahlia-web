@@ -15,6 +15,13 @@ describe("Create Account Page", () => {
       })
     }).as("createAccount")
 
+    cy.intercept("POST", "/api/v1/auth/confirmation", {
+      statusCode: 200,
+      body: {
+        success: true,
+      },
+    }).as("confirmation")
+
     cy.visit("/create-account")
   })
 
@@ -33,6 +40,10 @@ describe("Create Account Page", () => {
 
     cy.url().should("include", "/sign-in")
     cy.contains("Check your email to finish creating your account").should("be.visible")
+
+    cy.contains(/send email again/i).click()
+
+    cy.wait("@confirmation")
   })
 
   it("should show validation errors if form is incomplete or wrong", () => {
