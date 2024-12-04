@@ -35,7 +35,10 @@ export const createAccount = async (
     user,
     contact,
     locale: getCurrentLanguage(),
-    confirm_success_url: "http://localhost:3000/my-account", // TODO DAH-2566
+    confirm_success_url:
+      process.env.NODE_ENV !== "production"
+        ? "https://dahlia-full.herokuapp.com/my-account"
+        : "https://housing.sfgov.org/my-account",
     config_name: "default",
   }).then(({ data, headers }: AxiosResponse<UserData>) => {
     setAuthHeaders(headers as AuthHeaders)

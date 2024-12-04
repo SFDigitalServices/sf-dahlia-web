@@ -8,9 +8,7 @@ import {
   FormCard,
   Icon,
   AlertBox,
-  SiteAlert,
   LinkButton,
-  debounce,
 } from "@bloom-housing/ui-components"
 import { Dialog, Link, Heading, Alert } from "@bloom-housing/ui-seeds"
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form"
@@ -23,6 +21,7 @@ import { AxiosError } from "axios"
 import { confirmEmail } from "../api/authApiService"
 import UserContext from "./context/UserContext"
 import { renderInlineMarkup } from "../util/languageUtil"
+import { SiteAlert } from "../components/SiteAlert"
 
 const NewAccountNotConfirmedModal = ({
   email,
@@ -33,7 +32,7 @@ const NewAccountNotConfirmedModal = ({
 }) => {
   const [emailSent, setEmailSent] = useState(false)
   const [emailSentError, setEmailSentError] = useState<string | null>(null)
-  const requestEmail = debounce(() => {
+  const requestEmail = () => {
     confirmEmail(email)
       .then(() => {
         setEmailSent(true)
@@ -41,7 +40,7 @@ const NewAccountNotConfirmedModal = ({
       .catch(() => {
         setEmailSentError(t("signIn.newAccount.sendEmailAgainButton.error"))
       })
-  }, 1000)
+  }
 
   return (
     <Dialog isOpen={!!email} onClose={onClose}>
@@ -96,7 +95,7 @@ const SignInFormCard = ({
           {renderInlineMarkup(requestError)}
         </AlertBox>
       )}
-      <SiteAlert type="notice" dismissable />
+      <SiteAlert type="success" />
       <div className="form-card__group pt-0 border-b">
         <Form id="sign-in" className="mt-10 relative" onSubmit={handleSubmit(onSubmit)}>
           <EmailFieldset register={register} errors={errors} />
@@ -150,9 +149,7 @@ const SignInForm = () => {
         })
       )
     } else {
-      // TODO: handle sign-in error states
-      // TODO: add error handling for 500 responses
-      setRequestError(`${t("signIn.badCredentials")}`)
+      setRequestError(`${t("signIn.unknownError")}`)
     }
   }
 
