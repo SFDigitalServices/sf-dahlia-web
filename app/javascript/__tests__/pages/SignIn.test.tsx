@@ -178,6 +178,7 @@ describe("<SignIn />", () => {
       expect(screen.queryByText("Email sent. Check your email.")).toBeNull()
     })
   })
+
   it("shows the timeout limit banner", async () => {
     const mockGetItem = jest.fn()
     const mockSetItem = jest.fn()
@@ -196,5 +197,31 @@ describe("<SignIn />", () => {
     window.sessionStorage.setItem("newAccount", "test@test.com")
     await renderAndLoadAsync(<SignIn assetPaths={{}} />)
     expect(screen.getByText(t("signOut.alertMessage.timeout"))).not.toBeNull()
+  })
+
+  it("shows the correct expired confirmed email modal", async () => {
+    const customLocation = {
+      ...window.location,
+      search: "?expiredConfirmed=test@test.com",
+      href: "http://dahlia.com",
+      assign: jest.fn(),
+      replace: jest.fn(),
+      reload: jest.fn(),
+      toString: jest.fn(),
+    }
+
+    Object.defineProperty(window, "location", {
+      configurable: true,
+      enumerable: true,
+      writable: true,
+      value: customLocation,
+    })
+
+    await renderAndLoadAsync(<SignIn assetPaths={{}} />)
+
+    await waitFor(() => {
+      expect(screen.getByText("Account already confirmed")).not.toBeNull()
+      expect(screen.getByText("Sign in to continue")).not.toBeNull()
+    })
   })
 })
