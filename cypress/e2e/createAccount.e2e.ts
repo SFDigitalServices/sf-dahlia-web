@@ -6,7 +6,6 @@ const setBirthYearAndVerifyError = (year: number, buttonText?: string) => {
 describe("Create Account Page", () => {
   beforeEach(() => {
     cy.intercept("POST", "/api/v1/auth", (req) => {
-      console.log(req.body)
       req.reply({
         statusCode: 201,
         body: {
@@ -83,7 +82,6 @@ describe("Create Account Page", () => {
     cy.get('input[name="lastName"]').clear().type("Doe")
 
     cy.intercept("POST", "/api/v1/auth", (req) => {
-      console.log(req.body)
       req.reply({
         statusCode: 422,
         body: {
