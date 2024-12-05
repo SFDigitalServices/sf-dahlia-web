@@ -55,6 +55,22 @@
   }
 }
 
+.banner-background-color {
+  background-color: var(--seeds-color-gray-400) !important;
+}
+
+.sign-in-banner {
+  max-width: 100%;
+  margin-bottom: 24px;
+
+  .seeds-icon {
+    display: none;
+  }
+  button[aria-label="Close"] {
+    display: none;
+  }
+}
+
 .seeds-common-message {
   a {
     margin-inline-start: 0;
