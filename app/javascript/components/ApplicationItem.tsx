@@ -9,14 +9,13 @@ import {
 } from "@bloom-housing/ui-components"
 import { Card, Link } from "@bloom-housing/ui-seeds"
 import "./ApplicationItem.scss"
-import { getCurrentLanguage } from "../util/languageUtil"
+import { getCurrentLanguage, localizedFormat } from "../util/languageUtil"
 import { getListingDetailPath, getLocalizedPath } from "../util/routeUtil"
 import { RailsListing } from "../modules/listings/SharedHelpers"
 import {
   getListingAddressString,
   isLotteryComplete,
   showLotteryResultsPDFonly,
-  convertToReadableDate,
 } from "../util/listingUtil"
 import { RailsLotteryResult } from "../api/types/rails/listings/RailsLotteryResult"
 import { getLotteryBucketDetails } from "../api/listingApiService"
@@ -78,9 +77,7 @@ const ApplicationItem = (props: ApplicationItemProps) => {
           <h3 className={"application-item__title"}>{listingName}</h3>
           {applicationDueDate && (
             <p className={"application-item__text"}>
-              {`${t("myApplications.applicationDeadline")}: ${convertToReadableDate(
-                applicationDueDate
-              )}`}
+              {t("myApplications.applicationDeadline")}:{localizedFormat(applicationDueDate, "LL")}
             </p>
           )}
         </header>
@@ -182,7 +179,7 @@ const ApplicationItem = (props: ApplicationItemProps) => {
             )}
           </span>
           <span className={"application-item_edited-text"}>
-            {`${t("label.edited")}: ${convertToReadableDate(props.editedDate)}`}
+            {t("label.edited")}:{localizedFormat(props.editedDate, "LL")}
           </span>
         </div>
       </Card.Section>

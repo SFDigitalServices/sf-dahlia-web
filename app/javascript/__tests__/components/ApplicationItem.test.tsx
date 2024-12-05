@@ -4,7 +4,7 @@ import { getApplicationPath } from "../../util/routeUtil"
 import { applicationWithOpenListing } from "../data/RailsApplication/application-with-open-listing"
 import { ApplicationItem } from "../../components/ApplicationItem"
 import { renderAndLoadAsync } from "../__util__/renderUtils"
-import { convertToReadableDate } from "../../util/listingUtil"
+import { localizedFormat } from "../../util/languageUtil"
 
 jest.mock("../../api/listingApiService", () => ({
   getLotteryBucketDetails: () =>
@@ -79,7 +79,7 @@ const generateFutureDate = () => {
 describe("Application Item", () => {
   it("displays a correct application item for an application to an open listing", () => {
     const futureDate = generateFutureDate()
-    const readableDate = convertToReadableDate(futureDate)
+    const readableDate = localizedFormat(futureDate, "LL")
     render(
       <ApplicationItem
         applicationURL={`${getApplicationPath()}/${applicationWithOpenListing.id}`}
@@ -102,7 +102,7 @@ describe("Application Item", () => {
 
   it("displays a correct application item for an in progress application to an open listing", () => {
     const futureDate = generateFutureDate()
-    const readableDate = convertToReadableDate(futureDate)
+    const readableDate = localizedFormat(futureDate, "LL")
     render(
       <ApplicationItem
         applicationURL={`${getApplicationPath()}/${applicationWithOpenListing.id}`}
@@ -127,7 +127,7 @@ describe("Application Item", () => {
 
   it("displays a correct application item for an application to a listing with a completed lottery", async () => {
     const futureDate = generateFutureDate()
-    const readableDate = convertToReadableDate(futureDate)
+    const readableDate = localizedFormat(futureDate, "LL")
 
     await renderAndLoadAsync(
       <ApplicationItem
