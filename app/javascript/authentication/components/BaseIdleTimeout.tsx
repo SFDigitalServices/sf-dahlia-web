@@ -3,7 +3,7 @@ import React, { FunctionComponent, useEffect, useState } from "react"
 import { AlertTypes, AppearanceStyleType, Button, Modal, t } from "@bloom-housing/ui-components"
 import { setSiteAlertMessage } from "../../components/SiteAlert"
 
-const PROMPT_TIMEOUT = 3000 // TODO DAH-2880: 3 seconds, revert to 1 minute after PA testing
+const PROMPT_TIMEOUT = 60000
 const events = ["mousemove", "keypress", "scroll"]
 
 function useIdleTimeout(timeoutMs: number, onTimeout: () => void) {
@@ -45,7 +45,7 @@ const BaseIdleTimeout: FunctionComponent<IdleTimeoutProps> = (props: IdleTimeout
   const { promptTitle, promptAction, promptText, redirectPath, onTimeout } = props
 
   // 30 minutes
-  const idleTimeout = 3000 // TODO DAH-2880: 3 seconds, update to 30 minutes after PA testing
+  const idleTimeout = 30 * 60 * 1000
   const [promptTimeout, setPromptTimeout] = useState<number | undefined>()
 
   useIdleTimeout(idleTimeout, () => {
