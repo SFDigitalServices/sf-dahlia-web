@@ -149,9 +149,7 @@ const SignInForm = () => {
         })
       )
     } else {
-      // TODO: handle sign-in error states
-      // TODO: add error handling for 500 responses
-      setRequestError(`${t("signIn.badCredentials")}`)
+      setRequestError(`${t("signIn.unknownError")}`)
     }
   }
 

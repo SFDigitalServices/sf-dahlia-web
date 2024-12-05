@@ -1564,6 +1564,7 @@
   "shortFormNav.you": "You",
   "signIn.badCredentials": "Invalid login credentials. Please try again.",
   "signIn.badCredentialsWithResetLink": "Email or password is incorrect. Check for mistakes and try again. <a target='_blank' href='%{url}'>Reset your password</a> if you need to.",
+  "signIn.unknownError": "Something went wrong. Try again or refresh the page.",
   "signIn.dontHaveAccount": "Don't have an account?",
   "signIn.easilyCheckLottery": "Easily check lottery results",
   "signIn.fillInFaster": "Fill in applications faster",

@@ -114,7 +114,9 @@ describe("<SignIn />", () => {
     })
 
     await waitFor(() => {
-      expect(screen.getByText(/invalid login credentials\. please try again\./i)).not.toBeNull()
+      expect(
+        screen.getByText(/Something went wrong\. Try again or refresh the page\./i)
+      ).not.toBeNull()
     })
   })
 
