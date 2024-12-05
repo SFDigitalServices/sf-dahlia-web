@@ -62,6 +62,7 @@ const MyAccount = (_props: MyAccountProps) => {
   const { profile, loading, initialStateLoaded } = React.useContext(UserContext)
 
   if (!profile && !loading && initialStateLoaded) {
+    window.sessionStorage.setItem("redirect", "account")
     // TODO: Redirect to React sign in page and show a message that user needs to sign in
     window.location.href = getSignInPath()
     return null
