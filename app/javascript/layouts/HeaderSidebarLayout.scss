@@ -15,6 +15,10 @@
       align-items: center;
     }
 
+    @media (max-width: $screen-lg) {
+      margin-left: 0;
+    }
+
     .page-header__title {
       font-size: var(--bloom-font-size-3xl);
       text-align: start !important;
