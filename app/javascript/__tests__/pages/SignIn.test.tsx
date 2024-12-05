@@ -2,9 +2,11 @@ import React from "react"
 
 import SignIn from "../../pages/sign-in"
 import { renderAndLoadAsync } from "../__util__/renderUtils"
-import { screen, waitFor } from "@testing-library/react"
+import { render, screen, waitFor } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
 import { post } from "../../api/apiService"
+import { SiteAlert } from "../../components/SiteAlert"
+import { t } from "@bloom-housing/ui-components"
 
 jest.mock("react-helmet-async", () => {
   return {
@@ -175,5 +177,24 @@ describe("<SignIn />", () => {
       expect(screen.queryByText("Check your email to finish creating your account")).toBeNull()
       expect(screen.queryByText("Email sent. Check your email.")).toBeNull()
     })
+  })
+  it("shows the timeout limit banner", async () => {
+    const mockGetItem = jest.fn()
+    const mockSetItem = jest.fn()
+    const mockRemoveItem = jest.fn()
+    Object.defineProperty(window, "sessionStorage", {
+      value: {
+        getItem: (...args: string[]) => mockGetItem(...args),
+        setItem: (...args: string[]) => mockSetItem(...args),
+        removeItem: (...args: string[]) => mockRemoveItem(...args),
+      },
+    })
+    window.sessionStorage.setItem("alert_message_secondary", t("signOut.alertMessage.timeout"))
+    mockGetItem.mockImplementationOnce(() => t("signOut.alertMessage.timeout"))
+    render(<SiteAlert type="secondary" />)
+    expect(mockGetItem).toHaveBeenCalledWith("alert_message_secondary")
+    window.sessionStorage.setItem("newAccount", "test@test.com")
+    await renderAndLoadAsync(<SignIn assetPaths={{}} />)
+    expect(screen.getByText(t("signOut.alertMessage.timeout"))).not.toBeNull()
   })
 })
