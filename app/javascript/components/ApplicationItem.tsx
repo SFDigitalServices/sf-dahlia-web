@@ -187,7 +187,7 @@ const ApplicationItem = (props: ApplicationItemProps) => {
             )}
           </span>
           <span className={"application-item_edited-text"}>
-            {t("label.edited")}:{localizedFormat(props.editedDate, "LL")}
+            {t("label.edited")}: {localizedFormat(props.editedDate, "LL")}
           </span>
         </div>
       </Card.Section>
