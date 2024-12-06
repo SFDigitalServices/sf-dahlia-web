@@ -20,6 +20,7 @@ import "../pages/account/styles/account.scss"
 import { AxiosError } from "axios"
 import { confirmEmail } from "../api/authApiService"
 import UserContext from "./context/UserContext"
+import { AccountAlreadyConfirmedModal } from "./components/AccountAlreadyConfirmedModal"
 import { SiteAlert } from "../components/SiteAlert"
 
 const NewAccountNotConfirmedModal = ({
@@ -66,6 +67,12 @@ const NewAccountNotConfirmedModal = ({
       </Dialog.Footer>
     </Dialog>
   )
+}
+
+const getExpiredConfirmedEmail = () => {
+  const urlParams = new URLSearchParams(window.location.search)
+  const expiredUnconfirmedEmail = urlParams.get("expiredConfirmed")
+  return expiredUnconfirmedEmail
 }
 
 const SignInFormCard = ({
@@ -140,6 +147,8 @@ const SignInForm = () => {
   const [showNewAccountNotConfirmedModal, setNewAccountNotConfirmedModal] = useState<string | null>(
     null
   )
+  const [showAccountAlreadyConfirmedModal, setShowAccountAlreadyConfirmedModal] = useState(null)
+
   const { signIn } = useContext(UserContext)
 
   const onSubmit = (data: { email: string; password: string }) => {
@@ -162,14 +171,21 @@ const SignInForm = () => {
 
   useEffect(() => {
     const newAccountEmail: string | null = window.sessionStorage.getItem("newAccount")
+    const expiredConfirmedEmail = getExpiredConfirmedEmail()
     if (newAccountEmail) {
       setNewAccountNotConfirmedModal(newAccountEmail)
       window.sessionStorage.removeItem("newAccount")
+    } else if (expiredConfirmedEmail) {
+      setShowAccountAlreadyConfirmedModal(true)
     }
   }, [])
 
   return (
     <>
+      <AccountAlreadyConfirmedModal
+        isOpen={showAccountAlreadyConfirmedModal}
+        onClose={() => setShowAccountAlreadyConfirmedModal(false)}
+      />
       <NewAccountNotConfirmedModal
         email={showNewAccountNotConfirmedModal}
         onClose={() => setNewAccountNotConfirmedModal(null)}
