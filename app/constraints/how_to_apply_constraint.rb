@@ -21,11 +21,7 @@ class HowToApplyConstraint
   end
 
   def listing_active(listing)
-    # Status has to be Active
-    # TODO: DAH-2846 Status will be added to the listing object
-    # Until then, that field will be nil
-    (!listing['Status'].nil? && listing['Status'] == 'Active') ||
-      # Accepting Online Applications has to be true
-      listing['Accepting_Online_Applications'] == true
+    # Status has to be Active && Accepting Online Applications has to be true
+    listing['Status'] == 'Active' && listing['Accepting_Online_Applications'] == true
   end
 end

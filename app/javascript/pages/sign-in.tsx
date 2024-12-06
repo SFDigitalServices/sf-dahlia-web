@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React from "react"
 
 import { t } from "@bloom-housing/ui-components"
 
@@ -10,21 +10,6 @@ interface SignInProps {
 }
 
 const SignIn = (_props: SignInProps) => {
-  const [showEmailConfirmationModal, setShowEmailConfirmationModal] = useState(null)
-
-  useEffect(() => {
-    const isRedirect = window.sessionStorage.getItem("redirect")
-    if (isRedirect === "true") {
-      setShowEmailConfirmationModal(true)
-      window.sessionStorage.removeItem("redirect")
-    }
-  }, [])
-
-  if (showEmailConfirmationModal) {
-    // TODO: https://sfgovdt.jira.com/browse/DAH-2881
-    window.alert("Email confirmation modal will show!")
-  }
-
   return (
     <FormsLayout title={t("pageTitle.signIn")}>
       <SignInForm />
@@ -32,4 +17,4 @@ const SignIn = (_props: SignInProps) => {
   )
 }
 
-export default withAppSetup(SignIn, true)
+export default withAppSetup(SignIn)

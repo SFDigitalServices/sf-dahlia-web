@@ -261,7 +261,7 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
                   class="pt-4 md:py-0 max-w-3xl"
                 >
                   <div
-                    class="my-6 px-6 md:my-12 md:px-0 md:mr-24"
+                    class="my-6 px-6 md:my-12 md:mr-24"
                   >
                     <div
                       class="seeds-common-message is-fullwidth seeds-message justify-start leading-5"
@@ -591,7 +591,7 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
                               class="text-base"
                               id="SubmitApplicationStep"
                             >
-                              When you are ready, submit your application in 3 steps:
+                              When you are ready, submit your application in 2 steps:
                             </div>
                             <ul
                               class="mb-0 pb-2"
@@ -612,12 +612,7 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
                               <li
                                 class="text-base"
                               >
-                                Follow the link to Box.com
-                              </li>
-                              <li
-                                class="text-base"
-                              >
-                                Upload your filled out application and all documents to Box.com
+                                Follow the link to Box.com. Upload your filled out application and all documents
                               </li>
                             </ul>
                             <div
