@@ -81,7 +81,7 @@ const ApplicationItem = (props: ApplicationItemProps) => {
                 <p>{t("myApplications.applicationDeadline")}</p>
                 <p>
                   {t("myApplications.applicationDeadlineTime", {
-                    date: localizedFormat(applicationDueDate, "LL"),
+                    date: localizedFormat(applicationDueDate, "ll"),
                     time: formatTimeOfDay(applicationDueDate),
                   })}
                 </p>
@@ -187,7 +187,7 @@ const ApplicationItem = (props: ApplicationItemProps) => {
             )}
           </span>
           <span className={"application-item_edited-text"}>
-            {t("label.edited")}: {localizedFormat(props.editedDate, "LL")}
+            {t("label.edited")}: {localizedFormat(props.editedDate, "ll")}
           </span>
         </div>
       </Card.Section>
