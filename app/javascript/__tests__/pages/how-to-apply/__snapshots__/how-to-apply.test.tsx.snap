@@ -289,7 +289,7 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
                           We are not accepting applications yet.
                         </b>
                         <br />
-                        Applications open: January 1, 2050 at 1:00 AM Pacific Time
+                        Applications open: December 31, 2049 at 5:00 PM Pacific Time
                       </span>
                     </div>
                     <div
@@ -640,7 +640,7 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
                                   />
                                 </svg>
                               </span>
-                               Applications open January 1, 2050 at 1:00 AM Pacific Time. Check back here to apply.
+                               Applications open December 31, 2049 at 5:00 PM Pacific Time. Check back here to apply.
                             </div>
                             <div
                               class="my-6 p-6 bg-gray-200"
