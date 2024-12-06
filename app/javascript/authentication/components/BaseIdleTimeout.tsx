@@ -1,7 +1,6 @@
 import React, { FunctionComponent, useEffect, useState } from "react"
 
-import { AlertTypes, AppearanceStyleType, Button, Modal, t } from "@bloom-housing/ui-components"
-import { setSiteAlertMessage } from "../../components/SiteAlert"
+import { AlertTypes, AppearanceStyleType, Button, Modal } from "@bloom-housing/ui-components"
 
 const PROMPT_TIMEOUT = 60000
 const events = ["mousemove", "keypress", "scroll"]
@@ -57,7 +56,6 @@ const BaseIdleTimeout: FunctionComponent<IdleTimeoutProps> = (props: IdleTimeout
     const timeoutAction = async () => {
       setPromptTimeout(undefined)
       await onTimeout()
-      setSiteAlertMessage(t("signOut.alertMessage.timeout"), "secondary")
       // replace this with proper react router when we have one
       return (window.location.href = redirectPath)
     }

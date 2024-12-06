@@ -6,6 +6,7 @@ import { User } from "../user"
 export type ContextProps = {
   signIn: (email: string, password: string) => Promise<User>
   signOut: () => void
+  timeOut: () => void
   saveProfile: (profile: User) => void
   // True when an API request is processing
   loading: boolean
