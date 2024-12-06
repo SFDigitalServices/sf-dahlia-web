@@ -1,6 +1,6 @@
 import { createReducer } from "typesafe-actions"
 
-import { clearHeaders } from "../token"
+import { clearHeadersSignOut, clearHeadersTimeOut } from "../token"
 import { User } from "../user"
 import { UserAction } from "./userActions"
 
@@ -16,7 +16,13 @@ const UserReducer = createReducer({ loading: false, initialStateLoaded: false } 
   [UserAction.StopLoading]: (state) => ({ ...state, loading: false }),
   [UserAction.SaveProfile]: (state, { payload: user }) => ({ ...state, profile: user }),
   [UserAction.SignOut]: () => {
-    clearHeaders()
+    clearHeadersSignOut()
+    // Clear out all existing state other than the storage type
+    return { loading: false, initialStateLoaded: true }
+  },
+  [UserAction.TimeOut]: () => {
+    clearHeadersTimeOut()
+
     // Clear out all existing state other than the storage type
     return { loading: false, initialStateLoaded: true }
   },

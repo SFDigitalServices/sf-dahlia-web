@@ -2,7 +2,7 @@ import React, { useEffect, useReducer } from "react"
 
 import { getProfile, signIn } from "../../api/authApiService"
 import { isTokenValid } from "../token"
-import { saveProfile, signOut, startLoading, stopLoading } from "./userActions"
+import { saveProfile, signOut, timeOut, startLoading, stopLoading } from "./userActions"
 import UserContext, { ContextProps } from "./UserContext"
 import UserReducer from "./UserReducer"
 
@@ -50,6 +50,7 @@ const UserProvider = (props: UserProviderProps) => {
         .finally(() => dispatch(stopLoading()))
     },
     signOut: () => dispatch(signOut()),
+    timeOut: () => dispatch(timeOut()),
   }
 
   return <UserContext.Provider value={contextValues}>{props.children}</UserContext.Provider>
