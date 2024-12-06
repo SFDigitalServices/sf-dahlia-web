@@ -9,7 +9,7 @@ import {
 } from "@bloom-housing/ui-components"
 import { Card, Link } from "@bloom-housing/ui-seeds"
 import "./ApplicationItem.scss"
-import { getCurrentLanguage, localizedFormat } from "../util/languageUtil"
+import { formatTimeOfDay, getCurrentLanguage, localizedFormat } from "../util/languageUtil"
 import { getListingDetailPath, getLocalizedPath } from "../util/routeUtil"
 import { RailsListing } from "../modules/listings/SharedHelpers"
 import {
@@ -76,9 +76,17 @@ const ApplicationItem = (props: ApplicationItemProps) => {
         <header className={"application-item__header"} data-testid="application-item">
           <h3 className={"application-item__title"}>{listingName}</h3>
           {applicationDueDate && (
-            <p className={"application-item__text"}>
-              {t("myApplications.applicationDeadline")}:{localizedFormat(applicationDueDate, "LL")}
-            </p>
+            <>
+              <div className={"application-item__text"}>
+                <p>{t("myApplications.applicationDeadline")}</p>
+                <p>
+                  {t("myApplications.applicationDeadlineTime", {
+                    date: localizedFormat(applicationDueDate, "LL"),
+                    time: formatTimeOfDay(applicationDueDate),
+                  })}
+                </p>
+              </div>
+            </>
           )}
         </header>
         <section className={"application-item__content"}>
