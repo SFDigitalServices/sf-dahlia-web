@@ -64,7 +64,7 @@ describe("My Applications", () => {
     cy.get(".application-item")
       .first()
       .within(() => {
-        cy.contains("Application deadline: Sep 1, 2024")
+        cy.contains("October 31, 2024 at 5:00 PM Pacific Time")
         cy.get(".application-item__status").should("contain.text", "Status: Submitted")
         cy.contains("Your lottery number is #01543743")
       })
@@ -76,7 +76,7 @@ describe("My Applications", () => {
     cy.get(".application-item")
       .eq(3)
       .within(() => {
-        cy.contains("Application deadline: Dec 15, 2022")
+        cy.contains("Dec 15, 2022 at 12:00 PM Pacific Time")
         cy.get(".application-item__status").should("contain.text", "Status: Results posted")
         cy.get("button").contains("#01517927").click()
       })
