@@ -42,6 +42,7 @@
   align-self: center;
   font-size: var(--seeds-font-size-sm);
   color: var(--seeds-color-gray-750);
+  @apply text-right;
   @media (max-width: theme("screens.sm")) {
     @apply text-left;
   }

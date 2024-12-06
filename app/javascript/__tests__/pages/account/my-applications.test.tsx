@@ -287,7 +287,7 @@ describe("<MyApplications />", () => {
       window.location.href = "http://dahlia.com?alreadySubmittedId=a0o6s000001cn02AAA"
       await renderAndLoadAsync(<MyApplications assetPaths={{}} />)
       const modal = screen.getByTestId("modalMock")
-      within(modal).getByText(/submitted: jun 6, 2024/i)
+      within(modal).getByText(/submitted: june 5, 2024/i)
       const button = within(modal).getByRole("link", {
         name: /view application/i,
       })

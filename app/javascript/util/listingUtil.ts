@@ -208,7 +208,7 @@ const formatEventTime = (eventTime: string) => {
 export const getEventDateTime = (eventDate: string, eventTime: string) => {
   const startTime = eventTime?.includes(":") ? eventTime : `${formatEventTime(eventTime)}`
   dayjs.extend(customParseFormat)
-  return dayjs(`${eventDate} ${startTime}`, "YYYY-MM-DD h:mmA")
+  return dayjs(`${eventDate} ${startTime}`, "YYYY-MM-DD h:mmA").tz()
 }
 
 export const sortByDateTimeString = (dateTimeA: dayjs.Dayjs, dateTimeB: dayjs.Dayjs) => {
@@ -697,12 +697,3 @@ export const listingHasVeteransPreference = (listing: RailsListing): boolean => 
 export const forceRecacheParam = () => ({
   params: window.location.search.includes("preview=true") ? { force: true } : {},
 })
-
-export const convertToReadableDate = (dateString: string) => {
-  return new Date(dateString).toLocaleDateString("en-US", {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-    timeZone: "UTC",
-  })
-}

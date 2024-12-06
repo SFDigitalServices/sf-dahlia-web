@@ -76,7 +76,7 @@ exports[`ListingDetailsAside renders ListingDetailsAside component fcfs 1`] = `
               <span
                 data-part="content"
               >
-                Applications open: January 1, 2050 at 1:00 AM Pacific Time
+                Applications open: December 31, 2049 at 5:00 PM Pacific Time
               </span>
             </div>
           </div>
@@ -136,7 +136,7 @@ exports[`ListingDetailsAside renders ListingDetailsAside component fcfs 1`] = `
                   <span
                     class="inline-block text-sm uppercase normal-case"
                   >
-                    November 19, 2019
+                    November 18, 2019
                   </span>
                   <span
                     class="inline-block text-xs font-bold ml-5 font-alt-sans"
@@ -242,7 +242,7 @@ exports[`ListingDetailsAside renders ListingDetailsAside component fcfs 1`] = `
                         <span
                           class="inline-block text-sm uppercase normal-case"
                         >
-                          December 3, 2019
+                          December 2, 2019
                         </span>
                         <span
                           class="inline-block text-xs font-bold ml-5 font-alt-sans"
@@ -260,7 +260,7 @@ exports[`ListingDetailsAside renders ListingDetailsAside component fcfs 1`] = `
                         <span
                           class="inline-block text-sm uppercase normal-case"
                         >
-                          December 7, 2019
+                          December 6, 2019
                         </span>
                         <span
                           class="inline-block text-xs font-bold ml-5 font-alt-sans"
@@ -296,7 +296,7 @@ exports[`ListingDetailsAside renders ListingDetailsAside component fcfs 1`] = `
                         <span
                           class="inline-block text-sm uppercase normal-case"
                         >
-                          December 8, 2019
+                          December 7, 2019
                         </span>
                       </p>
                     </div>
@@ -463,7 +463,7 @@ exports[`ListingDetailsAside renders ListingDetailsAside component fcfs 1`] = `
             <div
               class="text-sm text-gray-750"
             >
-              June 2020
+              May 2020
             </div>
           </section>
           <div
@@ -588,7 +588,7 @@ exports[`ListingDetailsAside renders ListingDetailsAside component rental 1`] = 
               <span
                 data-part="content"
               >
-                Applications closed: January 1, 2000 at 1:00 AM Pacific Time
+                Applications closed: December 31, 1999 at 5:00 PM Pacific Time
               </span>
             </div>
           </div>
@@ -615,7 +615,7 @@ exports[`ListingDetailsAside renders ListingDetailsAside component rental 1`] = 
                   <span
                     class="font-bold"
                   >
-                    6:00 pm
+                    11:00 am
                   </span>
                 </p>
                 <div
@@ -664,7 +664,7 @@ exports[`ListingDetailsAside renders ListingDetailsAside component rental 1`] = 
                 <p
                   class="mb-4"
                 >
-                  March 23, 2023
+                  March 22, 2023
                 </p>
                 <p
                   class="text-gray-700"
@@ -694,7 +694,7 @@ exports[`ListingDetailsAside renders ListingDetailsAside component rental 1`] = 
                   <span
                     class="inline-block text-sm uppercase normal-case"
                   >
-                    February 23, 2018
+                    February 22, 2018
                   </span>
                   <span
                     class="inline-block text-xs font-bold ml-5 font-alt-sans"
@@ -840,7 +840,7 @@ exports[`ListingDetailsAside renders ListingDetailsAside component sales 1`] = `
               <span
                 data-part="content"
               >
-                Application deadline: January 1, 2050 at 1:00 AM Pacific Time
+                Application deadline: December 31, 2049 at 5:00 PM Pacific Time
               </span>
             </div>
           </div>
@@ -864,7 +864,7 @@ exports[`ListingDetailsAside renders ListingDetailsAside component sales 1`] = `
                   <span
                     class="inline-block text-sm uppercase normal-case"
                   >
-                    November 19, 2019
+                    November 18, 2019
                   </span>
                   <span
                     class="inline-block text-xs font-bold ml-5 font-alt-sans"
@@ -972,7 +972,7 @@ exports[`ListingDetailsAside renders ListingDetailsAside component sales 1`] = `
                         <span
                           class="inline-block text-sm uppercase normal-case"
                         >
-                          December 3, 2019
+                          December 2, 2019
                         </span>
                         <span
                           class="inline-block text-xs font-bold ml-5 font-alt-sans"
@@ -990,7 +990,7 @@ exports[`ListingDetailsAside renders ListingDetailsAside component sales 1`] = `
                         <span
                           class="inline-block text-sm uppercase normal-case"
                         >
-                          December 7, 2019
+                          December 6, 2019
                         </span>
                         <span
                           class="inline-block text-xs font-bold ml-5 font-alt-sans"
@@ -1026,7 +1026,7 @@ exports[`ListingDetailsAside renders ListingDetailsAside component sales 1`] = `
                         <span
                           class="inline-block text-sm uppercase normal-case"
                         >
-                          December 8, 2019
+                          December 7, 2019
                         </span>
                       </p>
                     </div>
@@ -1193,7 +1193,7 @@ exports[`ListingDetailsAside renders ListingDetailsAside component sales 1`] = `
             <div
               class="text-sm text-gray-750"
             >
-              June 2020
+              May 2020
             </div>
           </section>
           <div

@@ -4,7 +4,8 @@ import { getApplicationPath } from "../../util/routeUtil"
 import { applicationWithOpenListing } from "../data/RailsApplication/application-with-open-listing"
 import { ApplicationItem } from "../../components/ApplicationItem"
 import { renderAndLoadAsync } from "../__util__/renderUtils"
-import { convertToReadableDate } from "../../util/listingUtil"
+import { formatTimeOfDay, localizedFormat } from "../../util/languageUtil"
+import { t } from "@bloom-housing/ui-components"
 
 jest.mock("../../api/listingApiService", () => ({
   getLotteryBucketDetails: () =>
@@ -79,7 +80,10 @@ const generateFutureDate = () => {
 describe("Application Item", () => {
   it("displays a correct application item for an application to an open listing", () => {
     const futureDate = generateFutureDate()
-    const readableDate = convertToReadableDate(futureDate)
+    const readableDate = t("myApplications.applicationDeadlineTime", {
+      date: localizedFormat(futureDate, "ll"),
+      time: formatTimeOfDay(futureDate),
+    })
     render(
       <ApplicationItem
         applicationURL={`${getApplicationPath()}/${applicationWithOpenListing.id}`}
@@ -95,14 +99,17 @@ describe("Application Item", () => {
     )
 
     expect(screen.getByText(/681 florida st, san francisco, ca 94110/i)).toBeInTheDocument()
-    expect(screen.getByText(new RegExp(readableDate, "i"))).toBeInTheDocument()
+    expect(screen.getByText(readableDate)).toBeInTheDocument()
     expect(screen.getByRole("link", { name: /view application/i })).toBeInTheDocument()
     expect(screen.queryByRole("link", { name: /delete/i })).not.toBeInTheDocument()
   })
 
   it("displays a correct application item for an in progress application to an open listing", () => {
     const futureDate = generateFutureDate()
-    const readableDate = convertToReadableDate(futureDate)
+    const readableDate = t("myApplications.applicationDeadlineTime", {
+      date: localizedFormat(futureDate, "ll"),
+      time: formatTimeOfDay(futureDate),
+    })
     render(
       <ApplicationItem
         applicationURL={`${getApplicationPath()}/${applicationWithOpenListing.id}`}
@@ -118,7 +125,7 @@ describe("Application Item", () => {
     )
 
     expect(screen.getByText(/681 florida st, san francisco, ca 94110/i)).toBeInTheDocument()
-    expect(screen.getByText(new RegExp(readableDate, "i"))).toBeInTheDocument()
+    expect(screen.getByText(readableDate)).toBeInTheDocument()
     expect(screen.getByRole("link", { name: /continue application/i })).toBeInTheDocument()
     expect(screen.queryByRole("link", { name: /see listing/i })).toBeInTheDocument()
     expect(screen.queryByRole("button", { name: /delete/i })).toBeInTheDocument()
@@ -127,7 +134,10 @@ describe("Application Item", () => {
 
   it("displays a correct application item for an application to a listing with a completed lottery", async () => {
     const futureDate = generateFutureDate()
-    const readableDate = convertToReadableDate(futureDate)
+    const readableDate = t("myApplications.applicationDeadlineTime", {
+      date: localizedFormat(futureDate, "ll"),
+      time: formatTimeOfDay(futureDate),
+    })
 
     await renderAndLoadAsync(
       <ApplicationItem
