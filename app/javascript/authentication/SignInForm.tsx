@@ -20,6 +20,7 @@ import "../pages/account/styles/account.scss"
 import { AxiosError } from "axios"
 import { confirmEmail } from "../api/authApiService"
 import UserContext from "./context/UserContext"
+import { AccountAlreadyConfirmedModal } from "./components/AccountAlreadyConfirmedModal"
 import { SiteAlert } from "../components/SiteAlert"
 
 const NewAccountNotConfirmedModal = ({
@@ -68,6 +69,12 @@ const NewAccountNotConfirmedModal = ({
   )
 }
 
+const getExpiredConfirmedEmail = () => {
+  const urlParams = new URLSearchParams(window.location.search)
+  const expiredUnconfirmedEmail = urlParams.get("expiredConfirmed")
+  return expiredUnconfirmedEmail
+}
+
 const SignInFormCard = ({
   onSubmit,
   requestError,
@@ -94,7 +101,11 @@ const SignInFormCard = ({
           {requestError}
         </AlertBox>
       )}
-      <SiteAlert type="success" />
+      {sessionStorage.getItem("alert_message_success") ? (
+        <SiteAlert type="success" />
+      ) : (
+        <SiteAlert type="secondary" />
+      )}
       <div className="form-card__group pt-0 border-b">
         <Form id="sign-in" className="mt-10 relative" onSubmit={handleSubmit(onSubmit)}>
           <EmailFieldset register={register} errors={errors} />
@@ -136,6 +147,8 @@ const SignInForm = () => {
   const [showNewAccountNotConfirmedModal, setNewAccountNotConfirmedModal] = useState<string | null>(
     null
   )
+  const [showAccountAlreadyConfirmedModal, setShowAccountAlreadyConfirmedModal] = useState(null)
+
   const { signIn } = useContext(UserContext)
 
   const onSubmit = (data: { email: string; password: string }) => {
@@ -158,14 +171,21 @@ const SignInForm = () => {
 
   useEffect(() => {
     const newAccountEmail: string | null = window.sessionStorage.getItem("newAccount")
+    const expiredConfirmedEmail = getExpiredConfirmedEmail()
     if (newAccountEmail) {
       setNewAccountNotConfirmedModal(newAccountEmail)
       window.sessionStorage.removeItem("newAccount")
+    } else if (expiredConfirmedEmail) {
+      setShowAccountAlreadyConfirmedModal(true)
     }
   }, [])
 
   return (
     <>
+      <AccountAlreadyConfirmedModal
+        isOpen={showAccountAlreadyConfirmedModal}
+        onClose={() => setShowAccountAlreadyConfirmedModal(false)}
+      />
       <NewAccountNotConfirmedModal
         email={showNewAccountNotConfirmedModal}
         onClose={() => setNewAccountNotConfirmedModal(null)}

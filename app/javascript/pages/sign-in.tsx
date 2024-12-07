@@ -17,4 +17,4 @@ const SignIn = (_props: SignInProps) => {
   )
 }
 
-export default withAppSetup(SignIn, true)
+export default withAppSetup(SignIn)

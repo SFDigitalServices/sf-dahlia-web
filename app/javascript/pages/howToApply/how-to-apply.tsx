@@ -94,7 +94,7 @@ const NotYetOpenMessage = ({ listing }: { listing: RailsSaleListing }) => {
 
 const HowLongItTakesSection = ({ listing }: { listing: RailsSaleListing }) => {
   return (
-    <div className="py-10">
+    <div>
       <Header headerText={t("howToApplyPage.howLongItTakesSection.title")} />
       <SubHeader subHeaderText={t("howToApplyPage.howLongItTakesSection.subtitle1")} />
       {t("howToApplyPage.howLongItTakesSection.p1")}
@@ -185,7 +185,7 @@ export const LeasingAgentBox = ({ listing }: { listing: RailsSaleListing }) => {
 
 const BeforeYouStartSection = ({ listing }: { listing: RailsSaleListing }) => {
   return (
-    <div className="pb-10">
+    <div className="pt-10">
       <Header headerText={t("howToApplyPage.beforeYouStartSection.title")} />
       <SubHeader subHeaderText={t("howToApplyPage.beforeYouStartSection.subtitle1")} />
       <div>{t("howToApplyPage.beforeYouStartSection.eligibilityList.title")}</div>
