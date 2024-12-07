@@ -8,6 +8,7 @@ import {
   getRentalDirectoryPath,
   getSaleDirectoryPath,
   getSignInPath,
+  getForgotPasswordPath,
 } from "../../util/routeUtil"
 
 describe("routeUtil", () => {
@@ -50,6 +51,12 @@ describe("routeUtil", () => {
     it("returns the correct path for getMyaccountSettingsPath", () => {
       expect(getMyAccountSettingsPath("/es/sign-in")).toBe("/es/account-settings")
       expect(getMyAccountSettingsPath("")).toBe("/account-settings")
+    })
+    it("returns the correct path for getForgotPasswordPath", () => {
+      expect(getForgotPasswordPath()).toBe("/forgot-password")
+      expect(getForgotPasswordPath("")).toBe("/forgot-password")
+
+      expect(getForgotPasswordPath("es/sign-in")).toBe("/es/forgot-password")
     })
   })
 
