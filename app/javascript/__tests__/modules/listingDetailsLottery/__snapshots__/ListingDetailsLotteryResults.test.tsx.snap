@@ -13,7 +13,7 @@ exports[`ListingDetailsLotteryResults displays if lottery is complete 1`] = `
     <p
       class="mb-4 text-xs"
     >
-      January 26, 2022
+      January 25, 2022
     </p>
     <div
       class="bg-gray-100 py-4"
@@ -42,7 +42,7 @@ exports[`ListingDetailsLotteryResults displays with summary if lottery is comple
     <p
       class="mb-4 text-xs"
     >
-      December 22, 2021
+      December 21, 2021
     </p>
     <div
       class="bg-gray-100 py-4"

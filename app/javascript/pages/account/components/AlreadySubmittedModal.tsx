@@ -2,8 +2,8 @@ import { t, LinkButton } from "@bloom-housing/ui-components"
 import { Dialog } from "@bloom-housing/ui-seeds"
 import React from "react"
 import { Application } from "../../../api/types/rails/application/RailsApplication"
-import { convertToReadableDate } from "../../../util/listingUtil"
 import { getApplicationPath } from "../../../util/routeUtil"
+import { localizedFormat } from "../../../util/languageUtil"
 
 export const AlreadySubmittedModal: React.FC<{
   alreadySubmittedId: string | null
@@ -14,8 +14,9 @@ export const AlreadySubmittedModal: React.FC<{
     return null
   }
 
-  const applicationSubmittedDate = convertToReadableDate(
-    alreadySubmittedApplication.applicationSubmittedDate
+  const applicationSubmittedDate = localizedFormat(
+    alreadySubmittedApplication.applicationSubmittedDate,
+    "LL"
   )
 
   return (

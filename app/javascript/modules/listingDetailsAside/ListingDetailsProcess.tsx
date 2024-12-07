@@ -69,7 +69,7 @@ export const ListingDetailsProcess = ({
               events={[
                 {
                   dateString: localizedFormat(listing.Lottery_Date, "LL"),
-                  timeString: dayjs(listing.Lottery_Date).format("hh:mma"),
+                  timeString: dayjs(listing.Lottery_Date).tz().format("hh:mma"),
                   note: getEventNote({
                     City: listing.Lottery_City,
                     Street_Address: listing.Lottery_Street_Address,

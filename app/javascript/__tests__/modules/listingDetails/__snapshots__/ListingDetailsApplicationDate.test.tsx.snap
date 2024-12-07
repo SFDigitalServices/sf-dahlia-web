@@ -95,7 +95,7 @@ exports[`ListingDetailsApplicationDate fcfs listing displays Applications closed
       <span
         data-part="content"
       >
-        Applications open: January 1, 2050 at 1:00 AM Pacific Time
+        Applications open: December 31, 2049 at 5:00 PM Pacific Time
       </span>
     </div>
   </div>
@@ -129,7 +129,7 @@ exports[`ListingDetailsApplicationDate lottery listing displays Application Dead
       <span
         data-part="content"
       >
-        Application deadline: January 1, 2050 at 1:00 AM Pacific Time
+        Application deadline: December 31, 2049 at 5:00 PM Pacific Time
       </span>
     </div>
   </div>
@@ -163,7 +163,7 @@ exports[`ListingDetailsApplicationDate lottery listing displays Applications Clo
       <span
         data-part="content"
       >
-        Applications closed: January 1, 2000 at 1:00 AM Pacific Time
+        Applications closed: December 31, 1999 at 5:00 PM Pacific Time
       </span>
     </div>
   </div>
