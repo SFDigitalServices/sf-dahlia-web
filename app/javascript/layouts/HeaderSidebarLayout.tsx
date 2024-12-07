@@ -18,7 +18,7 @@ const HeaderSidebarLayout = ({ children, title, subtitle, mainPage, sidebarConte
   const { getAssetPath } = React.useContext(ConfigContext)
   const classNames = mainPage
     ? "flex flex-wrap flex-col md:flex-row relative m-auto w-full"
-    : "flex flex-wrap flex-col md:flex-row relative max-w-5xl m-auto w-full"
+    : "flex flex-wrap flex-col md:flex-row relative max-w-5xl lg:m-auto w-full"
   return (
     <Layout title={title}>
       <PageHeader
