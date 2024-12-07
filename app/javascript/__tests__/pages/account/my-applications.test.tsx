@@ -131,6 +131,7 @@ describe("<MyApplications />", () => {
         },
         signIn: jest.fn(),
         signOut: jest.fn(),
+        timeOut: jest.fn(),
         saveProfile: jest.fn(),
         loading: false,
         initialStateLoaded: true,
