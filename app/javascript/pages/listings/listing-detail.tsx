@@ -125,7 +125,7 @@ const ListingDetail = () => {
         : "listingDetails.applicationDeadline.closed",
       {
         date: localizedFormat(listing.Application_Due_Date, "ll"),
-        time: dayjs(listing.Application_Due_Date).format("h:mm A"),
+        time: dayjs(listing.Application_Due_Date).tz().format("h:mm A"),
       }
     )}`
   return (

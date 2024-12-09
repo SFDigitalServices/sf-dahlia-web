@@ -1,6 +1,8 @@
 import { t, addTranslation } from "@bloom-housing/ui-components"
 import Markdown from "markdown-to-jsx"
 import dayjs, { PluginFunc } from "dayjs"
+import utc from "dayjs/plugin/utc"
+import timezone from "dayjs/plugin/timezone"
 import React from "react"
 
 import { stripMostTags } from "./filterUtil"
@@ -10,6 +12,11 @@ import {
   RailsTranslationLanguage,
   RailsTranslations,
 } from "../api/types/rails/listings/RailsTranslation"
+
+// Set Pacific Time as default
+dayjs.extend(utc)
+dayjs.extend(timezone)
+dayjs.tz.setDefault("America/Los_Angeles")
 
 type PhraseBundle = Record<string, unknown>
 export interface LangConfig {
@@ -228,14 +235,13 @@ export function defaultIfNotTranslated(
  */
 export function localizedFormat(date: string, format: string): string {
   const lang = getCurrentLanguage(window.location.pathname)
-
-  return dayjs(date).locale(dayJsLocales[lang]).format(format)
+  return dayjs(date).tz().locale(dayJsLocales[lang]).format(format)
 }
 
 // Time zone is assumed to be Pacific
 export const formatTimeOfDay = (time: string) => {
-  const formattedTime = dayjs(time).format("h:mm")
-  const hour = Number(dayjs(time).format("H"))
+  const formattedTime = dayjs(time).tz().format("h:mm")
+  const hour = Number(dayjs(time).tz().format("H"))
   const suffix = hour >= 12 ? "PM" : "AM"
   return `${formattedTime} ${suffix}`
 }

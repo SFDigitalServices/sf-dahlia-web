@@ -245,14 +245,14 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
           </hgroup>
         </header>
         <article
-          class="flex flex-wrap flex-col md:flex-row relative max-w-5xl m-auto w-full"
+          class="flex flex-wrap flex-col md:flex-row relative max-w-5xl lg:m-auto w-full"
         >
           <div
             class="w-full md:w-2/3"
             data-testid="info-main-content"
           >
             <section
-              class="flex"
+              class="flex pl-12 lg:pl-0"
             >
               <article
                 class="markdown max-w-5xl m-auto"
@@ -261,7 +261,7 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
                   class="pt-4 md:py-0 max-w-3xl"
                 >
                   <div
-                    class="my-6 px-6 md:my-12 md:px-0 md:mr-24"
+                    class="my-6 pr-6 md:my-12 md:mr-24"
                   >
                     <div
                       class="seeds-common-message is-fullwidth seeds-message justify-start leading-5"
@@ -289,12 +289,10 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
                           We are not accepting applications yet.
                         </b>
                         <br />
-                        Applications open: January 1, 2050 at 1:00 AM Pacific Time
+                        Applications open: December 31, 2049 at 5:00 PM Pacific Time
                       </span>
                     </div>
-                    <div
-                      class="py-10"
-                    >
+                    <div>
                       <h2
                         class="text-2xl mb-0 font-alt-serif"
                       >
@@ -314,7 +312,7 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
                       30 minutes or less
                     </div>
                     <div
-                      class="pb-10"
+                      class="pt-10"
                     >
                       <h2
                         class="text-2xl mb-0 font-alt-serif"
@@ -593,7 +591,7 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
                               class="text-base"
                               id="SubmitApplicationStep"
                             >
-                              When you are ready, submit your application in 3 steps:
+                              When you are ready, submit your application in 2 steps:
                             </div>
                             <ul
                               class="mb-0 pb-2"
@@ -614,12 +612,7 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
                               <li
                                 class="text-base"
                               >
-                                Follow the link to Box.com
-                              </li>
-                              <li
-                                class="text-base"
-                              >
-                                Upload your filled out application and all documents to Box.com
+                                Follow the link to Box.com. Upload your filled out application and all documents
                               </li>
                             </ul>
                             <div
@@ -645,7 +638,7 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
                                   />
                                 </svg>
                               </span>
-                               Applications open January 1, 2050 at 1:00 AM Pacific Time. Check back here to apply.
+                               Applications open December 31, 2049 at 5:00 PM Pacific Time. Check back here to apply.
                             </div>
                             <div
                               class="my-6 p-6 bg-gray-200"

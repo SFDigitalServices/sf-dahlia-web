@@ -67,7 +67,7 @@ exports[`MobileListingDetailsLottery does display when fcfs toggle is disabled 1
             <span
               class="font-bold"
             >
-              7:00 pm
+              11:00 am
             </span>
           </p>
           <div
@@ -102,7 +102,7 @@ exports[`MobileListingDetailsLottery does display when fcfs toggle is disabled 1
           <p
             class="mb-4"
           >
-            January 24, 2021
+            January 23, 2021
           </p>
           <p
             class="text-gray-700"
@@ -396,7 +396,7 @@ exports[`MobileListingDetailsLottery does display when lottery listing is closed
             <span
               class="font-bold"
             >
-              6:00 pm
+              11:00 am
             </span>
           </p>
           <div
@@ -445,7 +445,7 @@ exports[`MobileListingDetailsLottery does display when lottery listing is closed
           <p
             class="mb-4"
           >
-            March 23, 2023
+            March 22, 2023
           </p>
           <p
             class="text-gray-700"
@@ -475,7 +475,7 @@ exports[`MobileListingDetailsLottery does display when lottery listing is closed
             <span
               class="inline-block text-sm uppercase normal-case"
             >
-              February 23, 2018
+              February 22, 2018
             </span>
             <span
               class="inline-block text-xs font-bold ml-5 font-alt-sans"
@@ -548,7 +548,7 @@ exports[`MobileListingDetailsLottery does display when lottery listing is closed
           class="text-sm text-gray-750"
         >
           <p>
-            Listing Updated: April 1, 2022
+            Listing Updated: March 31, 2022
           </p>
         </div>
       </section>
