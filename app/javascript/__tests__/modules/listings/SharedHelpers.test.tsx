@@ -17,7 +17,7 @@ describe("SharedHelpers", () => {
         imageUrl: {},
         statuses: [
           {
-            content: "Application Deadline: January 1, 2050",
+            content: "Application Deadline: December 31, 2049",
             status: 0,
           },
         ],
@@ -36,7 +36,7 @@ describe("SharedHelpers", () => {
         imageUrl: {},
         statuses: [
           {
-            content: "Application Deadline: January 1, 2050",
+            content: "Application Deadline: December 31, 2049",
             status: 0,
           },
         ],
@@ -59,7 +59,7 @@ describe("SharedHelpers", () => {
         imageUrl: {},
         statuses: [
           {
-            content: "Application Deadline: January 1, 2050",
+            content: "Application Deadline: December 31, 2049",
             status: 0,
           },
         ],
@@ -92,7 +92,7 @@ describe("SharedHelpers", () => {
       // given
       const expectedStatus = {
         status: ApplicationStatusType.Open,
-        content: "Applications open: January 1, 2050",
+        content: "Applications open: December 31, 2049",
         subContent: "First come, first served",
       }
 

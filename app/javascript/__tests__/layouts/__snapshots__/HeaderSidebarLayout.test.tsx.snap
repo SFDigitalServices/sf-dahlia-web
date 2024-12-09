@@ -239,7 +239,7 @@ exports[`<HeaderSidebarLayout /> Contact Bar renders Contact Information 1`] = `
           </hgroup>
         </header>
         <article
-          class="flex flex-wrap flex-col md:flex-row relative max-w-5xl m-auto w-full"
+          class="flex flex-wrap flex-col md:flex-row relative max-w-5xl lg:m-auto w-full"
         >
           <div
             class="w-full md:w-2/3"

@@ -9,14 +9,13 @@ import {
 } from "@bloom-housing/ui-components"
 import { Card, Link } from "@bloom-housing/ui-seeds"
 import "./ApplicationItem.scss"
-import { getCurrentLanguage } from "../util/languageUtil"
+import { formatTimeOfDay, getCurrentLanguage, localizedFormat } from "../util/languageUtil"
 import { getListingDetailPath, getLocalizedPath } from "../util/routeUtil"
 import { RailsListing } from "../modules/listings/SharedHelpers"
 import {
   getListingAddressString,
   isLotteryComplete,
   showLotteryResultsPDFonly,
-  convertToReadableDate,
 } from "../util/listingUtil"
 import { RailsLotteryResult } from "../api/types/rails/listings/RailsLotteryResult"
 import { getLotteryBucketDetails } from "../api/listingApiService"
@@ -77,11 +76,17 @@ const ApplicationItem = (props: ApplicationItemProps) => {
         <header className={"application-item__header"} data-testid="application-item">
           <h3 className={"application-item__title"}>{listingName}</h3>
           {applicationDueDate && (
-            <p className={"application-item__text"}>
-              {`${t("myApplications.applicationDeadline")}: ${convertToReadableDate(
-                applicationDueDate
-              )}`}
-            </p>
+            <>
+              <div className={"application-item__text"}>
+                <p>{t("myApplications.applicationDeadline")}</p>
+                <p>
+                  {t("myApplications.applicationDeadlineTime", {
+                    date: localizedFormat(applicationDueDate, "ll"),
+                    time: formatTimeOfDay(applicationDueDate),
+                  })}
+                </p>
+              </div>
+            </>
           )}
         </header>
         <section className={"application-item__content"}>
@@ -182,7 +187,7 @@ const ApplicationItem = (props: ApplicationItemProps) => {
             )}
           </span>
           <span className={"application-item_edited-text"}>
-            {`${t("label.edited")}: ${convertToReadableDate(props.editedDate)}`}
+            {t("label.edited")}: {localizedFormat(props.editedDate, "ll")}
           </span>
         </div>
       </Card.Section>

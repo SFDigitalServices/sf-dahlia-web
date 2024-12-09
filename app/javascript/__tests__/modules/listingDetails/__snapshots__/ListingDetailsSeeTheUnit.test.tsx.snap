@@ -126,7 +126,7 @@ exports[`ListingDetailsSeeTheUnit renders SeeDetailsOnline when both MLS and Lis
                 <span
                   class="inline-block text-sm uppercase normal-case"
                 >
-                  December 3, 2019
+                  December 2, 2019
                 </span>
                 <span
                   class="inline-block text-xs font-bold ml-5 font-alt-sans"
@@ -144,7 +144,7 @@ exports[`ListingDetailsSeeTheUnit renders SeeDetailsOnline when both MLS and Lis
                 <span
                   class="inline-block text-sm uppercase normal-case"
                 >
-                  December 7, 2019
+                  December 6, 2019
                 </span>
                 <span
                   class="inline-block text-xs font-bold ml-5 font-alt-sans"
@@ -180,7 +180,7 @@ exports[`ListingDetailsSeeTheUnit renders SeeDetailsOnline when both MLS and Lis
                 <span
                   class="inline-block text-sm uppercase normal-case"
                 >
-                  December 8, 2019
+                  December 7, 2019
                 </span>
               </p>
             </div>
@@ -356,7 +356,7 @@ exports[`ListingDetailsSeeTheUnit renders SeeDetailsOnline when only Listing_Onl
                 <span
                   class="inline-block text-sm uppercase normal-case"
                 >
-                  December 3, 2019
+                  December 2, 2019
                 </span>
                 <span
                   class="inline-block text-xs font-bold ml-5 font-alt-sans"
@@ -374,7 +374,7 @@ exports[`ListingDetailsSeeTheUnit renders SeeDetailsOnline when only Listing_Onl
                 <span
                   class="inline-block text-sm uppercase normal-case"
                 >
-                  December 7, 2019
+                  December 6, 2019
                 </span>
                 <span
                   class="inline-block text-xs font-bold ml-5 font-alt-sans"
@@ -410,7 +410,7 @@ exports[`ListingDetailsSeeTheUnit renders SeeDetailsOnline when only Listing_Onl
                 <span
                   class="inline-block text-sm uppercase normal-case"
                 >
-                  December 8, 2019
+                  December 7, 2019
                 </span>
               </p>
             </div>
@@ -578,7 +578,7 @@ exports[`ListingDetailsSeeTheUnit renders SeeDetailsOnline when only MLS is set 
                 <span
                   class="inline-block text-sm uppercase normal-case"
                 >
-                  December 3, 2019
+                  December 2, 2019
                 </span>
                 <span
                   class="inline-block text-xs font-bold ml-5 font-alt-sans"
@@ -596,7 +596,7 @@ exports[`ListingDetailsSeeTheUnit renders SeeDetailsOnline when only MLS is set 
                 <span
                   class="inline-block text-sm uppercase normal-case"
                 >
-                  December 7, 2019
+                  December 6, 2019
                 </span>
                 <span
                   class="inline-block text-xs font-bold ml-5 font-alt-sans"
@@ -632,7 +632,7 @@ exports[`ListingDetailsSeeTheUnit renders SeeDetailsOnline when only MLS is set 
                 <span
                   class="inline-block text-sm uppercase normal-case"
                 >
-                  December 8, 2019
+                  December 7, 2019
                 </span>
               </p>
             </div>

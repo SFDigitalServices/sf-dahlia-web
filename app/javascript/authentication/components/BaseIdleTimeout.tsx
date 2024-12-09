@@ -1,12 +1,7 @@
 import React, { FunctionComponent, useEffect, useState } from "react"
 
-import {
-  AlertTypes,
-  AppearanceStyleType,
-  Button,
-  Modal,
-  setSiteAlertMessage,
-} from "@bloom-housing/ui-components"
+import { AlertTypes, AppearanceStyleType, Button, Modal, t } from "@bloom-housing/ui-components"
+import { setSiteAlertMessage } from "../../components/SiteAlert"
 
 const PROMPT_TIMEOUT = 60000
 const events = ["mousemove", "keypress", "scroll"]
@@ -47,18 +42,10 @@ type IdleTimeoutProps = {
 }
 
 const BaseIdleTimeout: FunctionComponent<IdleTimeoutProps> = (props: IdleTimeoutProps) => {
-  const {
-    promptTitle,
-    promptAction,
-    promptText,
-    redirectPath,
-    alertMessage,
-    alertType = "alert",
-    onTimeout,
-  } = props
+  const { promptTitle, promptAction, promptText, redirectPath, onTimeout } = props
 
-  // 5 minutes
-  const idleTimeout = 5 * 60 * 1000
+  // 30 minutes
+  const idleTimeout = 30 * 60 * 1000
   const [promptTimeout, setPromptTimeout] = useState<number | undefined>()
 
   useIdleTimeout(idleTimeout, () => {
@@ -70,8 +57,7 @@ const BaseIdleTimeout: FunctionComponent<IdleTimeoutProps> = (props: IdleTimeout
     const timeoutAction = async () => {
       setPromptTimeout(undefined)
       await onTimeout()
-      setSiteAlertMessage(alertMessage, alertType)
-
+      setSiteAlertMessage(t("signOut.alertMessage.timeout"), "secondary")
       // replace this with proper react router when we have one
       return (window.location.href = redirectPath)
     }

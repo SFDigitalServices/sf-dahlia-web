@@ -25,7 +25,7 @@ exports[`ListingDetailsLotteryInfo displays when listing has upcoming lottery 1`
           <span
             class="font-bold"
           >
-            6:00 pm
+            11:00 am
           </span>
         </p>
         <div
@@ -74,7 +74,7 @@ exports[`ListingDetailsLotteryInfo displays when listing has upcoming lottery 1`
         <p
           class="mb-4"
         >
-          March 23, 2023
+          March 22, 2023
         </p>
         <p
           class="text-gray-700"
