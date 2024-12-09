@@ -245,14 +245,14 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
           </hgroup>
         </header>
         <article
-          class="flex flex-wrap flex-col md:flex-row relative max-w-5xl m-auto w-full"
+          class="flex flex-wrap flex-col md:flex-row relative max-w-5xl lg:m-auto w-full"
         >
           <div
             class="w-full md:w-2/3"
             data-testid="info-main-content"
           >
             <section
-              class="flex"
+              class="flex pl-12 lg:pl-0"
             >
               <article
                 class="markdown max-w-5xl m-auto"
@@ -261,7 +261,7 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
                   class="pt-4 md:py-0 max-w-3xl"
                 >
                   <div
-                    class="my-6 px-6 md:my-12 md:mr-24"
+                    class="my-6 pr-6 md:my-12 md:mr-24"
                   >
                     <div
                       class="seeds-common-message is-fullwidth seeds-message justify-start leading-5"
