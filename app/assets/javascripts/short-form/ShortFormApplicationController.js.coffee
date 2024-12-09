@@ -83,9 +83,11 @@ ShortFormApplicationController = (
 
   $scope.startAutofilledApp = ->
     AnalyticsService.trackFormSuccess('Application', 'Start with these details')
+    AnalyticsService.trackApplicationStart($scope.listing.Id, AccountService.loggedInUser?.id || null, 'Start with these details')
     $scope.go(ShortFormNavigationService.initialState())
 
   $scope.trackContinuePreviousDraft = ->
+    AnalyticsService.trackApplicationStart($scope.listing.Id, AccountService.loggedInUser?.id || null, 'Continue with these details')
     AnalyticsService.trackFormSuccess('Application', 'Continue with these details')
 
   $scope.resetAndStartNewApp = ->
@@ -103,6 +105,7 @@ ShortFormApplicationController = (
     $scope.householdMembers = ShortFormApplicationService.householdMembers
     delete $scope.application.autofill
     AnalyticsService.trackFormSuccess('Application', 'Reset and start from scratch')
+    AnalyticsService.trackApplicationStart($scope.listing.Id, AccountService.loggedInUser?.id || null, 'Reset and start from scratch')
     $state.go(ShortFormNavigationService.initialState())
 
   $scope.resetAndReplaceApp = ShortFormApplicationService.resetAndReplaceApp
@@ -211,6 +214,7 @@ ShortFormApplicationController = (
     $scope.applicant[fieldToDisable] = false
 
   $scope.beginApplication = (lang = 'en') ->
+    AnalyticsService.trackApplicationStart($scope.listing.Id, AccountService.loggedInUser?.id || null, 'Begin Application')
     if $scope.isCustomEducatorListing()
       ShortFormNavigationService.goToApplicationPage('dahlia.short-form-welcome.custom-educator-screening', {lang: lang})
     else if $scope.listing.Reserved_community_type
@@ -889,6 +893,7 @@ ShortFormApplicationController = (
       .then(  ->
         ShortFormNavigationService.isLoading(false)
         ShortFormNavigationService.goToApplicationPage('dahlia.short-form-application.confirmation')
+        AnalyticsService.trackApplicationComplete($scope.listing.Id, AccountService.loggedInUser?.id || null,)
       ).catch( ->
         ShortFormNavigationService.isLoading(false)
       )
@@ -976,6 +981,7 @@ ShortFormApplicationController = (
           currentUrl = window.location.origin
           newUrl = "#{currentUrl}/my-applications?"
           if previousApp.id
+            AnalyticsService.trackApplicationAbandon($scope.listing.Id, AccountService.loggedInUser?.id || null, 'Already Submitted')
             newUrl += "alreadySubmittedId=#{previousApp.id}"
             if doubleSubmit
               newUrl += "&"
