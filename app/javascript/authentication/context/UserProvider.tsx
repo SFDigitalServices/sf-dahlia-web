@@ -9,6 +9,7 @@ import {
   timeOut,
   startLoading,
   stopLoading,
+  signOutConnectionIssue,
 } from "./userActions"
 import UserContext, { ContextProps } from "./UserContext"
 import UserReducer from "./UserReducer"
@@ -38,7 +39,7 @@ const UserProvider = (props: UserProviderProps) => {
 
   // On initial load/reload, check localStorage to see if we have a token available
   useEffect(() => {
-    if (!isTokenValid()) dispatch(systemSignOut())
+    if (!isTokenValid()) dispatch(signOutConnectionIssue())
   }, [])
 
   const contextValues: ContextProps = {
