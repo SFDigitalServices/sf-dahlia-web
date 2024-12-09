@@ -151,7 +151,7 @@ const SignInForm = () => {
     } else if (expiredConfirmedEmail) {
       setShowAccountAlreadyConfirmedModal(true)
     } else if (expiredUnconfirmedEmail) {
-      setExpiredUnconfirmedModal(expiredConfirmedEmail)
+      setExpiredUnconfirmedModal(expiredUnconfirmedEmail)
     }
   }, [])
 
