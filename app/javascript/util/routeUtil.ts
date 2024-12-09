@@ -74,3 +74,22 @@ export const getEligibilityEstimatorLink = localizedPathGetter("/eligibility-est
 // Footer
 export const getDisclaimerPath = localizedPathGetter("/disclaimer")
 export const getPrivacyPolicyPath = localizedPathGetter("/privacy")
+
+const SignInRedirects = {
+  account: getMyAccountPath(),
+  applications: getMyApplicationsPath(),
+  settings: getMyAccountSettingsPath(),
+  home: getHomepagePath(),
+}
+
+const getRedirectUrl = (key: string): string => {
+  console.log("getting redirect for", key)
+  return SignInRedirects[key] || SignInRedirects.home
+}
+
+export const getSignInRedirectUrl = () => {
+  const redirect = window.sessionStorage.getItem("redirect")
+  window.sessionStorage.removeItem("redirect")
+
+  return getRedirectUrl(redirect || "account")
+}
