@@ -63,6 +63,13 @@ export const clearHeadersTimeOut = () => {
   getStorage().removeItem(ACCESS_TOKEN_LOCAL_STORAGE_KEY)
 }
 
+export const clearHeadersConnectionIssue = () => {
+  if (getStorage().getItem(ACCESS_TOKEN_LOCAL_STORAGE_KEY)) {
+    getStorage().setItem("alert_message_secondary", t("signOut.alertMessage.connectionIssue"))
+    getStorage().removeItem(ACCESS_TOKEN_LOCAL_STORAGE_KEY)
+  }
+}
+
 const getTokenTtl = (): number =>
   Number.parseInt(getAuthHeaders()?.expiry as string) * 1000 - Date.now()
 export const isTokenValid = (): boolean => getAuthHeaders() && getTokenTtl() > 0
