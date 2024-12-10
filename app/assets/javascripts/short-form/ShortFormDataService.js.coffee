@@ -451,7 +451,9 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
 
 
   Service._reformatAltContact = (alternateContact) ->
-    return { alternateContactType: 'None' } unless alternateContact
+    # autofill logic in Rails will set appMemberId to null
+    if !alternateContact || _.isEqual(alternateContact, { appMemberId: null })
+      return { alternateContactType: 'None' }
     contact = _.pick alternateContact, Service.WHITELIST_FIELDS.alternateContact
     contact.mailing_address = Service._reformatMailingAddress(alternateContact)
     return contact
