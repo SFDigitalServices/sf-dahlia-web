@@ -116,8 +116,6 @@ const ListingDetail = () => {
     })
   }, [router, router.pathname])
 
-  const { unleashFlag: isSalesFcfsEnabled } = useFeatureFlag("FCFS", false)
-
   const getDescription = (listing: RailsListing) =>
     `${getListingAddressString(listing)}. ${t(
       isApplicationOpen
@@ -175,13 +173,11 @@ const ListingDetail = () => {
                 <ListingDetailsWaitlist listing={listing} />
               </Mobile>
             )}
-            {isFcfsSalesListing(listing) && isSalesFcfsEnabled && (
-              <Mobile>{fcfsNoLotteryRequired()}</Mobile>
-            )}
+            {isFcfsSalesListing(listing) && <Mobile>{fcfsNoLotteryRequired()}</Mobile>}
             <Mobile>
               <ListingDetailsApply listing={listing} />
             </Mobile>
-            {isSalesFcfsEnabled && isApplicationOpen && (
+            {isApplicationOpen && (
               <Mobile>
                 <div className="border-b border-t m-0">
                   <NeedHelpBlock listing={listing} />
@@ -198,7 +194,7 @@ const ListingDetail = () => {
                 listing={listing}
                 imageSrc={getAssetPath("listing-eligibility.svg")}
               />
-              {!isRental(listing) && isSalesFcfsEnabled ? (
+              {!isRental(listing) ? (
                 <MobileListingDetailsSeeTheUnit
                   listing={listing}
                   imageSrc={getAssetPath("listing-units.svg")}

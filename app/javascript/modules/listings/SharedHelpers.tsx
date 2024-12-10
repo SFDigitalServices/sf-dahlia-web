@@ -162,68 +162,8 @@ export const getListingStatuses = (
   return getLotteryStatuses(listing)
 }
 
-/**
- * @deprecated In favor of getListingStatuses.
- *
- * Returns every status bar under the image card for one listing for the directory page
- */
-export const getListingImageCardStatuses = (
-  listing: RailsListing,
-  hasFiltersSet: boolean
-): StatusBarType[] => {
-  const statuses: StatusBarType[] = []
-  const formattedDueDateString = localizedFormat(listing.Application_Due_Date, "LL")
-  const lotteryResultsDateString = localizedFormat(listing.Lottery_Results_Date, "LL")
-
-  if (new Date(listing.Application_Due_Date) < new Date()) {
-    if (!isLotteryComplete(listing)) {
-      statuses.push({
-        status: ApplicationStatusType.Closed,
-        content: `${t("listings.applicationsClosed")}: ${formattedDueDateString}`,
-        hideIcon: true,
-      })
-    }
-    statuses.push({
-      status: ApplicationStatusType.PostLottery,
-      content: `${t("listings.lotteryResults.cardTitle")}: ${lotteryResultsDateString}`,
-      hideIcon: true,
-    })
-  } else {
-    if (hasFiltersSet && listing.Does_Match) {
-      return [
-        {
-          status: ApplicationStatusType.Matched,
-          content: `${t("listings.eligibilityCalculator.matched")}`,
-          hideIcon: false,
-          iconType: "check",
-        },
-      ]
-    } else if (hasFiltersSet && !listing.Does_Match) {
-      return [
-        {
-          status: ApplicationStatusType.PostLottery,
-          content: `${t("listings.eligibilityCalculator.notAMatch")}`,
-          hideIcon: true,
-        },
-      ]
-    } else {
-      return [
-        {
-          status: ApplicationStatusType.Open,
-          content: `${t("listings.applicationDeadline")}: ${formattedDueDateString}`,
-        },
-      ]
-    }
-  }
-  return statuses
-}
-
 // Get imageCardProps for a given listing
-export const getImageCardProps = (
-  listing: RailsListing,
-  hasFiltersSet?: boolean,
-  useUpdatedDirectoryStatuses: boolean = false
-) => {
+export const getImageCardProps = (listing: RailsListing, hasFiltersSet?: boolean) => {
   const imageUrl =
     listing?.Listing_Images?.length > 0
       ? listing.Listing_Images[0].displayImageURL
@@ -237,9 +177,7 @@ export const getImageCardProps = (
     imageUrl: imageUrl,
     href: `/listings/${listing.listingID}`,
     tags: getTagContent(listing),
-    statuses: useUpdatedDirectoryStatuses
-      ? getListingStatuses(listing, hasFiltersSet)
-      : getListingImageCardStatuses(listing, hasFiltersSet),
+    statuses: getListingStatuses(listing, hasFiltersSet),
     description: imageDescription,
   }
 }
