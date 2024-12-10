@@ -2,7 +2,14 @@ import React, { useEffect, useReducer } from "react"
 
 import { getProfile, signIn } from "../../api/authApiService"
 import { isTokenValid } from "../token"
-import { saveProfile, signOut, startLoading, stopLoading } from "./userActions"
+import {
+  saveProfile,
+  userSignOut,
+  systemSignOut,
+  timeOut,
+  startLoading,
+  stopLoading,
+} from "./userActions"
 import UserContext, { ContextProps } from "./UserContext"
 import UserReducer from "./UserReducer"
 
@@ -24,14 +31,14 @@ const UserProvider = (props: UserProviderProps) => {
         .then((profile) => {
           dispatch(saveProfile(profile))
         })
-        .catch(() => dispatch(signOut()))
+        .catch(() => dispatch(systemSignOut()))
         .finally(() => dispatch(stopLoading()))
     }
   }, [state.profile])
 
   // On initial load/reload, check localStorage to see if we have a token available
   useEffect(() => {
-    if (!isTokenValid()) dispatch(signOut())
+    if (!isTokenValid()) dispatch(systemSignOut())
   }, [])
 
   const contextValues: ContextProps = {
@@ -40,7 +47,7 @@ const UserProvider = (props: UserProviderProps) => {
     initialStateLoaded: state.initialStateLoaded,
     saveProfile: (profile) => dispatch(saveProfile(profile)),
     signIn: async (email, password) => {
-      dispatch(signOut())
+      dispatch(systemSignOut())
       dispatch(startLoading())
       return signIn(email, password)
         .then((profile) => {
@@ -49,7 +56,8 @@ const UserProvider = (props: UserProviderProps) => {
         })
         .finally(() => dispatch(stopLoading()))
     },
-    signOut: () => dispatch(signOut()),
+    signOut: () => dispatch(userSignOut()),
+    timeOut: () => dispatch(timeOut()),
   }
 
   return <UserContext.Provider value={contextValues}>{props.children}</UserContext.Provider>

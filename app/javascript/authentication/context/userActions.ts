@@ -6,10 +6,14 @@ export enum UserAction {
   StartLoading = "StartLoading",
   StopLoading = "StopLoading",
   SaveProfile = "SaveProfile",
-  SignOut = "SignOut",
+  UserSignOut = "UserSignOut",
+  SystemSignOut = "SystemSignOut",
+  TimeOut = "TimeOut",
 }
 
 export const startLoading = createAction(UserAction.StartLoading)()
 export const stopLoading = createAction(UserAction.StopLoading)()
 export const saveProfile = createAction(UserAction.SaveProfile)<User>()
-export const signOut = createAction(UserAction.SignOut)()
+export const userSignOut = createAction(UserAction.UserSignOut)()
+export const systemSignOut = createAction(UserAction.SystemSignOut)()
+export const timeOut = createAction(UserAction.TimeOut)()
