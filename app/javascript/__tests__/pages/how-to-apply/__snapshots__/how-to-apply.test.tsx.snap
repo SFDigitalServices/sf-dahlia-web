@@ -467,7 +467,7 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
                               <div
                                 class="font-semibold font-alt-sans text-lg pb-2"
                               >
-                                What documents you need.
+                                What documents you need
                               </div>
                               <div>
                                 See first 2 pages of the PDF application to find out what documents you need.
