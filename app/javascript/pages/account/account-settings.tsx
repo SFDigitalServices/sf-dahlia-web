@@ -41,6 +41,7 @@ import { FormHeader, FormSection, getDobStringFromDobObject } from "../../util/a
 import { AxiosError } from "axios"
 import { ErrorSummaryBanner } from "./components/ErrorSummaryBanner"
 import { ExpandedAccountAxiosError, getErrorMessage } from "./components/util"
+import { setSiteAlertMessage } from "../../components/SiteAlert"
 
 const Banner = ({
   showBanner,
@@ -456,7 +457,8 @@ const AccountSettingsPage = () => {
   const { profile, loading, initialStateLoaded } = React.useContext(UserContext)
 
   if (!profile && !loading && initialStateLoaded) {
-    // TODO: Redirect to React sign in page and show a message that user needs to sign in
+    window.sessionStorage.setItem("redirect", "settings")
+    setSiteAlertMessage(t("signIn.loginRequired"), "secondary")
     window.location.href = getSignInPath()
     return null
   }
