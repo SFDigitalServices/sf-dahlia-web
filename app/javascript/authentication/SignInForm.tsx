@@ -10,64 +10,20 @@ import {
   AlertBox,
   LinkButton,
 } from "@bloom-housing/ui-components"
-import { Dialog, Link, Heading, Alert } from "@bloom-housing/ui-seeds"
+import { Link, Heading } from "@bloom-housing/ui-seeds"
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form"
 
-import { getSignInRedirectUrl } from "../util/routeUtil"
+import { getSignInRedirectUrl, getForgotPasswordPath } from "../util/routeUtil"
 import EmailFieldset from "../pages/account/components/EmailFieldset"
 import PasswordFieldset from "../pages/account/components/PasswordFieldset"
 import "../pages/account/styles/account.scss"
 import { AxiosError } from "axios"
-import { confirmEmail } from "../api/authApiService"
 import UserContext from "./context/UserContext"
 import { AccountAlreadyConfirmedModal } from "./components/AccountAlreadyConfirmedModal"
 import { SiteAlert } from "../components/SiteAlert"
-
-const NewAccountNotConfirmedModal = ({
-  email,
-  onClose,
-}: {
-  email: string
-  onClose: () => void
-}) => {
-  const [emailSent, setEmailSent] = useState(false)
-  const [emailSentError, setEmailSentError] = useState<string | null>(null)
-  const requestEmail = () => {
-    confirmEmail(email)
-      .then(() => {
-        setEmailSent(true)
-      })
-      .catch(() => {
-        setEmailSentError(t("signIn.newAccount.sendEmailAgainButton.error"))
-      })
-  }
-
-  return (
-    <Dialog isOpen={!!email} onClose={onClose}>
-      <Dialog.Header>{t("signIn.newAccount.title")}</Dialog.Header>
-      {emailSent && (
-        <Alert className="sign-in-banner banner-background-color">
-          {t("signIn.newAccount.sendEmailAgainButton.confirmation")}
-        </Alert>
-      )}
-      {emailSentError && (
-        <Alert variant="alert" className="sign-in-banner">
-          {emailSentError}
-        </Alert>
-      )}
-      <Dialog.Content>{t("signIn.newAccount.p1", { email })}</Dialog.Content>
-      <Dialog.Content>{t("signIn.newAccount.p2")}</Dialog.Content>
-      <Dialog.Footer>
-        <Button type="submit" styleType={AppearanceStyleType.primary} onClick={onClose}>
-          {t("t.ok")}
-        </Button>
-        <Button styleType={AppearanceStyleType.secondary} onClick={requestEmail}>
-          {t("signIn.newAccount.sendEmailAgainButton")}
-        </Button>
-      </Dialog.Footer>
-    </Dialog>
-  )
-}
+import { NewAccountNotConfirmedModal } from "./components/NewAccountNotConfirmedModal"
+import { ExpiredUnconfirmedModal } from "./components/ExpiredUnconfirmedModal"
+import { renderInlineMarkup } from "../util/languageUtil"
 
 const getExpiredConfirmedEmail = () => {
   const urlParams = new URLSearchParams(window.location.search)
@@ -98,14 +54,11 @@ const SignInFormCard = ({
       </div>
       {requestError && (
         <AlertBox onClose={() => setRequestError(undefined)} type="alert">
-          {requestError}
+          {renderInlineMarkup(requestError)}
         </AlertBox>
       )}
-      {sessionStorage.getItem("alert_message_success") ? (
-        <SiteAlert type="success" />
-      ) : (
-        <SiteAlert type="secondary" />
-      )}
+      <SiteAlert type="success" />
+      <SiteAlert type="secondary" />
       <div className="form-card__group pt-0 border-b">
         <Form id="sign-in" className="mt-10 relative" onSubmit={handleSubmit(onSubmit)}>
           <EmailFieldset register={register} errors={errors} />
@@ -142,14 +95,35 @@ const SignInFormCard = ({
   )
 }
 
+const getExpiredUnconfirmedEmail = () => {
+  const urlParams = new URLSearchParams(window.location.search)
+  const expiredUnconfirmedEmail = urlParams.get("expiredUnconfirmed")
+  return expiredUnconfirmedEmail
+}
+
 const SignInForm = () => {
   const [requestError, setRequestError] = useState<string>()
   const [showNewAccountNotConfirmedModal, setNewAccountNotConfirmedModal] = useState<string | null>(
     null
   )
+  const [showExpiredUnconfirmedModal, setExpiredUnconfirmedModal] = useState<string | null>(null)
   const [showAccountAlreadyConfirmedModal, setShowAccountAlreadyConfirmedModal] = useState(null)
 
   const { signIn } = useContext(UserContext)
+
+  const handleRequestError = (error: AxiosError<{ error: string; email: string }>) => {
+    if (error.response.data.error === "not_confirmed") {
+      setNewAccountNotConfirmedModal(error.response.data.email)
+    } else if (error.response.data.error === "bad_credentials") {
+      setRequestError(
+        t("signIn.badCredentialsWithResetLink", {
+          url: getForgotPasswordPath(),
+        })
+      )
+    } else {
+      setRequestError(`${t("signIn.unknownError")}`)
+    }
+  }
 
   const onSubmit = (data: { email: string; password: string }) => {
     const { email, password } = data
@@ -160,28 +134,30 @@ const SignInForm = () => {
         window.scrollTo(0, 0)
       })
       .catch((error: AxiosError<{ error: string; email: string }>) => {
-        if (error.response.data.error === "not_confirmed") {
-          setNewAccountNotConfirmedModal(error.response.data.email)
-        } else {
-          // TODO: handle sign-in error states
-          setRequestError(`${t("signIn.badCredentials")}`)
-        }
+        handleRequestError(error)
       })
   }
 
   useEffect(() => {
     const newAccountEmail: string | null = window.sessionStorage.getItem("newAccount")
     const expiredConfirmedEmail = getExpiredConfirmedEmail()
+    const expiredUnconfirmedEmail = getExpiredUnconfirmedEmail()
     if (newAccountEmail) {
       setNewAccountNotConfirmedModal(newAccountEmail)
       window.sessionStorage.removeItem("newAccount")
     } else if (expiredConfirmedEmail) {
       setShowAccountAlreadyConfirmedModal(true)
+    } else if (expiredUnconfirmedEmail) {
+      setExpiredUnconfirmedModal(expiredUnconfirmedEmail)
     }
   }, [])
 
   return (
     <>
+      <ExpiredUnconfirmedModal
+        email={showExpiredUnconfirmedModal}
+        onClose={() => setExpiredUnconfirmedModal(null)}
+      />
       <AccountAlreadyConfirmedModal
         isOpen={showAccountAlreadyConfirmedModal}
         onClose={() => setShowAccountAlreadyConfirmedModal(false)}

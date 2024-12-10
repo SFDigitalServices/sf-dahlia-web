@@ -88,11 +88,116 @@ describe("<SignIn />", () => {
     })
 
     await waitFor(() => {
-      expect(screen.getByText(/invalid login credentials\. please try again\./i)).not.toBeNull()
+      expect(
+        screen.getByText(/Email or password is incorrect\. Check for mistakes and try again/i)
+      ).not.toBeNull()
     })
   })
 
-  it("shows the correct expired unconfirmed modal", async () => {
+  it("shows an error message when a unknown error occurs", async () => {
+    ;(post as jest.Mock).mockRejectedValueOnce({
+      response: {
+        status: 503,
+        data: { error: "" },
+      },
+    })
+
+    await renderAndLoadAsync(<SignIn assetPaths={{}} />)
+
+    await userEvent.type(screen.getByRole("textbox", { name: /email/i }), "test@test.com")
+    await userEvent.type(screen.getByLabelText(/^password$/i), "Password1")
+    await userEvent.click(screen.getByRole("button", { name: /sign in/i }))
+
+    await waitFor(() => {
+      expect(post).toHaveBeenCalledWith("/api/v1/auth/sign_in", {
+        email: "test@test.com",
+        password: "Password1",
+      })
+    })
+
+    await waitFor(() => {
+      expect(
+        screen.getByText(/Something went wrong\. Try again or refresh the page\./i)
+      ).not.toBeNull()
+    })
+  })
+
+  it("shows the correct expired unconfirmed email modal", async () => {
+    const customLocation = {
+      ...window.location,
+      search: "?expiredUnconfirmed=test@test.com",
+      href: "http://dahlia.com",
+      assign: jest.fn(),
+      replace: jest.fn(),
+      reload: jest.fn(),
+      toString: jest.fn(),
+    }
+
+    Object.defineProperty(window, "location", {
+      configurable: true,
+      enumerable: true,
+      writable: true,
+      value: customLocation,
+    })
+
+    await renderAndLoadAsync(<SignIn assetPaths={{}} />)
+
+    await waitFor(() => {
+      expect(screen.getByText("Confirmation link expired")).not.toBeNull()
+      expect(screen.getByText("Send a new link")).not.toBeNull()
+      expect(screen.queryByText("Email sent. Check your email.")).toBeNull()
+    })
+
+    jest.resetAllMocks()
+    ;(post as jest.Mock).mockRejectedValueOnce({
+      response: {
+        status: 400,
+        data: { error: "Bad Request", message: "Invalid input" },
+      },
+    })
+
+    await userEvent.click(
+      screen.getByRole("button", {
+        name: /send a new link/i,
+      })
+    )
+
+    await waitFor(() => {
+      expect(post).toHaveBeenCalledWith("/api/v1/auth/confirmation", { email: "test@test.com" })
+    })
+
+    await waitFor(() => {
+      expect(
+        screen.getByText(
+          "Something went wrong. We could not send an email. Try sending it again or refreshing the page."
+        )
+      ).not.toBeNull()
+    })
+
+    jest.resetAllMocks()
+    ;(post as jest.Mock).mockResolvedValueOnce({
+      response: {
+        status: 200,
+        data: { success: true },
+      },
+    })
+
+    await userEvent.click(
+      screen.getByRole("button", {
+        name: /send a new link/i,
+      })
+    )
+
+    await waitFor(() => {
+      expect(post).toHaveBeenCalledWith("/api/v1/auth/confirmation", { email: "test@test.com" })
+    })
+
+    await waitFor(() => {
+      expect(screen.getByText("Email sent. Check your email.")).not.toBeNull()
+    })
+  })
+
+  it("shows the correct new account modal", async () => {
     ;(post as jest.Mock).mockRejectedValueOnce({
       response: {
         status: 422,
