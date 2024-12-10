@@ -21,7 +21,6 @@ import {
 } from "../../modules/listings/DirectoryHelpers"
 import BuyHeader from "../../modules/listings/BuyHeader"
 import { defaultIfNotTranslated } from "../../util/languageUtil"
-import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 
 const getForSaleSummaryTable = (listing: RailsSaleListing) => {
   const summary = listing.unitSummaries.general ?? listing.unitSummaries.reserved
@@ -87,17 +86,17 @@ const getBuyHeader = (
   )
 }
 
-const getFindMoreActionBlock = (isSalesFcfsEnabled: boolean) => {
+const getFindMoreActionBlock = (isSalesDirectory: boolean) => {
   return (
     <>
-      <div className={`bg-primary-darker ${isSalesFcfsEnabled ? "sale-directory" : ""}`}>
+      <div className={`bg-primary-darker ${isSalesDirectory ? "sale-directory" : ""}`}>
         <div className="max-w-5xl mx-auto p-2 md:p-4">
           <ActionBlock
             header={<Heading priority={2}>{t("saleDirectory.callout.title")}</Heading>}
             background="primary-darker"
             layout={ActionBlockLayout.inline}
             actions={[
-              !isSalesFcfsEnabled && (
+              !isSalesDirectory && (
                 <Link
                   className="button"
                   key="action-1"
@@ -108,8 +107,8 @@ const getFindMoreActionBlock = (isSalesFcfsEnabled: boolean) => {
                 </Link>
               ),
               <Link
-                className={`button ${isSalesFcfsEnabled ? "ml-8" : ""}`}
-                key={isSalesFcfsEnabled ? "action-1" : "action-2"}
+                className={`button ${isSalesDirectory ? "ml-8" : ""}`}
+                key={isSalesDirectory ? "action-1" : "action-2"}
                 external
                 href={"https://sfmohcd.org/current-listings-city-second-program"}
               >
@@ -124,8 +123,6 @@ const getFindMoreActionBlock = (isSalesFcfsEnabled: boolean) => {
 }
 
 const SaleDirectory = () => {
-  const { unleashFlag: isSalesFcfsEnabled } = useFeatureFlag("FCFS", false)
-
   const eligibilityFilters: EligibilityFilters = JSON.parse(
     localStorage.getItem("ngStorage-eligibility_filters")
   )
@@ -148,7 +145,7 @@ const SaleDirectory = () => {
         filters={hasSetEligibilityFilters() ? eligibilityFilters : null}
         getSummaryTable={getForSaleSummaryTable}
         getPageHeader={getBuyHeader}
-        findMoreActionBlock={getFindMoreActionBlock(isSalesFcfsEnabled)}
+        findMoreActionBlock={getFindMoreActionBlock(true)}
       />
     </Layout>
   )

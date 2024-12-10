@@ -63,6 +63,7 @@ export const CUSTOM_LISTING_TYPES = {
 }
 
 export const LISTING_TYPE_FIRST_COME_FIRST_SERVED = "First Come, First Served"
+export const LISTING_TYPE_STANDARD_LOTTERY = "Standard Lottery"
 
 export const TENURE_TYPES = {
   NEW_SALE: "New sale",

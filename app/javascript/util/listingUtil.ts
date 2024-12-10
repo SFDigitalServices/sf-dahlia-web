@@ -23,6 +23,7 @@ import {
   LISTING_TYPE_FIRST_COME_FIRST_SERVED,
   LISTING_TYPES,
   LISTING_STATUS_ACTIVE,
+  LISTING_TYPE_STANDARD_LOTTERY,
 } from "../modules/constants"
 import { RailsListing } from "../modules/listings/SharedHelpers"
 import { LANGUAGE_CONFIGS, getCustomListingType, getReservedCommunityType } from "./languageUtil"
@@ -34,6 +35,13 @@ import { ListingState } from "../modules/listings/ListingState"
 export const isFcfsSalesListing = (listing: RailsRentalListing | RailsSaleListing) => {
   return (
     listing.Listing_Type === LISTING_TYPE_FIRST_COME_FIRST_SERVED &&
+    listing.RecordType.Name === LISTING_TYPES.OWNERSHIP
+  )
+}
+
+export const isLotterySalesListing = (listing: RailsRentalListing | RailsSaleListing) => {
+  return (
+    listing.Listing_Type === LISTING_TYPE_STANDARD_LOTTERY &&
     listing.RecordType.Name === LISTING_TYPES.OWNERSHIP
   )
 }

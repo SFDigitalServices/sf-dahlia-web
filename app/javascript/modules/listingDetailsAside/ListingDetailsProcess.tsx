@@ -12,20 +12,13 @@ import {
 } from "@bloom-housing/ui-components"
 import { getTranslatedString, localizedFormat, renderInlineMarkup } from "../../util/languageUtil"
 import { ListingDetailsLotteryPreferenceLists } from "./ListingDetailsLotteryPreferenceLists"
-import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 export interface ListingDetailsProcessProps {
   listing: RailsListing
   isApplicationOpen: boolean
 }
 
-const WhatToExpect = ({
-  listing,
-  isSalesFcfsEnabled,
-}: {
-  listing: RailsListing
-  isSalesFcfsEnabled: boolean
-}) => {
-  if (isFcfsSalesListing(listing) && isSalesFcfsEnabled) {
+const WhatToExpect = ({ listing }: { listing: RailsListing }) => {
+  if (isFcfsSalesListing(listing)) {
     return null
   }
   return (
@@ -56,7 +49,6 @@ export const ListingDetailsProcess = ({
 }: ListingDetailsProcessProps) => {
   const isListingSale = isSale(listing)
   const isListingRental = isRental(listing)
-  const { unleashFlag: isSalesFcfsEnabled } = useFeatureFlag("FCFS", false)
 
   return (
     <>
@@ -86,7 +78,7 @@ export const ListingDetailsProcess = ({
             />
           </div>
         )}
-      <WhatToExpect listing={listing} isSalesFcfsEnabled={isSalesFcfsEnabled} />
+      <WhatToExpect listing={listing} />
       <ListingDetailsLotteryPreferenceLists
         listing={listing}
         isApplicationOpen={isApplicationOpen}
@@ -96,7 +88,7 @@ export const ListingDetailsProcess = ({
         listing.Leasing_Agent_Phone ||
         listing.Office_Hours ||
         listing.Leasing_Agent_Title) &&
-        (isListingRental || !isSalesFcfsEnabled) && (
+        isListingRental && (
           <div className="border-b border-gray-400 md:border-b-0 last:border-b-0">
             <Contact
               sectionTitle={t("contactAgent.contact")}
@@ -165,13 +157,6 @@ export const ListingDetailsProcess = ({
                 listing.LastModifiedDate,
                 "LL"
               )}`}</p>
-              {!isSalesFcfsEnabled && listing.Multiple_Listing_Service_URL && (
-                <p className="mt-1">
-                  <a href={listing.Multiple_Listing_Service_URL} target="_blank" className="">
-                    {t("listings.process.seeThisUnitOnMls")}
-                  </a>
-                </p>
-              )}
             </SidebarBlock>
           </div>
         )}

@@ -16,7 +16,6 @@ import {
 import { RailsListing } from "./SharedHelpers"
 import "./ListingDirectory.scss"
 import { MailingListSignup } from "../../components/MailingListSignup"
-import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 
 interface RentalDirectoryProps {
   listingsAPI: (filters?: EligibilityFilters) => Promise<RailsListing[]>
@@ -45,20 +44,17 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
   // Whether any listings are a match.
   const [match, setMatch] = useState<boolean>(false)
   const [filters, setFilters] = useState(props.filters ?? null)
-  const { flagsReady, unleashFlag: isSalesFcfsEnabled } = useFeatureFlag("FCFS", false)
 
   useEffect(() => {
     void props.listingsAPI(props.filters).then((listings) => {
-      if (flagsReady) {
-        setLoading(true)
-        setRawListings(listings)
-        const sortedListings = sortListings(listings, filters, setMatch)
-        setListings(sortedListings)
-        setLoading(false)
-      }
+      setLoading(true)
+      setRawListings(listings)
+      const sortedListings = sortListings(listings, filters, setMatch)
+      setListings(sortedListings)
+      setLoading(false)
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props, flagsReady])
+  }, [props])
 
   useEffect(() => {
     const sortedListings = sortListings(rawListings, filters, setMatch)
@@ -68,9 +64,9 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
 
   const hasFiltersSet = filters !== null
   return (
-    <LoadingOverlay isLoading={loading || !flagsReady}>
+    <LoadingOverlay isLoading={loading}>
       <div>
-        {!loading && flagsReady && (
+        {!loading && (
           <>
             {props.getPageHeader(filters, setFilters, match)}
             <div id="listing-results">
@@ -78,38 +74,24 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
                 listings.open,
                 props.directoryType,
                 props.getSummaryTable,
-                hasFiltersSet,
-                isSalesFcfsEnabled
+                hasFiltersSet
               )}
-              {isSalesFcfsEnabled &&
-                fcfsSalesView(
-                  [...listings.fcfsSalesOpen, ...listings.fcfsSalesNotYetOpen],
-                  props.directoryType,
-                  props.getSummaryTable,
-                  hasFiltersSet,
-                  isSalesFcfsEnabled
-                )}
+              {fcfsSalesView(
+                [...listings.fcfsSalesOpen, ...listings.fcfsSalesNotYetOpen],
+                props.directoryType,
+                props.getSummaryTable,
+                hasFiltersSet
+              )}
               {props.findMoreActionBlock}
               {filters &&
                 additionalView(
                   listings.additional,
                   props.directoryType,
                   props.getSummaryTable,
-                  hasFiltersSet,
-                  isSalesFcfsEnabled
+                  hasFiltersSet
                 )}
-              {upcomingLotteriesView(
-                listings.upcoming,
-                props.directoryType,
-                props.getSummaryTable,
-                isSalesFcfsEnabled
-              )}
-              {lotteryResultsView(
-                listings.results,
-                props.directoryType,
-                props.getSummaryTable,
-                isSalesFcfsEnabled
-              )}
+              {upcomingLotteriesView(listings.upcoming, props.directoryType, props.getSummaryTable)}
+              {lotteryResultsView(listings.results, props.directoryType, props.getSummaryTable)}
             </div>
           </>
         )}

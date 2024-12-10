@@ -209,24 +209,6 @@ exports[`ListingDetailsAdditionalInformation displays additional information sec
             </span>
           </div>
         </div>
-        <div
-          class="text-xs mt-4"
-        >
-          <div
-            class="text-xs inline primary-lighter-markup-link translate"
-          >
-            <span>
-              Should your application be chosen from the lottery, be prepared to fill out a more detailed application and provide 
-              <a
-                href="https://sfmohcd.org/after-homebuyer-lottery"
-                target="_blank"
-              >
-                required supporting documents
-              </a>
-               within 5 business days of being contacted.
-            </span>
-          </div>
-        </div>
       </div>
       <div
         class="info-card bg-gray-100 border-0"
