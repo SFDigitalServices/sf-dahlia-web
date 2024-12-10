@@ -13,7 +13,7 @@ import {
 import { Dialog, Link, Heading, Alert } from "@bloom-housing/ui-seeds"
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form"
 
-import { getMyAccountPath } from "../util/routeUtil"
+import { getForgotPasswordPath, getMyAccountPath } from "../util/routeUtil"
 import EmailFieldset from "../pages/account/components/EmailFieldset"
 import PasswordFieldset from "../pages/account/components/PasswordFieldset"
 import "../pages/account/styles/account.scss"
@@ -22,6 +22,7 @@ import { confirmEmail } from "../api/authApiService"
 import UserContext from "./context/UserContext"
 import { AccountAlreadyConfirmedModal } from "./components/AccountAlreadyConfirmedModal"
 import { SiteAlert } from "../components/SiteAlert"
+import { renderInlineMarkup } from "../util/languageUtil"
 
 const NewAccountNotConfirmedModal = ({
   email,
@@ -98,7 +99,7 @@ const SignInFormCard = ({
       </div>
       {requestError && (
         <AlertBox onClose={() => setRequestError(undefined)} type="alert">
-          {requestError}
+          {renderInlineMarkup(requestError)}
         </AlertBox>
       )}
       {sessionStorage.getItem("alert_message_success") ? (
@@ -151,6 +152,20 @@ const SignInForm = () => {
 
   const { signIn } = useContext(UserContext)
 
+  const handleRequestError = (error: AxiosError<{ error: string; email: string }>) => {
+    if (error.response.data.error === "not_confirmed") {
+      setNewAccountNotConfirmedModal(error.response.data.email)
+    } else if (error.response.data.error === "bad_credentials") {
+      setRequestError(
+        t("signIn.badCredentialsWithResetLink", {
+          url: getForgotPasswordPath(),
+        })
+      )
+    } else {
+      setRequestError(`${t("signIn.unknownError")}`)
+    }
+  }
+
   const onSubmit = (data: { email: string; password: string }) => {
     const { email, password } = data
 
@@ -160,12 +175,7 @@ const SignInForm = () => {
         window.scrollTo(0, 0)
       })
       .catch((error: AxiosError<{ error: string; email: string }>) => {
-        if (error.response.data.error === "not_confirmed") {
-          setNewAccountNotConfirmedModal(error.response.data.email)
-        } else {
-          // TODO: handle sign-in error states
-          setRequestError(`${t("signIn.badCredentials")}`)
-        }
+        handleRequestError(error)
       })
   }
 
