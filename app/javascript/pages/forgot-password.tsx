@@ -22,10 +22,9 @@ const ForgotPassword = () => {
   const [emailSubmitted, setEmailSubmitted] = useState(false)
   // eslint-disable-next-line @typescript-eslint/unbound-method
   const { register, handleSubmit, errors } = useForm()
-  const onSubmit = (data: { email: string }) => {
+  const onSubmit = () => {
     setEmailSubmitted(true)
     // TODO: DAH-2984 API integration
-    console.log(data)
   }
   return (
     <FormsLayout>
