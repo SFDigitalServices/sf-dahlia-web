@@ -53,17 +53,28 @@ export const ListingDetailsAside = ({ listing, imageSrc }: ListingDetailsSidebar
         <aside className="w-full static md:absolute md:right-0 md:w-1/3 md:top-0 sm:w-2/3 md:ml-2 h-full md:border border-solid bg-white">
           <div className="hidden md:block">
             <ListingDetailsApplicationDate listing={listing} />
-            {isFcfsSalesListing(listing) && fcfsNoLotteryRequired()}
+            {
+              // Only show the fcfsNoLotteryRequired component for FCFS Sales listings
+              isFcfsSalesListing(listing) && fcfsNoLotteryRequired()
+            }
             <ListingDetailsLotteryInfo listing={listing} />
             <ListingDetailsLotteryResults listing={listing} />
             {/* ListingDetailsWaitlist gets rendered in a different order due to info architecture
           importance in different states */}
             {!isApplicationOpen && <ListingDetailsWaitlist listing={listing} />}
             {isApplicationOpen && <ListingDetailsInfoSession listing={listing} />}
-            {isListingRental && <ListingDetailsOpenHouses listing={listing} />}
+            {
+              // For sales listings, open house information appears in the See the Unit component
+              // Rental listings do not have the See the Unit component
+              // so we need to show open house information for rental listings here
+              isListingRental && <ListingDetailsOpenHouses listing={listing} />
+            }
             {isApplicationOpen && <ListingDetailsWaitlist listing={listing} />}
             <ListingDetailsApply listing={listing} />
-            {isSaleListing && <ListingDetailsSeeTheUnit listing={listing} />}
+            {
+              // This ListingDetailsSeeTheUnit component is currently only available to sales listings
+              isSaleListing && <ListingDetailsSeeTheUnit listing={listing} />
+            }
             {isApplicationOpen && <NeedHelpBlock listing={listing} />}
             {isSaleListing && listing.Expected_Move_in_Date && expectedMoveInDateBlock}
             <ListingDetailsProcess listing={listing} isApplicationOpen={isApplicationOpen} />
