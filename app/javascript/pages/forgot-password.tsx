@@ -9,6 +9,16 @@ import FormsLayout from "../layouts/FormLayout"
 import withAppSetup from "../layouts/withAppSetup"
 
 const ForgotPassword = () => {
+  const EmailSubmittedCard = () => {
+    return (
+      <div className="text-center p-8">
+        <Heading priority={3} size="2xl" className="mb-4">
+          {t("forgotPassword.emailSent")}
+        </Heading>
+        <p>{t("forgotPassword.emailLink")}</p>
+      </div>
+    )
+  }
   const [emailSubmitted, setEmailSubmitted] = useState(true)
   // eslint-disable-next-line @typescript-eslint/unbound-method
   const { register, handleSubmit, errors } = useForm()
@@ -26,7 +36,7 @@ const ForgotPassword = () => {
         </div>
         {emailSubmitted ? (
           <div className="form-card__group pt-0 border-b">
-            <Form id="sign-in" className="mt-10 relative" onSubmit={handleSubmit(onSubmit)}>
+            <Form className="mt-10 relative" onSubmit={handleSubmit(onSubmit)}>
               <EmailFieldset register={register} errors={errors} />
               <div className="text-center mt-4">
                 <Button styleType={AppearanceStyleType.primary} type="submit">
@@ -39,12 +49,7 @@ const ForgotPassword = () => {
             </Form>
           </div>
         ) : (
-          <div className="text-center p-8">
-            <Heading priority={3} size="2xl" className="mb-4">
-              {t("forgotPassword.emailSent")}
-            </Heading>
-            <p>{t("forgotPassword.emailLink")}</p>
-          </div>
+          <EmailSubmittedCard />
         )}
       </FormCard>
     </FormsLayout>
