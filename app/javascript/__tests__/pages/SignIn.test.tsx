@@ -284,6 +284,16 @@ describe("<SignIn />", () => {
     })
   })
 
+  it("shows the sign in required banner", async () => {
+    window.sessionStorage.setItem("alert_message_secondary", t("signIn.loginRequired"))
+
+    render(<SiteAlert type="secondary" />)
+    window.sessionStorage.setItem("redirect", "account")
+
+    await renderAndLoadAsync(<SignIn assetPaths={{}} />)
+    expect(screen.getByText(t("signIn.loginRequired"))).not.toBeNull()
+  })
+
   it("shows the timeout limit banner", async () => {
     const mockGetItem = jest.fn()
     const mockSetItem = jest.fn()

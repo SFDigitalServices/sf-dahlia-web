@@ -21,6 +21,7 @@ import "./styles/my-applications.scss"
 import { DoubleSubmittedModal } from "./components/DoubleSubmittedModal"
 import { AlreadySubmittedModal } from "./components/AlreadySubmittedModal"
 import { extractModalParamsFromUrl } from "./components/util"
+import { setSiteAlertMessage } from "../../components/SiteAlert"
 
 export const noApplications = () => {
   return (
@@ -198,6 +199,8 @@ const MyApplications = () => {
   }, [authLoading, initialStateLoaded, profile])
 
   if (!profile && !authLoading && initialStateLoaded) {
+    window.sessionStorage.setItem("redirect", "applications")
+    setSiteAlertMessage(t("signIn.loginRequired"), "secondary")
     window.location.href = getSignInPath()
     return null
   }
