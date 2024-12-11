@@ -14,7 +14,7 @@ ShortFormNavigationService = (
   Service.goToApplicationPage = (path, params) ->
     # Every time the user completes an application page,
     # we track that in GTM/GA as a form success.
-    AnalyticsService.trackFormSuccess('Application')
+    AnalyticsService.trackFormSuccess('Application Page View')
     if params
       $state.go(path, params)
     else
