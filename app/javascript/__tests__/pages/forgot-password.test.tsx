@@ -13,6 +13,6 @@ jest.mock("react-helmet-async", () => {
 describe("<ForgotPassword />", () => {
   it("shows the correct form text", async () => {
     const { getAllByText } = await renderAndLoadAsync(<ForgotPassword assetPaths={{}} />)
-    expect(getAllByText("Forgot Password")).not.toBeNull()
+    expect(getAllByText("Forgot password")).not.toBeNull()
   })
 })
