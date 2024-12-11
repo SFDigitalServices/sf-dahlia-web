@@ -1155,6 +1155,13 @@ ShortFormApplicationService = (
   Service.getProjectIdForBoundaryMatching = ->
     ListingDataService.getProjectIdForBoundaryMatching(Service.listing)
 
+  Service.demographicsAreAutofilled = ->
+    Service.application.autofill &&
+    Service.application.applicant &&
+    _.some(ShortFormDataService.demographicFields, (field) -> !!Service.application.applicant[field])
+
+  Service.APPLICATION_AUTOFILL_IMPROVEMENTS = $window.APPLICATION_AUTOFILL_IMPROVEMENTS
+
   return Service
 
 ############################################################################################
