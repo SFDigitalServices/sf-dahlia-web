@@ -19,11 +19,11 @@ const ForgotPassword = () => {
       </div>
     )
   }
-  const [emailSubmitted, setEmailSubmitted] = useState(true)
+  const [emailSubmitted, setEmailSubmitted] = useState(false)
   // eslint-disable-next-line @typescript-eslint/unbound-method
   const { register, handleSubmit, errors } = useForm()
   const onSubmit = (data: { email: string }) => {
-    setEmailSubmitted(false)
+    setEmailSubmitted(true)
     // TODO: DAH-2984 API integration
     console.log(data)
   }
@@ -34,7 +34,7 @@ const ForgotPassword = () => {
           <Icon size="2xl" symbol="profile" />
           <h2 className="form-card__title">{t("pageTitle.forgotPasswordLowercase")}</h2>
         </div>
-        {emailSubmitted ? (
+        {!emailSubmitted ? (
           <div className="form-card__group pt-0 border-b">
             <Form className="mt-10 relative" onSubmit={handleSubmit(onSubmit)}>
               <EmailFieldset register={register} errors={errors} />
