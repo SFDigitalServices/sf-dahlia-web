@@ -1,4 +1,9 @@
-import { clearHeadersSignOut, clearHeaders, clearHeadersTimeOut } from "../../authentication/token"
+import {
+  clearHeadersSignOut,
+  clearHeaders,
+  clearHeadersTimeOut,
+  clearHeadersConnectionIssue,
+} from "../../authentication/token"
 
 const ACCESS_TOKEN_LOCAL_STORAGE_KEY = "auth_headers"
 
@@ -33,6 +38,15 @@ describe("token.ts", () => {
     expect(mockSetItem).toHaveBeenCalledWith(
       "alert_message_secondary",
       "You were inactive for more than 30 minutes, so we signed you out. We do this for your security. Sign in again to continue."
+    )
+  })
+  it("signOutConnectionIssue", () => {
+    mockGetItem.mockImplementationOnce(() => "test-local-storage-key")
+    clearHeadersConnectionIssue()
+    expect(mockRemoveItem).toHaveBeenCalledWith(ACCESS_TOKEN_LOCAL_STORAGE_KEY)
+    expect(mockSetItem).toHaveBeenCalledWith(
+      "alert_message_secondary",
+      "There was a connection issue, so we signed you out. We do this for your security. Sign in again to continue."
     )
   })
 })
