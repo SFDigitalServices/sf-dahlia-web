@@ -63,7 +63,7 @@ export const clearHeadersTimeOut = () => {
 
 export const clearHeadersConnectionIssue = () => {
   if (getStorage().getItem(ACCESS_TOKEN_LOCAL_STORAGE_KEY)) {
-    getStorage().setItem("alert_message_secondary", t("signOut.alertMessage.connectionIssue"))
+    setSiteAlertMessage(t("signOut.alertMessage.connectionIssue"), "secondary")
   }
 
   getStorage().removeItem(ACCESS_TOKEN_LOCAL_STORAGE_KEY)
