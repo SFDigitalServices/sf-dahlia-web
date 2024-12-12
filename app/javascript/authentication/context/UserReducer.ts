@@ -1,6 +1,11 @@
 import { createReducer } from "typesafe-actions"
 
-import { clearHeaders, clearHeadersSignOut, clearHeadersTimeOut } from "../token"
+import {
+  clearHeaders,
+  clearHeadersSignOut,
+  clearHeadersTimeOut,
+  clearHeadersConnectionIssue,
+} from "../token"
 import { User } from "../user"
 import { UserAction } from "./userActions"
 
@@ -27,7 +32,11 @@ const UserReducer = createReducer({ loading: false, initialStateLoaded: false } 
   },
   [UserAction.TimeOut]: () => {
     clearHeadersTimeOut()
-
+    // Clear out all existing state other than the storage type
+    return { loading: false, initialStateLoaded: true }
+  },
+  [UserAction.SignOutConnectionIssue]: () => {
+    clearHeadersConnectionIssue()
     // Clear out all existing state other than the storage type
     return { loading: false, initialStateLoaded: true }
   },
