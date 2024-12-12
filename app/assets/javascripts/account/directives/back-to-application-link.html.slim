@@ -1,5 +1,5 @@
 .back-link-container.small-only-text-center ng-if="rememberedShortFormState"
-  a.back-link ui-sref="{{rememberedShortFormState}}"
+  a.back-link(ui-sref="{{rememberedShortFormState}}" ng-click="logBackLinkClick()")
     span.ui-icon.ui-static.ui-medium.i-primary
       svg
         use xlink:href="#i-left"

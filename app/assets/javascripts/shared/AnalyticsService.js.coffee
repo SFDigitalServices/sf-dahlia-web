@@ -6,15 +6,32 @@ AnalyticsService = ($state) ->
   Service = {}
   Service.timer = {}
 
+  Service.resetProperties = {
+    label: undefined
+    event: undefined
+    event_timestamp: undefined
+    category: undefined
+    action: undefined
+    origin: undefined
+    reason: undefined
+    eventTimeout: undefined
+    fieldId: undefined
+    user_id: undefined
+    time_to_abandon: undefined
+    time_to_submit: undefined
+    listing_id: undefined
+  }
+
   Service.trackEvent = (event, properties) ->
     dataLayer = window.dataLayer || []
-    unless properties.label
+    combinedProperties = Object.assign({}, Service.resetProperties, properties)
+    unless combinedProperties.label
       # by default, grab the end of the URL e.g. the "contact" from "/x/y/z/contact"
       current_path = _.first(_.last($state.current.url.split('/')).split('?'))
-      properties.label = current_path
-    properties.event = event
-    properties.event_timestamp = Date.now()
-    dataLayer.push(properties)
+      combinedProperties.label = current_path
+    combinedProperties.event = event
+    combinedProperties.event_timestamp = Date.now()
+    dataLayer.push(combinedProperties)
 
   # Tracks the current page as the user navigates
   Service.trackCurrentPage = ->
@@ -69,19 +86,19 @@ AnalyticsService = ($state) ->
     Service.trackEvent('Form Message', params)
 
   Service.trackApplicationStart = (listingId, userId = null, origin = null) ->
-    params = { category: "Application", action: 'Application Start', user_id: userId, listing_id: listingId, origin: origin }
+    params = { user_id: userId, listing_id: listingId, origin: origin }
     Service.createApplicationTimer(listingId)
-    Service.trackEvent('Analytics Message', params)
+    Service.trackEvent('Application_Start', params)
 
-  Service.trackApplicationComplete = (listingId, userId = null) ->
+  Service.trackApplicationComplete = (listingId, userId = null, reason = null) ->
     time_to_submit = Service.getApplicationDuration(listingId)
-    params = { category: "Application", action: 'Application Complete', user_id: userId, listing_id: listingId, time_to_submit: time_to_submit }
-    Service.trackEvent('Analytics Message', params)
+    params = { user_id: userId, listing_id: listingId, time_to_submit: time_to_submit, reason: reason }
+    Service.trackEvent('Application_Complete', params)
 
   Service.trackApplicationAbandon = (listingId, userId = null, reason = null) ->
     time_to_abandon = Service.getApplicationDuration(listingId)
-    params = { category: "Application", action: 'Application Abandon', user_id: userId, listing_id: listingId, time_to_abandon: time_to_abandon, reason: reason }
-    Service.trackEvent('Analytics Message', params)
+    params = { user_id: userId, listing_id: listingId, time_to_abandon: time_to_abandon, reason: reason }
+    Service.trackEvent('Application_Abandon', params)
 
   # Distinct from trackFormFieldError, this function is called when there is a validation error on the form
   # For example, if the user has an income that is out of bounds

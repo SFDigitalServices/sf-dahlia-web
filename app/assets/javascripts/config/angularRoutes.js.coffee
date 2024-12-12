@@ -592,8 +592,8 @@
         ]
         application: [
           # 'listing' is part of the params so that application waits for listing (above) to resolve
-          '$q', '$stateParams', '$state', 'ShortFormApplicationService', 'AccountService', 'AutosaveService', 'listing'
-          ($q, $stateParams, $state, ShortFormApplicationService, AccountService, AutosaveService, listing) ->
+          '$q', '$stateParams', '$state', 'ShortFormApplicationService', 'AccountService', 'AutosaveService', 'AnalyticsService', 'listing'
+          ($q, $stateParams, $state, ShortFormApplicationService, AccountService, AutosaveService, AnalyticsService, listing) ->
             deferred = $q.defer()
 
             # if the user just clicked the language switcher, don't reload the whole route
@@ -620,6 +620,7 @@
 
               if ShortFormApplicationService.application.status == 'Submitted'
                 # send them to their review page if the application is already submitted
+                AnalyticsService.trackApplicationComplete(listing.Id, AccountService.loggedInUser?.id || null, "Application already submitted")
                 $state.go('dahlia.short-form-review', {id: ShortFormApplicationService.application.id})
               else if ShortFormApplicationService.application.autofill == true
                 $state.go('dahlia.short-form-application.autofill-preview', {id: listing.Id, lang: $stateParams.lang})
