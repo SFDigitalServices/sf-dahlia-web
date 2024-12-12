@@ -932,6 +932,9 @@ ShortFormApplicationService = (
 
     # this will setup Service.application with the loaded data
     Service.resetApplicationData(formattedApp)
+    if !_.isEmpty(data.application) && !_.isEmpty(Service.application) && Service.application.status.match(/draft/i) && Service.application.id
+      AnalyticsService.trackApplicationStart(data?.application?.listingID, data?.application?.primaryApplicant?.webAppID, 'Continue with these details')
+
     # one last step, reconcile any uploaded files with your saved member + preference data
     if !_.isEmpty(Service.application) && Service.application.status.match(/draft/i)
       Service.refreshPreferences('all')
