@@ -155,6 +155,8 @@ export const ListingDetailsApply = ({ listing }: ListingDetailsApplyProps) => {
   const isFcfsBmrSales = isFcfsSalesListing(listing)
   const listingState = getFcfsSalesListingState(listing)
 
+  // FCFS BMR Sales rely on listing states
+  // Other listings use the isOpen function
   if (isFcfsBmrSales ? listingState === ListingState.Closed : !isOpen(listing)) return null
 
   const isListingRental = isRental(listing)
