@@ -1219,6 +1219,8 @@
   "listings.occupancyDescriptionNoSro": "Occupancy limits for this building differ from household size, and do not include children under 6.",
   "listings.occupancyDescriptionSomeSro": "Occupancy for this building varies by unit type. SROs are limited to 1 person per unit, regardless of age. For all other unit types, occupancy limits do not count children under 6.",
   "listings.onePerson": "1 person",
+  "listings.openListings.subtitle": "",
+  "listings.openListings.title": "",
   "listings.openWaitlist": "Open Waitlist",
   "listings.openWaitlistSlots": "Open Waitlist Slots",
   "listings.people": "people",
