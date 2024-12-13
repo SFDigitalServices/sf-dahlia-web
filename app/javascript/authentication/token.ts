@@ -40,11 +40,33 @@ export const setAuthHeaders = (headers: AuthHeaders | AxiosHeaders) => {
 }
 
 export const getHeaders = (): AuthHeaders | AxiosHeaders | undefined => getAuthHeaders()
+
 export const clearHeaders = () => {
+  getStorage().removeItem(ACCESS_TOKEN_LOCAL_STORAGE_KEY)
+}
+
+export const clearHeadersSignOut = () => {
   if (getStorage().getItem(ACCESS_TOKEN_LOCAL_STORAGE_KEY)) {
     setSiteAlertMessage(t("signOut.alertMessage.confirmSignOut"), "success")
-    getStorage().removeItem(ACCESS_TOKEN_LOCAL_STORAGE_KEY)
   }
+
+  getStorage().removeItem(ACCESS_TOKEN_LOCAL_STORAGE_KEY)
+}
+
+export const clearHeadersTimeOut = () => {
+  if (getStorage().getItem(ACCESS_TOKEN_LOCAL_STORAGE_KEY)) {
+    setSiteAlertMessage(t("signOut.alertMessage.timeout"), "secondary")
+  }
+
+  getStorage().removeItem(ACCESS_TOKEN_LOCAL_STORAGE_KEY)
+}
+
+export const clearHeadersConnectionIssue = () => {
+  if (getStorage().getItem(ACCESS_TOKEN_LOCAL_STORAGE_KEY)) {
+    setSiteAlertMessage(t("signOut.alertMessage.connectionIssue"), "secondary")
+  }
+
+  getStorage().removeItem(ACCESS_TOKEN_LOCAL_STORAGE_KEY)
 }
 
 const getTokenTtl = (): number =>

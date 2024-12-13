@@ -12,15 +12,15 @@ interface IdleTimeoutProps {
 }
 
 const IdleTimeout = ({ onTimeout, useFormTimeout = false }: IdleTimeoutProps) => {
-  const { profile, signOut } = useContext(UserContext)
+  const { profile, timeOut } = useContext(UserContext)
 
-  const handleTimeout = async (shouldSignOut: boolean) => {
+  const handleTimeout = async (shouldTimeOut: boolean) => {
     onTimeout && (await onTimeout())
-    signOut && shouldSignOut && signOut()
+    timeOut && shouldTimeOut && timeOut()
   }
 
   // Only render the IdleTimeout component if the user is logged in
-  if (profile && signOut) {
+  if (profile && timeOut) {
     return (
       <BaseIdleTimeout
         promptTitle={t("idleTimeout.stayLoggedIn")}
