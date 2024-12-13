@@ -2,6 +2,7 @@ import React from "react"
 import { render, cleanup } from "@testing-library/react"
 import ForSale from "../../../pages/listings/for-sale"
 import { openSaleListing } from "../../data/RailsSaleListing/listing-sale-open"
+import { fcfsSaleListing } from "../../data/RailsSaleListing/listing-sale-fcfs"
 import { useFeatureFlag } from "../../../hooks/useFeatureFlag"
 
 const axios = require("axios")
@@ -40,7 +41,7 @@ describe("For Sale", () => {
   })
 
   it("listings with multiple listings render the first image in the array", async () => {
-    axios.get.mockResolvedValue({ data: { listings: [openSaleListing] } })
+    axios.get.mockResolvedValue({ data: { listings: [openSaleListing, fcfsSaleListing] } })
 
     const { findByAltText } = render(<ForSale assetPaths="/" />)
 
