@@ -43,9 +43,9 @@ describe("For Sale", () => {
   it("listings with multiple listings render the first image in the array", async () => {
     axios.get.mockResolvedValue({ data: { listings: [openSaleListing, fcfsSaleListing] } })
 
-    const { findByAltText } = render(<ForSale assetPaths="/" />)
+    const { findAllByAltText } = render(<ForSale assetPaths="/" />)
 
-    const image = await findByAltText("This is a listing image")
-    expect(image.getAttribute("src")).toBe(openSaleListing.Listing_Images[0].displayImageURL)
+    const image = await findAllByAltText("This is a listing image")
+    expect(image[0].getAttribute("src")).toBe(openSaleListing.Listing_Images[0].displayImageURL)
   })
 })
