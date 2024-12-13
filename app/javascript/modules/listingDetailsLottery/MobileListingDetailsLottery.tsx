@@ -6,7 +6,6 @@ import { ListingDetailsProcess } from "../listingDetailsAside/ListingDetailsProc
 import { isFcfsSalesListing, isOpen, isRental } from "../../util/listingUtil"
 import { ListingDetailsLotteryInfo } from "./LotteryDetailsLotteryInfo"
 import { ListingDetailsWaitlist } from "../listingDetailsAside/ListingDetailsWaitlist"
-import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import { ListingDetailsOpenHouses } from "../listingDetailsAside/ListingDetailsOpenHouses"
 
 export interface ListingDetailsLotteryProps {
@@ -15,13 +14,11 @@ export interface ListingDetailsLotteryProps {
 }
 
 export const MobileListingDetailsLottery = ({ imageSrc, listing }: ListingDetailsLotteryProps) => {
-  const { unleashFlag: isSalesFcfsEnabled } = useFeatureFlag("FCFS", false)
-  const shouldNotRenderForFcfs = isSalesFcfsEnabled && isFcfsSalesListing(listing)
-  const shouldRenderComponent = shouldNotRenderForFcfs ? false : !isOpen(listing)
+  const shouldRenderComponent = isFcfsSalesListing(listing) ? false : !isOpen(listing)
 
   return (
     listing &&
-    !shouldNotRenderForFcfs && (
+    shouldRenderComponent && (
       <Mobile>
         <ListingDetailItem
           imageAlt={""}
