@@ -173,10 +173,7 @@ const ListingDetail = () => {
                 <ListingDetailsWaitlist listing={listing} />
               </Mobile>
             )}
-            {
-              // No Lottery required component is only for FCFS Sales listings
-              isFcfsSalesListing(listing) && <Mobile>{fcfsNoLotteryRequired()}</Mobile>
-            }
+            {isFcfsSalesListing(listing) && <Mobile>{fcfsNoLotteryRequired()}</Mobile>}
             <Mobile>
               <ListingDetailsApply listing={listing} />
             </Mobile>
@@ -197,21 +194,18 @@ const ListingDetail = () => {
                 listing={listing}
                 imageSrc={getAssetPath("listing-eligibility.svg")}
               />
-              {
-                // See the unit component is only for sales listings
-                !isRental(listing) ? (
-                  <MobileListingDetailsSeeTheUnit
-                    listing={listing}
-                    imageSrc={getAssetPath("listing-units.svg")}
-                  />
-                ) : (
-                  <MobileListingDetailsProcess
-                    listing={listing}
-                    imageSrc={getAssetPath("listing-units.svg")}
-                    isApplicationOpen={isApplicationOpen}
-                  />
-                )
-              }
+              {!isRental(listing) ? (
+                <MobileListingDetailsSeeTheUnit
+                  listing={listing}
+                  imageSrc={getAssetPath("listing-units.svg")}
+                />
+              ) : (
+                <MobileListingDetailsProcess
+                  listing={listing}
+                  imageSrc={getAssetPath("listing-units.svg")}
+                  isApplicationOpen={isApplicationOpen}
+                />
+              )}
               <></>
               <ListingDetailsFeatures
                 listing={listing}

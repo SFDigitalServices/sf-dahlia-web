@@ -75,10 +75,7 @@ export const ListingDetailsProcess = ({
             />
           </div>
         )}
-      {
-        // FCFS Sales listings do not have the what to expect section
-        !isFcfsSalesListing(listing) && <WhatToExpect />
-      }
+      {!isFcfsSalesListing(listing) && <WhatToExpect />}
       <ListingDetailsLotteryPreferenceLists
         listing={listing}
         isApplicationOpen={isApplicationOpen}

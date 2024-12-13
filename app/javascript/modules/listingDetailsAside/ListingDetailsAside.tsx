@@ -71,10 +71,7 @@ export const ListingDetailsAside = ({ listing, imageSrc }: ListingDetailsSidebar
             }
             {isApplicationOpen && <ListingDetailsWaitlist listing={listing} />}
             <ListingDetailsApply listing={listing} />
-            {
-              // This ListingDetailsSeeTheUnit component is currently only available to sales listings
-              isSaleListing && <ListingDetailsSeeTheUnit listing={listing} />
-            }
+            {isSaleListing && <ListingDetailsSeeTheUnit listing={listing} />}
             {isApplicationOpen && <NeedHelpBlock listing={listing} />}
             {isSaleListing && listing.Expected_Move_in_Date && expectedMoveInDateBlock}
             <ListingDetailsProcess listing={listing} isApplicationOpen={isApplicationOpen} />
