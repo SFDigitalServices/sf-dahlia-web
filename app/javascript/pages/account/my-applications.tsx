@@ -66,8 +66,8 @@ const applicationHeader = (text: string) => {
   )
 }
 
-const resetPassword = () => {
-  resetPasswordAPI("abc123")
+const resetPassword = (password: string) => {
+  resetPasswordAPI(password)
     .then((res) => {
       console.log(res)
     })
@@ -220,7 +220,11 @@ const MyApplications = () => {
     <Layout
       children={
         <section className="bg-gray-300 border-t border-gray-450">
-          <button onClick={() => resetPassword()}>Reset Password</button>
+          <button onClick={() => resetPassword("abcd1234")}>
+            Reset Password with Good Password
+          </button>{" "}
+          <br />
+          <button onClick={() => resetPassword("boo")}>Reset Password with Bad Password</button>
           <div className="flex flex-wrap relative max-w-2xl mx-auto sm:py-8">
             <Card className="w-full mobile-card">
               <Card.Header className="flex justify-center w-full flex-col items-center pb-8">
