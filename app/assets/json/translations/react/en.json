@@ -1462,6 +1462,7 @@
   "pageTitle.rent": "Rent affordable housing",
   "pageTitle.rentalListings": "Rental Listings",
   "pageTitle.resetPassword": "Reset Password",
+  "pageTitle.resetPassword.lowercase": "Reset password",
   "pageTitle.saleListings": "Sale Listings",
   "pageTitle.shareListing": "Share %{listing}",
   "pageTitle.shareThisListing": "Share this listing",
