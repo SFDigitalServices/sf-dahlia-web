@@ -81,6 +81,25 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
       'isVeteran',
     ]
 
+  Service.demographicFields = [
+    'asianOther',
+    'blackOther',
+    'gender',
+    'genderOther',
+    'indigenousCentralSouthAmericaGroup',
+    'indigenousNativeAmericanGroup',
+    'indigenousOther',
+    'latinoOther',
+    'menaOther',
+    'otherLanguage',
+    'pacificIslanderOther',
+    'primaryLanguage'
+    'raceEthnicity',
+    'sexualOrientation',
+    'sexualOrientationOther'
+    'whiteOther',
+  ]
+
   Service.showVeteransApplicationQuestion = ->
     SharedService.showVeteransApplicationQuestion(ListingDataService.listing)
 
