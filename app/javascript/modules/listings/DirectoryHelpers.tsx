@@ -36,6 +36,7 @@ import RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
 import { ListingState } from "./ListingState"
 import { ListingsGroupHeader } from "./ListingsGroupHeader"
 import { IconHomeCheck } from "./assets/icon-home-check"
+import { EmptyListingsView } from "./components/EmptyListingsView"
 
 export type RailsUnitSummary = RailsSaleUnitSummary | RailsRentalUnitSummary
 
@@ -256,7 +257,11 @@ export const openListingsView = (
     subtitle={t(`listings.${directoryType}.openListings.subtitle`)}
     icon={<Icon size="xlarge" symbol="house" />}
   >
-    {listings.length > 0 && getListingCards(listings, directoryType, stackedDataFxn, filtersSet)}
+    {listings.length > 0 ? (
+      getListingCards(listings, directoryType, stackedDataFxn, filtersSet)
+    ) : (
+      <EmptyListingsView directoryType={directoryType} unitsCount={listings.length} />
+    )}
   </ListingsGroupHeader>
 )
 
