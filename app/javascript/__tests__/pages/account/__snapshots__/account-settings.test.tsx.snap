@@ -656,7 +656,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                           </label>
                         </div>
                         <div
-                          class="field-note"
+                          class="field-note pb-3"
                           id="newPasswordInstructions"
                         >
                           <span>
@@ -1522,7 +1522,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                         </label>
                       </div>
                       <div
-                        class="field-note"
+                        class="field-note pb-3"
                         id="newPasswordInstructions"
                       >
                         <span>
@@ -2421,7 +2421,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                           </label>
                         </div>
                         <div
-                          class="field-note"
+                          class="field-note pb-3"
                           id="newPasswordInstructions"
                         >
                           <span>
@@ -3263,7 +3263,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                         </label>
                       </div>
                       <div
-                        class="field-note"
+                        class="field-note pb-3"
                         id="newPasswordInstructions"
                       >
                         <span>
