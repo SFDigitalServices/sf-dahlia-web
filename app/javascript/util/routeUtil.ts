@@ -84,7 +84,6 @@ const SignInRedirects = {
 }
 
 const getRedirectUrl = (key: string): string => {
-  console.log("getting redirect for", key)
   return SignInRedirects[key] || SignInRedirects.home
 }
 
