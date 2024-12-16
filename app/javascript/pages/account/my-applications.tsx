@@ -67,7 +67,7 @@ const applicationHeader = (text: string) => {
 }
 
 const resetPassword = () => {
-  resetPasswordAPI("Test123!")
+  resetPasswordAPI("abc123")
     .then((res) => {
       console.log(res)
     })
