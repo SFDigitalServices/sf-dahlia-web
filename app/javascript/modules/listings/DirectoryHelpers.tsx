@@ -252,32 +252,30 @@ export const openListingsView = (
   directoryType: DirectoryType,
   stackedDataFxn: StackedDataFxnType,
   filtersSet?: boolean
-) =>
-  listings.length > 0 && (
-    <ListingsGroupHeader
-      title={t(`listings.${directoryType}.openListings.title`)}
-      subtitle={t(`listings.${directoryType}.openListings.subtitle`)}
-      icon={IconHome}
-    >
-      {getListingCards(listings, directoryType, stackedDataFxn, filtersSet)}
-    </ListingsGroupHeader>
-  )
+) => (
+  <ListingsGroupHeader
+    title={t(`listings.${directoryType}.openListings.title`)}
+    subtitle={t(`listings.${directoryType}.openListings.subtitle`)}
+    icon={IconHome}
+  >
+    {listings.length > 0 && getListingCards(listings, directoryType, stackedDataFxn, filtersSet)}
+  </ListingsGroupHeader>
+)
 
 export const fcfsSalesView = (
   listings: RailsListing[],
   directoryType: DirectoryType,
   stackedDataFxn: StackedDataFxnType,
   filtersSet?: boolean
-) =>
-  listings.length > 0 && (
-    <ListingsGroupHeader
-      title={t(`listings.${directoryType}.fcfsListings.title`)}
-      subtitle={t(`listings.${directoryType}.fcfsListings.subtitle`)}
-      icon={IconHomeCheck}
-    >
-      {getListingCards(listings, directoryType, stackedDataFxn, filtersSet)}
-    </ListingsGroupHeader>
-  )
+) => (
+  <ListingsGroupHeader
+    title={t(`listings.${directoryType}.fcfsListings.title`)}
+    subtitle={t(`listings.${directoryType}.fcfsListings.subtitle`)}
+    icon={IconHomeCheck}
+  >
+    {listings.length > 0 && getListingCards(listings, directoryType, stackedDataFxn, filtersSet)}
+  </ListingsGroupHeader>
+)
 
 // Get an expandable group of listings
 export const getListingGroup = (
