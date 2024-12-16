@@ -193,7 +193,7 @@ ShortFormNavigationService = (
     'veterans-preference': {scopedCallbacks: [{func: 'checkAfterVeteransPreference'}]}
     'custom-preferences': {scopedCallbacks: [{func: 'checkForCustomProofPreferences'}]}
     'custom-proof-preferences': {scopedCallbacks: [{func: 'checkForCustomProofPreferences'}]}
-    'general-lottery-notice': {callbacks: [Service.goToSection.bind(null, 'Review')]}
+    'general-lottery-notice': {scopedCallbacks: [{func: 'goToDemographicsPageUnlessAutofilled'}]}
     # review
     # TODO -> not sure what this does, just says the next page?
     'review-optional': {path: 'review-summary'}
@@ -351,6 +351,8 @@ ShortFormNavigationService = (
         ,'alternate-contact-phone-address'
         ,'household-overview'
         ,'preferences-intro'
+        # prev page is not deterministic for review-summary (we may skip demographics page)
+        # but it doesn't matter because we hide the back button for this page
         ,'review-summary'
         ,'review-terms'
           Service._getPreviousPage()
