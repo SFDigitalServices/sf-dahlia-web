@@ -463,7 +463,7 @@ ShortFormApplicationController = (
       ShortFormNavigationService.goToApplicationPage('dahlia.short-form-application.general-lottery-notice')
     else
       # otherwise go to the Review section
-      ShortFormNavigationService.goToSection('Review')
+      $scope.goToDemographicsPageUnlessAutofilled()
 
   $scope.checkPreferenceEligibility = (type = 'liveWorkInSf') ->
     # this mainly gets used as one of the submit callbacks for relevant pages in ShortFormNavigationService
@@ -761,6 +761,12 @@ ShortFormApplicationController = (
   $scope.goToPostHomeAndCommunityBasedServicesPage = ->
     page = ShortFormNavigationService.getPostHomeAndCommunityBasedServicesPage($scope.listing)
     ShortFormNavigationService.goToApplicationPage("dahlia.short-form-application.#{page}")
+
+  $scope.goToDemographicsPageUnlessAutofilled = ->
+    if ShortFormApplicationService.APPLICATION_AUTOFILL_IMPROVEMENTS && ShortFormApplicationService.demographicsAreAutofilled()
+      ShortFormNavigationService.goToApplicationPage("dahlia.short-form-application.review-summary")
+    else
+      ShortFormNavigationService.goToApplicationPage("dahlia.short-form-application.review-optional")
 
   $scope.hasHomeAndCommunityBasedServicesYes = ->
     $scope.application.hasHomeAndCommunityBasedServices == 'Yes'
