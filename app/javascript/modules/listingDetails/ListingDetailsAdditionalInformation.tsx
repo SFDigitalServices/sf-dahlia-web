@@ -1,23 +1,48 @@
-import React from "react"
+import React, { ReactNode } from "react"
 import { LinkButton, ListingDetailItem, Mobile, t } from "@bloom-housing/ui-components"
 import { RailsListing } from "../listings/SharedHelpers"
 import { TextTruncate } from "../../components/TextTruncate"
-import { isHabitatListing, isFcfsSalesListing, isOpen, isSale } from "../../util/listingUtil"
+import { isHabitatListing, isOpen, isSale, isLotterySalesListing } from "../../util/listingUtil"
 import { stripMostTags } from "../../util/filterUtil"
 import { getTranslatedString, localizedFormat } from "../../util/languageUtil"
-import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 
 export interface ListingDetailsAdditionalInformationProps {
   listing: RailsListing
   imageSrc: string
 }
 
+const RequiredDocuments = ({
+  listing,
+  children,
+}: {
+  listing: RailsListing
+  children?: ReactNode
+}) => {
+  return (
+    <div className="info-card bg-gray-100 border-0">
+      <h3 className="text-serif-xl">{t("listings.requiredDocuments")}</h3>
+      <div className="text-xs">
+        <TextTruncate
+          className="primary-lighter-markup-link translate"
+          buttonClassName="text-blue-700"
+          text={stripMostTags(
+            getTranslatedString(
+              listing.Required_Documents,
+              "Required_Documents__c",
+              listing.translations
+            )
+          )}
+        />
+      </div>
+      {children}
+    </div>
+  )
+}
+
 export const ListingDetailsAdditionalInformation = ({
   listing,
   imageSrc,
 }: ListingDetailsAdditionalInformationProps) => {
-  const { unleashFlag: isSalesFcfsEnabled } = useFeatureFlag("FCFS", false)
-
   const getCommissionString = () => {
     return listing.Realtor_Commission_Unit === "percent"
       ? t("listings.realtorCommissionPercentage", {
@@ -50,39 +75,29 @@ export const ListingDetailsAdditionalInformation = ({
             />
           </div>
         )}
-        {(!!listing.Required_Documents ||
-          (isSale(listing) && isSalesFcfsEnabled && !isFcfsSalesListing(listing))) && (
-          <div className="info-card bg-gray-100 border-0">
-            <h3 className="text-serif-xl">{t("listings.requiredDocuments")}</h3>
-            <div className="text-xs">
-              <TextTruncate
-                className="primary-lighter-markup-link translate"
-                buttonClassName="text-blue-700"
-                text={stripMostTags(
-                  getTranslatedString(
-                    listing.Required_Documents,
-                    "Required_Documents__c",
-                    listing.translations
-                  )
-                )}
-              />
-            </div>
-            {isSalesFcfsEnabled &&
-              !isFcfsSalesListing(listing) &&
-              isSale(listing) &&
-              !isHabitatListing(listing) && (
-                <div className="text-xs mt-4">
-                  <TextTruncate
-                    className="primary-lighter-markup-link translate"
-                    buttonClassName="text-blue-700"
-                    text={t("listings.requiredDocumentsAfterApplying", {
-                      url: "https://sfmohcd.org/after-homebuyer-lottery",
-                    })}
-                  />
-                </div>
-              )}
-          </div>
-        )}
+        {
+          // Show the component if there are required documents (there aren't always)
+          // Always show the component for lottery sales listings
+          (!!listing?.Required_Documents || isLotterySalesListing(listing)) && (
+            <RequiredDocuments listing={listing}>
+              {
+                // Lottery sales listings (excluding habitat listings) have specific content
+                // that should always show in the Required documents section
+                isLotterySalesListing(listing) && !isHabitatListing(listing) && (
+                  <div className="text-xs mt-4">
+                    <TextTruncate
+                      className="primary-lighter-markup-link translate"
+                      buttonClassName="text-blue-700"
+                      text={t("listings.requiredDocumentsAfterApplying", {
+                        url: "https://sfmohcd.org/after-homebuyer-lottery",
+                      })}
+                    />
+                  </div>
+                )
+              }
+            </RequiredDocuments>
+          )
+        }
         {listing.Legal_Disclaimers && (
           <div className="info-card bg-gray-100 border-0">
             <h3 className="text-serif-xl">{t("listings.importantProgramRules")}</h3>
@@ -183,13 +198,6 @@ export const ListingDetailsAdditionalInformation = ({
                 listing.LastModifiedDate,
                 "LL"
               )}`}</p>
-              {!isSalesFcfsEnabled && listing.Multiple_Listing_Service_URL && (
-                <p className="mt-1">
-                  <a href={listing.Multiple_Listing_Service_URL} target="_blank">
-                    {t("listings.process.seeThisUnitOnMls")}
-                  </a>
-                </p>
-              )}
             </div>
           )}
         </Mobile>
