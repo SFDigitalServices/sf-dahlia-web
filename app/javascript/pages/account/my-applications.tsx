@@ -13,7 +13,11 @@ import { Card, Dialog, Heading } from "@bloom-housing/ui-seeds"
 import { ApplicationItem } from "../../components/ApplicationItem"
 import { getApplicationPath, getLocalizedPath, getSignInPath } from "../../util/routeUtil"
 import { getCurrentLanguage, renderInlineMarkup } from "../../util/languageUtil"
-import { deleteApplication, getApplications } from "../../api/authApiService"
+import {
+  deleteApplication,
+  getApplications,
+  resetPassword as resetPasswordAPI,
+} from "../../api/authApiService"
 import UserContext from "../../authentication/context/UserContext"
 import { Application } from "../../api/types/rails/application/RailsApplication"
 import { isRental, isSale } from "../../util/listingUtil"
@@ -60,6 +64,16 @@ const applicationHeader = (text: string) => {
       {text}
     </Heading>
   )
+}
+
+const resetPassword = () => {
+  resetPasswordAPI("Test123!")
+    .then((res) => {
+      console.log(res)
+    })
+    .catch((error) => {
+      console.log(error)
+    })
 }
 
 const generateApplicationList = (
@@ -206,6 +220,7 @@ const MyApplications = () => {
     <Layout
       children={
         <section className="bg-gray-300 border-t border-gray-450">
+          <button onClick={() => resetPassword()}>Reset Password</button>
           <div className="flex flex-wrap relative max-w-2xl mx-auto sm:py-8">
             <Card className="w-full mobile-card">
               <Card.Header className="flex justify-center w-full flex-col items-center pb-8">
