@@ -18,7 +18,7 @@ export interface PasswordFieldsetProps {
   register: UseFormMethods["register"]
   errors: UseFormMethods["errors"]
   watch: UseFormMethods["watch"]
-  passwordType: "signIn" | "createAccount" | "accountSettings"
+  passwordType: "signIn" | "createAccount" | "accountSettings" | "resetPassword"
   labelText: string
 }
 
@@ -103,7 +103,7 @@ const NewPasswordInstructions = ({
 }) => {
   const showValidationInfo = passwordValidationContent.length > 0
   return (
-    <div className="field-note" id="newPasswordInstructions">
+    <div className="field-note pb-3" id="newPasswordInstructions">
       <span>{t("createAccount.passwordInstructions.mustInclude")}</span>
       <ul className={`${showValidationInfo ? "" : "list-disc list-inside pl-2"}`}>
         {instructionListItem(
@@ -220,7 +220,9 @@ const PasswordFieldset = ({
           required: "password:required",
           validate: newPasswordValidation,
         }}
-        passwordVisibilityDefault={passwordType !== "signIn"}
+        passwordVisibilityDefault={
+          passwordType === "createAccount" || passwordType === "accountSettings"
+        }
         error={errors.password}
         errorMessage={
           errors.password?.message &&
