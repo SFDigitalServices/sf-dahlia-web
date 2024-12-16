@@ -17,7 +17,6 @@ import { ListingDetailsLotteryInfo } from "../listingDetailsLottery/LotteryDetai
 import { ListingDetailsWaitlist } from "./ListingDetailsWaitlist"
 import { ListingDetailsOpenHouses } from "./ListingDetailsOpenHouses"
 import { ListingDetailsSeeTheUnit } from "./ListingDetailsSeeTheUnit"
-import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import { localizedFormat } from "../../util/languageUtil"
 import { fcfsNoLotteryRequired } from "../noLotteryRequired/fcfsNoLotteryRequired"
 import { ListingState } from "../listings/ListingState"
@@ -34,8 +33,6 @@ export const ListingDetailsAside = ({ listing, imageSrc }: ListingDetailsSidebar
     : isOpen(listing)
   const isSaleListing = isSale(listing)
   const isListingRental = isRental(listing)
-
-  const { unleashFlag: isSalesFcfsEnabled } = useFeatureFlag("FCFS", false)
 
   const expectedMoveInDateBlock = (
     <SidebarBlock title={t("listings.expectedMoveinDate")} priority={2}>
@@ -56,19 +53,25 @@ export const ListingDetailsAside = ({ listing, imageSrc }: ListingDetailsSidebar
         <aside className="w-full static md:absolute md:right-0 md:w-1/3 md:top-0 sm:w-2/3 md:ml-2 h-full md:border border-solid bg-white">
           <div className="hidden md:block">
             <ListingDetailsApplicationDate listing={listing} />
-            {isFcfsSalesListing(listing) && isSalesFcfsEnabled && fcfsNoLotteryRequired()}
+            {
+              // Only show the fcfsNoLotteryRequired component for FCFS Sales listings
+              isFcfsSalesListing(listing) && fcfsNoLotteryRequired()
+            }
             <ListingDetailsLotteryInfo listing={listing} />
             <ListingDetailsLotteryResults listing={listing} />
             {/* ListingDetailsWaitlist gets rendered in a different order due to info architecture
           importance in different states */}
             {!isApplicationOpen && <ListingDetailsWaitlist listing={listing} />}
             {isApplicationOpen && <ListingDetailsInfoSession listing={listing} />}
-            {(isListingRental || !isSalesFcfsEnabled) && (
-              <ListingDetailsOpenHouses listing={listing} />
-            )}
+            {
+              // For sales listings, open house information appears in the See the Unit component
+              // Rental listings do not have the See the Unit component
+              // so we need to show open house information for rental listings here
+              isListingRental && <ListingDetailsOpenHouses listing={listing} />
+            }
             {isApplicationOpen && <ListingDetailsWaitlist listing={listing} />}
             <ListingDetailsApply listing={listing} />
-            {isSaleListing && isSalesFcfsEnabled && <ListingDetailsSeeTheUnit listing={listing} />}
+            {isSaleListing && <ListingDetailsSeeTheUnit listing={listing} />}
             {isApplicationOpen && <NeedHelpBlock listing={listing} />}
             {isSaleListing && listing.Expected_Move_in_Date && expectedMoveInDateBlock}
             <ListingDetailsProcess listing={listing} isApplicationOpen={isApplicationOpen} />

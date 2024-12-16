@@ -22,7 +22,6 @@ import {
 } from "../../util/listingUtil"
 import { getSfGovUrl, renderInlineMarkup } from "../../util/languageUtil"
 import "./ListingDetailsApply.scss"
-import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import { localizedPath } from "../../util/routeUtil"
 import { ListingState } from "../listings/ListingState"
 
@@ -156,28 +155,24 @@ export const ListingDetailsApply = ({ listing }: ListingDetailsApplyProps) => {
   const isFcfsBmrSales = isFcfsSalesListing(listing)
   const listingState = getFcfsSalesListingState(listing)
 
-  const { unleashFlag: isSalesFcfsEnabled } = useFeatureFlag("FCFS", false)
-
-  if (
-    isSalesFcfsEnabled && isFcfsBmrSales ? listingState === ListingState.Closed : !isOpen(listing)
-  )
-    return null
+  // FCFS BMR Sales rely on listing states
+  // Other listings use the isOpen function
+  if (isFcfsBmrSales ? listingState === ListingState.Closed : !isOpen(listing)) return null
 
   const isListingRental = isRental(listing)
 
   const acceptingPaperApps = acceptingPaperApplications(listing)
 
-  const howToApplyBlock =
-    isSalesFcfsEnabled && isFcfsBmrSales ? (
-      <FcfsBmrSalesHowToApply listingId={listing.listingID} />
-    ) : (
-      <StandardHowToApply
-        listingId={listing.listingID}
-        isListingRental={isListingRental}
-        isHabitatListing={isHabitatListing(listing)}
-        acceptingPaperApps={acceptingPaperApps}
-      />
-    )
+  const howToApplyBlock = isFcfsBmrSales ? (
+    <FcfsBmrSalesHowToApply listingId={listing.listingID} />
+  ) : (
+    <StandardHowToApply
+      listingId={listing.listingID}
+      isListingRental={isListingRental}
+      isHabitatListing={isHabitatListing(listing)}
+      acceptingPaperApps={acceptingPaperApps}
+    />
+  )
 
   const submitPaperApplicationBlocks = (
     <>
