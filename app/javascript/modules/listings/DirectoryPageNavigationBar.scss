@@ -2,14 +2,13 @@
   position: sticky;
   top: 0;
   z-index: 1;
-  background-color: #fff;
+  background-color: var(--seeds-bg-color-surface);
   margin: 0 auto;
   width: 100%;
-  max-width: var(--bloom-width-5xl);
 
-  --inter-row-gap: var(--bloom-s12);
-  --max-width: var(--bloom-width-3xl);
-  --max-width-large-screen: var(--bloom-width-5xl);
+  --inter-row-gap: var(--seeds-s12);
+  --max-width: var(--seeds-width-3xl);
+  --max-width-large-screen: var(--seeds-width-5xl);
   --margin: var(--inter-row-gap) auto;
   --seeds-focus-ring-box-shadow: none !important;
   --seeds-focus-ring-outline: none !important;
@@ -29,26 +28,25 @@
     --max-width: var(--max-width-large-screen);
   }
 
-  .seeds-button {
+  .directory-page-navigation-bar__button {
     flex: 1 0 0;
     min-width: max-content;
-    margin-left: 16px;
-    padding: var(--sizes-size-s4, 16px) var(--sizes-size-s6, 24px);
+    margin-left: var(--seeds-s4);
+    padding: var(--seeds-s4) var(--seeds-s6);
 
-    background: var(--components-tabs-background-color, #fff);
-    color: var(--components-tabs-label-color, #767676);
-    border: var(--borders-width-1, 1px) solid var(--components-tabs-border-color, #dedee0);
+    background: var(--seeds-bg-color-surface);
+    color: var(--seeds-text-color-light);
+    border: var(--seeds-border-1) solid var(--seeds-color-gray-450);
     border-radius: 0px;
   }
-  .seeds-button:hover,
+  .directory-page-navigation-bar__button:hover,
   .active {
     color: var(--components-tabs-active-label-color, #222);
     background: var(--components-tabs-background-color);
 
-    border-top: var(--borders-width-1, 1px) solid var(--components-tabs-border-color, #dedee0);
-    border-right: var(--borders-width-1, 1px) solid var(--components-tabs-border-color, #dedee0);
-    border-left: var(--borders-width-1, 1px) solid var(--components-tabs-border-color, #dedee0);
-    border-bottom: var(--components-tabs-active-indicator-width, 2px) solid
-      var(--components-tabs-active-indicator-color, #0077da);
+    border-top: var(--seeds-border-1) solid var(--seeds-color-gray-450);
+    border-right: var(--seeds-border-1) solid var(--seeds-color-gray-450);
+    border-left: var(--seeds-border-1) solid var(--seeds-color-gray-450);
+    border-bottom: var(--seeds-s0_5) solid var(---seeds-color-primary);
   }
 }

@@ -266,7 +266,7 @@ exports[`For Rent renders ForRent component 1`] = `
             class="directory-page-navigation-bar"
           >
             <button
-              class="seeds-button"
+              class="seeds-button directory-page-navigation-bar__button"
               data-size="md"
               data-variant="primary"
               type="button"
@@ -290,7 +290,7 @@ exports[`For Rent renders ForRent component 1`] = `
               />
             </button>
             <button
-              class="seeds-button"
+              class="seeds-button directory-page-navigation-bar__button"
               data-size="md"
               data-variant="primary"
               type="button"
@@ -317,7 +317,7 @@ exports[`For Rent renders ForRent component 1`] = `
               />
             </button>
             <button
-              class="seeds-button"
+              class="seeds-button directory-page-navigation-bar__button"
               data-size="md"
               data-variant="primary"
               type="button"

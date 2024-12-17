@@ -28,7 +28,11 @@ const DirectoryPageNavigationBar = ({
               const y = element.getBoundingClientRect().top + window.scrollY + yOffset
               window.scrollTo({ top: y, behavior: "smooth" })
             }}
-            className={activeItem === section.ref ? "active" : ""}
+            className={
+              activeItem === section.ref
+                ? "active directory-page-navigation-bar__button"
+                : "directory-page-navigation-bar__button"
+            }
           >
             {typeof section.icon === "string" ? (
               <Icon size="medium" symbol={section.icon as UniversalIconType} />
