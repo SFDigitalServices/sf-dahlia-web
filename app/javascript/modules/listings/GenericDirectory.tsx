@@ -1,4 +1,4 @@
-import React, { Dispatch, ReactNode, SetStateAction, useEffect, useState } from "react"
+import React, { Dispatch, ReactNode, SetStateAction, useEffect, useRef, useState } from "react"
 import { LoadingOverlay, StackedTableRow } from "@bloom-housing/ui-components"
 
 import type RailsRentalListing from "../../api/types/rails/listings/RailsRentalListing"
@@ -16,6 +16,7 @@ import {
 import { RailsListing } from "./SharedHelpers"
 import "./ListingDirectory.scss"
 import { MailingListSignup } from "../../components/MailingListSignup"
+import DirectoryPageNavigationBar from "./DirectoryPageNavigationBar"
 
 interface RentalDirectoryProps {
   listingsAPI: (filters?: EligibilityFilters) => Promise<RailsListing[]>
@@ -44,6 +45,7 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
   // Whether any listings are a match.
   const [match, setMatch] = useState<boolean>(false)
   const [filters, setFilters] = useState(props.filters ?? null)
+  const [activeItem, setActiveItem] = useState(null)
 
   useEffect(() => {
     void props.listingsAPI(props.filters).then((listings) => {
@@ -62,6 +64,32 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filters])
 
+  const observerRef = useRef(null)
+  useEffect(() => {
+    const handleIntersectionEvent = (element) => {
+      let newActiveItem = activeItem
+      let prevY = null
+      for (const e of element) {
+        if (e.isIntersecting) {
+          if (!prevY) {
+            console.log("first if")
+            prevY = e.boundingClientRect.y
+            newActiveItem = e.target.id
+          }
+
+          if (e.boundingClientRect.y < prevY) {
+            console.log("second if")
+            newActiveItem = e.target.id
+          }
+        }
+      }
+
+      setActiveItem(newActiveItem)
+    }
+
+    observerRef.current = new IntersectionObserver(handleIntersectionEvent)
+  }, [activeItem])
+
   const hasFiltersSet = filters !== null
   return (
     <LoadingOverlay isLoading={loading}>
@@ -69,20 +97,50 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
         {!loading && (
           <>
             {props.getPageHeader(filters, setFilters, match)}
+            <DirectoryPageNavigationBar
+              directoryType={props.directoryType}
+              listingLengths={{
+                open: listings.open.length,
+                upcoming: listings.upcoming.length,
+                fcfs: listings.fcfsSalesNotYetOpen.length + listings.fcfsSalesOpen.length,
+                results: listings.results.length,
+              }}
+              activeItem={activeItem}
+              setActiveItem={setActiveItem}
+            />
             <div id="listing-results">
-              {openListingsView(
-                listings.open,
-                props.directoryType,
-                props.getSummaryTable,
-                hasFiltersSet
-              )}
-              {props.directoryType === "forSale" &&
-                fcfsSalesView(
-                  [...listings.fcfsSalesOpen, ...listings.fcfsSalesNotYetOpen],
+              <div
+                id="enter-a-lottery"
+                ref={(el) => {
+                  if (el) {
+                    observerRef?.current?.observe(el)
+                  }
+                }}
+              >
+                {openListingsView(
+                  listings.open,
                   props.directoryType,
                   props.getSummaryTable,
                   hasFiltersSet
                 )}
+              </div>
+              {props.directoryType === "forSale" && (
+                <div
+                  id="buy-now"
+                  ref={(el) => {
+                    if (el) {
+                      observerRef?.current?.observe(el)
+                    }
+                  }}
+                >
+                  {fcfsSalesView(
+                    [...listings.fcfsSalesOpen, ...listings.fcfsSalesNotYetOpen],
+                    props.directoryType,
+                    props.getSummaryTable,
+                    hasFiltersSet
+                  )}
+                </div>
+              )}
               {props.findMoreActionBlock}
               {filters &&
                 additionalView(
@@ -91,8 +149,30 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
                   props.getSummaryTable,
                   hasFiltersSet
                 )}
-              {upcomingLotteriesView(listings.upcoming, props.directoryType, props.getSummaryTable)}
-              {lotteryResultsView(listings.results, props.directoryType, props.getSummaryTable)}
+              <div
+                id="upcoming-lotteries"
+                ref={(el) => {
+                  if (el) {
+                    observerRef?.current?.observe(el)
+                  }
+                }}
+              >
+                {upcomingLotteriesView(
+                  listings.upcoming,
+                  props.directoryType,
+                  props.getSummaryTable
+                )}
+              </div>
+              <div
+                id="lottery-results"
+                ref={(el) => {
+                  if (el) {
+                    observerRef?.current?.observe(el)
+                  }
+                }}
+              >
+                {lotteryResultsView(listings.results, props.directoryType, props.getSummaryTable)}
+              </div>
             </div>
           </>
         )}
