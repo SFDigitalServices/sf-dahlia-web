@@ -45,7 +45,7 @@ const BaseIdleTimeout: FunctionComponent<IdleTimeoutProps> = (props: IdleTimeout
   const { promptTitle, promptAction, promptText, redirectPath, onTimeout } = props
 
   // 30 minutes
-  const idleTimeout = 3000 // 30 * 60 * 1000
+  const idleTimeout = 30 * 60 * 1000
   const [promptTimeout, setPromptTimeout] = useState<number | undefined>()
 
   useIdleTimeout(idleTimeout, () => {
@@ -71,6 +71,7 @@ const BaseIdleTimeout: FunctionComponent<IdleTimeoutProps> = (props: IdleTimeout
 
   const modalActions = [
     <Button
+      key="timeout-button"
       styleType={AppearanceStyleType.primary}
       onClick={() => {
         clearTimeout(promptTimeout)
