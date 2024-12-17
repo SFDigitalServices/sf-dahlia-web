@@ -17,6 +17,12 @@ import { RailsListing } from "./SharedHelpers"
 import "./ListingDirectory.scss"
 import { MailingListSignup } from "../../components/MailingListSignup"
 import DirectoryPageNavigationBar from "./DirectoryPageNavigationBar"
+import {
+  DIRECTORY_TYPE_SALES,
+  RENTAL_DIRECTORY_SECTIONS,
+  SALE_DIRECTORY_SECTIONS,
+} from "../constants"
+import { IconHomeCheck } from "./assets/icon-home-check"
 
 interface RentalDirectoryProps {
   listingsAPI: (filters?: EligibilityFilters) => Promise<RailsListing[]>
@@ -64,6 +70,8 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filters])
 
+  const hasFiltersSet = filters !== null
+
   const observerRef = useRef(null)
   useEffect(() => {
     const handleIntersectionEvents = (events: IntersectionObserverEntry[]) => {
@@ -86,7 +94,34 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
     observerRef.current = new IntersectionObserver(handleIntersectionEvents)
   }, [activeItem])
 
-  const hasFiltersSet = filters !== null
+  const directorySections =
+    props.directoryType === DIRECTORY_TYPE_SALES
+      ? SALE_DIRECTORY_SECTIONS
+      : RENTAL_DIRECTORY_SECTIONS
+
+  const directorySectionInfo = {
+    open: {
+      ref: "enter-a-lottery",
+      icon: "house",
+      numListings: listings.open.length,
+    },
+    fcfs: {
+      ref: "buy-now",
+      icon: IconHomeCheck,
+      numListings: listings.fcfsSalesNotYetOpen.length + listings.fcfsSalesOpen.length,
+    },
+    upcoming: {
+      ref: "upcoming-lotteries",
+      icon: "clock",
+      numListings: listings.upcoming.length,
+    },
+    results: {
+      ref: "lottery-results",
+      icon: "result",
+      numListings: listings.results.length,
+    },
+  }
+
   return (
     <LoadingOverlay isLoading={loading}>
       <div>
@@ -94,15 +129,10 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
           <>
             {props.getPageHeader(filters, setFilters, match)}
             <DirectoryPageNavigationBar
-              directoryType={props.directoryType}
-              listingLengths={{
-                open: listings.open.length,
-                upcoming: listings.upcoming.length,
-                fcfs: listings.fcfsSalesNotYetOpen.length + listings.fcfsSalesOpen.length,
-                results: listings.results.length,
-              }}
+              directorySections={directorySections.map((section: string) => {
+                return { key: section, ...directorySectionInfo[section] }
+              })}
               activeItem={activeItem}
-              setActiveItem={setActiveItem}
             />
             <div id="listing-results">
               <div
@@ -120,7 +150,7 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
                   hasFiltersSet
                 )}
               </div>
-              {props.directoryType === "forSale" && (
+              {props.directoryType === DIRECTORY_TYPE_SALES && (
                 <div
                   id="buy-now"
                   ref={(el) => {

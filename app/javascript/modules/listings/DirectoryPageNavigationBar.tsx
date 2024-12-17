@@ -1,48 +1,42 @@
-import React from "react"
+import React, { ReactNode } from "react"
 import "./DirectoryPageNavigationBar.scss"
-import { Button } from "@bloom-housing/ui-seeds"
-import { Icon, t } from "@bloom-housing/ui-components"
+import { Button, Icon as SeedsIcon } from "@bloom-housing/ui-seeds"
+import { Icon, t, UniversalIconType } from "@bloom-housing/ui-components"
+interface DirectorySectionInfoObject {
+  key: string
+  ref: string
+  icon: ReactNode | string
+  numListings: number
+}
 
 const DirectoryPageNavigationBar = ({
-  directoryType,
-  listingLengths,
+  directorySections,
   activeItem,
 }: {
-  directoryType: string
-  listingLengths: { open: number; upcoming: number; fcfs: number; results: number }
+  directorySections: DirectorySectionInfoObject[]
   activeItem: string
-  setActiveItem: React.Dispatch<string>
 }) => {
-  const directorySections =
-    directoryType === "forSale"
-      ? {
-          open: { key: "enter-a-lottery", icon: "house" },
-          fcfs: { key: "buy-now", icon: "house" },
-          upcoming: { key: "upcoming-lotteries", icon: "house" },
-          results: { key: "lottery-results", icon: "house" },
-        }
-      : {
-          open: { key: "enter-a-lottery", icon: "house" },
-          upcoming: { key: "upcoming-lotteries", icon: "house" },
-          results: { key: "lottery-results", icon: "house" },
-        }
-
   return (
     <div className="directory-page-navigation-bar">
-      {Object.keys(directorySections).map((listingType, index) => {
+      {directorySections.map((section, index) => {
         return (
           <Button
             key={`nav-button-${index}`}
             onClick={() => {
-              document
-                .querySelector(`#${directorySections[listingType].key}`)
-                .scrollIntoView({ behavior: "smooth" })
+              const yOffset = -60
+              const element = document.querySelector(`#${section.ref}`)
+              const y = element.getBoundingClientRect().top + window.scrollY + yOffset
+              window.scrollTo({ top: y, behavior: "smooth" })
             }}
-            className={activeItem === directorySections[listingType].key ? "active" : ""}
+            className={activeItem === section.ref ? "active" : ""}
           >
-            <Icon size="medium" symbol={directorySections[listingType].icon} />
-            {t(`listingsDirectory.navBar.${listingType}`, {
-              numListings: listingLengths[listingType],
+            {typeof section.icon === "string" ? (
+              <Icon size="medium" symbol={section.icon as UniversalIconType} />
+            ) : (
+              <SeedsIcon size="md">{section.icon}</SeedsIcon>
+            )}
+            {t(`listingsDirectory.navBar.${section.key}`, {
+              numListings: section.numListings,
             })}
           </Button>
         )

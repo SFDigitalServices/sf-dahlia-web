@@ -105,3 +105,8 @@ export const SFGOV_LINKS = [
   "http://sfmohcd.org/displaced-tenant-housing-preference",
   "http://sfmohcd.org/neighborhood-resident-housing-preference",
 ]
+
+export const SALE_DIRECTORY_SECTIONS = ["open", "fcfs", "upcoming", "results"]
+export const RENTAL_DIRECTORY_SECTIONS = ["open", "upcoming", "results"]
+
+export const DIRECTORY_TYPE_SALES = "forSale"
