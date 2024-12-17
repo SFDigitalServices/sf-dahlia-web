@@ -8,17 +8,18 @@ import "../pages/account/styles/account.scss"
 import FormsLayout from "../layouts/FormLayout"
 import withAppSetup from "../layouts/withAppSetup"
 
+const EmailSubmittedCard = () => {
+  return (
+    <div className="text-center p-8">
+      <Heading priority={3} size="2xl" className="mb-4">
+        {t("forgotPassword.emailSent")}
+      </Heading>
+      <p>{t("forgotPassword.emailLink")}</p>
+    </div>
+  )
+}
+
 const ForgotPassword = () => {
-  const EmailSubmittedCard = () => {
-    return (
-      <div className="text-center p-8">
-        <Heading priority={3} size="2xl" className="mb-4">
-          {t("forgotPassword.emailSent")}
-        </Heading>
-        <p>{t("forgotPassword.emailLink")}</p>
-      </div>
-    )
-  }
   const [emailSubmitted, setEmailSubmitted] = useState(false)
   // eslint-disable-next-line @typescript-eslint/unbound-method
   const { register, handleSubmit, errors } = useForm()
