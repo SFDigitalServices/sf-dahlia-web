@@ -41,8 +41,8 @@
   }
   .directory-page-navigation-bar__button:hover,
   .active {
-    color: var(--components-tabs-active-label-color, #222);
-    background: var(--components-tabs-background-color);
+    color: var(--seeds-text-color-darker);
+    background: var(--seeds-bg-color-surface);
 
     border-top: var(--seeds-border-1) solid var(--seeds-color-gray-450);
     border-right: var(--seeds-border-1) solid var(--seeds-color-gray-450);
