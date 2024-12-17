@@ -1,6 +1,7 @@
 import React, { FunctionComponent, useEffect, useState } from "react"
 
-import { AlertTypes, AppearanceStyleType, Button, Modal } from "@bloom-housing/ui-components"
+import { AlertTypes, AppearanceStyleType, Button } from "@bloom-housing/ui-components"
+import { Dialog } from "@bloom-housing/ui-seeds"
 
 const PROMPT_TIMEOUT = 60000
 const events = ["mousemove", "keypress", "scroll"]
@@ -44,7 +45,7 @@ const BaseIdleTimeout: FunctionComponent<IdleTimeoutProps> = (props: IdleTimeout
   const { promptTitle, promptAction, promptText, redirectPath, onTimeout } = props
 
   // 30 minutes
-  const idleTimeout = 30 * 60 * 1000
+  const idleTimeout = 3000 // 30 * 60 * 1000
   const [promptTimeout, setPromptTimeout] = useState<number | undefined>()
 
   useIdleTimeout(idleTimeout, () => {
@@ -79,17 +80,18 @@ const BaseIdleTimeout: FunctionComponent<IdleTimeoutProps> = (props: IdleTimeout
       {promptAction}
     </Button>,
   ]
-
   return (
-    <Modal
-      open={Boolean(promptTimeout)}
-      title={promptTitle}
-      ariaDescription={promptText}
-      actions={modalActions}
-      hideCloseIcon
+    <Dialog
+      isOpen={Boolean(promptTimeout)}
+      onClose={() => {
+        clearTimeout(promptTimeout)
+        setPromptTimeout(undefined)
+      }}
     >
-      {promptText}
-    </Modal>
+      <Dialog.Header>{promptTitle}</Dialog.Header>
+      <Dialog.Content>{promptText}</Dialog.Content>
+      <Dialog.Footer>{modalActions}</Dialog.Footer>
+    </Dialog>
   )
 }
 
