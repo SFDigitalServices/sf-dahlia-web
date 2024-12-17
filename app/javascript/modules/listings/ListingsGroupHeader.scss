@@ -1,8 +1,20 @@
 .listings-group__header {
-  margin-bottom: 0px;
+  margin-bottom: var(--seeds-s0_5);
+}
+
+.listings-group__custom {
+  max-width: var(--bloom-width-3xl);
+
+  @media (min-width: $screen-lg) {
+    max-width: var(--bloom-width-5xl);
+  }
+
+  &:not(:first-of-type) {
+    margin-top: var(--seeds-s20);
+  }
 }
 
 .listings-group__header:not(:first-of-type) {
   border-top: 1px solid var(--seeds-color-gray-450);
-  padding-top: 36px;
+  padding-top: var(--seeds-s9);
 }
