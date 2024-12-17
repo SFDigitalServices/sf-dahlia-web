@@ -22,6 +22,11 @@ jest.mock("../../../hooks/useFeatureFlag", () => ({
 describe("For Rent", () => {
   beforeEach(() => {
     ;(useFeatureFlag as jest.Mock).mockReturnValue({ flagsReady: true })
+    const mockIntersectionObserver = jest.fn()
+    mockIntersectionObserver.mockReturnValue({
+      observe: () => null,
+    })
+    window.IntersectionObserver = mockIntersectionObserver
   })
   afterEach(() => {
     cleanup()

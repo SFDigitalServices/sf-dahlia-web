@@ -23,6 +23,11 @@ jest.mock("../../../hooks/useFeatureFlag", () => ({
 describe("For Sale", () => {
   beforeEach(() => {
     ;(useFeatureFlag as jest.Mock).mockReturnValue({ flagsReady: true })
+    const mockIntersectionObserver = jest.fn()
+    mockIntersectionObserver.mockReturnValue({
+      observe: () => null,
+    })
+    window.IntersectionObserver = mockIntersectionObserver
   })
 
   afterEach(() => {
