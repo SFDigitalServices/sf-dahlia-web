@@ -7,19 +7,7 @@ AnalyticsService = ($state) ->
   Service.timer = {}
 
   Service.resetProperties = {
-    label: undefined
-    event: undefined
-    event_timestamp: undefined
-    category: undefined
-    action: undefined
-    origin: undefined
-    reason: undefined
-    eventTimeout: undefined
-    fieldId: undefined
-    user_id: undefined
-    time_to_abandon: undefined
-    time_to_submit: undefined
-    listing_id: undefined
+    # Any properties that should be reset on each event
   }
 
   Service.trackEvent = (event, properties) ->
@@ -30,7 +18,7 @@ AnalyticsService = ($state) ->
       current_path = _.first(_.last($state.current.url.split('/')).split('?'))
       combinedProperties.label = current_path
     combinedProperties.event = event
-    combinedProperties.event_timestamp = Date.now()
+    combinedProperties.event_timestamp = new Date().toISOString();
     dataLayer.push(combinedProperties)
 
   # Tracks the current page as the user navigates
@@ -86,19 +74,19 @@ AnalyticsService = ($state) ->
     Service.trackEvent('Form Message', params)
 
   Service.trackApplicationStart = (listingId, userId = null, origin = null) ->
-    params = { user_id: userId, listing_id: listingId, origin: origin }
+    params = { user_id: userId, listing_id: listingId, application_started_origin: origin }
     Service.createApplicationTimer(listingId)
-    Service.trackEvent('Application_Start', params)
+    Service.trackEvent('application_started', params)
 
   Service.trackApplicationComplete = (listingId, userId = null, reason = null) ->
     time_to_submit = Service.getApplicationDuration(listingId)
     params = { user_id: userId, listing_id: listingId, time_to_submit: time_to_submit, reason: reason }
-    Service.trackEvent('Application_Complete', params)
+    Service.trackEvent('application_completed', params)
 
   Service.trackApplicationAbandon = (listingId, userId = null, reason = null) ->
     time_to_abandon = Service.getApplicationDuration(listingId)
     params = { user_id: userId, listing_id: listingId, time_to_abandon: time_to_abandon, reason: reason }
-    Service.trackEvent('Application_Abandon', params)
+    Service.trackEvent('application_exited', params)
 
   # Distinct from trackFormFieldError, this function is called when there is a validation error on the form
   # For example, if the user has an income that is out of bounds
