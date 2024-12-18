@@ -1,5 +1,5 @@
 import React, { Dispatch, ReactNode, SetStateAction, useEffect, useRef, useState } from "react"
-import { LoadingOverlay, StackedTableRow } from "@bloom-housing/ui-components"
+import { LoadingOverlay, StackedTableRow, t } from "@bloom-housing/ui-components"
 
 import type RailsRentalListing from "../../api/types/rails/listings/RailsRentalListing"
 import { EligibilityFilters } from "../../api/listingsApiService"
@@ -9,6 +9,8 @@ import {
   fcfsSalesView,
   ListingsGroups,
   lotteryResultsView,
+  matchedTextBanner,
+  noMatchesTextBanner,
   openListingsView,
   sortListings,
   upcomingLotteriesView,
@@ -22,6 +24,7 @@ import {
   DIRECTORY_TYPE_SALES,
   RENTAL_DIRECTORY_SECTIONS,
   SALE_DIRECTORY_SECTIONS,
+  DIRECTORY_SECTION_ADDITIONAL_LISTINGS,
 } from "../constants"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 
@@ -32,8 +35,7 @@ interface RentalDirectoryProps {
   getSummaryTable: (listing: RailsRentalListing) => Record<string, StackedTableRow>[]
   getPageHeader: (
     filters: EligibilityFilters,
-    setFilters: Dispatch<SetStateAction<EligibilityFilters>>,
-    match: boolean
+    setFilters: Dispatch<SetStateAction<EligibilityFilters>>
   ) => JSX.Element
   findMoreActionBlock: ReactNode
 }
@@ -132,21 +134,37 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
     false
   )
 
+  const directorySectionInfo = directorySections.map((section: string) => {
+    return { key: section, ...DIRECTORY_SECTION_INFO[section] }
+  })
+  if (hasFiltersSet && listings.additional.length > 0) {
+    directorySectionInfo.splice(-2, 0, {
+      key: DIRECTORY_SECTION_ADDITIONAL_LISTINGS,
+      ...DIRECTORY_SECTION_INFO[DIRECTORY_SECTION_ADDITIONAL_LISTINGS],
+    })
+  }
+
   return (
     <LoadingOverlay isLoading={loading}>
       <div>
         {!loading && (
           <>
-            {props.getPageHeader(filters, setFilters, match)}
+            {props.getPageHeader(filters, setFilters)}
             {newDirectoryEnabled && (
               <DirectoryPageNavigationBar
-                directorySections={directorySections.map((section: string) => {
-                  return { key: section, ...DIRECTORY_SECTION_INFO[section] }
-                })}
+                directorySectionInfo={directorySectionInfo}
                 activeItem={activeItem}
                 listings={listings}
               />
             )}
+            <div className="match-banner">
+              {filters &&
+                (match
+                  ? matchedTextBanner()
+                  : noMatchesTextBanner(
+                      `${t("listings.eligibilityCalculator.rent.noMatchingUnits")}`
+                    ))}
+            </div>
             <div id="listing-results">
               <DirectorySection refKey="enter-a-lottery" observerRef={observerRef}>
                 {openListingsView(
@@ -167,13 +185,15 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
                 </DirectorySection>
               )}
               {props.findMoreActionBlock}
-              {filters &&
-                additionalView(
-                  listings.additional,
-                  props.directoryType,
-                  props.getSummaryTable,
-                  hasFiltersSet
-                )}
+              <DirectorySection refKey="additional-listings" observerRef={observerRef}>
+                {filters &&
+                  additionalView(
+                    listings.additional,
+                    props.directoryType,
+                    props.getSummaryTable,
+                    hasFiltersSet
+                  )}
+              </DirectorySection>
               <DirectorySection refKey="upcoming-lotteries" observerRef={observerRef}>
                 {upcomingLotteriesView(
                   listings.upcoming,

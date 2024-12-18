@@ -11,17 +11,17 @@ interface DirectorySectionInfoObject {
 }
 
 const DirectoryPageNavigationBar = ({
-  directorySections,
+  directorySectionInfo,
   activeItem,
   listings,
 }: {
-  directorySections: DirectorySectionInfoObject[]
+  directorySectionInfo: DirectorySectionInfoObject[]
   activeItem: string
   listings: ListingsGroups
 }) => {
   return (
     <div className="directory-page-navigation-bar">
-      {directorySections.map((section, index) => {
+      {directorySectionInfo.map((section, index) => {
         return (
           <Button
             href={`#${section.ref}`}

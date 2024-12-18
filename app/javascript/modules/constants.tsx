@@ -112,6 +112,7 @@ export const DIRECTORY_SECTION_OPEN_LOTTERIES = "open"
 export const DIRECTORY_SECTION_FCFS_LISTINGS = "fcfs"
 export const DIRECTORY_SECTION_UPCOMING_LOTTERIES = "upcoming"
 export const DIRECTORY_SECTION_LOTTERY_RESULTS = "results"
+export const DIRECTORY_SECTION_ADDITIONAL_LISTINGS = "additional"
 
 export const SALE_DIRECTORY_SECTIONS = [
   DIRECTORY_SECTION_OPEN_LOTTERIES,
@@ -134,6 +135,10 @@ export const DIRECTORY_SECTION_INFO = {
   fcfs: {
     ref: "buy-now",
     icon: IconHomeCheck,
+  },
+  additional: {
+    ref: "additional-listings",
+    icon: "doubleHouse",
   },
   upcoming: {
     ref: "upcoming-lotteries",

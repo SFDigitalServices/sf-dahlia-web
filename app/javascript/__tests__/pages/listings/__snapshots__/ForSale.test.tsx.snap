@@ -443,6 +443,9 @@ exports[`For Sale renders ForSale component 1`] = `
             </a>
           </div>
           <div
+            class="match-banner"
+          />
+          <div
             id="listing-results"
           >
             <div
@@ -563,6 +566,9 @@ exports[`For Sale renders ForSale component 1`] = `
                 </div>
               </div>
             </div>
+            <div
+              id="additional-listings"
+            />
             <div
               id="upcoming-lotteries"
             />
