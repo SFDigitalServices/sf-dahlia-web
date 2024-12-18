@@ -36,6 +36,7 @@ import RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
 import { ListingState } from "./ListingState"
 import { ListingsGroupHeader } from "./ListingsGroupHeader"
 import { IconHomeCheck } from "./assets/icon-home-check"
+import { EmptyListingsView } from "./components/EmptyListingsView"
 
 export type RailsUnitSummary = RailsSaleUnitSummary | RailsRentalUnitSummary
 
@@ -249,14 +250,23 @@ export const openListingsView = (
   listings: RailsListing[],
   directoryType: DirectoryType,
   stackedDataFxn: StackedDataFxnType,
-  filtersSet?: boolean
+  filtersSet?: boolean,
+  numFcfsListings?: number
 ) => (
   <ListingsGroupHeader
     title={t(`listings.${directoryType}.openListings.title`)}
     subtitle={t(`listings.${directoryType}.openListings.subtitle`)}
     icon={<Icon size="xlarge" symbol="house" />}
   >
-    {listings.length > 0 && getListingCards(listings, directoryType, stackedDataFxn, filtersSet)}
+    {listings.length > 0 ? (
+      getListingCards(listings, directoryType, stackedDataFxn, filtersSet)
+    ) : (
+      <EmptyListingsView
+        directoryType={directoryType}
+        section="open"
+        listingsCount={numFcfsListings}
+      />
+    )}
   </ListingsGroupHeader>
 )
 
@@ -264,14 +274,23 @@ export const fcfsSalesView = (
   listings: RailsListing[],
   directoryType: DirectoryType,
   stackedDataFxn: StackedDataFxnType,
-  filtersSet?: boolean
+  filtersSet?: boolean,
+  numOpenListings?: number
 ) => (
   <ListingsGroupHeader
     title={t(`listings.${directoryType}.fcfsListings.title`)}
     subtitle={t(`listings.${directoryType}.fcfsListings.subtitle`)}
     icon={IconHomeCheck}
   >
-    {listings.length > 0 && getListingCards(listings, directoryType, stackedDataFxn, filtersSet)}
+    {listings.length > 0 ? (
+      getListingCards(listings, directoryType, stackedDataFxn, filtersSet)
+    ) : (
+      <EmptyListingsView
+        directoryType={directoryType}
+        section="fcfs"
+        listingsCount={numOpenListings}
+      />
+    )}
   </ListingsGroupHeader>
 )
 
