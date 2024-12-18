@@ -10,8 +10,6 @@
   --max-width: var(--seeds-width-3xl);
   --max-width-large-screen: var(--seeds-width-5xl);
   --margin: var(--inter-row-gap) auto;
-  --seeds-focus-ring-box-shadow: none !important;
-  --seeds-focus-ring-outline: none !important;
 
   display: flex;
   flex-direction: row;
@@ -19,10 +17,6 @@
   overflow-x: auto;
   overflow-y: hidden;
   margin: var(--margin);
-
-  a:focus {
-    box-shadow: none !important;
-  }
 
   @media (min-width: $screen-lg) {
     --max-width: var(--max-width-large-screen);
@@ -39,8 +33,24 @@
     border: var(--seeds-border-1) solid var(--seeds-color-gray-450);
     border-radius: 0px;
   }
-  .directory-page-navigation-bar__button:hover,
-  .active {
+
+  .directory-page-navigation-bar__button:hover {
+    color: var(--seeds-color-primary);
+    background: var(--seeds-bg-color-surface-primary);
+
+    border-top: var(--seeds-border-1) solid var(--seeds-border-color);
+    border-right: var(--seeds-border-1) solid var(--seeds-border-color);
+    border-left: var(--seeds-border-1) solid var(--seeds-border-color);
+    border-bottom: var(--seeds-s0_5) solid var(--seeds-border-color);
+  }
+
+  .directory-page-navigation-bar__button:focus,
+  .directory-page-navigation-bar__button:focus-visible {
+    box-shadow: inset var(--seeds-focus-ring-box-shadow);
+  }
+
+  .active,
+  .active:hover {
     color: var(--seeds-text-color-darker);
     background: var(--seeds-bg-color-surface);
 
