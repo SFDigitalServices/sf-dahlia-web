@@ -1,8 +1,8 @@
 .listings-group__custom {
-  max-width: var(--bloom-width-3xl);
+  max-width: var(--seeds-width-3xl);
 
   @media (min-width: $screen-lg) {
-    max-width: var(--bloom-width-5xl);
+    max-width: var(--seeds-width-5xl);
   }
 
   &:not(:first-of-type) {
