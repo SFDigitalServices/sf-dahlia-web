@@ -18,11 +18,12 @@ import "./ListingDirectory.scss"
 import { MailingListSignup } from "../../components/MailingListSignup"
 import DirectoryPageNavigationBar from "./DirectoryPageNavigationBar"
 import {
+  DIRECTORY_SECTION_INFO,
   DIRECTORY_TYPE_SALES,
   RENTAL_DIRECTORY_SECTIONS,
   SALE_DIRECTORY_SECTIONS,
 } from "../constants"
-import { IconHomeCheck } from "./assets/icon-home-check"
+import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 
 interface RentalDirectoryProps {
   listingsAPI: (filters?: EligibilityFilters) => Promise<RailsListing[]>
@@ -37,6 +38,29 @@ interface RentalDirectoryProps {
   findMoreActionBlock: ReactNode
 }
 
+const DirectorySection = ({
+  refKey,
+  observerRef,
+  children,
+}: {
+  refKey: string
+  observerRef: React.MutableRefObject<null | IntersectionObserver>
+  children: ReactNode
+}) => {
+  return (
+    <div
+      id={refKey}
+      ref={(el) => {
+        if (el) {
+          observerRef?.current?.observe(el)
+        }
+      }}
+    >
+      {children}
+    </div>
+  )
+}
+
 export const GenericDirectory = (props: RentalDirectoryProps) => {
   const [rawListings, setRawListings] = useState<Array<RailsListing>>([])
   const [listings, setListings] = useState<ListingsGroups>({
@@ -44,8 +68,7 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
     upcoming: [],
     results: [],
     additional: [],
-    fcfsSalesOpen: [],
-    fcfsSalesNotYetOpen: [],
+    fcfs: [],
   })
   const [loading, setLoading] = useState<boolean>(true)
   // Whether any listings are a match.
@@ -99,28 +122,10 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
       ? SALE_DIRECTORY_SECTIONS
       : RENTAL_DIRECTORY_SECTIONS
 
-  const directorySectionInfo = {
-    open: {
-      ref: "enter-a-lottery",
-      icon: "house",
-      numListings: listings.open.length,
-    },
-    fcfs: {
-      ref: "buy-now",
-      icon: IconHomeCheck,
-      numListings: listings.fcfsSalesNotYetOpen.length + listings.fcfsSalesOpen.length,
-    },
-    upcoming: {
-      ref: "upcoming-lotteries",
-      icon: "clock",
-      numListings: listings.upcoming.length,
-    },
-    results: {
-      ref: "lottery-results",
-      icon: "result",
-      numListings: listings.results.length,
-    },
-  }
+  const { unleashFlag: newDirectoryEnabled } = useFeatureFlag(
+    "temp.webapp.directory.listings",
+    false
+  )
 
   return (
     <LoadingOverlay isLoading={loading}>
@@ -128,44 +133,33 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
         {!loading && (
           <>
             {props.getPageHeader(filters, setFilters, match)}
-            <DirectoryPageNavigationBar
-              directorySections={directorySections.map((section: string) => {
-                return { key: section, ...directorySectionInfo[section] }
-              })}
-              activeItem={activeItem}
-            />
+            {newDirectoryEnabled && (
+              <DirectoryPageNavigationBar
+                directorySections={directorySections.map((section: string) => {
+                  return { key: section, ...DIRECTORY_SECTION_INFO[section] }
+                })}
+                activeItem={activeItem}
+                listings={listings}
+              />
+            )}
             <div id="listing-results">
-              <div
-                id="enter-a-lottery"
-                ref={(el) => {
-                  if (el) {
-                    observerRef?.current?.observe(el)
-                  }
-                }}
-              >
+              <DirectorySection refKey="enter-a-lottery" observerRef={observerRef}>
                 {openListingsView(
                   listings.open,
                   props.directoryType,
                   props.getSummaryTable,
                   hasFiltersSet
                 )}
-              </div>
+              </DirectorySection>
               {props.directoryType === DIRECTORY_TYPE_SALES && (
-                <div
-                  id="buy-now"
-                  ref={(el) => {
-                    if (el) {
-                      observerRef?.current?.observe(el)
-                    }
-                  }}
-                >
+                <DirectorySection refKey="buy-now" observerRef={observerRef}>
                   {fcfsSalesView(
-                    [...listings.fcfsSalesOpen, ...listings.fcfsSalesNotYetOpen],
+                    listings.fcfs,
                     props.directoryType,
                     props.getSummaryTable,
                     hasFiltersSet
                   )}
-                </div>
+                </DirectorySection>
               )}
               {props.findMoreActionBlock}
               {filters &&
@@ -175,30 +169,16 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
                   props.getSummaryTable,
                   hasFiltersSet
                 )}
-              <div
-                id="upcoming-lotteries"
-                ref={(el) => {
-                  if (el) {
-                    observerRef?.current?.observe(el)
-                  }
-                }}
-              >
+              <DirectorySection refKey="upcoming-lotteries" observerRef={observerRef}>
                 {upcomingLotteriesView(
                   listings.upcoming,
                   props.directoryType,
                   props.getSummaryTable
                 )}
-              </div>
-              <div
-                id="lottery-results"
-                ref={(el) => {
-                  if (el) {
-                    observerRef?.current?.observe(el)
-                  }
-                }}
-              >
+              </DirectorySection>
+              <DirectorySection refKey="lottery-results" observerRef={observerRef}>
                 {lotteryResultsView(listings.results, props.directoryType, props.getSummaryTable)}
-              </div>
+              </DirectorySection>
             </div>
           </>
         )}

@@ -2,6 +2,7 @@ import React, { ReactNode } from "react"
 import "./DirectoryPageNavigationBar.scss"
 import { Button, Icon as SeedsIcon } from "@bloom-housing/ui-seeds"
 import { Icon, t, UniversalIconType } from "@bloom-housing/ui-components"
+import { ListingsGroups } from "./DirectoryHelpers"
 interface DirectorySectionInfoObject {
   key: string
   ref: string
@@ -12,9 +13,11 @@ interface DirectorySectionInfoObject {
 const DirectoryPageNavigationBar = ({
   directorySections,
   activeItem,
+  listings,
 }: {
   directorySections: DirectorySectionInfoObject[]
   activeItem: string
+  listings: ListingsGroups
 }) => {
   return (
     <div className="directory-page-navigation-bar">
@@ -40,7 +43,7 @@ const DirectoryPageNavigationBar = ({
               <SeedsIcon size="md">{section.icon}</SeedsIcon>
             )}
             {t(`listingsDirectory.navBar.${section.key}`, {
-              numListings: section.numListings,
+              numListings: listings[section.key].length,
             })}
           </Button>
         )
