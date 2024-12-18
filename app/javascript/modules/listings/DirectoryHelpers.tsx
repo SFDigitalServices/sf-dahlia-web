@@ -34,6 +34,8 @@ import { getImageCardProps, RailsListing } from "./SharedHelpers"
 import TableSubHeader from "./TableSubHeader"
 import RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
 import { ListingState } from "./ListingState"
+import { ListingsGroupHeader } from "./ListingsGroupHeader"
+import { IconHomeCheck } from "./assets/icon-home-check"
 
 export type RailsUnitSummary = RailsSaleUnitSummary | RailsRentalUnitSummary
 
@@ -249,14 +251,30 @@ export const openListingsView = (
   directoryType: DirectoryType,
   stackedDataFxn: StackedDataFxnType,
   filtersSet?: boolean
-) => listings.length > 0 && getListingCards(listings, directoryType, stackedDataFxn, filtersSet)
+) => (
+  <ListingsGroupHeader
+    title={t(`listings.${directoryType}.openListings.title`)}
+    subtitle={t(`listings.${directoryType}.openListings.subtitle`)}
+    icon={<Icon size="xlarge" symbol="house" />}
+  >
+    {listings.length > 0 && getListingCards(listings, directoryType, stackedDataFxn, filtersSet)}
+  </ListingsGroupHeader>
+)
 
 export const fcfsSalesView = (
   listings: RailsListing[],
   directoryType: DirectoryType,
   stackedDataFxn: StackedDataFxnType,
   filtersSet?: boolean
-) => listings.length > 0 && getListingCards(listings, directoryType, stackedDataFxn, filtersSet)
+) => (
+  <ListingsGroupHeader
+    title={t(`listings.${directoryType}.fcfsListings.title`)}
+    subtitle={t(`listings.${directoryType}.fcfsListings.subtitle`)}
+    icon={IconHomeCheck}
+  >
+    {listings.length > 0 && getListingCards(listings, directoryType, stackedDataFxn, filtersSet)}
+  </ListingsGroupHeader>
+)
 
 // Get an expandable group of listings
 export const getListingGroup = (
@@ -409,18 +427,6 @@ export const sortListings = (
   fcfsSalesNotYetOpen.sort((a: RailsSaleListing, b: RailsSaleListing) =>
     sortListingByStringDate(a, b, "Application_Start_Date_Time", true)
   )
-
-  // uncomment to see the listings order in the console
-
-  // console.log("FCFS Open Listings")
-  // fcfsSalesOpen.map((listing) =>
-  //   console.log(`Name: ${listing.Name} ${listing.Application_Start_Date_Time}`)
-  // )
-
-  // console.log("FCFS Not Yet Open Listings")
-  // fcfsSalesNotYetOpen.map((listing) =>
-  //   console.log(`Name: ${listing.Name} ${listing.Application_Start_Date_Time}`)
-  // )
 
   return {
     open,
