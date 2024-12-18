@@ -6,6 +6,13 @@
   }
 }
 
+#buy-now,
+#enter-a-lottery,
+#upcoming-lotteries,
+#lottery-results {
+  scroll-margin-top: 80px;
+}
+
 #buy-now > .listings-group__customHeader {
   border-top: 1px solid var(--seeds-color-gray-450);
   padding-top: var(--seeds-s9);

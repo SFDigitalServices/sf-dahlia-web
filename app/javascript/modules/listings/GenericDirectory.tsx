@@ -99,14 +99,19 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
   useEffect(() => {
     const handleIntersectionEvents = (events: IntersectionObserverEntry[]) => {
       let newActiveItem = activeItem
-      for (const e of events) {
-        let prevRatio = null
-        if (e.isIntersecting) {
-          if (!prevRatio) {
-            prevRatio = e.intersectionRatio
-            newActiveItem = e.target.id
-          } else if (e.intersectionRatio > prevRatio) {
-            newActiveItem = e.target.id
+
+      if (!events.some((e) => e.isIntersecting)) {
+        newActiveItem = null
+      } else {
+        for (const e of events) {
+          let prevRatio = null
+          if (e.isIntersecting) {
+            if (!prevRatio) {
+              prevRatio = e.intersectionRatio
+              newActiveItem = e.target.id
+            } else if (e.intersectionRatio > prevRatio) {
+              newActiveItem = e.target.id
+            }
           }
         }
       }
