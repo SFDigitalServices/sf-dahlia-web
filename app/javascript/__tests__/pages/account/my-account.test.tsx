@@ -1,7 +1,7 @@
 import { renderAndLoadAsync } from "../../__util__/renderUtils"
 import MyAccount from "../../../pages/account/my-account"
 import React from "react"
-import UserContext, { ContextProps } from "../../../authentication/context/UserContext"
+import { setupUserContext } from "../../__util__/accountUtils"
 
 describe("<MyAccount />", () => {
   beforeEach(() => {
@@ -12,31 +12,9 @@ describe("<MyAccount />", () => {
 
   describe("when the user is signed in", () => {
     let getByTestId
-    let originalUseContext
 
     beforeEach(async () => {
-      originalUseContext = React.useContext
-      const mockContextValue: ContextProps = {
-        profile: {
-          uid: "abc123",
-          email: "email@email.com",
-          created_at: new Date(),
-          updated_at: new Date(),
-        },
-        signIn: jest.fn(),
-        signOut: jest.fn(),
-        timeOut: jest.fn(),
-        saveProfile: jest.fn(),
-        loading: false,
-        initialStateLoaded: true,
-      }
-
-      jest.spyOn(React, "useContext").mockImplementation((context) => {
-        if (context === UserContext) {
-          return mockContextValue
-        }
-        return originalUseContext(context)
-      })
+      setupUserContext({ loggedIn: true })
 
       const renderResult = await renderAndLoadAsync(<MyAccount assetPaths={{}} />)
       getByTestId = renderResult.getByTestId
@@ -71,39 +49,11 @@ describe("<MyAccount />", () => {
   })
 
   describe("when the user is not signed in", () => {
-    let originalUseContext
     let originalLocation: Location
 
     beforeEach(async () => {
-      originalUseContext = React.useContext
       originalLocation = window.location
-      const mockContextValue: ContextProps = {
-        profile: undefined,
-        signIn: jest.fn(),
-        signOut: jest.fn(),
-        timeOut: jest.fn(),
-        saveProfile: jest.fn(),
-        loading: false,
-        initialStateLoaded: true,
-      }
-
-      jest.spyOn(React, "useContext").mockImplementation((context) => {
-        if (context === UserContext) {
-          return mockContextValue
-        }
-        return originalUseContext(context)
-      })
-
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      delete (window as any)?.location
-      ;(window as Window).location = {
-        ...originalLocation,
-        href: "http://dahlia.com",
-        assign: jest.fn(),
-        replace: jest.fn(),
-        reload: jest.fn(),
-        toString: jest.fn(),
-      }
+      setupUserContext({ loggedIn: false })
 
       await renderAndLoadAsync(<MyAccount assetPaths={{}} />)
     })
