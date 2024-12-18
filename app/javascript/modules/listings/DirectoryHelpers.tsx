@@ -251,7 +251,8 @@ export const openListingsView = (
   directoryType: DirectoryType,
   stackedDataFxn: StackedDataFxnType,
   observerRef: React.MutableRefObject<null | IntersectionObserver>,
-  filtersSet?: boolean
+  filtersSet?: boolean,
+  numFcfsListings?: number
 ) => (
   <ListingsGroupHeader
     title={t(`listings.${directoryType}.openListings.title`)}
@@ -263,7 +264,11 @@ export const openListingsView = (
     {listings.length > 0 ? (
       getListingCards(listings, directoryType, stackedDataFxn, filtersSet)
     ) : (
-      <EmptyListingsView directoryType={directoryType} unitsCount={listings.length} />
+      <EmptyListingsView
+        directoryType={directoryType}
+        section="open"
+        listingsCount={numFcfsListings}
+      />
     )}
   </ListingsGroupHeader>
 )
@@ -273,7 +278,8 @@ export const fcfsSalesView = (
   directoryType: DirectoryType,
   stackedDataFxn: StackedDataFxnType,
   observerRef: React.MutableRefObject<null | IntersectionObserver>,
-  filtersSet?: boolean
+  filtersSet?: boolean,
+  numOpenListings?: number
 ) => (
   <ListingsGroupHeader
     title={t(`listings.${directoryType}.fcfsListings.title`)}
@@ -282,7 +288,15 @@ export const fcfsSalesView = (
     observerRef={observerRef}
     refKey="buy-now"
   >
-    {listings.length > 0 && getListingCards(listings, directoryType, stackedDataFxn, filtersSet)}
+    {listings.length > 0 ? (
+      getListingCards(listings, directoryType, stackedDataFxn, filtersSet)
+    ) : (
+      <EmptyListingsView
+        directoryType={directoryType}
+        section="fcfs"
+        listingsCount={numOpenListings}
+      />
+    )}
   </ListingsGroupHeader>
 )
 
