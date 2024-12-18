@@ -1,8 +1,16 @@
 .empty-listings-view {
+  margin: auto;
+  max-width: var(--seeds-width-3xl);
+
+  @media (min-width: $screen-lg) {
+    max-width: var(--seeds-width-5xl);
+  }
+
   &_subheader {
     color: var(--seeds-color-secondary-dark);
   }
 
   &_content {
+    margin-top: 24px;
   }
 }

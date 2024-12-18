@@ -171,8 +171,17 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
                   listings.open,
                   props.directoryType,
                   props.getSummaryTable,
-                  hasFiltersSet
+                  hasFiltersSet,
+                  listings.fcfs.length
                 )}
+                {props.directoryType === "forSale" &&
+                  fcfsSalesView(
+                    listings.fcfs,
+                    props.directoryType,
+                    props.getSummaryTable,
+                    hasFiltersSet,
+                    listings.open.length
+                  )}
               </DirectorySection>
               {props.directoryType === DIRECTORY_TYPE_SALES && (
                 <DirectorySection refKey="buy-now" observerRef={observerRef}>

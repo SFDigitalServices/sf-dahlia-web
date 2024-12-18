@@ -250,7 +250,8 @@ export const openListingsView = (
   listings: RailsListing[],
   directoryType: DirectoryType,
   stackedDataFxn: StackedDataFxnType,
-  filtersSet?: boolean
+  filtersSet?: boolean,
+  numFcfsListings?: number
 ) => (
   <ListingsGroupHeader
     title={t(`listings.${directoryType}.openListings.title`)}
@@ -260,7 +261,11 @@ export const openListingsView = (
     {listings.length > 0 ? (
       getListingCards(listings, directoryType, stackedDataFxn, filtersSet)
     ) : (
-      <EmptyListingsView directoryType={directoryType} unitsCount={listings.length} />
+      <EmptyListingsView
+        directoryType={directoryType}
+        section="open"
+        listingsCount={numFcfsListings}
+      />
     )}
   </ListingsGroupHeader>
 )
@@ -269,14 +274,23 @@ export const fcfsSalesView = (
   listings: RailsListing[],
   directoryType: DirectoryType,
   stackedDataFxn: StackedDataFxnType,
-  filtersSet?: boolean
+  filtersSet?: boolean,
+  numOpenListings?: number
 ) => (
   <ListingsGroupHeader
     title={t(`listings.${directoryType}.fcfsListings.title`)}
     subtitle={t(`listings.${directoryType}.fcfsListings.subtitle`)}
     icon={IconHomeCheck}
   >
-    {listings.length > 0 && getListingCards(listings, directoryType, stackedDataFxn, filtersSet)}
+    {listings.length > 0 ? (
+      getListingCards(listings, directoryType, stackedDataFxn, filtersSet)
+    ) : (
+      <EmptyListingsView
+        directoryType={directoryType}
+        section="fcfs"
+        listingsCount={numOpenListings}
+      />
+    )}
   </ListingsGroupHeader>
 )
 
