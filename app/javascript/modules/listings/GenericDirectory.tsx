@@ -1,5 +1,5 @@
-import React, { Dispatch, ReactNode, SetStateAction, useEffect, useState } from "react"
-import { LoadingOverlay, StackedTableRow } from "@bloom-housing/ui-components"
+import React, { Dispatch, ReactNode, SetStateAction, useEffect, useRef, useState } from "react"
+import { LoadingOverlay, StackedTableRow, t } from "@bloom-housing/ui-components"
 
 import type RailsRentalListing from "../../api/types/rails/listings/RailsRentalListing"
 import { EligibilityFilters } from "../../api/listingsApiService"
@@ -9,6 +9,8 @@ import {
   fcfsSalesView,
   ListingsGroups,
   lotteryResultsView,
+  matchedTextBanner,
+  noMatchesTextBanner,
   openListingsView,
   sortListings,
   upcomingLotteriesView,
@@ -16,6 +18,15 @@ import {
 import { RailsListing } from "./SharedHelpers"
 import "./ListingDirectory.scss"
 import { MailingListSignup } from "../../components/MailingListSignup"
+import DirectoryPageNavigationBar from "./DirectoryPageNavigationBar"
+import {
+  DIRECTORY_SECTION_INFO,
+  DIRECTORY_TYPE_SALES,
+  RENTAL_DIRECTORY_SECTIONS,
+  SALE_DIRECTORY_SECTIONS,
+  DIRECTORY_SECTION_ADDITIONAL_LISTINGS,
+} from "../constants"
+import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 
 interface RentalDirectoryProps {
   listingsAPI: (filters?: EligibilityFilters) => Promise<RailsListing[]>
@@ -24,10 +35,32 @@ interface RentalDirectoryProps {
   getSummaryTable: (listing: RailsRentalListing) => Record<string, StackedTableRow>[]
   getPageHeader: (
     filters: EligibilityFilters,
-    setFilters: Dispatch<SetStateAction<EligibilityFilters>>,
-    match: boolean
+    setFilters: Dispatch<SetStateAction<EligibilityFilters>>
   ) => JSX.Element
   findMoreActionBlock: ReactNode
+}
+
+const DirectorySection = ({
+  refKey,
+  observerRef,
+  children,
+}: {
+  refKey: string
+  observerRef: React.MutableRefObject<null | IntersectionObserver>
+  children: ReactNode
+}) => {
+  return (
+    <div
+      id={refKey}
+      ref={(el) => {
+        if (el) {
+          observerRef?.current?.observe(el)
+        }
+      }}
+    >
+      {children}
+    </div>
+  )
 }
 
 export const GenericDirectory = (props: RentalDirectoryProps) => {
@@ -37,13 +70,13 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
     upcoming: [],
     results: [],
     additional: [],
-    fcfsSalesOpen: [],
-    fcfsSalesNotYetOpen: [],
+    fcfs: [],
   })
   const [loading, setLoading] = useState<boolean>(true)
   // Whether any listings are a match.
   const [match, setMatch] = useState<boolean>(false)
   const [filters, setFilters] = useState(props.filters ?? null)
+  const [activeItem, setActiveItem] = useState(null)
 
   useEffect(() => {
     void props.listingsAPI(props.filters).then((listings) => {
@@ -63,36 +96,114 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
   }, [filters])
 
   const hasFiltersSet = filters !== null
+
+  const observerRef = useRef(null)
+  useEffect(() => {
+    const handleIntersectionEvents = (events: IntersectionObserverEntry[]) => {
+      let newActiveItem = activeItem
+
+      if (!events.some((e) => e.isIntersecting)) {
+        newActiveItem = null
+      } else {
+        for (const e of events) {
+          let prevRatio = null
+          if (e.isIntersecting) {
+            if (!prevRatio) {
+              prevRatio = e.intersectionRatio
+              newActiveItem = e.target.id
+            } else if (e.intersectionRatio > prevRatio) {
+              newActiveItem = e.target.id
+            }
+          }
+        }
+      }
+
+      setActiveItem(newActiveItem)
+    }
+
+    observerRef.current = new IntersectionObserver(handleIntersectionEvents)
+  }, [activeItem])
+
+  const directorySections =
+    props.directoryType === DIRECTORY_TYPE_SALES
+      ? SALE_DIRECTORY_SECTIONS
+      : RENTAL_DIRECTORY_SECTIONS
+
+  const { unleashFlag: newDirectoryEnabled } = useFeatureFlag(
+    "temp.webapp.directory.listings",
+    false
+  )
+
+  const directorySectionInfo = directorySections.map((section: string) => {
+    return { key: section, ...DIRECTORY_SECTION_INFO[section] }
+  })
+  if (hasFiltersSet && listings.additional.length > 0) {
+    directorySectionInfo.splice(-2, 0, {
+      key: DIRECTORY_SECTION_ADDITIONAL_LISTINGS,
+      ...DIRECTORY_SECTION_INFO[DIRECTORY_SECTION_ADDITIONAL_LISTINGS],
+    })
+  }
+
   return (
     <LoadingOverlay isLoading={loading}>
       <div>
         {!loading && (
           <>
-            {props.getPageHeader(filters, setFilters, match)}
-            <div id="listing-results">
-              {openListingsView(
-                listings.open,
-                props.directoryType,
-                props.getSummaryTable,
-                hasFiltersSet
-              )}
-              {props.directoryType === "forSale" &&
-                fcfsSalesView(
-                  [...listings.fcfsSalesOpen, ...listings.fcfsSalesNotYetOpen],
-                  props.directoryType,
-                  props.getSummaryTable,
-                  hasFiltersSet
-                )}
-              {props.findMoreActionBlock}
+            {props.getPageHeader(filters, setFilters)}
+            {newDirectoryEnabled && (
+              <DirectoryPageNavigationBar
+                directorySectionInfo={directorySectionInfo}
+                activeItem={activeItem}
+                listings={listings}
+              />
+            )}
+            <div className="match-banner">
               {filters &&
-                additionalView(
-                  listings.additional,
+                (match
+                  ? matchedTextBanner()
+                  : noMatchesTextBanner(
+                      `${t("listings.eligibilityCalculator.rent.noMatchingUnits")}`
+                    ))}
+            </div>
+            <div id="listing-results">
+              <DirectorySection refKey="enter-a-lottery" observerRef={observerRef}>
+                {openListingsView(
+                  listings.open,
                   props.directoryType,
                   props.getSummaryTable,
                   hasFiltersSet
                 )}
-              {upcomingLotteriesView(listings.upcoming, props.directoryType, props.getSummaryTable)}
-              {lotteryResultsView(listings.results, props.directoryType, props.getSummaryTable)}
+              </DirectorySection>
+              {props.directoryType === DIRECTORY_TYPE_SALES && (
+                <DirectorySection refKey="buy-now" observerRef={observerRef}>
+                  {fcfsSalesView(
+                    listings.fcfs,
+                    props.directoryType,
+                    props.getSummaryTable,
+                    hasFiltersSet
+                  )}
+                </DirectorySection>
+              )}
+              {props.findMoreActionBlock}
+              <DirectorySection refKey="additional-listings" observerRef={observerRef}>
+                {filters &&
+                  additionalView(
+                    listings.additional,
+                    props.directoryType,
+                    props.getSummaryTable,
+                    hasFiltersSet
+                  )}
+              </DirectorySection>
+              <DirectorySection refKey="upcoming-lotteries" observerRef={observerRef}>
+                {upcomingLotteriesView(
+                  listings.upcoming,
+                  props.directoryType,
+                  props.getSummaryTable
+                )}
+              </DirectorySection>
+              <DirectorySection refKey="lottery-results" observerRef={observerRef}>
+                {lotteryResultsView(listings.results, props.directoryType, props.getSummaryTable)}
+              </DirectorySection>
             </div>
           </>
         )}

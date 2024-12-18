@@ -14,8 +14,6 @@ import {
   getRangeString,
   showWaitlist,
   getAvailabilityString,
-  matchedTextBanner,
-  noMatchesTextBanner,
   eligibilityHeader,
   getMinMax,
 } from "../../modules/listings/DirectoryHelpers"
@@ -65,8 +63,7 @@ const getForSaleSummaryTable = (listing: RailsSaleListing) => {
 
 const getBuyHeader = (
   filters: EligibilityFilters,
-  setFilters: Dispatch<SetStateAction<EligibilityFilters>>,
-  match: boolean
+  setFilters: Dispatch<SetStateAction<EligibilityFilters>>
 ) => {
   return filters ? (
     <>
@@ -76,10 +73,6 @@ const getBuyHeader = (
         `${t("listings.eligibilityCalculator.sale.showingMatchingUnits")}`
       )}
       <hr />
-
-      {match
-        ? matchedTextBanner()
-        : noMatchesTextBanner(`${t("listings.eligibilityCalculator.sale.noMatchingUnits")}`)}
     </>
   ) : (
     <BuyHeader />

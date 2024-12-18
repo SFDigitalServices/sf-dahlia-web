@@ -21,10 +21,10 @@ const ListingsGroupHeader = ({ title, icon, subtitle, children }: ListingsGroupP
 
   return (
     <>
-      <div className="listings-group__header listings-group__custom">
+      <div className="listings-group__header listings-group__customHeader">
         <div className="listings-group__content">
           <div className="listings-group__icon">{icon}</div>
-          <div className="listings-group__header-group">
+          <div>
             <h2 className="listings-group__title">{title}</h2>
             {subtitle && <div className="listings-group__info">{subtitle}</div>}
           </div>

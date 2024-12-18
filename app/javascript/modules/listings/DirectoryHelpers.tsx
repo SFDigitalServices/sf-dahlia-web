@@ -50,8 +50,7 @@ export interface ListingsGroups {
   upcoming: RailsListing[]
   results: RailsListing[]
   additional: RailsListing[]
-  fcfsSalesOpen: RailsListing[]
-  fcfsSalesNotYetOpen: RailsListing[]
+  fcfs: RailsListing[]
 }
 
 type Listing = RailsRentalListing & {
@@ -433,8 +432,7 @@ export const sortListings = (
     upcoming,
     results,
     additional,
-    fcfsSalesOpen,
-    fcfsSalesNotYetOpen,
+    fcfs: [...fcfsSalesOpen, ...fcfsSalesNotYetOpen],
   } as ListingsGroups
 }
 

@@ -28,8 +28,6 @@ import {
   getRentSubText,
   showWaitlist,
   getAvailabilityString,
-  matchedTextBanner,
-  noMatchesTextBanner,
   eligibilityHeader,
 } from "../../modules/listings/DirectoryHelpers"
 
@@ -62,8 +60,7 @@ const getForRentSummaryTable = (listing: RailsRentalListing) => {
 
 const getRentalHeader = (
   filters: EligibilityFilters,
-  setFilters: Dispatch<SetStateAction<EligibilityFilters>>,
-  match: boolean
+  setFilters: Dispatch<SetStateAction<EligibilityFilters>>
 ) => {
   return filters ? (
     <>
@@ -73,10 +70,6 @@ const getRentalHeader = (
         `${t("listings.eligibilityCalculator.rent.showingMatchingUnits")}`
       )}
       <hr />
-
-      {match
-        ? matchedTextBanner()
-        : noMatchesTextBanner(`${t("listings.eligibilityCalculator.rent.noMatchingUnits")}`)}
     </>
   ) : (
     <PageHeader title={t("rentalDirectory.title")} subtitle={t("rentalDirectory.ifYouTellUs")}>
