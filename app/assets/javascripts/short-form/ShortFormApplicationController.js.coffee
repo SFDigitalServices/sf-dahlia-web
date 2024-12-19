@@ -916,8 +916,8 @@ ShortFormApplicationController = (
         if $window.ACCOUNT_INFORMATION_PAGES_REACT is "true"
           $window.removeEventListener('beforeunload', ShortFormApplicationService.onExit)
           $window.removeEventListener('unload', $scope.onUnload)
-
-        AnalyticsService.trackApplicationAbandon($scope.listing.Id, AccountService.loggedInUser.id, 'Logged In Save and Finish Later')
+        # user id should always be present, but we are being cautious
+        AnalyticsService.trackApplicationAbandon($scope.listing.Id, AccountService.loggedInUser?.id, 'Logged In Save and Finish Later')
         # ShortFormNavigationService.isLoading(false) will happen after My Apps are loaded
         # go to my applications without tracking Form Success
         $scope.go('dahlia.my-applications', {skipConfirm: true})
