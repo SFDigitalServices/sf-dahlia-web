@@ -395,6 +395,31 @@ exports[`For Rent renders ForRent component 1`] = `
                   </div>
                 </div>
               </div>
+              <div
+                class="empty-listings-view"
+              >
+                <h1
+                  class="text-heading-xl"
+                >
+                  0 open lotteries
+                </h1>
+                <div
+                  class="empty-listings-view_content"
+                >
+                  <div />
+                  <div>
+                    <span>
+                      <a
+                        href="https://confirmsubscription.com/h/y/C3BAFCD742D47910"
+                        target="_blank"
+                      >
+                        Get an email
+                      </a>
+                       whenever a new listing is posted
+                    </span>
+                  </div>
+                </div>
+              </div>
             </div>
             <div
               class="bg-primary-darker"
