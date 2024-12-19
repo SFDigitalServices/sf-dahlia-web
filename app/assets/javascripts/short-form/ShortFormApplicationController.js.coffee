@@ -992,14 +992,16 @@ ShortFormApplicationController = (
           currentUrl = window.location.origin
           newUrl = "#{currentUrl}/my-applications?"
           if previousApp.id
-            AnalyticsService.trackApplicationAbandon($scope.listing.Id, AccountService.loggedInUser?.id || null, 'Already Submitted')
+            # user id should always be present, but we are being cautious
+            AnalyticsService.trackApplicationAbandon($scope.listing.Id, AccountService.loggedInUser?.id, 'Already Submitted')
             newUrl += "alreadySubmittedId=#{previousApp.id}"
             if doubleSubmit
               newUrl += "&"
           if doubleSubmit
             # As we rebuilt the My Applications page in React we were not able to figure out a way to trigger the Double Submit Modal.
             # We are leaving the code here both to document past behavior and to protect the application in case somehow the modal is triggered
-            AnalyticsService.trackApplicationAbandon($scope.listing.Id, AccountService.loggedInUser?.id || null, 'Double Submitted')
+            # user id should always be present, but we are being cautious
+            AnalyticsService.trackApplicationAbandon($scope.listing.Id, AccountService.loggedInUser?.id, 'Double Submitted')
             newUrl += "doubleSubmit=true"
 
           window.location.href = newUrl

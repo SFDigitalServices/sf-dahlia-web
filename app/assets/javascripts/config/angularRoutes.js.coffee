@@ -620,7 +620,8 @@
 
               if ShortFormApplicationService.application.status == 'Submitted'
                 # send them to their review page if the application is already submitted
-                AnalyticsService.trackApplicationAbandon(listing.Id, AccountService.loggedInUser?.id || null, "Application already submitted")
+                # user id should always be present, but we are being cautious
+                AnalyticsService.trackApplicationAbandon(listing.Id, AccountService.loggedInUser?.id, "Application already submitted")
                 $state.go('dahlia.short-form-review', {id: ShortFormApplicationService.application.id})
               else if ShortFormApplicationService.application.autofill == true
                 $state.go('dahlia.short-form-application.autofill-preview', {id: listing.Id, lang: $stateParams.lang})
