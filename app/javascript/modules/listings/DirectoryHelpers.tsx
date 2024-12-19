@@ -13,6 +13,12 @@ import {
   t,
 } from "@bloom-housing/ui-components"
 import dayjs from "dayjs"
+import {
+  DIRECTORY_SECTION_OPEN_LOTTERIES,
+  DIRECTORY_SECTION_ADDITIONAL_LISTINGS,
+  DIRECTORY_SECTION_LOTTERY_RESULTS,
+  DIRECTORY_SECTION_UPCOMING_LOTTERIES,
+} from "../constants"
 
 import type RailsRentalListing from "../../api/types/rails/listings/RailsRentalListing"
 import type RailsRentalUnitSummary from "../../api/types/rails/listings/RailsRentalUnitSummary"
@@ -41,6 +47,7 @@ import { EmptyListingsView } from "./components/EmptyListingsView"
 export type RailsUnitSummary = RailsSaleUnitSummary | RailsRentalUnitSummary
 
 export type DirectoryType = "forRent" | "forSale"
+export type DirectorySectionType = typeof DIRECTORY_SECTION_OPEN_LOTTERIES
 
 export type minMax = "min" | "max"
 
@@ -264,11 +271,7 @@ export const openListingsView = (
     {listings.length > 0 ? (
       getListingCards(listings, directoryType, stackedDataFxn, filtersSet)
     ) : (
-      <EmptyListingsView
-        directoryType={directoryType}
-        section="open"
-        listingsCount={numFcfsListings}
-      />
+      <EmptyListingsView section="open" listingsCount={numFcfsListings} />
     )}
   </ListingsGroupHeader>
 )
@@ -291,11 +294,7 @@ export const fcfsSalesView = (
     {listings.length > 0 ? (
       getListingCards(listings, directoryType, stackedDataFxn, filtersSet)
     ) : (
-      <EmptyListingsView
-        directoryType={directoryType}
-        section="fcfs"
-        listingsCount={numOpenListings}
-      />
+      <EmptyListingsView section="fcfs" listingsCount={numOpenListings} />
     )}
   </ListingsGroupHeader>
 )
@@ -310,26 +309,29 @@ export const getListingGroup = (
   show,
   refKey: string,
   observerRef: React.MutableRefObject<null | IntersectionObserver>,
+  section: DirectorySectionType,
   hasFiltersSet?: boolean,
   subtitle?: string,
   icon?: IconTypes
 ) => {
   return (
     // TODO: https://sfgovdt.jira.com/browse/DAH-3109 will update Bloom-UIC to accept the refKey and observerRef
-    listings.length > 0 && (
-      <ListingsGroup
-        listingsCount={listings.length}
-        header={header}
-        hideButtonText={hide}
-        showButtonText={show}
-        info={subtitle}
-        icon={icon}
-        // refKey={refKey}
-        // observerRef={observerRef}
-      >
-        {getListingCards(listings, directoryType, stackedDataFxn, hasFiltersSet)}
-      </ListingsGroup>
-    )
+    <ListingsGroup
+      listingsCount={listings.length}
+      header={header}
+      hideButtonText={hide}
+      showButtonText={show}
+      info={subtitle}
+      icon={icon}
+      // refKey={refKey}
+      // observerRef={observerRef}
+    >
+      {listings.length > 0
+        ? getListingCards(listings, directoryType, stackedDataFxn, hasFiltersSet)
+        : section !== DIRECTORY_SECTION_ADDITIONAL_LISTINGS && (
+            <EmptyListingsView section={section} />
+          )}
+    </ListingsGroup>
   )
 }
 
@@ -348,6 +350,7 @@ export const upcomingLotteriesView = (
     t("listings.upcomingLotteries.show"),
     "upcoming-lotteries",
     observerRef,
+    DIRECTORY_SECTION_UPCOMING_LOTTERIES,
     undefined,
     t("listings.upcomingLotteries.subtitle")
   )
@@ -368,6 +371,7 @@ export const lotteryResultsView = (
     t("listings.lotteryResults.show"),
     "lottery-results",
     observerRef,
+    DIRECTORY_SECTION_LOTTERY_RESULTS,
     undefined,
     t("listings.lotteryResults.subtitle"),
     "result"
@@ -390,6 +394,7 @@ export const additionalView = (
     `${t("listings.additional.show")}`,
     "additional-listings",
     observerRef,
+    DIRECTORY_SECTION_ADDITIONAL_LISTINGS,
     filtersSet,
     t("listings.additional.subtitle"),
     "doubleHouse"
