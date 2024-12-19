@@ -2,6 +2,8 @@
   margin: auto;
   max-width: var(--seeds-width-3xl);
 
+  padding-bottom: var(--seeds-spacer-container);
+
   @media (min-width: $screen-lg) {
     max-width: var(--seeds-width-5xl);
   }
@@ -11,6 +13,6 @@
   }
 
   &_content {
-    margin-top: 24px;
+    margin-top: var(--seeds-spacer-content);
   }
 }

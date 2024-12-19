@@ -181,7 +181,8 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
                     listings.fcfs,
                     props.directoryType,
                     props.getSummaryTable,
-                    hasFiltersSet
+                    hasFiltersSet,
+                    listings.open.length
                   )}
                 </DirectorySection>
               )}
