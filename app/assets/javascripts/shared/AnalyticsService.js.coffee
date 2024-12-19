@@ -6,20 +6,15 @@ AnalyticsService = ($state) ->
   Service = {}
   Service.timer = {}
 
-  Service.resetProperties = {
-    # Any properties that should be reset on each event
-  }
-
   Service.trackEvent = (event, properties) ->
     dataLayer = window.dataLayer || []
-    combinedProperties = Object.assign({}, Service.resetProperties, properties)
-    unless combinedProperties.label
+    unless properties.label
       # by default, grab the end of the URL e.g. the "contact" from "/x/y/z/contact"
       current_path = _.first(_.last($state.current.url.split('/')).split('?'))
-      combinedProperties.label = current_path
-    combinedProperties.event = event
-    combinedProperties.event_timestamp = new Date().toISOString();
-    dataLayer.push(combinedProperties)
+      properties.label = current_path
+    properties.event = event
+    properties.event_timestamp = new Date().toISOString();
+    dataLayer.push(properties)
 
   # Tracks the current page as the user navigates
   Service.trackCurrentPage = ->
