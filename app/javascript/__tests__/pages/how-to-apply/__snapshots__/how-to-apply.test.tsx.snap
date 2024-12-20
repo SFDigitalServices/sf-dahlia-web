@@ -221,7 +221,6 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
         </nav>
       </header>
       <main
-        class="md:overflow-x-hidden"
         data-testid="main-content-test-id"
         id="main-content"
       >

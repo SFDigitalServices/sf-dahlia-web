@@ -33,3 +33,12 @@
 .listings-row_table .listings-row_headers {
   @apply text-left;
 }
+
+.match-banner {
+  margin: auto;
+  max-width: var(--seeds-width-3xl);
+
+  @media (min-width: $screen-lg) {
+    max-width: var(--seeds-width-5xl);
+  }
+}
