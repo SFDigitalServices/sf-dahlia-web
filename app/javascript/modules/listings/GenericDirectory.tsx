@@ -15,12 +15,14 @@ import {
   additionalView,
   DirectoryType,
   fcfsSalesView,
+  handleSectionHeaderEvents,
   ListingsGroups,
   lotteryResultsView,
   matchedTextBanner,
   noMatchesTextBanner,
   openListingsView,
   sortListings,
+  toggleNavBarBoxShadow,
   upcomingLotteriesView,
 } from "./DirectoryHelpers"
 import { RailsListing } from "./SharedHelpers"
@@ -85,7 +87,7 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
   // Whether any listings are a match.
   const [match, setMatch] = useState<boolean>(false)
   const [filters, setFilters] = useState(props.filters ?? null)
-  const [activeItem, setActiveItem] = useState(null)
+  const [activeItem, setActiveItem] = useState<string>(null)
 
   useEffect(() => {
     void props.listingsAPI(props.filters).then((listings) => {
@@ -123,46 +125,9 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
   const observerRef: MutableRefObject<null | IntersectionObserver> = useRef(null)
   useEffect(() => {
     const handleIntersectionEvents = (events: IntersectionObserverEntry[]) => {
-      let newActiveItem = activeItem
+      toggleNavBarBoxShadow(events)
 
-      const pageHeaderIds = new Set([
-        "for-rent-page-header",
-        "for-rent-page-header-filters",
-        "for-sale-page-header",
-        "for-sale-page-header-filters",
-      ])
-
-      const pageHeaderEvents = events.filter((e) => pageHeaderIds.has(e.target.id))
-
-      document
-        .querySelector("#nav-bar-container")
-        .classList.toggle("directory-page-navigation-bar__header-intercept", false)
-
-      if (pageHeaderEvents.length > 0 && pageHeaderEvents.every((e) => !e.isIntersecting)) {
-        document
-          .querySelector("#nav-bar-container")
-          .classList.toggle("directory-page-navigation-bar__header-intercept", true)
-      }
-
-      const sectionHeaderEvents = events.filter((e) => !pageHeaderIds.has(e.target.id))
-
-      if (!sectionHeaderEvents.some((e) => e.isIntersecting)) {
-        newActiveItem = null
-      } else {
-        for (const e of sectionHeaderEvents) {
-          let prevRatio = null
-          if (e.isIntersecting) {
-            if (!prevRatio) {
-              prevRatio = e.intersectionRatio
-              newActiveItem = e.target.id
-            } else if (e.intersectionRatio > prevRatio) {
-              newActiveItem = e.target.id
-            }
-          }
-        }
-      }
-
-      setActiveItem(newActiveItem)
+      handleSectionHeaderEvents(events, activeItem, setActiveItem)
     }
 
     observerRef.current = new IntersectionObserver(handleIntersectionEvents)

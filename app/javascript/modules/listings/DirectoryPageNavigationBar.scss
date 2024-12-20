@@ -4,8 +4,8 @@
   z-index: 1;
   background-color: var(--seeds-bg-color-surface);
 
-  padding-top: 12px;
-  padding-bottom: 12px;
+  padding-top: var(--seeds-s3);
+  padding-bottom: var(--seeds-s3);
   transition: box-shadow 200ms cubic-bezier(0.33, 1, 0.68, 1);
 }
 
