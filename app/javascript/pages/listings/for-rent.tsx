@@ -60,28 +60,45 @@ const getForRentSummaryTable = (listing: RailsRentalListing) => {
 
 const getRentalHeader = (
   filters: EligibilityFilters,
-  setFilters: Dispatch<SetStateAction<EligibilityFilters>>
+  setFilters: Dispatch<SetStateAction<EligibilityFilters>>,
+  observerRef: React.MutableRefObject<null | IntersectionObserver>
 ) => {
   return filters ? (
-    <>
+    <div
+      id="for-rent-page-header-filters"
+      ref={(el) => {
+        if (el) {
+          observerRef?.current?.observe(el)
+        }
+      }}
+    >
       {eligibilityHeader(
         filters,
         setFilters,
         `${t("listings.eligibilityCalculator.rent.showingMatchingUnits")}`
       )}
       <hr />
-    </>
+    </div>
   ) : (
-    <PageHeader title={t("rentalDirectory.title")} subtitle={t("rentalDirectory.ifYouTellUs")}>
-      <p className="mt-4 md:mt-8 mb-2">
-        <LinkButton href={getEligibilityEstimatorLink()}>
-          {t("rentalDirectory.findMatchingListings")}
-        </LinkButton>
-      </p>
-      <a className="text-base text-primary-dark" href={getHelpCalculatingIncomeLink()}>
-        {t("rentalDirectory.orGetHelpCalculating")}
-      </a>
-    </PageHeader>
+    <div
+      id="for-rent-page-header"
+      ref={(el) => {
+        if (el) {
+          observerRef?.current?.observe(el)
+        }
+      }}
+    >
+      <PageHeader title={t("rentalDirectory.title")} subtitle={t("rentalDirectory.ifYouTellUs")}>
+        <p className="mt-4 md:mt-8 mb-2">
+          <LinkButton href={getEligibilityEstimatorLink()}>
+            {t("rentalDirectory.findMatchingListings")}
+          </LinkButton>
+        </p>
+        <a className="text-base text-primary-dark" href={getHelpCalculatingIncomeLink()}>
+          {t("rentalDirectory.orGetHelpCalculating")}
+        </a>
+      </PageHeader>
+    </div>
   )
 }
 

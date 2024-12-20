@@ -1,4 +1,12 @@
-import React, { Dispatch, ReactNode, SetStateAction, useEffect, useRef, useState } from "react"
+import React, {
+  Dispatch,
+  MutableRefObject,
+  ReactNode,
+  SetStateAction,
+  useEffect,
+  useRef,
+  useState,
+} from "react"
 import { LoadingOverlay, StackedTableRow, t } from "@bloom-housing/ui-components"
 
 import type RailsRentalListing from "../../api/types/rails/listings/RailsRentalListing"
@@ -35,7 +43,8 @@ interface RentalDirectoryProps {
   getSummaryTable: (listing: RailsRentalListing) => Record<string, StackedTableRow>[]
   getPageHeader: (
     filters: EligibilityFilters,
-    setFilters: Dispatch<SetStateAction<EligibilityFilters>>
+    setFilters: Dispatch<SetStateAction<EligibilityFilters>>,
+    observerRef: React.MutableRefObject<null | IntersectionObserver>
   ) => JSX.Element
   findMoreActionBlock: ReactNode
 }
@@ -96,16 +105,51 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
   }, [filters])
 
   const hasFiltersSet = filters !== null
+  const directorySections =
+    props.directoryType === DIRECTORY_TYPE_SALES
+      ? SALE_DIRECTORY_SECTIONS
+      : RENTAL_DIRECTORY_SECTIONS
 
-  const observerRef = useRef(null)
+  const directorySectionInfo = directorySections.map((section: string) => {
+    return { key: section, ...DIRECTORY_SECTION_INFO[section] }
+  })
+  if (hasFiltersSet && listings.additional.length > 0) {
+    directorySectionInfo.splice(-2, 0, {
+      key: DIRECTORY_SECTION_ADDITIONAL_LISTINGS,
+      ...DIRECTORY_SECTION_INFO[DIRECTORY_SECTION_ADDITIONAL_LISTINGS],
+    })
+  }
+
+  const observerRef: MutableRefObject<null | IntersectionObserver> = useRef(null)
   useEffect(() => {
     const handleIntersectionEvents = (events: IntersectionObserverEntry[]) => {
       let newActiveItem = activeItem
 
-      if (!events.some((e) => e.isIntersecting)) {
+      const pageHeaderIds = new Set([
+        "for-rent-page-header",
+        "for-rent-page-header-filters",
+        "for-sale-page-header",
+        "for-sale-page-header-filters",
+      ])
+
+      const pageHeaderEvents = events.filter((e) => pageHeaderIds.has(e.target.id))
+
+      document
+        .querySelector("#nav-bar-container")
+        .classList.toggle("directory-page-navigation-bar__header-intercept", false)
+
+      if (pageHeaderEvents.length > 0 && pageHeaderEvents.every((e) => !e.isIntersecting)) {
+        document
+          .querySelector("#nav-bar-container")
+          .classList.toggle("directory-page-navigation-bar__header-intercept", true)
+      }
+
+      const sectionHeaderEvents = events.filter((e) => !pageHeaderIds.has(e.target.id))
+
+      if (!sectionHeaderEvents.some((e) => e.isIntersecting)) {
         newActiveItem = null
       } else {
-        for (const e of events) {
+        for (const e of sectionHeaderEvents) {
           let prevRatio = null
           if (e.isIntersecting) {
             if (!prevRatio) {
@@ -124,32 +168,17 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
     observerRef.current = new IntersectionObserver(handleIntersectionEvents)
   }, [activeItem])
 
-  const directorySections =
-    props.directoryType === DIRECTORY_TYPE_SALES
-      ? SALE_DIRECTORY_SECTIONS
-      : RENTAL_DIRECTORY_SECTIONS
-
   const { unleashFlag: newDirectoryEnabled } = useFeatureFlag(
     "temp.webapp.directory.listings",
     false
   )
-
-  const directorySectionInfo = directorySections.map((section: string) => {
-    return { key: section, ...DIRECTORY_SECTION_INFO[section] }
-  })
-  if (hasFiltersSet && listings.additional.length > 0) {
-    directorySectionInfo.splice(-2, 0, {
-      key: DIRECTORY_SECTION_ADDITIONAL_LISTINGS,
-      ...DIRECTORY_SECTION_INFO[DIRECTORY_SECTION_ADDITIONAL_LISTINGS],
-    })
-  }
 
   return (
     <LoadingOverlay isLoading={loading}>
       <div>
         {!loading && (
           <>
-            {props.getPageHeader(filters, setFilters)}
+            {props.getPageHeader(filters, setFilters, observerRef)}
             {newDirectoryEnabled && (
               <DirectoryPageNavigationBar
                 directorySectionInfo={directorySectionInfo}

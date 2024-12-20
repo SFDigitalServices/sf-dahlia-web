@@ -63,19 +63,37 @@ const getForSaleSummaryTable = (listing: RailsSaleListing) => {
 
 const getBuyHeader = (
   filters: EligibilityFilters,
-  setFilters: Dispatch<SetStateAction<EligibilityFilters>>
+  setFilters: Dispatch<SetStateAction<EligibilityFilters>>,
+  observerRef: React.MutableRefObject<null | IntersectionObserver>
 ) => {
   return filters ? (
-    <>
+    <div
+      id="for-sale-page-header-filters"
+      ref={(el) => {
+        if (el) {
+          observerRef?.current?.observe(el)
+        }
+      }}
+    >
       {eligibilityHeader(
         filters,
         setFilters,
         `${t("listings.eligibilityCalculator.sale.showingMatchingUnits")}`
       )}
+      ,
       <hr />
-    </>
+    </div>
   ) : (
-    <BuyHeader />
+    <div
+      id="for-sale-page-header"
+      ref={(el) => {
+        if (el) {
+          observerRef?.current?.observe(el)
+        }
+      }}
+    >
+      <BuyHeader />
+    </div>
   )
 }
 

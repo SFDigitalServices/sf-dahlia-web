@@ -1,7 +1,20 @@
-.directory-page-navigation-bar {
+.directory-page-navigation-bar__container {
   position: sticky;
   top: 0;
   z-index: 1;
+  background-color: var(--seeds-bg-color-surface);
+
+  padding-top: 12px;
+  padding-bottom: 12px;
+  transition: box-shadow 200ms cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+.directory-page-navigation-bar__header-intercept {
+  box-shadow: #dddde0 0 1px 1px;
+  transition-duration: 400ms;
+}
+
+.directory-page-navigation-bar {
   background-color: var(--seeds-bg-color-surface);
   margin: 0 auto;
   width: 100%;
@@ -9,14 +22,12 @@
   --inter-row-gap: var(--seeds-s12);
   --max-width: var(--seeds-width-3xl);
   --max-width-large-screen: var(--seeds-width-5xl);
-  --margin: var(--inter-row-gap) auto;
 
   display: flex;
   flex-direction: row;
   max-width: var(--max-width);
   overflow-x: auto;
   overflow-y: hidden;
-  margin: var(--margin);
 
   @media (min-width: $screen-lg) {
     --max-width: var(--max-width-large-screen);
