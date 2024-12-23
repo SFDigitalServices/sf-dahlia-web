@@ -127,7 +127,7 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
     const handleIntersectionEvents = (events: IntersectionObserverEntry[]) => {
       toggleNavBarBoxShadow(events)
 
-      handleSectionHeaderEvents(events, activeItem, setActiveItem)
+      handleSectionHeaderEvents(events, setActiveItem)
     }
 
     observerRef.current = new IntersectionObserver(handleIntersectionEvents)

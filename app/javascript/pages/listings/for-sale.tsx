@@ -16,6 +16,7 @@ import {
   getAvailabilityString,
   eligibilityHeader,
   getMinMax,
+  PageHeaderWithRef,
 } from "../../modules/listings/DirectoryHelpers"
 import BuyHeader from "../../modules/listings/BuyHeader"
 import { defaultIfNotTranslated } from "../../util/languageUtil"
@@ -67,14 +68,7 @@ const getBuyHeader = (
   observerRef: React.MutableRefObject<null | IntersectionObserver>
 ) => {
   return (
-    <div
-      id="page-header"
-      ref={(el) => {
-        if (el) {
-          observerRef?.current?.observe(el)
-        }
-      }}
-    >
+    <PageHeaderWithRef observerRef={observerRef}>
       {filters ? (
         <>
           {eligibilityHeader(
@@ -87,7 +81,7 @@ const getBuyHeader = (
       ) : (
         <BuyHeader />
       )}
-    </div>
+    </PageHeaderWithRef>
   )
 }
 

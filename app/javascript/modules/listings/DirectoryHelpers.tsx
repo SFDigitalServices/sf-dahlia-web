@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction } from "react"
+import React, { Dispatch, ReactNode, SetStateAction } from "react"
 
 import {
   AppearanceSizeType,
@@ -446,6 +446,27 @@ export const matchedTextBanner = () => {
   )
 }
 
+export const PageHeaderWithRef = ({
+  children,
+  observerRef,
+}: {
+  children: ReactNode
+  observerRef: React.MutableRefObject<null | IntersectionObserver>
+}) => {
+  return (
+    <div
+      id="page-header"
+      ref={(el) => {
+        if (el) {
+          observerRef?.current?.observe(el)
+        }
+      }}
+    >
+      {children}
+    </div>
+  )
+}
+
 export const toggleNavBarBoxShadow = (events: IntersectionObserverEntry[]) => {
   const pageHeaderEvents = events.filter((e) => e.target.id === DIRECTORY_PAGE_HEADER)
 
@@ -462,10 +483,9 @@ export const toggleNavBarBoxShadow = (events: IntersectionObserverEntry[]) => {
 
 export const handleSectionHeaderEvents = (
   events: IntersectionObserverEntry[],
-  prevActiveItem: string,
   setActiveItem: React.Dispatch<string>
 ) => {
-  let newActiveItem = prevActiveItem
+  let newActiveItem: string = null
   const sectionHeaderEvents = events.filter((e) => e.target.id !== DIRECTORY_PAGE_HEADER)
 
   if (sectionHeaderEvents.some((e) => e.isIntersecting)) {
@@ -480,8 +500,6 @@ export const handleSectionHeaderEvents = (
         }
       }
     }
-  } else {
-    newActiveItem = null
   }
 
   setActiveItem(newActiveItem)

@@ -29,6 +29,7 @@ import {
   showWaitlist,
   getAvailabilityString,
   eligibilityHeader,
+  PageHeaderWithRef,
 } from "../../modules/listings/DirectoryHelpers"
 
 const getForRentSummaryTable = (listing: RailsRentalListing) => {
@@ -64,14 +65,7 @@ const getRentalHeader = (
   observerRef: React.MutableRefObject<null | IntersectionObserver>
 ) => {
   return (
-    <div
-      id="page-header"
-      ref={(el) => {
-        if (el) {
-          observerRef?.current?.observe(el)
-        }
-      }}
-    >
+    <PageHeaderWithRef observerRef={observerRef}>
       {filters ? (
         eligibilityHeader(
           filters,
@@ -90,7 +84,7 @@ const getRentalHeader = (
           </a>
         </PageHeader>
       )}
-    </div>
+    </PageHeaderWithRef>
   )
 }
 
