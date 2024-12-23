@@ -1,0 +1,43 @@
+name: Check Translation Files Sorting
+
+on:
+  push:
+    paths:
+      - "app/assets/json/translations/react/*.json"
+  pull_request:
+    paths:
+      - "app/assets/json/translations/react/*.json"
+
+jobs:
+  check-sorting:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Verify jq installation
+        run: |
+          if ! command -v jq &> /dev/null; then
+            echo "jq could not be found, installing..."
+            sudo apt-get update && sudo apt-get install -y jq
+          else
+            echo "jq is already installed: $(jq --version)"
+          fi
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "16"
+
+      - name: Install dependencies
+        run: npm install --global jsonlint-cli
+
+      - name: Validate and check sorting of translation files
+        run: |
+          for file in app/assets/json/translations/react/*.json; do
+            echo "Checking $file"
+            jsonlint-cli $file
+            jq -S '.' $file > temp.json && mv temp.json $file
+            git diff --exit-code $file || (echo "$file is not sorted." && exit 1)
+          done
