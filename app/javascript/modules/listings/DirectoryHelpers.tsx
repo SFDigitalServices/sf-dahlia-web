@@ -36,7 +36,6 @@ import RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
 import { ListingState } from "./ListingState"
 import { ListingsGroupHeader } from "./ListingsGroupHeader"
 import { IconHomeCheck } from "./assets/icon-home-check"
-import { DIRECTORY_PAGE_HEADER } from "../constants"
 
 export type RailsUnitSummary = RailsSaleUnitSummary | RailsRentalUnitSummary
 
@@ -444,47 +443,6 @@ export const matchedTextBanner = () => {
       content={`${t("listings.eligibilityCalculator.youMayBeEligible")}`}
     />
   )
-}
-
-export const toggleNavBarBoxShadow = (events: IntersectionObserverEntry[]) => {
-  const pageHeaderEvents = events.filter((e) => e.target.id === DIRECTORY_PAGE_HEADER)
-
-  document
-    .querySelector("#nav-bar-container")
-    .classList.toggle("directory-page-navigation-bar__header-intercept", false)
-
-  if (pageHeaderEvents.length > 0 && pageHeaderEvents.every((e) => !e.isIntersecting)) {
-    document
-      .querySelector("#nav-bar-container")
-      .classList.toggle("directory-page-navigation-bar__header-intercept", true)
-  }
-}
-
-export const handleSectionHeaderEvents = (
-  events: IntersectionObserverEntry[],
-  prevActiveItem: string,
-  setActiveItem: React.Dispatch<string>
-) => {
-  let newActiveItem = prevActiveItem
-  const sectionHeaderEvents = events.filter((e) => e.target.id !== DIRECTORY_PAGE_HEADER)
-
-  if (sectionHeaderEvents.some((e) => e.isIntersecting)) {
-    for (const e of sectionHeaderEvents) {
-      let prevRatio = null
-      if (e.isIntersecting) {
-        if (!prevRatio) {
-          prevRatio = e.intersectionRatio
-          newActiveItem = e.target.id
-        } else if (e.intersectionRatio > prevRatio) {
-          newActiveItem = e.target.id
-        }
-      }
-    }
-  } else {
-    newActiveItem = null
-  }
-
-  setActiveItem(newActiveItem)
 }
 
 export const noMatchesTextBanner = (content: string) => {
