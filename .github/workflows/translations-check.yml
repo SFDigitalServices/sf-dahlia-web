@@ -4,9 +4,6 @@ on:
   push:
     paths:
       - "app/assets/json/translations/react/*.json"
-  pull_request:
-    paths:
-      - "app/assets/json/translations/react/*.json"
 
 jobs:
   check-sorting:
@@ -38,6 +35,15 @@ jobs:
           for file in app/assets/json/translations/react/*.json; do
             echo "Checking $file"
             jsonlint-cli $file
-            jq -S '.' $file > temp.json && mv temp.json $file
-            git diff --exit-code $file || (echo "$file is not sorted." && exit 1)
+
+            jq -S '.' $file > sorted.json
+            if ! diff -u $file sorted.json > differences.txt; then
+              echo "Sorting errors found in $file:"
+              cat differences.txt
+              rm sorted.json differences.txt
+              exit 1
+            else
+              echo "$file is properly sorted."
+              rm sorted.json
+            fi
           done
