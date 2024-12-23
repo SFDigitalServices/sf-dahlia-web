@@ -1,0 +1,46 @@
+name: Validate PR Title
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize]
+
+jobs:
+  check-title:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Validate PR title
+        env:
+          PR_TITLE: ${{ github.event.pull_request.title }}
+        run: |
+          # Define the regex for the required formats
+          jira_regex="^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test): DAH-[0-9]+ .+"
+          urgent_regex="^urgent: .+"
+
+          if [[ "${PR_TITLE}" =~ $urgent_regex ]]; then
+            echo "⚠️ PR title contains 'urgent'. Skipping JIRA check but validating description."
+          elif [[ "${PR_TITLE}" =~ $jira_regex ]]; then
+            echo "✅ PR title matches JIRA format."
+            exit 0
+          else
+            echo "❌ Invalid PR title: '${PR_TITLE}'"
+            echo "Please format your PR title as:"
+            echo "'<label>: DAH-<issue number> <description>'"
+            echo "or use 'urgent: <description>' for urgent PRs."
+            echo "Examples:"
+            echo "- 'feat: DAH-1234 Add new feature'"
+            echo "- 'urgent: Hotfix for production'"
+            exit 1
+          fi
+
+          # Validate that a description exists in both cases
+          description_regex="^.*: .+"
+          if [[ ! "${PR_TITLE}" =~ $description_regex ]]; then
+            echo "❌ Missing description in PR title: '${PR_TITLE}'"
+            echo "Ensure your PR title includes a description after the colon."
+            exit 1
+          fi
+
+          echo "✅ PR title is valid."
