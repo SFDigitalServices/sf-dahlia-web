@@ -1,7 +1,9 @@
 .empty-listings-view {
   margin: auto;
+  width: 90%;
   max-width: var(--seeds-width-3xl);
 
+  padding: var(--seeds-s3);
   padding-bottom: var(--seeds-spacer-container);
 
   @media (min-width: $screen-lg) {
