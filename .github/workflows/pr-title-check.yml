@@ -17,30 +17,31 @@ jobs:
         run: |
           # Define the regex for the required formats
           jira_regex="^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test): DAH-[0-9]+ .+"
-          urgent_regex="^urgent: .+"
+          urgent_regex="^urgent: \S+"
 
           if [[ "${PR_TITLE}" =~ $urgent_regex ]]; then
-            echo "⚠️ PR title contains 'urgent'. Skipping JIRA check but validating description."
+            echo "PR title contains 'urgent'. Skipping JIRA check but validating description."
           elif [[ "${PR_TITLE}" =~ $jira_regex ]]; then
-            echo "✅ PR title matches JIRA format."
+            echo "PR title matches JIRA format."
             exit 0
           else
-            echo "❌ Invalid PR title: '${PR_TITLE}'"
+            echo "Invalid PR title: '${PR_TITLE}'"
             echo "Please format your PR title as:"
             echo "'<label>: DAH-<issue number> <description>'"
             echo "or use 'urgent: <description>' for urgent PRs."
+            echo "Available labels (case sensitive): build, chore, ci, docs, feat, fix, perf, refactor, revert, style, test."
             echo "Examples:"
             echo "- 'feat: DAH-1234 Add new feature'"
             echo "- 'urgent: Hotfix for production'"
             exit 1
           fi
 
-          # Validate that a description exists in both cases
-          description_regex="^.*: .+"
+          # Validate that a description exists and has no trailing whitespace
+          description_regex="^.*: \S+"
           if [[ ! "${PR_TITLE}" =~ $description_regex ]]; then
-            echo "❌ Missing description in PR title: '${PR_TITLE}'"
-            echo "Ensure your PR title includes a description after the colon."
+            echo "Missing or invalid description in PR title: '${PR_TITLE}'"
+            echo "Ensure your PR title includes a description after the colon with no extra whitespace."
             exit 1
           fi
 
-          echo "✅ PR title is valid."
+          echo "PR title is valid."
