@@ -37,7 +37,7 @@ jobs:
             jsonlint-cli $file
 
             jq -S '.' $file > sorted.json
-            if ! diff -u $file sorted.json > differences.txt; then
+            if ! diff -uw $file sorted.json > differences.txt; then
               echo "Sorting errors found in $file:"
               cat differences.txt
               rm sorted.json differences.txt
