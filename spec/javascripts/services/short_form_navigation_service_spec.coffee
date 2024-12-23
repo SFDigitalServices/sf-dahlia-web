@@ -54,7 +54,7 @@ do ->
     describe 'goToApplicationPage', ->
       it 'calls AnalyticsService.trackFormSuccess with "Application"', ->
         ShortFormNavigationService.goToApplicationPage()
-        expect(fakeAnalyticsService.trackFormSuccess).toHaveBeenCalledWith('Application')
+        expect(fakeAnalyticsService.trackFormSuccess).toHaveBeenCalledWith('Application Page View')
 
       describe 'when params are not provided', ->
         it 'calls $state.go with the given path', ->

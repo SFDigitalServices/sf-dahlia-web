@@ -18,6 +18,9 @@ do ->
       trackFormSuccess: jasmine.createSpy()
       trackFormError: jasmine.createSpy()
       trackFormAbandon: jasmine.createSpy()
+      trackApplicationStart: jasmine.createSpy()
+      trackApplicationComplete: jasmine.createSpy()
+      trackApplicationAbandon: jasmine.createSpy()
     fakeShortFormApplicationService =
       form:
         applicationForm:
