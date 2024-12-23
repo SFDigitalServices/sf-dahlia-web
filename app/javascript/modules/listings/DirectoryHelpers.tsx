@@ -36,7 +36,7 @@ import RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
 import { ListingState } from "./ListingState"
 import { ListingsGroupHeader } from "./ListingsGroupHeader"
 import { IconHomeCheck } from "./assets/icon-home-check"
-import { DIRECTORY_PAGE_HEADER_IDS } from "../constants"
+import { DIRECTORY_PAGE_HEADER } from "../constants"
 
 export type RailsUnitSummary = RailsSaleUnitSummary | RailsRentalUnitSummary
 
@@ -447,7 +447,7 @@ export const matchedTextBanner = () => {
 }
 
 export const toggleNavBarBoxShadow = (events: IntersectionObserverEntry[]) => {
-  const pageHeaderEvents = events.filter((e) => DIRECTORY_PAGE_HEADER_IDS.has(e.target.id))
+  const pageHeaderEvents = events.filter((e) => e.target.id === DIRECTORY_PAGE_HEADER)
 
   document
     .querySelector("#nav-bar-container")
@@ -466,7 +466,7 @@ export const handleSectionHeaderEvents = (
   setActiveItem: React.Dispatch<string>
 ) => {
   let newActiveItem = prevActiveItem
-  const sectionHeaderEvents = events.filter((e) => !DIRECTORY_PAGE_HEADER_IDS.has(e.target.id))
+  const sectionHeaderEvents = events.filter((e) => e.target.id !== DIRECTORY_PAGE_HEADER)
 
   if (sectionHeaderEvents.some((e) => e.isIntersecting)) {
     for (const e of sectionHeaderEvents) {

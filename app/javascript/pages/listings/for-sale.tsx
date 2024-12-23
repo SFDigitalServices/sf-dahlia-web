@@ -66,33 +66,26 @@ const getBuyHeader = (
   setFilters: Dispatch<SetStateAction<EligibilityFilters>>,
   observerRef: React.MutableRefObject<null | IntersectionObserver>
 ) => {
-  return filters ? (
+  return (
     <div
-      id="for-sale-page-header-filters"
+      id="page-header"
       ref={(el) => {
         if (el) {
           observerRef?.current?.observe(el)
         }
       }}
     >
-      {eligibilityHeader(
-        filters,
-        setFilters,
-        `${t("listings.eligibilityCalculator.sale.showingMatchingUnits")}`
-      )}
-      ,
-      <hr />
-    </div>
-  ) : (
-    <div
-      id="for-sale-page-header"
-      ref={(el) => {
-        if (el) {
-          observerRef?.current?.observe(el)
-        }
-      }}
-    >
-      <BuyHeader />
+      filters ? (
+      <>
+        {eligibilityHeader(
+          filters,
+          setFilters,
+          `${t("listings.eligibilityCalculator.sale.showingMatchingUnits")}`
+        )}
+        <hr />
+      </>
+      ) : (
+      <BuyHeader />)
     </div>
   )
 }

@@ -63,41 +63,33 @@ const getRentalHeader = (
   setFilters: Dispatch<SetStateAction<EligibilityFilters>>,
   observerRef: React.MutableRefObject<null | IntersectionObserver>
 ) => {
-  return filters ? (
+  return (
     <div
-      id="for-rent-page-header-filters"
+      id="page-header"
       ref={(el) => {
         if (el) {
           observerRef?.current?.observe(el)
         }
       }}
     >
-      {eligibilityHeader(
-        filters,
-        setFilters,
-        `${t("listings.eligibilityCalculator.rent.showingMatchingUnits")}`
+      {filters ? (
+        eligibilityHeader(
+          filters,
+          setFilters,
+          `${t("listings.eligibilityCalculator.rent.showingMatchingUnits")}`
+        )
+      ) : (
+        <PageHeader title={t("rentalDirectory.title")} subtitle={t("rentalDirectory.ifYouTellUs")}>
+          <p className="mt-4 md:mt-8 mb-2">
+            <LinkButton href={getEligibilityEstimatorLink()}>
+              {t("rentalDirectory.findMatchingListings")}
+            </LinkButton>
+          </p>
+          <a className="text-base text-primary-dark" href={getHelpCalculatingIncomeLink()}>
+            {t("rentalDirectory.orGetHelpCalculating")}
+          </a>
+        </PageHeader>
       )}
-      <hr />
-    </div>
-  ) : (
-    <div
-      id="for-rent-page-header"
-      ref={(el) => {
-        if (el) {
-          observerRef?.current?.observe(el)
-        }
-      }}
-    >
-      <PageHeader title={t("rentalDirectory.title")} subtitle={t("rentalDirectory.ifYouTellUs")}>
-        <p className="mt-4 md:mt-8 mb-2">
-          <LinkButton href={getEligibilityEstimatorLink()}>
-            {t("rentalDirectory.findMatchingListings")}
-          </LinkButton>
-        </p>
-        <a className="text-base text-primary-dark" href={getHelpCalculatingIncomeLink()}>
-          {t("rentalDirectory.orGetHelpCalculating")}
-        </a>
-      </PageHeader>
     </div>
   )
 }

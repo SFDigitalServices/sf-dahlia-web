@@ -150,9 +150,4 @@ export const DIRECTORY_SECTION_INFO = {
   },
 }
 
-export const DIRECTORY_PAGE_HEADER_IDS = new Set([
-  "for-rent-page-header",
-  "for-rent-page-header-filters",
-  "for-sale-page-header",
-  "for-sale-page-header-filters",
-])
+export const DIRECTORY_PAGE_HEADER = "page-header"
