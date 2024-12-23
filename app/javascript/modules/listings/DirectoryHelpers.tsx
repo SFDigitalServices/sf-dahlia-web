@@ -495,7 +495,9 @@ export const handleSectionHeaderEvents = (
         if (!prevRatio) {
           prevRatio = e.intersectionRatio
           newActiveItem = e.target.id
-        } else if (e.intersectionRatio > prevRatio) {
+        }
+
+        if (e.intersectionRatio > prevRatio) {
           newActiveItem = e.target.id
         }
       }

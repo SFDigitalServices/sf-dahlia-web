@@ -122,21 +122,23 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
     })
   }
 
-  const observerRef: MutableRefObject<null | IntersectionObserver> = useRef(null)
-  useEffect(() => {
-    const handleIntersectionEvents = (events: IntersectionObserverEntry[]) => {
-      toggleNavBarBoxShadow(events)
-
-      handleSectionHeaderEvents(events, setActiveItem)
-    }
-
-    observerRef.current = new IntersectionObserver(handleIntersectionEvents)
-  }, [activeItem])
-
   const { unleashFlag: newDirectoryEnabled } = useFeatureFlag(
     "temp.webapp.directory.listings",
     false
   )
+
+  const observerRef: MutableRefObject<null | IntersectionObserver> = useRef(null)
+  useEffect(() => {
+    if (newDirectoryEnabled) {
+      const handleIntersectionEvents = (events: IntersectionObserverEntry[]) => {
+        toggleNavBarBoxShadow(events)
+
+        handleSectionHeaderEvents(events, setActiveItem)
+      }
+
+      observerRef.current = new IntersectionObserver(handleIntersectionEvents)
+    }
+  }, [activeItem, newDirectoryEnabled])
 
   return (
     <LoadingOverlay isLoading={loading}>
