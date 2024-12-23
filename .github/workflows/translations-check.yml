@@ -1,7 +1,7 @@
 name: Check Translation Files Sorting
 
 on:
-  push:
+  pull_request:
     paths:
       - "app/assets/json/translations/react/*.json"
 
