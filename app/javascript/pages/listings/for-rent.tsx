@@ -29,8 +29,8 @@ import {
   showWaitlist,
   getAvailabilityString,
   eligibilityHeader,
-  PageHeaderWithRef,
 } from "../../modules/listings/DirectoryHelpers"
+import { PageHeaderWithRef } from "../../modules/listings/util/NavigationBarUtils"
 
 const getForRentSummaryTable = (listing: RailsRentalListing) => {
   const summary = listing.unitSummaries.general ?? listing.unitSummaries.reserved

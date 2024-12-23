@@ -7,18 +7,9 @@ import {
   getTableHeader,
   showWaitlist,
   getPriorityTypes,
-  handleSectionHeaderEvents,
 } from "../../modules/listings/DirectoryHelpers"
 import type RailsRentalListing from "../../api/types/rails/listings/RailsRentalListing"
 import type RailsRentalUnitSummary from "../../api/types/rails/listings/RailsRentalUnitSummary"
-
-const mockIntersectionObserverEntry = (id, isIntersecting, intersectionRatio) => {
-  return {
-    target: { id },
-    isIntersecting,
-    intersectionRatio,
-  } as IntersectionObserverEntry
-}
 
 describe("DirectoryHelpers", () => {
   describe("getCurrencyString", () => {
@@ -319,22 +310,6 @@ describe("DirectoryHelpers", () => {
       }
 
       expect(getPriorityTypes(testListing as RailsRentalListing)).toEqual(["test"])
-    })
-  })
-
-  describe("handleSectionHeaderEvents", () => {
-    const mockSetActiveItem = jest.fn()
-
-    it("handleSectionHeaderEvents sets the correct active item", () => {
-      const events: IntersectionObserverEntry[] = [
-        mockIntersectionObserverEntry("section-1", true, 0.5),
-        mockIntersectionObserverEntry("section-2", true, 0.8),
-        mockIntersectionObserverEntry("section-3", false, 0),
-      ]
-
-      handleSectionHeaderEvents(events, mockSetActiveItem)
-
-      expect(mockSetActiveItem).toHaveBeenCalledWith("section-2")
     })
   })
 })

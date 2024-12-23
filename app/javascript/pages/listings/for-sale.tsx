@@ -16,10 +16,10 @@ import {
   getAvailabilityString,
   eligibilityHeader,
   getMinMax,
-  PageHeaderWithRef,
 } from "../../modules/listings/DirectoryHelpers"
 import BuyHeader from "../../modules/listings/BuyHeader"
 import { defaultIfNotTranslated } from "../../util/languageUtil"
+import { PageHeaderWithRef } from "../../modules/listings/util/NavigationBarUtils"
 
 const getForSaleSummaryTable = (listing: RailsSaleListing) => {
   const summary = listing.unitSummaries.general ?? listing.unitSummaries.reserved

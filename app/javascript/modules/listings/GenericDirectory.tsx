@@ -15,14 +15,12 @@ import {
   additionalView,
   DirectoryType,
   fcfsSalesView,
-  handleSectionHeaderEvents,
   ListingsGroups,
   lotteryResultsView,
   matchedTextBanner,
   noMatchesTextBanner,
   openListingsView,
   sortListings,
-  toggleNavBarBoxShadow,
   upcomingLotteriesView,
 } from "./DirectoryHelpers"
 import { RailsListing } from "./SharedHelpers"
@@ -35,8 +33,10 @@ import {
   RENTAL_DIRECTORY_SECTIONS,
   SALE_DIRECTORY_SECTIONS,
   DIRECTORY_SECTION_ADDITIONAL_LISTINGS,
+  DIRECTORY_PAGE_HEADER,
 } from "../constants"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
+import { handleSectionHeaderEvents, toggleNavBarBoxShadow } from "./util/NavigationBarUtils"
 
 interface RentalDirectoryProps {
   listingsAPI: (filters?: EligibilityFilters) => Promise<RailsListing[]>
@@ -131,9 +131,13 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
   useEffect(() => {
     if (newDirectoryEnabled) {
       const handleIntersectionEvents = (events: IntersectionObserverEntry[]) => {
-        toggleNavBarBoxShadow(events)
+        const pageHeaderEvents = events.filter((e) => e.target.id === DIRECTORY_PAGE_HEADER)
+        toggleNavBarBoxShadow(pageHeaderEvents)
 
-        handleSectionHeaderEvents(events, setActiveItem)
+        const sectionHeaderEvents = events.filter((e) => e.target.id !== DIRECTORY_PAGE_HEADER)
+        if (sectionHeaderEvents.some((e) => e.isIntersecting)) {
+          handleSectionHeaderEvents(sectionHeaderEvents, setActiveItem)
+        }
       }
 
       observerRef.current = new IntersectionObserver(handleIntersectionEvents)

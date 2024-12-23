@@ -1,4 +1,4 @@
-import React, { Dispatch, ReactNode, SetStateAction } from "react"
+import React, { Dispatch, SetStateAction } from "react"
 
 import {
   AppearanceSizeType,
@@ -36,7 +36,6 @@ import RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
 import { ListingState } from "./ListingState"
 import { ListingsGroupHeader } from "./ListingsGroupHeader"
 import { IconHomeCheck } from "./assets/icon-home-check"
-import { DIRECTORY_PAGE_HEADER } from "../constants"
 
 export type RailsUnitSummary = RailsSaleUnitSummary | RailsRentalUnitSummary
 
@@ -444,67 +443,6 @@ export const matchedTextBanner = () => {
       content={`${t("listings.eligibilityCalculator.youMayBeEligible")}`}
     />
   )
-}
-
-export const PageHeaderWithRef = ({
-  children,
-  observerRef,
-}: {
-  children: ReactNode
-  observerRef: React.MutableRefObject<null | IntersectionObserver>
-}) => {
-  return (
-    <div
-      id="page-header"
-      ref={(el) => {
-        if (el) {
-          observerRef?.current?.observe(el)
-        }
-      }}
-    >
-      {children}
-    </div>
-  )
-}
-
-export const toggleNavBarBoxShadow = (events: IntersectionObserverEntry[]) => {
-  const pageHeaderEvents = events.filter((e) => e.target.id === DIRECTORY_PAGE_HEADER)
-
-  document
-    .querySelector("#nav-bar-container")
-    .classList.toggle("directory-page-navigation-bar__header-intercept", false)
-
-  if (pageHeaderEvents.length > 0 && pageHeaderEvents.every((e) => !e.isIntersecting)) {
-    document
-      .querySelector("#nav-bar-container")
-      .classList.toggle("directory-page-navigation-bar__header-intercept", true)
-  }
-}
-
-export const handleSectionHeaderEvents = (
-  events: IntersectionObserverEntry[],
-  setActiveItem: React.Dispatch<string>
-) => {
-  let newActiveItem: string = null
-  const sectionHeaderEvents = events.filter((e) => e.target.id !== DIRECTORY_PAGE_HEADER)
-
-  if (sectionHeaderEvents.some((e) => e.isIntersecting)) {
-    for (const e of sectionHeaderEvents) {
-      let prevRatio = null
-      if (e.isIntersecting) {
-        if (!prevRatio) {
-          prevRatio = e.intersectionRatio
-          newActiveItem = e.target.id
-        }
-
-        if (e.intersectionRatio > prevRatio) {
-          newActiveItem = e.target.id
-        }
-      }
-    }
-  }
-
-  setActiveItem(newActiveItem)
 }
 
 export const noMatchesTextBanner = (content: string) => {
