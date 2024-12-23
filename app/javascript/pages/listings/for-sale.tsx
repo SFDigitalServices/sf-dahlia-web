@@ -75,17 +75,18 @@ const getBuyHeader = (
         }
       }}
     >
-      filters ? (
-      <>
-        {eligibilityHeader(
-          filters,
-          setFilters,
-          `${t("listings.eligibilityCalculator.sale.showingMatchingUnits")}`
-        )}
-        <hr />
-      </>
+      {filters ? (
+        <>
+          {eligibilityHeader(
+            filters,
+            setFilters,
+            `${t("listings.eligibilityCalculator.sale.showingMatchingUnits")}`
+          )}
+          <hr />
+        </>
       ) : (
-      <BuyHeader />)
+        <BuyHeader />
+      )}
     </div>
   )
 }

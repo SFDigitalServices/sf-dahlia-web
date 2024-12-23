@@ -226,7 +226,7 @@ exports[`For Sale renders ForSale component 1`] = `
       >
         <div>
           <div
-            id="for-sale-page-header"
+            id="page-header"
           >
             <header
               class="page-header buy-header"
