@@ -37,6 +37,11 @@ AccountController = (
   $scope.passwordRegex = /^(?=.*[0-9])(?=.*[a-zA-Z])(.+){8,}$/
   $scope.emailRegex = SharedService.emailRegex
 
+  $scope.logBackLinkClick = ->
+    path = window.location.pathname
+    listingId = path.split('/')[2]
+    AnalyticsService.trackApplicationStart(listingId || "", null, "Continue with application from save and exit")
+
   $scope.accountForm = ->
     # pick up which ever one is defined (the other will be undefined)
     $scope.form.signIn ||

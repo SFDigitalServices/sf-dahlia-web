@@ -83,9 +83,11 @@ ShortFormApplicationController = (
 
   $scope.startAutofilledApp = ->
     AnalyticsService.trackFormSuccess('Application', 'Start with these details')
+    AnalyticsService.trackApplicationStart($scope.listing.Id, AccountService.loggedInUser?.id || null, 'Start with these details')
     $scope.go(ShortFormNavigationService.initialState())
 
   $scope.trackContinuePreviousDraft = ->
+    AnalyticsService.trackApplicationStart($scope.listing.Id, AccountService.loggedInUser?.id || null, 'Continue with these details')
     AnalyticsService.trackFormSuccess('Application', 'Continue with these details')
 
   $scope.resetAndStartNewApp = ->
@@ -103,9 +105,16 @@ ShortFormApplicationController = (
     $scope.householdMembers = ShortFormApplicationService.householdMembers
     delete $scope.application.autofill
     AnalyticsService.trackFormSuccess('Application', 'Reset and start from scratch')
+    AnalyticsService.trackApplicationStart($scope.listing.Id, AccountService.loggedInUser?.id || null, 'Reset and start from scratch')
     $state.go(ShortFormNavigationService.initialState())
 
   $scope.resetAndReplaceApp = ShortFormApplicationService.resetAndReplaceApp
+
+  $scope.onUnload = (e) ->
+    # We want to track the user's actual exit after confirming that they want to leave the page
+    # Note that this is not perfect, as this will also capture application reloads which doesn't necessarily constitute an abandonment
+    AnalyticsService.trackApplicationAbandon($scope.listing.Id, AccountService.loggedInUser?.id || null, "Generic Exit")
+
 
   $scope.atShortFormState = ->
     ShortFormApplicationService.isShortFormPage($state.current)
@@ -113,6 +122,7 @@ ShortFormApplicationController = (
   if $scope.atShortFormState() && !$window.jasmine && !window.protractor
     # don't add this onbeforeunload inside of jasmine tests
     $window.addEventListener 'beforeunload', ShortFormApplicationService.onExit
+    $window.addEventListener 'unload', $scope.onUnload
 
   $scope.submitForm = ->
     form = $scope.form.applicationForm
@@ -211,6 +221,7 @@ ShortFormApplicationController = (
     $scope.applicant[fieldToDisable] = false
 
   $scope.beginApplication = (lang = 'en') ->
+    AnalyticsService.trackApplicationStart($scope.listing.Id, AccountService.loggedInUser?.id || null, 'Begin Application')
     if $scope.isCustomEducatorListing()
       ShortFormNavigationService.goToApplicationPage('dahlia.short-form-welcome.custom-educator-screening', {lang: lang})
     else if $scope.listing.Reserved_community_type
@@ -889,6 +900,7 @@ ShortFormApplicationController = (
       .then(  ->
         ShortFormNavigationService.isLoading(false)
         ShortFormNavigationService.goToApplicationPage('dahlia.short-form-application.confirmation')
+        AnalyticsService.trackApplicationComplete($scope.listing.Id, AccountService.loggedInUser?.id || null)
       ).catch( ->
         ShortFormNavigationService.isLoading(false)
       )
@@ -903,7 +915,9 @@ ShortFormApplicationController = (
         # if redirecting to the React my-applications page, disable the "Leave site?" popup
         if $window.ACCOUNT_INFORMATION_PAGES_REACT is "true"
           $window.removeEventListener('beforeunload', ShortFormApplicationService.onExit)
-
+          $window.removeEventListener('unload', $scope.onUnload)
+        # user id should always be present, but we are being cautious
+        AnalyticsService.trackApplicationAbandon($scope.listing.Id, AccountService.loggedInUser?.id, 'Logged In Save and Finish Later')
         # ShortFormNavigationService.isLoading(false) will happen after My Apps are loaded
         # go to my applications without tracking Form Success
         $scope.go('dahlia.my-applications', {skipConfirm: true})
@@ -912,6 +926,7 @@ ShortFormApplicationController = (
       )
     else
       ShortFormNavigationService.isLoading(false)
+      AnalyticsService.trackApplicationAbandon($scope.listing.Id, null, 'Logged Out Save and Finish Later')
       # go to Create Account without tracking Form Success
       $scope.go('dahlia.short-form-application.create-account')
 
@@ -971,17 +986,22 @@ ShortFormApplicationController = (
       if $scope.appIsSubmitted(previousApp)
         # My Applications page is now in React, prevent the "Leave Site?" popup when redirecting
         $window.removeEventListener('beforeunload', ShortFormApplicationService.onExit)
+        $window.removeEventListener('unload', $scope.onUnload)
         doubleSubmit = !! $scope.appIsSubmitted($scope.application)
         if $window.ACCOUNT_INFORMATION_PAGES_REACT is "true"
           currentUrl = window.location.origin
           newUrl = "#{currentUrl}/my-applications?"
           if previousApp.id
+            # user id should always be present, but we are being cautious
+            AnalyticsService.trackApplicationAbandon($scope.listing.Id, AccountService.loggedInUser?.id, 'Already Submitted')
             newUrl += "alreadySubmittedId=#{previousApp.id}"
             if doubleSubmit
               newUrl += "&"
           if doubleSubmit
             # As we rebuilt the My Applications page in React we were not able to figure out a way to trigger the Double Submit Modal.
             # We are leaving the code here both to document past behavior and to protect the application in case somehow the modal is triggered
+            # user id should always be present, but we are being cautious
+            AnalyticsService.trackApplicationAbandon($scope.listing.Id, AccountService.loggedInUser?.id, 'Double Submitted')
             newUrl += "doubleSubmit=true"
 
           window.location.href = newUrl

@@ -2,7 +2,7 @@ import { useFlag as useFlagUnleash, useFlagsStatus } from "@unleash/proxy-client
 
 // If you want to allow a user to change this feature flag via the URL, you can add it to the urlWhiteList set.
 // Unless set, the feature flag will only be determined by the Unleash API.
-const urlWhiteList = new Set(["testFlag"])
+const urlWhiteList = new Set(["temp.webapp.directory.listings", "testFlag"])
 
 export const useFeatureFlag = (flagName: string, defaultValue: boolean) => {
   const urlParams = new URLSearchParams(window.location.search)
