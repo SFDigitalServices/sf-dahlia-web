@@ -46,6 +46,14 @@ const SignInFormCard = ({
   // https://github.com/react-hook-form/react-hook-form/issues/2887
   // eslint-disable-next-line @typescript-eslint/unbound-method
   const { register, handleSubmit, errors, watch } = useForm()
+  const [showBannerError, setShowBannerError] = useState(false)
+
+  useEffect(() => {
+    if (errors.email || errors.password) {
+      setShowBannerError(true)
+    }
+  }, [errors.email, errors.password])
+
   return (
     <FormCard>
       <div className="form-card__lead text-center border-b mx-0">
@@ -57,11 +65,16 @@ const SignInFormCard = ({
           {renderInlineMarkup(requestError)}
         </AlertBox>
       )}
+      {showBannerError && (
+        <AlertBox onClose={() => setShowBannerError(undefined)} type="alert">
+          {renderInlineMarkup(t("signIn.badCredentialsWithResetLink"))}
+        </AlertBox>
+      )}
       <SiteAlert type="success" />
       <SiteAlert type="secondary" />
       <div className="form-card__group pt-0 border-b">
         <Form id="sign-in" className="mt-10 relative" onSubmit={handleSubmit(onSubmit)}>
-          <EmailFieldset register={register} errors={errors} />
+          <EmailFieldset register={register} />
           <span className="right-0 absolute">
             <Link href="/forgot-password" className="forgot-password-link">
               {t("forgotPassword.title")}
@@ -69,7 +82,6 @@ const SignInFormCard = ({
           </span>
           <PasswordFieldset
             register={register}
-            errors={errors}
             watch={watch}
             labelText={t("label.password")}
             passwordType="signIn"
