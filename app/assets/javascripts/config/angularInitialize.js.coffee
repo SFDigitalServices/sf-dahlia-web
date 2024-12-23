@@ -136,6 +136,9 @@
             onConfirm: ->
               # fires only if user clicks 'ok' to leave page
               # reloads this stateChangeStart method with skipConfirm true
+              AnalyticsService.trackApplicationAbandon(ShortFormApplicationService.listing.listingID, null, "Leaving for " + toState.name)
+              $window.removeEventListener('unload', $rootScope.onUnload)
+
               toParams.skipConfirm = true
               $state.go(toState.name, toParams)
           )
