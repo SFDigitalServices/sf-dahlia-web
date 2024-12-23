@@ -14,12 +14,13 @@ export const toggleNavBarBoxShadow = (pageHeaderEvents: IntersectionObserverEntr
 
 export const handleSectionHeaderEvents = (
   sectionHeaderEvents: IntersectionObserverEntry[],
+  prevActiveItem: string,
   setActiveItem: React.Dispatch<string>
 ) => {
-  let newActiveItem: string = null
+  let newActiveItem = prevActiveItem
 
+  let prevRatio = null
   for (const e of sectionHeaderEvents) {
-    let prevRatio = null
     if (e.isIntersecting) {
       if (!prevRatio) {
         prevRatio = e.intersectionRatio

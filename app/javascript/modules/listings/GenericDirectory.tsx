@@ -136,7 +136,9 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
 
         const sectionHeaderEvents = events.filter((e) => e.target.id !== DIRECTORY_PAGE_HEADER)
         if (sectionHeaderEvents.some((e) => e.isIntersecting)) {
-          handleSectionHeaderEvents(sectionHeaderEvents, setActiveItem)
+          handleSectionHeaderEvents(sectionHeaderEvents, activeItem, setActiveItem)
+        } else {
+          setActiveItem(null)
         }
       }
 
