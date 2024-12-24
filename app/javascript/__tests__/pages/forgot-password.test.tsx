@@ -22,7 +22,7 @@ describe("<ForgotPassword />", () => {
   it("shows the text after submission", async () => {
     await renderAndLoadAsync(<ForgotPassword assetPaths={{}} />)
     await userEvent.type(screen.getByRole("textbox", { name: /email/i }), "test@test.com")
-    await userEvent.click(screen.getByRole("button", { name: /sign in/i }))
+    await userEvent.click(screen.getByRole("button", { name: /send email/i }))
     expect(screen.getByText("We sent you an email")).not.toBeNull()
     expect(
       screen.getByText(
