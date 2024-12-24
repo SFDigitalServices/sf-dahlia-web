@@ -9,8 +9,8 @@ export interface ListingsGroupProps {
   info?: string
   listingsCount: number
   showButtonText: string
-  refKey: string
-  observerRef: React.MutableRefObject<null | IntersectionObserver>
+  refKey?: string
+  observerRef?: React.MutableRefObject<null | IntersectionObserver>
 }
 
 const ListingsGroup = (props: ListingsGroupProps) => {
