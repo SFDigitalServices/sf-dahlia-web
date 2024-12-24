@@ -1,37 +1,34 @@
-import { handleSectionHeaderEvents } from "../../../../modules/listings/util/NavigationBarUtils"
+import { handleSectionHeaderEntries } from "../../../../modules/listings/util/NavigationBarUtils"
 
-const mockIntersectionObserverEntry = (id, isIntersecting, intersectionRatio) => {
+const mockIntersectionObserverEntry = (id, isIntersecting) => {
   return {
     target: { id },
     isIntersecting,
-    intersectionRatio,
   } as IntersectionObserverEntry
 }
 
 describe("handleSectionHeaderEvents", () => {
-  const mockSetActiveItem = jest.fn()
-
   it("handleSectionHeaderEvents sets the correct active item", () => {
     const events: IntersectionObserverEntry[] = [
-      mockIntersectionObserverEntry("section-1", true, 0.5),
-      mockIntersectionObserverEntry("section-2", true, 0.8),
-      mockIntersectionObserverEntry("section-3", false, 0),
+      mockIntersectionObserverEntry("enter-a-lottery", false),
+      mockIntersectionObserverEntry("buy-now", true),
+      mockIntersectionObserverEntry("lottery-results", false),
     ]
 
-    handleSectionHeaderEvents(events, "section-1", mockSetActiveItem)
+    handleSectionHeaderEntries(events)
 
-    expect(mockSetActiveItem).toHaveBeenCalledWith("section-2")
+    expect(handleSectionHeaderEntries(events)).toEqual("buy-now")
   })
 
   it("handleSectionHeaderEvents sets the correct active item based on ratio", () => {
     const events: IntersectionObserverEntry[] = [
-      mockIntersectionObserverEntry("section-1", true, 0.8),
-      mockIntersectionObserverEntry("section-2", true, 0.5),
-      mockIntersectionObserverEntry("section-3", false, 0),
+      mockIntersectionObserverEntry("enter-a-lottery", true),
+      mockIntersectionObserverEntry("buy-now", true),
+      mockIntersectionObserverEntry("lottery-results", false),
     ]
 
-    handleSectionHeaderEvents(events, "section-1", mockSetActiveItem)
+    handleSectionHeaderEntries(events)
 
-    expect(mockSetActiveItem).toHaveBeenCalledWith("section-1")
+    expect(handleSectionHeaderEntries(events)).toEqual("buy-now")
   })
 })

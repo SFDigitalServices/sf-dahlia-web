@@ -360,41 +360,38 @@ exports[`For Rent renders ForRent component 1`] = `
             id="listing-results"
           >
             <div
-              id="enter-a-lottery"
+              class="listings-group__header listings-group__customHeader"
             >
               <div
-                class="listings-group__header listings-group__customHeader"
+                class="listings-group__content"
               >
                 <div
-                  class="listings-group__content"
+                  class="listings-group__icon"
                 >
-                  <div
-                    class="listings-group__icon"
+                  <span
+                    class="ui-icon ui-xlarge"
                   >
-                    <span
-                      class="ui-icon ui-xlarge"
+                    <svg
+                      fill="currentColor"
+                      viewBox="0 0 51 45"
                     >
-                      <svg
-                        fill="currentColor"
-                        viewBox="0 0 51 45"
-                      >
-                        <path
-                          d="M49.7173 21.1504C50.2904 21.6532 50.3425 22.4593 49.7608 23.1094C49.3353 23.6815 48.4496 23.7335 47.8766 23.1528L44.6292 20.2923V37.4466C44.6292 41.278 41.5207 44.3812 37.6829 44.3812H12.6762C8.84011 44.3812 5.72991 41.278 5.72991 37.4466V20.2923L2.48165 23.1528C1.90597 23.7335 1.02805 23.6815 0.520446 23.1094C0.0127579 22.4593 0.0676337 21.6532 0.642961 21.1504L24.2592 0.346902C24.7888 -0.115634 25.5703 -0.115634 26.0999 0.346902L49.7173 21.1504ZM12.6762 41.6074H18.2332V27.7383C18.2332 26.204 19.4749 24.9644 21.0118 24.9644H29.3473C30.8842 24.9644 32.1258 26.204 32.1258 27.7383V41.6074H37.6829C39.9838 41.6074 41.8507 39.7437 41.8507 37.4466V17.9172L25.1795 3.23671L8.50843 17.9172V37.4466C8.50843 39.7437 10.3752 41.6074 12.6762 41.6074ZM21.0118 41.6074H29.3473V27.7383H21.0118V41.6074Z"
-                        />
-                      </svg>
-                    </span>
-                  </div>
-                  <div>
-                    <h2
-                      class="listings-group__title"
-                    >
-                      Enter a lottery
-                    </h2>
-                    <div
-                      class="listings-group__info"
-                    >
-                      Enter a lottery to rent a unit at a below-market-rate (BMR) price.
-                    </div>
+                      <path
+                        d="M49.7173 21.1504C50.2904 21.6532 50.3425 22.4593 49.7608 23.1094C49.3353 23.6815 48.4496 23.7335 47.8766 23.1528L44.6292 20.2923V37.4466C44.6292 41.278 41.5207 44.3812 37.6829 44.3812H12.6762C8.84011 44.3812 5.72991 41.278 5.72991 37.4466V20.2923L2.48165 23.1528C1.90597 23.7335 1.02805 23.6815 0.520446 23.1094C0.0127579 22.4593 0.0676337 21.6532 0.642961 21.1504L24.2592 0.346902C24.7888 -0.115634 25.5703 -0.115634 26.0999 0.346902L49.7173 21.1504ZM12.6762 41.6074H18.2332V27.7383C18.2332 26.204 19.4749 24.9644 21.0118 24.9644H29.3473C30.8842 24.9644 32.1258 26.204 32.1258 27.7383V41.6074H37.6829C39.9838 41.6074 41.8507 39.7437 41.8507 37.4466V17.9172L25.1795 3.23671L8.50843 17.9172V37.4466C8.50843 39.7437 10.3752 41.6074 12.6762 41.6074ZM21.0118 41.6074H29.3473V27.7383H21.0118V41.6074Z"
+                      />
+                    </svg>
+                  </span>
+                </div>
+                <div>
+                  <h2
+                    class="listings-group__title"
+                    id="enter-a-lottery"
+                  >
+                    Enter a lottery
+                  </h2>
+                  <div
+                    class="listings-group__info"
+                  >
+                    Enter a lottery to rent a unit at a below-market-rate (BMR) price.
                   </div>
                 </div>
               </div>
@@ -435,15 +432,6 @@ exports[`For Rent renders ForRent component 1`] = `
                 </div>
               </div>
             </div>
-            <div
-              id="additional-listings"
-            />
-            <div
-              id="upcoming-lotteries"
-            />
-            <div
-              id="lottery-results"
-            />
           </div>
           <div
             class="action-block mt-4 primary-lighter action-block__block"

@@ -36,7 +36,7 @@ import {
   DIRECTORY_PAGE_HEADER,
 } from "../constants"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
-import { handleSectionHeaderEvents, toggleNavBarBoxShadow } from "./util/NavigationBarUtils"
+import { handleSectionHeaderEntries, toggleNavBarBoxShadow } from "./util/NavigationBarUtils"
 
 interface RentalDirectoryProps {
   listingsAPI: (filters?: EligibilityFilters) => Promise<RailsListing[]>
@@ -49,29 +49,6 @@ interface RentalDirectoryProps {
     observerRef: React.MutableRefObject<null | IntersectionObserver>
   ) => JSX.Element
   findMoreActionBlock: ReactNode
-}
-
-const DirectorySection = ({
-  refKey,
-  observerRef,
-  children,
-}: {
-  refKey: string
-  observerRef: React.MutableRefObject<null | IntersectionObserver>
-  children: ReactNode
-}) => {
-  return (
-    <div
-      id={refKey}
-      ref={(el) => {
-        if (el) {
-          observerRef?.current?.observe(el)
-        }
-      }}
-    >
-      {children}
-    </div>
-  )
 }
 
 export const GenericDirectory = (props: RentalDirectoryProps) => {
@@ -130,19 +107,20 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
   const observerRef: MutableRefObject<null | IntersectionObserver> = useRef(null)
   useEffect(() => {
     if (newDirectoryEnabled) {
-      const handleIntersectionEvents = (events: IntersectionObserverEntry[]) => {
-        const pageHeaderEvents = events.filter((e) => e.target.id === DIRECTORY_PAGE_HEADER)
-        toggleNavBarBoxShadow(pageHeaderEvents)
+      const handleIntersectionEntries = (entries: IntersectionObserverEntry[]) => {
+        const pageHeaderEntries = entries.filter((e) => e.target.id === DIRECTORY_PAGE_HEADER)
+        toggleNavBarBoxShadow(pageHeaderEntries)
 
-        const sectionHeaderEvents = events.filter((e) => e.target.id !== DIRECTORY_PAGE_HEADER)
-        if (sectionHeaderEvents.some((e) => e.isIntersecting)) {
-          handleSectionHeaderEvents(sectionHeaderEvents, activeItem, setActiveItem)
-        } else {
-          setActiveItem(null)
+        const sectionHeaderEntries = entries.filter(
+          (e) => e.target.id !== DIRECTORY_PAGE_HEADER && e.isIntersecting
+        )
+        const newActiveItem = handleSectionHeaderEntries(sectionHeaderEntries)
+        if (newActiveItem) {
+          setActiveItem(newActiveItem)
         }
       }
 
-      observerRef.current = new IntersectionObserver(handleIntersectionEvents)
+      observerRef.current = new IntersectionObserver(handleIntersectionEntries)
     }
   }, [activeItem, newDirectoryEnabled])
 
@@ -168,44 +146,45 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
                     ))}
             </div>
             <div id="listing-results">
-              <DirectorySection refKey="enter-a-lottery" observerRef={observerRef}>
-                {openListingsView(
-                  listings.open,
+              {openListingsView(
+                listings.open,
+                props.directoryType,
+                props.getSummaryTable,
+                observerRef,
+                hasFiltersSet
+              )}
+              {props.directoryType === DIRECTORY_TYPE_SALES &&
+                fcfsSalesView(
+                  listings.fcfs,
                   props.directoryType,
                   props.getSummaryTable,
+                  observerRef,
                   hasFiltersSet
                 )}
-              </DirectorySection>
-              {props.directoryType === DIRECTORY_TYPE_SALES && (
-                <DirectorySection refKey="buy-now" observerRef={observerRef}>
-                  {fcfsSalesView(
-                    listings.fcfs,
-                    props.directoryType,
-                    props.getSummaryTable,
-                    hasFiltersSet
-                  )}
-                </DirectorySection>
-              )}
               {props.findMoreActionBlock}
-              <DirectorySection refKey="additional-listings" observerRef={observerRef}>
-                {filters &&
-                  additionalView(
-                    listings.additional,
-                    props.directoryType,
-                    props.getSummaryTable,
-                    hasFiltersSet
-                  )}
-              </DirectorySection>
-              <DirectorySection refKey="upcoming-lotteries" observerRef={observerRef}>
-                {upcomingLotteriesView(
-                  listings.upcoming,
+              {filters &&
+                additionalView(
+                  listings.additional,
                   props.directoryType,
-                  props.getSummaryTable
+                  props.getSummaryTable,
+                  "addition-listings",
+                  observerRef,
+                  hasFiltersSet
                 )}
-              </DirectorySection>
-              <DirectorySection refKey="lottery-results" observerRef={observerRef}>
-                {lotteryResultsView(listings.results, props.directoryType, props.getSummaryTable)}
-              </DirectorySection>
+              {upcomingLotteriesView(
+                listings.upcoming,
+                props.directoryType,
+                props.getSummaryTable,
+                "upcoming-lotteries",
+                observerRef
+              )}
+              {lotteryResultsView(
+                listings.results,
+                props.directoryType,
+                props.getSummaryTable,
+                "lottery-results",
+                observerRef
+              )}
             </div>
           </>
         )}

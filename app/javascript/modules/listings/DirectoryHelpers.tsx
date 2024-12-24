@@ -7,7 +7,6 @@ import {
   IconTypes,
   LinkButton,
   ListingCard,
-  ListingsGroup,
   PageHeader,
   StackedTableRow,
   t,
@@ -36,6 +35,7 @@ import RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
 import { ListingState } from "./ListingState"
 import { ListingsGroupHeader } from "./ListingsGroupHeader"
 import { IconHomeCheck } from "./assets/icon-home-check"
+import { ListingsGroup } from "./ListingsGroupCustom"
 
 export type RailsUnitSummary = RailsSaleUnitSummary | RailsRentalUnitSummary
 
@@ -249,12 +249,15 @@ export const openListingsView = (
   listings: RailsListing[],
   directoryType: DirectoryType,
   stackedDataFxn: StackedDataFxnType,
+  observerRef: React.MutableRefObject<null | IntersectionObserver>,
   filtersSet?: boolean
 ) => (
   <ListingsGroupHeader
     title={t(`listings.${directoryType}.openListings.title`)}
     subtitle={t(`listings.${directoryType}.openListings.subtitle`)}
     icon={<Icon size="xlarge" symbol="house" />}
+    refKey="enter-a-lottery"
+    observerRef={observerRef}
   >
     {listings.length > 0 && getListingCards(listings, directoryType, stackedDataFxn, filtersSet)}
   </ListingsGroupHeader>
@@ -264,12 +267,15 @@ export const fcfsSalesView = (
   listings: RailsListing[],
   directoryType: DirectoryType,
   stackedDataFxn: StackedDataFxnType,
+  observerRef: React.MutableRefObject<null | IntersectionObserver>,
   filtersSet?: boolean
 ) => (
   <ListingsGroupHeader
     title={t(`listings.${directoryType}.fcfsListings.title`)}
     subtitle={t(`listings.${directoryType}.fcfsListings.subtitle`)}
     icon={IconHomeCheck}
+    observerRef={observerRef}
+    refKey="buy-now"
   >
     {listings.length > 0 && getListingCards(listings, directoryType, stackedDataFxn, filtersSet)}
   </ListingsGroupHeader>
@@ -283,6 +289,8 @@ export const getListingGroup = (
   header,
   hide,
   show,
+  refKey: string,
+  observerRef: React.MutableRefObject<null | IntersectionObserver>,
   hasFiltersSet?: boolean,
   subtitle?: string,
   icon?: IconTypes
@@ -296,6 +304,8 @@ export const getListingGroup = (
         showButtonText={show}
         info={subtitle}
         icon={icon}
+        refKey={refKey}
+        observerRef={observerRef}
       >
         {getListingCards(listings, directoryType, stackedDataFxn, hasFiltersSet)}
       </ListingsGroup>
@@ -306,7 +316,9 @@ export const getListingGroup = (
 export const upcomingLotteriesView = (
   listings,
   directoryType,
-  stackedDataFxn: StackedDataFxnType
+  stackedDataFxn: StackedDataFxnType,
+  refKey: string,
+  observerRef: React.MutableRefObject<null | IntersectionObserver>
 ) => {
   return getListingGroup(
     listings,
@@ -315,12 +327,20 @@ export const upcomingLotteriesView = (
     t("listings.upcomingLotteries.title"),
     t("listings.upcomingLotteries.hide"),
     t("listings.upcomingLotteries.show"),
+    refKey,
+    observerRef,
     undefined,
     t("listings.upcomingLotteries.subtitle")
   )
 }
 
-export const lotteryResultsView = (listings, directoryType, stackedDataFxn: StackedDataFxnType) => {
+export const lotteryResultsView = (
+  listings,
+  directoryType,
+  stackedDataFxn: StackedDataFxnType,
+  refKey: string,
+  observerRef: React.MutableRefObject<null | IntersectionObserver>
+) => {
   return getListingGroup(
     listings,
     directoryType,
@@ -328,6 +348,8 @@ export const lotteryResultsView = (listings, directoryType, stackedDataFxn: Stac
     t("listings.lotteryResults.title"),
     t("listings.lotteryResults.hide"),
     t("listings.lotteryResults.show"),
+    refKey,
+    observerRef,
     undefined,
     t("listings.lotteryResults.subtitle"),
     "result"
@@ -338,6 +360,8 @@ export const additionalView = (
   listings,
   directoryType,
   stackedDataFxn: StackedDataFxnType,
+  refKey: string,
+  observerRef: React.MutableRefObject<null | IntersectionObserver>,
   filtersSet?: boolean
 ) => {
   return getListingGroup(
@@ -347,6 +371,8 @@ export const additionalView = (
     `${t("listings.additional.title")}`,
     `${t("listings.additional.hide")}`,
     `${t("listings.additional.show")}`,
+    refKey,
+    observerRef,
     filtersSet,
     t("listings.additional.subtitle"),
     "doubleHouse"

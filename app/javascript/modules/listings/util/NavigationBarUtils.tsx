@@ -1,37 +1,43 @@
 import React, { ReactNode } from "react"
 
-export const toggleNavBarBoxShadow = (pageHeaderEvents: IntersectionObserverEntry[]) => {
+export const toggleNavBarBoxShadow = (pageHeaderEntries: IntersectionObserverEntry[]) => {
   document
     .querySelector("#nav-bar-container")
     .classList.toggle("directory-page-navigation-bar__header-intercept", false)
 
-  if (pageHeaderEvents.length > 0 && pageHeaderEvents.every((e) => !e.isIntersecting)) {
+  if (pageHeaderEntries.length > 0 && pageHeaderEntries.every((e) => !e.isIntersecting)) {
     document
       .querySelector("#nav-bar-container")
       .classList.toggle("directory-page-navigation-bar__header-intercept", true)
   }
 }
 
-export const handleSectionHeaderEvents = (
-  sectionHeaderEvents: IntersectionObserverEntry[],
-  prevActiveItem: string,
-  setActiveItem: React.Dispatch<string>
-) => {
-  let newActiveItem = prevActiveItem
-
-  let prevRatio = null
-  for (const e of sectionHeaderEvents) {
-    if (e.isIntersecting) {
-      if (!prevRatio) {
-        prevRatio = e.intersectionRatio
-        newActiveItem = e.target.id
-      } else if (e.intersectionRatio > prevRatio) {
-        newActiveItem = e.target.id
+export const handleSectionHeaderEntries = (sectionHeaderEntries: IntersectionObserverEntry[]) => {
+  const rollup = sectionHeaderEntries.reduce(
+    (acc, event) => {
+      acc[event.target.id] = {
+        intersecting: event.isIntersecting,
       }
+      return acc
+    },
+    {
+      "enter-a-lottery": false,
+      "buy-now": false,
+      "upcoming-lotteries": false,
+      "lottery-results": false,
+    }
+  )
+
+  for (const sectionHeader of [
+    "lottery-results",
+    "upcoming-lotteries",
+    "buy-now",
+    "enter-a-lottery",
+  ]) {
+    if (rollup[sectionHeader].intersecting) {
+      return sectionHeader
     }
   }
-
-  setActiveItem(newActiveItem)
 }
 
 export const PageHeaderWithRef = ({
