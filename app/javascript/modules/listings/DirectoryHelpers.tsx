@@ -271,7 +271,7 @@ export const openListingsView = (
     {listings.length > 0 ? (
       getListingCards(listings, directoryType, stackedDataFxn, filtersSet)
     ) : (
-      <EmptyListingsView section="open" listingsCount={numFcfsListings} />
+      <EmptyListingsView section="open" listingsCount={numFcfsListings} icon={IconHomeCheck} />
     )}
   </ListingsGroupHeader>
 )
@@ -294,7 +294,7 @@ export const fcfsSalesView = (
     {listings.length > 0 ? (
       getListingCards(listings, directoryType, stackedDataFxn, filtersSet)
     ) : (
-      <EmptyListingsView section="fcfs" listingsCount={numOpenListings} />
+      <EmptyListingsView section="fcfs" listingsCount={numOpenListings} icon="house" />
     )}
   </ListingsGroupHeader>
 )

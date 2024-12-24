@@ -1,7 +1,7 @@
 import { Heading } from "@bloom-housing/ui-seeds"
-import React from "react"
+import React, { ReactNode } from "react"
 import "./EmptyListingsView.scss"
-import { t } from "@bloom-housing/ui-components"
+import { Icon, t, UniversalIconType } from "@bloom-housing/ui-components"
 import { renderInlineMarkup } from "../../../util/languageUtil"
 import { DirectorySectionType } from "../DirectoryHelpers"
 import {
@@ -13,15 +13,22 @@ import {
 export const EmptyListingsView = ({
   listingsCount,
   section,
+  icon,
 }: {
   listingsCount?: number
   section: DirectorySectionType
+  icon?: ReactNode
 }) => {
   return (
     <div className="empty-listings-view">
       <Heading size="xl">{t(`listingDirectory.emptyListingsView.title.${section}`)}</Heading>
       <div className="empty-listings-view_content">
         <div>
+          {typeof icon === "string" ? (
+            <Icon className="empty-state-icon" size="medium" symbol={icon as UniversalIconType} />
+          ) : (
+            <span className="empty-state-icon ui-icon ui-medium">{icon}</span>
+          )}
           {listingsCount > 0 &&
             renderInlineMarkup(
               t(`listingDirectory.emptyListingsView.${section}`, {
@@ -34,6 +41,7 @@ export const EmptyListingsView = ({
             )}
         </div>
         <div>
+          <Icon className="empty-state-icon" size="medium" symbol="envelope" />
           {renderInlineMarkup(
             t("listingDirectory.emptyListingsView.getAnEmail", {
               target: "https://confirmsubscription.com/h/y/C3BAFCD742D47910",
