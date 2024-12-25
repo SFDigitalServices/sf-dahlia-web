@@ -1,8 +1,6 @@
 .listings-group__customHeader {
-  max-width: var(--seeds-width-3xl);
-
-  @media (min-width: $screen-lg) {
-    max-width: var(--seeds-width-5xl);
+  .listings-group__content {
+    max-width: 100%;
   }
 }
 

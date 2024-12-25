@@ -1,0 +1,24 @@
+.empty-listings-view {
+  margin: auto;
+  width: 90%;
+  max-width: var(--seeds-width-3xl);
+
+  padding: var(--seeds-s3);
+  padding-bottom: var(--seeds-spacer-container);
+
+  @media (min-width: $screen-lg) {
+    max-width: var(--seeds-width-5xl);
+  }
+
+  &_subheader {
+    color: var(--seeds-color-secondary-dark);
+  }
+
+  &_content {
+    margin-top: var(--seeds-spacer-content);
+  }
+
+  .empty-state-icon {
+    padding-right: var(--bloom-s2);
+  }
+}
