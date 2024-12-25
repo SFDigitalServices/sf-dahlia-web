@@ -10,6 +10,7 @@ import {
   getSignInPath,
 } from "../../util/routeUtil"
 import { renderInlineMarkup } from "../../util/languageUtil"
+import { setSiteAlertMessage } from "../../components/SiteAlert"
 
 interface MyAccountProps {
   assetPaths: unknown
@@ -62,7 +63,8 @@ const MyAccount = (_props: MyAccountProps) => {
   const { profile, loading, initialStateLoaded } = React.useContext(UserContext)
 
   if (!profile && !loading && initialStateLoaded) {
-    // TODO: Redirect to React sign in page and show a message that user needs to sign in
+    window.sessionStorage.setItem("redirect", "account")
+    setSiteAlertMessage(t("signIn.loginRequired"), "secondary")
     window.location.href = getSignInPath()
     return null
   }
