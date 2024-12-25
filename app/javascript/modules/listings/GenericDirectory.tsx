@@ -167,7 +167,6 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
                   listings.additional,
                   props.directoryType,
                   props.getSummaryTable,
-                  "addition-listings",
                   observerRef,
                   hasFiltersSet
                 )}
@@ -175,14 +174,12 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
                 listings.upcoming,
                 props.directoryType,
                 props.getSummaryTable,
-                "upcoming-lotteries",
                 observerRef
               )}
               {lotteryResultsView(
                 listings.results,
                 props.directoryType,
                 props.getSummaryTable,
-                "lottery-results",
                 observerRef
               )}
             </div>

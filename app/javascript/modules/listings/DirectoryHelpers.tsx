@@ -7,6 +7,7 @@ import {
   IconTypes,
   LinkButton,
   ListingCard,
+  ListingsGroup,
   PageHeader,
   StackedTableRow,
   t,
@@ -35,7 +36,6 @@ import RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
 import { ListingState } from "./ListingState"
 import { ListingsGroupHeader } from "./ListingsGroupHeader"
 import { IconHomeCheck } from "./assets/icon-home-check"
-import { ListingsGroup } from "./ListingsGroupCustom"
 
 export type RailsUnitSummary = RailsSaleUnitSummary | RailsRentalUnitSummary
 
@@ -296,6 +296,7 @@ export const getListingGroup = (
   icon?: IconTypes
 ) => {
   return (
+    // TODO: https://sfgovdt.jira.com/browse/DAH-3109 will update Bloom-UIC to accept the refKey and observerRef
     listings.length > 0 && (
       <ListingsGroup
         listingsCount={listings.length}
@@ -304,8 +305,8 @@ export const getListingGroup = (
         showButtonText={show}
         info={subtitle}
         icon={icon}
-        refKey={refKey}
-        observerRef={observerRef}
+        // refKey={refKey}
+        // observerRef={observerRef}
       >
         {getListingCards(listings, directoryType, stackedDataFxn, hasFiltersSet)}
       </ListingsGroup>
@@ -317,7 +318,6 @@ export const upcomingLotteriesView = (
   listings,
   directoryType,
   stackedDataFxn: StackedDataFxnType,
-  refKey: string,
   observerRef: React.MutableRefObject<null | IntersectionObserver>
 ) => {
   return getListingGroup(
@@ -327,7 +327,7 @@ export const upcomingLotteriesView = (
     t("listings.upcomingLotteries.title"),
     t("listings.upcomingLotteries.hide"),
     t("listings.upcomingLotteries.show"),
-    refKey,
+    "upcoming-lotteries",
     observerRef,
     undefined,
     t("listings.upcomingLotteries.subtitle")
@@ -338,7 +338,6 @@ export const lotteryResultsView = (
   listings,
   directoryType,
   stackedDataFxn: StackedDataFxnType,
-  refKey: string,
   observerRef: React.MutableRefObject<null | IntersectionObserver>
 ) => {
   return getListingGroup(
@@ -348,7 +347,7 @@ export const lotteryResultsView = (
     t("listings.lotteryResults.title"),
     t("listings.lotteryResults.hide"),
     t("listings.lotteryResults.show"),
-    refKey,
+    "lottery-results",
     observerRef,
     undefined,
     t("listings.lotteryResults.subtitle"),
@@ -360,7 +359,6 @@ export const additionalView = (
   listings,
   directoryType,
   stackedDataFxn: StackedDataFxnType,
-  refKey: string,
   observerRef: React.MutableRefObject<null | IntersectionObserver>,
   filtersSet?: boolean
 ) => {
@@ -371,7 +369,7 @@ export const additionalView = (
     `${t("listings.additional.title")}`,
     `${t("listings.additional.hide")}`,
     `${t("listings.additional.show")}`,
-    refKey,
+    "additional-listings",
     observerRef,
     filtersSet,
     t("listings.additional.subtitle"),
