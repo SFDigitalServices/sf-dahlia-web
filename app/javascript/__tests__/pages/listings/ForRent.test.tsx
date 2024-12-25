@@ -19,9 +19,15 @@ jest.mock("../../../hooks/useFeatureFlag", () => ({
   useFeatureFlag: jest.fn(),
 }))
 
+const mockIntersectionObserver = jest.fn()
+
 describe("For Rent", () => {
   beforeEach(() => {
-    ;(useFeatureFlag as jest.Mock).mockReturnValue({ flagsReady: true })
+    ;(useFeatureFlag as jest.Mock).mockReturnValue({ flagsReady: true, unleashFlag: true })
+    mockIntersectionObserver.mockReturnValue({
+      observe: () => null,
+    })
+    window.IntersectionObserver = mockIntersectionObserver
   })
   afterEach(() => {
     cleanup()
@@ -35,7 +41,10 @@ describe("For Rent", () => {
     const { findByText, asFragment } = render(<ForRent assetPaths="/" />)
 
     expect(await findByText("Rent affordable housing")).toBeDefined()
+    ;(await findByText("Enter a lottery")).click()
+
     expect(asFragment()).toMatchSnapshot()
+    expect(mockIntersectionObserver).toHaveBeenCalled()
   })
 
   it("listings with multiple listings render the first image in the array", async () => {
@@ -58,5 +67,6 @@ describe("For Rent", () => {
 
     const image = await findByAltText("This is a listing image")
     expect(image.getAttribute("src")).toBe(sroRentalListing.Listing_Images[0].displayImageURL)
+    expect(mockIntersectionObserver).toHaveBeenCalled()
   })
 })

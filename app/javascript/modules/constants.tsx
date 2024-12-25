@@ -1,3 +1,5 @@
+import { IconHomeCheck } from "./listings/assets/icon-home-check"
+
 export const PREFERENCES = {
   aliceGriffith: "Alice Griffith Housing Development Resident",
   antiDisplacement: "Anti-Displacement Housing Preference (ADHP)",
@@ -105,3 +107,47 @@ export const SFGOV_LINKS = [
   "http://sfmohcd.org/displaced-tenant-housing-preference",
   "http://sfmohcd.org/neighborhood-resident-housing-preference",
 ]
+
+export const DIRECTORY_SECTION_OPEN_LOTTERIES = "open"
+export const DIRECTORY_SECTION_FCFS_LISTINGS = "fcfs"
+export const DIRECTORY_SECTION_UPCOMING_LOTTERIES = "upcoming"
+export const DIRECTORY_SECTION_LOTTERY_RESULTS = "results"
+export const DIRECTORY_SECTION_ADDITIONAL_LISTINGS = "additional"
+
+export const SALE_DIRECTORY_SECTIONS = [
+  DIRECTORY_SECTION_OPEN_LOTTERIES,
+  DIRECTORY_SECTION_FCFS_LISTINGS,
+  DIRECTORY_SECTION_UPCOMING_LOTTERIES,
+  DIRECTORY_SECTION_LOTTERY_RESULTS,
+]
+export const RENTAL_DIRECTORY_SECTIONS = [
+  DIRECTORY_SECTION_OPEN_LOTTERIES,
+  DIRECTORY_SECTION_UPCOMING_LOTTERIES,
+  DIRECTORY_SECTION_LOTTERY_RESULTS,
+]
+
+export const DIRECTORY_TYPE_SALES = "forSale"
+export const DIRECTORY_SECTION_INFO = {
+  open: {
+    ref: "enter-a-lottery",
+    icon: "house",
+  },
+  fcfs: {
+    ref: "buy-now",
+    icon: IconHomeCheck,
+  },
+  additional: {
+    ref: "additional-listings",
+    icon: "doubleHouse",
+  },
+  upcoming: {
+    ref: "upcoming-lotteries",
+    icon: "clock",
+  },
+  results: {
+    ref: "lottery-results",
+    icon: "result",
+  },
+}
+
+export const DIRECTORY_PAGE_HEADER = "page-header"

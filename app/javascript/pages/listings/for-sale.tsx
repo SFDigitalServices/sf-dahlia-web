@@ -14,13 +14,12 @@ import {
   getRangeString,
   showWaitlist,
   getAvailabilityString,
-  matchedTextBanner,
-  noMatchesTextBanner,
   eligibilityHeader,
   getMinMax,
 } from "../../modules/listings/DirectoryHelpers"
 import BuyHeader from "../../modules/listings/BuyHeader"
 import { defaultIfNotTranslated } from "../../util/languageUtil"
+import { PageHeaderWithRef } from "../../modules/listings/util/NavigationBarUtils"
 
 const getForSaleSummaryTable = (listing: RailsSaleListing) => {
   const summary = listing.unitSummaries.general ?? listing.unitSummaries.reserved
@@ -66,23 +65,23 @@ const getForSaleSummaryTable = (listing: RailsSaleListing) => {
 const getBuyHeader = (
   filters: EligibilityFilters,
   setFilters: Dispatch<SetStateAction<EligibilityFilters>>,
-  match: boolean
+  observerRef: React.MutableRefObject<null | IntersectionObserver>
 ) => {
-  return filters ? (
-    <>
-      {eligibilityHeader(
-        filters,
-        setFilters,
-        `${t("listings.eligibilityCalculator.sale.showingMatchingUnits")}`
+  return (
+    <PageHeaderWithRef observerRef={observerRef}>
+      {filters ? (
+        <>
+          {eligibilityHeader(
+            filters,
+            setFilters,
+            `${t("listings.eligibilityCalculator.sale.showingMatchingUnits")}`
+          )}
+          <hr />
+        </>
+      ) : (
+        <BuyHeader />
       )}
-      <hr />
-
-      {match
-        ? matchedTextBanner()
-        : noMatchesTextBanner(`${t("listings.eligibilityCalculator.sale.noMatchingUnits")}`)}
-    </>
-  ) : (
-    <BuyHeader />
+    </PageHeaderWithRef>
   )
 }
 

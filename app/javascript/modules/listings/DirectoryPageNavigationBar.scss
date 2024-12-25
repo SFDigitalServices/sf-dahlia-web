@@ -1,0 +1,82 @@
+.directory-page-navigation-bar__container {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background-color: var(--seeds-bg-color-surface);
+
+  transition: box-shadow 200ms cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+.directory-page-navigation-bar__header-intercept {
+  box-shadow: var(--seeds-color-secondary-light) 0 1px 1px;
+  transition-duration: 400ms;
+}
+
+.directory-page-navigation-bar {
+  background-color: var(--seeds-bg-color-surface);
+  margin: 0 auto;
+  width: 100%;
+
+  --inter-row-gap: var(--seeds-s12);
+  --max-width: var(--seeds-width-3xl);
+  --max-width-large-screen: var(--seeds-width-5xl);
+
+  display: flex;
+  flex-direction: row;
+  max-width: var(--max-width);
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  @media (min-width: $screen-lg) {
+    --max-width: var(--max-width-large-screen);
+  }
+
+  .directory-page-navigation-bar__button:focus {
+    box-shadow: none;
+  }
+
+  .directory-page-navigation-bar__button {
+    flex: 1 0 0;
+    min-width: max-content;
+    margin: var(--seeds-s3) var(--seeds-s2);
+    padding: var(--seeds-s4) var(--seeds-s6);
+
+    background: var(--seeds-bg-color-surface);
+    color: var(--seeds-text-color-light);
+    border: var(--seeds-border-1) solid var(--seeds-color-gray-450);
+    border-radius: 0px;
+  }
+
+  .directory-page-navigation-bar__button:hover {
+    background: var(--seeds-bg-color-surface);
+    color: var(--seeds-text-color-light);
+    border: var(--seeds-border-1) solid var(--seeds-color-gray-450);
+    border-radius: 0px;
+
+    @media (min-width: $screen-md) {
+      color: var(--seeds-color-primary);
+      background: var(--seeds-bg-color-surface-primary);
+
+      border-top: var(--seeds-border-1) solid var(--seeds-border-color);
+      border-right: var(--seeds-border-1) solid var(--seeds-border-color);
+      border-left: var(--seeds-border-1) solid var(--seeds-border-color);
+      border-bottom: var(--seeds-s0_5) solid var(--seeds-border-color);
+    }
+  }
+
+  .directory-page-navigation-bar__button:focus-visible {
+    outline: var(--seeds-focus-ring-outline);
+    box-shadow: var(--seeds-focus-ring-box-shadow);
+  }
+
+  .active,
+  .active:hover {
+    color: var(--seeds-text-color-darker);
+    background: var(--seeds-bg-color-surface);
+
+    border-top: var(--seeds-border-1) solid var(--seeds-color-gray-450);
+    border-right: var(--seeds-border-1) solid var(--seeds-color-gray-450);
+    border-left: var(--seeds-border-1) solid var(--seeds-color-gray-450);
+    border-bottom: var(--seeds-s0_5) solid var(--seeds-color-primary);
+  }
+}
