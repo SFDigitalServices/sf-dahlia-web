@@ -12,7 +12,7 @@ https://sfgovdt.jira.com/browse/<JIRA TICKET NUMBER>
 
 - [ ] branch name begins with `angular` if it contains updates to Angular code
 - [ ] branch name contains the Jira ticket number
-- [ ] PR name follows `type: TICKET-NUMBER Description` format, e.g. `feat: DAH-123 New Feature`
+- [ ] PR name follows `type: TICKET-NUMBER Description` format, e.g. `feat: DAH-123 New Feature`. If the PR is urgent and does not need a ticket then use the format `urgent: Description`
 
 ### Code quality
 
