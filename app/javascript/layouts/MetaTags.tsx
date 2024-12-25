@@ -89,6 +89,7 @@ const MetaTags = (props: MetaTagsProps) => {
         <link href={getAssetPath("manifest.json")} rel="manifest" />
         <meta content={getAssetPath("ms-icon-144x144.png")} name="msapplication-TileImage" />
         */}
+        <link href={getAssetPath("manifest.json")} rel="manifest" />
       </Helmet>
     </>
   )
