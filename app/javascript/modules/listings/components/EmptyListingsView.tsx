@@ -9,6 +9,7 @@ import {
   DIRECTORY_SECTION_INFO,
   DIRECTORY_SECTION_OPEN_LOTTERIES,
 } from "../../constants"
+import { useFeatureFlag } from "../../../hooks/useFeatureFlag"
 
 export const EmptyListingsView = ({
   listingsCount,
@@ -19,6 +20,15 @@ export const EmptyListingsView = ({
   section: DirectorySectionType
   icon?: ReactNode
 }) => {
+  const { unleashFlag: newDirectoryEnabled } = useFeatureFlag(
+    "temp.webapp.directory.listings",
+    false
+  )
+
+  if (!newDirectoryEnabled) {
+    return null
+  }
+
   return (
     <div className="empty-listings-view">
       <Heading size="xl">{t(`listingDirectory.emptyListingsView.title.${section}`)}</Heading>

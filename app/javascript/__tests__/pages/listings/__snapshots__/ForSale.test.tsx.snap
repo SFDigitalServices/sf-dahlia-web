@@ -712,7 +712,6 @@ exports[`For Sale renders ForSale component 1`] = `
                   >
                     <h2
                       class="listings-group__title"
-                      id="upcoming-lotteries"
                     >
                       Upcoming Lotteries
                     </h2>
@@ -777,7 +776,6 @@ exports[`For Sale renders ForSale component 1`] = `
                   >
                     <h2
                       class="listings-group__title"
-                      id="lottery-results"
                     >
                       Lottery Results
                     </h2>

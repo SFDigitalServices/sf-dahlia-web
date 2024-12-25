@@ -18,6 +18,7 @@ import {
   DIRECTORY_SECTION_ADDITIONAL_LISTINGS,
   DIRECTORY_SECTION_LOTTERY_RESULTS,
   DIRECTORY_SECTION_UPCOMING_LOTTERIES,
+  DIRECTORY_SECTION_FCFS_LISTINGS,
 } from "../constants"
 
 import type RailsRentalListing from "../../api/types/rails/listings/RailsRentalListing"
@@ -47,8 +48,12 @@ import { EmptyListingsView } from "./components/EmptyListingsView"
 export type RailsUnitSummary = RailsSaleUnitSummary | RailsRentalUnitSummary
 
 export type DirectoryType = "forRent" | "forSale"
-export type DirectorySectionType = typeof DIRECTORY_SECTION_OPEN_LOTTERIES
-
+export type DirectorySectionType =
+  | typeof DIRECTORY_SECTION_OPEN_LOTTERIES
+  | typeof DIRECTORY_SECTION_FCFS_LISTINGS
+  | typeof DIRECTORY_SECTION_UPCOMING_LOTTERIES
+  | typeof DIRECTORY_SECTION_LOTTERY_RESULTS
+  | typeof DIRECTORY_SECTION_ADDITIONAL_LISTINGS
 export type minMax = "min" | "max"
 
 export type StackedDataFxnType = (listing: RailsRentalListing) => Record<string, StackedTableRow>[]
