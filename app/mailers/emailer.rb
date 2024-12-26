@@ -3,8 +3,8 @@
 # basic emailer class
 class Emailer < Devise::Mailer
   include ActionMailer::Text
-  default from: 'DAHLIA <donotreply@sfgov.org>'
-  default reply_to: 'DAHLIA <donotreply@sfgov.org>'
+  default from: ENV['MAILER_FROM'] || 'DAHLIA <donotreply@sfgov.org>'
+  default reply_to: ENV['MAILER_REPLY_TO'] || 'DAHLIA <donotreply@sfgov.org>'
   layout 'email'
 
   ### service external methods
