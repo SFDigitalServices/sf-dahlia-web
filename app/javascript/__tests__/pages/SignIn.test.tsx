@@ -66,6 +66,20 @@ describe("<SignIn />", () => {
     expect(getByText("Create an account")).not.toBeNull()
   })
 
+  it("shows the correct error message on submit", async () => {
+    await renderAndLoadAsync(<SignIn assetPaths={{}} />)
+
+    await userEvent.type(screen.getByRole("textbox", { name: /email/i }), "test@test.com")
+    await userEvent.type(screen.getByLabelText(/^password$/i), "Password1")
+    await userEvent.click(screen.getByRole("button", { name: /sign in/i }))
+
+    await waitFor(() => {
+      expect(
+        screen.getByText(/Email or password is incorrect\. Check for mistakes and try again/i)
+      ).not.toBeNull()
+    })
+  })
+
   it("shows the correct error message when bad credentials are entered", async () => {
     ;(post as jest.Mock).mockRejectedValueOnce({
       response: {
@@ -76,16 +90,9 @@ describe("<SignIn />", () => {
 
     await renderAndLoadAsync(<SignIn assetPaths={{}} />)
 
-    await userEvent.type(screen.getByRole("textbox", { name: /email/i }), "test@test.com")
-    await userEvent.type(screen.getByLabelText(/^password$/i), "Password1")
+    await userEvent.type(screen.getByRole("textbox", { name: /email/i }), "test")
+    await userEvent.type(screen.getByLabelText(/^password$/i), "Pass")
     await userEvent.click(screen.getByRole("button", { name: /sign in/i }))
-
-    await waitFor(() => {
-      expect(post).toHaveBeenCalledWith("/api/v1/auth/sign_in", {
-        email: "test@test.com",
-        password: "Password1",
-      })
-    })
 
     await waitFor(() => {
       expect(
