@@ -45,14 +45,17 @@ const SignInFormCard = ({
   // This is causing a linting issue with unbound-method, see open issue as of 10/21/2020:
   // https://github.com/react-hook-form/react-hook-form/issues/2887
   // eslint-disable-next-line @typescript-eslint/unbound-method
-  const { register, handleSubmit, errors, watch } = useForm()
-  const [showBannerError, setShowBannerError] = useState(false)
+  const { register, handleSubmit, watch } = useForm()
 
-  useEffect(() => {
+  const onError = (errors: { email: string; password: string }) => {
     if (errors.email || errors.password) {
-      setShowBannerError(true)
+      setRequestError(
+        t("signIn.badCredentialsWithResetLink", {
+          url: getForgotPasswordPath(),
+        })
+      )
     }
-  }, [errors.email, errors.password])
+  }
 
   return (
     <FormCard>
@@ -65,15 +68,10 @@ const SignInFormCard = ({
           {renderInlineMarkup(requestError)}
         </AlertBox>
       )}
-      {showBannerError && (
-        <AlertBox onClose={() => setShowBannerError(undefined)} type="alert">
-          {renderInlineMarkup(t("signIn.badCredentialsWithResetLink"))}
-        </AlertBox>
-      )}
       <SiteAlert type="success" />
       <SiteAlert type="secondary" />
       <div className="form-card__group pt-0 border-b">
-        <Form id="sign-in" className="mt-10 relative" onSubmit={handleSubmit(onSubmit)}>
+        <Form id="sign-in" className="mt-10 relative" onSubmit={handleSubmit(onSubmit, onError)}>
           <EmailFieldset register={register} />
           <span className="right-0 absolute">
             <Link href="/forgot-password" className="forgot-password-link">
