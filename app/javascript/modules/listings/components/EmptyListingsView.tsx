@@ -18,7 +18,7 @@ export const EmptyListingsView = ({
 }: {
   listingsCount?: number
   section: DirectorySectionType
-  icon?: ReactNode
+  icon?: ReactNode | string
 }) => {
   const { unleashFlag: newDirectoryEnabled } = useFeatureFlag(
     "temp.webapp.directory.listings",
@@ -31,6 +31,13 @@ export const EmptyListingsView = ({
 
   return (
     <div className="empty-listings-view">
+      {
+        // 'section' will be:
+        // DIRECTORY_SECTION_OPEN_LOTTERIES: listingDirectory.emptyListingsView.title.open
+        // DIRECTORY_SECTION_FCFS_LISTINGS: listingDirectory.emptyListingsView.title.fcfs
+        // DIRECTORY_SECTION_UPCOMING_LOTTERIES: listingDirectory.emptyListingsView.title.upcoming
+        // DIRECTORY_SECTION_LOTTERY_RESULTS: listingDirectory.emptyListingsView.title.results
+      }
       <Heading size="xl">{t(`listingDirectory.emptyListingsView.title.${section}`)}</Heading>
       <div className="empty-listings-view_content">
         <div>
@@ -40,7 +47,12 @@ export const EmptyListingsView = ({
             <span className="empty-state-icon ui-icon ui-medium">{icon}</span>
           )}
           {listingsCount > 0 &&
+            (section === DIRECTORY_SECTION_OPEN_LOTTERIES ||
+              section === DIRECTORY_SECTION_FCFS_LISTINGS) &&
             renderInlineMarkup(
+              // listingsCount only used for DIRECTORY_SECTION_OPEN_LOTTERIES and DIRECTORY_SECTION_FCFS_LISTINGS section
+              // DIRECTORY_SECTION_OPEN_LOTTERIES: listingDirectory.emptyListingsView.open
+              // DIRECTORY_SECTION_FCFS_LISTINGS: listingDirectory.emptyListingsView.fcfs
               t(`listingDirectory.emptyListingsView.${section}`, {
                 numListings: listingsCount,
                 target:
