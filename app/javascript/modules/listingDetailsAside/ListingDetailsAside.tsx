@@ -70,7 +70,7 @@ export const ListingDetailsAside = ({ listing, imageSrc }: ListingDetailsSidebar
               isListingRental && <ListingDetailsOpenHouses listing={listing} />
             }
             {isApplicationOpen && <ListingDetailsWaitlist listing={listing} />}
-            <ListingDetailsApply listing={listing} />
+            {listing.Accepting_Online_Applications && <ListingDetailsApply listing={listing} />}
             {isSaleListing && <ListingDetailsSeeTheUnit listing={listing} />}
             {isApplicationOpen && <NeedHelpBlock listing={listing} />}
             {isSaleListing && listing.Expected_Move_in_Date && expectedMoveInDateBlock}
