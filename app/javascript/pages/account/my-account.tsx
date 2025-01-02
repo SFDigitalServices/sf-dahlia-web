@@ -31,11 +31,11 @@ const AccountDashCard = ({
   return (
     <a
       href={link}
-      className="text-black block outline-none focus:underline flex-1 w-full md:w-1/2  h-auto"
+      className="text-black block outline-none focus:underline flex-1 w-full md:w-1/2  h-auto max-h-64"
     >
       <Card
         spacing="md"
-        className={`cursor-pointer text-gray-850 hover:text-primary flex justify-start items-center text-center h-full h-auto rounded-none md:rounded-lg ${
+        className={`cursor-pointer text-gray-850 hover:text-primary flex justify-start items-center text-center h-full h-auto max-h-64 rounded-none md:rounded-lg ${
           removeBottomBorder ? "border-b-0 md:border-b" : ""
         }`}
       >
