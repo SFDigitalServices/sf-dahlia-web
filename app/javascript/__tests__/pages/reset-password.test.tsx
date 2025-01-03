@@ -24,6 +24,7 @@ describe("<ResetPassword />", () => {
     beforeEach(() => {
       originalLocation = window.location
       setupUserContext({ loggedIn: false })
+      setupLocationAndRouteMock()
     })
     afterEach(() => {
       jest.restoreAllMocks()
@@ -43,6 +44,7 @@ describe("<ResetPassword />", () => {
         },
         writable: true,
       })
+
       expect(window.location.href).toBe("/sign-in")
     })
   })

@@ -3,7 +3,11 @@ import { renderAndLoadAsync } from "../../__util__/renderUtils"
 import AccountSettingsPage from "../../../pages/account/account-settings"
 import { fireEvent, screen, within, act } from "@testing-library/react"
 import { authenticatedPut } from "../../../api/apiService"
-import { mockProfileStub, setupUserContext } from "../../__util__/accountUtils"
+import {
+  mockProfileStub,
+  setupLocationAndRouteMock,
+  setupUserContext,
+} from "../../__util__/accountUtils"
 
 jest.mock("../../../api/apiService", () => ({
   authenticatedPut: jest.fn(),
@@ -711,6 +715,7 @@ describe("<AccountSettingsPage />", () => {
     beforeEach(() => {
       originalLocation = window.location
       setupUserContext({ loggedIn: false, saveProfileMock })
+      setupLocationAndRouteMock()
     })
 
     afterEach(() => {
@@ -721,7 +726,7 @@ describe("<AccountSettingsPage />", () => {
     it("redirects to the sign in page", async () => {
       const { queryByText } = await renderAndLoadAsync(<AccountSettingsPage assetPaths={{}} />)
 
-      expect(window.location.href).toBe("/sign-in")
+      expect(window.location.href).toBe("http://dahlia.com/sign-in")
       expect(queryByText("Account Settings")).toBeNull()
     })
   })
