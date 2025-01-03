@@ -350,8 +350,6 @@ exports[`For Sale renders ForSale component 1`] = `
             >
               <a
                 class="seeds-button directory-page-navigation-bar__button"
-                data-size="md"
-                data-variant="primary"
                 href="#enter-a-lottery"
                 id="nav-bar-button-enter-a-lottery"
               >
@@ -371,8 +369,6 @@ exports[`For Sale renders ForSale component 1`] = `
               </a>
               <a
                 class="seeds-button directory-page-navigation-bar__button"
-                data-size="md"
-                data-variant="primary"
                 href="#buy-now"
                 id="nav-bar-button-buy-now"
               >
@@ -398,8 +394,6 @@ exports[`For Sale renders ForSale component 1`] = `
               </a>
               <a
                 class="seeds-button directory-page-navigation-bar__button"
-                data-size="md"
-                data-variant="primary"
                 href="#upcoming-lotteries"
                 id="nav-bar-button-upcoming-lotteries"
               >
@@ -422,8 +416,6 @@ exports[`For Sale renders ForSale component 1`] = `
               </a>
               <a
                 class="seeds-button directory-page-navigation-bar__button"
-                data-size="md"
-                data-variant="primary"
                 href="#lottery-results"
                 id="nav-bar-button-lottery-results"
               >
