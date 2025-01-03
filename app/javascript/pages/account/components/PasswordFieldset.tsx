@@ -138,6 +138,7 @@ const PasswordField = ({ passwordVisibilityDefault = false, ...props }: Password
   return (
     <>
       <Field
+        dataTestId="password-field"
         {...props}
         type={showPassword ? "text" : "password"}
         inputProps={{ className: "input", required: true }}
