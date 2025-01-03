@@ -1,7 +1,7 @@
 import React, { useEffect, useReducer } from "react"
 
 import { getProfile, signIn } from "../../api/authApiService"
-import { isTokenValid } from "../token"
+import { getTemporaryAuthParamsFromUrl, isTokenValid, setAuthHeadersFromUrl } from "../token"
 import {
   saveProfile,
   userSignOut,
@@ -28,6 +28,14 @@ const UserProvider = (props: UserProviderProps) => {
   useEffect(() => {
     if (!state.profile) {
       dispatch(startLoading())
+      const temporaryAuthParamsFromUrl = getTemporaryAuthParamsFromUrl()
+      if (
+        temporaryAuthParamsFromUrl &&
+        temporaryAuthParamsFromUrl.accessToken &&
+        temporaryAuthParamsFromUrl.reset_password === "true"
+      ) {
+        setAuthHeadersFromUrl(temporaryAuthParamsFromUrl)
+      }
       getProfile()
         .then((profile) => {
           dispatch(saveProfile(profile))
