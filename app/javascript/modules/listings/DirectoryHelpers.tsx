@@ -293,10 +293,10 @@ export const getListingGroup = (
   observerRef: React.MutableRefObject<null | IntersectionObserver>,
   hasFiltersSet?: boolean,
   subtitle?: string,
-  icon?: IconTypes
+  icon?: IconTypes,
+  isOpen?: boolean
 ) => {
   return (
-    // TODO: https://sfgovdt.jira.com/browse/DAH-3109 will update Bloom-UIC to accept the refKey and observerRef
     listings.length > 0 && (
       <ListingsGroup
         listingsCount={listings.length}
@@ -305,8 +305,9 @@ export const getListingGroup = (
         showButtonText={show}
         info={subtitle}
         icon={icon}
-        // refKey={refKey}
-        // observerRef={observerRef}
+        refKey={refKey}
+        observerRef={observerRef}
+        isOpen={isOpen}
       >
         {getListingCards(listings, directoryType, stackedDataFxn, hasFiltersSet)}
       </ListingsGroup>
@@ -318,7 +319,8 @@ export const upcomingLotteriesView = (
   listings,
   directoryType,
   stackedDataFxn: StackedDataFxnType,
-  observerRef: React.MutableRefObject<null | IntersectionObserver>
+  observerRef: React.MutableRefObject<null | IntersectionObserver>,
+  isOpen: boolean
 ) => {
   return getListingGroup(
     listings,
@@ -330,7 +332,9 @@ export const upcomingLotteriesView = (
     "upcoming-lotteries",
     observerRef,
     undefined,
-    t("listings.upcomingLotteries.subtitle")
+    t("listings.upcomingLotteries.subtitle"),
+    null,
+    isOpen
   )
 }
 
@@ -338,7 +342,8 @@ export const lotteryResultsView = (
   listings,
   directoryType,
   stackedDataFxn: StackedDataFxnType,
-  observerRef: React.MutableRefObject<null | IntersectionObserver>
+  observerRef: React.MutableRefObject<null | IntersectionObserver>,
+  isOpen?: boolean
 ) => {
   return getListingGroup(
     listings,
@@ -351,7 +356,8 @@ export const lotteryResultsView = (
     observerRef,
     undefined,
     t("listings.lotteryResults.subtitle"),
-    "result"
+    "result",
+    isOpen
   )
 }
 
@@ -360,7 +366,8 @@ export const additionalView = (
   directoryType,
   stackedDataFxn: StackedDataFxnType,
   observerRef: React.MutableRefObject<null | IntersectionObserver>,
-  filtersSet?: boolean
+  filtersSet?: boolean,
+  isOpen?: boolean
 ) => {
   return getListingGroup(
     listings,
@@ -373,7 +380,8 @@ export const additionalView = (
     observerRef,
     filtersSet,
     t("listings.additional.subtitle"),
-    "doubleHouse"
+    "doubleHouse",
+    isOpen
   )
 }
 
