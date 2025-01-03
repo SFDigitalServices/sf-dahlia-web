@@ -1,7 +1,7 @@
 import { renderAndLoadAsync } from "../../__util__/renderUtils"
 import MyAccount from "../../../pages/account/my-account"
 import React from "react"
-import { setupUserContext } from "../../__util__/accountUtils"
+import { setupLocationAndRouteMock, setupUserContext } from "../../__util__/accountUtils"
 
 describe("<MyAccount />", () => {
   beforeEach(() => {
@@ -54,6 +54,7 @@ describe("<MyAccount />", () => {
     beforeEach(async () => {
       originalLocation = window.location
       setupUserContext({ loggedIn: false })
+      setupLocationAndRouteMock()
 
       await renderAndLoadAsync(<MyAccount assetPaths={{}} />)
     })
