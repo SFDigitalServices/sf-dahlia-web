@@ -151,7 +151,8 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
                 props.directoryType,
                 props.getSummaryTable,
                 observerRef,
-                hasFiltersSet
+                hasFiltersSet,
+                listings.fcfs.length
               )}
               {props.directoryType === DIRECTORY_TYPE_SALES &&
                 fcfsSalesView(
@@ -159,7 +160,8 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
                   props.directoryType,
                   props.getSummaryTable,
                   observerRef,
-                  hasFiltersSet
+                  hasFiltersSet,
+                  listings.open.length
                 )}
               {props.findMoreActionBlock}
               {filters &&
