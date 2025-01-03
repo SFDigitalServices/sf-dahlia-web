@@ -39,6 +39,58 @@ export const setAuthHeaders = (headers: AuthHeaders | AxiosHeaders) => {
   getStorage().setItem(ACCESS_TOKEN_LOCAL_STORAGE_KEY, JSON.stringify(headersToSet))
 }
 
+const parseUrlParams = (url: string): URLSearchParams => {
+  const urlObj = new URL(url)
+  return urlObj.searchParams
+}
+
+export interface TemporaryURLParams {
+  expiry: string | null
+  accessToken: string | null
+  client: string | null
+  uid: string | null
+  tokenType: string
+  reset_password: string | null
+}
+
+export const getTemporaryAuthParamsFromUrl = (): TemporaryURLParams => {
+  const params = parseUrlParams(window.location.href)
+
+  const expiry = params.get("expiry")
+  const accessToken = params.get("access-token")
+  const client = params.get("client")
+  const uid = params.get("uid")
+  const resetPassword = params.get("reset_password")
+
+  return {
+    expiry,
+    accessToken,
+    client,
+    uid,
+    tokenType: "Bearer",
+    reset_password: resetPassword,
+  }
+}
+
+export const setAuthHeadersFromUrl = ({
+  expiry,
+  accessToken,
+  client,
+  uid,
+  tokenType,
+}: TemporaryURLParams) => {
+  if (expiry && accessToken && client && uid && tokenType) {
+    setAuthHeaders({
+      expiry,
+      "access-token": accessToken,
+      client,
+      uid,
+      "token-type": tokenType,
+    } as AuthHeaders)
+    return true
+  } else return false
+}
+
 export const getHeaders = (): AuthHeaders | AxiosHeaders | undefined => getAuthHeaders()
 
 export const clearHeaders = () => {
