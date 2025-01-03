@@ -1,16 +1,20 @@
-.listings-group__custom {
+.listings-group__customHeader {
   max-width: var(--seeds-width-3xl);
 
   @media (min-width: $screen-lg) {
     max-width: var(--seeds-width-5xl);
   }
-
-  &:not(:first-of-type) {
-    margin-top: var(--seeds-s20);
-  }
 }
 
-.listings-group__header:not(:first-of-type) {
+#buy-now,
+#enter-a-lottery,
+#upcoming-lotteries,
+#lottery-results,
+#additional-listings {
+  scroll-margin-top: 70px;
+}
+
+#buy-now > .listings-group__customHeader {
   border-top: 1px solid var(--seeds-color-gray-450);
   padding-top: var(--seeds-s9);
 }

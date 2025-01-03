@@ -50,8 +50,7 @@ export interface ListingsGroups {
   upcoming: RailsListing[]
   results: RailsListing[]
   additional: RailsListing[]
-  fcfsSalesOpen: RailsListing[]
-  fcfsSalesNotYetOpen: RailsListing[]
+  fcfs: RailsListing[]
 }
 
 type Listing = RailsRentalListing & {
@@ -250,12 +249,15 @@ export const openListingsView = (
   listings: RailsListing[],
   directoryType: DirectoryType,
   stackedDataFxn: StackedDataFxnType,
+  observerRef: React.MutableRefObject<null | IntersectionObserver>,
   filtersSet?: boolean
 ) => (
   <ListingsGroupHeader
     title={t(`listings.${directoryType}.openListings.title`)}
     subtitle={t(`listings.${directoryType}.openListings.subtitle`)}
     icon={<Icon size="xlarge" symbol="house" />}
+    refKey="enter-a-lottery"
+    observerRef={observerRef}
   >
     {listings.length > 0 && getListingCards(listings, directoryType, stackedDataFxn, filtersSet)}
   </ListingsGroupHeader>
@@ -265,12 +267,15 @@ export const fcfsSalesView = (
   listings: RailsListing[],
   directoryType: DirectoryType,
   stackedDataFxn: StackedDataFxnType,
+  observerRef: React.MutableRefObject<null | IntersectionObserver>,
   filtersSet?: boolean
 ) => (
   <ListingsGroupHeader
     title={t(`listings.${directoryType}.fcfsListings.title`)}
     subtitle={t(`listings.${directoryType}.fcfsListings.subtitle`)}
     icon={IconHomeCheck}
+    observerRef={observerRef}
+    refKey="buy-now"
   >
     {listings.length > 0 && getListingCards(listings, directoryType, stackedDataFxn, filtersSet)}
   </ListingsGroupHeader>
@@ -284,11 +289,14 @@ export const getListingGroup = (
   header,
   hide,
   show,
+  refKey: string,
+  observerRef: React.MutableRefObject<null | IntersectionObserver>,
   hasFiltersSet?: boolean,
   subtitle?: string,
   icon?: IconTypes
 ) => {
   return (
+    // TODO: https://sfgovdt.jira.com/browse/DAH-3109 will update Bloom-UIC to accept the refKey and observerRef
     listings.length > 0 && (
       <ListingsGroup
         listingsCount={listings.length}
@@ -297,6 +305,8 @@ export const getListingGroup = (
         showButtonText={show}
         info={subtitle}
         icon={icon}
+        // refKey={refKey}
+        // observerRef={observerRef}
       >
         {getListingCards(listings, directoryType, stackedDataFxn, hasFiltersSet)}
       </ListingsGroup>
@@ -307,7 +317,8 @@ export const getListingGroup = (
 export const upcomingLotteriesView = (
   listings,
   directoryType,
-  stackedDataFxn: StackedDataFxnType
+  stackedDataFxn: StackedDataFxnType,
+  observerRef: React.MutableRefObject<null | IntersectionObserver>
 ) => {
   return getListingGroup(
     listings,
@@ -316,12 +327,19 @@ export const upcomingLotteriesView = (
     t("listings.upcomingLotteries.title"),
     t("listings.upcomingLotteries.hide"),
     t("listings.upcomingLotteries.show"),
+    "upcoming-lotteries",
+    observerRef,
     undefined,
     t("listings.upcomingLotteries.subtitle")
   )
 }
 
-export const lotteryResultsView = (listings, directoryType, stackedDataFxn: StackedDataFxnType) => {
+export const lotteryResultsView = (
+  listings,
+  directoryType,
+  stackedDataFxn: StackedDataFxnType,
+  observerRef: React.MutableRefObject<null | IntersectionObserver>
+) => {
   return getListingGroup(
     listings,
     directoryType,
@@ -329,6 +347,8 @@ export const lotteryResultsView = (listings, directoryType, stackedDataFxn: Stac
     t("listings.lotteryResults.title"),
     t("listings.lotteryResults.hide"),
     t("listings.lotteryResults.show"),
+    "lottery-results",
+    observerRef,
     undefined,
     t("listings.lotteryResults.subtitle"),
     "result"
@@ -339,6 +359,7 @@ export const additionalView = (
   listings,
   directoryType,
   stackedDataFxn: StackedDataFxnType,
+  observerRef: React.MutableRefObject<null | IntersectionObserver>,
   filtersSet?: boolean
 ) => {
   return getListingGroup(
@@ -348,6 +369,8 @@ export const additionalView = (
     `${t("listings.additional.title")}`,
     `${t("listings.additional.hide")}`,
     `${t("listings.additional.show")}`,
+    "additional-listings",
+    observerRef,
     filtersSet,
     t("listings.additional.subtitle"),
     "doubleHouse"
@@ -433,8 +456,7 @@ export const sortListings = (
     upcoming,
     results,
     additional,
-    fcfsSalesOpen,
-    fcfsSalesNotYetOpen,
+    fcfs: [...fcfsSalesOpen, ...fcfsSalesNotYetOpen],
   } as ListingsGroups
 }
 

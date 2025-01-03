@@ -222,7 +222,6 @@ exports[`Listing Detail initializes Google Tag Manager for a sales listing 1`] =
         </nav>
       </header>
       <main
-        class="md:overflow-x-hidden"
         data-testid="main-content-test-id"
         id="main-content"
       >
@@ -5054,7 +5053,6 @@ exports[`Listing Detail renders a habitat listing 1`] = `
         </nav>
       </header>
       <main
-        class="md:overflow-x-hidden"
         data-testid="main-content-test-id"
         id="main-content"
       >
@@ -9886,7 +9884,6 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
         </nav>
       </header>
       <main
-        class="md:overflow-x-hidden"
         data-testid="main-content-test-id"
         id="main-content"
       >
@@ -14820,7 +14817,6 @@ exports[`Listing Detail renders an open rental listing 1`] = `
         </nav>
       </header>
       <main
-        class="md:overflow-x-hidden"
         data-testid="main-content-test-id"
         id="main-content"
       >

@@ -28,10 +28,9 @@ import {
   getRentSubText,
   showWaitlist,
   getAvailabilityString,
-  matchedTextBanner,
-  noMatchesTextBanner,
   eligibilityHeader,
 } from "../../modules/listings/DirectoryHelpers"
+import { PageHeaderWithRef } from "../../modules/listings/util/NavigationBarUtils"
 
 const getForRentSummaryTable = (listing: RailsRentalListing) => {
   const summary = listing.unitSummaries.general ?? listing.unitSummaries.reserved
@@ -63,32 +62,29 @@ const getForRentSummaryTable = (listing: RailsRentalListing) => {
 const getRentalHeader = (
   filters: EligibilityFilters,
   setFilters: Dispatch<SetStateAction<EligibilityFilters>>,
-  match: boolean
+  observerRef: React.MutableRefObject<null | IntersectionObserver>
 ) => {
-  return filters ? (
-    <>
-      {eligibilityHeader(
-        filters,
-        setFilters,
-        `${t("listings.eligibilityCalculator.rent.showingMatchingUnits")}`
+  return (
+    <PageHeaderWithRef observerRef={observerRef}>
+      {filters ? (
+        eligibilityHeader(
+          filters,
+          setFilters,
+          `${t("listings.eligibilityCalculator.rent.showingMatchingUnits")}`
+        )
+      ) : (
+        <PageHeader title={t("rentalDirectory.title")} subtitle={t("rentalDirectory.ifYouTellUs")}>
+          <p className="mt-4 md:mt-8 mb-2">
+            <LinkButton href={getEligibilityEstimatorLink()}>
+              {t("rentalDirectory.findMatchingListings")}
+            </LinkButton>
+          </p>
+          <a className="text-base text-primary-dark" href={getHelpCalculatingIncomeLink()}>
+            {t("rentalDirectory.orGetHelpCalculating")}
+          </a>
+        </PageHeader>
       )}
-      <hr />
-
-      {match
-        ? matchedTextBanner()
-        : noMatchesTextBanner(`${t("listings.eligibilityCalculator.rent.noMatchingUnits")}`)}
-    </>
-  ) : (
-    <PageHeader title={t("rentalDirectory.title")} subtitle={t("rentalDirectory.ifYouTellUs")}>
-      <p className="mt-4 md:mt-8 mb-2">
-        <LinkButton href={getEligibilityEstimatorLink()}>
-          {t("rentalDirectory.findMatchingListings")}
-        </LinkButton>
-      </p>
-      <a className="text-base text-primary-dark" href={getHelpCalculatingIncomeLink()}>
-        {t("rentalDirectory.orGetHelpCalculating")}
-      </a>
-    </PageHeader>
+    </PageHeaderWithRef>
   )
 }
 
