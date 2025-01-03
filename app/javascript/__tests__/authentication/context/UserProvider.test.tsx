@@ -45,9 +45,9 @@ const TestComponent = () => {
       ) : (
         <button
           onClick={() => {
-            // The function will be mocked, but Typescript doesn't know that
-            // eslint-disable-next-line @typescript-eslint/no-floating-promises
             signIn("test@example.com", "password")
+              .then(() => {})
+              .catch(() => {})
           }}
         >
           Sign In
