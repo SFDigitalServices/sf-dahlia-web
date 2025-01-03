@@ -26,6 +26,7 @@ export const fcfsNoLotteryRequired = () => {
           )}
           hideExternalLinkIcon={true}
           ariaLabel={t("listings.fcfs.bmrSales.noLotteryRequired.footer.aria")}
+          className="fcfs-no-lottery-link"
         >
           {t("listings.fcfs.bmrSales.noLotteryRequired.footer")}
         </Link>

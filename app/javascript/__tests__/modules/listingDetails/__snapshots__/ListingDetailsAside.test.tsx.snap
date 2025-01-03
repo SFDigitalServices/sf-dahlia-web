@@ -103,7 +103,7 @@ exports[`ListingDetailsAside renders ListingDetailsAside component fcfs 1`] = `
             >
               <a
                 aria-label="Learn more about how it works to apply"
-                class="seeds-link"
+                class="seeds-link fcfs-no-lottery-link"
                 href="https://www.sf.gov/step-by-step/buy-home-without-entering-lottery"
                 target="_blank"
               >
