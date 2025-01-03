@@ -554,6 +554,7 @@
   "forgotPassword.emailSent": "We sent you an email",
   "forgotPassword.emailSentDescription": "You'll receive an email with a link to reset your password.",
   "forgotPassword.emailSentTitle": "We've sent you an email.",
+  "forgotPassword.subtitle": "We will send you an email with a link to reset your password.",
   "forgotPassword.title": "Forgot password?",
   "g1Confirmation.browseMoreListings": "Browse more listings",
   "g1Confirmation.createAccountBody": "Creating an account will save your information for future applications, and you can check the status of this application anytime.",
