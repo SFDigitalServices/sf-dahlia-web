@@ -36,7 +36,7 @@ const ForgotPassword = () => {
           <p className="form-subtitle">{t("forgotPassword.subtitle")}</p>
         </div>
         {!emailSubmitted ? (
-          <div className="form-card__group pt-0 border-b">
+          <div className="form-card__group pt-0">
             <Form className="mt-10 relative" onSubmit={handleSubmit(onSubmit)}>
               <EmailFieldset register={register} errors={errors} />
               <div className="text-center mt-4">
