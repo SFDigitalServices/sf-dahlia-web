@@ -84,6 +84,12 @@ window.matchMedia = jest.fn().mockImplementation((query) => ({
 
 void loadTranslations(LanguagePrefix.English)
 
+process.env.GOOGLE_TAG_MANAGER_KEY = "GTM-123456"
+jest.mock("react-gtm-module", () => ({
+  initialize: jest.fn(),
+  dataLayer: jest.fn(),
+}))
+
 // FIXME: Re-enable when this issue is deployed
 // https://github.com/bloom-housing/bloom/issues/1378
 // // fail on console warnings. This allows us to catch missing

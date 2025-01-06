@@ -83,7 +83,7 @@ const ListingDetail = () => {
   const { pushToDataLayer } = useGTMDataLayer()
 
   useEffect(() => {
-    if (!!listing && !!process.env.GOOGLE_TAG_MANAGER_KEY) {
+    if (listing) {
       const tagManagerArgs = {
         listing_tenure: listing.Tenure,
         listing_status: listing.Status,
