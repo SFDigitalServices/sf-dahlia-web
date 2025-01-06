@@ -53,6 +53,35 @@ module Force
       end
     end
 
+    def listen_and_log_events
+      subscription = nil
+
+      EM.error_handler do |error|
+        logger('Error while listening for Salesforce Platform Events', error)
+      end
+
+      EM.add_shutdown_hook do
+        subscription&.unsubscribe
+        logger(
+          'Unsubscribed from Salesforce Platform Events due to EventMachine shutdown',
+        )
+      end
+
+      EM.run do
+        subscription = log_subscription_to_listing_updates
+        subscription.callback do
+          logger('Logging subscription to Salesforce Platform Events')
+        end
+        subscription.errback do |error|
+          logger('Error logging subscription to Salesforce Platform Events', error)
+        end
+
+        # cannot log in the trap block to improve observability,
+        #  but we can rely on logs in EM.add_shutdown_hook
+        Signal.trap('TERM') { EM.stop }
+      end
+    end
+
     private
 
     def setup_salesforce_client
@@ -85,6 +114,30 @@ module Force
         )
         event = parse_event(platform_event)
         translate_and_cache(event)
+      end
+    end
+
+    def log_subscription_to_listing_updates
+      @faye_client.subscribe('/data/Listing__ChangeEvent') do |platform_event|
+        logger(
+          "Logging New Salesforce event via '/data/Listing__ChangeEvent': " \
+          "#{platform_event.to_json}",
+        )
+        event = parse_event(platform_event)
+        text_to_translate = process_event_values(event.listing_id, event.updated_values)
+        GoogleTranslationService.google_translation_usage_logger(
+          'salesforce_event_subscriber',
+          text_to_translate.join.size,
+        )
+
+        # cache some placeholder data so that caching logic can execute and be analyzed
+        # we only need the actual listing_id and timestamp
+        @translation_service.cache_listing_translations(
+          event.listing_id,
+          %w[field_1 field_2],
+          [{ to: 'ES', translation: %w[text_1 text_2] }],
+          event.last_modified_date,
+        )
       end
     end
 
