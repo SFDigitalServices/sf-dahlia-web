@@ -13,7 +13,7 @@ import {
 import { Link, Heading } from "@bloom-housing/ui-seeds"
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form"
 
-import { getForgotPasswordPath, getMyAccountPath } from "../util/routeUtil"
+import { getForgotPasswordPath, getSignInRedirectUrl } from "../util/routeUtil"
 import EmailFieldset from "../pages/account/components/EmailFieldset"
 import PasswordFieldset from "../pages/account/components/PasswordFieldset"
 import "../pages/account/styles/account.scss"
@@ -24,6 +24,7 @@ import { SiteAlert } from "../components/SiteAlert"
 import { NewAccountNotConfirmedModal } from "./components/NewAccountNotConfirmedModal"
 import { ExpiredUnconfirmedModal } from "./components/ExpiredUnconfirmedModal"
 import { renderInlineMarkup } from "../util/languageUtil"
+import useRedirect from "../hooks/useRedirect"
 
 const getExpiredConfirmedEmail = () => {
   const urlParams = new URLSearchParams(window.location.search)
@@ -111,6 +112,8 @@ const SignInForm = () => {
 
   const { signIn } = useContext(UserContext)
 
+  const { redirect } = useRedirect()
+
   const handleRequestError = (error: AxiosError<{ error: string; email: string }>) => {
     if (error.response.data.error === "not_confirmed") {
       setNewAccountNotConfirmedModal(error.response.data.email)
@@ -130,7 +133,7 @@ const SignInForm = () => {
 
     signIn(email, password)
       .then(() => {
-        window.location.href = getMyAccountPath()
+        window.location.href = getSignInRedirectUrl(redirect)
         window.scrollTo(0, 0)
       })
       .catch((error: AxiosError<{ error: string; email: string }>) => {

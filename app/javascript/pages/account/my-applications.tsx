@@ -21,6 +21,7 @@ import "./styles/my-applications.scss"
 import { DoubleSubmittedModal } from "./components/DoubleSubmittedModal"
 import { AlreadySubmittedModal } from "./components/AlreadySubmittedModal"
 import { extractModalParamsFromUrl } from "./components/util"
+import useRedirect from "../../hooks/useRedirect"
 
 export const noApplications = () => {
   return (
@@ -146,6 +147,8 @@ const MyApplications = () => {
   const [openDoubleSubmittedModal, setOpenDoubleSubmittedModal] = useState<boolean>(false)
   const [deleteApp, setDeleteApp] = useState("")
 
+  const { handleRedirect } = useRedirect()
+
   const handleDeleteApp = (id: string) => {
     setDeleteApp(id)
     setOpenDeleteModal(true)
@@ -166,6 +169,13 @@ const MyApplications = () => {
       })
     setOpenDeleteModal(false)
   }
+
+  React.useEffect(() => {
+    if (!profile && !authLoading && initialStateLoaded) {
+      handleRedirect("applications")
+      window.location.href = getSignInPath()
+    }
+  })
 
   React.useEffect(() => {
     const { alreadySubmittedIdFromURL, doubleSubmitFromURL } = extractModalParamsFromUrl(
@@ -198,7 +208,6 @@ const MyApplications = () => {
   }, [authLoading, initialStateLoaded, profile])
 
   if (!profile && !authLoading && initialStateLoaded) {
-    window.location.href = getSignInPath()
     return null
   }
 
