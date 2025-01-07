@@ -501,7 +501,6 @@ exports[`For Rent renders ForRent component 1`] = `
                   >
                     <h2
                       class="listings-group__title"
-                      id="Upcoming Lotteries"
                     >
                       Upcoming Lotteries
                     </h2>
@@ -566,7 +565,6 @@ exports[`For Rent renders ForRent component 1`] = `
                   >
                     <h2
                       class="listings-group__title"
-                      id="Lottery Results"
                     >
                       Lottery Results
                     </h2>
