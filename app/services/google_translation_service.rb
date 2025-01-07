@@ -57,10 +57,10 @@ class GoogleTranslationService
     Rails.logger.info("#{msg}: #{msg_hash}")
   end
 
-  def self.google_translation_usage_logger(message, char_count)
+  def self.google_translation_usage_logger(trigger, char_count)
     # comma separation to process logs more easily in the absence of structured logging
     Rails.logger.info(
-      "log_google_translate_usage, #{message}, #{Time.now.to_i}, #{char_count}",
+      "log_google_translate_usage, #{trigger}, #{Time.now.to_i}, #{char_count}",
     )
   end
 

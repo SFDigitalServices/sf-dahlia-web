@@ -40,6 +40,8 @@ module Force
       results = Request.new(parse_response: true).cached_get(endpoint, nil, force)
       listing = process_listing_images(results)
 
+      listing['translations'] = log_listing_translations(listing)
+
       if Rails.configuration.unleash.is_enabled? 'GoogleCloudTranslate'
         listing['translations'] = get_listing_translations(listing) || {}
       end
@@ -76,6 +78,24 @@ module Force
           "Listing is outdated for #{listing_id}, " \
           'refreshing the cached listing',
         )
+        refresh_listing_cache(listing_id)
+      end
+      listing_translations
+    end
+
+    def self.log_listing_translations(listing)
+      listing_id = listing['Id']
+      listing_translations = fetch_listing_translations_from_cache(listing_id)
+
+      # we can only do the timestamp check since we are not actually translating anything
+      # this is okay because the bulk of translations are triggered by the timestamp check
+      if translations_are_outdated?(listing_translations[:LastModifiedDate],
+                                    listing['LastModifiedDate'])
+        return CacheService.new.log_process_translations(listing)
+      end
+
+      if listing_is_outdated?(listing_translations[:LastModifiedDate],
+                              listing['LastModifiedDate'])
         refresh_listing_cache(listing_id)
       end
       listing_translations
