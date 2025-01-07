@@ -40,28 +40,33 @@ export const EmptyListingsView = ({
       }
       <Heading size="xl">{t(`listingDirectory.emptyListingsView.title.${section}`)}</Heading>
       <div className="empty-listings-view_content">
-        <div>
-          {typeof icon === "string" ? (
-            <Icon className="empty-state-icon" size="medium" symbol={icon as UniversalIconType} />
-          ) : (
-            <span className="empty-state-icon ui-icon ui-medium">{icon}</span>
+        {listingsCount > 0 &&
+          (section === DIRECTORY_SECTION_OPEN_LOTTERIES ||
+            section === DIRECTORY_SECTION_FCFS_LISTINGS) && (
+            <div>
+              {typeof icon === "string" ? (
+                <Icon
+                  className="empty-state-icon"
+                  size="medium"
+                  symbol={icon as UniversalIconType}
+                />
+              ) : (
+                <span className="empty-state-icon ui-icon ui-medium">{icon}</span>
+              )}
+              {renderInlineMarkup(
+                // listingsCount only used for DIRECTORY_SECTION_OPEN_LOTTERIES and DIRECTORY_SECTION_FCFS_LISTINGS section
+                // DIRECTORY_SECTION_OPEN_LOTTERIES: listingDirectory.emptyListingsView.open
+                // DIRECTORY_SECTION_FCFS_LISTINGS: listingDirectory.emptyListingsView.fcfs
+                t(`listingDirectory.emptyListingsView.${section}`, {
+                  numListings: listingsCount,
+                  target:
+                    section === DIRECTORY_SECTION_OPEN_LOTTERIES
+                      ? `#${DIRECTORY_SECTION_INFO[DIRECTORY_SECTION_FCFS_LISTINGS].ref}`
+                      : `#${DIRECTORY_SECTION_INFO[DIRECTORY_SECTION_OPEN_LOTTERIES].ref}`,
+                })
+              )}
+            </div>
           )}
-          {listingsCount > 0 &&
-            (section === DIRECTORY_SECTION_OPEN_LOTTERIES ||
-              section === DIRECTORY_SECTION_FCFS_LISTINGS) &&
-            renderInlineMarkup(
-              // listingsCount only used for DIRECTORY_SECTION_OPEN_LOTTERIES and DIRECTORY_SECTION_FCFS_LISTINGS section
-              // DIRECTORY_SECTION_OPEN_LOTTERIES: listingDirectory.emptyListingsView.open
-              // DIRECTORY_SECTION_FCFS_LISTINGS: listingDirectory.emptyListingsView.fcfs
-              t(`listingDirectory.emptyListingsView.${section}`, {
-                numListings: listingsCount,
-                target:
-                  section === DIRECTORY_SECTION_OPEN_LOTTERIES
-                    ? `#${DIRECTORY_SECTION_INFO[DIRECTORY_SECTION_FCFS_LISTINGS].ref}`
-                    : `#${DIRECTORY_SECTION_INFO[DIRECTORY_SECTION_OPEN_LOTTERIES].ref}`,
-              })
-            )}
-        </div>
         <div>
           <Icon className="empty-state-icon" size="medium" symbol="envelope" />
           {renderInlineMarkup(

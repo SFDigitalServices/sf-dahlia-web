@@ -327,24 +327,27 @@ export const getListingGroup = (
   subtitle?: string,
   icon?: IconTypes
 ) => {
+  const showListingsGroup = section !== DIRECTORY_SECTION_ADDITIONAL_LISTINGS || listings.length > 0
   return (
     // TODO: https://sfgovdt.jira.com/browse/DAH-3109 will update Bloom-UIC to accept the refKey and observerRef
-    <ListingsGroup
-      listingsCount={listings.length}
-      header={header}
-      hideButtonText={hide}
-      showButtonText={show}
-      info={subtitle}
-      icon={icon}
-      // refKey={refKey}
-      // observerRef={observerRef}
-    >
-      {listings.length > 0
-        ? getListingCards(listings, directoryType, stackedDataFxn, hasFiltersSet)
-        : section !== DIRECTORY_SECTION_ADDITIONAL_LISTINGS && (
-            <EmptyListingsView section={section} />
-          )}
-    </ListingsGroup>
+    showListingsGroup && (
+      <ListingsGroup
+        listingsCount={listings.length}
+        header={header}
+        hideButtonText={hide}
+        showButtonText={show}
+        info={subtitle}
+        icon={icon}
+        // refKey={refKey}
+        // observerRef={observerRef}
+      >
+        {listings.length > 0
+          ? getListingCards(listings, directoryType, stackedDataFxn, hasFiltersSet)
+          : section !== DIRECTORY_SECTION_ADDITIONAL_LISTINGS && (
+              <EmptyListingsView section={section} />
+            )}
+      </ListingsGroup>
+    )
   )
 }
 
