@@ -1,3 +1,7 @@
+html {
+  scroll-behavior: smooth;
+}
+
 .directory-page-navigation-bar__container {
   position: sticky;
   top: 0;
@@ -40,6 +44,7 @@
     min-width: max-content;
     margin: var(--seeds-s3) var(--seeds-s2);
     padding: var(--seeds-s4) var(--seeds-s6);
+    font-weight: var(--seeds-font-weight-regular);
 
     background: var(--seeds-bg-color-surface);
     color: var(--seeds-text-color-light);
