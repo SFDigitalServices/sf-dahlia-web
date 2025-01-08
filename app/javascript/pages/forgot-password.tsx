@@ -33,14 +33,15 @@ const ForgotPassword = () => {
         <div className="form-card__lead text-center border-b mx-0">
           <Icon size="2xl" symbol="profile" />
           <h2 className="form-card__title">{t("pageTitle.forgotPasswordLowercase")}</h2>
+          <p className="form-subtitle">{t("forgotPassword.subtitle")}</p>
         </div>
         {!emailSubmitted ? (
-          <div className="form-card__group pt-0 border-b">
+          <div className="form-card__group pt-0">
             <Form className="mt-10 relative" onSubmit={handleSubmit(onSubmit)}>
               <EmailFieldset register={register} errors={errors} />
               <div className="text-center mt-4">
                 <Button styleType={AppearanceStyleType.primary} type="submit">
-                  {t("pageTitle.signIn")}
+                  {t("label.sendEmail")}
                 </Button>
               </div>
               <div className="text-center mt-4">
