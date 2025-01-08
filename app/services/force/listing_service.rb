@@ -40,7 +40,9 @@ module Force
       results = Request.new(parse_response: true).cached_get(endpoint, nil, force)
       listing = process_listing_images(results)
 
-      listing['translations'] = log_listing_translations(listing, opts[:rake_task])
+      if Rails.configuration.unleash.is_enabled? 'LogGoogleCloudTranslateUsage'
+        listing['translations'] = log_listing_translations(listing, opts[:rake_task])
+      end
 
       if Rails.configuration.unleash.is_enabled? 'GoogleCloudTranslate'
         listing['translations'] = get_listing_translations(listing) || {}

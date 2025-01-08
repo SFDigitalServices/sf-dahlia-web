@@ -46,8 +46,11 @@ namespace :translate do # rubocop:disable Metrics/BlockLength
 
   task subscribe: :environment do
     subscriber = Force::EventSubscriberTranslateService.new
-    # TODO: re-enable after we have logged enough data
-    # subscriber.listen_and_process_events
+    subscriber.listen_and_process_events
+  end
+
+  task log_usage: :environment do
+    subscriber = Force::EventSubscriberTranslateService.new
     subscriber.listen_and_log_events
   end
 end
