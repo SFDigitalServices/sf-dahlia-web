@@ -283,6 +283,8 @@ ShortFormNavigationService = (
     listing = ShortFormApplicationService.listing
     if listing && ListingIdentityService.isRental(listing)
       sections.shift()
+    if listing && ShortFormApplicationService.listingIsDALP()
+      sections.splice(4, 1)
     sections
 
   Service.submitOptionsForCurrentPage = ->
