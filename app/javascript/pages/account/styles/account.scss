@@ -18,6 +18,11 @@
   line-height: 24px;
 }
 
+.form-subtitle {
+  color: var(--seeds-color-gray-700);
+  padding-top: var(--seeds-spacer-header);
+}
+
 // password section
 
 .bullet::marker {
