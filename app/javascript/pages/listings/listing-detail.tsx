@@ -178,9 +178,11 @@ const ListingDetail = () => {
               </Mobile>
             )}
             {isFcfsSalesListing(listing) && <Mobile>{fcfsNoLotteryRequired()}</Mobile>}
-            <Mobile>
-              <ListingDetailsApply listing={listing} />
-            </Mobile>
+            {listing.Accepting_Online_Applications && (
+              <Mobile>
+                <ListingDetailsApply listing={listing} />
+              </Mobile>
+            )}
             {isApplicationOpen && (
               <Mobile>
                 <div className="border-b border-t m-0">
