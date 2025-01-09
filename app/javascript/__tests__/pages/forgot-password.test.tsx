@@ -30,4 +30,50 @@ describe("<ForgotPassword />", () => {
       )
     ).not.toBeNull()
   })
+
+  it("should extract the email parameter from the URL", async () => {
+    const customLocation = {
+      ...window.location,
+      search: "?email=test@test.com",
+      href: "http://dahlia.com",
+      assign: jest.fn(),
+      replace: jest.fn(),
+      reload: jest.fn(),
+      toString: jest.fn(),
+    }
+
+    Object.defineProperty(window, "location", {
+      configurable: true,
+      enumerable: true,
+      writable: true,
+      value: customLocation,
+    })
+    await renderAndLoadAsync(<ForgotPassword assetPaths={{}} />)
+
+    const emailInput = screen.getByLabelText(/email/i)
+    expect(emailInput).toHaveValue("test@test.com")
+  })
+
+  it("should handle the absence of the email parameter", async () => {
+    const customLocation = {
+      ...window.location,
+      search: "",
+      href: "http://dahlia.com",
+      assign: jest.fn(),
+      replace: jest.fn(),
+      reload: jest.fn(),
+      toString: jest.fn(),
+    }
+
+    Object.defineProperty(window, "location", {
+      configurable: true,
+      enumerable: true,
+      writable: true,
+      value: customLocation,
+    })
+    await renderAndLoadAsync(<ForgotPassword assetPaths={{}} />)
+
+    const emailInput = screen.getByLabelText(/email/i)
+    expect(emailInput).toHaveValue("")
+  })
 })

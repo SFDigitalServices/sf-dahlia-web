@@ -215,6 +215,7 @@ const PasswordSection = ({ user, setUser }: SectionProps) => {
           register={register}
           errors={errors}
           watch={watch}
+          email={user?.email}
           labelText={t("label.password")}
           passwordType="accountSettings"
         />
