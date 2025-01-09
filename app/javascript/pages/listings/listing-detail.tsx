@@ -86,11 +86,11 @@ const ListingDetail = () => {
     if (listing) {
       const tagManagerArgs = {
         listing_tenure: listing.Tenure,
-        listing_status: listing.Status,
+        listing_status: listing?.Status,
         listing_name: listing.Name,
-        listing_record_type: listing.RecordType?.Name,
-        listing_num_preferences: listing.Listing_Lottery_Preferences.length,
-        listing_custom_type: listing.Custom_Listing_Type,
+        listing_record_type: listing?.RecordType?.Name,
+        listing_num_preferences: listing?.Listing_Lottery_Preferences?.length,
+        listing_custom_type: listing?.Custom_Listing_Type,
         listing_id: listing.Id,
       }
       pushToDataLayer("view_listing", tagManagerArgs)
