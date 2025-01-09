@@ -126,6 +126,7 @@ module Force
         event = parse_event(platform_event)
         text_to_translate = process_event_values(event.listing_id, event.updated_values)
         GoogleTranslationService.google_translation_usage_logger(
+          event.listing_id,
           'salesforce_event_subscriber',
           text_to_translate.join.size,
         )

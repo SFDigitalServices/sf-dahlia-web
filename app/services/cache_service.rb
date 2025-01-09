@@ -52,6 +52,7 @@ class CacheService
   def log_process_translations(listing, trigger)
     strings_to_translate = build_strings_to_translate(listing)
     GoogleTranslationService.google_translation_usage_logger(
+      listing['Id'],
       trigger,
       strings_to_translate.values.join.size,
     )
