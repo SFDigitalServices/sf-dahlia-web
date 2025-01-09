@@ -171,13 +171,12 @@ class CacheService
     listing_images_equal?(prev_cached_listing_images, fresh_listing_images)
   end
 
-  # TODO: remove `rake_task` arguments after we are done logging Google Translate usage
   def cache_single_listing(listing, rake_task: nil)
     Rails.logger.info("Calling cache_single_listing for #{listing['Id']}")
 
     id = listing['Id']
     # cache this listing from API
-    Force::ListingService.listing(id, force: true, rake_task: rake_task)
+    Force::ListingService.listing(id, force: true, rake_task:)
     units = Force::ListingService.units(id, force: true)
     AmiCacheService.new.cache_ami_chart_data(units)
     Force::ListingService.preferences(id, force: true)

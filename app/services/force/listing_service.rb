@@ -40,14 +40,27 @@ module Force
       results = Request.new(parse_response: true).cached_get(endpoint, nil, force)
       listing = process_listing_images(results)
 
-      if Rails.configuration.unleash.is_enabled? 'LogGoogleCloudTranslateUsage'
-        listing['translations'] = log_listing_translations(listing, opts[:rake_task])
-      end
+      translation_usage_by_trigger(listing, opts[:rake_task])
 
       if Rails.configuration.unleash.is_enabled? 'GoogleCloudTranslate'
         listing['translations'] = get_listing_translations(listing) || {}
       end
       listing
+    end
+
+    def self.translation_usage_by_trigger(listing, rake_task = nil)
+      # only one of these feature flags should be turned on at a time
+      if Rails.configuration.unleash.is_enabled? 'LogGoogleCloudTranslateUsageForPageView'
+        listing['translations'] = log_listing_translations(listing, 'page_view')
+      elsif Rails.configuration.unleash.is_enabled?(
+        'LogGoogleCloudTranslateUsageForPrefetch10Min',
+      ) && rake_task == 'prefetch_10min'
+        listing['translations'] = log_listing_translations(listing, 'prefetch_10min')
+      elsif Rails.configuration.unleash.is_enabled?(
+        'LogGoogleCloudTranslateUsageForPrefetchDaily',
+      ) && rake_task == 'prefetch_daily'
+        listing['translations'] = log_listing_translations(listing, 'prefetch_daily')
+      end
     end
 
     def self.process_listing_images(results)
@@ -85,23 +98,16 @@ module Force
       listing_translations
     end
 
-    def self.log_listing_translations(listing, rake_task)
+    def self.log_listing_translations(listing, trigger)
       listing_id = listing['Id']
       listing_translations = fetch_listing_translations_from_cache(listing_id)
       translations_last_modified = listing_translations[:LastModifiedDate]
-
-      # additional timestamps to log potential usage of translating during prefetch rake tasks
-      if rake_task == 'prefetch_10min'
-        translations_last_modified = listing_translations[:LastModifiedDateForPrefetch10Min]
-      elsif rake_task == 'prefetch_daily'
-        translations_last_modified = listing_translations[:LastModifiedDateForPrefetchDaily]
-      end
 
       # we can only do the timestamp check since we are not actually translating anything
       # this is okay because the bulk of translations are triggered by the timestamp check
       if translations_are_outdated?(translations_last_modified,
                                     listing['LastModifiedDate'])
-        return CacheService.new.log_process_translations(listing, rake_task || 'page_view')
+        return CacheService.new.log_process_translations(listing, trigger)
       end
 
       if listing_is_outdated?(translations_last_modified,

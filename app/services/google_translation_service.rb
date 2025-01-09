@@ -82,16 +82,6 @@ class GoogleTranslationService
     # uses the values from that object and the api returns 1 for each key
     return_value = { LastModifiedDate: last_modified }
 
-    # additional timestamps to log potential usage of
-    #  translating during prefetch rake tasks
-    if Rails.configuration.unleash.is_enabled? 'LogGoogleCloudTranslateUsage'
-      return_value = {
-        **return_value,
-        LastModifiedDateForPrefetch10Min: last_modified,
-        LastModifiedDateForPrefetchDaily: last_modified,
-      }
-    end
-
     translations.each do |target|
       target[:translation].each_with_index do |value, i|
         field = keys[i].to_sym
