@@ -11,6 +11,7 @@ import { ConfigProvider } from "../lib/ConfigContext"
 import NavigationProvider from "../navigation/NavigationProvider"
 import ErrorBoundary, { BoundaryScope } from "../components/ErrorBoundary"
 import "@bloom-housing/ui-seeds/src/global/app-css.scss"
+import { useGTMInitializer } from "../hooks/analytics/useInitializeGTM"
 
 interface ObjectWithAssets {
   assetPaths: unknown
@@ -31,6 +32,8 @@ const withAppSetup =
     if (process.env.NODE_ENV !== "production") {
       void axe(React, ReactDOM, 1000)
     }
+
+    useGTMInitializer(process.env.GOOGLE_TAG_MANAGER_KEY)
 
     return (
       <FlagProvider config={config}>

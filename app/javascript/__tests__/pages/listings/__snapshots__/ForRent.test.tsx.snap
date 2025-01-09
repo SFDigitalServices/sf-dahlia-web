@@ -397,6 +397,42 @@ exports[`For Rent renders ForRent component 1`] = `
               </div>
             </div>
             <div
+              class="empty-listings-view"
+            >
+              <h1
+                class="text-heading-xl"
+              >
+                0 open lotteries
+              </h1>
+              <div
+                class="empty-listings-view_content"
+              >
+                <div>
+                  <span
+                    class="ui-icon ui-medium empty-state-icon"
+                  >
+                    <svg
+                      fill="currentColor"
+                      viewBox="0 0 51 39"
+                    >
+                      <path
+                        d="M44.6431 0.564941H7.14307C3.69092 0.564941 0.893066 3.36279 0.893066 6.81494V31.8149C0.893066 35.2671 3.69092 38.0649 7.14307 38.0649H44.6431C48.0952 38.0649 50.8931 35.2671 50.8931 31.8149V6.81494C50.8931 3.36279 48.0903 0.564941 44.6431 0.564941ZM7.14307 3.68994H44.6431C46.3657 3.68994 47.7681 5.09229 47.7681 6.81494V10.3315L28.7056 24.6284C27.0454 25.8706 24.7378 25.8706 23.0776 24.6284L4.01807 10.3306V6.81494C4.01807 5.09619 5.42041 3.68994 7.14307 3.68994ZM47.7681 31.8149C47.7681 33.5376 46.3657 34.9399 44.6431 34.9399H7.14307C5.42041 34.9399 4.01807 33.5376 4.01807 31.8149V14.1489L21.2056 27.1274C22.5845 28.1636 24.2388 28.6919 25.8931 28.6919C27.5474 28.6919 29.2036 28.1626 30.5806 27.1274L47.7681 14.1489V31.8149Z"
+                      />
+                    </svg>
+                  </span>
+                  <span>
+                    <a
+                      href="https://confirmsubscription.com/h/y/C3BAFCD742D47910"
+                      target="_blank"
+                    >
+                      Get an email
+                    </a>
+                     whenever a new listing is posted
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div
               class="bg-primary-darker"
             >
               <div
@@ -429,6 +465,125 @@ exports[`For Rent renders ForRent component 1`] = `
                       View opportunities
                     </a>
                   </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="listings-group"
+            >
+              <div
+                class="listings-group__header"
+              >
+                <div
+                  class="listings-group__content"
+                >
+                  <div
+                    class="listings-group__icon"
+                  >
+                    <span
+                      class="ui-icon ui-xlarge"
+                    >
+                      <svg
+                        fill="currentColor"
+                        viewBox="0 0 32 32"
+                      >
+                        <path
+                          d="M23.258 15.994h-7.251v-11.266c0-0.368-0.299-0.667-0.667-0.667s-0.667 0.299-0.667 0.667v11.931c0 0.368 0.299 0.667 0.667 0.667h7.917c0.368 0 0.667-0.299 0.667-0.667s-0.298-0.667-0.667-0.667z"
+                        />
+                        <path
+                          d="M16 0.333c-8.64 0-15.669 7.029-15.669 15.669s7.029 15.669 15.669 15.669c8.64 0 15.669-7.027 15.669-15.667s-7.029-15.67-15.669-15.67zM16 30.338c-7.906 0-14.336-6.43-14.336-14.334s6.43-14.338 14.336-14.338 14.336 6.43 14.336 14.336c0 7.904-6.43 14.336-14.336 14.336z"
+                        />
+                      </svg>
+                    </span>
+                  </div>
+                  <div
+                    class="listings-group__header-group"
+                  >
+                    <h2
+                      class="listings-group__title"
+                    >
+                      Upcoming Lotteries
+                    </h2>
+                    <div
+                      class="listings-group__info"
+                    >
+                      The application deadline has passed on the following listings, and you can still get information on the lottery date and time.
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="listings-group__button"
+                >
+                  <button
+                    class="button w-full"
+                    tabindex="0"
+                  >
+                    Show Upcoming Lotteries (0)
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div
+              class="listings-group"
+            >
+              <div
+                class="listings-group__header"
+              >
+                <div
+                  class="listings-group__content"
+                >
+                  <div
+                    class="listings-group__icon"
+                  >
+                    <span
+                      class="ui-icon ui-xlarge"
+                    >
+                      <svg
+                        fill="currentColor"
+                        viewBox="0 0 32 32"
+                      >
+                        <path
+                          d="M22.754 22.68h-13.387c-0.368 0-0.667 0.299-0.667 0.667s0.299 0.667 0.667 0.667h13.389c0.368 0 0.667-0.299 0.667-0.667s-0.299-0.667-0.667-0.667z"
+                        />
+                        <path
+                          d="M22.754 18.68h-13.387c-0.368 0-0.667 0.299-0.667 0.667s0.299 0.667 0.667 0.667h13.389c0.368 0 0.667-0.299 0.667-0.667s-0.299-0.667-0.667-0.667z"
+                        />
+                        <path
+                          d="M22.754 14.68h-13.387c-0.368 0-0.667 0.299-0.667 0.667s0.299 0.667 0.667 0.667h13.389c0.368 0 0.667-0.299 0.667-0.667s-0.299-0.667-0.667-0.667z"
+                        />
+                        <path
+                          d="M9.365 12.013h7.438c0.368 0 0.667-0.299 0.667-0.667s-0.299-0.667-0.667-0.667h-7.438c-0.368 0-0.667 0.299-0.667 0.667s0.299 0.667 0.667 0.667z"
+                        />
+                        <path
+                          d="M27.526 4.877l-4.416-4.358c-0.216-0.213-0.514-0.506-1.072-0.506h-16.285c-0.947 0-1.717 0.781-1.717 1.741v26.014c0 0.205 0.098 0.387 0.246 0.51l3.142 3.36c0.126 0.134 0.302 0.211 0.486 0.211s0.362-0.077 0.486-0.211l3.506-3.747 3.629 3.875c0.251 0.269 0.722 0.269 0.973 0l3.629-3.875 3.629 3.875c0.126 0.134 0.301 0.21 0.483 0.211 0.002 0 0.002 0 0.003 0 0.182 0 0.357-0.075 0.483-0.206l3.117-3.27c0.117-0.123 0.184-0.29 0.184-0.459v-22.029c0.002-0.562-0.274-0.902-0.509-1.138zM26.102 5.347h-3.398v-3.355l3.398 3.355zM24.259 30.341l-3.634-3.88c-0.126-0.134-0.302-0.211-0.486-0.211s-0.362 0.077-0.486 0.211l-3.629 3.875-3.629-3.875c-0.251-0.269-0.722-0.269-0.973 0l-3.506 3.747-2.544-2.718v-25.736c0-0.221 0.174-0.408 0.382-0.408l15.616-0.010v4.677c0 0.368 0.299 0.667 0.667 0.667h4.667v21.094l-2.445 2.566z"
+                        />
+                      </svg>
+                    </span>
+                  </div>
+                  <div
+                    class="listings-group__header-group"
+                  >
+                    <h2
+                      class="listings-group__title"
+                    >
+                      Lottery Results
+                    </h2>
+                    <div
+                      class="listings-group__info"
+                    >
+                      You can now check lottery results on the remaining listings.
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="listings-group__button"
+                >
+                  <button
+                    class="button w-full"
+                    tabindex="0"
+                  >
+                    Show Lottery Results (0)
+                  </button>
                 </div>
               </div>
             </div>

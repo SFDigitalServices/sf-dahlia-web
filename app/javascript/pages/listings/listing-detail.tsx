@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from "react"
-import TagManager from "react-gtm-module"
 
 import {
   ListingDetails,
@@ -52,6 +51,7 @@ import { MobileListingDetailsProcess } from "../../modules/listingDetailsAside/M
 import { fcfsNoLotteryRequired } from "../../modules/noLotteryRequired/fcfsNoLotteryRequired"
 import { NeedHelpBlock } from "../../modules/listingDetailsAside/ListingDetailsNeedHelp"
 import { ListingState } from "../../modules/listings/ListingState"
+import { useGTMDataLayer } from "../../hooks/analytics/useGTMDataLayer"
 
 const ListingDetail = () => {
   const { flagsReady, unleashFlag: isCloudTranslationEnabled } = useFeatureFlag(
@@ -80,18 +80,22 @@ const ListingDetail = () => {
     fetchingAmiCharts,
   } = useContext(ListingDetailsContext)
 
+  const { pushToDataLayer } = useGTMDataLayer()
+
   useEffect(() => {
-    if (!!listing && !!process.env.GOOGLE_TAG_MANAGER_KEY) {
+    if (listing) {
       const tagManagerArgs = {
-        gtmId: process.env.GOOGLE_TAG_MANAGER_KEY,
-        dataLayer: {
-          event: "view_listing",
-          listingType: isRental(listing) ? "rental" : "sale",
-        },
+        listing_tenure: listing.Tenure,
+        listing_status: listing.Status,
+        listing_name: listing.Name,
+        listing_record_type: listing.RecordType?.Name,
+        listing_num_preferences: listing.Listing_Lottery_Preferences.length,
+        listing_custom_type: listing.Custom_Listing_Type,
+        listing_id: listing.Id,
       }
-      TagManager.initialize(tagManagerArgs)
+      pushToDataLayer("view_listing", tagManagerArgs)
     }
-  }, [listing])
+  }, [listing, pushToDataLayer])
 
   useEffect(() => {
     if (listing?.listingID && !fetchedUnits && !fetchingUnits) {
@@ -174,9 +178,11 @@ const ListingDetail = () => {
               </Mobile>
             )}
             {isFcfsSalesListing(listing) && <Mobile>{fcfsNoLotteryRequired()}</Mobile>}
-            <Mobile>
-              <ListingDetailsApply listing={listing} />
-            </Mobile>
+            {listing.Accepting_Online_Applications && (
+              <Mobile>
+                <ListingDetailsApply listing={listing} />
+              </Mobile>
+            )}
             {isApplicationOpen && (
               <Mobile>
                 <div className="border-b border-t m-0">
