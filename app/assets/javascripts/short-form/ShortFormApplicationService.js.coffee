@@ -202,7 +202,7 @@ ShortFormApplicationService = (
         # make sure all validatedForms in previous section == true
         _.every(validated['Income'], (i) -> i)
       when 'Review'
-        if (Service.listingIsDALP())
+        if (Service.listingIsDalp())
           Service.userCanAccessSection('Income') &&
           completed.Income &&
           # make sure all validatedForms in previous section == true
@@ -1158,7 +1158,7 @@ ShortFormApplicationService = (
       ListingDataService.listing.Custom_Listing_Type
     )
 
-  Service.listingIsDALP = ->
+  Service.listingIsDalp = ->
     ListingDataService.listing.Custom_Listing_Type == 'Downpayment Assistance Loan Program'
 
   Service.listingHasHomeAndCommunityBasedServicesUnits = (listing) ->
