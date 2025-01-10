@@ -941,8 +941,10 @@ ShortFormApplicationService = (
     #  Similar logic needs to be added to the `resetAndStartNewApp` function
     formattedApp.customEducatorScreeningAnswer ?= Service.application.customEducatorScreeningAnswer
     formattedApp.customEducatorJobClassificationNumber ?= Service.application.customEducatorJobClassificationNumber
-    formattedApp.dalp_educator ?= Service.application.dalp_educator
-    formattedApp.dalp_first_responder ?= Service.application.dalp_first_responder
+    if (Service.application.dalp_first_responder != null)
+      formattedApp.dalp_first_responder = Service.application.dalp_first_responder
+    if (Service.application.dalp_educator != null)
+      formattedApp.dalp_educator = Service.application.dalp_educator
     formattedApp.answeredDalpScreening ?= Service.application.answeredDalpScreening
 
     # this will setup Service.application with the loaded data
