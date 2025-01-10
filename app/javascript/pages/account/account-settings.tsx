@@ -6,7 +6,6 @@ import UserContext from "../../authentication/context/UserContext"
 import { Form, DOBFieldValues, t } from "@bloom-housing/ui-components"
 import { DeepMap, FieldError, useForm } from "react-hook-form"
 import { Card, Alert } from "@bloom-housing/ui-seeds"
-import { getSignInPath } from "../../util/routeUtil"
 import { User } from "../../authentication/user"
 import Layout from "../../layouts/Layout"
 import EmailFieldset, {
@@ -41,6 +40,8 @@ import { FormHeader, FormSection, getDobStringFromDobObject } from "../../util/a
 import { AxiosError } from "axios"
 import { ErrorSummaryBanner } from "./components/ErrorSummaryBanner"
 import { ExpandedAccountAxiosError, getErrorMessage } from "./components/util"
+import useRedirect from "../../hooks/useRedirect"
+import { getSignInPath } from "../../util/routeUtil"
 
 const Banner = ({
   showBanner,
@@ -454,9 +455,10 @@ const AccountSettings = ({ profile }: { profile: User }) => {
 
 const AccountSettingsPage = () => {
   const { profile, loading, initialStateLoaded } = React.useContext(UserContext)
+  const { handleRedirect } = useRedirect()
 
   if (!profile && !loading && initialStateLoaded) {
-    // TODO: Redirect to React sign in page and show a message that user needs to sign in
+    handleRedirect("settings")
     window.location.href = getSignInPath()
     return null
   }

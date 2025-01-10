@@ -10,6 +10,7 @@ import {
   getSignInPath,
 } from "../../util/routeUtil"
 import { renderInlineMarkup } from "../../util/languageUtil"
+import useRedirect from "../../hooks/useRedirect"
 
 interface MyAccountProps {
   assetPaths: unknown
@@ -60,9 +61,10 @@ const AccountDashCard = ({
 
 const MyAccount = (_props: MyAccountProps) => {
   const { profile, loading, initialStateLoaded } = React.useContext(UserContext)
+  const { handleRedirect } = useRedirect()
 
   if (!profile && !loading && initialStateLoaded) {
-    // TODO: Redirect to React sign in page and show a message that user needs to sign in
+    handleRedirect("account")
     window.location.href = getSignInPath()
     return null
   }
