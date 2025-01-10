@@ -549,6 +549,10 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
           prefKey = 'assistedHousing'
         else if shortFormPref.individualPreference == 'Rent Burdened'
           prefKey = 'rentBurden'
+      else if listingPref.preferenceName == ListingDataService.preferenceMap.dalpEducator
+          data.dalp_educator = !!shortFormPref.appMemberID
+      else if listingPref.preferenceName == ListingDataService.preferenceMap.dalpFirstResponder
+          data.dalp_first_responder = !!shortFormPref.appMemberID
       else
         prefKey = _.invert(ListingDataService.preferenceMap)[listingPref.preferenceName]
         unless prefKey
