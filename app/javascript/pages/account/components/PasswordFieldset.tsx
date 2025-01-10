@@ -16,7 +16,7 @@ const PASSWORD_VALIDATION_ERRORS = new Set([
 
 export interface PasswordFieldsetProps {
   register: UseFormMethods["register"]
-  errors: UseFormMethods["errors"]
+  errors?: UseFormMethods["errors"]
   watch: UseFormMethods["watch"]
   passwordType: "signIn" | "createAccount" | "accountSettings" | "resetPassword"
   labelText: string
@@ -173,7 +173,7 @@ const PasswordFieldset = ({
   const [passwordValidationContent, setPasswordValidationContent] = React.useState("")
   const newPassword: string = watch("password", "")
 
-  const hasError = errors.currentPassword || errors.password
+  const hasError = errors?.currentPassword || errors?.password
 
   React.useEffect(() => {
     setPasswordValidationContent(newPassword)
@@ -187,11 +187,11 @@ const PasswordFieldset = ({
           <PasswordField
             name="currentPassword"
             label={t("label.currentPassword")}
-            error={errors.currentPassword}
+            error={errors?.currentPassword}
             errorMessage={
-              errors.currentPassword?.message &&
+              errors?.currentPassword?.message &&
               getErrorMessage(
-                errors.currentPassword?.message as string,
+                errors?.currentPassword?.message as string,
                 passwordFieldsetErrors,
                 false
               )
@@ -212,7 +212,7 @@ const PasswordFieldset = ({
         <NewPasswordInstructions passwordValidationContent={passwordValidationContent} />
       )}
       <PasswordField
-        describedBy={errors.password?.message ? undefined : "newPasswordInstructions"} // undefined will force the input to be described by the error message
+        describedBy={errors?.password?.message ? undefined : "newPasswordInstructions"} // undefined will force the input to be described by the error message
         name="password"
         label="password"
         labelClassName="sr-only"
@@ -224,10 +224,10 @@ const PasswordFieldset = ({
         passwordVisibilityDefault={
           passwordType === "createAccount" || passwordType === "accountSettings"
         }
-        error={errors.password}
+        error={errors?.password}
         errorMessage={
-          errors.password?.message &&
-          getErrorMessage(errors.password?.message as string, passwordFieldsetErrors, false)
+          errors?.password?.message &&
+          getErrorMessage(errors?.password?.message as string, passwordFieldsetErrors, false)
         }
         register={register}
       />
