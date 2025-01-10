@@ -34,6 +34,8 @@ import {
   SALE_DIRECTORY_SECTIONS,
   DIRECTORY_SECTION_ADDITIONAL_LISTINGS,
   DIRECTORY_PAGE_HEADER,
+  DIRECTORY_SECTION_LOTTERY_RESULTS,
+  DIRECTORY_SECTION_UPCOMING_LOTTERIES,
 } from "../constants"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import { handleSectionHeaderEntries, toggleNavBarBoxShadow } from "./util/NavigationBarUtils"
@@ -65,6 +67,25 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
   const [match, setMatch] = useState<boolean>(false)
   const [filters, setFilters] = useState(props.filters ?? null)
   const [activeItem, setActiveItem] = useState<string>(null)
+  const [resultsIsOpen, setResultsIsOpen] = useState<boolean>(false)
+  const [upcomingIsOpen, setUpcomingIsOpen] = useState<boolean>(false)
+  const [additionalIsOpen, setAdditionalIsOpen] = useState<boolean>(false)
+
+  const handleNavigation = (section: string) => {
+    setActiveItem(section)
+
+    switch (section) {
+      case DIRECTORY_SECTION_ADDITIONAL_LISTINGS:
+        setAdditionalIsOpen(true)
+        break
+      case DIRECTORY_SECTION_LOTTERY_RESULTS:
+        setResultsIsOpen(true)
+        break
+      case DIRECTORY_SECTION_UPCOMING_LOTTERIES:
+        setUpcomingIsOpen(true)
+        break
+    }
+  }
 
   useEffect(() => {
     void props.listingsAPI(props.filters).then((listings) => {
@@ -135,6 +156,7 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
                 directorySectionInfo={directorySectionInfo}
                 activeItem={activeItem}
                 listings={listings}
+                handleNavigation={handleNavigation}
               />
             )}
             <div className="match-banner">
@@ -170,19 +192,22 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
                   props.directoryType,
                   props.getSummaryTable,
                   observerRef,
-                  hasFiltersSet
+                  hasFiltersSet,
+                  additionalIsOpen
                 )}
               {upcomingLotteriesView(
                 listings.upcoming,
                 props.directoryType,
                 props.getSummaryTable,
-                observerRef
+                observerRef,
+                upcomingIsOpen
               )}
               {lotteryResultsView(
                 listings.results,
                 props.directoryType,
                 props.getSummaryTable,
-                observerRef
+                observerRef,
+                resultsIsOpen
               )}
             </div>
           </>
