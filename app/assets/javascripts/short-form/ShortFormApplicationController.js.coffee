@@ -97,6 +97,9 @@ ShortFormApplicationController = (
       answeredCommunityScreening: $scope.application.answeredCommunityScreening
       customEducatorScreeningAnswer: $scope.application.customEducatorScreeningAnswer
       customEducatorJobClassificationNumber: $scope.application.customEducatorJobClassificationNumber
+      dalp_educator: $scope.application.dalp_educator
+      dalp_first_responder: $scope.application.dalp_first_responder
+      answeredDalpScreening: $scope.application.answeredDalpScreening
     ShortFormApplicationService.resetApplicationData(data)
     $scope.applicant = ShortFormApplicationService.applicant
     $scope.preferences = ShortFormApplicationService.preferences
@@ -282,6 +285,10 @@ ShortFormApplicationController = (
       ShortFormHelperService.customEducatorValidJobClassificationNumbers,
       (value || '').toUpperCase()
     )
+
+  $scope.afterDalpScreening = ->
+    ShortFormApplicationService.application.answeredDalpScreening = true
+    ShortFormNavigationService.goToApplicationPage('dahlia.short-form-application.prerequisites', { id: $state.params.id })
 
   $scope.customEducatorValidateEligibility = ->
     if $scope.customEducatorIsListing1() && $scope.customEducatorIsEducator()
@@ -815,6 +822,9 @@ ShortFormApplicationController = (
 
   $scope.listingIsSale = ->
     ShortFormApplicationService.listingIsSale()
+
+  $scope.listingIsDalp = ->
+    ShortFormApplicationService.listingIsDalp()
 
   $scope.listingIsHabitat = ->
     ShortFormApplicationService.listingIsHabitat()

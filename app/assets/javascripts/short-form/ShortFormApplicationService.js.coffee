@@ -96,6 +96,9 @@ ShortFormApplicationService = (
     customEducatorJobClassificationNumber: null
     isAnyoneAVeteran: null
     hasHomeAndCommunityBasedServices: null
+    dalp_educator: null
+    dalp_first_responder: null
+    answeredDalpScreening: null
 
   Service.currentCustomProofPreference = {}
   Service.currentRentBurdenAddress = {}
@@ -912,6 +915,9 @@ ShortFormApplicationService = (
       answeredCommunityScreening: Service.application.answeredCommunityScreening,
       customEducatorScreeningAnswer: Service.application.customEducatorScreeningAnswer,
       customEducatorJobClassificationNumber: Service.application.customEducatorJobClassificationNumber,
+      dalp_educator: Service.application.dalp_educator
+      dalp_first_responder: Service.application.dalp_first_responder
+      answeredDalpScreening: Service.answeredDalpScreening
     })
     $state.go('dahlia.short-form-application.name')
 
@@ -935,6 +941,9 @@ ShortFormApplicationService = (
     #  Similar logic needs to be added to the `resetAndStartNewApp` function
     formattedApp.customEducatorScreeningAnswer ?= Service.application.customEducatorScreeningAnswer
     formattedApp.customEducatorJobClassificationNumber ?= Service.application.customEducatorJobClassificationNumber
+    formattedApp.dalp_educator ?= Service.application.dalp_educator
+    formattedApp.dalp_first_responder ?= Service.application.dalp_first_responder
+    formattedApp.answeredDalpScreening ?= Service.application.answeredDalpScreening
 
     # this will setup Service.application with the loaded data
     Service.resetApplicationData(formattedApp)
@@ -1145,6 +1154,9 @@ ShortFormApplicationService = (
 
   Service.listingIsSale = ->
     ListingIdentityService.isSale(Service.listing)
+
+  Service.listingIsDalp = ->
+    ListingIdentityService.isDalpListing(Service.listing)
 
   Service.listingIsHabitat = ->
     ListingIdentityService.isHabitatListing(Service.listing)
