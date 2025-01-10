@@ -99,6 +99,7 @@
 .application-item__status {
   padding-block: 0;
   font-size: var(--seeds-font-size-sm);
+  text-wrap: nowrap;
   @media (max-width: theme("screens.sm")) {
     padding-top: var(--seeds-s4);
   }
