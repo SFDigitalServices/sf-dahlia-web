@@ -303,8 +303,10 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
         memberId = appPrefs[prefKey + '_household_member']
         member = _.find(allMembers, { id: memberId })
 
-        if !member && prefKey == 'rentBurden'
-          # set a default member in the case of rentBurden where none was indicated
+        if !member && prefKey == 'rentBurden' ||
+            (listingPref.preferenceName == PREFS.dalpEducator && application.dalp_educator) ||
+            (listingPref.preferenceName == PREFS.dalpFirstResponder && application.dalp_first_responder)
+          # set a default member in the case of rentBurden or DALP where none was indicated
           member = application.applicant
 
         if member
