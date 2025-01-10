@@ -27,6 +27,10 @@ const ForgotPassword = () => {
     setEmailSubmitted(true)
     // TODO: DAH-2984 API integration
   }
+
+  const urlParams = new URLSearchParams(window.location.search)
+  const emailParam = urlParams.get("email") || undefined
+
   return (
     <FormsLayout>
       <FormCard>
@@ -38,7 +42,7 @@ const ForgotPassword = () => {
         {!emailSubmitted ? (
           <div className="form-card__group pt-0">
             <Form className="mt-10 relative" onSubmit={handleSubmit(onSubmit)}>
-              <EmailFieldset register={register} errors={errors} />
+              <EmailFieldset defaultEmail={emailParam} register={register} errors={errors} />
               <div className="text-center mt-4">
                 <Button styleType={AppearanceStyleType.primary} type="submit">
                   {t("label.sendEmail")}

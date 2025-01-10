@@ -51,6 +51,25 @@ export const getNewLanguagePath = (
   return getLocalizedPath(currentPath, LanguagePrefix.English, queryString)
 }
 
+/**
+ *
+ * Create a new path with one or more params that may or may not be undefined.
+ * The function should take in a localized path (from one of the functions below) and a params object.
+ */
+export const createPath = (path: string, params: { [key: string]: string | undefined }): string => {
+  let newPath = path
+  let firstAdded = false
+  Object.keys(params).forEach((key) => {
+    if (params[key] && !firstAdded) {
+      newPath += `?${key}=${params[key]}`
+      firstAdded = true
+    } else if (params[key]) {
+      newPath += `&${key}=${params[key]}`
+    }
+  })
+  return newPath
+}
+
 export const getHomepagePath = localizedPathGetter("/")
 export const getRentalDirectoryPath = localizedPathGetter("/listings/for-rent")
 export const getSaleDirectoryPath = localizedPathGetter("/listings/for-sale")
