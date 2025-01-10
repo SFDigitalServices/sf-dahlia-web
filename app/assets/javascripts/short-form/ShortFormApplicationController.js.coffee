@@ -661,6 +661,15 @@ ShortFormApplicationController = (
       ShortFormNavigationService.goToSection('Preferences')
       return
 
+    if match == 'householdMatch' && ShortFormApplicationService.listingIsDalp()
+      $scope.goToNextReservedPageIfAvailable()
+      return
+
+    if match == 'incomeMatch' && ShortFormApplicationService.listingIsDalp()
+      ShortFormApplicationService.completeSection('Income')
+      ShortFormNavigationService.goToSection('Review')
+      return
+
     ShortFormApplicationService.checkHouseholdEligibility($scope.listing)
       .then( (response) ->
         eligibility = response.data
