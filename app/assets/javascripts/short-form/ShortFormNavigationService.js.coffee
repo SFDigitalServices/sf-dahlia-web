@@ -102,6 +102,8 @@ ShortFormNavigationService = (
       scopedCallbacks: [{func: 'validateCommunityEligibility'}]
     'custom-educator-screening':
       scopedCallbacks: [{func: 'customEducatorValidateEligibility'}]
+    'dalp-screening':
+      scopedCallbacks: [{func: 'afterDalpScreening'}]
     # you
     'prerequisites':
       callbacks: [
