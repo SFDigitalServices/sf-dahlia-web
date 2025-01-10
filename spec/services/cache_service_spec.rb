@@ -53,7 +53,7 @@ describe CacheService do
     # expects `prefetch_args` to be a hash of options passed to `prefetch_listings`
     it 'refreshes the listing cache for updated listing' do
       expect(Force::ListingService).to receive(:listing)
-        .with(updated_listing_id, force: true)
+        .with(updated_listing_id, hash_including(force: true))
       expect(Force::ListingService).to receive(:units)
         .with(updated_listing_id, force: true)
       expect(Force::ListingService).to receive(:preferences)

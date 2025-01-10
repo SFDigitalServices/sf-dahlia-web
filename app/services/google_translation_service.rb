@@ -57,6 +57,13 @@ class GoogleTranslationService
     Rails.logger.info("#{msg}: #{msg_hash}")
   end
 
+  def self.google_translation_usage_logger(listing_id, trigger, char_count)
+    # comma separation to process logs more easily in the absence of structured logging
+    Rails.logger.info(
+      "log_google_translate_usage, #{trigger}, #{listing_id}, #{Time.now.to_i}, #{char_count}",
+    )
+  end
+
   private
 
   def parse_translations(results)
@@ -74,6 +81,7 @@ class GoogleTranslationService
     # they will be in the same order as the translations because the translation service
     # uses the values from that object and the api returns 1 for each key
     return_value = { LastModifiedDate: last_modified }
+
     translations.each do |target|
       target[:translation].each_with_index do |value, i|
         field = keys[i].to_sym
