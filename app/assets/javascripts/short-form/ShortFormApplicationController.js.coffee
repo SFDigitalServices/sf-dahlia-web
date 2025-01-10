@@ -259,6 +259,9 @@ ShortFormApplicationController = (
   $scope.customEducatorIsListing3 = ->
     $scope.listing.Custom_Listing_Type == 'Educator 3: Waitlist - SFUSD employees & public'
 
+  $scope.isDALPListing = ->
+    $scope.listing.Custom_Listing_Type == 'Downpayment Assistance Loan Program'
+
   $scope.isCustomEducatorListing = ->
     $scope.customEducatorIsListing1() || $scope.customEducatorIsListing2() || $scope.customEducatorIsListing3()
 
@@ -659,6 +662,15 @@ ShortFormApplicationController = (
     # skip the check if we're doing an incomeMatch and the applicant has vouchers
     if match == 'incomeMatch' && $scope.application.householdVouchersSubsidies == 'Yes'
       ShortFormNavigationService.goToSection('Preferences')
+      return
+
+    if match == 'householdMatch' && $scope.isDALPListing()
+      $scope.goToNextReservedPageIfAvailable()
+      return
+
+    if match == 'incomeMatch' && $scope.isDALPListing()
+      ShortFormApplicationService.completeSection('Income')
+      ShortFormNavigationService.goToSection('Review')
       return
 
     ShortFormApplicationService.checkHouseholdEligibility($scope.listing)

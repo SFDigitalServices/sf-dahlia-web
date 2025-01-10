@@ -133,5 +133,8 @@ angular.module('dahlia.components')
       ctrl.getIsNonPrimaryMemberVeteran = ->
         ctrl.translatedYesNoNoAnswer(ctrl.application.isNonPrimaryMemberVeteran)
 
+      ctrl.isDALPListing = ->
+        ListingDataService.listing.Custom_Listing_Type == 'Downpayment Assistance Loan Program'
+
       return ctrl
   ]
