@@ -596,6 +596,8 @@ ShortFormNavigationService = (
     !!ShortFormApplicationService.listing.customPreferences.length
 
   Service.initialState = () ->
+    if ShortFormApplicationService.listingIsDalp()
+      'dahlia.short-form-application.dalp-screening'
     if ListingIdentityService.isSale(ShortFormApplicationService.listing)
       'dahlia.short-form-application.prerequisites'
     else

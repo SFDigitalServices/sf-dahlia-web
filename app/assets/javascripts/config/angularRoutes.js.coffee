@@ -668,11 +668,11 @@
         infoChanged:
           squash: true
       onEnter: [
-        '$stateParams', 'ShortFormApplicationService', 'AccountService', 'AutosaveService'
-        ($stateParams, ShortFormApplicationService, AccountService, AutosaveService) ->
-          # If applicant tries to go to this page on a rental listing, redirect them back to homepage
+        '$state', '$stateParams', 'ShortFormApplicationService', 'AccountService', 'AutosaveService'
+        ($state, $stateParams, ShortFormApplicationService, AccountService, AutosaveService) ->
           if ShortFormApplicationService.listingIsDalp() && !ShortFormApplicationService.application.answeredDalpScreening
-            $state.go('dahlia.short-form-welcome.dalp-screening', {id: listing.Id, skipConfirm: true, lang: lang})
+            $state.go('dahlia.short-form-application.dalp-screening', {id: $stateParams.id, skipConfirm: true, lang: $stateParams.lang})
+          # If applicant tries to go to this page on a rental listing, redirect them back to homepage
           if !ShortFormApplicationService.listingIsSale()
             $state.go('dahlia.welcome')
           ShortFormApplicationService.completeSection('Intro')

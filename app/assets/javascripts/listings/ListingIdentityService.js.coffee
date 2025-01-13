@@ -28,7 +28,7 @@ ListingIdentityService = (ListingConstantsService) ->
     return false unless listing
     listing.Reserved_community_type == ListingConstantsService.RESERVED_TYPES.HABITAT
 
-  # Determine if listing is special habitat for humanity listing that has hard-coded content
+  # Determine if listing is DALP listing that has hard-coded content
   Service.isDalpListing = (listing) ->
     return false unless listing
     listing.Custom_Listing_Type == 'Downpayment Assistance Loan Program'
