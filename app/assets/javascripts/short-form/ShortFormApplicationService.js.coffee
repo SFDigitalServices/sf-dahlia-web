@@ -50,6 +50,8 @@ ShortFormApplicationService = (
     documents:
       'Loan pre-approval': {}
       'Homebuyer education certificate': {}
+      'Dalp educator proof': {}
+      'Dalp first responder proof': {}
     preferences:
       liveInSf: null
       workInSf: null
@@ -96,8 +98,8 @@ ShortFormApplicationService = (
     customEducatorJobClassificationNumber: null
     isAnyoneAVeteran: null
     hasHomeAndCommunityBasedServices: null
-    dalp_educator: null
-    dalp_first_responder: null
+    dalpEducator: null
+    dalpFirstResponder: null
     answeredDalpScreening: null
 
   Service.currentCustomProofPreference = {}
@@ -915,9 +917,6 @@ ShortFormApplicationService = (
       answeredCommunityScreening: Service.application.answeredCommunityScreening,
       customEducatorScreeningAnswer: Service.application.customEducatorScreeningAnswer,
       customEducatorJobClassificationNumber: Service.application.customEducatorJobClassificationNumber,
-      dalp_educator: Service.application.dalp_educator
-      dalp_first_responder: Service.application.dalp_first_responder
-      answeredDalpScreening: Service.answeredDalpScreening
     })
     $state.go('dahlia.short-form-application.name')
 
@@ -941,11 +940,6 @@ ShortFormApplicationService = (
     #  Similar logic needs to be added to the `resetAndStartNewApp` function
     formattedApp.customEducatorScreeningAnswer ?= Service.application.customEducatorScreeningAnswer
     formattedApp.customEducatorJobClassificationNumber ?= Service.application.customEducatorJobClassificationNumber
-    if (Service.application.dalp_first_responder != null)
-      formattedApp.dalp_first_responder = Service.application.dalp_first_responder
-    if (Service.application.dalp_educator != null)
-      formattedApp.dalp_educator = Service.application.dalp_educator
-    formattedApp.answeredDalpScreening ?= Service.application.answeredDalpScreening
 
     # this will setup Service.application with the loaded data
     Service.resetApplicationData(formattedApp)

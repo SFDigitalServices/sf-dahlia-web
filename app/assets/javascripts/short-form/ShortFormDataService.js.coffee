@@ -304,8 +304,8 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
         member = _.find(allMembers, { id: memberId })
 
         if !member && prefKey == 'rentBurden' ||
-            (listingPref.preferenceName == PREFS.dalpEducator && application.dalp_educator) ||
-            (listingPref.preferenceName == PREFS.dalpFirstResponder && application.dalp_first_responder)
+            (listingPref.preferenceName == PREFS.dalpEducator && application.dalpEducator) ||
+            (listingPref.preferenceName == PREFS.dalpFirstResponder && application.dalpFirstResponder)
           # set a default member in the case of rentBurden or DALP where none was indicated
           member = application.applicant
 
@@ -550,9 +550,11 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
         else if shortFormPref.individualPreference == 'Rent Burdened'
           prefKey = 'rentBurden'
       else if listingPref.preferenceName == ListingDataService.preferenceMap.dalpEducator
-          data.dalp_educator = !!shortFormPref.appMemberID
+          data.dalpEducator = !!shortFormPref.appMemberID
+          return
       else if listingPref.preferenceName == ListingDataService.preferenceMap.dalpFirstResponder
-          data.dalp_first_responder = !!shortFormPref.appMemberID
+          data.dalpFirstResponder = !!shortFormPref.appMemberID
+          return
       else
         prefKey = _.invert(ListingDataService.preferenceMap)[listingPref.preferenceName]
         unless prefKey

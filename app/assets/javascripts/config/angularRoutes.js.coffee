@@ -559,17 +559,6 @@
         'container@dahlia.short-form-welcome.custom-educator-screening':
           templateUrl: 'short-form/templates/a3-custom-educator-screening.html'
     })
-    .state('dahlia.short-form-welcome.dalp-screening', {
-      url: '/dalp-screening'
-      params:
-        skipConfirm: { squash: true, value: false }
-      views:
-        'container@':
-          templateUrl: 'short-form/templates/layout.html'
-          controller: 'ShortFormApplicationController'
-        'container@dahlia.short-form-welcome.dalp-screening':
-          templateUrl: 'short-form/templates/a4a-dalp-screening.html'
-    })
     .state('dahlia.short-form-welcome.overview', {
       url: '/overview'
       views:
@@ -647,9 +636,6 @@
               if ShortFormApplicationService.listingIsEducator() &&
                 !ShortFormApplicationService.application.customEducatorScreeningAnswer
                   $state.go('dahlia.short-form-welcome.custom-educator-screening', {id: listing.Id, skipConfirm: true, lang: lang})
-              if ShortFormApplicationService.listingIsDalp() &&
-                !ShortFormApplicationService.application.answeredDalpScreening
-                  $state.go('dahlia.short-form-welcome.dalp-screening', {id: listing.Id, skipConfirm: true, lang: lang})
             ).catch( (response) ->
               # Verify source of errors in https://www.pivotaltracker.com/story/show/159802520
               console.error('Error getting my application for listing (angularRoutes, application)', $stateParams.id)
@@ -660,6 +646,17 @@
         $title: ['$title', '$translate', 'listing', ($title, $translate, listing) ->
           $translate('page_title.listing_application', {listing: listing.Name})
         ]
+    })
+    .state('dahlia.short-form-application.dalp-screening', {
+      url: '/dalp-screening'
+      params:
+        skipConfirm: { squash: true, value: false }
+      views:
+        'container@':
+          templateUrl: 'short-form/templates/layout.html'
+          controller: 'ShortFormApplicationController'
+        'container@dahlia.short-form-application.dalp-screening':
+          templateUrl: 'short-form/templates/a4a-dalp-screening.html'
     })
     # Short form: "You" section
     .state('dahlia.short-form-application.prerequisites', {
@@ -674,6 +671,8 @@
         '$stateParams', 'ShortFormApplicationService', 'AccountService', 'AutosaveService'
         ($stateParams, ShortFormApplicationService, AccountService, AutosaveService) ->
           # If applicant tries to go to this page on a rental listing, redirect them back to homepage
+          if ShortFormApplicationService.listingIsDalp() && !ShortFormApplicationService.application.answeredDalpScreening
+            $state.go('dahlia.short-form-welcome.dalp-screening', {id: listing.Id, skipConfirm: true, lang: lang})
           if !ShortFormApplicationService.listingIsSale()
             $state.go('dahlia.welcome')
           ShortFormApplicationService.completeSection('Intro')
