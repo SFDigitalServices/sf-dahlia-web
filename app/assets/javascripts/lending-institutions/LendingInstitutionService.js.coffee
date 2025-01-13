@@ -1,14 +1,14 @@
-LendingInstitutionService = ($http, ShortFormApplicationService) ->
+LendingInstitutionService = ($http) ->
   Service = {}
   Service.lendingInstitutions = {}
 
-  Service.getLendingInstitutions = ->
-    if ShortFormApplicationService.listingIsDalp()
-      $http.get("/api/v1/short-form/lending_institutions").success((data, status) ->
+  Service.getLendingInstitutions = (listingIsDalp) ->
+    if listingIsDalp
+      $http.get("/api/v1/short-form/lending_institutions_dalp").success((data, status) ->
         angular.copy(data, Service.lendingInstitutions)
       )
     else
-      $http.get("/api/v1/short-form/lending_institutions_dalp").success((data, status) ->
+      $http.get("/api/v1/short-form/lending_institutions").success((data, status) ->
         angular.copy(data, Service.lendingInstitutions)
       )
 
@@ -30,7 +30,7 @@ LendingInstitutionService = ($http, ShortFormApplicationService) ->
 ######################################## CONFIG ############################################
 ############################################################################################
 
-LendingInstitutionService.$inject = ['$http', 'ShortFormApplicationService']
+LendingInstitutionService.$inject = ['$http']
 
 angular
   .module('dahlia.services')

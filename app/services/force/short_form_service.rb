@@ -134,7 +134,6 @@ module Force
 
       endpoint = '/services/apexrest/agents?certified=dalp'
       response = Request.new.cached_get(endpoint)
-      puts response
       @institutions = format_institutions(response)
     end
 
