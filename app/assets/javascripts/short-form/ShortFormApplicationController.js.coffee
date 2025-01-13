@@ -259,9 +259,6 @@ ShortFormApplicationController = (
   $scope.customEducatorIsListing3 = ->
     $scope.listing.Custom_Listing_Type == 'Educator 3: Waitlist - SFUSD employees & public'
 
-  $scope.isDALPListing = ->
-    $scope.listing.Custom_Listing_Type == 'Downpayment Assistance Loan Program'
-
   $scope.isCustomEducatorListing = ->
     $scope.customEducatorIsListing1() || $scope.customEducatorIsListing2() || $scope.customEducatorIsListing3()
 
