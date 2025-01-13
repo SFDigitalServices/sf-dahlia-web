@@ -119,6 +119,7 @@ export const habitatListing: RailsSaleListing = {
     },
     Id: "a0a4U00000IRWNDQA5",
   },
+  Status: "Active",
   In_Lottery: 3,
   Program_Type: "IH-OWN",
   Units_Available: 8,

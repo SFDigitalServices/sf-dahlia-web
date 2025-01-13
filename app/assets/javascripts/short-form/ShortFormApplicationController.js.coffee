@@ -664,11 +664,11 @@ ShortFormApplicationController = (
       ShortFormNavigationService.goToSection('Preferences')
       return
 
-    if match == 'householdMatch' && $scope.isDALPListing()
+    if match == 'householdMatch' && ShortFormApplicationService.listingIsDalp()
       $scope.goToNextReservedPageIfAvailable()
       return
 
-    if match == 'incomeMatch' && $scope.isDALPListing()
+    if match == 'incomeMatch' && ShortFormApplicationService.listingIsDalp()
       ShortFormApplicationService.completeSection('Income')
       ShortFormNavigationService.goToSection('Review')
       return
