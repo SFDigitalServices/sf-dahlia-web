@@ -9,15 +9,19 @@ section.app-container.focus-container ng-class="{'t-zh': application.application
           h2.app-card_question translate="a4_overview.title"
           h3.app-card_question translate="a4_overview.subtitle" ng-if="application.applicationLanguage == 'Chinese'"
         .app-inner
-          p.margin-bottom
+          p.margin-bottom ng-if="!listingIsDalp()"
             | {{'a4_overview.p1' | translate}}
-          p.margin-bottom translate="a4_overview.p2" translate-value-sref="dahlia.document-checklist" translate-compile="true"
+          p.margin-bottom ng-if="!listingIsDalp()" translate="a4_overview.p2" translate-value-sref="dahlia.document-checklist" translate-compile="true"
           p.margin-bottom ng-if="(listingIsSale() && !listingIsHabitat())"
             | {{'a4_overview.p2b-ownership' | translate}}
-          p.margin-bottom
-            | {{'a4_overview.p3' | translate}}
-          p.margin-bottom
+          p.margin-bottom.t-bold ng-if="listingIsDalp()"
+            | {{'a4_overview.p3b-dalp' | translate}}
+          p.margin-bottom ng-if="listingIsDalp()"
+            | {{'a4_overview.p3b' | translate}}
+          p.margin-bottom ng-if="!listingIsDalp()"
             | {{'a4_overview.p4' | translate}}
+          p.margin-bottom ng-if="listingIsDalp()"
+            | {{'a4_overview.p4b-dalp' | translate}}
           p.margin-bottom
             | {{'a4_overview.warning' | translate}}
         .button-pager
