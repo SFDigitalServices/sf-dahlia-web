@@ -50,6 +50,8 @@ ShortFormApplicationService = (
     documents:
       'Loan pre-approval': {}
       'Homebuyer education certificate': {}
+      'Dalp educator proof': {}
+      'Dalp first responder proof': {}
     preferences:
       liveInSf: null
       workInSf: null
@@ -96,6 +98,9 @@ ShortFormApplicationService = (
     customEducatorJobClassificationNumber: null
     isAnyoneAVeteran: null
     hasHomeAndCommunityBasedServices: null
+    dalpEducator: null
+    dalpFirstResponder: null
+    answeredDalpScreening: null
 
   Service.currentCustomProofPreference = {}
   Service.currentRentBurdenAddress = {}
@@ -1145,6 +1150,9 @@ ShortFormApplicationService = (
 
   Service.listingIsSale = ->
     ListingIdentityService.isSale(Service.listing)
+
+  Service.listingIsDalp = ->
+    ListingIdentityService.isDalpListing(Service.listing)
 
   Service.listingIsHabitat = ->
     ListingIdentityService.isHabitatListing(Service.listing)
