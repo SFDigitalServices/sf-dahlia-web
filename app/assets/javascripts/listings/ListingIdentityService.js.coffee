@@ -28,6 +28,11 @@ ListingIdentityService = (ListingConstantsService) ->
     return false unless listing
     listing.Reserved_community_type == ListingConstantsService.RESERVED_TYPES.HABITAT
 
+  # Determine if listing is DALP listing that has hard-coded content
+  Service.isDalpListing = (listing) ->
+    return false unless listing
+    listing.Custom_Listing_Type == 'Downpayment Assistance Loan Program'
+
   # Business logic for determining if a listing is open
   # `due date` should be a datetime, to include precise hour of deadline
   Service.isOpen = (listing) ->
