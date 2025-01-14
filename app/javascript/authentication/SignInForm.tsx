@@ -14,7 +14,7 @@ import {
 import { Link, Heading } from "@bloom-housing/ui-seeds"
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form"
 
-import { getForgotPasswordPath, getSignInRedirectUrl } from "../util/routeUtil"
+import { createPath, getForgotPasswordPath, getSignInRedirectUrl } from "../util/routeUtil"
 import EmailFieldset from "../pages/account/components/EmailFieldset"
 import PasswordFieldset from "../pages/account/components/PasswordFieldset"
 import "../pages/account/styles/account.scss"
@@ -52,12 +52,13 @@ const SignInFormCard = ({
   // https://github.com/react-hook-form/react-hook-form/issues/2887
   // eslint-disable-next-line @typescript-eslint/unbound-method
   const { register, handleSubmit, watch } = useForm()
+  const emailField = watch("email", undefined)
 
   const onError = (errors: { email: string; password: string }) => {
     if (errors.email || errors.password) {
       setRequestError(
         t("signIn.badCredentialsWithResetLink", {
-          url: getForgotPasswordPath(),
+          url: createPath(getForgotPasswordPath(), { email: emailField }),
         })
       )
     }
@@ -80,7 +81,10 @@ const SignInFormCard = ({
         <Form id="sign-in" className="mt-10 relative" onSubmit={handleSubmit(onSubmit, onError)}>
           <EmailFieldset register={register} />
           <span className="right-0 absolute">
-            <Link href="/forgot-password" className="forgot-password-link">
+            <Link
+              href={createPath(getForgotPasswordPath(), { email: emailField })}
+              className="forgot-password-link"
+            >
               {t("forgotPassword.title")}
             </Link>
           </span>

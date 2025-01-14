@@ -280,6 +280,12 @@ describe("<AccountSettingsPage />", () => {
           name: /email/i,
         })
 
+        expect(
+          screen.getByRole("link", {
+            name: /forgot password\?/i,
+          })
+        ).toHaveAttribute("href", "/forgot-password?email=email@email.com")
+
         const emailField = within(group).getByRole("textbox")
 
         await act(async () => {
@@ -322,6 +328,12 @@ describe("<AccountSettingsPage />", () => {
             }),
           })
         )
+
+        expect(
+          screen.getByRole("link", {
+            name: /forgot password\?/i,
+          })
+        ).toHaveAttribute("href", "/forgot-password?email=test@test.com")
       })
 
       it("does not update with malformed emails", async () => {
