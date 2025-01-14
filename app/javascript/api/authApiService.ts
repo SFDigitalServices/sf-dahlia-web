@@ -1,6 +1,6 @@
 import { AxiosResponse } from "axios"
 import { User, UserData } from "../authentication/user"
-import { authenticatedDelete, authenticatedGet, authenticatedPut, post, put } from "./apiService"
+import { authenticatedDelete, authenticatedGet, authenticatedPut, post } from "./apiService"
 import { AuthHeaders, setAuthHeaders } from "../authentication/token"
 import { Application } from "./types/rails/application/RailsApplication"
 import { getCurrentLanguage, getRoutePrefix, LanguagePrefix } from "../util/languageUtil"
@@ -58,10 +58,12 @@ export const deleteApplication = async (id: string) =>
     return res.data
   })
 
-export const forgotPassword = async (email: string): Promise<string> =>
-  put<{ message: string }>("/user/forgot-password", {
+export const forgotPassword = async (email: string, redirect_url: string): Promise<string> =>
+  post<{ message: string }>("/api/v1/auth/password", {
     appUrl: window.location.origin,
-    email: email,
+    email,
+    redirect_url,
+    locale: getRoutePrefix(window.location.pathname) || LanguagePrefix.English,
   }).then(({ data }) => data.message)
 
 export const updateNameOrDOB = async (user: User): Promise<User> => {
