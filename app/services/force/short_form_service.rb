@@ -91,7 +91,7 @@ module Force
 
       # log just first few chars of file_body; otherwise will take up many log lines
       truncated_file_body = file_body ? "#{file_body[0, 20]}..." : ''
-      Rails.logger.info "Api::V1::ShortFormService.attach_file Parameters:
+      Rails.logger.info "Api::V1::ShortFormService.attach_file Parameters: \
         #{post_body.merge(Body: truncated_file_body)}"
 
       post_body[:Body] = file_body
@@ -110,7 +110,6 @@ module Force
 
     def self.can_claim?(session_uid, application)
       return false unless application['status'].casecmp('submitted').zero?
-
       metadata = JSON.parse(application['formMetadata'])
       # only claimable if they are in the same user session
       session_uid == metadata['session_uid']
@@ -181,7 +180,6 @@ module Force
 
     def self.format_agent(agent)
       return unless agent.present? && agent['BMR_Certified__c']
-
       status = agent['Lending_Agent_Status__c']
       inactive_date = agent['Lending_Agent_Inactive_Date__c']
       agent.slice('Id', 'FirstName', 'LastName').merge(

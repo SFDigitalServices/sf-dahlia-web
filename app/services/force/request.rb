@@ -85,7 +85,7 @@ module Force
     def initialize_client
       @client = Restforce.new(
         authentication_retries: 1,
-        instance_url: ENV.fetch('SALESFORCE_INSTANCE_URL', nil),
+        instance_url: ENV['SALESFORCE_INSTANCE_URL'],
         mashify: false,
         timeout: @timeout,
       )
@@ -186,7 +186,7 @@ module Force
     end
 
     def post_request_with_headers_and_auth(endpoint, body, headers = {})
-      conn = Faraday.new(url: ENV.fetch('SALESFORCE_INSTANCE_URL', nil))
+      conn = Faraday.new(url: ENV['SALESFORCE_INSTANCE_URL'])
       apex_endpoint = api_url(endpoint)
       conn.post apex_endpoint do |req|
         headers.each do |k, v|
