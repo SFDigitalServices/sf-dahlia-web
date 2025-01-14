@@ -51,7 +51,7 @@
         small.error#applicant_alternate_phone_type_error ng-if="inputInvalid('alternatePhoneType')"
           | {{'error.phone_number_type' | translate}}
 
-  .app-inner.inset ng-class="{ border-bottom: !listingIsDalp() }"
+  .app-inner.inset ng-class="{ 'border-bottom': !listingIsDalp() }"
     .form-group.row.has-option ng-class="{error: addressInputInvalid('home_address')}"
       label.form-label.caps
         | {{'label.address' | translate}}
@@ -68,7 +68,7 @@
           label for="applicant_separate_address"
             | {{'label.applicant_separate_address' | translate}}
 
-  .app-inner.inset ng-class="{ border-bottom: !listingIsDalp() }" ng-if="applicant.hasAltMailingAddress"
+  .app-inner.inset ng-class="{ 'border-bottom': !listingIsDalp() }" ng-if="applicant.hasAltMailingAddress"
     .form-group.row ng-class="{ error: addressInputInvalid('mailing_address')}"
       label.form-label.caps
         | {{'label.mailing_address' | translate}}
