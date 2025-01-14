@@ -6,8 +6,8 @@ describe Force::ShortFormService do
   data = JSON.parse(File.read("#{Rails.root}/spec/support/sample-applications.json"))
   apps = data['applications']
   fake_listing_id = 'xyz0001232x'
-  institutions_path = '/spec/javascripts/fixtures/json/short_form-api-'\
-    'lending-institutions.json'
+  institutions_path = '/spec/javascripts/fixtures/json/short_form-api-' \
+                      'lending-institutions.json'
   fake_lending_institutions = JSON.parse(File.read("#{Rails.root}#{institutions_path}"))
 
   describe '.autofill' do
@@ -56,6 +56,18 @@ describe Force::ShortFormService do
         .and_return(fake_lending_institutions)
       VCR.use_cassette('shortform/lending-institutions') do
         expect(Force::ShortFormService.lending_institutions)
+          .to eq fake_lending_institutions
+      end
+    end
+  end
+
+  describe '.lending_institutions_dalp' do
+    it 'should return dalp lending institutions' do
+      allow(Force::ShortFormService)
+        .to receive(:lending_institutions_dalp)
+        .and_return(fake_lending_institutions)
+      VCR.use_cassette('shortform/lending-institutions_dalp') do
+        expect(Force::ShortFormService.lending_institutions_dalp)
           .to eq fake_lending_institutions
       end
     end
