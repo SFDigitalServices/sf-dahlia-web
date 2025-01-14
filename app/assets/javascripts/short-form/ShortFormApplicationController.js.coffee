@@ -819,6 +819,9 @@ ShortFormApplicationController = (
   $scope.listingIsHabitat = ->
     ShortFormApplicationService.listingIsHabitat()
 
+  $scope.listingIsDalp = ->
+    ShortFormApplicationService.listingIsDalp()
+
   $scope.onIncomeValueChange = ->
     ShortFormApplicationService.invalidateIncomeForm()
     return if !ShortFormApplicationService.listingHasPreference('rentBurden') ||
