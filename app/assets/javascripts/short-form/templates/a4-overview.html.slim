@@ -24,5 +24,7 @@ section.app-container.focus-container ng-class="{'t-zh': application.application
           .button-pager_row.primary
             button#submit.button.primary ui-sref="dahlia.short-form-application.name({id: listing.Id})" ng-if="listingIsRental()"
               | {{'t.next' | translate}}
-            button#submit.button.primary ui-sref="dahlia.short-form-application.prerequisites({id: listing.Id})" ng-if="listingIsSale()"
+            button#submit.button.primary ui-sref="dahlia.short-form-application.prerequisites({id: listing.Id})" ng-if="listingIsSale() && !listingIsDalp()"
+              | {{'t.next' | translate}}
+            button#submit.button.primary ui-sref="dahlia.short-form-application.dalp-screening({id: listing.Id})" ng-if="listingIsDalp()"
               | {{'t.next' | translate}}
