@@ -7,6 +7,7 @@ import { userEvent } from "@testing-library/user-event"
 import { post } from "../../api/apiService"
 import { SiteAlert } from "../../components/SiteAlert"
 import { t } from "@bloom-housing/ui-components"
+import "@testing-library/jest-dom"
 
 jest.mock("react-helmet-async", () => {
   return {
@@ -78,6 +79,18 @@ describe("<SignIn />", () => {
         screen.getByText(/Email or password is incorrect\. Check for mistakes and try again/i)
       ).not.toBeNull()
     })
+
+    expect(
+      screen.getByRole("link", {
+        name: /reset your password/i,
+      })
+    ).toHaveAttribute("href", "/forgot-password?email=test")
+
+    expect(
+      screen.getByRole("link", {
+        name: /forgot password\?/i,
+      })
+    ).toHaveAttribute("href", "/forgot-password?email=test")
   })
 
   it("shows the correct error message when bad credentials are entered", async () => {

@@ -9,6 +9,7 @@ import {
   getSaleDirectoryPath,
   getSignInPath,
   getForgotPasswordPath,
+  createPath,
 } from "../../util/routeUtil"
 
 describe("routeUtil", () => {
@@ -85,6 +86,43 @@ describe("routeUtil", () => {
         "/sign-in?react=true"
       )
       expect(getNewLanguagePath("/sign-in", "", "?react=true")).toBe("/sign-in?react=true")
+    })
+  })
+
+  describe("createPath", () => {
+    it("should create a path with query parameters", () => {
+      const path = getForgotPasswordPath()
+      const params = { email: "test@example.com", token: "12345" }
+      const result = createPath(path, params)
+      expect(result).toBe("/forgot-password?email=test@example.com&token=12345")
+    })
+
+    it("should handle undefined parameters", () => {
+      const path = getForgotPasswordPath()
+      const params = { email: "test@example.com", token: undefined }
+      const result = createPath(path, params)
+      expect(result).toBe("/forgot-password?email=test@example.com")
+    })
+
+    it("should return the original path if no parameters are provided", () => {
+      const path = getForgotPasswordPath()
+      const params = {}
+      const result = createPath(path, params)
+      expect(result).toBe("/forgot-password")
+    })
+
+    it("should handle multiple parameters", () => {
+      const path = getForgotPasswordPath()
+      const params = { email: "test@example.com", token: "12345", lang: "en" }
+      const result = createPath(path, params)
+      expect(result).toBe("/forgot-password?email=test@example.com&token=12345&lang=en")
+    })
+
+    it("should handle empty string parameters", () => {
+      const path = getForgotPasswordPath()
+      const params = { email: "", token: "12345" }
+      const result = createPath(path, params)
+      expect(result).toBe("/forgot-password?token=12345")
     })
   })
 })
