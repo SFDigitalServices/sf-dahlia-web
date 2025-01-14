@@ -19,12 +19,6 @@ Given /^I go to the first page of the "([^"]*)" application$/, (listing) ->
       "/listings/#{Utils.Page.seniorListingId}/apply-welcome/community-screening"
     when 'Sale Test Listing'
       "/listings/#{Utils.Page.saleListingId}/apply-welcome/overview"
-    when 'Custom Educator 2 Test Listing'
-      # This listing should be a clone of 'Test Listing', except that Custom_Listing_Type == 'Educator 2: SFUSD employees & public'
-      # If there are issues with the e2e tests, go to Salesforce and check that this listing has the same Preferences and Units as 'Test Listing'
-      "/listings/#{Utils.Page.customEducatorListing2Id}/apply-welcome/custom-educator-screening"
-    when 'Custom Educator 1 Test Listing'
-      "/listings/#{Utils.Page.customEducatorListing1Id}/apply-welcome/custom-educator-screening"
 
   Utils.Page.goTo(url)
 
@@ -36,10 +30,6 @@ Given /^I go to the welcome page of the "([^"]*)" application$/, (listing) ->
       Utils.Page.seniorListingId
     when 'Sale Test Listing'
       Utils.Page.saleListingId
-    when 'Custom Educator 1 Test Listing'
-      Utils.Page.customEducatorListing1Id
-    when 'Custom Educator 2 Test Listing'
-      Utils.Page.customEducatorListing2Id
   Utils.Page.goTo("/listings/#{listingId}/apply-welcome/intro")
 
 When /^I go to the "([^"]*)" page$/, (pageName) ->
