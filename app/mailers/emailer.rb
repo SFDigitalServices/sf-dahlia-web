@@ -2,6 +2,8 @@
 
 # basic emailer class
 class Emailer < Devise::Mailer
+  require 'sendgrid-ruby'
+  include SendGrid
   include ActionMailer::Text
   default from: 'DAHLIA <donotreply@sfgov.org>'
   default reply_to: 'DAHLIA <donotreply@sfgov.org>'
@@ -29,13 +31,36 @@ class Emailer < Devise::Mailer
     return false unless listing.present? && params[:email].present?
 
     check_for_confirmed_account(params[:email])
-    _submission_confirmation_email(
-      email: params[:email],
-      listing:,
-      listing_url: "#{base_url}/listings/#{listing.Id}",
-      lottery_number: params[:lottery_number],
-      resending: params[:resending],
-    )
+    data = {
+      'from' => {
+        'email' => 'tallulah.kay@sfgov.org',
+      },
+      'personalizations' => [
+        {
+          'to' => [
+            {
+              'email' => params[:email],
+            },
+          ],
+          'dynamic_template_data' => {
+            'date' => 'test date',
+            'time' => 'test time',
+            'lottery_number' => params[:lottery_number],
+            'lottery_date' => 'test lottery date',
+          },
+        },
+      ], 'template_id' => 'd-a84230b2a95b4374a504d0027eb2c7b0'
+    }
+    sg = SendGrid::API.new(api_key: ENV.fetch('SENDGRID_API_KEY', nil))
+    sg.client.mail._('send').post(request_body: data)
+
+    # _submission_confirmation_email(
+    #   email: params[:email],
+    #   listing:,
+    #   listing_url: "#{base_url}/listings/#{listing.Id}",
+    #   lottery_number: params[:lottery_number],
+    #   resending: params[:resending],
+    # )
   end
 
   def confirmation_instructions(record, token, opts = {})
@@ -74,7 +99,7 @@ class Emailer < Devise::Mailer
       listing_name: @listing_name,
     )
     check_for_confirmed_account(@email)
-    mail(to: @email, subject: subject) do |format|
+    mail(to: @email, subject:) do |format|
       format.html do
         render(
           'draft_application_saved',
