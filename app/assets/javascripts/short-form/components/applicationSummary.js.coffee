@@ -15,8 +15,8 @@ angular.module('dahlia.components')
     preferences: '<'
     showVeteransApplicationQuestion: '<'
   controller: [
-    '$filter', '$state', '$translate', 'LendingInstitutionService', 'ShortFormHelperService', 'ShortFormNavigationService', 'ShortFormRaceEthnicityService',
-    ($filter, $state, $translate, LendingInstitutionService, ShortFormHelperService, ShortFormNavigationService, ShortFormRaceEthnicityService) ->
+    '$filter', '$state', '$translate', 'LendingInstitutionService', 'ShortFormHelperService', 'ShortFormNavigationService', 'ShortFormRaceEthnicityService', 'ListingDataService',
+    ($filter, $state, $translate, LendingInstitutionService, ShortFormHelperService, ShortFormNavigationService, ShortFormRaceEthnicityService, ListingDataService) ->
       ctrl = @
 
       ctrl.$onInit = ->
