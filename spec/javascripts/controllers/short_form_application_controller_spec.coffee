@@ -58,6 +58,7 @@ do ->
       householdMember: {
         firstName: "Oberon"
       }
+      listingIsDalp: jasmine.createSpy().and.returnValue(false)
       isWelcomePage: jasmine.createSpy()
       isShortFormPage: jasmine.createSpy().and.returnValue(true)
       copyHomeToMailingAddress: jasmine.createSpy()
