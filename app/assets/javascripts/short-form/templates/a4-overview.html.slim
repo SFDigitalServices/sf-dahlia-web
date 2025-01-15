@@ -8,7 +8,18 @@ section.app-container.focus-container ng-class="{'t-zh': application.application
         short-form-header
           h2.app-card_question translate="a4_overview.title"
           h3.app-card_question translate="a4_overview.subtitle" ng-if="application.applicationLanguage == 'Chinese'"
-        .app-inner
+        .app-inner ng-if="listingIsDalp()"
+          p.margin-bottom
+            | {{'a4_overview.p2b-ownership' | translate}}
+          p.margin-bottom.t-bold
+            | {{'a4_overview.p3b-dalp' | translate}}
+          p.margin-bottom
+            | {{'a4_overview.p3b' | translate}}
+          p.margin-bottom
+            | {{'a4_overview.p4b-dalp' | translate}}
+          p.margin-bottom
+            | {{'a4_overview.warning' | translate}}
+        .app-inner ng-if="!listingIsDalp()"
           p.margin-bottom
             | {{'a4_overview.p1' | translate}}
           p.margin-bottom translate="a4_overview.p2" translate-value-sref="dahlia.document-checklist" translate-compile="true"
