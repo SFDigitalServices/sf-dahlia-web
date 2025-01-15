@@ -681,8 +681,8 @@
             ShortFormApplicationService.infoChanged = $stateParams.infoChanged
       ]
       resolve:
-        lendingInstitutions: ['LendingInstitutionService', (LendingInstitutionService) ->
-          LendingInstitutionService.getLendingInstitutions()
+        lendingInstitutions: ['listing', 'LendingInstitutionService', (listing, LendingInstitutionService) ->
+          LendingInstitutionService.getLendingInstitutions(listing.Custom_Listing_Type == "Downpayment Assistance Loan Program")
         ]
     })
     .state('dahlia.short-form-application.autofill-preview', {

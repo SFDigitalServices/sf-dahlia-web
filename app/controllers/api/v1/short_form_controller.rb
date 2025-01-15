@@ -121,6 +121,11 @@ class Api::V1::ShortFormController < ApiController
     render json: lending_institutions
   end
 
+  def lending_institutions_dalp
+    lending_institutions = Force::ShortFormService.lending_institutions_dalp
+    render json: lending_institutions
+  end
+
   def files
     uploaded_files = Force::ShortFormService.files(params[:id])
     local_files = UploadedFile.where(application_id: params[:id])

@@ -61,6 +61,20 @@ do ->
         httpBackend.flush()
         expect(LendingInstitutionService.lendingInstitutions).toEqual lendingInstitutions
 
+    describe 'Service.getLendingInstitutions for DALP listing', ->
+      beforeEach (done) ->
+        LendingInstitutionService.lendingInstitutions = {}
+        stubAngularAjaxRequest httpBackend, "/api/v1/short-form/lending_institutions_dalp", lendingInstitutions
+        LendingInstitutionService.getLendingInstitutions(true)
+        done()
+
+      afterAll ->
+        LendingInstitutionService.lendingInstitutions = lendingInstitutions
+
+      it 'assigns Service.lendingInstitutions with the lending institutions results', ->
+        httpBackend.flush()
+        expect(LendingInstitutionService.lendingInstitutions).toEqual lendingInstitutions
+
     describe 'Service.getLendingAgentName', ->
       it 'should return the name of a lending agent, given the ID', ->
         expect(LendingInstitutionService.getLendingAgentName('lender_a1')).toBe('Lana Lender 1')
