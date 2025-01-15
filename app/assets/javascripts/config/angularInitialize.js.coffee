@@ -180,6 +180,8 @@
         if !ShortFormApplicationService.authorizedToProceed(toState, fromState, toSection)
           e.preventDefault()
           if ShortFormApplicationService.listingIsSale()
+            if (ShortFormApplicationService.listingIsDalp())
+              return $state.go('dahlia.short-form-application.dalp-screening', toParams)
             return $state.go('dahlia.short-form-application.prerequisites', toParams)
           return $state.go('dahlia.short-form-application.name', toParams)
 
