@@ -86,6 +86,7 @@ describe("<CreateAccount />", () => {
   jest.setTimeout(10000)
 
   let user
+  jest.setTimeout(10000)
 
   beforeEach(async () => {
     document.documentElement.lang = "en"
