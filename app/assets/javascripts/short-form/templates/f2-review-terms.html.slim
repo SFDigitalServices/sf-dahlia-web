@@ -5,10 +5,14 @@
 
   .app-inner
     p translate="f2_review_terms.p1" translate-value-date="{{listing.Application_Due_Date | date : 'MMM d, yyyy' }}"
-    p translate="f2_review_terms.p2"
-    p translate="f2_review_terms.p3"
+    p translate="f2_review_terms.p2" ng-if='!listingIsDalp()'
+    p translate="f2_review_terms.p2_dalp" ng-if='listingIsDalp()'
+    p translate="f2_review_terms.p3" ng-if='!listingIsDalp()'
+    p translate="f2_review_terms.p3_dalp" ng-if='listingIsDalp()'
     p translate="f2_review_terms.p4_rental" ng-if='listingIsRental()'
-    p translate="f2_review_terms.p4_sale" ng-if='listingIsSale()' translate-value-url="https://sfmohcd.org/after-homebuyer-lottery"
+    p translate="f2_review_terms.p4_sale" ng-if='listingIsSale() && !listingIsDalp()' translate-value-url="https://sfmohcd.org/after-homebuyer-lottery"
+    p translate="f2_review_terms.p4_dalp" ng-if='listingIsDalp()' translate-value-url="https://sf.gov/node/7128"
+    p translate="f2_review_terms.p4.5_dalp" ng-if='listingIsDalp()'
     p translate="f2_review_terms.p5"
     p translate="f2_review_terms.p6"
 
