@@ -4,6 +4,7 @@ import { authenticatedDelete, authenticatedGet, authenticatedPut, post } from ".
 import { AuthHeaders, setAuthHeaders } from "../authentication/token"
 import { Application } from "./types/rails/application/RailsApplication"
 import { getCurrentLanguage, getRoutePrefix, LanguagePrefix } from "../util/languageUtil"
+import { getResetPasswordPath } from "../util/routeUtil"
 
 export const signIn = async (email: string, password: string): Promise<User> =>
   post<UserData>("/api/v1/auth/sign_in", {
@@ -58,11 +59,11 @@ export const deleteApplication = async (id: string) =>
     return res.data
   })
 
-export const forgotPassword = async (email: string, redirect_url: string): Promise<string> =>
+export const forgotPassword = async (email: string): Promise<string> =>
   post<{ message: string }>("/api/v1/auth/password", {
     appUrl: window.location.origin,
     email,
-    redirect_url,
+    redirect_url: getResetPasswordPath(),
     locale: getRoutePrefix(window.location.pathname) || LanguagePrefix.English,
   }).then(({ data }) => data.message)
 

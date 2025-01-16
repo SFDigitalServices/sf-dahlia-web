@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import { AppearanceStyleType, Button, Form, t, FormCard, Icon } from "@bloom-housing/ui-components"
 import { Link, Heading } from "@bloom-housing/ui-seeds"
 import { useForm } from "react-hook-form"
-import { getResetPasswordPath, getSignInPath } from "../util/routeUtil"
+import { getSignInPath } from "../util/routeUtil"
 import EmailFieldset from "../pages/account/components/EmailFieldset"
 import "../pages/account/styles/account.scss"
 import FormsLayout from "../layouts/FormLayout"
@@ -25,13 +25,12 @@ const ForgotPassword = () => {
   const { register, handleSubmit, errors } = useForm()
   const onSubmit = (data: { email: string }) => {
     setEmailSubmitted(true)
-    forgotPassword(data.email, getResetPasswordPath())
-      .then((data) => {
-        console.log("Email sent", data)
-        // window.location.href = getSignInPath()
-      })
+    forgotPassword(data.email)
+      .then(() => {})
       .catch((error) => {
-        console.error("Error sending email", error)
+        if (error.response.status !== 404) {
+          console.error("Error sending email", error)
+        }
       })
   }
 
