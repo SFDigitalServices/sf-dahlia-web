@@ -20,7 +20,6 @@ https://sfgovdt.jira.com/browse/<JIRA TICKET NUMBER>
 - [ ] all automated code checks pass (linting, tests, coverage, etc.)
 - [ ] code irrelevant to the ticket is not modified e.g. changing indentation due to automated formatting
 - [ ] if the code changes the UI, it matches the UI design exactly
-- [ ] if the changes include human translations, follow the [human translations process](https://sfgovdt.jira.com/l/cp/XS1KpvE4)
 
 ### Review instructions
 
@@ -33,3 +32,6 @@ https://sfgovdt.jira.com/browse/<JIRA TICKET NUMBER>
 - [ ] PR has `needs review` label
 - [ ] Use `Housing Eng` group to automatically assign reviewers, and/or assign specific engineers
 - [ ] If time sensitive, notify engineers in Slack
+
+### Merge to main
+- [ ] Code change is behind a feature flag been PA tested in the review environment (use `needs product acceptance` label to indicate that the PR is waiting for PA testing)
