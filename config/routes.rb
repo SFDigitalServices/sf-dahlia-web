@@ -50,6 +50,7 @@ Rails.application.routes.draw do
         post 'proof' => 'short_form#upload_proof'
         delete 'proof' => 'short_form#delete_proof'
         get 'lending_institutions' => 'short_form#lending_institutions'
+        get 'lending_institutions_dalp' => 'short_form#lending_institutions_dalp'
       end
       scope '/addresses' do
         # address validation
