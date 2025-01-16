@@ -83,6 +83,13 @@ export const updateEmail = async (email: string): Promise<string> =>
     },
   }).then(({ data }) => data.status)
 
+export const resetPassword = async (new_password: string): Promise<string> =>
+  authenticatedPut<{ message: string }>("/api/v1/auth/password", {
+    password: new_password,
+    password_confirmation: new_password,
+    locale: getRoutePrefix(window.location.pathname) || LanguagePrefix.English,
+  }).then(({ data }) => data.message)
+
 export const updatePassword = async (
   new_password: string,
   current_password: string
