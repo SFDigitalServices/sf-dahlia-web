@@ -297,6 +297,10 @@ ShortFormApplicationController = (
 
   ########## END CUSTOM SCREENING LOGIC ##########
 
+  $scope.afterDalpScreening = ->
+    ShortFormApplicationService.application.answeredDalpScreening = true
+    ShortFormNavigationService.goToApplicationPage('dahlia.short-form-application.prerequisites')
+
   $scope.addressInputInvalid = (identifier = '') ->
     return true if $scope.addressValidationError(identifier)
     $scope.inputInvalid('address1', identifier) ||
@@ -816,8 +820,14 @@ ShortFormApplicationController = (
   $scope.listingIsSale = ->
     ShortFormApplicationService.listingIsSale()
 
+  $scope.listingIsDalp = ->
+    ShortFormApplicationService.listingIsDalp()
+
   $scope.listingIsHabitat = ->
     ShortFormApplicationService.listingIsHabitat()
+
+  $scope.listingIsDalp = ->
+    ShortFormApplicationService.listingIsDalp()
 
   $scope.onIncomeValueChange = ->
     ShortFormApplicationService.invalidateIncomeForm()
