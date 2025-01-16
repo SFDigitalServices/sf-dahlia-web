@@ -1,21 +1,13 @@
 import React from "react"
-import UserContext, { ContextProps } from "../../../authentication/context/UserContext"
 import { renderAndLoadAsync } from "../../__util__/renderUtils"
 import AccountSettingsPage from "../../../pages/account/account-settings"
 import { fireEvent, screen, within, act } from "@testing-library/react"
 import { authenticatedPut } from "../../../api/apiService"
-import { User } from "../../../authentication/user"
-
-const mockProfile: User = {
-  uid: "abc123",
-  email: "email@email.com",
-  created_at: new Date(),
-  updated_at: new Date(),
-  DOB: "1999-01-01",
-  firstName: "FirstName",
-  lastName: "LastName",
-  middleName: "MiddleName",
-}
+import {
+  mockProfileStub,
+  setupLocationAndRouteMock,
+  setupUserContext,
+} from "../../__util__/accountUtils"
 
 jest.mock("../../../api/apiService", () => ({
   authenticatedPut: jest.fn(),
@@ -25,53 +17,16 @@ const saveProfileMock = jest.fn()
 
 describe("<AccountSettingsPage />", () => {
   describe("when the user is signed in", () => {
-    let getByText
-    let getAllByText
-    let queryByText
-    let originalUseContext
     let promise
     let renderResult
-    let originalLocation: Location
 
     beforeEach(async () => {
       document.documentElement.lang = "en"
-      originalUseContext = React.useContext
-      originalLocation = window.location
-
-      const mockContextValue: ContextProps = {
-        profile: mockProfile,
-        signIn: jest.fn(),
-        signOut: jest.fn(),
-        timeOut: jest.fn(),
-        saveProfile: saveProfileMock,
-        loading: false,
-        initialStateLoaded: true,
-      }
-
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      delete (window as any)?.location
-      ;(window as Window).location = {
-        ...originalLocation,
-        href: "http://dahlia.com",
-        assign: jest.fn(),
-        replace: jest.fn(),
-        reload: jest.fn(),
-        toString: jest.fn(),
-      }
-
-      jest.spyOn(React, "useContext").mockImplementation((context) => {
-        if (context === UserContext) {
-          return mockContextValue
-        }
-        return originalUseContext(context)
-      })
+      setupUserContext({ loggedIn: true, saveProfileMock })
 
       promise = Promise.resolve()
 
       renderResult = await renderAndLoadAsync(<AccountSettingsPage assetPaths={{}} />)
-      getByText = renderResult.getByText
-      getAllByText = renderResult.getAllByText
-      queryByText = renderResult.queryByText
     })
 
     afterEach(() => {
@@ -79,7 +34,7 @@ describe("<AccountSettingsPage />", () => {
     })
 
     it("shows the correct header text", () => {
-      const title = getByText("Account settings")
+      const title = screen.getByText("Account settings")
 
       expect(title).not.toBeNull()
     })
@@ -102,11 +57,11 @@ describe("<AccountSettingsPage />", () => {
       it("updates Name", async () => {
         ;(authenticatedPut as jest.Mock).mockResolvedValue({
           data: {
-            contact: { ...mockProfile, firstName: "NewFirstName", lastName: "NewLastName" },
+            contact: { ...mockProfileStub, firstName: "NewFirstName", lastName: "NewLastName" },
           },
         })
 
-        const button = getAllByText("Update")
+        const button = screen.getAllByText("Update")
         const firstNameField: Element = screen.getByRole("textbox", {
           name: /first name/i,
         })
@@ -118,7 +73,7 @@ describe("<AccountSettingsPage />", () => {
           fireEvent.change(firstNameField, { target: { value: "NewFirstName" } })
           fireEvent.change(lastNameField, { target: { value: "NewLastName" } })
           expect(
-            getByText("We will update any applications you have not submitted yet.")
+            screen.getByText("We will update any applications you have not submitted yet.")
           ).not.toBeNull()
           const closeButton = screen.getByLabelText("Close")
 
@@ -127,7 +82,7 @@ describe("<AccountSettingsPage />", () => {
           await promise
         })
 
-        expect(getByText("Your changes have been saved.")).not.toBeNull()
+        expect(screen.getByText("Your changes have been saved.")).not.toBeNull()
 
         await act(async () => {
           const closeButton = screen.getByLabelText("Close")
@@ -137,12 +92,12 @@ describe("<AccountSettingsPage />", () => {
         })
 
         expect(
-          queryByText(
+          screen.queryByText(
             "We sent you an email. Check your email and follow the link to finish changing your information."
           )
         ).toBeNull()
 
-        expect(queryByText("Your changes have been saved.")).toBeNull()
+        expect(screen.queryByText("Your changes have been saved.")).toBeNull()
 
         expect(authenticatedPut).toHaveBeenCalledWith(
           "/api/v1/account/update",
@@ -165,14 +120,14 @@ describe("<AccountSettingsPage />", () => {
         ;(authenticatedPut as jest.Mock).mockResolvedValue({
           data: {
             contact: {
-              ...mockProfile,
+              ...mockProfileStub,
               DOB: "2000-02-06",
               dobObject: { birthYear: "2000", birthMonth: "02", birthDay: "06" },
             },
           },
         })
 
-        const button = getAllByText("Update")
+        const button = screen.getAllByText("Update")
         const monthField: Element = screen.getByRole("spinbutton", {
           name: /month/i,
         })
@@ -188,7 +143,7 @@ describe("<AccountSettingsPage />", () => {
           fireEvent.change(dayField, { target: { value: 6 } })
           fireEvent.change(yearField, { target: { value: 2000 } })
           expect(
-            getByText("We will update any applications you have not submitted yet.")
+            screen.getByText("We will update any applications you have not submitted yet.")
           ).not.toBeNull()
           const closeButton = screen.getByLabelText("Close")
 
@@ -199,9 +154,9 @@ describe("<AccountSettingsPage />", () => {
         })
 
         expect(
-          queryByText("We will update any applications you have not submitted yet.")
+          screen.queryByText("We will update any applications you have not submitted yet.")
         ).toBeNull()
-        expect(getByText("Your changes have been saved.")).not.toBeNull()
+        expect(screen.getByText("Your changes have been saved.")).not.toBeNull()
 
         await act(async () => {
           const closeButton = screen.getByLabelText("Close")
@@ -209,7 +164,7 @@ describe("<AccountSettingsPage />", () => {
           await promise
         })
 
-        expect(queryByText("Your changes have been saved.")).toBeNull()
+        expect(screen.queryByText("Your changes have been saved.")).toBeNull()
 
         expect(authenticatedPut).toHaveBeenCalledWith(
           "/api/v1/account/update",
@@ -224,7 +179,7 @@ describe("<AccountSettingsPage />", () => {
       })
 
       it("blocks a DOB update if invalid", async () => {
-        const button = getAllByText("Update")
+        const button = screen.getAllByText("Update")
         const monthField: Element = screen.getByRole("spinbutton", {
           name: /month/i,
         })
@@ -275,7 +230,7 @@ describe("<AccountSettingsPage />", () => {
           },
         })
 
-        const emailUpdateButton = getAllByText("Update")[2]
+        const emailUpdateButton = screen.getAllByText("Update")[2]
         const group = screen.getByRole("group", {
           name: /email/i,
         })
@@ -293,7 +248,7 @@ describe("<AccountSettingsPage />", () => {
           emailUpdateButton.dispatchEvent(new MouseEvent("click"))
 
           expect(
-            getByText("We will update any applications you have not submitted yet.")
+            screen.getByText("We will update any applications you have not submitted yet.")
           ).not.toBeNull()
           const closeButton = screen.getByLabelText("Close")
           fireEvent.click(closeButton)
@@ -302,7 +257,7 @@ describe("<AccountSettingsPage />", () => {
         })
 
         expect(
-          getByText(
+          screen.getByText(
             "We sent you an email. Check your email and follow the link to finish changing your information."
           )
         ).not.toBeNull()
@@ -315,7 +270,7 @@ describe("<AccountSettingsPage />", () => {
         })
 
         expect(
-          queryByText(
+          screen.queryByText(
             "We sent you an email. Check your email and follow the link to finish changing your information."
           )
         ).toBeNull()
@@ -343,7 +298,7 @@ describe("<AccountSettingsPage />", () => {
           },
         })
 
-        const emailUpdateButton = getAllByText("Update")[2]
+        const emailUpdateButton = screen.getAllByText("Update")[2]
         const group = screen.getByRole("group", {
           name: /email/i,
         })
@@ -368,7 +323,7 @@ describe("<AccountSettingsPage />", () => {
           },
         })
 
-        const passwordUpdateButton = getAllByText("Update")[3]
+        const passwordUpdateButton = screen.getAllByText("Update")[3]
         const currentPasswordField = screen.getByLabelText(/current password/i)
 
         await act(async () => {
@@ -387,7 +342,7 @@ describe("<AccountSettingsPage />", () => {
           },
         })
 
-        const passwordUpdateButton = getAllByText("Update")[3]
+        const passwordUpdateButton = screen.getAllByText("Update")[3]
 
         const currentPasswordField = screen.getByLabelText(/current password/i)
         const newPasswordField = screen.getByLabelText(/choose a new password/i)
@@ -409,7 +364,7 @@ describe("<AccountSettingsPage />", () => {
           },
         })
 
-        const passwordUpdateButton = getAllByText("Update")[3]
+        const passwordUpdateButton = screen.getAllByText("Update")[3]
 
         const currentPasswordField = screen.getByLabelText(/current password/i)
         const newPasswordField = screen.getByLabelText(/choose a new password/i)
@@ -421,7 +376,7 @@ describe("<AccountSettingsPage />", () => {
           await promise
         })
 
-        expect(getByText("Your changes have been saved.")).not.toBeNull()
+        expect(screen.getByText("Your changes have been saved.")).not.toBeNull()
 
         await act(async () => {
           const closeButton = screen.getByLabelText("Close")
@@ -429,7 +384,7 @@ describe("<AccountSettingsPage />", () => {
           await promise
         })
 
-        expect(queryByText("Your changes have been saved.")).toBeNull()
+        expect(screen.queryByText("Your changes have been saved.")).toBeNull()
 
         expect(authenticatedPut).toHaveBeenCalledWith(
           "/api/v1/auth/password",
@@ -459,7 +414,7 @@ describe("<AccountSettingsPage />", () => {
           },
         })
 
-        const button = getAllByText("Update")
+        const button = screen.getAllByText("Update")
         const firstNameField: Element = screen.getByRole("textbox", {
           name: /first name/i,
         })
@@ -475,8 +430,8 @@ describe("<AccountSettingsPage />", () => {
           await promise
         })
 
-        expect(getAllByText("Enter first name")).toHaveLength(2)
-        expect(getAllByText("Enter last name")).toHaveLength(2)
+        expect(screen.getAllByText("Enter first name")).toHaveLength(2)
+        expect(screen.getAllByText("Enter last name")).toHaveLength(2)
 
         await act(async () => {
           screen
@@ -507,7 +462,7 @@ describe("<AccountSettingsPage />", () => {
       })
 
       it("date of birth errors", async () => {
-        const button = getAllByText("Update")
+        const button = screen.getAllByText("Update")
         const monthField: Element = screen.getByRole("spinbutton", {
           name: /month/i,
         })
@@ -619,7 +574,7 @@ describe("<AccountSettingsPage />", () => {
       })
 
       it("email Errors", async () => {
-        const button = getAllByText("Update")
+        const button = screen.getAllByText("Update")
         const group = screen.getByRole("group", {
           name: /email/i,
         })
@@ -677,7 +632,7 @@ describe("<AccountSettingsPage />", () => {
         ).not.toBeNull()
       })
       it("password Errors", async () => {
-        const button = getAllByText("Update")
+        const button = screen.getAllByText("Update")
         const currentPasswordField = screen.getByLabelText(/current password/i)
         const newPasswordField = screen.getByLabelText(/choose a new password/i)
 
@@ -755,39 +710,12 @@ describe("<AccountSettingsPage />", () => {
   })
 
   describe("when the user is not signed in", () => {
-    let originalUseContext
     let originalLocation: Location
 
     beforeEach(() => {
-      originalUseContext = React.useContext
       originalLocation = window.location
-      const mockContextValue: ContextProps = {
-        profile: undefined,
-        signIn: jest.fn(),
-        signOut: jest.fn(),
-        timeOut: jest.fn(),
-        saveProfile: jest.fn(),
-        loading: false,
-        initialStateLoaded: true,
-      }
-
-      jest.spyOn(React, "useContext").mockImplementation((context) => {
-        if (context === UserContext) {
-          return mockContextValue
-        }
-        return originalUseContext(context)
-      })
-
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      delete (window as any)?.location
-      ;(window as Window).location = {
-        ...originalLocation,
-        href: "http://dahlia.com",
-        assign: jest.fn(),
-        replace: jest.fn(),
-        reload: jest.fn(),
-        toString: jest.fn(),
-      }
+      setupUserContext({ loggedIn: false, saveProfileMock })
+      setupLocationAndRouteMock()
     })
 
     afterEach(() => {
@@ -798,7 +726,7 @@ describe("<AccountSettingsPage />", () => {
     it("redirects to the sign in page", async () => {
       const { queryByText } = await renderAndLoadAsync(<AccountSettingsPage assetPaths={{}} />)
 
-      expect(window.location.href).toBe("/sign-in?redirect=settings")
+      expect(window.location.href).toBe("http://dahlia.com/sign-in")
       expect(queryByText("Account Settings")).toBeNull()
     })
   })

@@ -4,12 +4,12 @@ import MyApplications, {
   determineApplicationItemList,
 } from "../../../pages/account/my-applications"
 import React from "react"
-import UserContext, { ContextProps } from "../../../authentication/context/UserContext"
 import { authenticatedGet, authenticatedDelete } from "../../../api/apiService"
 import { fireEvent, render, screen, waitFor, within } from "@testing-library/react"
 import { applicationWithOpenListing } from "../../data/RailsApplication/application-with-open-listing"
 import { Application } from "../../../api/types/rails/application/RailsApplication"
 import { openSaleListing } from "../../data/RailsSaleListing/listing-sale-open"
+import { setupLocationAndRouteMock, setupUserContext } from "../../__util__/accountUtils"
 
 jest.mock("axios")
 
@@ -45,63 +45,12 @@ describe("<MyApplications />", () => {
   beforeEach(() => {
     originalLocation = window.location
 
-    const customLocation = {
-      ...originalLocation,
-      href: "http://dahlia.com",
-      assign: jest.fn(),
-      replace: jest.fn(),
-      reload: jest.fn(),
-      toString: jest.fn(),
-    }
-
-    Object.defineProperty(window, "location", {
-      configurable: true,
-      enumerable: true,
-      writable: true,
-      value: customLocation,
-    })
-
-    // Redefine the href setter to resolve relative URLs
-    Object.defineProperty(window.location, "href", {
-      configurable: true,
-      enumerable: true,
-      set: function (href: string) {
-        const base = "http://dahlia.com"
-        try {
-          const newUrl = new URL(href, base)
-          this._href = newUrl.href
-        } catch {
-          this._href = href
-        }
-      },
-      get: function () {
-        return this._href || "http://dahlia.com"
-      },
-    })
+    setupLocationAndRouteMock()
   })
 
   describe("when the user is not signed in", () => {
-    let originalUseContext
-
     beforeEach(() => {
-      originalUseContext = React.useContext
-
-      const mockContextValue = {
-        profile: undefined,
-        signIn: jest.fn(),
-        signOut: jest.fn(),
-        timeOut: jest.fn(),
-        saveProfile: jest.fn(),
-        loading: false,
-        initialStateLoaded: true,
-      }
-
-      jest.spyOn(React, "useContext").mockImplementation((context) => {
-        if (context === UserContext) {
-          return mockContextValue
-        }
-        return originalUseContext(context)
-      })
+      setupUserContext({ loggedIn: false, setUpMockLocation: false })
     })
 
     afterEach(() => {
@@ -118,31 +67,8 @@ describe("<MyApplications />", () => {
   })
 
   describe("when a user is signed in", () => {
-    let originalUseContext
-
     beforeEach(() => {
-      originalUseContext = React.useContext
-      const mockContextValue: ContextProps = {
-        profile: {
-          uid: "abc123",
-          email: "email@email.com",
-          created_at: new Date(),
-          updated_at: new Date(),
-        },
-        signIn: jest.fn(),
-        signOut: jest.fn(),
-        timeOut: jest.fn(),
-        saveProfile: jest.fn(),
-        loading: false,
-        initialStateLoaded: true,
-      }
-
-      jest.spyOn(React, "useContext").mockImplementation((context) => {
-        if (context === UserContext) {
-          return mockContextValue
-        }
-        return originalUseContext(context)
-      })
+      setupUserContext({ loggedIn: true, setUpMockLocation: false })
       ;(authenticatedGet as jest.Mock).mockResolvedValue({ data: { data: "test-data" } })
     })
 
