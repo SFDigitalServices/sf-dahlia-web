@@ -6,7 +6,7 @@ _just one or two sentences_
 
 https://sfgovdt.jira.com/browse/<JIRA TICKET NUMBER>
 
-## Checklist before requesting review
+## Before requesting eng review
 
 ### Version Control
 
@@ -27,11 +27,15 @@ https://sfgovdt.jira.com/browse/<JIRA TICKET NUMBER>
 - [ ] instructions work for PA testers
 - [ ] instructions have already been performed at least once
 
-### Request review
+### Request eng review
 
 - [ ] PR has `needs review` label
 - [ ] Use `Housing Eng` group to automatically assign reviewers, and/or assign specific engineers
 - [ ] If time sensitive, notify engineers in Slack
 
-### Merge to main
-- [ ] Code change is behind a feature flag been PA tested in the review environment (use `needs product acceptance` label to indicate that the PR is waiting for PA testing)
+## Before merging
+
+### Request product acceptance testing
+
+- [ ] Code change is behind a feature flag
+- [ ] If code change is not behind a feature flag, it has been PA tested in the review environment (use `needs product acceptance` label to indicate that the PR is waiting for PA testing)
