@@ -2,10 +2,15 @@ LendingInstitutionService = ($http) ->
   Service = {}
   Service.lendingInstitutions = {}
 
-  Service.getLendingInstitutions = ->
-    $http.get("/api/v1/short-form/lending_institutions").success((data, status) ->
-      angular.copy(data, Service.lendingInstitutions)
-    )
+  Service.getLendingInstitutions = (listingIsDalp) ->
+    if listingIsDalp
+      $http.get("/api/v1/short-form/lending_institutions_dalp").success((data, status) ->
+        angular.copy(data, Service.lendingInstitutions)
+      )
+    else
+      $http.get("/api/v1/short-form/lending_institutions").success((data, status) ->
+        angular.copy(data, Service.lendingInstitutions)
+      )
 
   Service.getLendingAgentName = (agentId) ->
     agent = _(Service.lendingInstitutions)
