@@ -2,7 +2,7 @@ import React from "react"
 
 import SignIn from "../../pages/sign-in"
 import { renderAndLoadAsync } from "../__util__/renderUtils"
-import { render, screen, waitFor } from "@testing-library/react"
+import { fireEvent, render, screen, waitFor } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
 import { post } from "../../api/apiService"
 import { SiteAlert } from "../../components/SiteAlert"
@@ -221,6 +221,33 @@ describe("<SignIn />", () => {
 
     await waitFor(() => {
       expect(screen.getByText("Email sent. Check your email.")).not.toBeNull()
+    })
+  })
+
+  it("handles enter key press as submit", async () => {
+    const { getByTestId } = render(<SignIn assetPaths={{}} />)
+    ;(post as jest.Mock).mockRejectedValue({
+      response: {
+        status: 422,
+        data: { error: "not_confirmed", email: "test@test.com" },
+      },
+    })
+
+    const emailField = getByTestId("email-field")
+    const passwordField = getByTestId("password-field")
+
+    fireEvent.change(emailField, { target: { value: "test@test.com" } })
+    fireEvent.change(passwordField, { target: { value: "test1234" } })
+    fireEvent.keyPress(emailField, { key: "Enter", code: "Enter" })
+
+    await waitFor(() => {
+      expect(post).toHaveBeenCalled()
+    })
+
+    fireEvent.keyPress(passwordField, { key: "Enter", code: "Enter" })
+
+    await waitFor(() => {
+      expect(post).toHaveBeenCalled()
     })
   })
 
