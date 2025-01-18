@@ -7,7 +7,7 @@ import EmailFieldset from "../pages/account/components/EmailFieldset"
 import "../pages/account/styles/account.scss"
 import FormsLayout from "../layouts/FormLayout"
 import withAppSetup from "../layouts/withAppSetup"
-
+import { forgotPassword } from "../api/authApiService"
 const EmailSubmittedCard = () => {
   return (
     <div className="text-center p-8">
@@ -23,9 +23,15 @@ const ForgotPassword = () => {
   const [emailSubmitted, setEmailSubmitted] = useState(false)
   // eslint-disable-next-line @typescript-eslint/unbound-method
   const { register, handleSubmit, errors } = useForm()
-  const onSubmit = () => {
+  const onSubmit = (data: { email: string }) => {
     setEmailSubmitted(true)
-    // TODO: DAH-2984 API integration
+    forgotPassword(data.email)
+      .then(() => {})
+      .catch((error) => {
+        if (error.response.status !== 404) {
+          console.error("Error sending email", error)
+        }
+      })
   }
 
   const urlParams = new URLSearchParams(window.location.search)
