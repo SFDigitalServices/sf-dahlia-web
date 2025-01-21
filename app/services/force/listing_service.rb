@@ -50,7 +50,9 @@ module Force
 
     def self.translation_usage_by_trigger(listing, rake_task = nil)
       # only one of these feature flags should be turned on at a time
-      if Rails.configuration.unleash.is_enabled? 'LogGoogleCloudTranslateUsageForPageView'
+      if Rails.configuration.unleash.is_enabled?(
+        'LogGoogleCloudTranslateUsageForPageView'
+      ) && rake_task.blank?
         listing['translations'] = log_listing_translations(listing, 'page_view')
       elsif Rails.configuration.unleash.is_enabled?(
         'LogGoogleCloudTranslateUsageForPrefetch10Min',
