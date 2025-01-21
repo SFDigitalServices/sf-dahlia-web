@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { AppearanceStyleType, Button, Form, t, FormCard, Icon } from "@bloom-housing/ui-components"
-import { Link, Heading } from "@bloom-housing/ui-seeds"
+import { Link, Heading, Alert } from "@bloom-housing/ui-seeds"
 import { useForm } from "react-hook-form"
 import { getSignInPath } from "../util/routeUtil"
 import EmailFieldset from "../pages/account/components/EmailFieldset"
@@ -18,9 +18,20 @@ const EmailSubmittedCard = () => {
     </div>
   )
 }
+const ServerAlert = ({ message }: { message?: string }) => {
+  return (
+    message && (
+      <Alert fullwidth variant="alert" className="error-summary-banner">
+        {message}
+      </Alert>
+    )
+  )
+}
 
 const ForgotPassword = () => {
   const [emailSubmitted, setEmailSubmitted] = useState(false)
+  const [serverError, setServerError] = React.useState<string | null>(null)
+
   // eslint-disable-next-line @typescript-eslint/unbound-method
   const { register, handleSubmit, errors } = useForm()
   const onSubmit = (data: { email: string }) => {
@@ -28,8 +39,8 @@ const ForgotPassword = () => {
     forgotPassword(data.email)
       .then(() => {})
       .catch((error) => {
-        if (error.response.status !== 404) {
-          console.error("Error sending email", error)
+        if (error.response?.status !== 404) {
+          setServerError(t("error.account.genericServerError"))
         }
       })
   }
@@ -39,6 +50,7 @@ const ForgotPassword = () => {
 
   return (
     <FormsLayout>
+      <ServerAlert message={serverError} />
       <FormCard>
         <div className="form-card__lead text-center border-b mx-0">
           <Icon size="2xl" symbol="profile" />
