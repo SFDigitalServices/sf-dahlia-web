@@ -38,6 +38,9 @@ do ->
       getStartOfSection: jasmine.createSpy()
     fakeShortFormRaceEthnicityService =
       salesforceToHumanReadable: jasmine.createSpy()
+    fakeListingDataService =
+      getListing: jasmine.createSpy()
+
     beforeEach module('dahlia.components')
     beforeEach module('customFilters', ($provide) ->)
 
@@ -55,6 +58,7 @@ do ->
         ShortFormHelperService: fakeShortFormHelperService
         ShortFormNavigationService: fakeShortFormNavigationService
         ShortFormRaceEthnicityService: fakeShortFormRaceEthnicityService
+        ListingDataService: fakeListingDataService
     )
 
     beforeEach ->
