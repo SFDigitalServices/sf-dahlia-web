@@ -94,7 +94,7 @@ const ApplicationItem = (props: ApplicationItemProps) => {
         </header>
         <section className={"application-item__content"}>
           <div className="w-full mb-3">
-            {!dalpEnabled && !isDalpListing(props.listing) && (
+            {!(!isDalpListing(props.listing) && !dalpEnabled) && (
               <p className={"application-item__text text-left w-full"}>{listingAddress}</p>
             )}
             {props.confirmationNumber && props.submitted && (
@@ -172,7 +172,7 @@ const ApplicationItem = (props: ApplicationItemProps) => {
         </section>
         <div className={"application-item__footer"}>
           <span className="text-sm inline-block space-x-3">
-            {!dalpEnabled && !isDalpListing(props.listing) && (
+            {!(!isDalpListing(props.listing) && !dalpEnabled) && (
               <Link href={getLocalizedPath(listingURL, getCurrentLanguage())}>
                 {t("myApplications.seeListing")}
               </Link>
