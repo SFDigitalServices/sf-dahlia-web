@@ -14,7 +14,8 @@ import {
 jest.mock("axios")
 
 // mock getStorage function from `authentication/token.ts'
-Storage.prototype.getItem = (_key: string) => JSON.stringify({ "access-token": "test-token" })
+Storage.prototype.getItem = (_key: string) =>
+  JSON.stringify({ "access-token": "test-token", expiry: Date.now() / 1000 + 3600 })
 
 describe("apiService", () => {
   const url = "test-url"

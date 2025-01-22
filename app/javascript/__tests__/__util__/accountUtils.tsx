@@ -4,6 +4,7 @@ import { User } from "../../authentication/user"
 
 export const mockProfileStub: User = {
   uid: "abc123",
+  id: 20,
   email: "email@email.com",
   created_at: new Date(),
   updated_at: new Date(),

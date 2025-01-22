@@ -153,7 +153,7 @@ AccountService = (
     # reset the user data immediately, then call signOut
     Service.setLoggedInUser({})
     ShortFormApplicationService.resetApplicationData() unless opts.preserveAppData
-    AnalyticsService.trackEvent('sign_out', { origin: opts.origin || 'Sign Out' })
+    AnalyticsService.trackEvent('logout', {reason: "Angular logout"})
     $auth.signOut()
     # close any open modal, e.g. "Lottery Results" that may have been opened while
     # you were on My Applications
