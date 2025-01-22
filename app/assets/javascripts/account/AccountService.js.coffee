@@ -11,7 +11,8 @@ AccountService = (
   bsLoadingOverlayService,
   ShortFormApplicationService,
   ShortFormDataService,
-  ModalService
+  ModalService,
+  AnalyticsService
 ) ->
   Service = {}
   # userAuth is used as model for inputs in create-account form
@@ -85,11 +86,17 @@ AccountService = (
         # reset userAuth object
         angular.copy(Service.userAuthDefaults, Service.userAuth)
         if response.signedIn
+          AnalyticsService.trackEvent('login_succeeded', { origin: 'Application Sign In', user_id: response.id })
           Service.setLoggedInUser(response)
           Service._reformatDOB()
           return true
       ).catch((response) ->
         # for errors we manually stop the loading overlay
+        AnalyticsService.trackEvent("login_failed", {
+            user_id: null,
+            origin: 'Application Sign In',
+            error_reason: response?.reason || undefined,
+          })
         bsLoadingOverlayService.stop()
         return false
       )
@@ -146,6 +153,7 @@ AccountService = (
     # reset the user data immediately, then call signOut
     Service.setLoggedInUser({})
     ShortFormApplicationService.resetApplicationData() unless opts.preserveAppData
+    AnalyticsService.trackEvent('sign_out', { origin: opts.origin || 'Sign Out' })
     $auth.signOut()
     # close any open modal, e.g. "Lottery Results" that may have been opened while
     # you were on My Applications
@@ -322,7 +330,7 @@ AccountService = (
 
 AccountService.$inject = [
   '$state', '$auth', '$http', '$translate', '$window', 'bsLoadingOverlayService'
-  'ShortFormApplicationService', 'ShortFormDataService', 'ModalService'
+  'ShortFormApplicationService', 'ShortFormDataService', 'ModalService', 'AnalyticsService'
 ]
 
 angular
