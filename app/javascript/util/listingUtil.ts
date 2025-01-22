@@ -32,6 +32,10 @@ import { getRangeString } from "../modules/listings/DirectoryHelpers"
 import { t } from "@bloom-housing/ui-components"
 import { ListingState } from "../modules/listings/ListingState"
 
+export const isDalpListing = (listing: RailsRentalListing | RailsSaleListing) => {
+  return listing.Custom_Listing_Type === CUSTOM_LISTING_TYPES.DALP
+}
+
 export const isFcfsSalesListing = (listing: RailsRentalListing | RailsSaleListing) => {
   return (
     listing.Listing_Type === LISTING_TYPE_FIRST_COME_FIRST_SERVED &&

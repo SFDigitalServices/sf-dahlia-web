@@ -62,6 +62,7 @@ export const CUSTOM_LISTING_TYPES = {
   EDUCATOR_ONE: "Educator 1: SFUSD employees only",
   EDUCATOR_TWO: "Educator 2: SFUSD employees & public",
   EDUCATOR_THREE: "Educator 3: Waitlist - SFUSD employees & public",
+  DALP: "Downpayment Assistance Loan Program",
 }
 
 export const LISTING_TYPE_FIRST_COME_FIRST_SERVED = "First Come, First Served"
