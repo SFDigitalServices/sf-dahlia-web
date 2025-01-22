@@ -149,7 +149,7 @@ const SignInForm = () => {
 
   const onSubmit = (data: { email: string; password: string }) => {
     const { email, password } = data
-
+    setRequestError("")
     signIn(email, password)
       .then(() => {
         const redirectUrl = getRedirectFromUrl()
