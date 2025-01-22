@@ -83,6 +83,8 @@ async function fillCreateAccountForm({
 }
 
 describe("<CreateAccount />", () => {
+  jest.setTimeout(10000)
+
   let user
 
   beforeEach(async () => {

@@ -325,11 +325,14 @@ export const getListingGroup = (
   section: DirectorySectionType,
   hasFiltersSet?: boolean,
   subtitle?: string,
-  icon?: IconTypes
+  icon?: IconTypes,
+  isOpen?: boolean,
+  newDirectoryEnabled?: boolean
 ) => {
-  const showListingsGroup = section !== DIRECTORY_SECTION_ADDITIONAL_LISTINGS || listings.length > 0
+  const showListingsGroup =
+    (newDirectoryEnabled && section !== DIRECTORY_SECTION_ADDITIONAL_LISTINGS) ||
+    listings.length > 0
   return (
-    // TODO: https://sfgovdt.jira.com/browse/DAH-3109 will update Bloom-UIC to accept the refKey and observerRef
     showListingsGroup && (
       <ListingsGroup
         listingsCount={listings.length}
@@ -338,8 +341,9 @@ export const getListingGroup = (
         showButtonText={show}
         info={subtitle}
         icon={icon}
-        // refKey={refKey}
-        // observerRef={observerRef}
+        refKey={refKey}
+        observerRef={observerRef}
+        isOpen={isOpen}
       >
         {listings.length > 0
           ? getListingCards(listings, directoryType, stackedDataFxn, hasFiltersSet)
@@ -355,7 +359,9 @@ export const upcomingLotteriesView = (
   listings,
   directoryType,
   stackedDataFxn: StackedDataFxnType,
-  observerRef: React.MutableRefObject<null | IntersectionObserver>
+  observerRef: React.MutableRefObject<null | IntersectionObserver>,
+  isOpen: boolean,
+  newDirectoryEnabled?: boolean
 ) => {
   return getListingGroup(
     listings,
@@ -368,7 +374,10 @@ export const upcomingLotteriesView = (
     observerRef,
     DIRECTORY_SECTION_UPCOMING_LOTTERIES,
     undefined,
-    t("listings.upcomingLotteries.subtitle")
+    t("listings.upcomingLotteries.subtitle"),
+    null,
+    isOpen,
+    newDirectoryEnabled
   )
 }
 
@@ -376,7 +385,9 @@ export const lotteryResultsView = (
   listings,
   directoryType,
   stackedDataFxn: StackedDataFxnType,
-  observerRef: React.MutableRefObject<null | IntersectionObserver>
+  observerRef: React.MutableRefObject<null | IntersectionObserver>,
+  isOpen?: boolean,
+  newDirectoryEnabled?: boolean
 ) => {
   return getListingGroup(
     listings,
@@ -390,7 +401,9 @@ export const lotteryResultsView = (
     DIRECTORY_SECTION_LOTTERY_RESULTS,
     undefined,
     t("listings.lotteryResults.subtitle"),
-    "result"
+    "result",
+    isOpen,
+    newDirectoryEnabled
   )
 }
 
@@ -399,7 +412,9 @@ export const additionalView = (
   directoryType,
   stackedDataFxn: StackedDataFxnType,
   observerRef: React.MutableRefObject<null | IntersectionObserver>,
-  filtersSet?: boolean
+  filtersSet?: boolean,
+  isOpen?: boolean,
+  newDirectoryEnabled?: boolean
 ) => {
   return getListingGroup(
     listings,
@@ -413,7 +428,9 @@ export const additionalView = (
     DIRECTORY_SECTION_ADDITIONAL_LISTINGS,
     filtersSet,
     t("listings.additional.subtitle"),
-    "doubleHouse"
+    "doubleHouse",
+    isOpen,
+    newDirectoryEnabled
   )
 }
 

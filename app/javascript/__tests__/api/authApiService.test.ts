@@ -14,6 +14,7 @@ import {
   updatePassword,
   getApplications,
   deleteApplication,
+  resetPassword,
 } from "../../api/authApiService"
 
 jest.mock("axios")
@@ -97,6 +98,21 @@ describe("authApiService", () => {
       const email = "email@test.com"
       await forgotPassword(email)
       expect(put).toHaveBeenCalledWith(url, { email, appUrl: "http://localhost" })
+    })
+  })
+
+  describe("resetPassword", () => {
+    it("calls apiService put", async () => {
+      const url = "/api/v1/auth/password"
+      const newPassword = "abc123"
+      await resetPassword(newPassword)
+      expect(authenticatedPut).toHaveBeenCalledWith(
+        url,
+        expect.objectContaining({
+          password: newPassword,
+          password_confirmation: newPassword,
+        })
+      )
     })
   })
 
