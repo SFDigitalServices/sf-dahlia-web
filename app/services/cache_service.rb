@@ -49,6 +49,24 @@ class CacheService
     )
   end
 
+  def log_process_translations(listing, trigger)
+    strings_to_translate = build_strings_to_translate(listing)
+    GoogleTranslationService.google_translation_usage_logger(
+      listing['Id'],
+      trigger,
+      strings_to_translate.values.join.size,
+    )
+
+    # cache some placeholder data so that caching logic can execute and be analyzed
+    # we only need the actual listing_id and timestamp
+    GoogleTranslationService.new.cache_listing_translations(
+      listing['Id'],
+      %w[field_1 field_2],
+      [{ to: 'ES', translation: %w[text_1 text_2] }],
+      listing['LastModifiedDate'],
+    )
+  end
+
   private
 
   attr_accessor :prev_cached_listings, :fresh_listings
@@ -117,7 +135,7 @@ class CacheService
 
   def cache_all_listings
     fresh_listings.each do |l|
-      cache_single_listing(l)
+      cache_single_listing(l, rake_task: 'prefetch_daily')
     end
   end
 
@@ -130,7 +148,7 @@ class CacheService
       next if listing_unchanged?(prev_cached_listing, fresh_listing) &&
               listing_images_unchanged?(prev_cached_listing, fresh_listing)
 
-      cache_single_listing(fresh_listing)
+      cache_single_listing(fresh_listing, rake_task: 'prefetch_10min')
     end
   end
 
@@ -154,12 +172,12 @@ class CacheService
     listing_images_equal?(prev_cached_listing_images, fresh_listing_images)
   end
 
-  def cache_single_listing(listing)
+  def cache_single_listing(listing, rake_task: nil)
     Rails.logger.info("Calling cache_single_listing for #{listing['Id']}")
 
     id = listing['Id']
     # cache this listing from API
-    Force::ListingService.listing(id, force: true)
+    Force::ListingService.listing(id, force: true, rake_task:)
     units = Force::ListingService.units(id, force: true)
     AmiCacheService.new.cache_ami_chart_data(units)
     Force::ListingService.preferences(id, force: true)

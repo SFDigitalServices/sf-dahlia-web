@@ -51,7 +51,7 @@
         small.error#applicant_alternate_phone_type_error ng-if="inputInvalid('alternatePhoneType')"
           | {{'error.phone_number_type' | translate}}
 
-  .app-inner.inset.border-bottom
+  .app-inner.inset ng-class="{ 'border-bottom': !listingIsDalp() }"
     .form-group.row.has-option ng-class="{error: addressInputInvalid('home_address')}"
       label.form-label.caps
         | {{'label.address' | translate}}
@@ -68,7 +68,7 @@
           label for="applicant_separate_address"
             | {{'label.applicant_separate_address' | translate}}
 
-  .app-inner.inset.border-bottom ng-if="applicant.hasAltMailingAddress"
+  .app-inner.inset ng-class="{ 'border-bottom': !listingIsDalp() }" ng-if="applicant.hasAltMailingAddress"
     .form-group.row ng-class="{ error: addressInputInvalid('mailing_address')}"
       label.form-label.caps
         | {{'label.mailing_address' | translate}}
@@ -77,7 +77,7 @@
 
       address-form address-type="mailing_address" model='applicant' model-name='applicant' is-required="true" on-change="addressChange('applicant')" hide-address2="true"
 
-  .app-inner.inset
+  .app-inner.inset ng-if="!listingIsDalp()"
     .form-group ng-class="{ error: inputInvalid('workInSf') }"
       label.form-label.caps
         | {{'label.work_in_sf' | translate}}

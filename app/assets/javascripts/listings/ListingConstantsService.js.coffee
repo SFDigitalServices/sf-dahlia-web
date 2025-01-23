@@ -94,6 +94,8 @@ ListingConstantsService = () ->
     rightToReturnSunnydale: "Right to Return - Sunnydale"
     rightToReturnHuntersView: "Right to Return - Hunters View"
     rightToReturnPotrero: "Right to Return - Potrero"
+    dalpFirstResponder: "DALP First Responders"
+    dalpEducator: "DALP SFUSD Educators"
 
   # List of preferences that follow the right to return pattern.
   Service.rightToReturnPreferences =
