@@ -3,6 +3,8 @@ import {
   clearHeaders,
   clearHeadersTimeOut,
   clearHeadersConnectionIssue,
+  getTemporaryAuthParamsFromUrl,
+  setAuthHeadersFromUrl,
 } from "../../authentication/token"
 
 const ACCESS_TOKEN_LOCAL_STORAGE_KEY = "auth_headers"
@@ -47,6 +49,41 @@ describe("token.ts", () => {
     expect(mockSetItem).toHaveBeenCalledWith(
       "alert_message_secondary",
       "There was a connection issue, so we signed you out. We do this for your security. Sign in again to continue."
+    )
+  })
+  it("getTemporaryAuthParamsFromURL", () => {
+    // Mock the window.location.href
+    Object.defineProperty(window, "location", {
+      writable: true,
+      value: {
+        href: "http://localhost:3000/reset-password?access-token=DDDDD&client=CCCCC&client_id=BBBBB&config=default&expiry=100&reset_password=true&token=AAAAAA&uid=test%40test.com",
+      },
+    })
+
+    const expectedParams = {
+      expiry: "100",
+      accessToken: "DDDDD",
+      client: "CCCCC",
+      uid: "test@test.com",
+      tokenType: "Bearer",
+      reset_password: "true",
+    }
+
+    const result = getTemporaryAuthParamsFromUrl()
+    expect(result).toEqual(expectedParams)
+
+    const setAuthReturn = setAuthHeadersFromUrl(result)
+
+    expect(setAuthReturn).toEqual(true)
+    expect(mockSetItem).toHaveBeenCalledWith(
+      ACCESS_TOKEN_LOCAL_STORAGE_KEY,
+      JSON.stringify({
+        expiry: "100",
+        "access-token": "DDDDD",
+        client: "CCCCC",
+        uid: "test@test.com",
+        "token-type": "Bearer",
+      })
     )
   })
 })

@@ -647,6 +647,17 @@
           $translate('page_title.listing_application', {listing: listing.Name})
         ]
     })
+    .state('dahlia.short-form-application.dalp-screening', {
+      url: '/dalp-screening'
+      params:
+        skipConfirm: { squash: true, value: false }
+      views:
+        'container@':
+          templateUrl: 'short-form/templates/layout.html'
+          controller: 'ShortFormApplicationController'
+        'container@dahlia.short-form-application.dalp-screening':
+          templateUrl: 'short-form/templates/a4a-dalp-screening.html'
+    })
     # Short form: "You" section
     .state('dahlia.short-form-application.prerequisites', {
       url: '/prerequisites'
@@ -657,8 +668,10 @@
         infoChanged:
           squash: true
       onEnter: [
-        '$stateParams', 'ShortFormApplicationService', 'AccountService', 'AutosaveService'
-        ($stateParams, ShortFormApplicationService, AccountService, AutosaveService) ->
+        '$state', '$stateParams', 'ShortFormApplicationService', 'AccountService', 'AutosaveService'
+        ($state, $stateParams, ShortFormApplicationService, AccountService, AutosaveService) ->
+          if ShortFormApplicationService.listingIsDalp() && !ShortFormApplicationService.application.answeredDalpScreening
+            $state.go('dahlia.short-form-application.dalp-screening', {id: $stateParams.id, skipConfirm: true, lang: $stateParams.lang})
           # If applicant tries to go to this page on a rental listing, redirect them back to homepage
           if !ShortFormApplicationService.listingIsSale()
             $state.go('dahlia.welcome')
@@ -668,8 +681,8 @@
             ShortFormApplicationService.infoChanged = $stateParams.infoChanged
       ]
       resolve:
-        lendingInstitutions: ['LendingInstitutionService', (LendingInstitutionService) ->
-          LendingInstitutionService.getLendingInstitutions()
+        lendingInstitutions: ['listing', 'LendingInstitutionService', (listing, LendingInstitutionService) ->
+          LendingInstitutionService.getLendingInstitutions(listing.Custom_Listing_Type == "Downpayment Assistance Loan Program")
         ]
     })
     .state('dahlia.short-form-application.autofill-preview', {
