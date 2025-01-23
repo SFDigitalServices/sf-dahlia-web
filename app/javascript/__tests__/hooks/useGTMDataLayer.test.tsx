@@ -46,7 +46,7 @@ describe("useGTMDataLayer", () => {
     expect(consoleSpy).toHaveBeenCalled()
   })
 
-  it("errors out when no event is provided in the data object", () => {
+  it("errors out when an event property is provided in the data object", () => {
     const event = "testEvent"
     const data = { test: "data", event: "testEvent" }
 
