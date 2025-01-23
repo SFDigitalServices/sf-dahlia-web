@@ -128,7 +128,7 @@
   "scripts": {
     "postinstall": "bower install",
     "protractor": "protractor ./spec/e2e/conf.js",
-    "test": "TZ='UTC' NODE_OPTIONS=\"--max-old-space-size=4096\" jest --coverage --maxWorkers=2 --logHeapUsage",
+    "test": "TZ='UTC' NODE_OPTIONS=\"--max-old-space-size=4096\" jest --coverage --maxWorkers=",
     "test:e2e": "cypress run --browser chrome",
     "test:e2e:open": "cypress open --browser chrome",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx app/javascript cypress",
