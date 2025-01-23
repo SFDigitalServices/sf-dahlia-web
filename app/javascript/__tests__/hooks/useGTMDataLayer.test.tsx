@@ -45,4 +45,15 @@ describe("useGTMDataLayer", () => {
 
     expect(consoleSpy).toHaveBeenCalled()
   })
+
+  it("errors out when no event is provided in the data object", () => {
+    const event = "testEvent"
+    const data = { test: "data", event: "testEvent" }
+
+    const { result } = renderHook(() => useGTMDataLayer())
+
+    result.current.pushToDataLayer(event, data)
+
+    expect(consoleSpy).toHaveBeenCalled()
+  })
 })

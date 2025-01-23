@@ -99,7 +99,7 @@ describe("UserProvider", () => {
     await waitFor(() => expect(screen.getByText("Sign In")).not.toBeNull())
   })
 
-  it("should handle token invalidation on initial load", async () => {
+  it("should handle token invalidation", async () => {
     ;(isTokenValid as jest.Mock).mockReturnValue(false)
     ;(getProfile as jest.Mock).mockRejectedValueOnce(new Error("Token expired"))
 
