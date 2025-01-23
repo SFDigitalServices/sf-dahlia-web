@@ -3,14 +3,9 @@ import Layout from "../../layouts/Layout"
 import withAppSetup from "../../layouts/withAppSetup"
 import { Card } from "@bloom-housing/ui-seeds"
 import { Icon, t, type UniversalIconType } from "@bloom-housing/ui-components"
-import UserContext from "../../authentication/context/UserContext"
-import {
-  getMyAccountSettingsPath,
-  getMyApplicationsPath,
-  getSignInPath,
-} from "../../util/routeUtil"
+import { getMyAccountSettingsPath, getMyApplicationsPath } from "../../util/routeUtil"
 import { renderInlineMarkup } from "../../util/languageUtil"
-import useRedirect from "../../hooks/useRedirect"
+import { withAuthentication } from "../../authentication/withAuthentication"
 
 interface MyAccountProps {
   assetPaths: unknown
@@ -60,15 +55,6 @@ const AccountDashCard = ({
 }
 
 const MyAccount = (_props: MyAccountProps) => {
-  const { profile, loading, initialStateLoaded } = React.useContext(UserContext)
-  const { handleRedirect } = useRedirect()
-
-  if (!profile && !loading && initialStateLoaded) {
-    handleRedirect("account")
-    window.location.href = getSignInPath()
-    return null
-  }
-
   return (
     <Layout title={"My Account"}>
       <section className="bg-gray-300 flex justify-center">
@@ -96,4 +82,4 @@ const MyAccount = (_props: MyAccountProps) => {
   )
 }
 
-export default withAppSetup(MyAccount)
+export default withAppSetup(withAuthentication(MyAccount, { redirectPath: "account" }))

@@ -11,7 +11,7 @@ import {
 } from "@bloom-housing/ui-components"
 import { Card, Dialog, Heading } from "@bloom-housing/ui-seeds"
 import { ApplicationItem } from "../../components/ApplicationItem"
-import { getApplicationPath, getLocalizedPath, getSignInPath } from "../../util/routeUtil"
+import { getApplicationPath, getLocalizedPath } from "../../util/routeUtil"
 import { getCurrentLanguage, renderInlineMarkup } from "../../util/languageUtil"
 import { deleteApplication, getApplications } from "../../api/authApiService"
 import UserContext from "../../authentication/context/UserContext"
@@ -21,7 +21,7 @@ import "./styles/my-applications.scss"
 import { DoubleSubmittedModal } from "./components/DoubleSubmittedModal"
 import { AlreadySubmittedModal } from "./components/AlreadySubmittedModal"
 import { extractModalParamsFromUrl } from "./components/util"
-import useRedirect from "../../hooks/useRedirect"
+import { withAuthentication } from "../../authentication/withAuthentication"
 
 export const noApplications = () => {
   return (
@@ -147,8 +147,6 @@ const MyApplications = () => {
   const [openDoubleSubmittedModal, setOpenDoubleSubmittedModal] = useState<boolean>(false)
   const [deleteApp, setDeleteApp] = useState("")
 
-  const { handleRedirect } = useRedirect()
-
   const handleDeleteApp = (id: string) => {
     setDeleteApp(id)
     setOpenDeleteModal(true)
@@ -169,13 +167,6 @@ const MyApplications = () => {
       })
     setOpenDeleteModal(false)
   }
-
-  React.useEffect(() => {
-    if (!profile && !authLoading && initialStateLoaded) {
-      handleRedirect("applications")
-      window.location.href = getSignInPath()
-    }
-  })
 
   React.useEffect(() => {
     const { alreadySubmittedIdFromURL, doubleSubmitFromURL } = extractModalParamsFromUrl(
@@ -276,4 +267,4 @@ const MyApplications = () => {
   )
 }
 
-export default withAppSetup(MyApplications)
+export default withAppSetup(withAuthentication(MyApplications, { redirectPath: "applications" }))

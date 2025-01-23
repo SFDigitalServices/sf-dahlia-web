@@ -40,9 +40,7 @@ import { FormHeader, FormSection, getDobStringFromDobObject } from "../../util/a
 import { AxiosError } from "axios"
 import { ErrorSummaryBanner } from "./components/ErrorSummaryBanner"
 import { ExpandedAccountAxiosError, getErrorMessage } from "./components/util"
-import { getLocalizedPath } from "../../util/routeUtil"
-import { getCurrentLanguage } from "../../util/languageUtil"
-import { isTokenValid } from "../../authentication/token"
+import { withAuthentication } from "../../authentication/withAuthentication"
 
 const Banner = ({
   showBanner,
@@ -455,28 +453,9 @@ const AccountSettings = ({ profile }: { profile: User }) => {
 }
 
 const AccountSettingsPage = () => {
-  const { profile, loading } = React.useContext(UserContext)
-
-  React.useEffect(() => {
-    // If we have no valid token, redirect immediately
-    if (!isTokenValid()) {
-      const redirectParam = "?redirect=settings"
-      const signInPath = getLocalizedPath("/sign-in", getCurrentLanguage(), redirectParam)
-      window.location.href = signInPath
-    }
-  }, [])
-
-  // Show nothing while loading
-  if (loading) {
-    return null
-  }
-
-  // Show nothing if not authenticated
-  if (!profile) {
-    return null
-  }
+  const { profile } = React.useContext(UserContext)
 
   return <AccountSettings profile={profile} />
 }
 
-export default withAppSetup(AccountSettingsPage)
+export default withAppSetup(withAuthentication(AccountSettingsPage, { redirectPath: "settings" }))
