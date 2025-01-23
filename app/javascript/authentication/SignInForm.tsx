@@ -9,6 +9,7 @@ import {
   Icon,
   AlertBox,
   LinkButton,
+  NavigationContext,
 } from "@bloom-housing/ui-components"
 import { Link, Heading } from "@bloom-housing/ui-seeds"
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form"
@@ -24,12 +25,16 @@ import { SiteAlert } from "../components/SiteAlert"
 import { NewAccountNotConfirmedModal } from "./components/NewAccountNotConfirmedModal"
 import { ExpiredUnconfirmedModal } from "./components/ExpiredUnconfirmedModal"
 import { renderInlineMarkup } from "../util/languageUtil"
-import useRedirect from "../hooks/useRedirect"
 
 const getExpiredConfirmedEmail = () => {
   const urlParams = new URLSearchParams(window.location.search)
   const expiredUnconfirmedEmail = urlParams.get("expiredConfirmed")
   return expiredUnconfirmedEmail
+}
+
+const getRedirectFromUrl = () => {
+  const urlParams = new URLSearchParams(window.location.search)
+  return urlParams.get("redirect")
 }
 
 const SignInFormCard = ({
@@ -112,7 +117,7 @@ const SignInForm = () => {
 
   const { signIn } = useContext(UserContext)
 
-  const { redirect } = useRedirect()
+  const { router } = useContext(NavigationContext)
 
   const handleRequestError = (error: AxiosError<{ error: string; email: string }>) => {
     if (error.response.data.error === "not_confirmed") {
@@ -133,7 +138,8 @@ const SignInForm = () => {
 
     signIn(email, password)
       .then(() => {
-        window.location.href = getSignInRedirectUrl(redirect)
+        const redirectUrl = getRedirectFromUrl()
+        router.push(getSignInRedirectUrl(redirectUrl || ""))
         window.scrollTo(0, 0)
       })
       .catch((error: AxiosError<{ error: string; email: string }>) => {
