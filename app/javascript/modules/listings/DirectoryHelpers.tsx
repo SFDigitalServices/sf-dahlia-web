@@ -7,7 +7,6 @@ import {
   IconTypes,
   LinkButton,
   ListingCard,
-  ListingsGroup,
   PageHeader,
   StackedTableRow,
   t,
@@ -44,6 +43,7 @@ import { ListingState } from "./ListingState"
 import { ListingsGroupHeader } from "./ListingsGroupHeader"
 import { IconHomeCheck } from "./assets/icon-home-check"
 import { EmptyListingsView } from "./components/EmptyListingsView"
+import ListingsGroup from "./components/ListingsGroup"
 
 export type RailsUnitSummary = RailsSaleUnitSummary | RailsRentalUnitSummary
 
@@ -326,9 +326,13 @@ export const getListingGroup = (
   hasFiltersSet?: boolean,
   subtitle?: string,
   icon?: IconTypes,
-  isOpen?: boolean
+  showListings?: boolean,
+  setShowListings?: React.Dispatch<React.SetStateAction<boolean>>,
+  newDirectoryEnabled?: boolean
 ) => {
-  const showListingsGroup = section !== DIRECTORY_SECTION_ADDITIONAL_LISTINGS || listings.length > 0
+  const showListingsGroup =
+    (newDirectoryEnabled && section !== DIRECTORY_SECTION_ADDITIONAL_LISTINGS) ||
+    listings.length > 0
   return (
     showListingsGroup && (
       <ListingsGroup
@@ -340,7 +344,8 @@ export const getListingGroup = (
         icon={icon}
         refKey={refKey}
         observerRef={observerRef}
-        isOpen={isOpen}
+        showListings={showListings}
+        setShowListings={setShowListings}
       >
         {listings.length > 0
           ? getListingCards(listings, directoryType, stackedDataFxn, hasFiltersSet)
@@ -357,7 +362,9 @@ export const upcomingLotteriesView = (
   directoryType,
   stackedDataFxn: StackedDataFxnType,
   observerRef: React.MutableRefObject<null | IntersectionObserver>,
-  isOpen: boolean
+  showListings?: boolean,
+  setShowListings?: React.Dispatch<React.SetStateAction<boolean>>,
+  newDirectoryEnabled?: boolean
 ) => {
   return getListingGroup(
     listings,
@@ -372,7 +379,9 @@ export const upcomingLotteriesView = (
     undefined,
     t("listings.upcomingLotteries.subtitle"),
     null,
-    isOpen
+    showListings,
+    setShowListings,
+    newDirectoryEnabled
   )
 }
 
@@ -381,7 +390,9 @@ export const lotteryResultsView = (
   directoryType,
   stackedDataFxn: StackedDataFxnType,
   observerRef: React.MutableRefObject<null | IntersectionObserver>,
-  isOpen?: boolean
+  showListings?: boolean,
+  setShowListings?: React.Dispatch<React.SetStateAction<boolean>>,
+  newDirectoryEnabled?: boolean
 ) => {
   return getListingGroup(
     listings,
@@ -396,7 +407,9 @@ export const lotteryResultsView = (
     undefined,
     t("listings.lotteryResults.subtitle"),
     "result",
-    isOpen
+    showListings,
+    setShowListings,
+    newDirectoryEnabled
   )
 }
 
@@ -406,22 +419,29 @@ export const additionalView = (
   stackedDataFxn: StackedDataFxnType,
   observerRef: React.MutableRefObject<null | IntersectionObserver>,
   filtersSet?: boolean,
-  isOpen?: boolean
+  showListings?: boolean,
+  setShowListings?: React.Dispatch<React.SetStateAction<boolean>>,
+  newDirectoryEnabled?: boolean
 ) => {
-  return getListingGroup(
-    listings,
-    directoryType,
-    stackedDataFxn,
-    `${t("listings.additional.title")}`,
-    `${t("listings.additional.hide")}`,
-    `${t("listings.additional.show")}`,
-    "additional-listings",
-    observerRef,
-    DIRECTORY_SECTION_ADDITIONAL_LISTINGS,
-    filtersSet,
-    t("listings.additional.subtitle"),
-    "doubleHouse",
-    isOpen
+  return (
+    listings.length > 0 &&
+    getListingGroup(
+      listings,
+      directoryType,
+      stackedDataFxn,
+      `${t("listings.additional.title")}`,
+      `${t("listings.additional.hide")}`,
+      `${t("listings.additional.show")}`,
+      "additional-listings",
+      observerRef,
+      DIRECTORY_SECTION_ADDITIONAL_LISTINGS,
+      filtersSet,
+      t("listings.additional.subtitle"),
+      "doubleHouse",
+      showListings,
+      setShowListings,
+      newDirectoryEnabled
+    )
   )
 }
 

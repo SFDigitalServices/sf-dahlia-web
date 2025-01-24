@@ -643,7 +643,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                         </div>
                         <a
                           class="seeds-link forgot-password-link"
-                          href="/forgot-password"
+                          href="/forgot-password?email=email@email.com"
                         >
                           Forgot password?
                         </a>
@@ -1511,7 +1511,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                       </div>
                       <a
                         class="seeds-link forgot-password-link"
-                        href="/forgot-password"
+                        href="/forgot-password?email=email@email.com"
                       >
                         Forgot password?
                       </a>
@@ -2412,7 +2412,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                         </div>
                         <a
                           class="seeds-link forgot-password-link"
-                          href="/forgot-password"
+                          href="/forgot-password?email=email@email.com"
                         >
                           Forgot password?
                         </a>
@@ -3256,7 +3256,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                       </div>
                       <a
                         class="seeds-link forgot-password-link"
-                        href="/forgot-password"
+                        href="/forgot-password?email=email@email.com"
                       >
                         Forgot password?
                       </a>
