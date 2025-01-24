@@ -40,7 +40,7 @@ module Force
       results = Request.new(parse_response: true).cached_get(endpoint, nil, force)
       listing = process_listing_images(results)
 
-      translation_usage_by_trigger(listing, opts[:rake_task])
+      translation_usage_by_trigger(listing, opts[:rake_task]) if listing.present?
 
       if Rails.configuration.unleash.is_enabled? 'GoogleCloudTranslate'
         listing['translations'] = get_listing_translations(listing) || {}
@@ -50,7 +50,9 @@ module Force
 
     def self.translation_usage_by_trigger(listing, rake_task = nil)
       # only one of these feature flags should be turned on at a time
-      if Rails.configuration.unleash.is_enabled? 'LogGoogleCloudTranslateUsageForPageView'
+      if Rails.configuration.unleash.is_enabled?(
+        'LogGoogleCloudTranslateUsageForPageView',
+      ) && rake_task.blank?
         listing['translations'] = log_listing_translations(listing, 'page_view')
       elsif Rails.configuration.unleash.is_enabled?(
         'LogGoogleCloudTranslateUsageForPrefetch10Min',

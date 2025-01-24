@@ -194,7 +194,8 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
                   observerRef,
                   hasFiltersSet,
                   additionalIsOpen,
-                  setAdditionalIsOpen
+                  setAdditionalIsOpen,
+                  newDirectoryEnabled
                 )}
               {upcomingLotteriesView(
                 listings.upcoming,
@@ -202,7 +203,8 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
                 props.getSummaryTable,
                 observerRef,
                 upcomingIsOpen,
-                setUpcomingIsOpen
+                setUpcomingIsOpen,
+                newDirectoryEnabled
               )}
               {lotteryResultsView(
                 listings.results,
@@ -210,7 +212,8 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
                 props.getSummaryTable,
                 observerRef,
                 resultsIsOpen,
-                setResultsIsOpen
+                setResultsIsOpen,
+                newDirectoryEnabled
               )}
             </div>
           </>

@@ -3,9 +3,9 @@ section.app-container
     .medium-6.medium-centered.columns.fixed-width
       short-form-back
       .app-header.app-card.form-card
-        header.app-card_header
+        header.app-card_header(ng-class="{'rounded-bottom-corners': listingIsDalp()}")
           h1.app-card_title.skiptranslate translate="t.application_for_listing" translate-value-listing-name="{{application.listing.Name || listing.Name}}"
-        .app-card_nav.text-center
+        .app-card_nav.text-center ng-if="!listingIsDalp()"
           a.button.button-link.button-lined.small-text-center.expand-small ui-sref="dahlia.listing({id: listing.listingID})"
             | {{'review_application.view_original_listing' | translate}}
 

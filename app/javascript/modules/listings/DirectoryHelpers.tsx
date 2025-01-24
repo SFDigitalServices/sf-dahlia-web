@@ -327,27 +327,33 @@ export const getListingGroup = (
   subtitle?: string,
   icon?: IconTypes,
   showListings?: boolean,
-  setShowListings?: React.Dispatch<React.SetStateAction<boolean>>
+  setShowListings?: React.Dispatch<React.SetStateAction<boolean>>,
+  newDirectoryEnabled?: boolean
 ) => {
+  const showListingsGroup =
+    (newDirectoryEnabled && section !== DIRECTORY_SECTION_ADDITIONAL_LISTINGS) ||
+    listings.length > 0
   return (
-    <ListingsGroup
-      listingsCount={listings.length}
-      header={header}
-      hideButtonText={hide}
-      showButtonText={show}
-      info={subtitle}
-      icon={icon}
-      refKey={refKey}
-      observerRef={observerRef}
-      showListings={showListings}
-      setShowListings={setShowListings}
-    >
-      {listings.length > 0
-        ? getListingCards(listings, directoryType, stackedDataFxn, hasFiltersSet)
-        : section !== DIRECTORY_SECTION_ADDITIONAL_LISTINGS && (
-            <EmptyListingsView section={section} />
-          )}
-    </ListingsGroup>
+    showListingsGroup && (
+      <ListingsGroup
+        listingsCount={listings.length}
+        header={header}
+        hideButtonText={hide}
+        showButtonText={show}
+        info={subtitle}
+        icon={icon}
+        refKey={refKey}
+        observerRef={observerRef}
+        showListings={showListings}
+        setShowListings={setShowListings}
+      >
+        {listings.length > 0
+          ? getListingCards(listings, directoryType, stackedDataFxn, hasFiltersSet)
+          : section !== DIRECTORY_SECTION_ADDITIONAL_LISTINGS && (
+              <EmptyListingsView section={section} />
+            )}
+      </ListingsGroup>
+    )
   )
 }
 
@@ -357,7 +363,8 @@ export const upcomingLotteriesView = (
   stackedDataFxn: StackedDataFxnType,
   observerRef: React.MutableRefObject<null | IntersectionObserver>,
   showListings?: boolean,
-  setShowListings?: React.Dispatch<React.SetStateAction<boolean>>
+  setShowListings?: React.Dispatch<React.SetStateAction<boolean>>,
+  newDirectoryEnabled?: boolean
 ) => {
   return getListingGroup(
     listings,
@@ -373,7 +380,8 @@ export const upcomingLotteriesView = (
     t("listings.upcomingLotteries.subtitle"),
     null,
     showListings,
-    setShowListings
+    setShowListings,
+    newDirectoryEnabled
   )
 }
 
@@ -383,7 +391,8 @@ export const lotteryResultsView = (
   stackedDataFxn: StackedDataFxnType,
   observerRef: React.MutableRefObject<null | IntersectionObserver>,
   showListings?: boolean,
-  setShowListings?: React.Dispatch<React.SetStateAction<boolean>>
+  setShowListings?: React.Dispatch<React.SetStateAction<boolean>>,
+  newDirectoryEnabled?: boolean
 ) => {
   return getListingGroup(
     listings,
@@ -399,7 +408,8 @@ export const lotteryResultsView = (
     t("listings.lotteryResults.subtitle"),
     "result",
     showListings,
-    setShowListings
+    setShowListings,
+    newDirectoryEnabled
   )
 }
 
@@ -410,7 +420,8 @@ export const additionalView = (
   observerRef: React.MutableRefObject<null | IntersectionObserver>,
   filtersSet?: boolean,
   showListings?: boolean,
-  setShowListings?: React.Dispatch<React.SetStateAction<boolean>>
+  setShowListings?: React.Dispatch<React.SetStateAction<boolean>>,
+  newDirectoryEnabled?: boolean
 ) => {
   return (
     listings.length > 0 &&
@@ -428,7 +439,8 @@ export const additionalView = (
       t("listings.additional.subtitle"),
       "doubleHouse",
       showListings,
-      setShowListings
+      setShowListings,
+      newDirectoryEnabled
     )
   )
 }
