@@ -40,6 +40,31 @@ const SignInFormCard = ({
   requestError: string
   setRequestError: Dispatch<SetStateAction<string>>
 }) => {
+  const emailSubmitField = document.querySelector("#email")
+  const passwordSubmitField = document.querySelector("#password")
+
+  useEffect(() => {
+    if (emailSubmitField) {
+      emailSubmitField.addEventListener("keypress", function (event: KeyboardEvent) {
+        if (event.key === "Enter") {
+          // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+          const button = document.querySelector("#sign-in-button") as HTMLElement
+          button.click()
+        }
+      })
+    }
+
+    if (passwordSubmitField) {
+      passwordSubmitField.addEventListener("keypress", function (event: KeyboardEvent) {
+        if (event.key === "Enter") {
+          // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+          const button = document.querySelector("#sign-in-button") as HTMLElement
+          button.click()
+        }
+      })
+    }
+  }, [emailSubmitField, passwordSubmitField])
+
   /* Form Handler */
   // TODO(DAH-1575): Upgrade React-Hook-Form. Note: When you update to Version 7 of react-hook-form, "errors" becomes: "formState: { errors }""
   // This is causing a linting issue with unbound-method, see open issue as of 10/21/2020:
@@ -89,7 +114,7 @@ const SignInFormCard = ({
             passwordType="signIn"
           />
           <div className="text-center mt-4">
-            <Button styleType={AppearanceStyleType.primary} type="submit">
+            <Button id="sign-in-button" styleType={AppearanceStyleType.primary} type="submit">
               {t("pageTitle.signIn")}
             </Button>
           </div>
