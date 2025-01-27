@@ -11,7 +11,7 @@
           input#application_is_first_time_homebuyer name="application_is_first_time_homebuyer" type="checkbox" ng-model="application.isFirstTimeHomebuyer" ng-required="true" ng-class="{ error: inputInvalid('application_is_first_time_homebuyer')}"
           label.checkbox-block_label for="application_is_first_time_homebuyer" ng-class="{ error: inputInvalid('application_is_first_time_homebuyer')}"
             strong.caps.form-label
-              | {{'label.application_is_first_time_homebuyer' | translate}}
+              | {{applicantHasClaimedDalpPriority() ? 'label.application_is_first_time_homebuyer_dalp' : 'label.application_is_first_time_homebuyer' | translate}}
             small.error id="application_is_first_time_homebuyerError" ng-show="inputInvalid('application_is_first_time_homebuyer')"
               | {{'label.field_required' | translate}}
       / My credit score is at least 650
