@@ -189,7 +189,7 @@ jobs:
       - setup
       - run: yarn cache clean
       - run: yarn install
-      - run: yarn test
+      - run: node --inspect --expose-gc ./node_modules/.bin/jest --runInBand --logHeapUsage --coverage
       # path configured in jest.config.js as <rootDir>/<coverageDirectory>
       - store_artifacts:
           path: app/javascript/test-coverage
