@@ -17,6 +17,7 @@ defaults: &defaults
         POSTGRES_USER: root
         POSTGRES_DB: sf_dahlia
     - image: "cypress/base:14.15.0"
+  resource_class: medium+
   executor: ruby/default
 non_production_jobs: &non_production_jobs
   filters:
@@ -189,7 +190,7 @@ jobs:
       - setup
       - run: yarn cache clean
       - run: yarn install
-      - run: node --inspect --expose-gc ./node_modules/.bin/jest --workerIdleMemoryLimit=350 --logHeapUsage --coverage
+      - run: yarn test
       # path configured in jest.config.js as <rootDir>/<coverageDirectory>
       - store_artifacts:
           path: app/javascript/test-coverage
