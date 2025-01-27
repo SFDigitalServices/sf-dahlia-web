@@ -40,12 +40,12 @@ const SignInFormCard = ({
   requestError: string
   setRequestError: Dispatch<SetStateAction<string>>
 }) => {
-  const emailField = document.querySelector("#email")
-  const passwordField = document.querySelector("#password")
+  const emailSubmitField = document.querySelector("#email")
+  const passwordSubmitField = document.querySelector("#password")
 
   useEffect(() => {
-    if (emailField) {
-      emailField.addEventListener("keypress", function (event: KeyboardEvent) {
+    if (emailSubmitField) {
+      emailSubmitField.addEventListener("keypress", function (event: KeyboardEvent) {
         if (event.key === "Enter") {
           // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
           const button = document.querySelector("#sign-in-button") as HTMLElement
@@ -54,8 +54,8 @@ const SignInFormCard = ({
       })
     }
 
-    if (passwordField) {
-      passwordField.addEventListener("keypress", function (event: KeyboardEvent) {
+    if (passwordSubmitField) {
+      passwordSubmitField.addEventListener("keypress", function (event: KeyboardEvent) {
         if (event.key === "Enter") {
           // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
           const button = document.querySelector("#sign-in-button") as HTMLElement
@@ -63,7 +63,7 @@ const SignInFormCard = ({
         }
       })
     }
-  }, [emailField, passwordField])
+  }, [emailSubmitField, passwordSubmitField])
 
   /* Form Handler */
   // TODO(DAH-1575): Upgrade React-Hook-Form. Note: When you update to Version 7 of react-hook-form, "errors" becomes: "formState: { errors }""
