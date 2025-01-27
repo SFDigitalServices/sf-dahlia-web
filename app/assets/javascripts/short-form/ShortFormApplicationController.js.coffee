@@ -820,9 +820,6 @@ ShortFormApplicationController = (
   $scope.listingIsSale = ->
     ShortFormApplicationService.listingIsSale()
 
-  $scope.listingIsDalp = ->
-    ShortFormApplicationService.listingIsDalp()
-
   $scope.listingIsHabitat = ->
     ShortFormApplicationService.listingIsHabitat()
 

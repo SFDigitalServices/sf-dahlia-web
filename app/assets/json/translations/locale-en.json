@@ -660,6 +660,7 @@
             "application_has_completed_homebuyer_education": "I have attended 10 hours of Homebuyer Education in the past year.",
             "application_has_loan_pre_approval": "I am pre-approved for a mortgage loan by a MOHCD-Approved Loan Officer.",
             "application_is_first_time_homebuyer": "I have not owned residential property within the past 3 years.",
+            "application_is_first_time_homebuyer_dalp": "I have not owned residential property in San Francisco within the past 3 years.",
             "application_pre_approval_must_be_120_days": "Your pre-approval letter must be dated within the past 120 days",
             "application_visit_homeownership_calendar": "If you haven't done this yet, <a href='{{url}}' target='_blank'>sign up to complete homebuyer education</a>. You will get a verification letter when you finish.",
             "apply_online": "Apply Online",

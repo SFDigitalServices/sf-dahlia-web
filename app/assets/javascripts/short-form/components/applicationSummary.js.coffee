@@ -136,5 +136,8 @@ angular.module('dahlia.components')
       ctrl.isDALPListing = ->
         ListingDataService.listing.Custom_Listing_Type == 'Downpayment Assistance Loan Program'
 
+      ctrl.applicantHasClaimedDalpPriority = ->
+        ctrl.application.dalpEducator == true || ctrl.application.dalpFirstResponder == true
+
       return ctrl
   ]
