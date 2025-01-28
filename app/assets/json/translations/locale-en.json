@@ -53,9 +53,6 @@
             "you_can_still_apply": "You can still apply, but will be ranked below SF Unified School District employees in the lottery.",
             "you_must_work_at": "You must work at SF Unified School District to apply."
         },
-        "a3a_dalp_screening": {
-            "title": ""
-        },
         "a4_overview": {
             "p1": "First we'll ask about you and the people you plan to live with. Then, we'll ask about your income. Finally, we'll see if you qualify for any affordable housing lottery preference, and if so, ask you to upload proof of those preferences.",
             "p2": "<a ui-sref='{{sref}}' target='_blank'>See our checklist</a> for information about required documents and claiming preferences.",
