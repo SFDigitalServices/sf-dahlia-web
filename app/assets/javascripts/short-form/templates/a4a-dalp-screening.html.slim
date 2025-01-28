@@ -12,13 +12,13 @@ section.app-container.focus-container
             label for="dalp_educator" Dalp educator
             | {{ application.dalpEducator }}
           .form-group.margin-left--2x.margin-right--2x.margin-bottom--2x ng-if="application.dalpEducator"
-            file-uploader button-label="Upload Paystub" file-label="Paystub" document="application.documents['Dalp educator proof']" file-type="Dalp educator proof" required="true"
+            file-uploader button-label="Upload Paystub" file-label="Paystub" document="application.documents['DALP educator proof']" file-type="DALP educator proof" required="true"
           .checkbox
             input#dalp_first_responder name="dalp_first_responder" type="checkbox" ng-model="application.dalpFirstResponder"
             label for="dalp_first_responder" Dalp first responder
             | {{ application.dalpFirstResponder }}
           .form-group.margin-left--2x.margin-right--2x.margin-bottom--2x ng-if="application.dalpFirstResponder"
-            file-uploader button-label="Upload Pay Stub" file-label="Paystub" document="application.documents['Dalp first responder proof']" file-type="Dalp first responder proof" required="true"
+            file-uploader button-label="Upload Pay Stub" file-label="Paystub" document="application.documents['DALP first responder proof']" file-type="DALP first responder proof" required="true"
     .button-pager
       .button-pager_row.primary.text-center
         input#submit.button.primary.radius type="submit" value="{{'t.next' | translate}}" ng-disabled="eligibilityErrors.length > 0"
