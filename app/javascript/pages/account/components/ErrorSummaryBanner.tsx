@@ -98,10 +98,10 @@ export const ErrorSummaryBanner = ({
           }
 
           return fieldError && fieldError.message ? (
-            <li key={key}>
+            <li className="list-outside" key={key}>
               <button
                 type="button"
-                className="text-blue-500 cursor-pointer background-none border-none p-0 text-left"
+                className="align-middle text-blue-500 cursor-pointer background-none border-none p-0 text-left"
                 onClick={() => {
                   if (fieldError.ref) {
                     fieldError.ref.scrollIntoView({ behavior: "smooth", block: "center" })
