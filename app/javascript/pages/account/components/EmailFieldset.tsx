@@ -81,8 +81,9 @@ interface EmailFieldProps {
 
 const EmailFieldset = ({ register, errors, defaultEmail, onChange, note }: EmailFieldProps) => {
   return (
-    <Fieldset hasError={errors.email} label={t("label.emailAddress")} note={note}>
+    <Fieldset hasError={errors?.email} label={t("label.emailAddress")} note={note}>
       <Field
+        dataTestId="email-field"
         className="pb-4"
         controlClassName="mt-1"
         type="email"
@@ -94,11 +95,11 @@ const EmailFieldset = ({ register, errors, defaultEmail, onChange, note }: Email
         }}
         labelClassName="sr-only"
         label="Email"
-        error={errors.email}
+        error={errors?.email}
         errorMessage={
-          errors.email?.message &&
+          errors?.email?.message &&
           renderInlineMarkup(
-            getErrorMessage(errors.email?.message as string, emailFieldsetErrors, false)
+            getErrorMessage(errors?.email?.message as string, emailFieldsetErrors, false)
           )
         }
         register={register}

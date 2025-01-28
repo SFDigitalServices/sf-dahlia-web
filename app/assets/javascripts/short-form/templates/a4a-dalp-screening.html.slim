@@ -1,0 +1,24 @@
+section.app-container.focus-container
+  .app-card.form-card
+    short-form-header
+      h2.app-card_question
+        | {{ 'a3a_dalp_screening.title' | translate }}
+
+    .app-inner.inset
+      .form-group
+        p.form-note.margin-bottom translate="label.please_select_all_that_apply"
+          .checkbox
+            input#dalp_educator name="dalp_educator" type="checkbox" ngchange="onSelectDalpEducator()" ng-model="application.dalpEducator"
+            label for="dalp_educator" Dalp educator
+            | {{ application.dalpEducator }}
+          .form-group.margin-left--2x.margin-right--2x.margin-bottom--2x ng-if="application.dalpEducator"
+            file-uploader button-label="Upload Paystub" file-label="Paystub" document="application.documents['DALP educator proof']" file-type="DALP educator proof" required="true"
+          .checkbox
+            input#dalp_first_responder name="dalp_first_responder" type="checkbox" ng-model="application.dalpFirstResponder"
+            label for="dalp_first_responder" Dalp first responder
+            | {{ application.dalpFirstResponder }}
+          .form-group.margin-left--2x.margin-right--2x.margin-bottom--2x ng-if="application.dalpFirstResponder"
+            file-uploader button-label="Upload Pay Stub" file-label="Paystub" document="application.documents['DALP first responder proof']" file-type="DALP first responder proof" required="true"
+    .button-pager
+      .button-pager_row.primary.text-center
+        input#submit.button.primary.radius type="submit" value="{{'t.next' | translate}}" ng-disabled="eligibilityErrors.length > 0"

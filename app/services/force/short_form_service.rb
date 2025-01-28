@@ -129,6 +129,14 @@ module Force
       @institutions = format_institutions(response)
     end
 
+    def self.lending_institutions_dalp
+      return @dalp_institutions if @dalp_institutions
+
+      endpoint = '/services/apexrest/agents?certified=dalp'
+      response = Request.new.cached_get(endpoint)
+      @dalp_institutions = format_institutions(response)
+    end
+
     def self._short_form_pref_id(application, file)
       _short_form_pref(application, file).try(:[], 'shortformPreferenceID')
     end

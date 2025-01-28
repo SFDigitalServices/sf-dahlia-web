@@ -50,6 +50,8 @@ ShortFormApplicationService = (
     documents:
       'Loan pre-approval': {}
       'Homebuyer education certificate': {}
+      'DALP educator proof': {}
+      'DALP first responder proof': {}
     preferences:
       liveInSf: null
       workInSf: null
@@ -96,6 +98,9 @@ ShortFormApplicationService = (
     customEducatorJobClassificationNumber: null
     isAnyoneAVeteran: null
     hasHomeAndCommunityBasedServices: null
+    dalpEducator: null
+    dalpFirstResponder: null
+    answeredDalpScreening: null
 
   Service.currentCustomProofPreference = {}
   Service.currentRentBurdenAddress = {}
@@ -202,10 +207,16 @@ ShortFormApplicationService = (
         # make sure all validatedForms in previous section == true
         _.every(validated['Income'], (i) -> i)
       when 'Review'
-        Service.userCanAccessSection('Preferences') &&
-        completed.Preferences &&
-        # make sure all validatedForms in previous section == true
-        _.every(validated['Preferences'], (i) -> i)
+        if (Service.listingIsDalp())
+          Service.userCanAccessSection('Income') &&
+          completed.Income &&
+          # make sure all validatedForms in previous section == true
+          _.every(validated['Income'], (i) -> i)
+        else
+          Service.userCanAccessSection('Preferences') &&
+          completed.Preferences &&
+          # make sure all validatedForms in previous section == true
+          _.every(validated['Preferences'], (i) -> i)
       else
         false
 
@@ -1140,6 +1151,9 @@ ShortFormApplicationService = (
   Service.listingIsSale = ->
     ListingIdentityService.isSale(Service.listing)
 
+  Service.listingIsDalp = ->
+    ListingIdentityService.isDalpListing(Service.listing)
+
   Service.listingIsHabitat = ->
     ListingIdentityService.isHabitatListing(Service.listing)
 
@@ -1151,6 +1165,9 @@ ShortFormApplicationService = (
       ['Educator 1: SFUSD employees only', 'Educator 2: SFUSD employees & public', 'Educator 3: Waitlist - SFUSD employees & public'],
       ListingDataService.listing.Custom_Listing_Type
     )
+
+  Service.listingIsDalp = ->
+    ListingDataService.listing.Custom_Listing_Type == 'Downpayment Assistance Loan Program'
 
   Service.listingHasHomeAndCommunityBasedServicesUnits = (listing) ->
     listing.Custom_Listing_Type == ListingConstantsService.HCBS_PRIORITY_NAME

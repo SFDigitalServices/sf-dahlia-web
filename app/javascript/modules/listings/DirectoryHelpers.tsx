@@ -7,12 +7,18 @@ import {
   IconTypes,
   LinkButton,
   ListingCard,
-  ListingsGroup,
   PageHeader,
   StackedTableRow,
   t,
 } from "@bloom-housing/ui-components"
 import dayjs from "dayjs"
+import {
+  DIRECTORY_SECTION_OPEN_LOTTERIES,
+  DIRECTORY_SECTION_ADDITIONAL_LISTINGS,
+  DIRECTORY_SECTION_LOTTERY_RESULTS,
+  DIRECTORY_SECTION_UPCOMING_LOTTERIES,
+  DIRECTORY_SECTION_FCFS_LISTINGS,
+} from "../constants"
 
 import type RailsRentalListing from "../../api/types/rails/listings/RailsRentalListing"
 import type RailsRentalUnitSummary from "../../api/types/rails/listings/RailsRentalUnitSummary"
@@ -36,11 +42,18 @@ import RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
 import { ListingState } from "./ListingState"
 import { ListingsGroupHeader } from "./ListingsGroupHeader"
 import { IconHomeCheck } from "./assets/icon-home-check"
+import { EmptyListingsView } from "./components/EmptyListingsView"
+import ListingsGroup from "./components/ListingsGroup"
 
 export type RailsUnitSummary = RailsSaleUnitSummary | RailsRentalUnitSummary
 
 export type DirectoryType = "forRent" | "forSale"
-
+export type DirectorySectionType =
+  | typeof DIRECTORY_SECTION_OPEN_LOTTERIES
+  | typeof DIRECTORY_SECTION_FCFS_LISTINGS
+  | typeof DIRECTORY_SECTION_UPCOMING_LOTTERIES
+  | typeof DIRECTORY_SECTION_LOTTERY_RESULTS
+  | typeof DIRECTORY_SECTION_ADDITIONAL_LISTINGS
 export type minMax = "min" | "max"
 
 export type StackedDataFxnType = (listing: RailsRentalListing) => Record<string, StackedTableRow>[]
@@ -250,7 +263,8 @@ export const openListingsView = (
   directoryType: DirectoryType,
   stackedDataFxn: StackedDataFxnType,
   observerRef: React.MutableRefObject<null | IntersectionObserver>,
-  filtersSet?: boolean
+  filtersSet?: boolean,
+  numFcfsListings?: number
 ) => (
   <ListingsGroupHeader
     title={t(`listings.${directoryType}.openListings.title`)}
@@ -259,7 +273,15 @@ export const openListingsView = (
     refKey="enter-a-lottery"
     observerRef={observerRef}
   >
-    {listings.length > 0 && getListingCards(listings, directoryType, stackedDataFxn, filtersSet)}
+    {listings.length > 0 ? (
+      getListingCards(listings, directoryType, stackedDataFxn, filtersSet)
+    ) : (
+      <EmptyListingsView
+        section={DIRECTORY_SECTION_OPEN_LOTTERIES}
+        listingsCount={numFcfsListings}
+        icon={IconHomeCheck}
+      />
+    )}
   </ListingsGroupHeader>
 )
 
@@ -268,7 +290,8 @@ export const fcfsSalesView = (
   directoryType: DirectoryType,
   stackedDataFxn: StackedDataFxnType,
   observerRef: React.MutableRefObject<null | IntersectionObserver>,
-  filtersSet?: boolean
+  filtersSet?: boolean,
+  numOpenListings?: number
 ) => (
   <ListingsGroupHeader
     title={t(`listings.${directoryType}.fcfsListings.title`)}
@@ -277,7 +300,15 @@ export const fcfsSalesView = (
     observerRef={observerRef}
     refKey="buy-now"
   >
-    {listings.length > 0 && getListingCards(listings, directoryType, stackedDataFxn, filtersSet)}
+    {listings.length > 0 ? (
+      getListingCards(listings, directoryType, stackedDataFxn, filtersSet)
+    ) : (
+      <EmptyListingsView
+        section={DIRECTORY_SECTION_FCFS_LISTINGS}
+        listingsCount={numOpenListings}
+        icon="house"
+      />
+    )}
   </ListingsGroupHeader>
 )
 
@@ -291,13 +322,19 @@ export const getListingGroup = (
   show,
   refKey: string,
   observerRef: React.MutableRefObject<null | IntersectionObserver>,
+  section: DirectorySectionType,
   hasFiltersSet?: boolean,
   subtitle?: string,
-  icon?: IconTypes
+  icon?: IconTypes,
+  showListings?: boolean,
+  setShowListings?: React.Dispatch<React.SetStateAction<boolean>>,
+  newDirectoryEnabled?: boolean
 ) => {
+  const showListingsGroup =
+    (newDirectoryEnabled && section !== DIRECTORY_SECTION_ADDITIONAL_LISTINGS) ||
+    listings.length > 0
   return (
-    // TODO: https://sfgovdt.jira.com/browse/DAH-3109 will update Bloom-UIC to accept the refKey and observerRef
-    listings.length > 0 && (
+    showListingsGroup && (
       <ListingsGroup
         listingsCount={listings.length}
         header={header}
@@ -305,10 +342,16 @@ export const getListingGroup = (
         showButtonText={show}
         info={subtitle}
         icon={icon}
-        // refKey={refKey}
-        // observerRef={observerRef}
+        refKey={refKey}
+        observerRef={observerRef}
+        showListings={showListings}
+        setShowListings={setShowListings}
       >
-        {getListingCards(listings, directoryType, stackedDataFxn, hasFiltersSet)}
+        {listings.length > 0
+          ? getListingCards(listings, directoryType, stackedDataFxn, hasFiltersSet)
+          : section !== DIRECTORY_SECTION_ADDITIONAL_LISTINGS && (
+              <EmptyListingsView section={section} />
+            )}
       </ListingsGroup>
     )
   )
@@ -318,7 +361,10 @@ export const upcomingLotteriesView = (
   listings,
   directoryType,
   stackedDataFxn: StackedDataFxnType,
-  observerRef: React.MutableRefObject<null | IntersectionObserver>
+  observerRef: React.MutableRefObject<null | IntersectionObserver>,
+  showListings?: boolean,
+  setShowListings?: React.Dispatch<React.SetStateAction<boolean>>,
+  newDirectoryEnabled?: boolean
 ) => {
   return getListingGroup(
     listings,
@@ -329,8 +375,13 @@ export const upcomingLotteriesView = (
     t("listings.upcomingLotteries.show"),
     "upcoming-lotteries",
     observerRef,
+    DIRECTORY_SECTION_UPCOMING_LOTTERIES,
     undefined,
-    t("listings.upcomingLotteries.subtitle")
+    t("listings.upcomingLotteries.subtitle"),
+    null,
+    showListings,
+    setShowListings,
+    newDirectoryEnabled
   )
 }
 
@@ -338,7 +389,10 @@ export const lotteryResultsView = (
   listings,
   directoryType,
   stackedDataFxn: StackedDataFxnType,
-  observerRef: React.MutableRefObject<null | IntersectionObserver>
+  observerRef: React.MutableRefObject<null | IntersectionObserver>,
+  showListings?: boolean,
+  setShowListings?: React.Dispatch<React.SetStateAction<boolean>>,
+  newDirectoryEnabled?: boolean
 ) => {
   return getListingGroup(
     listings,
@@ -349,9 +403,13 @@ export const lotteryResultsView = (
     t("listings.lotteryResults.show"),
     "lottery-results",
     observerRef,
+    DIRECTORY_SECTION_LOTTERY_RESULTS,
     undefined,
     t("listings.lotteryResults.subtitle"),
-    "result"
+    "result",
+    showListings,
+    setShowListings,
+    newDirectoryEnabled
   )
 }
 
@@ -360,20 +418,30 @@ export const additionalView = (
   directoryType,
   stackedDataFxn: StackedDataFxnType,
   observerRef: React.MutableRefObject<null | IntersectionObserver>,
-  filtersSet?: boolean
+  filtersSet?: boolean,
+  showListings?: boolean,
+  setShowListings?: React.Dispatch<React.SetStateAction<boolean>>,
+  newDirectoryEnabled?: boolean
 ) => {
-  return getListingGroup(
-    listings,
-    directoryType,
-    stackedDataFxn,
-    `${t("listings.additional.title")}`,
-    `${t("listings.additional.hide")}`,
-    `${t("listings.additional.show")}`,
-    "additional-listings",
-    observerRef,
-    filtersSet,
-    t("listings.additional.subtitle"),
-    "doubleHouse"
+  return (
+    listings.length > 0 &&
+    getListingGroup(
+      listings,
+      directoryType,
+      stackedDataFxn,
+      `${t("listings.additional.title")}`,
+      `${t("listings.additional.hide")}`,
+      `${t("listings.additional.show")}`,
+      "additional-listings",
+      observerRef,
+      DIRECTORY_SECTION_ADDITIONAL_LISTINGS,
+      filtersSet,
+      t("listings.additional.subtitle"),
+      "doubleHouse",
+      showListings,
+      setShowListings,
+      newDirectoryEnabled
+    )
   )
 }
 
