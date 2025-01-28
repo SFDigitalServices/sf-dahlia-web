@@ -53,13 +53,16 @@
             "you_can_still_apply": "You can still apply, but will be ranked below SF Unified School District employees in the lottery.",
             "you_must_work_at": "You must work at SF Unified School District to apply."
         },
+        "a3a_dalp_screening": {
+            "title": ""
+        },
         "a4_overview": {
             "p1": "First we'll ask about you and the people you plan to live with. Then, we'll ask about your income. Finally, we'll see if you qualify for any affordable housing lottery preference, and if so, ask you to upload proof of those preferences.",
             "p2": "<a ui-sref='{{sref}}' target='_blank'>See our checklist</a> for information about required documents and claiming preferences.",
             "p2b-ownership": "Make sure your documents are up to date. Your loan pre-approval letter must be dated within the past 120 days, and your Homebuyer Education verification form must be dated within the past year.",
-            "p3b-dalp": "Your loan pre-approval letter must contain the sales price of a market-rate property, the maximum first loan amount, and the DALP loan amount. A pre-approval letter for a below-market-rate (BMR) property will not be accepted.",
             "p3": "You may also start the application now and save it and upload documents later.",
             "p3b": "You may also start the application now and save it and upload documents later. You cannot change your application once you submit it.",
+            "p3b-dalp": "Your loan pre-approval letter must contain the sales price of a market-rate property, the maximum first loan amount, and the DALP loan amount. A pre-approval letter for a below-market-rate (BMR) property will not be accepted.",
             "p4": "Please be aware that each household member can only appear on one application for each listing. If your application contains household members that are on other applications for this listing, all of them will be disqualified.",
             "p4b-dalp": "Please be aware that each household member can only appear on one application for this DALP lottery. If your application contains household members that are on other applications for this DALP lottery, all of them will be disqualified.",
             "subtitle": "DO NOT TRANSLATE - Chinese-only",
@@ -575,10 +578,12 @@
             "p2_dalp": "Applicants will be contacted by MOHCD in lottery rank order until loan funds are reserved or disbursed.",
             "p3": "All of the information that you have provided will be verified and your eligibility confirmed.  Your application will be removed from the lottery if you have made any fraudulent statements, or if any household member appears on more than one application for this listing. If we cannot verify a housing lottery preference that you have claimed, you will not receive the preference but will not be otherwise penalized.",
             "p3_dalp": "All of the information that you have provided will be verified and your eligibility confirmed. Your application will be removed from the lottery if you have made any fraudulent statements, or if any household member appears on more than one application for this DALP lottery.",
+            "p4": {
+                "5_dalp": "Completing this lottery application does not entitle you to the DALP program or indicate you are eligible for the DALP program."
+            },
+            "p4_dalp": "Should your application be chosen from the lottery, be prepared to fill out a more detailed application and provide supporting documents within 5 business days of being contacted. For more information, please visit the <a href='{{url}}' target='_blank'>DALP information page</a>.",
             "p4_rental": "Should your application be chosen from the lottery, be prepared to fill out a more detailed application and provide required supporting documents within 5 business days of being contacted. For more information, please contact the developer or agent posted in the listing. Completing this lottery application does not entitle you to housing or indicate you are eligible for housing. All applicants will be screened as outlined in the property's Resident Selection Criteria.",
             "p4_sale": "Should your application be chosen from the lottery, be prepared to fill out a more detailed application and provide <a href='{{url}}' target='_blank'>required supporting documents</a> within 5 business days of being contacted. For more information, please contact the developer or agent posted in the listing. Completing this lottery application does not entitle you to housing or indicate you are eligible for housing. ",
-            "p4_dalp": "Should your application be chosen from the lottery, be prepared to fill out a more detailed application and provide supporting documents within 5 business days of being contacted. For more information, please visit the <a href='{{url}}' target='_blank'>DALP information page</a>.",
-            "p4.5_dalp": "Completing this lottery application does not entitle you to the DALP program or indicate you are eligible for the DALP program.",
             "p5": "You cannot change your online application after you submit.",
             "p6": "I declare that the foregoing is true and accurate, and acknowledge that any misstatement fraudulently or negligently made on this application will result in removal from the lottery.",
             "title": "Terms"
@@ -599,15 +604,22 @@
             "title": "Forgot Password"
         },
         "g1_confirmation": {
+            "after_the_lottery_link": "Lottery results and more about what happens next on SF.gov",
+            "after_the_lottery_p1": "Check your results online",
+            "after_the_lottery_p2": "We contact applicants in the order of the lottery results until all loan funding has been reserved",
+            "after_the_lottery_title": "After the lottery",
             "browse_more_listings": "Browse more listings",
             "create_account_body": "Creating an account will save your information for future applications, and you can check the status of this application anytime.",
             "create_account_title": "Would you like to create an account?",
+            "dont_submit_another_app_p1_dalp": "Your household may only submit 1 application to the DALP lottery.",
             "dont_submit_another_app_p1_email": "If you need to update information on your application, do not apply again or both applications will be removed from the lottery. Contact the agent if you did not receive an email confirmation.",
             "dont_submit_another_app_p1_no_email": "If you need to update information on your application, do not apply again or both applications will be removed from the lottery. Contact the agent if you have any questions.",
             "dont_submit_another_app_title": "Do not submit another application for this listing",
+            "dont_submit_another_app_title_dalp": "Do not apply again, or your application will be removed",
             "go_to_my_applications": "Go to My Applications",
             "lottery_number": "Here's your lottery ticket number",
             "next_steps_body1": "The lottery will be held on",
+            "next_steps_body1_dalp": "Lottery date: ",
             "next_steps_body2_rental": "You do not need to attend the housing lottery. Results will be posted {{listingLink}}. Please refer to the listing for the lottery results date. <br><br>Applicants will be contacted by the agent in lottery rank order until vacancies are filled. Should your application be chosen, be prepared to fill out a more detailed application and provide required supporting documents within 5 business days of being contacted.",
             "next_steps_body2_sale": "You do not need to attend the housing lottery. Results will be posted {{listingLink}}. Please refer to the listing for the lottery results date. <br><br>Applicants will be contacted by the agent in lottery rank order until vacancies are filled. Should your application be chosen, be prepared to fill out a more detailed application and provide <a href='{{url}}' target='_blank'>required supporting documents</a> within 5 business days of being contacted.",
             "next_steps_title": "What to expect next",
