@@ -83,6 +83,7 @@ const EmailFieldset = ({ register, errors, defaultEmail, onChange, note }: Email
   return (
     <Fieldset hasError={errors?.email} label={t("label.emailAddress")} note={note}>
       <Field
+        dataTestId="email-field"
         className="pb-4"
         controlClassName="mt-1"
         type="email"
