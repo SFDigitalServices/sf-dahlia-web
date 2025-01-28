@@ -13,8 +13,8 @@ import {
 } from "./userActions"
 import UserContext, { ContextProps } from "./UserContext"
 import UserReducer from "./UserReducer"
-import { useGTMDataLayer } from "../../hooks/analytics/useGTMDataLayer"
 import { AxiosError } from "axios"
+import { useGTMDataLayerWithoutUserContext } from "../../hooks/analytics/useGTMDataLayer"
 
 interface UserProviderProps {
   children?: React.ReactNode
@@ -26,7 +26,7 @@ const UserProvider = (props: UserProviderProps) => {
     initialStateLoaded: false,
   })
 
-  const { pushToDataLayer } = useGTMDataLayer()
+  const { pushToDataLayer } = useGTMDataLayerWithoutUserContext()
 
   // Load our profile as soon as we have an access token available
   useEffect(() => {
@@ -47,7 +47,7 @@ const UserProvider = (props: UserProviderProps) => {
         .catch((error) => {
           if (error?.message === "Token expired") {
             pushToDataLayer("logout", {
-              user_id: state?.profile?.id || undefined,
+              user_id: undefined,
               reason: "Token expire",
             })
 
@@ -81,7 +81,7 @@ const UserProvider = (props: UserProviderProps) => {
         })
         .catch((error: AxiosError<{ error: string; email: string }>) => {
           pushToDataLayer("login_failed", {
-            user_id: null,
+            user_id: undefined,
             origin,
             error_reason: error.response?.data.error,
           })
