@@ -14,7 +14,8 @@ import {
 jest.mock("axios")
 
 // mock getStorage function from `authentication/token.ts'
-Storage.prototype.getItem = (_key: string) => JSON.stringify({ "access-token": "test-token" })
+Storage.prototype.getItem = (_key: string) =>
+  JSON.stringify({ "access-token": "test-token", expiry: Date.now() / 1000 + 3600 })
 
 describe("apiService", () => {
   const url = "test-url"
@@ -99,6 +100,21 @@ describe("apiService", () => {
         expect(createSpy).toHaveBeenCalled()
         expect(deleteSpy).toHaveBeenCalled()
       })
+    })
+    it("fails if the token is present but invalid", async () => {
+      jest.spyOn(console, "error").mockImplementation(() => {})
+      Storage.prototype.getItem = (_key: string) => {
+        return JSON.stringify({ "access-token": "test-token", expiry: "0" })
+      }
+      try {
+        await authenticatedPost(url, data, config)
+        console.error("This console error should not be called")
+      } catch (error) {
+        // eslint-disable-next-line jest/no-conditional-expect, jest/no-try-expect
+        expect(error).toBeInstanceOf(Error)
+        // eslint-disable-next-line jest/no-conditional-expect, jest/no-try-expect
+        expect(error.message).toBe("Token expired")
+      }
     })
   })
 })
