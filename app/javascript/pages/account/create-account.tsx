@@ -38,6 +38,7 @@ import {
 import { ExpandedAccountAxiosError, getErrorMessage } from "./components/util"
 
 import "./create-account.scss"
+import { getSignInPath } from "../../util/routeUtil"
 
 interface CreateAccountProps {
   assetPaths: unknown
@@ -164,7 +165,7 @@ const onSubmit = (setError: (name: string, error: ErrorOption) => void) => (data
   createAccount(userData, contactData)
     .then(() => {
       window.sessionStorage.setItem("newAccount", userData.email)
-      window.location.replace("/sign-in")
+      window.location.replace(getSignInPath())
     })
     .catch(handleCreateAccountErrors(setError))
 }

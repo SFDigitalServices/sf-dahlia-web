@@ -2,6 +2,8 @@ interface User {
   /**  */
   uid: string
 
+  id: number
+
   /**  */
   email: string
 

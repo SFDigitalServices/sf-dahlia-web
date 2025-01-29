@@ -3,9 +3,9 @@ section.app-container
     .medium-6.medium-centered.columns.fixed-width
       short-form-back
       .app-header.app-card.form-card
-        header.app-card_header
+        header.app-card_header(ng-class="{'rounded-bottom-corners': listingIsDalp()}")
           h1.app-card_title.skiptranslate translate="t.application_for_listing" translate-value-listing-name="{{application.listing.Name || listing.Name}}"
-        .app-card_nav.text-center
+        .app-card_nav.text-center ng-if="!listingIsDalp()"
           a.button.button-link.button-lined.small-text-center.expand-small ui-sref="dahlia.listing({id: listing.listingID})"
             | {{'review_application.view_original_listing' | translate}}
 
@@ -22,7 +22,7 @@ section.app-container
               | {{'review_application.your_lottery_number' | translate}}
             p.beta.t-serif.no-margin
               | &#35;{{ application.lotteryNumber }}
-        application-summary application="application" applicant="applicant" alternate-contact="alternateContact" household-members="householdMembers" listing="listing" preferences="preferences" is-rental="listingIsRental()" is-sale="listingIsSale()" is-habitat-listing="listingIsHabitat()" is-custom-educator-listing="isCustomEducatorListing()" show-veterans-application-question="showVeteransApplicationQuestion" listing-has-home-and-community-based-services-units="listingHasHomeAndCommunityBasedServicesUnits()"
+        application-summary application="application" applicant="applicant" alternate-contact="alternateContact" household-members="householdMembers" listing="listing" preferences="preferences" is-rental="listingIsRental()" is-sale="listingIsSale()" is-habitat-listing="listingIsHabitat()" is-custom-educator-listing="isCustomEducatorListing()" show-veterans-application-question="showVeteransApplicationQuestion" listing-has-home-and-community-based-services-units="listingHasHomeAndCommunityBasedServicesUnits()" applicant-has-claimed-dalp-priority="applicantHasClaimedDalpPriority()"
 
         .padding--2x.text-center
           button.button-link.button-lined.t-small.lined.hide-for-print ng-click="print()"
