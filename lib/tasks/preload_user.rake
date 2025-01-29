@@ -1,6 +1,6 @@
 namespace :preload do
   task user: :environment do
-    puts 'Preloading user'
+    puts "Preloading user #{Rails.env}"
     unless Rails.env.production?
       puts 'Creating test user'
       user = User.find_or_create_by(email: 'test@test.com') do |u|
