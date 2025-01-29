@@ -98,7 +98,6 @@ describe("authApiService", () => {
       await forgotPassword(email)
       expect(post).toHaveBeenCalledWith(url, {
         email,
-        appUrl: "http://localhost",
         locale: "en",
         redirect_url: "/reset-password",
       })
