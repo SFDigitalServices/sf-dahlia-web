@@ -969,7 +969,6 @@ ShortFormApplicationController = (
         $scope.submitDisabled = false
       )
     else
-      AnalyticsService.trackFormError('Application')
       $scope.handleErrorState()
 
   $scope.afterSignInWhileApplying = ->
