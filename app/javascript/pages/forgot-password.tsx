@@ -35,12 +35,15 @@ const ForgotPassword = () => {
   // eslint-disable-next-line @typescript-eslint/unbound-method
   const { register, handleSubmit, errors } = useForm()
   const onSubmit = (data: { email: string }) => {
-    setEmailSubmitted(true)
     forgotPassword(data.email)
-      .then(() => {})
+      .then(() => {
+        setEmailSubmitted(true)
+      })
       .catch((error) => {
         if (error.response?.status !== 404) {
           setServerError(t("error.account.genericServerError"))
+        } else {
+          setEmailSubmitted(true)
         }
       })
   }
