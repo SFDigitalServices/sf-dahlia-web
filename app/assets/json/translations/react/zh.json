@@ -615,7 +615,7 @@
   "howToApplyPage.howToApplySection.step5.button": "提交申請表",
   "howToApplyPage.howToApplySection.step5.infoBox.p1": "請在 30 分鐘內上傳申請表和所有文件，否則您的排序順位將會遭到取消。我們將根據收到已填妥申請表的時間和日期，為您指定新的排序順位。",
   "howToApplyPage.howToApplySection.step5.infoBox.title": "在 30 分鐘內上傳申請表",
-  "howToApplyPage.howToApplySection.step5.listItem1": "填寫資訊，並取得上傳 <a className='underline' href='%{url}' target='_blank'>PDF 申請表和文件</a>的連結",
+  "howToApplyPage.howToApplySection.step5.listItem1": "填寫資訊，並取得上傳 <a className='underline' href='%{url}'>PDF 申請表和文件</a>的連結",
   "howToApplyPage.howToApplySection.step5.listItem2": "依照連結前往 Box.com",
   "howToApplyPage.howToApplySection.step5.listItem2.v2": "依照連結前往 Box.com。上傳您填妥好的申請表和所有文件",
   "howToApplyPage.howToApplySection.step5.listItem3": "將填妥的申請表和所有文件上傳至 Box.com",

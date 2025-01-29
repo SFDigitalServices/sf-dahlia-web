@@ -1,12 +1,15 @@
 import axios, { AxiosInstance, AxiosResponse } from "axios"
 import type { AxiosRequestConfig } from "axios"
 
-import { setAuthHeaders, getHeaders } from "../authentication/token"
+import { setAuthHeaders, getHeaders, isTokenValid } from "../authentication/token"
 
 // Use this function for authenticated calls
 const createAxiosInstance = (): AxiosInstance => {
   if (!getHeaders()) {
-    throw new Error("Unauthorized. Sign in first")
+    throw new Error("Unauthorized")
+  }
+  if (!isTokenValid()) {
+    throw new Error("Token expired")
   }
   return axios.create({
     headers: getHeaders(),

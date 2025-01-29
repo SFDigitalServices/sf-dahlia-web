@@ -1,7 +1,7 @@
 import React, { useEffect, useReducer } from "react"
 
 import { getProfile, signIn } from "../../api/authApiService"
-import { getTemporaryAuthParamsFromUrl, isTokenValid, setAuthHeadersFromUrl } from "../token"
+import { getTemporaryAuthParamsFromUrl, setAuthHeadersFromUrl } from "../token"
 import {
   saveProfile,
   userSignOut,
@@ -13,6 +13,8 @@ import {
 } from "./userActions"
 import UserContext, { ContextProps } from "./UserContext"
 import UserReducer from "./UserReducer"
+import { useGTMDataLayer } from "../../hooks/analytics/useGTMDataLayer"
+import { AxiosError } from "axios"
 
 interface UserProviderProps {
   children?: React.ReactNode
@@ -23,6 +25,8 @@ const UserProvider = (props: UserProviderProps) => {
     loading: false,
     initialStateLoaded: false,
   })
+
+  const { pushToDataLayer } = useGTMDataLayer()
 
   // Load our profile as soon as we have an access token available
   useEffect(() => {
@@ -40,33 +44,59 @@ const UserProvider = (props: UserProviderProps) => {
         .then((profile) => {
           dispatch(saveProfile(profile))
         })
-        .catch(() => dispatch(systemSignOut()))
-        .finally(() => dispatch(stopLoading()))
-    }
-  }, [state.profile])
+        .catch((error) => {
+          if (error?.message === "Token expired") {
+            pushToDataLayer("logout", {
+              user_id: state?.profile?.id || undefined,
+              reason: "Token expire",
+            })
 
-  // On initial load/reload, check localStorage to see if we have a token available
-  useEffect(() => {
-    if (!isTokenValid()) dispatch(signOutConnectionIssue())
-  }, [])
+            // Give the DataLayer push some time to finish before the user is redirected
+            setTimeout(() => {
+              dispatch(signOutConnectionIssue())
+            }, 100)
+          } else {
+            dispatch(systemSignOut())
+          }
+        })
+        .finally(() => {
+          dispatch(stopLoading())
+        })
+    }
+  }, [pushToDataLayer, state.profile])
 
   const contextValues: ContextProps = {
     loading: state.loading,
     profile: state.profile,
     initialStateLoaded: state.initialStateLoaded,
     saveProfile: (profile) => dispatch(saveProfile(profile)),
-    signIn: async (email, password) => {
+    signIn: async (email, password, origin) => {
       dispatch(systemSignOut())
       dispatch(startLoading())
       return signIn(email, password)
         .then((profile) => {
+          pushToDataLayer("login_succeeded", { user_id: profile.id, origin })
           dispatch(saveProfile(profile))
           return profile
         })
+        .catch((error: AxiosError<{ error: string; email: string }>) => {
+          pushToDataLayer("login_failed", {
+            user_id: null,
+            origin,
+            error_reason: error.response?.data.error,
+          })
+          throw error
+        })
         .finally(() => dispatch(stopLoading()))
     },
-    signOut: () => dispatch(userSignOut()),
-    timeOut: () => dispatch(timeOut()),
+    signOut: () => {
+      pushToDataLayer("logout", { user_id: state.profile.id, reason: "User clicked logout" })
+      dispatch(userSignOut())
+    },
+    timeOut: () => {
+      pushToDataLayer("logout", { user_id: state.profile.id, reason: "Timed out" })
+      dispatch(timeOut())
+    },
   }
 
   return <UserContext.Provider value={contextValues}>{props.children}</UserContext.Provider>

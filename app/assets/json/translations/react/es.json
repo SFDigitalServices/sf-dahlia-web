@@ -615,7 +615,7 @@
   "howToApplyPage.howToApplySection.step5.button": "Presente la solicitud",
   "howToApplyPage.howToApplySection.step5.infoBox.p1": "Si no carga su solicitud y todos los documentos dentro de 30 minutos, perderá su lugar en la fila. Recibirá un nuevo lugar en la fila según la hora y la fecha en que recibamos su solicitud completa.",
   "howToApplyPage.howToApplySection.step5.infoBox.title": "Cargue su solicitud dentro de los 30 minutos",
-  "howToApplyPage.howToApplySection.step5.listItem1": "Complete su información y obtenga un enlace para cargar <a className='underline' href='%{url}' target='_blank'>su solicitud y su documentos en formato PDF</a>",
+  "howToApplyPage.howToApplySection.step5.listItem1": "Complete su información y obtenga un enlace para cargar <a className='underline' href='%{url}'>su solicitud y su documentos en formato PDF</a>",
   "howToApplyPage.howToApplySection.step5.listItem2": "Sigue el enlace a Box.com",
   "howToApplyPage.howToApplySection.step5.listItem2.v2": "Siga el enlace a Box.com. Cargue su solicitud completa y toda la documentación requerida.",
   "howToApplyPage.howToApplySection.step5.listItem3": "Cargue su solicitud completada y todos los documentos en Box.com",
