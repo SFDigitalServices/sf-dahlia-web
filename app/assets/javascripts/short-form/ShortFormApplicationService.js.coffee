@@ -1183,6 +1183,15 @@ ShortFormApplicationService = (
 
   Service.APPLICATION_AUTOFILL_IMPROVEMENTS = $window.APPLICATION_AUTOFILL_IMPROVEMENTS
 
+  Service.localizedSfGovUrl = (path) ->
+    sfgovPrefix = {
+      'English': ''
+      'Spanish': '/es'
+      'Filipino': '/fil'
+      'Chinese': '/zh-hant'
+    }[Service.application.applicationLanguage]
+    "https://www.sf.gov#{sfgovPrefix}/#{path}"
+
   return Service
 
 ############################################################################################
