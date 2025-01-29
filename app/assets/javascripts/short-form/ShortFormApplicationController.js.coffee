@@ -297,6 +297,23 @@ ShortFormApplicationController = (
 
   ########## END CUSTOM SCREENING LOGIC ##########
 
+  $scope.onChangeDalpEducatorOrFirstResponder = ->
+    if $scope.application.dalpEducator || $scope.application.dalpFirstResponder
+      $scope.application.dalpNotEducatorOrFirstResponder = null
+
+  $scope.onChangeDalpNotEducatorOrFirstResponder = ->
+    if $scope.application.dalpNotEducatorOrFirstResponder
+      $scope.application.dalpEducator = null
+      $scope.application.dalpFirstResponder = null
+
+  # TODO WIP language switcher
+  $scope.dalpScreeningFirstResponderLink = ->
+    'https://www.sf.gov/first-responders-downpayment-assistance-loan-program-frdalp'
+
+  # TODO WIP language switcher
+  $scope.dalpScreeningEducatorLink = ->
+    'https://www.sf.gov/educators-downpayment-assistance-loan-program'
+
   $scope.applicantHasClaimedDalpPriority = ->
     ShortFormApplicationService.application.dalpEducator == true || ShortFormApplicationService.application.dalpFirstResponder == true
 

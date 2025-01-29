@@ -46,5 +46,8 @@ angular.module('dahlia.components')
 
       ctrl.assetPaths = SharedService.assetPaths
 
+      ctrl.showPaystubExampleNote =
+        ctrl.fileType == 'DALP first responder paystub' || ctrl.fileType == 'DALP educator paystub'
+
       return ctrl
   ]
