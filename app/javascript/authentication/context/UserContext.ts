@@ -4,7 +4,7 @@ import { User } from "../user"
 
 // External interface this context provides
 export type ContextProps = {
-  signIn: (email: string, password: string) => Promise<User>
+  signIn: (email: string, password: string, origin?: string) => Promise<User>
   signOut: () => void
   timeOut: () => void
   saveProfile: (profile: User) => void

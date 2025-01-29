@@ -11,6 +11,10 @@ export const useGTMDataLayer = () => {
       console.error("An event must be provided when pushing to the data layer.")
       return
     }
+    if (data?.event) {
+      console.error("Data object cannot contain an 'event' key.")
+      return
+    }
     TagManager.dataLayer({ dataLayer: { event, ...data } })
   }, [])
 
