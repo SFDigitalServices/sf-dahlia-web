@@ -1,24 +1,41 @@
 section.app-container.focus-container
   .app-card.form-card
     short-form-header
-      h2.app-card_question
-        | {{ 'a3a_dalp_screening.title' | translate }}
+      h2.app-card_question translate="a4a_dalp_screening.title"
+      p.margin-bottom translate="a4a_dalp_screening.instructions_p1"
+      p.no-margin
+        span
+          | {{ 'a4a_dalp_screening.instructions_p2' | translate }}
+        ul.bullet-list
+          li.margin-bottom-none
+            a.lined target="_blank" href="{{dalpScreeningFirstResponderLink()}}" translate="a4a_dalp_screening.instructions_p3" aria-label="{{'a4a_dalp_screening.instructions_p3' | translate}} - Opens in new window"
+          li.margin-bottom-none
+            a.lined target="_blank" href="{{dalpScreeningEducatorLink()}}" translate="a4a_dalp_screening.instructions_p4" aria-label="{{'a4a_dalp_screening.instructions_p4' | translate}} - Opens in new window"
 
-    .app-inner.inset
+    .app-inner
       .form-group
         p.form-note.margin-bottom translate="label.please_select_all_that_apply"
-          .checkbox
-            input#dalp_educator name="dalp_educator" type="checkbox" ngchange="onSelectDalpEducator()" ng-model="application.dalpEducator"
-            label for="dalp_educator" Dalp educator
-            | {{ application.dalpEducator }}
-          .form-group.margin-left--2x.margin-right--2x.margin-bottom--2x ng-if="application.dalpEducator"
-            file-uploader button-label="Upload Paystub" file-label="Paystub" document="application.documents['DALP educator proof']" file-type="DALP educator proof" required="true"
-          .checkbox
-            input#dalp_first_responder name="dalp_first_responder" type="checkbox" ng-model="application.dalpFirstResponder"
-            label for="dalp_first_responder" Dalp first responder
-            | {{ application.dalpFirstResponder }}
-          .form-group.margin-left--2x.margin-right--2x.margin-bottom--2x ng-if="application.dalpFirstResponder"
-            file-uploader button-label="Upload Pay Stub" file-label="Paystub" document="application.documents['DALP first responder proof']" file-type="DALP first responder proof" required="true"
+          .checkbox-group
+
+            .checkbox-block.margin-bottom--2x
+              input#dalp_educator name="dalp_educator" type="checkbox" ng-model="application.dalpEducator" ng-change='onChangeDalpEducatorOrFirstResponder()'
+              label.checkbox-block_label for="dalp_educator"
+                strong.form-label translate="a4a_dalp_screening.i_am_an_educator"
+            .form-group.margin-left--2x.margin-right--2x.margin-bottom--2x ng-if="application.dalpEducator"
+              file-uploader button-label="{{'label.upload_proof_of_employment' | translate}}" file-label="{{'label.upload_proof_of_employment' | translate}}" document="application.documents['DALP educator paystub']" file-type="DALP educator paystub" required="true"
+
+            .checkbox-block.margin-bottom--2x
+              input#dalp_first_responder name="dalp_first_responder" type="checkbox" ng-model="application.dalpFirstResponder" ng-change='onChangeDalpEducatorOrFirstResponder()'
+              label.checkbox-block_label for="dalp_first_responder"
+                strong.form-label translate="a4a_dalp_screening.i_am_a_first_responder"
+            .form-group.margin-left--2x.margin-right--2x.margin-bottom--2x ng-if="application.dalpFirstResponder"
+              file-uploader button-label="{{'label.upload_proof_of_employment' | translate}}" file-label="{{'label.upload_proof_of_employment' | translate}}" document="application.documents['DALP first responder paystub']" file-type="DALP first responder paystub" required="true"
+
+            .checkbox-block.margin-bottom--2x
+              input#dalp_not_educator_or_first_responder name="dalp_not_educator_or_first_responder" type="checkbox" ng-model="application.dalpNotEducatorOrFirstResponder" ng-change='onChangeDalpNotEducatorOrFirstResponder()'
+              label.checkbox-block_label for="dalp_not_educator_or_first_responder"
+                strong.form-label translate="a4a_dalp_screening.none_of_these_apply_to_me"
+
     .button-pager
       .button-pager_row.primary.text-center
         input#submit.button.primary.radius type="submit" value="{{'t.next' | translate}}" ng-disabled="eligibilityErrors.length > 0"

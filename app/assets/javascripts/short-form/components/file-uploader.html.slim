@@ -18,6 +18,7 @@
     | {{'error.file_missing' | translate}}
   small.error id="{{$ctrl.fileInputName}}_error" ng-if="$ctrl.document.error"
     | {{$ctrl.document.error | translate}}
+  p.form-note.micro.input-inset.margin-bottom translate="label.examples_paystub" ng-if="$ctrl.showPaystubExampleNote"
   p.form-note.micro.input-inset.margin-bottom translate="label.upload_proof_instructions_1"
   p.form-note.micro.input-inset translate="label.upload_proof_instructions_2"
   p.form-note.micro.input-inset translate="label.upload_proof_instructions_3"

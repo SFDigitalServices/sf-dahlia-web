@@ -50,8 +50,8 @@ ShortFormApplicationService = (
     documents:
       'Loan pre-approval': {}
       'Homebuyer education certificate': {}
-      'DALP educator proof': {}
-      'DALP first responder proof': {}
+      'DALP educator paystub': {}
+      'DALP first responder paystub': {}
     preferences:
       liveInSf: null
       workInSf: null
@@ -100,6 +100,7 @@ ShortFormApplicationService = (
     hasHomeAndCommunityBasedServices: null
     dalpEducator: null
     dalpFirstResponder: null
+    dalpNotEducatorOrFirstResponder: null
     answeredDalpScreening: null
 
   Service.currentCustomProofPreference = {}
