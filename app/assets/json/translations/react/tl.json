@@ -615,7 +615,7 @@
   "howToApplyPage.howToApplySection.step5.button": "Magsumite ng aplikasyon",
   "howToApplyPage.howToApplySection.step5.infoBox.p1": "Kung hindi mo i-upload ang iyong aplikasyon at lahat ng mga dokumento sa loob ng 30 minuto, mawawala ka ng puwesto sa pila. Makakakuha ka ng bagong puwesto sa pila batay sa oras at petsa na natanggap namin ang iyong nakumpletong aplikasyon.",
   "howToApplyPage.howToApplySection.step5.infoBox.title": "I-upload ang iyong aplikasyon sa loob ng 30 minuto",
-  "howToApplyPage.howToApplySection.step5.listItem1": "Ilagay ang iyong impormasyon at kumuha ng link para mai-upload ang iyong <a className='underline' href='%{url}' target='_blank'>mga PDF na aplikasyon at mga dokumento</a>",
+  "howToApplyPage.howToApplySection.step5.listItem1": "Ilagay ang iyong impormasyon at kumuha ng link para mai-upload ang iyong <a className='underline' href='%{url}'>mga PDF na aplikasyon at mga dokumento</a>",
   "howToApplyPage.howToApplySection.step5.listItem2": "Sundan ang link sa Box.com",
   "howToApplyPage.howToApplySection.step5.listItem3": "I-upload ang iyong napunang aplikasyon at lahat ng mga dokumento sa Box.com",
   "howToApplyPage.howToApplySection.step5.p1": "Kapag handa ka na, isumite ang iyong aplikasyon sa 3 hakbang:",

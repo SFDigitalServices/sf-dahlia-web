@@ -14,12 +14,14 @@ import { getListingDetailPath, getLocalizedPath } from "../util/routeUtil"
 import { RailsListing } from "../modules/listings/SharedHelpers"
 import {
   getListingAddressString,
+  isDalpListing,
   isLotteryComplete,
   showLotteryResultsPDFonly,
 } from "../util/listingUtil"
 import { RailsLotteryResult } from "../api/types/rails/listings/RailsLotteryResult"
 import { getLotteryBucketDetails } from "../api/listingApiService"
 import { ListingDetailsLotterySearchForm } from "../modules/listingDetailsLottery/ListingDetailsLotterySearchForm"
+import { useFeatureFlag } from "../hooks/useFeatureFlag"
 
 interface ApplicationItemProps {
   applicationURL: string
@@ -33,6 +35,7 @@ interface ApplicationItemProps {
 }
 
 const ApplicationItem = (props: ApplicationItemProps) => {
+  const { unleashFlag: dalpEnabled } = useFeatureFlag("temp.webapp.dalp", false)
   const [lotteryBucketDetails, setLotteryBucketDetails] = React.useState<RailsLotteryResult>()
   const [isModalOpen, setIsModalOpen] = React.useState(false)
   const applicationDueDate = props.listing.Application_Due_Date
@@ -91,7 +94,9 @@ const ApplicationItem = (props: ApplicationItemProps) => {
         </header>
         <section className={"application-item__content"}>
           <div className="w-full mb-3">
-            <p className={"application-item__text text-left w-full"}>{listingAddress}</p>
+            {(!isDalpListing(props.listing) || !dalpEnabled) && (
+              <p className={"application-item__text text-left w-full"}>{listingAddress}</p>
+            )}
             {props.confirmationNumber && props.submitted && (
               <div className={"application-item__confirm-text"}>
                 {lotteryComplete ? (
@@ -167,9 +172,11 @@ const ApplicationItem = (props: ApplicationItemProps) => {
         </section>
         <div className={"application-item__footer"}>
           <span className="text-sm inline-block space-x-3">
-            <Link href={getLocalizedPath(listingURL, getCurrentLanguage())}>
-              {t("myApplications.seeListing")}
-            </Link>
+            {(!isDalpListing(props.listing) || !dalpEnabled) && (
+              <Link href={getLocalizedPath(listingURL, getCurrentLanguage())}>
+                {t("myApplications.seeListing")}
+              </Link>
+            )}
             {props.submitted && lotteryComplete && (
               <Link href={props.applicationURL}>{t("myApplications.viewApplication")}</Link>
             )}
