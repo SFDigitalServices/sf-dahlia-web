@@ -10,8 +10,7 @@ const SidebarContactInfo = () => (
       {renderInlineMarkup(
         t("assistance.contact.questionsAboutPrograms.contactWebsite", {
           url: getSfGovUrl(
-            "https://sf.gov/departments/mayors-office-housing-and-community-development",
-            55
+            "https://sf.gov/departments/mayors-office-housing-and-community-development"
           ),
         })
       )}
