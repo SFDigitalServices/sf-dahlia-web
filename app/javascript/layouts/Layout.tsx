@@ -197,8 +197,7 @@ const Layout = (props: LayoutProps) => {
               <Markdown>
                 {t("footer.dahliaDescription", {
                   mohcdUrl: getSfGovUrl(
-                    "https://sf.gov/departments/mayors-office-housing-and-community-development",
-                    55
+                    "https://sf.gov/departments/mayors-office-housing-and-community-development"
                   ),
                 })}
               </Markdown>

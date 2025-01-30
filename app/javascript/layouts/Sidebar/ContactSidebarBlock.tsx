@@ -45,7 +45,7 @@ const SidebarSFHelp = () => (
     <br />
     {renderInlineMarkup(
       t("assistance.contact.helpLine.subtitle", {
-        url: getSfGovUrl("https://sf.gov/departments/311-customer-service-center", 217),
+        url: getSfGovUrl("https://sf.gov/departments/311-customer-service-center"),
       })
     )}
   </p>

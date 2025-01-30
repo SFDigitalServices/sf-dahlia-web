@@ -114,10 +114,10 @@ const HowLongItTakesSection = ({ listing }: { listing: RailsSaleListing }) => {
   )
 }
 
-const renderInlineSfGovUrl = (key: string, url: string, node: number) => {
+const renderInlineSfGovUrl = (key: string, url: string) => {
   return renderInlineMarkup(
     `${t(key, {
-      url: getSfGovUrl(url, node),
+      url: getSfGovUrl(url),
     })}`
   )
 }
@@ -127,17 +127,14 @@ const eligibilityListItems = [
   {
     index: 2,
     link: "https://sf.gov/determine-if-you-can-buy-affordable-housing-program",
-    node: 7164,
   },
   {
     index: 3,
     link: "https://sf.gov/sign-complete-homebuyer-education",
-    node: 212,
   },
   {
     index: 4,
     link: "https://sf.gov/reports/october-2023/find-lender-below-market-rate-program",
-    node: 6953,
   },
   { index: 5 },
 ]
@@ -202,8 +199,7 @@ const BeforeYouStartSection = ({ listing }: { listing: RailsSaleListing }) => {
 
               renderInlineSfGovUrl(
                 `howToApplyPage.beforeYouStartSection.eligibilityList.listItem${item.index}`,
-                item.link,
-                item.node
+                item.link
               )
             }
           </li>
@@ -409,7 +405,7 @@ const WhatHappensNextSection = () => {
       <a
         className="underline"
         target="_blank"
-        href={getSfGovUrl("https://www.sf.gov/node/14246", 14246)}
+        href={getSfGovUrl("https://www.sf.gov/node/14246")}
         aria-label={t("listings.fcfs.bmrSales.noLotteryRequired.footer.aria")}
       >
         {t("listings.fcfs.bmrSales.noLotteryRequired.footer")}
