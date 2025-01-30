@@ -26,7 +26,7 @@
       span translate="g1_confirmation.next_steps_body2_rental" ng-if='listingIsRental()' translate-values="listingLink()"
       span translate="g1_confirmation.next_steps_body2_sale" ng-if='listingIsSale()' translate-values="listingLink()" translate-value-url="https://sfmohcd.org/after-homebuyer-lottery"
 
-  .app-inner.inset-wide.border-bottom ng-if='listingIsDalp()'
+  .app-inner.border-bottom ng-if='listingIsDalp()'
     label.form-label.caps
       | {{'g1_confirmation.next_steps_title' | translate}}
     p.form-note
