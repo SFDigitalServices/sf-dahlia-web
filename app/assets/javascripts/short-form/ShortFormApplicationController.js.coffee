@@ -297,6 +297,9 @@ ShortFormApplicationController = (
 
   ########## END CUSTOM SCREENING LOGIC ##########
 
+  $scope.applicantHasClaimedDalpPriority = ->
+    ShortFormApplicationService.application.dalpEducator == true || ShortFormApplicationService.application.dalpFirstResponder == true
+
   $scope.afterDalpScreening = ->
     ShortFormApplicationService.application.answeredDalpScreening = true
     ShortFormNavigationService.goToApplicationPage('dahlia.short-form-application.prerequisites')
@@ -820,9 +823,6 @@ ShortFormApplicationController = (
   $scope.listingIsSale = ->
     ShortFormApplicationService.listingIsSale()
 
-  $scope.listingIsDalp = ->
-    ShortFormApplicationService.listingIsDalp()
-
   $scope.listingIsHabitat = ->
     ShortFormApplicationService.listingIsHabitat()
 
@@ -969,7 +969,6 @@ ShortFormApplicationController = (
         $scope.submitDisabled = false
       )
     else
-      AnalyticsService.trackFormError('Application')
       $scope.handleErrorState()
 
   $scope.afterSignInWhileApplying = ->
