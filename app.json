@@ -32,7 +32,7 @@
         "heroku-postgresql"
       ],
       "scripts": {
-        "postdeploy": "rake db:migrate && bundle exec rake preload:user"
+        "postdeploy": "rake db:migrate && rake preload:user"
       }
     }
   },
