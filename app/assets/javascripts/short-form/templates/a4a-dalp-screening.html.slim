@@ -22,14 +22,14 @@ section.app-container.focus-container
               label.checkbox-block_label for="dalp_educator"
                 strong.form-label translate="a4a_dalp_screening.i_am_an_educator"
             .form-group.margin-left--2x.margin-right--2x.margin-bottom--2x ng-if="application.dalpEducator"
-              file-uploader button-label="{{'label.upload_proof_of_employment' | translate}}" file-label="{{'label.upload_proof_of_employment' | translate}}" document="application.documents['DALP educator paystub']" file-type="DALP educator paystub" required="true"
+              file-uploader button-label="{{'label.upload_proof_of_employment' | translate}}" file-label="{{'label.upload_proof_of_employment' | translate}}" document="application.documents['DALP educator proof']" file-type="DALP educator proof" required="true"
 
             .checkbox-block.margin-bottom
               input#dalp_first_responder name="dalp_first_responder" type="checkbox" ng-model="application.dalpFirstResponder" ng-change="onChangeDalpEducatorOrFirstResponder()" ng-required="dalpNoOptionSelected()"
               label.checkbox-block_label for="dalp_first_responder"
                 strong.form-label translate="a4a_dalp_screening.i_am_a_first_responder"
             .form-group.margin-left--2x.margin-right--2x.margin-bottom--2x ng-if="application.dalpFirstResponder"
-              file-uploader button-label="{{'label.upload_proof_of_employment' | translate}}" file-label="{{'label.upload_proof_of_employment' | translate}}" document="application.documents['DALP first responder paystub']" file-type="DALP first responder paystub" required="true"
+              file-uploader button-label="{{'label.upload_proof_of_employment' | translate}}" file-label="{{'label.upload_proof_of_employment' | translate}}" document="application.documents['DALP first responder proof']" file-type="DALP first responder proof" required="true"
 
             .checkbox-block.margin-bottom
               input#dalp_not_educator_or_first_responder name="dalp_not_educator_or_first_responder" type="checkbox" ng-model="application.dalpNotEducatorOrFirstResponder" ng-change='onChangeDalpNotEducatorOrFirstResponder()'
