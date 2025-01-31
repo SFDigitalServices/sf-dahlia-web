@@ -405,7 +405,7 @@ const WhatHappensNextSection = () => {
       <a
         className="underline"
         target="_blank"
-        href={getSfGovUrl("https://www.sf.gov/node/14246")}
+        href={getSfGovUrl("https://www.sf.gov/step-by-step/buy-home-without-entering-lottery")}
         aria-label={t("listings.fcfs.bmrSales.noLotteryRequired.footer.aria")}
       >
         {t("listings.fcfs.bmrSales.noLotteryRequired.footer")}
