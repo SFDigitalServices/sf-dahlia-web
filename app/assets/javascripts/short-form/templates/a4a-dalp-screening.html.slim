@@ -17,24 +17,27 @@ section.app-container.focus-container
         p.form-note.margin-bottom translate="label.please_select_all_that_apply"
           .checkbox-group
 
-            .checkbox-block.margin-bottom--2x
-              input#dalp_educator name="dalp_educator" type="checkbox" ng-model="application.dalpEducator" ng-change='onChangeDalpEducatorOrFirstResponder()'
+            .checkbox-block.margin-bottom
+              input#dalp_educator name="dalp_educator" type="checkbox" ng-model="application.dalpEducator" ng-change="onChangeDalpEducatorOrFirstResponder()" ng-required="dalpNoOptionSelected()"
               label.checkbox-block_label for="dalp_educator"
                 strong.form-label translate="a4a_dalp_screening.i_am_an_educator"
             .form-group.margin-left--2x.margin-right--2x.margin-bottom--2x ng-if="application.dalpEducator"
               file-uploader button-label="{{'label.upload_proof_of_employment' | translate}}" file-label="{{'label.upload_proof_of_employment' | translate}}" document="application.documents['DALP educator paystub']" file-type="DALP educator paystub" required="true"
 
-            .checkbox-block.margin-bottom--2x
-              input#dalp_first_responder name="dalp_first_responder" type="checkbox" ng-model="application.dalpFirstResponder" ng-change='onChangeDalpEducatorOrFirstResponder()'
+            .checkbox-block.margin-bottom
+              input#dalp_first_responder name="dalp_first_responder" type="checkbox" ng-model="application.dalpFirstResponder" ng-change="onChangeDalpEducatorOrFirstResponder()" ng-required="dalpNoOptionSelected()"
               label.checkbox-block_label for="dalp_first_responder"
                 strong.form-label translate="a4a_dalp_screening.i_am_a_first_responder"
             .form-group.margin-left--2x.margin-right--2x.margin-bottom--2x ng-if="application.dalpFirstResponder"
               file-uploader button-label="{{'label.upload_proof_of_employment' | translate}}" file-label="{{'label.upload_proof_of_employment' | translate}}" document="application.documents['DALP first responder paystub']" file-type="DALP first responder paystub" required="true"
 
-            .checkbox-block.margin-bottom--2x
+            .checkbox-block.margin-bottom
               input#dalp_not_educator_or_first_responder name="dalp_not_educator_or_first_responder" type="checkbox" ng-model="application.dalpNotEducatorOrFirstResponder" ng-change='onChangeDalpNotEducatorOrFirstResponder()'
               label.checkbox-block_label for="dalp_not_educator_or_first_responder"
                 strong.form-label translate="a4a_dalp_screening.none_of_these_apply_to_me"
+
+        small.error ng-if="dalpShowNoOptionSelectedError()"
+          | {{'error.please_select_an_option' | translate}}
 
     .button-pager
       .button-pager_row.primary.text-center
