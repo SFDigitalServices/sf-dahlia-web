@@ -1,0 +1,41 @@
+p[style="font-size: 26px"]
+  = t 'emailer.submission_confirmation_dalp.we_got_your_application'
+p
+  == t 'emailer.submission_confirmation_dalp.you_applied_to_listing', link: link_to('Downpayment Assistance Loan Program (DALP) 2025', 'https://www.sf.gov/reports--december-2024--downpayment-assistance-loan-program-dalp')
+p
+  == t 'emailer.submission_confirmation_dalp.submitted', submission_date: @submission_date
+h3
+  = t 'emailer.submission_confirmation_dalp.your_lottery_number'
+p[style="font-size: 20px"]
+  = @lottery_number
+p
+  = t 'emailer.submission_confirmation_dalp.keep_this_number'
+h3
+  = t 'emailer.submission_confirmation_dalp.what_happens_next'
+
+p
+  == t 'emailer.submission_confirmation_dalp.lottery_date', lottery_date: @lottery_date
+h4[style="margin-bottom: 0px"]
+  = t 'emailer.submission_confirmation_dalp.after_lottery'
+ul
+  li
+    = t 'emailer.submission_confirmation_dalp.check_results'
+  li
+    = t 'emailer.submission_confirmation_dalp.we_contact_applicants'
+
+p
+  = link_to t('emailer.submission_confirmation_dalp.where_to_check_link'), 'https://www.sf.gov/dalp-lottery-results'
+h3
+  = t 'emailer.submission_confirmation_dalp.get_help'
+p
+  = t 'emailer.submission_confirmation_dalp.contact_us'
+h4[style="margin-bottom: 0px"]
+  | Mayor's Office of Housing and Community Development
+div
+  | City and County of San Francisco
+div
+  | 1 South Van Ness Avenue, 5th Floor
+div
+  | San Francisco, CA 9410
+div
+  | Phone: (415) 701-5500
