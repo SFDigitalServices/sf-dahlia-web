@@ -46,6 +46,33 @@ describe Emailer, type: :mailer do
       end
     end
 
+    describe '#submission_confirmation_dalp' do
+      before do
+        @params = {
+          lottery_number: '3888078',
+          email: @confirmed_user.email,
+          first_name: fake_contact['firstName'],
+          last_name: fake_contact['lastName'],
+          listing_id: 'a0WW4000000HQAzMAO',
+        }
+        @listing_name = 'DALP 2024'
+      end
+
+      let(:mail) { Emailer.submission_confirmation(@params) }
+
+      it 'renders the email' do
+        name = "#{@params[:firstName]} #{@params[:lastName]}"
+        text = 'We got your application.'
+        VCR.use_cassette('emailer/submission_confirmation_dalp') do
+          expect(mail.subject).to eq("We got your #{@listing_name} application")
+          expect(mail.to).to eq([@params[:email]])
+          expect(mail.from).to eq(['donotreply@sfgov.org'])
+          expect(mail.body.encoded).to match(name)
+          expect(mail.body.encoded).to match(text)
+        end
+      end
+    end
+
     describe '#draft_application_saved' do
       let(:params) do
         {
@@ -151,6 +178,33 @@ describe Emailer, type: :mailer do
         text = 'Thanks for applying. We have received your application'
         VCR.use_cassette('emailer/submission_confirmation') do
           expect(mail.subject).to eq("Thanks for applying to #{@listing_name}")
+          expect(mail.to).to eq([@params[:email]])
+          expect(mail.from).to eq(['donotreply@sfgov.org'])
+          expect(mail.body.encoded).to match(greeting)
+          expect(mail.body.encoded).to match(text)
+        end
+      end
+    end
+
+    describe '#submission_confirmation_dalp' do
+      before do
+        @params = {
+          lottery_number: '3888078',
+          email: @unconfirmed_user.email,
+          first_name: fake_contact['firstName'],
+          last_name: fake_contact['lastName'],
+          listing_id: 'a0WW4000000HQAzMAO',
+        }
+        @listing_name = 'DALP 2024'
+      end
+
+      let(:mail) { Emailer.submission_confirmation(@params) }
+
+      it 'renders the email' do
+        greeting = 'Hello,'
+        text = 'We got your application.'
+        VCR.use_cassette('emailer/submission_confirmation_dalp') do
+          expect(mail.subject).to eq("We got your #{@listing_name} application")
           expect(mail.to).to eq([@params[:email]])
           expect(mail.from).to eq(['donotreply@sfgov.org'])
           expect(mail.body.encoded).to match(greeting)

@@ -1,0 +1,128 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: "<<SALESFORCE_INSTANCE_URL>>/services/oauth2/token"
+    body:
+      encoding: US-ASCII
+      string: grant_type=password&client_id=<<SALESFORCE_CLIENT_ID>>&client_secret=<<SALESFORCE_CLIENT_SECRET>>&username=<<SALESFORCE_USERNAME>>&password=<<SALESFORCE_PASSWORD>><<SALESFORCE_SECURITY_TOKEN>>
+    headers:
+      User-Agent:
+      - Faraday v2.7.12
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 31 Jan 2025 20:51:47 GMT
+      Content-Type:
+      - application/json;charset=UTF-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Content-Type-Options:
+      - nosniff
+      X-Robots-Tag:
+      - none
+      Cache-Control:
+      - no-cache,must-revalidate,max-age=0,no-store,private
+      Expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      X-Readonlymode:
+      - 'false'
+      Vary:
+      - Accept-Encoding
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains
+      Set-Cookie:
+      - BrowserId=L-ksauAVEe-oWJGWgn9b5Q; domain=.salesforce.com; path=/; expires=Sat,
+        31-Jan-2026 20:51:47 GMT; Max-Age=31536000; secure; SameSite=None
+      - CookieConsentPolicy=0:1; path=/; expires=Sat, 31-Jan-2026 20:51:47 GMT; Max-Age=31536000;
+        secure
+      - LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Sat, 31-Jan-2026 20:51:47
+        GMT; Max-Age=31536000; secure
+      Server:
+      - sfdcedge
+      X-Sfdc-Request-Id:
+      - c6f639fad51b0d78f1d95386276c7af8
+      X-Request-Id:
+      - c6f639fad51b0d78f1d95386276c7af8
+    body:
+      encoding: ASCII-8BIT
+      string: '{"access_token":"<<ACCESS_TOKEN>>","instance_url":"<<SALESFORCE_INSTANCE_URL>>","id":"https://test.salesforce.com/id/00D6s000000tHVMEA2/0050P000007QAY9QAO","token_type":"Bearer","issued_at":"1738356707539","signature":"HLJeS3MbjhFodmNnHOv09mwtFmJwVVUOKiS9UxZYQDs="}'
+  recorded_at: Fri, 31 Jan 2025 20:51:47 GMT
+- request:
+    method: get
+    uri: "<<SALESFORCE_INSTANCE_URL>>/services/apexrest/ListingDetails/a0WW4000000HQAzMAO"
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.7.12
+      Authorization:
+      - OAuth <<ACCESS_TOKEN>>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 31 Jan 2025 20:51:48 GMT
+      Content-Type:
+      - application/json;charset=UTF-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains
+      X-Robots-Tag:
+      - none
+      Set-Cookie:
+      - BrowserId=MBO_G-AVEe-vLfPd9h-WHA; domain=.salesforce.com; path=/; expires=Sat,
+        31-Jan-2026 20:51:47 GMT; Max-Age=31536000; secure; SameSite=None
+      - CookieConsentPolicy=0:1; path=/; expires=Sat, 31-Jan-2026 20:51:47 GMT; Max-Age=31536000;
+        secure
+      - LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Sat, 31-Jan-2026 20:51:47
+        GMT; Max-Age=31536000; secure
+      Vary:
+      - Accept-Encoding
+      Cache-Control:
+      - no-cache,must-revalidate,max-age=0,no-store,private
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - sfdcedge
+      X-Sfdc-Request-Id:
+      - eefdf4895caceec6d7ee4321c8708e92
+      X-Request-Id:
+      - eefdf4895caceec6d7ee4321c8708e92
+      X-Sfdc-Edge-Cache:
+      - MISS
+    body:
+      encoding: ASCII-8BIT
+      string: '[{"unitSummaries":{"reserved":null,"general":null},"reservedDescriptor":null,"prioritiesDescriptor":null,"listingID":"a0WW4000000HQAzMAO","listing":{"attributes":{"type":"Listing__c","url":"/services/data/v35.0/sobjects/Listing__c/a0WW4000000HQAzMAO"},"Name":"DALP
+        2024","Realtor_Commission_Unit__c":"percent","Allows_Realtor_Commission__c":false,"Tenure__c":"New
+        sale","Building__c":"a0aW4000008we25IAA","In_Lottery__c":126,"Program_Type__c":"BMR-OTHER","Units_Available__c":0,"SASE_Required_for_Lottery_Ticket__c":false,"nGeneral_Application_Total__c":94,"Lottery_Status__c":"Not
+        Yet Run","Building_Name__c":"DALP Test Development","Building_City__c":"San
+        Francisco","Building_State__c":"CA","Year_Built__c":0,"LastModifiedDate":"2025-01-31T20:51:00.000+0000","Marketing_URL__c":"DALP-2024-Dec24","Application_Due_Date__c":"2025-12-31T20:00:00.000+0000","Application_State__c":"CA","Lottery_Date__c":"2024-12-10T20:00:00.000+0000","Publish_Lottery_Results_on_DAHLIA__c":"Publish
+        only PDF results on DAHLIA","LotteryResultsURL__c":"https://www.google.com/","Accepting_Online_Applications__c":true,"Lottery_Winners__c":0,"Leasing_Agent_Name__c":"Mictest
+        Soltest","Accepting_applications_at_leasing_agent__c":false,"Accepting_applications_by_PO_Box__c":false,"Blank_paper_application_can_be_picked_up__c":false,"Deposit_Min__c":0.00,"Reserved_community_maximum_age__c":0,"Reserved_community_minimum_age__c":0,"hasWaitlist__c":false,"Total_waitlist_openings__c":0,"Total_number_of_building_units__c":0,"Application_Start_Date_Time__c":"2024-12-05T20:00:00.000+0000","Listing_Type__c":"Listing
+        for Lottery Only","Custom_Listing_Type__c":"Downpayment Assistance Loan Program","RecordTypeId":"0120P000000kPURQA2","Status__c":"New","Id":"a0WW4000000HQAzMAO","Listing_Lottery_Preferences__r":{"totalSize":2,"done":true,"records":[{"attributes":{"type":"Listing_Lottery_Preference__c","url":"/services/data/v35.0/sobjects/Listing_Lottery_Preference__c/a0lW4000000ovazIAA"},"Listing__c":"a0WW4000000HQAzMAO","Id":"a0lW4000000ovazIAA","Total_Submitted_Apps__c":16,"Order__c":1,"Current_Units_Available__c":0,"Custom_Preference_Description__c":false,"Lottery_Preference__c":"a0m0P00000zcycHQAQ","Lottery_Preference__r":{"attributes":{"type":"Lottery_Preference__c","url":"/services/data/v35.0/sobjects/Lottery_Preference__c/a0m0P00000zcycHQAQ"},"Id":"a0m0P00000zcycHQAQ","Name":"DALP
+        First Responders","Preference_Short_Code__c":"DFR"}},{"attributes":{"type":"Listing_Lottery_Preference__c","url":"/services/data/v35.0/sobjects/Listing_Lottery_Preference__c/a0lW4000000ovcbIAA"},"Listing__c":"a0WW4000000HQAzMAO","Id":"a0lW4000000ovcbIAA","Total_Submitted_Apps__c":29,"Order__c":2,"Current_Units_Available__c":0,"Custom_Preference_Description__c":false,"Lottery_Preference__c":"a0m0P00000zcycMQAQ","Lottery_Preference__r":{"attributes":{"type":"Lottery_Preference__c","url":"/services/data/v35.0/sobjects/Lottery_Preference__c/a0m0P00000zcycMQAQ"},"Id":"a0m0P00000zcycMQAQ","Name":"DALP
+        SFUSD Educators","Preference_Short_Code__c":"DSE"}}]},"Building__r":{"attributes":{"type":"Building__c","url":"/services/data/v35.0/sobjects/Building__c/a0aW4000008we25IAA"},"Id":"a0aW4000008we25IAA"},"RecordType":{"attributes":{"type":"RecordType","url":"/services/data/v35.0/sobjects/RecordType/0120P000000kPURQA2"},"Id":"0120P000000kPURQA2","Name":"Ownership"}},"chartTypes":null}]'
+  recorded_at: Fri, 31 Jan 2025 20:51:48 GMT
+recorded_with: VCR 6.1.0
