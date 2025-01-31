@@ -510,7 +510,7 @@
                 "subject": "We got your %{listing_name} application",
                 "we_got_your_application": "We got your application.",
                 "you_applied_to_listing": "You applied to the %{link} on DAHLIA San Francisco Housing Portal.",
-                "submitted": "Submitted: %{submission_date}",
+                "submitted": "Submitted: %{submission_date} at %{submission_time} Pacific Time",
                 "your_lottery_number": "Your DALP lottery number",
                 "keep_this_number": "You need this number to check your results. Keep it in a safe place.",
                 "what_happens_next": "What happens next",
