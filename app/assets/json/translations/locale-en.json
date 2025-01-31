@@ -72,8 +72,8 @@
             "instructions_p2": "Check if you can apply as a:",
             "instructions_p3": "First responder",
             "instructions_p4": "Educator",
-            "i_am_an_educator": "I am a first responder (a uniformed, sworn member of San Francisco Police, Fire or Sheriff’s Department)",
-            "i_am_a_first_responder": "I am an educator at San Francisco Unified School District (SFUSD)",
+            "i_am_an_educator": "I am an educator at San Francisco Unified School District (SFUSD)",
+            "i_am_a_first_responder": "I am a first responder (a uniformed, sworn member of San Francisco Police, Fire or Sheriff’s Department)",
             "none_of_these_apply_to_me": "None of these apply to me"
 
         },
