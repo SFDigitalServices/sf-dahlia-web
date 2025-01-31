@@ -304,7 +304,7 @@ ShortFormApplicationController = (
 
   $scope.onChangeDalpEducatorOrFirstResponder = ->
     if $scope.application.dalpEducator || $scope.application.dalpFirstResponder
-      $scope.application.dalpNotEducatorOrFirstResponder = null
+      $scope.application.dalpNotEducatorOrqFirstResponder = null
 
   $scope.onChangeDalpNotEducatorOrFirstResponder = ->
     if $scope.application.dalpNotEducatorOrFirstResponder
@@ -326,9 +326,9 @@ ShortFormApplicationController = (
     ShortFormApplicationService.application.answeredDalpScreening = true
     # Clean up DALP proof files
     if !ShortFormApplicationService.application.dalpEducator
-      FileUploadService.deleteFile($scope.listing, { document: ShortFormApplicationService.application.documents['DALP educator paystub'] })
+      FileUploadService.deleteFile($scope.listing, { document: ShortFormApplicationService.application.documents['DALP educator proof'] })
     if !ShortFormApplicationService.application.dalpFirstResponder
-      FileUploadService.deleteFile($scope.listing, { document: ShortFormApplicationService.application.documents['DALP first responder paystub'] })
+      FileUploadService.deleteFile($scope.listing, { document: ShortFormApplicationService.application.documents['DALP first responder proof'] })
     ShortFormNavigationService.goToApplicationPage('dahlia.short-form-application.prerequisites')
 
   ########## END DALP SCREENING LOGIC ##########
