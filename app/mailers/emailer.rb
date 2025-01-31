@@ -119,9 +119,8 @@ class Emailer < Devise::Mailer
     @lottery_date = ''
     tz = TZInfo::Timezone.get('US/Pacific')
     submission_datetime = Time.now.getlocal(tz.current_period.offset.utc_total_offset)
-    @submission_date = submission_datetime.strftime('%B %e, %Y %I:%M %P')
+    @submission_date = submission_datetime.strftime('%B %e, %Y')
     @submission_time = submission_datetime.strftime('%I:%M %P')
-    @submission_date = Time.current.strftime('%B %e, %Y %I:%M %P %Z')
     is_dalp_listing = @listing.Custom_Listing_Type == 'Downpayment Assistance Loan Program'
     if @listing.Lottery_Date
       @lottery_date = Time.zone.parse(@listing.Lottery_Date).strftime('%B %e, %Y')
