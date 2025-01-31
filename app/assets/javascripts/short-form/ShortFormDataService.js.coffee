@@ -122,12 +122,6 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
     if application.isAnyoneAVeteran == 'Yes' && application.preferences.veterans_household_member
       veteranMemberId = parseInt(application.preferences.veterans_household_member, 10)
 
-    # Clean up DALP proof files
-    if !application.dalpEducator
-      FileUploadService.deleteFile({ 'Id': listingId }, { document: application.documents['DALP educator paystub'] })
-    if !application.dalpFirstResponder
-      FileUploadService.deleteFile({ 'Id': listingId }, { document: application.documents['DALP first responder paystub'] })
-
     # primaryApplicant
     sfApp.primaryApplicant = _.pick application.applicant, Service.WHITELIST_FIELDS.primaryApplicant
     sfApp.primaryApplicant.dob = Service.formatUserDOB(application.applicant)

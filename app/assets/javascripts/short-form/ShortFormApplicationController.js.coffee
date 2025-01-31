@@ -11,6 +11,7 @@ ShortFormApplicationController = (
   AccountService,
   AddressValidationService,
   AnalyticsService,
+  FileUploadService,
   Idle,
   inputMaxLength,
   ListingDataService,
@@ -313,6 +314,11 @@ ShortFormApplicationController = (
 
   $scope.afterDalpScreening = ->
     ShortFormApplicationService.application.answeredDalpScreening = true
+    # Clean up DALP proof files
+    if !ShortFormApplicationService.application.dalpEducator
+      FileUploadService.deleteFile($scope.listing, { document: ShortFormApplicationService.application.documents['DALP educator paystub'] })
+    if !ShortFormApplicationService.application.dalpFirstResponder
+      FileUploadService.deleteFile($scope.listing, { document: ShortFormApplicationService.application.documents['DALP first responder paystub'] })
     ShortFormNavigationService.goToApplicationPage('dahlia.short-form-application.prerequisites')
 
   $scope.addressInputInvalid = (identifier = '') ->
@@ -1219,6 +1225,7 @@ ShortFormApplicationController.$inject = [
   'AccountService',
   'AddressValidationService',
   'AnalyticsService',
+  'FileUploadService',
   'Idle',
   'inputMaxLength',
   'ListingDataService',
