@@ -304,15 +304,15 @@ ShortFormApplicationController = (
 
   $scope.onChangeDalpEducatorOrFirstResponder = ->
     if $scope.application.dalpEducator || $scope.application.dalpFirstResponder
-      $scope.application.dalpNotEducatorOrqFirstResponder = null
+      $scope.application.dalpNotEducatorOrFirstResponder = null
 
-  $scope.onChangeDalpNotEducatorOrFirstResponder = ->
+  $scope.onChangeDalpNoneApply = ->
     if $scope.application.dalpNotEducatorOrFirstResponder
       $scope.application.dalpEducator = null
       $scope.application.dalpFirstResponder = null
 
   $scope.dalpNoOptionSelected = ->
-    !$scope.application.dalpNotEducatorOrFirstResponder &
+    !$scope.application.dalpNotEducatorOrFirstResponder &&
     !$scope.application.dalpEducator &&
     !$scope.application.dalpFirstResponder
 

@@ -32,7 +32,7 @@ section.app-container.focus-container
               file-uploader button-label="{{'label.upload_proof_of_employment' | translate}}" file-label="{{'label.upload_proof_of_employment' | translate}}" document="application.documents['DALP first responder proof']" file-type="DALP first responder proof" required="true"
 
             .checkbox-block.margin-bottom
-              input#dalp_not_educator_or_first_responder name="dalp_not_educator_or_first_responder" type="checkbox" ng-model="application.dalpNotEducatorOrFirstResponder" ng-change='onChangeDalpNotEducatorOrFirstResponder()'
+              input#dalp_not_educator_or_first_responder name="dalp_not_educator_or_first_responder" type="checkbox" ng-model="application.dalpNotEducatorOrFirstResponder" ng-change='onChangeDalpNoneApply()'
               label.checkbox-block_label for="dalp_not_educator_or_first_responder"
                 strong.form-label translate="a4a_dalp_screening.none_of_these_apply_to_me"
 
