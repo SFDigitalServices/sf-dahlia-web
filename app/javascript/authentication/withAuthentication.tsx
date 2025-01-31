@@ -29,7 +29,8 @@ export const withAuthentication = <P extends object>(
     React.useEffect(() => {
       if (!isTokenValid()) {
         const redirectParam = redirectPath ? `?redirect=${redirectPath}` : ""
-        const signInPath = getLocalizedPath("/sign-in", getCurrentLanguage(), redirectParam)
+        const language = getCurrentLanguage()
+        const signInPath = getLocalizedPath("/sign-in", language, redirectParam)
         window.location.href = signInPath
       }
     }, [])

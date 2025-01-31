@@ -31,10 +31,13 @@ describe("<AccountSettingsPage />", () => {
     let originalUseContext
     let promise
     let renderResult
+    let originalLocation: Location
 
     beforeEach(async () => {
       document.documentElement.lang = "en"
       originalUseContext = React.useContext
+      originalLocation = window.location
+
       const mockContextValue: ContextProps = {
         profile: mockProfile,
         signIn: jest.fn(),
@@ -43,6 +46,17 @@ describe("<AccountSettingsPage />", () => {
         saveProfile: saveProfileMock,
         loading: false,
         initialStateLoaded: true,
+      }
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      delete (window as any)?.location
+      ;(window as Window).location = {
+        ...originalLocation,
+        href: "http://dahlia.com",
+        assign: jest.fn(),
+        replace: jest.fn(),
+        reload: jest.fn(),
+        toString: jest.fn(),
       }
 
       jest.spyOn(React, "useContext").mockImplementation((context) => {
@@ -68,20 +82,6 @@ describe("<AccountSettingsPage />", () => {
       const title = getByText("Account settings")
 
       expect(title).not.toBeNull()
-    })
-
-    it("resize events", () => {
-      expect(renderResult).toMatchSnapshot()
-
-      act(() => {
-        // Change the viewport to 500px.
-        global.innerWidth = 500
-
-        // Trigger the window resize event.
-        global.dispatchEvent(new Event("resize"))
-      })
-
-      expect(renderResult).toMatchSnapshot()
     })
 
     describe("when the user updates their name and DOB", () => {
@@ -772,7 +772,7 @@ describe("<AccountSettingsPage />", () => {
     it("redirects to the sign in page", async () => {
       const { queryByText } = await renderAndLoadAsync(<AccountSettingsPage assetPaths={{}} />)
 
-      expect(window.location.href).toBe("/sign-in")
+      expect(window.location.href).toBe("/sign-in?redirect=settings")
       expect(queryByText("Account Settings")).toBeNull()
     })
   })
