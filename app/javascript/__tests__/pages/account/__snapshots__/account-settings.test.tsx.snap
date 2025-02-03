@@ -32,7 +32,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
             name="google-site-verification"
           />
           <meta
-            content="http://localhost/"
+            content="/sign-in?redirect=settings"
             property="og:url"
           />
           <meta
@@ -897,7 +897,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
           name="google-site-verification"
         />
         <meta
-          content="http://localhost/"
+          content="/sign-in?redirect=settings"
           property="og:url"
         />
         <meta
@@ -1819,7 +1819,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
             name="google-site-verification"
           />
           <meta
-            content="http://localhost/"
+            content="/sign-in?redirect=settings"
             property="og:url"
           />
           <meta
@@ -2660,7 +2660,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
           name="google-site-verification"
         />
         <meta
-          content="http://localhost/"
+          content="/sign-in?redirect=settings"
           property="og:url"
         />
         <meta

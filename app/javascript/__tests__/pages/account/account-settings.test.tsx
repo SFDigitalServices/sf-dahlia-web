@@ -84,6 +84,20 @@ describe("<AccountSettingsPage />", () => {
       expect(title).not.toBeNull()
     })
 
+    it("resize events", () => {
+      expect(renderResult).toMatchSnapshot()
+
+      act(() => {
+        // Change the viewport to 500px.
+        global.innerWidth = 500
+
+        // Trigger the window resize event.
+        global.dispatchEvent(new Event("resize"))
+      })
+
+      expect(renderResult).toMatchSnapshot()
+    })
+
     describe("when the user updates their name and DOB", () => {
       it("updates Name", async () => {
         ;(authenticatedPut as jest.Mock).mockResolvedValue({
