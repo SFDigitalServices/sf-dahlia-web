@@ -112,7 +112,7 @@ describe("<MyApplications />", () => {
     it("redirects to the sign in page", async () => {
       const { queryByText } = await renderAndLoadAsync(<MyApplications assetPaths={{}} />)
 
-      expect(window.location.href).toBe("http://dahlia.com/sign-in")
+      expect(window.location.href).toBe("http://dahlia.com/sign-in?redirect=applications")
       expect(queryByText("My applications")).toBeNull()
     })
   })
