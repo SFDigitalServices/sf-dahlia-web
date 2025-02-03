@@ -66,6 +66,17 @@
             "title": "Here's what to expect for this application.",
             "warning": "Any fraudulent statements will cause your application to be removed from the lottery."
         },
+        "a4a_dalp_screening": {
+            "title": "Is anyone on the application a San Francisco first responder or educator?",
+            "instructions_p1": "This program has funding set aside for first responders and educators. Your answer helps us determine what funding you may be eligible for.",
+            "instructions_p2": "Check if you can apply as a:",
+            "instructions_p3": "First responder",
+            "instructions_p4": "Educator",
+            "i_am_an_educator": "I am an educator at San Francisco Unified School District (SFUSD)",
+            "i_am_a_first_responder": "I am a first responder (a uniformed, sworn member of San Francisco Police, Fire or Sheriff’s Department)",
+            "none_of_these_apply_to_me": "None of these apply to me"
+
+        },
         "account_settings": {
             "account_changes_saved": "Your changes have been saved.",
             "account_settings": "Account Settings",
@@ -601,15 +612,22 @@
             "title": "Forgot Password"
         },
         "g1_confirmation": {
+            "after_the_lottery_link": "Lottery results and more about what happens next",
+            "after_the_lottery_p1": "Check your results online",
+            "after_the_lottery_p2": "We contact applicants in the order of the lottery results until all loan funding has been reserved",
+            "after_the_lottery_title": "After the lottery",
             "browse_more_listings": "Browse more listings",
             "create_account_body": "Creating an account will save your information for future applications, and you can check the status of this application anytime.",
             "create_account_title": "Would you like to create an account?",
+            "dont_submit_another_app_p1_dalp": "Your household may only submit 1 application to the DALP lottery.",
             "dont_submit_another_app_p1_email": "If you need to update information on your application, do not apply again or both applications will be removed from the lottery. Contact the agent if you did not receive an email confirmation.",
             "dont_submit_another_app_p1_no_email": "If you need to update information on your application, do not apply again or both applications will be removed from the lottery. Contact the agent if you have any questions.",
             "dont_submit_another_app_title": "Do not submit another application for this listing",
+            "dont_submit_another_app_title_dalp": "Do not apply again, or your application will be removed",
             "go_to_my_applications": "Go to My Applications",
             "lottery_number": "Here's your lottery ticket number",
             "next_steps_body1": "The lottery will be held on",
+            "next_steps_body1_dalp": "Lottery date: ",
             "next_steps_body2_rental": "You do not need to attend the housing lottery. Results will be posted {{listingLink}}. Please refer to the listing for the lottery results date. <br><br>Applicants will be contacted by the agent in lottery rank order until vacancies are filled. Should your application be chosen, be prepared to fill out a more detailed application and provide required supporting documents within 5 business days of being contacted.",
             "next_steps_body2_sale": "You do not need to attend the housing lottery. Results will be posted {{listingLink}}. Please refer to the listing for the lottery results date. <br><br>Applicants will be contacted by the agent in lottery rank order until vacancies are filled. Should your application be chosen, be prepared to fill out a more detailed application and provide <a href='{{url}}' target='_blank'>required supporting documents</a> within 5 business days of being contacted.",
             "next_steps_title": "What to expect next",
@@ -870,8 +888,10 @@
             "upload_proof_instructions_3": "Maximum file name length is 80 characters",
             "upload_proof_of_preference": "Upload proof of preference",
             "upload_proof_of_rent_payment": "Upload proof of rent payment",
+            "upload_proof_of_employment": "Upload proof of employment",
             "upload_rent_description": "Please provide proof for your monthly rent. You said your rent at this address is: {{rent}} <br/><br/>You can upload multiple documents, if your household pays with multiple checks, money orders etc.",
             "upload_verification_letter": "Upload verification letter",
+            "upload_proof_example_paystub": "Examples: a copy of your paycheck or letter from your employer that shows your job title.",
             "uploaded": "Uploaded",
             "uploading": "Uploading",
             "verification_letter": "Verification Letter",

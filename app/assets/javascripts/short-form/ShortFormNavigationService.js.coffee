@@ -314,6 +314,7 @@ ShortFormNavigationService = (
       'intro',
       'community-screening',
       'custom-educator-screening',
+      'dalp-screening',
       'overview',
       'verify-address',
       'household-members',
