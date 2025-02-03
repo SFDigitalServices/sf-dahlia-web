@@ -47,7 +47,7 @@
         # we don't want to show the beforeunload dialog, because it would allow the applicant to stay on the page after session expiration
         $window.removeEventListener('beforeunload', ShortFormApplicationService.onExit)
         if ShortFormApplicationService.listingIsDalp()
-          $window.location.href = "https://www.sf.gov/apply-downpayment-loan-buy-market-rate-home"
+          $window.location.href = ShortFormApplicationService.localizedSfGovUrl("apply-downpayment-loan-buy-market-rate-home")
         else
           $state.go('dahlia.listing', {timeout: true, id: ShortFormApplicationService.listing.Id})
 
@@ -110,7 +110,7 @@
         # the redirect will trigger $stateChangeStart again and will popup the confirmation alert
         e.preventDefault()
         if ShortFormApplicationService.listingIsDalp()
-          $window.location.href = "https://www.sf.gov/apply-downpayment-loan-buy-market-rate-home"
+          $window.location.href = ShortFormApplicationService.localizedSfGovUrl("apply-downpayment-loan-buy-market-rate-home")
         else
           $state.go('dahlia.listing', {id: ShortFormApplicationService.listing.listingID})
 
