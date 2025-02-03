@@ -283,5 +283,4 @@ workflows:
   build-and-deploy:
     jobs:
       - build
-      - e2e-legacy:
-          <<: *angular_jobs
+      - e2e-legacy
