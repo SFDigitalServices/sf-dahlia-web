@@ -148,6 +148,10 @@ const SignInForm = () => {
   }
 
   useEffect(() => {
+    const redirectUrl = getRedirectFromUrl()
+    if (redirectUrl) {
+      setRequestError(t("signIn.loginRequired"))
+    }
     const newAccountEmail: string | null = window.sessionStorage.getItem("newAccount")
     const expiredConfirmedEmail = getExpiredConfirmedEmail()
     const expiredUnconfirmedEmail = getExpiredUnconfirmedEmail()
