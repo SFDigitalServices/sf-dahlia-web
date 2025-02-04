@@ -85,7 +85,9 @@ Rails.application.routes.draw do
   get '(:lang)/listings/for-rent' => 'directory#rent', lang: /(en|es|zh|tl)/
   get '(:lang)/listings/for-sale' => 'directory#sale', lang: /(en|es|zh|tl)/
   # TODO: Paths on Bloom needs to be configurable
-  get '(:lang)/listings/:id' => 'listing#index', lang: /(en|es|zh|tl)/
+  get '(:lang)/listings/:id' => 'listing#index', lang: /(en|es|zh|tl)/, constraints: DalpConstraint.new
+  get '/listings/:id', to: redirect('/')
+  get '(:lang)/listings/:id', to: redirect('%{lang}')
 
   # If the constraint doesn't pass, it falls back to the next match
   get '(:lang)/listings/:id/how-to-apply' => 'listing#how_to_apply', lang: /(en|es|zh|tl)/, constraints: HowToApplyConstraint.new
