@@ -173,7 +173,7 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
             </div>
             <div id="listing-results">
               {openListingsView(
-                [],
+                listings.open,
                 props.directoryType,
                 props.getSummaryTable,
                 observerRef,
