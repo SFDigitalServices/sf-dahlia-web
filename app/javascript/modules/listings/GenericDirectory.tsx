@@ -3,6 +3,7 @@ import React, {
   MutableRefObject,
   ReactNode,
   SetStateAction,
+  useContext,
   useEffect,
   useRef,
   useState,
@@ -39,6 +40,7 @@ import {
 } from "../constants"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import { handleSectionHeaderEntries, toggleNavBarBoxShadow } from "./util/NavigationBarUtils"
+import { ConfigContext } from "../../lib/ConfigContext"
 
 interface RentalDirectoryProps {
   listingsAPI: (filters?: EligibilityFilters) => Promise<RailsListing[]>
@@ -145,6 +147,8 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
     }
   }, [activeItem, newDirectoryEnabled])
 
+  const { getAssetPath } = useContext(ConfigContext)
+
   return (
     <LoadingOverlay isLoading={loading}>
       <div>
@@ -169,12 +173,13 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
             </div>
             <div id="listing-results">
               {openListingsView(
-                listings.open,
+                [],
                 props.directoryType,
                 props.getSummaryTable,
                 observerRef,
                 hasFiltersSet,
-                listings.fcfs.length
+                listings.fcfs.length,
+                getAssetPath("house-circle-check.svg")
               )}
               {props.directoryType === DIRECTORY_TYPE_SALES &&
                 fcfsSalesView(
@@ -183,7 +188,8 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
                   props.getSummaryTable,
                   observerRef,
                   hasFiltersSet,
-                  listings.open.length
+                  listings.open.length,
+                  getAssetPath("house-circle-check.svg")
                 )}
               {props.findMoreActionBlock}
               {filters &&
