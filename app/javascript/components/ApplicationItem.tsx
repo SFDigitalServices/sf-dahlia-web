@@ -9,7 +9,12 @@ import {
 } from "@bloom-housing/ui-components"
 import { Card, Link } from "@bloom-housing/ui-seeds"
 import "./ApplicationItem.scss"
-import { formatTimeOfDay, getCurrentLanguage, localizedFormat } from "../util/languageUtil"
+import {
+  formatTimeOfDay,
+  getCurrentLanguage,
+  localizedFormat,
+  getSfGovUrl,
+} from "../util/languageUtil"
 import { getListingDetailPath, getLocalizedPath } from "../util/routeUtil"
 import { RailsListing } from "../modules/listings/SharedHelpers"
 import {
@@ -45,6 +50,7 @@ const ApplicationItem = (props: ApplicationItemProps) => {
   const lotteryComplete = isLotteryComplete(props.listing)
   const pastDue = new Date() > new Date(props.listing.Application_Due_Date)
   const applicationID = props.applicationURL.split("/").pop()
+  const dalpLotteryResultsUrl = getSfGovUrl("https://www.sf.gov/dalp-lottery-results")
 
   React.useEffect(() => {
     if (isLotteryComplete(props.listing)) {
@@ -102,11 +108,15 @@ const ApplicationItem = (props: ApplicationItemProps) => {
                 {lotteryComplete ? (
                   <span>
                     {t("myApplications.yourLotteryNumberIs.withLink")}{" "}
-                    {showLotteryResultsPDFonly(props.listing) ? (
+                    {isDalpListing(props.listing) && (
+                      <Link href={dalpLotteryResultsUrl}>{`#${props.confirmationNumber}`}</Link>
+                    )}
+                    {!isDalpListing(props.listing) && showLotteryResultsPDFonly(props.listing) && (
                       <Link
                         href={props.listing.LotteryResultsURL}
                       >{`#${props.confirmationNumber}`}</Link>
-                    ) : (
+                    )}
+                    {!isDalpListing(props.listing) && !showLotteryResultsPDFonly(props.listing) && (
                       <button
                         className="text-blue-500"
                         onClick={() => setIsModalOpen(true)}
@@ -142,6 +152,7 @@ const ApplicationItem = (props: ApplicationItemProps) => {
               ApplicationButton(props.applicationURL, t("label.viewApplication"))}
             {props.submitted &&
               lotteryComplete &&
+              !isDalpListing(props.listing) &&
               (showLotteryResultsPDFonly(props.listing) ? (
                 ApplicationButton(
                   props.listing.LotteryResultsURL,
@@ -161,6 +172,15 @@ const ApplicationItem = (props: ApplicationItemProps) => {
                   {t("listings.lottery.viewLotteryResults")}
                 </Button>
               ))}
+            {props.submitted &&
+              lotteryComplete &&
+              isDalpListing(props.listing) &&
+              ApplicationButton(
+                dalpLotteryResultsUrl,
+                t("listings.lottery.checkLotteryResults"),
+                AppearanceStyleType.primary,
+                true
+              )}
             {!props.submitted &&
               !pastDue &&
               ApplicationButton(

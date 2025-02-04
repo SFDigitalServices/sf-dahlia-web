@@ -1124,6 +1124,7 @@
   "listings.incomeExceptions.students": "Are full-time students (but not the primary applicant).",
   "listings.incomeRange.minMaxPerMonth": "Income <span className='font-semibold'>$%{min} to $%{max}</span> per month",
   "listings.incomeRange.upToMaxPerMonth": "Income <span className='font-semibold'>up to $%{max}</span> per month",
+  "listings.lottery.checkLotteryResults": "Check Lottery Results",
   "listings.lottery.downloadLotteryResults": "Download Lottery Results",
   "listings.lottery.preferences": "Anyone may enter the housing lottery for this listing. If your household has one of the following preferences, you will be considered in the order shown here. Each preference holder will be reviewed in lottery rank order.",
   "listings.lottery.title": "Lottery Preferences",
