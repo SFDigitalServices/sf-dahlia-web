@@ -83,7 +83,7 @@ const UserProvider = (props: UserProviderProps) => {
           pushToDataLayer("login_failed", {
             user_id: undefined,
             origin,
-            error_reason: error.response?.data.error,
+            reason: error.response?.data.error,
           })
           throw error
         })
