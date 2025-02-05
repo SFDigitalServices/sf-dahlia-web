@@ -459,7 +459,7 @@
   "error.account.passwordComplexity.abbreviated": "選擇強式密碼",
   "error.accountBanner.header": "缺少部分資訊，或輸入內容有誤：",
   "error.address": "請輸入地址",
-  "error.addressValidation.notFound": "沒有符合此地址的資料。請檢查輸入的門牌號碼、街道名和城市名。請勿提供郵政信箱。&lt;br&gt;&lt;br&gt;如果您輸入的地址正確，&lt;a href=%{mailInfo} target=&quot;_blank&quot;&gt;請傳送電子郵件至 lotteryappeals@sfgov.org&lt;/a&gt; 尋求協助。",
+  "error.addressValidation.notFound": "沒有符合此地址的資料。請檢查輸入的門牌號碼、街道名和城市名。請勿提供郵政信箱。&lt;br&gt;&lt;br&gt;如果您輸入的地址正確，&lt;a href=%{mailInfo} target=&quot;_blank&quot;&gt;請傳送電子郵件至 lotteryappeal@sfgov.org&lt;/a&gt; 尋求協助。",
   "error.addressValidation.notFoundBody": "親愛的 MOHCD：\n\n我無法完成有關 %{listing_name} 的申請表。我的地址是 %{home_address}，而表格顯示資料有誤。請告訴我接下來該如何處理。\n\n謝謝，\n%{first_name} %{last_name}\n%{email}\n%{phone_number}",
   "error.addressValidation.notFoundSubject": "無法在 DAHLIA 申請表輸入我的地址。",
   "error.addressValidationDuplicateUnit": "如果您有公寓或單位號碼，只能在公寓 (Apt) 或單位號碼 (Unit#) 欄位填寫。",
