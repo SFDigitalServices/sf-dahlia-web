@@ -459,7 +459,7 @@
   "error.account.passwordComplexity.abbreviated": "Elija una contraseña segura",
   "error.accountBanner.header": "Falta alguna información o está ingresada incorrectamente:",
   "error.address": "Ingrese una dirección",
-  "error.addressValidation.notFound": "No se encontró la dirección. Verifique el número de la vivienda, la calle y la ciudad que se ingresaron. No se permiten los apartados postales.&lt;br&gt;&lt;br&gt;Si la dirección que ingresó es correcta, &lt;a href=%{mailInfo} target=&quot;_blank&quot;&gt;envíenos un correo electrónico a lotteryappeals@sfgov.org&lt;/a&gt; para solicitar ayuda.",
+  "error.addressValidation.notFound": "No se encontró la dirección. Verifique el número de la vivienda, la calle y la ciudad que se ingresaron. No se permiten los apartados postales.&lt;br&gt;&lt;br&gt;Si la dirección que ingresó es correcta, &lt;a href=%{mailInfo} target=&quot;_blank&quot;&gt;envíenos un correo electrónico a lotteryappeal@sfgov.org&lt;/a&gt; para solicitar ayuda.",
   "error.addressValidation.notFoundBody": "Estimado(a) representante de la MOHCD:\n\nNo pude completar mi solicitud para %{listing_name}. Mi dirección es %{home_address} y en el formulario se me indica que hay un error. Indíqueme qué puedo hacer a continuación.\n\nGracias,\n%{first_name} %{last_name}\n%{email}\n%{phone_number}",
   "error.addressValidation.notFoundSubject": "No puedo ingresar mi dirección en la solicitud en DAHLIA",
   "error.addressValidationDuplicateUnit": "Si tiene un número de unidad o departamento, simplemente ingréselo en el casillero “Apt or Unit #” (N.° de departamento o unidad)",
