@@ -65,17 +65,21 @@ const ApplicationItem = (props: ApplicationItemProps) => {
     text: string,
     style?: AppearanceStyleType,
     newTab?: boolean
-  ) => (
-    <LinkButton
-      size={AppearanceSizeType.small}
-      styleType={style}
-      href={getLocalizedPath(url, getCurrentLanguage())}
-      newTab={newTab}
-      className="text-11"
-    >
-      {text}
-    </LinkButton>
-  )
+  ) => {
+    const externalUrl = url.startsWith("http")
+    return (
+      <LinkButton
+        size={AppearanceSizeType.small}
+        styleType={style}
+        href={externalUrl ? url : getLocalizedPath(url, getCurrentLanguage())}
+        newTab={newTab}
+        className="text-11"
+      >
+        {text}
+      </LinkButton>
+    )
+  }
+
   const classNames = ["application-item"]
   if (!props.submitted) classNames.push("application-item__bg")
 
