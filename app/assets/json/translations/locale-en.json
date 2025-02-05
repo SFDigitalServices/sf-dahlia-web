@@ -67,15 +67,14 @@
             "warning": "Any fraudulent statements will cause your application to be removed from the lottery."
         },
         "a4a_dalp_screening": {
-            "title": "Is anyone on the application a San Francisco first responder or educator?",
+            "i_am_a_first_responder": "I am a first responder (a uniformed, sworn member of San Francisco Police, Fire or Sheriff’s Department)",
+            "i_am_an_educator": "I am an educator at San Francisco Unified School District (SFUSD)",
             "instructions_p1": "This program has funding set aside for first responders and educators. Your answer helps us determine what funding you may be eligible for.",
             "instructions_p2": "Check if you can apply as a:",
             "instructions_p3": "First responder",
             "instructions_p4": "Educator",
-            "i_am_an_educator": "I am an educator at San Francisco Unified School District (SFUSD)",
-            "i_am_a_first_responder": "I am a first responder (a uniformed, sworn member of San Francisco Police, Fire or Sheriff’s Department)",
-            "none_of_these_apply_to_me": "None of these apply to me"
-
+            "none_of_these_apply_to_me": "None of these apply to me",
+            "title": "Is anyone on the application a San Francisco first responder or educator?"
         },
         "account_settings": {
             "account_changes_saved": "Your changes have been saved.",
@@ -883,15 +882,15 @@
             "upload_copy_of_lease": "Upload Copy of Lease",
             "upload_lease_description": "Please upload the first page, or whichever page shows the rent amount.",
             "upload_preapproval_letter": "Upload pre-approval letter",
+            "upload_proof_example_paystub": "Examples: a copy of your paycheck or letter from your employer that shows your job title.",
             "upload_proof_instructions_1": "If you're on a smartphone, you can take a picture.",
             "upload_proof_instructions_2": "Maximum file size is 5MB.<br>Supported file types: PDF, JPG, PNG, HEIC.",
             "upload_proof_instructions_3": "Maximum file name length is 80 characters",
+            "upload_proof_of_employment": "Upload proof of employment",
             "upload_proof_of_preference": "Upload proof of preference",
             "upload_proof_of_rent_payment": "Upload proof of rent payment",
-            "upload_proof_of_employment": "Upload proof of employment",
             "upload_rent_description": "Please provide proof for your monthly rent. You said your rent at this address is: {{rent}} <br/><br/>You can upload multiple documents, if your household pays with multiple checks, money orders etc.",
             "upload_verification_letter": "Upload verification letter",
-            "upload_proof_example_paystub": "Examples: a copy of your paycheck or letter from your employer that shows your job title.",
             "uploaded": "Uploaded",
             "uploading": "Uploading",
             "verification_letter": "Verification Letter",
