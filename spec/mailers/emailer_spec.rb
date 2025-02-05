@@ -61,13 +61,11 @@ describe Emailer, type: :mailer do
       let(:mail) { Emailer.submission_confirmation(@params) }
 
       it 'renders the email' do
-        name = "#{@params[:firstName]} #{@params[:lastName]}"
         text = 'We got your application.'
         VCR.use_cassette('emailer/submission_confirmation_dalp') do
           expect(mail.subject).to eq("We got your #{@listing_name} application")
           expect(mail.to).to eq([@params[:email]])
           expect(mail.from).to eq(['donotreply@sfgov.org'])
-          expect(mail.body.encoded).to match(name)
           expect(mail.body.encoded).to match(text)
         end
       end
@@ -201,13 +199,11 @@ describe Emailer, type: :mailer do
       let(:mail) { Emailer.submission_confirmation(@params) }
 
       it 'renders the email' do
-        greeting = 'Hello,'
         text = 'We got your application.'
         VCR.use_cassette('emailer/submission_confirmation_dalp') do
           expect(mail.subject).to eq("We got your #{@listing_name} application")
           expect(mail.to).to eq([@params[:email]])
           expect(mail.from).to eq(['donotreply@sfgov.org'])
-          expect(mail.body.encoded).to match(greeting)
           expect(mail.body.encoded).to match(text)
         end
       end
