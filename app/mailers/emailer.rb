@@ -142,7 +142,7 @@ class Emailer < Devise::Mailer
 
     if is_dalp_listing
       mail(to: @email, subject: @subject) do |format|
-        format.html { render 'submission_confirmation_dalp' }
+        format.html { render layout: 'submission_confirmation_dalp' }
       end
     else
       mail(to: @email, subject: @subject) do |format|
