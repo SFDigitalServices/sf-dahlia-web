@@ -459,7 +459,7 @@
   "error.account.passwordComplexity.abbreviated": "Pumili ng malakas na password",
   "error.accountBanner.header": "Wala o mali ang pagkakalagay ng ilang impormasyon:",
   "error.address": "Pakipasok ang inyong address",
-  "error.addressValidation.notFound": "Hindi nahanap ang address na ito. Pakitingnan ang house number, street, at lungsod na nailagay. Hindi pinapayagan ang mga PO Box.&lt;br&gt;&lt;br&gt;Kung wasto ang nailagay ninyong address, &lt;a href=%{mailInfo} target=&quot;_blank&quot;&gt;mag-email sa amin sa lotteryappeals@sfgov.org&lt;/a&gt; para sa tulong.",
+  "error.addressValidation.notFound": "Hindi nahanap ang address na ito. Pakitingnan ang house number, street, at lungsod na nailagay. Hindi pinapayagan ang mga PO Box.&lt;br&gt;&lt;br&gt;Kung wasto ang nailagay ninyong address, &lt;a href=%{mailInfo} target=&quot;_blank&quot;&gt;mag-email sa amin sa lotteryappeal@sfgov.org&lt;/a&gt; para sa tulong.",
   "error.addressValidation.notFoundBody": "Minamahal na MOHCD,\n\nhindi ko makumpleto ang aking aplikasyon para sa %{listing_name}. Ang address ko ay %{home_address} at sinasabi sa akin ng form na mayroong error. Pakipayuhan ako ng sunod na gagawin.\n\nSalamat,\n%{first_name} %{last_name}\n%{email}\n%{phone_number}",
   "error.addressValidation.notFoundSubject": "Hindi mailagay ang aking address sa aplikasyon sa DAHLIA",
   "error.addressValidationDuplicateUnit": "Kung mayroon kayong numero ng apartment o yunit, ilagay lang ito sa kahong Apt o Yunit #",

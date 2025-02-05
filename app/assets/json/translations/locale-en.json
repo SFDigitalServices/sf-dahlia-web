@@ -511,7 +511,7 @@
             "accessible_only_anyone": "At least one member of your household must need an accessible unit.",
             "address": "Please enter an address",
             "address_validation": {
-                "not_found": "This address was not found. Please check the house number, street, and city entered. PO Boxes are not allowed.<br><br>If the address you entered is correct, <a href={{mailInfo}} target=\"_blank\">email us at lotteryappeals@sfgov.org</a> for help.",
+                "not_found": "This address was not found. Please check the house number, street, and city entered. PO Boxes are not allowed.<br><br>If the address you entered is correct, <a href={{mailInfo}} target=\"_blank\">email us at lotteryappeal@sfgov.org</a> for help.",
                 "not_found_body": "Dear MOHCD,\n\nI am unable to complete my application for {{listing_name}}. My address is {{home_address}} and the form is telling me there is an error. Please advise me on what to do next.\n\nThank you,\n{{first_name}} {{last_name}}\n{{email}}\n{{phone_number}}",
                 "not_found_subject": "Unable to enter my address in DAHLIA application"
             },
