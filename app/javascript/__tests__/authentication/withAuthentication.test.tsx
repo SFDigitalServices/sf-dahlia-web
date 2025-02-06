@@ -33,6 +33,7 @@ describe("withAuthentication", () => {
         email: "test@example.com",
         created_at: new Date(),
         updated_at: new Date(),
+        id: 0,
       },
       signIn: jest.fn(),
       signOut: jest.fn(),

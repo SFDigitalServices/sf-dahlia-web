@@ -32,7 +32,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
             name="google-site-verification"
           />
           <meta
-            content="/sign-in?redirect=settings"
+            content="http://dahlia.com/sign-in?redirect=settings"
             property="og:url"
           />
           <meta
@@ -127,7 +127,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                 class="site-header__notice-text"
               >
                 <span>
-                  We'd love to get 
+                  We'd love to get
                   <a
                     href="https://airtable.com/shrw64DubWTQfRkdo"
                     target="_blank"
@@ -770,7 +770,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                 class="text-gray-500"
               >
                 <span>
-                  DAHLIA: San Francisco Housing Portal is a project of the 
+                  DAHLIA: San Francisco Housing Portal is a project of the
                   <br />
                   <a
                     class="text-white"
@@ -816,7 +816,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                 class="text-sm"
               >
                 For listing and application questions, please contact the agent displayed on the listing.
-                 
+
                 <br />
                 For general program inquiries, you may call MOHCD at 415-701-5500.
               </p>
@@ -900,7 +900,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
           name="google-site-verification"
         />
         <meta
-          content="/sign-in?redirect=settings"
+          content="http://dahlia.com/sign-in?redirect=settings"
           property="og:url"
         />
         <meta
@@ -995,7 +995,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
               class="site-header__notice-text"
             >
               <span>
-                We'd love to get 
+                We'd love to get
                 <a
                   href="https://airtable.com/shrw64DubWTQfRkdo"
                   target="_blank"
@@ -1638,7 +1638,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
               class="text-gray-500"
             >
               <span>
-                DAHLIA: San Francisco Housing Portal is a project of the 
+                DAHLIA: San Francisco Housing Portal is a project of the
                 <br />
                 <a
                   class="text-white"
@@ -1684,7 +1684,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
               class="text-sm"
             >
               For listing and application questions, please contact the agent displayed on the listing.
-               
+
               <br />
               For general program inquiries, you may call MOHCD at 415-701-5500.
             </p>
@@ -1825,7 +1825,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
             name="google-site-verification"
           />
           <meta
-            content="/sign-in?redirect=settings"
+            content="http://dahlia.com/sign-in?redirect=settings"
             property="og:url"
           />
           <meta
@@ -1920,7 +1920,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                 class="site-header__notice-text"
               >
                 <span>
-                  We'd love to get 
+                  We'd love to get
                   <a
                     href="https://airtable.com/shrw64DubWTQfRkdo"
                     target="_blank"
@@ -2539,7 +2539,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                 class="text-gray-500"
               >
                 <span>
-                  DAHLIA: San Francisco Housing Portal is a project of the 
+                  DAHLIA: San Francisco Housing Portal is a project of the
                   <br />
                   <a
                     class="text-white"
@@ -2585,7 +2585,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                 class="text-sm"
               >
                 For listing and application questions, please contact the agent displayed on the listing.
-                 
+
                 <br />
                 For general program inquiries, you may call MOHCD at 415-701-5500.
               </p>
@@ -2669,7 +2669,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
           name="google-site-verification"
         />
         <meta
-          content="/sign-in?redirect=settings"
+          content="http://dahlia.com/sign-in?redirect=settings"
           property="og:url"
         />
         <meta
@@ -2764,7 +2764,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
               class="site-header__notice-text"
             >
               <span>
-                We'd love to get 
+                We'd love to get
                 <a
                   href="https://airtable.com/shrw64DubWTQfRkdo"
                   target="_blank"
@@ -3383,7 +3383,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
               class="text-gray-500"
             >
               <span>
-                DAHLIA: San Francisco Housing Portal is a project of the 
+                DAHLIA: San Francisco Housing Portal is a project of the
                 <br />
                 <a
                   class="text-white"
@@ -3429,7 +3429,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
               class="text-sm"
             >
               For listing and application questions, please contact the agent displayed on the listing.
-               
+
               <br />
               For general program inquiries, you may call MOHCD at 415-701-5500.
             </p>
