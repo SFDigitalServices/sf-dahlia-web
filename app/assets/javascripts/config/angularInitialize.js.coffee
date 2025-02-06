@@ -46,7 +46,10 @@
       else if ShortFormApplicationService.isShortFormPage($state.current)
         # we don't want to show the beforeunload dialog, because it would allow the applicant to stay on the page after session expiration
         $window.removeEventListener('beforeunload', ShortFormApplicationService.onExit)
-        $state.go('dahlia.listing', {timeout: true, id: ShortFormApplicationService.listing.Id})
+        if ShortFormApplicationService.listingIsDalp()
+          $window.location.href = ShortFormApplicationService.localizedSfGovUrl("apply-downpayment-loan-buy-market-rate-home")
+        else
+          $state.go('dahlia.listing', {timeout: true, id: ShortFormApplicationService.listing.Id})
 
     $rootScope.$on '$stateChangeStart', (e, toState, toParams, fromState, fromParams) ->
       # always start the loading overlay
@@ -106,7 +109,10 @@
       if ShortFormApplicationService.hittingBackFromConfirmation(fromState, toState)
         # the redirect will trigger $stateChangeStart again and will popup the confirmation alert
         e.preventDefault()
-        $state.go('dahlia.listing', {id: ShortFormApplicationService.listing.listingID})
+        if ShortFormApplicationService.listingIsDalp()
+          $window.location.href = ShortFormApplicationService.localizedSfGovUrl("apply-downpayment-loan-buy-market-rate-home")
+        else
+          $state.go('dahlia.listing', {id: ShortFormApplicationService.listing.listingID})
 
       else if (ShortFormApplicationService.isLeavingShortForm(toState, fromState))
         content =

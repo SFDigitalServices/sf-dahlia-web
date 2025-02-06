@@ -66,6 +66,16 @@
             "title": "Here's what to expect for this application.",
             "warning": "Any fraudulent statements will cause your application to be removed from the lottery."
         },
+        "a4a_dalp_screening": {
+            "i_am_a_first_responder": "I am a first responder (a uniformed, sworn member of San Francisco Police, Fire or Sheriff’s Department)",
+            "i_am_an_educator": "I am an educator at San Francisco Unified School District (SFUSD)",
+            "instructions_p1": "This program has funding set aside for first responders and educators. Your answer helps us determine what funding you may be eligible for.",
+            "instructions_p2": "Check if you can apply as a:",
+            "instructions_p3": "First responder",
+            "instructions_p4": "Educator",
+            "none_of_these_apply_to_me": "None of these apply to me",
+            "title": "Is anyone on the application a San Francisco first responder or educator?"
+        },
         "account_settings": {
             "account_changes_saved": "Your changes have been saved.",
             "account_settings": "Account Settings",
@@ -494,13 +504,29 @@
                 "thanks_for_applying_to_listing": "Thanks for applying. We have received your application for %{link}.",
                 "we_would_like_your_feedback": "We'd like to get your feedback",
                 "what_to_expect_next": "What to expect next"
+            },
+            "submission_confirmation_dalp": {
+                "after_lottery": "After the lottery",
+                "check_results": "Check your results online",
+                "contact_us": "Contact us with questions about your application. Email sfhousinginfo@sfgov.org.",
+                "get_help": "Get help",
+                "keep_this_number": "You need this number to check your results. Keep it in a safe place.",
+                "lottery_date": "Lottery date: %{lottery_date}",
+                "subject": "We got your %{listing_name} application",
+                "submitted": "Submitted: %{submission_date} at %{submission_time} Pacific Time",
+                "we_contact_applicants": "We contact applicants in order of the lottery results until all loan funding has been reserved",
+                "we_got_your_application": "We got your application.",
+                "what_happens_next": "What happens next",
+                "where_to_check_link": "Where to check results and more about what to expect next",
+                "you_applied_to_listing": "You applied to the %{link} on DAHLIA San Francisco Housing Portal.",
+                "your_lottery_number": "Your DALP lottery number"
             }
         },
         "error": {
             "accessible_only_anyone": "At least one member of your household must need an accessible unit.",
             "address": "Please enter an address",
             "address_validation": {
-                "not_found": "This address was not found. Please check the house number, street, and city entered. PO Boxes are not allowed.<br><br>If the address you entered is correct, <a href={{mailInfo}} target=\"_blank\">email us at lotteryappeals@sfgov.org</a> for help.",
+                "not_found": "This address was not found. Please check the house number, street, and city entered. PO Boxes are not allowed.<br><br>If the address you entered is correct, <a href={{mailInfo}} target=\"_blank\">email us at lotteryappeal@sfgov.org</a> for help.",
                 "not_found_body": "Dear MOHCD,\n\nI am unable to complete my application for {{listing_name}}. My address is {{home_address}} and the form is telling me there is an error. Please advise me on what to do next.\n\nThank you,\n{{first_name}} {{last_name}}\n{{email}}\n{{phone_number}}",
                 "not_found_subject": "Unable to enter my address in DAHLIA application"
             },
@@ -601,15 +627,22 @@
             "title": "Forgot Password"
         },
         "g1_confirmation": {
+            "after_the_lottery_link": "Lottery results and more about what happens next",
+            "after_the_lottery_p1": "Check your results online",
+            "after_the_lottery_p2": "We contact applicants in the order of the lottery results until all loan funding has been reserved",
+            "after_the_lottery_title": "After the lottery",
             "browse_more_listings": "Browse more listings",
             "create_account_body": "Creating an account will save your information for future applications, and you can check the status of this application anytime.",
             "create_account_title": "Would you like to create an account?",
+            "dont_submit_another_app_p1_dalp": "Your household may only submit 1 application to the DALP lottery.",
             "dont_submit_another_app_p1_email": "If you need to update information on your application, do not apply again or both applications will be removed from the lottery. Contact the agent if you did not receive an email confirmation.",
             "dont_submit_another_app_p1_no_email": "If you need to update information on your application, do not apply again or both applications will be removed from the lottery. Contact the agent if you have any questions.",
             "dont_submit_another_app_title": "Do not submit another application for this listing",
+            "dont_submit_another_app_title_dalp": "Do not apply again, or your application will be removed",
             "go_to_my_applications": "Go to My Applications",
             "lottery_number": "Here's your lottery ticket number",
             "next_steps_body1": "The lottery will be held on",
+            "next_steps_body1_dalp": "Lottery date: ",
             "next_steps_body2_rental": "You do not need to attend the housing lottery. Results will be posted {{listingLink}}. Please refer to the listing for the lottery results date. <br><br>Applicants will be contacted by the agent in lottery rank order until vacancies are filled. Should your application be chosen, be prepared to fill out a more detailed application and provide required supporting documents within 5 business days of being contacted.",
             "next_steps_body2_sale": "You do not need to attend the housing lottery. Results will be posted {{listingLink}}. Please refer to the listing for the lottery results date. <br><br>Applicants will be contacted by the agent in lottery rank order until vacancies are filled. Should your application be chosen, be prepared to fill out a more detailed application and provide <a href='{{url}}' target='_blank'>required supporting documents</a> within 5 business days of being contacted.",
             "next_steps_title": "What to expect next",
@@ -661,6 +694,8 @@
             "application_habitat_credit_score": "My credit score is at least 650",
             "application_has_completed_homebuyer_education": "I have attended 10 hours of Homebuyer Education in the past year.",
             "application_has_loan_pre_approval": "I am pre-approved for a mortgage loan by a MOHCD-Approved Loan Officer.",
+            "application_is_dalp_educator": "I am an educator at San Francisco Unified School District (SFUSD)",
+            "application_is_dalp_first_responder": "I am a San Francisco first responder",
             "application_is_first_time_homebuyer": "I have not owned residential property within the past 3 years.",
             "application_is_first_time_homebuyer_dalp": "I have not owned residential property in San Francisco within the past 3 years.",
             "application_pre_approval_must_be_120_days": "Your pre-approval letter must be dated within the past 120 days",
@@ -863,9 +898,11 @@
             "upload_copy_of_lease": "Upload Copy of Lease",
             "upload_lease_description": "Please upload the first page, or whichever page shows the rent amount.",
             "upload_preapproval_letter": "Upload pre-approval letter",
+            "upload_proof_example_paystub": "Examples: a copy of your paycheck or letter from your employer that shows your job title.",
             "upload_proof_instructions_1": "If you're on a smartphone, you can take a picture.",
             "upload_proof_instructions_2": "Maximum file size is 5MB.<br>Supported file types: PDF, JPG, PNG, HEIC.",
             "upload_proof_instructions_3": "Maximum file name length is 80 characters",
+            "upload_proof_of_employment": "Upload proof of employment",
             "upload_proof_of_preference": "Upload proof of preference",
             "upload_proof_of_rent_payment": "Upload proof of rent payment",
             "upload_rent_description": "Please provide proof for your monthly rent. You said your rent at this address is: {{rent}} <br/><br/>You can upload multiple documents, if your household pays with multiple checks, money orders etc.",

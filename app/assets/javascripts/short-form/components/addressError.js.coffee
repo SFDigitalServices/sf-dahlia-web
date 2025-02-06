@@ -49,7 +49,7 @@ angular.module('dahlia.components')
               body: $translate.instant('error.address_validation.not_found_body', bodyParams)
 
             @errorMessageWithEmail = $translate.instant('error.address_validation.not_found'
-              { mailInfo: "mailto:lotteryappeals@sfgov.org?#{SharedService.toQueryString(mailParams)}"})
+              { mailInfo: "mailto:lotteryappeal@sfgov.org?#{SharedService.toQueryString(mailParams)}"})
 
       @$onChanges = () ->
         @setError()

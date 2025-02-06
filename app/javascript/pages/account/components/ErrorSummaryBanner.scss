@@ -3,3 +3,7 @@
     display: none;
   }
 }
+
+.error-summary-banner.seeds-common-message > [data-part="content"] {
+  max-width: fit-content;
+}

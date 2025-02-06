@@ -1,7 +1,12 @@
 / Qualify
 span ng-show="::$ctrl.isSale"
-  review-summary-section header="{{'short_form_nav.qualify' | translate}}" section-name="prerequisites" editable="::$ctrl.sectionsAreEditable" edit-description="{{'label.edit_qualifications' | translate}}"
+  review-summary-section header="{{'short_form_nav.qualify' | translate}}" section-name="{{::$ctrl.qualifySectionHref()}}" editable="::$ctrl.sectionsAreEditable" edit-description="{{'label.edit_qualifications' | translate}}"
   .app-inner
+    review-summary-item label="{{'label.you_have_confirmed' | translate}}" identifier="application-is-dalp" ng-if="::($ctrl.application.dalpEducator || $ctrl.application.dalpFirstResponder)"
+      div.margin-bottom ng-if="::$ctrl.application.dalpFirstResponder"
+        | {{ 'label.application_is_dalp_first_responder' | translate}}
+      div ng-if="::$ctrl.application.dalpEducator"
+        | {{ 'label.application_is_dalp_educator' | translate}}
     review-summary-item label="{{'label.you_have_confirmed' | translate}}" identifier="application-is-first-time-homebuyer" ng-if="::$ctrl.application.isFirstTimeHomebuyer"
       | {{ ::$ctrl.applicantHasClaimedDalpPriority ? 'label.application_is_first_time_homebuyer_dalp' : 'label.application_is_first_time_homebuyer' | translate}}
     review-summary-item label="{{'label.you_have_confirmed' | translate}}" identifier="application-has-completed-homebuyer-education" sub-label="{{'label.applicant_homebuyer_education_agency' | translate}}: {{::$ctrl.application.homebuyerEducationAgency}}" bold-sub-label="{{::$ctrl.verificationLetterAttached()}}" ng-if="::($ctrl.application.hasCompletedHomebuyerEducation && !$ctrl.isHabitatListing)"
