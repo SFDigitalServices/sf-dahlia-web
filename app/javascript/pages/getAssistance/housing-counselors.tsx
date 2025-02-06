@@ -18,15 +18,15 @@ import housingCounselorsList from "../../../assets/json/housing_counselors_react
 import CounselorFilter from "./counselor-filter"
 import { renderInlineMarkup } from "../../util/languageUtil"
 
-const HOMEOWNERSHIP_SF = {
-  fullName: "Homeownership SF (Rentals and Ownership)",
-  shortName: "Homeownership SF",
+const HOME_SF = {
+  fullName: "Home SF (Rentals and Ownership)",
+  shortName: "Home SF",
   services: ["rental", "ownership"],
   languages: ["english", "filipino", "spanish"],
   address: "275 5th Street #314",
   cityState: "San Francisco, CA 94103",
-  website: "https://www.homeownershipsf.org/",
-  email: "info@homeownershipsf.org",
+  website: "https://www.homesanfrancisco.org/",
+  email: "info@homesanfrancisco.org",
   phone: "(415) 202-5464",
 }
 
@@ -219,7 +219,7 @@ const HousingCounselors = () => {
           <div id="homeownership-sf" className="m-6 mb-2 md:m-0 md:mb-0 md:mt-12">
             <Heading priority={2}>{t("assistance.housingCounselors.startHere.title")}</Heading>
             <p className="text-base my-4">{t("assistance.housingCounselors.startHere.subtitle")}</p>
-            {HousingCounselor(HOMEOWNERSHIP_SF)}
+            {HousingCounselor(HOME_SF)}
           </div>
           <div className="border-b w-full border-gray-500 md:my-9" />
           <div className="px-6 pt-6 md:pl-0 md:mt-12">
