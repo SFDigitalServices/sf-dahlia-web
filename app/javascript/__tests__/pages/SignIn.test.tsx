@@ -2,11 +2,12 @@ import React from "react"
 
 import SignIn from "../../pages/sign-in"
 import { renderAndLoadAsync } from "../__util__/renderUtils"
-import { render, screen, waitFor } from "@testing-library/react"
+import { fireEvent, render, screen, waitFor } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
 import { post } from "../../api/apiService"
 import { SiteAlert } from "../../components/SiteAlert"
 import { t } from "@bloom-housing/ui-components"
+import "@testing-library/jest-dom"
 
 jest.mock("react-helmet-async", () => {
   return {
@@ -64,6 +65,32 @@ describe("<SignIn />", () => {
     ).not.toBeNull()
     expect(getByText("Password")).not.toBeNull()
     expect(getByText("Create an account")).not.toBeNull()
+  })
+
+  it("shows the correct error message on submit", async () => {
+    await renderAndLoadAsync(<SignIn assetPaths={{}} />)
+
+    await userEvent.type(screen.getByRole("textbox", { name: /email/i }), "test")
+    await userEvent.type(screen.getByLabelText(/^password$/i), "Pass")
+    await userEvent.click(screen.getByRole("button", { name: /sign in/i }))
+
+    await waitFor(() => {
+      expect(
+        screen.getByText(/Email or password is incorrect\. Check for mistakes and try again/i)
+      ).not.toBeNull()
+    })
+
+    expect(
+      screen.getByRole("link", {
+        name: /reset your password/i,
+      })
+    ).toHaveAttribute("href", "/forgot-password?email=test")
+
+    expect(
+      screen.getByRole("link", {
+        name: /forgot password\?/i,
+      })
+    ).toHaveAttribute("href", "/forgot-password?email=test")
   })
 
   it("shows the correct error message when bad credentials are entered", async () => {
@@ -194,6 +221,33 @@ describe("<SignIn />", () => {
 
     await waitFor(() => {
       expect(screen.getByText("Email sent. Check your email.")).not.toBeNull()
+    })
+  })
+
+  it("handles enter key press as submit", async () => {
+    const { getByTestId } = render(<SignIn assetPaths={{}} />)
+    ;(post as jest.Mock).mockRejectedValue({
+      response: {
+        status: 422,
+        data: { error: "not_confirmed", email: "test@test.com" },
+      },
+    })
+
+    const emailField = getByTestId("email-field")
+    const passwordField = getByTestId("password-field")
+
+    fireEvent.change(emailField, { target: { value: "test@test.com" } })
+    fireEvent.change(passwordField, { target: { value: "test1234" } })
+    fireEvent.keyPress(emailField, { key: "Enter", code: "Enter" })
+
+    await waitFor(() => {
+      expect(post).toHaveBeenCalled()
+    })
+
+    fireEvent.keyPress(passwordField, { key: "Enter", code: "Enter" })
+
+    await waitFor(() => {
+      expect(post).toHaveBeenCalled()
     })
   })
 

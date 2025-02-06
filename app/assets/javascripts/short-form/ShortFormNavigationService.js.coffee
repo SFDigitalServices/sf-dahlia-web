@@ -102,6 +102,8 @@ ShortFormNavigationService = (
       scopedCallbacks: [{func: 'validateCommunityEligibility'}]
     'custom-educator-screening':
       scopedCallbacks: [{func: 'customEducatorValidateEligibility'}]
+    'dalp-screening':
+      scopedCallbacks: [{func: 'afterDalpScreening'}]
     # you
     'prerequisites':
       callbacks: [
@@ -283,6 +285,8 @@ ShortFormNavigationService = (
     listing = ShortFormApplicationService.listing
     if listing && ListingIdentityService.isRental(listing)
       sections.shift()
+    if listing && ShortFormApplicationService.listingIsDalp()
+      sections.splice(4, 1)
     sections
 
   Service.submitOptionsForCurrentPage = ->
@@ -310,6 +314,7 @@ ShortFormNavigationService = (
       'intro',
       'community-screening',
       'custom-educator-screening',
+      'dalp-screening',
       'overview',
       'verify-address',
       'household-members',
@@ -423,7 +428,9 @@ ShortFormNavigationService = (
         Service.getPrevPageOfGeneralLottery()
       # -- Review
       when 'review-optional'
-        if ShortFormApplicationService.applicantHasNoPreferences()
+        if ShortFormApplicationService.listingIsDalp()
+          'income'
+        else if ShortFormApplicationService.applicantHasNoPreferences()
           'general-lottery-notice'
         else if Service.hasCustomPreferences()
           'custom-preferences'
@@ -590,6 +597,8 @@ ShortFormNavigationService = (
     !!ShortFormApplicationService.listing.customPreferences.length
 
   Service.initialState = () ->
+    if ShortFormApplicationService.listingIsDalp()
+      'dahlia.short-form-application.dalp-screening'
     if ListingIdentityService.isSale(ShortFormApplicationService.listing)
       'dahlia.short-form-application.prerequisites'
     else

@@ -16,7 +16,7 @@
       p.form-note
         | {{'g1_confirmation.please_write_down_your_number' | translate}}
 
-  .app-inner.inset.border-bottom
+  .app-inner.inset.border-bottom ng-if='!listingIsDalp()'
     label.form-label.caps
       | {{'g1_confirmation.next_steps_title' | translate}}
     p.form-note
@@ -26,7 +26,29 @@
       span translate="g1_confirmation.next_steps_body2_rental" ng-if='listingIsRental()' translate-values="listingLink()"
       span translate="g1_confirmation.next_steps_body2_sale" ng-if='listingIsSale()' translate-values="listingLink()" translate-value-url="https://sfmohcd.org/after-homebuyer-lottery"
 
-  .app-inner.inset ng-class="{ 'border-bottom': (!loggedIn() && accountExists()) }"
+  .app-inner.border-bottom ng-if='listingIsDalp()'
+    label.form-label.caps
+      | {{'g1_confirmation.next_steps_title' | translate}}
+    p.form-note
+      span
+        | {{listingIsDalp() ? 'g1_confirmation.next_steps_body1_dalp' : 'g1_confirmation.next_steps_body1' | translate }}
+      '
+      ' {{ listing.Lottery_Date | date : 'longDate'}}.
+    br
+    label.form-label.form-note
+      | {{ 'g1_confirmation.after_the_lottery_title' | translate }}
+    ul.bullet-list
+      li.form-note.no-margin
+        | {{ 'g1_confirmation.after_the_lottery_p1' | translate }}
+      li.form-note
+        | {{ 'g1_confirmation.after_the_lottery_p2' | translate }}
+    a.button.button-link.button-lined.no-padding style="line-height: 1.25" href='https://www.sf.gov/dalp-lottery-results' target='_blank' translate="g1_confirmation.after_the_lottery_link"
+    label.form-label.form-note.padding-top
+      | {{ 'g1_confirmation.dont_submit_another_app_title_dalp' | translate }}
+    p.form-note
+      | {{ 'g1_confirmation.dont_submit_another_app_p1_dalp' | translate }}
+
+  .app-inner.inset ng-class="{ 'border-bottom': (!loggedIn() && !accountExists()) }" ng-if="!listingIsDalp()"
     .form-group
       h3.form-label.caps
         | {{'g1_confirmation.dont_submit_another_app_title' | translate}}

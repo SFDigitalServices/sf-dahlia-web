@@ -1,5 +1,3 @@
-import { IconHomeCheck } from "./listings/assets/icon-home-check"
-
 export const PREFERENCES = {
   aliceGriffith: "Alice Griffith Housing Development Resident",
   antiDisplacement: "Anti-Displacement Housing Preference (ADHP)",
@@ -62,6 +60,7 @@ export const CUSTOM_LISTING_TYPES = {
   EDUCATOR_ONE: "Educator 1: SFUSD employees only",
   EDUCATOR_TWO: "Educator 2: SFUSD employees & public",
   EDUCATOR_THREE: "Educator 3: Waitlist - SFUSD employees & public",
+  DALP: "Downpayment Assistance Loan Program",
 }
 
 export const LISTING_TYPE_FIRST_COME_FIRST_SERVED = "First Come, First Served"
@@ -134,7 +133,6 @@ export const DIRECTORY_SECTION_INFO = {
   },
   fcfs: {
     ref: "buy-now",
-    icon: IconHomeCheck,
   },
   additional: {
     ref: "additional-listings",

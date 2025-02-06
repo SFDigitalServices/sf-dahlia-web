@@ -14,7 +14,7 @@ import {
 import { Link, Heading } from "@bloom-housing/ui-seeds"
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form"
 
-import { getForgotPasswordPath, getSignInRedirectUrl } from "../util/routeUtil"
+import { createPath, getForgotPasswordPath } from "../util/routeUtil"
 import EmailFieldset from "../pages/account/components/EmailFieldset"
 import PasswordFieldset from "../pages/account/components/PasswordFieldset"
 import "../pages/account/styles/account.scss"
@@ -46,12 +46,49 @@ const SignInFormCard = ({
   requestError: string
   setRequestError: Dispatch<SetStateAction<string>>
 }) => {
+  const emailSubmitField = document.querySelector("#email")
+  const passwordSubmitField = document.querySelector("#password")
+
+  useEffect(() => {
+    if (emailSubmitField) {
+      emailSubmitField.addEventListener("keypress", function (event: KeyboardEvent) {
+        if (event.key === "Enter") {
+          // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+          const button = document.querySelector("#sign-in-button") as HTMLElement
+          button.click()
+        }
+      })
+    }
+
+    if (passwordSubmitField) {
+      passwordSubmitField.addEventListener("keypress", function (event: KeyboardEvent) {
+        if (event.key === "Enter") {
+          // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+          const button = document.querySelector("#sign-in-button") as HTMLElement
+          button.click()
+        }
+      })
+    }
+  }, [emailSubmitField, passwordSubmitField])
+
   /* Form Handler */
   // TODO(DAH-1575): Upgrade React-Hook-Form. Note: When you update to Version 7 of react-hook-form, "errors" becomes: "formState: { errors }""
   // This is causing a linting issue with unbound-method, see open issue as of 10/21/2020:
   // https://github.com/react-hook-form/react-hook-form/issues/2887
   // eslint-disable-next-line @typescript-eslint/unbound-method
-  const { register, handleSubmit, errors, watch } = useForm()
+  const { register, handleSubmit, watch } = useForm()
+  const emailField = watch("email", undefined)
+
+  const onError = (errors: { email: string; password: string }) => {
+    if (errors.email || errors.password) {
+      setRequestError(
+        t("signIn.badCredentialsWithResetLink", {
+          url: createPath(getForgotPasswordPath(), { email: emailField }),
+        })
+      )
+    }
+  }
+
   return (
     <FormCard>
       <div className="form-card__lead text-center border-b mx-0">
@@ -66,22 +103,24 @@ const SignInFormCard = ({
       <SiteAlert type="success" />
       <SiteAlert type="secondary" />
       <div className="form-card__group pt-0 border-b">
-        <Form id="sign-in" className="mt-10 relative" onSubmit={handleSubmit(onSubmit)}>
-          <EmailFieldset register={register} errors={errors} />
+        <Form id="sign-in" className="mt-10 relative" onSubmit={handleSubmit(onSubmit, onError)}>
+          <EmailFieldset register={register} />
           <span className="right-0 absolute">
-            <Link href="/forgot-password" className="forgot-password-link">
+            <Link
+              href={createPath(getForgotPasswordPath(), { email: emailField })}
+              className="forgot-password-link"
+            >
               {t("forgotPassword.title")}
             </Link>
           </span>
           <PasswordFieldset
             register={register}
-            errors={errors}
             watch={watch}
             labelText={t("label.password")}
             passwordType="signIn"
           />
           <div className="text-center mt-4">
-            <Button styleType={AppearanceStyleType.primary} type="submit">
+            <Button id="sign-in-button" styleType={AppearanceStyleType.primary} type="submit">
               {t("pageTitle.signIn")}
             </Button>
           </div>
@@ -135,8 +174,8 @@ const SignInForm = () => {
 
   const onSubmit = (data: { email: string; password: string }) => {
     const { email, password } = data
-
-    signIn(email, password)
+    setRequestError("")
+    signIn(email, password, "Sign In Page")
       .then(() => {
         const redirectUrl = getRedirectFromUrl()
         router.push(getSignInRedirectUrl(redirectUrl || ""))

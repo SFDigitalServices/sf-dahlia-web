@@ -27,7 +27,6 @@ body .goog-te-banner-frame {
   display: none;
 }
 
-
 .banner-bar a {
   text-decoration: underline;
   color: inherit;
@@ -38,10 +37,17 @@ body .goog-te-banner-frame {
   float: none;
 }
 
-#\:1\.container{
-  display:none !important;
+#\:1\.container {
+  display: none !important;
 }
 
 .app-card_nav {
   overflow: auto;
+}
+
+@media (min-width: 768px) {
+  .rounded-bottom-corners {
+    border-bottom-left-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
+  }
 }

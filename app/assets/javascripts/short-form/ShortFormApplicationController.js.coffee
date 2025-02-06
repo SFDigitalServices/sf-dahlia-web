@@ -11,6 +11,7 @@ ShortFormApplicationController = (
   AccountService,
   AddressValidationService,
   AnalyticsService,
+  FileUploadService,
   Idle,
   inputMaxLength,
   ListingDataService,
@@ -74,6 +75,8 @@ ShortFormApplicationController = (
   $scope.submitDisabled = false
 
   $scope.emailRegex = SharedService.emailRegex
+
+  $scope.localizedSfGovUrl = ShortFormApplicationService.localizedSfGovUrl
 
   $scope.propertyCardImageURL = ->
     if _.isArray($scope.listing.Listing_Images)
@@ -295,7 +298,40 @@ ShortFormApplicationController = (
       $scope.clearEligibilityErrors()
       ShortFormNavigationService.goToApplicationPage('dahlia.short-form-welcome.overview')
 
-  ########## END CUSTOM SCREENING LOGIC ##########
+  ########## END CUSTOM EDUCATOR SCREENING LOGIC ##########
+
+  ########## BEGIN DALP SCREENING LOGIC ##########
+
+  $scope.onChangeDalpEducatorOrFirstResponder = ->
+    if $scope.application.dalpEducator || $scope.application.dalpFirstResponder
+      $scope.application.dalpNotEducatorOrFirstResponder = null
+
+  $scope.onChangeDalpNoneApply = ->
+    if $scope.application.dalpNotEducatorOrFirstResponder
+      $scope.application.dalpEducator = null
+      $scope.application.dalpFirstResponder = null
+
+  $scope.dalpNoOptionSelected = ->
+    !$scope.application.dalpNotEducatorOrFirstResponder &&
+    !$scope.application.dalpEducator &&
+    !$scope.application.dalpFirstResponder
+
+  $scope.dalpShowNoOptionSelectedError = ->
+    $scope.dalpNoOptionSelected() && $scope.form.applicationForm.$submitted
+
+  $scope.applicantHasClaimedDalpPriority = ->
+    ShortFormApplicationService.application.dalpEducator == true || ShortFormApplicationService.application.dalpFirstResponder == true
+
+  $scope.afterDalpScreening = ->
+    ShortFormApplicationService.application.answeredDalpScreening = true
+    # Clean up DALP proof files
+    if !ShortFormApplicationService.application.dalpEducator
+      FileUploadService.deleteFile($scope.listing, { document: ShortFormApplicationService.application.documents['DALP educator proof'] })
+    if !ShortFormApplicationService.application.dalpFirstResponder
+      FileUploadService.deleteFile($scope.listing, { document: ShortFormApplicationService.application.documents['DALP first responder proof'] })
+    ShortFormNavigationService.goToApplicationPage('dahlia.short-form-application.prerequisites')
+
+  ########## END DALP SCREENING LOGIC ##########
 
   $scope.addressInputInvalid = (identifier = '') ->
     return true if $scope.addressValidationError(identifier)
@@ -661,6 +697,15 @@ ShortFormApplicationController = (
       ShortFormNavigationService.goToSection('Preferences')
       return
 
+    if match == 'householdMatch' && ShortFormApplicationService.listingIsDalp()
+      $scope.goToNextReservedPageIfAvailable()
+      return
+
+    if match == 'incomeMatch' && ShortFormApplicationService.listingIsDalp()
+      ShortFormApplicationService.completeSection('Income')
+      ShortFormNavigationService.goToSection('Review')
+      return
+
     ShortFormApplicationService.checkHouseholdEligibility($scope.listing)
       .then( (response) ->
         eligibility = response.data
@@ -810,6 +855,9 @@ ShortFormApplicationController = (
   $scope.listingIsHabitat = ->
     ShortFormApplicationService.listingIsHabitat()
 
+  $scope.listingIsDalp = ->
+    ShortFormApplicationService.listingIsDalp()
+
   $scope.onIncomeValueChange = ->
     ShortFormApplicationService.invalidateIncomeForm()
     return if !ShortFormApplicationService.listingHasPreference('rentBurden') ||
@@ -950,7 +998,6 @@ ShortFormApplicationController = (
         $scope.submitDisabled = false
       )
     else
-      AnalyticsService.trackFormError('Application')
       $scope.handleErrorState()
 
   $scope.afterSignInWhileApplying = ->
@@ -1190,6 +1237,7 @@ ShortFormApplicationController.$inject = [
   'AccountService',
   'AddressValidationService',
   'AnalyticsService',
+  'FileUploadService',
   'Idle',
   'inputMaxLength',
   'ListingDataService',

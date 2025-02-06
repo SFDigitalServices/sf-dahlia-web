@@ -6,7 +6,7 @@ describe("Rental listings directory page", () => {
   })
 
   it("renders a listing with the correct interactivity", () => {
-    cy.intercept("/api/v1/listings/a0W8H00000140LvUAI.json", {
+    cy.intercept("/api/v1/listings/a0W0P00000Hc7RcUAJ.json", {
       fixture: "openRentalListing.json",
     }).as("listingDetails")
 
@@ -19,7 +19,7 @@ describe("Rental listings directory page", () => {
         cy.contains("a", "See Details").click()
         cy.wait("@listingDetails").its("response.statusCode").should("eq", 200)
       })
-    cy.url().should("include", "/listings/a0W8H00000140LvUAI")
+    cy.url().should("include", "/listings/a0W0P00000Hc7RcUAJ")
     cy.go("back")
 
     cy.get('[data-testid="listing-card-component"]')
@@ -28,7 +28,7 @@ describe("Rental listings directory page", () => {
         cy.get("h2").click()
         cy.wait("@listingDetails").its("response.statusCode").should("eq", 200)
       })
-    cy.url().should("include", "/listings/a0W8H00000140LvUAI")
+    cy.url().should("include", "/listings/a0W0P00000Hc7RcUAJ")
   })
 
   it("renders upcoming and results", () => {
