@@ -1,6 +1,7 @@
 var config = require('./conf-shared')
 
 config.baseUrl = 'http://localhost:3000/'
+config.chromeDriver = '../../node_modules/chromedriver/bin/chromedriver',
 config.capabilities = {
   browserName: 'chrome',
   getPageTimeout: 30000,
