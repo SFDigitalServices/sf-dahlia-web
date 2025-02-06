@@ -8,6 +8,7 @@ import {
   setupLocationAndRouteMock,
   setupUserContext,
 } from "../../__util__/accountUtils"
+import { withAuthentication } from "../../../authentication/withAuthentication"
 
 jest.mock("../../../api/apiService", () => ({
   authenticatedPut: jest.fn(),
@@ -19,15 +20,14 @@ describe("<AccountSettingsPage />", () => {
   describe("when the user is signed in", () => {
     let promise
     let renderResult
-    let originalLocation: Location
 
     beforeEach(async () => {
       document.documentElement.lang = "en"
       setupUserContext({ loggedIn: true, saveProfileMock })
-
+      setupLocationAndRouteMock()
       promise = Promise.resolve()
-
-      renderResult = await renderAndLoadAsync(<AccountSettingsPage assetPaths={{}} />)
+      const WrappedComponent = withAuthentication(AccountSettingsPage, { redirectPath: "settings" })
+      renderResult = await renderAndLoadAsync(<WrappedComponent assetPaths={{}} />)
     })
 
     afterEach(() => {
@@ -38,6 +38,20 @@ describe("<AccountSettingsPage />", () => {
       const title = screen.getByText("Account settings")
 
       expect(title).not.toBeNull()
+    })
+
+    it("resize events", () => {
+      expect(renderResult).toMatchSnapshot()
+
+      act(() => {
+        // Change the viewport to 500px.
+        global.innerWidth = 500
+
+        // Trigger the window resize event.
+        global.dispatchEvent(new Event("resize"))
+      })
+
+      expect(renderResult).toMatchSnapshot()
     })
 
     describe("when the user updates their name and DOB", () => {
@@ -711,9 +725,10 @@ describe("<AccountSettingsPage />", () => {
     })
 
     it("redirects to the sign in page", async () => {
-      const { queryByText } = await renderAndLoadAsync(<AccountSettingsPage assetPaths={{}} />)
+      const WrappedComponent = withAuthentication(AccountSettingsPage, { redirectPath: "settings" })
+      const { queryByText } = await renderAndLoadAsync(<WrappedComponent assetPaths={{}} />)
 
-      expect(window.location.href).toBe("http://dahlia.com/sign-in")
+      expect(window.location.href).toBe("http://dahlia.com/sign-in?redirect=settings")
       expect(queryByText("Account Settings")).toBeNull()
     })
   })

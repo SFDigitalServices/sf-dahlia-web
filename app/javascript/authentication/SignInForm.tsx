@@ -14,7 +14,7 @@ import {
 import { Link, Heading } from "@bloom-housing/ui-seeds"
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form"
 
-import { createPath, getForgotPasswordPath } from "../util/routeUtil"
+import { createPath, getForgotPasswordPath, getSignInRedirectUrl } from "../util/routeUtil"
 import EmailFieldset from "../pages/account/components/EmailFieldset"
 import PasswordFieldset from "../pages/account/components/PasswordFieldset"
 import "../pages/account/styles/account.scss"
