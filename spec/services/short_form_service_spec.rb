@@ -15,7 +15,6 @@ describe Force::ShortFormService do
     File.read("#{Rails.root}#{dalp_institutions_path}"),
   )
 
-  puts fake_lending_institutions_dalp
   describe '.autofill' do
     it 'should pull in details from the most recently submitted application' do
       # autofill for a made-up listing ID
