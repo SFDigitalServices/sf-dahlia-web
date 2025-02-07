@@ -89,6 +89,8 @@ module Force
     end
 
     def translate_and_cache(event)
+      return if event.updated_values.blank?
+
       translations = translate_event_values(event.listing_id, event.updated_values)
       GoogleTranslationService.log_translations(
         msg: 'Translated text',

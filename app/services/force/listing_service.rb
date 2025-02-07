@@ -40,8 +40,6 @@ module Force
       results = Request.new(parse_response: true).cached_get(endpoint, nil, force)
       listing = process_listing_images(results)
 
-      translation_usage_by_trigger(listing, opts[:rake_task]) if listing.present?
-
       # only check for stale translations when this method is called during the
       #   scheduled rake task
       if Rails.configuration.unleash.is_enabled?('GoogleCloudTranslate') &&
