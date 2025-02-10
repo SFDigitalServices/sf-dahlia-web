@@ -1,6 +1,6 @@
 / Qualify
 span ng-show="::$ctrl.isSale"
-  review-summary-section header="{{'short_form_nav.qualify' | translate}}" section-name="prerequisites" editable="::$ctrl.sectionsAreEditable" edit-description="{{'label.edit_qualifications' | translate}}"
+  review-summary-section header="{{'short_form_nav.qualify' | translate}}" section-name="{{::$ctrl.qualifySectionHref()}}" editable="::$ctrl.sectionsAreEditable" edit-description="{{'label.edit_qualifications' | translate}}"
   .app-inner
     review-summary-item label="{{'label.you_have_confirmed' | translate}}" identifier="application-is-dalp" ng-if="::($ctrl.application.dalpEducator || $ctrl.application.dalpFirstResponder)"
       div.margin-bottom ng-if="::$ctrl.application.dalpFirstResponder"

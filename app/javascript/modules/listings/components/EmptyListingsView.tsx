@@ -51,7 +51,7 @@ export const EmptyListingsView = ({
                   symbol={icon as UniversalIconType}
                 />
               ) : (
-                <span className="empty-state-icon ui-icon ui-medium">{icon}</span>
+                icon
               )}
               {renderInlineMarkup(
                 // listingsCount only used for DIRECTORY_SECTION_OPEN_LOTTERIES and DIRECTORY_SECTION_FCFS_LISTINGS section
