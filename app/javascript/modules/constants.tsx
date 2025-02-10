@@ -1,5 +1,3 @@
-import { IconHomeCheck } from "./listings/assets/icon-home-check"
-
 export const PREFERENCES = {
   aliceGriffith: "Alice Griffith Housing Development Resident",
   antiDisplacement: "Anti-Displacement Housing Preference (ADHP)",
@@ -135,7 +133,6 @@ export const DIRECTORY_SECTION_INFO = {
   },
   fcfs: {
     ref: "buy-now",
-    icon: IconHomeCheck,
   },
   additional: {
     ref: "additional-listings",
