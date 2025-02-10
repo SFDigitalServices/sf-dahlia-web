@@ -79,6 +79,7 @@
     "chai": "4.0.2",
     "chai-as-promised": "7.1.1",
     "chance": "1.0.10",
+    "chromedriver": "^132.0.0",
     "coffee-script": "1.12.7",
     "coffeelint": "^2.1.0",
     "coffeelint-forbidden-regex": "0.1.1",

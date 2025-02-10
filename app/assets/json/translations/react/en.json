@@ -1593,7 +1593,7 @@
   "shortFormNav.qualify": "Qualify",
   "shortFormNav.review": "Review",
   "shortFormNav.you": "You",
-  "signIn.accountAlreadyConfirmed.p1": "Sign in to continue",
+  "signIn.accountAlreadyConfirmed.p1": "Sign in to continue.",
   "signIn.accountAlreadyConfirmed.title": "Account already confirmed",
   "signIn.badCredentials": "Invalid login credentials. Please try again.",
   "signIn.badCredentialsWithResetLink": "Email or password is incorrect. Check for mistakes and try again. <a target='_blank' href='%{url}'>Reset your password</a> if you need to.",
