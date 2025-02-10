@@ -8,6 +8,7 @@ import {
   Modal,
 } from "@bloom-housing/ui-components"
 import { Card, Link } from "@bloom-housing/ui-seeds"
+import ExternalLink from "../navigation/Link"
 import "./ApplicationItem.scss"
 import {
   formatTimeOfDay,
@@ -113,7 +114,12 @@ const ApplicationItem = (props: ApplicationItemProps) => {
                   <span>
                     {t("myApplications.yourLotteryNumberIs.withLink")}{" "}
                     {isDalpListing(props.listing) && (
-                      <Link href={dalpLotteryResultsUrl}>{`#${props.confirmationNumber}`}</Link>
+                      <ExternalLink
+                        className="underline"
+                        external
+                        href={dalpLotteryResultsUrl}
+                        target="_blank"
+                      >{`#${props.confirmationNumber}`}</ExternalLink>
                     )}
                     {!isDalpListing(props.listing) && showLotteryResultsPDFonly(props.listing) && (
                       <Link
