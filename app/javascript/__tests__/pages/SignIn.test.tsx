@@ -380,7 +380,7 @@ describe("<SignIn />", () => {
 
     await waitFor(() => {
       expect(screen.getByText("Account already confirmed")).not.toBeNull()
-      expect(screen.getByText("Sign in to continue")).not.toBeNull()
+      expect(screen.getByText("Sign in to continue.")).not.toBeNull()
     })
   })
 })
