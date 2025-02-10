@@ -63,7 +63,7 @@
 
       address-error error="addressValidationError('home_address')"
 
-  .app-inner.inset.border-bottom
+  .app-inner.inset.border-bottom ng-if="!listingIsDalp()"
     .form-group ng-class="{ error: inputInvalid('workInSf') }"
       label.form-label.caps id="workInSf_label"
         | {{'label.member_work_in_sf' | translate}}
