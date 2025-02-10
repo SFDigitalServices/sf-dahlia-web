@@ -7,7 +7,7 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-gem 'rails', '~> 7.2.0'
+gem 'rails', '~> 8.0.0'
 
 gem 'unleash', '~> 5.0.4'
 
@@ -28,7 +28,7 @@ gem 'sprockets_uglifier_with_source_maps'
 gem 'puma', '~> 6.4.3'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 2.8.0'
+gem 'jbuilder', '>= 2.8.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', group: :doc
 

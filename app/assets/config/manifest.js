@@ -1,3 +1,14 @@
 //= link_tree ../images
 //= link_directory ../javascripts .js
 //= link_directory ../stylesheets .css
+//= link additional-resources.json
+//= link housing_counselors.json
+//= link housing_counselors_react.json
+//= link translations/locale-en.json
+//= link translations/locale-es.json
+//= link translations/locale-zh.json
+//= link translations/locale-tl.json
+//= link translations/react/en.json
+//= link translations/react/es.json
+//= link translations/react/zh.json
+//= link translations/react/tl.json
