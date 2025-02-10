@@ -216,7 +216,7 @@ const HousingCounselors = () => {
     >
       <div className="page-main">
         <div className="md:mr-8 md:mb-2 md:mt-4">
-          <div id="homeownership-sf" className="m-6 mb-2 md:m-0 md:mb-0 md:mt-12">
+          <div id="home-sf" className="m-6 mb-2 md:m-0 md:mb-0 md:mt-12">
             <Heading priority={2}>{t("assistance.housingCounselors.startHere.title")}</Heading>
             <p className="text-base my-4">{t("assistance.housingCounselors.startHere.subtitle")}</p>
             {HousingCounselor(HOME_SF)}
