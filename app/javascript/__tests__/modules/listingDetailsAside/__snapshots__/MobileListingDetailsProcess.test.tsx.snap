@@ -175,9 +175,7 @@ exports[`MobileListingDetailsProcess renders with listing with open application 
         </div>
       </section>
     </div>
-    <div
-      class="border-b border-gray-400 md:border-b-0"
-    >
+    <div>
       <section
         class="aside-block"
       >

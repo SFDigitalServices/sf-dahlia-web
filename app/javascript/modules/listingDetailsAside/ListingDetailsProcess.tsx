@@ -19,7 +19,7 @@ export interface ListingDetailsProcessProps {
 
 const WhatToExpect = () => {
   return (
-    <div className="border-b border-gray-400 md:border-b-0">
+    <div>
       <ExpandableSection
         content={t("emailer.submissionConfirmation.applicantsWillBeContacted")}
         expandableContent={
