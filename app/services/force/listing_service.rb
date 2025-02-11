@@ -43,8 +43,9 @@ module Force
       # only check for stale translations when this method is called during the
       #   scheduled rake task
       if Rails.configuration.unleash.is_enabled?('GoogleCloudTranslate') &&
-         rake_task == 'prefetch_10min'
-        listing['translations'] = get_listing_translations(listing) || {}
+         listing.present?
+        listing['translations'] =
+          get_listing_translations(listing, opts[:rake_task] == 'prefetch_10min') || {}
       end
       listing
     end
@@ -54,9 +55,11 @@ module Force
       add_image_urls(results_with_cached_listing_images).first
     end
 
-    def self.get_listing_translations(listing)
+    def self.get_listing_translations(listing, check_for_stale_translations)
       listing_id = listing['Id']
       listing_translations = fetch_listing_translations_from_cache(listing_id)
+      return listing_translations unless check_for_stale_translations
+
       if translations_invalid?(listing_translations) ||
          translations_are_outdated?(
            listing_translations[:LastModifiedDate], listing['LastModifiedDate']

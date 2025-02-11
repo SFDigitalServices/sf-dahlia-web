@@ -89,18 +89,21 @@ module Force
     end
 
     def translate_and_cache(event)
-      return if event.updated_values.blank?
-
-      translations = translate_event_values(event.listing_id, event.updated_values)
-      GoogleTranslationService.log_translations(
-        msg: 'Translated text',
-        caller_method: "#{self.class.name}##{__method__}",
-        listing_id: event.listing_id,
-        text: translations,
-      )
-      if translations.empty?
+      if event.updated_values.blank?
         logger("No translations for event: #{event.to_json}")
         return []
+      end
+
+      translations = translate_event_values(event.listing_id, event.updated_values)
+      translations.each do |target|
+        next if target[:to] == 'EN'
+
+        GoogleTranslationService.log_translations(
+          msg: 'Translated text',
+          caller_method: "#{self.class.name}##{__method__}",
+          listing_id: event.listing_id,
+          text: target[:translation],
+        )
       end
       logger("Caching translations for event: #{event.to_json}")
 
@@ -141,8 +144,8 @@ module Force
         msg: 'Text to translate',
         caller_method: "#{self.class.name}##{__method__}",
         listing_id:,
-        text: values,
-        char_count: text_to_translate.join.size,
+        text: text_to_translate,
+        char_count: true,
       )
       @translation_service.translate(text_to_translate, languages)
     end

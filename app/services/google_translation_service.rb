@@ -48,13 +48,15 @@ class GoogleTranslationService
     translations
   end
 
-  def self.log_translations(msg:, caller_method:, text:, listing_id:, char_count: nil)
+  def self.log_translations(msg:, caller_method:, text:, listing_id:, char_count: false)
+    truncated_text =
+      text.try(:map) { |string| string.present? ? string[0..32] : nil }.try(:compact)
     msg_hash = {
       msg:,
-      char_count:,
+      char_count: char_count ? text.try(:flatten).try(:join).try(:size) : nil,
       caller_method:,
       listing_id:,
-      text:,
+      text: truncated_text,
     }.compact
     Rails.logger.info(msg_hash.to_json)
   end
