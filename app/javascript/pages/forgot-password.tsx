@@ -1,13 +1,13 @@
 import React, { useState } from "react"
 import { AppearanceStyleType, Button, Form, t, FormCard, Icon } from "@bloom-housing/ui-components"
-import { Link, Heading } from "@bloom-housing/ui-seeds"
+import { Link, Heading, Alert } from "@bloom-housing/ui-seeds"
 import { useForm } from "react-hook-form"
 import { getSignInPath } from "../util/routeUtil"
 import EmailFieldset from "../pages/account/components/EmailFieldset"
 import "../pages/account/styles/account.scss"
 import FormsLayout from "../layouts/FormLayout"
 import withAppSetup from "../layouts/withAppSetup"
-
+import { forgotPassword } from "../api/authApiService"
 const EmailSubmittedCard = () => {
   return (
     <div className="text-center p-8">
@@ -18,14 +18,34 @@ const EmailSubmittedCard = () => {
     </div>
   )
 }
+const ServerAlert = ({ message }: { message?: string }) => {
+  return (
+    message && (
+      <Alert fullwidth variant="alert" className="error-summary-banner">
+        {message}
+      </Alert>
+    )
+  )
+}
 
 const ForgotPassword = () => {
   const [emailSubmitted, setEmailSubmitted] = useState(false)
+  const [serverError, setServerError] = React.useState<string | null>(null)
+
   // eslint-disable-next-line @typescript-eslint/unbound-method
   const { register, handleSubmit, errors } = useForm()
-  const onSubmit = () => {
-    setEmailSubmitted(true)
-    // TODO: DAH-2984 API integration
+  const onSubmit = (data: { email: string }) => {
+    forgotPassword(data.email)
+      .then(() => {
+        setEmailSubmitted(true)
+      })
+      .catch((error) => {
+        if (error.response?.status !== 404) {
+          setServerError(t("error.account.genericServerError"))
+        } else {
+          setEmailSubmitted(true)
+        }
+      })
   }
 
   const urlParams = new URLSearchParams(window.location.search)
@@ -33,6 +53,7 @@ const ForgotPassword = () => {
 
   return (
     <FormsLayout>
+      <ServerAlert message={serverError} />
       <FormCard>
         <div className="form-card__lead text-center border-b mx-0">
           <Icon size="2xl" symbol="profile" />
