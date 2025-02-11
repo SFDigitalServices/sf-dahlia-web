@@ -74,7 +74,7 @@ class Emailer < Devise::Mailer
       listing_name: @listing_name,
     )
     check_for_confirmed_account(@email)
-    mail(to: @email, subject: subject) do |format|
+    mail(to: @email, subject:) do |format|
       format.html do
         render(
           'draft_application_saved',
@@ -117,17 +117,37 @@ class Emailer < Devise::Mailer
     @listing_url = params[:listing_url]
     @lottery_number = params[:lottery_number]
     @lottery_date = ''
+    tz = TZInfo::Timezone.get('US/Pacific')
+    submission_datetime = Time.now.getlocal(tz.current_period.offset.utc_total_offset)
+    @submission_date = submission_datetime.strftime('%B %e, %Y')
+    @submission_time = submission_datetime.strftime('%I:%M %P')
+    is_dalp_listing = @listing.Custom_Listing_Type == 'Downpayment Assistance Loan Program'
     if @listing.Lottery_Date
       @lottery_date = Time.zone.parse(@listing.Lottery_Date).strftime('%B %e, %Y')
     end
-    @subject = I18n.translate(
-      'emailer.submission_confirmation.subject', listing_name: @listing_name
-    )
+    @subject = if is_dalp_listing
+                 I18n.translate(
+                   'emailer.submission_confirmation_dalp.subject',
+                   listing_name: @listing_name,
+                 )
+               else
+                 I18n.translate(
+                   'emailer.submission_confirmation.subject',
+                   listing_name: @listing_name,
+                 )
+               end
     # @resending is for situations where we need to manually resend emails due to failed
     # deliveries, but we're not sure if some recipients already received the email
     @resending_submission_confirmation = params[:resending] || false
-    mail(to: @email, subject: @subject) do |format|
-      format.html { render 'submission_confirmation' }
+
+    if is_dalp_listing
+      mail(to: @email, subject: @subject) do |format|
+        format.html { render layout: 'submission_confirmation_dalp' }
+      end
+    else
+      mail(to: @email, subject: @subject) do |format|
+        format.html { render 'submission_confirmation' }
+      end
     end
   end
 

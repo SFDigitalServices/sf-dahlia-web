@@ -67,15 +67,14 @@
             "warning": "Any fraudulent statements will cause your application to be removed from the lottery."
         },
         "a4a_dalp_screening": {
-            "title": "Is anyone on the application a San Francisco first responder or educator?",
+            "i_am_a_first_responder": "I am a first responder (a uniformed, sworn member of San Francisco Police, Fire or Sheriff’s Department)",
+            "i_am_an_educator": "I am an educator at San Francisco Unified School District (SFUSD)",
             "instructions_p1": "This program has funding set aside for first responders and educators. Your answer helps us determine what funding you may be eligible for.",
             "instructions_p2": "Check if you can apply as a:",
             "instructions_p3": "First responder",
             "instructions_p4": "Educator",
-            "i_am_an_educator": "I am an educator at San Francisco Unified School District (SFUSD)",
-            "i_am_a_first_responder": "I am a first responder (a uniformed, sworn member of San Francisco Police, Fire or Sheriff’s Department)",
-            "none_of_these_apply_to_me": "None of these apply to me"
-
+            "none_of_these_apply_to_me": "None of these apply to me",
+            "title": "Is anyone on the application a San Francisco first responder or educator?"
         },
         "account_settings": {
             "account_changes_saved": "Your changes have been saved.",
@@ -505,13 +504,29 @@
                 "thanks_for_applying_to_listing": "Thanks for applying. We have received your application for %{link}.",
                 "we_would_like_your_feedback": "We'd like to get your feedback",
                 "what_to_expect_next": "What to expect next"
+            },
+            "submission_confirmation_dalp": {
+                "after_lottery": "After the lottery",
+                "check_results": "Check your results online",
+                "contact_us": "Contact us with questions about your application. Email sfhousinginfo@sfgov.org.",
+                "get_help": "Get help",
+                "keep_this_number": "You need this number to check your results. Keep it in a safe place.",
+                "lottery_date": "Lottery date: %{lottery_date}",
+                "subject": "We got your %{listing_name} application",
+                "submitted": "Submitted: %{submission_date} at %{submission_time} Pacific Time",
+                "we_contact_applicants": "We contact applicants in order of the lottery results until all loan funding has been reserved",
+                "we_got_your_application": "We got your application.",
+                "what_happens_next": "What happens next",
+                "where_to_check_link": "Where to check results and more about what to expect next",
+                "you_applied_to_listing": "You applied to the %{link} on DAHLIA San Francisco Housing Portal.",
+                "your_lottery_number": "Your DALP lottery number"
             }
         },
         "error": {
             "accessible_only_anyone": "At least one member of your household must need an accessible unit.",
             "address": "Please enter an address",
             "address_validation": {
-                "not_found": "This address was not found. Please check the house number, street, and city entered. PO Boxes are not allowed.<br><br>If the address you entered is correct, <a href={{mailInfo}} target=\"_blank\">email us at lotteryappeals@sfgov.org</a> for help.",
+                "not_found": "This address was not found. Please check the house number, street, and city entered. PO Boxes are not allowed.<br><br>If the address you entered is correct, <a href={{mailInfo}} target=\"_blank\">email us at lotteryappeal@sfgov.org</a> for help.",
                 "not_found_body": "Dear MOHCD,\n\nI am unable to complete my application for {{listing_name}}. My address is {{home_address}} and the form is telling me there is an error. Please advise me on what to do next.\n\nThank you,\n{{first_name}} {{last_name}}\n{{email}}\n{{phone_number}}",
                 "not_found_subject": "Unable to enter my address in DAHLIA application"
             },
@@ -883,15 +898,15 @@
             "upload_copy_of_lease": "Upload Copy of Lease",
             "upload_lease_description": "Please upload the first page, or whichever page shows the rent amount.",
             "upload_preapproval_letter": "Upload pre-approval letter",
+            "upload_proof_example_paystub": "Examples: a copy of your paycheck or letter from your employer that shows your job title.",
             "upload_proof_instructions_1": "If you're on a smartphone, you can take a picture.",
             "upload_proof_instructions_2": "Maximum file size is 5MB.<br>Supported file types: PDF, JPG, PNG, HEIC.",
             "upload_proof_instructions_3": "Maximum file name length is 80 characters",
+            "upload_proof_of_employment": "Upload proof of employment",
             "upload_proof_of_preference": "Upload proof of preference",
             "upload_proof_of_rent_payment": "Upload proof of rent payment",
-            "upload_proof_of_employment": "Upload proof of employment",
             "upload_rent_description": "Please provide proof for your monthly rent. You said your rent at this address is: {{rent}} <br/><br/>You can upload multiple documents, if your household pays with multiple checks, money orders etc.",
             "upload_verification_letter": "Upload verification letter",
-            "upload_proof_example_paystub": "Examples: a copy of your paycheck or letter from your employer that shows your job title.",
             "uploaded": "Uploaded",
             "uploading": "Uploading",
             "verification_letter": "Verification Letter",

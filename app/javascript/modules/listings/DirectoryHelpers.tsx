@@ -41,9 +41,8 @@ import TableSubHeader from "./TableSubHeader"
 import RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
 import { ListingState } from "./ListingState"
 import { ListingsGroupHeader } from "./ListingsGroupHeader"
-import { IconHomeCheck } from "./assets/icon-home-check"
 import { EmptyListingsView } from "./components/EmptyListingsView"
-import ListingsGroup from "./components/ListingsGroup"
+import { ListingsGroup } from "./components/ListingsGroup"
 
 export type RailsUnitSummary = RailsSaleUnitSummary | RailsRentalUnitSummary
 
@@ -264,7 +263,8 @@ export const openListingsView = (
   stackedDataFxn: StackedDataFxnType,
   observerRef: React.MutableRefObject<null | IntersectionObserver>,
   filtersSet?: boolean,
-  numFcfsListings?: number
+  numFcfsListings?: number,
+  iconPath?: string
 ) => (
   <ListingsGroupHeader
     title={t(`listings.${directoryType}.openListings.title`)}
@@ -279,7 +279,17 @@ export const openListingsView = (
       <EmptyListingsView
         section={DIRECTORY_SECTION_OPEN_LOTTERIES}
         listingsCount={numFcfsListings}
-        icon={IconHomeCheck}
+        icon={
+          <span className="empty-state-icon">
+            <img
+              className="inline-block"
+              src={iconPath}
+              width="16"
+              height="16"
+              alt="Icon Home Check"
+            />
+          </span>
+        }
       />
     )}
   </ListingsGroupHeader>
@@ -291,12 +301,13 @@ export const fcfsSalesView = (
   stackedDataFxn: StackedDataFxnType,
   observerRef: React.MutableRefObject<null | IntersectionObserver>,
   filtersSet?: boolean,
-  numOpenListings?: number
+  numOpenListings?: number,
+  iconPath?: string
 ) => (
   <ListingsGroupHeader
     title={t(`listings.${directoryType}.fcfsListings.title`)}
     subtitle={t(`listings.${directoryType}.fcfsListings.subtitle`)}
-    icon={IconHomeCheck}
+    icon={<img src={iconPath} width="40" height="40" alt="Icon Home Check" />}
     observerRef={observerRef}
     refKey="buy-now"
   >

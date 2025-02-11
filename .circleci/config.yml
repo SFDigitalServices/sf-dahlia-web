@@ -98,7 +98,7 @@ commands:
       - run:
           command: |
             ./node_modules/protractor/bin/webdriver-manager clean
-            ./node_modules/protractor/bin/webdriver-manager update --versions.chrome 2.41 --versions.standalone 3.141.59
+            ./node_modules/protractor/bin/webdriver-manager update --versions.standalone 4.0.0-alpha-2
             ./node_modules/protractor/bin/webdriver-manager status
   upgrade-bundler:
     description: Upgrade bundler
