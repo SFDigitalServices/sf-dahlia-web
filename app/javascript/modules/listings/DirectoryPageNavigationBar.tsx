@@ -1,7 +1,8 @@
-import React, { ReactNode } from "react"
+import React, { ReactNode, useContext } from "react"
 import "./DirectoryPageNavigationBar.scss"
 import { Icon, t, UniversalIconType } from "@bloom-housing/ui-components"
 import { ListingsGroups } from "./DirectoryHelpers"
+import { ConfigContext } from "../../lib/ConfigContext"
 interface DirectorySectionInfoObject {
   key: string
   ref: string
@@ -20,6 +21,7 @@ const DirectoryPageNavigationBar = ({
   listings: ListingsGroups
   handleNavigation: (section: string) => void
 }) => {
+  const { getAssetPath } = useContext(ConfigContext)
   return (
     <div id="nav-bar-container" className="directory-page-navigation-bar__container">
       <div className="directory-page-navigation-bar">
@@ -39,10 +41,15 @@ const DirectoryPageNavigationBar = ({
                 return true
               }}
             >
-              {typeof section.icon === "string" ? (
+              {section.icon ? (
                 <Icon size="medium" symbol={section.icon as UniversalIconType} />
               ) : (
-                <div className="ui-icon ui-medium">{section.icon}</div>
+                <img
+                  src={getAssetPath("house-circle-check.svg")}
+                  alt="House Circle Check"
+                  width="16"
+                  height="16"
+                />
               )}
               {t(`listingsDirectory.navBar.${section.key}`, {
                 numListings: listings[section.key].length,
