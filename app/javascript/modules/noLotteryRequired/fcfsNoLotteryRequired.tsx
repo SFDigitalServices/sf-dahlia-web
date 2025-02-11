@@ -20,10 +20,7 @@ export const fcfsNoLotteryRequired = () => {
       <CardFooter className="mx-6 mb-6 underline fcfs-no-lottery-section">
         <Link
           newWindowTarget
-          href={getSfGovUrl(
-            "https://www.sf.gov/step-by-step/buy-home-without-entering-lottery",
-            14246
-          )}
+          href={getSfGovUrl("https://www.sf.gov/step-by-step/buy-home-without-entering-lottery")}
           hideExternalLinkIcon={true}
           ariaLabel={t("listings.fcfs.bmrSales.noLotteryRequired.footer.aria")}
           className="fcfs-no-lottery-link"

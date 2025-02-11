@@ -24,8 +24,7 @@ export const ListingDetailsChisholmPreferences = ({
             {renderInlineMarkup(
               t("listings.customListingType.educator.preferences.part4a", {
                 chisholmLotteryLink: getSfGovUrl(
-                  "https://sf.gov/information/learn-how-lottery-works-shirley-chisholm-village",
-                  10493
+                  "https://www.sf.gov/learn-how-lottery-works-shirley-chisholm-village"
                 ),
               })
             )}
@@ -34,8 +33,7 @@ export const ListingDetailsChisholmPreferences = ({
             {renderInlineMarkup(
               t("listings.customListingType.educator.preferences.part4b", {
                 preferencesLink: getSfGovUrl(
-                  "https://sf.gov/information/learn-about-housing-lottery-preference-programs",
-                  3274
+                  "https://sf.gov/information/learn-about-housing-lottery-preference-programs"
                 ),
               })
             )}

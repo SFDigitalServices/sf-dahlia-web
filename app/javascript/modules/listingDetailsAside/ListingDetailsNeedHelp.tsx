@@ -11,8 +11,7 @@ export const NeedHelpBlock = ({ listing }: { listing: RailsSaleListing | RailsRe
   const isListingRental = isRental(listing)
 
   const salesNeedHelpLink = getSfGovUrl(
-    "https://www.sf.gov/resource/2022/homebuyer-program-counseling-agencies",
-    7209
+    "https://www.sf.gov/resource/2022/homebuyer-program-counseling-agencies"
   )
 
   return (

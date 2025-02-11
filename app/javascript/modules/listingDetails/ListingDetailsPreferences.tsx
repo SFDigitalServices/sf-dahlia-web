@@ -35,23 +35,6 @@ export interface ListingDetailsPreferencesProps {
   translations?: RailsTranslations
 }
 
-export const mapPreferenceLink = (link: string): string => {
-  switch (link) {
-    case "http://sfmohcd.org/certificate-preference":
-      return getSfGovUrl(link, 3275)
-    case "http://sfmohcd.org/displaced-tenant-housing-preference":
-      return getSfGovUrl(link, 7488)
-    case "http://sfmohcd.org/housing-preference-programs":
-      return getSfGovUrl(link, 3274)
-    case "http://sfmohcd.org/neighborhood-resident-housing-preference":
-      return getSfGovUrl(link, 3274)
-    case "https://www.sf.gov/certain-buildings-have-special-lottery-preferences":
-      return getSfGovUrl(link, 11931)
-    default:
-      return link
-  }
-}
-
 export const ListingDetailsPreferences = ({
   listingID,
   translations,
@@ -85,7 +68,7 @@ export const ListingDetailsPreferences = ({
           if (preference.readMoreUrl) {
             links.push({
               title: t("label.readMore"),
-              url: mapPreferenceLink(preference.readMoreUrl),
+              url: getSfGovUrl(preference.readMoreUrl),
               ariaLabel: t(`listings.lotteryPreference.${preference.preferenceName}.readMore`),
             })
           }

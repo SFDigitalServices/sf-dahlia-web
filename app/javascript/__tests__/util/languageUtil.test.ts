@@ -208,20 +208,25 @@ describe("languageUtil", () => {
   })
 
   describe("getSfGovUrl", () => {
-    const node = 55
     it("returns the correct url for a sf.gov link", () => {
       const enLink = "https://sf.gov/departments/mayors-office-housing-and-community-development"
-      expect(getSfGovUrl(enLink, node, "https://housing.sfgov.org")).toBe(enLink)
-      expect(getSfGovUrl(enLink, node, "es")).toBe("https://sf.gov/es/node/55")
-      expect(getSfGovUrl(enLink, node, "zh")).toBe("https://sf.gov/zh-hant/node/55")
-      expect(getSfGovUrl(enLink, node, "tl")).toBe("https://sf.gov/fil/node/55")
+      expect(getSfGovUrl(enLink, "https://housing.sfgov.org")).toBe(enLink)
+      expect(getSfGovUrl(enLink, "es")).toBe(
+        "https://sf.gov/es/departments/mayors-office-housing-and-community-development"
+      )
+      expect(getSfGovUrl(enLink, "zh")).toBe(
+        "https://sf.gov/zh-hant/departments/mayors-office-housing-and-community-development"
+      )
+      expect(getSfGovUrl(enLink, "tl")).toBe(
+        "https://sf.gov/fil/departments/mayors-office-housing-and-community-development"
+      )
     })
     it("returns the same url if not an sf.gov link", () => {
       const enLink = "https://housing.acgov.org"
-      expect(getSfGovUrl(enLink, node, "https://housing.sfgov.org")).toBe(enLink)
-      expect(getSfGovUrl(enLink, node, "es")).toBe(enLink)
-      expect(getSfGovUrl(enLink, node, "zh")).toBe(enLink)
-      expect(getSfGovUrl(enLink, node, "tl")).toBe(enLink)
+      expect(getSfGovUrl(enLink, "https://housing.sfgov.org")).toBe(enLink)
+      expect(getSfGovUrl(enLink, "es")).toBe(enLink)
+      expect(getSfGovUrl(enLink, "zh")).toBe(enLink)
+      expect(getSfGovUrl(enLink, "tl")).toBe(enLink)
     })
   })
 })

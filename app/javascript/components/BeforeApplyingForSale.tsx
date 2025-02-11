@@ -57,10 +57,7 @@ export const BeforeApplyingForSale = ({ beforeApplyingType }: BeforeApplyingForS
   ) {
     requirements = renderInlineMarkup(
       `${t("saleDirectory.beforeApplying.readFullList", {
-        url: getSfGovUrl(
-          "https://sf.gov/determine-if-you-can-buy-affordable-housing-program",
-          7164
-        ),
+        url: getSfGovUrl("https://sf.gov/determine-if-you-can-buy-affordable-housing-program"),
       })}`
     )
     listItems = [
@@ -68,17 +65,14 @@ export const BeforeApplyingForSale = ({ beforeApplyingType }: BeforeApplyingForS
       {
         content: renderInlineMarkup(
           `${t("saleDirectory.beforeApplying.step2", {
-            url: getSfGovUrl(
-              "https://sf.gov/determine-if-you-can-buy-affordable-housing-program",
-              7164
-            ),
+            url: getSfGovUrl("https://sf.gov/determine-if-you-can-buy-affordable-housing-program"),
           })}`
         ),
       },
       {
         content: renderInlineMarkup(
           `${t("saleDirectory.beforeApplying.step3", {
-            url: getSfGovUrl("https://sf.gov/sign-complete-homebuyer-education", 212),
+            url: getSfGovUrl("https://sf.gov/sign-complete-homebuyer-education"),
           })}`
         ),
       },
@@ -86,8 +80,7 @@ export const BeforeApplyingForSale = ({ beforeApplyingType }: BeforeApplyingForS
         content: renderInlineMarkup(
           `${t("saleDirectory.beforeApplying.step4", {
             url: getSfGovUrl(
-              "https://sf.gov/reports/october-2023/find-lender-below-market-rate-program",
-              6953
+              "https://sf.gov/reports/october-2023/find-lender-below-market-rate-program"
             ),
           })}`
         ),
