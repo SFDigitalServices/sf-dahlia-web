@@ -93,11 +93,15 @@ describe("authApiService", () => {
   })
 
   describe("forgotPassword", () => {
-    it("calls apiService put", async () => {
-      const url = "/user/forgot-password"
+    it("calls apiService post", async () => {
+      const url = "/api/v1/auth/password"
       const email = "email@test.com"
       await forgotPassword(email)
-      expect(put).toHaveBeenCalledWith(url, { email, appUrl: "http://localhost" })
+      expect(post).toHaveBeenCalledWith(url, {
+        email,
+        locale: "en",
+        redirect_url: "/reset-password",
+      })
     })
   })
 

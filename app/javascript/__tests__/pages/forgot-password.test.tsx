@@ -4,6 +4,7 @@ import ForgotPassword from "../../pages/forgot-password"
 import { renderAndLoadAsync } from "../__util__/renderUtils"
 import { screen } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
+import { post } from "../../api/apiService"
 
 jest.mock("react-helmet-async", () => {
   return {
@@ -11,6 +12,10 @@ jest.mock("react-helmet-async", () => {
     Helmet: ({ children }: { children: React.ReactNode }) => children, // Mock Helmet component
   }
 })
+
+jest.mock("../../api/apiService", () => ({
+  post: jest.fn(),
+}))
 
 describe("<ForgotPassword />", () => {
   it("shows the correct form text", async () => {
@@ -20,6 +25,11 @@ describe("<ForgotPassword />", () => {
   })
 
   it("shows the text after submission", async () => {
+    ;(post as jest.Mock).mockResolvedValue({
+      data: {
+        status: "success",
+      },
+    })
     await renderAndLoadAsync(<ForgotPassword assetPaths={{}} />)
     await userEvent.type(screen.getByRole("textbox", { name: /email/i }), "test@test.com")
     await userEvent.click(screen.getByRole("button", { name: /send email/i }))
@@ -75,5 +85,36 @@ describe("<ForgotPassword />", () => {
 
     const emailInput = screen.getByLabelText(/email/i)
     expect(emailInput).toHaveValue("")
+  })
+
+  it("shows an error message when the server responds with an error", async () => {
+    ;(post as jest.Mock).mockRejectedValueOnce({
+      response: {
+        status: 500,
+      },
+    })
+
+    await renderAndLoadAsync(<ForgotPassword assetPaths={{}} />)
+    await userEvent.type(screen.getByRole("textbox", { name: /email/i }), "test@test.com")
+    await userEvent.click(screen.getByRole("button", { name: /send email/i }))
+
+    expect(screen.getByText(/something went wrong\. try again or check back later/i)).not.toBeNull()
+  })
+  it("does not show an error message when the email does not exist", async () => {
+    ;(post as jest.Mock).mockRejectedValueOnce({
+      response: {
+        status: 404,
+      },
+    })
+
+    await renderAndLoadAsync(<ForgotPassword assetPaths={{}} />)
+    await userEvent.type(screen.getByRole("textbox", { name: /email/i }), "test@test.com")
+    await userEvent.click(screen.getByRole("button", { name: /send email/i }))
+
+    expect(
+      screen.getByText(
+        "If there is an account with that email address, you will get an email with a link to reset your password."
+      )
+    ).not.toBeNull()
   })
 })
