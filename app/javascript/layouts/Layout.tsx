@@ -183,7 +183,7 @@ const Layout = (props: LayoutProps) => {
             mainContentId={"main-content"}
           />
 
-          <main data-testid="main-content-test-id" id="main-content" className="overflow-x-hidden">
+          <main data-testid="main-content-test-id" id="main-content">
             <ErrorBoundary boundaryScope={BoundaryScope.content}>{props.children}</ErrorBoundary>
           </main>
         </div>

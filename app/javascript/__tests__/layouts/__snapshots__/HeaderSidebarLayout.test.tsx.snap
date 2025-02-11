@@ -215,7 +215,6 @@ exports[`<HeaderSidebarLayout /> Contact Bar renders Contact Information 1`] = `
         </nav>
       </header>
       <main
-        class="overflow-x-hidden"
         data-testid="main-content-test-id"
         id="main-content"
       >

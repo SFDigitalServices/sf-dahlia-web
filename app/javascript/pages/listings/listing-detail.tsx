@@ -138,99 +138,101 @@ const ListingDetail = () => {
         description={listing ? getDescription(listing) : null}
         image={listing?.Listing_Images ? listing?.Listing_Images[0].displayImageURL : null}
       >
-        <div className="flex absolute w-full flex-col items-center border-0 border-t border-solid">
-          <SiteAlert type="alert" className={alertClasses} />
-          <SiteAlert type="success" className={alertClasses} timeout={30_000} />
-        </div>
-        {listing && (
-          <article className="flex flex-wrap flex-col relative max-w-5xl m-auto w-full">
-            <ListingDetailsImageCard listing={listing} />
-            {listingIsHabitat && (
-              <Mobile>
-                <ListingDetailsApplicationDate listing={listing} />
-              </Mobile>
-            )}
-            <ListingDetailsHabitat listing={listing} />
-            {!isApplicationOpen && !listingIsHabitat && (
-              <Mobile>
-                <ListingDetailsApplicationDate listing={listing} />
-              </Mobile>
-            )}
-            <ListingDetailsReservedBanner
-              reservedCommunityMinimumAge={listing.Reserved_community_minimum_age}
-              reservedCommunityType={listing.Reserved_community_type}
-              customListingType={listing.Custom_Listing_Type}
-            />
-            <ErrorBoundary
-              boundaryScope={BoundaryScope.component}
-              componentClassNames="p-4 text-left"
-            >
-              <ListingDetailsPricingTable listing={listing} />
-            </ErrorBoundary>
-            {listingHasSROUnits(listing) && (
-              <div className="md:w-2/3 md:pr-8">
-                <ListingDetailsSROInfo listing={listing} />
-              </div>
-            )}
-            {isApplicationOpen && !listingIsHabitat && (
-              <Mobile>
-                <ListingDetailsApplicationDate listing={listing} />
-                <ListingDetailsWaitlist listing={listing} />
-              </Mobile>
-            )}
-            {isFcfsSalesListing(listing) && <Mobile>{fcfsNoLotteryRequired()}</Mobile>}
-            {listing.Accepting_Online_Applications && (
-              <Mobile>
-                <ListingDetailsApply listing={listing} />
-              </Mobile>
-            )}
-            {isApplicationOpen && (
-              <Mobile>
-                <div className="border-b border-t m-0">
-                  <NeedHelpBlock listing={listing} />
-                </div>
-              </Mobile>
-            )}
-            <ListingDetailsAside listing={listing} imageSrc={getAssetPath("listing-units.svg")} />
-            <ListingDetails>
-              <MobileListingDetailsLottery
-                imageSrc={getAssetPath("listing-units.svg")}
-                listing={listing}
-              />
-              <ListingDetailsEligibility
-                listing={listing}
-                imageSrc={getAssetPath("listing-eligibility.svg")}
-              />
-              {!isRental(listing) ? (
-                <MobileListingDetailsSeeTheUnit
-                  listing={listing}
-                  imageSrc={getAssetPath("listing-units.svg")}
-                />
-              ) : (
-                <MobileListingDetailsProcess
-                  listing={listing}
-                  imageSrc={getAssetPath("listing-units.svg")}
-                  isApplicationOpen={isApplicationOpen}
-                />
+        <div className="overflow-x-hidden">
+          <div className="flex absolute w-full flex-col items-center border-0 border-t border-solid">
+            <SiteAlert type="alert" className={alertClasses} />
+            <SiteAlert type="success" className={alertClasses} timeout={30_000} />
+          </div>
+          {listing && (
+            <article className="flex flex-wrap flex-col relative max-w-5xl m-auto w-full">
+              <ListingDetailsImageCard listing={listing} />
+              {listingIsHabitat && (
+                <Mobile>
+                  <ListingDetailsApplicationDate listing={listing} />
+                </Mobile>
               )}
-              <></>
-              <ListingDetailsFeatures
-                listing={listing}
-                imageSrc={getAssetPath("listing-features.svg")}
+              <ListingDetailsHabitat listing={listing} />
+              {!isApplicationOpen && !listingIsHabitat && (
+                <Mobile>
+                  <ListingDetailsApplicationDate listing={listing} />
+                </Mobile>
+              )}
+              <ListingDetailsReservedBanner
+                reservedCommunityMinimumAge={listing.Reserved_community_minimum_age}
+                reservedCommunityType={listing.Reserved_community_type}
+                customListingType={listing.Custom_Listing_Type}
               />
-              <ListingDetailsNeighborhood
-                imageSrc={getAssetPath("listing-neighborhood.svg")}
-                listing={listing}
-              />
-              <ListingDetailsAdditionalInformation
-                listing={listing}
-                imageSrc={getAssetPath("listing-legal.svg")}
-              />
-              <ListingDetailsMOHCD />
-            </ListingDetails>
-          </article>
-        )}
-        <MailingListSignup />
+              <ErrorBoundary
+                boundaryScope={BoundaryScope.component}
+                componentClassNames="p-4 text-left"
+              >
+                <ListingDetailsPricingTable listing={listing} />
+              </ErrorBoundary>
+              {listingHasSROUnits(listing) && (
+                <div className="md:w-2/3 md:pr-8">
+                  <ListingDetailsSROInfo listing={listing} />
+                </div>
+              )}
+              {isApplicationOpen && !listingIsHabitat && (
+                <Mobile>
+                  <ListingDetailsApplicationDate listing={listing} />
+                  <ListingDetailsWaitlist listing={listing} />
+                </Mobile>
+              )}
+              {isFcfsSalesListing(listing) && <Mobile>{fcfsNoLotteryRequired()}</Mobile>}
+              {listing.Accepting_Online_Applications && (
+                <Mobile>
+                  <ListingDetailsApply listing={listing} />
+                </Mobile>
+              )}
+              {isApplicationOpen && (
+                <Mobile>
+                  <div className="border-b border-t m-0">
+                    <NeedHelpBlock listing={listing} />
+                  </div>
+                </Mobile>
+              )}
+              <ListingDetailsAside listing={listing} imageSrc={getAssetPath("listing-units.svg")} />
+              <ListingDetails>
+                <MobileListingDetailsLottery
+                  imageSrc={getAssetPath("listing-units.svg")}
+                  listing={listing}
+                />
+                <ListingDetailsEligibility
+                  listing={listing}
+                  imageSrc={getAssetPath("listing-eligibility.svg")}
+                />
+                {!isRental(listing) ? (
+                  <MobileListingDetailsSeeTheUnit
+                    listing={listing}
+                    imageSrc={getAssetPath("listing-units.svg")}
+                  />
+                ) : (
+                  <MobileListingDetailsProcess
+                    listing={listing}
+                    imageSrc={getAssetPath("listing-units.svg")}
+                    isApplicationOpen={isApplicationOpen}
+                  />
+                )}
+                <></>
+                <ListingDetailsFeatures
+                  listing={listing}
+                  imageSrc={getAssetPath("listing-features.svg")}
+                />
+                <ListingDetailsNeighborhood
+                  imageSrc={getAssetPath("listing-neighborhood.svg")}
+                  listing={listing}
+                />
+                <ListingDetailsAdditionalInformation
+                  listing={listing}
+                  imageSrc={getAssetPath("listing-legal.svg")}
+                />
+                <ListingDetailsMOHCD />
+              </ListingDetails>
+            </article>
+          )}
+          <MailingListSignup />
+        </div>
       </Layout>
     </LoadingOverlay>
   )
