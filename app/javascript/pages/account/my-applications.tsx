@@ -26,7 +26,7 @@ import { withAuthentication } from "../../authentication/withAuthentication"
 export const noApplications = () => {
   return (
     <Card.Section className="flex flex-col bg-primary-lighter items-center pb-12 border-t">
-      <h2 className="text-xl">{t("myApplications.noApplications")}</h2>
+      <p className="font-serif text-xl">{t("myApplications.noApplications")}</p>
       <div className="flex flex-col gap-y-4 w-3/5 pt-4">
         <LinkButton href={getLocalizedPath("/listings/for-rent", getCurrentLanguage())}>
           {t("listings.browseRentals")}
