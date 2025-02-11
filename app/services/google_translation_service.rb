@@ -48,13 +48,15 @@ class GoogleTranslationService
     translations
   end
 
-  def self.log_translations(msg:, caller_method:, text:, listing_id:)
+  def self.log_translations(msg:, caller_method:, text:, listing_id:, char_count: nil)
     msg_hash = {
+      msg:,
+      char_count:,
       caller_method:,
       listing_id:,
       text:,
-    }.to_json
-    Rails.logger.info("#{msg}: #{msg_hash}")
+    }.compact
+    Rails.logger.info(msg_hash.to_json)
   end
 
   private

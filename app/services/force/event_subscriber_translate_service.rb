@@ -142,6 +142,7 @@ module Force
         caller_method: "#{self.class.name}##{__method__}",
         listing_id:,
         text: values,
+        char_count: text_to_translate.join.size,
       )
       @translation_service.translate(text_to_translate, languages)
     end

@@ -29,6 +29,7 @@ class CacheService
       caller_method: "#{self.class.name}##{__method__}",
       listing_id: listing['Id'],
       text: strings_to_translate,
+      char_count: strings_to_translate.values.join.size,
     )
     translations = translation_service.translate(strings_to_translate.values,
                                                  languages)
