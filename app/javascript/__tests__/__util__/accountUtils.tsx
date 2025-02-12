@@ -93,7 +93,7 @@ export const setupLocationAndRouteMock = (search?: string) => {
       }
     },
     get: function () {
-      return "http://dahlia.com" + (this._search || "")
+      return "http://dahlia.com" + (this._pathname || "") + (this._search || "")
     },
   })
   Object.defineProperty(window.location, "search", {
