@@ -1,7 +1,17 @@
 import { renderAndLoadAsync } from "../../__util__/renderUtils"
 import MyAccount from "../../../pages/account/my-account"
 import React from "react"
-import { setupLocationAndRouteMock, setupUserContext } from "../../__util__/accountUtils"
+import {
+  mockProfileStub,
+  setupLocationAndRouteMock,
+  setupUserContext,
+} from "../../__util__/accountUtils"
+import TagManager from "react-gtm-module"
+
+jest.mock("react-gtm-module", () => ({
+  initialize: jest.fn(),
+  dataLayer: jest.fn(),
+}))
 
 describe("<MyAccount />", () => {
   beforeEach(() => {
@@ -15,6 +25,10 @@ describe("<MyAccount />", () => {
 
     beforeEach(async () => {
       setupUserContext({ loggedIn: true })
+
+      setupLocationAndRouteMock(
+        "?access-token=true&accountConfirmed=true&account_confirmation_success=true"
+      )
 
       const renderResult = await renderAndLoadAsync(<MyAccount assetPaths={{}} />)
       getByTestId = renderResult.getByTestId
@@ -45,6 +59,25 @@ describe("<MyAccount />", () => {
       const links = mainContent.querySelectorAll("a")
       const linkHeader = links[1].querySelector("h2")
       expect(linkHeader?.textContent).toBe("Account settings")
+    })
+  })
+
+  describe("when a user confirms their account", () => {
+    it("sends an analytics event", async () => {
+      setupUserContext({ loggedIn: true })
+
+      setupLocationAndRouteMock(
+        "?access-token=test&accountConfirmed=true&account_confirmation_success=true"
+      )
+
+      await renderAndLoadAsync(<MyAccount assetPaths={{}} />)
+
+      expect(TagManager.dataLayer).toHaveBeenCalledWith({
+        dataLayer: {
+          event: "account_create_completed",
+          user_id: mockProfileStub.id,
+        },
+      })
     })
   })
 
