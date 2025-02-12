@@ -56,24 +56,6 @@ class CacheService
     )
   end
 
-  def log_process_translations(listing, trigger)
-    strings_to_translate = build_strings_to_translate(listing)
-    GoogleTranslationService.google_translation_usage_logger(
-      listing['Id'],
-      trigger,
-      strings_to_translate.values.join.size,
-    )
-
-    # cache some placeholder data so that caching logic can execute and be analyzed
-    # we only need the actual listing_id and timestamp
-    GoogleTranslationService.new.cache_listing_translations(
-      listing['Id'],
-      %w[field_1 field_2],
-      [{ to: 'ES', translation: %w[text_1 text_2] }],
-      listing['LastModifiedDate'],
-    )
-  end
-
   private
 
   attr_accessor :prev_cached_listings, :fresh_listings
