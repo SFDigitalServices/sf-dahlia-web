@@ -95,7 +95,7 @@ AccountService = (
         AnalyticsService.trackEvent("login_failed", {
             user_id: null,
             origin: 'Application Sign In',
-            error_reason: response?.reason || undefined,
+            reason: response?.reason || undefined,
           })
         # for errors we manually stop the loading overlay
         bsLoadingOverlayService.stop()
