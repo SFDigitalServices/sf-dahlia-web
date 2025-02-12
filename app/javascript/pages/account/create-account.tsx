@@ -38,6 +38,7 @@ import {
 import { ExpandedAccountAxiosError, getErrorMessage } from "./components/util"
 
 import "./create-account.scss"
+import { DataLayerEvent, useGTMDataLayer } from "../../hooks/analytics/useGTMDataLayer"
 import { AppPages, getSignInPath } from "../../util/routeUtil"
 
 interface CreateAccountProps {
@@ -147,28 +148,55 @@ const handleCreateAccountErrors =
     error.response?.data?.errors?.lastName && setError(...handleNameServerErrors("lastName", error))
   }
 
-const onSubmit = (setError: (name: string, error: ErrorOption) => void) => (data) => {
-  const { password, ...user } = data
-  const userInfo: User = user
-  user.DOB = getDobStringFromDobObject(userInfo.dobObject)
-  const userData = {
-    email: userInfo.email,
-    password: password,
-    password_confirmation: password,
+const onSubmit =
+  (
+    setError: (name: string, error: ErrorOption) => void,
+    pushToDataLayer: (event: string, data: DataLayerEvent) => void
+  ) =>
+  (data) => {
+    const { password, ...user } = data
+    const userInfo: User = user
+    user.DOB = getDobStringFromDobObject(userInfo.dobObject)
+    const userData = {
+      email: userInfo.email,
+      password: password,
+      password_confirmation: password,
+    }
+    const contactData = {
+      firstName: userInfo.firstName,
+      lastName: userInfo.lastName,
+      email: userInfo.email,
+      DOB: userInfo.DOB,
+    }
+    createAccount(userData, contactData)
+      .then((user) => {
+        pushToDataLayer("account_create_start_succeeded", {
+          origin: "create account",
+          user_id: user.id,
+        })
+        window.sessionStorage.setItem("newAccount", userData.email)
+        window.location.replace(getSignInPath())
+      })
+      .catch((error: ExpandedAccountAxiosError) => {
+        if (
+          (error.response.data?.errors?.full_messages || []).includes(
+            "Email has already been taken"
+          )
+        ) {
+          pushToDataLayer("account_create_start_failed", {
+            origin: "create account",
+            reason: "email has already been taken",
+          })
+        } else {
+          pushToDataLayer("account_create_start_failed", {
+            origin: "create account",
+            reason: "generic error",
+          })
+        }
+
+        handleCreateAccountErrors(setError)(error)
+      })
   }
-  const contactData = {
-    firstName: userInfo.firstName,
-    lastName: userInfo.lastName,
-    email: userInfo.email,
-    DOB: userInfo.DOB,
-  }
-  createAccount(userData, contactData)
-    .then(() => {
-      window.sessionStorage.setItem("newAccount", userData.email)
-      window.location.replace(getSignInPath())
-    })
-    .catch(handleCreateAccountErrors(setError))
-}
 
 const CreateAccountContent = ({ register, watch, errors }: SectionProps) => {
   return (
@@ -194,6 +222,7 @@ const modifyErrors = (errors: DeepMap<FieldValues, FieldError>) => {
 
 const CreateAccount = (_props: CreateAccountProps) => {
   const errorBannerRef = React.useRef<HTMLSpanElement>(null)
+  const { pushToDataLayer } = useGTMDataLayer()
   const {
     register,
     formState: { errors },
@@ -221,7 +250,10 @@ const CreateAccount = (_props: CreateAccountProps) => {
               />
             </span>
             <Form
-              onSubmit={handleSubmit(onSubmit(setError), scrollToErrorOnSubmit(errorBannerRef))}
+              onSubmit={handleSubmit(
+                onSubmit(setError, pushToDataLayer),
+                scrollToErrorOnSubmit(errorBannerRef)
+              )}
             >
               <CreateAccountContent register={register} watch={watch} errors={errors} />
               {/* Footer has to be in the Form because of styling */}

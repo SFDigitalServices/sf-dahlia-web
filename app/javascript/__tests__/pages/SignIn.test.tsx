@@ -8,6 +8,7 @@ import { post } from "../../api/apiService"
 import { SiteAlert } from "../../components/SiteAlert"
 import { t } from "@bloom-housing/ui-components"
 import "@testing-library/jest-dom"
+import TagManager from "react-gtm-module"
 
 jest.mock("react-helmet-async", () => {
   return {
@@ -18,6 +19,11 @@ jest.mock("react-helmet-async", () => {
 
 jest.mock("../../api/apiService", () => ({
   post: jest.fn(),
+}))
+
+jest.mock("react-gtm-module", () => ({
+  initialize: jest.fn(),
+  dataLayer: jest.fn(),
 }))
 
 jest.mock("@bloom-housing/ui-seeds", () => {
@@ -152,7 +158,7 @@ describe("<SignIn />", () => {
   it("shows the correct expired unconfirmed email modal", async () => {
     const customLocation = {
       ...window.location,
-      search: "?expiredUnconfirmed=test@test.com",
+      search: "?expiredUnconfirmed=test@test.com&id=123",
       href: "http://dahlia.com",
       assign: jest.fn(),
       replace: jest.fn(),
@@ -173,6 +179,13 @@ describe("<SignIn />", () => {
       expect(screen.getByText("Confirmation link expired")).not.toBeNull()
       expect(screen.getByText("Send a new link")).not.toBeNull()
       expect(screen.queryByText("Email sent. Check your email.")).toBeNull()
+    })
+
+    expect(TagManager.dataLayer).toHaveBeenCalledWith({
+      dataLayer: {
+        event: "account_create_expired",
+        user_id: "123",
+      },
     })
 
     jest.resetAllMocks()
