@@ -2,7 +2,11 @@ import { useCallback, useContext } from "react"
 import TagManager from "react-gtm-module"
 import UserContext from "../../authentication/context/UserContext"
 
-const validateAndPushData = (event, data) => {
+export interface DataLayerEvent {
+  [key: string]: string | number | boolean
+}
+
+const validateAndPushData = (event: string, data: DataLayerEvent) => {
   if (!data || typeof data !== "object") {
     console.error("Data must be an object when pushing to the data layer.")
     return
@@ -23,7 +27,7 @@ export const useGTMDataLayer = () => {
   const { profile } = useContext(UserContext)
 
   const pushToDataLayer = useCallback(
-    (event, data) => {
+    (event: string, data: DataLayerEvent) => {
       validateAndPushData(event, { user_id: profile?.id || undefined, ...data })
     },
     [profile?.id]
@@ -34,7 +38,7 @@ export const useGTMDataLayer = () => {
 
 // A pure version of the hook that does not rely on any context
 export const useGTMDataLayerWithoutUserContext = () => {
-  const pushToDataLayer = useCallback((event, data) => {
+  const pushToDataLayer = useCallback((event: string, data: DataLayerEvent) => {
     validateAndPushData(event, data)
   }, [])
 
