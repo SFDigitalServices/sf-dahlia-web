@@ -148,6 +148,19 @@ const handleCreateAccountErrors =
     error.response?.data?.errors?.lastName && setError(...handleNameServerErrors("lastName", error))
   }
 
+const handleAccountCreateError = (
+  error: string[],
+  pushToDataLayer: (event: string, data: DataLayerEvent) => void
+) => {
+  const reason = (error || []).includes("Email has already been taken")
+    ? "email has already been taken"
+    : "generic error"
+  pushToDataLayer("account_create_start_failed", {
+    origin: "create account",
+    reason,
+  })
+}
+
 const onSubmit =
   (
     setError: (name: string, error: ErrorOption) => void,
@@ -178,22 +191,7 @@ const onSubmit =
         window.location.replace(getSignInPath())
       })
       .catch((error: ExpandedAccountAxiosError) => {
-        if (
-          (error.response.data?.errors?.full_messages || []).includes(
-            "Email has already been taken"
-          )
-        ) {
-          pushToDataLayer("account_create_start_failed", {
-            origin: "create account",
-            reason: "email has already been taken",
-          })
-        } else {
-          pushToDataLayer("account_create_start_failed", {
-            origin: "create account",
-            reason: "generic error",
-          })
-        }
-
+        handleAccountCreateError(error.response?.data?.errors?.full_messages, pushToDataLayer)
         handleCreateAccountErrors(setError)(error)
       })
   }
