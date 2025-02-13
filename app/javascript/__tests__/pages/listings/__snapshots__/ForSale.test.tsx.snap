@@ -221,7 +221,6 @@ exports[`For Sale renders ForSale component 1`] = `
         </nav>
       </header>
       <main
-        class="overflow-x-hidden"
         data-testid="main-content-test-id"
         id="main-content"
       >
@@ -336,6 +335,44 @@ exports[`For Sale renders ForSale component 1`] = `
                            for more details.
                         </span>
                       </div>
+                    </div>
+                  </div>
+                  <div
+                    class="buy-header_right_col"
+                  >
+                    <div
+                      class="md:bg-white md:p-4"
+                    >
+                      <h2
+                        class="text__underline-weighted mb-5"
+                      >
+                        Get a down payment loan
+                      </h2>
+                      <p
+                        class="mb-4"
+                      >
+                        Get a loan up to $500,000 to buy a home through the 2025 Downpayment Assistance Loan Program (DALP).
+                      </p>
+                      <p
+                        class="font-bold"
+                      >
+                        Application dates
+                      </p>
+                      <p
+                        class="mb-4"
+                      >
+                        Apply between March 4 and June 2, 2025
+                      </p>
+                      <p
+                        class="mb-4"
+                      >
+                        <a
+                          href="https://www.sf.gov/apply-downpayment-loan-buy-market-rate-home"
+                          target="_blank"
+                        >
+                          Learn more about DALP and how to apply
+                        </a>
+                      </p>
                     </div>
                   </div>
                 </div>
