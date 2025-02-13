@@ -4,7 +4,7 @@ class ShortFormAttachmentJob < ApplicationJob
 
   rescue_from(ActiveRecord::RecordNotFound) do |e|
     # catch UploadedFile not being found
-    Raven.capture_exception(e)
+    Sentry.capture_exception(e)
   end
 
   def perform(application_id, file_id)

@@ -13,6 +13,7 @@ Bundler.require(*Rails.groups)
 module SfDahliaWeb
   # setting up config for application
   class Application < Rails::Application
+    # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.0
 
     config.assets.paths << Rails.root.join('lib', 'assets', 'bower_components')
@@ -20,7 +21,7 @@ module SfDahliaWeb
     config.assets.paths << Rails.root.join('app', 'assets', 'json', 'translations', 'react')
 
     # http://guides.rubyonrails.org/action_mailer_basics.html#previewing-emails
-    config.action_mailer.preview_path = "#{Rails.root}/lib/mailer_previews"
+    config.action_mailer.preview_paths = ["#{Rails.root}/lib/mailer_previews"]
 
     config.time_zone = 'Pacific Time (US & Canada)'
 

@@ -184,7 +184,7 @@ class CacheService
     Force::ListingService.lottery_buckets(id, force: true) if listing_closed?(listing)
     process_listing_images(listing)
   rescue Faraday::ClientError => e
-    Raven.capture_exception(e, tags: { 'listing_id' => listing['Id'] })
+    Sentry.capture_exception(e, tags: { 'listing_id' => listing['Id'] })
   end
 
   def process_listing_images(listing)

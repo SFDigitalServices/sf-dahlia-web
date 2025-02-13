@@ -29,7 +29,7 @@ class ApiController < ActionController::API
     status = opts[:status] || :internal_server_error
     status_code = Rack::Utils::SYMBOL_TO_STATUS_CODE[status]
     external_capture = opts[:external_capture] || false
-    Raven.capture_exception(e) if external_capture
+    Sentry.capture_exception(e) if external_capture
     message = "#{e.class.name}, #{e.message}"
     logger.error "<< API Error >> #{message}"
 
