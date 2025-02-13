@@ -2,6 +2,7 @@ import { renderAndLoadAsync } from "../../__util__/renderUtils"
 import MyAccount from "../../../pages/account/my-account"
 import React from "react"
 import { setupLocationAndRouteMock, setupUserContext } from "../../__util__/accountUtils"
+import { withAuthentication } from "../../../authentication/withAuthentication"
 
 describe("<MyAccount />", () => {
   beforeEach(() => {
@@ -15,8 +16,10 @@ describe("<MyAccount />", () => {
 
     beforeEach(async () => {
       setupUserContext({ loggedIn: true })
+      setupLocationAndRouteMock()
+      const WrappedComponent = withAuthentication(MyAccount, { redirectPath: "account" })
 
-      const renderResult = await renderAndLoadAsync(<MyAccount assetPaths={{}} />)
+      const renderResult = await renderAndLoadAsync(<WrappedComponent assetPaths={{}} />)
       getByTestId = renderResult.getByTestId
     })
 
@@ -56,7 +59,8 @@ describe("<MyAccount />", () => {
       setupUserContext({ loggedIn: false })
       setupLocationAndRouteMock()
 
-      await renderAndLoadAsync(<MyAccount assetPaths={{}} />)
+      const WrappedComponent = withAuthentication(MyAccount, { redirectPath: "account" })
+      await renderAndLoadAsync(<WrappedComponent assetPaths={{}} />)
     })
 
     afterEach(() => {
@@ -65,19 +69,7 @@ describe("<MyAccount />", () => {
     })
 
     it("redirects to the sign in page if the user is not signed in", () => {
-      // This is a temporary workaround until we implement the redirects to the sign in page
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      delete (window as any).location
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      window.location = { href: "" } as any
-
-      Object.defineProperty(window, "location", {
-        value: {
-          href: "/sign-in",
-        },
-        writable: true,
-      })
-      expect(window.location.href).toBe("/sign-in")
+      expect(window.location.href).toBe("http://dahlia.com/sign-in?redirect=account")
     })
   })
 })

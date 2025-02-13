@@ -9,11 +9,12 @@ import {
   Icon,
   AlertBox,
   LinkButton,
+  NavigationContext,
 } from "@bloom-housing/ui-components"
 import { Link, Heading } from "@bloom-housing/ui-seeds"
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form"
 
-import { createPath, getForgotPasswordPath, getMyAccountPath } from "../util/routeUtil"
+import { createPath, getForgotPasswordPath, getSignInRedirectUrl } from "../util/routeUtil"
 import EmailFieldset from "../pages/account/components/EmailFieldset"
 import PasswordFieldset from "../pages/account/components/PasswordFieldset"
 import "../pages/account/styles/account.scss"
@@ -29,6 +30,11 @@ const getExpiredConfirmedEmail = () => {
   const urlParams = new URLSearchParams(window.location.search)
   const expiredUnconfirmedEmail = urlParams.get("expiredConfirmed")
   return expiredUnconfirmedEmail
+}
+
+const getRedirectFromUrl = () => {
+  const urlParams = new URLSearchParams(window.location.search)
+  return urlParams.get("redirect")
 }
 
 const SignInFormCard = ({
@@ -150,6 +156,8 @@ const SignInForm = () => {
 
   const { signIn } = useContext(UserContext)
 
+  const { router } = useContext(NavigationContext)
+
   const handleRequestError = (error: AxiosError<{ error: string; email: string }>) => {
     if (error.response.data.error === "not_confirmed") {
       setNewAccountNotConfirmedModal(error.response.data.email)
@@ -169,7 +177,8 @@ const SignInForm = () => {
     setRequestError("")
     signIn(email, password, "Sign In Page")
       .then(() => {
-        window.location.href = getMyAccountPath()
+        const redirectUrl = getRedirectFromUrl()
+        router.push(getSignInRedirectUrl(redirectUrl || ""))
         window.scrollTo(0, 0)
       })
       .catch((error: AxiosError<{ error: string; email: string }>) => {
@@ -178,6 +187,10 @@ const SignInForm = () => {
   }
 
   useEffect(() => {
+    const redirectUrl = getRedirectFromUrl()
+    if (redirectUrl) {
+      setRequestError(t("signIn.loginRequired"))
+    }
     const newAccountEmail: string | null = window.sessionStorage.getItem("newAccount")
     const expiredConfirmedEmail = getExpiredConfirmedEmail()
     const expiredUnconfirmedEmail = getExpiredUnconfirmedEmail()

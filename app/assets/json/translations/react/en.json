@@ -1607,6 +1607,7 @@
   "signIn.fillInFaster": "Fill in applications faster",
   "signIn.forgotPassword": "Forgot password?",
   "signIn.loggedOutDueToInactivity": "We care about your security. We logged you out due to inactivity. Please sign in to continue.",
+  "signIn.loginRequired": "You must be signed in to see this page. Sign in to continue.",
   "signIn.newAccount.p1": "We sent a link to %{email}.",
   "signIn.newAccount.p2": "Follow the link in your email to finish creating your account. It expires after 24 hours.",
   "signIn.newAccount.sendEmailAgainButton": "Send email again",

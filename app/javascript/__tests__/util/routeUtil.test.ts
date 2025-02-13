@@ -10,6 +10,7 @@ import {
   getSignInPath,
   getForgotPasswordPath,
   createPath,
+  getSignInRedirectUrl,
 } from "../../util/routeUtil"
 
 describe("routeUtil", () => {
@@ -123,6 +124,31 @@ describe("routeUtil", () => {
       const params = { email: "", token: "12345" }
       const result = createPath(path, params)
       expect(result).toBe("/forgot-password?token=12345")
+    })
+  })
+  describe("getSignInRedirectUrl", () => {
+    it("returns the correct redirect URL for 'account'", () => {
+      expect(getSignInRedirectUrl("account")).toBe("/my-account")
+    })
+
+    it("returns the correct redirect URL for 'applications'", () => {
+      expect(getSignInRedirectUrl("applications")).toBe("/my-applications")
+    })
+
+    it("returns the correct redirect URL for 'settings'", () => {
+      expect(getSignInRedirectUrl("settings")).toBe("/account-settings")
+    })
+
+    it("returns the correct redirect URL for 'home'", () => {
+      expect(getSignInRedirectUrl("home")).toBe("/")
+    })
+
+    it("returns the default redirect URL for an unknown key", () => {
+      expect(getSignInRedirectUrl("unknown")).toBe("/")
+    })
+
+    it("returns the default redirect URL when no key is provided", () => {
+      expect(getSignInRedirectUrl("")).toBe("/my-account")
     })
   })
 })
