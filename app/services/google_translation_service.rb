@@ -48,20 +48,17 @@ class GoogleTranslationService
     translations
   end
 
-  def self.log_translations(msg:, caller_method:, text:, listing_id:)
+  def self.log_translations(msg:, caller_method:, text:, listing_id:, char_count: false)
+    truncated_text =
+      text.try(:map) { |string| string.present? ? string[0..32] : nil }.try(:compact)
     msg_hash = {
+      msg:,
+      char_count: char_count ? text.try(:flatten).try(:join).try(:size) : nil,
       caller_method:,
       listing_id:,
-      text:,
-    }.to_json
-    Rails.logger.info("#{msg}: #{msg_hash}")
-  end
-
-  def self.google_translation_usage_logger(listing_id, trigger, char_count)
-    # comma separation to process logs more easily in the absence of structured logging
-    Rails.logger.info(
-      "log_google_translate_usage, #{trigger}, #{listing_id}, #{Time.now.to_i}, #{char_count}",
-    )
+      text: truncated_text,
+    }.compact
+    Rails.logger.info(msg_hash.to_json)
   end
 
   private

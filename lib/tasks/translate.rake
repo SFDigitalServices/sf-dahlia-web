@@ -44,13 +44,22 @@ namespace :translate do # rubocop:disable Metrics/BlockLength
     puts response
   end
 
+  # when re-enabling translations, many cached translations will be stale
+  # use this task to selectively update translations
+  desc 'Pre-fetch listing translations for caching for supplied listing ids'
+  task :refresh_cache, [:listing_ids] => :environment do |_t, args|
+    listing_ids = args[:listing_ids].split
+
+    listing_ids.map do |listing_id|
+      listing = Force::ListingService.listing(listing_id)
+      next unless listing.present?
+
+      CacheService.new.process_translations(listing)
+    end
+  end
+
   task subscribe: :environment do
     subscriber = Force::EventSubscriberTranslateService.new
     subscriber.listen_and_process_events
-  end
-
-  task log_usage: :environment do
-    subscriber = Force::EventSubscriberTranslateService.new
-    subscriber.listen_and_log_events
   end
 end

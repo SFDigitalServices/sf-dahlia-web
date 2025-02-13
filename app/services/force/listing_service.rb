@@ -40,29 +40,14 @@ module Force
       results = Request.new(parse_response: true).cached_get(endpoint, nil, force)
       listing = process_listing_images(results)
 
-      translation_usage_by_trigger(listing, opts[:rake_task]) if listing.present?
-
-      if Rails.configuration.unleash.is_enabled? 'GoogleCloudTranslate'
-        listing['translations'] = get_listing_translations(listing) || {}
+      # only check for stale translations when this method is called during the
+      #   scheduled rake task
+      if Rails.configuration.unleash.is_enabled?('GoogleCloudTranslate') &&
+         listing.present?
+        listing['translations'] =
+          get_listing_translations(listing, opts[:rake_task] == 'prefetch_10min') || {}
       end
       listing
-    end
-
-    def self.translation_usage_by_trigger(listing, rake_task = nil)
-      # only one of these feature flags should be turned on at a time
-      if Rails.configuration.unleash.is_enabled?(
-        'LogGoogleCloudTranslateUsageForPageView',
-      ) && rake_task.blank?
-        listing['translations'] = log_listing_translations(listing, 'page_view')
-      elsif Rails.configuration.unleash.is_enabled?(
-        'LogGoogleCloudTranslateUsageForPrefetch10Min',
-      ) && rake_task == 'prefetch_10min'
-        listing['translations'] = log_listing_translations(listing, 'prefetch_10min')
-      elsif Rails.configuration.unleash.is_enabled?(
-        'LogGoogleCloudTranslateUsageForPrefetchDaily',
-      ) && rake_task == 'prefetch_daily'
-        listing['translations'] = log_listing_translations(listing, 'prefetch_daily')
-      end
     end
 
     def self.process_listing_images(results)
@@ -70,9 +55,11 @@ module Force
       add_image_urls(results_with_cached_listing_images).first
     end
 
-    def self.get_listing_translations(listing)
+    def self.get_listing_translations(listing, check_for_stale_translations)
       listing_id = listing['Id']
       listing_translations = fetch_listing_translations_from_cache(listing_id)
+      return listing_translations unless check_for_stale_translations
+
       if translations_invalid?(listing_translations) ||
          translations_are_outdated?(
            listing_translations[:LastModifiedDate], listing['LastModifiedDate']
@@ -95,25 +82,6 @@ module Force
           "Listing is outdated for #{listing_id}, " \
           'refreshing the cached listing',
         )
-        refresh_listing_cache(listing_id)
-      end
-      listing_translations
-    end
-
-    def self.log_listing_translations(listing, trigger)
-      listing_id = listing['Id']
-      listing_translations = fetch_listing_translations_from_cache(listing_id)
-      translations_last_modified = listing_translations[:LastModifiedDate]
-
-      # we can only do the timestamp check since we are not actually translating anything
-      # this is okay because the bulk of translations are triggered by the timestamp check
-      if translations_are_outdated?(translations_last_modified,
-                                    listing['LastModifiedDate'])
-        return CacheService.new.log_process_translations(listing, trigger)
-      end
-
-      if listing_is_outdated?(translations_last_modified,
-                              listing['LastModifiedDate'])
         refresh_listing_cache(listing_id)
       end
       listing_translations
