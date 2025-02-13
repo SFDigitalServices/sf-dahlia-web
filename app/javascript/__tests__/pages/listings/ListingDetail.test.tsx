@@ -80,9 +80,12 @@ describe("Listing Detail", () => {
   })
 
   it("initializes Google Tag Manager for a sales listing", async () => {
+    const mockedDate = new Date()
     axios.get.mockResolvedValue({
       data: { listing: habitatListing, units: habitatListing.Units, ami: [] },
     })
+    jest.useFakeTimers()
+    jest.setSystemTime(mockedDate)
     await renderAndLoadAsync(<ListingDetail assetPaths="/" />)
 
     expect(TagManager.dataLayer).toHaveBeenCalledWith({
@@ -95,6 +98,8 @@ describe("Listing Detail", () => {
         listing_record_type: "Ownership",
         listing_status: "Active",
         listing_tenure: "New sale",
+        event_timestamp: mockedDate.toISOString(),
+        listingType: undefined,
       },
     })
   })
