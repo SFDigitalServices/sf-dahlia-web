@@ -148,18 +148,12 @@ const handleCreateAccountErrors =
     error.response?.data?.errors?.lastName && setError(...handleNameServerErrors("lastName", error))
   }
 
-const handleAccountCreateError = (
-  error: string[],
-  pushToDataLayer: (event: string, data: DataLayerEvent) => void
-) => {
-  const reason = (error || []).includes("Email has already been taken")
-    ? "email has already been taken"
-    : "generic error"
-  pushToDataLayer("account_create_start_failed", {
-    origin: "create account",
-    reason,
-  })
-}
+const extractContactData = (u) => ({
+  firstName: u.firstName,
+  lastName: u.lastName,
+  email: u.email,
+  DOB: u.DOB,
+})
 
 const onSubmit =
   (
@@ -175,12 +169,7 @@ const onSubmit =
       password: password,
       password_confirmation: password,
     }
-    const contactData = {
-      firstName: userInfo.firstName,
-      lastName: userInfo.lastName,
-      email: userInfo.email,
-      DOB: userInfo.DOB,
-    }
+    const contactData = extractContactData(userInfo)
     createAccount(userData, contactData)
       .then((user) => {
         pushToDataLayer("account_create_start_succeeded", {
@@ -191,7 +180,22 @@ const onSubmit =
         window.location.replace(getSignInPath())
       })
       .catch((error: ExpandedAccountAxiosError) => {
-        handleAccountCreateError(error.response?.data?.errors?.full_messages, pushToDataLayer)
+        if (
+          (error.response.data?.errors?.full_messages || []).includes(
+            "Email has already been taken"
+          )
+        ) {
+          pushToDataLayer("account_create_start_failed", {
+            origin: "create account",
+            reason: "email has already been taken",
+          })
+        } else {
+          pushToDataLayer("account_create_start_failed", {
+            origin: "create account",
+            reason: "generic error",
+          })
+        }
+
         handleCreateAccountErrors(setError)(error)
       })
   }
