@@ -195,7 +195,6 @@ const onSubmit =
             reason: "generic error",
           })
         }
-
         handleCreateAccountErrors(setError)(error)
       })
   }
