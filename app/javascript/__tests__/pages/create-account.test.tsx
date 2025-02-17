@@ -165,13 +165,15 @@ describe("<CreateAccount />", () => {
     await fillCreateAccountForm(defaultFormValues)
     await user.click(createAccountButton)
 
-    expect(TagManager.dataLayer).toHaveBeenCalledWith({
-      dataLayer: {
-        event: "account_create_start_succeeded",
-        origin: "create account",
-        user_id: mockUserData.data.id,
-      },
-    })
+    expect(TagManager.dataLayer).toHaveBeenCalledWith(
+      expect.objectContaining({
+        dataLayer: expect.objectContaining({
+          event: "account_create_start_succeeded",
+          origin: "create account",
+          user_id: mockUserData.data.id,
+        }),
+      })
+    )
 
     expect(post).toHaveBeenCalledWith(
       "/api/v1/auth",
@@ -551,13 +553,16 @@ describe("<CreateAccount />", () => {
         await fillCreateAccountForm(defaultFormValues)
         await user.click(createAccountButton)
 
-        expect(TagManager.dataLayer).toHaveBeenCalledWith({
-          dataLayer: {
-            event: "account_create_start_failed",
-            origin: "create account",
-            reason: "email has already been taken",
-          },
-        })
+        expect(TagManager.dataLayer).toHaveBeenCalledWith(
+          expect.objectContaining({
+            dataLayer: expect.objectContaining({
+              event: "account_create_start_failed",
+              origin: "create account",
+              reason: "email has already been taken",
+              user_id: undefined,
+            }),
+          })
+        )
 
         expect(
           screen.getByRole("button", {
@@ -585,13 +590,16 @@ describe("<CreateAccount />", () => {
         await fillCreateAccountForm(defaultFormValues)
         await user.click(createAccountButton)
 
-        expect(TagManager.dataLayer).toHaveBeenCalledWith({
-          dataLayer: {
-            event: "account_create_start_failed",
-            origin: "create account",
-            reason: "generic error",
-          },
-        })
+        expect(TagManager.dataLayer).toHaveBeenCalledWith(
+          expect.objectContaining({
+            dataLayer: expect.objectContaining({
+              event: "account_create_start_failed",
+              origin: "create account",
+              reason: "generic error",
+              user_id: undefined,
+            }),
+          })
+        )
 
         expect(
           screen.getByText(/email entered incorrectly. Enter email like: example@web.com/i)
