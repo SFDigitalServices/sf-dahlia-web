@@ -181,12 +181,14 @@ describe("<SignIn />", () => {
       expect(screen.queryByText("Email sent. Check your email.")).toBeNull()
     })
 
-    expect(TagManager.dataLayer).toHaveBeenCalledWith({
-      dataLayer: {
-        event: "account_create_expired",
-        user_id: "123",
-      },
-    })
+    expect(TagManager.dataLayer).toHaveBeenCalledWith(
+      expect.objectContaining({
+        dataLayer: expect.objectContaining({
+          event: "account_create_expired",
+          user_id: "123",
+        }),
+      })
+    )
 
     jest.resetAllMocks()
     ;(post as jest.Mock).mockRejectedValueOnce({

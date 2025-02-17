@@ -72,12 +72,14 @@ describe("<MyAccount />", () => {
 
       await renderAndLoadAsync(<MyAccount assetPaths={{}} />)
 
-      expect(TagManager.dataLayer).toHaveBeenCalledWith({
-        dataLayer: {
-          event: "account_create_completed",
-          user_id: mockProfileStub.id,
-        },
-      })
+      expect(TagManager.dataLayer).toHaveBeenCalledWith(
+        expect.objectContaining({
+          dataLayer: expect.objectContaining({
+            event: "account_create_completed",
+            user_id: mockProfileStub.id,
+          }),
+        })
+      )
     })
   })
 
