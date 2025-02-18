@@ -153,15 +153,6 @@ const extractContactData = (userInfo) => ({
   DOB: userInfo.DOB,
 })
 
-const extractUserData = (
-  userInfo,
-  pwdInfo
-): { email: string; password: string; password_confirmation: string } => ({
-  email: userInfo.email,
-  password: pwdInfo,
-  password_confirmation: pwdInfo,
-})
-
 const handleAccountCreateError = (
   error: ExpandedAccountAxiosError,
   pushToDataLayer: (event: string, data: DataLayerEvent) => void,
@@ -190,7 +181,11 @@ const onSubmit =
     const { password, ...user } = data
     const userInfo: User = user
     user.DOB = getDobStringFromDobObject(userInfo.dobObject)
-    const userData = extractUserData(userInfo, password)
+    const userData = {
+      email: userInfo.email,
+      password: password,
+      password_confirmation: password,
+    }
     const contactData = extractContactData(userInfo)
     createAccount(userData, contactData)
       .then((user) => {
