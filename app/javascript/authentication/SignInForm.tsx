@@ -24,6 +24,7 @@ import { SiteAlert } from "../components/SiteAlert"
 import { NewAccountNotConfirmedModal } from "./components/NewAccountNotConfirmedModal"
 import { ExpiredUnconfirmedModal } from "./components/ExpiredUnconfirmedModal"
 import { renderInlineMarkup } from "../util/languageUtil"
+import { useGTMDataLayer } from "../hooks/analytics/useGTMDataLayer"
 
 const getExpiredConfirmedEmail = () => {
   const urlParams = new URLSearchParams(window.location.search)
@@ -137,7 +138,8 @@ const SignInFormCard = ({
 const getExpiredUnconfirmedEmail = () => {
   const urlParams = new URLSearchParams(window.location.search)
   const expiredUnconfirmedEmail = urlParams.get("expiredUnconfirmed")
-  return expiredUnconfirmedEmail
+  const id = urlParams.get("id")
+  return { expiredUnconfirmedEmail, id }
 }
 
 const SignInForm = () => {
@@ -147,6 +149,7 @@ const SignInForm = () => {
   )
   const [showExpiredUnconfirmedModal, setExpiredUnconfirmedModal] = useState<string | null>(null)
   const [showAccountAlreadyConfirmedModal, setShowAccountAlreadyConfirmedModal] = useState(null)
+  const { pushToDataLayer } = useGTMDataLayer()
 
   const { signIn } = useContext(UserContext)
 
@@ -180,16 +183,17 @@ const SignInForm = () => {
   useEffect(() => {
     const newAccountEmail: string | null = window.sessionStorage.getItem("newAccount")
     const expiredConfirmedEmail = getExpiredConfirmedEmail()
-    const expiredUnconfirmedEmail = getExpiredUnconfirmedEmail()
+    const { expiredUnconfirmedEmail, id } = getExpiredUnconfirmedEmail()
     if (newAccountEmail) {
       setNewAccountNotConfirmedModal(newAccountEmail)
       window.sessionStorage.removeItem("newAccount")
     } else if (expiredConfirmedEmail) {
       setShowAccountAlreadyConfirmedModal(true)
     } else if (expiredUnconfirmedEmail) {
+      pushToDataLayer("account_create_expired", { user_id: id || undefined })
       setExpiredUnconfirmedModal(expiredUnconfirmedEmail)
     }
-  }, [])
+  }, [pushToDataLayer])
 
   return (
     <>

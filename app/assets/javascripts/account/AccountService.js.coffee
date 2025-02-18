@@ -63,6 +63,11 @@ AccountService = (
         angular.copy(response.data, Service.createdAccount)
         angular.copy(Service.userAuthDefaults, Service.userAuth)
         Service.clearAccountMessages()
+        AnalyticsService.trackEvent('account_create_start_succeeded', {
+          origin: if shortFormSession != null && shortFormSession.uid != null then "app flow" else "create account",
+          user_id: response.data.id
+        })
+
         return true
       ).error((response) ->
         # for errors we manually stop the loading overlay
@@ -70,10 +75,22 @@ AccountService = (
         msg = response.errors.full_messages[0]
         if msg == 'Email has already been taken'
           Service.accountError.messages.user = $translate.instant("error.email_already_in_use")
+          AnalyticsService.trackEvent("account_create_start_failed", {
+            origin: if shortFormSession != null && shortFormSession.uid != null then "app flow" else "create account",
+            reason: "email has already been taken",
+          })
         else if msg == 'Salesforce contact can\'t be blank'
           Service.accountError.messages.user = $translate.instant("error.create_account")
+          AnalyticsService.trackEvent("account_create_start_failed", {
+            origin: if shortFormSession != null && shortFormSession.uid != null then "app flow" else "create account",
+            reason: "generic error",
+          })
         else
           Service.accountError.messages.user = msg
+          AnalyticsService.trackEvent("account_create_start_failed", {
+            origin: if shortFormSession != null && shortFormSession.uid != null then "app flow" else "create account",
+            reason: "generic error",
+          })
         return false
       )
 

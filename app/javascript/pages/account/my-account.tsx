@@ -10,6 +10,8 @@ import {
   getSignInPath,
 } from "../../util/routeUtil"
 import { renderInlineMarkup } from "../../util/languageUtil"
+import { parseUrlParams } from "../../authentication/token"
+import { useGTMDataLayer } from "../../hooks/analytics/useGTMDataLayer"
 
 interface MyAccountProps {
   assetPaths: unknown
@@ -60,6 +62,22 @@ const AccountDashCard = ({
 
 const MyAccount = (_props: MyAccountProps) => {
   const { profile, loading, initialStateLoaded } = React.useContext(UserContext)
+  const { pushToDataLayer } = useGTMDataLayer()
+
+  React.useEffect(() => {
+    const params = parseUrlParams(window.location.href)
+    if (
+      params.get("access-token") &&
+      params.get("accountConfirmed") === "true" &&
+      params.get("account_confirmation_success") === "true" &&
+      profile
+    ) {
+      pushToDataLayer("account_create_completed", { user_id: profile.id })
+      // We want to remove the query params from the URL so that the user can refresh the page without retriggering the analytics event
+      const url = window.location.origin + window.location.pathname
+      window.history.replaceState({}, document.title, url)
+    }
+  }, [profile, pushToDataLayer])
 
   if (!profile && !loading && initialStateLoaded) {
     // TODO: Redirect to React sign in page and show a message that user needs to sign in

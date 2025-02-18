@@ -5,9 +5,16 @@ import { renderAndLoadAsync } from "../__util__/renderUtils"
 import { screen, within, cleanup, waitFor } from "@testing-library/react"
 import { post } from "../../api/apiService"
 import { userEvent } from "@testing-library/user-event"
+import { setupLocationAndRouteMock, setupUserContext } from "../__util__/accountUtils"
+import TagManager from "react-gtm-module"
 
 jest.mock("../../api/apiService", () => ({
   post: jest.fn(),
+}))
+
+jest.mock("react-gtm-module", () => ({
+  initialize: jest.fn(),
+  dataLayer: jest.fn(),
 }))
 
 const defaultFormValues = {
@@ -82,6 +89,18 @@ async function fillCreateAccountForm({
   expect(passwordField).toHaveValue(password)
 }
 
+const mockUserData = {
+  data: {
+    id: 1,
+    email: "test@example.com",
+  },
+}
+const mockHeaders = {
+  "access-token": "mock-token",
+  client: "mock-client",
+  uid: "mock-uid",
+}
+
 describe("<CreateAccount />", () => {
   jest.setTimeout(10000)
 
@@ -89,6 +108,8 @@ describe("<CreateAccount />", () => {
 
   beforeEach(async () => {
     document.documentElement.lang = "en"
+    setupUserContext({ loggedIn: false, saveProfileMock: jest.fn() })
+    setupLocationAndRouteMock()
     await renderAndLoadAsync(<CreateAccountPage assetPaths={{}} />)
     user = userEvent.setup()
   })
@@ -103,51 +124,6 @@ describe("<CreateAccount />", () => {
   })
 
   it("correctly calls the redirect function", async () => {
-    const customLocation = {
-      ...window.location,
-      href: "http://dahlia.com",
-      assign: jest.fn(),
-      replace: jest.fn(),
-      reload: jest.fn(),
-      toString: jest.fn(),
-    }
-
-    Object.defineProperty(window, "location", {
-      configurable: true,
-      enumerable: true,
-      writable: true,
-      value: customLocation,
-    })
-
-    // Redefine the href setter to resolve relative URLs
-    Object.defineProperty(window.location, "href", {
-      configurable: true,
-      enumerable: true,
-      set: function (href: string) {
-        const base = "http://dahlia.com"
-        try {
-          const newUrl = new URL(href, base)
-          this._href = newUrl.href
-        } catch {
-          this._href = href
-        }
-      },
-      get: function () {
-        return this._href || "http://dahlia.com"
-      },
-    })
-
-    const mockUserData = {
-      data: {
-        id: 1,
-        email: "test@example.com",
-      },
-    }
-    const mockHeaders = {
-      "access-token": "mock-token",
-      client: "mock-client",
-      uid: "mock-uid",
-    }
     ;(post as jest.Mock).mockResolvedValue({
       data: mockUserData,
       headers: mockHeaders,
@@ -178,9 +154,8 @@ describe("<CreateAccount />", () => {
 
   it("creates a new account", async () => {
     ;(post as jest.Mock).mockResolvedValue({
-      data: {
-        status: "success",
-      },
+      data: mockUserData,
+      headers: mockHeaders,
     })
 
     const createAccountButton = screen.getByRole("button", {
@@ -189,6 +164,16 @@ describe("<CreateAccount />", () => {
 
     await fillCreateAccountForm(defaultFormValues)
     await user.click(createAccountButton)
+
+    expect(TagManager.dataLayer).toHaveBeenCalledWith(
+      expect.objectContaining({
+        dataLayer: expect.objectContaining({
+          event: "account_create_start_succeeded",
+          origin: "create account",
+          user_id: mockUserData.data.id,
+        }),
+      })
+    )
 
     expect(post).toHaveBeenCalledWith(
       "/api/v1/auth",
@@ -568,6 +553,17 @@ describe("<CreateAccount />", () => {
         await fillCreateAccountForm(defaultFormValues)
         await user.click(createAccountButton)
 
+        expect(TagManager.dataLayer).toHaveBeenCalledWith(
+          expect.objectContaining({
+            dataLayer: expect.objectContaining({
+              event: "account_create_start_failed",
+              origin: "create account",
+              reason: "email has already been taken",
+              user_id: undefined,
+            }),
+          })
+        )
+
         expect(
           screen.getByRole("button", {
             name: /email is already in use/i,
@@ -593,6 +589,17 @@ describe("<CreateAccount />", () => {
 
         await fillCreateAccountForm(defaultFormValues)
         await user.click(createAccountButton)
+
+        expect(TagManager.dataLayer).toHaveBeenCalledWith(
+          expect.objectContaining({
+            dataLayer: expect.objectContaining({
+              event: "account_create_start_failed",
+              origin: "create account",
+              reason: "generic error",
+              user_id: undefined,
+            }),
+          })
+        )
 
         expect(
           screen.getByText(/email entered incorrectly. Enter email like: example@web.com/i)

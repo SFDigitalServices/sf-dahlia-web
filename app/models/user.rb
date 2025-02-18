@@ -54,6 +54,17 @@ class User < ApplicationRecord
     devise_mailer.send(notification, self, *args).deliver_later
   end
 
+  # utility function to move a user back to unconfirmed state and resend confirmation instructions
+  # optionally expire the token so that the user has to request a new one
+  def move_to_unconfirmed(expire_token: false)
+    self.update_columns(confirmed_at: nil, confirmation_sent_at: nil)
+    self.generate_confirmation_token!
+    if expire_token
+      self.update_columns(confirmation_sent_at: 3.days.ago)
+    end
+    self.send_confirmation_instructions
+  end
+
   private
 
   def password_complexity
