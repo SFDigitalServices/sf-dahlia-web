@@ -224,7 +224,6 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
             </nav>
           </header>
           <main
-            class="overflow-x-hidden"
             data-testid="main-content-test-id"
             id="main-content"
           >
@@ -1093,7 +1092,6 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
           </nav>
         </header>
         <main
-          class="overflow-x-hidden"
           data-testid="main-content-test-id"
           id="main-content"
         >
@@ -1995,7 +1993,6 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
             </nav>
           </header>
           <main
-            class="overflow-x-hidden"
             data-testid="main-content-test-id"
             id="main-content"
           >
@@ -2840,7 +2837,6 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
           </nav>
         </header>
         <main
-          class="overflow-x-hidden"
           data-testid="main-content-test-id"
           id="main-content"
         >
