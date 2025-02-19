@@ -126,7 +126,7 @@
     "webpack-dev-server": "^4.15.1"
   },
   "scripts": {
-    "postinstall": "bower install",
+    "postinstall": "bower install --allow-root",
     "protractor": "protractor ./spec/e2e/conf.js",
     "test": "TZ='UTC' jest --coverage --maxWorkers=2",
     "test:e2e": "cypress run --browser chrome",

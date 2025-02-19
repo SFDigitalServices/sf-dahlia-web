@@ -1,0 +1,38 @@
+services:
+  db:
+    image: postgres:14
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: mysecretpassword
+      POSTGRES_DB: sf_dahlia
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  # redis:
+  #   image: redis:latest
+
+  web:
+    build: .
+    depends_on:
+      - db
+      #   - redis
+    env_file:
+      - .env
+    command: bash -c "
+      rm -f tmp/pids/server.pid &&
+      yarn install &&
+      until pg_isready -h db -p 5432 -U postgres; do sleep 2; done &&
+      bundle exec rails db:create db:migrate webpacker:compile &&
+      rails server -b 0.0.0.0"
+    volumes:
+      - .:/app
+    ports:
+      - "3000:3000"
+    environment:
+      DATABASE_URL: postgres://postgres:mysecretpassword@db:5432/sf_dahlia
+
+volumes:
+  postgres_data:
