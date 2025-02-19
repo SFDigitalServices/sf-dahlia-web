@@ -36,7 +36,9 @@ DeviseTokenAuth.setup do |config|
   config.send_confirmation_email = true
 
   # Only permit redirects to a set of allowlisted URLs. Any redirect_urls that are not part of this list
-  # will be rejected. By default, this is set to an empty array, and all redirect URLs are allowed.
+  # will be rejected. In this list we are effectively only scoping to the my account and reset password pages,
+  # but since we have multiple different environments, we need to allow for multiple different URLs.
+  # By default, this is set to an empty array, and all redirect URLs are allowed.
   config.redirect_whitelist = [
     "https://#{ENV['HEROKU_APP_NAME']}.herokuapp.com/my-account",
     "https://#{ENV['HEROKU_APP_NAME']}.herokuapp.com/reset-password",
