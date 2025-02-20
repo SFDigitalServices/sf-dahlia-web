@@ -454,7 +454,11 @@ const AccountSettings = ({ profile }: { profile: User }) => {
 }
 
 const AccountSettingsPage = () => {
-  const { profile } = React.useContext(UserContext)
+  const { profile, loading, initialStateLoaded } = React.useContext(UserContext)
+
+  if (!profile && !loading && initialStateLoaded) {
+    return null
+  }
 
   return <AccountSettings profile={profile} />
 }
