@@ -7,11 +7,10 @@ import {
   t,
   FormCard,
   Icon,
-  AlertBox,
   LinkButton,
   NavigationContext,
 } from "@bloom-housing/ui-components"
-import { Link, Heading } from "@bloom-housing/ui-seeds"
+import { Link, Heading, Alert } from "@bloom-housing/ui-seeds"
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form"
 
 import { createPath, getForgotPasswordPath, getSignInRedirectUrl } from "../util/routeUtil"
@@ -88,7 +87,7 @@ const SignInFormCard = ({
       )
     }
   }
-
+  const showSecondaryAlert = requestError === t("signIn.loginRequired")
   return (
     <FormCard>
       <div className="form-card__lead text-center border-b mx-0">
@@ -96,9 +95,13 @@ const SignInFormCard = ({
         <h2 className="form-card__title">{t("pageTitle.signIn")}</h2>
       </div>
       {requestError && (
-        <AlertBox onClose={() => setRequestError(undefined)} type="alert">
+        <Alert
+          fullwidth
+          onClose={() => setRequestError(undefined)}
+          variant={showSecondaryAlert ? "secondary" : "alert"}
+        >
           {renderInlineMarkup(requestError)}
-        </AlertBox>
+        </Alert>
       )}
       <SiteAlert type="success" />
       <SiteAlert type="secondary" />
