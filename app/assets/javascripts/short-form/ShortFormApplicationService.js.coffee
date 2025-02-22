@@ -208,16 +208,10 @@ ShortFormApplicationService = (
         # make sure all validatedForms in previous section == true
         _.every(validated['Income'], (i) -> i)
       when 'Review'
-        if (Service.listingIsDalp())
-          Service.userCanAccessSection('Income') &&
-          completed.Income &&
-          # make sure all validatedForms in previous section == true
-          _.every(validated['Income'], (i) -> i)
-        else
-          Service.userCanAccessSection('Preferences') &&
-          completed.Preferences &&
-          # make sure all validatedForms in previous section == true
-          _.every(validated['Preferences'], (i) -> i)
+        Service.userCanAccessSection('Preferences') &&
+        completed.Preferences &&
+        # make sure all validatedForms in previous section == true
+        _.every(validated['Preferences'], (i) -> i)
       else
         false
 
