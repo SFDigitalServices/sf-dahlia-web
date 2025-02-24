@@ -96,7 +96,8 @@ describe Force::EventSubscriberTranslateService do
             .with('/data/Listing__ChangeEvent')
             .and_yield(event)
             .and_return(faye_subscription)
-          expect(translation_service).to receive(:translate).and_return(['Hello World'])
+          expect(translation_service).to receive(:translate)
+            .and_return([{ to: 'EN', translation: ['Hello World'] }])
           expect(translation_service).to receive(:cache_listing_translations)
 
           EM.add_timer(0.1) { EM.stop }
