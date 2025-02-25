@@ -221,7 +221,6 @@ exports[`Listing Interest Page renders listing interest page with error response
         </nav>
       </header>
       <main
-        class="overflow-x-hidden"
         data-testid="main-content-test-id"
         id="main-content"
       >
@@ -601,7 +600,6 @@ exports[`Listing Interest Page renders listing interest page with expired respon
         </nav>
       </header>
       <main
-        class="overflow-x-hidden"
         data-testid="main-content-test-id"
         id="main-content"
       >
@@ -1051,7 +1049,6 @@ exports[`Listing Interest Page renders listing interest page with no response 1`
         </nav>
       </header>
       <main
-        class="overflow-x-hidden"
         data-testid="main-content-test-id"
         id="main-content"
       >
@@ -1463,7 +1460,6 @@ exports[`Listing Interest Page renders listing interest page with yes response 1
         </nav>
       </header>
       <main
-        class="overflow-x-hidden"
         data-testid="main-content-test-id"
         id="main-content"
       >
