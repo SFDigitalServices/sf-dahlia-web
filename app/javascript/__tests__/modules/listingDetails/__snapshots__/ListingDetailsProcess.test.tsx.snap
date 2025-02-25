@@ -2,9 +2,7 @@
 
 exports[`ListingDetailsProcess renders leasing agent section if exists 1`] = `
 <DocumentFragment>
-  <div
-    class="border-b border-gray-400 md:border-b-0"
-  >
+  <div>
     <section
       class="aside-block"
     >
