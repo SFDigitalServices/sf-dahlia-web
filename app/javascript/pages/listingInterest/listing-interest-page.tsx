@@ -3,6 +3,7 @@ import withAppSetup from "../../layouts/withAppSetup"
 import { FormCard, Heading } from "@bloom-housing/ui-components"
 import FormLayout from "../../layouts/FormLayout"
 import Link from "../../navigation/Link"
+import { AppPages } from "../../util/routeUtil"
 
 interface UrlParams {
   listing: string
@@ -183,4 +184,4 @@ const ListingInterestPage = (_props: HomePageProps) => {
   )
 }
 
-export default withAppSetup(ListingInterestPage)
+export default withAppSetup(ListingInterestPage, { pageName: AppPages.ListingInterest })

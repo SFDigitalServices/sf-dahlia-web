@@ -20,6 +20,7 @@ import {
 import BuyHeader from "../../modules/listings/BuyHeader"
 import { defaultIfNotTranslated } from "../../util/languageUtil"
 import { PageHeaderWithRef } from "../../modules/listings/util/NavigationBarUtils"
+import { AppPages } from "../../util/routeUtil"
 
 const getForSaleSummaryTable = (listing: RailsSaleListing) => {
   const summary = listing.unitSummaries.general ?? listing.unitSummaries.reserved
@@ -150,4 +151,4 @@ const SaleDirectory = () => {
   )
 }
 
-export default withAppSetup(SaleDirectory)
+export default withAppSetup(SaleDirectory, { pageName: AppPages.SaleDirectory })

@@ -13,7 +13,12 @@ import {
 import { Link, Heading, Alert } from "@bloom-housing/ui-seeds"
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form"
 
-import { createPath, getForgotPasswordPath, getSignInRedirectUrl } from "../util/routeUtil"
+import {
+  createPath,
+  getForgotPasswordPath,
+  getCreateAccountPath,
+  getSignInRedirectUrl,
+} from "../util/routeUtil"
 import EmailFieldset from "../pages/account/components/EmailFieldset"
 import PasswordFieldset from "../pages/account/components/PasswordFieldset"
 import "../pages/account/styles/account.scss"
@@ -137,7 +142,7 @@ const SignInFormCard = ({
           <p>{t("signIn.fillInFaster")}</p>
           <p>{t("signIn.easilyCheckLottery")}</p>
         </div>
-        <LinkButton href="/create-account">{t("label.createAccount")}</LinkButton>
+        <LinkButton href={getCreateAccountPath()}>{t("label.createAccount")}</LinkButton>
       </div>
     </FormCard>
   )
