@@ -526,7 +526,7 @@
             "accessible_only_anyone": "Al menos un miembro de su hogar debe necesitar una unidad accesible.",
             "address": "Ingrese una dirección",
             "address_validation": {
-                "not_found": "No se encontró la dirección. Verifique el número de la vivienda, la calle y la ciudad que se ingresaron. No se permiten los apartados postales.<br><br>Si la dirección que ingresó es correcta, <a href={{mailInfo}} target=\"_blank\">envíenos un correo electrónico a lotteryappeals@sfgov.org</a> para solicitar ayuda.",
+                "not_found": "No se encontró la dirección. Verifique el número de la vivienda, la calle y la ciudad que se ingresaron. No se permiten los apartados postales.<br><br>Si la dirección que ingresó es correcta, <a href={{mailInfo}} target=\"_blank\">envíenos un correo electrónico a lotteryappeal@sfgov.org</a> para solicitar ayuda.",
                 "not_found_body": "Estimado(a) MOHCD, no puedo completar mi solicitud para {{listing_name}}. Mi dirección es {{home_address}} y el formulario me señala que hay un error. Indíqueme qué puedo hacer a continuación. Gracias, {{first_name}} {{last_name}} {{email}} {{phone_number}}",
                 "not_found_subject": "No puedo ingresar mi dirección en la solicitud en DAHLIA"
             },

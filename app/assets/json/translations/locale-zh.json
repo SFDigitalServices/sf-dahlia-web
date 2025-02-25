@@ -527,7 +527,7 @@
             "accessible_only_anyone": "您的家中至少要有一名成員有無障礙單位方面的需求。",
             "address": "請輸入地址",
             "address_validation": {
-                "not_found": "沒有符合此地址的資料。請檢查輸入的門牌號碼、街道名和城市名。請勿提供郵政信箱。<br><br>如果您輸入的地址正確，<a href={{mailInfo}} target=\"_blank\">請傳送電子郵件至 lotteryappeals@sfgov.org</a> 尋求協助。",
+                "not_found": "沒有符合此地址的資料。請檢查輸入的門牌號碼、街道名和城市名。請勿提供郵政信箱。<br><br>如果您輸入的地址正確，<a href={{mailInfo}} target=\"_blank\">請傳送電子郵件至 lotteryappeal@sfgov.org</a> 尋求協助。",
                 "not_found_body": "親愛的 MOHCD，我無法完成有關 {{listing_name}} 的申請表。我的地址是 {{home_address}}，而表格顯示資料有誤。請告訴我接下來該如何處理。謝謝，{{first_name}} {{last_name}} {{email}} {{phone_number}}",
                 "not_found_subject": "無法在 DAHLIA 申請表輸入我的地址。"
             },
