@@ -703,7 +703,7 @@ ShortFormApplicationController = (
 
     if match == 'incomeMatch' && ShortFormApplicationService.listingIsDalp()
       ShortFormApplicationService.completeSection('Income')
-      ShortFormNavigationService.goToSection('Review')
+      ShortFormNavigationService.goToSection('Preferences')
       return
 
     ShortFormApplicationService.checkHouseholdEligibility($scope.listing)
