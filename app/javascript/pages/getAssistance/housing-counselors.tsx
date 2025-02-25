@@ -17,6 +17,7 @@ import "./housing-counselors.scss"
 import housingCounselorsList from "../../../assets/json/housing_counselors_react.json"
 import CounselorFilter from "./counselor-filter"
 import { renderInlineMarkup } from "../../util/languageUtil"
+import { AppPages } from "../../util/routeUtil"
 
 const HOME_SF = {
   fullName: "Home SF (Rentals and Ownership)",
@@ -242,4 +243,4 @@ const HousingCounselors = () => {
   )
 }
 
-export default withAppSetup(HousingCounselors)
+export default withAppSetup(HousingCounselors, { pageName: AppPages.HousingCounselors })

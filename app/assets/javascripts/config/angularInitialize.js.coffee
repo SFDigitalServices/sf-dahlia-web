@@ -23,29 +23,47 @@
     })
 
     $rootScope.$on 'IdleStart', ->
+      isInShortForm = ShortFormApplicationService.isShortFormPage($state.current)
+      label_prefix = if isInShortForm then "application" else undefined
       content =
         title: $translate.instant('t.continue_with_your_application')
         continue: $translate.instant('t.continue')
       if AccountService.loggedIn()
         content.message = $translate.instant('t.session_inactivity_logged_in')
+        AnalyticsService.trackEvent('session_exp_warning_shown', {label_prefix, is_during_application_flow: isInShortForm, user_id: AccountService.loggedInUser.id, url: window.location.href})
       else if $state.is('dahlia.short-form-application.confirmation')
         content.message = $translate.instant('t.session_inactivity_confirmation')
+        AnalyticsService.trackEvent('session_exp_warning_shown', {label_prefix, is_during_application_flow: isInShortForm, user_id: undefined, url: window.location.href})
       else
         content.message = $translate.instant('t.session_inactivity')
-      ModalService.alert(content, {nativeAlert: true})
+        AnalyticsService.trackEvent('session_exp_warning_shown', {label_prefix, is_during_application_flow: isInShortForm, user_id: undefined, url: window.location.href})
+      ModalService.alert content,
+        onConfirm: ->
+          AnalyticsService.trackEvent('session_exp_warning_action', {
+            label_prefix,
+            is_during_application_flow: isInShortForm,
+            user_id: undefined,
+            action: "user prevented",
+            url: window.location.href
+          })
+        { nativeAlert: true }
 
     $rootScope.$on 'IdleTimeout', ->
       content =
         message: $translate.instant('t.session_expired')
         continue: $translate.instant('t.ok')
+      isInShortForm = ShortFormApplicationService.isShortFormPage($state.current)
+      label_prefix = if isInShortForm then "application" else undefined
       ModalService.alert(content, {nativeAlert: true})
       if AccountService.loggedIn()
         AutosaveService.save() if ShortFormApplicationService.isShortFormPage($state.current)
+        AnalyticsService.trackEvent('session_exp_warning_action', {label_prefix, is_during_application_flow: isInShortForm, user_id: AccountService.loggedInUser.id, action: "timed out and logged out", url: window.location.href})
         AccountService.signOut()
         $state.go('dahlia.sign-in', {timeout: true})
       else if ShortFormApplicationService.isShortFormPage($state.current)
         # we don't want to show the beforeunload dialog, because it would allow the applicant to stay on the page after session expiration
         $window.removeEventListener('beforeunload', ShortFormApplicationService.onExit)
+        AnalyticsService.trackEvent('session_exp_warning_action', {label_prefix, is_during_application_flow: isInShortForm, user_id: undefined, action: "timed out and logged out", url: window.location.href})
         if ShortFormApplicationService.listingIsDalp()
           $window.location.href = ShortFormApplicationService.localizedSfGovUrl("apply-downpayment-loan-buy-market-rate-home")
         else

@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import { AppearanceStyleType, Button, Form, t, FormCard, Icon } from "@bloom-housing/ui-components"
 import { Link, Heading, Alert } from "@bloom-housing/ui-seeds"
 import { useForm } from "react-hook-form"
-import { getSignInPath } from "../util/routeUtil"
+import { AppPages, getSignInPath } from "../util/routeUtil"
 import EmailFieldset from "../pages/account/components/EmailFieldset"
 import "../pages/account/styles/account.scss"
 import FormsLayout from "../layouts/FormLayout"
@@ -82,4 +82,7 @@ const ForgotPassword = () => {
   )
 }
 
-export default withAppSetup(ForgotPassword, true)
+export default withAppSetup(ForgotPassword, {
+  useFormTimeout: true,
+  pageName: AppPages.ForgotPassword,
+})

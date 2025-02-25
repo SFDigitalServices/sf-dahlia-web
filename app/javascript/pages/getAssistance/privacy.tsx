@@ -6,6 +6,7 @@ import { renderMarkup } from "../../util/languageUtil"
 import { MailingListSignup } from "../../components/MailingListSignup"
 import { ConfigContext } from "../../lib/ConfigContext"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
+import { AppPages } from "../../util/routeUtil"
 
 const Privacy = () => {
   const { getAssetPath } = React.useContext(ConfigContext)
@@ -142,4 +143,4 @@ const Privacy = () => {
   )
 }
 
-export default withAppSetup(Privacy)
+export default withAppSetup(Privacy, { pageName: AppPages.PrivacyPolicy })

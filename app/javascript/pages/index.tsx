@@ -6,7 +6,7 @@ import Layout from "../layouts/Layout"
 import withAppSetup from "../layouts/withAppSetup"
 import { ConfigContext } from "../lib/ConfigContext"
 import Link from "../navigation/Link"
-import { getRentalDirectoryPath, getSaleDirectoryPath } from "../util/routeUtil"
+import { AppPages, getRentalDirectoryPath, getSaleDirectoryPath } from "../util/routeUtil"
 
 interface HomePageProps {
   assetPaths: unknown
@@ -48,4 +48,4 @@ const HomePage = (_props: HomePageProps) => {
   )
 }
 
-export default withAppSetup(HomePage)
+export default withAppSetup(HomePage, { pageName: AppPages.Home })

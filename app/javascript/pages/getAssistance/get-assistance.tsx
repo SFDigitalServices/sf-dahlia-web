@@ -11,6 +11,7 @@ import {
 import { faYoutube } from "@fortawesome/free-brands-svg-icons"
 import bloomTheme from "../../../../tailwind.config"
 import {
+  AppPages,
   getAdditionalResourcesPath,
   getDocumentChecklistPath,
   getHousingCounselorsPath,
@@ -121,4 +122,4 @@ const GetAssistance = () => {
   )
 }
 
-export default withAppSetup(GetAssistance)
+export default withAppSetup(GetAssistance, { pageName: AppPages.GetAssistance })

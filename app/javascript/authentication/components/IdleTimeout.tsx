@@ -5,17 +5,26 @@ import { t } from "@bloom-housing/ui-components"
 import { getHomepagePath, getSignInPath } from "../../util/routeUtil"
 import UserContext from "../context/UserContext"
 import BaseIdleTimeout from "./BaseIdleTimeout"
+import { useGTMDataLayer } from "../../hooks/analytics/useGTMDataLayer"
 
 interface IdleTimeoutProps {
   onTimeout?: () => unknown
   useFormTimeout?: boolean
+  pageName?: string
 }
 
-const IdleTimeout = ({ onTimeout, useFormTimeout = false }: IdleTimeoutProps) => {
+const IdleTimeout = ({ onTimeout, useFormTimeout = false, pageName }: IdleTimeoutProps) => {
   const { profile, timeOut } = useContext(UserContext)
+  const { pushToDataLayer } = useGTMDataLayer()
 
   const handleTimeout = async (shouldTimeOut: boolean) => {
     onTimeout && (await onTimeout())
+    pushToDataLayer("session_exp_warning_action", {
+      label: pageName,
+      url: window.location.href,
+      action: "timed out and logged out",
+      is_during_application_flow: false, // When we move to the react application flow this will need to be updated
+    })
     timeOut && shouldTimeOut && timeOut()
   }
 
@@ -29,6 +38,21 @@ const IdleTimeout = ({ onTimeout, useFormTimeout = false }: IdleTimeoutProps) =>
         redirectPath={getSignInPath()}
         alertMessage={t("signIn.userTokenValidationTimeout")}
         alertType={useFormTimeout ? "alert" : "notice"}
+        onPrompt={() => {
+          pushToDataLayer("session_exp_warning_shown", {
+            label: pageName,
+            url: window.location.href,
+            is_during_application_flow: false, // When we move to the react application flow this will need to be updated
+          })
+        }}
+        onTimeoutCancel={() => {
+          pushToDataLayer("session_exp_warning_action", {
+            label: pageName,
+            url: window.location.href,
+            action: "user prevented",
+            is_during_application_flow: false, // When we move to the react application flow this will need to be updated
+          })
+        }}
         onTimeout={() => handleTimeout(true)}
       />
     )
@@ -43,6 +67,21 @@ const IdleTimeout = ({ onTimeout, useFormTimeout = false }: IdleTimeoutProps) =>
         redirectPath={getHomepagePath()}
         alertMessage={t("idleTimeout.sessionExpired")}
         alertType={"alert"}
+        onPrompt={() => {
+          pushToDataLayer("session_exp_warning_shown", {
+            label: pageName,
+            url: window.location.href,
+            is_during_application_flow: false, // When we move to the react application flow this will need to be updated
+          })
+        }}
+        onTimeoutCancel={() => {
+          pushToDataLayer("session_exp_warning_action", {
+            label: pageName,
+            url: window.location.href,
+            action: "user prevented",
+            is_during_application_flow: false, // When we move to the react application flow this will need to be updated
+          })
+        }}
         onTimeout={() => handleTimeout(false)}
       />
     )

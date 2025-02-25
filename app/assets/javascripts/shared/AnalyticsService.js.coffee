@@ -11,7 +11,10 @@ AnalyticsService = ($state) ->
     unless properties.label
       # by default, grab the end of the URL e.g. the "contact" from "/x/y/z/contact"
       current_path = _.first(_.last($state.current.url.split('/')).split('?'))
-      properties.label = current_path
+      if properties.label_prefix?
+        properties.label = "#{properties.label_prefix} #{current_path}"
+      else
+        properties.label = current_path
     properties.event = event
     properties.event_timestamp = new Date().toISOString();
     dataLayer.push(properties)

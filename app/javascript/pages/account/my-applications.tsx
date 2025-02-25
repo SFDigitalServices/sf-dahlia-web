@@ -11,10 +11,9 @@ import {
 } from "@bloom-housing/ui-components"
 import { Card, Dialog, Heading } from "@bloom-housing/ui-seeds"
 import { ApplicationItem } from "../../components/ApplicationItem"
-import { getApplicationPath, getLocalizedPath } from "../../util/routeUtil"
+import { AppPages, getApplicationPath, getLocalizedPath } from "../../util/routeUtil"
 import { getCurrentLanguage, renderInlineMarkup } from "../../util/languageUtil"
 import { deleteApplication, getApplications } from "../../api/authApiService"
-import UserContext from "../../authentication/context/UserContext"
 import { Application } from "../../api/types/rails/application/RailsApplication"
 import { isRental, isSale } from "../../util/listingUtil"
 import "./styles/my-applications.scss"
@@ -138,7 +137,6 @@ export const determineApplicationItemList = (
 }
 
 const MyApplications = () => {
-  const { profile, loading: authLoading, initialStateLoaded } = React.useContext(UserContext)
   const [error, setError] = React.useState<string | null>(null)
   const [loading, setLoading] = React.useState<boolean>(true)
   const [applications, setApplications] = React.useState<Application[]>([])
@@ -184,23 +182,17 @@ const MyApplications = () => {
 
   React.useEffect(() => {
     setLoading(true)
-    if (profile) {
-      getApplications()
-        .then((applications) => {
-          setApplications(applications.applications)
-        })
-        .catch((error: string) => {
-          setError(error)
-        })
-        .finally(() => {
-          setLoading(false)
-        })
-    }
-  }, [authLoading, initialStateLoaded, profile])
-
-  if (!profile && !authLoading && initialStateLoaded) {
-    return null
-  }
+    getApplications()
+      .then((applications) => {
+        setApplications(applications.applications)
+      })
+      .catch((error: string) => {
+        setError(error)
+      })
+      .finally(() => {
+        setLoading(false)
+      })
+  }, [])
 
   return (
     <Layout
@@ -267,4 +259,6 @@ const MyApplications = () => {
   )
 }
 
-export default withAppSetup(withAuthentication(MyApplications, { redirectPath: "applications" }))
+export default withAppSetup(withAuthentication(MyApplications, { redirectPath: "applications" }), {
+  pageName: AppPages.MyApplications,
+})
