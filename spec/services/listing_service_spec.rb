@@ -104,7 +104,7 @@ describe Force::ListingService do
 
       expect(cache_store).to receive(:fetch).and_return({ LastModifiedDate: '2024-03-08T16:51:35.000+0000' })
 
-      listing = Force::ListingService.listing(listing_id)
+      listing = Force::ListingService.listing(listing_id, { rake_task: 'prefetch_10min' })
       expect(listing).to have_key('translations')
     end
     it 'should return details of a listing with fresh listing_translations attached' do
@@ -118,7 +118,7 @@ describe Force::ListingService do
 
       expect(cache_service).to receive(:process_translations).and_return({ LastModifiedDate: '2024-03-08T16:51:35.000+0000' })
 
-      listing = Force::ListingService.listing(listing_id)
+      listing = Force::ListingService.listing(listing_id, { rake_task: 'prefetch_10min' })
       expect(listing).to have_key('translations')
     end
 
@@ -133,7 +133,7 @@ describe Force::ListingService do
 
       expect(cache_service).to receive(:process_translations).and_return({ LastModifiedDate: '2024-03-08T16:51:35.000+0000' })
 
-      listing = Force::ListingService.listing(listing_id)
+      listing = Force::ListingService.listing(listing_id, { rake_task: 'prefetch_10min' })
       expect(listing).to have_key('translations')
     end
 
@@ -147,7 +147,7 @@ describe Force::ListingService do
       expect(request_instance).to receive(:cached_get)
         .with(endpoint, nil, true).and_return([single_listing])
 
-      listing = Force::ListingService.listing(listing_id)
+      listing = Force::ListingService.listing(listing_id, { rake_task: 'prefetch_10min' })
       expect(listing).to have_key('translations')
     end
 

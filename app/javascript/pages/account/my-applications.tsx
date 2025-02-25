@@ -11,7 +11,7 @@ import {
 } from "@bloom-housing/ui-components"
 import { Card, Dialog, Heading } from "@bloom-housing/ui-seeds"
 import { ApplicationItem } from "../../components/ApplicationItem"
-import { getApplicationPath, getLocalizedPath, getSignInPath } from "../../util/routeUtil"
+import { getApplicationPath, getLocalizedPath } from "../../util/routeUtil"
 import { getCurrentLanguage, renderInlineMarkup } from "../../util/languageUtil"
 import { deleteApplication, getApplications } from "../../api/authApiService"
 import UserContext from "../../authentication/context/UserContext"
@@ -21,6 +21,7 @@ import "./styles/my-applications.scss"
 import { DoubleSubmittedModal } from "./components/DoubleSubmittedModal"
 import { AlreadySubmittedModal } from "./components/AlreadySubmittedModal"
 import { extractModalParamsFromUrl } from "./components/util"
+import { withAuthentication } from "../../authentication/withAuthentication"
 
 export const noApplications = () => {
   return (
@@ -198,7 +199,6 @@ const MyApplications = () => {
   }, [authLoading, initialStateLoaded, profile])
 
   if (!profile && !authLoading && initialStateLoaded) {
-    window.location.href = getSignInPath()
     return null
   }
 
@@ -267,4 +267,4 @@ const MyApplications = () => {
   )
 }
 
-export default withAppSetup(MyApplications)
+export default withAppSetup(withAuthentication(MyApplications, { redirectPath: "applications" }))
