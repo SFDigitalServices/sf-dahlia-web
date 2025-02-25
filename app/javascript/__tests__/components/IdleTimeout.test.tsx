@@ -130,7 +130,7 @@ describe("IdleTimeout", () => {
         dataLayer: expect.objectContaining({
           label: "testPage",
           url: window.location.href,
-          action: "timed out and logged out",
+          action: "timed out not logged in",
           is_during_application_flow: false,
           user_id: undefined,
         }),
@@ -180,6 +180,7 @@ describe("IdleTimeout", () => {
           url: window.location.href,
           is_during_application_flow: false,
           user_id: mockProfileStub.id,
+          action: "user prevented",
         }),
       })
     )
