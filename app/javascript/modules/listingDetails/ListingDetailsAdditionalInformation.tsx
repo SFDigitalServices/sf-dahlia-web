@@ -43,13 +43,13 @@ export const ListingDetailsAdditionalInformation = ({
   listing,
   imageSrc,
 }: ListingDetailsAdditionalInformationProps) => {
-  const getCommissionString = () => {
-    return listing.Realtor_Commission_Unit === "percent"
-      ? t("listings.realtorCommissionPercentage", {
-          percentage: listing.Realtor_Commission_Amount,
-        })
-      : `$${listing.Realtor_Commission_Amount.toLocaleString()}`
-  }
+  // const getCommissionString = () => {
+  //   return listing.Realtor_Commission_Unit === "percent"
+  //     ? t("listings.realtorCommissionPercentage", {
+  //         percentage: listing.Realtor_Commission_Amount,
+  //       })
+  //     : `$${listing.Realtor_Commission_Amount.toLocaleString()}`
+  // }
 
   return (
     <ListingDetailItem
@@ -132,7 +132,8 @@ export const ListingDetailsAdditionalInformation = ({
             </div>
           </div>
         )}
-        {isSale(listing) && (
+        {/*  DAH-3242: Realtor section hidden until future configuration */}
+        {/* {isSale(listing) && (
           <div className="info-card bg-gray-100 border-0">
             <h3 className="text-serif-xl">{t("listings.realtorCommission")}</h3>
             <div className="text-xs">
@@ -164,7 +165,7 @@ export const ListingDetailsAdditionalInformation = ({
               )}
             </div>
           </div>
-        )}
+        )} */}
         {listing.Repricing_Mechanism && (
           <div className="info-card bg-gray-100 border-0">
             <h3 className="text-serif-xl">{t("listings.rePricing")}</h3>

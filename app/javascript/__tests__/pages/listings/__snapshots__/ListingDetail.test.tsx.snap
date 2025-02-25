@@ -3451,20 +3451,6 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                         <h3
                           class="text-serif-xl"
                         >
-                          For the Buyer's Realtor
-                        </h3>
-                        <div
-                          class="text-xs"
-                        >
-                          Your realtor is not eligible for a commission on this unit
-                        </div>
-                      </div>
-                      <div
-                        class="info-card bg-gray-100 border-0"
-                      >
-                        <h3
-                          class="text-serif-xl"
-                        >
                           Housing Program
                         </h3>
                         <a
@@ -3498,20 +3484,6 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                             Cissy can write in here whatever she needs to say.
                           </span>
                         </div>
-                      </div>
-                    </div>
-                    <div
-                      class="info-card bg-gray-100 border-0"
-                    >
-                      <h3
-                        class="text-serif-xl"
-                      >
-                        For the Buyer's Realtor
-                      </h3>
-                      <div
-                        class="text-xs"
-                      >
-                        Your realtor is not eligible for a commission on this unit
                       </div>
                     </div>
                     <div
@@ -3594,20 +3566,6 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                             Cissy can write in here whatever she needs to say.
                           </span>
                         </div>
-                      </div>
-                    </div>
-                    <div
-                      class="info-card bg-gray-100 border-0"
-                    >
-                      <h3
-                        class="text-serif-xl"
-                      >
-                        For the Buyer's Realtor
-                      </h3>
-                      <div
-                        class="text-xs"
-                      >
-                        Your realtor is not eligible for a commission on this unit
                       </div>
                     </div>
                     <div
@@ -4533,20 +4491,6 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                             Cissy can write in here whatever she needs to say.
                           </span>
                         </div>
-                      </div>
-                    </div>
-                    <div
-                      class="info-card bg-gray-100 border-0"
-                    >
-                      <h3
-                        class="text-serif-xl"
-                      >
-                        For the Buyer's Realtor
-                      </h3>
-                      <div
-                        class="text-xs"
-                      >
-                        Your realtor is not eligible for a commission on this unit
                       </div>
                     </div>
                     <div
