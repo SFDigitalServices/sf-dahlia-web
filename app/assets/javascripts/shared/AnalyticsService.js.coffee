@@ -13,6 +13,7 @@ AnalyticsService = ($state) ->
       current_path = _.first(_.last($state.current.url.split('/')).split('?'))
       if properties.label_prefix?
         properties.label = "#{properties.label_prefix} #{current_path}"
+        delete properties.label_prefix
       else
         properties.label = current_path
     properties.event = event

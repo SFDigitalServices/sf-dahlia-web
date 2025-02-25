@@ -22,7 +22,7 @@ const IdleTimeout = ({ onTimeout, useFormTimeout = false, pageName }: IdleTimeou
     pushToDataLayer("session_exp_warning_action", {
       label: pageName,
       url: window.location.href,
-      action: "timed out and logged out",
+      action: profile?.id ? "timed out and logged out" : "timed out not logged in",
       is_during_application_flow: false, // When we move to the react application flow this will need to be updated
     })
     timeOut && shouldTimeOut && timeOut()
