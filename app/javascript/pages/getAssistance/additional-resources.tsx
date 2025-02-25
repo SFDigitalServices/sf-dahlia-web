@@ -26,7 +26,7 @@ const AdditionalResources = () => {
                     <InfoCard
                       title={t(resource.title)}
                       subtitle={t(resource.agency)}
-                      externalHref={getSfGovUrl(resource.externalUrl, resource.sfGovNode)}
+                      externalHref={getSfGovUrl(resource.externalUrl)}
                       className="info-card-additional-resources is-normal-primary-lighter"
                       key={resource.title}
                     >
