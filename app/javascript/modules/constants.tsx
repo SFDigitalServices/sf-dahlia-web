@@ -79,7 +79,7 @@ export const LOTTERY_RANKING_VIDEO_URL = "https://www.youtube.com/watch?v=oW56bU
 export const SFGOV_LINKS = [
   "https://sf.gov/departments/mayors-office-housing-and-community-development",
   "https://sf.gov/information/learn-about-housing-lottery-preference-programs",
-  "https://sf.gov/information/learn-how-lottery-works-shirley-chisholm-village",
+  "https://www.sf.gov/learn-how-lottery-works-shirley-chisholm-village",
   "https://sf.gov/apply-shirley-chisholm-village-housing",
   "https://sf.gov/reports/january-2023/first-come-first-served-bmr-listings",
   "https://sf.gov/reports/december-2022/city-second-program-current-listings",
@@ -98,7 +98,7 @@ export const SFGOV_LINKS = [
   "https://sf.gov/information/special-calculations-household-income",
   "https://sf.gov/after-rental-housing-lottery",
   "https://www.sf.gov/step-by-step/buy-home-without-entering-lottery",
-  "https://www.sf.gov/node/14246",
+  "https://www.sf.gov/step-by-step--buy-home-without-entering-lottery",
   "https://www.sf.gov/resource/2022/homebuyer-program-counseling-agencies",
   "https://www.sf.gov/dalp-lottery-results",
   // Salesforce links that redirect to sf.gov pages
