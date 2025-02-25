@@ -52,6 +52,7 @@ import { fcfsNoLotteryRequired } from "../../modules/noLotteryRequired/fcfsNoLot
 import { NeedHelpBlock } from "../../modules/listingDetailsAside/ListingDetailsNeedHelp"
 import { ListingState } from "../../modules/listings/ListingState"
 import { useGTMDataLayer } from "../../hooks/analytics/useGTMDataLayer"
+import { AppPages } from "../../util/routeUtil"
 
 const ListingDetail = () => {
   const { flagsReady, unleashFlag: isCloudTranslationEnabled } = useFeatureFlag(
@@ -238,4 +239,4 @@ const ListingDetail = () => {
   )
 }
 
-export default withAppSetup(ListingDetail)
+export default withAppSetup(ListingDetail, { pageName: AppPages.ListingDetail })
