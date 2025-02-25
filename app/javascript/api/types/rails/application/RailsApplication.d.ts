@@ -189,7 +189,7 @@ type AdaPriority =
 type HomebuyerEducationAgency =
   | "ASIAN Inc."
   | "BALANCE"
-  | "Homeownership SF"
+  | "Home SF"
   | "Mission Economic Development Agency"
   | "San Francisco Housing Development Corporation"
   | "San Francisco LGBT Community Center"

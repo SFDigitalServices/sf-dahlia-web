@@ -76,6 +76,7 @@ export const getSaleDirectoryPath = localizedPathGetter("/listings/for-sale")
 export const getAssistancePath = localizedPathGetter("/get-assistance")
 export const getSignInPath = localizedPathGetter("/sign-in")
 export const getForgotPasswordPath = localizedPathGetter("/forgot-password")
+export const getResetPasswordPath = localizedPathGetter("/reset-password")
 export const getFavoritesPath = localizedPathGetter("/favorites")
 export const getMyAccountPath = localizedPathGetter("/my-account")
 export const getMyApplicationsPath = localizedPathGetter("/my-applications")
@@ -94,3 +95,18 @@ export const getEligibilityEstimatorLink = localizedPathGetter("/eligibility-est
 // Footer
 export const getDisclaimerPath = localizedPathGetter("/disclaimer")
 export const getPrivacyPolicyPath = localizedPathGetter("/privacy")
+
+export const SignInRedirects = {
+  account: getMyAccountPath(),
+  applications: getMyApplicationsPath(),
+  settings: getMyAccountSettingsPath(),
+  home: getHomepagePath(),
+}
+
+const getRedirectUrl = (key: string): string => {
+  return SignInRedirects[key] || SignInRedirects.home
+}
+
+export const getSignInRedirectUrl = (redirect: string) => {
+  return getRedirectUrl(redirect || "account")
+}
