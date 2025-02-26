@@ -712,9 +712,7 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                         </div>
                       </div>
                     </section>
-                    <div
-                      class="border-b border-gray-400 md:border-b-0"
-                    >
+                    <div>
                       <section
                         class="aside-block"
                       >
@@ -950,9 +948,7 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                         </div>
                       </section>
                     </div>
-                    <div
-                      class="border-b border-gray-400 md:border-b-0"
-                    >
+                    <div>
                       <section
                         class="aside-block"
                       >
@@ -1088,9 +1084,7 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                       </div>
                     </section>
                   </div>
-                  <div
-                    class="border-b border-gray-400 md:border-b-0"
-                  >
+                  <div>
                     <section
                       class="aside-block"
                     >
@@ -1267,9 +1261,7 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                       </div>
                     </section>
                   </div>
-                  <div
-                    class="border-b border-gray-400 md:border-b-0"
-                  >
+                  <div>
                     <section
                       class="aside-block"
                     >
@@ -3727,9 +3719,7 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                       </div>
                     </section>
                   </div>
-                  <div
-                    class="border-b border-gray-400 md:border-b-0"
-                  >
+                  <div>
                     <section
                       class="aside-block"
                     >
@@ -5355,9 +5345,7 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                         </div>
                       </section>
                     </div>
-                    <div
-                      class="border-b border-gray-400 md:border-b-0"
-                    >
+                    <div>
                       <section
                         class="aside-block"
                       >
@@ -5636,9 +5624,7 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                         </div>
                       </section>
                     </div>
-                    <div
-                      class="border-b border-gray-400 md:border-b-0"
-                    >
+                    <div>
                       <section
                         class="aside-block"
                       >
@@ -5817,9 +5803,7 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                       </div>
                     </section>
                   </div>
-                  <div
-                    class="border-b border-gray-400 md:border-b-0"
-                  >
+                  <div>
                     <section
                       class="aside-block"
                     >
@@ -6039,9 +6023,7 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                       </div>
                     </section>
                   </div>
-                  <div
-                    class="border-b border-gray-400 md:border-b-0"
-                  >
+                  <div>
                     <section
                       class="aside-block"
                     >
@@ -8640,9 +8622,7 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                       </div>
                     </section>
                   </div>
-                  <div
-                    class="border-b border-gray-400 md:border-b-0"
-                  >
+                  <div>
                     <section
                       class="aside-block"
                     >
@@ -10223,9 +10203,7 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                         </div>
                       </section>
                     </div>
-                    <div
-                      class="border-b border-gray-400 md:border-b-0"
-                    >
+                    <div>
                       <section
                         class="aside-block"
                       >
@@ -10570,9 +10548,7 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                         </div>
                       </section>
                     </div>
-                    <div
-                      class="border-b border-gray-400 md:border-b-0"
-                    >
+                    <div>
                       <section
                         class="aside-block"
                       >
@@ -10788,9 +10764,7 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                       </div>
                     </section>
                   </div>
-                  <div
-                    class="border-b border-gray-400 md:border-b-0"
-                  >
+                  <div>
                     <section
                       class="aside-block"
                     >
@@ -11047,9 +11021,7 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                       </div>
                     </section>
                   </div>
-                  <div
-                    class="border-b border-gray-400 md:border-b-0"
-                  >
+                  <div>
                     <section
                       class="aside-block"
                     >
@@ -11640,7 +11612,7 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                                   >
                                     <li>
                                       <a
-                                        href="https://sf.gov/information/learn-how-lottery-works-shirley-chisholm-village"
+                                        href="https://www.sf.gov/learn-how-lottery-works-shirley-chisholm-village"
                                         target="_blank"
                                       >
                                         Check if you qualify and see how preferences are ranked for this listing
@@ -12207,7 +12179,7 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                                 >
                                   <li>
                                     <a
-                                      href="https://sf.gov/information/learn-how-lottery-works-shirley-chisholm-village"
+                                      href="https://www.sf.gov/learn-how-lottery-works-shirley-chisholm-village"
                                       target="_blank"
                                     >
                                       Check if you qualify and see how preferences are ranked for this listing
@@ -12815,7 +12787,7 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                                 >
                                   <li>
                                     <a
-                                      href="https://sf.gov/information/learn-how-lottery-works-shirley-chisholm-village"
+                                      href="https://www.sf.gov/learn-how-lottery-works-shirley-chisholm-village"
                                       target="_blank"
                                     >
                                       Check if you qualify and see how preferences are ranked for this listing
@@ -14740,9 +14712,7 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                       </div>
                     </section>
                   </div>
-                  <div
-                    class="border-b border-gray-400 md:border-b-0"
-                  >
+                  <div>
                     <section
                       class="aside-block"
                     >
@@ -15269,7 +15239,7 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                                 >
                                   <li>
                                     <a
-                                      href="https://sf.gov/information/learn-how-lottery-works-shirley-chisholm-village"
+                                      href="https://www.sf.gov/learn-how-lottery-works-shirley-chisholm-village"
                                       target="_blank"
                                     >
                                       Check if you qualify and see how preferences are ranked for this listing
