@@ -512,7 +512,7 @@
                 "contact_us": "如果您對您的申請有疑問，請與我們聯絡。請發送電子郵件至 sfhousinginfo@sfgov.org。",
                 "get_help": "獲取協助",
                 "keep_this_number": "您需要這個號碼來查看您的結果。請將其存放在安全的地方。",
-                "lottery_date": "抽籤日期：％{lottery_date}",
+                "lottery_date": "抽籤日期：%{lottery_date}",
                 "subject": "我們已收到您的 %{listing_name} 申請表",
                 "submitted": "提交日期：%{submission_date}，%{submission_time} 太平洋時間",
                 "we_contact_applicants": "我們將按照抽籤結果的順序聯絡申請人，直到貸款資金全數分配完畢",
