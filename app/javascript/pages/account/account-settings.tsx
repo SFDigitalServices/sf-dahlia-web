@@ -6,7 +6,7 @@ import UserContext from "../../authentication/context/UserContext"
 import { Form, DOBFieldValues, t } from "@bloom-housing/ui-components"
 import { DeepMap, FieldError, useForm } from "react-hook-form"
 import { Card, Alert } from "@bloom-housing/ui-seeds"
-import { AppPages, getSignInPath } from "../../util/routeUtil"
+import { AppPages } from "../../util/routeUtil"
 import { User } from "../../authentication/user"
 import Layout from "../../layouts/Layout"
 import EmailFieldset, {
