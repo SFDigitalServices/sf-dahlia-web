@@ -723,9 +723,7 @@ exports[`ListingDetailsAside renders ListingDetailsAside component rental 1`] = 
               </div>
             </section>
           </div>
-          <div
-            class="border-b border-gray-400 md:border-b-0"
-          >
+          <div>
             <section
               class="aside-block"
             >
@@ -1196,9 +1194,7 @@ exports[`ListingDetailsAside renders ListingDetailsAside component sales 1`] = `
               May 2020
             </div>
           </section>
-          <div
-            class="border-b border-gray-400 md:border-b-0"
-          >
+          <div>
             <section
               class="aside-block"
             >

@@ -197,8 +197,7 @@ const Layout = (props: LayoutProps) => {
               <Markdown>
                 {t("footer.dahliaDescription", {
                   mohcdUrl: getSfGovUrl(
-                    "https://sf.gov/departments/mayors-office-housing-and-community-development",
-                    55
+                    "https://sf.gov/departments/mayors-office-housing-and-community-development"
                   ),
                 })}
               </Markdown>
@@ -207,13 +206,9 @@ const Layout = (props: LayoutProps) => {
               <Markdown>
                 {t("footer.inPartnershipWith", {
                   sfdsUrl: getSfGovUrl(
-                    "https://sf.gov/departments/city-administrator/digital-services",
-                    1788
+                    "https://sf.gov/departments/city-administrator/digital-services"
                   ),
-                  mayorUrl: getSfGovUrl(
-                    "https://sf.gov/departments/mayors-office-innovation",
-                    3095
-                  ),
+                  mayorUrl: getSfGovUrl("https://sf.gov/departments/mayors-office-innovation"),
                 })}
               </Markdown>
             </p>

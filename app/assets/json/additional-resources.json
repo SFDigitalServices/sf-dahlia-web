@@ -8,22 +8,19 @@
                     "title": "assistance.additionalResources.sfHousingResources.fcfs.title",
                     "agency": "assistance.additionalResources.sfHousingResources.fcfs.agency",
                     "description": "assistance.additionalResources.sfHousingResources.fcfs.description",
-                    "externalUrl": "https://sf.gov/reports/january-2023/first-come-first-served-bmr-listings",
-                    "sfGovNode": 6396
+                    "externalUrl": "https://sf.gov/reports/january-2023/first-come-first-served-bmr-listings"
                 },
                 {
                     "title": "assistance.additionalResources.sfHousingResources.downpayment.title",
                     "agency": "assistance.additionalResources.sfHousingResources.downpayment.agency",
                     "description": "assistance.additionalResources.sfHousingResources.downpayment.description",
-                    "externalUrl": "https://sf.gov/reports/december-2022/city-second-program-current-listings",
-                    "sfGovNode": 7189
+                    "externalUrl": "https://sf.gov/reports/december-2022/city-second-program-current-listings"
                 },
                 {
                     "title": "assistance.additionalResources.sfHousingResources.rental.title",
                     "agency": "assistance.additionalResources.sfHousingResources.rental.agency",
                     "description": "assistance.additionalResources.sfHousingResources.rental.description",
-                    "externalUrl": "https://sf.gov/information/san-francisco-rental-opportunities",
-                    "sfGovNode": 7153
+                    "externalUrl": "https://sf.gov/information/san-francisco-rental-opportunities"
                 },
                 {
                     "title": "assistance.additionalResources.sfHousingResources.support.title",
