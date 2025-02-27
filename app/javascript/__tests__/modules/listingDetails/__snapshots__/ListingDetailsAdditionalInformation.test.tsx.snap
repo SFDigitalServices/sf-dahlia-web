@@ -266,43 +266,6 @@ exports[`ListingDetailsAdditionalInformation displays additional information sec
         <h3
           class="text-serif-xl"
         >
-          For the Buyer's Realtor
-        </h3>
-        <div
-          class="text-xs"
-        >
-          <span
-            class="font-bold"
-          >
-            Your Commission: 
-          </span>
-           3% of the sales price
-          <div
-            class="mt-4"
-          >
-            <span
-              class="font-bold"
-            >
-              How to receive it: 
-            </span>
-            <span>
-              <div
-                class="text-xs inline primary-lighter-markup-link translate"
-              >
-                <span>
-                  Register with the Leasing Agent
-                </span>
-              </div>
-            </span>
-          </div>
-        </div>
-      </div>
-      <div
-        class="info-card bg-gray-100 border-0"
-      >
-        <h3
-          class="text-serif-xl"
-        >
           Resale Price Restrictions
         </h3>
         <div

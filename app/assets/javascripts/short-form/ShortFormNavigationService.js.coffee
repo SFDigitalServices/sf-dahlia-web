@@ -285,8 +285,6 @@ ShortFormNavigationService = (
     listing = ShortFormApplicationService.listing
     if listing && ListingIdentityService.isRental(listing)
       sections.shift()
-    if listing && ShortFormApplicationService.listingIsDalp()
-      sections.splice(4, 1)
     sections
 
   Service.submitOptionsForCurrentPage = ->
@@ -428,9 +426,7 @@ ShortFormNavigationService = (
         Service.getPrevPageOfGeneralLottery()
       # -- Review
       when 'review-optional'
-        if ShortFormApplicationService.listingIsDalp()
-          'income'
-        else if ShortFormApplicationService.applicantHasNoPreferences()
+        if ShortFormApplicationService.applicantHasNoPreferences()
           'general-lottery-notice'
         else if Service.hasCustomPreferences()
           'custom-preferences'

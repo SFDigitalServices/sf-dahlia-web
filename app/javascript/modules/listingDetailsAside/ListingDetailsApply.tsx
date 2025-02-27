@@ -86,8 +86,7 @@ const StandardHowToApply = ({
                 url: isHabitatListing
                   ? "https://habitatgsf.org/amber-drive-info/"
                   : getSfGovUrl(
-                      "https://sf.gov/determine-if-you-can-buy-affordable-housing-program",
-                      7164
+                      "https://sf.gov/determine-if-you-can-buy-affordable-housing-program"
                     ),
               })
             )}

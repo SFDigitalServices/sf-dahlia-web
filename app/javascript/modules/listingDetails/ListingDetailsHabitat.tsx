@@ -58,10 +58,7 @@ export const ListingDetailsHabitat = ({ listing }: ListingDetailsHabitatProps) =
       <div className="mt-4">
         {renderMarkup(
           t("listings.incomeExceptions.intro", {
-            url: getSfGovUrl(
-              "https://sf.gov/information/special-calculations-household-income",
-              7080
-            ),
+            url: getSfGovUrl("https://sf.gov/information/special-calculations-household-income"),
           })
         )}
       </div>

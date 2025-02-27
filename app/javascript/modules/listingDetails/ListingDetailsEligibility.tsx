@@ -155,8 +155,7 @@ export const ListingDetailsEligibility = ({
                     {renderInlineMarkup(
                       t("listings.customListingType.educator.eligibility.part2", {
                         chisholmLink: getSfGovUrl(
-                          "https://sf.gov/apply-shirley-chisholm-village-housing",
-                          10543
+                          "https://sf.gov/apply-shirley-chisholm-village-housing"
                         ),
                       })
                     )}
@@ -204,8 +203,7 @@ export const ListingDetailsEligibility = ({
                     {renderInlineMarkup(
                       t("listings.customListingType.educator.eligibility.part2", {
                         chisholmLink: getSfGovUrl(
-                          "https://sf.gov/apply-shirley-chisholm-village-housing",
-                          10543
+                          "https://sf.gov/apply-shirley-chisholm-village-housing"
                         ),
                       })
                     )}
@@ -259,8 +257,7 @@ export const ListingDetailsEligibility = ({
                   {renderMarkup(
                     t("listings.incomeExceptions.intro", {
                       url: getSfGovUrl(
-                        "https://sf.gov/information/special-calculations-household-income",
-                        7080
+                        "https://sf.gov/information/special-calculations-household-income"
                       ),
                     })
                   )}
