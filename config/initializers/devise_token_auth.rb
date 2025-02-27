@@ -42,6 +42,8 @@ DeviseTokenAuth.setup do |config|
   config.redirect_whitelist = [
     "https://#{ENV['HEROKU_APP_NAME']}.herokuapp.com/my-account",
     "https://#{ENV['HEROKU_APP_NAME']}.herokuapp.com/reset-password",
+    "https://dahlia-full.herokuapp.com/my-account",
+    "https://dahlia-full.herokuapp.com/reset-password",
     "https://housing.sfgov.org/my-account",
     "https://housing.sfgov.org/reset-password",
     "http://localhost:3000/my-account",
