@@ -10,7 +10,7 @@
     "@babel/preset-react": "^7.22.5",
     "@babel/preset-typescript": "^7.22.5",
     "@babel/runtime": "^7.22.5",
-    "@bloom-housing/ui-components": "^12.6.0",
+    "@bloom-housing/ui-components": "^12.6.1",
     "@bloom-housing/ui-seeds": "^1.17.0",
     "@fortawesome/fontawesome-svg-core": "^6.6.0",
     "@fortawesome/free-brands-svg-icons": "^6.6.0",
