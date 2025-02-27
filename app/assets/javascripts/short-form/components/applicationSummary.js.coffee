@@ -16,8 +16,8 @@ angular.module('dahlia.components')
     showVeteransApplicationQuestion: '<'
     applicantHasClaimedDalpPriority: '<'
   controller: [
-    '$filter', '$state', '$translate', 'LendingInstitutionService', 'ShortFormHelperService', 'ShortFormNavigationService', 'ShortFormRaceEthnicityService',
-    ($filter, $state, $translate, LendingInstitutionService, ShortFormHelperService, ShortFormNavigationService, ShortFormRaceEthnicityService) ->
+    '$filter', '$state', '$translate', 'LendingInstitutionService', 'ShortFormHelperService', 'ShortFormNavigationService', 'ShortFormRaceEthnicityService', 'ListingDataService'
+    ($filter, $state, $translate, LendingInstitutionService, ShortFormHelperService, ShortFormNavigationService, ShortFormRaceEthnicityService, ListingDataService) ->
       ctrl = @
 
       ctrl.$onInit = ->
@@ -133,6 +133,9 @@ angular.module('dahlia.components')
 
       ctrl.getIsNonPrimaryMemberVeteran = ->
         ctrl.translatedYesNoNoAnswer(ctrl.application.isNonPrimaryMemberVeteran)
+
+      ctrl.isDALPListing = ->
+        ListingDataService.listing.Custom_Listing_Type == 'Downpayment Assistance Loan Program'
 
       ctrl.qualifySectionHref = ->
         if ctrl.isDALPListing()
