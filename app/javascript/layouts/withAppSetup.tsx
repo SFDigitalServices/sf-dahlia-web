@@ -12,6 +12,7 @@ import NavigationProvider from "../navigation/NavigationProvider"
 import ErrorBoundary, { BoundaryScope } from "../components/ErrorBoundary"
 import "@bloom-housing/ui-seeds/src/global/app-css.scss"
 import { useGTMInitializer } from "../hooks/analytics/useInitializeGTM"
+import { AppPages } from "../util/routeUtil"
 
 interface ObjectWithAssets {
   assetPaths: unknown
@@ -27,7 +28,13 @@ const config = {
 // Ignore linting error on 'object' type, because we can't use Record<string, unknown> here.
 // eslint-disable-next-line @typescript-eslint/ban-types
 const withAppSetup =
-  <P extends ObjectWithAssets>(Component: React.ComponentType<P>, useFormTimeout?: boolean) =>
+  <P extends ObjectWithAssets>(
+    Component: React.ComponentType<P>,
+    configuration: {
+      useFormTimeout?: boolean
+      pageName?: AppPages
+    }
+  ) =>
   (props: P) => {
     if (process.env.NODE_ENV !== "production") {
       void axe(React, ReactDOM, 1000)
@@ -44,7 +51,8 @@ const withAppSetup =
                 <UserProvider>
                   <IdleTimeout
                     onTimeout={() => console.log("Logout")}
-                    useFormTimeout={useFormTimeout}
+                    useFormTimeout={configuration?.useFormTimeout}
+                    pageName={configuration?.pageName}
                   />
                   <Component {...props} />
                 </UserProvider>

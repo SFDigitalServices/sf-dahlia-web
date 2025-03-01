@@ -5,6 +5,7 @@ import withAppSetup from "../../layouts/withAppSetup"
 import { getSfGovUrl, renderInlineMarkup } from "../../util/languageUtil"
 import { PREFERENCES_IDS } from "../../modules/constants"
 import useTranslate from "../../hooks/useTranslate"
+import { AppPages } from "../../util/routeUtil"
 
 const DocumentChecklist = () => {
   // false means useTranslate will not be disabled when GoogleCloudTranslate is enabled
@@ -218,4 +219,4 @@ const DocumentChecklist = () => {
   )
 }
 
-export default withAppSetup(DocumentChecklist)
+export default withAppSetup(DocumentChecklist, { pageName: AppPages.DocumentChecklist })

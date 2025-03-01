@@ -5,7 +5,7 @@ import { AppearanceStyleType, Button, Form, FormCard, Icon, t } from "@bloom-hou
 import withAppSetup from "../layouts/withAppSetup"
 import { Alert, Link } from "@bloom-housing/ui-seeds"
 import FormLayout from "../layouts/FormLayout"
-import { getMyApplicationsPath, getSignInPath } from "../util/routeUtil"
+import { AppPages, getMyApplicationsPath, getSignInPath } from "../util/routeUtil"
 import { useForm } from "react-hook-form"
 import PasswordFieldset from "./account/components/PasswordFieldset"
 import { resetPassword } from "../api/authApiService"
@@ -93,4 +93,7 @@ const ResetPassword = (_props: ResetPasswordProps) => {
   )
 }
 
-export default withAppSetup(ResetPassword, true)
+export default withAppSetup(ResetPassword, {
+  useFormTimeout: true,
+  pageName: AppPages.ResetPassword,
+})

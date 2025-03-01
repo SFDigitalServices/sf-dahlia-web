@@ -16,6 +16,7 @@ import withAppSetup from "../../layouts/withAppSetup"
 import type RailsRentalListing from "../../api/types/rails/listings/RailsRentalListing"
 import Link from "../../navigation/Link"
 import {
+  AppPages,
   getAdditionalResourcesPath,
   getEligibilityEstimatorLink,
   getHelpCalculatingIncomeLink,
@@ -138,4 +139,4 @@ const RentDirectory = () => {
   )
 }
 
-export default withAppSetup(RentDirectory)
+export default withAppSetup(RentDirectory, { pageName: AppPages.RentalDirectory })

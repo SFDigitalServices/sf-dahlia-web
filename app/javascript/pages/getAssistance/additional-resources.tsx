@@ -5,6 +5,7 @@ import additionalResources from "../../../assets/json/additional-resources.json"
 import { InfoCard, InfoCardGrid, t } from "@bloom-housing/ui-components"
 import "./additional-resources.scss"
 import { getSfGovUrl } from "../../util/languageUtil"
+import { AppPages } from "../../util/routeUtil"
 
 const AdditionalResources = () => {
   return (
@@ -43,4 +44,4 @@ const AdditionalResources = () => {
   )
 }
 
-export default withAppSetup(AdditionalResources)
+export default withAppSetup(AdditionalResources, { pageName: AppPages.AdditionalResources })
