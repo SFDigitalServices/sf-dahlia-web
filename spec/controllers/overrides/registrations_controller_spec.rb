@@ -25,7 +25,7 @@ describe Overrides::RegistrationsController do
         DOB: '1985-07-23',
         email: 'jane@doe.com',
       },
-      confirm_success_url: 'http://localhost/my-account',
+      confirm_success_url: 'http://localhost:3000/my-account',
     }
   end
 
