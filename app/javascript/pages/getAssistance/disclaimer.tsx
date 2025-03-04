@@ -4,6 +4,7 @@ import withAppSetup from "../../layouts/withAppSetup"
 import { ConfigContext } from "../../lib/ConfigContext"
 import { MailingListSignup } from "../../components/MailingListSignup"
 import { t, PageHeader } from "@bloom-housing/ui-components"
+import { AppPages } from "../../util/routeUtil"
 
 const Disclaimer = () => {
   const { getAssetPath } = React.useContext(ConfigContext)
@@ -46,4 +47,4 @@ const Disclaimer = () => {
   )
 }
 
-export default withAppSetup(Disclaimer)
+export default withAppSetup(Disclaimer, { pageName: AppPages.Disclaimer })

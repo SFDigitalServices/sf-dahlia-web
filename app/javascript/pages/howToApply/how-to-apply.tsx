@@ -33,6 +33,7 @@ import "./how-to-apply.scss"
 import HeaderSidebarLayout from "../../layouts/HeaderSidebarLayout"
 import GetHelpSidebarBlock from "../../layouts/Sidebar/GetHelpSidebarBlock"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
+import { AppPages } from "../../util/routeUtil"
 
 interface HowToApplyProps {
   assetPaths: unknown
@@ -459,4 +460,4 @@ const HowToApply = (_props: HowToApplyProps) => {
   )
 }
 
-export default withAppSetup(HowToApply)
+export default withAppSetup(HowToApply, { pageName: AppPages.HowToApply })

@@ -39,10 +39,20 @@ type IdleTimeoutProps = {
   alertMessage: string
   alertType?: AlertTypes
   onTimeout: () => unknown
+  onPrompt: () => unknown
+  onTimeoutCancel?: () => unknown
 }
 
 const BaseIdleTimeout: FunctionComponent<IdleTimeoutProps> = (props: IdleTimeoutProps) => {
-  const { promptTitle, promptAction, promptText, redirectPath, onTimeout } = props
+  const {
+    promptTitle,
+    promptAction,
+    promptText,
+    redirectPath,
+    onTimeout,
+    onTimeoutCancel,
+    onPrompt,
+  } = props
 
   // 30 minutes
   const idleTimeout = 30 * 60 * 1000
@@ -62,11 +72,12 @@ const BaseIdleTimeout: FunctionComponent<IdleTimeoutProps> = (props: IdleTimeout
     }
 
     // Give the user 1 minute to respond to the prompt before the onTimeout action
-    setPromptTimeout(
-      setTimeout(() => {
+    setPromptTimeout(() => {
+      onPrompt()
+      return setTimeout(() => {
         void timeoutAction()
       }, PROMPT_TIMEOUT) as unknown as number
-    )
+    })
   })
 
   const modalActions = [
@@ -76,6 +87,7 @@ const BaseIdleTimeout: FunctionComponent<IdleTimeoutProps> = (props: IdleTimeout
       onClick={() => {
         clearTimeout(promptTimeout)
         setPromptTimeout(undefined)
+        onTimeoutCancel()
       }}
     >
       {promptAction}
@@ -87,6 +99,7 @@ const BaseIdleTimeout: FunctionComponent<IdleTimeoutProps> = (props: IdleTimeout
       onClose={() => {
         clearTimeout(promptTimeout)
         setPromptTimeout(undefined)
+        onTimeoutCancel()
       }}
     >
       <Dialog.Header>{promptTitle}</Dialog.Header>
