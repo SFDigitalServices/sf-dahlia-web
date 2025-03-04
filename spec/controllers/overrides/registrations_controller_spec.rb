@@ -71,7 +71,7 @@ describe Overrides::RegistrationsController do
           DOB: '1985-07-23',
           email: 'jane@doe.com',
         },
-        confirm_success_url: 'http://localhost/my-account',
+        confirm_success_url: 'http://localhost:3000/my-account',
       }
 
       expect(response.status).to eq 422
@@ -95,7 +95,7 @@ describe Overrides::RegistrationsController do
           DOB: '1985-07-23',
           email: 'jane@doe.com',
         },
-        confirm_success_url: 'http://localhost/my-account',
+        confirm_success_url: 'http://localhost:3000/my-account',
       }
       expect(response.status).to eq 422
     end
@@ -118,7 +118,7 @@ describe Overrides::RegistrationsController do
           DOB: '1985-07-23',
           email: 'jane@doe.com',
         },
-        confirm_success_url: 'http://localhost/my-account',
+        confirm_success_url: 'http://localhost:3000/my-account',
       }
       expect(response.status).to eq 422
     end
@@ -141,7 +141,7 @@ describe Overrides::RegistrationsController do
           DOB: '1823-04-23', # invalid year
           email: 'jane@doe.com',
         },
-        confirm_success_url: 'http://localhost/my-account',
+        confirm_success_url: 'http://localhost:3000/my-account',
       }
       expect(response.status).to eq 422
     end

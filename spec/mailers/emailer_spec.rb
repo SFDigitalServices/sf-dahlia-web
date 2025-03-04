@@ -109,7 +109,7 @@ describe Emailer, type: :mailer do
           'Remember to always create a strong password for your account and not ' \
           'share your password with others.'
         settings_link =
-          '<a href="http://localhost/sign-in?redirectTo=dahlia.account-settings">' \
+          '<a href="http://localhost:3000/sign-in?redirectTo=dahlia.account-settings">' \
           'Account Settings</a>'
         VCR.use_cassette('emailer/account_update') do
           expect(mail.subject).to eq(subject)
@@ -247,7 +247,7 @@ describe Emailer, type: :mailer do
           'Remember to always create a strong password for your account and not ' \
           'share your password with others.'
         settings_link =
-          '<a href="http://localhost/sign-in?redirectTo=dahlia.account-settings">' \
+          '<a href="http://localhost:3000/sign-in?redirectTo=dahlia.account-settings">' \
           'Account Settings</a>'
         VCR.use_cassette('emailer/account_update') do
           expect(mail.subject).to eq(subject)
