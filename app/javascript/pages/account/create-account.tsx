@@ -38,7 +38,8 @@ import {
 import { ExpandedAccountAxiosError, getErrorMessage } from "./components/util"
 
 import "./create-account.scss"
-import { AppPages, getSignInPath } from "../../util/routeUtil"
+import { AppPages, getLocalizedPath, getSignInPath } from "../../util/routeUtil"
+import { getCurrentLanguage } from "../../util/languageUtil"
 
 interface CreateAccountProps {
   assetPaths: unknown
@@ -109,7 +110,7 @@ const PasswordSection = ({ register, errors, watch }: SectionProps) => {
 }
 
 const signInRedirect = () => {
-  console.log("sign in redirect")
+  window.location.href = getLocalizedPath("/sign-in", getCurrentLanguage())
 }
 
 const CreateAccountFooter = () => {
