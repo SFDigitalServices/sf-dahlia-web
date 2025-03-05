@@ -38,7 +38,7 @@ import {
 import { ExpandedAccountAxiosError, getErrorMessage } from "./components/util"
 
 import "./create-account.scss"
-import { getSignInPath } from "../../util/routeUtil"
+import { AppPages, getSignInPath } from "../../util/routeUtil"
 
 interface CreateAccountProps {
   assetPaths: unknown
@@ -234,4 +234,7 @@ const CreateAccount = (_props: CreateAccountProps) => {
   )
 }
 
-export default withAppSetup(CreateAccount, true)
+export default withAppSetup(CreateAccount, {
+  useFormTimeout: true,
+  pageName: AppPages.CreateAccount,
+})

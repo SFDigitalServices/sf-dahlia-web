@@ -16,7 +16,7 @@ angular.module('dahlia.components')
     showVeteransApplicationQuestion: '<'
     applicantHasClaimedDalpPriority: '<'
   controller: [
-    '$filter', '$state', '$translate', 'LendingInstitutionService', 'ShortFormHelperService', 'ShortFormNavigationService', 'ShortFormRaceEthnicityService', 'ListingDataService',
+    '$filter', '$state', '$translate', 'LendingInstitutionService', 'ShortFormHelperService', 'ShortFormNavigationService', 'ShortFormRaceEthnicityService', 'ListingDataService'
     ($filter, $state, $translate, LendingInstitutionService, ShortFormHelperService, ShortFormNavigationService, ShortFormRaceEthnicityService, ListingDataService) ->
       ctrl = @
 

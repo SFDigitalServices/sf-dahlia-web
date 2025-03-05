@@ -28,16 +28,23 @@ class CacheService
       msg: 'Text to translate',
       caller_method: "#{self.class.name}##{__method__}",
       listing_id: listing['Id'],
-      text: strings_to_translate,
+      text: strings_to_translate.values,
+      char_count: true,
     )
-    translations = translation_service.translate(strings_to_translate.values,
-                                                 languages)
-    GoogleTranslationService.log_translations(
-      msg: 'Translated text',
-      caller_method: "#{self.class.name}##{__method__}",
-      listing_id: listing['Id'],
-      text: translations,
+    translations = translation_service.translate(
+      strings_to_translate.values,
+      languages,
     )
+    translations.each do |target|
+      next if target[:to] == 'EN'
+
+      GoogleTranslationService.log_translations(
+        msg: 'Translated text',
+        caller_method: "#{self.class.name}##{__method__}",
+        listing_id: listing['Id'],
+        text: target[:translation],
+      )
+    end
 
     translation_service.cache_listing_translations(
       listing['Id'],
@@ -45,24 +52,6 @@ class CacheService
         ServiceHelper.convert_to_salesforce_field_name(key)
       end,
       translations,
-      listing['LastModifiedDate'],
-    )
-  end
-
-  def log_process_translations(listing, trigger)
-    strings_to_translate = build_strings_to_translate(listing)
-    GoogleTranslationService.google_translation_usage_logger(
-      listing['Id'],
-      trigger,
-      strings_to_translate.values.join.size,
-    )
-
-    # cache some placeholder data so that caching logic can execute and be analyzed
-    # we only need the actual listing_id and timestamp
-    GoogleTranslationService.new.cache_listing_translations(
-      listing['Id'],
-      %w[field_1 field_2],
-      [{ to: 'ES', translation: %w[text_1 text_2] }],
       listing['LastModifiedDate'],
     )
   end

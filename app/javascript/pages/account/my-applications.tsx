@@ -11,16 +11,16 @@ import {
 } from "@bloom-housing/ui-components"
 import { Card, Dialog, Heading } from "@bloom-housing/ui-seeds"
 import { ApplicationItem } from "../../components/ApplicationItem"
-import { getApplicationPath, getLocalizedPath, getSignInPath } from "../../util/routeUtil"
+import { AppPages, getApplicationPath, getLocalizedPath } from "../../util/routeUtil"
 import { getCurrentLanguage, renderInlineMarkup } from "../../util/languageUtil"
 import { deleteApplication, getApplications } from "../../api/authApiService"
-import UserContext from "../../authentication/context/UserContext"
 import { Application } from "../../api/types/rails/application/RailsApplication"
 import { isRental, isSale } from "../../util/listingUtil"
 import "./styles/my-applications.scss"
 import { DoubleSubmittedModal } from "./components/DoubleSubmittedModal"
 import { AlreadySubmittedModal } from "./components/AlreadySubmittedModal"
 import { extractModalParamsFromUrl } from "./components/util"
+import { withAuthentication } from "../../authentication/withAuthentication"
 
 export const noApplications = () => {
   return (
@@ -137,7 +137,6 @@ export const determineApplicationItemList = (
 }
 
 const MyApplications = () => {
-  const { profile, loading: authLoading, initialStateLoaded } = React.useContext(UserContext)
   const [error, setError] = React.useState<string | null>(null)
   const [loading, setLoading] = React.useState<boolean>(true)
   const [applications, setApplications] = React.useState<Application[]>([])
@@ -183,24 +182,17 @@ const MyApplications = () => {
 
   React.useEffect(() => {
     setLoading(true)
-    if (profile) {
-      getApplications()
-        .then((applications) => {
-          setApplications(applications.applications)
-        })
-        .catch((error: string) => {
-          setError(error)
-        })
-        .finally(() => {
-          setLoading(false)
-        })
-    }
-  }, [authLoading, initialStateLoaded, profile])
-
-  if (!profile && !authLoading && initialStateLoaded) {
-    window.location.href = getSignInPath()
-    return null
-  }
+    getApplications()
+      .then((applications) => {
+        setApplications(applications.applications)
+      })
+      .catch((error: string) => {
+        setError(error)
+      })
+      .finally(() => {
+        setLoading(false)
+      })
+  }, [])
 
   return (
     <Layout
@@ -267,4 +259,6 @@ const MyApplications = () => {
   )
 }
 
-export default withAppSetup(MyApplications)
+export default withAppSetup(withAuthentication(MyApplications, { redirectPath: "applications" }), {
+  pageName: AppPages.MyApplications,
+})

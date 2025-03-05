@@ -5,6 +5,7 @@ import withAppSetup from "../../layouts/withAppSetup"
 import { getSfGovUrl, renderInlineMarkup } from "../../util/languageUtil"
 import { PREFERENCES_IDS } from "../../modules/constants"
 import useTranslate from "../../hooks/useTranslate"
+import { AppPages } from "../../util/routeUtil"
 
 const DocumentChecklist = () => {
   // false means useTranslate will not be disabled when GoogleCloudTranslate is enabled
@@ -73,7 +74,7 @@ const DocumentChecklist = () => {
           <p>
             {renderInlineMarkup(
               t("documentChecklist.copDoc2", {
-                url: getSfGovUrl("https://sf.gov/learn-about-certificate-preference-cop", 3275),
+                url: getSfGovUrl("https://sf.gov/learn-about-certificate-preference-cop"),
               })
             )}
           </p>
@@ -90,10 +91,7 @@ const DocumentChecklist = () => {
           <p>
             {renderInlineMarkup(
               t("documentChecklist.dthpDoc3", {
-                url: getSfGovUrl(
-                  "https://sf.gov/displaced-tenant-housing-preference-program-dthp",
-                  7488
-                ),
+                url: getSfGovUrl("https://sf.gov/displaced-tenant-housing-preference-program-dthp"),
               })
             )}
           </p>
@@ -187,8 +185,7 @@ const DocumentChecklist = () => {
               {renderInlineMarkup(
                 t("documentChecklist.p3", {
                   url: getSfGovUrl(
-                    "https://sf.gov/information/learn-about-housing-lottery-preference-programs",
-                    3274
+                    "https://sf.gov/information/learn-about-housing-lottery-preference-programs"
                   ),
                 })
               )}
@@ -208,8 +205,7 @@ const DocumentChecklist = () => {
                 {renderInlineMarkup(
                   t("documentChecklist.homebuyerLoanDesc", {
                     url: getSfGovUrl(
-                      "https://sf.gov/reports/february-2023/find-lender-below-market-rate-program",
-                      6953
+                      "https://sf.gov/reports/february-2023/find-lender-below-market-rate-program"
                     ),
                   })
                 )}
@@ -223,4 +219,4 @@ const DocumentChecklist = () => {
   )
 }
 
-export default withAppSetup(DocumentChecklist)
+export default withAppSetup(DocumentChecklist, { pageName: AppPages.DocumentChecklist })

@@ -5,6 +5,7 @@ import additionalResources from "../../../assets/json/additional-resources.json"
 import { InfoCard, InfoCardGrid, t } from "@bloom-housing/ui-components"
 import "./additional-resources.scss"
 import { getSfGovUrl } from "../../util/languageUtil"
+import { AppPages } from "../../util/routeUtil"
 
 const AdditionalResources = () => {
   return (
@@ -26,7 +27,7 @@ const AdditionalResources = () => {
                     <InfoCard
                       title={t(resource.title)}
                       subtitle={t(resource.agency)}
-                      externalHref={getSfGovUrl(resource.externalUrl, resource.sfGovNode)}
+                      externalHref={getSfGovUrl(resource.externalUrl)}
                       className="info-card-additional-resources is-normal-primary-lighter"
                       key={resource.title}
                     >
@@ -43,4 +44,4 @@ const AdditionalResources = () => {
   )
 }
 
-export default withAppSetup(AdditionalResources)
+export default withAppSetup(AdditionalResources, { pageName: AppPages.AdditionalResources })
