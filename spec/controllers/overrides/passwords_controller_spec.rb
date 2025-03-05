@@ -18,7 +18,7 @@ describe Overrides::PasswordsController do
       expect_any_instance_of(User).to receive(:send_devise_notification).and_return(true)
       params = {
         email: user.email,
-        redirect_url: 'http://localhost:3000/forgot-password',
+        redirect_url: 'http://localhost:3000/reset-password',
       }
       post :create, params: params
       expect(response.status).to eq 200
