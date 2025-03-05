@@ -1,1 +1,620 @@
-{"TSE Financial":[{"Id":"0034U00002XRPX4QAP", "FirstName":"Matthew", "LastName":"Henderson", "Status":"Active", "Lending_Agent_Inactive_Date":null}, {"Id":"0030P00001zhLEvQAM", "FirstName":"Gina", "LastName":"Tse-Louie", "Status":"Active", "Lending_Agent_Inactive_Date":null}], "Guarantee Mortgage":[{"Id":"0034U00003CMpbzQAD", "FirstName":"Winnie", "LastName":"Liu", "Status":"Active", "Lending_Agent_Inactive_Date":null}, {"Id":"0030P000027uLE1QAM", "FirstName":"Bob", "LastName":"Bednarz", "Status":"Active", "Lending_Agent_Inactive_Date":null}, {"Id":"0030P00002LA5KaQAL", "FirstName":"Kathy", "LastName":"Derangi", "Status":"Active", "Lending_Agent_Inactive_Date":null}], "Guild  Mortgage Company, LLC":[{"Id":"0034U00002b6WX8QAM", "FirstName":"Janene", "LastName":"Towner-Chernoff", "Status":"Active", "Lending_Agent_Inactive_Date":null}, {"Id":"0034U00002j7kNbQAI", "FirstName":"Gelda", "LastName":"Angel", "Status":"Active", "Lending_Agent_Inactive_Date":null}, {"Id":"0030P0000292unOQAQ", "FirstName":"Sandra", "LastName":"Smith", "Status":"Active", "Lending_Agent_Inactive_Date":null}], "NorCal Capital Group":[{"Id":"0030P000029dwYgQAI", "FirstName":"Winnie", "LastName":"Liu", "Status":"Active", "Lending_Agent_Inactive_Date":null}], "Absolute Home Loans":[{"Id":"0030P00002LA514QAD", "FirstName":"Scott", "LastName":"Keller", "Status":"Active", "Lending_Agent_Inactive_Date":null}], "Envoy Mortgage":[{"Id":"0034U00002Vb5rtQAB", "FirstName":"Maria", "LastName":"Kopf", "Status":null, "Lending_Agent_Inactive_Date":null}, {"Id":"0030P00002LA5BdQAL", "FirstName":"Kelle", "LastName":"Murphy", "Status":"Active", "Lending_Agent_Inactive_Date":null}, {"Id":"0030P00002LA5DUQA1", "FirstName":"Kacey", "LastName":"Murphy", "Status":"Active", "Lending_Agent_Inactive_Date":null}], "Mason McDuffie Mortgage":[{"Id":"0030P00002LA5TMQA1", "FirstName":"Ray", "LastName":"Gin", "Status":"Active", "Lending_Agent_Inactive_Date":null}], "Change Lending LLC (Commerce Home Mortgage)":[{"Id":"0034U00002ziNY7QAM", "FirstName":"Ting", "LastName":"Chen", "Status":"Active", "Lending_Agent_Inactive_Date":null}, {"Id":"0030P00002LBB1gQAH", "FirstName":"Cindy", "LastName":"Lowary", "Status":"Active", "Lending_Agent_Inactive_Date":null}], "Amalgamated Bank":[{"Id":"0030P00002O3hdeQAB", "FirstName":"Terry", "LastName":"Kitson", "Status":"Active", "Lending_Agent_Inactive_Date":null}], "CrossCountry Mortgage, LLC":[{"Id":"0034U00002lW8gcQAC", "FirstName":"Sharon", "LastName":"Nguyen", "Status":"Active", "Lending_Agent_Inactive_Date":null}], "General Mortgage Capital Corporation":[{"Id":"0034U000031Gd3ZQAS", "FirstName":"Ming", "LastName":"Chin", "Status":"Active", "Lending_Agent_Inactive_Date":null}], "American Pacific Mortgage Corporation":[{"Id":"0034U00002wZcw7QAC", "FirstName":"Atanasio Randolph (Sonny)", "LastName":"Aguilera", "Status":"Active", "Lending_Agent_Inactive_Date":null}, {"Id":"0036s00000YTaRVAA1", "FirstName":"Lender", "LastName":"Test 05/29/2024 v1", "Status":"Active", "Lending_Agent_Inactive_Date":null}, {"Id":"0036s00000YTaRkAAL", "FirstName":"Leasing", "LastName":"Test 05/29/2024 v1", "Status":"Active", "Lending_Agent_Inactive_Date":null}, {"Id":"0036s00000YTaRpAAL", "FirstName":"Property Agent", "LastName":"Test 05/29/2024 v1", "Status":"Active", "Lending_Agent_Inactive_Date":null}, {"Id":"0036s00000YTaRuAAL", "FirstName":"Property Agent", "LastName":"Test 05/29/2024 v2", "Status":"Active", "Lending_Agent_Inactive_Date":null}, {"Id":"0036s00000Z1MrcAAF", "FirstName":"Property Agent", "LastName":"Test 06/02/2024 v3", "Status":"Active", "Lending_Agent_Inactive_Date":null}], "U.S. Bank National Association":[{"Id":"0034U00002z9hBQQAY", "FirstName":"Cesar", "LastName":"Ortiz", "Status":"Active", "Lending_Agent_Inactive_Date":null}, {"Id":"0034U00002z9hIfQAI", "FirstName":"Sean", "LastName":"Crowley", "Status":"Active", "Lending_Agent_Inactive_Date":null}, {"Id":"0034U000032ppw5QAA", "FirstName":"Leslie D.", "LastName":"Harvey", "Status":"Active", "Lending_Agent_Inactive_Date":null}], "New American Funding, LLC.":[{"Id":"0034U00002zhNzzQAE", "FirstName":"Tom F.", "LastName":"Murphy", "Status":"Active", "Lending_Agent_Inactive_Date":null}, {"Id":"0034U000034f0mgQAA", "FirstName":"Anne", "LastName":"Toth", "Status":"Active", "Lending_Agent_Inactive_Date":null}, {"Id":"0034U000038ZibuQAC", "FirstName":"Adolfo", "LastName":"Ferretti", "Status":"Active", "Lending_Agent_Inactive_Date":null}, {"Id":"0034U000038ZieVQAS", "FirstName":"Melanie", "LastName":"Pauly (Monterrosa)", "Status":"Active", "Lending_Agent_Inactive_Date":null}, {"Id":"0034U00003B0iXqQAJ", "FirstName":"Michael", "LastName":"Murillo", "Status":"Active", "Lending_Agent_Inactive_Date":null}], "First-Citizens Bank & Trust Company":[{"Id":"0034U00002zizUUQAY", "FirstName":"Karen", "LastName":"Alcala", "Status":"Active", "Lending_Agent_Inactive_Date":null}, {"Id":"0034U00002zizd1QAA", "FirstName":"Nelson", "LastName":"Wong", "Status":"Active", "Lending_Agent_Inactive_Date":null}, {"Id":"0034U00002zizedQAA", "FirstName":"Josie", "LastName":"Ramirez", "Status":"Active", "Lending_Agent_Inactive_Date":null}], "Guaranteed Rate Affinity":[{"Id":"0034U00003Bc9GuQAJ", "FirstName":"Fe", "LastName":"David", "Status":"Active", "Lending_Agent_Inactive_Date":null}], "LaSalle Mortgage Services":[{"Id":"0034U000035WnpkQAC", "FirstName":"Melody", "LastName":"Rose", "Status":"Active", "Lending_Agent_Inactive_Date":null}, {"Id":"0034U000035WnrBQAS", "FirstName":"Dejon", "LastName":"Smith", "Status":"Active", "Lending_Agent_Inactive_Date":null}], "Silicon Valley Bank (Boston Private Bank & Trust Co.)":[{"Id":"0034U00002lT9LwQAK", "FirstName":"Nelson", "LastName":"Wong", "Status":"Active", "Lending_Agent_Inactive_Date":null}, {"Id":"003U000001p3AjVIAU", "FirstName":"Josie", "LastName":"Ramirez", "Status":"Active", "Lending_Agent_Inactive_Date":null}, {"Id":"0030P00002ME0yyQAD", "FirstName":"Karen", "LastName":"Alcala", "Status":"Active", "Lending_Agent_Inactive_Date":null}], "Guranteed Rate":[{"Id":"0034U000030WeC1QAK", "FirstName":"Phillip", "LastName":"Cannon", "Status":"Active", "Lending_Agent_Inactive_Date":null}, {"Id":"0034U000031uft4QAA", "FirstName":"Adrian", "LastName":"Azali", "Status":"Active", "Lending_Agent_Inactive_Date":null}, {"Id":"003U000001poFw8IAE", "FirstName":"May", "LastName":"Montana", "Status":"Active", "Lending_Agent_Inactive_Date":null}, {"Id":"003U000001pqHGDIA2", "FirstName":"Jeff", "LastName":"Parrott", "Status":"Active", "Lending_Agent_Inactive_Date":null}, {"Id":"0030P00002LA5OMQA1", "FirstName":"Glenn", "LastName":"Rodriguez", "Status":"Active", "Lending_Agent_Inactive_Date":null}, {"Id":"0030P00002Oro9JQAR", "FirstName":"Lynell", "LastName":"Bevels", "Status":"Active", "Lending_Agent_Inactive_Date":null}], "Moneyland Inc":[{"Id":"0036s00000YSrnoAAD", "FirstName":"Calvin", "LastName":"Glenn", "Status":"Active", "Lending_Agent_Inactive_Date":null}], "All California Mortgage/APMC":[{"Id":"0030P00002S6RMCQA3", "FirstName":"Stacey", "LastName":"Stowe", "Status":"Active", "Lending_Agent_Inactive_Date":null}], "JP Morgan Chase Bank, N.A.":[{"Id":"0034U00002wb5c0QAA", "FirstName":"Elmar", "LastName":"Aslami", "Status":"Active", "Lending_Agent_Inactive_Date":null}, {"Id":"0034U000031GcZoQAK", "FirstName":"Rene", "LastName":"Perez", "Status":"Active", "Lending_Agent_Inactive_Date":null}, {"Id":"0034U000031HPSBQA4", "FirstName":"Mark", "LastName":"Wong", "Status":"Active", "Lending_Agent_Inactive_Date":"2024-01-16"}, {"Id":"0034U000031HPSKQA4", "FirstName":"Veronica", "LastName":"Martinez", "Status":"Active", "Lending_Agent_Inactive_Date":null}, {"Id":"0034U000033qpmVQAQ", "FirstName":"Michael", "LastName":"Schwartz", "Status":"Active", "Lending_Agent_Inactive_Date":null}, {"Id":"0030P00001ves4lQAA", "FirstName":"Ronald", "LastName":"Chiu", "Status":"Active", "Lending_Agent_Inactive_Date":null}]}
+{
+  "TSE Financial": [
+    {
+      "Id": "0034U00002XRPX4QAP",
+      "FirstName": "Matthew",
+      "LastName": "Henderson",
+      "Status": "Active",
+      "Lending_Agent_Inactive_Date": null
+    },
+    {
+      "Id": "0030P00001zhLEvQAM",
+      "FirstName": "Gina",
+      "LastName": "Tse-Louie",
+      "Status": "Active",
+      "Lending_Agent_Inactive_Date": null
+    }
+  ],
+  "Guarantee Mortgage": [
+    {
+      "Id": "0034U00003CMpbzQAD",
+      "FirstName": "Winnie",
+      "LastName": "Liu",
+      "Status": "Active",
+      "Lending_Agent_Inactive_Date": null
+    },
+    {
+      "Id": "0030P000027uLE1QAM",
+      "FirstName": "Bob",
+      "LastName": "Bednarz",
+      "Status": "Active",
+      "Lending_Agent_Inactive_Date": null
+    },
+    {
+      "Id": "0030P00002LA5KaQAL",
+      "FirstName": "Kathy",
+      "LastName": "Derangi",
+      "Status": "Active",
+      "Lending_Agent_Inactive_Date": null
+    }
+  ],
+  "Guild  Mortgage Company, LLC": [
+    {
+      "Id": "0034U00002b6WX8QAM",
+      "FirstName": "Janene",
+      "LastName": "Towner-Chernoff",
+      "Status": "Active",
+      "Lending_Agent_Inactive_Date": null
+    },
+    {
+      "Id": "0034U00002j7kNbQAI",
+      "FirstName": "Gelda",
+      "LastName": "Angel",
+      "Status": "Active",
+      "Lending_Agent_Inactive_Date": null
+    },
+    {
+      "Id": "0030P0000292unOQAQ",
+      "FirstName": "Sandra",
+      "LastName": "Smith",
+      "Status": "Active",
+      "Lending_Agent_Inactive_Date": null
+    }
+  ],
+  "NorCal Capital Group": [
+    {
+      "Id": "0030P000029dwYgQAI",
+      "FirstName": "Winnie",
+      "LastName": "Liu",
+      "Status": "Active",
+      "Lending_Agent_Inactive_Date": null
+    }
+  ],
+  "Absolute Home Loans": [
+    {
+      "Id": "0030P00002LA514QAD",
+      "FirstName": "Scott",
+      "LastName": "Keller",
+      "Status": "Active",
+      "Lending_Agent_Inactive_Date": null
+    }
+  ],
+  "Envoy Mortgage": [
+    {
+      "Id": "0034U00002Vb5rtQAB",
+      "FirstName": "Maria",
+      "LastName": "Kopf",
+      "Status": null,
+      "Lending_Agent_Inactive_Date": null
+    },
+    {
+      "Id": "0030P00002LA5BdQAL",
+      "FirstName": "Kelle",
+      "LastName": "Murphy",
+      "Status": "Active",
+      "Lending_Agent_Inactive_Date": null
+    },
+    {
+      "Id": "0030P00002LA5DUQA1",
+      "FirstName": "Kacey",
+      "LastName": "Murphy",
+      "Status": "Active",
+      "Lending_Agent_Inactive_Date": null
+    }
+  ],
+  "Mason McDuffie Mortgage": [
+    {
+      "Id": "0030P00002LA5TMQA1",
+      "FirstName": "Ray",
+      "LastName": "Gin",
+      "Status": "Active",
+      "Lending_Agent_Inactive_Date": null
+    }
+  ],
+  "Change Lending LLC (Commerce Home Mortgage)": [
+    {
+      "Id": "0034U00002ziNY7QAM",
+      "FirstName": "Ting",
+      "LastName": "Chen",
+      "Status": "Active",
+      "Lending_Agent_Inactive_Date": null
+    },
+    {
+      "Id": "0030P00002LBB1gQAH",
+      "FirstName": "Cindy",
+      "LastName": "Lowary",
+      "Status": "Active",
+      "Lending_Agent_Inactive_Date": null
+    }
+  ],
+  "Amalgamated Bank": [
+    {
+      "Id": "0030P00002O3hdeQAB",
+      "FirstName": "Terry",
+      "LastName": "Kitson",
+      "Status": "Active",
+      "Lending_Agent_Inactive_Date": null
+    }
+  ],
+  "CrossCountry Mortgage, LLC": [
+    {
+      "Id": "0034U00002lW8gcQAC",
+      "FirstName": "Sharon",
+      "LastName": "Nguyen",
+      "Status": "Active",
+      "Lending_Agent_Inactive_Date": null
+    }
+  ],
+  "General Mortgage Capital Corporation": [
+    {
+      "Id": "0034U00002uSXXzQAO",
+      "FirstName": "Vicki",
+      "LastName": "Yue",
+      "Status": "Active",
+      "Lending_Agent_Inactive_Date": null
+    },
+    {
+      "Id": "0034U000031Gd3ZQAS",
+      "FirstName": "Ming",
+      "LastName": "Chin",
+      "Status": "Active",
+      "Lending_Agent_Inactive_Date": null
+    }
+  ],
+  "American Pacific Mortgage Corporation": [
+    {
+      "Id": "0034U00002wZcw7QAC",
+      "FirstName": "Atanasio Randolph (Sonny)",
+      "LastName": "Aguilera",
+      "Status": "Active",
+      "Lending_Agent_Inactive_Date": null
+    },
+    {
+      "Id": "0036s00000YTaRVAA1",
+      "FirstName": "Lender",
+      "LastName": "Test 05/29/2024 v1",
+      "Status": "Active",
+      "Lending_Agent_Inactive_Date": null
+    },
+    {
+      "Id": "0036s00000YTaRkAAL",
+      "FirstName": "Leasing",
+      "LastName": "Test 05/29/2024 v1",
+      "Status": "Active",
+      "Lending_Agent_Inactive_Date": null
+    },
+    {
+      "Id": "0036s00000YTaRpAAL",
+      "FirstName": "Property Agent",
+      "LastName": "Test 05/29/2024 v1",
+      "Status": "Active",
+      "Lending_Agent_Inactive_Date": null
+    },
+    {
+      "Id": "0036s00000YTaRuAAL",
+      "FirstName": "Property Agent",
+      "LastName": "Test 05/29/2024 v2",
+      "Status": "Active",
+      "Lending_Agent_Inactive_Date": null
+    },
+    {
+      "Id": "0036s00000Z1MrcAAF",
+      "FirstName": "Property Agent",
+      "LastName": "Test 06/02/2024 v3",
+      "Status": "Active",
+      "Lending_Agent_Inactive_Date": null
+    }
+  ],
+  "U.S. Bank National Association": [
+    {
+      "Id": "0034U00002z9h9aQAA",
+      "FirstName": "Carla",
+      "LastName": "Morand",
+      "Status": "Active",
+      "Lending_Agent_Inactive_Date": null
+    },
+    {
+      "Id": "0034U00002z9hBQQAY",
+      "FirstName": "Cesar",
+      "LastName": "Ortiz",
+      "Status": "Active",
+      "Lending_Agent_Inactive_Date": null
+    },
+    {
+      "Id": "0034U00002z9hIfQAI",
+      "FirstName": "Sean",
+      "LastName": "Crowley",
+      "Status": "Active",
+      "Lending_Agent_Inactive_Date": null
+    },
+    {
+      "Id": "0034U000032ppw5QAA",
+      "FirstName": "Leslie D.",
+      "LastName": "Harvey",
+      "Status": "Active",
+      "Lending_Agent_Inactive_Date": null
+    },
+    {
+      "Id": "0034U000038ZXhmQAG",
+      "FirstName": "Mariza",
+      "LastName": "Soss",
+      "Status": "Active",
+      "Lending_Agent_Inactive_Date": null
+    }
+  ],
+  "New American Funding, LLC.": [
+    {
+      "Id": "0034U00002zhNzzQAE",
+      "FirstName": "Tom F.",
+      "LastName": "Murphy",
+      "Status": "Active",
+      "Lending_Agent_Inactive_Date": null
+    },
+    {
+      "Id": "0034U000034f0mgQAA",
+      "FirstName": "Anne",
+      "LastName": "Toth",
+      "Status": "Active",
+      "Lending_Agent_Inactive_Date": null
+    },
+    {
+      "Id": "0034U000038ZibuQAC",
+      "FirstName": "Adolfo",
+      "LastName": "Ferretti",
+      "Status": "Active",
+      "Lending_Agent_Inactive_Date": null
+    },
+    {
+      "Id": "0034U000038ZieVQAS",
+      "FirstName": "Melanie",
+      "LastName": "Pauly (Monterrosa)",
+      "Status": "Active",
+      "Lending_Agent_Inactive_Date": null
+    },
+    {
+      "Id": "0034U00003B0iXqQAJ",
+      "FirstName": "Michael",
+      "LastName": "Murillo",
+      "Status": "Active",
+      "Lending_Agent_Inactive_Date": null
+    }
+  ],
+  "First-Citizens Bank & Trust Company": [
+    {
+      "Id": "0034U00002zizUUQAY",
+      "FirstName": "Karen",
+      "LastName": "Alcala",
+      "Status": "Active",
+      "Lending_Agent_Inactive_Date": null
+    },
+    {
+      "Id": "0034U00002zizd1QAA",
+      "FirstName": "Nelson",
+      "LastName": "Wong",
+      "Status": "Active",
+      "Lending_Agent_Inactive_Date": null
+    },
+    {
+      "Id": "0034U00002zizedQAA",
+      "FirstName": "Josie",
+      "LastName": "Ramirez",
+      "Status": "Active",
+      "Lending_Agent_Inactive_Date": null
+    }
+  ],
+  "Primary Residential Mortgage, Inc.": [
+    {
+      "Id": "0034U000031Fpq7QAC",
+      "FirstName": "Renee Ann",
+      "LastName": "Tucker",
+      "Status": "Active",
+      "Lending_Agent_Inactive_Date": null
+    },
+    {
+      "Id": "0034U000031ub2bQAA",
+      "FirstName": "Harry",
+      "LastName": "Payne",
+      "Status": "Active",
+      "Lending_Agent_Inactive_Date": null
+    },
+    {
+      "Id": "0034U000038xX2dQAE",
+      "FirstName": "Kerry",
+      "LastName": "Ettinger",
+      "Status": "Active",
+      "Lending_Agent_Inactive_Date": null
+    },
+    {
+      "Id": "0034U00003CKwI6QAL",
+      "FirstName": "Marc",
+      "LastName": "Yu",
+      "Status": "Active",
+      "Lending_Agent_Inactive_Date": null
+    },
+    {
+      "Id": "0034U00003CLKYaQAP",
+      "FirstName": "Michael",
+      "LastName": "Jenkins",
+      "Status": "Active",
+      "Lending_Agent_Inactive_Date": null
+    }
+  ],
+  "Guaranteed Rate Affinity": [
+    {
+      "Id": "0034U00003Bc9GuQAJ",
+      "FirstName": "Fe",
+      "LastName": "David",
+      "Status": "Active",
+      "Lending_Agent_Inactive_Date": null
+    }
+  ],
+  "Golden Empire Mortgage, Inc": [
+    {
+      "Id": "0034U000031HKz1QAG",
+      "FirstName": "Esmeralda",
+      "LastName": "Velasco",
+      "Status": "Active",
+      "Lending_Agent_Inactive_Date": null
+    }
+  ],
+  "All Elite Loan, Inc.": [
+    {
+      "Id": "0034U000031v9dsQAA",
+      "FirstName": "Linda",
+      "LastName": "Li",
+      "Status": "Active",
+      "Lending_Agent_Inactive_Date": null
+    },
+    {
+      "Id": "0034U000031vAqRQAU",
+      "FirstName": "Alvin",
+      "LastName": "Huang",
+      "Status": "Active",
+      "Lending_Agent_Inactive_Date": null
+    }
+  ],
+  "LaSalle Mortgage Services": [
+    {
+      "Id": "0034U000035WnpkQAC",
+      "FirstName": "Melody",
+      "LastName": "Rose",
+      "Status": "Active",
+      "Lending_Agent_Inactive_Date": null
+    },
+    {
+      "Id": "0034U000035WnrBQAS",
+      "FirstName": "Dejon",
+      "LastName": "Smith",
+      "Status": "Active",
+      "Lending_Agent_Inactive_Date": null
+    }
+  ],
+  "Ameritrust Mortgage Corporation": [
+    {
+      "Id": "0034U000036trKDQAY",
+      "FirstName": "Martha Jauregui",
+      "LastName": "Uu",
+      "Status": "Active",
+      "Lending_Agent_Inactive_Date": null
+    }
+  ],
+  "PNC Bank National Association": [
+    {
+      "Id": "0034U000038Z0lCQAS",
+      "FirstName": "Tony K.",
+      "LastName": "Dinh",
+      "Status": "Active",
+      "Lending_Agent_Inactive_Date": null
+    },
+    {
+      "Id": "0034U000038Z10tQAC",
+      "FirstName": "Faviola",
+      "LastName": "Tapia",
+      "Status": "Active",
+      "Lending_Agent_Inactive_Date": null
+    },
+    {
+      "Id": "0034U000038Z160QAC",
+      "FirstName": "Pippy",
+      "LastName": "Guzman (Sou)",
+      "Status": "Active",
+      "Lending_Agent_Inactive_Date": null
+    },
+    {
+      "Id": "0034U000038Z161QAC",
+      "FirstName": "Rickey",
+      "LastName": "Bradley",
+      "Status": "Active",
+      "Lending_Agent_Inactive_Date": null
+    }
+  ],
+  "First Commercial Bank (USA)": [
+    {
+      "Id": "0034U00003B0kCHQAZ",
+      "FirstName": "Derek",
+      "LastName": "Hung",
+      "Status": "Active",
+      "Lending_Agent_Inactive_Date": null
+    },
+    {
+      "Id": "0034U00003B0kEYQAZ",
+      "FirstName": "Priscilla",
+      "LastName": "Yuen",
+      "Status": "Active",
+      "Lending_Agent_Inactive_Date": null
+    }
+  ],
+  "Silicon Valley Bank (Boston Private Bank & Trust Co.)": [
+    {
+      "Id": "0034U00002lT9LwQAK",
+      "FirstName": "Nelson",
+      "LastName": "Wong",
+      "Status": "Active",
+      "Lending_Agent_Inactive_Date": null
+    },
+    {
+      "Id": "003U000001p3AjVIAU",
+      "FirstName": "Josie",
+      "LastName": "Ramirez",
+      "Status": "Active",
+      "Lending_Agent_Inactive_Date": null
+    },
+    {
+      "Id": "0030P00002ME0yyQAD",
+      "FirstName": "Karen",
+      "LastName": "Alcala",
+      "Status": "Active",
+      "Lending_Agent_Inactive_Date": null
+    }
+  ],
+  "Bank of America, N.A.": [
+    {
+      "Id": "0034U00002j7HVuQAM",
+      "FirstName": "Katherine Xinyuan",
+      "LastName": "Yang",
+      "Status": "Active",
+      "Lending_Agent_Inactive_Date": null
+    },
+    {
+      "Id": "0034U00002lTMp2QAG",
+      "FirstName": "Sandy",
+      "LastName": "Wong",
+      "Status": "Active",
+      "Lending_Agent_Inactive_Date": null
+    },
+    {
+      "Id": "0034U000032eQFaQAM",
+      "FirstName": "Yukang (Edison)",
+      "LastName": "Huang",
+      "Status": "Active",
+      "Lending_Agent_Inactive_Date": null
+    },
+    {
+      "Id": "003U000001cPRLaIAO",
+      "FirstName": "Ana",
+      "LastName": "Wyatt",
+      "Status": "Active",
+      "Lending_Agent_Inactive_Date": null
+    },
+    {
+      "Id": "0030P00002AdmuTQAR",
+      "FirstName": "Derek",
+      "LastName": "Kam",
+      "Status": "Active",
+      "Lending_Agent_Inactive_Date": null
+    },
+    {
+      "Id": "003U000001rXJttIAG",
+      "FirstName": "Mya",
+      "LastName": "Aye",
+      "Status": "Active",
+      "Lending_Agent_Inactive_Date": null
+    }
+  ],
+  "Guranteed Rate": [
+    {
+      "Id": "0034U000030WeC1QAK",
+      "FirstName": "Phillip",
+      "LastName": "Cannon",
+      "Status": "Active",
+      "Lending_Agent_Inactive_Date": null
+    },
+    {
+      "Id": "0034U000031uft4QAA",
+      "FirstName": "Adrian",
+      "LastName": "Azali",
+      "Status": "Active",
+      "Lending_Agent_Inactive_Date": null
+    },
+    {
+      "Id": "003U000001poFw8IAE",
+      "FirstName": "May",
+      "LastName": "Montana",
+      "Status": "Active",
+      "Lending_Agent_Inactive_Date": null
+    },
+    {
+      "Id": "003U000001pqHGDIA2",
+      "FirstName": "Jeff",
+      "LastName": "Parrott",
+      "Status": "Active",
+      "Lending_Agent_Inactive_Date": null
+    },
+    {
+      "Id": "0030P00002LA5OMQA1",
+      "FirstName": "Glenn",
+      "LastName": "Rodriguez",
+      "Status": "Active",
+      "Lending_Agent_Inactive_Date": null
+    },
+    {
+      "Id": "0030P00002Oro9JQAR",
+      "FirstName": "Lynell",
+      "LastName": "Bevels",
+      "Status": "Active",
+      "Lending_Agent_Inactive_Date": null
+    }
+  ],
+  "Moneyland Inc": [
+    {
+      "Id": "0036s00000YSrnoAAD",
+      "FirstName": "Calvin",
+      "LastName": "Glenn",
+      "Status": "Active",
+      "Lending_Agent_Inactive_Date": null
+    }
+  ],
+  "All California Mortgage/APMC": [
+    {
+      "Id": "0030P00002S6RMCQA3",
+      "FirstName": "Stacey",
+      "LastName": "Stowe",
+      "Status": "Active",
+      "Lending_Agent_Inactive_Date": null
+    }
+  ],
+  "JP Morgan Chase Bank, N.A.": [
+    {
+      "Id": "0034U00002wb5c0QAA",
+      "FirstName": "Elmar",
+      "LastName": "Aslami",
+      "Status": "Active",
+      "Lending_Agent_Inactive_Date": null
+    },
+    {
+      "Id": "0034U000031GcZoQAK",
+      "FirstName": "Rene",
+      "LastName": "Perez",
+      "Status": "Active",
+      "Lending_Agent_Inactive_Date": null
+    },
+    {
+      "Id": "0034U000031HPSBQA4",
+      "FirstName": "Mark",
+      "LastName": "Wong",
+      "Status": "Active",
+      "Lending_Agent_Inactive_Date": "2024-01-16"
+    },
+    {
+      "Id": "0034U000031HPSKQA4",
+      "FirstName": "Veronica",
+      "LastName": "Martinez",
+      "Status": "Active",
+      "Lending_Agent_Inactive_Date": null
+    },
+    {
+      "Id": "0034U000033qpmVQAQ",
+      "FirstName": "Michael",
+      "LastName": "Schwartz",
+      "Status": "Active",
+      "Lending_Agent_Inactive_Date": null
+    },
+    {
+      "Id": "0030P00001ves4lQAA",
+      "FirstName": "Ronald",
+      "LastName": "Chiu",
+      "Status": "Active",
+      "Lending_Agent_Inactive_Date": null
+    }
+  ]
+}

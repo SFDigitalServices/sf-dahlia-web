@@ -87,6 +87,7 @@ export const getDocumentChecklistPath = localizedPathGetter("/document-checklist
 export const getShareListingPath = localizedPathGetter("/share")
 export const getApplicationPath = localizedPathGetter("/applications")
 export const getListingDetailPath = localizedPathGetter("/listings")
+export const getCreateAccountPath = localizedPathGetter("/create-account")
 
 // Rental Listing Directory
 export const getHelpCalculatingIncomeLink = localizedPathGetter("/income-calculator/rental/intro")
@@ -109,4 +110,31 @@ const getRedirectUrl = (key: string): string => {
 
 export const getSignInRedirectUrl = (redirect: string) => {
   return getRedirectUrl(redirect || "account")
+}
+
+export enum AppPages {
+  Home = "home",
+  RentalDirectory = "for rent Listings",
+  SaleDirectory = "for sale listings",
+  GetAssistance = "get assistance",
+  SignIn = "sign in",
+  CreateAccount = "create account",
+  ForgotPassword = "forgot password",
+  ResetPassword = "reset password",
+  Favorites = "favorites",
+  MyAccount = "my account",
+  MyApplications = "my applications",
+  AccountSettings = "account settings",
+  AdditionalResources = "additional resources",
+  HousingCounselors = "housing counselors",
+  DocumentChecklist = "document checklist",
+  ShareListing = "share listing",
+  Application = "application",
+  ListingDetail = "listing detail",
+  HelpCalculatingIncome = "help calculating income",
+  EligibilityEstimator = "eligibility estimator",
+  Disclaimer = "disclaimer",
+  PrivacyPolicy = "privacy policy",
+  HowToApply = "how to apply",
+  ListingInterest = "listing interest",
 }
