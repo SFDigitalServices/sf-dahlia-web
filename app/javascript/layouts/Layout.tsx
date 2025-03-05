@@ -135,7 +135,7 @@ const Layout = (props: LayoutProps) => {
     return
   }
   const feedbackBanner = (
-    <Markdown>
+    <Markdown className="feedback-link">
       {t("nav.getFeedback", { feedbackUrl: "https://airtable.com/shrw64DubWTQfRkdo" })}
     </Markdown>
   )
