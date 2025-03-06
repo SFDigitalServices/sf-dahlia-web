@@ -3,6 +3,13 @@
 module Force
   # encapsulate all Salesforce ShortForm querying functions
   class ShortFormService
+    AGENT_CERTIFICATIONS =
+      {
+        bmr: 'BMR_Certified__c',
+        dalp: 'DALP_Certified__c',
+        mcc: 'MCC_Certified__c',
+      }.freeze
+
     def self.check_household_eligibility(listing_id, params)
       endpoint = "/Listing/EligibilityCheck/#{listing_id}"
       %i[householdsize childrenUnder6].each do |k|
@@ -126,7 +133,7 @@ module Force
 
       endpoint = '/services/apexrest/agents/'
       response = Request.new.cached_get(endpoint)
-      @institutions = format_institutions(response)
+      @institutions = format_institutions(response, :bmr)
     end
 
     def self.lending_institutions_dalp
@@ -134,7 +141,7 @@ module Force
 
       endpoint = '/services/apexrest/agents?certified=dalp'
       response = Request.new.cached_get(endpoint)
-      @dalp_institutions = format_institutions(response)
+      @dalp_institutions = format_institutions(response, :dalp)
     end
 
     def self._short_form_pref_id(application, file)
@@ -151,11 +158,11 @@ module Force
       end
     end
 
-    def self.format_institutions(data)
+    def self.format_institutions(data, certification)
       return [] unless data
 
       data.each_with_object({}) do |institution, institutions|
-        agents = institution_agents(institution)
+        agents = institution_agents(institution, certification)
         institutions[institution['Name']] = agents unless agents.blank?
         institutions
       end
@@ -168,18 +175,19 @@ module Force
     end
     private_class_method :format_institutions
 
-    def self.institution_agents(institution)
+    def self.institution_agents(institution, certification)
       return unless institution['Contacts'] && institution['Contacts']['records']
 
       institution['Contacts']['records'].each_with_object([]) do |agent, arr|
-        arr << format_agent(agent)
+        arr << format_agent(agent, certification)
         arr
       end.compact
     end
     private_class_method :format_institutions
 
-    def self.format_agent(agent)
-      return unless agent.present? && agent['BMR_Certified__c']
+    def self.format_agent(agent, certification)
+      return unless agent.present? && agent[AGENT_CERTIFICATIONS[certification]]
+
       status = agent['Lending_Agent_Status__c']
       inactive_date = agent['Lending_Agent_Inactive_Date__c']
       agent.slice('Id', 'FirstName', 'LastName').merge(
