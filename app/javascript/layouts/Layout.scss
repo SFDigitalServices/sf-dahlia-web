@@ -39,3 +39,9 @@
     @apply bg-blue-100;
   }
 }
+
+.feedback-link a:focus {
+        transition: all 200ms ease-out;
+        outline: none;
+        box-shadow: 0 0 0 2px #fff, 0 0 3px 4px var(--bloom-color-accent-cool);
+}

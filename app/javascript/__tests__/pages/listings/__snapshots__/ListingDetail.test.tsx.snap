@@ -124,7 +124,9 @@ exports[`Listing Detail renders a habitat listing 1`] = `
           <div
             class="site-header__notice-text"
           >
-            <span>
+            <span
+              class="feedback-link"
+            >
               We'd love to get 
               <a
                 href="https://airtable.com/shrw64DubWTQfRkdo"
@@ -4893,7 +4895,9 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
           <div
             class="site-header__notice-text"
           >
-            <span>
+            <span
+              class="feedback-link"
+            >
               We'd love to get 
               <a
                 href="https://airtable.com/shrw64DubWTQfRkdo"
@@ -9820,7 +9824,9 @@ exports[`Listing Detail renders an open rental listing 1`] = `
           <div
             class="site-header__notice-text"
           >
-            <span>
+            <span
+              class="feedback-link"
+            >
               We'd love to get 
               <a
                 href="https://airtable.com/shrw64DubWTQfRkdo"
