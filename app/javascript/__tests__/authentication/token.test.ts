@@ -3,8 +3,7 @@ import {
   clearHeaders,
   clearHeadersTimeOut,
   clearHeadersConnectionIssue,
-  getTemporaryAuthParamsFromUrl,
-  setAuthHeadersFromUrl,
+  attemptToSetAuthHeadersFromURL,
 } from "../../authentication/token"
 
 const ACCESS_TOKEN_LOCAL_STORAGE_KEY = "auth_headers"
@@ -60,21 +59,9 @@ describe("token.ts", () => {
       },
     })
 
-    const expectedParams = {
-      expiry: "100",
-      accessToken: "DDDDD",
-      client: "CCCCC",
-      uid: "test@test.com",
-      tokenType: "Bearer",
-      reset_password: "true",
-    }
+    const result = attemptToSetAuthHeadersFromURL()
+    expect(result).toEqual(true)
 
-    const result = getTemporaryAuthParamsFromUrl()
-    expect(result).toEqual(expectedParams)
-
-    const setAuthReturn = setAuthHeadersFromUrl(result)
-
-    expect(setAuthReturn).toEqual(true)
     expect(mockSetItem).toHaveBeenCalledWith(
       ACCESS_TOKEN_LOCAL_STORAGE_KEY,
       JSON.stringify({
