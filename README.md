@@ -53,8 +53,8 @@ More information about getting started can be found on the team confluence.
 1. `yarn install` to install bower, grunt and other dependencies (which will also automatically `bower install` to load front-end JS libraries)
 1. `overcommit --install` to install git hooks into the repo
 1. Download PostgreSQL. You only need to turn it on, the next step will set it up for you.
+1. copy `.env.sample` into a file called `.env`, and copy correct Salesforce and Unleash environment credentials (not shared publicly in this repo)
 1. `rake db:create && rake db:migrate` to create the dev database and migrate the DB tables
-1. copy `.env.sample` into a file called `.env`, and copy correct Salesforce environment credentials (not shared publicly in this repo)
 1. Start Servers
    - `yarn client` to start the webpack dev server alone
    - `yarn server` to start rails server alone, which will now be running at http://localhost:3000 by default
