@@ -57,7 +57,7 @@ module Overrides
       error_details = @resource.error_details(:email)
       email = ERB::Util.url_encode(@resource.email)
       if error_details.include?(:confirmation_period_expired)
-        redirect_to "/sign-in?expiredUnconfirmed=#{email}"
+        redirect_to "/sign-in?expiredUnconfirmed=#{email}&id=#{@resource.id}"
       else
         redirect_to "/sign-in?expiredConfirmed=#{email}"
       end
