@@ -189,4 +189,171 @@ http_interactions:
          "count": 1
         }
   recorded_at: Fri, 02 Aug 2024 14:32:50 GMT
-recorded_with: VCR 6.1.0
+- request:
+    method: get
+    uri: https://gis.sf.gov/dahl/rest/services/app_services/NRHP_Composite/GeocodeServer/findAddressCandidates?Address=1222%20Harrison%20St&City=San%20Francisco&State=CA&f=pjson&outfields=loc_name
+    body:
+      encoding: ASCII-8BIT
+      string: ''
+    headers:
+      Connection:
+      - close
+      User-Agent:
+      - http.rb/5.1.1
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.26.2
+      Date:
+      - Thu, 06 Feb 2025 22:41:10 GMT
+      Content-Type:
+      - text/plain;charset=UTF-8
+      Content-Length:
+      - '2727'
+      Connection:
+      - close
+      Cache-Control:
+      - max-age=315360000
+      Etag:
+      - '"aae582da"'
+      X-Content-Type-Options:
+      - nosniff
+      Vary:
+      - Origin
+      Expires:
+      - Thu, 31 Dec 2037 23:55:55 GMT
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+         "spatialReference": {
+          "wkid": 102100,
+          "latestWkid": 3857
+         },
+         "candidates": [
+          {
+           "address": "1222 HARRISON ST, San Francisco, California, 94103",
+           "location": {
+            "x": -13626517.0663302876,
+            "y": 4547486.3551361477
+           },
+           "score": 100,
+           "attributes": {
+            "Loc_name": "eas_gc"
+           },
+           "extent": {
+            "xmin": -13626628.3858210817,
+            "ymin": 4547345.52338426001,
+            "xmax": -13626405.7468394935,
+            "ymax": 4547627.18879283685
+           }
+          },
+          {
+           "address": "HARRISON, San Francisco, California, 94107",
+           "location": {
+            "x": -13625404.0130093601,
+            "y": 4548564.42930983938
+           },
+           "score": 91.92,
+           "attributes": {
+            "Loc_name": "strctr_li"
+           },
+           "extent": {
+            "xmin": -13625515.3325001523,
+            "ymin": 4548423.58297506254,
+            "xmax": -13625292.693518566,
+            "ymax": 4548705.27755014133
+           }
+          },
+          {
+           "address": "HARRISON, San Francisco, California, 94103",
+           "location": {
+            "x": -13626696.4413794335,
+            "y": 4547272.62573243212
+           },
+           "score": 91.92,
+           "attributes": {
+            "Loc_name": "strctr_li"
+           },
+           "extent": {
+            "xmin": -13626807.7608702276,
+            "ymin": 4547131.79687113874,
+            "xmax": -13626585.1218886394,
+            "ymax": 4547413.45649837889
+           }
+          },
+          {
+           "address": "HARRISON, San Francisco, California, 94105",
+           "location": {
+            "x": -13624536.5877721552,
+            "y": 4549430.74088257924
+           },
+           "score": 91.92,
+           "attributes": {
+            "Loc_name": "strctr_li"
+           },
+           "extent": {
+            "xmin": -13624647.9072629493,
+            "ymin": 4549289.88282646611,
+            "xmax": -13624425.2682813611,
+            "ymax": 4549571.60084479675
+           }
+          },
+          {
+           "address": "HARRISON, San Francisco, California, 94110",
+           "location": {
+            "x": -13626869.3193334006,
+            "y": 4545066.99491133355
+           },
+           "score": 91.92,
+           "attributes": {
+            "Loc_name": "strctr_li"
+           },
+           "extent": {
+            "xmin": -13626980.6388241947,
+            "ymin": 4544926.19587098993,
+            "xmax": -13626757.9998426065,
+            "ymax": 4545207.79585485347
+           }
+          },
+          {
+           "address": "HARRISON, San Francisco, California, 94129",
+           "location": {
+            "x": -13633995.5050285589,
+            "y": 4550966.13367534336
+           },
+           "score": 91.92,
+           "attributes": {
+            "Loc_name": "strctr_li"
+           },
+           "extent": {
+            "xmin": -13634106.824519353,
+            "ymin": 4550825.25483873021,
+            "xmax": -13633884.1855377648,
+            "ymax": 4551107.01441908628
+           }
+          },
+          {
+           "address": "GARRISON, San Francisco, California, 94134",
+           "location": {
+            "x": -13627005.6418788452,
+            "y": 4538500.75521764252
+           },
+           "score": 78.48,
+           "attributes": {
+            "Loc_name": "strctr_li"
+           },
+           "extent": {
+            "xmin": -13627116.9613696374,
+            "ymin": 4538360.04485564586,
+            "xmax": -13626894.3223880511,
+            "ymax": 4538641.46747842059
+           }
+          }
+         ]
+        }
+  recorded_at: Thu, 06 Feb 2025 22:41:10 GMT
+recorded_with: VCR 6.3.1
