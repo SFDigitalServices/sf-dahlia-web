@@ -27,7 +27,7 @@ This repository contains the source code for [housing.sfgov.org](https://housing
 Before you install DAHLIA, your system should have the following:
 
 - [Homebrew](http://brew.sh)
-- [Ruby](https://www.ruby-lang.org/en/documentation/installation/) 3.1.3 (Use [RVM](https://rvm.io/rvm/install) or [rbenv](https://github.com/rbenv/rbenv))
+- [Ruby](https://www.ruby-lang.org/en/documentation/installation/) 3.4.1 (Use [RVM](https://rvm.io/rvm/install) or [rbenv](https://github.com/rbenv/rbenv))
   - For issues installing on an Apple Silicon mac, go [here](https://zwbetz.com/install-ruby-version-manager-on-mac/)
 - [Bundler](https://github.com/bundler/bundler) `gem install bundler`
 - [PostgreSQL](https://postgresapp.com/)
@@ -46,7 +46,7 @@ More information about getting started can be found on the team confluence.
    - Using gh is recommended. This can be installed with either [Brew](https://brew.sh/) or downloading directly from [Github](https://cli.github.com/)
 1. `cd sf-dahlia-web` to open the directory
 1. Using NVM, install 18.12.1 (or whatever version we are on) with `nvm install 18.12.1`
-1. Using RVM, install 3.1.3 (or whatever version we are on) with `rvm instal 3.1.3`
+1. Using RVM, install 3.4.1 (or whatever version we are on) with `rvm instal 3.4.1`
 1. `bundle install` to download all necessary gems
    - See [here](https://stackoverflow.com/a/19850273/260495) if you have issues installing `pg` gem with Postgres.app, you may need to use: `gem install pg -v <failing-pg-version> -- --with-pg-config=/Applications/Postgres.app/Contents/Versions/latest/bin/pg_config`
    - If you need to run this command make sure you run bundle install again following the success of the Postgres installation to install the remaining gems

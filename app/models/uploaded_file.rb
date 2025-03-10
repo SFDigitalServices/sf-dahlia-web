@@ -1,6 +1,14 @@
 # Model for storing temporary uploaded files in the DB
 class UploadedFile < ApplicationRecord
-  enum rent_burden_type: %i[lease rent]
+  enum :rent_burden_type, { lease: 0, rent: 1 }
+
+  def rent_burden_type_name
+    case rent_burden_type
+    when 0 then 'lease'
+    when 1 then 'rent'
+    else 'unknown'
+    end
+  end
 
   def self.create_and_resize(attrs)
     tempfile_path = attrs[:file].tempfile.path
