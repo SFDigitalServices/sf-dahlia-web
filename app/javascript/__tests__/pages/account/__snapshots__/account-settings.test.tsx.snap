@@ -126,7 +126,9 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
               <div
                 class="site-header__notice-text"
               >
-                <span>
+                <span
+                  class="feedback-link"
+                >
                   We'd love to get 
                   <a
                     href="https://airtable.com/shrw64DubWTQfRkdo"
@@ -996,7 +998,9 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
             <div
               class="site-header__notice-text"
             >
-              <span>
+              <span
+                class="feedback-link"
+              >
                 We'd love to get 
                 <a
                   href="https://airtable.com/shrw64DubWTQfRkdo"
@@ -1923,7 +1927,9 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
               <div
                 class="site-header__notice-text"
               >
-                <span>
+                <span
+                  class="feedback-link"
+                >
                   We'd love to get 
                   <a
                     href="https://airtable.com/shrw64DubWTQfRkdo"
@@ -2769,7 +2775,9 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
             <div
               class="site-header__notice-text"
             >
-              <span>
+              <span
+                class="feedback-link"
+              >
                 We'd love to get 
                 <a
                   href="https://airtable.com/shrw64DubWTQfRkdo"
