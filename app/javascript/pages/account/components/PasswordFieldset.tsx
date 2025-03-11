@@ -143,7 +143,7 @@ const PasswordField = ({ passwordVisibilityDefault = false, ...props }: Password
         dataTestId="password-field"
         {...props}
         type={showPassword ? "text" : "password"}
-        inputProps={{ className: "input", required: true }}
+        inputProps={{ className: "input", required: true, autoCapitalize: "none" }}
       />
       <div className="field">
         <input
