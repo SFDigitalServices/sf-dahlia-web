@@ -54,24 +54,27 @@ export const ListingDetailsEligibility = ({
 }: ListingDetailsEligibilityProps) => {
   const isAllSRO = listingHasOnlySROUnits(listing)
   const isSomeSRO = listingHasSROUnits(listing)
-  const priorityUnits = []
+  const prioritiesDescriptor = listing.prioritiesDescriptor
+  const priorityUnits = prioritiesDescriptor || ([] as ReducedUnit[])
 
-  listing.Units?.forEach((unit: RailsUnit) => {
-    const priorityUnit = priorityUnits?.find((priorityUnit: ReducedUnit) => {
-      return priorityUnit.name === unit.Priority_Type
-    })
-
-    if (unit.Priority_Type && !priorityUnit) {
-      priorityUnits.push({
-        name: unit.Priority_Type,
-        numberOfUnits: 1,
+  if (!prioritiesDescriptor) {
+    listing.Units?.forEach((unit: RailsUnit) => {
+      const priorityUnit = priorityUnits?.find((priorityUnit: ReducedUnit) => {
+        return priorityUnit.name === unit.Priority_Type
       })
-    }
 
-    if (unit.Priority_Type && priorityUnit) {
-      priorityUnit.numberOfUnits++
-    }
-  })
+      if (unit.Priority_Type && !priorityUnit) {
+        priorityUnits.push({
+          name: unit.Priority_Type,
+          numberOfUnits: 1,
+        })
+      }
+
+      if (unit.Priority_Type && priorityUnit) {
+        priorityUnit.numberOfUnits++
+      }
+    })
+  }
 
   let occupancySubtitle = ""
   if (isSale(listing)) {
