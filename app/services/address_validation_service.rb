@@ -7,13 +7,17 @@ class AddressValidationService
     verify = %w[delivery] if verify.empty?
     @address = address.merge(verify: verify)
     @timeout = false
+    @easypost = EasyPost::Client.new(
+      api_key: ENV.fetch('EASYPOST_API_KEY', nil), read_timeout: 10, open_timeout: 10,
+    )
   end
 
   def validate
     return false unless @address.present?
+
     @timeout = false
-    @validation = EasyPost::Address.create(@address)
-  rescue EasyPost::Error
+    @validation = @easypost.address.create(@address)
+  rescue @easypost.error
     @timeout = true
     # just return the original address, unable to return a validated one
     @address
@@ -51,7 +55,7 @@ class AddressValidationService
     # we do not accept PO Boxes
     if po_box?(@validation)
       Rails.logger.info(
-        'Address validation: '\
+        'Address validation: ' \
         "Raised an address validation error for a PO Box #{@validation.to_json}",
       )
       return true
@@ -77,6 +81,7 @@ class AddressValidationService
     return 'DUPLICATE UNIT' if duplicate_unit?(@validation)
     return nil unless
       @validation.present? && @validation.verifications.delivery.errors.present?
+
     @validation.verifications.delivery.errors.first.message
   end
 end

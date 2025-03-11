@@ -6,6 +6,9 @@ import { Icon, t, type UniversalIconType } from "@bloom-housing/ui-components"
 import { AppPages, getMyAccountSettingsPath, getMyApplicationsPath } from "../../util/routeUtil"
 import { renderInlineMarkup } from "../../util/languageUtil"
 import { withAuthentication } from "../../authentication/withAuthentication"
+import { parseUrlParams } from "../../authentication/token"
+import { useGTMDataLayer } from "../../hooks/analytics/useGTMDataLayer"
+import UserContext from "../../authentication/context/UserContext"
 
 interface MyAccountProps {
   assetPaths: unknown
@@ -55,6 +58,24 @@ const AccountDashCard = ({
 }
 
 const MyAccount = (_props: MyAccountProps) => {
+  const { profile } = React.useContext(UserContext)
+  const { pushToDataLayer } = useGTMDataLayer()
+
+  React.useEffect(() => {
+    const params = parseUrlParams(window.location.href)
+    if (
+      params.get("access-token") &&
+      params.get("accountConfirmed") === "true" &&
+      params.get("account_confirmation_success") === "true" &&
+      profile
+    ) {
+      pushToDataLayer("account_create_completed", { user_id: profile.id })
+      // We want to remove the query params from the URL so that the user can refresh the page without retriggering the analytics event
+      const url = window.location.origin + window.location.pathname
+      window.history.replaceState({}, document.title, url)
+    }
+  }, [profile, pushToDataLayer])
+
   return (
     <Layout title={"My Account"}>
       <section className="bg-gray-300 flex justify-center">

@@ -32,4 +32,34 @@ describe User, type: :model do
       expect(duplicate_user.errors[:email]).to include("has already been taken")
     end
   end
+
+  describe 'move_to_unconfirmed' do
+    let(:user) { create(:user, confirmed_at: Time.current, confirmation_sent_at: Time.current) }
+    before do
+      allow(user).to receive(:generate_confirmation_token!)
+      allow(user).to receive(:send_confirmation_instructions)
+    end
+
+    context 'without expiring token' do
+      it 'resets confirmation fields and sends instructions' do
+        user.move_to_unconfirmed
+        user.reload
+        expect(user.confirmed_at).to be_nil
+        expect(user.confirmation_sent_at).to be_nil
+        expect(user).to have_received(:generate_confirmation_token!)
+        expect(user).to have_received(:send_confirmation_instructions)
+      end
+    end
+
+    context 'with expiring token' do
+      it 'resets confirmation fields, sets confirmation_sent_at to 3 days ago, and sends instructions' do
+        user.move_to_unconfirmed(expire_token: true)
+        user.reload
+        expect(user.confirmed_at).to be_nil
+        expect(user.confirmation_sent_at).to be_within(1.second).of(3.days.ago)
+        expect(user).to have_received(:generate_confirmation_token!)
+        expect(user).to have_received(:send_confirmation_instructions)
+      end
+    end
+  end
 end
