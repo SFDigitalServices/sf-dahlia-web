@@ -616,6 +616,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                             <input
                               aria-describedby="currentPassword-error"
                               aria-invalid="false"
+                              autocapitalize="none"
                               class="input"
                               data-testid="password-field"
                               id="currentPassword"
@@ -700,6 +701,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                             <input
                               aria-describedby="newPasswordInstructions"
                               aria-invalid="false"
+                              autocapitalize="none"
                               class="input"
                               data-testid="password-field"
                               id="password"
@@ -1486,6 +1488,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                           <input
                             aria-describedby="currentPassword-error"
                             aria-invalid="false"
+                            autocapitalize="none"
                             class="input"
                             data-testid="password-field"
                             id="currentPassword"
@@ -1570,6 +1573,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                           <input
                             aria-describedby="newPasswordInstructions"
                             aria-invalid="false"
+                            autocapitalize="none"
                             class="input"
                             data-testid="password-field"
                             id="password"
@@ -2389,6 +2393,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                             <input
                               aria-describedby="currentPassword-error"
                               aria-invalid="false"
+                              autocapitalize="none"
                               class="input"
                               data-testid="password-field"
                               id="currentPassword"
@@ -2473,6 +2478,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                             <input
                               aria-describedby="newPasswordInstructions"
                               aria-invalid="false"
+                              autocapitalize="none"
                               class="input"
                               data-testid="password-field"
                               id="password"
@@ -3235,6 +3241,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                           <input
                             aria-describedby="currentPassword-error"
                             aria-invalid="false"
+                            autocapitalize="none"
                             class="input"
                             data-testid="password-field"
                             id="currentPassword"
@@ -3319,6 +3326,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                           <input
                             aria-describedby="newPasswordInstructions"
                             aria-invalid="false"
+                            autocapitalize="none"
                             class="input"
                             data-testid="password-field"
                             id="password"

@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '3.1.3'
+ruby '3.4.1'
 
 # same method is used in https://github.com/rails/rails/blob/master/Gemfile
 git_source(:github) do |repo_name|
@@ -7,12 +7,12 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-gem 'rails', '~> 7.0.8'
+gem 'rails', '~> 8.0.0'
 
 gem 'unleash', '~> 5.0.4'
 
 # Use SCSS for stylesheets
-gem 'sass-rails', '~> 5.0'
+gem 'sassc-rails'
 # Slim templates generator for Rails 3 and 4
 gem 'slim-rails'
 # Use Uglifier as compressor for JavaScript assets
@@ -28,7 +28,7 @@ gem 'sprockets_uglifier_with_source_maps'
 gem 'puma', '~> 6.4.3'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 2.8.0'
+gem 'jbuilder', '>= 2.8.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', group: :doc
 
@@ -75,7 +75,7 @@ gem 'oj_mimic_json'
 
 # user authentication
 # Note: devise 4.7.2 is unverified and causes undefined method `rails51?' errors.
-gem 'devise', '4.9.0'
+gem 'devise', '4.9.3'
 gem 'devise_token_auth', '~> 1.2.1'
 
 # listing interest email token
@@ -110,7 +110,10 @@ gem 'hashdiff'
 gem 'fog-aws'
 
 # https://elements.heroku.com/addons/sentry
-gem 'sentry-raven'
+gem 'sentry-ruby'
+gem "sentry-rails"
+gem "sentry-sidekiq"
+gem "sentry-delayed_job"
 
 gem 'scout_apm'
 
@@ -156,5 +159,6 @@ group :production do
   gem 'newrelic_rpm'
   gem 'dalli'
   gem 'memcachier'
-  gem 'rails_autoscale_agent'
+  gem "judoscale-rails"
+  gem "judoscale-sidekiq"
 end
