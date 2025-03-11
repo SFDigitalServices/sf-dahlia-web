@@ -709,3 +709,24 @@ export const listingHasVeteransPreference = (listing: RailsListing): boolean => 
 export const forceRecacheParam = () => ({
   params: window.location.search.includes("preview=true") ? { force: true } : {},
 })
+
+export const getPriorityUnits = (units: RailsUnit[]) => {
+  const priorityUnits = []
+  units.forEach((unit: RailsUnit) => {
+    const priorityUnit = priorityUnits?.find((priorityUnit) => {
+      return priorityUnit.name === unit.Priority_Type
+    })
+
+    if (unit.Priority_Type && !priorityUnit) {
+      priorityUnits.push({
+        name: unit.Priority_Type,
+        numberOfUnits: 1,
+      })
+    }
+
+    if (unit.Priority_Type && priorityUnit) {
+      priorityUnit.numberOfUnits++
+    }
+  })
+  return priorityUnits
+}
