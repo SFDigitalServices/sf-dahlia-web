@@ -72,7 +72,7 @@ export const attemptToSetAuthHeadersFromURL = () => {
   } else return false
 }
 
-const setSignInPageAlert = (alert: AlertReason) => {
+export const setSignInPageAlert = (alert: AlertReason) => {
   const alertParam = `?alert=${alert}`
   const language = getCurrentLanguage()
   return getLocalizedPath("/sign-in", language, alertParam)
