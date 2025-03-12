@@ -18,6 +18,9 @@ import {
   getForgotPasswordPath,
   getCreateAccountPath,
   getSignInRedirectUrl,
+  mapRedirectParamToEnum,
+  AlertReason,
+  mapAlertParamToEnum,
 } from "../util/routeUtil"
 import EmailFieldset from "../pages/account/components/EmailFieldset"
 import PasswordFieldset from "../pages/account/components/PasswordFieldset"
@@ -25,7 +28,6 @@ import "../pages/account/styles/account.scss"
 import { AxiosError } from "axios"
 import UserContext from "./context/UserContext"
 import { AccountAlreadyConfirmedModal } from "./components/AccountAlreadyConfirmedModal"
-import { SiteAlert } from "../components/SiteAlert"
 import { NewAccountNotConfirmedModal } from "./components/NewAccountNotConfirmedModal"
 import { ExpiredUnconfirmedModal } from "./components/ExpiredUnconfirmedModal"
 import { renderInlineMarkup } from "../util/languageUtil"
@@ -37,9 +39,19 @@ const getExpiredConfirmedEmail = () => {
   return expiredUnconfirmedEmail
 }
 
-const getRedirectFromUrl = () => {
-  const urlParams = new URLSearchParams(window.location.search)
-  return urlParams.get("redirect")
+const getRedirectTypeFromURL = () => {
+  const redirectParam = new URLSearchParams(window.location.search).get("redirect")
+  return redirectParam ? mapRedirectParamToEnum(redirectParam) : undefined
+}
+
+const getAlertFromURL = () => {
+  const alertParam = new URLSearchParams(window.location.search).get("alert")
+  return alertParam ? mapAlertParamToEnum(alertParam) : undefined
+}
+
+export type SignInAlertMessage = {
+  message: string
+  alertType: "alert" | "success" | "secondary"
 }
 
 const SignInFormCard = ({
@@ -48,8 +60,8 @@ const SignInFormCard = ({
   setRequestError,
 }: {
   onSubmit: SubmitHandler<FieldValues>
-  requestError: string
-  setRequestError: Dispatch<SetStateAction<string>>
+  requestError: SignInAlertMessage
+  setRequestError: Dispatch<SetStateAction<SignInAlertMessage>>
 }) => {
   const emailSubmitField = document.querySelector("#email")
   const passwordSubmitField = document.querySelector("#password")
@@ -86,14 +98,14 @@ const SignInFormCard = ({
 
   const onError = (errors: { email: string; password: string }) => {
     if (errors.email || errors.password) {
-      setRequestError(
-        t("signIn.badCredentialsWithResetLink", {
+      setRequestError({
+        message: t("signIn.badCredentialsWithResetLink", {
           url: createPath(getForgotPasswordPath(), { email: emailField }),
-        })
-      )
+        }),
+        alertType: "alert",
+      })
     }
   }
-  const showSecondaryAlert = requestError === t("signIn.loginRequired")
   return (
     <FormCard>
       <div className="form-card__lead text-center border-b mx-0">
@@ -104,13 +116,11 @@ const SignInFormCard = ({
         <Alert
           fullwidth
           onClose={() => setRequestError(undefined)}
-          variant={showSecondaryAlert ? "secondary" : "alert"}
+          variant={requestError.alertType}
         >
-          {renderInlineMarkup(requestError)}
+          {renderInlineMarkup(requestError.message)}
         </Alert>
       )}
-      <SiteAlert type="success" />
-      <SiteAlert type="secondary" />
       <div className="form-card__group pt-0 border-b">
         <Form id="sign-in" className="mt-10 relative" onSubmit={handleSubmit(onSubmit, onError)}>
           <EmailFieldset register={register} />
@@ -156,8 +166,28 @@ const getExpiredUnconfirmedEmail = () => {
   return { expiredUnconfirmedEmail, id }
 }
 
+const getSignInAlertMessage = (alertType: AlertReason): SignInAlertMessage => {
+  switch (alertType) {
+    case AlertReason.SignOut:
+      return {
+        message: t("signOut.alertMessage.confirmSignOut"),
+        alertType: "success",
+      }
+    case AlertReason.ConnectionIssue:
+      return { message: t("signOut.alertMessage.connectionIssue"), alertType: "secondary" }
+
+    case AlertReason.TimeOut:
+      return { message: t("signOut.alertMessage.timeout"), alertType: "secondary" }
+    case AlertReason.LoginRequired:
+      return { message: t("signIn.loginRequired"), alertType: "secondary" }
+
+    default:
+      return undefined
+  }
+}
+
 const SignInForm = () => {
-  const [requestError, setRequestError] = useState<string>()
+  const [requestError, setRequestError] = useState<SignInAlertMessage>()
   const [showNewAccountNotConfirmedModal, setNewAccountNotConfirmedModal] = useState<string | null>(
     null
   )
@@ -170,26 +200,27 @@ const SignInForm = () => {
   const { router } = useContext(NavigationContext)
 
   const handleRequestError = (error: AxiosError<{ error: string; email: string }>) => {
-    if (error.response.data.error === "not_confirmed") {
+    if (error?.response?.data?.error === "not_confirmed") {
       setNewAccountNotConfirmedModal(error.response.data.email)
-    } else if (error.response.data.error === "bad_credentials") {
-      setRequestError(
-        t("signIn.badCredentialsWithResetLink", {
+    } else if (error?.response?.data?.error === "bad_credentials") {
+      setRequestError({
+        message: t("signIn.badCredentialsWithResetLink", {
           url: getForgotPasswordPath(),
-        })
-      )
+        }),
+        alertType: "alert",
+      })
     } else {
-      setRequestError(`${t("signIn.unknownError")}`)
+      setRequestError({ message: `${t("signIn.unknownError")}`, alertType: "alert" })
     }
   }
 
   const onSubmit = (data: { email: string; password: string }) => {
     const { email, password } = data
-    setRequestError("")
+    setRequestError(undefined)
     signIn(email, password, "Sign In Page")
       .then(() => {
-        const redirectUrl = getRedirectFromUrl()
-        router.push(getSignInRedirectUrl(redirectUrl || ""))
+        const redirectType = getRedirectTypeFromURL()
+        router.push(getSignInRedirectUrl(redirectType))
         window.scrollTo(0, 0)
       })
       .catch((error: AxiosError<{ error: string; email: string }>) => {
@@ -198,9 +229,13 @@ const SignInForm = () => {
   }
 
   useEffect(() => {
-    const redirectUrl = getRedirectFromUrl()
-    if (redirectUrl) {
-      setRequestError(t("signIn.loginRequired"))
+    const alertType = getAlertFromURL()
+    const redirectType = getRedirectTypeFromURL()
+    if (redirectType) {
+      setRequestError(getSignInAlertMessage(AlertReason.LoginRequired))
+    }
+    if (alertType) {
+      setRequestError(getSignInAlertMessage(alertType))
     }
     const newAccountEmail: string | null = window.sessionStorage.getItem("newAccount")
     const expiredConfirmedEmail = getExpiredConfirmedEmail()

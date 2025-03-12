@@ -1,6 +1,6 @@
-import { t } from "@bloom-housing/ui-components"
 import { AxiosHeaders } from "axios"
-import { setSiteAlertMessage } from "../components/SiteAlert"
+import { AlertReason, getLocalizedPath } from "../util/routeUtil"
+import { getCurrentLanguage } from "../util/languageUtil"
 const ACCESS_TOKEN_LOCAL_STORAGE_KEY = "auth_headers"
 
 const getStorage = () => {
@@ -72,6 +72,12 @@ export const attemptToSetAuthHeadersFromURL = () => {
   } else return false
 }
 
+export const setSignInPageAlert = (alert: AlertReason) => {
+  const alertParam = `?alert=${alert}`
+  const language = getCurrentLanguage()
+  return getLocalizedPath("/sign-in", language, alertParam)
+}
+
 export const getHeaders = (): AuthHeaders | AxiosHeaders | undefined => getAuthHeaders()
 
 export const clearHeaders = () => {
@@ -80,7 +86,7 @@ export const clearHeaders = () => {
 
 export const clearHeadersSignOut = () => {
   if (getStorage().getItem(ACCESS_TOKEN_LOCAL_STORAGE_KEY)) {
-    setSiteAlertMessage(t("signOut.alertMessage.confirmSignOut"), "success")
+    window.location.href = setSignInPageAlert(AlertReason.SignOut)
   }
 
   getStorage().removeItem(ACCESS_TOKEN_LOCAL_STORAGE_KEY)
@@ -88,15 +94,14 @@ export const clearHeadersSignOut = () => {
 
 export const clearHeadersTimeOut = () => {
   if (getStorage().getItem(ACCESS_TOKEN_LOCAL_STORAGE_KEY)) {
-    setSiteAlertMessage(t("signOut.alertMessage.timeout"), "secondary")
+    window.location.href = setSignInPageAlert(AlertReason.TimeOut)
   }
-
   getStorage().removeItem(ACCESS_TOKEN_LOCAL_STORAGE_KEY)
 }
 
 export const clearHeadersConnectionIssue = () => {
   if (getStorage().getItem(ACCESS_TOKEN_LOCAL_STORAGE_KEY)) {
-    setSiteAlertMessage(t("signOut.alertMessage.connectionIssue"), "secondary")
+    window.location.href = setSignInPageAlert(AlertReason.ConnectionIssue)
   }
 
   getStorage().removeItem(ACCESS_TOKEN_LOCAL_STORAGE_KEY)
