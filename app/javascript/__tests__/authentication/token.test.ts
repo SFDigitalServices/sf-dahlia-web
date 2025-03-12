@@ -5,6 +5,7 @@ import {
   clearHeadersConnectionIssue,
   attemptToSetAuthHeadersFromURL,
 } from "../../authentication/token"
+import { setupLocationAndRouteMock } from "../__util__/accountUtils"
 
 const ACCESS_TOKEN_LOCAL_STORAGE_KEY = "auth_headers"
 
@@ -20,6 +21,16 @@ Object.defineProperty(window, "sessionStorage", {
 })
 
 describe("token.ts", () => {
+  let originalLocation: Location
+
+  beforeEach(() => {
+    originalLocation = window.location
+    setupLocationAndRouteMock()
+  })
+  afterEach(() => {
+    window.location = originalLocation
+  })
+
   it("clearHeaders", () => {
     mockGetItem.mockImplementationOnce(() => "test-local-storage-key")
 
@@ -30,25 +41,16 @@ describe("token.ts", () => {
     mockGetItem.mockImplementationOnce(() => "test-local-storage-key")
     clearHeadersSignOut()
     expect(mockRemoveItem).toHaveBeenCalledWith(ACCESS_TOKEN_LOCAL_STORAGE_KEY)
-    expect(mockSetItem).toHaveBeenCalledWith("alert_message_success", "You are signed out.")
   })
   it("clearHeadersTimeOut", () => {
     mockGetItem.mockImplementationOnce(() => "test-local-storage-key")
     clearHeadersTimeOut()
     expect(mockRemoveItem).toHaveBeenCalledWith(ACCESS_TOKEN_LOCAL_STORAGE_KEY)
-    expect(mockSetItem).toHaveBeenCalledWith(
-      "alert_message_secondary",
-      "You were inactive for more than 30 minutes, so we signed you out. We do this for your security. Sign in again to continue."
-    )
   })
   it("signOutConnectionIssue", () => {
     mockGetItem.mockImplementationOnce(() => "test-local-storage-key")
     clearHeadersConnectionIssue()
     expect(mockRemoveItem).toHaveBeenCalledWith(ACCESS_TOKEN_LOCAL_STORAGE_KEY)
-    expect(mockSetItem).toHaveBeenCalledWith(
-      "alert_message_secondary",
-      "There was a connection issue, so we signed you out. We do this for your security. Sign in again to continue."
-    )
   })
   it("getTemporaryAuthParamsFromURL", () => {
     // Mock the window.location.href

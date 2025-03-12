@@ -3,7 +3,12 @@ import Layout from "../../layouts/Layout"
 import withAppSetup from "../../layouts/withAppSetup"
 import { Card } from "@bloom-housing/ui-seeds"
 import { Icon, t, type UniversalIconType } from "@bloom-housing/ui-components"
-import { AppPages, getMyAccountSettingsPath, getMyApplicationsPath } from "../../util/routeUtil"
+import {
+  AppPages,
+  getMyAccountSettingsPath,
+  getMyApplicationsPath,
+  RedirectType,
+} from "../../util/routeUtil"
 import { renderInlineMarkup } from "../../util/languageUtil"
 import { withAuthentication } from "../../authentication/withAuthentication"
 import { parseUrlParams } from "../../authentication/token"
@@ -103,6 +108,6 @@ const MyAccount = (_props: MyAccountProps) => {
   )
 }
 
-export default withAppSetup(withAuthentication(MyAccount, { redirectPath: "account" }), {
+export default withAppSetup(withAuthentication(MyAccount, { redirectType: RedirectType.Account }), {
   pageName: AppPages.MyAccount,
 })

@@ -11,7 +11,7 @@ import {
 } from "@bloom-housing/ui-components"
 import { Card, Dialog, Heading } from "@bloom-housing/ui-seeds"
 import { ApplicationItem } from "../../components/ApplicationItem"
-import { AppPages, getApplicationPath, getLocalizedPath } from "../../util/routeUtil"
+import { AppPages, getApplicationPath, getLocalizedPath, RedirectType } from "../../util/routeUtil"
 import { getCurrentLanguage, renderInlineMarkup } from "../../util/languageUtil"
 import { deleteApplication, getApplications } from "../../api/authApiService"
 import { Application } from "../../api/types/rails/application/RailsApplication"
@@ -259,6 +259,9 @@ const MyApplications = () => {
   )
 }
 
-export default withAppSetup(withAuthentication(MyApplications, { redirectPath: "applications" }), {
-  pageName: AppPages.MyApplications,
-})
+export default withAppSetup(
+  withAuthentication(MyApplications, { redirectType: RedirectType.Applications }),
+  {
+    pageName: AppPages.MyApplications,
+  }
+)

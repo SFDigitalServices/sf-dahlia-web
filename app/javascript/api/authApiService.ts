@@ -41,8 +41,7 @@ export const createAccount = async (
         ? "https://dahlia-full.herokuapp.com/my-account"
         : "https://housing.sfgov.org/my-account",
     config_name: "default",
-  }).then(({ data, headers }: AxiosResponse<UserData>) => {
-    setAuthHeaders(headers as AuthHeaders)
+  }).then(({ data }: AxiosResponse<UserData>) => {
     return data.data
   })
 
