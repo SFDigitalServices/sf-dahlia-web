@@ -177,7 +177,7 @@ const getSignInAlertMessage = (alertType: AlertReason): SignInAlertMessage => {
       return { message: t("signOut.alertMessage.connectionIssue"), alertType: "secondary" }
 
     case AlertReason.TimeOut:
-      return { message: t("signOut.alertMessage.timeOut"), alertType: "secondary" }
+      return { message: t("signOut.alertMessage.timeout"), alertType: "secondary" }
     case AlertReason.LoginRequired:
       return { message: t("signIn.loginRequired"), alertType: "secondary" }
 
