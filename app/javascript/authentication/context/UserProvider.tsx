@@ -38,7 +38,6 @@ const UserProvider = (props: UserProviderProps) => {
           dispatch(saveProfile(profile))
         })
         .catch((error) => {
-          console.error("Error loading profile", error)
           if (error?.message === "Token expired") {
             pushToDataLayer("logout", {
               user_id: undefined,
@@ -47,11 +46,9 @@ const UserProvider = (props: UserProviderProps) => {
 
             // Give the DataLayer push some time to finish before the user is redirected
             setTimeout(() => {
-              console.log("Connection Issue Dispatched...")
               dispatch(signOutConnectionIssue())
             }, 100)
           } else {
-            console.log("systemSignOut")
             dispatch(systemSignOut())
           }
         })
