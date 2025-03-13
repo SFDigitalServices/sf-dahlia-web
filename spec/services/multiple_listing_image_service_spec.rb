@@ -11,14 +11,9 @@ describe MultipleListingImageService do
     # mock remote storage connection
     allow(FileStorageService).to receive(:find).and_return([])
     allow(FileStorageService).to receive(:upload).and_return(true)
-
-    # stub external image requests
-    stub_request(:get, /(\.jpg|\.png|\.jpeg)/)
-      .to_return(body: File.new(image_path), status: 200)
   end
 
   describe '.process_images' do
-
     it 'should return an error if the image is unreadable' do
       stub_request(:get, /(\.jpg|\.png|\.jpeg)/)
         .to_return(body: File.new("#{Rails.root}/README.md"), status: 200)
@@ -26,7 +21,7 @@ describe MultipleListingImageService do
       image_processor = MultipleListingImageService.new(listing).process_images
 
       error_message =
-        "MultipleListingImageService error: Image for listing #{listing_id} is unreadable."
+        "MultipleListingImageService error: Bad image url for listing #{listing_id}"
       expect(image_processor.errors.first).to include(error_message)
     end
 
@@ -37,18 +32,31 @@ describe MultipleListingImageService do
       image_processor = MultipleListingImageService.new(listing).process_images
 
       error_message =
-        'MultipleListingImageService error: Unable to process image for listing '\
-        'a0W4U00000IgshXUAR with image'
+        "MultipleListingImageService error: Bad image url for listing #{listing_id}"
       expect(image_processor.errors.first).to start_with(error_message)
     end
 
     it 'should upload a listing image' do
+      stub_request(:get, /(\.jpg|\.png|\.jpeg)/)
+        .to_return(
+          body: File.new(image_path),
+          status: 200,
+          headers: { 'Content-Type' => 'image/png' },
+        )
+
       MultipleListingImageService.new(listing).process_images
 
       expect(FileStorageService).to have_received(:upload)
     end
 
     it 'should save a reference to the uploaded file' do
+      stub_request(:get, /(\.jpg|\.png|\.jpeg)/)
+        .to_return(
+          body: File.new(image_path),
+          status: 200,
+          headers: { 'Content-Type' => 'image/png' },
+        )
+
       image_processor = MultipleListingImageService.new(listing)
       allow(image_processor).to receive(:resized_image?).and_return(true)
 
