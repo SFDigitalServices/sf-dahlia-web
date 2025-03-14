@@ -134,11 +134,11 @@ exports[`MobileListingDetailsLottery does display when lottery listing is closed
       <section
         class="aside-block"
       >
-        <h4
+        <h2
           class="text__underline-weighted"
         >
           Open Houses
-        </h4>
+        </h2>
         <div
           class="false"
         >
