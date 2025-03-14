@@ -100,8 +100,10 @@ class MultipleListingImageService
     end
   rescue OpenURI::HTTPError => e
     e.message
-  rescue Socket::ResolutionError => e
-    e
+  rescue Socket::ResolutionError => _e
+    'does not exist'
+  rescue Errno::ECONNREFUSED => _e
+    'can not resolve'
   end
 
   # TODO: pull into a new image_upload service?
