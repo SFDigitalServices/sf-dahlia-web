@@ -1611,6 +1611,7 @@
   "signIn.fillInFaster": "Punan ang mga application nang mas mabilis",
   "signIn.forgotPassword": "Nakalimutan ba ninyo ang inyong password?",
   "signIn.loggedOutDueToInactivity": "Pinahahalagahan namin ang inyong seguridad.  Ni-log-out namin kayo dahil sa kawalan ng aktibidad. Mangyaring mag-sign in para magpatuloy.",
+  "signIn.loginRequired": "Dapat ay naka-sign in ka para makita ang page na ito. Mag-sign in upang magpatuloy.",
   "signIn.newAccount.p1": "Nagpadala kami ng link sa %{email}.",
   "signIn.newAccount.p2": "Sundin ang link sa iyong email upang tapusin ang paggawa ng iyong account. Mag-e-expire ito pagkatapos ng 24 na oras.",
   "signIn.newAccount.sendEmailAgainButton": "Magpadala muli ng email",

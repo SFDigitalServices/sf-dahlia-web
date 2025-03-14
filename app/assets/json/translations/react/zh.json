@@ -1611,6 +1611,7 @@
   "signIn.fillInFaster": "加速填寫申請表",
   "signIn.forgotPassword": "忘記密碼？",
   "signIn.loggedOutDueToInactivity": "我們關心您的安全。由於沒有使用活動，我們已經將您登出。請重新登入以繼續。",
+  "signIn.loginRequired": "您必須登入才能查看此頁面。登入以繼續。",
   "signIn.newAccount.p1": "我們已將連結發送至 %{email}。",
   "signIn.newAccount.p2": "請前往電子郵件中所連結的網站，以完成帳戶建立程序。連結將在 24 小時後無效。",
   "signIn.newAccount.sendEmailAgainButton": "再次發送電子郵件",
