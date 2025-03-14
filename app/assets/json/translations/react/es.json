@@ -1611,6 +1611,7 @@
   "signIn.fillInFaster": "Completar solicitudes más rápido",
   "signIn.forgotPassword": "¿Olvidó su contraseña?",
   "signIn.loggedOutDueToInactivity": "Nos preocupa su seguridad. Cerramos su sesión por inactividad. Por favor inicie sesión para continuar.",
+  "signIn.loginRequired": "Debes iniciar sesión para ver esta página. Inicia sesión para continuar.",
   "signIn.newAccount.p1": "Enviamos un enlace a %{email}.",
   "signIn.newAccount.p2": "Siga el enlace en su correo electrónico para terminar de crear su cuenta. Vence en el término de 24 horas.",
   "signIn.newAccount.sendEmailAgainButton": "Enviar correo electrónico nuevamente",
