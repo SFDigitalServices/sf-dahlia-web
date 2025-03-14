@@ -40,6 +40,9 @@ generatedWebpackConfig.plugins.unshift(
       UNLEASH_TOKEN: JSON.stringify(process.env.UNLEASH_TOKEN),
       UNLEASH_ENV: JSON.stringify(process.env.UNLEASH_ENV),
       FCFS_FORMASSEMBLY_URL: JSON.stringify(process.env.FCFS_FORMASSEMBLY_URL),
+      FCFS_FORMASSEMBLY_URL_ES: JSON.stringify(process.env.FCFS_FORMASSEMBLY_URL_ES),
+      FCFS_FORMASSEMBLY_URL_ZH: JSON.stringify(process.env.FCFS_FORMASSEMBLY_URL_ZH),
+      FCFS_FORMASSEMBLY_URL_TL: JSON.stringify(process.env.FCFS_FORMASSEMBLY_URL_TL),
     },
   })
 )
