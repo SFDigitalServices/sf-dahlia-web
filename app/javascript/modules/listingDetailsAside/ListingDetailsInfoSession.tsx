@@ -32,6 +32,7 @@ export const ListingDetailsInfoSession = ({ listing }: ListingDetailsInfoSession
               }
             })}
             headerText={t("listings.process.informationSessions")}
+            priority={2}
           />
         </div>
       ) : null}
