@@ -1,11 +1,11 @@
 import React from "react"
 import { isTokenValid } from "./token"
 import UserContext from "./context/UserContext"
-import { getLocalizedPath } from "../util/routeUtil"
+import { getLocalizedPath, RedirectType } from "../util/routeUtil"
 import { getCurrentLanguage } from "../util/languageUtil"
 
 interface WithAuthenticationProps {
-  redirectPath?: string
+  redirectType?: RedirectType
 }
 
 /**
@@ -21,14 +21,14 @@ interface WithAuthenticationProps {
  */
 export const withAuthentication = <P extends object>(
   WrappedComponent: React.ComponentType<P>,
-  { redirectPath }: WithAuthenticationProps = {}
+  { redirectType }: WithAuthenticationProps = {}
 ) => {
   const WithAuthenticationComponent = (props: P) => {
     const { profile, loading } = React.useContext(UserContext)
 
     React.useEffect(() => {
       if (!isTokenValid()) {
-        const redirectParam = redirectPath ? `?redirect=${redirectPath}` : ""
+        const redirectParam = redirectType ? `?redirect=${redirectType}` : ""
         const language = getCurrentLanguage()
         const signInPath = getLocalizedPath("/sign-in", language, redirectParam)
         window.location.href = signInPath
