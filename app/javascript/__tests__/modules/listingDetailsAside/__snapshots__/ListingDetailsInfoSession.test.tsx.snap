@@ -10,11 +10,11 @@ exports[`ListingDetailsInfoSession renders ListingDetailsInfoSession component 1
     <section
       class="aside-block"
     >
-      <h4
+      <h2
         class="text__underline-weighted"
       >
         Information Sessions
-      </h4>
+      </h2>
       <div
         class="false"
       >

@@ -8,11 +8,11 @@ exports[`ListingDetailsOpenHouses displays Open Houses with Listing containing O
     <section
       class="aside-block"
     >
-      <h4
+      <h2
         class="text__underline-weighted"
       >
         Open Houses
-      </h4>
+      </h2>
       <div
         class="false"
       >
