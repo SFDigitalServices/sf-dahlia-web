@@ -11,6 +11,7 @@ import {
   getForgotPasswordPath,
   createPath,
   getSignInRedirectUrl,
+  RedirectType,
 } from "../../util/routeUtil"
 
 describe("routeUtil", () => {
@@ -128,27 +129,27 @@ describe("routeUtil", () => {
   })
   describe("getSignInRedirectUrl", () => {
     it("returns the correct redirect URL for 'account'", () => {
-      expect(getSignInRedirectUrl("account")).toBe("/my-account")
+      expect(getSignInRedirectUrl(RedirectType.Account)).toBe("/my-account")
     })
 
     it("returns the correct redirect URL for 'applications'", () => {
-      expect(getSignInRedirectUrl("applications")).toBe("/my-applications")
+      expect(getSignInRedirectUrl(RedirectType.Applications)).toBe("/my-applications")
     })
 
     it("returns the correct redirect URL for 'settings'", () => {
-      expect(getSignInRedirectUrl("settings")).toBe("/account-settings")
+      expect(getSignInRedirectUrl(RedirectType.Settings)).toBe("/account-settings")
     })
 
     it("returns the correct redirect URL for 'home'", () => {
-      expect(getSignInRedirectUrl("home")).toBe("/")
+      expect(getSignInRedirectUrl(RedirectType.Home)).toBe("/")
     })
 
     it("returns the default redirect URL for an unknown key", () => {
-      expect(getSignInRedirectUrl("unknown")).toBe("/")
+      expect(getSignInRedirectUrl("unknown" as RedirectType)).toBe("/")
     })
 
     it("returns the default redirect URL when no key is provided", () => {
-      expect(getSignInRedirectUrl("")).toBe("/my-account")
+      expect(getSignInRedirectUrl("" as RedirectType)).toBe("/my-account")
     })
   })
 })

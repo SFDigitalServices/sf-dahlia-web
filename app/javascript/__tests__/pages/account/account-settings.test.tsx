@@ -9,6 +9,7 @@ import {
   setupUserContext,
 } from "../../__util__/accountUtils"
 import { withAuthentication } from "../../../authentication/withAuthentication"
+import { RedirectType } from "../../../util/routeUtil"
 
 jest.mock("../../../api/apiService", () => ({
   authenticatedPut: jest.fn(),
@@ -26,7 +27,9 @@ describe("<AccountSettingsPage />", () => {
       setupUserContext({ loggedIn: true, saveProfileMock })
       setupLocationAndRouteMock()
       promise = Promise.resolve()
-      const WrappedComponent = withAuthentication(AccountSettingsPage, { redirectPath: "settings" })
+      const WrappedComponent = withAuthentication(AccountSettingsPage, {
+        redirectType: RedirectType.Settings,
+      })
       renderResult = await renderAndLoadAsync(<WrappedComponent assetPaths={{}} />)
     })
 
@@ -725,7 +728,9 @@ describe("<AccountSettingsPage />", () => {
     })
 
     it("redirects to the sign in page", async () => {
-      const WrappedComponent = withAuthentication(AccountSettingsPage, { redirectPath: "settings" })
+      const WrappedComponent = withAuthentication(AccountSettingsPage, {
+        redirectType: RedirectType.Settings,
+      })
       const { queryByText } = await renderAndLoadAsync(<WrappedComponent assetPaths={{}} />)
 
       expect(window.location.href).toBe("http://dahlia.com/sign-in?redirect=settings")

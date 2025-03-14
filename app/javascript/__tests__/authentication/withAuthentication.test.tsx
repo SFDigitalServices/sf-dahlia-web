@@ -3,7 +3,7 @@ import { render } from "@testing-library/react"
 import { withAuthentication } from "../../authentication/withAuthentication"
 import UserContext, { ContextProps } from "../../authentication/context/UserContext"
 import { isTokenValid } from "../../authentication/token"
-import { getLocalizedPath } from "../../util/routeUtil"
+import { getLocalizedPath, RedirectType } from "../../util/routeUtil"
 import { getCurrentLanguage } from "../../util/languageUtil"
 
 jest.mock("../../authentication/token", () => ({
@@ -94,7 +94,9 @@ describe("withAuthentication", () => {
   it("redirects to sign-in with redirect param when specified", () => {
     ;(isTokenValid as jest.Mock).mockReturnValue(false)
     ;(getLocalizedPath as jest.Mock).mockReturnValue("/sign-in?redirect=test-path")
-    const WrappedWithRedirect = withAuthentication(TestComponent, { redirectPath: "test-path" })
+    const WrappedWithRedirect = withAuthentication(TestComponent, {
+      redirectType: "test-path" as RedirectType,
+    })
 
     render(
       <UserContext.Provider value={mockContextValue}>

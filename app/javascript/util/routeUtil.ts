@@ -97,19 +97,63 @@ export const getEligibilityEstimatorLink = localizedPathGetter("/eligibility-est
 export const getDisclaimerPath = localizedPathGetter("/disclaimer")
 export const getPrivacyPolicyPath = localizedPathGetter("/privacy")
 
-export const SignInRedirects = {
-  account: getMyAccountPath(),
-  applications: getMyApplicationsPath(),
-  settings: getMyAccountSettingsPath(),
-  home: getHomepagePath(),
+export enum RedirectType {
+  Account = "account",
+  Applications = "applications",
+  Settings = "settings",
+  Home = "home",
 }
 
-const getRedirectUrl = (key: string): string => {
-  return SignInRedirects[key] || SignInRedirects.home
+export enum AlertReason {
+  SignOut = "sign-out",
+  TimeOut = "time-out",
+  ConnectionIssue = "connection-issue",
+  LoginRequired = "login-required",
 }
 
-export const getSignInRedirectUrl = (redirect: string) => {
-  return getRedirectUrl(redirect || "account")
+export const mapRedirectParamToEnum = (param: string | null): RedirectType => {
+  switch (param) {
+    case "account":
+      return RedirectType.Account
+    case "applications":
+      return RedirectType.Applications
+    case "settings":
+      return RedirectType.Settings
+    case "home":
+      return RedirectType.Home
+    default:
+      return RedirectType.Home
+  }
+}
+
+export const mapAlertParamToEnum = (param: string | null): AlertReason => {
+  switch (param) {
+    case "sign-out":
+      return AlertReason.SignOut
+    case "time-out":
+      return AlertReason.TimeOut
+    case "connection-issue":
+      return AlertReason.ConnectionIssue
+    case "login-required":
+      return AlertReason.LoginRequired
+    default:
+      return AlertReason.ConnectionIssue
+  }
+}
+
+export const SignInRedirectUrls = {
+  [RedirectType.Account]: getMyAccountPath(),
+  [RedirectType.Applications]: getMyApplicationsPath(),
+  [RedirectType.Settings]: getMyAccountSettingsPath(),
+  [RedirectType.Home]: getHomepagePath(),
+}
+
+const getRedirectUrl = (key: RedirectType): string => {
+  return SignInRedirectUrls[key] || SignInRedirectUrls[RedirectType.Home]
+}
+
+export const getSignInRedirectUrl = (redirect: RedirectType) => {
+  return getRedirectUrl(redirect || RedirectType.Account)
 }
 
 export enum AppPages {
