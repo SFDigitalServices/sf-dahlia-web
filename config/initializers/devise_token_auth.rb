@@ -39,18 +39,23 @@ DeviseTokenAuth.setup do |config|
   # will be rejected. In this list we are effectively only scoping to the my account and reset password pages,
   # but since we have multiple different environments, we need to allow for multiple different URLs.
   # By default, this is set to an empty array, and all redirect URLs are allowed.
-  config.redirect_whitelist = [
-    "https://#{ENV['HEROKU_APP_NAME']}.herokuapp.com/my-account",
-    "https://#{ENV['HEROKU_APP_NAME']}.herokuapp.com/reset-password",
-    "https://dahlia-full.herokuapp.com/my-account",
-    "https://dahlia-full.herokuapp.com/reset-password",
-    "https://housing.sfgov.org/my-account",
-    "https://housing.sfgov.org/reset-password",
-    "http://localhost:3000/my-account",
-    "http://localhost:3000/reset-password",
-    "/my-account",
-    "/reset-password"
+  allowed_domains = [
+    "https://#{ENV['HEROKU_APP_NAME']}.herokuapp.com",
+    "https://dahlia-full.herokuapp.com",
+    "https://housing.sfgov.org",
+    "http://localhost:3000",
+    ""
   ]
+
+  allowed_locales = ['', '/en', '/es', '/zh', '/tl']
+  allowed_paths   = ["/my-account", "/reset-password"]
+
+  config.redirect_whitelist = allowed_domains.flat_map do |domain|
+    allowed_paths.flat_map do |path|
+      allowed_locales.map { |locale| "#{domain}#{locale}#{path}" }
+    end
+  end
+
 
   # By default, only Bearer Token authentication is implemented out of the box.
   # If you wish to integrate with legacy Devise authentication, you can

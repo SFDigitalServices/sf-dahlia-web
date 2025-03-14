@@ -123,7 +123,9 @@ exports[`Listing Interest Page renders listing interest page with error response
           <div
             class="site-header__notice-text"
           >
-            <span>
+            <span
+              class="feedback-link"
+            >
               We'd love to get 
               <a
                 href="https://airtable.com/shrw64DubWTQfRkdo"
@@ -502,7 +504,9 @@ exports[`Listing Interest Page renders listing interest page with expired respon
           <div
             class="site-header__notice-text"
           >
-            <span>
+            <span
+              class="feedback-link"
+            >
               We'd love to get 
               <a
                 href="https://airtable.com/shrw64DubWTQfRkdo"
@@ -951,7 +955,9 @@ exports[`Listing Interest Page renders listing interest page with no response 1`
           <div
             class="site-header__notice-text"
           >
-            <span>
+            <span
+              class="feedback-link"
+            >
               We'd love to get 
               <a
                 href="https://airtable.com/shrw64DubWTQfRkdo"
@@ -1362,7 +1368,9 @@ exports[`Listing Interest Page renders listing interest page with yes response 1
           <div
             class="site-header__notice-text"
           >
-            <span>
+            <span
+              class="feedback-link"
+            >
               We'd love to get 
               <a
                 href="https://airtable.com/shrw64DubWTQfRkdo"

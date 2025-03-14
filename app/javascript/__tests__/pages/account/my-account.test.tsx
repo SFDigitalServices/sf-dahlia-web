@@ -8,6 +8,7 @@ import {
 } from "../../__util__/accountUtils"
 import { withAuthentication } from "../../../authentication/withAuthentication"
 import TagManager from "react-gtm-module"
+import { RedirectType } from "../../../util/routeUtil"
 
 jest.mock("react-gtm-module", () => ({
   initialize: jest.fn(),
@@ -26,7 +27,7 @@ describe("<MyAccount />", () => {
 
     beforeEach(async () => {
       setupUserContext({ loggedIn: true })
-      const WrappedComponent = withAuthentication(MyAccount, { redirectPath: "account" })
+      const WrappedComponent = withAuthentication(MyAccount, { redirectType: RedirectType.Account })
 
       setupLocationAndRouteMock(
         "?access-token=true&accountConfirmed=true&account_confirmation_success=true"
@@ -93,7 +94,7 @@ describe("<MyAccount />", () => {
       setupUserContext({ loggedIn: false })
       setupLocationAndRouteMock()
 
-      const WrappedComponent = withAuthentication(MyAccount, { redirectPath: "account" })
+      const WrappedComponent = withAuthentication(MyAccount, { redirectType: RedirectType.Account })
       await renderAndLoadAsync(<WrappedComponent assetPaths={{}} />)
     })
 

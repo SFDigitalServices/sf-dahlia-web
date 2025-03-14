@@ -17,6 +17,7 @@ defaults: &defaults
         POSTGRES_USER: root
         POSTGRES_DB: sf_dahlia
     - image: "cypress/base:14.15.0"
+  resource_class: medium+
   executor: ruby/default
 non_production_jobs: &non_production_jobs
   filters:

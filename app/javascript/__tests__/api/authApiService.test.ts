@@ -51,7 +51,7 @@ describe("authApiService", () => {
   })
 
   describe("createAccount", () => {
-    it("calls apiService post and sets headers", async () => {
+    it("calls apiService post", async () => {
       const url = "/api/v1/auth"
       const data = {
         user: {
@@ -72,7 +72,7 @@ describe("authApiService", () => {
       const storageSpy = jest.spyOn(Storage.prototype, "setItem")
       await createAccount(data.user, data.contact)
       expect(post).toHaveBeenCalledWith(url, data)
-      expect(storageSpy).toHaveBeenCalled()
+      expect(storageSpy).not.toHaveBeenCalled()
     })
   })
 
