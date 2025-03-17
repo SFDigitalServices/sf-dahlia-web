@@ -32,14 +32,14 @@ describe("<HowToApply />", () => {
   })
 
   it("shows 'SUBMIT APPLICATION' button if URL is present", async () => {
-    process.env.FCFS_FORMASSEMBLY_URL = "https://www.test.com"
+    process.env.FCFS_FORMASSEMBLY_URL_EN = "https://www.test.com"
     axios.get.mockResolvedValue({ data: { listing: openFcfsSaleListing } })
     const { queryByText } = await renderAndLoadAsync(<HowToApply assetPaths={{}} />)
     expect(queryByText("Submit application")).not.toBeNull()
   })
 
   it("does not show 'SUBMIT APPLICATION' button if URL is missing", async () => {
-    process.env.FCFS_FORMASSEMBLY_URL = undefined
+    process.env.FCFS_FORMASSEMBLY_URL_EN = undefined
     axios.get.mockResolvedValue({ data: { listing: openFcfsSaleListing } })
     const { queryByText } = await renderAndLoadAsync(<HowToApply assetPaths={{}} />)
     expect(queryByText("Submit application")).toBeNull()
