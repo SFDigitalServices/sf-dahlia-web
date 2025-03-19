@@ -310,6 +310,7 @@ workflows:
             app/assets/javascripts/.* run-angular-job true
             spec/javascripts/.* run-angular-job true
           base-revision: main
+          config-path: .circleci/config.yml
   build-and-deploy:
     jobs:
       - build
