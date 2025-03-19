@@ -3,6 +3,11 @@ orbs:
   ruby: circleci/ruby@0.1.2
   cypress: cypress-io/cypress@1.26.0
   browser-tools: circleci/browser-tools@1.4.4
+  path-filtering: circleci/path-filtering@1.2.0
+parameters:
+  run-angular-job:
+    type: boolean
+    default: false
 defaults: &defaults
   working_directory: ~/web
   docker:
@@ -26,14 +31,6 @@ non_production_jobs: &non_production_jobs
   requires:
     - build
 angular_jobs: &angular_jobs
-  filters:
-    branches:
-      only:
-        - /^angular.*$/
-        - main
-    paths:
-      - app/assets/javascripts/**/*
-      - spec/javascripts/**/*
   requires:
     - build
 prod_and_release_jobs: &prod_and_release_jobs
@@ -220,14 +217,24 @@ jobs:
   unit-angular:
     <<: *defaults
     steps:
-      - setup
-      - run:
-          name: OpenSSL workaround for PhantomJS
-          command: echo "export OPENSSL_CONF=/etc/ssl/" >> $BASH_ENV
-      - run: RAILS_ENV=test bundle exec rails db:create
-      - run: RAILS_ENV=test bundle exec rails db:test:prepare
-      - run: yarn install
-      - run: bundle exec rake jasmine:ci
+      - when:
+          condition:
+            equal: [true, << pipeline.parameters.run-angular-job >>]
+          steps:
+            - run: echo "Running Angular unit tests"
+            - setup
+            - run:
+                name: OpenSSL workaround for PhantomJS
+                command: echo "export OPENSSL_CONF=/etc/ssl/" >> $BASH_ENV
+            - run: RAILS_ENV=test bundle exec rails db:create
+            - run: RAILS_ENV=test bundle exec rails db:test:prepare
+            - run: yarn install
+            - run: bundle exec rake jasmine:ci
+      - when:
+          condition:
+            equal: [false, << pipeline.parameters.run-angular-job >>]
+          steps:
+            - run: echo "Skipping Angular unit tests"
   e2e:
     <<: *defaults
     environment:
@@ -253,15 +260,24 @@ jobs:
     <<: *defaults
     parallelism: 4
     steps:
-      - setup
-      - start-server
-      - run:
-          name: Run e2e tests using test splitting
-          command: |
-            TESTFILES=$(circleci tests glob "spec/e2e/features/**/*.feature" | circleci tests split --split-by=timings)
-            LIST=$(echo $TESTFILES | awk '{ gsub(" ", ",") ; system( "echo "  $0) }')
-            echo $LIST
-            npm run protractor -- --specs $LIST
+      - when:
+          condition:
+            equal: [true, << pipeline.parameters.run-angular-job >>]
+          steps:
+            - setup
+            - start-server
+            - run:
+                name: Run e2e tests using test splitting
+                command: |
+                  TESTFILES=$(circleci tests glob "spec/e2e/features/**/*.feature" | circleci tests split --split-by=timings)
+                  LIST=$(echo $TESTFILES | awk '{ gsub(" ", ",") ; system( "echo "  $0) }')
+                  echo $LIST
+                  npm run protractor -- --specs $LIST
+      - when:
+          condition:
+            equal: [false, << pipeline.parameters.run-angular-job >>]
+          steps:
+            - run: echo "Skipping e2e-legacy job"
   cleanup-test-data:
     <<: *defaults
     steps:
@@ -284,6 +300,16 @@ jobs:
       - run: echo "All required jobs have now completed"
 workflows:
   version: 2.1
+  check-paths:
+    jobs:
+      - path-filtering/filter:
+          name: check-angular-files
+          mapping: |
+            ^main$ run-angular-job true
+            ^angular.*$ run-angular-job true
+            app/assets/javascripts/.* run-angular-job true
+            spec/javascripts/.* run-angular-job true
+          base-revision: main
   build-and-deploy:
     jobs:
       - build
