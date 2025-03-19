@@ -76,7 +76,7 @@ const staticUserData = {
   acceptingNewMOHCDClients: false,
 }
 
-const generateHeaders = (email: string) => ({
+export const generateHeaders = (email: string) => ({
   expiry: `${Date.now() / 1000 + 6000}`,
   "access-token": "mock-access-token",
   client: "mock-client",
