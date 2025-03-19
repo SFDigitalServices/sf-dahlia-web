@@ -31,6 +31,9 @@ angular_jobs: &angular_jobs
       only:
         - /^angular.*$/
         - main
+    paths:
+      - app/assets/javascripts/**/*
+      - spec/javascripts/**/*
   requires:
     - build
 prod_and_release_jobs: &prod_and_release_jobs
