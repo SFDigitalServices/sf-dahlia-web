@@ -104,6 +104,8 @@ class MultipleListingImageService
     'does not exist'
   rescue Errno::ECONNREFUSED => _e
     'can not resolve'
+  rescue Net::OpenTimeout => _e
+    'request timed out'
   end
 
   # TODO: pull into a new image_upload service?

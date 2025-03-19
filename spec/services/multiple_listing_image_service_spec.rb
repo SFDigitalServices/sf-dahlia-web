@@ -58,6 +58,17 @@ describe MultipleListingImageService do
       expect(image_processor.errors.first).to include(error_message)
     end
 
+    it 'should return an error when the request for the file url times out' do
+      stub_request(:get, /(\.jpg|\.png|\.jpeg)/)
+        .to_raise(Net::OpenTimeout)
+
+      image_processor = MultipleListingImageService.new(listing).process_images
+
+      error_message =
+        "MultipleListingImageService error: Bad image url for listing #{listing_id}"
+      expect(image_processor.errors.first).to include(error_message)
+    end
+
     it 'should return an error when status is not 200' do
       stub_request(:get, /(\.jpg|\.png|\.jpeg)/)
         .to_return(body: File.new("#{Rails.root}/README.md"), status: 500)
