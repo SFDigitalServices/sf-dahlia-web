@@ -36,13 +36,14 @@ class GoogleTranslationService
     translations = transform_translations_for_caching(listing_id, keys, translations,
                                                       last_modified)
     cache_key = Force::ListingService.listing_translations_cache_key(listing_id)
+    content = translations.blank? ? 'LastModifiedDate' : 'translations'
     if @cache.write(cache_key, translations)
       google_translation_logger(
-        "Successfully wrote translations to cache with key '#{cache_key}'",
+        "Successfully wrote #{content} to cache with key '#{cache_key}'",
       )
     else
       google_translation_logger(
-        "Error writing translations to cache with key '#{cache_key}'", true
+        "Error writing #{content} to cache with key '#{cache_key}'", true
       )
     end
     translations
