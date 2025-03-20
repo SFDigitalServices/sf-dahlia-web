@@ -1,5 +1,5 @@
 import React from "react"
-import { cleanup, render } from "@testing-library/react"
+import { cleanup, render, screen, waitFor } from "@testing-library/react"
 import { renderAndLoadAsync } from "../../__util__/renderUtils"
 import HowToApply, { LeasingAgentBox } from "../../../pages/howToApply/how-to-apply"
 import { notYetOpenSaleFcfsListing } from "../../data/RailsSaleListing/listing-sale-fcfs-not-yet-open"
@@ -32,14 +32,37 @@ describe("<HowToApply />", () => {
   })
 
   it("shows 'SUBMIT APPLICATION' button if URL is present", async () => {
-    process.env.FCFS_FORMASSEMBLY_URL = "https://www.test.com"
+    process.env.FCFS_FORMASSEMBLY_URL_EN = "https://www.test.com"
     axios.get.mockResolvedValue({ data: { listing: openFcfsSaleListing } })
     const { queryByText } = await renderAndLoadAsync(<HowToApply assetPaths={{}} />)
     expect(queryByText("Submit application")).not.toBeNull()
   })
 
+  it("opens correct url for a locale", async () => {
+    process.env.FCFS_FORMASSEMBLY_URL_EN = "https://www.test.com"
+    process.env.FCFS_FORMASSEMBLY_URL_ES = "https://www.test-es.com"
+    // set client to ES locale
+    const originalLocation = window.location
+    jest.spyOn(window, "location", "get").mockImplementation(() => ({
+      ...originalLocation,
+      pathname: "/es/test",
+    }))
+    axios.get.mockResolvedValue({ data: { listing: openFcfsSaleListing } })
+    global.open = jest.fn()
+
+    await renderAndLoadAsync(<HowToApply assetPaths={{}} />)
+    screen.getByText("Submit application").click()
+    await waitFor(() => {
+      expect(global.open).toHaveBeenCalledWith(
+        `${process.env.FCFS_FORMASSEMBLY_URL_ES}?ListingID=a0W0P00000GlKfBUAV`,
+        "_blank"
+      )
+    })
+    jest.restoreAllMocks()
+  })
+
   it("does not show 'SUBMIT APPLICATION' button if URL is missing", async () => {
-    process.env.FCFS_FORMASSEMBLY_URL = undefined
+    process.env.FCFS_FORMASSEMBLY_URL_EN = undefined
     axios.get.mockResolvedValue({ data: { listing: openFcfsSaleListing } })
     const { queryByText } = await renderAndLoadAsync(<HowToApply assetPaths={{}} />)
     expect(queryByText("Submit application")).toBeNull()

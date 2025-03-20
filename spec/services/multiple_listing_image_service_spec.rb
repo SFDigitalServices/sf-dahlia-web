@@ -11,44 +11,96 @@ describe MultipleListingImageService do
     # mock remote storage connection
     allow(FileStorageService).to receive(:find).and_return([])
     allow(FileStorageService).to receive(:upload).and_return(true)
-
-    # stub external image requests
-    stub_request(:get, /(\.jpg|\.png|\.jpeg)/)
-      .to_return(body: File.new(image_path), status: 200)
   end
 
   describe '.process_images' do
-
-    it 'should return an error if the image is unreadable' do
+    it 'should return an error if the file is not an image' do
       stub_request(:get, /(\.jpg|\.png|\.jpeg)/)
         .to_return(body: File.new("#{Rails.root}/README.md"), status: 200)
 
       image_processor = MultipleListingImageService.new(listing).process_images
 
       error_message =
-        "MultipleListingImageService error: Image for listing #{listing_id} is unreadable."
+        "MultipleListingImageService error: Bad image url for listing #{listing_id}"
       expect(image_processor.errors.first).to include(error_message)
     end
 
-    it 'should return standard error when reading image' do
+    it 'should return an error when the file url is invalid' do
+      bad_image_listing = JSON.parse(listing_json)['listing']
+      bad_image_listing['Listing_Images'].first['Image_URL'] = 'bad-url'
+
+      image_processor = MultipleListingImageService.new(bad_image_listing).process_images
+
+      error_message =
+        "MultipleListingImageService error: Bad image url for listing #{listing_id}"
+      expect(image_processor.errors.first).to include(error_message)
+    end
+
+    it 'should return an error when the file url does not exist' do
+      stub_request(:get, /(\.jpg|\.png|\.jpeg)/)
+        .to_raise(Socket::ResolutionError)
+
+      image_processor = MultipleListingImageService.new(listing).process_images
+
+      error_message =
+        "MultipleListingImageService error: Bad image url for listing #{listing_id}"
+      expect(image_processor.errors.first).to include(error_message)
+    end
+
+    it 'should return an error when the file url cannot be resolved' do
+      stub_request(:get, /(\.jpg|\.png|\.jpeg)/)
+        .to_raise(Errno::ECONNREFUSED)
+
+      image_processor = MultipleListingImageService.new(listing).process_images
+
+      error_message =
+        "MultipleListingImageService error: Bad image url for listing #{listing_id}"
+      expect(image_processor.errors.first).to include(error_message)
+    end
+
+    it 'should return an error when the request for the file url times out' do
+      stub_request(:get, /(\.jpg|\.png|\.jpeg)/)
+        .to_raise(Net::OpenTimeout)
+
+      image_processor = MultipleListingImageService.new(listing).process_images
+
+      error_message =
+        "MultipleListingImageService error: Bad image url for listing #{listing_id}"
+      expect(image_processor.errors.first).to include(error_message)
+    end
+
+    it 'should return an error when status is not 200' do
       stub_request(:get, /(\.jpg|\.png|\.jpeg)/)
         .to_return(body: File.new("#{Rails.root}/README.md"), status: 500)
 
       image_processor = MultipleListingImageService.new(listing).process_images
 
       error_message =
-        'MultipleListingImageService error: Unable to process image for listing '\
-        'a0W4U00000IgshXUAR with image'
+        "MultipleListingImageService error: Bad image url for listing #{listing_id}"
       expect(image_processor.errors.first).to start_with(error_message)
     end
 
     it 'should upload a listing image' do
+      stub_request(:get, /(\.jpg|\.png|\.jpeg)/)
+        .to_return(
+          body: File.new(image_path),
+          status: 200,
+          headers: { 'Content-Type' => 'image/png' },
+        )
+
       MultipleListingImageService.new(listing).process_images
 
       expect(FileStorageService).to have_received(:upload)
     end
 
     it 'should save a reference to the uploaded file' do
+      stub_request(:get, /(\.jpg|\.png|\.jpeg)/)
+        .to_return(
+          body: File.new(image_path),
+          status: 200,
+          headers: { 'Content-Type' => 'image/png' },
+        )
+
       image_processor = MultipleListingImageService.new(listing)
       allow(image_processor).to receive(:resized_image?).and_return(true)
 
