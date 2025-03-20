@@ -122,11 +122,11 @@ exports[`ListingDetailsAside renders ListingDetailsAside component fcfs 1`] = `
             <section
               class="aside-block"
             >
-              <h4
+              <h2
                 class="text__underline-weighted"
               >
                 Information Sessions
-              </h4>
+              </h2>
               <div
                 class="false"
               >
@@ -680,11 +680,11 @@ exports[`ListingDetailsAside renders ListingDetailsAside component rental 1`] = 
             <section
               class="aside-block"
             >
-              <h4
+              <h2
                 class="text__underline-weighted"
               >
                 Open Houses
-              </h4>
+              </h2>
               <div
                 class="false"
               >
@@ -848,11 +848,11 @@ exports[`ListingDetailsAside renders ListingDetailsAside component sales 1`] = `
             <section
               class="aside-block"
             >
-              <h4
+              <h2
                 class="text__underline-weighted"
               >
                 Information Sessions
-              </h4>
+              </h2>
               <div
                 class="false"
               >
