@@ -7,6 +7,7 @@ import {
   renderInlineMarkup,
   getPathWithoutLanguagePrefix,
   getTranslatedString,
+  getCurrentLanguage,
 } from "../../util/languageUtil"
 import { isValidUrl } from "../../util/urlUtil"
 import {
@@ -40,7 +41,8 @@ interface HowToApplyProps {
 }
 
 const generateSubmissionUrl = (listingId: string) => {
-  const formAssemblyUrl = process.env.FCFS_FORMASSEMBLY_URL
+  const currentLocale = getCurrentLanguage()
+  const formAssemblyUrl = process.env[`FCFS_FORMASSEMBLY_URL_${currentLocale.toUpperCase()}`]
   if (!isValidUrl(formAssemblyUrl)) return null
 
   return `${formAssemblyUrl}?ListingID=${listingId}`
