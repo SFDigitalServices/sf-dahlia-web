@@ -28,14 +28,23 @@ export const handleSectionHeaderEntries = (sectionHeaderEntries: IntersectionObs
     }
   )
 
-  for (const sectionHeader of [
-    "lottery-results",
-    "upcoming-lotteries",
-    "buy-now",
-    "enter-a-lottery",
-  ]) {
+  const headers = ["enter-a-lottery", "buy-now", "upcoming-lotteries", "lottery-results"]
+  for (const sectionHeader of headers) {
     if (rollup[sectionHeader].intersecting) {
       return sectionHeader
+    }
+  }
+
+  // Edge case when user is scrolling and reverses direction in the middle of two sections
+  // Iterate through the sections and return the first one in the viewport
+  for (const sectionHeader of headers) {
+    const el = document.querySelector(`#${sectionHeader}`)
+    if (el) {
+      const rect = el.getBoundingClientRect()
+      const viewportH = window.innerHeight || document.documentElement.clientHeight
+      if (rect.top + el.clientHeight > 0 && rect.top < viewportH) {
+        return sectionHeader
+      }
     }
   }
 }
