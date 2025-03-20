@@ -26,6 +26,15 @@ class MultipleListingImageService
   def process_image(listing_image)
     li_raw_image_url = listing_image['Image_URL']
 
+    url_validity = check_image_url_validity(li_raw_image_url)
+    unless url_validity == true
+      add_error(
+        @errors,
+        "Bad image url for listing #{@listing_id} - #{url_validity}: #{li_raw_image_url}",
+      )
+      return
+    end
+
     return if li_raw_image_url.blank?
 
     cache_string = get_cache_string(@listing_id, li_raw_image_url)
@@ -80,6 +89,23 @@ class MultipleListingImageService
     ListingImage.where(salesforce_listing_id: listing_id,
                        image_url:,
                        raw_image_url: li_raw_image_url).exists?
+  end
+
+  def check_image_url_validity(url)
+    uri = URI.parse(url)
+    return 'Invalid URL' unless uri.is_a?(URI::HTTP)
+
+    uri.open do |f|
+      return f.content_type.starts_with?('image') ? true : f.content_type
+    end
+  rescue OpenURI::HTTPError => e
+    e.message
+  rescue Socket::ResolutionError => _e
+    'does not exist'
+  rescue Errno::ECONNREFUSED => _e
+    'can not resolve'
+  rescue Net::OpenTimeout => _e
+    'request timed out'
   end
 
   # TODO: pull into a new image_upload service?
