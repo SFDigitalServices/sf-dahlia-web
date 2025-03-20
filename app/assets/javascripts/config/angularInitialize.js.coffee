@@ -38,14 +38,24 @@
         content.message = $translate.instant('t.session_inactivity')
         AnalyticsService.trackEvent('session_exp_warning_shown', {label_prefix, is_during_application_flow: isInShortForm, user_id: undefined, url: window.location.href})
       ModalService.alert content,
-        onConfirm: ->
-          AnalyticsService.trackEvent('session_exp_warning_action', {
-            label_prefix,
-            is_during_application_flow: isInShortForm,
-            user_id: undefined,
-            action: "user prevented",
-            url: window.location.href
-          })
+        {
+          onConfirm: ->
+            AnalyticsService.trackEvent('session_exp_warning_action', {
+              label_prefix,
+              is_during_application_flow: isInShortForm,
+              user_id: undefined,
+              action: "user prevented",
+              url: window.location.href
+            })
+          onClose: ->
+            AnalyticsService.trackEvent('session_exp_warning_action', {
+              label_prefix,
+              is_during_application_flow: isInShortForm,
+              user_id: undefined,
+              action: "user prevented",
+              url: window.location.href
+            })
+        }
         { nativeAlert: true }
 
     $rootScope.$on 'IdleTimeout', ->

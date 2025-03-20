@@ -22,6 +22,7 @@ ModalService = ($modal, $window) ->
   Service.alert = (content, opts = {}) ->
     angular.copy(content, Service.content)
     Service.callbacks.onConfirm = opts.onConfirm if opts.onConfirm
+    Service.callbacks.onClose = opts.onClose if opts.onClose
     nativeAlert = !!opts.nativeAlert
     if nativeAlert && !$window.navigator.userAgent.match(/iPhone|iPad|iPod/i)
       $window.alert(content.message)
