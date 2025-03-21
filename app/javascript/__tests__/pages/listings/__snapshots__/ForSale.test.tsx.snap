@@ -481,141 +481,147 @@ exports[`For Sale renders ForSale component 1`] = `
             id="listing-results"
           >
             <div
-              class="listings-group__header listings-group__customHeader"
+              id="enter-a-lottery"
             >
               <div
-                class="listings-group__content"
+                class="listings-group__header listings-group__customHeader"
               >
                 <div
-                  class="listings-group__icon"
+                  class="listings-group__content"
                 >
-                  <span
-                    class="ui-icon ui-xlarge"
-                  >
-                    <svg
-                      fill="currentColor"
-                      viewBox="0 0 51 45"
-                    >
-                      <path
-                        d="M49.7173 21.1504C50.2904 21.6532 50.3425 22.4593 49.7608 23.1094C49.3353 23.6815 48.4496 23.7335 47.8766 23.1528L44.6292 20.2923V37.4466C44.6292 41.278 41.5207 44.3812 37.6829 44.3812H12.6762C8.84011 44.3812 5.72991 41.278 5.72991 37.4466V20.2923L2.48165 23.1528C1.90597 23.7335 1.02805 23.6815 0.520446 23.1094C0.0127579 22.4593 0.0676337 21.6532 0.642961 21.1504L24.2592 0.346902C24.7888 -0.115634 25.5703 -0.115634 26.0999 0.346902L49.7173 21.1504ZM12.6762 41.6074H18.2332V27.7383C18.2332 26.204 19.4749 24.9644 21.0118 24.9644H29.3473C30.8842 24.9644 32.1258 26.204 32.1258 27.7383V41.6074H37.6829C39.9838 41.6074 41.8507 39.7437 41.8507 37.4466V17.9172L25.1795 3.23671L8.50843 17.9172V37.4466C8.50843 39.7437 10.3752 41.6074 12.6762 41.6074ZM21.0118 41.6074H29.3473V27.7383H21.0118V41.6074Z"
-                      />
-                    </svg>
-                  </span>
-                </div>
-                <div>
-                  <h2
-                    class="listings-group__title"
-                    id="enter-a-lottery"
-                  >
-                    Enter a lottery
-                  </h2>
                   <div
-                    class="listings-group__info"
+                    class="listings-group__icon"
                   >
-                    Enter a lottery to buy a home at a below-market-rate (BMR) price.
+                    <span
+                      class="ui-icon ui-xlarge"
+                    >
+                      <svg
+                        fill="currentColor"
+                        viewBox="0 0 51 45"
+                      >
+                        <path
+                          d="M49.7173 21.1504C50.2904 21.6532 50.3425 22.4593 49.7608 23.1094C49.3353 23.6815 48.4496 23.7335 47.8766 23.1528L44.6292 20.2923V37.4466C44.6292 41.278 41.5207 44.3812 37.6829 44.3812H12.6762C8.84011 44.3812 5.72991 41.278 5.72991 37.4466V20.2923L2.48165 23.1528C1.90597 23.7335 1.02805 23.6815 0.520446 23.1094C0.0127579 22.4593 0.0676337 21.6532 0.642961 21.1504L24.2592 0.346902C24.7888 -0.115634 25.5703 -0.115634 26.0999 0.346902L49.7173 21.1504ZM12.6762 41.6074H18.2332V27.7383C18.2332 26.204 19.4749 24.9644 21.0118 24.9644H29.3473C30.8842 24.9644 32.1258 26.204 32.1258 27.7383V41.6074H37.6829C39.9838 41.6074 41.8507 39.7437 41.8507 37.4466V17.9172L25.1795 3.23671L8.50843 17.9172V37.4466C8.50843 39.7437 10.3752 41.6074 12.6762 41.6074ZM21.0118 41.6074H29.3473V27.7383H21.0118V41.6074Z"
+                        />
+                      </svg>
+                    </span>
+                  </div>
+                  <div>
+                    <h2
+                      class="listings-group__title"
+                    >
+                      Enter a lottery
+                    </h2>
+                    <div
+                      class="listings-group__info"
+                    >
+                      Enter a lottery to buy a home at a below-market-rate (BMR) price.
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="empty-listings-view"
+              >
+                <h1
+                  class="text-heading-xl"
+                >
+                  0 open lotteries
+                </h1>
+                <div
+                  class="empty-listings-view_content"
+                >
+                  <div>
+                    <span
+                      class="ui-icon ui-medium empty-state-icon"
+                    >
+                      <svg
+                        fill="currentColor"
+                        viewBox="0 0 51 39"
+                      >
+                        <path
+                          d="M44.6431 0.564941H7.14307C3.69092 0.564941 0.893066 3.36279 0.893066 6.81494V31.8149C0.893066 35.2671 3.69092 38.0649 7.14307 38.0649H44.6431C48.0952 38.0649 50.8931 35.2671 50.8931 31.8149V6.81494C50.8931 3.36279 48.0903 0.564941 44.6431 0.564941ZM7.14307 3.68994H44.6431C46.3657 3.68994 47.7681 5.09229 47.7681 6.81494V10.3315L28.7056 24.6284C27.0454 25.8706 24.7378 25.8706 23.0776 24.6284L4.01807 10.3306V6.81494C4.01807 5.09619 5.42041 3.68994 7.14307 3.68994ZM47.7681 31.8149C47.7681 33.5376 46.3657 34.9399 44.6431 34.9399H7.14307C5.42041 34.9399 4.01807 33.5376 4.01807 31.8149V14.1489L21.2056 27.1274C22.5845 28.1636 24.2388 28.6919 25.8931 28.6919C27.5474 28.6919 29.2036 28.1626 30.5806 27.1274L47.7681 14.1489V31.8149Z"
+                        />
+                      </svg>
+                    </span>
+                    <span>
+                      <a
+                        href="https://confirmsubscription.com/h/y/C3BAFCD742D47910"
+                        target="_blank"
+                      >
+                        Get an email
+                      </a>
+                       whenever a new listing is posted
+                    </span>
                   </div>
                 </div>
               </div>
             </div>
             <div
-              class="empty-listings-view"
-            >
-              <h1
-                class="text-heading-xl"
-              >
-                0 open lotteries
-              </h1>
-              <div
-                class="empty-listings-view_content"
-              >
-                <div>
-                  <span
-                    class="ui-icon ui-medium empty-state-icon"
-                  >
-                    <svg
-                      fill="currentColor"
-                      viewBox="0 0 51 39"
-                    >
-                      <path
-                        d="M44.6431 0.564941H7.14307C3.69092 0.564941 0.893066 3.36279 0.893066 6.81494V31.8149C0.893066 35.2671 3.69092 38.0649 7.14307 38.0649H44.6431C48.0952 38.0649 50.8931 35.2671 50.8931 31.8149V6.81494C50.8931 3.36279 48.0903 0.564941 44.6431 0.564941ZM7.14307 3.68994H44.6431C46.3657 3.68994 47.7681 5.09229 47.7681 6.81494V10.3315L28.7056 24.6284C27.0454 25.8706 24.7378 25.8706 23.0776 24.6284L4.01807 10.3306V6.81494C4.01807 5.09619 5.42041 3.68994 7.14307 3.68994ZM47.7681 31.8149C47.7681 33.5376 46.3657 34.9399 44.6431 34.9399H7.14307C5.42041 34.9399 4.01807 33.5376 4.01807 31.8149V14.1489L21.2056 27.1274C22.5845 28.1636 24.2388 28.6919 25.8931 28.6919C27.5474 28.6919 29.2036 28.1626 30.5806 27.1274L47.7681 14.1489V31.8149Z"
-                      />
-                    </svg>
-                  </span>
-                  <span>
-                    <a
-                      href="https://confirmsubscription.com/h/y/C3BAFCD742D47910"
-                      target="_blank"
-                    >
-                      Get an email
-                    </a>
-                     whenever a new listing is posted
-                  </span>
-                </div>
-              </div>
-            </div>
-            <div
-              class="listings-group__header listings-group__customHeader"
+              id="buy-now"
             >
               <div
-                class="listings-group__content"
+                class="listings-group__header listings-group__customHeader"
               >
                 <div
-                  class="listings-group__icon"
+                  class="listings-group__content"
                 >
-                  <img
-                    alt="Icon Home Check"
-                    height="40"
-                    width="40"
-                  />
-                </div>
-                <div>
-                  <h2
-                    class="listings-group__title"
-                    id="buy-now"
-                  >
-                    Buy now
-                  </h2>
                   <div
-                    class="listings-group__info"
+                    class="listings-group__icon"
                   >
-                    Buy a below-market-rate (BMR) home without entering a lottery. First come, first served.
+                    <img
+                      alt="Icon Home Check"
+                      height="40"
+                      width="40"
+                    />
+                  </div>
+                  <div>
+                    <h2
+                      class="listings-group__title"
+                    >
+                      Buy now
+                    </h2>
+                    <div
+                      class="listings-group__info"
+                    >
+                      Buy a below-market-rate (BMR) home without entering a lottery. First come, first served.
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <div
-              class="empty-listings-view"
-            >
-              <h1
-                class="text-heading-xl"
-              >
-                0 open listings
-              </h1>
               <div
-                class="empty-listings-view_content"
+                class="empty-listings-view"
               >
-                <div>
-                  <span
-                    class="ui-icon ui-medium empty-state-icon"
-                  >
-                    <svg
-                      fill="currentColor"
-                      viewBox="0 0 51 39"
+                <h1
+                  class="text-heading-xl"
+                >
+                  0 open listings
+                </h1>
+                <div
+                  class="empty-listings-view_content"
+                >
+                  <div>
+                    <span
+                      class="ui-icon ui-medium empty-state-icon"
                     >
-                      <path
-                        d="M44.6431 0.564941H7.14307C3.69092 0.564941 0.893066 3.36279 0.893066 6.81494V31.8149C0.893066 35.2671 3.69092 38.0649 7.14307 38.0649H44.6431C48.0952 38.0649 50.8931 35.2671 50.8931 31.8149V6.81494C50.8931 3.36279 48.0903 0.564941 44.6431 0.564941ZM7.14307 3.68994H44.6431C46.3657 3.68994 47.7681 5.09229 47.7681 6.81494V10.3315L28.7056 24.6284C27.0454 25.8706 24.7378 25.8706 23.0776 24.6284L4.01807 10.3306V6.81494C4.01807 5.09619 5.42041 3.68994 7.14307 3.68994ZM47.7681 31.8149C47.7681 33.5376 46.3657 34.9399 44.6431 34.9399H7.14307C5.42041 34.9399 4.01807 33.5376 4.01807 31.8149V14.1489L21.2056 27.1274C22.5845 28.1636 24.2388 28.6919 25.8931 28.6919C27.5474 28.6919 29.2036 28.1626 30.5806 27.1274L47.7681 14.1489V31.8149Z"
-                      />
-                    </svg>
-                  </span>
-                  <span>
-                    <a
-                      href="https://confirmsubscription.com/h/y/C3BAFCD742D47910"
-                      target="_blank"
-                    >
-                      Get an email
-                    </a>
-                     whenever a new listing is posted
-                  </span>
+                      <svg
+                        fill="currentColor"
+                        viewBox="0 0 51 39"
+                      >
+                        <path
+                          d="M44.6431 0.564941H7.14307C3.69092 0.564941 0.893066 3.36279 0.893066 6.81494V31.8149C0.893066 35.2671 3.69092 38.0649 7.14307 38.0649H44.6431C48.0952 38.0649 50.8931 35.2671 50.8931 31.8149V6.81494C50.8931 3.36279 48.0903 0.564941 44.6431 0.564941ZM7.14307 3.68994H44.6431C46.3657 3.68994 47.7681 5.09229 47.7681 6.81494V10.3315L28.7056 24.6284C27.0454 25.8706 24.7378 25.8706 23.0776 24.6284L4.01807 10.3306V6.81494C4.01807 5.09619 5.42041 3.68994 7.14307 3.68994ZM47.7681 31.8149C47.7681 33.5376 46.3657 34.9399 44.6431 34.9399H7.14307C5.42041 34.9399 4.01807 33.5376 4.01807 31.8149V14.1489L21.2056 27.1274C22.5845 28.1636 24.2388 28.6919 25.8931 28.6919C27.5474 28.6919 29.2036 28.1626 30.5806 27.1274L47.7681 14.1489V31.8149Z"
+                        />
+                      </svg>
+                    </span>
+                    <span>
+                      <a
+                        href="https://confirmsubscription.com/h/y/C3BAFCD742D47910"
+                        target="_blank"
+                      >
+                        Get an email
+                      </a>
+                       whenever a new listing is posted
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -657,6 +663,7 @@ exports[`For Sale renders ForSale component 1`] = `
             </div>
             <div
               class="listings-group"
+              id="upcoming-lotteries"
             >
               <div
                 class="listings-group__header"
@@ -688,7 +695,6 @@ exports[`For Sale renders ForSale component 1`] = `
                   >
                     <h2
                       class="listings-group__title"
-                      id="upcoming-lotteries"
                     >
                       Upcoming Lotteries
                     </h2>
@@ -713,6 +719,7 @@ exports[`For Sale renders ForSale component 1`] = `
             </div>
             <div
               class="listings-group"
+              id="lottery-results"
             >
               <div
                 class="listings-group__header"
@@ -753,7 +760,6 @@ exports[`For Sale renders ForSale component 1`] = `
                   >
                     <h2
                       class="listings-group__title"
-                      id="lottery-results"
                     >
                       Lottery Results
                     </h2>

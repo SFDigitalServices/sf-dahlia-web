@@ -20,7 +20,7 @@ describe("handleSectionHeaderEvents", () => {
     expect(handleSectionHeaderEntries(events)).toEqual("buy-now")
   })
 
-  it("handleSectionHeaderEvents sets the correct active item based on ratio", () => {
+  it("handleSectionHeaderEvents sets the correct active item based on order", () => {
     const events: IntersectionObserverEntry[] = [
       mockIntersectionObserverEntry("enter-a-lottery", true),
       mockIntersectionObserverEntry("buy-now", true),
@@ -29,6 +29,6 @@ describe("handleSectionHeaderEvents", () => {
 
     handleSectionHeaderEntries(events)
 
-    expect(handleSectionHeaderEntries(events)).toEqual("buy-now")
+    expect(handleSectionHeaderEntries(events)).toEqual("enter-a-lottery")
   })
 })
