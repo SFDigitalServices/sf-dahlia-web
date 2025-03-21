@@ -5,10 +5,10 @@
             "subtitle": "assistance.additionalResources.sfHousingResources.subtitle",
             "resources": [
                 {
-                    "title": "assistance.additionalResources.sfHousingResources.fcfs.title",
+                    "title": "assistance.additionalResources.sfHousingResources.rental.fcfs.title",
                     "agency": "assistance.additionalResources.sfHousingResources.fcfs.agency",
-                    "description": "assistance.additionalResources.sfHousingResources.fcfs.description",
-                    "externalUrl": "https://sf.gov/reports/january-2023/first-come-first-served-bmr-listings"
+                    "description": "assistance.additionalResources.sfHousingResources.rental.fcfs.description",
+                    "externalUrl": "https://www.sf.gov/reports--november-2024--first-come-first-served-bmr-rental-listings-0"
                 },
                 {
                     "title": "assistance.additionalResources.sfHousingResources.downpayment.title",
