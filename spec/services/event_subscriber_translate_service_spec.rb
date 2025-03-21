@@ -33,6 +33,19 @@ describe Force::EventSubscriberTranslateService do
       'event' => { 'replayId' => 9_730_266 },
     }
   end
+  let(:event_without_content) do
+    {
+      'payload' => {
+        'ChangeEventHeader' => {
+          'recordIds' => ['a0W4U00000KnjQuUAJ'],
+          'entityName' => 'Listing__c',
+          'changedFields' => %w[LastModifiedDate],
+        },
+        'LastModifiedDate' => '2024-06-29T19:09:24Z',
+      },
+      'event' => { 'replayId' => 9_730_266 },
+    }
+  end
   before do
     allow(Force::Request).to receive(:new).and_return(request_client)
     allow(request_client).to receive(:get).and_return(
@@ -98,6 +111,20 @@ describe Force::EventSubscriberTranslateService do
             .and_return(faye_subscription)
           expect(translation_service).to receive(:translate)
             .and_return([{ to: 'EN', translation: ['Hello World'] }])
+          expect(translation_service).to receive(:cache_listing_translations)
+
+          EM.add_timer(0.1) { EM.stop }
+
+          service.new.listen_and_process_events
+        end
+      end
+      it 'detects incoming events without content from Salesforce and calls translations service' do
+        EM.run do
+          expect(faye_client).to receive(:subscribe)
+            .with('/data/Listing__ChangeEvent')
+            .and_yield(event_without_content)
+            .and_return(faye_subscription)
+          expect(translation_service).not_to receive(:translate)
           expect(translation_service).to receive(:cache_listing_translations)
 
           EM.add_timer(0.1) { EM.stop }
