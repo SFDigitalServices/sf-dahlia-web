@@ -32,24 +32,22 @@ const ListingsGroup = ({
   const toggleListings = () => setShowListings(!showListings)
 
   return (
-    <div className="listings-group">
+    <div
+      className="listings-group"
+      id={refKey ?? header}
+      ref={(el) => {
+        if (el) {
+          observerRef?.current?.observe(el)
+        }
+      }}
+    >
       <div className="listings-group__header">
         <div className="listings-group__content">
           <div className="listings-group__icon">
             <Icon size="xlarge" symbol={icon ?? `clock`} />
           </div>
           <div className="listings-group__header-group">
-            <h2
-              id={refKey ?? header}
-              ref={(el) => {
-                if (el) {
-                  observerRef?.current?.observe(el)
-                }
-              }}
-              className="listings-group__title"
-            >
-              {header}
-            </h2>
+            <h2 className="listings-group__title">{header}</h2>
             {info && <div className="listings-group__info">{info}</div>}
           </div>
         </div>

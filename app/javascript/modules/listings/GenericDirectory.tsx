@@ -5,7 +5,6 @@ import React, {
   SetStateAction,
   useContext,
   useEffect,
-  useRef,
   useState,
 } from "react"
 import { LoadingOverlay, StackedTableRow, t } from "@bloom-housing/ui-components"
@@ -54,6 +53,8 @@ interface RentalDirectoryProps {
   ) => JSX.Element
   findMoreActionBlock: ReactNode
 }
+
+const observerRef: MutableRefObject<null | IntersectionObserver> = { current: null }
 
 export const GenericDirectory = (props: RentalDirectoryProps) => {
   const [rawListings, setRawListings] = useState<Array<RailsListing>>([])
@@ -127,9 +128,8 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
     false
   )
 
-  const observerRef: MutableRefObject<null | IntersectionObserver> = useRef(null)
   useEffect(() => {
-    if (newDirectoryEnabled) {
+    if (newDirectoryEnabled && !observerRef.current) {
       const handleIntersectionEntries = (entries: IntersectionObserverEntry[]) => {
         const pageHeaderEntries = entries.filter((e) => e.target.id === DIRECTORY_PAGE_HEADER)
         toggleNavBarBoxShadow(pageHeaderEntries)

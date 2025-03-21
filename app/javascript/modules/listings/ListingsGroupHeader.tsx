@@ -29,28 +29,25 @@ const ListingsGroupHeader = ({
   }
 
   return (
-    <>
+    <div
+      id={refKey}
+      ref={(el) => {
+        if (el) {
+          observerRef?.current?.observe(el)
+        }
+      }}
+    >
       <div className="listings-group__header listings-group__customHeader">
         <div className="listings-group__content">
           <div className="listings-group__icon">{icon}</div>
           <div>
-            <h2
-              id={refKey}
-              ref={(el) => {
-                if (el) {
-                  observerRef?.current?.observe(el)
-                }
-              }}
-              className="listings-group__title"
-            >
-              {title}
-            </h2>
+            <h2 className="listings-group__title">{title}</h2>
             {subtitle && <div className="listings-group__info">{subtitle}</div>}
           </div>
         </div>
       </div>
       {children}
-    </>
+    </div>
   )
 }
 
