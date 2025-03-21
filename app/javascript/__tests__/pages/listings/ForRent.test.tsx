@@ -45,6 +45,7 @@ describe("For Rent", () => {
     ;(await findByText("Enter a lottery")).click()
 
     expect(asFragment()).toMatchSnapshot()
+    expect(mockIntersectionObserver).toHaveBeenCalled()
     expect(observeFunction).toHaveBeenCalled()
   })
 
