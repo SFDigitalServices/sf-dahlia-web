@@ -295,33 +295,40 @@ export const openListingsView = (
   </ListingsGroupHeader>
 )
 
-export const fcfsSalesView = (
+export const FcfsSalesView = (
   listings: RailsListing[],
   directoryType: DirectoryType,
+  humanTranslationsReady: boolean,
   stackedDataFxn: StackedDataFxnType,
   observerRef: React.MutableRefObject<null | IntersectionObserver>,
   filtersSet?: boolean,
   numOpenListings?: number,
   iconPath?: string
-) => (
-  <ListingsGroupHeader
-    title={t(`listings.${directoryType}.fcfsListings.title`)}
-    subtitle={t(`listings.${directoryType}.fcfsListings.subtitle`)}
-    icon={<img src={iconPath} width="40" height="40" alt="Icon Home Check" />}
-    observerRef={observerRef}
-    refKey="buy-now"
-  >
-    {listings.length > 0 ? (
-      getListingCards(listings, directoryType, stackedDataFxn, filtersSet)
-    ) : (
-      <EmptyListingsView
-        section={DIRECTORY_SECTION_FCFS_LISTINGS}
-        listingsCount={numOpenListings}
-        icon="house"
-      />
-    )}
-  </ListingsGroupHeader>
-)
+) => {
+  return (
+    <ListingsGroupHeader
+      title={t(`listings.${directoryType}.fcfsListings.title`)}
+      subtitle={
+        humanTranslationsReady
+          ? t(`listings.${directoryType}.fcfsListings.subtitle.v2`)
+          : t(`listings.${directoryType}.fcfsListings.subtitle`)
+      }
+      icon={<img src={iconPath} width="40" height="40" alt="Icon Home Check" />}
+      observerRef={observerRef}
+      refKey="buy-now"
+    >
+      {listings.length > 0 ? (
+        getListingCards(listings, directoryType, stackedDataFxn, filtersSet)
+      ) : (
+        <EmptyListingsView
+          section={DIRECTORY_SECTION_FCFS_LISTINGS}
+          listingsCount={numOpenListings}
+          icon="house"
+        />
+      )}
+    </ListingsGroupHeader>
+  )
+}
 
 // Get an expandable group of listings
 export const getListingGroup = (
