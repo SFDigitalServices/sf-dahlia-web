@@ -12,7 +12,7 @@ export const toggleNavBarBoxShadow = (pageHeaderEntries: IntersectionObserverEnt
   }
 }
 
-const isElementInViewport = (elem: HTMLElement) => {
+export const isElementInViewport = (elem: HTMLElement) => {
   if (elem) {
     const rect = elem.getBoundingClientRect()
     const viewportH = window.innerHeight || document.documentElement.clientHeight

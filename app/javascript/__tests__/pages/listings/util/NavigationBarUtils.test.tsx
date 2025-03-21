@@ -1,4 +1,7 @@
-import { handleSectionHeaderEntries } from "../../../../modules/listings/util/NavigationBarUtils"
+import {
+  handleSectionHeaderEntries,
+  isElementInViewport,
+} from "../../../../modules/listings/util/NavigationBarUtils"
 
 const mockIntersectionObserverEntry = (id, isIntersecting) => {
   return {
@@ -30,5 +33,23 @@ describe("handleSectionHeaderEvents", () => {
     handleSectionHeaderEntries(events)
 
     expect(handleSectionHeaderEntries(events)).toEqual("enter-a-lottery")
+  })
+})
+
+describe("isElementInViewport", () => {
+  it("isElementInViewport returns true for element on screen", () => {
+    const container = {
+      getBoundingClientRect: jest.fn().mockReturnValue({ top: 0 }),
+      clientHeight: 50,
+    } as unknown as HTMLElement
+    expect(isElementInViewport(container)).toBeTruthy()
+  })
+
+  it("isElementInViewport returns false for element off screen", () => {
+    const container = {
+      getBoundingClientRect: jest.fn().mockReturnValue({ top: -100 }),
+      clientHeight: 50,
+    } as unknown as HTMLElement
+    expect(isElementInViewport(container)).toBeFalsy()
   })
 })
