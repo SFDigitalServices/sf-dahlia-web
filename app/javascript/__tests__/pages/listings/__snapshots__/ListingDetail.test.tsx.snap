@@ -5306,11 +5306,11 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                       <section
                         class="aside-block"
                       >
-                        <h4
+                        <h2
                           class="text__underline-weighted"
                         >
                           Open Houses
-                        </h4>
+                        </h2>
                         <div
                           class="false"
                         >
@@ -5585,11 +5585,11 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                       <section
                         class="aside-block"
                       >
-                        <h4
+                        <h2
                           class="text__underline-weighted"
                         >
                           Open Houses
-                        </h4>
+                        </h2>
                         <div
                           class="false"
                         >
@@ -5764,11 +5764,11 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                     <section
                       class="aside-block"
                     >
-                      <h4
+                      <h2
                         class="text__underline-weighted"
                       >
                         Open Houses
-                      </h4>
+                      </h2>
                       <div
                         class="false"
                       >
@@ -5984,11 +5984,11 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                     <section
                       class="aside-block"
                     >
-                      <h4
+                      <h2
                         class="text__underline-weighted"
                       >
                         Open Houses
-                      </h4>
+                      </h2>
                       <div
                         class="false"
                       >
@@ -8583,11 +8583,11 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                     <section
                       class="aside-block"
                     >
-                      <h4
+                      <h2
                         class="text__underline-weighted"
                       >
                         Open Houses
-                      </h4>
+                      </h2>
                       <div
                         class="false"
                       >
