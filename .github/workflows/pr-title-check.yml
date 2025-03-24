@@ -18,12 +18,6 @@ jobs:
           # Define the regex for the required formats
           jira_regex="^(build|ci|docs|feat|fix|perf|refactor|revert|style|test): DAH-[0-9]+ .+|^chore: .+"
           urgent_regex="^urgent: \S+"
-          echo "Checking PR actor: '${{ github.actor }}'"
-          # Skip validation for Dependabot PRs
-          if [[ "${{ github.actor }}" == "dependabot[bot]" ]]; then
-            echo "PR created by Dependabot - skipping title validation."
-            exit 0
-          fi
 
           if [[ "${PR_TITLE}" =~ $urgent_regex ]]; then
             echo "PR title contains 'urgent'. Skipping JIRA check but validating description."
