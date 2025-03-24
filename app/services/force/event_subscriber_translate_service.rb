@@ -91,6 +91,11 @@ module Force
     def translate_and_cache(event)
       if event.updated_values.blank?
         logger("No translations for event: #{event.to_json}")
+        # we want to signal that the translations are still up-to-date,
+        #  even when there is nothing to translate
+        @translation_service.cache_listing_translations(
+          event.listing_id, nil, [], event.last_modified_date
+        )
         return []
       end
 
