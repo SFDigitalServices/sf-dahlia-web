@@ -71,6 +71,7 @@ export const ListingDetailsProcess = ({
                 },
               ]}
               headerText={t("listings.process.publicLottery")}
+              priority={2}
               sectionHeader={true}
             />
           </div>

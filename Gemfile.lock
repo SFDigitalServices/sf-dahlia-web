@@ -356,11 +356,11 @@ GEM
       net-protocol
     newrelic_rpm (9.17.0)
     nio4r (2.7.4)
-    nokogiri (1.18.2-arm64-darwin)
+    nokogiri (1.18.4-arm64-darwin)
       racc (~> 1.4)
-    nokogiri (1.18.2-x86_64-darwin)
+    nokogiri (1.18.4-x86_64-darwin)
       racc (~> 1.4)
-    nokogiri (1.18.2-x86_64-linux-gnu)
+    nokogiri (1.18.4-x86_64-linux-gnu)
       racc (~> 1.4)
     oj (3.16.9)
       bigdecimal (>= 3.0)
@@ -589,7 +589,7 @@ GEM
     unicode-emoji (4.0.4)
     unleash (5.0.7)
       murmurhash3 (~> 0.1.7)
-    uri (1.0.2)
+    uri (1.0.3)
     useragent (0.16.11)
     vcr (6.3.1)
       base64

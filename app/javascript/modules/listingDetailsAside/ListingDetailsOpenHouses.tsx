@@ -38,7 +38,7 @@ export const ListingDetailsOpenHouses = ({ listing, sectionHeader = true }: Open
         >
           <section className={sectionHeader ? "aside-block" : ""}>
             {sectionHeader && (
-              <Heading priority={4} styleType="underlineWeighted">
+              <Heading priority={2} styleType="underlineWeighted">
                 {t("label.openHouses")}
               </Heading>
             )}
