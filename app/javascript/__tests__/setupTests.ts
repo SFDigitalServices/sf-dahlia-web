@@ -66,7 +66,6 @@ beforeEach(() => {
 let previousHeapUsage: number | null = null
 const THRESHOLD_PERCENTAGE = 5
 
-// fail test if api call has not been mocked up
 // eslint-disable-next-line jest/require-top-level-describe
 afterEach(() => {
   if (inspectMode) {
@@ -88,6 +87,8 @@ afterEach(() => {
     previousHeapUsage = currentHeapUsage
   }
   cleanup()
+
+  // fail test if api call has not been mocked up
   expect(spies.delete).not.toHaveBeenCalled()
   expect(spies.get).not.toHaveBeenCalled()
   expect(spies.post).not.toHaveBeenCalled()
