@@ -52,11 +52,11 @@ exports[`MobileListingDetailsProcess renders with listing with open application 
       <section
         class="aside-block"
       >
-        <h4
+        <h2
           class="text__underline-weighted"
         >
           Information Sessions
-        </h4>
+        </h2>
         <div
           class="false"
         >
@@ -101,11 +101,11 @@ exports[`MobileListingDetailsProcess renders with listing with open application 
       <section
         class="aside-block"
       >
-        <h4
+        <h2
           class="text__underline-weighted"
         >
           Open Houses
-        </h4>
+        </h2>
         <div
           class="pb-3"
         >
