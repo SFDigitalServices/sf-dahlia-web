@@ -40,7 +40,10 @@ describe("Sign In integration tests", () => {
 
     cy.wait(1000)
 
+    cy.contains("Email or password is incorrect.").should("be.visible")
     cy.get("@signInFailed.all").should("have.length", 0)
+    cy.get('[aria-label="Close"]').first().click()
+    cy.contains("Email or password is incorrect.").should("not.exist")
 
     cy.get('input[name="email"]').clear().type("user@example.com")
     cy.get('input[name="password"]').clear().type("wrongpassword1")
@@ -135,7 +138,7 @@ describe("Sign In integration tests", () => {
     }).as("confirmation")
     cy.visit("/sign-in?expiredUnconfirmed=user@test.com")
 
-    cy.get("#seeds-overlay-portal").within(() => {
+    cy.get('[role="dialog"]').within(() => {
       cy.contains("Confirmation link expired").should("be.visible")
       cy.contains("button", "Send a new link").click()
       cy.wait("@confirmation")
@@ -145,7 +148,7 @@ describe("Sign In integration tests", () => {
 
     cy.visit("/sign-in?expiredConfirmed=user@test.com")
 
-    cy.get("#seeds-overlay-portal").within(() => {
+    cy.get('[role="dialog"]').within(() => {
       cy.contains("button", "OK").should("be.visible")
       cy.contains("Account already confirmed").should("be.visible")
       cy.get('[aria-label="Close"]').click()
