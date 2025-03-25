@@ -1,9 +1,18 @@
 import { get } from "./apiService"
 import type RailsRentalListing from "./types/rails/listings/RailsRentalListing"
-import { listings, listingsWithFilters } from "./apiEndpoints"
+import { listings, listingsWithFilters, listingsMapData } from "./apiEndpoints"
 import { forceRecacheParam } from "../util/listingUtil"
 
 type ListingsResponse = { listings: RailsRentalListing[] }
+
+export type ListingMapData = {
+  listingId: string
+  location: { lat: number; lng: number }
+  section: string
+  selected?: boolean
+}
+
+export type ListingsMapDataResponse = { listings_map_data: ListingMapData[] }
 
 export type EligibilityFilters = {
   household_size: string
@@ -66,3 +75,6 @@ export const getRentalListings = async (
 export const getSaleListings = async (
   filters?: EligibilityFilters
 ): Promise<RailsRentalListing[]> => getListings("ownership", filters)
+
+export const getListingsMapData = async () =>
+  get<ListingsMapDataResponse>(listingsMapData).then(({ data }) => data.listings_map_data)

@@ -1135,10 +1135,10 @@
     tailwindcss-rtl "^0.9.0"
     typesafe-actions "^5.1.0"
 
-"@bloom-housing/ui-seeds@^1.17.0":
-  version "1.17.0"
-  resolved "https://registry.yarnpkg.com/@bloom-housing/ui-seeds/-/ui-seeds-1.17.0.tgz#b5a9cb2c0ffb83d8fe37919fa7e0775a796836b0"
-  integrity sha512-LoYWq5I02lzU3VRDiMnvAezdhjBIj1dN8mazMWotHv9RoZaO1J37nmM2zX5UiMv7604I+j1BMZOmjN6sSMyUIA==
+"@bloom-housing/ui-seeds@^1.19.0":
+  version "1.19.1"
+  resolved "https://registry.yarnpkg.com/@bloom-housing/ui-seeds/-/ui-seeds-1.19.1.tgz#7ebb17f1c07c5e59f126fafd0442479be0206d72"
+  integrity sha512-+cPy67q/UaGpAi71Uf4i38wDfT3U2wTXgqk5wCyFftaDlbw38kVd0m6dS0tVt+eMLZlmWSX2s3RWPcHkT/Ahjw==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^6.3.0"
     "@fortawesome/react-fontawesome" "^0.2.0"
@@ -2138,6 +2138,11 @@
   resolved "https://registry.yarnpkg.com/@types/geojson/-/geojson-7946.0.13.tgz#e6e77ea9ecf36564980a861e24e62a095988775e"
   integrity sha512-bmrNrgKMOhM3WsafmbGmC+6dsF2Z308vLFsQ3a/bT8X8Sv5clVYpPars/UPq+sAaJP+5OoLAYgwbkS5QEJdLUQ==
 
+"@types/google.maps@^3.54.10":
+  version "3.58.1"
+  resolved "https://registry.yarnpkg.com/@types/google.maps/-/google.maps-3.58.1.tgz#71ce3dec44de1452f56641d2c87c7dd8ea964b4d"
+  integrity sha512-X9QTSvGJ0nCfMzYOnaVs/k6/4L+7F5uCS+4iUmkLEls6J9S/Phv+m/i3mDeyc49ZBgwab3EFO1HEoBY7k98EGQ==
+
 "@types/graceful-fs@^4.1.3":
   version "4.1.9"
   resolved "https://registry.yarnpkg.com/@types/graceful-fs/-/graceful-fs-4.1.9.tgz#2a06bc0f68a20ab37b3e36aa238be6abdf49e8b4"
@@ -2578,6 +2583,14 @@
   version "4.2.2"
   resolved "https://registry.yarnpkg.com/@unleash/proxy-client-react/-/proxy-client-react-4.2.2.tgz#e4bd5a44c8f7fd49d5165c562a07c3246bb2bfcd"
   integrity sha512-KRg1dAQfxLSBe8O2i6GIGDM+7HUdUu/ntREy+JeYbmJ2b6ApFtLX/wt+3T/CjrTYjwRlZKZYJDx5E4fRDOQqpQ==
+
+"@vis.gl/react-google-maps@latest":
+  version "1.5.2"
+  resolved "https://registry.yarnpkg.com/@vis.gl/react-google-maps/-/react-google-maps-1.5.2.tgz#8ecc74b8c1aa6ccffd62d235513da7337f376a08"
+  integrity sha512-0Ypmde7M73GgV4TgcaUTNKXsbcXWToPVuawMNrVg7htXmhpEfLARHwhtmP6N1da3od195ZKC8ShXzC6Vm+zYHQ==
+  dependencies:
+    "@types/google.maps" "^3.54.10"
+    fast-deep-equal "^3.1.3"
 
 "@webassemblyjs/ast@1.12.1", "@webassemblyjs/ast@^1.12.1":
   version "1.12.1"
