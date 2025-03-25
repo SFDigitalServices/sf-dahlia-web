@@ -15,7 +15,7 @@ import { EligibilityFilters } from "../../api/listingsApiService"
 import {
   additionalView,
   DirectoryType,
-  fcfsSalesView,
+  FcfsSalesView,
   ListingsGroups,
   lotteryResultsView,
   matchedTextBanner,
@@ -88,6 +88,11 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
         break
     }
   }
+
+  const { unleashFlag: humanTranslationsReady } = useFeatureFlag(
+    "temp.webapp.listings.sales.fcfsListings.subtitle",
+    false
+  )
 
   useEffect(() => {
     void props.listingsAPI(props.filters).then((listings) => {
@@ -182,9 +187,10 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
                 getAssetPath("house-circle-check.svg")
               )}
               {props.directoryType === DIRECTORY_TYPE_SALES &&
-                fcfsSalesView(
+                FcfsSalesView(
                   listings.fcfs,
                   props.directoryType,
+                  humanTranslationsReady,
                   props.getSummaryTable,
                   observerRef,
                   hasFiltersSet,

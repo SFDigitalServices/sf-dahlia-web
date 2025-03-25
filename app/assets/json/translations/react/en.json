@@ -1087,6 +1087,7 @@
   "listings.forRent.openListings.subtitle": "Enter a lottery to rent a unit at a below-market-rate (BMR) price.",
   "listings.forRent.openListings.title": "Enter a lottery",
   "listings.forSale.fcfsListings.subtitle": "Buy a below-market-rate (BMR) home without entering a lottery. First come, first served.",
+  "listings.forSale.fcfsListings.subtitle.v2": "Buy a home at a below-market-rate (BMR) price without entering a lottery. First come, first served.",
   "listings.forSale.fcfsListings.title": "Buy now",
   "listings.forSale.openListings.subtitle": "Enter a lottery to buy a home at a below-market-rate (BMR) price.",
   "listings.forSale.openListings.title": "Enter a lottery",
