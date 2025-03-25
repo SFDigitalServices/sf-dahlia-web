@@ -42,6 +42,8 @@ import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import { handleSectionHeaderEntries, toggleNavBarBoxShadow } from "./util/NavigationBarUtils"
 import { ConfigContext } from "../../lib/ConfigContext"
 
+import ListingsMap from "./listingsMap"
+
 interface RentalDirectoryProps {
   listingsAPI: (filters?: EligibilityFilters) => Promise<RailsListing[]>
   directoryType: DirectoryType
@@ -154,6 +156,7 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
       <div>
         {!loading && (
           <>
+            <ListingsMap listings={listings} />
             {props.getPageHeader(filters, setFilters, observerRef)}
             {newDirectoryEnabled && (
               <DirectoryPageNavigationBar

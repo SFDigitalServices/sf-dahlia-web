@@ -76,6 +76,25 @@ class Api::V1::ListingsController < ApiController
     render json: { ami: @ami_levels }
   end
 
+  def map_data
+    listings_map_data = ListingsMapService.new.listings_map_data
+    if listings_map_data.blank?
+      render json: { listings_map_data: nil }
+      return
+    end
+
+    listings_map_data = listings_map_data.map do |listing_id, data|
+      {
+        listingId: listing_id,
+        location: {
+          lat: data[:location][:lat],
+          lng: data[:location][:lng],
+        },
+      }
+    end
+    render json: { listings_map_data: listings_map_data }
+  end
+
   private
 
   def listings_params
