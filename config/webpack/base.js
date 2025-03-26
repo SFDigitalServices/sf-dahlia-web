@@ -32,6 +32,7 @@ generatedWebpackConfig.plugins.unshift(
     "process.env": {
       COVID_UPDATE: JSON.stringify(process.env.COVID_UPDATE),
       GOOGLE_PLACES_KEY: JSON.stringify(process.env.GOOGLE_PLACES_KEY),
+      GOOGLE_MAPS_API_KEY: JSON.stringify(process.env.GOOGLE_MAPS_API_KEY),
       TOP_MESSAGE: JSON.stringify(process.env.TOP_MESSAGE),
       TOP_MESSAGE_TYPE: JSON.stringify(process.env.TOP_MESSAGE_TYPE),
       TOP_MESSAGE_INVERTED: JSON.stringify(process.env.TOP_MESSAGE_INVERTED),

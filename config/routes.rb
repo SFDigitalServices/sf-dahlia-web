@@ -35,6 +35,7 @@ Rails.application.routes.draw do
         collection do
           get 'ami' => 'listings#ami'
           get 'eligibility' => 'listings#eligibility'
+          get 'map_data' => 'listings#map_data'
         end
       end
       get 'trk' => 'listing_interest#index'
