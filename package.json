@@ -116,6 +116,7 @@
     "jest-fail-on-console": "^3.3.1",
     "jest-junit": "^16.0.0",
     "lint-staged": "^10.5.4",
+    "node-jq": "^6.0.1",
     "prettier": "^2.2.1",
     "protractor": "^5.4.2",
     "protractor-cucumber-framework": "3.1.2",
