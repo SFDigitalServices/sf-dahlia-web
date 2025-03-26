@@ -9,7 +9,8 @@ export type ListingMapData = {
   listingId: string
   location: { lat: number; lng: number }
   section: string
-} & RailsRentalListing
+  selected?: boolean
+}
 
 export type ListingsMapDataResponse = { listings_map_data: ListingMapData[] }
 

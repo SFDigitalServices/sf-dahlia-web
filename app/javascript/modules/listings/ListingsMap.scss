@@ -1,0 +1,30 @@
+.map-marker {
+  border-radius: 50%;
+  height: 3rem;
+  width: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 0.1rem solid var(--seeds-color-black);
+  box-shadow: var(--seeds-shadow-md);
+}
+
+.map-marker-expanded {
+  font-size: var(--seeds-font-size-sm);
+  border-radius: 5%;
+  height: 10rem;
+  width: 20rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 0.1rem solid var(--seeds-color-black);
+  box-shadow: var(--seeds-shadow-md);
+  a {
+    font-size: var(--seeds-font-size-lg);
+    padding: 0.2rem;
+  }
+  span {
+    padding: 0.2rem;
+  }
+}

@@ -42,7 +42,7 @@ import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import { handleSectionHeaderEntries, toggleNavBarBoxShadow } from "./util/NavigationBarUtils"
 import { ConfigContext } from "../../lib/ConfigContext"
 
-import ListingsMap from "./listingsMap"
+import ListingsMap from "./ListingsMap"
 
 interface RentalDirectoryProps {
   listingsAPI: (filters?: EligibilityFilters) => Promise<RailsListing[]>
