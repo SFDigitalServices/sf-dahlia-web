@@ -1,54 +1,53 @@
 import React, { useState, useEffect } from "react"
 import { getListingsMapData } from "../../api/listingsApiService"
 import type { ListingMapData } from "../../api/listingsApiService"
-import { ListingsGroups } from "./DirectoryHelpers"
+import type { ListingsGroups } from "./DirectoryHelpers"
 import { APIProvider, Map, AdvancedMarker } from "@vis.gl/react-google-maps"
 import { ListingAddress } from "../../components/ListingAddress"
-import { getListingAddressString } from "../../util/listingUtil"
-import { RailsListing } from "./SharedHelpers"
+import { getImageCardProps, RailsListing } from "./SharedHelpers"
+import { DIRECTORY_SECTION_INFO } from "../constants"
 import "./ListingsMap.scss"
 
 import { Icon } from "@bloom-housing/ui-components"
-import { CheckboxGroup, Link } from "@bloom-housing/ui-seeds"
+import { Link } from "@bloom-housing/ui-seeds"
 
 type MergedListingMapData = ListingMapData & RailsListing
 interface ListingsMapProps {
   listings: ListingsGroups
+  sectionRef: string
 }
 interface MapMarkerProps {
   marker: MergedListingMapData
   onClick: (listingId: string) => void
 }
 
-const pinStyle = (section) =>
+const pinStyle = (sectionRef) =>
   ({
-    open: {
+    "enter-a-lottery": {
       bg: "#8BC34A",
-      iconSymbol: "house",
+      iconSymbol: DIRECTORY_SECTION_INFO.open.icon,
     },
-    upcoming: {
+    "upcoming-lotteries": {
       bg: "#FFEB3B",
-      iconSymbol: "clock",
+      iconSymbol: DIRECTORY_SECTION_INFO.upcoming.icon,
     },
-    results: {
+    "lottery-results": {
       bg: "#FF9800",
-      iconSymbol: "result",
+      iconSymbol: DIRECTORY_SECTION_INFO.results.icon,
     },
-    additional: {
+    "additional-listings": {
       bg: "#03A9F4",
-      iconSymbol: "doubleHouse",
+      iconSymbol: DIRECTORY_SECTION_INFO.additional.icon,
     },
-    fcfs: {
+    "buy-now": {
+      // fcfs
       bg: "#FAFAFA",
       iconSymbol: "house",
     },
-  }[section] || {
+  }[sectionRef] || {
     bg: "#9E9E9E",
     iconSymbol: "house",
   })
-
-const propertInfoLink = (listing: RailsListing) =>
-  `https://sfplanninggis.org/PIM/?search=${getListingAddressString(listing)}`
 
 // TODO combine listings with identical lat/lng so they don't cover one another on the map
 const mergeListingData = (
@@ -56,11 +55,26 @@ const mergeListingData = (
   groupedListings: ListingsGroups
 ): MergedListingMapData[] => {
   const listingsWithSection = [
-    ...groupedListings.open.map((listing) => ({ ...listing, section: "open" })),
-    ...groupedListings.upcoming.map((listing) => ({ ...listing, section: "upcoming" })),
-    ...groupedListings.results.map((listing) => ({ ...listing, section: "results" })),
-    ...groupedListings.additional.map((listing) => ({ ...listing, section: "additional" })),
-    ...groupedListings.fcfs.map((listing) => ({ ...listing, section: "fcfs" })),
+    ...groupedListings.open.map((listing) => ({
+      ...listing,
+      section: DIRECTORY_SECTION_INFO.open,
+    })),
+    ...groupedListings.upcoming.map((listing) => ({
+      ...listing,
+      section: DIRECTORY_SECTION_INFO.upcoming,
+    })),
+    ...groupedListings.results.map((listing) => ({
+      ...listing,
+      section: DIRECTORY_SECTION_INFO.results,
+    })),
+    ...groupedListings.additional.map((listing) => ({
+      ...listing,
+      section: DIRECTORY_SECTION_INFO.additional,
+    })),
+    ...groupedListings.fcfs.map((listing) => ({
+      ...listing,
+      section: DIRECTORY_SECTION_INFO.fcfs,
+    })),
   ]
 
   // only show listings in the current directory (provided by props)
@@ -68,12 +82,12 @@ const mergeListingData = (
     ...listing,
     ...listingsMapsData.find((listingMapData) => listing.Id === listingMapData.listingId),
     selected: false,
-    hidden: listing.section !== "open",
+    hidden: listing.section.ref !== "enter-a-lottery",
   }))
 }
 
 const MapMarker = ({ marker, onClick }: MapMarkerProps) => {
-  const { bg, iconSymbol } = pinStyle(marker.section)
+  const { bg, iconSymbol } = pinStyle(marker.section.ref)
 
   const Pin = () => (
     <div className="map-marker" style={{ backgroundColor: bg }}>
@@ -81,20 +95,36 @@ const MapMarker = ({ marker, onClick }: MapMarkerProps) => {
     </div>
   )
 
-  const ExpandedPin = () => (
-    <div
-      className="map-marker-expanded"
-      style={{ border: `solid 0.2rem ${bg}`, backgroundColor: "#fff" }}
-    >
-      <Link href={`/listings/${marker.listingID}`} newWindowTarget>
-        {marker.Name}
-      </Link>
-      <Link href={propertInfoLink(marker)} newWindowTarget>
-        Property Information
-      </Link>
-      <ListingAddress listing={marker} />
-    </div>
-  )
+  const ExpandedPin = () => {
+    const { imageUrl, description } = getImageCardProps(marker)
+
+    return (
+      <div
+        className="map-marker-expanded"
+        style={{
+          border: `solid 0.2rem ${bg}`,
+          backgroundColor: "#fff",
+          display: "flex",
+          flexDirection: "row",
+          padding: "1.5rem",
+        }}
+      >
+        <div style={{ width: "40%" }}>
+          <img src={imageUrl} alt={description} style={{ width: "100%" }} />
+        </div>
+        <div style={{ display: "flex", flexDirection: "column" }}>
+          <div>
+            <Link href={`/listings/${marker.listingID}`} newWindowTarget>
+              {marker.Name}
+            </Link>
+          </div>
+          <div>
+            <ListingAddress listing={marker} cityNewline />
+          </div>
+        </div>
+      </div>
+    )
+  }
 
   if (marker.hidden) return null
 
@@ -110,38 +140,8 @@ const MapMarker = ({ marker, onClick }: MapMarkerProps) => {
   )
 }
 
-const ListingsMap = ({ listings }: ListingsMapProps) => {
-  const [listingsMapData, setListingsMapData] = useState<MergedListingMapData[] | undefined>(
-    undefined
-  )
-
-  const [markerFilters, setMarkerFilters] = useState([
-    {
-      label: "Open",
-      value: "open",
-      selected: true,
-    },
-    {
-      label: "Upcoming",
-      value: "upcoming",
-      selected: false,
-    },
-    {
-      label: "Results",
-      value: "results",
-      selected: false,
-    },
-    {
-      label: "Additional",
-      value: "additional",
-      selected: false,
-    },
-    {
-      label: "FCFS",
-      value: "fcfs",
-      selected: false,
-    },
-  ])
+const ListingsMap = ({ listings, sectionRef }: ListingsMapProps) => {
+  const [listingsMapData, setListingsMapData] = useState<MergedListingMapData[]>([])
 
   useEffect(() => {
     getListingsMapData()
@@ -153,6 +153,15 @@ const ListingsMap = ({ listings }: ListingsMapProps) => {
       })
   }, [listings])
 
+  useEffect(() => {
+    setListingsMapData((l) =>
+      l.map((data) => ({
+        ...data,
+        hidden: data.section.ref !== sectionRef,
+      }))
+    )
+  }, [sectionRef])
+
   const handleClickMarker = (listingId: string) =>
     setListingsMapData(
       listingsMapData.map((data) => ({
@@ -161,34 +170,9 @@ const ListingsMap = ({ listings }: ListingsMapProps) => {
       }))
     )
 
-  const handleClickFilter = (selectedFilters) => {
-    setMarkerFilters(
-      markerFilters.map((filter) => ({
-        ...filter,
-        selected: selectedFilters
-          .map((selectedFilter) => selectedFilter.value)
-          .includes(filter.value),
-      }))
-    )
-    setListingsMapData(
-      listingsMapData.map((data) => ({
-        ...data,
-        hidden: !selectedFilters
-          .map((selectedFilter) => selectedFilter.value)
-          .includes(data.section),
-      }))
-    )
-  }
-
   return (
-    <div id="listingsMap" style={{ height: "500px" }}>
-      <CheckboxGroup
-        id="map-marker-filter"
-        values={markerFilters.filter((filter) => filter.selected)}
-        options={markerFilters}
-        onChange={handleClickFilter}
-      />
-      {listingsMapData && (
+    <div id="listingsMap" style={{ height: "100%" }}>
+      {listingsMapData.length > 0 && (
         <APIProvider apiKey={process.env.GOOGLE_MAPS_API_KEY}>
           <Map
             mapId="DAHLIA_LISTINGS_MAP"

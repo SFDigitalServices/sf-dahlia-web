@@ -8,7 +8,7 @@ type ListingsResponse = { listings: RailsRentalListing[] }
 export type ListingMapData = {
   listingId: string
   location: { lat: number; lng: number }
-  section: string
+  section: { ref: string }
   selected?: boolean
   hidden?: boolean
 }

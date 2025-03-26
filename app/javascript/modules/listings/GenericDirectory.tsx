@@ -8,7 +8,7 @@ import React, {
   useRef,
   useState,
 } from "react"
-import { LoadingOverlay, StackedTableRow, t } from "@bloom-housing/ui-components"
+import { LoadingOverlay, Desktop, Mobile, StackedTableRow, t } from "@bloom-housing/ui-components"
 
 import type RailsRentalListing from "../../api/types/rails/listings/RailsRentalListing"
 import { EligibilityFilters } from "../../api/listingsApiService"
@@ -151,80 +151,122 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
 
   const { getAssetPath } = useContext(ConfigContext)
 
+  const matchBanner = (
+    <div className="match-banner">
+      {filters &&
+        (match
+          ? matchedTextBanner()
+          : noMatchesTextBanner(`${t("listings.eligibilityCalculator.rent.noMatchingUnits")}`))}
+    </div>
+  )
+
+  const listingResults = (
+    <>
+      <div id="listing-results">
+        {openListingsView(
+          listings.open,
+          props.directoryType,
+          props.getSummaryTable,
+          observerRef,
+          hasFiltersSet,
+          listings.fcfs.length,
+          getAssetPath("house-circle-check.svg")
+        )}
+        {props.directoryType === DIRECTORY_TYPE_SALES &&
+          fcfsSalesView(
+            listings.fcfs,
+            props.directoryType,
+            props.getSummaryTable,
+            observerRef,
+            hasFiltersSet,
+            listings.open.length,
+            getAssetPath("house-circle-check.svg")
+          )}
+        {props.findMoreActionBlock}
+        {filters &&
+          additionalView(
+            listings.additional,
+            props.directoryType,
+            props.getSummaryTable,
+            observerRef,
+            hasFiltersSet,
+            additionalIsOpen,
+            setAdditionalIsOpen,
+            newDirectoryEnabled
+          )}
+        {upcomingLotteriesView(
+          listings.upcoming,
+          props.directoryType,
+          props.getSummaryTable,
+          observerRef,
+          upcomingIsOpen,
+          setUpcomingIsOpen,
+          newDirectoryEnabled
+        )}
+        {lotteryResultsView(
+          listings.results,
+          props.directoryType,
+          props.getSummaryTable,
+          observerRef,
+          resultsIsOpen,
+          setResultsIsOpen,
+          newDirectoryEnabled
+        )}
+      </div>
+    </>
+  )
+
   return (
     <LoadingOverlay isLoading={loading}>
       <div>
         {!loading && (
           <>
-            <ListingsMap listings={listings} />
             {props.getPageHeader(filters, setFilters, observerRef)}
-            {newDirectoryEnabled && (
-              <DirectoryPageNavigationBar
-                directorySectionInfo={directorySectionInfo}
-                activeItem={activeItem}
-                listings={listings}
-                handleNavigation={handleNavigation}
-              />
-            )}
-            <div className="match-banner">
-              {filters &&
-                (match
-                  ? matchedTextBanner()
-                  : noMatchesTextBanner(
-                      `${t("listings.eligibilityCalculator.rent.noMatchingUnits")}`
-                    ))}
-            </div>
-            <div id="listing-results">
-              {openListingsView(
-                listings.open,
-                props.directoryType,
-                props.getSummaryTable,
-                observerRef,
-                hasFiltersSet,
-                listings.fcfs.length,
-                getAssetPath("house-circle-check.svg")
-              )}
-              {props.directoryType === DIRECTORY_TYPE_SALES &&
-                fcfsSalesView(
-                  listings.fcfs,
-                  props.directoryType,
-                  props.getSummaryTable,
-                  observerRef,
-                  hasFiltersSet,
-                  listings.open.length,
-                  getAssetPath("house-circle-check.svg")
+            <Desktop>
+              <div style={{ display: "flex" }}>
+                <div style={{ width: "50vw", height: "100vh", position: "sticky", top: "0" }}>
+                  <ListingsMap listings={listings} sectionRef={activeItem} />
+                </div>
+                <div>
+                  {newDirectoryEnabled && (
+                    <DirectoryPageNavigationBar
+                      directorySectionInfo={directorySectionInfo}
+                      activeItem={activeItem}
+                      listings={listings}
+                      handleNavigation={handleNavigation}
+                    />
+                  )}
+                  {matchBanner}
+                  {listingResults}
+                </div>
+              </div>
+            </Desktop>
+            <Mobile>
+              <div>
+                {newDirectoryEnabled && (
+                  <DirectoryPageNavigationBar
+                    directorySectionInfo={directorySectionInfo}
+                    activeItem={activeItem}
+                    listings={listings}
+                    handleNavigation={handleNavigation}
+                  />
                 )}
-              {props.findMoreActionBlock}
-              {filters &&
-                additionalView(
-                  listings.additional,
-                  props.directoryType,
-                  props.getSummaryTable,
-                  observerRef,
-                  hasFiltersSet,
-                  additionalIsOpen,
-                  setAdditionalIsOpen,
-                  newDirectoryEnabled
-                )}
-              {upcomingLotteriesView(
-                listings.upcoming,
-                props.directoryType,
-                props.getSummaryTable,
-                observerRef,
-                upcomingIsOpen,
-                setUpcomingIsOpen,
-                newDirectoryEnabled
-              )}
-              {lotteryResultsView(
-                listings.results,
-                props.directoryType,
-                props.getSummaryTable,
-                observerRef,
-                resultsIsOpen,
-                setResultsIsOpen,
-                newDirectoryEnabled
-              )}
-            </div>
+                {matchBanner}
+                <div
+                  style={{
+                    width: "100vw",
+                    height: "30vh",
+                    position: "sticky",
+                    top: "5rem",
+                    zIndex: 10,
+                  }}
+                >
+                  <ListingsMap listings={listings} sectionRef={activeItem} />
+                </div>
+
+                {listingResults}
+              </div>
+            </Mobile>
           </>
         )}
         <MailingListSignup />
