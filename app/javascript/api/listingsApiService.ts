@@ -10,6 +10,7 @@ export type ListingMapData = {
   location: { lat: number; lng: number }
   section: string
   selected?: boolean
+  hidden?: boolean
 }
 
 export type ListingsMapDataResponse = { listings_map_data: ListingMapData[] }

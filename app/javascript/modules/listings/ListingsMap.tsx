@@ -9,7 +9,7 @@ import { RailsListing } from "./SharedHelpers"
 import "./ListingsMap.scss"
 
 import { Icon } from "@bloom-housing/ui-components"
-import { Link } from "@bloom-housing/ui-seeds"
+import { CheckboxGroup, Link } from "@bloom-housing/ui-seeds"
 
 type MergedListingMapData = ListingMapData & RailsListing
 interface ListingsMapProps {
@@ -68,6 +68,7 @@ const mergeListingData = (
     ...listing,
     ...listingsMapsData.find((listingMapData) => listing.Id === listingMapData.listingId),
     selected: false,
+    hidden: listing.section !== "open",
   }))
 }
 
@@ -95,6 +96,8 @@ const MapMarker = ({ marker, onClick }: MapMarkerProps) => {
     </div>
   )
 
+  if (marker.hidden) return null
+
   return (
     <AdvancedMarker
       key={marker.listingId}
@@ -111,6 +114,34 @@ const ListingsMap = ({ listings }: ListingsMapProps) => {
   const [listingsMapData, setListingsMapData] = useState<MergedListingMapData[] | undefined>(
     undefined
   )
+
+  const [markerFilters, setMarkerFilters] = useState([
+    {
+      label: "Open",
+      value: "open",
+      selected: true,
+    },
+    {
+      label: "Upcoming",
+      value: "upcoming",
+      selected: false,
+    },
+    {
+      label: "Results",
+      value: "results",
+      selected: false,
+    },
+    {
+      label: "Additional",
+      value: "additional",
+      selected: false,
+    },
+    {
+      label: "FCFS",
+      value: "fcfs",
+      selected: false,
+    },
+  ])
 
   useEffect(() => {
     getListingsMapData()
@@ -130,8 +161,33 @@ const ListingsMap = ({ listings }: ListingsMapProps) => {
       }))
     )
 
+  const handleClickFilter = (selectedFilters) => {
+    setMarkerFilters(
+      markerFilters.map((filter) => ({
+        ...filter,
+        selected: selectedFilters
+          .map((selectedFilter) => selectedFilter.value)
+          .includes(filter.value),
+      }))
+    )
+    setListingsMapData(
+      listingsMapData.map((data) => ({
+        ...data,
+        hidden: !selectedFilters
+          .map((selectedFilter) => selectedFilter.value)
+          .includes(data.section),
+      }))
+    )
+  }
+
   return (
     <div id="listingsMap" style={{ height: "500px" }}>
+      <CheckboxGroup
+        id="map-marker-filter"
+        values={markerFilters.filter((filter) => filter.selected)}
+        options={markerFilters}
+        onChange={handleClickFilter}
+      />
       {listingsMapData && (
         <APIProvider apiKey={process.env.GOOGLE_MAPS_API_KEY}>
           <Map
