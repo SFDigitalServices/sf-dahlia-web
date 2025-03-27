@@ -79,6 +79,7 @@ class Api::V1::ShortFormController < ApiController
         "'#{response['primaryApplicant']['lastName']}'" \
         ']',
       )
+      Rails.logger.info("ShortFormController#submit_application: response: #{response}")
       process_submit_app_response(response)
       render json: response
     else
@@ -213,18 +214,19 @@ class Api::V1::ShortFormController < ApiController
     files.update_all(user_id: current_user.id)
   end
 
-  def extract_application_submission_fields
+  def extract_application_submission_fields(response)
   {
     email: application_params[:primaryApplicant]&.[](:email).to_s,
-    listing_id: application_params[:listingID].to_s,
-    lottery_number: response&.[]('lotteryNumber').to_s,
-    listing_name: application_params[:listing]&.[](:name).to_s,
-    lottery_date: application_params[:listing]&.[](:lotteryDate).to_s,
+    listingId: application_params[:listingID].to_s,
+    lotteryNumber: response&.[]('lotteryNumber').to_s,
+    listingName: application_params[:listing]&.[](:name).to_s,
+    lotteryDate: application_params[:listing]&.[](:lotteryDate).to_s,
   }
   end
 
   def send_application_submission_message(response)
-    submission_fields = extract_application_submission_fields
+    submission_fields = extract_application_submission_fields(response)
+    Rails.logger.info("Sending application submission message: #{submission_fields}")
     message_response = HTTP.headers("x-api-key" => ENV['MESSAGE_SERVICE_API_KEY']).post("http://localhost:3001/messages/application-submission", :params => submission_fields)
     if message_response.code >= 400
       Rails.logger.error("Error sending application submission message: #{message_response.to_s}")
@@ -516,6 +518,7 @@ class Api::V1::ShortFormController < ApiController
             :lendingAgent,
             :homebuyerEducationAgency,
             :isNonPrimaryMemberVeteran,
+            :lotteryDate,
           )
           .to_h
   end
