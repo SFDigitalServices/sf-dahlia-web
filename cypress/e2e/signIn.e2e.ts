@@ -104,7 +104,7 @@ describe("Sign In integration tests", () => {
     cy.get('button[type="submit"]').click()
 
     cy.wait("@signIn")
-    cy.url().should("include", "/my-applications")
+    cy.url().should("include", "/my-applications", { timeout: 1000 })
   })
 
   it("should navigate to forgot password page with email prefilled", () => {
