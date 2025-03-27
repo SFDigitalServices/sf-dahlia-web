@@ -41,7 +41,6 @@ import {
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import { handleSectionHeaderEntries, toggleNavBarBoxShadow } from "./util/NavigationBarUtils"
 import { ConfigContext } from "../../lib/ConfigContext"
-
 import ListingsMap from "./ListingsMap"
 
 interface RentalDirectoryProps {
@@ -74,6 +73,7 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
   const [resultsIsOpen, setResultsIsOpen] = useState<boolean>(false)
   const [upcomingIsOpen, setUpcomingIsOpen] = useState<boolean>(false)
   const [additionalIsOpen, setAdditionalIsOpen] = useState<boolean>(false)
+  const [mobileMapView, setMobileMapView] = useState<boolean>(false)
 
   const handleNavigation = (section: string) => {
     setActiveItem(section)
@@ -160,6 +160,7 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
     </div>
   )
 
+  // TODO: extract to component
   const listingResults = (
     <>
       <div id="listing-results">
@@ -225,7 +226,11 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
             <Desktop>
               <div style={{ display: "flex" }}>
                 <div style={{ width: "50vw", height: "100vh", position: "sticky", top: "0" }}>
-                  <ListingsMap listings={listings} sectionRef={activeItem} />
+                  <ListingsMap
+                    listings={listings}
+                    sectionRef={activeItem}
+                    mobileView={mobileMapView}
+                  />
                 </div>
                 <div>
                   {newDirectoryEnabled && (
@@ -241,31 +246,66 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
                 </div>
               </div>
             </Desktop>
+            {/*  TODO: extract to component */}
             <Mobile>
-              <div>
-                {newDirectoryEnabled && (
-                  <DirectoryPageNavigationBar
-                    directorySectionInfo={directorySectionInfo}
-                    activeItem={activeItem}
-                    listings={listings}
-                    handleNavigation={handleNavigation}
-                  />
-                )}
-                {matchBanner}
-                <div
-                  style={{
-                    width: "100vw",
-                    height: "30vh",
-                    position: "sticky",
-                    top: "5rem",
-                    zIndex: 10,
-                  }}
-                >
-                  <ListingsMap listings={listings} sectionRef={activeItem} />
-                </div>
-
-                {listingResults}
-              </div>
+              {newDirectoryEnabled && (
+                <DirectoryPageNavigationBar
+                  directorySectionInfo={directorySectionInfo}
+                  activeItem={activeItem}
+                  listings={listings}
+                  handleNavigation={handleNavigation}
+                />
+              )}
+              {matchBanner}
+              {mobileMapView && (
+                <>
+                  <div
+                    style={{
+                      width: "100vw",
+                      height: "50vh",
+                    }}
+                  >
+                    <ListingsMap
+                      listings={listings}
+                      sectionRef={activeItem}
+                      mobileView={mobileMapView}
+                    />
+                  </div>
+                  <div
+                    style={{
+                      position: "fixed",
+                      bottom: "3rem",
+                      left: "30vw",
+                      cursor: "pointer",
+                      border: "0.2rem #000 solid",
+                      padding: "1rem",
+                      backgroundColor: "#fff",
+                    }}
+                    onClick={() => setMobileMapView(false)}
+                  >
+                    List View
+                  </div>
+                </>
+              )}
+              {!mobileMapView && (
+                <>
+                  {listingResults}
+                  <div
+                    style={{
+                      position: "fixed",
+                      bottom: "3rem",
+                      left: "30vw",
+                      cursor: "pointer",
+                      border: "0.2rem #000 solid",
+                      padding: "1rem",
+                      backgroundColor: "#fff",
+                    }}
+                    onClick={() => setMobileMapView(true)}
+                  >
+                    Map View
+                  </div>
+                </>
+              )}
             </Mobile>
           </>
         )}

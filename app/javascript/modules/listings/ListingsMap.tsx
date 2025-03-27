@@ -15,10 +15,18 @@ type MergedListingMapData = ListingMapData & RailsListing
 interface ListingsMapProps {
   listings: ListingsGroups
   sectionRef: string
+  mobileView: boolean
 }
 interface MapMarkerProps {
   marker: MergedListingMapData
-  onClick: (listingId: string) => void
+  selectMarker: (listingId: string) => void
+  deselectMarkers: () => void
+  mobileView: boolean
+}
+
+interface MobileExpandedPinProps {
+  marker: MergedListingMapData
+  deselectMarkers: () => void
 }
 
 const pinStyle = (sectionRef) =>
@@ -86,11 +94,11 @@ const mergeListingData = (
   }))
 }
 
-const MapMarker = ({ marker, onClick }: MapMarkerProps) => {
+const MapMarker = ({ marker, mobileView, selectMarker, deselectMarkers }: MapMarkerProps) => {
   const { bg, iconSymbol } = pinStyle(marker.section.ref)
 
   const Pin = () => (
-    <div className="map-marker" style={{ backgroundColor: bg }}>
+    <div className="map-marker" style={{ backgroundColor: marker.selected ? "#2196F3" : bg }}>
       <Icon size="large" symbol={iconSymbol} />
     </div>
   )
@@ -132,15 +140,57 @@ const MapMarker = ({ marker, onClick }: MapMarkerProps) => {
     <AdvancedMarker
       key={marker.listingId}
       position={marker.location}
-      onClick={() => onClick(marker.listingId)}
+      onClick={() => selectMarker(marker.listingId)}
       zIndex={marker.selected ? 1 : 0}
     >
-      {marker.selected ? <ExpandedPin /> : <Pin />}
+      {marker.selected && !mobileView && <ExpandedPin />}
+      {(!marker.selected || mobileView) && <Pin />}
     </AdvancedMarker>
   )
 }
 
-const ListingsMap = ({ listings, sectionRef }: ListingsMapProps) => {
+const MobileExpandedPin = ({ marker, deselectMarkers }: MobileExpandedPinProps) => {
+  const { imageUrl, description } = getImageCardProps(marker)
+
+  return (
+    <div
+      className="map-marker-expanded"
+      style={{
+        border: `solid 0.2rem #000`,
+        backgroundColor: "#fff",
+        display: "flex",
+        flexDirection: "row",
+        padding: "1rem",
+        position: "fixed",
+        width: "80vw",
+        bottom: "10rem",
+        left: "10vw",
+        zIndex: 10,
+      }}
+      onClick={() => deselectMarkers()}
+    >
+      <div style={{ width: "40%" }}>
+        <img src={imageUrl} alt={description} style={{ width: "100%" }} />
+      </div>
+      <div style={{ display: "flex", flexDirection: "column" }}>
+        <div>
+          <Link href={`/listings/${marker.listingID}`} newWindowTarget>
+            {marker.Name}
+          </Link>
+        </div>
+        <div>
+          <ListingAddress listing={marker} cityNewline />
+        </div>
+        <div>
+          <p>{marker.unitSummaries.general[0].unitType}</p>
+          <p>${marker.unitSummaries.general[0].maxPriceWithoutParking}</p>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+const ListingsMap = ({ listings, sectionRef, mobileView }: ListingsMapProps) => {
   const [listingsMapData, setListingsMapData] = useState<MergedListingMapData[]>([])
 
   useEffect(() => {
@@ -162,13 +212,24 @@ const ListingsMap = ({ listings, sectionRef }: ListingsMapProps) => {
     )
   }, [sectionRef])
 
-  const handleClickMarker = (listingId: string) =>
-    setListingsMapData(
-      listingsMapData.map((data) => ({
+  const selectMarker = (listingId: string) => {
+    setListingsMapData((l) =>
+      l.map((data) => ({
         ...data,
         selected: data.listingID === listingId && !data.selected,
       }))
     )
+  }
+
+  const deselectMarkers = () =>
+    setListingsMapData((l) =>
+      l.map((data) => ({
+        ...data,
+        selected: false,
+      }))
+    )
+
+  const selectedMarker = () => listingsMapData.find((data) => data.selected)
 
   return (
     <div id="listingsMap" style={{ height: "100%" }}>
@@ -180,10 +241,19 @@ const ListingsMap = ({ listings, sectionRef }: ListingsMapProps) => {
             defaultCenter={{ lat: 37.783333, lng: -122.416667 }}
           >
             {listingsMapData.map((marker) => (
-              <MapMarker marker={marker} onClick={handleClickMarker} key={marker.listingID} />
+              <MapMarker
+                marker={marker}
+                selectMarker={selectMarker}
+                deselectMarkers={deselectMarkers}
+                key={marker.listingID}
+                mobileView={mobileView}
+              />
             ))}
           </Map>
         </APIProvider>
+      )}
+      {mobileView && selectedMarker() && (
+        <MobileExpandedPin marker={selectedMarker()} deselectMarkers={deselectMarkers} />
       )}
     </div>
   )
