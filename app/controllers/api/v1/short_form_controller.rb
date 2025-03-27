@@ -213,7 +213,30 @@ class Api::V1::ShortFormController < ApiController
     files.update_all(user_id: current_user.id)
   end
 
+  def extract_application_submission_fields
+  {
+    email: application_params[:primaryApplicant]&.[](:email).to_s,
+    listing_id: application_params[:listingID].to_s,
+    lottery_number: response&.[]('lotteryNumber').to_s,
+    listing_name: application_params[:listing]&.[](:name).to_s,
+    lottery_date: application_params[:listing]&.[](:lotteryDate).to_s,
+  }
+  end
+
+  def send_application_submission_message(response)
+    submission_fields = extract_application_submission_fields
+    message_response = HTTP.headers("x-api-key" => ENV['MESSAGE_SERVICE_API_KEY']).post("http://localhost:3001/messages/application-submission", :params => submission_fields)
+    if message_response.code >= 400
+      Rails.logger.error("Error sending application submission message: #{message_response.to_s}")
+    else
+      Rails.logger.info("Application Submission message sent: #{message_response.to_s}")
+    end
+  rescue HTTP::Error
+    Rails.logger.error("Error sending application submission message: #{message_response.to_s}")
+  end
+
   def send_submit_app_confirmation(response)
+    send_application_submission_message(response)
     Emailer.submission_confirmation(
       locale: params[:locale],
       email: application_params[:primaryApplicant][:email],
