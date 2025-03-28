@@ -17,6 +17,8 @@ class GoogleTranslationService
   def translate(text, to)
     return [] if text.empty?
 
+    text.map! { |string| string.is_a?(String) ? string : '' }
+
     google_translation_logger('Translating text...')
     translations = to.map do |target|
       translation = @translate.translate(text, to: target)
