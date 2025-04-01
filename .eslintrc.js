@@ -187,6 +187,7 @@ module.exports = {
     "spec/javascripts",
     "**/.eslintrc.js",
     "cypress.config.ts",
+    "Gruntfile.js",
   ],
   settings: {
     react: {
