@@ -10,7 +10,7 @@ const getStorage = () => {
     case "local":
       return localStorage
     default:
-      return sessionStorage
+      return localStorage
   }
 }
 

@@ -12,7 +12,7 @@ const ACCESS_TOKEN_LOCAL_STORAGE_KEY = "auth_headers"
 const mockGetItem = jest.fn()
 const mockSetItem = jest.fn()
 const mockRemoveItem = jest.fn()
-Object.defineProperty(window, "sessionStorage", {
+Object.defineProperty(window, "localStorage", {
   value: {
     getItem: (...args: string[]) => mockGetItem(...args),
     setItem: (...args: string[]) => mockSetItem(...args),

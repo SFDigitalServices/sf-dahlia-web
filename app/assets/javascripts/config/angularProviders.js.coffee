@@ -114,9 +114,9 @@ getAvailableStorageType = ->
   # "QUOTA_EXCEEDED_ERR: DOM Exception 22: An attempt was made to add something to storage that exceeded the quota."
   key = '__' + Math.round(Math.random() * 1e7)
   try
-    sessionStorage.setItem key, key
-    sessionStorage.removeItem key
-    return 'sessionStorage'
+    localStorage.setItem key, key
+    localStorage.removeItem key
+    return 'localStorage'
   catch e
     # private window can use cookies, they will just be cleared when you close the window
     return 'cookies'
