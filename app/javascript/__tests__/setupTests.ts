@@ -16,12 +16,14 @@ const spies = {
   create: jest.spyOn(axios, "create"),
 }
 
+const inspectMode = process.env.INSPECT_MODE === "true"
+
 failOnConsole({
-  shouldFailOnLog: true,
-  shouldFailOnInfo: true,
-  shouldFailOnWarn: true,
-  shouldFailOnError: true,
-  shouldFailOnAssert: true,
+  shouldFailOnLog: !inspectMode,
+  shouldFailOnInfo: !inspectMode,
+  shouldFailOnWarn: !inspectMode,
+  shouldFailOnError: !inspectMode,
+  shouldFailOnAssert: !inspectMode,
 })
 // If you want to permit a console message, you can use the following:
 // ```
@@ -57,17 +59,41 @@ jest.mock("react-helmet-async", () => {
 
 // eslint-disable-next-line jest/require-top-level-describe
 beforeEach(() => {
+  jest.clearAllMocks()
   jest.resetAllMocks()
 })
 
-// fail test if api call has not been mocked up
+let previousHeapUsage: number | null = null
+const THRESHOLD_PERCENTAGE = 5
+
 // eslint-disable-next-line jest/require-top-level-describe
 afterEach(() => {
+  if (inspectMode) {
+    const testName = expect.getState().currentTestName
+    const currentHeapUsage = process.memoryUsage().heapUsed / 1024 / 1024
+    const roundedUsage = Math.round(currentHeapUsage * 100) / 100
+
+    if (previousHeapUsage !== null) {
+      const increase = ((currentHeapUsage - previousHeapUsage) / previousHeapUsage) * 100
+      if (increase > THRESHOLD_PERCENTAGE) {
+        console.error(
+          `Test "${testName}" caused an anomalous heap increase: ${
+            Math.round(previousHeapUsage * 100) / 100
+          } MB -> ${roundedUsage} MB (${Math.round(increase * 100) / 100}% increase).`
+        )
+      }
+    }
+
+    previousHeapUsage = currentHeapUsage
+  }
   cleanup()
+
+  // fail test if api call has not been mocked up
   expect(spies.delete).not.toHaveBeenCalled()
   expect(spies.get).not.toHaveBeenCalled()
   expect(spies.post).not.toHaveBeenCalled()
   expect(spies.put).not.toHaveBeenCalled()
+  jest.restoreAllMocks()
 })
 
 // see: https://jestjs.io/docs/en/manual-mocks#mocking-methods-which-are-not-implemented-in-jsdom
