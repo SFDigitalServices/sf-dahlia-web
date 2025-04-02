@@ -251,11 +251,13 @@ class Api::V1::ShortFormController < ApiController
     Time.zone.parse(lottery_date).strftime('%B %e, %Y') if lottery_date
 
     # TODO: Add feature toggle
-    send_application_submission_message(
-      lotteryNumber: response&.[]('lotteryNumber').to_s,
-      listingName: listing.Name,
-      lotteryDate: listing.Lottery_Date,
-    )
+    if Rails.configuration.unleash.is_enabled? 'UseMessageService'
+      send_application_submission_message(
+        lotteryNumber: response&.[]('lotteryNumber').to_s,
+        listingName: listing.Name,
+        lotteryDate: listing.Lottery_Date,
+      )
+    end
     Emailer.submission_confirmation(
       locale: params[:locale],
       email: application_params[:primaryApplicant][:email],
