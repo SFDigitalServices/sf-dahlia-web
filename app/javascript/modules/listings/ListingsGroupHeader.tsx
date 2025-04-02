@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react"
+import React, { ReactNode, useRef, useLayoutEffect, MutableRefObject } from "react"
 import "./ListingsGroupHeader.scss"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 
@@ -8,7 +8,7 @@ export interface ListingsGroupProps {
   subtitle?: string
   children: React.ReactNode
   refKey: string
-  observerRef: React.MutableRefObject<null | IntersectionObserver>
+  addObservedElement: (elem: HTMLElement) => void
 }
 
 const ListingsGroupHeader = ({
@@ -17,26 +17,25 @@ const ListingsGroupHeader = ({
   subtitle,
   children,
   refKey,
-  observerRef,
+  addObservedElement,
 }: ListingsGroupProps) => {
   const { unleashFlag: newDirectoryEnabled } = useFeatureFlag(
     "temp.webapp.directory.listings",
     false
   )
 
+  const container: MutableRefObject<null | HTMLDivElement> = useRef(null)
+
+  useLayoutEffect(() => {
+    addObservedElement(container.current)
+  }, [addObservedElement])
+
   if (!newDirectoryEnabled) {
     return children
   }
 
   return (
-    <div
-      id={refKey}
-      ref={(el) => {
-        if (el) {
-          observerRef?.current?.observe(el)
-        }
-      }}
-    >
+    <div id={refKey} ref={container}>
       <div className="listings-group__header listings-group__customHeader">
         <div className="listings-group__content">
           <div className="listings-group__icon">{icon}</div>

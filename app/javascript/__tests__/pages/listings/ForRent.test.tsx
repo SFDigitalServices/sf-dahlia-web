@@ -21,6 +21,9 @@ jest.mock("../../../hooks/useFeatureFlag", () => ({
 
 const mockIntersectionObserver = jest.fn()
 const observeFunction = jest.fn()
+const mockResizeObserver = jest.fn()
+const mockResizeObserveFunction = jest.fn()
+const mockResizeDisconnectFunction = jest.fn()
 
 describe("For Rent", () => {
   beforeEach(() => {
@@ -29,6 +32,12 @@ describe("For Rent", () => {
       observe: observeFunction,
     })
     window.IntersectionObserver = mockIntersectionObserver
+
+    mockResizeObserver.mockReturnValue({
+      observe: mockResizeObserveFunction,
+      disconnect: mockResizeDisconnectFunction,
+    })
+    window.ResizeObserver = mockResizeObserver
   })
   afterEach(() => {
     cleanup()

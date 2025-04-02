@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useRef, useLayoutEffect, MutableRefObject } from "react"
 import "./ListingsGroup.scss"
 import { Button, Icon, UniversalIconType } from "@bloom-housing/ui-components"
 
@@ -11,7 +11,7 @@ export interface ListingsGroupProps {
   listingsCount: number
   showButtonText: string
   refKey?: string
-  observerRef?: React.MutableRefObject<null | IntersectionObserver>
+  addObservedElement: (elem: HTMLElement) => void
   showListings?: boolean
   setShowListings?: React.Dispatch<React.SetStateAction<boolean>>
 }
@@ -25,22 +25,19 @@ const ListingsGroup = ({
   listingsCount,
   showButtonText,
   refKey,
-  observerRef,
+  addObservedElement,
   showListings,
   setShowListings,
 }: ListingsGroupProps) => {
   const toggleListings = () => setShowListings(!showListings)
+  const container: MutableRefObject<null | HTMLDivElement> = useRef(null)
+
+  useLayoutEffect(() => {
+    addObservedElement(container.current)
+  }, [addObservedElement])
 
   return (
-    <div
-      className="listings-group"
-      id={refKey ?? header}
-      ref={(el) => {
-        if (el) {
-          observerRef?.current?.observe(el)
-        }
-      }}
-    >
+    <div className="listings-group" id={refKey ?? header} ref={container}>
       <div className="listings-group__header">
         <div className="listings-group__content">
           <div className="listings-group__icon">

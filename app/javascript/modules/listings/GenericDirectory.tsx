@@ -6,6 +6,8 @@ import React, {
   useContext,
   useEffect,
   useState,
+  useRef,
+  useCallback,
 } from "react"
 import { LoadingOverlay, StackedTableRow, t } from "@bloom-housing/ui-components"
 
@@ -49,12 +51,18 @@ interface RentalDirectoryProps {
   getPageHeader: (
     filters: EligibilityFilters,
     setFilters: Dispatch<SetStateAction<EligibilityFilters>>,
-    observerRef: React.MutableRefObject<null | IntersectionObserver>
+    addObservedElement: (elem: HTMLElement) => void
   ) => JSX.Element
   findMoreActionBlock: ReactNode
 }
 
-const observerRef: MutableRefObject<null | IntersectionObserver> = { current: null }
+interface ObservedElementsProps {
+  [key: string]: Element
+}
+
+interface ElementHeightsProps {
+  [key: string]: number
+}
 
 export const GenericDirectory = (props: RentalDirectoryProps) => {
   const [rawListings, setRawListings] = useState<Array<RailsListing>>([])
@@ -73,6 +81,15 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
   const [resultsIsOpen, setResultsIsOpen] = useState<boolean>(false)
   const [upcomingIsOpen, setUpcomingIsOpen] = useState<boolean>(false)
   const [additionalIsOpen, setAdditionalIsOpen] = useState<boolean>(false)
+  const currentElement: MutableRefObject<null | Element> = useRef(null)
+  const ratio: number = 0.6
+  const docRef = useRef(document)
+  const lastScrollY = useRef<number>(0)
+  const scrollDirection = useRef<number>(1)
+  const intersectionObservers = useRef<IntersectionObserver[]>([])
+  const observedElements = useRef<ObservedElementsProps>({})
+  const elementHeights = useRef<ElementHeightsProps>({})
+  const resizeObserverRef: MutableRefObject<null | ResizeObserver> = useRef(null)
 
   const handleNavigation = (section: string) => {
     setActiveItem(section)
@@ -89,6 +106,54 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
         break
     }
   }
+
+  const handleIntersectionEntries = (entries: IntersectionObserverEntry[]) => {
+    const pageHeaderEntries = entries.filter((e) => e.target.id === DIRECTORY_PAGE_HEADER)
+    toggleNavBarBoxShadow(pageHeaderEntries)
+
+    const sectionHeaderEntries = entries.filter(
+      (e) => e.target.id !== DIRECTORY_PAGE_HEADER && e.isIntersecting
+    )
+    const newActiveItem: string = handleSectionHeaderEntries(
+      sectionHeaderEntries,
+      currentElement.current,
+      scrollDirection
+    )
+    if (newActiveItem) {
+      setActiveItem(newActiveItem)
+    }
+  }
+
+  const addIntersectionObserver = useCallback((element: Element) => {
+    // create a different threshold and observer for each element, since they may have very different heights
+    const threshold = Math.min(1, (window.innerHeight / element.clientHeight) * ratio)
+    const observer = new IntersectionObserver(handleIntersectionEntries, { threshold })
+    observer.observe(element)
+
+    intersectionObservers.current.push(observer)
+    elementHeights[element.id] = element.clientHeight
+    resizeObserverRef.current.observe(element)
+  }, [])
+
+  const initObservers = useCallback(() => {
+    intersectionObservers.current.forEach((observer) => observer.disconnect())
+    intersectionObservers.current = []
+    resizeObserverRef.current.disconnect()
+
+    for (const element of Object.values(observedElements.current)) {
+      addIntersectionObserver(element)
+    }
+  }, [addIntersectionObserver])
+
+  const addObservedElement = useCallback(
+    (elem: Element): void => {
+      if (!(elem.id in observedElements)) {
+        observedElements.current[elem.id] = elem
+        addIntersectionObserver(elem)
+      }
+    },
+    [addIntersectionObserver]
+  )
 
   const { unleashFlag: humanTranslationsReady } = useFeatureFlag(
     "temp.webapp.listings.sales.fcfsListings.subtitle",
@@ -134,23 +199,36 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
   )
 
   useEffect(() => {
-    if (newDirectoryEnabled && !observerRef.current) {
-      const handleIntersectionEntries = (entries: IntersectionObserverEntry[]) => {
-        const pageHeaderEntries = entries.filter((e) => e.target.id === DIRECTORY_PAGE_HEADER)
-        toggleNavBarBoxShadow(pageHeaderEntries)
+    if (newDirectoryEnabled) {
+      const handleResize = (entries) => {
+        window.requestAnimationFrame((): void | undefined => {
+          if (!Array.isArray(entries) || entries.length === 0) {
+            return
+          }
+          for (const entry of entries) {
+            const currentHeight = elementHeights[entry.target.id]
+            const diff = Math.abs(entry.contentRect.height - currentHeight) / currentHeight
 
-        const sectionHeaderEntries = entries.filter(
-          (e) => e.target.id !== DIRECTORY_PAGE_HEADER && e.isIntersecting
-        )
-        const newActiveItem = handleSectionHeaderEntries(sectionHeaderEntries)
-        if (newActiveItem) {
-          setActiveItem(newActiveItem)
-        }
+            if (diff > 0.1) {
+              // the resized difference is big enough that we should reset the intersection ratios
+              initObservers()
+
+              return
+            }
+          }
+        })
       }
 
-      observerRef.current = new IntersectionObserver(handleIntersectionEntries)
+      docRef.current.addEventListener("scroll", () => {
+        scrollDirection.current = window.scrollY > lastScrollY.current ? 1 : -1
+        lastScrollY.current = window.scrollY
+      })
+      if (!resizeObserverRef.current) {
+        resizeObserverRef.current = new ResizeObserver(handleResize)
+      }
+      initObservers()
     }
-  }, [activeItem, newDirectoryEnabled])
+  }, [newDirectoryEnabled, initObservers])
 
   const { getAssetPath } = useContext(ConfigContext)
 
@@ -159,7 +237,7 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
       <div>
         {!loading && (
           <>
-            {props.getPageHeader(filters, setFilters, observerRef)}
+            {props.getPageHeader(filters, setFilters, addObservedElement)}
             {newDirectoryEnabled && (
               <DirectoryPageNavigationBar
                 directorySectionInfo={directorySectionInfo}
@@ -181,7 +259,7 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
                 listings.open,
                 props.directoryType,
                 props.getSummaryTable,
-                observerRef,
+                addObservedElement,
                 hasFiltersSet,
                 listings.fcfs.length,
                 getAssetPath("house-circle-check.svg")
@@ -192,7 +270,7 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
                   props.directoryType,
                   humanTranslationsReady,
                   props.getSummaryTable,
-                  observerRef,
+                  addObservedElement,
                   hasFiltersSet,
                   listings.open.length,
                   getAssetPath("house-circle-check.svg")
@@ -203,7 +281,7 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
                   listings.additional,
                   props.directoryType,
                   props.getSummaryTable,
-                  observerRef,
+                  addObservedElement,
                   hasFiltersSet,
                   additionalIsOpen,
                   setAdditionalIsOpen,
@@ -213,7 +291,7 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
                 listings.upcoming,
                 props.directoryType,
                 props.getSummaryTable,
-                observerRef,
+                addObservedElement,
                 upcomingIsOpen,
                 setUpcomingIsOpen,
                 newDirectoryEnabled
@@ -222,7 +300,7 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
                 listings.results,
                 props.directoryType,
                 props.getSummaryTable,
-                observerRef,
+                addObservedElement,
                 resultsIsOpen,
                 setResultsIsOpen,
                 newDirectoryEnabled
