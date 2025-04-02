@@ -132,7 +132,9 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
 
     intersectionObservers.current.push(observer)
     elementHeights[element.id] = element.clientHeight
-    resizeObserverRef.current.observe(element)
+    if (resizeObserverRef.current) {
+      resizeObserverRef.current.observe(element)
+    }
   }, [])
 
   const initObservers = useCallback(() => {
@@ -209,7 +211,7 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
             const currentHeight = elementHeights[entry.target.id]
             const diff = Math.abs(entry.contentRect.height - currentHeight) / currentHeight
 
-            if (diff > 0.1) {
+            if (diff > 0.02) {
               // the resized difference is big enough that we should reset the intersection ratios
               initObservers()
 
