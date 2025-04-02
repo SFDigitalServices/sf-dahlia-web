@@ -149,7 +149,7 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
 
   const addObservedElement = useCallback(
     (elem: Element): void => {
-      if (!(elem.id in observedElements)) {
+      if (elem && !(elem.id in observedElements)) {
         observedElements.current[elem.id] = elem
         addIntersectionObserver(elem)
       }
@@ -204,9 +204,6 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
     if (newDirectoryEnabled) {
       const handleResize = (entries) => {
         window.requestAnimationFrame((): void | undefined => {
-          if (!Array.isArray(entries) || entries.length === 0) {
-            return
-          }
           for (const entry of entries) {
             const currentHeight = elementHeights[entry.target.id]
             const diff = Math.abs(entry.contentRect.height - currentHeight) / currentHeight

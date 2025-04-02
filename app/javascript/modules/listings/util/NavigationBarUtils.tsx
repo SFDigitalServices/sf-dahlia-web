@@ -1,14 +1,13 @@
 import React, { ReactNode, useRef, useLayoutEffect, MutableRefObject } from "react"
 
 export const toggleNavBarBoxShadow = (pageHeaderEntries: IntersectionObserverEntry[]) => {
-  document
-    .querySelector("#nav-bar-container")
-    .classList.toggle("directory-page-navigation-bar__header-intercept", false)
+  const navBarContainer = document.querySelector("#nav-bar-container")
+  if (navBarContainer) {
+    navBarContainer.classList.toggle("directory-page-navigation-bar__header-intercept", false)
 
-  if (pageHeaderEntries.length > 0 && pageHeaderEntries.every((e) => !e.isIntersecting)) {
-    document
-      .querySelector("#nav-bar-container")
-      .classList.toggle("directory-page-navigation-bar__header-intercept", true)
+    if (pageHeaderEntries.length > 0 && pageHeaderEntries.every((e) => !e.isIntersecting)) {
+      navBarContainer.classList.toggle("directory-page-navigation-bar__header-intercept", true)
+    }
   }
 }
 
