@@ -47,12 +47,14 @@ class Api::V1::ShortFormController < ApiController
   def show_application
     @application = Force::ShortFormService.get(params[:id])
     return render_unauthorized_error unless user_can_access?(@application)
+
     map_listing_to_application
     render json: { application: @application }
   end
 
   def show_listing_application_for_user
     return render json: { application: {} } unless current_user.present?
+
     find_listing_application
     find_application_files
     render json: {
@@ -93,6 +95,7 @@ class Api::V1::ShortFormController < ApiController
 
   def update_application
     return if params['autosave'] == 'true' && autosave_disabled
+
     @application = Force::ShortFormService.get(application_params[:id])
     return render_unauthorized_error unless user_can_access?(@application)
     return render_unauthorized_error unless draft?(@application)
@@ -104,6 +107,7 @@ class Api::V1::ShortFormController < ApiController
   def claim_submitted_application
     @application = Force::ShortFormService.get(application_params[:id])
     return render_unauthorized_error unless user_can_claim?(@application)
+
     # calls same underlying method for submit
     submit_application
   end
@@ -139,6 +143,7 @@ class Api::V1::ShortFormController < ApiController
   def process_submit_app_response(response)
     attach_files_and_send_confirmation(response)
     return unless current_user && application_complete
+
     delete_draft_application(application_params[:listingID])
   end
 
@@ -182,6 +187,7 @@ class Api::V1::ShortFormController < ApiController
 
   def initial_submission?
     return false if params[:action].to_s == 'claim_submitted_application'
+
     application_params[:status] == 'submitted'
   end
 
@@ -214,31 +220,37 @@ class Api::V1::ShortFormController < ApiController
     files.update_all(user_id: current_user.id)
   end
 
-  def extract_application_submission_fields(response)
-  {
-    email: application_params[:primaryApplicant]&.[](:email).to_s,
-    listingId: application_params[:listingID].to_s,
-    lotteryNumber: response&.[]('lotteryNumber').to_s,
-    listingName: application_params[:listing]&.[](:name).to_s,
-    lotteryDate: application_params[:listing]&.[](:lotteryDate).to_s,
-  }
-  end
-
-  def send_application_submission_message(response)
-    submission_fields = extract_application_submission_fields(response)
+  def send_application_submission_message(lotteryNumber:, listingName:, lotteryDate:)
+    submission_fields = {
+      email: application_params[:primaryApplicant]&.[](:email).to_s,
+      listingId: application_params[:listingID].to_s,
+      lotteryNumber:,
+      listingName: listingName.to_s,
+      lotteryDate: lotteryDate.to_s,
+    }
     Rails.logger.info("Sending application submission message: #{submission_fields}")
-    message_response = HTTP.headers("x-api-key" => ENV['MESSAGE_SERVICE_API_KEY']).post("http://localhost:3001/messages/application-submission", :params => submission_fields)
+    message_response = HTTP.headers('x-api-key' => ENV.fetch('MESSAGE_SERVICE_API_KEY', nil)).post(
+      'http://localhost:3001/messages/application-submission', params: submission_fields
+    )
     if message_response.code >= 400
-      Rails.logger.error("Error sending application submission message: #{message_response.to_s}")
+      Rails.logger.error("Error sending application submission message: #{message_response}")
     else
-      Rails.logger.info("Application Submission message sent: #{message_response.to_s}")
+      Rails.logger.info("Application Submission message sent: #{message_response}")
     end
   rescue HTTP::Error
-    Rails.logger.error("Error sending application submission message: #{message_response.to_s}")
+    Rails.logger.error("Error sending application submission message: #{message_response}")
   end
 
   def send_submit_app_confirmation(response)
-    send_application_submission_message(response)
+    listing = Hashie::Mash.new(Force::ListingService.listing(application_params[:listingID]))
+    lottery_date = listing.Lottery_Date
+    Time.zone.parse(lottery_date).strftime('%B %e, %Y') if lottery_date
+
+    send_application_submission_message(
+      lotteryNumber: response&.[]('lotteryNumber').to_s,
+      listingName: listing.Name,
+      lotteryDate: listing.Lottery_Date,
+    )
     Emailer.submission_confirmation(
       locale: params[:locale],
       email: application_params[:primaryApplicant][:email],
@@ -282,6 +294,7 @@ class Api::V1::ShortFormController < ApiController
 
   def user_can_access?(application)
     return false if application.empty?
+
     Force::ShortFormService.user_owns_app?(user_contact_id, application)
   end
 
@@ -304,6 +317,7 @@ class Api::V1::ShortFormController < ApiController
     if e.message.include?('APEX_ERROR') && e.message.exclude?('UNABLE_TO_LOCK_ROW')
       return render_err(e, status: 500, external_capture: true)
     end
+
     raise e.class, e.message
   end
 
@@ -324,8 +338,10 @@ class Api::V1::ShortFormController < ApiController
 
   def unconfirmed_user_with_temp_session_id
     return false if params[:temp_session_id].blank?
+
     @unconfirmed_user = User.find_by_temp_session_id(params[:temp_session_id])
     return unless @unconfirmed_user
+
     params.delete :temp_session_id
     @unconfirmed_user.update(temp_session_id: nil)
   end
@@ -518,7 +534,6 @@ class Api::V1::ShortFormController < ApiController
             :lendingAgent,
             :homebuyerEducationAgency,
             :isNonPrimaryMemberVeteran,
-            :lotteryDate,
           )
           .to_h
   end
