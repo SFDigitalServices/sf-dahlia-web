@@ -106,6 +106,12 @@
     "COVID_UPDATE": {
       "required": false
     },
+    "MESSAGE_SERVICE_API_KEY": {
+      "required": false
+    },
+    "MESSAGE_SERVICE_URL": {
+      "required": false
+    },
     "NODE_OPTIONS": {
       "required": false,
       "value": "--openssl-legacy-provider --max_old_space_size=4096"
