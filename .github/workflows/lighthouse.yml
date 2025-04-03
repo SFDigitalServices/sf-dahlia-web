@@ -7,9 +7,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4 # Upgrade to v4 and fetch full history
+        uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # Required for LHCI to resolve branches/commits
+          fetch-depth: 0
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
