@@ -222,42 +222,9 @@ class Api::V1::ShortFormController < ApiController
     files.update_all(user_id: current_user.id)
   end
 
-  def send_application_submission_message(lotteryNumber:, listingName:, lotteryDate:)
-    submission_fields = {
-      email: application_params[:primaryApplicant]&.[](:email).to_s,
-      listingId: application_params[:listingID].to_s,
-      lotteryNumber:,
-      listingName: listingName.to_s,
-      lotteryDate: lotteryDate.to_s,
-    }
-    application_submission_endpoint = "#{ENV.fetch('MESSAGE_SERVICE_URL',
-                                                   nil)}/messages/application-submission"
-    Rails.logger.info("Sending application submission message: #{submission_fields} to #{application_submission_endpoint}")
-    message_response = HTTP.headers('x-api-key' => ENV.fetch('MESSAGE_SERVICE_API_KEY', nil)).post(
-      application_submission_endpoint, params: submission_fields
-    )
-    if message_response.code >= 400
-      Rails.logger.error("Error sending application submission message: #{message_response}")
-    else
-      Rails.logger.info("Application Submission message sent: #{message_response}")
-    end
-  rescue StandardError => e
-    Rails.logger.error("Standard Error sending application submission message: #{e.message}")
-  end
-
   def send_submit_app_confirmation(response)
-    listing = Hashie::Mash.new(Force::ListingService.listing(application_params[:listingID]))
-    lottery_date = listing.Lottery_Date
-    Time.zone.parse(lottery_date).strftime('%B %e, %Y') if lottery_date
-
-    # TODO: Add feature toggle
-    if Rails.configuration.unleash.is_enabled? 'UseMessageService'
-      send_application_submission_message(
-        lotteryNumber: response&.[]('lotteryNumber').to_s,
-        listingName: listing.Name,
-        lotteryDate: listing.Lottery_Date,
-      )
-    end
+    DahliaBackend::MessageService.send_application_confirmation(application_params,
+                                                                response)
     Emailer.submission_confirmation(
       locale: params[:locale],
       email: application_params[:primaryApplicant][:email],
