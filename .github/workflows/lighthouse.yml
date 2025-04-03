@@ -6,20 +6,32 @@ jobs:
     if: github.event.deployment_status.state == 'success'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
-        # here we only install the dependencies require()d in lighthouserc.js
-      - run: |
-          npm i url-join
+      - name: Checkout code
+        uses: actions/checkout@v4 # Upgrade to v4 and fetch full history
+        with:
+          fetch-depth: 0 # Required for LHCI to resolve branches/commits
 
-      - name: determine branch
-        uses: SFDigitalServices/git-the-branch@v1
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
 
-      - uses: treosh/lighthouse-ci-action@v3
+      - name: Install dependencies
+        run: npm i url-join
+
+      - name: Extract branch name
+        run: |
+          BRANCH_NAME=$(echo "${{ github.event.deployment.ref }}" | sed 's/refs\/heads\///')
+          echo "GIT_BRANCH=$BRANCH_NAME" >> $GITHUB_ENV
+          echo "LHCI_BUILD_CONTEXT__CURRENT_HASH=$(git rev-parse HEAD)" >> $GITHUB_ENV
+
+      - name: Lighthouse CI
+        uses: treosh/lighthouse-ci-action@v3
         with:
           serverToken: ${{ secrets.LHCI_BUILD_TOKEN }}
           serverBaseUrl: https://lighthouse-ci-sfgov.herokuapp.com
         env:
           LHCI_BUILD_CONTEXT__CURRENT_BRANCH: ${{ env.GIT_BRANCH }}
+          LHCI_BUILD_CONTEXT__CURRENT_HASH: ${{ env.LHCI_BUILD_CONTEXT__CURRENT_HASH }}
           LHCI_GITHUB_TOKEN: ${{ github.token }}
           LHCI_COLLECT_BASE_URL: ${{ github.event.deployment.payload.web_url }}
