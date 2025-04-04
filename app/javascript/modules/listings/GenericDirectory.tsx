@@ -1,13 +1,11 @@
 import React, {
+  useRef,
   Dispatch,
-  MutableRefObject,
   ReactNode,
   SetStateAction,
   useContext,
   useEffect,
   useState,
-  useRef,
-  useCallback,
 } from "react"
 import { LoadingOverlay, StackedTableRow, t } from "@bloom-housing/ui-components"
 
@@ -35,12 +33,11 @@ import {
   RENTAL_DIRECTORY_SECTIONS,
   SALE_DIRECTORY_SECTIONS,
   DIRECTORY_SECTION_ADDITIONAL_LISTINGS,
-  DIRECTORY_PAGE_HEADER,
   DIRECTORY_SECTION_LOTTERY_RESULTS,
   DIRECTORY_SECTION_UPCOMING_LOTTERIES,
 } from "../constants"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
-import { handleSectionHeaderEntries, toggleNavBarBoxShadow } from "./util/NavigationBarUtils"
+import { MenuIntersectionObserverHandle, MenuIntersectionObserver } from "./util/NavigationBarUtils"
 import { ConfigContext } from "../../lib/ConfigContext"
 
 interface RentalDirectoryProps {
@@ -54,14 +51,6 @@ interface RentalDirectoryProps {
     addObservedElement: (elem: HTMLElement) => void
   ) => JSX.Element
   findMoreActionBlock: ReactNode
-}
-
-interface ObservedElementsProps {
-  [key: string]: Element
-}
-
-interface ElementHeightsProps {
-  [key: string]: number
 }
 
 export const GenericDirectory = (props: RentalDirectoryProps) => {
@@ -81,15 +70,11 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
   const [resultsIsOpen, setResultsIsOpen] = useState<boolean>(false)
   const [upcomingIsOpen, setUpcomingIsOpen] = useState<boolean>(false)
   const [additionalIsOpen, setAdditionalIsOpen] = useState<boolean>(false)
-  const currentElement: MutableRefObject<null | Element> = useRef(null)
-  const ratio: number = 0.6
-  const docRef = useRef(document)
-  const lastScrollY = useRef<number>(0)
-  const scrollDirection = useRef<number>(1)
-  const intersectionObservers = useRef<IntersectionObserver[]>([])
-  const observedElements = useRef<ObservedElementsProps>({})
-  const elementHeights = useRef<ElementHeightsProps>({})
-  const resizeObserverRef: MutableRefObject<null | ResizeObserver> = useRef(null)
+  const menuIntersectionObserverRef = useRef<MenuIntersectionObserverHandle>(null)
+
+  const addObservedElement = (elem) => {
+    menuIntersectionObserverRef.current?.addObservedElement(elem)
+  }
 
   const handleNavigation = (section: string) => {
     setActiveItem(section)
@@ -106,56 +91,6 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
         break
     }
   }
-
-  const handleIntersectionEntries = (entries: IntersectionObserverEntry[]) => {
-    const pageHeaderEntries = entries.filter((e) => e.target.id === DIRECTORY_PAGE_HEADER)
-    toggleNavBarBoxShadow(pageHeaderEntries)
-
-    const sectionHeaderEntries = entries.filter(
-      (e) => e.target.id !== DIRECTORY_PAGE_HEADER && e.isIntersecting
-    )
-    const newActiveItem: string = handleSectionHeaderEntries(
-      sectionHeaderEntries,
-      currentElement.current,
-      scrollDirection
-    )
-    if (newActiveItem) {
-      setActiveItem(newActiveItem)
-    }
-  }
-
-  const addIntersectionObserver = useCallback((element: Element) => {
-    // create a different threshold and observer for each element, since they may have very different heights
-    const threshold = Math.min(1, (window.innerHeight / element.clientHeight) * ratio)
-    const observer = new IntersectionObserver(handleIntersectionEntries, { threshold })
-    observer.observe(element)
-
-    intersectionObservers.current.push(observer)
-    elementHeights[element.id] = element.clientHeight
-    if (resizeObserverRef.current) {
-      resizeObserverRef.current.observe(element)
-    }
-  }, [])
-
-  const initObservers = useCallback(() => {
-    intersectionObservers.current.forEach((observer) => observer.disconnect())
-    intersectionObservers.current = []
-    resizeObserverRef.current.disconnect()
-
-    for (const element of Object.values(observedElements.current)) {
-      addIntersectionObserver(element)
-    }
-  }, [addIntersectionObserver])
-
-  const addObservedElement = useCallback(
-    (elem: Element): void => {
-      if (elem && !(elem.id in observedElements)) {
-        observedElements.current[elem.id] = elem
-        addIntersectionObserver(elem)
-      }
-    },
-    [addIntersectionObserver]
-  )
 
   const { unleashFlag: humanTranslationsReady } = useFeatureFlag(
     "temp.webapp.listings.sales.fcfsListings.subtitle",
@@ -200,39 +135,13 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
     false
   )
 
-  useEffect(() => {
-    if (newDirectoryEnabled) {
-      const handleResize = (entries) => {
-        window.requestAnimationFrame((): void | undefined => {
-          for (const entry of entries) {
-            const currentHeight = elementHeights[entry.target.id]
-            const diff = Math.abs(entry.contentRect.height - currentHeight) / currentHeight
-
-            if (diff > 0.02) {
-              // the resized difference is big enough that we should reset the intersection ratios
-              initObservers()
-
-              return
-            }
-          }
-        })
-      }
-
-      docRef.current.addEventListener("scroll", () => {
-        scrollDirection.current = window.scrollY > lastScrollY.current ? 1 : -1
-        lastScrollY.current = window.scrollY
-      })
-      if (!resizeObserverRef.current) {
-        resizeObserverRef.current = new ResizeObserver(handleResize)
-      }
-      initObservers()
-    }
-  }, [newDirectoryEnabled, initObservers])
-
   const { getAssetPath } = useContext(ConfigContext)
 
   return (
     <LoadingOverlay isLoading={loading}>
+      {newDirectoryEnabled && (
+        <MenuIntersectionObserver ref={menuIntersectionObserverRef} setActiveItem={setActiveItem} />
+      )}
       <div>
         {!loading && (
           <>
