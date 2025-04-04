@@ -218,6 +218,9 @@ module.exports = function (grunt) {
           return token ? `phrase push --access_token ${token}` : "phrase push"
         },
       },
+      reactSort: {
+        cmd: "./bin/sort-translations.sh",
+      },
     },
   })
 
@@ -243,6 +246,7 @@ module.exports = function (grunt) {
     "copy:addBackLanguageKey", // only relevant for angular
     "json_remove_fields", // necessary for react and angular
     "sortJSON", // only relevant for angular
+    "exec:reactSort",
   ])
 
   grunt.registerTask("phrasePush", [
@@ -251,6 +255,7 @@ module.exports = function (grunt) {
     "copy:addBackLanguageKey",
     "json_remove_fields",
     "sortJSON",
+    "exec:reactSort",
   ])
 
   grunt.registerTask("phrasePull", [
@@ -259,6 +264,7 @@ module.exports = function (grunt) {
     "copy:addBackLanguageKey",
     "json_remove_fields",
     "sortJSON",
+    "exec:reactSort",
   ])
 
   grunt.registerTask("deploy", ["clean", "copy", "replace"])
