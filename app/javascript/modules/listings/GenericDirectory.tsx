@@ -1,11 +1,10 @@
 import React, {
+  useRef,
   Dispatch,
-  MutableRefObject,
   ReactNode,
   SetStateAction,
   useContext,
   useEffect,
-  useRef,
   useState,
 } from "react"
 import { LoadingOverlay, StackedTableRow, t } from "@bloom-housing/ui-components"
@@ -34,12 +33,11 @@ import {
   RENTAL_DIRECTORY_SECTIONS,
   SALE_DIRECTORY_SECTIONS,
   DIRECTORY_SECTION_ADDITIONAL_LISTINGS,
-  DIRECTORY_PAGE_HEADER,
   DIRECTORY_SECTION_LOTTERY_RESULTS,
   DIRECTORY_SECTION_UPCOMING_LOTTERIES,
 } from "../constants"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
-import { handleSectionHeaderEntries, toggleNavBarBoxShadow } from "./util/NavigationBarUtils"
+import { MenuIntersectionObserverHandle, MenuIntersectionObserver } from "./util/NavigationBarUtils"
 import { ConfigContext } from "../../lib/ConfigContext"
 
 interface RentalDirectoryProps {
@@ -50,7 +48,7 @@ interface RentalDirectoryProps {
   getPageHeader: (
     filters: EligibilityFilters,
     setFilters: Dispatch<SetStateAction<EligibilityFilters>>,
-    observerRef: React.MutableRefObject<null | IntersectionObserver>
+    addObservedElement: (elem: HTMLElement) => void
   ) => JSX.Element
   findMoreActionBlock: ReactNode
 }
@@ -72,6 +70,11 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
   const [resultsIsOpen, setResultsIsOpen] = useState<boolean>(false)
   const [upcomingIsOpen, setUpcomingIsOpen] = useState<boolean>(false)
   const [additionalIsOpen, setAdditionalIsOpen] = useState<boolean>(false)
+  const menuIntersectionObserverRef = useRef<MenuIntersectionObserverHandle>(null)
+
+  const addObservedElement = (elem) => {
+    menuIntersectionObserverRef.current?.addObservedElement(elem)
+  }
 
   const handleNavigation = (section: string) => {
     setActiveItem(section)
@@ -132,34 +135,17 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
     false
   )
 
-  const observerRef: MutableRefObject<null | IntersectionObserver> = useRef(null)
-  useEffect(() => {
-    if (newDirectoryEnabled) {
-      const handleIntersectionEntries = (entries: IntersectionObserverEntry[]) => {
-        const pageHeaderEntries = entries.filter((e) => e.target.id === DIRECTORY_PAGE_HEADER)
-        toggleNavBarBoxShadow(pageHeaderEntries)
-
-        const sectionHeaderEntries = entries.filter(
-          (e) => e.target.id !== DIRECTORY_PAGE_HEADER && e.isIntersecting
-        )
-        const newActiveItem = handleSectionHeaderEntries(sectionHeaderEntries)
-        if (newActiveItem) {
-          setActiveItem(newActiveItem)
-        }
-      }
-
-      observerRef.current = new IntersectionObserver(handleIntersectionEntries)
-    }
-  }, [activeItem, newDirectoryEnabled])
-
   const { getAssetPath } = useContext(ConfigContext)
 
   return (
     <LoadingOverlay isLoading={loading}>
+      {newDirectoryEnabled && (
+        <MenuIntersectionObserver ref={menuIntersectionObserverRef} setActiveItem={setActiveItem} />
+      )}
       <div>
         {!loading && (
           <>
-            {props.getPageHeader(filters, setFilters, observerRef)}
+            {props.getPageHeader(filters, setFilters, addObservedElement)}
             {newDirectoryEnabled && (
               <DirectoryPageNavigationBar
                 directorySectionInfo={directorySectionInfo}
@@ -181,7 +167,7 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
                 listings.open,
                 props.directoryType,
                 props.getSummaryTable,
-                observerRef,
+                addObservedElement,
                 hasFiltersSet,
                 listings.fcfs.length,
                 getAssetPath("house-circle-check.svg")
@@ -192,7 +178,7 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
                   props.directoryType,
                   humanTranslationsReady,
                   props.getSummaryTable,
-                  observerRef,
+                  addObservedElement,
                   hasFiltersSet,
                   listings.open.length,
                   getAssetPath("house-circle-check.svg")
@@ -203,7 +189,7 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
                   listings.additional,
                   props.directoryType,
                   props.getSummaryTable,
-                  observerRef,
+                  addObservedElement,
                   hasFiltersSet,
                   additionalIsOpen,
                   setAdditionalIsOpen,
@@ -213,7 +199,7 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
                 listings.upcoming,
                 props.directoryType,
                 props.getSummaryTable,
-                observerRef,
+                addObservedElement,
                 upcomingIsOpen,
                 setUpcomingIsOpen,
                 newDirectoryEnabled
@@ -222,7 +208,7 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
                 listings.results,
                 props.directoryType,
                 props.getSummaryTable,
-                observerRef,
+                addObservedElement,
                 resultsIsOpen,
                 setResultsIsOpen,
                 newDirectoryEnabled

@@ -1,34 +1,29 @@
 import { handleSectionHeaderEntries } from "../../../../modules/listings/util/NavigationBarUtils"
 
-const mockIntersectionObserverEntry = (id, isIntersecting) => {
+const mockIntersectionObserverEntry = (id, isIntersecting, intersectionRatio) => {
   return {
     target: { id },
-    isIntersecting,
+    isIntersecting: isIntersecting,
+    intersectionRatio: intersectionRatio,
   } as IntersectionObserverEntry
 }
 
 describe("handleSectionHeaderEvents", () => {
   it("handleSectionHeaderEvents sets the correct active item", () => {
     const events: IntersectionObserverEntry[] = [
-      mockIntersectionObserverEntry("enter-a-lottery", false),
-      mockIntersectionObserverEntry("buy-now", true),
-      mockIntersectionObserverEntry("lottery-results", false),
+      mockIntersectionObserverEntry("buy-now", true, 0.2),
     ]
 
-    handleSectionHeaderEntries(events)
+    const result = handleSectionHeaderEntries(events, null, 1)
 
-    expect(handleSectionHeaderEntries(events)).toEqual("buy-now")
+    expect(result).toEqual("buy-now")
   })
 
-  it("handleSectionHeaderEvents sets the correct active item based on ratio", () => {
-    const events: IntersectionObserverEntry[] = [
-      mockIntersectionObserverEntry("enter-a-lottery", true),
-      mockIntersectionObserverEntry("buy-now", true),
-      mockIntersectionObserverEntry("lottery-results", false),
-    ]
+  it("handleSectionHeaderEvents returns null for empty arrays", () => {
+    const events: IntersectionObserverEntry[] = []
 
-    handleSectionHeaderEntries(events)
+    const result = handleSectionHeaderEntries(events, null, -1)
 
-    expect(handleSectionHeaderEntries(events)).toEqual("buy-now")
+    expect(result).toBeUndefined()
   })
 })

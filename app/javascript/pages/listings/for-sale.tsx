@@ -66,10 +66,10 @@ const getForSaleSummaryTable = (listing: RailsSaleListing) => {
 const getBuyHeader = (
   filters: EligibilityFilters,
   setFilters: Dispatch<SetStateAction<EligibilityFilters>>,
-  observerRef: React.MutableRefObject<null | IntersectionObserver>
+  addObservedElement: (elem: HTMLElement) => void
 ) => {
   return (
-    <PageHeaderWithRef observerRef={observerRef}>
+    <PageHeaderWithRef addObservedElement={addObservedElement}>
       {filters ? (
         <>
           {eligibilityHeader(

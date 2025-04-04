@@ -63,10 +63,10 @@ const getForRentSummaryTable = (listing: RailsRentalListing) => {
 const getRentalHeader = (
   filters: EligibilityFilters,
   setFilters: Dispatch<SetStateAction<EligibilityFilters>>,
-  observerRef: React.MutableRefObject<null | IntersectionObserver>
+  addObservedElement: (elem: HTMLElement) => void
 ) => {
   return (
-    <PageHeaderWithRef observerRef={observerRef}>
+    <PageHeaderWithRef addObservedElement={addObservedElement}>
       {filters ? (
         eligibilityHeader(
           filters,
