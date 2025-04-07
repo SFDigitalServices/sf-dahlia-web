@@ -91,6 +91,25 @@ const addIntersectionObserver = (element: Element, callback: (id: string) => voi
   }
 }
 
+const addScrollListener = () => {
+  document.addEventListener("scroll", () => {
+    if (window.scrollY !== lastScrollY) {
+      scrollDirection = window.scrollY > lastScrollY ? 1 : -1
+      lastScrollY = window.scrollY
+    }
+  })
+}
+
+const initObservers = (callback: (id: string) => void) => {
+  intersectionObservers.forEach((observer) => observer.disconnect())
+  intersectionObservers = []
+  resizeObserverRef.disconnect()
+
+  for (const element of Object.values(observedElements)) {
+    addIntersectionObserver(element, callback)
+  }
+}
+
 export const PageHeaderWithRef = ({
   children,
   addObservedElement,
@@ -134,26 +153,15 @@ export const MenuIntersectionObserver = forwardRef<
 
           if (diff > 0.02) {
             // the resized difference is big enough that we should reset the intersection ratios
-            intersectionObservers.forEach((observer) => observer.disconnect())
-            intersectionObservers = []
-            resizeObserverRef.disconnect()
-
-            for (const element of Object.values(observedElements)) {
-              addIntersectionObserver(element, props.setActiveItem)
-            }
-
+            initObservers(props.setActiveItem)
             return
           }
         }
       })
     }
 
-    document.addEventListener("scroll", () => {
-      if (window.scrollY !== lastScrollY) {
-        scrollDirection = window.scrollY > lastScrollY ? 1 : -1
-        lastScrollY = window.scrollY
-      }
-    })
+    addScrollListener()
+
     if (!resizeObserverRef) {
       resizeObserverRef = new ResizeObserver(handleResize)
     }
