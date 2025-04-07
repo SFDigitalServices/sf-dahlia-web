@@ -14,7 +14,7 @@ describe("handleSectionHeaderEvents", () => {
       mockIntersectionObserverEntry("buy-now", true, 0.2),
     ]
 
-    const result = handleSectionHeaderEntries(events, null, 1)
+    const result = handleSectionHeaderEntries(events)
 
     expect(result).toEqual("buy-now")
   })
@@ -22,7 +22,7 @@ describe("handleSectionHeaderEvents", () => {
   it("handleSectionHeaderEvents returns null for empty arrays", () => {
     const events: IntersectionObserverEntry[] = []
 
-    const result = handleSectionHeaderEntries(events, null, -1)
+    const result = handleSectionHeaderEntries(events)
 
     expect(result).toBeUndefined()
   })

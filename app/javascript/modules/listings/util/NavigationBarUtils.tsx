@@ -7,7 +7,7 @@ import React, {
   useRef,
   useCallback,
   useImperativeHandle,
-  useLayoutEffect,
+  useEffect,
 } from "react"
 
 import { DIRECTORY_PAGE_HEADER } from "../../constants"
@@ -24,6 +24,14 @@ export interface MenuIntersectionObserverHandle {
   addObservedElement: (elem) => void
 }
 
+let currentElement: HTMLElement
+let lastScrollY: number = 0
+let scrollDirection: number = 1
+let intersectionObservers: IntersectionObserver[] = []
+const observedElements: ObservedElementsProps = {}
+const elementHeights: ElementHeightsProps = {}
+let resizeObserverRef: ResizeObserver
+
 type MenuIntersectionObserverProps = {
   setActiveItem: Dispatch<SetStateAction<string>>
 }
@@ -39,7 +47,7 @@ export const toggleNavBarBoxShadow = (pageHeaderEntries: IntersectionObserverEnt
   }
 }
 
-export const handleSectionHeaderEntries = (entries, currentElement, scrollDirection) => {
+export const handleSectionHeaderEntries = (entries) => {
   if (entries.length > 0) {
     const { target, intersectionRatio } = entries[0]
 
@@ -56,26 +64,30 @@ export const handleSectionHeaderEntries = (entries, currentElement, scrollDirect
   }
 }
 
-const handleIntersectionEntries = (
-  entries: IntersectionObserverEntry[],
-  currentElement,
-  scrollDirection,
-  callback?: (activeItem: string) => void
-) => {
-  const pageHeaderEntries = entries.filter((e) => e.target.id === DIRECTORY_PAGE_HEADER)
-  toggleNavBarBoxShadow(pageHeaderEntries)
+const addIntersectionObserver = (element: Element, callback: (id: string) => void) => {
+  // create a different threshold and observer for each element, since they may have very different heights
+  const threshold = Math.min(1, (window.innerHeight / element.clientHeight) * 0.6)
+  // eslint-disable-next-line unicorn/consistent-function-scoping
+  const handleIntersectionEntries = (entries: IntersectionObserverEntry[]) => {
+    const pageHeaderEntries = entries.filter((e) => e.target.id === DIRECTORY_PAGE_HEADER)
+    toggleNavBarBoxShadow(pageHeaderEntries)
 
-  const sectionHeaderEntries = entries.filter(
-    (e) => e.target.id !== DIRECTORY_PAGE_HEADER && e.isIntersecting
-  )
+    const sectionHeaderEntries = entries.filter(
+      (e) => e.target.id !== DIRECTORY_PAGE_HEADER && e.isIntersecting
+    )
 
-  const newActiveItem: string = handleSectionHeaderEntries(
-    sectionHeaderEntries,
-    currentElement,
-    scrollDirection
-  )
-  if (callback && newActiveItem) {
-    callback(newActiveItem)
+    const newActiveItem: string = handleSectionHeaderEntries(sectionHeaderEntries)
+    if (callback && newActiveItem) {
+      callback(newActiveItem)
+    }
+  }
+  const observer = new IntersectionObserver(handleIntersectionEntries, { threshold })
+  observer.observe(element)
+
+  intersectionObservers.push(observer)
+  elementHeights[element.id] = element.clientHeight
+  if (resizeObserverRef) {
+    resizeObserverRef.observe(element)
   }
 }
 
@@ -88,7 +100,7 @@ export const PageHeaderWithRef = ({
 }) => {
   const container: MutableRefObject<null | HTMLDivElement> = useRef(null)
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     addObservedElement(container.current)
   }, [addObservedElement])
 
@@ -103,65 +115,18 @@ export const MenuIntersectionObserver = forwardRef<
   MenuIntersectionObserverHandle,
   MenuIntersectionObserverProps
 >((props, ref) => {
-  const currentElement: MutableRefObject<null | Element> = useRef(null)
-  const docRef = useRef(document)
-  const lastScrollY = useRef<number>(0)
-  const scrollDirection = useRef<number>(1)
-  const intersectionObservers = useRef<IntersectionObserver[]>([])
-  const observedElements = useRef<ObservedElementsProps>({})
-  const elementHeights = useRef<ElementHeightsProps>({})
-  const resizeObserverRef: MutableRefObject<null | ResizeObserver> = useRef(null)
-
-  const handleIntersectionEntriesCallback = useCallback(
-    (entries: IntersectionObserverEntry[]) => {
-      handleIntersectionEntries(
-        entries,
-        currentElement.current,
-        scrollDirection,
-        props.setActiveItem
-      )
+  const addObservedElement = useCallback(
+    (elem: Element): void => {
+      if (elem && !(elem.id in observedElements)) {
+        observedElements[elem.id] = elem
+        addIntersectionObserver(elem, props.setActiveItem)
+      }
     },
     [props]
   )
 
-  const addIntersectionObserver = useCallback(
-    (element: Element) => {
-      // create a different threshold and observer for each element, since they may have very different heights
-      const threshold = Math.min(1, (window.innerHeight / element.clientHeight) * 0.6)
-      const observer = new IntersectionObserver(handleIntersectionEntriesCallback, { threshold })
-      observer.observe(element)
-
-      intersectionObservers.current.push(observer)
-      elementHeights[element.id] = element.clientHeight
-      if (resizeObserverRef.current) {
-        resizeObserverRef.current.observe(element)
-      }
-    },
-    [handleIntersectionEntriesCallback]
-  )
-
-  const initObservers = useCallback(() => {
-    intersectionObservers.current.forEach((observer) => observer.disconnect())
-    intersectionObservers.current = []
-    resizeObserverRef.current.disconnect()
-
-    for (const element of Object.values(observedElements.current)) {
-      addIntersectionObserver(element)
-    }
-  }, [addIntersectionObserver])
-
-  const addObservedElement = useCallback(
-    (elem: Element): void => {
-      if (elem && !(elem.id in observedElements)) {
-        observedElements.current[elem.id] = elem
-        addIntersectionObserver(elem)
-      }
-    },
-    [addIntersectionObserver]
-  )
-
-  const handleResize = useCallback(
-    (entries) => {
+  useEffect(() => {
+    const handleResize = (entries) => {
       window.requestAnimationFrame((): void | undefined => {
         for (const entry of entries) {
           const currentHeight = elementHeights[entry.target.id]
@@ -169,25 +134,31 @@ export const MenuIntersectionObserver = forwardRef<
 
           if (diff > 0.02) {
             // the resized difference is big enough that we should reset the intersection ratios
-            initObservers()
+            intersectionObservers.forEach((observer) => observer.disconnect())
+            intersectionObservers = []
+            resizeObserverRef.disconnect()
+
+            for (const element of Object.values(observedElements)) {
+              addIntersectionObserver(element, props.setActiveItem)
+            }
 
             return
           }
         }
       })
-    },
-    [initObservers]
-  )
-
-  useLayoutEffect(() => {
-    docRef.current.addEventListener("scroll", () => {
-      scrollDirection.current = window.scrollY > lastScrollY.current ? 1 : -1
-      lastScrollY.current = window.scrollY
-    })
-    if (!resizeObserverRef.current) {
-      resizeObserverRef.current = new ResizeObserver(handleResize)
     }
-  }, [handleResize])
+
+    document.addEventListener("scroll", () => {
+      if (window.scrollY !== lastScrollY) {
+        scrollDirection = window.scrollY > lastScrollY ? 1 : -1
+        lastScrollY = window.scrollY
+      }
+    })
+    if (!resizeObserverRef) {
+      resizeObserverRef = new ResizeObserver(handleResize)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   useImperativeHandle(ref, () => ({
     addObservedElement,

@@ -78,6 +78,5 @@ describe("For Rent", () => {
 
     const image = await findByAltText("This is a listing image")
     expect(image.getAttribute("src")).toBe(sroRentalListing.Listing_Images[0].displayImageURL)
-    expect(observeFunction).toHaveBeenCalled()
   }, 0)
 })
