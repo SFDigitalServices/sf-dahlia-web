@@ -40,22 +40,42 @@ export const toggleNavBarBoxShadow = (pageHeaderEntries: IntersectionObserverEnt
 }
 
 export const handleSectionHeaderEntries = (entries, currentElement, scrollDirection) => {
-  if (entries.length === 0) {
-    return
+  if (entries.length > 0) {
+    const { target, intersectionRatio } = entries[0]
+
+    if (
+      !currentElement ||
+      (target.id !== currentElement.id &&
+        intersectionRatio &&
+        // check that the new element is in the same direction the user is scrolling from the current one
+        (target.offsetTop - currentElement.offsetTop) * scrollDirection > 0)
+    ) {
+      currentElement = target
+      return target.id
+    }
   }
+}
 
-  const { target, intersectionRatio } = entries[0]
-  const id = target.id
+const handleIntersectionEntries = (
+  entries: IntersectionObserverEntry[],
+  currentElement,
+  scrollDirection,
+  callback?: (activeItem: string) => void
+) => {
+  const pageHeaderEntries = entries.filter((e) => e.target.id === DIRECTORY_PAGE_HEADER)
+  toggleNavBarBoxShadow(pageHeaderEntries)
 
-  if (
-    !currentElement ||
-    (id !== currentElement.id &&
-      intersectionRatio &&
-      // check that the new element is in the same direction the user is scrolling from the current one
-      (target.offsetTop - currentElement.offsetTop) * scrollDirection > 0)
-  ) {
-    currentElement = target
-    return id
+  const sectionHeaderEntries = entries.filter(
+    (e) => e.target.id !== DIRECTORY_PAGE_HEADER && e.isIntersecting
+  )
+
+  const newActiveItem: string = handleSectionHeaderEntries(
+    sectionHeaderEntries,
+    currentElement,
+    scrollDirection
+  )
+  if (callback && newActiveItem) {
+    callback(newActiveItem)
   }
 }
 
@@ -84,7 +104,6 @@ export const MenuIntersectionObserver = forwardRef<
   MenuIntersectionObserverProps
 >((props, ref) => {
   const currentElement: MutableRefObject<null | Element> = useRef(null)
-  const ratio: number = 0.6
   const docRef = useRef(document)
   const lastScrollY = useRef<number>(0)
   const scrollDirection = useRef<number>(1)
@@ -93,22 +112,14 @@ export const MenuIntersectionObserver = forwardRef<
   const elementHeights = useRef<ElementHeightsProps>({})
   const resizeObserverRef: MutableRefObject<null | ResizeObserver> = useRef(null)
 
-  const handleIntersectionEntries = useCallback(
+  const handleIntersectionEntriesCallback = useCallback(
     (entries: IntersectionObserverEntry[]) => {
-      const pageHeaderEntries = entries.filter((e) => e.target.id === DIRECTORY_PAGE_HEADER)
-      toggleNavBarBoxShadow(pageHeaderEntries)
-
-      const sectionHeaderEntries = entries.filter(
-        (e) => e.target.id !== DIRECTORY_PAGE_HEADER && e.isIntersecting
-      )
-      const newActiveItem: string = handleSectionHeaderEntries(
-        sectionHeaderEntries,
+      handleIntersectionEntries(
+        entries,
         currentElement.current,
-        scrollDirection
+        scrollDirection,
+        props.setActiveItem
       )
-      if (newActiveItem) {
-        props.setActiveItem(newActiveItem)
-      }
     },
     [props]
   )
@@ -116,8 +127,8 @@ export const MenuIntersectionObserver = forwardRef<
   const addIntersectionObserver = useCallback(
     (element: Element) => {
       // create a different threshold and observer for each element, since they may have very different heights
-      const threshold = Math.min(1, (window.innerHeight / element.clientHeight) * ratio)
-      const observer = new IntersectionObserver(handleIntersectionEntries, { threshold })
+      const threshold = Math.min(1, (window.innerHeight / element.clientHeight) * 0.6)
+      const observer = new IntersectionObserver(handleIntersectionEntriesCallback, { threshold })
       observer.observe(element)
 
       intersectionObservers.current.push(observer)
@@ -126,7 +137,7 @@ export const MenuIntersectionObserver = forwardRef<
         resizeObserverRef.current.observe(element)
       }
     },
-    [handleIntersectionEntries]
+    [handleIntersectionEntriesCallback]
   )
 
   const initObservers = useCallback(() => {
