@@ -534,7 +534,7 @@ describe("<CreateAccount />", () => {
         ).not.toBeNull()
       })
 
-      it("shows server errors for email field", async () => {
+      it("shows server error when email is already taken", async () => {
         const createAccountButton = screen.getByRole("button", {
           name: /create account/i,
         })
@@ -575,6 +575,12 @@ describe("<CreateAccount />", () => {
             name: /sign in to your account/i,
           })
         ).not.toBeNull()
+      })
+
+      it("shows server error when email format is invalid", async () => {
+        const createAccountButton = screen.getByRole("button", {
+          name: /create account/i,
+        })
         ;(post as jest.Mock).mockRejectedValue({
           response: {
             status: 422,
@@ -609,6 +615,12 @@ describe("<CreateAccount />", () => {
             name: /email entered incorrectly/i,
           })
         ).not.toBeNull()
+      })
+
+      it("shows generic error for email-related server errors", async () => {
+        const createAccountButton = screen.getByRole("button", {
+          name: /create account/i,
+        })
         ;(post as jest.Mock).mockRejectedValue({
           response: {
             status: 500,
@@ -634,10 +646,12 @@ describe("<CreateAccount />", () => {
         ).not.toBeNull()
       })
 
-      it("shows server errors for password field", async () => {
+      it("shows validation error when password is too short", async () => {
         const createAccountButton = screen.getByRole("button", {
           name: /create account/i,
         })
+
+        // Set up mock for the specific error case
         ;(post as jest.Mock).mockRejectedValue({
           response: {
             status: 422,
@@ -663,6 +677,14 @@ describe("<CreateAccount />", () => {
             name: /choose a strong password/i,
           })
         ).not.toBeNull()
+      })
+
+      it("shows generic error message when server returns 500 error", async () => {
+        const createAccountButton = screen.getByRole("button", {
+          name: /create account/i,
+        })
+
+        // Set up mock for the server error case
         ;(post as jest.Mock).mockRejectedValue({
           response: {
             status: 500,
@@ -679,12 +701,12 @@ describe("<CreateAccount />", () => {
         await user.click(createAccountButton)
 
         expect(
-          screen.getAllByRole("button", {
+          screen.getByRole("button", {
             name: /something went wrong/i,
           })
         ).not.toBeNull()
         expect(
-          screen.getAllByText(/something went wrong\. try again or check back later/i)
+          screen.getByText(/something went wrong\. try again or check back later/i)
         ).not.toBeNull()
       })
     })
