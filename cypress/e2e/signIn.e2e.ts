@@ -96,6 +96,7 @@ describe("Sign In integration tests", () => {
       })
     }).as("signIn")
     cy.intercept("/api/v1/auth/validate_token", userObjectGenerator({ email: "user@example.com" }))
+    cy.intercept("/api/v1/account/my-applications", { fixture: "applications.json" })
 
     cy.contains("You must be signed in to see this page. Sign in to continue.").should("be.visible")
 
@@ -104,6 +105,7 @@ describe("Sign In integration tests", () => {
     cy.get('button[type="submit"]').click()
 
     cy.wait("@signIn")
+    cy.wait(1000)
     cy.url().should("include", "/my-applications")
   })
 

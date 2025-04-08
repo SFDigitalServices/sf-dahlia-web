@@ -40,4 +40,5 @@ module.exports = {
   transformIgnorePatterns: ["node_modules/?!(@bloom-housing/ui-components)"],
   moduleFileExtensions: ["js", "jsx", "ts", "tsx"],
   testEnvironment: "jsdom",
+  testSequencer: "<rootDir>/__tests__/CustomTestSequencer.ts",
 }
