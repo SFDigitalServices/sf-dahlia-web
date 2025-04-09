@@ -48,11 +48,7 @@ export const withAuthentication = <P extends object>(
       }
     }, [profile, pushToDataLayer])
 
-    if (loading) {
-      return null
-    }
-
-    if (!profile) {
+    if (loading || !profile) {
       return null
     }
 
