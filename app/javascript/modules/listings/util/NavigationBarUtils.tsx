@@ -150,22 +150,18 @@ export const MenuIntersectionObserver = forwardRef<
     // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   )
-
   useEffect(() => {
     const handleResize = (entries) => {
       window.requestAnimationFrame((): void | undefined => {
         for (const entry of entries) {
           if (calculateHeightDifferenceRatio(entry) > 0.02) {
-            // the resized difference is big enough that we should reset the intersection ratios
             initObservers(props.setActiveItem)
             break
           }
         }
       })
     }
-
     addScrollListener()
-
     if (!resizeObserverRef) {
       resizeObserverRef = new ResizeObserver(handleResize)
     }
