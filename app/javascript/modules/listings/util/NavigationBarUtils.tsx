@@ -119,6 +119,17 @@ const calculateHeightDifferenceRatio = (elem) => {
   return Math.abs(elem.contentRect.height - originalHeight) / originalHeight
 }
 
+const handleResize = (entries, setActiveItem: (id: string) => void) => {
+  window.requestAnimationFrame((): void | undefined => {
+    for (const entry of entries) {
+      if (calculateHeightDifferenceRatio(entry) > 0.02) {
+        initObservers(setActiveItem)
+        break
+      }
+    }
+  })
+}
+
 export const PageHeaderWithRef = ({
   children,
   addObservedElement,
@@ -151,19 +162,11 @@ export const MenuIntersectionObserver = forwardRef<
     []
   )
   useEffect(() => {
-    const handleResize = (entries) => {
-      window.requestAnimationFrame((): void | undefined => {
-        for (const entry of entries) {
-          if (calculateHeightDifferenceRatio(entry) > 0.02) {
-            initObservers(props.setActiveItem)
-            break
-          }
-        }
-      })
-    }
     addScrollListener()
     if (!resizeObserverRef) {
-      resizeObserverRef = new ResizeObserver(handleResize)
+      resizeObserverRef = new ResizeObserver((entries) => {
+        handleResize(entries, props.setActiveItem)
+      })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
