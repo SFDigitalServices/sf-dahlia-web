@@ -261,7 +261,7 @@ export const openListingsView = (
   listings: RailsListing[],
   directoryType: DirectoryType,
   stackedDataFxn: StackedDataFxnType,
-  observerRef: React.MutableRefObject<null | IntersectionObserver>,
+  addObservedElement: (elem: HTMLElement) => void,
   filtersSet?: boolean,
   numFcfsListings?: number,
   iconPath?: string
@@ -271,7 +271,7 @@ export const openListingsView = (
     subtitle={t(`listings.${directoryType}.openListings.subtitle`)}
     icon={<Icon size="xlarge" symbol="house" />}
     refKey="enter-a-lottery"
-    observerRef={observerRef}
+    addObservedElement={addObservedElement}
   >
     {listings.length > 0 ? (
       getListingCards(listings, directoryType, stackedDataFxn, filtersSet)
@@ -300,7 +300,7 @@ export const FcfsSalesView = (
   directoryType: DirectoryType,
   humanTranslationsReady: boolean,
   stackedDataFxn: StackedDataFxnType,
-  observerRef: React.MutableRefObject<null | IntersectionObserver>,
+  addObservedElement: (elem: HTMLElement) => void,
   filtersSet?: boolean,
   numOpenListings?: number,
   iconPath?: string
@@ -314,7 +314,7 @@ export const FcfsSalesView = (
           : t(`listings.${directoryType}.fcfsListings.subtitle`)
       }
       icon={<img src={iconPath} width="40" height="40" alt="Icon Home Check" />}
-      observerRef={observerRef}
+      addObservedElement={addObservedElement}
       refKey="buy-now"
     >
       {listings.length > 0 ? (
@@ -339,7 +339,7 @@ export const getListingGroup = (
   hide,
   show,
   refKey: string,
-  observerRef: React.MutableRefObject<null | IntersectionObserver>,
+  addObservedElement: (elem: HTMLElement) => void,
   section: DirectorySectionType,
   hasFiltersSet?: boolean,
   subtitle?: string,
@@ -361,7 +361,7 @@ export const getListingGroup = (
         info={subtitle}
         icon={icon}
         refKey={refKey}
-        observerRef={observerRef}
+        addObservedElement={addObservedElement}
         showListings={showListings}
         setShowListings={setShowListings}
       >
@@ -379,7 +379,7 @@ export const upcomingLotteriesView = (
   listings,
   directoryType,
   stackedDataFxn: StackedDataFxnType,
-  observerRef: React.MutableRefObject<null | IntersectionObserver>,
+  addObservedElement: (elem: HTMLElement) => void,
   showListings?: boolean,
   setShowListings?: React.Dispatch<React.SetStateAction<boolean>>,
   newDirectoryEnabled?: boolean
@@ -392,7 +392,7 @@ export const upcomingLotteriesView = (
     t("listings.upcomingLotteries.hide"),
     t("listings.upcomingLotteries.show"),
     "upcoming-lotteries",
-    observerRef,
+    addObservedElement,
     DIRECTORY_SECTION_UPCOMING_LOTTERIES,
     undefined,
     t("listings.upcomingLotteries.subtitle"),
@@ -407,7 +407,7 @@ export const lotteryResultsView = (
   listings,
   directoryType,
   stackedDataFxn: StackedDataFxnType,
-  observerRef: React.MutableRefObject<null | IntersectionObserver>,
+  addObservedElement: (elem: HTMLElement) => void,
   showListings?: boolean,
   setShowListings?: React.Dispatch<React.SetStateAction<boolean>>,
   newDirectoryEnabled?: boolean
@@ -420,7 +420,7 @@ export const lotteryResultsView = (
     t("listings.lotteryResults.hide"),
     t("listings.lotteryResults.show"),
     "lottery-results",
-    observerRef,
+    addObservedElement,
     DIRECTORY_SECTION_LOTTERY_RESULTS,
     undefined,
     t("listings.lotteryResults.subtitle"),
@@ -435,7 +435,7 @@ export const additionalView = (
   listings,
   directoryType,
   stackedDataFxn: StackedDataFxnType,
-  observerRef: React.MutableRefObject<null | IntersectionObserver>,
+  addObservedElement: (elem: HTMLElement) => void,
   filtersSet?: boolean,
   showListings?: boolean,
   setShowListings?: React.Dispatch<React.SetStateAction<boolean>>,
@@ -451,7 +451,7 @@ export const additionalView = (
       `${t("listings.additional.hide")}`,
       `${t("listings.additional.show")}`,
       "additional-listings",
-      observerRef,
+      addObservedElement,
       DIRECTORY_SECTION_ADDITIONAL_LISTINGS,
       filtersSet,
       t("listings.additional.subtitle"),
