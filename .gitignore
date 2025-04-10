@@ -59,6 +59,7 @@ coverage
 app/javascript/test-coverage
 junit.xml
 cypress/screenshots/*
+jestInspectOutput.txt
 
 # Yalc
 .yalc
