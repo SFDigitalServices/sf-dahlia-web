@@ -29,7 +29,7 @@ let lastScrollY: number = 0
 let scrollDirection: number = 1
 let intersectionObservers: IntersectionObserver[] = []
 const observedElements: ObservedElementsProps = {}
-const elementHeights: ElementHeightsProps = {}
+export const elementHeights: ElementHeightsProps = {}
 let resizeObserverRef: ResizeObserver
 
 type MenuIntersectionObserverProps = {
@@ -104,7 +104,7 @@ const addScrollListener = () => {
   })
 }
 
-const initObservers = (callback: (id: string) => void) => {
+export const initObservers = (callback: (id: string) => void) => {
   intersectionObservers.forEach((observer) => observer.disconnect())
   intersectionObservers = []
   resizeObserverRef.disconnect()
@@ -119,7 +119,7 @@ const calculateHeightDifferenceRatio = (elem) => {
   return Math.abs(elem.contentRect.height - originalHeight) / originalHeight
 }
 
-const handleResize = (entries, setActiveItem: (id: string) => void) => {
+export const handleResize = (entries, setActiveItem: (id: string) => void) => {
   window.requestAnimationFrame((): void | undefined => {
     for (const entry of entries) {
       if (calculateHeightDifferenceRatio(entry) > 0.02) {
