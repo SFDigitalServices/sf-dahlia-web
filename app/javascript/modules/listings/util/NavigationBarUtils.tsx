@@ -64,7 +64,7 @@ export const handleSectionHeaderEntries = (entries) => {
   }
 }
 
-const addIntersectionObserver = (element: Element, callback: (id: string) => void) => {
+export const addIntersectionObserver = (element: Element, callback: (id: string) => void) => {
   if (element && !(element.id in observedElements)) {
     observedElements[element.id] = element
 

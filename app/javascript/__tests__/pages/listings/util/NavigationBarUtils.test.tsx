@@ -119,4 +119,19 @@ describe("handleSectionHeaderEvents", () => {
     navBarUtils.handleResize([entry], setActiveItem)
     expect(initObserversSpy).toHaveBeenCalled()
   })
+
+  it("addIntersectionObserver creates a custom IntersectionObserver and watches for resize", () => {
+    const callback = jest.fn()
+    const element = {
+      id: "element_id",
+      clientHeight: 100,
+    } as unknown as HTMLElement
+    window.innerHeight = 200
+
+    navBarUtils.addIntersectionObserver(element, callback)
+
+    expect(mockIntersectionObserver).toHaveBeenCalled()
+    expect(mockIntersectionObserveFunction).toHaveBeenCalled()
+    expect(mockResizeObserveFunction).toHaveBeenCalled()
+  })
 })
