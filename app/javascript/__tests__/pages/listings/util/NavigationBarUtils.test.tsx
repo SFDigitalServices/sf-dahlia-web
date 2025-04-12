@@ -10,6 +10,13 @@ const mockIntersectionObserverEntry = (id, isIntersecting, intersectionRatio) =>
   } as IntersectionObserverEntry
 }
 
+const mockElement = (id, clientHeight) => {
+  return {
+    id: id,
+    clientHeight: clientHeight,
+  } as unknown as HTMLElement
+}
+
 const mockIntersectionObserver = jest.fn()
 const mockIntersectionObserveFunction = jest.fn()
 const mockIntersetionDisconnectFunction = jest.fn()
@@ -44,6 +51,7 @@ describe("handleSectionHeaderEvents", () => {
     cleanup()
     jest.clearAllMocks()
     jest.resetAllMocks()
+    jest.resetModules()
   })
 
   it("handleSectionHeaderEvents sets the correct active item", () => {
@@ -122,16 +130,27 @@ describe("handleSectionHeaderEvents", () => {
 
   it("addIntersectionObserver creates a custom IntersectionObserver and watches for resize", () => {
     const callback = jest.fn()
-    const element = {
-      id: "element_id",
-      clientHeight: 100,
-    } as unknown as HTMLElement
     window.innerHeight = 200
 
-    navBarUtils.addIntersectionObserver(element, callback)
+    navBarUtils.addIntersectionObserver(mockElement("element_id", 100), callback)
 
     expect(mockIntersectionObserver).toHaveBeenCalled()
     expect(mockIntersectionObserveFunction).toHaveBeenCalled()
     expect(mockResizeObserveFunction).toHaveBeenCalled()
+  })
+
+  it("initObservers recreates intersection observers", () => {
+    const callback = jest.fn()
+    window.innerHeight = 200
+
+    navBarUtils.addIntersectionObserver(mockElement("element1_id", 100), callback)
+    navBarUtils.addIntersectionObserver(mockElement("element2_id", 100), callback)
+
+    navBarUtils.initObservers(callback)
+
+    expect(mockIntersectionObserver).toHaveBeenCalledTimes(2)
+    expect(mockIntersectionObserveFunction).toHaveBeenCalledTimes(2)
+    expect(mockResizeDisconnectFunction).toHaveBeenCalled()
+    expect(mockResizeObserveFunction).toHaveBeenCalledTimes(2)
   })
 })
