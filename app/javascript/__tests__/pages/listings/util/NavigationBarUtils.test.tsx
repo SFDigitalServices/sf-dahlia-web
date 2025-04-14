@@ -2,12 +2,12 @@ import React from "react"
 import { cleanup, render } from "@testing-library/react"
 import * as navBarUtils from "../../../../modules/listings/util/NavigationBarUtils"
 
-const mockIntersectionObserverEntry = (id, isIntersecting, intersectionRatio) => {
+const mockIntersectionObserverEntry = (id, offsetTop, isIntersecting, intersectionRatio) => {
   return {
-    target: { id },
+    target: { id: id, offsetTop: offsetTop },
     isIntersecting: isIntersecting,
     intersectionRatio: intersectionRatio,
-  } as IntersectionObserverEntry
+  } as unknown as IntersectionObserverEntry
 }
 
 const mockElement = (id, clientHeight) => {
@@ -55,13 +55,24 @@ describe("handleSectionHeaderEvents", () => {
   })
 
   it("handleSectionHeaderEvents sets the correct active item", () => {
-    const events: IntersectionObserverEntry[] = [
-      mockIntersectionObserverEntry("buy-now", true, 0.2),
-    ]
-
-    const result = navBarUtils.handleSectionHeaderEntries(events)
-
+    let result = navBarUtils.handleSectionHeaderEntries([
+      mockIntersectionObserverEntry("buy-now", 0, true, 0.2),
+    ])
     expect(result).toEqual("buy-now")
+
+    jest.mock("../../../../modules/listings/util/NavigationBarUtils", () => {
+      const originalUtils = jest.requireActual(
+        "../../../../modules/listings/util/NavigationBarUtils"
+      )
+      return {
+        __esModule: true,
+        ...originalUtils,
+        scrollDirection: 1,
+      }
+    })
+    result = navBarUtils.handleSectionHeaderEntries([
+      mockIntersectionObserverEntry("lottery-results", 100, true, 0.2),
+    ])
   })
 
   it("handleSectionHeaderEvents returns null for empty arrays", () => {
@@ -152,5 +163,19 @@ describe("handleSectionHeaderEvents", () => {
     expect(mockIntersectionObserveFunction).toHaveBeenCalledTimes(2)
     expect(mockResizeDisconnectFunction).toHaveBeenCalled()
     expect(mockResizeObserveFunction).toHaveBeenCalledTimes(2)
+  })
+
+  it("scrollListener correctly updates variables to track latest scrollY coordinate and scroll direction", () => {
+    window.scrollY = 10
+    navBarUtils.scrollListener()
+
+    expect(navBarUtils.scrollDirection).toEqual(1)
+    expect(navBarUtils.lastScrollY).toEqual(10)
+
+    window.scrollY = 5
+    navBarUtils.scrollListener()
+
+    expect(navBarUtils.scrollDirection).toEqual(-1)
+    expect(navBarUtils.lastScrollY).toEqual(5)
   })
 })

@@ -24,9 +24,9 @@ export interface MenuIntersectionObserverHandle {
   addObservedElement: (elem) => void
 }
 
-let currentElement: HTMLElement
-let lastScrollY: number = 0
-let scrollDirection: number = 1
+export let currentElement: HTMLElement
+export let lastScrollY: number = 0
+export let scrollDirection: number = 1
 let intersectionObservers: IntersectionObserver[] = []
 const observedElements: ObservedElementsProps = {}
 export const elementHeights: ElementHeightsProps = {}
@@ -95,13 +95,14 @@ export const addIntersectionObserver = (element: Element, callback: (id: string)
   }
 }
 
+export const scrollListener = () => {
+  if (window.scrollY !== lastScrollY) {
+    scrollDirection = window.scrollY > lastScrollY ? 1 : -1
+    lastScrollY = window.scrollY
+  }
+}
 const addScrollListener = () => {
-  document.addEventListener("scroll", () => {
-    if (window.scrollY !== lastScrollY) {
-      scrollDirection = window.scrollY > lastScrollY ? 1 : -1
-      lastScrollY = window.scrollY
-    }
-  })
+  document.addEventListener("scroll", scrollListener)
 }
 
 export const initObservers = (callback: (id: string) => void) => {
