@@ -5,7 +5,7 @@ import { SiteAlert, clearSiteAlertMessage, setSiteAlertMessage } from "../../com
 const mockGetItem = jest.fn()
 const mockSetItem = jest.fn()
 const mockRemoveItem = jest.fn()
-Object.defineProperty(window, "sessionStorage", {
+Object.defineProperty(window, "localStorage", {
   value: {
     getItem: (...args: string[]) => mockGetItem(...args),
     setItem: (...args: string[]) => mockSetItem(...args),
@@ -29,7 +29,7 @@ describe("<SiteAlert>", () => {
   })
 
   it("can render an alert from session storage", () => {
-    window.sessionStorage.setItem("alert_message_alert", "Alert Message Goes Here")
+    window.localStorage.setItem("alert_message_alert", "Alert Message Goes Here")
     mockGetItem.mockImplementationOnce(() => "Alert Message Goes Here")
     const { getByText } = render(<SiteAlert />)
 
