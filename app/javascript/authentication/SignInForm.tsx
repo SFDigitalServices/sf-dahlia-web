@@ -246,12 +246,12 @@ const SignInForm = () => {
     if (alertType) {
       setRequestError(getSignInAlertMessage(alertType))
     }
-    const newAccountEmail: string | null = window.sessionStorage.getItem("newAccount")
+    const newAccountEmail: string | null = window.localStorage.getItem("newAccount")
     const expiredConfirmedEmail = getExpiredConfirmedEmail()
     const { expiredUnconfirmedEmail, id } = getExpiredUnconfirmedEmail()
     if (newAccountEmail) {
       setNewAccountNotConfirmedModal(newAccountEmail)
-      window.sessionStorage.removeItem("newAccount")
+      window.localStorage.removeItem("newAccount")
     } else if (expiredConfirmedEmail) {
       setShowAccountAlreadyConfirmedModal(true)
     } else if (expiredUnconfirmedEmail) {

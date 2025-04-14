@@ -22,11 +22,11 @@ type SiteAlertProps = {
 }
 
 export const setSiteAlertMessage = (message: string, type: AlertTypes) => {
-  sessionStorage.setItem(`alert_message_${type}`, message)
+  localStorage.setItem(`alert_message_${type}`, message)
 }
 
 export const clearSiteAlertMessage = (type: AlertTypes) => {
-  sessionStorage.removeItem(`alert_message_${type}`)
+  localStorage.removeItem(`alert_message_${type}`)
 }
 
 export const SiteAlert = ({ type = "alert", alertMessage }: SiteAlertProps) => {
@@ -34,12 +34,12 @@ export const SiteAlert = ({ type = "alert", alertMessage }: SiteAlertProps) => {
   const [message, setMessage] = useState("")
 
   useEffect(() => {
-    const storedMessage = sessionStorage.getItem(`alert_message_${type}`)
+    const storedMessage = localStorage.getItem(`alert_message_${type}`)
 
     if (storedMessage) {
       setMessage(storedMessage)
       setOpen(true)
-      sessionStorage.removeItem(`alert_message_${type}`)
+      localStorage.removeItem(`alert_message_${type}`)
     }
   }, [type])
 
