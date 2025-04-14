@@ -193,7 +193,7 @@ const onSubmit =
           origin: "create account",
           user_id: user.id,
         })
-        window.sessionStorage.setItem("newAccount", userData.email)
+        window.localStorage.setItem("newAccount", userData.email)
         window.location.replace(getSignInPath())
       })
       .catch((error: ExpandedAccountAxiosError) => {

@@ -55,7 +55,7 @@ exports[`HabitatForHumanity renders HabitatForHumanity component 1`] = `
       Payments
     </div>
     <div>
-      No down payment, but you do need to complete 500 hours of sweat equity. Your monthly payment will be 30% of your income.
+      No down payment, but you do need to complete 150 hours of sweat equity. Your monthly payment will be 30% of your income.
     </div>
     <div
       class="mt-4 border-0 border-b pb-2 mb-2"
