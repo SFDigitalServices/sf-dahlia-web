@@ -64,27 +64,32 @@ export const handleSectionHeaderEntries = (entries) => {
   }
 }
 
+export const handleIntersectionEntries = (entries: IntersectionObserverEntry[], callback) => {
+  const pageHeaderEntries = entries.filter((e) => e.target.id === DIRECTORY_PAGE_HEADER)
+  toggleNavBarBoxShadow(pageHeaderEntries)
+
+  const sectionHeaderEntries = entries.filter(
+    (e) => e.target.id !== DIRECTORY_PAGE_HEADER && e.isIntersecting
+  )
+
+  const newActiveItem: string = handleSectionHeaderEntries(sectionHeaderEntries)
+  if (callback && newActiveItem) {
+    callback(newActiveItem)
+  }
+}
+
 export const addIntersectionObserver = (element: Element, callback: (id: string) => void) => {
   if (element && !(element.id in observedElements)) {
     observedElements[element.id] = element
 
     // create a different threshold and observer for each element, since they may have very different heights
     const threshold = Math.min(1, (window.innerHeight / element.clientHeight) * 0.6)
-    // eslint-disable-next-line unicorn/consistent-function-scoping
-    const handleIntersectionEntries = (entries: IntersectionObserverEntry[]) => {
-      const pageHeaderEntries = entries.filter((e) => e.target.id === DIRECTORY_PAGE_HEADER)
-      toggleNavBarBoxShadow(pageHeaderEntries)
-
-      const sectionHeaderEntries = entries.filter(
-        (e) => e.target.id !== DIRECTORY_PAGE_HEADER && e.isIntersecting
-      )
-
-      const newActiveItem: string = handleSectionHeaderEntries(sectionHeaderEntries)
-      if (callback && newActiveItem) {
-        callback(newActiveItem)
-      }
-    }
-    const observer = new IntersectionObserver(handleIntersectionEntries, { threshold })
+    const observer = new IntersectionObserver(
+      (entries) => {
+        handleIntersectionEntries(entries, callback)
+      },
+      { threshold }
+    )
     observer.observe(element)
 
     intersectionObservers.push(observer)

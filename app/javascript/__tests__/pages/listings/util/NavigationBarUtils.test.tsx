@@ -1,6 +1,7 @@
 import React from "react"
 import { cleanup, render } from "@testing-library/react"
 import * as navBarUtils from "../../../../modules/listings/util/NavigationBarUtils"
+import { DIRECTORY_PAGE_HEADER } from "../../../../modules/constants"
 
 const mockIntersectionObserverEntry = (id, offsetTop, isIntersecting, intersectionRatio) => {
   return {
@@ -24,7 +25,7 @@ const mockResizeObserver = jest.fn()
 const mockResizeObserveFunction = jest.fn()
 const mockResizeDisconnectFunction = jest.fn()
 
-describe("handleSectionHeaderEvents", () => {
+describe("navBarUtils", () => {
   beforeEach(() => {
     mockIntersectionObserver.mockReturnValue({
       observe: mockIntersectionObserveFunction,
@@ -55,10 +56,13 @@ describe("handleSectionHeaderEvents", () => {
   })
 
   it("handleSectionHeaderEvents sets the correct active item", () => {
-    let result = navBarUtils.handleSectionHeaderEntries([
-      mockIntersectionObserverEntry("buy-now", 0, true, 0.2),
-    ])
-    expect(result).toEqual("buy-now")
+    const callback = jest.fn()
+    navBarUtils.handleIntersectionEntries(
+      [mockIntersectionObserverEntry("buy-now", 0, true, 0.2)],
+      callback
+    )
+    expect(callback).toHaveBeenCalledWith("buy-now")
+    callback.mockClear()
 
     jest.mock("../../../../modules/listings/util/NavigationBarUtils", () => {
       const originalUtils = jest.requireActual(
@@ -70,9 +74,11 @@ describe("handleSectionHeaderEvents", () => {
         scrollDirection: 1,
       }
     })
-    result = navBarUtils.handleSectionHeaderEntries([
-      mockIntersectionObserverEntry("lottery-results", 100, true, 0.2),
-    ])
+    navBarUtils.handleIntersectionEntries(
+      [mockIntersectionObserverEntry("lottery-results", 100, true, 0.2)],
+      callback
+    )
+    expect(callback).toHaveBeenCalledWith("lottery-results")
   })
 
   it("handleSectionHeaderEvents returns null for empty arrays", () => {
@@ -177,5 +183,32 @@ describe("handleSectionHeaderEvents", () => {
 
     expect(navBarUtils.scrollDirection).toEqual(-1)
     expect(navBarUtils.lastScrollY).toEqual(5)
+  })
+
+  it("handleIntersectionEntries processes the directory page header", () => {
+    const callback = jest.fn()
+    const mockToggle = jest.fn()
+    const mockQuerySelector = jest.fn()
+    mockQuerySelector.mockReturnValue({
+      getBoundingClientRect: jest.fn().mockReturnValue({ top: 0 }),
+      clientHeight: 50,
+      classList: {
+        toggle: mockToggle,
+      },
+    } as unknown as HTMLElement)
+    document.querySelector = mockQuerySelector
+
+    navBarUtils.handleIntersectionEntries(
+      [mockIntersectionObserverEntry(DIRECTORY_PAGE_HEADER, 0, true, 0.2)],
+      callback
+    )
+    expect(mockToggle).toHaveBeenCalledTimes(1)
+    mockToggle.mockClear()
+
+    navBarUtils.handleIntersectionEntries(
+      [mockIntersectionObserverEntry(DIRECTORY_PAGE_HEADER, 0, false, 0.2)],
+      callback
+    )
+    expect(mockToggle).toHaveBeenCalledTimes(2)
   })
 })
