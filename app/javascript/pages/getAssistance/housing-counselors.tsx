@@ -83,7 +83,7 @@ const HousingCounselor = (housingCounselor: CounselorData) => {
             <p className="icon-item flex gap-2">
               <Icon className="address-icon" symbol="map" size="medium" />
               <div className="flex flex-col">
-                <span className="font-semibold">{t(address.label_key)}</span>
+                {address.label_key && <span className="font-semibold">{t(address.label_key)}</span>}
                 <span>{address.street}</span>
                 <span>{address.cityState}</span>
               </div>
