@@ -111,7 +111,9 @@ export const initObservers = (callback: (id: string) => void) => {
   intersectionObservers = []
   resizeObserverRef.disconnect()
 
-  for (const element of Object.values(observedElements)) {
+  const elements = Object.values(observedElements)
+  for (const element of elements) {
+    delete observedElements[element.id]
     addIntersectionObserver(element, callback)
   }
 }

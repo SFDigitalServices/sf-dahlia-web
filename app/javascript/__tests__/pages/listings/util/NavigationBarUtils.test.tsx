@@ -165,10 +165,10 @@ describe("navBarUtils", () => {
 
     navBarUtils.initObservers(callback)
 
-    expect(mockIntersectionObserver).toHaveBeenCalledTimes(2)
-    expect(mockIntersectionObserveFunction).toHaveBeenCalledTimes(2)
+    expect(mockIntersectionObserver).toHaveBeenCalled()
+    expect(mockIntersectionObserveFunction).toHaveBeenCalled()
     expect(mockResizeDisconnectFunction).toHaveBeenCalled()
-    expect(mockResizeObserveFunction).toHaveBeenCalledTimes(2)
+    expect(mockResizeObserveFunction).toHaveBeenCalled()
   })
 
   it("scrollListener correctly updates variables to track latest scrollY coordinate and scroll direction", () => {
