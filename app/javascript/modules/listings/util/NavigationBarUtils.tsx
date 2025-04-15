@@ -64,7 +64,7 @@ export const handleSectionHeaderEntries = (entries) => {
   }
 }
 
-export const handleIntersectionEntries = (entries: IntersectionObserverEntry[], callback) => {
+export const handleIntersection = (entries: IntersectionObserverEntry[], callback) => {
   const pageHeaderEntries = entries.filter((e) => e.target.id === DIRECTORY_PAGE_HEADER)
   toggleNavBarBoxShadow(pageHeaderEntries)
 
@@ -86,7 +86,7 @@ export const addIntersectionObserver = (element: Element, callback: (id: string)
     const threshold = Math.min(1, (window.innerHeight / element.clientHeight) * 0.6)
     const observer = new IntersectionObserver(
       (entries) => {
-        handleIntersectionEntries(entries, callback)
+        handleIntersection(entries, callback)
       },
       { threshold }
     )

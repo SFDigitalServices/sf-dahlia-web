@@ -57,7 +57,7 @@ describe("navBarUtils", () => {
 
   it("handleSectionHeaderEvents sets the correct active item", () => {
     const callback = jest.fn()
-    navBarUtils.handleIntersectionEntries(
+    navBarUtils.handleIntersection(
       [mockIntersectionObserverEntry("buy-now", 0, true, 0.2)],
       callback
     )
@@ -74,7 +74,7 @@ describe("navBarUtils", () => {
         scrollDirection: 1,
       }
     })
-    navBarUtils.handleIntersectionEntries(
+    navBarUtils.handleIntersection(
       [mockIntersectionObserverEntry("lottery-results", 100, true, 0.2)],
       callback
     )
@@ -198,14 +198,14 @@ describe("navBarUtils", () => {
     } as unknown as HTMLElement)
     document.querySelector = mockQuerySelector
 
-    navBarUtils.handleIntersectionEntries(
+    navBarUtils.handleIntersection(
       [mockIntersectionObserverEntry(DIRECTORY_PAGE_HEADER, 0, true, 0.2)],
       callback
     )
     expect(mockToggle).toHaveBeenCalledTimes(1)
     mockToggle.mockClear()
 
-    navBarUtils.handleIntersectionEntries(
+    navBarUtils.handleIntersection(
       [mockIntersectionObserverEntry(DIRECTORY_PAGE_HEADER, 0, false, 0.2)],
       callback
     )
