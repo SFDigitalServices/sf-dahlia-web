@@ -48,7 +48,7 @@ describe("<SignIn />", () => {
   })
 
   it("alerts if redirect is true", async () => {
-    window.sessionStorage.setItem("newAccount", "test@test.com")
+    window.localStorage.setItem("newAccount", "test@test.com")
 
     await renderAndLoadAsync(<SignIn assetPaths={{}} />)
 
@@ -357,18 +357,18 @@ describe("<SignIn />", () => {
     const mockGetItem = jest.fn()
     const mockSetItem = jest.fn()
     const mockRemoveItem = jest.fn()
-    Object.defineProperty(window, "sessionStorage", {
+    Object.defineProperty(window, "localStorage", {
       value: {
         getItem: (...args: string[]) => mockGetItem(...args),
         setItem: (...args: string[]) => mockSetItem(...args),
         removeItem: (...args: string[]) => mockRemoveItem(...args),
       },
     })
-    window.sessionStorage.setItem("alert_message_secondary", t("signOut.alertMessage.timeout"))
+    window.localStorage.setItem("alert_message_secondary", t("signOut.alertMessage.timeout"))
     mockGetItem.mockImplementationOnce(() => t("signOut.alertMessage.timeout"))
     render(<SiteAlert type="secondary" />)
     expect(mockGetItem).toHaveBeenCalledWith("alert_message_secondary")
-    window.sessionStorage.setItem("newAccount", "test@test.com")
+    window.localStorage.setItem("newAccount", "test@test.com")
     await renderAndLoadAsync(<SignIn assetPaths={{}} />)
     expect(screen.getByText(t("signOut.alertMessage.timeout"))).not.toBeNull()
   })

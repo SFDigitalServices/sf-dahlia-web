@@ -188,9 +188,19 @@ export const ListingDetailsAdditionalInformation = ({
           {isSale(listing) && (
             <div className="info-card bg-gray-100 border-0">
               <h3 className="text-serif-xl">{t("listings.housingProgram")}</h3>
-              <a href={`https://sfmohcd.org/for-buyers`} target="_blank" className="text-xs">
-                {t("listings.belowMarketRate")}
-              </a>
+              {!isHabitatListing(listing) ? (
+                <a href={`https://sfmohcd.org/for-buyers`} target="_blank" className="text-xs">
+                  {t("listings.belowMarketRate")}
+                </a>
+              ) : (
+                <a
+                  href={`https://sfmohcd.org/current-listings-city-second-program`}
+                  target="_blank"
+                  className="text-xs"
+                >
+                  {t("saleDirectory.callout.citySecondLoan")}
+                </a>
+              )}
             </div>
           )}
           {isOpen(listing) && (

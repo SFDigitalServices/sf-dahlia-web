@@ -1,7 +1,7 @@
 import React from "react"
 import { getEventNote, RailsListing } from "../listings/SharedHelpers"
 import dayjs from "dayjs"
-import { isFcfsSalesListing, isRental, isSale } from "../../util/listingUtil"
+import { isFcfsSalesListing, isHabitatListing, isRental, isSale } from "../../util/listingUtil"
 import {
   EventSection,
   Contact,
@@ -145,9 +145,19 @@ export const ListingDetailsProcess = ({
         {isListingSale && (
           <div className="border-b border-gray-400 md:border-b-0 last:border-b-0">
             <SidebarBlock title={t("listings.housingProgram")} priority={2}>
-              <a href={`https://sfmohcd.org/for-buyers`} target="_blank" className="text-base">
-                {t("listings.belowMarketRate")}
-              </a>
+              {!isHabitatListing(listing) ? (
+                <a href={`https://sfmohcd.org/for-buyers`} target="_blank" className="text-base">
+                  {t("listings.belowMarketRate")}
+                </a>
+              ) : (
+                <a
+                  href={`https://sfmohcd.org/current-listings-city-second-program`}
+                  target="_blank"
+                  className="text-base"
+                >
+                  {t("saleDirectory.callout.citySecondLoan")}
+                </a>
+              )}
             </SidebarBlock>
           </div>
         )}
