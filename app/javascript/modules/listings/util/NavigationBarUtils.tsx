@@ -36,17 +36,6 @@ type MenuIntersectionObserverProps = {
   setActiveItem: Dispatch<SetStateAction<string>>
 }
 
-export const toggleNavBarBoxShadow = (pageHeaderEntries: IntersectionObserverEntry[]) => {
-  const navBarContainer = document.querySelector("#nav-bar-container")
-  if (navBarContainer) {
-    navBarContainer.classList.toggle("directory-page-navigation-bar__header-intercept", false)
-
-    if (pageHeaderEntries.length > 0 && pageHeaderEntries.every((e) => !e.isIntersecting)) {
-      navBarContainer.classList.toggle("directory-page-navigation-bar__header-intercept", true)
-    }
-  }
-}
-
 export const handleSectionHeaderEntries = (entries) => {
   if (entries.length > 0) {
     const { target, intersectionRatio } = entries[0]
@@ -66,7 +55,14 @@ export const handleSectionHeaderEntries = (entries) => {
 
 export const handleIntersection = (entries: IntersectionObserverEntry[], callback) => {
   const pageHeaderEntries = entries.filter((e) => e.target.id === DIRECTORY_PAGE_HEADER)
-  toggleNavBarBoxShadow(pageHeaderEntries)
+  const navBarContainer = document.querySelector("#nav-bar-container")
+  if (navBarContainer) {
+    navBarContainer.classList.toggle("directory-page-navigation-bar__header-intercept", false)
+
+    if (pageHeaderEntries.length > 0 && pageHeaderEntries.every((e) => !e.isIntersecting)) {
+      navBarContainer.classList.toggle("directory-page-navigation-bar__header-intercept", true)
+    }
+  }
 
   const sectionHeaderEntries = entries.filter(
     (e) => e.target.id !== DIRECTORY_PAGE_HEADER && e.isIntersecting
