@@ -31,6 +31,7 @@ const HOME_SF = {
 }
 
 interface Address {
+  label_key?: string // This field will be translated
   street: string
   cityState: string
 }
@@ -76,14 +77,16 @@ const HousingCounselor = (housingCounselor: CounselorData) => {
         )}
       </p>
 
-      <div className="mt-4">
+      <div className="mt-4 flex flex-col gap-2">
         {housingCounselor.address.map((address) => {
           return (
             <p className="icon-item flex gap-2">
               <Icon className="address-icon" symbol="map" size="medium" />
-              <span>
-                {address.street} <br /> {address.cityState}
-              </span>
+              <div className="flex flex-col">
+                <span className="font-semibold">{t(address.label_key)}</span>
+                <span>{address.street}</span>
+                <span>{address.cityState}</span>
+              </div>
             </p>
           )
         })}

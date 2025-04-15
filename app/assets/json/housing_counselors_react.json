@@ -34,10 +34,12 @@
             ],
             "address": [
                 {
+                    "label_key": "assistance.housingCounselors.counselor.addressLabel.mainOffice",
                     "street": "3543 18th Street",
                     "cityState": "San Francisco, CA 94110"
                 },
                 {
+                    "label_key": "assistance.housingCounselors.counselor.addressLabel.hubByApptOnly",
                     "street": "5172 3rd Street",
                     "cityState": "San Francisco, CA 94124"
                 }

@@ -94,6 +94,8 @@
   "assistance.housingCounselors.counselor.email.upper": "EMAIL %{counselorName}",
   "assistance.housingCounselors.counselor.visitWebsite.lower": "Visit %{counselorName}",
   "assistance.housingCounselors.counselor.visitWebsite.upper": "VISIT %{counselorName}",
+  "assistance.housingCounselors.counselor.addressLabel.hubByApptOnly": "Hub (By appointment only)",
+  "assistance.housingCounselors.counselor.addressLabel.mainOffice": "Main office",
   "assistance.housingCounselors.findACounselor.filter": "FILTER",
   "assistance.housingCounselors.findACounselor.filter.all": "Showing all housing counselors:",
   "assistance.housingCounselors.findACounselor.filter.apply": "APPLY FILTER",
