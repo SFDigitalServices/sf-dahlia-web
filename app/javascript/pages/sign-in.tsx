@@ -1,8 +1,8 @@
 import React from "react"
+import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/clerk-react"
 
 import { t } from "@bloom-housing/ui-components"
 
-import { SignInForm } from "../authentication/SignInForm"
 import FormsLayout from "../layouts/FormLayout"
 import withAppSetup from "../layouts/withAppSetup"
 import { AppPages } from "../util/routeUtil"
@@ -13,7 +13,14 @@ interface SignInProps {
 const SignIn = (_props: SignInProps) => {
   return (
     <FormsLayout title={t("pageTitle.signIn")}>
-      <SignInForm />
+      <header>
+        <SignedOut>
+          <SignInButton />
+        </SignedOut>
+        <SignedIn>
+          <UserButton />
+        </SignedIn>
+      </header>
     </FormsLayout>
   )
 }
