@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'http'
-
 # RESTful JSON API to query for short form actions
 class Api::V1::ShortFormController < ApiController
   before_action :authenticate_user!,
