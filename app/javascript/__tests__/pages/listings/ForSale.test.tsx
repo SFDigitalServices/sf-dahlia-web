@@ -28,6 +28,15 @@ describe("For Sale", () => {
       observe: () => null,
     })
     window.IntersectionObserver = mockIntersectionObserver
+
+    const mockResizeObserver = jest.fn()
+    const mockResizeObserveFunction = jest.fn()
+    const mockResizeDisconnectFunction = jest.fn()
+    mockResizeObserver.mockReturnValue({
+      observe: mockResizeObserveFunction,
+      disconnect: mockResizeDisconnectFunction,
+    })
+    window.ResizeObserver = mockResizeObserver
   })
 
   afterEach(() => {
