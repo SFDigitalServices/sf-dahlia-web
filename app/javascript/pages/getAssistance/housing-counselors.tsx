@@ -24,11 +24,16 @@ const HOME_SF = {
   shortName: "Home SF",
   services: ["rental", "ownership"],
   languages: ["english", "filipino", "spanish"],
-  address: "275 5th Street #314",
-  cityState: "San Francisco, CA 94103",
+  address: [{ street: "275 5th Street #314", cityState: "San Francisco, CA 94103" }],
   website: "https://www.homesanfrancisco.org/",
   email: "info@homesanfrancisco.org",
   phone: "(415) 202-5464",
+}
+
+interface Address {
+  label_key?: string // This field will be translated
+  street: string
+  cityState: string
 }
 
 interface CounselorData {
@@ -36,8 +41,7 @@ interface CounselorData {
   shortName?: string
   services: string[]
   languages: string[]
-  address: string
-  cityState: string
+  address: Address[]
   website: string
   email: string
   phone: string
@@ -73,12 +77,20 @@ const HousingCounselor = (housingCounselor: CounselorData) => {
         )}
       </p>
 
-      <p className="icon-item flex mt-4">
-        <Icon className="address-icon" symbol="map" size="medium" />
-        <span>
-          {housingCounselor.address} <br /> {housingCounselor.cityState}
-        </span>
-      </p>
+      <div className="mt-4 flex flex-col gap-2">
+        {housingCounselor.address.map((address, index) => {
+          return (
+            <div key={index} className="icon-item flex gap-2">
+              <Icon className="address-icon" symbol="map" size="medium" />
+              <div className="flex flex-col">
+                {address.label_key && <span className="font-semibold">{t(address.label_key)}</span>}
+                <span>{address.street}</span>
+                <span>{address.cityState}</span>
+              </div>
+            </div>
+          )
+        })}
+      </div>
       <Mobile>
         <div className="flex flex-col gap-2 mt-4 mb-2">
           <Button
