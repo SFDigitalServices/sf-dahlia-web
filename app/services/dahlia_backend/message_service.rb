@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module DahliaBackend
+  # Service for sending messages to applicants through the DAHLIA API
   class MessageService
     FEATURE_FLAG_USE_MESSAGE_SERVICE = 'UseMessageService'
 
@@ -9,7 +10,7 @@ module DahliaBackend
       #
       # @param [Hash] application_params Parameters from the application
       # @param [Hash] application_response Response from the application submission
-      # @return [Object, nil] Response from the message service or nil if service is disabled
+      # @return [Object, nil] Response from the message service or nil if service is disabled/error occurs
       def send_application_confirmation(application_params, application_response)
         new.send_application_confirmation(application_params, application_response)
       end
@@ -26,21 +27,17 @@ module DahliaBackend
     end
 
     # Instance method implementation for application confirmation
+    # @param [Hash] application_params Parameters from the application
+    # @param [Hash] application_response Response from the application submission
+    # @return [Object, nil] Response from the message service or nil if service is disabled/error occurs
     def send_application_confirmation(application_params, application_response)
       return unless self.class.service_enabled?
       return unless valid_params?(application_params, application_response)
 
-      listing = fetch_listing(application_params[:listingID])
-      formatted_date = format_lottery_date(listing.Lottery_Date)
+      fields = prepare_submission_fields(application_params, application_response)
+      return if fields.nil?
 
-      submission_fields = build_submission_fields(
-        application_params,
-        application_response,
-        listing,
-        formatted_date,
-      )
-
-      send_message('/messages/application-submission', submission_fields)
+      send_message('/messages/application-submission', fields)
     rescue StandardError => e
       log_error('Error sending confirmation', e)
       nil
@@ -48,18 +45,28 @@ module DahliaBackend
 
     private
 
-    def build_submission_fields(application_params, application_response, listing,
-                                formatted_date)
+    def prepare_submission_fields(application_params, application_response)
+      listing_id = application_params[:listingID]
+      email = application_params.dig(:primaryApplicant, :email).to_s
+
+      listing = fetch_listing(listing_id)
+      return nil unless listing
+
+      formatted_date = format_lottery_date(listing.Lottery_Date)
+
       {
-        email: application_params.dig(:primaryApplicant, :email).to_s,
-        listingId: application_params[:listingID],
+        email: email,
+        listingId: listing_id,
         lotteryNumber: application_response&.[]('lotteryNumber').to_s,
         listingName: listing.Name.to_s,
-        lotteryDate: formatted_date.to_s,
+        lotteryDate: formatted_date,
       }
     end
 
-    # Uses the composed client
+    # Sends a message through the API client
+    # @param [String] endpoint API endpoint
+    # @param [Hash] fields Message fields
+    # @return [Object, nil] Response from API or nil if sending fails
     def send_message(endpoint, fields)
       log_info("Sending message to #{endpoint}: #{fields}")
       response = client.post(endpoint, fields)
@@ -82,7 +89,13 @@ module DahliaBackend
     end
 
     def fetch_listing(listing_id)
-      Hashie::Mash.new(Force::ListingService.listing(listing_id))
+      listing_data = Force::ListingService.listing(listing_id)
+      return nil unless listing_data
+
+      Hashie::Mash.new(listing_data)
+    rescue StandardError => e
+      log_error("Error fetching listing #{listing_id}", e)
+      nil
     end
 
     def format_lottery_date(lottery_date)

@@ -5,14 +5,18 @@ require 'http'
 module DahliaBackend
   class ApiClient
     def api_url
-      @api_url ||= ENV.fetch('DAHLIA_API_URL') do
+      @api_url ||= begin
+        ENV.fetch('DAHLIA_API_URL')
+      rescue KeyError
         log_warn('DAHLIA_API_URL environment variable not set')
         nil
       end
     end
 
     def api_key
-      @api_key ||= ENV.fetch('DAHLIA_API_KEY') do
+      @api_key ||= begin
+        ENV.fetch('DAHLIA_API_KEY')
+      rescue KeyError
         log_warn('DAHLIA_API_KEY environment variable not set')
         nil
       end
