@@ -11,8 +11,12 @@
                 "english",
                 "mandarin"
             ],
-            "address": "1167 Mission Street, 4th Floor",
-            "cityState": "San Francisco, CA 94103",
+            "address": [
+                {
+                    "street": "1167 Mission Street, 4th Floor",
+                    "cityState": "San Francisco, CA 94103"
+                }
+            ],
             "website": "https://www.asianinc.org/housing/",
             "email": "housing.counseling@asianinc.org",
             "phone": "(415) 928–5910"
@@ -28,8 +32,18 @@
                 "russian",
                 "spanish"
             ],
-            "address": "3543 18th Street",
-            "cityState": "San Francisco, CA 94110",
+            "address": [
+                {
+                    "label_key": "assistance.housingCounselors.counselor.addressLabel.mainOffice",
+                    "street": "3543 18th Street",
+                    "cityState": "San Francisco, CA 94110"
+                },
+                {
+                    "label_key": "assistance.housingCounselors.counselor.addressLabel.hubByApptOnly",
+                    "street": "5172 3rd Street",
+                    "cityState": "San Francisco, CA 94124"
+                }
+            ],
             "website": "https://www.balancepro.org/workshops/",
             "email": "sfhousing@balancepro.org",
             "phone": "(800) 777-7526"
@@ -45,8 +59,12 @@
                 "english",
                 "spanish"
             ],
-            "address": "2301 Mission Street",
-            "cityState": "San Francisco, CA 94110",
+            "address": [
+                {
+                    "street": "2301 Mission Street",
+                    "cityState": "San Francisco, CA 94110"
+                }
+            ],
             "website": "https://medasf.org/programs/housing-opportunities/",
             "email": "homeownership@medasf.org",
             "phone": "(415) 209-5143"
@@ -61,8 +79,12 @@
                 "cantonese",
                 "english"
             ],
-            "address": "1800 Market Street",
-            "cityState": "San Francisco, CA 94102",
+            "address": [
+                {
+                    "street": "1800 Market Street",
+                    "cityState": "San Francisco, CA 94102"
+                }
+            ],
             "website": "https://www.sfcenter.org/program/housing-financial/",
             "email": "financialservices@sfcenter.org",
             "phone": "(415) 865–5555"
@@ -79,8 +101,12 @@
                 "french",
                 "spanish"
             ],
-            "address": "1110 Howard Street",
-            "cityState": "San Francisco, CA 94103",
+            "address": [
+                {
+                    "street": "1110 Howard Street",
+                    "cityState": "San Francisco, CA 94103"
+                }
+            ],
             "website": "https://bishopsf.org/",
             "email": "info@bishopsf.org",
             "phone": "(415) 513-5177"
@@ -94,8 +120,12 @@
                 "english",
                 "spanish"
             ],
-            "address": "2500 18th Street",
-            "cityState": "San Francisco, CA 94110",
+            "address": [
+                {
+                    "street": "2500 18th Street",
+                    "cityState": "San Francisco, CA 94110"
+                }
+            ],
             "website": "https://homelessprenatal.org/",
             "email": "info@homelessprenatal.org",
             "phone": "(415) 546-6756"
@@ -109,8 +139,12 @@
                 "english",
                 "spanish"
             ],
-            "address": "65 Laguna St",
-            "cityState": "San Francisco, CA 94102",
+            "address": [
+                {
+                    "street": "65 Laguna St",
+                    "cityState": "San Francisco, CA 94102"
+                }
+            ],
             "website": "https://www.openhousesf.org/",
             "email": "housing@openhousesf.org",
             "phone": "(415) 296-8995"
@@ -126,8 +160,12 @@
                 "english",
                 "mandarin"
             ],
-            "address": "731 Sansome Street #100",
-            "cityState": "San Francisco, CA 94111",
+            "address": [
+                {
+                    "street": "731 Sansome Street #100",
+                    "cityState": "San Francisco, CA 94111"
+                }
+            ],
             "website": "https://www.selfhelpelderly.org/",
             "email": "info@selfhelpelderly.org",
             "phone": "(415) 677-7600"
@@ -143,8 +181,12 @@
                 "mandarin",
                 "vietnamese"
             ],
-            "address": "875 O’Farrell Street",
-            "cityState": "San Francisco, CA 94109",
+            "address": [
+                {
+                    "street": "875 O’Farrell Street",
+                    "cityState": "San Francisco, CA 94109"
+                }
+            ],
             "website": "http://www.seaccusa.org/",
             "email": "info@seaccusa.org",
             "phone": "(415) 885-2743"
