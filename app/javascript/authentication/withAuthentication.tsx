@@ -30,17 +30,21 @@ export const withAuthentication = <P extends object>(
 
     React.useEffect(() => {
       const params = parseUrlParams(window.location.href)
+      console.log("params", params)
       if (
         params.get("access-token") &&
         params.get("accountConfirmed") === "true" &&
         params.get("account_confirmation_success") === "true" &&
         profile
       ) {
+        console.log("Account confirmed")
         pushToDataLayer("account_create_completed", { user_id: profile.id })
         // We want to remove the query params from the URL so that the user can refresh the page without retriggering the analytics event
         const url = window.location.origin + window.location.pathname
         window.history.replaceState({}, document.title, url)
+        console.log("URL cleaned up", url)
       } else if (!isTokenValid()) {
+        console.log("Token is not valid")
         const redirectParam = redirectType ? `?redirect=${redirectType}` : ""
         const language = getCurrentLanguage()
         const signInPath = getLocalizedPath("/sign-in", language, redirectParam)
