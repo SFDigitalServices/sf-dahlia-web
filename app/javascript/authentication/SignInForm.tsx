@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useContext, useEffect, useState } from "react"
+import React, { Dispatch, SetStateAction, useContext, useEffect, useRef, useState } from "react"
 
 import {
   AppearanceStyleType,
@@ -93,8 +93,15 @@ const SignInFormCard = ({
   // This is causing a linting issue with unbound-method, see open issue as of 10/21/2020:
   // https://github.com/react-hook-form/react-hook-form/issues/2887
   // eslint-disable-next-line @typescript-eslint/unbound-method
-  const { register, handleSubmit, watch } = useForm()
+  const { register, handleSubmit, watch } = useForm({ shouldFocusError: false })
   const emailField = watch("email", undefined)
+  const alertRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (requestError) {
+      alertRef.current?.focus()
+    }
+  }, [requestError])
 
   const onError = (errors: { email: string; password: string }) => {
     if (errors.email || errors.password) {
@@ -113,13 +120,15 @@ const SignInFormCard = ({
         <h2 className="form-card__title">{t("pageTitle.signIn")}</h2>
       </div>
       {requestError && (
-        <Alert
-          fullwidth
-          onClose={() => setRequestError(undefined)}
-          variant={requestError.alertType}
-        >
-          {renderInlineMarkup(requestError.message)}
-        </Alert>
+        <div ref={alertRef} tabIndex={-1}>
+          <Alert
+            fullwidth
+            onClose={() => setRequestError(undefined)}
+            variant={requestError.alertType}
+          >
+            {renderInlineMarkup(requestError.message)}
+          </Alert>
+        </div>
       )}
       <div className="form-card__group pt-0 border-b">
         <Form id="sign-in" className="mt-10 relative" onSubmit={handleSubmit(onSubmit, onError)}>
@@ -237,12 +246,12 @@ const SignInForm = () => {
     if (alertType) {
       setRequestError(getSignInAlertMessage(alertType))
     }
-    const newAccountEmail: string | null = window.sessionStorage.getItem("newAccount")
+    const newAccountEmail: string | null = window.localStorage.getItem("newAccount")
     const expiredConfirmedEmail = getExpiredConfirmedEmail()
     const { expiredUnconfirmedEmail, id } = getExpiredUnconfirmedEmail()
     if (newAccountEmail) {
       setNewAccountNotConfirmedModal(newAccountEmail)
-      window.sessionStorage.removeItem("newAccount")
+      window.localStorage.removeItem("newAccount")
     } else if (expiredConfirmedEmail) {
       setShowAccountAlreadyConfirmedModal(true)
     } else if (expiredUnconfirmedEmail) {
