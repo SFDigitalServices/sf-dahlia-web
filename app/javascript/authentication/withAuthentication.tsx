@@ -42,12 +42,10 @@ export const withAuthentication = <P extends object>(
         params.get("accountConfirmed") === "true" &&
         params.get("account_confirmation_success") === "true"
       ) {
-        console.log("Account confirmed")
         pushToDataLayer("account_create_completed", { user_id: profile.id })
         // We want to remove the query params from the URL so that the user can refresh the page without retriggering the analytics event
         const url = window.location.origin + window.location.pathname
         window.history.replaceState({}, document.title, url)
-        console.log("URL cleaned up", url)
       }
     }, [profile, pushToDataLayer, loading, initialStateLoaded])
 
