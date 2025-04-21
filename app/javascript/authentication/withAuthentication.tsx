@@ -25,17 +25,22 @@ export const withAuthentication = <P extends object>(
   { redirectType }: WithAuthenticationProps = {}
 ) => {
   const WithAuthenticationComponent = (props: P) => {
-    const { profile, loading } = React.useContext(UserContext)
+    const { profile, loading, initialStateLoaded } = React.useContext(UserContext)
     const { pushToDataLayer } = useGTMDataLayer()
 
     React.useEffect(() => {
       const params = parseUrlParams(window.location.href)
-      console.log("params", params)
-      if (
+
+      if (!isTokenValid() && !loading && initialStateLoaded) {
+        const redirectParam = redirectType ? `?redirect=${redirectType}` : ""
+        const language = getCurrentLanguage()
+        const signInPath = getLocalizedPath("/sign-in", language, redirectParam)
+        window.location.href = signInPath
+      } else if (
+        profile &&
         params.get("access-token") &&
         params.get("accountConfirmed") === "true" &&
-        params.get("account_confirmation_success") === "true" &&
-        profile
+        params.get("account_confirmation_success") === "true"
       ) {
         console.log("Account confirmed")
         pushToDataLayer("account_create_completed", { user_id: profile.id })
@@ -43,14 +48,8 @@ export const withAuthentication = <P extends object>(
         const url = window.location.origin + window.location.pathname
         window.history.replaceState({}, document.title, url)
         console.log("URL cleaned up", url)
-      } else if (!isTokenValid()) {
-        console.log("Token is not valid")
-        const redirectParam = redirectType ? `?redirect=${redirectType}` : ""
-        const language = getCurrentLanguage()
-        const signInPath = getLocalizedPath("/sign-in", language, redirectParam)
-        window.location.href = signInPath
       }
-    }, [profile, pushToDataLayer])
+    }, [profile, pushToDataLayer, loading, initialStateLoaded])
 
     if (loading || !profile) {
       return null
