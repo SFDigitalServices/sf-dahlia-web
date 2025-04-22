@@ -2,12 +2,28 @@ import React from "react"
 import { render } from "@testing-library/react"
 import { withAuthentication } from "../../authentication/withAuthentication"
 import UserContext, { ContextProps } from "../../authentication/context/UserContext"
-import { isTokenValid } from "../../authentication/token"
+import { isTokenValid, parseUrlParams } from "../../authentication/token"
 import { getLocalizedPath, RedirectType } from "../../util/routeUtil"
+import { setupLocationAndRouteMock } from "../__util__/accountUtils"
 import { getCurrentLanguage } from "../../util/languageUtil"
+import TagManager from "react-gtm-module"
+
+// Mock the useGTMDataLayer hook
+jest.mock("react-gtm-module", () => ({
+  initialize: jest.fn(),
+  dataLayer: jest.fn(),
+}))
+
+jest.mock("react-gtm-module", () => ({
+  initialize: jest.fn(),
+  dataLayer: jest.fn(),
+}))
 
 jest.mock("../../authentication/token", () => ({
   isTokenValid: jest.fn(),
+  parseUrlParams: jest.fn(() => ({
+    get: jest.fn((_) => null),
+  })),
 }))
 
 jest.mock("../../util/languageUtil", () => ({
@@ -20,13 +36,11 @@ jest.mock("../../util/routeUtil", () => ({
 }))
 
 describe("withAuthentication", () => {
-  let originalLocation: Location
   let mockContextValue: ContextProps
   const TestComponent = () => <div>Protected Component</div>
   const WrappedComponent = withAuthentication(TestComponent)
 
   beforeEach(() => {
-    originalLocation = window.location
     mockContextValue = {
       profile: {
         uid: "123",
@@ -44,25 +58,21 @@ describe("withAuthentication", () => {
     }
 
     // Reset all mocks before each test
-    jest.clearAllMocks()
     ;(getCurrentLanguage as jest.Mock).mockReturnValue("en")
+    ;(isTokenValid as jest.Mock).mockReset()
+    ;(parseUrlParams as jest.Mock).mockReset()
+
+    // Setup default mock return values
+    ;(parseUrlParams as jest.Mock).mockReturnValue({
+      get: jest.fn((_) => null),
+    })
 
     // Mock window.location
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    delete (window as any).location
-    window.location = {
-      ...originalLocation,
-      href: "http://test.com",
-      assign: jest.fn(),
-      replace: jest.fn(),
-      reload: jest.fn(),
-      toString: jest.fn(),
-    }
+    setupLocationAndRouteMock()
   })
 
   afterEach(() => {
-    jest.clearAllMocks()
-    window.location = originalLocation
+    jest.restoreAllMocks()
   })
 
   it("renders the wrapped component when authenticated", () => {
@@ -88,7 +98,7 @@ describe("withAuthentication", () => {
     )
 
     expect(getLocalizedPath).toHaveBeenCalledWith("/sign-in", "en", "")
-    expect(window.location.href).toBe("/sign-in")
+    expect(window.location.href).toBe("http://dahlia.com/sign-in")
   })
 
   it("redirects to sign-in with redirect param when specified", () => {
@@ -105,7 +115,7 @@ describe("withAuthentication", () => {
     )
 
     expect(getLocalizedPath).toHaveBeenCalledWith("/sign-in", "en", "?redirect=test-path")
-    expect(window.location.href).toBe("/sign-in?redirect=test-path")
+    expect(window.location.href).toBe("http://dahlia.com/sign-in?redirect=test-path")
   })
 
   it("returns null while loading", () => {
@@ -140,5 +150,61 @@ describe("withAuthentication", () => {
     const WrappedWithName = withAuthentication(TestComponentWithName)
 
     expect(WrappedWithName.displayName).toBe("WithAuthentication(TestComponentWithName)")
+  })
+
+  it("pushes to data layer and cleans URL when account is confirmed", () => {
+    // Setup token as valid
+    ;(isTokenValid as jest.Mock).mockReturnValue(true)
+
+    // Mock URL params for account confirmation
+    const mockGet = jest.fn((key: string) => {
+      if (key === "access-token") return "test-token"
+      if (key === "accountConfirmed") return "true"
+      if (key === "account_confirmation_success") return "true"
+      return null
+    })
+    ;(parseUrlParams as jest.Mock).mockReturnValue({
+      get: mockGet,
+    })
+
+    // Mock window.history.replaceState
+    // eslint-disable-next-line @typescript-eslint/unbound-method
+    const originalReplaceState = window.history.replaceState
+    window.history.replaceState = jest.fn()
+
+    // Set up mock location
+    const mockLocation = {
+      origin: "http://dahlia.com",
+      pathname: "/account",
+      href: "http://dahlia.com/account?access-token=test-token&accountConfirmed=true&account_confirmation_success=true",
+    }
+    Object.defineProperty(window, "location", { value: mockLocation, writable: true })
+
+    render(
+      <UserContext.Provider value={mockContextValue}>
+        <WrappedComponent />
+      </UserContext.Provider>
+    )
+
+    // Verify data layer was called with correct params
+    expect(TagManager.dataLayer).toHaveBeenCalledWith(
+      expect.objectContaining({
+        dataLayer: expect.objectContaining({
+          event: "account_create_completed",
+          user_id: mockContextValue.profile.id,
+        }),
+      })
+    )
+
+    // Verify URL params were cleaned up
+    // eslint-disable-next-line @typescript-eslint/unbound-method
+    expect(window.history.replaceState).toHaveBeenCalledWith(
+      {},
+      document.title,
+      window.location?.origin + "/account" || "http://dahlia.com/account"
+    )
+
+    // Restore original replaceState
+    window.history.replaceState = originalReplaceState
   })
 })

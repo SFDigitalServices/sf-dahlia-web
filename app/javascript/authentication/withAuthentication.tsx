@@ -1,8 +1,9 @@
 import React from "react"
-import { isTokenValid } from "./token"
+import { isTokenValid, parseUrlParams } from "./token"
 import UserContext from "./context/UserContext"
 import { getLocalizedPath, RedirectType } from "../util/routeUtil"
 import { getCurrentLanguage } from "../util/languageUtil"
+import { useGTMDataLayer } from "../hooks/analytics/useGTMDataLayer"
 
 interface WithAuthenticationProps {
   redirectType?: RedirectType
@@ -24,22 +25,31 @@ export const withAuthentication = <P extends object>(
   { redirectType }: WithAuthenticationProps = {}
 ) => {
   const WithAuthenticationComponent = (props: P) => {
-    const { profile, loading } = React.useContext(UserContext)
+    const { profile, loading, initialStateLoaded } = React.useContext(UserContext)
+    const { pushToDataLayer } = useGTMDataLayer()
 
     React.useEffect(() => {
-      if (!isTokenValid()) {
+      const params = parseUrlParams(window.location.href)
+
+      if (!isTokenValid() && !loading && initialStateLoaded) {
         const redirectParam = redirectType ? `?redirect=${redirectType}` : ""
         const language = getCurrentLanguage()
         const signInPath = getLocalizedPath("/sign-in", language, redirectParam)
         window.location.href = signInPath
+      } else if (
+        profile &&
+        params.get("access-token") &&
+        params.get("accountConfirmed") === "true" &&
+        params.get("account_confirmation_success") === "true"
+      ) {
+        pushToDataLayer("account_create_completed", { user_id: profile.id })
+        // We want to remove the query params from the URL so that the user can refresh the page without retriggering the analytics event
+        const url = window.location.origin + window.location.pathname
+        window.history.replaceState({}, document.title, url)
       }
-    }, [])
+    }, [profile, pushToDataLayer, loading, initialStateLoaded])
 
-    if (loading) {
-      return null
-    }
-
-    if (!profile) {
+    if (loading || !profile) {
       return null
     }
 
