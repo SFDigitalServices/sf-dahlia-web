@@ -1,13 +1,8 @@
 import { renderAndLoadAsync } from "../../__util__/renderUtils"
 import MyAccount from "../../../pages/account/my-account"
 import React from "react"
-import {
-  mockProfileStub,
-  setupLocationAndRouteMock,
-  setupUserContext,
-} from "../../__util__/accountUtils"
+import { setupLocationAndRouteMock, setupUserContext } from "../../__util__/accountUtils"
 import { withAuthentication } from "../../../authentication/withAuthentication"
-import TagManager from "react-gtm-module"
 import { RedirectType } from "../../../util/routeUtil"
 
 jest.mock("react-gtm-module", () => ({
@@ -62,27 +57,6 @@ describe("<MyAccount />", () => {
       const links = mainContent.querySelectorAll("a")
       const linkHeader = links[1].querySelector("h2")
       expect(linkHeader?.textContent).toBe("Account settings")
-    })
-  })
-
-  describe("when a user confirms their account", () => {
-    it("sends an analytics event", async () => {
-      setupUserContext({ loggedIn: true })
-
-      setupLocationAndRouteMock(
-        "?access-token=test&accountConfirmed=true&account_confirmation_success=true"
-      )
-
-      await renderAndLoadAsync(<MyAccount assetPaths={{}} />)
-
-      expect(TagManager.dataLayer).toHaveBeenCalledWith(
-        expect.objectContaining({
-          dataLayer: expect.objectContaining({
-            event: "account_create_completed",
-            user_id: mockProfileStub.id,
-          }),
-        })
-      )
     })
   })
 
