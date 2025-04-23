@@ -29,7 +29,7 @@ export const BeforeApplyingForSale = ({ beforeApplyingType }: BeforeApplyingForS
   if (beforeApplyingType === BeforeApplyingType.LISTING_DETAILS_HABITAT) {
     requirements = renderMarkup(
       `${t("saleDirectory.beforeApplying.readFullList", {
-        url: "https://habitatgsf.org/amber-drive-info/",
+        url: "http://www.habitatgsf.org/innes-ave",
       })}`
     )
 
@@ -37,7 +37,7 @@ export const BeforeApplyingForSale = ({ beforeApplyingType }: BeforeApplyingForS
       {
         content: renderMarkup(
           `${t("listingsForSale.beforeApplyingHabitat.step1", {
-            url: "https://habitatgsf.org/amber-drive-info/",
+            url: "http://www.habitatgsf.org/innes-ave",
           })}`
         ),
       },
@@ -45,7 +45,7 @@ export const BeforeApplyingForSale = ({ beforeApplyingType }: BeforeApplyingForS
       {
         content: renderMarkup(
           `${t("listingsForSale.beforeApplyingHabitat.step3", {
-            url: "https://sfmohcd.org/sites/default/files/Documents/MOH/Inclusionary%20Manuals/Inclusionary%20Affordable%20Housing%20Program%20Manual%2010.15.2018.pdf",
+            url: "https://media.api.sf.gov/documents/DALP_Manual_-_2025.pdf",
           })}`
         ),
       },

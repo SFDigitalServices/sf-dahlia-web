@@ -35,7 +35,7 @@ exports[`ListingDetailsHabitat displays habitat info when habitat listing 1`] = 
       <p>
         These units are offered by 
         <a
-          href="https://habitatgsf.org/amber-drive-info/"
+          href="http://www.habitatgsf.org/innes-ave"
           target="_blank"
         >
           Habitat for Humanity Greater San Francisco
@@ -50,7 +50,7 @@ exports[`ListingDetailsHabitat displays habitat info when habitat listing 1`] = 
         <p>
           You must go to a 
           <a
-            href="https://habitatgsf.org/amber-drive-info/"
+            href="http://www.habitatgsf.org/innes-ave"
             target="_blank"
           >
             Habitat for Humanity information session
