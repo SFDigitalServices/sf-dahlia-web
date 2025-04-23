@@ -30,7 +30,7 @@ exports[`BeforeApplyingForSale display Before Applying when type is Habitat list
         <p>
           Go to a 
           <a
-            href="https://habitatgsf.org/amber-drive-info/"
+            href="http://www.habitatgsf.org/innes-ave"
             target="_blank"
           >
             Habitat for Humanity information session
@@ -48,7 +48,7 @@ exports[`BeforeApplyingForSale display Before Applying when type is Habitat list
         <p>
           Meet the 
           <a
-            href="https://sfmohcd.org/sites/default/files/Documents/MOH/Inclusionary%20Manuals/Inclusionary%20Affordable%20Housing%20Program%20Manual%2010.15.2018.pdf"
+            href="https://media.api.sf.gov/documents/DALP_Manual_-_2025.pdf"
             target="_blank"
           >
             income requirements
@@ -67,7 +67,7 @@ exports[`BeforeApplyingForSale display Before Applying when type is Habitat list
       <p>
         Read 
         <a
-          href="https://habitatgsf.org/amber-drive-info/"
+          href="http://www.habitatgsf.org/innes-ave"
           target="_blank"
         >
           our full list of requirements
