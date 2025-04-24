@@ -80,7 +80,7 @@ const HousingCounselor = (housingCounselor: CounselorData) => {
       <div className="mt-4 flex flex-col gap-2">
         {housingCounselor.address.map((address, index) => {
           return (
-            <div key={index} className="icon-item flex gap-2">
+            <div key={index} className="icon-item flex">
               <Icon className="address-icon" symbol="map" size="medium" />
               <div className="flex flex-col">
                 {address.label_key && <span className="font-semibold">{t(address.label_key)}</span>}
