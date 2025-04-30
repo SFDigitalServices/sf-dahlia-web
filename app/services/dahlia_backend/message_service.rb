@@ -59,7 +59,14 @@ module DahliaBackend
         listingId: listing_id,
         lotteryNumber: application_response&.[]('lotteryNumber').to_s,
         listingName: listing.Name.to_s,
+        isRental: listing.RecordType.Name == 'Rental',
         lotteryDate: formatted_date,
+        leasingAgent: {
+          name: listing.Leasing_Agent_Name.to_s,
+          email: listing.Leasing_Agent_Email.to_s,
+          phone: listing.Leasing_Agent_Phone.to_s,
+          officeHours: listing.Leasing_Agent_Office_Hours.to_s,
+        },
       }
     end
 
