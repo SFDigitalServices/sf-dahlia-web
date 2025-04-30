@@ -65,6 +65,26 @@ const getRentalHeader = (
   setFilters: Dispatch<SetStateAction<EligibilityFilters>>,
   addObservedElement: (elem: HTMLElement) => void
 ) => {
+  const test = `
+  Very
+  Long
+  Multi
+  Line
+  String
+  To
+  Purposely
+  Test
+  The
+  New
+  Method
+  Line
+  Threshold
+  Configuration
+  For
+  Code
+  Climate
+  `
+
   return (
     <PageHeaderWithRef addObservedElement={addObservedElement}>
       {filters ? (
@@ -83,6 +103,7 @@ const getRentalHeader = (
           <a className="text-base text-primary-dark" href={getHelpCalculatingIncomeLink()}>
             {t("rentalDirectory.orGetHelpCalculating")}
           </a>
+          <p>{test}</p>
         </PageHeader>
       )}
     </PageHeaderWithRef>
