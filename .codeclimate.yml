@@ -13,6 +13,9 @@ checks:
   method-complexity:
     config:
       threshold: 8
+  method-lines:
+    config:
+      threshold: 40
 plugins:
  duplication:
    enabled: true
