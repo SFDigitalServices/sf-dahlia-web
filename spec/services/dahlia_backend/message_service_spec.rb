@@ -6,7 +6,7 @@ RSpec.describe DahliaBackend::MessageService do
   let(:listing) do
     double('Listing', Name: 'Test Listing', Lottery_Date: '2024-07-01T00:00:00Z',
                       RecordType: Hashie::Mash.new(Name: 'Rental'),
-                      Leasing_Agent_Name: 'John Doe', Leasing_Agent_Email: 'email', Leasing_Agent_Phone: '123-456-7890', Leasing_Agent_Office_Hours: '9am-5pm')
+                      Leasing_Agent_Name: 'John Doe', Leasing_Agent_Email: 'email', Leasing_Agent_Phone: '123-456-7890', Office_Hours: '9am-5pm')
   end
   let(:application_params) do
     {

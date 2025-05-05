@@ -65,7 +65,7 @@ module DahliaBackend
           name: listing.Leasing_Agent_Name.to_s,
           email: listing.Leasing_Agent_Email.to_s,
           phone: listing.Leasing_Agent_Phone.to_s,
-          officeHours: listing.Leasing_Agent_Office_Hours.to_s,
+          officeHours: listing.Office_Hours.to_s,
         },
       }
     end
