@@ -73,6 +73,7 @@ const ListingDetail = () => {
   const listingIsHabitat = listing && isHabitatListing(listing)
 
   const {
+    units,
     fetchUnits,
     fetchedUnits,
     fetchingUnits,
@@ -97,7 +98,7 @@ const ListingDetail = () => {
       }
       pushToDataLayer("view_listing", tagManagerArgs)
     }
-  }, [listing, pushToDataLayer])
+  }, [listing, pushToDataLayer, units])
 
   useEffect(() => {
     if (listing?.listingID && !fetchedUnits && !fetchingUnits) {
@@ -107,10 +108,10 @@ const ListingDetail = () => {
 
   useEffect(() => {
     if (listing?.listingID && !fetchingAmiCharts && !fetchedAmiCharts) {
-      const chartsToFetch = getAmiChartDataFromUnits(listing.Units)
+      const chartsToFetch = getAmiChartDataFromUnits(units)
       fetchAmiCharts(chartsToFetch)
     }
-  }, [listing?.listingID, fetchAmiCharts, fetchedAmiCharts, fetchingAmiCharts, listing?.Units])
+  }, [listing?.listingID, fetchAmiCharts, fetchedAmiCharts, fetchingAmiCharts, units])
 
   useEffect(() => {
     const path = getPathWithoutLanguagePrefix(router.pathname)

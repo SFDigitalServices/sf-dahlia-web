@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useContext } from "react"
 import {
   Card,
   ExpandableText,
@@ -30,6 +30,8 @@ import {
 } from "../../util/languageUtil"
 import { BeforeApplyingForSale, BeforeApplyingType } from "../../components/BeforeApplyingForSale"
 import { ListingDetailsPreferences } from "./ListingDetailsPreferences"
+import ListingDetailsContext from "../../contexts/listingDetails/listingDetailsContext"
+import type RailsUnit from "../../api/types/rails/listings/RailsUnit"
 import ErrorBoundary, { BoundaryScope } from "../../components/ErrorBoundary"
 import { ListingDetailsHMITable } from "./ListingDetailsHMITable"
 import "./ListingDetailsEligibility.scss"
@@ -53,7 +55,25 @@ export const ListingDetailsEligibility = ({
 }: ListingDetailsEligibilityProps) => {
   const isAllSRO = listingHasOnlySROUnits(listing)
   const isSomeSRO = listingHasSROUnits(listing)
-  const priorityUnits = listing.prioritiesDescriptor
+  const priorityUnits = []
+  const { units } = useContext(ListingDetailsContext)
+
+  units?.forEach((unit: RailsUnit) => {
+    const priorityUnit = priorityUnits?.find((priorityUnit: ReducedUnit) => {
+      return priorityUnit.name === unit.Priority_Type
+    })
+
+    if (unit.Priority_Type && !priorityUnit) {
+      priorityUnits.push({
+        name: unit.Priority_Type,
+        numberOfUnits: 1,
+      })
+    }
+
+    if (unit.Priority_Type && priorityUnit) {
+      priorityUnit.numberOfUnits++
+    }
+  })
 
   let occupancySubtitle = ""
   if (isSale(listing)) {
