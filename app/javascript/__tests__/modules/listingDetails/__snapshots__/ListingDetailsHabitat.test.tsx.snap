@@ -19,12 +19,12 @@ exports[`ListingDetailsHabitat displays habitat info when habitat listing 1`] = 
       Sweat Equity
     </h4>
     <p>
-      You do not need to pay a down payment. You do need to complete 150 hours of sweat equity. Sweat equity is volunteer hours that you and your friends and family do.
+      You do not need to pay a down payment. You do need to complete 250 hours of sweat equity. Sweat equity is volunteer hours that you and your friends and family do.
     </p>
     <p
       class="mt-4"
     >
-      If you are concerned about your ability to complete 150 hours of sweat equity, reach out to Habitat for Humanity Greater San Francisco to ask how they can help.
+      If you are concerned about your ability to complete 250 hours of sweat equity, reach out to Habitat for Humanity Greater San Francisco to ask how they can help.
     </p>
     <h4
       class="text__underline-weighted mt-8"
@@ -35,7 +35,7 @@ exports[`ListingDetailsHabitat displays habitat info when habitat listing 1`] = 
       <p>
         These units are offered by 
         <a
-          href="https://habitatgsf.org/amber-drive-info/"
+          href="http://www.habitatgsf.org/innes-ave"
           target="_blank"
         >
           Habitat for Humanity Greater San Francisco
@@ -50,7 +50,7 @@ exports[`ListingDetailsHabitat displays habitat info when habitat listing 1`] = 
         <p>
           You must go to a 
           <a
-            href="https://habitatgsf.org/amber-drive-info/"
+            href="http://www.habitatgsf.org/innes-ave"
             target="_blank"
           >
             Habitat for Humanity information session
@@ -71,7 +71,7 @@ exports[`ListingDetailsHabitat displays habitat info when habitat listing 1`] = 
         MOHCD will check to see if you qualify for the listing. If you qualify, MOHCD will issue you a conditional approval.
       </li>
       <li>
-        You must complete 150 hours of sweat equity.
+        You must complete 250 hours of sweat equity.
       </li>
       <li>
         Habitat Greater San Francisco will work with you to approve your first mortgage loan.
@@ -92,7 +92,7 @@ exports[`ListingDetailsHabitat displays habitat info when habitat listing 1`] = 
       Income Range
     </h4>
     <p>
-      To be eligible for a Habitat for Humanity Greater San Francisco home in this listing, your household income needs to be between 82% and 109.8% Area Median Income (AMI) as listed below.
+      To be eligible for a Habitat for Humanity Greater San Francisco home in this listing, your household income needs to be between 65.4% and 104.5% Area Median Income (AMI) as listed below.
     </p>
     <p
       class="mt-4"

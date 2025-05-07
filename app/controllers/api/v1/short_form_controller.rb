@@ -47,12 +47,14 @@ class Api::V1::ShortFormController < ApiController
   def show_application
     @application = Force::ShortFormService.get(params[:id])
     return render_unauthorized_error unless user_can_access?(@application)
+
     map_listing_to_application
     render json: { application: @application }
   end
 
   def show_listing_application_for_user
     return render json: { application: {} } unless current_user.present?
+
     find_listing_application
     find_application_files
     render json: {
@@ -79,6 +81,7 @@ class Api::V1::ShortFormController < ApiController
         "'#{response['primaryApplicant']['lastName']}'" \
         ']',
       )
+      Rails.logger.info("ShortFormController#submit_application: response: #{response}")
       process_submit_app_response(response)
       render json: response
     else
@@ -92,6 +95,7 @@ class Api::V1::ShortFormController < ApiController
 
   def update_application
     return if params['autosave'] == 'true' && autosave_disabled
+
     @application = Force::ShortFormService.get(application_params[:id])
     return render_unauthorized_error unless user_can_access?(@application)
     return render_unauthorized_error unless draft?(@application)
@@ -103,6 +107,7 @@ class Api::V1::ShortFormController < ApiController
   def claim_submitted_application
     @application = Force::ShortFormService.get(application_params[:id])
     return render_unauthorized_error unless user_can_claim?(@application)
+
     # calls same underlying method for submit
     submit_application
   end
@@ -138,6 +143,7 @@ class Api::V1::ShortFormController < ApiController
   def process_submit_app_response(response)
     attach_files_and_send_confirmation(response)
     return unless current_user && application_complete
+
     delete_draft_application(application_params[:listingID])
   end
 
@@ -181,6 +187,7 @@ class Api::V1::ShortFormController < ApiController
 
   def initial_submission?
     return false if params[:action].to_s == 'claim_submitted_application'
+
     application_params[:status] == 'submitted'
   end
 
@@ -214,6 +221,8 @@ class Api::V1::ShortFormController < ApiController
   end
 
   def send_submit_app_confirmation(response)
+    DahliaBackend::MessageService.send_application_confirmation(application_params,
+                                                                response)
     Emailer.submission_confirmation(
       locale: params[:locale],
       email: application_params[:primaryApplicant][:email],
@@ -257,6 +266,7 @@ class Api::V1::ShortFormController < ApiController
 
   def user_can_access?(application)
     return false if application.empty?
+
     Force::ShortFormService.user_owns_app?(user_contact_id, application)
   end
 
@@ -279,6 +289,7 @@ class Api::V1::ShortFormController < ApiController
     if e.message.include?('APEX_ERROR') && e.message.exclude?('UNABLE_TO_LOCK_ROW')
       return render_err(e, status: 500, external_capture: true)
     end
+
     raise e.class, e.message
   end
 
@@ -299,8 +310,10 @@ class Api::V1::ShortFormController < ApiController
 
   def unconfirmed_user_with_temp_session_id
     return false if params[:temp_session_id].blank?
+
     @unconfirmed_user = User.find_by_temp_session_id(params[:temp_session_id])
     return unless @unconfirmed_user
+
     params.delete :temp_session_id
     @unconfirmed_user.update(temp_session_id: nil)
   end
