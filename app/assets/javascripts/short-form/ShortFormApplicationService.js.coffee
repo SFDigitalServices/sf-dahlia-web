@@ -738,9 +738,6 @@ ShortFormApplicationService = (
     $window.removeEventListener 'beforeunload', Service.onExit
     unless toState.name == 'dahlia.short-form-review'
       Service.resetApplicationData()
-    if toParams.timeout
-      AnalyticsService.trackTimeout('Application')
-    else
       AnalyticsService.trackFormAbandon('Application')
 
   Service.invalidateNameForm = ->
