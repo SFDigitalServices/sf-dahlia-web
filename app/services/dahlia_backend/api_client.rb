@@ -27,7 +27,7 @@ module DahliaBackend
     end
 
     def post(endpoint, params)
-      response = http_client.post("#{api_url}#{endpoint}", params: params)
+      response = http_client.post("#{api_url}#{endpoint}", json: params)
 
       if response.code >= 400
         log_error("POST request failed: #{response.code} #{response.body}", nil)
