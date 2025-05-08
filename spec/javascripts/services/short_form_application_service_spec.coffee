@@ -55,7 +55,6 @@ do ->
       trackFormSuccess: jasmine.createSpy()
       trackFormError: jasmine.createSpy()
       trackFormAbandon: jasmine.createSpy()
-      trackTimeout: jasmine.createSpy()
     fakeFileUploadService =
       uploadProof: jasmine.createSpy()
       deleteFile: jasmine.createSpy()
@@ -740,12 +739,6 @@ do ->
         expect(ShortFormApplicationService.isLeavingShortForm(toState, fromState)).toEqual(false)
 
     describe 'leaveAndResetShortForm', ->
-      it 'should call trackTimeout if timing out', ->
-        toState = {name: 'dahlia.listings-for-rent'}
-        toParams = {timeout: true}
-        ShortFormApplicationService.leaveAndResetShortForm(toState, toParams)
-        expect(fakeAnalyticsService.trackTimeout).toHaveBeenCalled()
-
       it 'should call trackFormAbandon if not timing out', ->
         toState = {name: 'dahlia.listings-for-rent'}
         toParams = {timeout: false}
