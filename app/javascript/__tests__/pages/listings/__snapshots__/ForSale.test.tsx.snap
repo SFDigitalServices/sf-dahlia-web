@@ -249,9 +249,9 @@ exports[`For Sale renders ForSale component 1`] = `
                   >
                     <a
                       class="button is-primary is-fullwidth"
-                      href="#nav-bar-container"
+                      href="#listing-results"
                     >
-                      See homes for sale
+                      See the listings
                     </a>
                   </div>
                   <div
