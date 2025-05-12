@@ -11672,7 +11672,7 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                             <span
                               class="info-card__subtitle"
                             >
-                              8 Units
+                              7 Units
                             </span>
                           </div>
                           <p
@@ -11690,7 +11690,7 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                             <h3
                               class="info-card__title"
                             >
-                              Hearing/Vision (Communication)
+                              Vision and/or Hearing Impairments
                             </h3>
                             <span
                               class="info-card__subtitle"
@@ -11701,7 +11701,7 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                           <p
                             class="text-sm text-gray-700"
                           >
-                            These units have accessibility features for people with impaired hearing and/or vision (communication).
+                             These units have accessibility features for people with impaired vision and/or hearing.
                           </p>
                         </div>
                       </li>
@@ -12239,7 +12239,7 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                           <span
                             class="info-card__subtitle"
                           >
-                            8 Units
+                            7 Units
                           </span>
                         </div>
                         <p
@@ -12257,7 +12257,7 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                           <h3
                             class="info-card__title"
                           >
-                            Hearing/Vision (Communication)
+                            Vision and/or Hearing Impairments
                           </h3>
                           <span
                             class="info-card__subtitle"
@@ -12268,7 +12268,7 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                         <p
                           class="text-sm text-gray-700"
                         >
-                          These units have accessibility features for people with impaired hearing and/or vision (communication).
+                           These units have accessibility features for people with impaired vision and/or hearing.
                         </p>
                       </div>
                     </li>
@@ -12847,7 +12847,7 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                           <span
                             class="info-card__subtitle"
                           >
-                            8 Units
+                            7 Units
                           </span>
                         </div>
                         <p
@@ -12865,7 +12865,7 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                           <h3
                             class="info-card__title"
                           >
-                            Hearing/Vision (Communication)
+                            Vision and/or Hearing Impairments
                           </h3>
                           <span
                             class="info-card__subtitle"
@@ -12876,7 +12876,7 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                         <p
                           class="text-sm text-gray-700"
                         >
-                          These units have accessibility features for people with impaired hearing and/or vision (communication).
+                           These units have accessibility features for people with impaired vision and/or hearing.
                         </p>
                       </div>
                     </li>
@@ -15299,7 +15299,7 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                           <span
                             class="info-card__subtitle"
                           >
-                            8 Units
+                            7 Units
                           </span>
                         </div>
                         <p
@@ -15317,7 +15317,7 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                           <h3
                             class="info-card__title"
                           >
-                            Hearing/Vision (Communication)
+                            Vision and/or Hearing Impairments
                           </h3>
                           <span
                             class="info-card__subtitle"
@@ -15328,7 +15328,7 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                         <p
                           class="text-sm text-gray-700"
                         >
-                          These units have accessibility features for people with impaired hearing and/or vision (communication).
+                           These units have accessibility features for people with impaired vision and/or hearing.
                         </p>
                       </div>
                     </li>
