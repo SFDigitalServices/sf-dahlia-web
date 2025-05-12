@@ -33,7 +33,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import "./how-to-apply.scss"
 import HeaderSidebarLayout from "../../layouts/HeaderSidebarLayout"
 import GetHelpSidebarBlock from "../../layouts/Sidebar/GetHelpSidebarBlock"
-import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import { AppPages } from "../../util/routeUtil"
 
 interface HowToApplyProps {
@@ -322,17 +321,10 @@ const SubmitApplicationStep = ({ listing }: { listing: RailsSaleListing }) => {
   const datetime = listing.Application_Start_Date_Time
   const submissionUrl = generateSubmissionUrl(listing.listingID)
 
-  const { unleashFlag: humanTranslationsReady } = useFeatureFlag(
-    "temp.webapp.howToApplyPage.step5.updateContent",
-    false
-  )
-
   return (
     <HowToApplyListItem headerText={t("howToApplyPage.howToApplySection.step5.title")}>
       <div id="SubmitApplicationStep" className="text-base">
-        {humanTranslationsReady
-          ? t("howToApplyPage.howToApplySection.step5.p1.v2")
-          : t("howToApplyPage.howToApplySection.step5.p1")}
+        {t("howToApplyPage.howToApplySection.step5.p1.v2")}
       </div>
       <ul className="mb-0 pb-2">
         <li className="text-base">
@@ -340,14 +332,7 @@ const SubmitApplicationStep = ({ listing }: { listing: RailsSaleListing }) => {
             t("howToApplyPage.howToApplySection.step5.listItem1", { url: "#HowToApplySection" })
           )}
         </li>
-        {humanTranslationsReady ? (
-          <li className="text-base">{t("howToApplyPage.howToApplySection.step5.listItem2.v2")}</li>
-        ) : (
-          <>
-            <li className="text-base">{t("howToApplyPage.howToApplySection.step5.listItem2")}</li>
-            <li className="text-base">{t("howToApplyPage.howToApplySection.step5.listItem3")}</li>
-          </>
-        )}
+        <li className="text-base">{t("howToApplyPage.howToApplySection.step5.listItem2.v2")}</li>
       </ul>
       <div className="text-base">{t("howToApplyPage.howToApplySection.step5.p2")}</div>
       {applicationsNotYetOpen(listing) && (
