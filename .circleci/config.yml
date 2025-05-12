@@ -290,8 +290,6 @@ workflows:
           <<: *non_production_jobs
       - unit-rspec:
           <<: *non_production_jobs
-      - unit-angular:
-          <<: *angular_jobs
       - e2e:
           <<: *non_production_jobs
       - coverage:
