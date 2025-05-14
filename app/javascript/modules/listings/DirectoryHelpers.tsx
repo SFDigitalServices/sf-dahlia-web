@@ -278,6 +278,7 @@ export const openListingsView = (
     ) : (
       <EmptyListingsView
         section={DIRECTORY_SECTION_OPEN_LOTTERIES}
+        directoryType={directoryType}
         listingsCount={numFcfsListings}
         icon={
           <span className="empty-state-icon">
@@ -322,6 +323,7 @@ export const FcfsSalesView = (
       ) : (
         <EmptyListingsView
           section={DIRECTORY_SECTION_FCFS_LISTINGS}
+          directoryType={directoryType}
           listingsCount={numOpenListings}
           icon="house"
         />
@@ -368,7 +370,7 @@ export const getListingGroup = (
         {listings.length > 0
           ? getListingCards(listings, directoryType, stackedDataFxn, hasFiltersSet)
           : section !== DIRECTORY_SECTION_ADDITIONAL_LISTINGS && (
-              <EmptyListingsView section={section} />
+              <EmptyListingsView section={section} directoryType={directoryType} />
             )}
       </ListingsGroup>
     )
