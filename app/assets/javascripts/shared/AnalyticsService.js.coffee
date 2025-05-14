@@ -78,11 +78,6 @@ AnalyticsService = ($state) ->
     _.merge(params, opts)
     Service.trackEvent('Field Message', params)
 
-  # Fired when the user leaves the create account page without creating an account
-  # Fired when the user exits the application process
-  Service.trackFormAbandon = (category) ->
-    Service.trackEvent('Form Message', { category: category, action: 'Form Abandon' })
-
   Service._currentHref = ->
     $state.href($state.current.name, $state.params)
 
