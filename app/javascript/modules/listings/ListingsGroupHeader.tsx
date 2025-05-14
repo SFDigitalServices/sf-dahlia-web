@@ -1,6 +1,5 @@
 import React, { ReactNode, useRef, useLayoutEffect, MutableRefObject } from "react"
 import "./ListingsGroupHeader.scss"
-import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 
 export interface ListingsGroupProps {
   title: string
@@ -19,20 +18,11 @@ const ListingsGroupHeader = ({
   refKey,
   addObservedElement,
 }: ListingsGroupProps) => {
-  const { unleashFlag: newDirectoryEnabled } = useFeatureFlag(
-    "temp.webapp.directory.listings",
-    false
-  )
-
   const container: MutableRefObject<null | HTMLDivElement> = useRef(null)
 
   useLayoutEffect(() => {
     addObservedElement(container.current)
   }, [addObservedElement])
-
-  if (!newDirectoryEnabled) {
-    return children
-  }
 
   return (
     <div id={refKey} ref={container}>
