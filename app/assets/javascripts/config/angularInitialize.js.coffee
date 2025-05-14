@@ -178,10 +178,6 @@
           e.preventDefault()
           false
 
-      else if fromState.name.match(/create\-account/) && !toState.name.match(/sign\-in/)
-        # track if they are leaving create account to go somewhere else
-        AnalyticsService.trackFormAbandon('Accounts')
-
     $rootScope.$on '$stateChangeSuccess', (e, toState, toParams, fromState, fromParams) ->
       # always stop the loading overlay
       bsLoadingOverlayService.stop()

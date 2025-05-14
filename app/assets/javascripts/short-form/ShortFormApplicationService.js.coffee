@@ -640,7 +640,6 @@ ShortFormApplicationService = (
     Service.cancelOptOut(preference)
 
   Service.onExit = (e) ->
-    AnalyticsService.trackFormAbandon('Application')
     e.returnValue = $translate.instant('t.are_you_sure_you_want_to_leave')
 
   Service.isWelcomePage = (state) ->
@@ -738,7 +737,6 @@ ShortFormApplicationService = (
     $window.removeEventListener 'beforeunload', Service.onExit
     unless toState.name == 'dahlia.short-form-review'
       Service.resetApplicationData()
-      AnalyticsService.trackFormAbandon('Application')
 
   Service.invalidateNameForm = ->
     Service.application.validatedForms['You']['name'] = false
