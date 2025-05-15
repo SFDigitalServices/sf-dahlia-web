@@ -604,7 +604,7 @@ exports[`For Sale renders ForSale component 1`] = `
                 <p
                   class="page-header-text-block"
                 >
-                  listingDirectory.emptyListingsView.forSale.subTitle.fcfs
+                  We do not have any units for sale right now.
                 </p>
                 <div
                   class="empty-listings-view_content"

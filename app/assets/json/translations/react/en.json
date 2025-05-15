@@ -924,6 +924,7 @@
   "listingDirectory.emptyListingsView.fcfs": "<a href='%{target}'>View %{numListings} listings</a> available through a lottery",
   "listingDirectory.emptyListingsView.forRent.subTitle.open": "We do not have any units for rent right now.",
   "listingDirectory.emptyListingsView.forSale.subTitle.open": "We do not have any units for sale right now.",
+  "listingDirectory.emptyListingsView.forSale.subTitle.fcfs": "We do not have any units for sale right now.",
   "listingDirectory.emptyListingsView.getAnEmail": "<a href='%{target}' target='_blank'>Get an email</a> whenever a new listing is posted",
   "listingDirectory.emptyListingsView.open": "<a href='%{target}'>View %{numListings} listings available now</a>, no lottery required",
   "listingDirectory.emptyListingsView.title.fcfs": "0 open listings",
