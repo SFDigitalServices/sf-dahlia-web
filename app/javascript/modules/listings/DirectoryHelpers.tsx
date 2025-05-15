@@ -298,7 +298,6 @@ export const openListingsView = (
 export const FcfsSalesView = (
   listings: RailsListing[],
   directoryType: DirectoryType,
-  humanTranslationsReady: boolean,
   stackedDataFxn: StackedDataFxnType,
   addObservedElement: (elem: HTMLElement) => void,
   filtersSet?: boolean,
@@ -308,11 +307,7 @@ export const FcfsSalesView = (
   return (
     <ListingsGroupHeader
       title={t(`listings.${directoryType}.fcfsListings.title`)}
-      subtitle={
-        humanTranslationsReady
-          ? t(`listings.${directoryType}.fcfsListings.subtitle.v2`)
-          : t(`listings.${directoryType}.fcfsListings.subtitle`)
-      }
+      subtitle={t(`listings.${directoryType}.fcfsListings.subtitle.v2`)}
       icon={<img src={iconPath} width="40" height="40" alt="Icon Home Check" />}
       addObservedElement={addObservedElement}
       refKey="buy-now"
@@ -345,12 +340,9 @@ export const getListingGroup = (
   subtitle?: string,
   icon?: IconTypes,
   showListings?: boolean,
-  setShowListings?: React.Dispatch<React.SetStateAction<boolean>>,
-  newDirectoryEnabled?: boolean
+  setShowListings?: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
-  const showListingsGroup =
-    (newDirectoryEnabled && section !== DIRECTORY_SECTION_ADDITIONAL_LISTINGS) ||
-    listings.length > 0
+  const showListingsGroup = section !== DIRECTORY_SECTION_ADDITIONAL_LISTINGS || listings.length > 0
   return (
     showListingsGroup && (
       <ListingsGroup
@@ -381,8 +373,7 @@ export const upcomingLotteriesView = (
   stackedDataFxn: StackedDataFxnType,
   addObservedElement: (elem: HTMLElement) => void,
   showListings?: boolean,
-  setShowListings?: React.Dispatch<React.SetStateAction<boolean>>,
-  newDirectoryEnabled?: boolean
+  setShowListings?: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
   return getListingGroup(
     listings,
@@ -398,8 +389,7 @@ export const upcomingLotteriesView = (
     t("listings.upcomingLotteries.subtitle"),
     null,
     showListings,
-    setShowListings,
-    newDirectoryEnabled
+    setShowListings
   )
 }
 
@@ -409,8 +399,7 @@ export const lotteryResultsView = (
   stackedDataFxn: StackedDataFxnType,
   addObservedElement: (elem: HTMLElement) => void,
   showListings?: boolean,
-  setShowListings?: React.Dispatch<React.SetStateAction<boolean>>,
-  newDirectoryEnabled?: boolean
+  setShowListings?: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
   return getListingGroup(
     listings,
@@ -426,8 +415,7 @@ export const lotteryResultsView = (
     t("listings.lotteryResults.subtitle"),
     "result",
     showListings,
-    setShowListings,
-    newDirectoryEnabled
+    setShowListings
   )
 }
 
@@ -438,8 +426,7 @@ export const additionalView = (
   addObservedElement: (elem: HTMLElement) => void,
   filtersSet?: boolean,
   showListings?: boolean,
-  setShowListings?: React.Dispatch<React.SetStateAction<boolean>>,
-  newDirectoryEnabled?: boolean
+  setShowListings?: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
   return (
     listings.length > 0 &&
@@ -457,8 +444,7 @@ export const additionalView = (
       t("listings.additional.subtitle"),
       "doubleHouse",
       showListings,
-      setShowListings,
-      newDirectoryEnabled
+      setShowListings
     )
   )
 }
