@@ -9,7 +9,6 @@ do ->
     fakeAnalyticsService =
       trackFormSuccess: jasmine.createSpy()
       trackFormError: jasmine.createSpy()
-      trackFormAbandon: jasmine.createSpy()
     fakeListing = getJSONFixture('listings-api-show.json').listing
     fakeUser =
       email: 'email@test.com'

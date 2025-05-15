@@ -13,8 +13,6 @@
     # check if user is logged in on page load
     AccountService.validateUser()
 
-    # start Apply Online timer
-    AnalyticsService.startTimer('Apply Online Click')
 
     bsLoadingOverlayService.setGlobalConfig({
       delay: 0
@@ -132,7 +130,6 @@
           when 'dahlia.listings-for-rent' then 'Browse to Application Start'
           when 'dahlia.listing' then 'Listing Page to Application Start'
           else 'Landing Page to Application Start'
-        AnalyticsService.startTimer(label: 'Apply Online Click', variable: timerVariable)
 
       if ShortFormApplicationService.hittingBackFromConfirmation(fromState, toState)
         # the redirect will trigger $stateChangeStart again and will popup the confirmation alert
@@ -180,10 +177,6 @@
           bsLoadingOverlayService.stop()
           e.preventDefault()
           false
-
-      else if fromState.name.match(/create\-account/) && !toState.name.match(/sign\-in/)
-        # track if they are leaving create account to go somewhere else
-        AnalyticsService.trackFormAbandon('Accounts')
 
     $rootScope.$on '$stateChangeSuccess', (e, toState, toParams, fromState, fromParams) ->
       # always stop the loading overlay
