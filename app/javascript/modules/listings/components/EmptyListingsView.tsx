@@ -34,6 +34,13 @@ export const EmptyListingsView = ({
         {t(`listingDirectory.emptyListingsView.title.${section}`)}
       </Heading>
       <p className={"page-header-text-block"}>
+        {
+          // when 'directoryType' is 'forRent', 'section' will be:
+          // DIRECTORY_SECTION_OPEN_LOTTERIES: listingDirectory.emptyListingsView.forRent.subTitle.open
+          // when 'directoryType' is 'forSales', 'section' will be:
+          // DIRECTORY_SECTION_OPEN_LOTTERIES: listingDirectory.emptyListingsView.forSale.subTitle.open
+          // DIRECTORY_SECTION_FCFS_LISTINGS: listingDirectory.emptyListingsView.forSale.subTitle.fcfs
+        }
         {t(`listingDirectory.emptyListingsView.${directoryType}.subTitle.${section}`)}
       </p>
       <div className="empty-listings-view_content">
