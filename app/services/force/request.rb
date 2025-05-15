@@ -88,6 +88,7 @@ module Force
         instance_url: ENV['SALESFORCE_INSTANCE_URL'],
         mashify: false,
         timeout: @timeout,
+        api_version: ENV.fetch('SALESFORCE_API_VERSION', '43.0'),
       )
       # set oauth token from the cache, if we can
       # otherwise authenticate client created above
