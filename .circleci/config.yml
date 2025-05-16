@@ -3,6 +3,7 @@ orbs:
   ruby: circleci/ruby@0.1.2
   cypress: cypress-io/cypress@1.26.0
   browser-tools: circleci/browser-tools@1.4.4
+  qlty: qltysh/qlty-orb@0.0.6
 defaults: &defaults
   working_directory: ~/web
   docker:
@@ -246,6 +247,13 @@ jobs:
           root: .
           paths:
             - tmp/codeclimate.*.json
+  coverage-qlty:
+    <<: *defaults
+    steps:
+      - checkout
+      - *attach_workspace
+      - run: qlty/coverage_publish
+        files: app/javascript/test-coverage/lcov.info, coverage/coverage.json
   e2e-legacy:
     <<: *defaults
     parallelism: 4
