@@ -1,6 +1,8 @@
 # Dahlia
 
 [![CircleCi Builds](https://app.circleci.com/pipelines/github/SFDigitalServices/sf-dahlia-web)](https://app.circleci.com/pipelines/github/SFDigitalServices/sf-dahlia-web)
+[![QLTY Code Coverage](https://qlty.sh/badges/2ff5047d-ae66-4b94-b3cf-c8eae8f7e4a8/test_coverage.svg)](https://qlty.sh/gh/SFDigitalServices/projects/sf-dahlia-web)
+[![QLTY Maintainability](https://qlty.sh/badges/2ff5047d-ae66-4b94-b3cf-c8eae8f7e4a8/maintainability.svg)](https://qlty.sh/gh/SFDigitalServices/projects/sf-dahlia-web)
 
 Cross-browser testing done with <a href="https://www.browserstack.com/"><img src="./Browserstack-logo@2x.png?raw=true" height="30" ></a>
 
@@ -190,6 +192,14 @@ To identify and have Rubocop automatically correct violations when possible, run
 
 - `rubocop -a [path_to_file]` for individual files
 - `rubocop -a` for all Ruby files
+
+### Qlty
+
+[Qlty](https://qlty.sh) was spun out of Code Climate to focus on code quality checks.
+Qlty provides a cli to run checks locally.
+
+- Install the CLI: `curl https://qlty.sh | sh`
+- [CLI Quickstart](https://docs.qlty.sh/cli/quickstart)
 
 ### Changing the Style Guide settings
 
