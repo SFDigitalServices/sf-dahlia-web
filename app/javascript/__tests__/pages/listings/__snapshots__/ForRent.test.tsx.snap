@@ -398,10 +398,15 @@ exports[`For Rent renders ForRent component 1`] = `
                 class="empty-listings-view"
               >
                 <h1
-                  class="text-heading-xl"
+                  class="text-heading-xl pb-3"
                 >
                   0 open lotteries
                 </h1>
+                <p
+                  class="page-header-text-block"
+                >
+                  We do not have any units for rent right now.
+                </p>
                 <div
                   class="empty-listings-view_content"
                 >
