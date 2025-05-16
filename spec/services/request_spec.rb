@@ -72,6 +72,7 @@ describe Force::Request do
         instance_url: ENV['SALESFORCE_INSTANCE_URL'],
         mashify: false,
         timeout: timeout,
+        api_version: ENV.fetch('SALESFORCE_API_VERSION', '43.0'),
       }
 
       expect(Restforce).to receive(:new)
