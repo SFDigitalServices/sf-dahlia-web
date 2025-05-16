@@ -191,6 +191,14 @@ To identify and have Rubocop automatically correct violations when possible, run
 - `rubocop -a [path_to_file]` for individual files
 - `rubocop -a` for all Ruby files
 
+### Qlty
+
+[Qlty](https://qlty.sh) was spun out of Code Climate to focus on code quality checks.
+Qlty provides a cli to run checks locally.
+
+- Install the CLI: `curl https://qlty.sh | sh`
+- [CLI Quickstart](https://docs.qlty.sh/cli/quickstart)
+
 ### Changing the Style Guide settings
 
 Any changes to Rubocop, JSCS, etc. affect the entire team, so it should be a group decision before commiting any changes. Please don't commit changes without discussing with the team first.
