@@ -1,8 +1,8 @@
 # Dahlia
 
 [![CircleCi Builds](https://app.circleci.com/pipelines/github/SFDigitalServices/sf-dahlia-web)](https://app.circleci.com/pipelines/github/SFDigitalServices/sf-dahlia-web)
-[![Code Coverage](https://qlty.sh/badges/2ff5047d-ae66-4b94-b3cf-c8eae8f7e4a8/test_coverage.svg)](https://qlty.sh/gh/SFDigitalServices/projects/sf-dahlia-web)
-[![Maintainability](https://qlty.sh/badges/2ff5047d-ae66-4b94-b3cf-c8eae8f7e4a8/maintainability.svg)](https://qlty.sh/gh/SFDigitalServices/projects/sf-dahlia-web)
+[![QLTY Code Coverage](https://qlty.sh/badges/2ff5047d-ae66-4b94-b3cf-c8eae8f7e4a8/test_coverage.svg)](https://qlty.sh/gh/SFDigitalServices/projects/sf-dahlia-web)
+[![QLTY Maintainability](https://qlty.sh/badges/2ff5047d-ae66-4b94-b3cf-c8eae8f7e4a8/maintainability.svg)](https://qlty.sh/gh/SFDigitalServices/projects/sf-dahlia-web)
 
 Cross-browser testing done with <a href="https://www.browserstack.com/"><img src="./Browserstack-logo@2x.png?raw=true" height="30" ></a>
 
