@@ -3,7 +3,7 @@ import React, { ReactNode } from "react"
 import "./EmptyListingsView.scss"
 import { Icon, t, UniversalIconType } from "@bloom-housing/ui-components"
 import { renderInlineMarkup } from "../../../util/languageUtil"
-import { DirectorySectionType } from "../DirectoryHelpers"
+import { DirectorySectionType, DirectoryType } from "../DirectoryHelpers"
 import {
   DIRECTORY_SECTION_FCFS_LISTINGS,
   DIRECTORY_SECTION_INFO,
@@ -13,10 +13,12 @@ import {
 export const EmptyListingsView = ({
   listingsCount,
   section,
+  directoryType,
   icon,
 }: {
   listingsCount?: number
   section: DirectorySectionType
+  directoryType: DirectoryType
   icon?: ReactNode | string
 }) => {
   return (
@@ -28,7 +30,19 @@ export const EmptyListingsView = ({
         // DIRECTORY_SECTION_UPCOMING_LOTTERIES: listingDirectory.emptyListingsView.title.upcoming
         // DIRECTORY_SECTION_LOTTERY_RESULTS: listingDirectory.emptyListingsView.title.results
       }
-      <Heading size="xl">{t(`listingDirectory.emptyListingsView.title.${section}`)}</Heading>
+      <Heading size="xl" className="pb-3">
+        {t(`listingDirectory.emptyListingsView.title.${section}`)}
+      </Heading>
+      <p className={"page-header-text-block"}>
+        {
+          // when 'directoryType' is 'forRent', 'section' will be:
+          // DIRECTORY_SECTION_OPEN_LOTTERIES: listingDirectory.emptyListingsView.forRent.subTitle.open
+          // when 'directoryType' is 'forSales', 'section' will be:
+          // DIRECTORY_SECTION_OPEN_LOTTERIES: listingDirectory.emptyListingsView.forSale.subTitle.open
+          // DIRECTORY_SECTION_FCFS_LISTINGS: listingDirectory.emptyListingsView.forSale.subTitle.fcfs
+        }
+        {t(`listingDirectory.emptyListingsView.${directoryType}.subTitle.${section}`)}
+      </p>
       <div className="empty-listings-view_content">
         {listingsCount > 0 &&
           (section === DIRECTORY_SECTION_OPEN_LOTTERIES ||
