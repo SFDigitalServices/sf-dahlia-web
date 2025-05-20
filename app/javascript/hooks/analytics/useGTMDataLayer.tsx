@@ -6,6 +6,10 @@ export interface DataLayerEvent {
   [key: string]: string | number | boolean
 }
 
+const isSnakeCase = (str: string): boolean => {
+  return /^[a-z0-9]+(?:_[a-z0-9]+)*$/.test(str)
+}
+
 const validateAndPushData = (event: string, data: DataLayerEvent) => {
   if (!data || typeof data !== "object") {
     console.error("Data must be an object when pushing to the data layer.")
@@ -13,6 +17,10 @@ const validateAndPushData = (event: string, data: DataLayerEvent) => {
   }
   if (!event) {
     console.error("An event must be provided when pushing to the data layer.")
+    return
+  }
+  if (!isSnakeCase(event)) {
+    console.error(`Event "${event}" must be in snake_case format.`)
     return
   }
   if (data?.event || data?.event_timestamp) {
