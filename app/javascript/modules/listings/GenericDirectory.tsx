@@ -36,7 +36,6 @@ import {
   DIRECTORY_SECTION_LOTTERY_RESULTS,
   DIRECTORY_SECTION_UPCOMING_LOTTERIES,
 } from "../constants"
-import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import { MenuIntersectionObserverHandle, MenuIntersectionObserver } from "./util/NavigationBarUtils"
 import { ConfigContext } from "../../lib/ConfigContext"
 
@@ -92,11 +91,6 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
     }
   }
 
-  const { unleashFlag: humanTranslationsReady } = useFeatureFlag(
-    "temp.webapp.listings.sales.fcfsListings.subtitle",
-    false
-  )
-
   useEffect(() => {
     void props.listingsAPI(props.filters).then((listings) => {
       setLoading(true)
@@ -130,30 +124,21 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
     })
   }
 
-  const { unleashFlag: newDirectoryEnabled } = useFeatureFlag(
-    "temp.webapp.directory.listings",
-    false
-  )
-
   const { getAssetPath } = useContext(ConfigContext)
 
   return (
     <LoadingOverlay isLoading={loading}>
-      {newDirectoryEnabled && (
-        <MenuIntersectionObserver ref={menuIntersectionObserverRef} setActiveItem={setActiveItem} />
-      )}
+      <MenuIntersectionObserver ref={menuIntersectionObserverRef} setActiveItem={setActiveItem} />
       <div>
         {!loading && (
           <>
             {props.getPageHeader(filters, setFilters, addObservedElement)}
-            {newDirectoryEnabled && (
-              <DirectoryPageNavigationBar
-                directorySectionInfo={directorySectionInfo}
-                activeItem={activeItem}
-                listings={listings}
-                handleNavigation={handleNavigation}
-              />
-            )}
+            <DirectoryPageNavigationBar
+              directorySectionInfo={directorySectionInfo}
+              activeItem={activeItem}
+              listings={listings}
+              handleNavigation={handleNavigation}
+            />
             <div className="match-banner">
               {filters &&
                 (match
@@ -176,7 +161,6 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
                 FcfsSalesView(
                   listings.fcfs,
                   props.directoryType,
-                  humanTranslationsReady,
                   props.getSummaryTable,
                   addObservedElement,
                   hasFiltersSet,
@@ -192,8 +176,7 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
                   addObservedElement,
                   hasFiltersSet,
                   additionalIsOpen,
-                  setAdditionalIsOpen,
-                  newDirectoryEnabled
+                  setAdditionalIsOpen
                 )}
               {upcomingLotteriesView(
                 listings.upcoming,
@@ -201,8 +184,7 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
                 props.getSummaryTable,
                 addObservedElement,
                 upcomingIsOpen,
-                setUpcomingIsOpen,
-                newDirectoryEnabled
+                setUpcomingIsOpen
               )}
               {lotteryResultsView(
                 listings.results,
@@ -210,8 +192,7 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
                 props.getSummaryTable,
                 addObservedElement,
                 resultsIsOpen,
-                setResultsIsOpen,
-                newDirectoryEnabled
+                setResultsIsOpen
               )}
             </div>
           </>

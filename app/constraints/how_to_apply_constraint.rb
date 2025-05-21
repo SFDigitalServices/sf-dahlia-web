@@ -4,13 +4,7 @@ class HowToApplyConstraint
     # if the FCFS feature flag is enabled
     listing_id = request.params['id']
     listing = Force::ListingService.listing(listing_id)
-    return true if fcfs_flag_enabled &&
-                   listing_type_fcfs_sales_bmr(listing) &&
-                   listing_active(listing)
-  end
-
-  def fcfs_flag_enabled
-    Rails.configuration.unleash.is_enabled? 'FCFS'
+    true if listing_type_fcfs_sales_bmr(listing) && listing_active(listing)
   end
 
   def listing_type_fcfs_sales_bmr(listing)
