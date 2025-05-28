@@ -527,11 +527,6 @@ exports[`For Sale renders ForSale component 1`] = `
                 >
                   0 open lotteries
                 </h1>
-                <p
-                  class="page-header-text-block"
-                >
-                  We do not have any units for sale right now.
-                </p>
                 <div
                   class="empty-listings-view_content"
                 >
@@ -601,11 +596,6 @@ exports[`For Sale renders ForSale component 1`] = `
                 >
                   0 open listings
                 </h1>
-                <p
-                  class="page-header-text-block"
-                >
-                  We do not have any units for sale right now.
-                </p>
                 <div
                   class="empty-listings-view_content"
                 >
