@@ -36,7 +36,7 @@ describe("useGTMDataLayer", () => {
     })
 
     it("pushes data to the data layer", () => {
-      const event = "testEvent"
+      const event = "test_event"
       const data = { test: "data" }
 
       pushToDataLayer(event, data)
@@ -68,6 +68,15 @@ describe("useGTMDataLayer", () => {
 
       expect(consoleSpy).toHaveBeenCalled()
     })
+
+    it("errors out when an event does not use snake_case", () => {
+      const event = "TestEvent"
+      const data = { test: "data" }
+
+      pushToDataLayer(event, data)
+
+      expect(consoleSpy).toHaveBeenCalled()
+    })
   })
 
   describe("User Information is not available", () => {
@@ -84,7 +93,7 @@ describe("useGTMDataLayer", () => {
     })
 
     it("pushed data to the data layer but with an undefined user_id", () => {
-      const event = "testEvent"
+      const event = "test_event"
       const data = { test: "data" }
 
       pushToDataLayer(event, data)
@@ -110,7 +119,7 @@ describe("useGTMDataLayer", () => {
     })
 
     it("pushed data to the data layer but without a user_id", () => {
-      const event = "testEvent"
+      const event = "test_event"
       const data = { test: "data" }
 
       pushToDataLayer(event, data)
