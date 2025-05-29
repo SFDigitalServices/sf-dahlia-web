@@ -237,7 +237,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
               >
                 <article
                   class="seeds-card w-full pb-8"
-                  data-spacing="base"
+                  data-spacing="md"
                 >
                   <header
                     class="seeds-card-header flex justify-center py-8 text-center w-full flex-col items-center"
@@ -1109,7 +1109,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
             >
               <article
                 class="seeds-card w-full pb-8"
-                data-spacing="base"
+                data-spacing="md"
               >
                 <header
                   class="seeds-card-header flex justify-center py-8 text-center w-full flex-col items-center"
@@ -2014,7 +2014,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
               >
                 <article
                   class="seeds-card w-full pb-8"
-                  data-spacing="base"
+                  data-spacing="md"
                 >
                   <header
                     class="seeds-card-header flex justify-center py-8 text-center w-full flex-col items-center"
@@ -2862,7 +2862,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
             >
               <article
                 class="seeds-card w-full pb-8"
-                data-spacing="base"
+                data-spacing="md"
               >
                 <header
                   class="seeds-card-header flex justify-center py-8 text-center w-full flex-col items-center"
