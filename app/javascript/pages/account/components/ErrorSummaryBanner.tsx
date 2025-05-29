@@ -33,8 +33,10 @@ export const scrollToErrorOnSubmit =
 
     if (errorKeys.length === 1 && errors[errorKeys[0]]?.ref) {
       errors[errorKeys[0]].ref.scrollIntoView({ behavior: "smooth", block: "center" })
+      errors[errorKeys[0]].ref.focus()
     } else {
       ref.current?.scrollIntoView({ behavior: "smooth", block: "center" })
+      ref.current?.focus()
     }
   }
 
