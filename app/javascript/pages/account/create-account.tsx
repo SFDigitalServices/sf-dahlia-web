@@ -243,7 +243,7 @@ const CreateAccount = (_props: CreateAccountProps) => {
               title={t("createAccount.title.sentenceCase")}
               description={t("createAccount.description")}
             />
-            <span ref={errorBannerRef}>
+            <span ref={errorBannerRef} tabIndex={-1} role="alert" aria-live="assertive">
               <ErrorSummaryBanner
                 errors={modifyErrors({ ...errors })}
                 messageMap={(messageKey) =>
