@@ -1,5 +1,5 @@
 import React from "react"
-import { render, cleanup } from "@testing-library/react"
+import { render, cleanup, waitFor } from "@testing-library/react"
 import ListingDetail from "../../../../javascript/pages/listings/listing-detail"
 import { openRentalListing } from "../../data/RailsRentalListing/listing-rental-open"
 import { habitatListing } from "../../data/RailsSaleListing/listing-sale-habitat"
@@ -102,5 +102,29 @@ describe("Listing Detail", () => {
         listingType: undefined,
       },
     })
+  })
+
+  it("makes an api request for ami charts with parameters", async () => {
+    axios.get.mockResolvedValue({
+      data: { listing: openRentalListing, units: openRentalListing.Units, ami: [] },
+    })
+    const { container } = render(<ListingDetail assetPaths="/" />)
+
+    await waitFor(() => {
+      expect(container.querySelectorAll(".spinner-animation")).toHaveLength(0)
+    })
+    // find the ami call
+    let amiCall
+    for (let i = axios.get.mock.calls.length; i > 0; i--) {
+      const url = axios.get.mock.calls[i - 1][0]
+      if (url.includes("ami.json") >= 0) {
+        amiCall = url
+        break
+      }
+    }
+    expect(amiCall).toBeDefined()
+    // ami call should have parameters
+    expect(amiCall).toContain("?")
+    expect(amiCall.split("?")[1].length).toBeGreaterThan(0)
   })
 })
