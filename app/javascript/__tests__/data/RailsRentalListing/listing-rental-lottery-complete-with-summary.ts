@@ -208,7 +208,7 @@ export const lotteryCompleteRentalListingWithSummary: RailsRentalListing = {
       Listing: "a0W4U00000KnFqKUAV",
       Id: "a0Y4U00000JuRCeUAN",
       Venue:
-        '<p>**FIRST COME, FIRST SERVED LISTING**</p><p><br></p><p>To view the listing &amp; instructions on how to submit an application, please click on this <a href="https://sfmohcd.org/bmr-resale-55-page-street-unit-211" target="_blank">link</a>.</p><p><br></p><p><br></p><p>Individual viewings may be available by appointment only. Please contact the listing agent, Trista Bernasconi, for assistance.</p>',
+        '<p>**FIRST COME, FIRST SERVED LISTING**</p><p><br></p><p>To view the listing &amp; instructions on how to submit an application, please click on this <a href="https://housing.sfgov.org/listings/a0W4U00000KnFqKUAV" target="_blank">link</a>.</p><p><br></p><p><br></p><p>Individual viewings may be available by appointment only. Please contact the listing agent, Trista Bernasconi, for assistance.</p>',
     },
     {
       attributes: {

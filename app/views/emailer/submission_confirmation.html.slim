@@ -10,7 +10,7 @@ p
   = t 'emailer.submission_confirmation.applicants_will_be_contacted'
 p
   - if @listing.Tenure == 'New sale' || @listing.Tenure == 'Resale'
-    == t 'emailer.submission_confirmation.should_your_application_be_chosen_sale', link: link_to(t('emailer.submission_confirmation.required_supporting_documents'), 'https://sfmohcd.org/after-homebuyer-lottery')
+    == t 'emailer.submission_confirmation.should_your_application_be_chosen_sale', link: link_to(t('emailer.submission_confirmation.required_supporting_documents'), 'https://www.sf.gov/after-bmr-homebuyer-lottery')
   - else
     = t 'emailer.submission_confirmation.should_your_application_be_chosen_rental'
 p
