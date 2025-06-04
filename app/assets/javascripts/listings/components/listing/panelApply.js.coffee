@@ -23,9 +23,6 @@ angular.module('dahlia.components')
         @application.id &&
         @application.status.toLowerCase() == 'draft'
 
-      @trackApplyOnlineTimer = ->
-        AnalyticsService.trackTimerEvent('Application', 'Apply Online Click')
-
       @lotteryComplete = (listing) ->
         ListingLotteryService.lotteryComplete(listing)
 
