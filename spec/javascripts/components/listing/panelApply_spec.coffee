@@ -23,9 +23,6 @@ do ->
     fakeShortFormApplicationService =
       getLanguageCode: jasmine.createSpy()
       application: fakeApplication
-    fakeAnalyticsService = {
-      trackTimerEvent: jasmine.createSpy()
-    }
     beforeEach module('dahlia.components')
     beforeEach inject((_$componentController_) ->
       $componentController = _$componentController_
@@ -33,7 +30,6 @@ do ->
         ListingDataService: fakeListingDataService
         ListingLotteryService: fakeListingLotteryService
         ShortFormApplicationService: fakeShortFormApplicationService
-        AnalyticsService: fakeAnalyticsService
       }
     )
 
@@ -67,11 +63,6 @@ do ->
         it 'returns false if application is not drafted', ->
           fakeApplication.status = 'any'
           expect(ctrl.hasDraftApplication()).toEqual false
-
-      describe '$ctrl.trackApplyOnlineTimer', ->
-        it 'calls AnalyticsService.trackTimerEvent', ->
-          ctrl.trackApplyOnlineTimer()
-          expect(fakeAnalyticsService.trackTimerEvent).toHaveBeenCalledWith('Application', 'Apply Online Click')
 
       describe '$ctrl.lotteryComplete', ->
         it 'calls ListingLotteryService.lotteryComplete', ->
