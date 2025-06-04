@@ -17,7 +17,7 @@ export const ListingDetailsLotterySearchFooter = ({
       <div className="bg-gray-100 py-4 px-8 md:px-0 text-center">
         <a
           className="text-blue-900"
-          href="http://sfmohcd.org/housing-preference-programs"
+          href="https://www.sf.gov/get-priority-housing-lottery"
           target="_blank"
         >
           {t("lottery.readAboutPreferences")}
