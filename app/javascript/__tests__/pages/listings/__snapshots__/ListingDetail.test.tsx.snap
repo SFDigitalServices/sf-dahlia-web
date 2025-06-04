@@ -787,7 +787,7 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                         >
                           <a
                             class="text-base"
-                            href="https://sfmohcd.org/current-listings-city-second-program"
+                            href="https://www.sf.gov/reports--december-2024--city-second-program-current-listings"
                             target="_blank"
                           >
                             City Second Loan Program
@@ -1023,7 +1023,7 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                         >
                           <a
                             class="text-base"
-                            href="https://sfmohcd.org/current-listings-city-second-program"
+                            href="https://www.sf.gov/reports--december-2024--city-second-program-current-listings"
                             target="_blank"
                           >
                             City Second Loan Program
@@ -1159,7 +1159,7 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                       >
                         <a
                           class="text-base"
-                          href="https://sfmohcd.org/current-listings-city-second-program"
+                          href="https://www.sf.gov/reports--december-2024--city-second-program-current-listings"
                           target="_blank"
                         >
                           City Second Loan Program
@@ -1336,7 +1336,7 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                       >
                         <a
                           class="text-base"
-                          href="https://sfmohcd.org/current-listings-city-second-program"
+                          href="https://www.sf.gov/reports--december-2024--city-second-program-current-listings"
                           target="_blank"
                         >
                           City Second Loan Program
@@ -3474,7 +3474,7 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                         </h3>
                         <a
                           class="text-xs"
-                          href="https://sfmohcd.org/current-listings-city-second-program"
+                          href="https://www.sf.gov/reports--december-2024--city-second-program-current-listings"
                           target="_blank"
                         >
                           City Second Loan Program
@@ -3515,7 +3515,7 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                       </h3>
                       <a
                         class="text-xs"
-                        href="https://sfmohcd.org/current-listings-city-second-program"
+                        href="https://www.sf.gov/reports--december-2024--city-second-program-current-listings"
                         target="_blank"
                       >
                         City Second Loan Program
@@ -3597,7 +3597,7 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                       </h3>
                       <a
                         class="text-xs"
-                        href="https://sfmohcd.org/current-listings-city-second-program"
+                        href="https://www.sf.gov/reports--december-2024--city-second-program-current-listings"
                         target="_blank"
                       >
                         City Second Loan Program
@@ -3794,7 +3794,7 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                       >
                         <a
                           class="text-base"
-                          href="https://sfmohcd.org/current-listings-city-second-program"
+                          href="https://www.sf.gov/reports--december-2024--city-second-program-current-listings"
                           target="_blank"
                         >
                           City Second Loan Program
@@ -4520,7 +4520,7 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                       </h3>
                       <a
                         class="text-xs"
-                        href="https://sfmohcd.org/current-listings-city-second-program"
+                        href="https://www.sf.gov/reports--december-2024--city-second-program-current-listings"
                         target="_blank"
                       >
                         City Second Loan Program

@@ -217,7 +217,7 @@ exports[`ListingDetailsLotteryModal displays initial view with form and listing 
     >
       <a
         class="text-blue-900"
-        href="http://sfmohcd.org/housing-preference-programs"
+        href="https://www.sf.gov/get-priority-housing-lottery"
         target="_blank"
       >
         Read About Housing Preferences

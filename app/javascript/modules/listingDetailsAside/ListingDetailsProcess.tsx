@@ -146,12 +146,16 @@ export const ListingDetailsProcess = ({
           <div className="border-b border-gray-400 md:border-b-0 last:border-b-0">
             <SidebarBlock title={t("listings.housingProgram")} priority={2}>
               {!isHabitatListing(listing) ? (
-                <a href={`https://sfmohcd.org/for-buyers`} target="_blank" className="text-base">
+                <a
+                  href={`https://www.sf.gov/resource--2022--apply-homebuyer-programs`}
+                  target="_blank"
+                  className="text-base"
+                >
                   {t("listings.belowMarketRate")}
                 </a>
               ) : (
                 <a
-                  href={`https://sfmohcd.org/current-listings-city-second-program`}
+                  href={`https://www.sf.gov/reports--december-2024--city-second-program-current-listings`}
                   target="_blank"
                   className="text-base"
                 >

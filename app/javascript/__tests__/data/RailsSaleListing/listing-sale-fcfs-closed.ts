@@ -189,7 +189,8 @@ export const closedFcfsSaleListing: RailsSaleListing = {
   Blank_paper_application_can_be_picked_up: false,
   Fee: 0,
   Deposit_Min: 0,
-  Building_Selection_Criteria: "https://sfmohcd.org/homebuyer-program-eligibility",
+  Building_Selection_Criteria:
+    "https://www.sf.gov/determine-if-you-can-buy-affordable-housing-program",
   Required_Documents: "Proof of residence\r\nBank statements\r\nConcert tickets",
   Smoking_Policy: "Smoking may cause problems",
   Pet_Policy: "All pets are awesome!",

@@ -438,7 +438,7 @@
             "displaced_certificate": "What is your DTHP Certificate Number?",
             "displaced_tenants_desc": "If you hold a Displaced Tenant Housing Preference Certificate (DTHP). DTHP Certificate holders are tenants who were evicted through either an Ellis Act Eviction or an Owner Move In Eviction, or have been displaced by a fire.",
             "have_not_heard_of_preferences": "If you have not heard of these preferences, you most likely do not have one.",
-            "need_certificate_for_preference": "You need a certificate to get this preference. If you don't know your certificate number <a href='https://sfmohcd.org/contact-us' target='_blank'>contact MOHCD</a>.",
+            "need_certificate_for_preference": "You need a certificate to get this preference. If you don't know your certificate number <a href='https://www.sf.gov/departments--mayors-office-housing-and-community-development' target='_blank'>contact MOHCD</a>.",
             "title": "There are lottery preferences for people who already have special certificates."
         },
         "e7a_veterans_preference": {
