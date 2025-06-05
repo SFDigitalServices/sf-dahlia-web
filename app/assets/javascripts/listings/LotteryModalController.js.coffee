@@ -52,9 +52,7 @@ LotteryModalController = (
       $scope.clearLotteryRankingInfo()
     else
       $scope.lotteryNumberFormatValid = true
-      ListingLotteryService.getLotteryRanking($scope.lotterySearchNumber, $scope.listing).then( ->
-        AnalyticsService.trackInvalidLotteryNumber() if !$scope.lotteryNumberValid()
-      )
+      ListingLotteryService.getLotteryRanking($scope.lotterySearchNumber, $scope.listing)
 
   # used within lottery modal to determine some template variations
   $scope.viewingMyApplications = ->

@@ -28,28 +28,6 @@ AnalyticsService = ($state) ->
     ga('set', 'page', path)
     ga('send', 'pageview')
 
-  # Fired when the entire application is loaded. Then events are tracked as diffs from this time as the user navigates
-  Service.startTimer = (opts = {}) ->
-    if opts.label
-      Service.timer[opts.label] = {start: moment()}
-      Service.timer[opts.label].variable = opts.variable if opts.variable
-
-  # Fired when the user clicks on the "Apply Online" button on a listing page.
-  # Events are tracked as diffs from the start time with specific keys as the user navigates
-  # Note that this is effectively deprecated as we no longer user the AngularJS listing page
-  Service.trackTimerEvent = (category, label, variable = '') ->
-    # once the timer has been cleared, we don't track it any more
-    return unless Service.timer[label]
-
-    elapsed = moment().diff(Service.timer[label].start)
-    params =
-      category: category
-      variable: Service.timer[label].variable || variable
-      label: label
-      time: elapsed
-    Service.timer[label] = null
-    Service.trackEvent('Timer Event', params)
-
   Service.createApplicationTimer = (listingId) ->
     currentTimeInMs = Date.now()
     localStorage.setItem("Application_Analytics_#{listingId}", currentTimeInMs)
@@ -99,28 +77,6 @@ AnalyticsService = ($state) ->
     params = { category: category, action: 'Form Field Error', fieldId: fieldId }
     _.merge(params, opts)
     Service.trackEvent('Field Message', params)
-
-  # Fired when the user leaves the create account page without creating an account
-  # Fired when the user exits the application process
-  Service.trackFormAbandon = (category) ->
-    Service.trackEvent('Form Message', { category: category, action: 'Form Abandon' })
-
-  # Fired when the user inputs a lotter number that is invalid
-  Service.trackInvalidLotteryNumber = ->
-    label = Service._currentHref()
-    Service.trackEvent('Form Message', {
-      category: 'Application',
-      action: 'Invalid Lottery Number',
-      label: label
-    })
-
-  # Fired when the user leaves an application as a result of a timeout
-  Service.trackTimeout = (category) ->
-    Service.trackEvent('Form Message', { category: category, action: 'Timeout' })
-
-  # Fired when the user reached the my account page with a confirmed account
-  Service.trackAccountCreation =  ->
-    Service.trackEvent('Form Message', { category: 'Accounts', action: 'Account Creation', label: 'Account Confirmation Success' })
 
   Service._currentHref = ->
     $state.href($state.current.name, $state.params)
