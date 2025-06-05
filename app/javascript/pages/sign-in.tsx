@@ -7,12 +7,13 @@ import { SignInForm } from "../authentication/SignInForm"
 import FormsLayout from "../layouts/FormLayout"
 import withAppSetup from "../layouts/withAppSetup"
 import { AppPages } from "../util/routeUtil"
+import { UNLEASH_FLAG } from "../modules/constants"
 interface SignInProps {
   assetPaths: unknown
 }
 
 const SignIn = (_props: SignInProps) => {
-  const { unleashFlag: clerkEnabled } = useFeatureFlag("temp.webapp.auth.clerk", false)
+  const { unleashFlag: clerkEnabled } = useFeatureFlag(UNLEASH_FLAG.CLERK_AUTH, false)
   if (clerkEnabled) {
     console.log("Clerk authentication is enabled.")
   }
