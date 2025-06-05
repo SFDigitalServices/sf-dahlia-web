@@ -354,10 +354,6 @@
         $title: ['$translate', ($translate) ->
           $translate('page_title.my_account')
         ]
-      onEnter: ['$stateParams', 'AnalyticsService', ($stateParams, AnalyticsService) ->
-        if $stateParams.accountConfirmed
-          AnalyticsService.trackAccountCreation()
-      ]
     })
     .state('dahlia.my-applications', {
       url: '/my-applications'
