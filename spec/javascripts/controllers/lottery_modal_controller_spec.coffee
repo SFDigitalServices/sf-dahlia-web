@@ -5,9 +5,6 @@ do ->
     state = {current: {name: undefined}}
     fakeListings = getJSONFixture('listings-api-index.json').listings
     fakeListing = getJSONFixture('listings-api-show.json').listing
-    fakeAnalyticsService = {
-      trackInvalidLotteryNumber: jasmine.createSpy()
-    }
     fakeShortFormApplicationService =
       application: {}
     fakeListingDataService =
@@ -35,7 +32,6 @@ do ->
         $state: state
         ListingDataService: fakeListingDataService
         ListingLotteryService: fakeListingLotteryService
-        AnalyticsService: fakeAnalyticsService
         ShortFormApplicationService: fakeShortFormApplicationService
       return
     )
