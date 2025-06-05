@@ -81,8 +81,8 @@ commands:
             curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.5/install.sh | bash
             echo 'export NVM_DIR="$HOME/.nvm"' >> $BASH_ENV
             echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> $BASH_ENV
-            echo 'nvm install v18.12.1' >> $BASH_ENV
-            echo 'nvm alias default v18.12.1' >> $BASH_ENV
+            echo 'nvm install v18.17.0' >> $BASH_ENV
+            echo 'nvm alias default v18.17.0' >> $BASH_ENV
       - run: |
           curl -o- -L https://yarnpkg.com/install.sh | bash
           echo 'export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"' >> $BASH_ENV
