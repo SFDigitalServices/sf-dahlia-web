@@ -150,3 +150,8 @@ export const DIRECTORY_SECTION_INFO = {
 }
 
 export const DIRECTORY_PAGE_HEADER = "page-header"
+
+// Unleash feature flags
+export const UNLEASH_FLAG = {
+  CLERK_AUTH: "temp.webapp.auth.clerk",
+}
