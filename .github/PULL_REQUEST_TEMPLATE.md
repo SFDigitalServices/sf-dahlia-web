@@ -12,7 +12,7 @@ https://sfgovdt.jira.com/browse/<JIRA TICKET NUMBER>
 
 - [ ] branch name begins with `angular` if it contains updates to Angular code
 - [ ] branch name contains the Jira ticket number
-- [ ] PR name follows `type: TICKET-NUMBER Description` format, e.g. `feat: DAH-123 New Feature`. If the PR is urgent and does not need a ticket then use the format `urgent: Description`
+- [ ] PR name follows `type: TICKET-NUMBER Description` format, e.g. `feat: DAH-123 New Feature`. If the PR is urgent and/or does not need a ticket then use the format `urgent: Description`
 
 ### Code quality
 
@@ -20,6 +20,7 @@ https://sfgovdt.jira.com/browse/<JIRA TICKET NUMBER>
 - [ ] all automated code checks pass (linting, tests, coverage, etc.)
 - [ ] code irrelevant to the ticket is not modified e.g. changing indentation due to automated formatting
 - [ ] if the code changes the UI, it matches the UI design exactly
+- [ ] if the PR is a bugfix, there are tests and logs around the bug
 
 ### Review instructions
 
