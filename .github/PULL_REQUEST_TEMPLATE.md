@@ -35,7 +35,7 @@ https://sfgovdt.jira.com/browse/<JIRA TICKET NUMBER>
 
 ## Before merging
 
-### Request product acceptance testing
+### Request product acceptance (PA) testing
 
-- [ ] Code change is behind a feature flag
-- [ ] If code change is not behind a feature flag, it has been PA tested in the review environment (use `needs product acceptance` label to indicate that the PR is waiting for PA testing)
+- [ ] PA tested in the review environment (use `needs product acceptance` label)
+- [ ] if PA testing cannot be done, changes are behind a feature flag
