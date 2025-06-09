@@ -1,3 +1,4 @@
+import dayjs from "dayjs"
 import {
   getCurrencyString,
   getRangeString,
@@ -326,9 +327,7 @@ describe("DirectoryHelpers", () => {
     beforeEach(() => {
       // modify application start date so that it will be considered an open listing
       fcfsSaleListingEarlierDate = JSON.parse(JSON.stringify(fcfsSaleListing))
-      const today = new Date()
-      const yesterday = new Date(today)
-      yesterday.setDate(today.getDate() - 1)
+      const yesterday = dayjs().subtract(1, "day")
       fcfsSaleListingEarlierDate.Application_Start_Date_Time = yesterday.toISOString()
       // another open listing, 1 month later
       fcfsSaleListingLaterDate = JSON.parse(JSON.stringify(fcfsSaleListingEarlierDate))
@@ -357,9 +356,9 @@ describe("DirectoryHelpers", () => {
       )
       expect(fcfs).toHaveLength(3)
       // two open fcfs listings are sorted by date
-      expect(new Date(fcfs[1].Application_Due_Date).getTime()).toBeGreaterThan(
-        new Date(fcfs[0].Application_Due_Date).getTime()
-      )
+      expect(
+        dayjs(fcfs[1].Application_Due_Date).isAfter(dayjs(fcfs[0].Application_Due_Date))
+      ).toBeTruthy()
       // not yet open fcfs listing is at the end
       expect(getFcfsSalesListingState(fcfs[2])).toEqual(ListingState.NotYetOpen)
     })
