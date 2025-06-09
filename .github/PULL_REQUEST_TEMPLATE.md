@@ -19,8 +19,6 @@ https://sfgovdt.jira.com/browse/<JIRA TICKET NUMBER>
 
 - [ ] [the set of changes is small](https://google.github.io/eng-practices/review/developer/small-cls.html#what-is-small)
 - [ ] all automated code checks pass (linting, tests, coverage, etc.)
-- [ ] code irrelevant to the ticket is not modified e.g. changing indentation due to automated formatting
-- [ ] if the code changes the UI, it matches the UI design exactly
 - [ ] if the PR is a bugfix, there are tests and logs around the bug
 
 ### Review instructions
