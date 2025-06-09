@@ -223,6 +223,19 @@ class Api::V1::ShortFormController < ApiController
   def send_submit_app_confirmation(response)
     DahliaBackend::MessageService.send_application_confirmation(application_params,
                                                                 response)
+
+    if Rails.configuration.unleash.is_enabled?('temp.webapp.messaging.enableInitialListingSend')
+      test_listing_id = ENV.fetch('TEMP_EMAIL_LISTING_ID', nil)
+
+      # Guard clause for test listing
+      Rails.logger.info("ShortFormController#send_submit_app_confirmation: Don't send old email for initial test listing #{test_listing_id}")
+
+      if application_params[:listingID] == test_listing_id
+        Rails.logger.info("ShortFormController#send_submit_app_confirmation: Skipping send old email for initial test listing #{test_listing_id}")
+        return
+      end
+    end
+
     Emailer.submission_confirmation(
       locale: params[:locale],
       email: application_params[:primaryApplicant][:email],
