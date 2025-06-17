@@ -43,33 +43,33 @@ Before you install DAHLIA, your system should have the following:
 More information about getting started can be found on the team confluence.
 
 1. Make sure your PostgreSQL server is running (e.g. using [Postgres.app](https://postgresapp.com/) listed above)
-2. Open a terminal window
-3. `git clone https://github.com/SFDigitalServices/sf-dahlia-web.git` to create the project directory
+1. Open a terminal window
+1. `git clone https://github.com/SFDigitalServices/sf-dahlia-web.git` to create the project directory
    - Using gh is recommended. This can be installed with either [Brew](https://brew.sh/) or downloading directly from [Github](https://cli.github.com/)
-4. `cd sf-dahlia-web` to open the directory
-5. Using NVM, install 18.12.1 (or whatever version we are on) with `nvm install 18.12.1`
-6. Using RVM, install 3.4.1 (or whatever version we are on) with `rvm install 3.4.1`
+1. `cd sf-dahlia-web` to open the directory
+1. Using NVM, install 18.12.1 (or whatever version we are on) with `nvm install 18.12.1`
+1. Using RVM, install 3.4.1 (or whatever version we are on) with `rvm install 3.4.1`
    - If you're having trouble with this command, try checking your openssl version:
      - `openssl version`
      - `brew install openssl@3`
      - `brew --prefix openssl@3`
      - `rvm install 3.4.1 --with-openssl-dir=$(brew --prefix openssl@3)`
      - `rvm use 3.4.1`
-7. `bundle install` to download all necessary gems
+1. `bundle install` to download all necessary gems
    - See [here](https://stackoverflow.com/a/19850273/260495) if you have issues installing `pg` gem with Postgres.app, you may need to use: `gem install pg -v <failing-pg-version> -- --with-pg-config=/Applications/Postgres.app/Contents/Versions/latest/bin/pg_config`
    - If you need to run this command make sure you run `bundle install` again following the success of the Postgres installation to install the remaining gems
-8. `yarn install` to install bower, grunt and other dependencies (which will also automatically `bower install` to load front-end JS libraries)
-9. `overcommit --install` to install git hooks into the repo
-10. Ensure PostgreSQL is running. You only need to turn it on, the next step will set it up for you.
-11. copy `.env.sample` into a file called `.env`, and copy correct Salesforce and Unleash environment credentials (not shared publicly in this repo)
-12. `rake db:create && rake db:migrate` to create the dev database and migrate the DB tables
-13. Start Servers
+1. `yarn install` to install bower, grunt and other dependencies (which will also automatically `bower install` to load front-end JS libraries)
+1. `overcommit --install` to install git hooks into the repo
+1. Ensure PostgreSQL is running. You only need to turn it on, the next step will set it up for you.
+1. copy `.env.sample` into a file called `.env`, and copy correct Salesforce and Unleash environment credentials (not shared publicly in this repo)
+1. `rake db:create && rake db:migrate` to create the dev database and migrate the DB tables
+1. Start Servers
 
 - `yarn client` to start the webpack dev server alone
 - `yarn server` to start rails server alone, which will now be running at <http://localhost:3000> by default
 - `yarn start` to start both servers with a single command
 
-14. Alternatively you can start the servers using the webpack and rails command directly
+1. Alternatively you can start the servers using the webpack and rails command directly
 
 - `NODE_OPTIONS=--openssl-legacy-provider ./bin/shakapacker-dev-server` to start webpack
   - This command might fail with `Command "webpack-dev-server" not found.`. In that case, you'll need to reinstall webpacker with `bundle exec rails:shakapacker:install`. During the install it will ask if you want to overwrite a few config files, do not overwrite them.
@@ -212,7 +212,7 @@ Qlty provides a cli to run checks locally.
 
 ### Changing the Style Guide settings
 
-Any changes to Rubocop, JSCS, etc. affect the entire team, so it should be a group decision before commiting any changes. Please don't commit changes without discussing with the team first.
+Any changes to Rubocop, JSCS, etc. affect the entire team, so it should be a group decision before committing any changes. Please don't commit changes without discussing with the team first.
 
 ### VS Code Setup
 
