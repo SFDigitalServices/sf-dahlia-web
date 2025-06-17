@@ -66,7 +66,7 @@ More information about getting started can be found on the team confluence.
 13. Start Servers
 
 - `yarn client` to start the webpack dev server alone
-- `yarn server` to start rails server alone, which will now be running at http://localhost:3000 by default
+- `yarn server` to start rails server alone, which will now be running at <http://localhost:3000> by default
 - `yarn start` to start both servers with a single command
 
 14. Alternatively you can start the servers using the webpack and rails command directly
@@ -89,7 +89,7 @@ To run ruby tests:
 To run Angular unit tests:
 
 - `rake jasmine:ci` to run in terminal
-- `rake jasmine` to then run tests interactively at http://localhost:8888/
+- `rake jasmine` to then run tests interactively at <http://localhost:8888/>
 
 To run React unit tests:
 
