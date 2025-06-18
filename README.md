@@ -33,7 +33,7 @@ Before you install DAHLIA, your system should have the following:
   - For issues installing on an Apple Silicon mac, go [here](https://zwbetz.com/install-ruby-version-manager-on-mac/)
 - [Bundler](https://github.com/bundler/bundler) `gem install bundler`
 - [PostgreSQL](https://postgresapp.com/)
-- [Node.js](https://nodejs.org/en/) 18.12.1
+- [Node.js](https://nodejs.org/en/) 18.17.0
   - Installing node with nvm is recommended. See [installing NVM and node.js on MacOS](https://stackoverflow.com/a/28025834/260495).
 - [Yarn](https://classic.yarnpkg.com/en/docs/install/#mac-stable)
   - After node is installed, you can install yarn with `npm install --global yarn`
@@ -47,8 +47,8 @@ More information about getting started can be found on the team confluence.
 1. `git clone https://github.com/SFDigitalServices/sf-dahlia-web.git` to create the project directory
    - Using gh is recommended. This can be installed with either [Brew](https://brew.sh/) or downloading directly from [Github](https://cli.github.com/)
 1. `cd sf-dahlia-web` to open the directory
-1. Using NVM, install 18.12.1 (or whatever version we are on) with `nvm install 18.12.1`
-1. Using RVM, install 3.4.1 (or whatever version we are on) with `rvm install 3.4.1`
+1. Using NVM, install 18.7.0 (or whatever version we are on) with `nvm install 18.7.0`
+1. Using RVM, install 3.4.1 (or whatever version we are on) with `rvm instal 3.4.1`
    - If you're having trouble with this command, try checking your openssl version:
      - `openssl version`
      - `brew install openssl@3`
