@@ -1,3 +1,4 @@
+import dayjs from "dayjs"
 import {
   getCurrencyString,
   getRangeString,
@@ -7,9 +8,17 @@ import {
   getTableHeader,
   showWaitlist,
   getPriorityTypes,
+  sortListings,
 } from "../../modules/listings/DirectoryHelpers"
+import { ListingState } from "../../modules/listings/ListingState"
+import { getFcfsSalesListingState } from "../../util/listingUtil"
+import type RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
 import type RailsRentalListing from "../../api/types/rails/listings/RailsRentalListing"
 import type RailsRentalUnitSummary from "../../api/types/rails/listings/RailsRentalUnitSummary"
+import { openSaleListing } from "../data/RailsSaleListing/listing-sale-open"
+import { fcfsSaleListing } from "../data/RailsSaleListing/listing-sale-fcfs"
+import { closedFcfsSaleListing } from "../data/RailsSaleListing/listing-sale-fcfs-closed"
+import { notYetOpenSaleFcfsListing } from "../data/RailsSaleListing/listing-sale-fcfs-not-yet-open"
 
 describe("DirectoryHelpers", () => {
   describe("getCurrencyString", () => {
@@ -310,6 +319,61 @@ describe("DirectoryHelpers", () => {
       }
 
       expect(getPriorityTypes(testListing as RailsRentalListing)).toEqual(["test"])
+    })
+  })
+  describe("sortListings", () => {
+    let fcfsSaleListingEarlierDate: RailsSaleListing
+    let fcfsSaleListingLaterDate: RailsSaleListing
+    beforeEach(() => {
+      // modify application start date so that it will be considered an open listing
+      fcfsSaleListingEarlierDate = JSON.parse(JSON.stringify(fcfsSaleListing))
+      const yesterday = dayjs().subtract(1, "day")
+      fcfsSaleListingEarlierDate.Application_Start_Date_Time = yesterday.toISOString()
+      // another open listing, 1 month later
+      fcfsSaleListingLaterDate = JSON.parse(JSON.stringify(fcfsSaleListingEarlierDate))
+      fcfsSaleListingLaterDate.Application_Due_Date = "2050-02-01T01:00:00.000+0000"
+    })
+
+    it("correctly puts listings in proper buckets", () => {
+      const mockSetMatch = jest.fn()
+      const { open, upcoming, results, additional, fcfs } = sortListings(
+        [openSaleListing, fcfsSaleListing, closedFcfsSaleListing, notYetOpenSaleFcfsListing],
+        null,
+        mockSetMatch
+      )
+      expect(open).toHaveLength(1)
+      expect(upcoming).toHaveLength(0)
+      expect(results).toHaveLength(0)
+      expect(additional).toHaveLength(0)
+      expect(fcfs).toHaveLength(2)
+    })
+
+    it("correctly sorts fcfs by due date", () => {
+      const { fcfs } = sortListings(
+        [notYetOpenSaleFcfsListing, fcfsSaleListingLaterDate, fcfsSaleListingEarlierDate],
+        null,
+        jest.fn()
+      )
+      expect(fcfs).toHaveLength(3)
+      // two open fcfs listings are sorted by date
+      expect(
+        dayjs(fcfs[1].Application_Due_Date).isAfter(dayjs(fcfs[0].Application_Due_Date))
+      ).toBeTruthy()
+      // not yet open fcfs listing is at the end
+      expect(getFcfsSalesListingState(fcfs[2])).toEqual(ListingState.NotYetOpen)
+    })
+
+    it("correctly sorts fcfs by state", () => {
+      const { fcfs } = sortListings(
+        [notYetOpenSaleFcfsListing, fcfsSaleListingEarlierDate],
+        null,
+        jest.fn()
+      )
+      expect(fcfs).toHaveLength(2)
+      // open listings are at the beginning
+      expect(getFcfsSalesListingState(fcfs[0])).toEqual(ListingState.Open)
+      // not yet open fcfs listings are at the end
+      expect(getFcfsSalesListingState(fcfs[1])).toEqual(ListingState.NotYetOpen)
     })
   })
 })
