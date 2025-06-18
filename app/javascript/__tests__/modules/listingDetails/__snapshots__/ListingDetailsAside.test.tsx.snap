@@ -487,7 +487,7 @@ exports[`ListingDetailsAside renders ListingDetailsAside component fcfs 1`] = `
               >
                 <a
                   class="text-base"
-                  href="https://sfmohcd.org/for-buyers"
+                  href="https://www.sf.gov/resource--2022--apply-homebuyer-programs"
                   target="_blank"
                 >
                   Below Market Rate
@@ -1255,7 +1255,7 @@ exports[`ListingDetailsAside renders ListingDetailsAside component sales 1`] = `
               >
                 <a
                   class="text-base"
-                  href="https://sfmohcd.org/for-buyers"
+                  href="https://www.sf.gov/resource--2022--apply-homebuyer-programs"
                   target="_blank"
                 >
                   Below Market Rate

@@ -9,7 +9,7 @@ header.directory-header#listings_header
       h2.h-caps-lined translate="listings_for_sale.before_applying.title"
       p translate="listings_for_sale.before_applying.make_sure_you"
       ng-include src="'listings/templates/_before-applying-list.html'"
-      p translate="listings_for_sale.before_applying.read_full_list" translate-value-url="https://sfmohcd.org/homebuyer-program-eligibility"
+      p translate="listings_for_sale.before_applying.read_full_list" translate-value-url="https://www.sf.gov/determine-if-you-can-buy-affordable-housing-program"
     .directory-header_secondary.medium-5.columns
       .directory-header_sidebar ng-if="$ctrl.advertiseDALP"
         h2.h-caps-lined translate="listings_for_sale.get_help.help_with_downpayment"
@@ -19,10 +19,10 @@ header.directory-header#listings_header
         h2.h-caps-lined translate="listings_for_sale.get_help.more_resources"
         p
           ' {{'listings_for_sale.get_help.mohcd_programs' | translate}}
-          a href="https://sfmohcd.org/affordable-homebuyer-programs" translate="listings_for_sale.get_help.visit_mohcd_programs"
+          a href="https://www.sf.gov/information--mohcd-homebuyer-programs" translate="listings_for_sale.get_help.visit_mohcd_programs"
       .directory-header_sidebar ng-if="!$ctrl.advertiseDALP"
         h2.h-caps-lined translate="listings_for_sale.get_help.title"
         p translate="listings_for_sale.get_help.some_people_may_qualify"
         p translate="listings_for_sale.get_help.other_groups_may_qualify"
         p
-          a href="https://sfmohcd.org/loan-programs" translate="listings_for_sale.get_help.view_full_list_of_programs"
+          a href="https://www.sf.gov/resource--2022--mohcd-loan-programs" translate="listings_for_sale.get_help.view_full_list_of_programs"
