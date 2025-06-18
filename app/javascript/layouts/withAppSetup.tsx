@@ -27,7 +27,6 @@ const config = {
   appName: "webapp", // The name of your application. It's only used for identifying your application
 }
 
-const clerkKey = process.env.CLERK_PUBLISHABLE_KEY
 // Ignore linting error on 'object' type, because we can't use Record<string, unknown> here.
 // eslint-disable-next-line @typescript-eslint/ban-types
 const withAppSetup =
@@ -68,7 +67,9 @@ const withAppSetup =
       )
 
       return clerkEnabled ? (
-        <ClerkProvider publishableKey={clerkKey}>{Providers}</ClerkProvider>
+        <ClerkProvider publishableKey={process.env.CLERK_PUBLISHABLE_KEY}>
+          {Providers}
+        </ClerkProvider>
       ) : (
         Providers
       )
