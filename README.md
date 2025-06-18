@@ -49,22 +49,31 @@ More information about getting started can be found on the team confluence.
 1. `cd sf-dahlia-web` to open the directory
 1. Using NVM, install 18.7.0 (or whatever version we are on) with `nvm install 18.7.0`
 1. Using RVM, install 3.4.1 (or whatever version we are on) with `rvm instal 3.4.1`
+   - If you're having trouble with this command, try checking your openssl version:
+     - `openssl version`
+     - `brew install openssl@3`
+     - `brew --prefix openssl@3`
+     - `rvm install 3.4.1 --with-openssl-dir=$(brew --prefix openssl@3)`
+     - `rvm use 3.4.1`
 1. `bundle install` to download all necessary gems
    - See [here](https://stackoverflow.com/a/19850273/260495) if you have issues installing `pg` gem with Postgres.app, you may need to use: `gem install pg -v <failing-pg-version> -- --with-pg-config=/Applications/Postgres.app/Contents/Versions/latest/bin/pg_config`
-   - If you need to run this command make sure you run bundle install again following the success of the Postgres installation to install the remaining gems
+   - If you need to run this command make sure you run `bundle install` again following the success of the Postgres installation to install the remaining gems
 1. `yarn install` to install bower, grunt and other dependencies (which will also automatically `bower install` to load front-end JS libraries)
 1. `overcommit --install` to install git hooks into the repo
-1. Download PostgreSQL. You only need to turn it on, the next step will set it up for you.
+1. Ensure PostgreSQL is running. You only need to turn it on, the next step will set it up for you.
 1. copy `.env.sample` into a file called `.env`, and copy correct Salesforce and Unleash environment credentials (not shared publicly in this repo)
 1. `rake db:create && rake db:migrate` to create the dev database and migrate the DB tables
 1. Start Servers
-   - `yarn client` to start the webpack dev server alone
-   - `yarn server` to start rails server alone, which will now be running at http://localhost:3000 by default
-   - `yarn start` to start both servers with a single command
+
+- `yarn client` to start the webpack dev server alone
+- `yarn server` to start rails server alone, which will now be running at <http://localhost:3000> by default
+- `yarn start` to start both servers with a single command
+
 1. Alternatively you can start the servers using the webpack and rails command directly
-   - `NODE_OPTIONS=--openssl-legacy-provider ./bin/shakapacker-dev-server` to start webpack
-     - This command might fail with `Command "webpack-dev-server" not found.`. In that case, you'll need to reinstall webpacker with `bundle exec rails:shakapacker:install`. During the install it will ask if you want to overwrite a few config files, do not overwrite them.
-   - In another terminal tab, run `rails s` to start the rails server
+
+- `NODE_OPTIONS=--openssl-legacy-provider ./bin/shakapacker-dev-server` to start webpack
+  - This command might fail with `Command "webpack-dev-server" not found.`. In that case, you'll need to reinstall webpacker with `bundle exec rails:shakapacker:install`. During the install it will ask if you want to overwrite a few config files, do not overwrite them.
+- In another terminal tab, run `rails s` to start the rails server
 
 ## How to migrate a page from AngularJS to React
 
@@ -80,7 +89,7 @@ To run ruby tests:
 To run Angular unit tests:
 
 - `rake jasmine:ci` to run in terminal
-- `rake jasmine` to then run tests interactively at http://localhost:8888/
+- `rake jasmine` to then run tests interactively at <http://localhost:8888/>
 
 To run React unit tests:
 
@@ -203,7 +212,7 @@ Qlty provides a cli to run checks locally.
 
 ### Changing the Style Guide settings
 
-Any changes to Rubocop, JSCS, etc. affect the entire team, so it should be a group decision before commiting any changes. Please don't commit changes without discussing with the team first.
+Any changes to Rubocop, JSCS, etc. affect the entire team, so it should be a group decision before committing any changes. Please don't commit changes without discussing with the team first.
 
 ### VS Code Setup
 
