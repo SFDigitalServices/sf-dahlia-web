@@ -5,7 +5,7 @@ export const preferences: RailsListingPreference[] = [
   {
     unitsAvailable: 6,
     requiresProof: false,
-    readMoreUrl: "http://sfmohcd.org/certificate-preference",
+    readMoreUrl: "https://www.sf.gov/learn-about-certificate-preference-cop",
     preferenceProofRequirementDescription: null,
     preferenceName: "Certificate of Preference (COP)",
     pdfUrl: null,
@@ -22,7 +22,7 @@ export const preferences: RailsListingPreference[] = [
   {
     unitsAvailable: 1,
     requiresProof: false,
-    readMoreUrl: "http://sfmohcd.org/displaced-tenant-housing-preference",
+    readMoreUrl: "https://www.sf.gov/learn-about-displaced-tenant-housing-preference-dthp",
     preferenceProofRequirementDescription: null,
     preferenceName: "Displaced Tenant Housing Preference (DTHP)",
     pdfUrl: null,
@@ -39,7 +39,7 @@ export const preferences: RailsListingPreference[] = [
   {
     unitsAvailable: 6,
     requiresProof: false,
-    readMoreUrl: "http://sfmohcd.org/housing-preference-programs",
+    readMoreUrl: "https://www.sf.gov/get-priority-housing-lottery",
     preferenceProofRequirementDescription: null,
     preferenceName: "Live or Work in San Francisco Preference",
     pdfUrl: null,
