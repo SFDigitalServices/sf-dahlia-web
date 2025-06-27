@@ -817,12 +817,12 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                     role="heading"
                   >
                     <div
-                      aria-controls="accordion__panel-:rc:"
+                      aria-controls="accordion__panel-:re:"
                       aria-disabled="false"
                       aria-expanded="false"
                       class="accordion__button"
                       data-accordion-component="AccordionItemButton"
-                      id="accordion__heading-:rc:"
+                      id="accordion__heading-:re:"
                       role="button"
                       tabindex="0"
                     >
@@ -909,7 +909,7 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                     class="accordion__panel"
                     data-accordion-component="AccordionItemPanel"
                     hidden=""
-                    id="accordion__panel-:rc:"
+                    id="accordion__panel-:re:"
                   >
                     <div
                       class="border-b border-gray-400 md:border-b-0"
@@ -1371,12 +1371,12 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                     role="heading"
                   >
                     <div
-                      aria-controls="accordion__panel-:rd:"
+                      aria-controls="accordion__panel-:rf:"
                       aria-disabled="false"
                       aria-expanded="false"
                       class="accordion__button"
                       data-accordion-component="AccordionItemButton"
-                      id="accordion__heading-:rd:"
+                      id="accordion__heading-:rf:"
                       role="button"
                       tabindex="0"
                     >
@@ -1459,7 +1459,7 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                     class="accordion__panel"
                     data-accordion-component="AccordionItemPanel"
                     hidden=""
-                    id="accordion__panel-:rd:"
+                    id="accordion__panel-:rf:"
                   >
                     <ul>
                       <li
@@ -2177,12 +2177,12 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                     role="heading"
                   >
                     <div
-                      aria-controls="accordion__panel-:re:"
+                      aria-controls="accordion__panel-:rg:"
                       aria-disabled="false"
                       aria-expanded="false"
                       class="accordion__button"
                       data-accordion-component="AccordionItemButton"
-                      id="accordion__heading-:re:"
+                      id="accordion__heading-:rg:"
                       role="button"
                       tabindex="0"
                     >
@@ -2265,7 +2265,7 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                     class="accordion__panel"
                     data-accordion-component="AccordionItemPanel"
                     hidden=""
-                    id="accordion__panel-:re:"
+                    id="accordion__panel-:rg:"
                   >
                     <section
                       class="aside-block see-the-unit translate"
@@ -2569,12 +2569,12 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                     role="heading"
                   >
                     <div
-                      aria-controls="accordion__panel-:rf:"
+                      aria-controls="accordion__panel-:rh:"
                       aria-disabled="false"
                       aria-expanded="false"
                       class="accordion__button"
                       data-accordion-component="AccordionItemButton"
-                      id="accordion__heading-:rf:"
+                      id="accordion__heading-:rh:"
                       role="button"
                       tabindex="0"
                     >
@@ -2661,7 +2661,7 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                     class="accordion__panel"
                     data-accordion-component="AccordionItemPanel"
                     hidden=""
-                    id="accordion__panel-:rf:"
+                    id="accordion__panel-:rh:"
                   >
                     <div
                       class="listing-detail-panel"
@@ -3177,12 +3177,12 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                     role="heading"
                   >
                     <div
-                      aria-controls="accordion__panel-:rg:"
+                      aria-controls="accordion__panel-:rk:"
                       aria-disabled="false"
                       aria-expanded="false"
                       class="accordion__button"
                       data-accordion-component="AccordionItemButton"
-                      id="accordion__heading-:rg:"
+                      id="accordion__heading-:rk:"
                       role="button"
                       tabindex="0"
                     >
@@ -3269,7 +3269,7 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                     class="accordion__panel"
                     data-accordion-component="AccordionItemPanel"
                     hidden=""
-                    id="accordion__panel-:rg:"
+                    id="accordion__panel-:rk:"
                   >
                     <iframe
                       class="md:mb-6 md:pl-16 pl-0"
@@ -3347,12 +3347,182 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                     role="heading"
                   >
                     <div
-                      aria-controls="accordion__panel-:rh:"
+                      aria-controls="accordion__panel-:ri:"
                       aria-disabled="false"
                       aria-expanded="false"
                       class="accordion__button"
                       data-accordion-component="AccordionItemButton"
-                      id="accordion__heading-:rh:"
+                      id="accordion__heading-:ri:"
+                      role="button"
+                      tabindex="0"
+                    >
+                      <header
+                        class="detail-header "
+                      >
+                        <span
+                          class="detail-header__image-container"
+                        >
+                          <img
+                            alt=""
+                            class="detail-header__image "
+                          />
+                        </span>
+                        <hgroup
+                          class="detail-header__hgroup"
+                        >
+                          <h2
+                            class="detail-header__title"
+                          >
+                            Neighborhood Map
+                          </h2>
+                          <span
+                            class="detail-header__subtitle"
+                          >
+                            Location and transportation
+                          </span>
+                          <span
+                            class="ui-icon ui-medium"
+                          >
+                            <svg
+                              fill="currentColor"
+                              viewBox="0 0 32 32"
+                            >
+                              <path
+                                d="M28.267 6.133l-12.267 12.267-12.267-12.267-3.733 3.733 16 16 16-16z"
+                              />
+                            </svg>
+                          </span>
+                        </hgroup>
+                      </header>
+                    </div>
+                  </div>
+                  <header
+                    class="detail-header "
+                  >
+                    <span
+                      class="detail-header__image-container"
+                    >
+                      <img
+                        alt=""
+                        class="detail-header__image "
+                      />
+                    </span>
+                    <hgroup
+                      class="detail-header__hgroup"
+                    >
+                      <h2
+                        class="detail-header__title"
+                      >
+                        Neighborhood Map
+                      </h2>
+                      <span
+                        class="detail-header__subtitle"
+                      >
+                        Location and transportation
+                      </span>
+                      <span
+                        class="ui-icon ui-medium"
+                      >
+                        <svg
+                          fill="currentColor"
+                          viewBox="0 0 32 32"
+                        >
+                          <path
+                            d="M28.267 6.133l-12.267 12.267-12.267-12.267-3.733 3.733 16 16 16-16z"
+                          />
+                        </svg>
+                      </span>
+                    </hgroup>
+                  </header>
+                  <div
+                    aria-hidden="true"
+                    class="accordion__panel"
+                    data-accordion-component="AccordionItemPanel"
+                    hidden=""
+                    id="accordion__panel-:ri:"
+                  >
+                    <iframe
+                      class="md:mb-6 md:pl-16 pl-0"
+                      height="450"
+                      src="https://www.google.com/maps/embed/v1/place?key=undefined&q=36 Amber Drive, San Francisco, CA 94131&language=en"
+                      title="Map of 36 Amber Drive, San Francisco, CA 94131"
+                      width="100%"
+                    />
+                  </div>
+                  <iframe
+                    class="md:mb-6 md:pl-16 pl-0"
+                    height="450"
+                    src="https://www.google.com/maps/embed/v1/place?key=undefined&q=36 Amber Drive, San Francisco, CA 94131&language=en"
+                    title="Map of 36 Amber Drive, San Francisco, CA 94131"
+                    width="100%"
+                  />
+                </div>
+                <li
+                  class="responsive-content-item bg-primary-lighter"
+                >
+                  <header
+                    class="detail-header "
+                  >
+                    <span
+                      class="detail-header__image-container"
+                    >
+                      <img
+                        alt=""
+                        class="detail-header__image "
+                      />
+                    </span>
+                    <hgroup
+                      class="detail-header__hgroup"
+                    >
+                      <h2
+                        class="detail-header__title"
+                      >
+                        Neighborhood Map
+                      </h2>
+                      <span
+                        class="detail-header__subtitle"
+                      >
+                        Location and transportation
+                      </span>
+                      <span
+                        class="ui-icon ui-medium"
+                      >
+                        <svg
+                          fill="currentColor"
+                          viewBox="0 0 32 32"
+                        >
+                          <path
+                            d="M28.267 6.133l-12.267 12.267-12.267-12.267-3.733 3.733 16 16 16-16z"
+                          />
+                        </svg>
+                      </span>
+                    </hgroup>
+                  </header>
+                  <iframe
+                    class="md:mb-6 md:pl-16 pl-0"
+                    height="450"
+                    src="https://www.google.com/maps/embed/v1/place?key=undefined&q=36 Amber Drive, San Francisco, CA 94131&language=en"
+                    title="Map of 36 Amber Drive, San Francisco, CA 94131"
+                    width="100%"
+                  />
+                </li>
+                <div
+                  class="accordion__item"
+                  data-accordion-component="AccordionItem"
+                >
+                  <div
+                    aria-level="2"
+                    class="accordion__heading"
+                    data-accordion-component="AccordionItemHeading"
+                    role="heading"
+                  >
+                    <div
+                      aria-controls="accordion__panel-:rj:"
+                      aria-disabled="false"
+                      aria-expanded="false"
+                      class="accordion__button"
+                      data-accordion-component="AccordionItemButton"
+                      id="accordion__heading-:rj:"
                       role="button"
                       tabindex="0"
                     >
@@ -3439,7 +3609,7 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                     class="accordion__panel"
                     data-accordion-component="AccordionItemPanel"
                     hidden=""
-                    id="accordion__panel-:rh:"
+                    id="accordion__panel-:rj:"
                   >
                     <div
                       class="listing-detail-panel"
@@ -4418,6 +4588,55 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                         class="detail-header__title"
                       >
                         Neighborhood
+                      </h2>
+                      <span
+                        class="detail-header__subtitle"
+                      >
+                        Location and transportation
+                      </span>
+                      <span
+                        class="ui-icon ui-medium"
+                      >
+                        <svg
+                          fill="currentColor"
+                          viewBox="0 0 32 32"
+                        >
+                          <path
+                            d="M28.267 6.133l-12.267 12.267-12.267-12.267-3.733 3.733 16 16 16-16z"
+                          />
+                        </svg>
+                      </span>
+                    </hgroup>
+                  </header>
+                  <iframe
+                    class="md:mb-6 md:pl-16 pl-0"
+                    height="450"
+                    src="https://www.google.com/maps/embed/v1/place?key=undefined&q=36 Amber Drive, San Francisco, CA 94131&language=en"
+                    title="Map of 36 Amber Drive, San Francisco, CA 94131"
+                    width="100%"
+                  />
+                </li>
+                <li
+                  class="responsive-content-item bg-primary-lighter"
+                >
+                  <header
+                    class="detail-header "
+                  >
+                    <span
+                      class="detail-header__image-container"
+                    >
+                      <img
+                        alt=""
+                        class="detail-header__image "
+                      />
+                    </span>
+                    <hgroup
+                      class="detail-header__hgroup"
+                    >
+                      <h2
+                        class="detail-header__title"
+                      >
+                        Neighborhood Map
                       </h2>
                       <span
                         class="detail-header__subtitle"
@@ -5455,12 +5674,12 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                     role="heading"
                   >
                     <div
-                      aria-controls="accordion__panel-:rp:"
+                      aria-controls="accordion__panel-:rt:"
                       aria-disabled="false"
                       aria-expanded="false"
                       class="accordion__button"
                       data-accordion-component="AccordionItemButton"
-                      id="accordion__heading-:rp:"
+                      id="accordion__heading-:rt:"
                       role="button"
                       tabindex="0"
                     >
@@ -5547,7 +5766,7 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                     class="accordion__panel"
                     data-accordion-component="AccordionItemPanel"
                     hidden=""
-                    id="accordion__panel-:rp:"
+                    id="accordion__panel-:rt:"
                   >
                     <div
                       class="border-b border-gray-400 md:border-b-0"
@@ -6138,12 +6357,12 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                     role="heading"
                   >
                     <div
-                      aria-controls="accordion__panel-:rq:"
+                      aria-controls="accordion__panel-:ru:"
                       aria-disabled="false"
                       aria-expanded="false"
                       class="accordion__button"
                       data-accordion-component="AccordionItemButton"
-                      id="accordion__heading-:rq:"
+                      id="accordion__heading-:ru:"
                       role="button"
                       tabindex="0"
                     >
@@ -6230,7 +6449,7 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                     class="accordion__panel"
                     data-accordion-component="AccordionItemPanel"
                     hidden=""
-                    id="accordion__panel-:rq:"
+                    id="accordion__panel-:ru:"
                   >
                     <ul>
                       <li
@@ -7283,12 +7502,12 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                     role="heading"
                   >
                     <div
-                      aria-controls="accordion__panel-:rr:"
+                      aria-controls="accordion__panel-:rv:"
                       aria-disabled="false"
                       aria-expanded="false"
                       class="accordion__button"
                       data-accordion-component="AccordionItemButton"
-                      id="accordion__heading-:rr:"
+                      id="accordion__heading-:rv:"
                       role="button"
                       tabindex="0"
                     >
@@ -7375,7 +7594,7 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                     class="accordion__panel"
                     data-accordion-component="AccordionItemPanel"
                     hidden=""
-                    id="accordion__panel-:rr:"
+                    id="accordion__panel-:rv:"
                   >
                     <div
                       class="listing-detail-panel"
@@ -8029,12 +8248,12 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                     role="heading"
                   >
                     <div
-                      aria-controls="accordion__panel-:rs:"
+                      aria-controls="accordion__panel-:r10:"
                       aria-disabled="false"
                       aria-expanded="false"
                       class="accordion__button"
                       data-accordion-component="AccordionItemButton"
-                      id="accordion__heading-:rs:"
+                      id="accordion__heading-:r10:"
                       role="button"
                       tabindex="0"
                     >
@@ -8121,7 +8340,7 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                     class="accordion__panel"
                     data-accordion-component="AccordionItemPanel"
                     hidden=""
-                    id="accordion__panel-:rs:"
+                    id="accordion__panel-:r10:"
                   >
                     <div
                       class="listing-detail-panel"
@@ -13964,12 +14183,12 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                     role="heading"
                   >
                     <div
-                      aria-controls="accordion__panel-:r4:"
+                      aria-controls="accordion__panel-:r6:"
                       aria-disabled="false"
                       aria-expanded="false"
                       class="accordion__button"
                       data-accordion-component="AccordionItemButton"
-                      id="accordion__heading-:r4:"
+                      id="accordion__heading-:r6:"
                       role="button"
                       tabindex="0"
                     >
@@ -14056,7 +14275,7 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                     class="accordion__panel"
                     data-accordion-component="AccordionItemPanel"
                     hidden=""
-                    id="accordion__panel-:r4:"
+                    id="accordion__panel-:r6:"
                   >
                     <iframe
                       class="md:mb-6 md:pl-16 pl-0"
@@ -14095,6 +14314,176 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                         class="detail-header__title"
                       >
                         Neighborhood
+                      </h2>
+                      <span
+                        class="detail-header__subtitle"
+                      >
+                        Location and transportation
+                      </span>
+                      <span
+                        class="ui-icon ui-medium"
+                      >
+                        <svg
+                          fill="currentColor"
+                          viewBox="0 0 32 32"
+                        >
+                          <path
+                            d="M28.267 6.133l-12.267 12.267-12.267-12.267-3.733 3.733 16 16 16-16z"
+                          />
+                        </svg>
+                      </span>
+                    </hgroup>
+                  </header>
+                  <iframe
+                    class="md:mb-6 md:pl-16 pl-0"
+                    height="450"
+                    src="https://www.google.com/maps/embed/v1/place?key=undefined&q=681 Florida St, San Francisco, CA 94110&language=en"
+                    title="Map of 681 Florida St, San Francisco, CA 94110"
+                    width="100%"
+                  />
+                </li>
+                <div
+                  class="accordion__item"
+                  data-accordion-component="AccordionItem"
+                >
+                  <div
+                    aria-level="2"
+                    class="accordion__heading"
+                    data-accordion-component="AccordionItemHeading"
+                    role="heading"
+                  >
+                    <div
+                      aria-controls="accordion__panel-:r4:"
+                      aria-disabled="false"
+                      aria-expanded="false"
+                      class="accordion__button"
+                      data-accordion-component="AccordionItemButton"
+                      id="accordion__heading-:r4:"
+                      role="button"
+                      tabindex="0"
+                    >
+                      <header
+                        class="detail-header "
+                      >
+                        <span
+                          class="detail-header__image-container"
+                        >
+                          <img
+                            alt=""
+                            class="detail-header__image "
+                          />
+                        </span>
+                        <hgroup
+                          class="detail-header__hgroup"
+                        >
+                          <h2
+                            class="detail-header__title"
+                          >
+                            Neighborhood Map
+                          </h2>
+                          <span
+                            class="detail-header__subtitle"
+                          >
+                            Location and transportation
+                          </span>
+                          <span
+                            class="ui-icon ui-medium"
+                          >
+                            <svg
+                              fill="currentColor"
+                              viewBox="0 0 32 32"
+                            >
+                              <path
+                                d="M28.267 6.133l-12.267 12.267-12.267-12.267-3.733 3.733 16 16 16-16z"
+                              />
+                            </svg>
+                          </span>
+                        </hgroup>
+                      </header>
+                    </div>
+                  </div>
+                  <header
+                    class="detail-header "
+                  >
+                    <span
+                      class="detail-header__image-container"
+                    >
+                      <img
+                        alt=""
+                        class="detail-header__image "
+                      />
+                    </span>
+                    <hgroup
+                      class="detail-header__hgroup"
+                    >
+                      <h2
+                        class="detail-header__title"
+                      >
+                        Neighborhood Map
+                      </h2>
+                      <span
+                        class="detail-header__subtitle"
+                      >
+                        Location and transportation
+                      </span>
+                      <span
+                        class="ui-icon ui-medium"
+                      >
+                        <svg
+                          fill="currentColor"
+                          viewBox="0 0 32 32"
+                        >
+                          <path
+                            d="M28.267 6.133l-12.267 12.267-12.267-12.267-3.733 3.733 16 16 16-16z"
+                          />
+                        </svg>
+                      </span>
+                    </hgroup>
+                  </header>
+                  <div
+                    aria-hidden="true"
+                    class="accordion__panel"
+                    data-accordion-component="AccordionItemPanel"
+                    hidden=""
+                    id="accordion__panel-:r4:"
+                  >
+                    <iframe
+                      class="md:mb-6 md:pl-16 pl-0"
+                      height="450"
+                      src="https://www.google.com/maps/embed/v1/place?key=undefined&q=681 Florida St, San Francisco, CA 94110&language=en"
+                      title="Map of 681 Florida St, San Francisco, CA 94110"
+                      width="100%"
+                    />
+                  </div>
+                  <iframe
+                    class="md:mb-6 md:pl-16 pl-0"
+                    height="450"
+                    src="https://www.google.com/maps/embed/v1/place?key=undefined&q=681 Florida St, San Francisco, CA 94110&language=en"
+                    title="Map of 681 Florida St, San Francisco, CA 94110"
+                    width="100%"
+                  />
+                </div>
+                <li
+                  class="responsive-content-item bg-primary-lighter"
+                >
+                  <header
+                    class="detail-header "
+                  >
+                    <span
+                      class="detail-header__image-container"
+                    >
+                      <img
+                        alt=""
+                        class="detail-header__image "
+                      />
+                    </span>
+                    <hgroup
+                      class="detail-header__hgroup"
+                    >
+                      <h2
+                        class="detail-header__title"
+                      >
+                        Neighborhood Map
                       </h2>
                       <span
                         class="detail-header__subtitle"
@@ -15687,6 +16076,55 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                         class="detail-header__title"
                       >
                         Neighborhood
+                      </h2>
+                      <span
+                        class="detail-header__subtitle"
+                      >
+                        Location and transportation
+                      </span>
+                      <span
+                        class="ui-icon ui-medium"
+                      >
+                        <svg
+                          fill="currentColor"
+                          viewBox="0 0 32 32"
+                        >
+                          <path
+                            d="M28.267 6.133l-12.267 12.267-12.267-12.267-3.733 3.733 16 16 16-16z"
+                          />
+                        </svg>
+                      </span>
+                    </hgroup>
+                  </header>
+                  <iframe
+                    class="md:mb-6 md:pl-16 pl-0"
+                    height="450"
+                    src="https://www.google.com/maps/embed/v1/place?key=undefined&q=681 Florida St, San Francisco, CA 94110&language=en"
+                    title="Map of 681 Florida St, San Francisco, CA 94110"
+                    width="100%"
+                  />
+                </li>
+                <li
+                  class="responsive-content-item bg-primary-lighter"
+                >
+                  <header
+                    class="detail-header "
+                  >
+                    <span
+                      class="detail-header__image-container"
+                    >
+                      <img
+                        alt=""
+                        class="detail-header__image "
+                      />
+                    </span>
+                    <hgroup
+                      class="detail-header__hgroup"
+                    >
+                      <h2
+                        class="detail-header__title"
+                      >
+                        Neighborhood Map
                       </h2>
                       <span
                         class="detail-header__subtitle"

@@ -1223,6 +1223,7 @@
   "listings.morePhotos": "photos",
   "listings.myApplications.error": "There was a problem loading your applications. Try refreshing the page. If the problem continues, send an email to <a href='mailto:sfhousinginfo@sfgov.org'>sfhousinginfo@sfgov.org</a>.",
   "listings.neighborhood.header": "Neighborhood",
+  "listings.neighborhood.header.mobile": "Neighborhood Map",
   "listings.neighborhood.locationAndTransportation": "Location and transportation",
   "listings.neighborhood.mapTitle": "Map of %{listingAddress}",
   "listings.neighborhood.subheader": "Location and transportation",
