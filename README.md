@@ -209,6 +209,11 @@ Qlty provides a cli to run checks locally.
 
 - Install the CLI: `curl https://qlty.sh | sh`
 - [CLI Quickstart](https://docs.qlty.sh/cli/quickstart)
+- Qlty relies on the cov reports from Jest tests in order to calculate its code coverage numbers.
+  The simplest way to see code coverage locally is to run `yarn test` and open the results file, `app/javascript/test-coverage/lcov-report/index.html` from a browser.
+- Run `qlty smells` to scan for code duplication and complexity
+- `qlty check` will run linters and plugins.
+- qlty commands run on changed files by default. To run against all files, pass the -a or --all switch.
 
 ### Changing the Style Guide settings
 
