@@ -57,10 +57,19 @@ jest.mock("react-helmet-async", () => {
   }
 })
 
+jest.mock("@clerk/clerk-react", () => {
+  const Clerk = jest.requireActual("@clerk/clerk-react")
+  return {
+    ...Clerk,
+    ClerkProvider: ({ children }: { children: React.ReactNode }) => children,
+  }
+})
+
 // eslint-disable-next-line jest/require-top-level-describe
 beforeEach(() => {
   jest.clearAllMocks()
   jest.resetAllMocks()
+  jest.spyOn(console, "log").mockImplementation(() => {})
 })
 
 let previousHeapUsage: number | null = null
