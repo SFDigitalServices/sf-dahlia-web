@@ -10,9 +10,12 @@ module DahliaBackend
       #
       # @param [Hash] application_params Parameters from the application
       # @param [Hash] application_response Response from the application submission
+      # @param [String] locale Locale for the message (default is 'en')
       # @return [Object, nil] Response from the message service or nil if service is disabled/error occurs
-      def send_application_confirmation(application_params, application_response)
-        new.send_application_confirmation(application_params, application_response)
+      def send_application_confirmation(application_params, application_response,
+                                        locale = 'en')
+        new.send_application_confirmation(application_params, application_response,
+                                          locale)
       end
 
       def service_enabled?
@@ -29,12 +32,14 @@ module DahliaBackend
     # Instance method implementation for application confirmation
     # @param [Hash] application_params Parameters from the application
     # @param [Hash] application_response Response from the application submission
+    # @param [String] locale Locale for the message (default is 'en')
     # @return [Object, nil] Response from the message service or nil if service is disabled/error occurs
-    def send_application_confirmation(application_params, application_response)
+    def send_application_confirmation(application_params, application_response,
+                                      locale = 'en')
       return unless self.class.service_enabled?
       return unless valid_params?(application_params, application_response)
 
-      fields = prepare_submission_fields(application_params, application_response)
+      fields = prepare_submission_fields(application_params, application_response, locale)
       return if fields.nil?
 
       send_message('/messages/application-submission', fields)
@@ -45,7 +50,8 @@ module DahliaBackend
 
     private
 
-    def prepare_submission_fields(application_params, application_response)
+    def prepare_submission_fields(application_params, application_response,
+                                  locale = 'en')
       listing_id = application_params[:listingID]
       email = application_params.dig(:primaryApplicant, :email).to_s
 
@@ -67,6 +73,7 @@ module DahliaBackend
           phone: listing.Leasing_Agent_Phone.to_s,
           officeHours: listing.Office_Hours.to_s,
         },
+        lang: locale,
       }
     end
 
