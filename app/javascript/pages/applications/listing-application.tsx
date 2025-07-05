@@ -1,12 +1,18 @@
 import React, { useEffect, useState } from "react"
+import "@trussworks/react-uswds/lib/index.css"
 import Layout from "../../layouts/Layout"
 import withAppSetup from "../../layouts/withAppSetup"
 import { getListing } from "../../api/listingApiService"
 import { RailsListing } from "../../modules/listings/SharedHelpers"
 import { AppPages } from "../../util/routeUtil"
+import Wizard from "./wizard"
 
 const ListingApplication = (props) => {
   const [listing, setListing] = useState<RailsListing>(null)
+
+  const [applicationData, setApplicationData] = useState({})
+
+  const [applicationPage, setApplicationPage] = useState(0)
 
   useEffect(() => {
     void getListing(props.listingId).then((listing: RailsListing) => {
@@ -19,9 +25,8 @@ const ListingApplication = (props) => {
       title={listing?.Name ? listing?.Name : null}
       image={listing?.Listing_Images ? listing?.Listing_Images[0].displayImageURL : null}
     >
-      <div style={{ textAlign: "center" }}>
-        <h1>{listing?.Id}</h1>
-      </div>
+      <h1>{listing?.Id}</h1>
+      <Wizard />
     </Layout>
   )
 }
