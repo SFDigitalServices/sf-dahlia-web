@@ -11,6 +11,7 @@ export interface ApplicationData {
   "dob-day"?: string
   "dob-year"?: string
   email?: string
+  "no-email"?: boolean
   "primary-phone"?: string
   "primary-phone-type"?: string
   "no-phone"?: boolean
@@ -40,7 +41,7 @@ export interface ApplicationData {
 const Wizard = () => {
   const [applicationData, setApplicationData] = useState<ApplicationData>({})
 
-  const [applicationPage, setApplicationPage] = useState(0)
+  const [applicationPage, setApplicationPage] = useState(1)
 
   const saveData = (data) => {
     setApplicationData({ ...applicationData, ...data })

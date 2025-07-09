@@ -46,7 +46,8 @@ const UserProvider = (props: UserProviderProps) => {
 
             // Give the DataLayer push some time to finish before the user is redirected
             setTimeout(() => {
-              dispatch(signOutConnectionIssue())
+              // dispatch(signOutConnectionIssue())
+              console.log("dispatch(signOutConnectionIssue()")
             }, 100)
           } else {
             dispatch(systemSignOut())

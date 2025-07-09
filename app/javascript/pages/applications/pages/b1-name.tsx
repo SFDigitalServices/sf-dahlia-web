@@ -92,7 +92,7 @@ const B1Name = ({ applicationData, nextPage, prevPage, saveData }: Props) => {
             control={control}
             name="first-name"
             rules={{ required: true, pattern: /^[A-Za-z]+$/ }}
-            render={({ onChange, onBlur, value, name, ref }, { invalid }) => (
+            render={({ onChange, onBlur, value, name }, { invalid }) => (
               <Field.Root invalid={invalid}>
                 <Input
                   type="text"
