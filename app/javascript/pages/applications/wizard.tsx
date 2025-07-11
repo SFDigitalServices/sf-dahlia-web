@@ -32,16 +32,18 @@ export interface ApplicationData {
   "claim-preference"?: boolean
   "no-preference"?: boolean
   "preference-option"?: string
-  "live-in-sf-member"?: string
+  "live-in-sf-claimant"?: string
   "live-in-sf-doctype"?: string
-  "work-in-sf-member"?: string
+  "live-in-sf-proof"?: string
+  "work-in-sf-claimant"?: string
   "work-in-sf-doctype"?: string
+  "work-in-sf-proof"?: string
 }
 
 const Wizard = () => {
   const [applicationData, setApplicationData] = useState<ApplicationData>({})
 
-  const [applicationPage, setApplicationPage] = useState(1)
+  const [applicationPage, setApplicationPage] = useState(0)
 
   const saveData = (data) => {
     setApplicationData({ ...applicationData, ...data })

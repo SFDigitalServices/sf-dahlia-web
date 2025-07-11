@@ -9,7 +9,6 @@ import {
   timeOut,
   startLoading,
   stopLoading,
-  signOutConnectionIssue,
 } from "./userActions"
 import UserContext, { ContextProps } from "./UserContext"
 import UserReducer from "./UserReducer"

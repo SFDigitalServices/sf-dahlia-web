@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react"
+
 import { Form } from "@base-ui-components/react/form"
 import { Field } from "@base-ui-components/react/field"
 import { Fieldset } from "@base-ui-components/react/fieldset"
@@ -235,7 +236,7 @@ const B1Name = ({ applicationData, nextPage, prevPage, saveData }: Props) => {
                   disabled={noEmail}
                 />
                 <Field.Error className="error-message" match={invalid}>
-                  invalid/missing first name
+                  invalid/missing email
                 </Field.Error>
               </Field.Root>
             )}

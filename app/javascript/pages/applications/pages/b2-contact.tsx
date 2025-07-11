@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react"
+
 import { Form } from "@base-ui-components/react/form"
 import { Field } from "@base-ui-components/react/field"
 import { Fieldset } from "@base-ui-components/react/fieldset"
@@ -331,7 +332,6 @@ const B2Contact = ({ nextPage, prevPage, saveData, applicationData }: Props) => 
                   onChange={onChange}
                   onBlur={onBlur}
                   value={value}
-                  disabled={noPhone}
                 />
                 <Field.Error className="error-message" match={invalid}>
                   invalid/missing street address
@@ -356,7 +356,6 @@ const B2Contact = ({ nextPage, prevPage, saveData, applicationData }: Props) => 
                   onChange={onChange}
                   onBlur={onBlur}
                   value={value}
-                  disabled={noPhone}
                 />
                 <Field.Error className="error-message" match={invalid}>
                   invalid apt or unit #
@@ -491,7 +490,6 @@ const B2Contact = ({ nextPage, prevPage, saveData, applicationData }: Props) => 
                       onChange={onChange}
                       onBlur={onBlur}
                       value={value}
-                      disabled={noPhone}
                     />
                     <Field.Error className="error-message" match={invalid}>
                       invalid/missing street address
