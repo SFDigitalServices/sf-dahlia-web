@@ -102,6 +102,15 @@ const StandardHowToApply = ({
       >
         {t("label.applyOnline")}
       </LinkButton>
+      <LinkButton
+        styleType={AppearanceStyleType.primary}
+        className={"w-full mt-4"}
+        transition={true}
+        newTab={true}
+        href={`listings/${listingId}/apply`}
+      >
+        Apply POC
+      </LinkButton>
       {process.env.COVID_UPDATE && (
         <div className={"mt-4"}>
           <Heading priority={2} className={"text-base text-gray-800 font-sans"}>
