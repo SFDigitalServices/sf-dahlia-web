@@ -30,4 +30,9 @@ bloomTheme.variants = {
   },
 }
 
+bloomTheme.plugins = [
+  ...bloomTheme.plugins,
+  require('@tailwindcss/forms')({ strategy: 'class' })
+]
+
 module.exports = bloomTheme
