@@ -56,7 +56,7 @@ describe Api::V1::ShortFormController, type: :controller do
         .and_return(response_data)
 
       expect(DahliaBackend::MessageService).to receive(:send_application_confirmation)
-        .with(application_params, response_data)
+        .with(application_params, response_data, nil)
 
       post :submit_application
       expect(response).to have_http_status(:ok)
