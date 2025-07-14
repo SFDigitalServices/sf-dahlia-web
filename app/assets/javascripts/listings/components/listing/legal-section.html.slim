@@ -17,7 +17,7 @@ accordion-heading
       h4.content-card_title.t-serif
         | {{'listings.required_documents' | translate}}
       p ng-text-truncate="::$ctrl.parent.listing.Required_Documents | stripMostTags | nl2br" ng-tt-words-threshold="60"
-      p translate="listings.required_documents_after_applying" translate-value-url="https://sfmohcd.org/after-homebuyer-lottery" ng-if="$ctrl.parent.isSale($ctrl.parent.listing) && !$ctrl.parent.isHabitatListing($ctrl.parent.listing)"
+      p translate="listings.required_documents_after_applying" translate-value-url="https://www.sf.gov/after-bmr-homebuyer-lottery" ng-if="$ctrl.parent.isSale($ctrl.parent.listing) && !$ctrl.parent.isHabitatListing($ctrl.parent.listing)"
     .content-card.bg-dust
       h4.content-card_title.t-serif
         | {{'listings.important_program_rules' | translate}}

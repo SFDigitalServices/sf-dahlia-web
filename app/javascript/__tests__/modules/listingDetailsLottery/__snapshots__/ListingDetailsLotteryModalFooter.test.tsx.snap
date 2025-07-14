@@ -7,7 +7,7 @@ exports[`ListingDetailsLotteryModalFooter displays full footer when modal status
   >
     <a
       class="text-blue-900"
-      href="http://sfmohcd.org/housing-preference-programs"
+      href="https://www.sf.gov/get-priority-housing-lottery"
       target="_blank"
     >
       Read About Housing Preferences
@@ -38,7 +38,7 @@ exports[`ListingDetailsLotteryModalFooter displays preference link only when sta
   >
     <a
       class="text-blue-900"
-      href="http://sfmohcd.org/housing-preference-programs"
+      href="https://www.sf.gov/get-priority-housing-lottery"
       target="_blank"
     >
       Read About Housing Preferences

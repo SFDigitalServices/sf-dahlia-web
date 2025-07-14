@@ -62,7 +62,7 @@ module SfDahliaWeb
     config.middleware.insert_before(Rack::Runtime, Rack::Rewrite) do
       r301 %r{(.+)/$}, '$1'
       r301 %r{(.+)/\?(.*)$}, '$1?$2'
-      r301 '/mohcd-plus-housing', 'https://sfmohcd.org/plus-housing-application'
+      r301 '/mohcd-plus-housing', 'https://sfmoh.tfaforms.net/22'
     end
 
     # Disables the deprecated #to_s override in some Ruby core classes

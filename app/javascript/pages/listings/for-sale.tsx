@@ -101,7 +101,7 @@ const getFindMoreActionBlock = (isSalesDirectory: boolean) => {
                   className="button"
                   key="action-1"
                   external
-                  href={"https://sfmohcd.org/current-bmr-homeownership-listings"}
+                  href={"https://housing.sfgov.org/listings/for-sale"}
                 >
                   {t("saleDirectory.callout.firstComeFirstServed")}
                 </Link>
@@ -110,7 +110,9 @@ const getFindMoreActionBlock = (isSalesDirectory: boolean) => {
                 className={`button ${isSalesDirectory ? "ml-8" : ""}`}
                 key={isSalesDirectory ? "action-1" : "action-2"}
                 external
-                href={"https://sfmohcd.org/current-listings-city-second-program"}
+                href={
+                  "https://www.sf.gov/reports--december-2024--city-second-program-current-listings"
+                }
               >
                 {t("saleDirectory.callout.citySecondLoan")}
               </Link>,
