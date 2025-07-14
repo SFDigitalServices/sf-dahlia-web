@@ -52,5 +52,55 @@ exports[`ListingDetailsNeighborhood displays map 1`] = `
       width="100%"
     />
   </li>
+  <li
+    class="responsive-content-item bg-primary-lighter"
+  >
+    <header
+      class="detail-header "
+    >
+      <span
+        class="detail-header__image-container"
+      >
+        <img
+          alt=""
+          class="detail-header__image "
+          src="test"
+        />
+      </span>
+      <hgroup
+        class="detail-header__hgroup"
+      >
+        <h2
+          class="detail-header__title"
+        >
+          Neighborhood Map
+        </h2>
+        <span
+          class="detail-header__subtitle"
+        >
+          Location and transportation
+        </span>
+        <span
+          class="ui-icon ui-medium"
+        >
+          <svg
+            fill="currentColor"
+            viewBox="0 0 32 32"
+          >
+            <path
+              d="M28.267 6.133l-12.267 12.267-12.267-12.267-3.733 3.733 16 16 16-16z"
+            />
+          </svg>
+        </span>
+      </hgroup>
+    </header>
+    <iframe
+      class="md:mb-6 md:pl-16 pl-0"
+      height="450"
+      src="https://www.google.com/maps/embed/v1/place?key=undefined&q=855 Brannan St, San Francisco, CA 94103&language=en"
+      title="Map of 855 Brannan St, San Francisco, CA 94103"
+      width="100%"
+    />
+  </li>
 </DocumentFragment>
 `;

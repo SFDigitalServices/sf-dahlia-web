@@ -48,9 +48,9 @@ RSpec.describe DahliaBackend::MessageService do
   describe '.send_application_confirmation' do
     it 'delegates to instance method' do
       expect_any_instance_of(described_class).to receive(:send_application_confirmation)
-        .with(application_params, application_response)
+        .with(application_params, application_response, 'en')
       described_class.send_application_confirmation(application_params,
-                                                    application_response)
+                                                    application_response, 'en')
     end
   end
 

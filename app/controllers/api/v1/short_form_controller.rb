@@ -222,7 +222,7 @@ class Api::V1::ShortFormController < ApiController
 
   def send_submit_app_confirmation(response)
     DahliaBackend::MessageService.send_application_confirmation(application_params,
-                                                                response)
+                                                                response, params[:locale])
 
     if Rails.configuration.unleash.is_enabled?('temp.webapp.messaging.enableInitialListingSend')
       initial_listing_id = ENV.fetch('TEMP_EMAIL_LISTING_ID', nil)
