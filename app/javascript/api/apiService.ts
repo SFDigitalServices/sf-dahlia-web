@@ -5,7 +5,8 @@ import { setAuthHeaders, getHeaders, isTokenValid } from "../authentication/toke
 
 // Use this function for authenticated calls
 const createAxiosInstance = (): AxiosInstance => {
-  if (!getHeaders()) {
+  const headers = getHeaders()
+  if (!headers || Object.keys(headers).length === 0) {
     throw new Error("Unauthorized")
   }
   if (!isTokenValid()) {
