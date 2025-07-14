@@ -37,7 +37,7 @@ exports[`ListingDetailsPreferences display 3 default preferences - COP, DTHP, L/
         <span>
           <a
             aria-label="Read more about the Certificate of Preference"
-            href="http://sfmohcd.org/certificate-preference"
+            href="https://www.sf.gov/learn-about-certificate-preference-cop"
             target="_blank"
           >
             Read More
@@ -77,7 +77,7 @@ exports[`ListingDetailsPreferences display 3 default preferences - COP, DTHP, L/
         <span>
           <a
             aria-label="Read more about the Displaced Tenant Housing Preference"
-            href="http://sfmohcd.org/displaced-tenant-housing-preference"
+            href="https://www.sf.gov/learn-about-displaced-tenant-housing-preference-dthp"
             target="_blank"
           >
             Read More
@@ -117,7 +117,7 @@ exports[`ListingDetailsPreferences display 3 default preferences - COP, DTHP, L/
         <span>
           <a
             aria-label="Read more about the Live or Work in San Francisco Preference"
-            href="http://sfmohcd.org/housing-preference-programs"
+            href="https://www.sf.gov/get-priority-housing-lottery"
             target="_blank"
           >
             Read More
@@ -175,7 +175,7 @@ exports[`ListingDetailsPreferences display 6 preferences 1`] = `
         <span>
           <a
             aria-label="Read more about the Certificate of Preference"
-            href="http://sfmohcd.org/certificate-preference"
+            href="https://www.sf.gov/learn-about-certificate-preference-cop"
             target="_blank"
           >
             Read More
@@ -215,7 +215,7 @@ exports[`ListingDetailsPreferences display 6 preferences 1`] = `
         <span>
           <a
             aria-label="Read more about the Rent Burdened / Assisted Housing Preference"
-            href="http://sfmohcd.org/housing-preference-programs"
+            href="https://www.sf.gov/get-priority-housing-lottery"
             target="_blank"
           >
             Read More
@@ -264,7 +264,7 @@ exports[`ListingDetailsPreferences display 6 preferences 1`] = `
         <span>
           <a
             aria-label="Read more about the Displaced Tenant Housing Preference"
-            href="http://sfmohcd.org/displaced-tenant-housing-preference"
+            href="https://www.sf.gov/learn-about-displaced-tenant-housing-preference-dthp"
             target="_blank"
           >
             Read More
@@ -304,7 +304,7 @@ exports[`ListingDetailsPreferences display 6 preferences 1`] = `
         <span>
           <a
             aria-label="Read more about the Neighborhood Resident Housing Preference"
-            href="http://sfmohcd.org/neighborhood-resident-housing-preference"
+            href="https://www.sf.gov/get-priority-housing-lottery"
             target="_blank"
           >
             Read More
@@ -353,7 +353,7 @@ exports[`ListingDetailsPreferences display 6 preferences 1`] = `
         <span>
           <a
             aria-label="Read more about the Live or Work in San Francisco Preference"
-            href="http://sfmohcd.org/housing-preference-programs"
+            href="https://www.sf.gov/get-priority-housing-lottery"
             target="_blank"
           >
             Read More

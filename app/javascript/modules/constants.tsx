@@ -102,10 +102,10 @@ export const SFGOV_LINKS = [
   "https://www.sf.gov/resource/2022/homebuyer-program-counseling-agencies",
   "https://www.sf.gov/dalp-lottery-results",
   // Salesforce links that redirect to sf.gov pages
-  "http://sfmohcd.org/certificate-preference",
-  "http://sfmohcd.org/housing-preference-programs",
-  "http://sfmohcd.org/displaced-tenant-housing-preference",
-  "http://sfmohcd.org/neighborhood-resident-housing-preference",
+  "https://www.sf.gov/learn-about-certificate-preference-cop",
+  "https://www.sf.gov/get-priority-housing-lottery",
+  "https://www.sf.gov/learn-about-displaced-tenant-housing-preference-dthp",
+  "https://www.sf.gov/get-priority-housing-lottery",
 ]
 
 export const DIRECTORY_SECTION_OPEN_LOTTERIES = "open"

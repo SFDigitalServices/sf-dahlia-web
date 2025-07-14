@@ -89,7 +89,7 @@ export const ListingDetailsAdditionalInformation = ({
                       className="primary-lighter-markup-link translate"
                       buttonClassName="text-blue-700"
                       text={t("listings.requiredDocumentsAfterApplying", {
-                        url: "https://sfmohcd.org/after-homebuyer-lottery",
+                        url: "https://www.sf.gov/after-bmr-homebuyer-lottery",
                       })}
                     />
                   </div>
@@ -189,12 +189,16 @@ export const ListingDetailsAdditionalInformation = ({
             <div className="info-card bg-gray-100 border-0">
               <h3 className="text-serif-xl">{t("listings.housingProgram")}</h3>
               {!isHabitatListing(listing) ? (
-                <a href={`https://sfmohcd.org/for-buyers`} target="_blank" className="text-xs">
+                <a
+                  href={`https://www.sf.gov/resource--2022--apply-homebuyer-programs`}
+                  target="_blank"
+                  className="text-xs"
+                >
                   {t("listings.belowMarketRate")}
                 </a>
               ) : (
                 <a
-                  href={`https://sfmohcd.org/current-listings-city-second-program`}
+                  href={`https://www.sf.gov/reports--december-2024--city-second-program-current-listings`}
                   target="_blank"
                   className="text-xs"
                 >
