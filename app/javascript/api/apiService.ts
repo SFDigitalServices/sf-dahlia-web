@@ -1,10 +1,11 @@
-import axios, { AxiosHeaders, AxiosInstance, AxiosResponse } from "axios"
+import axios, { AxiosInstance, AxiosResponse } from "axios"
 import type { AxiosRequestConfig } from "axios"
-import { AuthHeaders, setAuthHeaders, getHeaders, isTokenValid } from "../authentication/token"
+
+import { setAuthHeaders, getHeaders, isTokenValid } from "../authentication/token"
 
 // Use this function for authenticated calls
 const createAxiosInstance = (): AxiosInstance => {
-  const headers: AuthHeaders | AxiosHeaders | undefined = getHeaders()
+  const headers = getHeaders()
   if (!headers || Object.keys(headers).length === 0) {
     throw new Error("Unauthorized")
   }
