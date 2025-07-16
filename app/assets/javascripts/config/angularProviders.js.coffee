@@ -58,8 +58,8 @@
 @dahlia.config ['IdleProvider', 'TitleProvider', (IdleProvider, TitleProvider) ->
   # don't override the title with timeout countdowns/warnings
   TitleProvider.enabled(false)
-  IdleProvider.idle(300)
-  IdleProvider.timeout(60)
+  IdleProvider.idle(30000)
+  IdleProvider.timeout(60000)
 ]
 
 @dahlia.config [

@@ -181,4 +181,5 @@ export enum AppPages {
   PrivacyPolicy = "privacy policy",
   HowToApply = "how to apply",
   ListingInterest = "listing interest",
+  ListingApplication = "listing application",
 }
