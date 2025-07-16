@@ -94,6 +94,8 @@ Rails.application.routes.draw do
   get '/listings/:id/how-to-apply', to: redirect('/listings/%{id}')
   get '(:lang)/listings/:id/how-to-apply', to: redirect('%{lang}/listings/%{id}')
 
+  get '/listings/:id/apply' => 'listing_application#index'
+
   get '(:lang)/sign-in' => 'auth#sign_in', lang: /(en|es|zh|tl)/
   get '(:lang)/create-account' => 'auth#create_account', lang: /(en|es|zh|tl)/
   get '(:lang)/forgot-password' => 'auth#forgot_password', lang: /(en|es|zh|tl)/
