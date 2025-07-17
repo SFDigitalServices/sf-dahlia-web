@@ -68,11 +68,10 @@ More information about getting started can be found on the team confluence.
 - `yarn client` to start the webpack dev server alone
 - `yarn server` to start rails server alone, which will now be running at <http://localhost:3000> by default
 - `yarn start` to start both servers with a single command
+- Alternatively you can start the servers using the webpack and rails command directly
 
-1. Alternatively you can start the servers using the webpack and rails command directly
-
-- `NODE_OPTIONS=--openssl-legacy-provider ./bin/shakapacker-dev-server` to start webpack
-  - This command might fail with `Command "webpack-dev-server" not found.`. In that case, you'll need to reinstall webpacker with `bundle exec rails:shakapacker:install`. During the install it will ask if you want to overwrite a few config files, do not overwrite them.
+  - `./bin/shakapacker-dev-server` to start webpack
+    - This command might fail with `Command "webpack-dev-server" not found.`. In that case, you'll need to reinstall webpacker with `bundle exec rails:shakapacker:install`. During the install it will ask if you want to overwrite a few config files, do not overwrite them.
 - In another terminal tab, run `rails s` to start the rails server
 
 ## How to migrate a page from AngularJS to React
