@@ -692,6 +692,13 @@ ShortFormApplicationController = (
       $scope.handleErrorState()
       return
 
+    # this check is needed for when household members are added via auto-fill
+    if _.some $scope.householdMembers, ShortFormApplicationService.applicantDoesNotmeetAllSeniorBuildingRequirements
+      ShortFormApplicationService.addSeniorEligibilityError()
+      $scope.handleErrorState()
+      return
+
+
     # skip the check if we're doing an incomeMatch and the applicant has vouchers
     if match == 'incomeMatch' && $scope.application.householdVouchersSubsidies == 'Yes'
       ShortFormNavigationService.goToSection('Preferences')
