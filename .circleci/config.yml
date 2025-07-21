@@ -242,6 +242,7 @@ jobs:
       - run: ./tmp/cc-test-reporter format-coverage -t lcov -o tmp/codeclimate.unit-react.json app/javascript/test-coverage/lcov.info
       - run: ./tmp/cc-test-reporter format-coverage -t simplecov -o tmp/codeclimate.unit-rspec.json coverage/coverage.json
       - run: ./tmp/cc-test-reporter sum-coverage tmp/codeclimate.*.json -p 2 -o tmp/codeclimate.total.json
+      - run: cat tmp/codeclimate.total.json
       - run: ./tmp/cc-test-reporter upload-coverage -i tmp/codeclimate.total.json
       - qlty/coverage_publish:
           files: app/javascript/test-coverage/lcov.info, coverage/coverage.json
