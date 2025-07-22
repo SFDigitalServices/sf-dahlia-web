@@ -439,7 +439,7 @@
             "displaced_certificate": "您的逼遷租戶住房優先權利 (Displaced Tenant Housing Preference, DTHP) 憑證號碼是多少？",
             "displaced_tenants_desc": "如果您持有「Displaced Tenant Housing Preference (DTHP)」。DTHP 憑證擁有者是已因「Ellis Act Eviction」或「Owner Move In Eviction」而被迫搬遷，或因火災而已獲安置的房客。",
             "have_not_heard_of_preferences": "如果您未曾聽過這些優先權利，則意味您可能沒有該權利。",
-            "need_certificate_for_preference": "您需要出具憑證以取得此優先權利。如果您不知道您的憑證號碼，<a href='https://www.sf.gov/departments--mayors-office-housing-and-community-development' target='_blank'>請聯絡住房和社區發展市長辦公室 (MOHCD)</a>。",
+            "need_certificate_for_preference": "您需要出具憑證以取得此優先權利。如果您不知道您的憑證號碼，<a href='https://sfmohcd.org/contact-us' target='_blank'>請聯絡住房和社區發展市長辦公室 (MOHCD)</a>。",
             "title": "針對這些已有特殊憑證的人士，亦有相應的抽籤優先權利。"
         },
         "e7a_veterans_preference": {
