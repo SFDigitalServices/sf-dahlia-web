@@ -9,7 +9,6 @@ import {
   timeOut,
   startLoading,
   stopLoading,
-  signOutConnectionIssue,
 } from "./userActions"
 import UserContext, { ContextProps } from "./UserContext"
 import UserReducer from "./UserReducer"
@@ -46,7 +45,8 @@ const UserProvider = (props: UserProviderProps) => {
 
             // Give the DataLayer push some time to finish before the user is redirected
             setTimeout(() => {
-              dispatch(signOutConnectionIssue())
+              // dispatch(signOutConnectionIssue())
+              console.log("dispatch(signOutConnectionIssue()")
             }, 100)
           } else {
             dispatch(systemSignOut())
