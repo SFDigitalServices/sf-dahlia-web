@@ -25,3 +25,11 @@ Cypress.Commands.add("addReactQueryParam", () => {
     cy.visit(newUrl)
   })
 })
+
+Cypress.Commands.addQuery("isInViewport", () => {
+  return (subject) => {
+    const { top, left } = subject[0].getBoundingClientRect()
+    expect(top).to.be.at.least(0)
+    expect(left).to.be.at.least(0)
+  }
+})

@@ -108,6 +108,15 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filters])
 
+  useEffect(() => {
+    if (!loading) {
+      const hash = window.location.hash
+      if (hash) {
+        window.location.href = hash
+      }
+    }
+  }, [loading])
+
   const hasFiltersSet = filters !== null
   const directorySections =
     props.directoryType === DIRECTORY_TYPE_SALES
