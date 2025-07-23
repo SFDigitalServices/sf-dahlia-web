@@ -408,7 +408,7 @@
   "e7PreferencesPrograms.displacedCertificate": "¿Cuál es su número de  certificado de preferencia de vivienda para inquilinos desplazados (DTHP)?",
   "e7PreferencesPrograms.displacedTenantsDesc": "Si usted posee un certificado de Displaced Tenant Housing Preference (DTHP). Los poseedores de certificados DTHP son inquilinos que fueron desalojados en virtud de la Ellis Act u Owner Move-In, o que fueron desplazados por un incendio.",
   "e7PreferencesPrograms.haveNotHeardOfPreferences": "Si no está enterado de estas preferencias, es probable que no tenga ninguna.",
-  "e7PreferencesPrograms.needCertificateForPreference": "Necesita un certificado para obtener esta preferencia. Si no conoce su número de certificado, <a href='https://sfmohcd.org/contact-us' target='_blank'>comuniquese con la MOHCD</a>.",
+  "e7PreferencesPrograms.needCertificateForPreference": "Necesita un certificado para obtener esta preferencia. Si no conoce su número de certificado, <a href='https://www.sf.gov/departments--mayors-office-housing-and-community-development' target='_blank'>comuniquese con la MOHCD</a>.",
   "e7PreferencesPrograms.title": "Existen preferencias de sorteo para personas que ya tienen certificados especiales.",
   "e7bCustomPreferences.employmentDisability.cannotWorkDisability": "No puede trabajar debido a discapacidad",
   "e7bCustomPreferences.employmentDisability.description": "Usted puede obtener esta preferencia si alguien en su hogar es: <ul><li>Un empleado de una institución pública de educación superior en San Francisco</li><li>Un empleado de una institución de salud pública en San Francisco</li><li>Un adulto que actualmente tiene una discapacidad que le ha impedido trabajar durante al menos un año</li></ul>",
