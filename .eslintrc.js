@@ -167,7 +167,7 @@ module.exports = {
   },
   overrides: [
     {
-      files: ["cypress/integration/*e2e.ts", "cypress/integration/*e2e.js"],
+      files: ["cypress/integration/*e2e.ts", "cypress/integration/*e2e.js", "cypress/support/*.ts"],
       rules: {
         // e2e files use chai-expect, not jest-expect, linter gets confused so we
         // turn off jest linting for these files.
