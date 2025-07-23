@@ -1,18 +1,8 @@
 import React, { useEffect, useState } from "react"
-import {
-  TextInput,
-  Select,
-  TextInputMask,
-  ErrorMessage,
-  Button,
-  Alert,
-  FormGroup,
-  Checkbox,
-  Radio,
-} from "@trussworks/react-uswds"
-
+import { Alert, Button, FormErrorMessage } from "@bloom-housing/ui-seeds"
+import { CardSection } from "@bloom-housing/ui-seeds/src/blocks/Card"
+import { Field, Select } from "@bloom-housing/ui-components"
 import { useForm } from "react-hook-form"
-
 import type { ApplicationData } from "../wizard"
 
 interface Props {
@@ -100,7 +90,7 @@ const B2Contact = ({ nextPage, prevPage, saveData, applicationData }: Props) => 
 
   return (
     <div className="flex-col justify-items-center m-8">
-      <Button type="button" unstyled onClick={prevPage}>
+      <Button type="button" onClick={prevPage}>
         back
       </Button>
 
@@ -108,7 +98,7 @@ const B2Contact = ({ nextPage, prevPage, saveData, applicationData }: Props) => 
         Thanks, {applicationData["first-name"] || ""}. Now we need to know how to contact you.
       </h2>
       {blockedAlert && (
-        <Alert type="error" headingLevel="h4" onClick={() => setBlockedAlert(false)}>
+        <Alert variant="alert" onClose={() => setBlockedAlert(false)}>
           You'll need to resolve any errors before moving on
         </Alert>
       )}
@@ -116,267 +106,281 @@ const B2Contact = ({ nextPage, prevPage, saveData, applicationData }: Props) => 
         {/****************************************************************************************************************************************************************************************
           PHONE */}
 
-        <FormGroup>
+        <CardSection>
           <p>your phone number</p>
-          <TextInputMask
+          <Field
             id="primary-phone"
             name="primary-phone"
             placeholder="555 555 5555"
             type="tel"
-            mask="(___) ___-____"
             disabled={noPhone}
-            inputRef={register({ required: !noPhone, pattern: /\(\d\d\d\) \d\d\d-\d\d\d\d/ })}
-            validationStatus={errors["primary-phone"] ? "error" : undefined}
+            validation={{ required: !noPhone, pattern: /\(\d\d\d\) \d\d\d-\d\d\d\d/ }}
+            register={register}
+            error={!!errors["primary-phone"]}
           />
-          {!!errors["primary-phone"] && <ErrorMessage>{errors["primary-phone"].type}</ErrorMessage>}
-        </FormGroup>
-        <FormGroup>
+          {!!errors["primary-phone"] && (
+            <FormErrorMessage>{errors["primary-phone"].type}</FormErrorMessage>
+          )}
+        </CardSection>
+        <CardSection>
           <Select
             id="primary-phone-type"
             name="primary-phone-type"
             disabled={noPhone}
-            inputRef={register({ required: !noPhone })}
-            validationStatus={errors["primary-phone-type"] ? "error" : undefined}
-          >
-            <option value="">What type of number is this?</option>
-            <option value="home">home</option>
-            <option value="work">work</option>
-            <option value="cell">cell</option>
-          </Select>
+            label="What type of number is this?"
+            validation={{ required: !noPhone }}
+            error={!!errors["primary-phone-type"]}
+            options={["home", "work", "cell"]}
+          />
           {!!errors["primary-phone-type"] && (
-            <ErrorMessage>{errors["primary-phone-type"].type}</ErrorMessage>
+            <FormErrorMessage>{errors["primary-phone-type"].type}</FormErrorMessage>
           )}
-        </FormGroup>
-        <Checkbox
+        </CardSection>
+        <Field
+          type="checkbox"
           id="no-phone"
           name="no-phone"
           label="I don't have a telephone number"
           disabled={showAdditionalPhone}
-          inputRef={register()}
+          register={register}
+          error={!!errors["no-phone"]}
         />
 
         {/****************************************************************************************************************************************************************************************
           PHONE 2 */}
 
-        <Checkbox
+        <Field
+          type="checkbox"
           id="show-additional-phone"
           name="show-additional-phone"
           label="I have an additional telephone number"
           disabled={noPhone}
-          inputRef={register()}
+          register={register}
+          error={!!errors["no-phone"]}
         />
         {showAdditionalPhone && (
           <>
-            <FormGroup>
+            <CardSection>
               <p>your second phone number</p>
-              <TextInputMask
+              <Field
                 id="additional-phone"
                 name="additional-phone"
                 placeholder="555 555 5555"
                 type="tel"
-                mask="(___) ___-____"
-                inputRef={register({ required: true, pattern: /^\(\d\d\d\) \d\d\d-\d\d\d\d$/ })}
-                validationStatus={errors["additional-phone"] ? "error" : undefined}
+                validation={{ required: true, pattern: /^\(\d\d\d\) \d\d\d-\d\d\d\d$/ }}
+                register={register}
+                error={!!errors["additional-phone"]}
               />
               {!!errors["additional-phone"] && (
-                <ErrorMessage>{errors["additional-phone"].type}</ErrorMessage>
+                <FormErrorMessage>{errors["additional-phone"].type}</FormErrorMessage>
               )}
-            </FormGroup>
-            <FormGroup>
+            </CardSection>
+            <CardSection>
               <Select
                 id="additional-phone-type"
                 name="additional-phone-type"
-                inputRef={register({ required: true })}
-                validationStatus={errors["additional-phone-type"] ? "error" : undefined}
-              >
-                <option value="">What type of number is this?</option>
-                <option value="home">home</option>
-                <option value="work">work</option>
-                <option value="cell">cell</option>
-              </Select>
+                validation={{ required: true }}
+                disabled={noPhone}
+                label="What type of number is this?"
+                error={!!errors["additional-phone-type"]}
+                options={["home", "work", "cell"]}
+              />
               {!!errors["additional-phone-type"] && (
-                <ErrorMessage>{errors["additional-phone-type"].type}</ErrorMessage>
+                <FormErrorMessage>{errors["additional-phone-type"].type}</FormErrorMessage>
               )}
-            </FormGroup>
+            </CardSection>
           </>
         )}
 
         {/****************************************************************************************************************************************************************************************
           ADDRESS */}
 
-        <FormGroup>
+        <CardSection>
           <p className="mt-8">address</p>
-          <TextInput
+          <Field
             id="address-street"
             name="address-street"
             placeholder="street address"
             type="text"
-            inputRef={register({ required: true, pattern: /^[A-Za-z0-9 -]+$/ })}
-            validationStatus={errors["address-street"] ? "error" : undefined}
+            validation={{ required: true, pattern: /^[A-Za-z0-9 -]+$/ }}
+            register={register}
+            error={!!errors["address-street"]}
           />
           {!!errors["address-street"] && (
-            <ErrorMessage>{errors["address-street"].type}</ErrorMessage>
+            <FormErrorMessage>{errors["address-street"].type}</FormErrorMessage>
           )}
-        </FormGroup>
+        </CardSection>
 
-        <FormGroup>
+        <CardSection>
           <p className="mt-4">apt or unit #</p>
-          <TextInput
+          <Field
             id="address-unit"
             name="address-unit"
             placeholder="apt or unit #"
             type="text"
-            inputRef={register({ pattern: /^[A-Za-z0-9 #]+$/ })}
-            validationStatus={errors["address-unit"] ? "error" : undefined}
+            validation={{ pattern: /^[A-Za-z0-9 #]+$/ }}
+            register={register}
+            error={!!errors["address-unit"]}
           />
-          {!!errors["address-unit"] && <ErrorMessage>{errors["address-unit"].type}</ErrorMessage>}
-        </FormGroup>
+          {!!errors["address-unit"] && (
+            <FormErrorMessage>{errors["address-unit"].type}</FormErrorMessage>
+          )}
+        </CardSection>
 
         <div className="flex">
-          <FormGroup>
+          <CardSection>
             <p>city name</p>
-            <TextInput
+            <Field
               id="address-city"
               name="address-city"
               placeholder="city name"
               type="text"
-              inputRef={register({ required: true, pattern: /^[A-Za-z -']+$/ })}
-              validationStatus={errors["address-city"] ? "error" : undefined}
+              validation={{ required: true, pattern: /^[A-Za-z -']+$/ }}
+              register={register}
+              error={!!errors["address-city"]}
             />
-            {!!errors["address-city"] && <ErrorMessage>{errors["address-city"].type}</ErrorMessage>}
-          </FormGroup>
-          <FormGroup>
+            {!!errors["address-city"] && (
+              <FormErrorMessage>{errors["address-city"].type}</FormErrorMessage>
+            )}
+          </CardSection>
+          <CardSection>
             <p>state</p>
             <Select
               id="address-state"
               name="address-state"
-              inputRef={register({ required: true })}
-              validationStatus={errors["address-state"] ? "error" : undefined}
-            >
-              <option value="">select one</option>
-              <option value="alabama">alabama</option>
-              <option value="alaska">alaska</option>
-              <option value="arizona">arizona</option>
-            </Select>
+              label="select one"
+              validation={{ required: true }}
+              error={!!errors["address-state"]}
+              options={["alabama", "alaska", "arizona"]}
+            />
             {!!errors["address-state"] && (
-              <ErrorMessage>{errors["address-state"].type}</ErrorMessage>
+              <FormErrorMessage>{errors["address-state"].type}</FormErrorMessage>
             )}
-          </FormGroup>
+          </CardSection>
         </div>
 
-        <FormGroup>
+        <CardSection>
           <p className="mt-4">zip</p>
-          <TextInputMask
+          <Field
             id="address-zip"
             name="address-zip"
             placeholder="zipcode"
             type="text"
-            mask="_____"
-            inputRef={register({ required: true, pattern: /^\d{5}$/ })}
-            validationStatus={errors["address-zip"] ? "error" : undefined}
+            validation={{ required: true, pattern: /^\d{5}$/ }}
+            register={register}
+            error={!!errors["address-zip"]}
           />
-          {!!errors["address-zip"] && <ErrorMessage>{errors["address-zip"].type}</ErrorMessage>}
-        </FormGroup>
+          {!!errors["address-zip"] && (
+            <FormErrorMessage>{errors["address-zip"].type}</FormErrorMessage>
+          )}
+        </CardSection>
 
         {/****************************************************************************************************************************************************************************************
           ADDRESS 2 */}
 
-        <Checkbox
+        <Field
+          type="checkbox"
           id="show-mail-address"
           name="show-mail-address"
           label="send my mail to a different address"
-          inputRef={register()}
+          register={register}
+          error={!!errors["show-mail-address"]}
         />
         {showMailAddress && (
           <>
-            <FormGroup>
+            <CardSection>
               <p className="mt-8">mailing address</p>
-              <TextInput
+              <Field
                 id="mail-address-street"
                 name="mail-address-street"
                 placeholder="street address"
                 type="text"
-                inputRef={register({ required: true, pattern: /^[A-Za-z0-9 -]+$/ })}
-                validationStatus={errors["mail-address-street"] ? "error" : undefined}
+                validation={{ required: true, pattern: /^[A-Za-z0-9 -]+$/ }}
+                register={register}
+                error={!!errors["mail-address-street"]}
               />
               {!!errors["mail-address-street"] && (
-                <ErrorMessage>{errors["mail-address-street"].type}</ErrorMessage>
+                <FormErrorMessage>{errors["mail-address-street"].type}</FormErrorMessage>
               )}
-            </FormGroup>
+            </CardSection>
 
             <div className="flex">
-              <FormGroup>
+              <CardSection>
                 <p>city name</p>
-                <TextInput
+                <Field
                   id="mail-address-city"
                   name="mail-address-city"
                   placeholder="city name"
                   type="text"
-                  inputRef={register({ required: true, pattern: /^[A-Za-z -']+$/ })}
-                  validationStatus={errors["mail-address-city"] ? "error" : undefined}
+                  validation={{ required: true, pattern: /^[A-Za-z -']+$/ }}
+                  register={register}
+                  error={!!errors["mail-address-city"]}
                 />
                 {!!errors["mail-address-city"] && (
-                  <ErrorMessage>{errors["mail-address-city"].type}</ErrorMessage>
+                  <FormErrorMessage>{errors["mail-address-city"].type}</FormErrorMessage>
                 )}
-              </FormGroup>
-              <FormGroup>
+              </CardSection>
+              <CardSection>
                 <p>state</p>
                 <Select
                   id="mail-address-state"
                   name="mail-address-state"
-                  inputRef={register({ required: true })}
-                  validationStatus={errors["mail-address-state"] ? "error" : undefined}
-                >
-                  <option value="">select one</option>
-                  <option value="alabama">alabama</option>
-                  <option value="alaska">alaska</option>
-                  <option value="arizona">arizona</option>
-                </Select>
+                  label="select one"
+                  validation={{ required: true }}
+                  error={!!errors["mail-address-state"]}
+                  options={["alabama", "alaska", "arizona"]}
+                />
                 {!!errors["mail-address-state"] && (
-                  <ErrorMessage>{errors["mail-address-state"].type}</ErrorMessage>
+                  <FormErrorMessage>{errors["mail-address-state"].type}</FormErrorMessage>
                 )}
-              </FormGroup>
+              </CardSection>
             </div>
 
-            <FormGroup>
+            <CardSection>
               <p className="mt-4">zip</p>
-              <TextInputMask
+              <Field
                 id="mail-address-zip"
                 name="mail-address-zip"
                 placeholder="zipcode"
                 type="text"
-                mask="_____"
-                inputRef={register({ required: true, pattern: /^\d{5}$/ })}
-                validationStatus={errors["mail-address-zip"] ? "error" : undefined}
+                validation={{ required: true, pattern: /^\d{5}$/ }}
+                register={register}
+                error={!!errors["mail-address-zip"]}
               />
               {!!errors["mail-address-zip"] && (
-                <ErrorMessage>{errors["mail-address-zip"].type}</ErrorMessage>
+                <FormErrorMessage>{errors["mail-address-zip"].type}</FormErrorMessage>
               )}
-            </FormGroup>
+            </CardSection>
           </>
         )}
 
         {/****************************************************************************************************************************************************************************************
           Work in SF */}
 
-        <FormGroup error={!!errors["work-in-sf"]}>
+        <CardSection>
           <p className="mt-8">do you work in san francisco?</p>
-          <Radio
+          <Field
+            type="radio"
             id="work-in-sf-yes"
             name="work-in-sf"
             label="yes"
-            value="yes"
-            inputRef={register({ required: true })}
+            validation={{ required: true }}
+            register={register}
+            error={!!errors["work-in-sf"]}
           />
-          <Radio
+          <Field
+            type="radio"
             id="work-in-sf-no"
             name="work-in-sf"
             label="no"
-            value="no"
-            inputRef={register({ required: true })}
+            validation={{ required: true }}
+            register={register}
+            error={!!errors["work-in-sf"]}
           />
-          {!!errors["work-in-sf"] && <ErrorMessage>{errors["work-in-sf"].type}</ErrorMessage>}
-        </FormGroup>
+          {!!errors["work-in-sf"] && (
+            <FormErrorMessage>{errors["work-in-sf"].type}</FormErrorMessage>
+          )}
+        </CardSection>
 
         <Button className="mt-8" type="submit">
           next

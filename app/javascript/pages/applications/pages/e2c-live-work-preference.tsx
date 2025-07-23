@@ -1,15 +1,10 @@
 import React, { useState, useEffect } from "react"
-import {
-  ErrorMessage,
-  Button,
-  Alert,
-  FormGroup,
-  Checkbox,
-  Select,
-  FileInput,
-} from "@trussworks/react-uswds"
 
-import { useForm, Controller } from "react-hook-form"
+import { Alert, Button, FormErrorMessage } from "@bloom-housing/ui-seeds"
+import { CardSection } from "@bloom-housing/ui-seeds/src/blocks/Card"
+import { Field, Select, Dropzone } from "@bloom-housing/ui-components"
+
+import { useForm } from "react-hook-form"
 
 import type { ApplicationData } from "../wizard"
 
@@ -37,8 +32,8 @@ const E2cLiveWorkPreference = ({ applicationData, nextPage, prevPage, saveData }
   const [claimPref, setClaimPref] = useState(false)
   const [noPref, setNoPref] = useState(false)
 
-  const { control, register, errors, handleSubmit, watch, setError, clearErrors, getValues, setValue } = useForm<Inputs>(
-    {
+  const { register, errors, handleSubmit, watch, setError, clearErrors, getValues, setValue } =
+    useForm<Inputs>({
       mode: "onTouched",
       shouldFocusError: false,
       defaultValues: {
@@ -51,8 +46,7 @@ const E2cLiveWorkPreference = ({ applicationData, nextPage, prevPage, saveData }
         "work-in-sf-member": applicationData["work-in-sf-member"] || "",
         "work-in-sf-doctype": applicationData["work-in-sf-doctype"] || "",
       },
-    }
-  )
+    })
 
   const onSubmit = (data, e) => {
     console.log("e2c-live-work-preference SUCCESS", data, e)
@@ -104,7 +98,7 @@ const E2cLiveWorkPreference = ({ applicationData, nextPage, prevPage, saveData }
 
   return (
     <div className="flex-col justify-items-center m-8">
-      <Button type="button" unstyled onClick={prevPage}>
+      <Button type="button" onClick={prevPage}>
         back
       </Button>
 
@@ -113,7 +107,7 @@ const E2cLiveWorkPreference = ({ applicationData, nextPage, prevPage, saveData }
         preferences.
       </h2>
       {blockedAlert && (
-        <Alert type="error" headingLevel="h4" onClick={() => setBlockedAlert(false)}>
+        <Alert variant="alert" onClose={() => setBlockedAlert(false)}>
           You'll need to resolve any errors before moving on
         </Alert>
       )}
@@ -123,11 +117,12 @@ const E2cLiveWorkPreference = ({ applicationData, nextPage, prevPage, saveData }
         {/****************************************************************************************************************************************************************************************
           claim preference */}
 
-        <Checkbox
+        <Field
+          type="checkbox"
           id="claim-preference"
-          name="claim-preference"
+          name="claimPref"
           label="live or work in san francisco preference"
-          checked={claimPref}
+          register={register}
           onChange={handleChangeClaimPref}
         />
 
@@ -135,22 +130,24 @@ const E2cLiveWorkPreference = ({ applicationData, nextPage, prevPage, saveData }
           preference option */}
 
         {claimPref && (
-          <FormGroup>
+          <CardSection>
             <p>which preference option would you like to claim?</p>
             <Select
               id="preference-option"
               name="preference-option"
-              inputRef={register({ required: claimPref })}
-              validationStatus={errors["preference-option"] ? "error" : undefined}
-            >
-              <option value="">Select one</option>
-              <option value="live-in-sf">Live in san francisco</option>
-              <option value="work-in-sf">Work in san francisco</option>
-            </Select>
+              validation={{ required: claimPref }}
+              label="Select one"
+              error={!!errors["preference-option"]}
+              register={register}
+              options={[
+                { label: "Live in SF", value: "live-in-sf" },
+                { label: "Work in SF", value: "work-in-sf" },
+              ]}
+            />
             {!!errors["preference-option"] && (
-              <ErrorMessage>{errors["preference-option"].type}</ErrorMessage>
+              <FormErrorMessage>{errors["preference-option"].type}</FormErrorMessage>
             )}
-          </FormGroup>
+          </CardSection>
         )}
 
         {/****************************************************************************************************************************************************************************************
@@ -158,56 +155,49 @@ const E2cLiveWorkPreference = ({ applicationData, nextPage, prevPage, saveData }
 
         {preferenceOption === "live-in-sf" && (
           <>
-            <FormGroup>
+            <CardSection>
               <p>whose name is on the document you're uploading?</p>
               <Select
                 id="live-in-sf-member"
                 name="live-in-sf-member"
-                inputRef={register({ required: claimPref })}
-                validationStatus={errors["live-in-sf-member"] ? "error" : undefined}
-              >
-                <option value="">Select one</option>
-                <option value="primary-member">
-                  {applicationData["first-name"]} {applicationData["last-name"]}
-                </option>
-                <option value="hh-member-1">household member 1</option>
-                <option value="hh-member-2">household member 2</option>
-              </Select>
+                validation={{ required: claimPref }}
+                label="Select one"
+                error={!!errors["live-in-sf-member"]}
+                options={["household member 1", "household member 2"]}
+              />
               {!!errors["live-in-sf-member"] && (
-                <ErrorMessage>{errors["live-in-sf-member"].type}</ErrorMessage>
+                <FormErrorMessage>{errors["live-in-sf-member"].type}</FormErrorMessage>
               )}
-            </FormGroup>
-            <FormGroup>
+            </CardSection>
+            <CardSection>
               <p>
                 What type of document would you like to upload to show you live at that address?
               </p>
               <Select
                 id="live-in-sf-doctype"
                 name="live-in-sf-doctype"
-                inputRef={register({ required: claimPref })}
-                validationStatus={errors["live-in-sf-doctype"] ? "error" : undefined}
-              >
-                <option value="">Select one</option>
-                <option value="telephone-bill">telephone bill</option>
-                <option value="cable-and-internet-bill">cable and internet bill</option>
-                <option value="gas-bill">gas bill</option>
-              </Select>
+                validation={{ required: claimPref }}
+                label="Select one"
+                error={!!errors["live-in-sf-doctype"]}
+                options={["telephone bill", "cable and internet bill", "gas bill"]}
+              />
               {!!errors["live-in-sf-doctype"] && (
-                <ErrorMessage>{errors["live-in-sf-doctype"].type}</ErrorMessage>
+                <FormErrorMessage>{errors["live-in-sf-doctype"].type}</FormErrorMessage>
               )}
-            </FormGroup>
-            <FormGroup>
-              <p>Upload proof of preference</p>
-              <Controller
-                name="live-in-sf-proof"
-                control={control}
-                rules={{ required: claimPref }}
-                render={(props, _meta) => <FileInput id="live-in-sf-proof" {...props} />}
+            </CardSection>
+            <CardSection>
+              <Dropzone
+                id="live-in-sf-proof"
+                label="Upload proof of preference"
+                uploader={() => {
+                  alert("Uploader function called")
+                }}
+                accept="image/*"
               />
               {!!errors["live-in-sf-proof"] && (
-                <ErrorMessage>{errors["live-in-sf-proof"].type}</ErrorMessage>
+                <FormErrorMessage>{errors["live-in-sf-proof"].type}</FormErrorMessage>
               )}
-            </FormGroup>
+            </CardSection>
           </>
         )}
 
@@ -216,70 +206,65 @@ const E2cLiveWorkPreference = ({ applicationData, nextPage, prevPage, saveData }
 
         {preferenceOption === "work-in-sf" && (
           <>
-            <FormGroup>
+            <CardSection>
               <p>whose name is on the document you're uploading?</p>
               <Select
                 id="work-in-sf-member"
                 name="work-in-sf-member"
-                inputRef={register({ required: claimPref })}
-                validationStatus={errors["work-in-sf-member"] ? "error" : undefined}
-              >
-                <option value="">Select one</option>
-                <option value="primary-member">
-                  {applicationData["first-name"]} {applicationData["last-name"]}
-                </option>
-                <option value="hh-member-1">household member 1</option>
-                <option value="hh-member-2">household member 2</option>
-              </Select>
+                validation={{ required: claimPref }}
+                label="Select one"
+                error={!!errors["work-in-sf-member"]}
+                options={["household member 1", "household member 2"]}
+              />
               {!!errors["work-in-sf-member"] && (
-                <ErrorMessage>{errors["work-in-sf-member"].type}</ErrorMessage>
+                <FormErrorMessage>{errors["work-in-sf-member"].type}</FormErrorMessage>
               )}
-            </FormGroup>
-            <FormGroup>
+            </CardSection>
+            <CardSection>
               <p>Which document are you uploading to prove eligibility?</p>
               <Select
                 id="work-in-sf-doctype"
                 name="work-in-sf-doctype"
-                inputRef={register({ required: claimPref })}
-                validationStatus={errors["work-in-sf-doctype"] ? "error" : undefined}
-              >
-                <option value="">Select one</option>
-                <option value="paystub">paystub with employer address</option>
-                <option value="letter-from-employer">letter from employer</option>
-              </Select>
+                validation={{ required: claimPref }}
+                label="Select one"
+                error={!!errors["work-in-sf-doctype"]}
+                options={["paystub with employer address", "letter from employer"]}
+              />
               {!!errors["work-in-sf-doctype"] && (
-                <ErrorMessage>{errors["work-in-sf-doctype"].type}</ErrorMessage>
+                <FormErrorMessage>{errors["work-in-sf-doctype"].type}</FormErrorMessage>
               )}
-            </FormGroup>
-            <FormGroup>
-              <p>Upload proof of preference</p>
-              <Controller
-                name="work-in-sf-proof"
-                control={control}
-                rules={{ required: claimPref }}
-                render={(props, _meta) => <FileInput id="work-in-sf-proof" {...props} />}
+            </CardSection>
+            <CardSection>
+              <Dropzone
+                id="work-in-sf-proof"
+                label="Upload proof of preference"
+                uploader={() => {
+                  alert("Uploader function called")
+                }}
+                accept="image/*"
               />
               {!!errors["work-in-sf-proof"] && (
-                <ErrorMessage>{errors["work-in-sf-proof"].type}</ErrorMessage>
+                <FormErrorMessage>{errors["work-in-sf-proof"].type}</FormErrorMessage>
               )}
-            </FormGroup>
+            </CardSection>
           </>
         )}
 
         {/****************************************************************************************************************************************************************************************
           no preference */}
 
-        <Checkbox
+        <Field
+          type="checkbox"
           id="no-preference"
           className="mt-8"
-          name="no-preference"
+          name="noPref"
           label="I don't want this lottery preference"
-          checked={noPref}
+          register={register}
           onChange={handleChangeNoPref}
         />
 
         {!!errors["choose-preference"] && (
-          <ErrorMessage>{errors["choose-preference"].type}</ErrorMessage>
+          <FormErrorMessage>{errors["choose-preference"].type}</FormErrorMessage>
         )}
 
         <Button className="mt-8" type="submit">

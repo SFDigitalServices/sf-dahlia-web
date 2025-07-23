@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react"
-import "@trussworks/react-uswds/lib/index.css"
 import Layout from "../../layouts/Layout"
 import withAppSetup from "../../layouts/withAppSetup"
 import { getListing } from "../../api/listingApiService"

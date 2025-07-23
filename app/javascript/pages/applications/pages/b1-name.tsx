@@ -1,15 +1,8 @@
 import React, { useState, useEffect } from "react"
-import {
-  TextInput,
-  ErrorMessage,
-  Button,
-  Alert,
-  FormGroup,
-  Checkbox,
-} from "@trussworks/react-uswds"
-
+import { Alert, Button, FormErrorMessage } from "@bloom-housing/ui-seeds"
+import { CardSection } from "@bloom-housing/ui-seeds/src/blocks/Card"
+import { Field } from "@bloom-housing/ui-components"
 import { useForm } from "react-hook-form"
-
 import type { ApplicationData } from "../wizard"
 
 interface Props {
@@ -70,111 +63,123 @@ const B1Name = ({ applicationData, nextPage, prevPage, saveData }: Props) => {
 
   return (
     <div className="flex-col justify-items-center m-8">
-      <Button type="button" unstyled onClick={prevPage}>
+      <Button type="button" onClick={prevPage}>
         back
       </Button>
 
       <h2>what's your name?</h2>
       {blockedAlert && (
-        <Alert type="error" headingLevel="h4" onClick={() => setBlockedAlert(false)}>
+        <Alert variant="alert" onClose={() => setBlockedAlert(false)}>
           You'll need to resolve any errors before moving on
         </Alert>
       )}
       <form onSubmit={handleSubmit(onSubmit, onError)}>
         <p>your name</p>
-        <FormGroup>
-          <TextInput
+        <CardSection>
+          <Field
             id="first-name"
             name="first-name"
             placeholder="first name"
             type="text"
-            inputRef={register({ required: true, pattern: /^[A-Za-z]+$/ })}
-            validationStatus={errors["first-name"] ? "error" : undefined}
+            validation={{ required: true, pattern: /^[A-Za-z]+$/ }}
+            register={register}
+            error={!!errors["first-name"]}
           />
-          {!!errors["first-name"] && <ErrorMessage>{errors["first-name"].type}</ErrorMessage>}
-        </FormGroup>
-        <FormGroup>
-          <TextInput
+          {!!errors["first-name"] && (
+            <FormErrorMessage>{errors["first-name"].type}</FormErrorMessage>
+          )}
+        </CardSection>
+        <CardSection>
+          <Field
             id="middle-name"
             name="middle-name"
             placeholder="middle name (optional)"
             type="text"
-            inputRef={register({ pattern: /^[A-Za-z]+$/ })}
-            validationStatus={errors["middle-name"] ? "error" : undefined}
+            validation={{ pattern: /^[A-Za-z]+$/ }}
+            register={register}
+            error={!!errors["middle-name"]}
           />
-          {!!errors["middle-name"] && <ErrorMessage>{errors["middle-name"].type}</ErrorMessage>}
-        </FormGroup>
-        <FormGroup>
-          <TextInput
+          {!!errors["middle-name"] && (
+            <FormErrorMessage>{errors["middle-name"].type}</FormErrorMessage>
+          )}
+        </CardSection>
+        <CardSection>
+          <Field
             id="last-name"
             name="last-name"
             placeholder="last name"
             type="text"
-            inputRef={register({ required: true, pattern: /^[A-Za-z]+$/ })}
-            validationStatus={errors["last-name"] ? "error" : undefined}
+            validation={{ required: true, pattern: /^[A-Za-z]+$/ }}
+            register={register}
+            error={!!errors["last-name"]}
           />
-          {!!errors["last-name"] && <ErrorMessage>{errors["last-name"].type}</ErrorMessage>}
-        </FormGroup>
+          {!!errors["last-name"] && <FormErrorMessage>{errors["last-name"].type}</FormErrorMessage>}
+        </CardSection>
 
         <p className="mt-8">your date of birth</p>
-        <FormGroup>
+        <CardSection>
           <div className="flex justify-between w-48">
             <div className="w-12">
-              <TextInput
+              <Field
                 id="dob-month"
                 name="dob-month"
                 placeholder="MM"
                 type="number"
-                inputRef={register({ required: true, pattern: /^\d{1,2}$/ })}
-                validationStatus={errors["dob-month"] ? "error" : undefined}
+                validation={{ required: true, pattern: /^\d{1,2}$/ }}
+                register={register}
+                error={!!errors["dob-month"]}
               />
             </div>
             <div className="w-12">
-              <TextInput
+              <Field
                 id="dob-day"
                 name="dob-day"
                 placeholder="DD"
                 type="number"
-                inputRef={register({ required: true, pattern: /^\d{1,2}$/ })}
-                validationStatus={errors["dob-day"] ? "error" : undefined}
+                validation={{ required: true, pattern: /^\d{1,2}$/ }}
+                register={register}
+                error={!!errors["dob-day"]}
               />
             </div>
             <div className="w-16">
-              <TextInput
+              <Field
                 id="dob-year"
                 name="dob-year"
                 placeholder="YYYY"
                 type="number"
-                inputRef={register({ required: true, pattern: /^\d\d\d\d$/ })}
-                validationStatus={errors["dob-year"] ? "error" : undefined}
+                validation={{ required: true, pattern: /^\d\d\d\d$/ }}
+                register={register}
+                error={!!errors["dob-year"]}
               />
             </div>
           </div>
           {(!!errors["dob-day"] || !!errors["dob-month"] || !!errors["dob-year"]) && (
-            <ErrorMessage>invalid dob</ErrorMessage>
+            <FormErrorMessage>invalid dob</FormErrorMessage>
           )}
-        </FormGroup>
+        </CardSection>
 
         <p className="mt-8">your email address</p>
-        <FormGroup>
-          <TextInput
+        <CardSection>
+          <Field
             id="email"
             name="email"
             placeholder="you@myemail.com"
             type="email"
-            inputRef={register({ required: !noEmail, pattern: /^[^@]+@[^@]+\.[^@]+$/ })}
-            validationStatus={errors.email ? "error" : undefined}
+            validation={{ required: !noEmail, pattern: /^[^@]+@[^@]+\.[^@]+$/ }}
             disabled={noEmail}
+            register={register}
+            error={!!errors.email}
           />
-          {!!errors.email && <ErrorMessage>{errors.email.type}</ErrorMessage>}
+          {!!errors.email && <FormErrorMessage>{errors.email.type}</FormErrorMessage>}
 
-          <Checkbox
+          <Field
+            type="checkbox"
             id="no-email"
             name="no-email"
             label="I don't have an email address"
-            inputRef={register()}
+            register={register}
           />
-        </FormGroup>
+        </CardSection>
 
         <Button className="mt-8" type="submit">
           next

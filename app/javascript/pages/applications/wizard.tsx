@@ -1,5 +1,4 @@
 import React, { useState } from "react"
-import "@trussworks/react-uswds/lib/index.css"
 import B1Name from "./pages/b1-name"
 import B2Contact from "./pages/b2-contact"
 import E2cLiveWorkPreference from "./pages/e2c-live-work-preference"
