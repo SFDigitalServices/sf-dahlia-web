@@ -10,6 +10,8 @@ declare global {
       signIn(email?: string): Chainable<any>
 
       addReactQueryParam(): Chainable<any>
+
+      isInViewport(): Chainable<any>
     }
   }
   interface Window {

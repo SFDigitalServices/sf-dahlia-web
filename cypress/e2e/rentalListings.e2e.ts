@@ -42,4 +42,11 @@ describe("Rental listings directory page", () => {
     cy.get(".listings-group__button button").first().click()
     cy.contains("Show Upcoming Lotteries")
   })
+
+  it("redirects to the correct section", () => {
+    cy.viewport(640, 960)
+    cy.visit("/listings/for-rent#upcoming-lotteries")
+    cy.wait("@listings")
+    cy.get("#upcoming-lotteries").isInViewport()
+  })
 })
