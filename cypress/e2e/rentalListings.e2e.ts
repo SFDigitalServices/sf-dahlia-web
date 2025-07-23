@@ -49,4 +49,22 @@ describe("Rental listings directory page", () => {
     cy.wait("@listings")
     cy.get("#upcoming-lotteries").isInViewport()
   })
+  
+  it("does not redirect to sign in page when there is no user session", () => {
+    cy.intercept("/api/v1/listings/a0W0P00000Hc7RcUAJ.json", {
+      fixture: "openRentalListing.json",
+    }).as("listingDetails")
+
+    cy.get('[data-testid="listing-card-component"]')
+      .first()
+      .within(() => {
+        cy.contains("a", "See Details").click()
+        cy.wait("@listingDetails").its("response.statusCode").should("eq", 200)
+      })
+    cy.contains("a", "Apply Online").click()
+    cy.contains("Let's get started")
+    cy.contains("a", "Rent").click()
+    cy.wait(5000)
+    cy.url().should("not.contain", "/sign-in")
+  })
 })

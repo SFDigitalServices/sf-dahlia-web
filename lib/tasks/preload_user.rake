@@ -12,7 +12,7 @@ namespace :preload do
       email: user.email,
       firstName: 'Test',
       lastName: 'User',
-      DOB: '1990-01-01',
+      DOB: '1950-01-01',
     )
 
     if salesforce_contact && salesforce_contact['contactId'].present?

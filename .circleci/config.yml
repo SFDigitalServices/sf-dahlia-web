@@ -12,7 +12,7 @@ defaults: &defaults
         RAILS_ENV: development
         PGHOST: 127.0.0.1
         PGUSER: root
-        NODE_OPTIONS: --openssl-legacy-provider --max_old_space_size=4096
+        NODE_OPTIONS: --max_old_space_size=4096
     - image: cimg/postgres:9.6
       environment:
         POSTGRES_USER: root

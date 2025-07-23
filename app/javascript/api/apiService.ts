@@ -5,7 +5,9 @@ import { setAuthHeaders, getHeaders, isTokenValid } from "../authentication/toke
 
 // Use this function for authenticated calls
 const createAxiosInstance = (): AxiosInstance => {
-  if (!getHeaders()) {
+  const headers = getHeaders()
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+  if (!headers || Object.keys(headers).length === 0) {
     throw new Error("Unauthorized")
   }
   if (!isTokenValid()) {
