@@ -49,7 +49,7 @@ describe("Rental listings directory page", () => {
     cy.wait("@listings")
     cy.get("#upcoming-lotteries").isInViewport()
   })
-  
+
   it("does not redirect to sign in page when there is no user session", () => {
     cy.intercept("/api/v1/listings/a0W0P00000Hc7RcUAJ.json", {
       fixture: "openRentalListing.json",
