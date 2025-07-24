@@ -4,6 +4,7 @@ import withAppSetup from "../../layouts/withAppSetup"
 import { getListing } from "../../api/listingApiService"
 import { RailsListing } from "../../modules/listings/SharedHelpers"
 import { AppPages } from "../../util/routeUtil"
+import Wizard from "../wizard"
 
 interface ListingApplicationProps {
   listingId: string
@@ -24,9 +25,8 @@ const ListingApplication = (props: ListingApplicationProps) => {
       title={listing?.Name ? listing?.Name : null}
       image={listing?.Listing_Images ? listing?.Listing_Images[0].displayImageURL : null}
     >
-      <div style={{ textAlign: "center" }}>
-        <h1>{listing?.Id}</h1>
-      </div>
+      <h1>{listing?.Id}</h1>
+      <Wizard />
     </Layout>
   )
 }
