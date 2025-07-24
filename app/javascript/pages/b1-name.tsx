@@ -31,7 +31,7 @@ interface CheckboxProps extends AriaCheckboxProps, ToggleStateOptions {
   children?: React.ReactNode
 }
 
-const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>((props, forwardedRef) => {
+export const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>((props, forwardedRef) => {
   const { children } = props
   const state = useToggleState(props)
   const ref = React.useRef<HTMLInputElement>(null)
@@ -104,24 +104,24 @@ const B1Name = ({ applicationData, nextPage, prevPage, saveData }: Props) => {
         </button>
       )}
 
-      <Form onSubmit={() => handleSubmit(onSubmit, onError)} className="my-2">
+      <Form onSubmit={handleSubmit(onSubmit, onError)} className="my-2">
         <fieldset>
           <legend>Your Name</legend>
           <Controller
             control={control}
             name="first-name"
             rules={{ required: "Name is required.", pattern: /^[A-Za-z]+$/ }}
-            render={({ onChange, onBlur, value, name, ref }, { invalid }) => (
+            render={({ onChange, onBlur, value, name }, { invalid }) => (
               <TextField
                 className="my-2 flex flex-col"
                 value={value}
                 onChange={onChange}
                 onBlur={onBlur}
-                ref={ref}
                 name={name}
+                validationBehavior="aria"
                 isInvalid={invalid}
               >
-                <Input type="text" ref={ref} placeholder="First Name" className="form-input my-2" />
+                <Input type="text" placeholder="First Name" className="form-input my-2" />
                 <FieldError className="error-message">invalid/missing first name</FieldError>
               </TextField>
             )}
@@ -130,22 +130,17 @@ const B1Name = ({ applicationData, nextPage, prevPage, saveData }: Props) => {
             control={control}
             name="middle-name"
             rules={{ required: "Name is required.", pattern: /^[A-Za-z]+$/ }}
-            render={({ onChange, onBlur, value, name, ref }, { invalid }) => (
+            render={({ onChange, onBlur, value, name }, { invalid }) => (
               <TextField
                 className="my-2 flex flex-col"
                 value={value}
                 onChange={onChange}
                 onBlur={onBlur}
-                ref={ref}
                 name={name}
+                validationBehavior="aria"
                 isInvalid={invalid}
               >
-                <Input
-                  type="text"
-                  ref={ref}
-                  placeholder="Middle Name"
-                  className="form-input my-2"
-                />
+                <Input type="text" placeholder="Middle Name" className="form-input my-2" />
                 <FieldError className="error-message">invalid middle name</FieldError>
               </TextField>
             )}
@@ -154,17 +149,17 @@ const B1Name = ({ applicationData, nextPage, prevPage, saveData }: Props) => {
             control={control}
             name="last-name"
             rules={{ required: "Name is required.", pattern: /^[A-Za-z]+$/ }}
-            render={({ onChange, onBlur, value, name, ref }, { invalid }) => (
+            render={({ onChange, onBlur, value, name }, { invalid }) => (
               <TextField
                 className="my-2 flex flex-col"
                 value={value}
                 onChange={onChange}
                 onBlur={onBlur}
-                ref={ref}
                 name={name}
+                validationBehavior="aria"
                 isInvalid={invalid}
               >
-                <Input type="text" ref={ref} placeholder="Last Name" className="form-input" />
+                <Input type="text" placeholder="Last Name" className="form-input" />
                 <FieldError className="error-message">invalid/missing last name</FieldError>
               </TextField>
             )}
@@ -180,7 +175,7 @@ const B1Name = ({ applicationData, nextPage, prevPage, saveData }: Props) => {
               required: true,
               pattern: /^\d{1,2}$/,
             }}
-            render={({ onChange, onBlur, value, name, ref }, { invalid }) => (
+            render={({ onChange, onBlur, value, name }, { invalid }) => (
               <TextField
                 type="number"
                 className="my-2 flex flex-col"
@@ -188,9 +183,10 @@ const B1Name = ({ applicationData, nextPage, prevPage, saveData }: Props) => {
                 onChange={onChange}
                 onBlur={onBlur}
                 name={name}
+                validationBehavior="aria"
                 isInvalid={invalid}
               >
-                <Input ref={ref} placeholder="MM" className="w-12 form-input" />
+                <Input placeholder="MM" className="w-12 form-input" />
                 <FieldError className="error-message">invalid/missing dob</FieldError>
               </TextField>
             )}
@@ -202,7 +198,7 @@ const B1Name = ({ applicationData, nextPage, prevPage, saveData }: Props) => {
               required: true,
               pattern: /^\d{1,2}$/,
             }}
-            render={({ onChange, onBlur, value, name, ref }, { invalid }) => (
+            render={({ onChange, onBlur, value, name }, { invalid }) => (
               <TextField
                 type="number"
                 className="my-2 flex flex-col"
@@ -210,9 +206,10 @@ const B1Name = ({ applicationData, nextPage, prevPage, saveData }: Props) => {
                 onChange={onChange}
                 onBlur={onBlur}
                 name={name}
+                validationBehavior="aria"
                 isInvalid={invalid}
               >
-                <Input ref={ref} placeholder="DD" className="w-12 form-input" />
+                <Input placeholder="DD" className="w-12 form-input" />
                 <FieldError className="error-message">invalid/missing dob</FieldError>
               </TextField>
             )}
@@ -222,9 +219,9 @@ const B1Name = ({ applicationData, nextPage, prevPage, saveData }: Props) => {
             name="dob-year"
             rules={{
               required: true,
-              pattern: /^\d{1,2}$/,
+              pattern: /^\d\d\d\d$/,
             }}
-            render={({ onChange, onBlur, value, name, ref }, { invalid }) => (
+            render={({ onChange, onBlur, value, name }, { invalid }) => (
               <TextField
                 type="number"
                 className="my-2 flex flex-col"
@@ -232,9 +229,10 @@ const B1Name = ({ applicationData, nextPage, prevPage, saveData }: Props) => {
                 onChange={onChange}
                 onBlur={onBlur}
                 name={name}
+                validationBehavior="aria"
                 isInvalid={invalid}
               >
-                <Input ref={ref} placeholder="YYYY" className="w-16 form-input" />
+                <Input placeholder="YYYY" className="w-16 form-input" />
                 <FieldError className="error-message">invalid/missing dob</FieldError>
               </TextField>
             )}
@@ -245,21 +243,21 @@ const B1Name = ({ applicationData, nextPage, prevPage, saveData }: Props) => {
           <Controller
             control={control}
             name="email"
-            rules={{ required: !noEmail, pattern: /^[A-Za-z]+$/ }}
-            render={({ onChange, onBlur, value, name, ref }, { invalid }) => (
+            rules={{ required: !noEmail, pattern: /^[^@]+@[^@]+\.[^@]+$/ }}
+            render={({ onChange, onBlur, value, name }, { invalid }) => (
               <TextField
                 className="my-2 flex flex-col"
                 type="email"
                 value={value}
                 onChange={onChange}
                 onBlur={onBlur}
-                ref={ref}
                 name={name}
+                validationBehavior="aria"
                 isInvalid={invalid}
                 isDisabled={noEmail}
               >
                 <Label>Your email address</Label>
-                <Input ref={ref} placeholder="Middle Name" className="form-input" />
+                <Input placeholder="sf@google.com" className="form-input" />
                 <FieldError className="error-message">invalid/missing email</FieldError>
               </TextField>
             )}
@@ -267,9 +265,9 @@ const B1Name = ({ applicationData, nextPage, prevPage, saveData }: Props) => {
           <Controller
             control={control}
             name="no-email"
-            rules={{ required: false }} // Remove required if checkbox is optional
-            render={({ onChange, onBlur, value, name, ref }) => (
-              <Checkbox value={value} onChange={onChange} onBlur={onBlur} ref={ref} name={name}>
+            rules={{ required: false }}
+            render={({ onChange, onBlur, value, name }) => (
+              <Checkbox value={value} onChange={onChange} onBlur={onBlur} name={name}>
                 <Label className="mx-2">I don't have an email address</Label>
               </Checkbox>
             )}
