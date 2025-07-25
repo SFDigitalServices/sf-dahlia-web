@@ -1,5 +1,5 @@
 {
-    "dependencies": {
-        "coffeelint-forbidden-regex": "0.1.1"
-    }
+  "dependencies": {
+    "coffeelint-forbidden-regex": "0.1.1"
+  }
 }
