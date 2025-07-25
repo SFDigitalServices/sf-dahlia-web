@@ -23,3 +23,7 @@ do ->
         toFilter = '2017-03-23'
         result = $filter('dateSuffixOrShortDate')(toFilter)
         expect(result).toEqual '3/23/2017'
+
+      it 'test linting', ->
+        foo = 'bar'
+        expect(foo).toEqual('bar')
