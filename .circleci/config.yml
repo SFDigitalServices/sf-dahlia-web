@@ -169,13 +169,6 @@ jobs:
       - run: bundle exec rake db:setup
       - run: bundle exec rake db:test:prepare
       - run: bundle exec rake db:migrate
-      - run:
-          name: Download cc-test-reporter
-          command: |
-            mkdir -p tmp/
-            curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./tmp/cc-test-reporter
-            chmod +x ./tmp/cc-test-reporter
-            ./tmp/cc-test-reporter before-build
       - persist_to_workspace:
           root: .
           paths:
@@ -239,16 +232,8 @@ jobs:
     steps:
       - checkout
       - *attach_workspace
-      - run: ./tmp/cc-test-reporter format-coverage -t lcov -o tmp/codeclimate.unit-react.json app/javascript/test-coverage/lcov.info
-      - run: ./tmp/cc-test-reporter format-coverage -t simplecov -o tmp/codeclimate.unit-rspec.json coverage/coverage.json
-      - run: ./tmp/cc-test-reporter sum-coverage tmp/codeclimate.*.json -p 2 -o tmp/codeclimate.total.json
-      - run: ./tmp/cc-test-reporter upload-coverage -i tmp/codeclimate.total.json
       - qlty/coverage_publish:
           files: app/javascript/test-coverage/lcov.info, coverage/coverage.json
-      - persist_to_workspace:
-          root: .
-          paths:
-            - tmp/codeclimate.*.json
   e2e-legacy:
     <<: *defaults
     parallelism: 4
