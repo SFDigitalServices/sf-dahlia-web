@@ -84,7 +84,6 @@
     "chromedriver": "^131.0.0",
     "coffee-script": "1.12.7",
     "coffeelint": "^2.1.0",
-    "coffeelint-forbidden-regex": "0.1.1",
     "concurrently": "^8.0.1",
     "cucumber": "^2.3.1",
     "cypress": "^13.6.3",
