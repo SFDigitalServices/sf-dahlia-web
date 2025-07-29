@@ -131,7 +131,6 @@ const B2Contact = ({ nextPage, prevPage, saveData, applicationData }: Props) => 
       <button className="button" type="button" onClick={prevPage}>
         back
       </button>
-
       <h2>
         Thanks, {applicationData["first-name"] || ""}. Now we need to know how to contact you.
       </h2>
@@ -267,7 +266,9 @@ const B2Contact = ({ nextPage, prevPage, saveData, applicationData }: Props) => 
                     <Popover>
                       <ListBox>
                         {phoneTypes.map(({ label, value }) => (
-                          <ListBoxItem id={value}>{label}</ListBoxItem>
+                          <ListBoxItem id={value} key={label}>
+                            {label}
+                          </ListBoxItem>
                         ))}
                       </ListBox>
                     </Popover>
@@ -563,7 +564,6 @@ const B2Contact = ({ nextPage, prevPage, saveData, applicationData }: Props) => 
           />
         </Group>
       </Form>
-
       <button className="mt-8 button" type="submit">
         next
       </button>
