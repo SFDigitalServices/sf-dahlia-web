@@ -21,6 +21,7 @@
     $localStorage = undefined
 
     beforeEach module('ui.router')
+    #
     # have to include http-etag to allow `$http.get(...).success(...).cached(...)` to work in the tests
     beforeEach module('http-etag')
     beforeEach module('dahlia.services', ($provide) ->
