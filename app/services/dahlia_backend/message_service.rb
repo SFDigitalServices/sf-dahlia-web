@@ -83,8 +83,7 @@ module DahliaBackend
     # @return [Object, nil] Response from API or nil if sending fails
     def send_message(endpoint, fields)
       log_info("Sending message to #{endpoint}: #{fields}")
-      timeout_in_seconds = 30
-      response = client.post(endpoint, fields, timeout_in_seconds: timeout_in_seconds)
+      response = client.post(endpoint, fields)
 
       if response
         log_info("Successfully sent message to: #{fields[:email]}")

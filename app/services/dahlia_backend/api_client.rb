@@ -23,12 +23,12 @@ module DahliaBackend
     end
 
     def http_client
-      @http_client ||= HTTP.headers('x-api-key' => api_key)
+      timeout_in_seconds = 30
+      @http_client ||= HTTP.headers('x-api-key' => api_key).timeout(timeout_in_seconds)
     end
 
-    def post(endpoint, params, timeout_in_seconds: nil)
-      client = timeout_in_seconds ? http_client.timeout(timeout_in_seconds) : http_client
-      response = client.post("#{api_url}#{endpoint}", json: params)
+    def post(endpoint, params)
+      response = http_client.post("#{api_url}#{endpoint}", json: params)
 
       if response.code >= 400
         log_error("POST request failed: #{response.code} #{response.body}", nil)
