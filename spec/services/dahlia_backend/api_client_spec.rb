@@ -12,6 +12,7 @@ RSpec.describe DahliaBackend::ApiClient, type: :service do
     allow(ENV).to receive(:fetch).with('DAHLIA_API_URL').and_return(api_url)
     allow(ENV).to receive(:fetch).with('DAHLIA_API_KEY').and_return(api_key)
     allow(HTTP).to receive(:headers).and_return(HTTP)
+    allow(HTTP).to receive(:timeout).and_return(HTTP)
     allow(HTTP).to receive(:post).and_return(http_response)
     allow(HTTP).to receive(:get).and_return(http_response)
   end
@@ -37,6 +38,15 @@ RSpec.describe DahliaBackend::ApiClient, type: :service do
       allow(ENV).to receive(:fetch).with('DAHLIA_API_KEY').and_raise(KeyError)
       expect(api_client).to receive(:log_warn).with('DAHLIA_API_KEY environment variable not set')
       expect(api_client.api_key).to be_nil
+    end
+  end
+
+  describe '#timeout' do
+    it 'sets the timeout for the HTTP client' do
+      headers_double = double('headers')
+      expect(HTTP).to receive(:headers).with('x-api-key' => api_key).and_return(headers_double)
+      expect(headers_double).to receive(:timeout).with(30)
+      api_client.http_client
     end
   end
 
