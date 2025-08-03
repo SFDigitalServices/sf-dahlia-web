@@ -23,7 +23,7 @@ module DahliaBackend
     end
 
     def http_client
-      timeout_in_seconds = 30
+      timeout_in_seconds = 10
       @http_client ||= HTTP.headers('x-api-key' => api_key).timeout(timeout_in_seconds)
     end
 

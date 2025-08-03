@@ -44,8 +44,13 @@ RSpec.describe DahliaBackend::ApiClient, type: :service do
   describe '#timeout' do
     it 'sets the timeout for the HTTP client' do
       headers_double = double('headers')
-      expect(HTTP).to receive(:headers).with('x-api-key' => api_key).and_return(headers_double)
-      expect(headers_double).to receive(:timeout).with(30)
+
+      expect(HTTP)
+        .to receive(:headers)
+        .with('x-api-key' => api_key)
+        .and_return(headers_double)
+
+      expect(headers_double).to receive(:timeout).with(10)
       api_client.http_client
     end
   end
