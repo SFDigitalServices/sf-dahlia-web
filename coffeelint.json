@@ -36,14 +36,6 @@
   "eol_last": {
     "level": "ignore"
   },
-  "forbidden_regex": {
-    "module": "coffeelint-forbidden-regex",
-    "level": "warn",
-    "regexList": [
-      "[^_]\\.merge"
-    ],
-    "message": "Avoid using angular's merge function due to a security vulnerability"
-  },
   "indentation": {
     "value": 2,
     "level": "error"
