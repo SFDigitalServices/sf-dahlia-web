@@ -41,4 +41,11 @@ module.exports = {
   moduleFileExtensions: ["js", "jsx", "ts", "tsx"],
   testEnvironment: "jsdom",
   testSequencer: "<rootDir>/__tests__/CustomTestSequencer.ts",
+  moduleNameMapper: {
+    "api/(.*)": "<rootDir>/app/javascript/api/$1",
+    "hooks/(.*)": "<rootDir>/app/javascript/hooks/$1",
+    "layouts/(.*)": "<rootDir>/app/javascript/layouts/$1",
+    "modules/(.*)": "<rootDir>/app/javascript/modules/$1",
+    "util/(.*)": "<rootDir>/app/javascript/util/$1",
+  }
 }
