@@ -1,9 +1,6 @@
 /*eslint no-undef: "error"*/
 /*eslint-env node*/
 
-const { pathsToModuleNameMapper } = require('ts-jest');
-const { compilerOptions } = require('./tsconfig.json');
-
 process.env.TZ = "UTC"
 process.env.NODE_ENV = "test"
 process.env.UNLEASH_ENV = "development"
