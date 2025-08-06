@@ -14,7 +14,7 @@
     "noEmit": false,
     "resolveJsonModule": true,
     "allowJs": true,
-    "types": ["@testing-library/jest-dom", "node", "jest"],
+    "types": ["@testing-library/jest-dom", "node", "jest"]
   },
   "include": ["app/javascript/**/*"],
   "exclude": ["app/javascript/__tests__/**", "node_modules", "vendor", "public"],
