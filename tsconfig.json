@@ -14,14 +14,7 @@
     "noEmit": false,
     "resolveJsonModule": true,
     "allowJs": true,
-    "types": ["@testing-library/jest-dom", "node", "jest"],
-    "paths": {
-      "api/*": ["./app/javascript/api/*"],
-      "hooks/*": ["./app/javascript/hooks/*"],
-      "layouts/*": ["./app/javascript/layouts/*"],
-      "modules/*": ["./app/javascript/modules/*"],
-      "util/*": ["./app/javascript/util/*"],
-    },
+    "types": ["@testing-library/jest-dom", "node", "jest"]
   },
   "include": ["app/javascript/**/*"],
   "exclude": ["app/javascript/__tests__/**", "node_modules", "vendor", "public"],

@@ -24,8 +24,8 @@ import { getSfGovUrl, renderInlineMarkup } from "../../util/languageUtil"
 import "./ListingDetailsApply.scss"
 import { localizedPath } from "../../util/routeUtil"
 import { ListingState } from "../listings/ListingState"
-import { useFeatureFlag } from "hooks/useFeatureFlag"
-import { UNLEASH_FLAG } from "modules/constants"
+import { useFeatureFlag } from "../../hooks/useFeatureFlag"
+import { UNLEASH_FLAG } from "../../modules/constants"
 
 export interface ListingDetailsApplyProps {
   listing: RailsListing

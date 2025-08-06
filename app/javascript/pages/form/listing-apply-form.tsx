@@ -1,13 +1,13 @@
 import React, { useMemo, useEffect, useState } from "react"
-import Layout from "layouts/Layout"
-import withAppSetup from "layouts/withAppSetup"
-import { getListing } from "api/listingApiService"
-import type { RailsListing } from "modules/listings/SharedHelpers"
-import { AppPages, getListingDetailPath } from "util/routeUtil"
+import Layout from "../../layouts/Layout"
+import withAppSetup from "../../layouts/withAppSetup"
+import { getListing } from "../../api/listingApiService"
+import type { RailsListing } from "../../modules/listings/SharedHelpers"
+import { AppPages, getListingDetailPath } from "../../util/routeUtil"
 import { LoadingOverlay } from "@bloom-housing/ui-components"
 import Intro from "./components/intro"
-import { useFeatureFlag } from "hooks/useFeatureFlag"
-import { UNLEASH_FLAG } from "modules/constants"
+import { useFeatureFlag } from "../../hooks/useFeatureFlag"
+import { UNLEASH_FLAG } from "../../modules/constants"
 
 interface ListingApplyFormProps {
   assetPaths: unknown
