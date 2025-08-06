@@ -17,11 +17,12 @@ interface ListingApplyFormProps {
 const ListingApplyForm = (props: ListingApplyFormProps) => {
   const [listing, setListing] = useState<RailsListing>(null)
 
-  const { unleashFlag: formEngine } = useFeatureFlag(UNLEASH_FLAG.FORM_ENGINE, false)
+  const { flagsReady, unleashFlag: formEngine } = useFeatureFlag(UNLEASH_FLAG.FORM_ENGINE, false)
 
   useMemo(() => {
-    if (!formEngine) window.location.href = `${getListingDetailPath()}/${props.listingId}`
-  }, [formEngine, props.listingId])
+    if (flagsReady && !formEngine)
+      window.location.href = `${getListingDetailPath()}/${props.listingId}`
+  }, [flagsReady, formEngine, props.listingId])
 
   useEffect(() => {
     void getListing(props.listingId).then((listing: RailsListing) => {
