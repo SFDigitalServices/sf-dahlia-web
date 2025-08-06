@@ -56,10 +56,8 @@
 
 # ng-idle configuration
 @dahlia.config ['IdleProvider', 'TitleProvider', (IdleProvider, TitleProvider) ->
-  idleTime = if window.APPLICATION_EXTENDED_IDLE_TIME then 60 * 60 * 8 else 300
-  timeoutTime = if window.APPLICATION_EXTENDED_IDLE_TIME then 60 * 60 * 7 else 60
-  console.log(window)
-  console.log(window.APPLICATION_EXTENDED_IDLE_TIME)
+  idleTime =    if window.ANGULAR_EXTENDED_IDLE_TIME then 60 * 60 * 8 else 300
+  timeoutTime = if window.ANGULAR_EXTENDED_IDLE_TIME then 60 * 60 * 7 else 60
   # don't override the title with timeout countdowns/warnings
   TitleProvider.enabled(false)
   IdleProvider.idle(idleTime)
