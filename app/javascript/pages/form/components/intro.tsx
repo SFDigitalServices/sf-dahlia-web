@@ -1,8 +1,8 @@
 import React from "react"
-import { getListingAddressString } from "util/listingUtil"
-import { localizedFormat, formatTimeOfDay } from "util/languageUtil"
+import { getListingAddressString } from "../../../util/listingUtil"
+import { localizedFormat, formatTimeOfDay } from "../../../util/languageUtil"
 import { t } from "@bloom-housing/ui-components"
-import type { RailsListing } from "modules/listings/SharedHelpers"
+import type { RailsListing } from "../../../modules/listings/SharedHelpers"
 import fallbackImg from "../../../../assets/images/bg@1200.jpg"
 
 interface IntroProps {
