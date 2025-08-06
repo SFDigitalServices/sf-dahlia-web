@@ -97,6 +97,11 @@ $colors: (
 // /* Additional stylesheets are contained within individual component folders */
 // /* ***********/
 
+// USWDS POC
+@import "@trussworks/react-uswds/lib/index.css";
+@import "@trussworks/react-uswds/lib/uswds.css";
+
+
 // AG Grid
 @import "ag-grid-community/styles/ag-grid.css";
 @import "ag-grid-community/styles/ag-theme-alpine.css";
