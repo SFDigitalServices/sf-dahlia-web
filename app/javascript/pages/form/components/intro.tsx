@@ -9,6 +9,8 @@ interface IntroProps {
   listing: RailsListing
 }
 
+// TODO: This component is used as a placeholder for now, the look and contents will need to be updated
+
 const Intro = ({ listing }: IntroProps) => {
   const imageUrl =
     listing?.Listing_Images?.length > 0
