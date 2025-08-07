@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import React from "react"
 import ListingApplyForm from "../../../pages/form/listing-apply-form"
 import { setupLocationAndRouteMock } from "../../__util__/accountUtils"
