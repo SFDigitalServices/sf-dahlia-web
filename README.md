@@ -214,6 +214,10 @@ Qlty provides a cli to run checks locally.
 - `qlty check` will run linters and plugins.
 - qlty commands run on changed files by default. To run against all files, pass the -a or --all switch.
 
+### Storybook
+
+[Storybook](https://storybook.js.org/) is used to develop and document our components. Run `yarn storybook` to view the component stories from a browser.
+
 ### Changing the Style Guide settings
 
 Any changes to Rubocop, JSCS, etc. affect the entire team, so it should be a group decision before committing any changes. Please don't commit changes without discussing with the team first.
