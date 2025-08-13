@@ -32,7 +32,7 @@ export const ListingDetailsLotteryInfo = ({ listing }: ListingDetailsLotteryInfo
                 getTranslatedString(listing.Lottery_Venue, "Lottery_Venue__c", listing.translations)
               )}
           </div>
-          {process.env.COVID_UPDATE !== "true" && !is55OakListingTemp(listing.listingID) && (
+          {!is55OakListingTemp(listing.listingID) && (
             <p className="mt-4 text-gray-700">{t("label.preLotteryInfo")}</p>
           )}
         </SidebarBlock>
