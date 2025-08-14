@@ -537,7 +537,7 @@ exports[`ListingDetailsFeatures displays listing details features section when r
           <div
             class="grid-section__inner md:grid md:grid-cols-2 md:gap-8 mb-5"
           >
-            <article
+            <div
               aria-label=""
               class="grid-item"
             >
@@ -561,7 +561,7 @@ exports[`ListingDetailsFeatures displays listing details features section when r
               >
                 May be higher for lower credit scores
               </div>
-            </article>
+            </div>
           </div>
         </section>
         <div
