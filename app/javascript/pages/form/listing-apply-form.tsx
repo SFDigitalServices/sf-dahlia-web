@@ -5,9 +5,10 @@ import { getListing } from "../../api/listingApiService"
 import type { RailsListing } from "../../modules/listings/SharedHelpers"
 import { AppPages, getListingDetailPath } from "../../util/routeUtil"
 import { LoadingOverlay } from "@bloom-housing/ui-components"
-import Intro from "./components/intro"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import { UNLEASH_FLAG } from "../../modules/constants"
+import FormEngine from "../../formEngine/formEngine"
+import testSchema from "../../formEngine/testListingApplicationTruncated"
 
 interface ListingApplyFormProps {
   assetPaths: unknown
@@ -33,9 +34,7 @@ const ListingApplyForm = (props: ListingApplyFormProps) => {
   return (
     <LoadingOverlay isLoading={!listing && !formEngine}>
       <Layout title={listing?.Name ? `${listing?.Name} Application` : null}>
-        <div className="bg-gray-300 flex justify-center p-8">
-          {listing && <Intro listing={listing} />}
-        </div>
+        {listing && <FormEngine listing={listing} schema={testSchema} />}
       </Layout>
     </LoadingOverlay>
   )
