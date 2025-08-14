@@ -28,7 +28,7 @@ exports[`ListingDetailsWaitlist renders waitlist section if listing has waitlist
             class="uppercase text-gray-800 font-bold font-alt-sans leading-7"
           >
             <span
-              class="text-right w-12 inline-block pr-2.5 text-base"
+              class="text-right w-16 inline-block pr-2.5 text-base"
             >
               5
             </span>
@@ -42,7 +42,7 @@ exports[`ListingDetailsWaitlist renders waitlist section if listing has waitlist
             class="uppercase text-gray-800 font-bold font-alt-sans leading-7"
           >
             <span
-              class="text-right w-12 inline-block pr-2.5 text-base"
+              class="text-right w-16 inline-block pr-2.5 text-base"
             >
               2
             </span>

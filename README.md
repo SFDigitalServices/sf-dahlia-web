@@ -33,7 +33,7 @@ Before you install DAHLIA, your system should have the following:
   - For issues installing on an Apple Silicon mac, go [here](https://zwbetz.com/install-ruby-version-manager-on-mac/)
 - [Bundler](https://github.com/bundler/bundler) `gem install bundler`
 - [PostgreSQL](https://postgresapp.com/)
-- [Node.js](https://nodejs.org/en/) 18.17.0
+- [Node.js](https://nodejs.org/en/)
   - Installing node with nvm is recommended. See [installing NVM and node.js on MacOS](https://stackoverflow.com/a/28025834/260495).
 - [Yarn](https://classic.yarnpkg.com/en/docs/install/#mac-stable)
   - After node is installed, you can install yarn with `npm install --global yarn`
@@ -72,6 +72,7 @@ More information about getting started can be found on the team confluence.
 
   - `./bin/shakapacker-dev-server` to start webpack
     - This command might fail with `Command "webpack-dev-server" not found.`. In that case, you'll need to reinstall webpacker with `bundle exec rails:shakapacker:install`. During the install it will ask if you want to overwrite a few config files, do not overwrite them.
+
 - In another terminal tab, run `rails s` to start the rails server
 
 ## How to migrate a page from AngularJS to React
@@ -213,6 +214,10 @@ Qlty provides a cli to run checks locally.
 - Run `qlty smells` to scan for code duplication and complexity
 - `qlty check` will run linters and plugins.
 - qlty commands run on changed files by default. To run against all files, pass the -a or --all switch.
+
+### Storybook
+
+[Storybook](https://storybook.js.org/) is used to develop and document our components. Run `yarn storybook` to view the component stories from a browser.
 
 ### Changing the Style Guide settings
 

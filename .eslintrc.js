@@ -188,6 +188,8 @@ module.exports = {
     "**/.eslintrc.js",
     "cypress.config.ts",
     "Gruntfile.js",
+    ".storybook",
+    "stories",
   ],
   settings: {
     react: {
