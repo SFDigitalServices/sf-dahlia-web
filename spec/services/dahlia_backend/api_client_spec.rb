@@ -50,7 +50,7 @@ RSpec.describe DahliaBackend::ApiClient, type: :service do
         .with('x-api-key' => api_key)
         .and_return(headers_double)
 
-      expect(headers_double).to receive(:timeout).with(10)
+      expect(headers_double).to receive(:timeout).with(2)
       api_client.http_client
     end
   end
