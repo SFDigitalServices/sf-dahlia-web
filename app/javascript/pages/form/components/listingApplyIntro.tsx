@@ -5,13 +5,13 @@ import { t } from "@bloom-housing/ui-components"
 import type { RailsListing } from "../../../modules/listings/SharedHelpers"
 import fallbackImg from "../../../../assets/images/bg@1200.jpg"
 
-interface IntroProps {
+interface ListingApplyIntroProps {
   listing: RailsListing
 }
 
 // TODO: This component is used as a placeholder for now, the look and contents will need to be updated
 
-const Intro = ({ listing }: IntroProps) => {
+const ListingApplyIntro = ({ listing }: ListingApplyIntroProps) => {
   const imageUrl =
     listing?.Listing_Images?.length > 0
       ? listing.Listing_Images[0].displayImageURL
@@ -33,4 +33,4 @@ const Intro = ({ listing }: IntroProps) => {
   )
 }
 
-export default Intro
+export default ListingApplyIntro
