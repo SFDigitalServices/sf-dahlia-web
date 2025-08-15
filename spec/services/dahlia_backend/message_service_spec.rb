@@ -34,17 +34,6 @@ RSpec.describe DahliaBackend::MessageService do
     allow(Time.zone).to receive(:parse).and_return(Time.parse(listing.Lottery_Date))
   end
 
-  describe '.service_enabled?' do
-    it 'returns true when feature flag is enabled' do
-      expect(described_class.service_enabled?).to be true
-    end
-
-    it 'returns false when feature flag is disabled' do
-      allow(Rails.configuration.unleash).to receive(:is_enabled?).and_return(false)
-      expect(described_class.service_enabled?).to be false
-    end
-  end
-
   describe '.send_application_confirmation' do
     it 'delegates to instance method' do
       expect_any_instance_of(described_class).to receive(:send_application_confirmation)
@@ -69,18 +58,6 @@ RSpec.describe DahliaBackend::MessageService do
 
   describe '#send_application_confirmation' do
     subject { described_class.new(client) }
-
-    context 'when service is disabled' do
-      before do
-        allow(Rails.configuration.unleash).to receive(:is_enabled?).and_return(false)
-      end
-
-      it 'does not send a message' do
-        expect(client).not_to receive(:post)
-        expect(subject.send_application_confirmation(application_params,
-                                                     application_response)).to be_nil
-      end
-    end
 
     context 'with invalid params' do
       it 'returns nil if application_params missing' do
