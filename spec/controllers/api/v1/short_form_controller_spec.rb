@@ -24,6 +24,17 @@ describe Api::V1::ShortFormController, type: :controller do
       )
     end
 
+    let(:emailer_params) do
+      {
+        locale: nil,
+        email: 'test@example.com',
+        listing_id: '12345',
+        lottery_number: '67890',
+        first_name: 'John',
+        last_name: 'Doe',
+      }
+    end
+
     let(:applicant_attrs) do
       {
         contactId: 'user_contact_id',
@@ -49,11 +60,35 @@ describe Api::V1::ShortFormController, type: :controller do
       allow(DahliaBackend::MessageService).to receive(:send_application_confirmation)
     end
 
-    it 'submits the application and sends confirmation' do
+    it 'submits the application and sends confirmation using old emailer' do
+      allow(Rails.configuration).to receive_message_chain(:unleash,
+                                                          :is_enabled?).and_return(false)
+
       # Precise expectations with arguments
       expect(Force::ShortFormService).to receive(:create_or_update)
         .with(application_params, applicant_attrs)
         .and_return(response_data)
+
+      expect(Emailer).to receive(:submission_confirmation)
+        .with(emailer_params)
+        .and_return(double(deliver_later: true))
+
+      expect(DahliaBackend::MessageService).not_to receive(:send_application_confirmation)
+
+      post :submit_application
+      expect(response).to have_http_status(:ok)
+    end
+
+    it 'submits the application and sends confirmation using new message service' do
+      allow(Rails.configuration).to receive_message_chain(:unleash,
+                                                          :is_enabled?).and_return(true)
+
+      # Precise expectations with arguments
+      expect(Force::ShortFormService).to receive(:create_or_update)
+        .with(application_params, applicant_attrs)
+        .and_return(response_data)
+
+      expect(Emailer).not_to receive(:submission_confirmation)
 
       expect(DahliaBackend::MessageService).to receive(:send_application_confirmation)
         .with(application_params, response_data, nil)

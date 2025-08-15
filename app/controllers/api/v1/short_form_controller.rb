@@ -221,8 +221,7 @@ class Api::V1::ShortFormController < ApiController
   end
 
   def send_submit_app_confirmation(response)
-    # TODO: check for rental
-    if application_params[:listingID] == ENV.fetch('TEMP_EMAIL_LISTING_ID', nil)
+    if !Rails.configuration.unleash.is_enabled?('UseMessageService') || application_params[:listingID] == ENV.fetch('TEMP_EMAIL_LISTING_ID', nil)
       Rails.logger.info("ShortFormController#send_submit_app_confirmation: Sending email from old emailer service for #{application_params[:listingID]}")
       Emailer.submission_confirmation(
         locale: params[:locale],
