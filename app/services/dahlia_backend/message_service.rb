@@ -82,7 +82,7 @@ module DahliaBackend
         log_info("Successfully sent message to: #{fields[:email]}")
         response
       else
-        log_error('Failed to send message', nil)
+        log_error("Failed to send message to #{endpoint}: #{fields.to_json}", nil)
         nil
       end
     end
