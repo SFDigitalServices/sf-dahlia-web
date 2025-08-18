@@ -72,6 +72,7 @@ More information about getting started can be found on the team confluence.
 
   - `./bin/shakapacker-dev-server` to start webpack
     - This command might fail with `Command "webpack-dev-server" not found.`. In that case, you'll need to reinstall webpacker with `bundle exec rails:shakapacker:install`. During the install it will ask if you want to overwrite a few config files, do not overwrite them.
+
 - In another terminal tab, run `rails s` to start the rails server
 
 ## How to migrate a page from AngularJS to React
@@ -235,4 +236,4 @@ DAHLIA is free software; you can redistribute it and/or modify it under the term
 
 This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License along with DAHLIA. If not, see [http://choosealicense.com/licenses/gpl-3.0/](http://choosealicense.com/licenses/gpl-3.0/)
+You should have received a copy of the GNU General Public License along with DAHLIA. If not, see [http://choosealicense.com/licenses/gpl-3.0/](http://choosealicense.com/licenses/gpl-3.0/).
