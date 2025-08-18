@@ -221,8 +221,17 @@ class Api::V1::ShortFormController < ApiController
   end
 
   def send_submit_app_confirmation(response)
-    if !Rails.configuration.unleash.is_enabled?('UseMessageService') || application_params[:listingID] == ENV.fetch('TEMP_EMAIL_LISTING_ID', nil)
-      Rails.logger.info("ShortFormController#send_submit_app_confirmation: Sending email from old emailer service for #{application_params[:listingID]}")
+    listing_id = application_params[:listingID]
+
+    use_old_emailer =
+      !Rails.configuration.unleash.is_enabled?('UseMessageService') ||
+      listing_id == ENV.fetch('TEMP_EMAIL_LISTING_ID', nil)
+
+    if use_old_emailer
+      Rails.logger.info(
+        'ShortFormController#send_submit_app_confirmation: ' \
+        "Sending email from old emailer service for #{listing_id}",
+      )
       Emailer.submission_confirmation(
         locale: params[:locale],
         email: application_params[:primaryApplicant][:email],
@@ -232,9 +241,15 @@ class Api::V1::ShortFormController < ApiController
         last_name: response['primaryApplicant']['lastName'],
       ).deliver_later
     else
-      Rails.logger.info("ShortFormController#send_submit_app_confirmation: Sending email from messaging service for #{application_params[:listingID]}")
-      DahliaBackend::MessageService.send_application_confirmation(application_params,
-                                                                  response, params[:locale])
+      Rails.logger.info(
+        'ShortFormController#send_submit_app_confirmation: ' \
+        "Sending email from messaging service for #{listing_id}",
+      )
+      DahliaBackend::MessageService.send_application_confirmation(
+        application_params,
+        response,
+        params[:locale],
+      )
     end
   end
 
