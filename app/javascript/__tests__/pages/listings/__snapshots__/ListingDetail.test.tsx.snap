@@ -7739,7 +7739,7 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                           <div
                             class="grid-section__inner md:grid md:grid-cols-2 md:gap-8 mb-5"
                           >
-                            <article
+                            <div
                               aria-label=""
                               class="grid-item"
                             >
@@ -7763,7 +7763,7 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                               >
                                 May be higher for lower credit scores
                               </div>
-                            </article>
+                            </div>
                           </div>
                         </section>
                         <div
@@ -7939,7 +7939,7 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                         <div
                           class="grid-section__inner md:grid md:grid-cols-2 md:gap-8 mb-5"
                         >
-                          <article
+                          <div
                             aria-label=""
                             class="grid-item"
                           >
@@ -7963,7 +7963,7 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                             >
                               May be higher for lower credit scores
                             </div>
-                          </article>
+                          </div>
                         </div>
                       </section>
                       <div
@@ -8180,7 +8180,7 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                         <div
                           class="grid-section__inner md:grid md:grid-cols-2 md:gap-8 mb-5"
                         >
-                          <article
+                          <div
                             aria-label=""
                             class="grid-item"
                           >
@@ -8204,7 +8204,7 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                             >
                               May be higher for lower credit scores
                             </div>
-                          </article>
+                          </div>
                         </div>
                       </section>
                       <div
@@ -9419,7 +9419,7 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                         <div
                           class="grid-section__inner md:grid md:grid-cols-2 md:gap-8 mb-5"
                         >
-                          <article
+                          <div
                             aria-label=""
                             class="grid-item"
                           >
@@ -9443,7 +9443,7 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                             >
                               May be higher for lower credit scores
                             </div>
-                          </article>
+                          </div>
                         </div>
                       </section>
                       <div
@@ -13485,7 +13485,7 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                           <div
                             class="grid-section__inner md:grid md:grid-cols-2 md:gap-8 mb-5"
                           >
-                            <article
+                            <div
                               aria-label=""
                               class="grid-item"
                             >
@@ -13504,7 +13504,7 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                               >
                                 or one month's rent
                               </div>
-                            </article>
+                            </div>
                           </div>
                         </section>
                         <div
@@ -13788,7 +13788,7 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                         <div
                           class="grid-section__inner md:grid md:grid-cols-2 md:gap-8 mb-5"
                         >
-                          <article
+                          <div
                             aria-label=""
                             class="grid-item"
                           >
@@ -13807,7 +13807,7 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                             >
                               or one month's rent
                             </div>
-                          </article>
+                          </div>
                         </div>
                       </section>
                       <div
@@ -14132,7 +14132,7 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                         <div
                           class="grid-section__inner md:grid md:grid-cols-2 md:gap-8 mb-5"
                         >
-                          <article
+                          <div
                             aria-label=""
                             class="grid-item"
                           >
@@ -14151,7 +14151,7 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                             >
                               or one month's rent
                             </div>
-                          </article>
+                          </div>
                         </div>
                       </section>
                       <div
@@ -16015,7 +16015,7 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                         <div
                           class="grid-section__inner md:grid md:grid-cols-2 md:gap-8 mb-5"
                         >
-                          <article
+                          <div
                             aria-label=""
                             class="grid-item"
                           >
@@ -16034,7 +16034,7 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                             >
                               or one month's rent
                             </div>
-                          </article>
+                          </div>
                         </div>
                       </section>
                       <div
