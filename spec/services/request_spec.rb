@@ -116,7 +116,7 @@ describe Force::Request do
       expect(cache).to receive(:fetch)
         .with(cache_key, force: false, expires_in: 10.minutes).and_yield
 
-      Force::Request.new.cached_get(endpoint, params, 'false')
+      Force::Request.new.cached_get(endpoint, params, false)
     end
   end
 
