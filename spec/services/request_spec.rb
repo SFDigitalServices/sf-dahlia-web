@@ -10,7 +10,7 @@ describe Force::Request do
   let(:cache) { instance_double(ActiveSupport::Cache::Store) }
 
   def api_url(endpoint, include_host = false)
-    host = include_host ? ENV['SALESFORCE_INSTANCE_URL'] : ''
+    host = include_host ? ENV.fetch('SALESFORCE_INSTANCE_URL', nil) : ''
     host + "/services/apexrest#{endpoint}"
   end
 
@@ -69,10 +69,10 @@ describe Force::Request do
       timeout = 27
       client_params = {
         authentication_retries: 1,
-        instance_url: ENV['SALESFORCE_INSTANCE_URL'],
+        instance_url: ENV.fetch('SALESFORCE_INSTANCE_URL', nil),
         mashify: false,
         timeout: timeout,
-        api_version: ENV.fetch('SALESFORCE_API_VERSION', '43.0'),
+        api_version: ENV.fetch('SALESFORCE_API_VERSION', '61.0'),
       }
 
       expect(Restforce).to receive(:new)
