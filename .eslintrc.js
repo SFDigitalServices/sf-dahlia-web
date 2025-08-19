@@ -190,6 +190,7 @@ module.exports = {
     "Gruntfile.js",
     ".storybook",
     "stories",
+    "app/javascript/test-coverage",
   ],
   settings: {
     react: {
