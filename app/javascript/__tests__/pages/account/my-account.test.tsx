@@ -1,7 +1,7 @@
 import { renderAndLoadAsync } from "../../__util__/renderUtils"
 import MyAccount from "../../../pages/account/my-account"
 import React from "react"
-import { setupLocationAndRouteMock, setupUserContext } from "../../__util__/accountUtils"
+import { setupUserContext } from "../../__util__/accountUtils"
 import { withAuthentication } from "../../../authentication/withAuthentication"
 import { RedirectType } from "../../../util/routeUtil"
 
@@ -23,10 +23,6 @@ describe("<MyAccount />", () => {
     beforeEach(async () => {
       setupUserContext({ loggedIn: true })
       const WrappedComponent = withAuthentication(MyAccount, { redirectType: RedirectType.Account })
-
-      setupLocationAndRouteMock(
-        "?access-token=true&accountConfirmed=true&account_confirmation_success=true"
-      )
 
       const renderResult = await renderAndLoadAsync(<WrappedComponent assetPaths={{}} />)
       getByTestId = renderResult.getByTestId
@@ -64,9 +60,8 @@ describe("<MyAccount />", () => {
     let originalLocation: Location
 
     beforeEach(async () => {
-      originalLocation = window.location
+      originalLocation = { ...window.location }
       setupUserContext({ loggedIn: false })
-      setupLocationAndRouteMock()
 
       const WrappedComponent = withAuthentication(MyAccount, { redirectType: RedirectType.Account })
       await renderAndLoadAsync(<WrappedComponent assetPaths={{}} />)
@@ -74,7 +69,10 @@ describe("<MyAccount />", () => {
 
     afterEach(() => {
       jest.restoreAllMocks()
-      window.location = originalLocation
+      Object.defineProperty(window, "location", {
+        value: originalLocation,
+        writable: true,
+      })
     })
 
     it("redirects to the sign in page if the user is not signed in", () => {

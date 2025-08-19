@@ -4,7 +4,6 @@ import { withAuthentication } from "../../authentication/withAuthentication"
 import UserContext, { ContextProps } from "../../authentication/context/UserContext"
 import { isTokenValid, parseUrlParams } from "../../authentication/token"
 import { getLocalizedPath, RedirectType } from "../../util/routeUtil"
-import { setupLocationAndRouteMock } from "../__util__/accountUtils"
 import { getCurrentLanguage } from "../../util/languageUtil"
 import TagManager from "react-gtm-module"
 
@@ -37,10 +36,12 @@ jest.mock("../../util/routeUtil", () => ({
 
 describe("withAuthentication", () => {
   let mockContextValue: ContextProps
+  let originalLocation: Location
   const TestComponent = () => <div>Protected Component</div>
   const WrappedComponent = withAuthentication(TestComponent)
 
   beforeEach(() => {
+    originalLocation = { ...window.location }
     mockContextValue = {
       profile: {
         uid: "123",
@@ -66,13 +67,14 @@ describe("withAuthentication", () => {
     ;(parseUrlParams as jest.Mock).mockReturnValue({
       get: jest.fn((_) => null),
     })
-
-    // Mock window.location
-    setupLocationAndRouteMock()
   })
 
   afterEach(() => {
     jest.restoreAllMocks()
+    Object.defineProperty(window, "location", {
+      value: originalLocation,
+      writable: true,
+    })
   })
 
   it("renders the wrapped component when authenticated", () => {
@@ -98,7 +100,7 @@ describe("withAuthentication", () => {
     )
 
     expect(getLocalizedPath).toHaveBeenCalledWith("/sign-in", "en", "")
-    expect(window.location.href).toBe("http://dahlia.com/sign-in")
+    expect(window.location.href).toBe("/sign-in")
   })
 
   it("redirects to sign-in with redirect param when specified", () => {
@@ -115,7 +117,7 @@ describe("withAuthentication", () => {
     )
 
     expect(getLocalizedPath).toHaveBeenCalledWith("/sign-in", "en", "?redirect=test-path")
-    expect(window.location.href).toBe("http://dahlia.com/sign-in?redirect=test-path")
+    expect(window.location.href).toBe("/sign-in?redirect=test-path")
   })
 
   it("returns null while loading", () => {
@@ -201,7 +203,7 @@ describe("withAuthentication", () => {
     expect(window.history.replaceState).toHaveBeenCalledWith(
       {},
       document.title,
-      window.location?.origin + "/account" || "http://dahlia.com/account"
+      window.location?.origin + "/account"
     )
 
     // Restore original replaceState

@@ -5,7 +5,7 @@ import { renderAndLoadAsync } from "../__util__/renderUtils"
 import { screen, within, cleanup, waitFor } from "@testing-library/react"
 import { post } from "../../api/apiService"
 import { userEvent } from "@testing-library/user-event"
-import { setupLocationAndRouteMock, setupUserContext } from "../__util__/accountUtils"
+import { setupUserContext } from "../__util__/accountUtils"
 import TagManager from "react-gtm-module"
 
 jest.mock("../../api/apiService", () => ({
@@ -105,17 +105,22 @@ describe("<CreateAccount />", () => {
   jest.setTimeout(10000)
 
   let user
+  let originalLocation: Location
 
   beforeEach(async () => {
     document.documentElement.lang = "en"
-    setupUserContext({ loggedIn: false, saveProfileMock: jest.fn() })
-    setupLocationAndRouteMock()
+    originalLocation = { ...window.location }
+    setupUserContext({ loggedIn: false })
     await renderAndLoadAsync(<CreateAccountPage assetPaths={{}} />)
     user = userEvent.setup()
   })
 
   afterEach(() => {
     jest.restoreAllMocks()
+    Object.defineProperty(window, "location", {
+      value: originalLocation,
+      writable: true,
+    })
     cleanup()
   })
 

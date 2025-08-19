@@ -5,7 +5,6 @@ import {
   clearHeadersConnectionIssue,
   attemptToSetAuthHeadersFromURL,
 } from "../../authentication/token"
-import { setupLocationAndRouteMock } from "../__util__/accountUtils"
 
 const ACCESS_TOKEN_LOCAL_STORAGE_KEY = "auth_headers"
 
@@ -24,11 +23,13 @@ describe("token.ts", () => {
   let originalLocation: Location
 
   beforeEach(() => {
-    originalLocation = window.location
-    setupLocationAndRouteMock()
+    originalLocation = { ...window.location }
   })
   afterEach(() => {
-    window.location = originalLocation
+    Object.defineProperty(window, "location", {
+      value: originalLocation,
+      writable: true,
+    })
   })
 
   it("clearHeaders", () => {

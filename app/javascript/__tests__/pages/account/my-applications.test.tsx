@@ -9,7 +9,7 @@ import { fireEvent, render, screen, waitFor, within } from "@testing-library/rea
 import { applicationWithOpenListing } from "../../data/RailsApplication/application-with-open-listing"
 import { Application } from "../../../api/types/rails/application/RailsApplication"
 import { openSaleListing } from "../../data/RailsSaleListing/listing-sale-open"
-import { setupLocationAndRouteMock, setupUserContext } from "../../__util__/accountUtils"
+import { setupUserContext } from "../../__util__/accountUtils"
 
 jest.mock("axios")
 
@@ -35,27 +35,26 @@ jest.mock("@bloom-housing/ui-seeds", () => {
 })
 
 describe("<MyApplications />", () => {
-  let originalLocation
+  let originalLocation: Location
+
   beforeEach(() => {
     // The below line prevents @axe-core from throwing an error
     // when the html tag does not have a lang attribute
     document.documentElement.lang = "en"
+    originalLocation = { ...window.location }
   })
 
-  beforeEach(() => {
-    originalLocation = window.location
-
-    setupLocationAndRouteMock()
+  afterEach(() => {
+    jest.restoreAllMocks()
+    Object.defineProperty(window, "location", {
+      value: originalLocation,
+      writable: true,
+    })
   })
 
   describe("when the user is not signed in", () => {
     beforeEach(() => {
-      setupUserContext({ loggedIn: false, setUpMockLocation: false })
-    })
-
-    afterEach(() => {
-      jest.restoreAllMocks()
-      window.location = originalLocation
+      setupUserContext({ loggedIn: false })
     })
 
     it("redirects to the sign in page", async () => {
@@ -68,7 +67,7 @@ describe("<MyApplications />", () => {
 
   describe("when a user is signed in", () => {
     beforeEach(() => {
-      setupUserContext({ loggedIn: true, setUpMockLocation: false })
+      setupUserContext({ loggedIn: true })
       ;(authenticatedGet as jest.Mock).mockResolvedValue({ data: { data: "test-data" } })
     })
 

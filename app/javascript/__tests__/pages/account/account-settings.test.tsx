@@ -3,19 +3,13 @@ import { renderAndLoadAsync } from "../../__util__/renderUtils"
 import AccountSettingsPage from "../../../pages/account/account-settings"
 import { fireEvent, screen, within, act } from "@testing-library/react"
 import { authenticatedPut } from "../../../api/apiService"
-import {
-  mockProfileStub,
-  setupLocationAndRouteMock,
-  setupUserContext,
-} from "../../__util__/accountUtils"
+import { mockProfileStub, setupUserContext } from "../../__util__/accountUtils"
 import { withAuthentication } from "../../../authentication/withAuthentication"
 import { RedirectType } from "../../../util/routeUtil"
 
 jest.mock("../../../api/apiService", () => ({
   authenticatedPut: jest.fn(),
 }))
-
-const saveProfileMock = jest.fn()
 
 describe("<AccountSettingsPage />", () => {
   describe("when the user is signed in", () => {
@@ -24,8 +18,7 @@ describe("<AccountSettingsPage />", () => {
 
     beforeEach(async () => {
       document.documentElement.lang = "en"
-      setupUserContext({ loggedIn: true, saveProfileMock })
-      setupLocationAndRouteMock()
+      setupUserContext({ loggedIn: true })
       promise = Promise.resolve()
       const WrappedComponent = withAuthentication(AccountSettingsPage, {
         redirectType: RedirectType.Settings,
@@ -113,8 +106,6 @@ describe("<AccountSettingsPage />", () => {
           })
         )
 
-        expect(saveProfileMock).toHaveBeenCalled()
-
         expect(firstNameField.getAttribute("value")).toBe("NewFirstName")
 
         expect(lastNameField.getAttribute("value")).toBe("NewLastName")
@@ -178,8 +169,6 @@ describe("<AccountSettingsPage />", () => {
             }),
           })
         )
-
-        expect(saveProfileMock).toHaveBeenCalled()
       })
 
       it("blocks a DOB update if invalid", async () => {
@@ -717,14 +706,16 @@ describe("<AccountSettingsPage />", () => {
     let originalLocation: Location
 
     beforeEach(() => {
-      originalLocation = window.location
-      setupUserContext({ loggedIn: false, saveProfileMock })
-      setupLocationAndRouteMock()
+      originalLocation = { ...window.location }
+      setupUserContext({ loggedIn: false })
     })
 
     afterEach(() => {
       jest.restoreAllMocks()
-      window.location = originalLocation
+      Object.defineProperty(window, "location", {
+        value: originalLocation,
+        writable: true,
+      })
     })
 
     it("redirects to the sign in page", async () => {

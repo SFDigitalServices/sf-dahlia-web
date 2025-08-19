@@ -32,9 +32,37 @@ exports[`ListingDetailsLotteryResults displays if lottery is complete 1`] = `
 exports[`ListingDetailsLotteryResults displays with summary if lottery is complete 1`] = `
 <DocumentFragment>
   <div
-    class="p-4 text-center"
+    class="border-b pt-4 text-center"
   >
-    An error occurred. Check back later.
+    <h3
+      class="mb-4"
+    >
+      Lottery Results
+    </h3>
+    <p
+      class="mb-4 text-xs"
+    >
+      December 21, 2021
+    </p>
+    <div
+      class="bg-gray-100 py-4"
+    >
+      <div
+        class="mb-3 mx-2 text-gray-700 text-xs translate"
+      >
+        <p>
+          <strong>
+            Applications are being accepted on a first come, first served basis starting 01/26/2022 at 8:00 AM PST
+          </strong>
+        </p>
+      </div>
+      <button
+        class="button is-primary is-small"
+        tabindex="0"
+      >
+        View Lottery Results
+      </button>
+    </div>
   </div>
 </DocumentFragment>
 `;

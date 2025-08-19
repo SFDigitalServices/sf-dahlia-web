@@ -42,7 +42,7 @@ describe("<HowToApply />", () => {
     process.env.FCFS_FORMASSEMBLY_URL_EN = "https://www.test.com"
     process.env.FCFS_FORMASSEMBLY_URL_ES = "https://www.test-es.com"
     // set client to ES locale
-    const originalLocation = window.location
+    const originalLocation = { ...window.location }
     jest.spyOn(window, "location", "get").mockImplementation(() => ({
       ...originalLocation,
       pathname: "/es/test",
@@ -59,6 +59,10 @@ describe("<HowToApply />", () => {
       )
     })
     jest.restoreAllMocks()
+    Object.defineProperty(window, "location", {
+      value: originalLocation,
+      writable: true,
+    })
   })
 
   it("does not show 'SUBMIT APPLICATION' button if URL is missing", async () => {
