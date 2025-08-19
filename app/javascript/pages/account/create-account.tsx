@@ -158,7 +158,9 @@ const handleAccountCreateError = (
   pushToDataLayer: (event: string, data: DataLayerEvent) => void,
   setError: (name: string, error: ErrorOption) => void
 ) => {
-  if ((error.response.data?.errors?.full_messages || []).includes("Email has already been taken")) {
+  if (
+    (error.response?.data?.errors?.full_messages || []).includes("Email has already been taken")
+  ) {
     pushToDataLayer("account_create_start_failed", {
       origin: "create account",
       reason: "email has already been taken",
