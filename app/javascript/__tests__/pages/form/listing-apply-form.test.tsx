@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/unbound-method */
 import React from "react"
 import ListingApplyForm from "../../../pages/form/listing-apply-form"
-import { setupLocationAndRouteMock } from "../../__util__/accountUtils"
 import { renderAndLoadAsync } from "../../__util__/renderUtils"
 import { useFeatureFlag } from "../../../hooks/useFeatureFlag"
 import { getListingDetailPath } from "../../../util/routeUtil"
@@ -25,20 +26,27 @@ describe("<ListingApplyForm />", () => {
   let originalLocation: Location
 
   beforeEach(() => {
-    originalLocation = window.location
-    setupLocationAndRouteMock()
+    originalLocation = { ...window.location }
+    delete (window as any).location
+    window.location = {
+      ...originalLocation,
+      assign: jest.fn(),
+    } as any
   })
   afterEach(() => {
     jest.restoreAllMocks()
-    window.location = originalLocation
+    Object.defineProperty(window, "location", {
+      value: originalLocation,
+      writable: true,
+    })
   })
 
   it("redirects to listing details page when toggle is off", async () => {
     ;(useFeatureFlag as jest.Mock).mockReturnValue({ flagsReady: true, unleashFlag: false })
     const listingId = "a0123"
-    const listingDetailsUrl = `http://dahlia.com${getListingDetailPath()}/${listingId}`
+    const listingDetailsUrl = `${getListingDetailPath()}/${listingId}`
     axios.get.mockResolvedValue({ data: { listing: openRentalListing } })
     await renderAndLoadAsync(<ListingApplyForm assetPaths={{}} listingId={listingId} />)
-    expect(window.location.href).toBe(listingDetailsUrl)
+    expect(window.location.assign).toHaveBeenCalledWith(listingDetailsUrl)
   })
 })

@@ -21,7 +21,7 @@ const ListingApplyForm = (props: ListingApplyFormProps) => {
 
   useMemo(() => {
     if (flagsReady && !formEngine)
-      window.location.href = `${getListingDetailPath()}/${props.listingId}`
+      window.location.assign(`${getListingDetailPath()}/${props.listingId}`)
   }, [flagsReady, formEngine, props.listingId])
 
   useEffect(() => {

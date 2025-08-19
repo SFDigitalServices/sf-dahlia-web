@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react"
 
 export interface ButtonProps {
   /** Is this the principal call to action on the page? */
