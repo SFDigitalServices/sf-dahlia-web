@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/unbound-method */
 import { renderAndLoadAsync } from "../../__util__/renderUtils"
 import MyAccount from "../../../pages/account/my-account"
 import React from "react"
@@ -20,16 +22,28 @@ describe("<MyAccount />", () => {
   describe("when the user is signed in", () => {
     let getByTestId
 
-    beforeEach(async () => {
-      setupUserContext({ loggedIn: true })
-      const WrappedComponent = withAuthentication(MyAccount, { redirectType: RedirectType.Account })
+    let originalLocation: Location
 
+    beforeEach(async () => {
+      originalLocation = { ...window.location }
+      delete (window as any).location
+      window.location = {
+        ...originalLocation,
+        assign: jest.fn(),
+      } as any
+      setupUserContext({ loggedIn: true })
+
+      const WrappedComponent = withAuthentication(MyAccount, { redirectType: RedirectType.Account })
       const renderResult = await renderAndLoadAsync(<WrappedComponent assetPaths={{}} />)
       getByTestId = renderResult.getByTestId
     })
 
     afterEach(() => {
       jest.restoreAllMocks()
+      Object.defineProperty(window, "location", {
+        value: originalLocation,
+        writable: true,
+      })
     })
 
     it("contains two links within the main content", () => {
@@ -61,6 +75,11 @@ describe("<MyAccount />", () => {
 
     beforeEach(async () => {
       originalLocation = { ...window.location }
+      delete (window as any).location
+      window.location = {
+        ...originalLocation,
+        assign: jest.fn(),
+      } as any
       setupUserContext({ loggedIn: false })
 
       const WrappedComponent = withAuthentication(MyAccount, { redirectType: RedirectType.Account })
@@ -76,7 +95,7 @@ describe("<MyAccount />", () => {
     })
 
     it("redirects to the sign in page if the user is not signed in", () => {
-      expect(window.location.href).toBe("http://dahlia.com/sign-in?redirect=account")
+      expect(window.location.assign).toHaveBeenCalledWith("/sign-in?redirect=account")
     })
   })
 })

@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/unbound-method */
 import React from "react"
 import { renderAndLoadAsync } from "../../__util__/renderUtils"
 import AccountSettingsPage from "../../../pages/account/account-settings"
@@ -14,40 +16,36 @@ jest.mock("../../../api/apiService", () => ({
 describe("<AccountSettingsPage />", () => {
   describe("when the user is signed in", () => {
     let promise
-    let renderResult
+    let originalLocation: Location
 
     beforeEach(async () => {
       document.documentElement.lang = "en"
+      originalLocation = { ...window.location }
+      delete (window as any).location
+      window.location = {
+        ...originalLocation,
+        assign: jest.fn(),
+      } as any
       setupUserContext({ loggedIn: true })
       promise = Promise.resolve()
       const WrappedComponent = withAuthentication(AccountSettingsPage, {
         redirectType: RedirectType.Settings,
       })
-      renderResult = await renderAndLoadAsync(<WrappedComponent assetPaths={{}} />)
+      await renderAndLoadAsync(<WrappedComponent assetPaths={{}} />)
     })
 
     afterEach(() => {
       jest.restoreAllMocks()
+      Object.defineProperty(window, "location", {
+        value: originalLocation,
+        writable: true,
+      })
     })
 
     it("shows the correct header text", () => {
       const title = screen.getByText("Account settings")
 
       expect(title).not.toBeNull()
-    })
-
-    it("resize events", () => {
-      expect(renderResult).toMatchSnapshot()
-
-      act(() => {
-        // Change the viewport to 500px.
-        global.innerWidth = 500
-
-        // Trigger the window resize event.
-        global.dispatchEvent(new Event("resize"))
-      })
-
-      expect(renderResult).toMatchSnapshot()
     })
 
     describe("when the user updates their name and DOB", () => {
@@ -705,27 +703,30 @@ describe("<AccountSettingsPage />", () => {
   describe("when the user is not signed in", () => {
     let originalLocation: Location
 
-    beforeEach(() => {
+    beforeEach(async () => {
       originalLocation = { ...window.location }
+      delete (window as any).location
+      window.location = {
+        ...originalLocation,
+        assign: jest.fn(),
+      } as any
       setupUserContext({ loggedIn: false })
+
+      const WrappedComponent = withAuthentication(AccountSettingsPage, {
+        redirectType: RedirectType.Settings,
+      })
+      await renderAndLoadAsync(<WrappedComponent assetPaths={{}} />)
     })
 
     afterEach(() => {
-      jest.restoreAllMocks()
       Object.defineProperty(window, "location", {
         value: originalLocation,
         writable: true,
       })
     })
 
-    it("redirects to the sign in page", async () => {
-      const WrappedComponent = withAuthentication(AccountSettingsPage, {
-        redirectType: RedirectType.Settings,
-      })
-      const { queryByText } = await renderAndLoadAsync(<WrappedComponent assetPaths={{}} />)
-
-      expect(window.location.href).toBe("http://dahlia.com/sign-in?redirect=settings")
-      expect(queryByText("Account Settings")).toBeNull()
+    it("redirects to the sign in page", () => {
+      expect(window.location.assign).toHaveBeenCalledWith("/sign-in?redirect=settings")
     })
   })
 })

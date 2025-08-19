@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/unbound-method */
 import React from "react"
 import { render } from "@testing-library/react"
 import { withAuthentication } from "../../authentication/withAuthentication"
@@ -67,6 +69,11 @@ describe("withAuthentication", () => {
     ;(parseUrlParams as jest.Mock).mockReturnValue({
       get: jest.fn((_) => null),
     })
+    delete (window as any).location
+    window.location = {
+      ...originalLocation,
+      assign: jest.fn(),
+    } as any
   })
 
   afterEach(() => {
@@ -100,7 +107,7 @@ describe("withAuthentication", () => {
     )
 
     expect(getLocalizedPath).toHaveBeenCalledWith("/sign-in", "en", "")
-    expect(window.location.href).toBe("/sign-in")
+    expect(window.location.assign).toHaveBeenCalledWith("/sign-in")
   })
 
   it("redirects to sign-in with redirect param when specified", () => {
@@ -117,7 +124,7 @@ describe("withAuthentication", () => {
     )
 
     expect(getLocalizedPath).toHaveBeenCalledWith("/sign-in", "en", "?redirect=test-path")
-    expect(window.location.href).toBe("/sign-in?redirect=test-path")
+    expect(window.location.assign).toHaveBeenCalledWith("/sign-in?redirect=test-path")
   })
 
   it("returns null while loading", () => {

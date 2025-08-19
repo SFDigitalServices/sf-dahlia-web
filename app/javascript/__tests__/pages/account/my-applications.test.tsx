@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/unbound-method */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react/prop-types */
 import { renderAndLoadAsync } from "../../__util__/renderUtils"
 import MyApplications, {
@@ -42,6 +44,11 @@ describe("<MyApplications />", () => {
     // when the html tag does not have a lang attribute
     document.documentElement.lang = "en"
     originalLocation = { ...window.location }
+    delete (window as any).location
+    window.location = {
+      ...originalLocation,
+      assign: jest.fn(),
+    } as any
   })
 
   afterEach(() => {
@@ -60,7 +67,7 @@ describe("<MyApplications />", () => {
     it("redirects to the sign in page", async () => {
       const { queryByText } = await renderAndLoadAsync(<MyApplications assetPaths={{}} />)
 
-      expect(window.location.href).toBe("http://dahlia.com/sign-in?redirect=applications")
+      expect(window.location.assign).toHaveBeenCalledWith("/sign-in?redirect=applications")
       expect(queryByText("My applications")).toBeNull()
     })
   })

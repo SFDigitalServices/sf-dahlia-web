@@ -56,7 +56,7 @@ const ResetPassword = (_props: ResetPasswordProps) => {
   const { register, handleSubmit, errors, watch } = useForm()
 
   if (!profile && !authLoading && initialStateLoaded) {
-    window.location.href = getSignInPath()
+    window.location.assign(getSignInPath())
     return null
   }
 
@@ -64,7 +64,7 @@ const ResetPassword = (_props: ResetPasswordProps) => {
     // TODO: DAH-2987 API integration
     resetPassword(data.password)
       .then(() => {
-        window.location.href = getMyApplicationsPath()
+        window.location.assign(getMyApplicationsPath())
       })
       .catch(() => {
         setServerError(t("error.account.genericServerError"))

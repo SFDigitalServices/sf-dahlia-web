@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/unbound-method */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react"
 
 import { renderAndLoadAsync } from "../__util__/renderUtils"
@@ -21,28 +23,46 @@ jest.mock("../../api/apiService", () => ({
 describe("<ResetPassword />", () => {
   describe("when the user is not signed in", () => {
     let originalLocation: Location
+
     beforeEach(() => {
       originalLocation = { ...window.location }
-      setupUserContext({ loggedIn: false })
+      delete (window as any).location
+      window.location = {
+        ...originalLocation,
+        assign: jest.fn(),
+      } as any
+
+      setupUserContext({
+        loggedIn: false,
+      })
     })
+
     afterEach(() => {
-      jest.restoreAllMocks()
       Object.defineProperty(window, "location", {
         value: originalLocation,
         writable: true,
       })
+      jest.restoreAllMocks()
     })
+
     it("redirects to the sign in page", async () => {
-      setupUserContext({ loggedIn: false })
       await renderAndLoadAsync(<ResetPassword assetPaths={{}} />)
-      expect(window.location.href).toBe("/sign-in")
+      expect(window.location.assign).toHaveBeenCalledWith("/sign-in")
     })
   })
   describe("when the user is signed in", () => {
     let originalLocation: Location
+
     beforeEach(() => {
       originalLocation = { ...window.location }
-      setupUserContext({ loggedIn: true })
+      window.location = {
+        ...originalLocation,
+        assign: jest.fn(),
+      } as any
+
+      setupUserContext({
+        loggedIn: true,
+      })
     })
 
     afterEach(() => {
@@ -88,7 +108,7 @@ describe("<ResetPassword />", () => {
           password_confirmation: "password1",
         })
       )
-      expect(window.location.href).toBe("/my-applications")
+      expect(window.location.assign).toHaveBeenCalledWith("/my-applications")
     })
 
     it("shows an error message when the server responds with an error", async () => {
