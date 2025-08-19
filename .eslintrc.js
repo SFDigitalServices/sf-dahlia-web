@@ -188,6 +188,7 @@ module.exports = {
     "**/.eslintrc.js",
     "cypress.config.ts",
     "Gruntfile.js",
+    "app/javascript/test-coverage",
   ],
   settings: {
     react: {
