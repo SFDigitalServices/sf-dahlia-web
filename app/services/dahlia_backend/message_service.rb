@@ -3,8 +3,6 @@
 module DahliaBackend
   # Service for sending messages to applicants through the DAHLIA API
   class MessageService
-    FEATURE_FLAG_USE_MESSAGE_SERVICE = 'UseMessageService'
-
     class << self
       # Sends application confirmation to the applicant
       #
@@ -16,10 +14,6 @@ module DahliaBackend
                                         locale = 'en')
         new.send_application_confirmation(application_params, application_response,
                                           locale)
-      end
-
-      def service_enabled?
-        Rails.configuration.unleash.is_enabled?(FEATURE_FLAG_USE_MESSAGE_SERVICE)
       end
     end
 
@@ -36,7 +30,6 @@ module DahliaBackend
     # @return [Object, nil] Response from the message service or nil if service is disabled/error occurs
     def send_application_confirmation(application_params, application_response,
                                       locale = 'en')
-      return unless self.class.service_enabled?
       return unless valid_params?(application_params, application_response)
 
       fields = prepare_submission_fields(application_params, application_response, locale)

@@ -221,29 +221,36 @@ class Api::V1::ShortFormController < ApiController
   end
 
   def send_submit_app_confirmation(response)
-    DahliaBackend::MessageService.send_application_confirmation(application_params,
-                                                                response, params[:locale])
+    listing_id = application_params[:listingID]
 
-    if Rails.configuration.unleash.is_enabled?('temp.webapp.messaging.enableInitialListingSend')
-      initial_listing_id = ENV.fetch('TEMP_EMAIL_LISTING_ID', nil)
+    use_old_emailer =
+      !Rails.configuration.unleash.is_enabled?('UseMessageService') ||
+      listing_id == ENV.fetch('TEMP_EMAIL_LISTING_ID', nil)
 
-      # Guard clause for test listing
-      Rails.logger.info("ShortFormController#send_submit_app_confirmation: Don't send old email for initial test listing #{initial_listing_id}")
-
-      if application_params[:listingID] == initial_listing_id
-        Rails.logger.info("ShortFormController#send_submit_app_confirmation: Skipping send old email for initial test listing #{initial_listing_id}")
-        return
-      end
+    if use_old_emailer
+      Rails.logger.info(
+        'ShortFormController#send_submit_app_confirmation: ' \
+        "Sending email from old emailer service for #{listing_id}",
+      )
+      Emailer.submission_confirmation(
+        locale: params[:locale],
+        email: application_params[:primaryApplicant][:email],
+        listing_id: application_params[:listingID],
+        lottery_number: response['lotteryNumber'],
+        first_name: response['primaryApplicant']['firstName'],
+        last_name: response['primaryApplicant']['lastName'],
+      ).deliver_later
+    else
+      Rails.logger.info(
+        'ShortFormController#send_submit_app_confirmation: ' \
+        "Sending email from messaging service for #{listing_id}",
+      )
+      DahliaBackend::MessageService.send_application_confirmation(
+        application_params,
+        response,
+        params[:locale],
+      )
     end
-
-    Emailer.submission_confirmation(
-      locale: params[:locale],
-      email: application_params[:primaryApplicant][:email],
-      listing_id: application_params[:listingID],
-      lottery_number: response['lotteryNumber'],
-      first_name: response['primaryApplicant']['firstName'],
-      last_name: response['primaryApplicant']['lastName'],
-    ).deliver_later
   end
 
   def email_draft_link(response)
