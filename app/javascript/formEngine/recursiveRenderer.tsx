@@ -1,10 +1,10 @@
 import React from "react"
-import type { FormSchema, StepComponentSchema, ComponentSchema } from "./formSchemas"
+import type { ComponentSchema } from "./formSchemas"
 import getFormComponentRegistry from "./formComponentRegistry"
 import { v4 as uuidv4 } from "uuid"
 
 interface FormEngineProps {
-  schema: FormSchema | StepComponentSchema | ComponentSchema
+  schema: ComponentSchema & Record<string, unknown>
 }
 
 const componentRegistry = getFormComponentRegistry()

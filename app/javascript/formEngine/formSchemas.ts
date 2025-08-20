@@ -53,8 +53,7 @@ export type FormSchema = z.infer<typeof FormSchema>
 // find values by key in nested plain objects and arrays
 const getNestedValuesByKey = (keyName: string, object: unknown, values: unknown[]): unknown[] => {
   if (object?.constructor === Object) {
-    for (const key of Object.keys(object)) {
-      const val = object[key]
+    for (const [key, val] of Object.entries(object)) {
       if (key === keyName) {
         values.push(val)
       } else {
@@ -67,12 +66,6 @@ const getNestedValuesByKey = (keyName: string, object: unknown, values: unknown[
     }
   }
   return values
-}
-
-const getComponentNames = (schema: unknown): string[] => {
-  return getNestedValuesByKey("componentName", schema, []).filter(
-    (name) => typeof name === "string"
-  )
 }
 
 // [{ firstName: 'applicantFirstName' }, { middleName: 'applicantMiddleName' }, { lastName: 'applicantLastName' }] ->
@@ -101,24 +94,24 @@ export const generateInitialFormData = (schema: FormSchema): Record<string, null
   }, {})
 }
 
+const getInvalidComponentNames = (schema: FormSchema): string[] => {
+  const schemaComponentNames = getNestedValuesByKey("componentName", schema, []).filter(
+    (name) => typeof name === "string"
+  )
+  const registeredComponentNames = Object.keys(getFormComponentRegistry())
+  return schemaComponentNames.filter((el) => !registeredComponentNames.includes(el))
+}
+
 export const parseFormSchema = (schema: FormSchema): FormSchema => {
-  let parsedSchema
+  let parsedSchema: FormSchema
   try {
     parsedSchema = FormSchema.parse(schema)
   } catch (error) {
-    if (error instanceof z.ZodError) {
-      console.error("Validation failed:", error.issues[0])
-    } else {
-      console.error("Unexpected error:", error)
-      return
-    }
+    console.error("Validation failed:", error)
+    return
   }
 
-  const schemaComponentNames = getComponentNames(schema)
-  const registeredComponentNames = Object.keys(getFormComponentRegistry())
-  const invalidComponentNames = schemaComponentNames.filter(
-    (el) => !registeredComponentNames.includes(el)
-  )
+  const invalidComponentNames = getInvalidComponentNames(parsedSchema)
   if (invalidComponentNames.length > 0) {
     console.error("Invalid component names:", invalidComponentNames)
     return

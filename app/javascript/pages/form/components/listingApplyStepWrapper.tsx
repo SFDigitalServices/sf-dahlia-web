@@ -6,7 +6,7 @@ import { CardSection } from "@bloom-housing/ui-seeds/src/blocks/Card"
 import { useFormEngineContext } from "../../../formEngine/formEngineContext"
 import { FormStepProvider } from "../../../formEngine/formStepContext"
 import type { DataSchema } from "../../../formEngine/formSchemas"
-import type { RailsListing } from "../../../modules/listings/SharedHelpers"
+import { translationFromDataSchema } from "../../../util/formEngineUtil"
 
 interface ListingApplyStepWrapperProps {
   title: string
@@ -52,24 +52,7 @@ const ListingApplyStepWrapper = ({
     handleNextStep()
   }
 
-  const titleString = (
-    title: string,
-    titleVars: Record<string, DataSchema>,
-    formData: Record<string, unknown>,
-    listingData: RailsListing
-  ): string => {
-    if (!titleVars) return t(title)
-
-    // formData.primaryApplicantFirstName === "Jane"
-    // { name: { dataSource: "form", key: "primaryApplicantFirstName" } } -> { name: "Jane" }
-    const translationVars = {}
-    for (const varName in titleVars) {
-      const { dataSource, dataKey } = titleVars[varName]
-      const data = { form: formData, listing: listingData }[dataSource]
-      translationVars[varName] = data[dataKey]
-    }
-    return t(title, translationVars)
-  }
+  const titleString = translationFromDataSchema(title, titleVars, { formData, listingData })
 
   return (
     <FormStepProvider value={{ register }}>
@@ -79,9 +62,7 @@ const ListingApplyStepWrapper = ({
         </Button>
       </CardSection>
       <CardSection>
-        <h1 className="mt-6 mb-4 text-xl md:text-2xl">
-          {titleString(title, titleVars, formData, listingData)}
-        </h1>
+        <h1 className="mt-6 mb-4 text-xl md:text-2xl">{titleString}</h1>
         {description && <p className="field-note text-base">{t(description)}</p>}
         {!!descriptionComponent && descriptionComponent}
       </CardSection>
