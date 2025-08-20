@@ -8,7 +8,7 @@ import { LoadingOverlay } from "@bloom-housing/ui-components"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import { UNLEASH_FLAG } from "../../modules/constants"
 import FormEngine from "../../formEngine/formEngine"
-import testSchema from "../../formEngine/testListingApplicationTruncated"
+import testSchema from "../../formEngine/testListingApplication"
 
 interface ListingApplyFormProps {
   assetPaths: unknown
