@@ -72,6 +72,8 @@ yalc.lock
 yarn-debug.log*
 .yarn-integrity
 
+*storybook.log
+storybook-static
 .qlty/*
 !.qlty/configs
 !.qlty/configs/**

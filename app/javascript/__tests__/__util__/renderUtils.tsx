@@ -1,5 +1,23 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { act, render, RenderOptions, RenderResult } from "@testing-library/react"
 import React from "react"
+
+export const mockWindowLocation = (): typeof window.location => {
+  const originalLocation = { ...window.location }
+  delete (window as any).location
+  window.location = {
+    ...originalLocation,
+    assign: jest.fn(),
+  } as any
+  return originalLocation
+}
+
+export const restoreWindowLocation = (originalLocation: typeof window.location): void => {
+  Object.defineProperty(window, "location", {
+    value: originalLocation,
+    writable: true,
+  })
+}
 
 /**
  * Render the component and wait for its async calls to complete.

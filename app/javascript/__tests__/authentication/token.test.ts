@@ -1,3 +1,4 @@
+import { mockWindowLocation, restoreWindowLocation } from "../__util__/renderUtils"
 import {
   clearHeadersSignOut,
   clearHeaders,
@@ -5,7 +6,6 @@ import {
   clearHeadersConnectionIssue,
   attemptToSetAuthHeadersFromURL,
 } from "../../authentication/token"
-import { setupLocationAndRouteMock } from "../__util__/accountUtils"
 
 const ACCESS_TOKEN_LOCAL_STORAGE_KEY = "auth_headers"
 
@@ -24,11 +24,10 @@ describe("token.ts", () => {
   let originalLocation: Location
 
   beforeEach(() => {
-    originalLocation = window.location
-    setupLocationAndRouteMock()
+    originalLocation = mockWindowLocation()
   })
   afterEach(() => {
-    window.location = originalLocation
+    restoreWindowLocation(originalLocation)
   })
 
   it("clearHeaders", () => {
