@@ -7,9 +7,6 @@ import "./listingApplyFormWrapper.scss"
 
 interface ListingApplyFormWrapperProps {
   currentStepIndex: number
-  onNavigateNext: (todoSpecialNavBehavior: any) => void // TODO put into context?
-  onNavigatePrev: (todoSpecialNavBehavior: any) => void
-  // initialFormState:
   children: React.ReactNode
 }
 
@@ -19,8 +16,6 @@ const ListingApplyFormWrapper = ({ children }: ListingApplyFormWrapperProps) => 
   const currentStepChild = children[currentStepIndex]
   const currentStepInfo = stepInfoMap[currentStepIndex]
   const showLayout = !currentStepInfo.hideLayout
-
-  console.log("children", children)
 
   return (
     <section className="bg-gray-300">

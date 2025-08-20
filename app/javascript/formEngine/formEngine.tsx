@@ -2,11 +2,12 @@ import React, { useState } from "react"
 import { FormEngineProvider, type FormEngineContext } from "./formEngineContext"
 import {
   type FormSchema,
+  type StepComponentSchema,
   parseFormSchema,
   getFieldNames,
   generateInitialFormData,
   generateSectionNames,
-} from "./formSchemaParser"
+} from "./formSchemas"
 import type { RailsListing } from "../modules/listings/SharedHelpers"
 import RecursiveRenderer from "./recursiveRenderer"
 
@@ -17,42 +18,32 @@ interface FormEngineProps {
 
 const FormEngine = ({ listing, schema }: FormEngineProps) => {
   const [formData, setFormData] = useState<Record<string, unknown>>(generateInitialFormData(schema))
-
-  const saveFormData = (data) => {
-    setFormData({ ...formData, ...data })
-  }
+  const [currentStepIndex, setCurrentStepIndex] = useState<number>(0)
 
   const parsedSchema = parseFormSchema(schema)
-
   if (!parsedSchema) {
     return <h1>Error parsing schema</h1>
   }
 
-  let currentStepIndex,
-    setCurrentStepIndex,
-    stepInfoMap,
-    sectionNames,
-    handleNextStep,
-    handlePrevStep
-  if (parsedSchema.componentType === "multiStepLayout") {
-    sectionNames = generateSectionNames(schema)
+  const saveFormData = (data: Record<string, unknown>) => {
+    setFormData({ ...formData, ...data })
+  }
 
-    stepInfoMap = schema.children.map((child) => {
+  let stepInfoMap, sectionNames, handleNextStep, handlePrevStep
+  if (parsedSchema.componentType === "multiStepLayout") {
+    sectionNames = generateSectionNames(parsedSchema)
+    stepInfoMap = parsedSchema.children.map((child: StepComponentSchema) => {
       return {
         ...child.stepInfo,
-        fieldNames: getFieldNames(child.children),
+        fieldNames: getFieldNames(child),
       }
     })
-    ;[currentStepIndex, setCurrentStepIndex] = useState(0)
-
-    const totalSteps = schema.children.length
-
+    const totalSteps = parsedSchema.children.length
     handleNextStep = () => {
       const newStepIndex = currentStepIndex + 1
       if (newStepIndex > totalSteps - 1) return
       setCurrentStepIndex(newStepIndex)
     }
-
     handlePrevStep = () => {
       const newStepIndex = currentStepIndex - 1
       if (newStepIndex < 0) return
@@ -64,9 +55,9 @@ const FormEngine = ({ listing, schema }: FormEngineProps) => {
     listingData: listing,
     formData: formData,
     saveFormData: saveFormData,
-    stepInfoMap: stepInfoMap ?? undefined,
+    stepInfoMap: stepInfoMap,
     sectionNames: sectionNames,
-    currentStepIndex: currentStepIndex ?? undefined,
+    currentStepIndex: currentStepIndex,
     handleNextStep,
     handlePrevStep,
   }

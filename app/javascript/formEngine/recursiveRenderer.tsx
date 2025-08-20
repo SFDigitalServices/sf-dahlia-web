@@ -1,5 +1,5 @@
 import React from "react"
-import type { FormSchema, StepComponentSchema, ComponentSchema } from "./formSchemaParser"
+import type { FormSchema, StepComponentSchema, ComponentSchema } from "./formSchemas"
 import getFormComponentRegistry from "./formComponentRegistry"
 import { v4 as uuidv4 } from "uuid"
 
@@ -10,9 +10,9 @@ interface FormEngineProps {
 const componentRegistry = getFormComponentRegistry()
 
 const RecursiveRenderer = ({ schema }: FormEngineProps) => {
-  const ComponentToRender = componentRegistry[schema.componentName]
+  const ComponentToRender: React.FC = componentRegistry[schema.componentName]
 
-  let children = []
+  let children: React.ReactNode[] = []
   if (schema.children && schema.children.length > 0) {
     children = schema.children.map((childSchema) => <RecursiveRenderer schema={childSchema} />)
   }

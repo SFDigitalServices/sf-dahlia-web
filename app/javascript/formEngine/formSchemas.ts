@@ -16,7 +16,7 @@ const NavigationSchema = z.object({
 const ComponentSchema = z.object({
   componentType: z.optional(z.string()),
   componentName: z.string(),
-  props: z.optional(z.record(z.string(), z.any())),
+  props: z.optional(z.record(z.string(), z.unknown())),
   // https://zod.dev/api#recursive-objects
   get children() {
     return z.optional(z.array(ComponentSchema))
@@ -45,13 +45,13 @@ export const FormSchema = z.object({
   formSubType: z.string(), // "defaultRental", "defaultSales"
   componentType: z.string(),
   componentName: z.string(),
-  props: z.optional(z.record(z.string(), z.any())),
+  props: z.optional(z.record(z.string(), z.unknown())),
   children: z.array(StepComponentSchema),
 })
 export type FormSchema = z.infer<typeof FormSchema>
 
 // find values by key in nested plain objects and arrays
-const getNestedValuesByKey = (keyName: string, object: any, values: any[]): string[] => {
+const getNestedValuesByKey = (keyName: string, object: unknown, values: unknown[]): unknown[] => {
   if (object?.constructor === Object) {
     for (const key of Object.keys(object)) {
       const val = object[key]
@@ -70,22 +70,30 @@ const getNestedValuesByKey = (keyName: string, object: any, values: any[]): stri
 }
 
 const getComponentNames = (schema: FormSchema): string[] => {
-  return getNestedValuesByKey("componentName", schema, [])
+  return getNestedValuesByKey("componentName", schema, []).filter(
+    (name) => typeof name === "string"
+  ) as string[]
 }
 
-// use to initiate react hook form initial state
-export const getFieldNames = (schema: any): string[] => {
+// [{ firstName: 'applicantFirstName' }, { middleName: 'applicantMiddleName' }, { lastName: 'applicantLastName' }] ->
+//   ['applicantFirstName', 'applicantMiddleName', 'applicantLastName']
+export const getFieldNames = (schema: FormSchema | StepComponentSchema): string[] => {
   const fieldNameGroups = getNestedValuesByKey("fieldNames", schema, [])
-  return Object.values(Object.assign({}, ...fieldNameGroups))
+  return Object.values(Object.assign({}, ...fieldNameGroups) as Record<string, unknown>).filter(
+    (name) => typeof name === "string"
+  ) as string[]
 }
 
 const getSectionNames = (schema: FormSchema | StepComponentSchema): string[] => {
-  return getNestedValuesByKey("sectionName", schema, [])
+  return getNestedValuesByKey("sectionName", schema, []).filter(
+    (name) => typeof name === "string"
+  ) as string[]
 }
 
 export const generateSectionNames = (schema: FormSchema): string[] => {
-  // remove duplicates
-  return getSectionNames(schema).filter((val, idx, ary) => ary.indexOf(val) === idx)
+  return getSectionNames(schema)
+    .filter((name) => typeof name === "string")
+    .filter((val, idx, ary) => ary.indexOf(val) === idx) // remove duplicates
 }
 
 export const generateInitialFormData = (schema: FormSchema): Record<string, null> => {

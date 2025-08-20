@@ -4,9 +4,7 @@ import { Button } from "@bloom-housing/ui-seeds"
 import { CardSection } from "@bloom-housing/ui-seeds/src/blocks/Card"
 import { useFormEngineContext } from "../../../formEngine/formEngineContext"
 
-interface ListingApplyOverviewProps {}
-
-const ListingApplyOverview = ({}: ListingApplyOverviewProps) => {
+const ListingApplyOverview = () => {
   const formEngineContext = useFormEngineContext()
   const { handleNextStep, handlePrevStep } = formEngineContext
 

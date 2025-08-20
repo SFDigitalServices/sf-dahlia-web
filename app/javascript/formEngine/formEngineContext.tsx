@@ -1,11 +1,11 @@
 import React, { createContext, ReactNode, useContext } from "react"
 import type { RailsListing } from "../modules/listings/SharedHelpers"
-import type { StepInfoSchema } from "./formSchemaParser"
+import type { StepInfoSchema } from "./formSchemas"
 
 export interface FormEngineContext {
   listingData?: RailsListing
-  formData: Record<string, any>
-  saveFormData: (formDataFragment: Record<string, any>) => void
+  formData: Record<string, unknown>
+  saveFormData: (formDataFragment: Record<string, unknown>) => void
   currentStepIndex?: number
   stepInfoMap: StepInfoSchema[]
   sectionNames: string[]
@@ -13,25 +13,7 @@ export interface FormEngineContext {
   handlePrevStep: () => void
 }
 
-const defaultFormEngineContext: FormEngineContext = {
-  formData: {},
-  saveFormData: () => {
-    console.warn("setFormData called but no FormEngineContext.Provider was found.")
-  },
-  currentStepIndex: 0,
-  stepInfoMap: [],
-  sectionNames: [],
-  handleNextStep: () => {
-    console.warn("handleNextStep called but no FormEngineContext.Provider was found.")
-  },
-  handlePrevStep: () => {
-    console.warn("handlePrevStep called but no FormEngineContext.Provider was found.")
-  },
-}
-
-export const FormEngineContext = createContext<FormEngineContext | undefined>(
-  defaultFormEngineContext
-)
+export const FormEngineContext = createContext<FormEngineContext | undefined>(undefined)
 
 export interface FormEngineProviderProps {
   value: FormEngineContext

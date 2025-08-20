@@ -5,11 +5,7 @@ import { Button, t } from "@bloom-housing/ui-components"
 import { useFormEngineContext } from "../../../formEngine/formEngineContext"
 import fallbackImg from "../../../../assets/images/bg@1200.jpg"
 
-interface ListingApplyIntroProps {}
-
-// TODO: This component is used as a placeholder for now, the look and contents will need to be updated
-
-const ListingApplyIntro = ({}: ListingApplyIntroProps) => {
+const ListingApplyIntro = () => {
   const formEngineContext = useFormEngineContext()
   const { listingData, handleNextStep } = formEngineContext
 
