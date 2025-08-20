@@ -69,25 +69,23 @@ const getNestedValuesByKey = (keyName: string, object: unknown, values: unknown[
   return values
 }
 
-const getComponentNames = (schema: FormSchema): string[] => {
+const getComponentNames = (schema: unknown): string[] => {
   return getNestedValuesByKey("componentName", schema, []).filter(
     (name) => typeof name === "string"
-  ) as string[]
+  )
 }
 
 // [{ firstName: 'applicantFirstName' }, { middleName: 'applicantMiddleName' }, { lastName: 'applicantLastName' }] ->
 //   ['applicantFirstName', 'applicantMiddleName', 'applicantLastName']
-export const getFieldNames = (schema: FormSchema | StepComponentSchema): string[] => {
+export const getFieldNames = (schema: unknown): string[] => {
   const fieldNameGroups = getNestedValuesByKey("fieldNames", schema, [])
   return Object.values(Object.assign({}, ...fieldNameGroups) as Record<string, unknown>).filter(
     (name) => typeof name === "string"
-  ) as string[]
+  )
 }
 
-const getSectionNames = (schema: FormSchema | StepComponentSchema): string[] => {
-  return getNestedValuesByKey("sectionName", schema, []).filter(
-    (name) => typeof name === "string"
-  ) as string[]
+const getSectionNames = (schema: unknown): string[] => {
+  return getNestedValuesByKey("sectionName", schema, []).filter((name) => typeof name === "string")
 }
 
 export const generateSectionNames = (schema: FormSchema): string[] => {

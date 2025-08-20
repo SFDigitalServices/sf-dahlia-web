@@ -32,22 +32,18 @@ const FormEngine = ({ listing, schema }: FormEngineProps) => {
   let stepInfoMap, sectionNames, handleNextStep, handlePrevStep
   if (parsedSchema.componentType === "multiStepLayout") {
     sectionNames = generateSectionNames(parsedSchema)
-    stepInfoMap = parsedSchema.children.map((child: StepComponentSchema) => {
-      return {
-        ...child.stepInfo,
-        fieldNames: getFieldNames(child),
-      }
-    })
+    stepInfoMap = parsedSchema.children.map((child: StepComponentSchema) => ({
+      ...child.stepInfo,
+      fieldNames: getFieldNames(child),
+    }))
     const totalSteps = parsedSchema.children.length
     handleNextStep = () => {
       const newStepIndex = currentStepIndex + 1
-      if (newStepIndex > totalSteps - 1) return
-      setCurrentStepIndex(newStepIndex)
+      if (newStepIndex < totalSteps) setCurrentStepIndex(newStepIndex)
     }
     handlePrevStep = () => {
       const newStepIndex = currentStepIndex - 1
-      if (newStepIndex < 0) return
-      setCurrentStepIndex(newStepIndex)
+      if (newStepIndex >= 0) setCurrentStepIndex(newStepIndex)
     }
   }
 
