@@ -1,3 +1,4 @@
+import { mockWindowLocation, restoreWindowLocation } from "../__util__/renderUtils"
 import {
   clearHeadersSignOut,
   clearHeaders,
@@ -23,13 +24,10 @@ describe("token.ts", () => {
   let originalLocation: Location
 
   beforeEach(() => {
-    originalLocation = { ...window.location }
+    originalLocation = mockWindowLocation()
   })
   afterEach(() => {
-    Object.defineProperty(window, "location", {
-      value: originalLocation,
-      writable: true,
-    })
+    restoreWindowLocation(originalLocation)
   })
 
   it("clearHeaders", () => {

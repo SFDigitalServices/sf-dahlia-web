@@ -2,7 +2,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react"
 
-import { renderAndLoadAsync } from "../__util__/renderUtils"
+import {
+  renderAndLoadAsync,
+  mockWindowLocation,
+  restoreWindowLocation,
+} from "../__util__/renderUtils"
 import ResetPassword from "../../pages/reset-password"
 import { setupUserContext } from "../__util__/accountUtils"
 import { screen } from "@testing-library/react"
@@ -25,12 +29,7 @@ describe("<ResetPassword />", () => {
     let originalLocation: Location
 
     beforeEach(() => {
-      originalLocation = { ...window.location }
-      delete (window as any).location
-      window.location = {
-        ...originalLocation,
-        assign: jest.fn(),
-      } as any
+      originalLocation = mockWindowLocation()
 
       setupUserContext({
         loggedIn: false,
@@ -38,10 +37,7 @@ describe("<ResetPassword />", () => {
     })
 
     afterEach(() => {
-      Object.defineProperty(window, "location", {
-        value: originalLocation,
-        writable: true,
-      })
+      restoreWindowLocation(originalLocation)
       jest.restoreAllMocks()
     })
 
@@ -54,11 +50,7 @@ describe("<ResetPassword />", () => {
     let originalLocation: Location
 
     beforeEach(() => {
-      originalLocation = { ...window.location }
-      window.location = {
-        ...originalLocation,
-        assign: jest.fn(),
-      } as any
+      originalLocation = mockWindowLocation()
 
       setupUserContext({
         loggedIn: true,
@@ -67,10 +59,7 @@ describe("<ResetPassword />", () => {
 
     afterEach(() => {
       jest.restoreAllMocks()
-      Object.defineProperty(window, "location", {
-        value: originalLocation,
-        writable: true,
-      })
+      restoreWindowLocation(originalLocation)
     })
 
     it("shows the correct form text", async () => {

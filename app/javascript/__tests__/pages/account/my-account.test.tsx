@@ -1,6 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/unbound-method */
-import { renderAndLoadAsync } from "../../__util__/renderUtils"
+import {
+  renderAndLoadAsync,
+  mockWindowLocation,
+  restoreWindowLocation,
+} from "../../__util__/renderUtils"
 import MyAccount from "../../../pages/account/my-account"
 import React from "react"
 import { setupUserContext } from "../../__util__/accountUtils"
@@ -25,12 +29,7 @@ describe("<MyAccount />", () => {
     let originalLocation: Location
 
     beforeEach(async () => {
-      originalLocation = { ...window.location }
-      delete (window as any).location
-      window.location = {
-        ...originalLocation,
-        assign: jest.fn(),
-      } as any
+      originalLocation = mockWindowLocation()
       setupUserContext({ loggedIn: true })
 
       const WrappedComponent = withAuthentication(MyAccount, { redirectType: RedirectType.Account })
@@ -40,10 +39,7 @@ describe("<MyAccount />", () => {
 
     afterEach(() => {
       jest.restoreAllMocks()
-      Object.defineProperty(window, "location", {
-        value: originalLocation,
-        writable: true,
-      })
+      restoreWindowLocation(originalLocation)
     })
 
     it("contains two links within the main content", () => {
@@ -74,12 +70,7 @@ describe("<MyAccount />", () => {
     let originalLocation: Location
 
     beforeEach(async () => {
-      originalLocation = { ...window.location }
-      delete (window as any).location
-      window.location = {
-        ...originalLocation,
-        assign: jest.fn(),
-      } as any
+      originalLocation = mockWindowLocation()
       setupUserContext({ loggedIn: false })
 
       const WrappedComponent = withAuthentication(MyAccount, { redirectType: RedirectType.Account })
@@ -88,10 +79,7 @@ describe("<MyAccount />", () => {
 
     afterEach(() => {
       jest.restoreAllMocks()
-      Object.defineProperty(window, "location", {
-        value: originalLocation,
-        writable: true,
-      })
+      restoreWindowLocation(originalLocation)
     })
 
     it("redirects to the sign in page if the user is not signed in", () => {

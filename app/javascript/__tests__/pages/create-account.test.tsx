@@ -1,7 +1,11 @@
 import React from "react"
 
 import CreateAccountPage from "../../pages/account/create-account"
-import { renderAndLoadAsync } from "../__util__/renderUtils"
+import {
+  renderAndLoadAsync,
+  mockWindowLocation,
+  restoreWindowLocation,
+} from "../__util__/renderUtils"
 import { screen, within, cleanup, waitFor } from "@testing-library/react"
 import { post } from "../../api/apiService"
 import { userEvent } from "@testing-library/user-event"
@@ -109,7 +113,7 @@ describe("<CreateAccount />", () => {
 
   beforeEach(async () => {
     document.documentElement.lang = "en"
-    originalLocation = { ...window.location }
+    originalLocation = mockWindowLocation()
     setupUserContext({ loggedIn: false })
     await renderAndLoadAsync(<CreateAccountPage assetPaths={{}} />)
     user = userEvent.setup()
@@ -117,10 +121,7 @@ describe("<CreateAccount />", () => {
 
   afterEach(() => {
     jest.restoreAllMocks()
-    Object.defineProperty(window, "location", {
-      value: originalLocation,
-      writable: true,
-    })
+    restoreWindowLocation(originalLocation)
     cleanup()
   })
 

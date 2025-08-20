@@ -1,7 +1,11 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react/prop-types */
-import { renderAndLoadAsync } from "../../__util__/renderUtils"
+import {
+  renderAndLoadAsync,
+  mockWindowLocation,
+  restoreWindowLocation,
+} from "../../__util__/renderUtils"
 import MyApplications, {
   determineApplicationItemList,
 } from "../../../pages/account/my-applications"
@@ -43,20 +47,11 @@ describe("<MyApplications />", () => {
     // The below line prevents @axe-core from throwing an error
     // when the html tag does not have a lang attribute
     document.documentElement.lang = "en"
-    originalLocation = { ...window.location }
-    delete (window as any).location
-    window.location = {
-      ...originalLocation,
-      assign: jest.fn(),
-    } as any
+    originalLocation = mockWindowLocation()
   })
 
   afterEach(() => {
-    jest.restoreAllMocks()
-    Object.defineProperty(window, "location", {
-      value: originalLocation,
-      writable: true,
-    })
+    restoreWindowLocation(originalLocation)
   })
 
   describe("when the user is not signed in", () => {

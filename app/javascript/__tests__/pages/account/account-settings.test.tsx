@@ -1,7 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/unbound-method */
 import React from "react"
-import { renderAndLoadAsync } from "../../__util__/renderUtils"
+import {
+  renderAndLoadAsync,
+  mockWindowLocation,
+  restoreWindowLocation,
+} from "../../__util__/renderUtils"
 import AccountSettingsPage from "../../../pages/account/account-settings"
 import { fireEvent, screen, within, act } from "@testing-library/react"
 import { authenticatedPut } from "../../../api/apiService"
@@ -20,12 +24,7 @@ describe("<AccountSettingsPage />", () => {
 
     beforeEach(async () => {
       document.documentElement.lang = "en"
-      originalLocation = { ...window.location }
-      delete (window as any).location
-      window.location = {
-        ...originalLocation,
-        assign: jest.fn(),
-      } as any
+      originalLocation = mockWindowLocation()
       setupUserContext({ loggedIn: true })
       promise = Promise.resolve()
       const WrappedComponent = withAuthentication(AccountSettingsPage, {
@@ -36,10 +35,7 @@ describe("<AccountSettingsPage />", () => {
 
     afterEach(() => {
       jest.restoreAllMocks()
-      Object.defineProperty(window, "location", {
-        value: originalLocation,
-        writable: true,
-      })
+      restoreWindowLocation(originalLocation)
     })
 
     it("shows the correct header text", () => {
@@ -704,12 +700,7 @@ describe("<AccountSettingsPage />", () => {
     let originalLocation: Location
 
     beforeEach(async () => {
-      originalLocation = { ...window.location }
-      delete (window as any).location
-      window.location = {
-        ...originalLocation,
-        assign: jest.fn(),
-      } as any
+      originalLocation = mockWindowLocation()
       setupUserContext({ loggedIn: false })
 
       const WrappedComponent = withAuthentication(AccountSettingsPage, {
@@ -719,10 +710,7 @@ describe("<AccountSettingsPage />", () => {
     })
 
     afterEach(() => {
-      Object.defineProperty(window, "location", {
-        value: originalLocation,
-        writable: true,
-      })
+      restoreWindowLocation(originalLocation)
     })
 
     it("redirects to the sign in page", () => {

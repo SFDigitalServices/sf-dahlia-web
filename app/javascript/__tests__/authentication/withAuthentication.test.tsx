@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import React from "react"
 import { render } from "@testing-library/react"
+import { mockWindowLocation, restoreWindowLocation } from "../__util__/renderUtils"
 import { withAuthentication } from "../../authentication/withAuthentication"
 import UserContext, { ContextProps } from "../../authentication/context/UserContext"
 import { isTokenValid, parseUrlParams } from "../../authentication/token"
@@ -43,7 +44,7 @@ describe("withAuthentication", () => {
   const WrappedComponent = withAuthentication(TestComponent)
 
   beforeEach(() => {
-    originalLocation = { ...window.location }
+    originalLocation = mockWindowLocation()
     mockContextValue = {
       profile: {
         uid: "123",
@@ -69,19 +70,11 @@ describe("withAuthentication", () => {
     ;(parseUrlParams as jest.Mock).mockReturnValue({
       get: jest.fn((_) => null),
     })
-    delete (window as any).location
-    window.location = {
-      ...originalLocation,
-      assign: jest.fn(),
-    } as any
   })
 
   afterEach(() => {
     jest.restoreAllMocks()
-    Object.defineProperty(window, "location", {
-      value: originalLocation,
-      writable: true,
-    })
+    restoreWindowLocation(originalLocation)
   })
 
   it("renders the wrapped component when authenticated", () => {
@@ -200,7 +193,7 @@ describe("withAuthentication", () => {
       expect.objectContaining({
         dataLayer: expect.objectContaining({
           event: "account_create_completed",
-          user_id: mockContextValue.profile.id,
+          user_id: mockContextValue.profile?.id,
         }),
       })
     )
