@@ -1,8 +1,14 @@
+/* eslint-disable @typescript-eslint/unbound-method */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react"
 
-import { renderAndLoadAsync } from "../__util__/renderUtils"
+import {
+  renderAndLoadAsync,
+  mockWindowLocation,
+  restoreWindowLocation,
+} from "../__util__/renderUtils"
 import ResetPassword from "../../pages/reset-password"
-import { setupLocationAndRouteMock, setupUserContext } from "../__util__/accountUtils"
+import { setupUserContext } from "../__util__/accountUtils"
 import { screen } from "@testing-library/react"
 import { authenticatedPut } from "../../api/apiService"
 import userEvent from "@testing-library/user-event"
@@ -21,44 +27,39 @@ jest.mock("../../api/apiService", () => ({
 describe("<ResetPassword />", () => {
   describe("when the user is not signed in", () => {
     let originalLocation: Location
+
     beforeEach(() => {
-      originalLocation = window.location
-      setupUserContext({ loggedIn: false })
-      setupLocationAndRouteMock()
+      originalLocation = mockWindowLocation()
+
+      setupUserContext({
+        loggedIn: false,
+      })
     })
+
     afterEach(() => {
+      restoreWindowLocation(originalLocation)
       jest.restoreAllMocks()
-      window.location = originalLocation
     })
+
     it("redirects to the sign in page", async () => {
       await renderAndLoadAsync(<ResetPassword assetPaths={{}} />)
-      // This is a temporary workaround until we implement the redirects to the sign in page
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      delete (window as any).location
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      window.location = { href: "" } as any
-
-      Object.defineProperty(window, "location", {
-        value: {
-          href: "/sign-in",
-        },
-        writable: true,
-      })
-
-      expect(window.location.href).toBe("/sign-in")
+      expect(window.location.assign).toHaveBeenCalledWith("/sign-in")
     })
   })
   describe("when the user is signed in", () => {
     let originalLocation: Location
+
     beforeEach(() => {
-      originalLocation = window.location
-      setupUserContext({ loggedIn: true })
-      setupLocationAndRouteMock()
+      originalLocation = mockWindowLocation()
+
+      setupUserContext({
+        loggedIn: true,
+      })
     })
 
     afterEach(() => {
       jest.restoreAllMocks()
-      window.location = originalLocation
+      restoreWindowLocation(originalLocation)
     })
 
     it("shows the correct form text", async () => {
@@ -89,8 +90,6 @@ describe("<ResetPassword />", () => {
 
       await userEvent.type(passwordField, "1")
       await userEvent.click(updateButton)
-      // screen.logTestingPlaygroundURL()
-
       expect(authenticatedPut).toHaveBeenCalledWith(
         "/api/v1/auth/password",
         expect.objectContaining({
@@ -98,7 +97,7 @@ describe("<ResetPassword />", () => {
           password_confirmation: "password1",
         })
       )
-      expect(window.location.href).toBe("http://dahlia.com/my-applications")
+      expect(window.location.assign).toHaveBeenCalledWith("/my-applications")
     })
 
     it("shows an error message when the server responds with an error", async () => {

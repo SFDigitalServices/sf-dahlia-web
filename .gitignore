@@ -71,3 +71,10 @@ yalc.lock
 /yarn-error.log
 yarn-debug.log*
 .yarn-integrity
+
+*storybook.log
+storybook-static
+.qlty/*
+!.qlty/configs
+!.qlty/configs/**
+!.qlty/qlty.toml

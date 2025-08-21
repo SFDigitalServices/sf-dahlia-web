@@ -35,7 +35,7 @@ export const withAuthentication = <P extends object>(
         const redirectParam = redirectType ? `?redirect=${redirectType}` : ""
         const language = getCurrentLanguage()
         const signInPath = getLocalizedPath("/sign-in", language, redirectParam)
-        window.location.href = signInPath
+        window.location.assign(signInPath)
       } else if (
         profile &&
         params.get("access-token") &&

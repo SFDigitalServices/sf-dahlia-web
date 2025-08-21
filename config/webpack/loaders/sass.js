@@ -71,6 +71,11 @@ module.exports = {
       options: {
         additionalData: tailwindVars,
         sourceMap: true,
+        sassOptions: {
+          logger: {
+            warn: console.warn
+          }
+        }
       }
     }
   ]

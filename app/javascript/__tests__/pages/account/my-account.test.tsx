@@ -1,7 +1,13 @@
-import { renderAndLoadAsync } from "../../__util__/renderUtils"
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/unbound-method */
+import {
+  renderAndLoadAsync,
+  mockWindowLocation,
+  restoreWindowLocation,
+} from "../../__util__/renderUtils"
 import MyAccount from "../../../pages/account/my-account"
 import React from "react"
-import { setupLocationAndRouteMock, setupUserContext } from "../../__util__/accountUtils"
+import { setupUserContext } from "../../__util__/accountUtils"
 import { withAuthentication } from "../../../authentication/withAuthentication"
 import { RedirectType } from "../../../util/routeUtil"
 
@@ -20,20 +26,20 @@ describe("<MyAccount />", () => {
   describe("when the user is signed in", () => {
     let getByTestId
 
+    let originalLocation: Location
+
     beforeEach(async () => {
+      originalLocation = mockWindowLocation()
       setupUserContext({ loggedIn: true })
+
       const WrappedComponent = withAuthentication(MyAccount, { redirectType: RedirectType.Account })
-
-      setupLocationAndRouteMock(
-        "?access-token=true&accountConfirmed=true&account_confirmation_success=true"
-      )
-
       const renderResult = await renderAndLoadAsync(<WrappedComponent assetPaths={{}} />)
       getByTestId = renderResult.getByTestId
     })
 
     afterEach(() => {
       jest.restoreAllMocks()
+      restoreWindowLocation(originalLocation)
     })
 
     it("contains two links within the main content", () => {
@@ -64,9 +70,8 @@ describe("<MyAccount />", () => {
     let originalLocation: Location
 
     beforeEach(async () => {
-      originalLocation = window.location
+      originalLocation = mockWindowLocation()
       setupUserContext({ loggedIn: false })
-      setupLocationAndRouteMock()
 
       const WrappedComponent = withAuthentication(MyAccount, { redirectType: RedirectType.Account })
       await renderAndLoadAsync(<WrappedComponent assetPaths={{}} />)
@@ -74,11 +79,11 @@ describe("<MyAccount />", () => {
 
     afterEach(() => {
       jest.restoreAllMocks()
-      window.location = originalLocation
+      restoreWindowLocation(originalLocation)
     })
 
     it("redirects to the sign in page if the user is not signed in", () => {
-      expect(window.location.href).toBe("http://dahlia.com/sign-in?redirect=account")
+      expect(window.location.assign).toHaveBeenCalledWith("/sign-in?redirect=account")
     })
   })
 })

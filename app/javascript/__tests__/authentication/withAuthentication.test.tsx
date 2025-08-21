@@ -1,10 +1,12 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/unbound-method */
 import React from "react"
 import { render } from "@testing-library/react"
+import { mockWindowLocation, restoreWindowLocation } from "../__util__/renderUtils"
 import { withAuthentication } from "../../authentication/withAuthentication"
 import UserContext, { ContextProps } from "../../authentication/context/UserContext"
 import { isTokenValid, parseUrlParams } from "../../authentication/token"
 import { getLocalizedPath, RedirectType } from "../../util/routeUtil"
-import { setupLocationAndRouteMock } from "../__util__/accountUtils"
 import { getCurrentLanguage } from "../../util/languageUtil"
 import TagManager from "react-gtm-module"
 
@@ -37,10 +39,12 @@ jest.mock("../../util/routeUtil", () => ({
 
 describe("withAuthentication", () => {
   let mockContextValue: ContextProps
+  let originalLocation: Location
   const TestComponent = () => <div>Protected Component</div>
   const WrappedComponent = withAuthentication(TestComponent)
 
   beforeEach(() => {
+    originalLocation = mockWindowLocation()
     mockContextValue = {
       profile: {
         uid: "123",
@@ -66,13 +70,11 @@ describe("withAuthentication", () => {
     ;(parseUrlParams as jest.Mock).mockReturnValue({
       get: jest.fn((_) => null),
     })
-
-    // Mock window.location
-    setupLocationAndRouteMock()
   })
 
   afterEach(() => {
     jest.restoreAllMocks()
+    restoreWindowLocation(originalLocation)
   })
 
   it("renders the wrapped component when authenticated", () => {
@@ -98,7 +100,7 @@ describe("withAuthentication", () => {
     )
 
     expect(getLocalizedPath).toHaveBeenCalledWith("/sign-in", "en", "")
-    expect(window.location.href).toBe("http://dahlia.com/sign-in")
+    expect(window.location.assign).toHaveBeenCalledWith("/sign-in")
   })
 
   it("redirects to sign-in with redirect param when specified", () => {
@@ -115,7 +117,7 @@ describe("withAuthentication", () => {
     )
 
     expect(getLocalizedPath).toHaveBeenCalledWith("/sign-in", "en", "?redirect=test-path")
-    expect(window.location.href).toBe("http://dahlia.com/sign-in?redirect=test-path")
+    expect(window.location.assign).toHaveBeenCalledWith("/sign-in?redirect=test-path")
   })
 
   it("returns null while loading", () => {
@@ -191,7 +193,7 @@ describe("withAuthentication", () => {
       expect.objectContaining({
         dataLayer: expect.objectContaining({
           event: "account_create_completed",
-          user_id: mockContextValue.profile.id,
+          user_id: mockContextValue.profile?.id,
         }),
       })
     )
@@ -201,7 +203,7 @@ describe("withAuthentication", () => {
     expect(window.history.replaceState).toHaveBeenCalledWith(
       {},
       document.title,
-      window.location?.origin + "/account" || "http://dahlia.com/account"
+      window.location?.origin + "/account"
     )
 
     // Restore original replaceState

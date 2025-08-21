@@ -2,7 +2,7 @@ import React from "react"
 import { act, render, screen, waitFor, fireEvent } from "@testing-library/react"
 import IdleTimeout from "../../authentication/components/IdleTimeout"
 import UserContext from "../../authentication/context/UserContext"
-import { mockProfileStub, setupLocationAndRouteMock } from "../__util__/accountUtils"
+import { mockProfileStub } from "../__util__/accountUtils"
 import { renderAndLoadAsync } from "../__util__/renderUtils"
 import TagManager from "react-gtm-module"
 
@@ -31,14 +31,20 @@ jest.mock("@bloom-housing/ui-seeds", () => {
 })
 
 describe("IdleTimeout", () => {
+  let originalLocation: Location
+
   beforeEach(() => {
-    setupLocationAndRouteMock()
+    originalLocation = { ...window.location }
     jest.useFakeTimers()
   })
 
   afterEach(() => {
     jest.runOnlyPendingTimers()
     jest.useRealTimers()
+    Object.defineProperty(window, "location", {
+      value: originalLocation,
+      writable: true,
+    })
   })
 
   it("renders null when not logged in and useFormTimeout false", () => {

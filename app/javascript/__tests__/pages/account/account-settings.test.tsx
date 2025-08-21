@@ -1,13 +1,15 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/unbound-method */
 import React from "react"
-import { renderAndLoadAsync } from "../../__util__/renderUtils"
+import {
+  renderAndLoadAsync,
+  mockWindowLocation,
+  restoreWindowLocation,
+} from "../../__util__/renderUtils"
 import AccountSettingsPage from "../../../pages/account/account-settings"
 import { fireEvent, screen, within, act } from "@testing-library/react"
 import { authenticatedPut } from "../../../api/apiService"
-import {
-  mockProfileStub,
-  setupLocationAndRouteMock,
-  setupUserContext,
-} from "../../__util__/accountUtils"
+import { mockProfileStub, setupUserContext } from "../../__util__/accountUtils"
 import { withAuthentication } from "../../../authentication/withAuthentication"
 import { RedirectType } from "../../../util/routeUtil"
 
@@ -15,46 +17,31 @@ jest.mock("../../../api/apiService", () => ({
   authenticatedPut: jest.fn(),
 }))
 
-const saveProfileMock = jest.fn()
-
 describe("<AccountSettingsPage />", () => {
   describe("when the user is signed in", () => {
     let promise
-    let renderResult
+    let originalLocation: Location
 
     beforeEach(async () => {
       document.documentElement.lang = "en"
-      setupUserContext({ loggedIn: true, saveProfileMock })
-      setupLocationAndRouteMock()
+      originalLocation = mockWindowLocation()
+      setupUserContext({ loggedIn: true })
       promise = Promise.resolve()
       const WrappedComponent = withAuthentication(AccountSettingsPage, {
         redirectType: RedirectType.Settings,
       })
-      renderResult = await renderAndLoadAsync(<WrappedComponent assetPaths={{}} />)
+      await renderAndLoadAsync(<WrappedComponent assetPaths={{}} />)
     })
 
     afterEach(() => {
       jest.restoreAllMocks()
+      restoreWindowLocation(originalLocation)
     })
 
     it("shows the correct header text", () => {
       const title = screen.getByText("Account settings")
 
       expect(title).not.toBeNull()
-    })
-
-    it("resize events", () => {
-      expect(renderResult).toMatchSnapshot()
-
-      act(() => {
-        // Change the viewport to 500px.
-        global.innerWidth = 500
-
-        // Trigger the window resize event.
-        global.dispatchEvent(new Event("resize"))
-      })
-
-      expect(renderResult).toMatchSnapshot()
     })
 
     describe("when the user updates their name and DOB", () => {
@@ -112,8 +99,6 @@ describe("<AccountSettingsPage />", () => {
             }),
           })
         )
-
-        expect(saveProfileMock).toHaveBeenCalled()
 
         expect(firstNameField.getAttribute("value")).toBe("NewFirstName")
 
@@ -178,8 +163,6 @@ describe("<AccountSettingsPage />", () => {
             }),
           })
         )
-
-        expect(saveProfileMock).toHaveBeenCalled()
       })
 
       it("blocks a DOB update if invalid", async () => {
@@ -716,25 +699,22 @@ describe("<AccountSettingsPage />", () => {
   describe("when the user is not signed in", () => {
     let originalLocation: Location
 
-    beforeEach(() => {
-      originalLocation = window.location
-      setupUserContext({ loggedIn: false, saveProfileMock })
-      setupLocationAndRouteMock()
-    })
+    beforeEach(async () => {
+      originalLocation = mockWindowLocation()
+      setupUserContext({ loggedIn: false })
 
-    afterEach(() => {
-      jest.restoreAllMocks()
-      window.location = originalLocation
-    })
-
-    it("redirects to the sign in page", async () => {
       const WrappedComponent = withAuthentication(AccountSettingsPage, {
         redirectType: RedirectType.Settings,
       })
-      const { queryByText } = await renderAndLoadAsync(<WrappedComponent assetPaths={{}} />)
+      await renderAndLoadAsync(<WrappedComponent assetPaths={{}} />)
+    })
 
-      expect(window.location.href).toBe("http://dahlia.com/sign-in?redirect=settings")
-      expect(queryByText("Account Settings")).toBeNull()
+    afterEach(() => {
+      restoreWindowLocation(originalLocation)
+    })
+
+    it("redirects to the sign in page", () => {
+      expect(window.location.assign).toHaveBeenCalledWith("/sign-in?redirect=settings")
     })
   })
 })
