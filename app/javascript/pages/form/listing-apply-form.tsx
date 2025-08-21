@@ -8,7 +8,7 @@ import { LoadingOverlay } from "@bloom-housing/ui-components"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import { UNLEASH_FLAG } from "../../modules/constants"
 import FormEngine from "../../formEngine/formEngine"
-import testSchema from "../../formEngine/testListingApplication"
+import listingApplicationDefaultRental from "../../formEngine/ListingApplicationDefaultRental"
 
 interface ListingApplyFormProps {
   assetPaths: unknown
@@ -34,7 +34,7 @@ const ListingApplyForm = (props: ListingApplyFormProps) => {
   return (
     <LoadingOverlay isLoading={!listing && !formEngine}>
       <Layout title={listing?.Name ? `${listing?.Name} Application` : null}>
-        {listing && <FormEngine listing={listing} schema={testSchema} />}
+        {listing && <FormEngine listing={listing} schema={listingApplicationDefaultRental} />}
       </Layout>
     </LoadingOverlay>
   )

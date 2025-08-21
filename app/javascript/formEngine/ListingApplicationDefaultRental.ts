@@ -66,7 +66,7 @@ const schema = {
       componentName: "ListingApplyStepWrapper",
       props: {
         title: "b2Contact.title",
-        titleVariables: {
+        titleVars: {
           name: { dataSource: "form", dataKey: "primaryApplicantFirstName" },
         },
       },
@@ -251,7 +251,6 @@ const schema = {
     //     description: "c3HouseholdMemberForm.p1",
     //   },
     //   children: [
-    //     // TODO how to group all fields on this page into a household member object in the form state?
     //     {
     //       componentName: "Name",
     //       props: {
