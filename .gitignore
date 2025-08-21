@@ -74,6 +74,7 @@ yarn-debug.log*
 
 *storybook.log
 storybook-static
+public/storybook/
 .qlty/*
 !.qlty/configs
 !.qlty/configs/**
