@@ -2,7 +2,7 @@ import * as z from "zod"
 import getFormComponentRegistry from "./formComponentRegistry"
 
 const DataSchema = z.object({
-  dataSource: z.enum(["listing", "form"]),
+  dataSource: z.string(), // "listing", "form"
   dataKey: z.string(),
 })
 export type DataSchema = z.infer<typeof DataSchema>

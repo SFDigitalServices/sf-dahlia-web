@@ -53,7 +53,6 @@ const ListingApplyStepWrapper = ({
   }
 
   const titleString = translationFromDataSchema(title, titleVars, { formData, listingData })
-  console.log("titleVars", titleVars)
 
   return (
     <FormStepProvider value={{ register }}>

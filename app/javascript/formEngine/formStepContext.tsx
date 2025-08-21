@@ -17,9 +17,5 @@ export const FormStepProvider = ({ value, children }: FormStepProviderProps) => 
 }
 
 export const useFormStepContext = () => {
-  const context = useContext(FormStepContext)
-  if (!context) {
-    throw new Error("useFormStepContext() must be used within a FormStepProvider.")
-  }
-  return context
+  return useContext(FormStepContext)
 }

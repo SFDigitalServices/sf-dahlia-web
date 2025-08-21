@@ -11,8 +11,6 @@ const getData = (
   return { form: formData, listing: listingData }[dataSource][dataKey]
 }
 
-// formData.primaryApplicantFirstName === "Jane"
-// { name: { dataSource: "form", key: "primaryApplicantFirstName" } } -> { name: "Jane" }
 export const translationFromDataSchema = (
   translationKey: string,
   translationVarsData: Record<string, DataSchema>,
