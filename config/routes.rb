@@ -6,6 +6,10 @@ class RestrictProduction
 end
 
 Rails.application.routes.draw do
+  if !Rails.env.production?
+    get '/storybook/*path', to: redirect('/storybook/%{path}'),
+      constraints: ->(request) { !request.xhr? && request.format.html? }
+  end
   root to: 'home#index', constraints: ->(req) { req.format == :html || req.format == '*/*' }
   mount_devise_token_auth_for(
     'User',
