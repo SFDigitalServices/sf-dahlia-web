@@ -1,0 +1,21 @@
+.application-form-header {
+  margin-block: var(--seeds-s6);
+
+  .application-form-header-heading {
+    font-size: var(--seeds-type-heading-size-xl);
+    color: var(--seeds-color-white);
+    font-weight: var(--seeds-font-weight-bold);
+    font-family: var(--seeds-font-alt-sans);
+  }
+
+  .application-form-header-title {
+    background-color: var(--seeds-color-primary);
+    padding-block: var(--seeds-s4);
+    color: var(--seeds-color-white);
+    --card-content-padding-inline: var(--seeds-s8);
+    @media (max-width: theme("screens.sm")) {
+      --card-content-padding-inline: var(--seeds-s4);
+    }
+    text-transform: uppercase;
+  }
+}
