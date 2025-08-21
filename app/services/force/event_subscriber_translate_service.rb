@@ -63,7 +63,7 @@ module Force
         host: ENV.fetch('SALESFORCE_HOST', nil),
         client_id: ENV.fetch('SALESFORCE_CLIENT_ID', nil),
         client_secret: ENV.fetch('SALESFORCE_CLIENT_SECRET', nil),
-        api_version: ENV.fetch('SALESFORCE_API_VERSION', '43.0'),
+        api_version: ENV.fetch('SALESFORCE_API_VERSION', '61.0'),
       )
     end
 
@@ -71,7 +71,7 @@ module Force
       credentials = @salesforce_client.authenticate!
       @faye_client = Faye::Client.new(
         "#{credentials.instance_url}/cometd/" \
-        "#{ENV.fetch('SALESFORCE_API_VERSION', '43.0')}/",
+        "#{ENV.fetch('SALESFORCE_API_VERSION', '61.0')}/",
       )
       @faye_client.set_header('Authorization', "OAuth #{credentials.access_token}")
     end
