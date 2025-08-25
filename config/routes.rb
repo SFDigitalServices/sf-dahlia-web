@@ -7,7 +7,6 @@ end
 
 Rails.application.routes.draw do
   if ENV['HEROKU_APP_NAME'] != 'dahlia-production'
-    console.log('Heroku review app test', ENV['HEROKU_APP_NAME'])
     get '/storybook/*path', to: redirect('/storybook/%{path}'),
       constraints: ->(request) { !request.xhr? && request.format.html? }
   end
