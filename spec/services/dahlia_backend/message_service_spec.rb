@@ -4,9 +4,15 @@ RSpec.describe DahliaBackend::MessageService do
   let(:client) { instance_double(DahliaBackend::ApiClient) }
   let(:listing_id) { 'listing-123' }
   let(:listing) do
-    double('Listing', Name: 'Test Listing', Lottery_Date: '2024-07-01T00:00:00Z',
-                      RecordType: Hashie::Mash.new(Name: 'Rental'),
-                      Leasing_Agent_Name: 'John Doe', Leasing_Agent_Email: 'email', Leasing_Agent_Phone: '123-456-7890', Office_Hours: '9am-5pm')
+    {
+      'Name' => 'Test Listing',
+      'Lottery_Date' => '2024-07-01T00:00:00Z',
+      'RecordType' => { 'Name' => 'Rental' },
+      'Leasing_Agent_Name' => 'John Doe',
+      'Leasing_Agent_Email' => 'email',
+      'Leasing_Agent_Phone' => '123-456-7890',
+      'Office_Hours' => '9am-5pm'
+    }
   end
   let(:application_params) do
     {
@@ -30,8 +36,7 @@ RSpec.describe DahliaBackend::MessageService do
     allow(Rails.configuration).to receive_message_chain(:unleash,
                                                         :is_enabled?).and_return(true)
     allow(Force::ListingService).to receive(:listing).with(listing_id).and_return(listing)
-    allow(Hashie::Mash).to receive(:new).and_return(listing)
-    allow(Time.zone).to receive(:parse).and_return(Time.parse(listing.Lottery_Date))
+    allow(Time.zone).to receive(:parse).and_return(Time.parse(listing['Lottery_Date']))
   end
 
   describe '.send_application_confirmation' do
