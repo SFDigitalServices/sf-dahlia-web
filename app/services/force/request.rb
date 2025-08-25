@@ -27,9 +27,8 @@ module Force
     def cached_get(endpoint, params = nil, force = false)
       key = "#{endpoint}#{params ? '?' + params.to_query : ''}"
       force = ActiveModel::Type::Boolean.new.cast(force)
-
-      force_refresh = force || !env_variable_true(ENV['CACHE_SALESFORCE_REQUESTS'])
-      if env_variable_true(ENV['FREEZE_SALESFORCE_CACHE'])
+      force_refresh = force.nil? ? env_variable_true(ENV.fetch('CACHE_SALESFORCE_REQUESTS', 'true')) : force
+      if env_variable_true(ENV.fetch('FREEZE_SALESFORCE_CACHE', nil))
         expires_in = 10.years
       else
         expires_in = params ? 10.minutes : 1.day
@@ -85,10 +84,10 @@ module Force
     def initialize_client
       @client = Restforce.new(
         authentication_retries: 1,
-        instance_url: ENV['SALESFORCE_INSTANCE_URL'],
+        instance_url: ENV.fetch('SALESFORCE_INSTANCE_URL', nil),
         mashify: false,
         timeout: @timeout,
-        api_version: ENV.fetch('SALESFORCE_API_VERSION', '43.0'),
+        api_version: ENV.fetch('SALESFORCE_API_VERSION', '61.0'),
       )
       # set oauth token from the cache, if we can
       # otherwise authenticate client created above
@@ -187,7 +186,7 @@ module Force
     end
 
     def post_request_with_headers_and_auth(endpoint, body, headers = {})
-      conn = Faraday.new(url: ENV['SALESFORCE_INSTANCE_URL'])
+      conn = Faraday.new(url: ENV.fetch('SALESFORCE_INSTANCE_URL', nil))
       apex_endpoint = api_url(endpoint)
       conn.post apex_endpoint do |req|
         headers.each do |k, v|
