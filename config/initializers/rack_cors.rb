@@ -10,5 +10,9 @@ if defined? Rack::Cors
       ]
       resource '/assets/*'
     end
+    allow do
+      origins '*'
+      resource '/storybook/*', methods: [:get]
+    end
   end
 end
