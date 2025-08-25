@@ -72,5 +72,18 @@ module SfDahliaWeb
     # Rails 7 can protect from open redirect attacks in `redirect_back_or_to` and `redirect_to`.
     # This is not compatible with our authentication process so we disable it
     config.action_controller.raise_on_open_redirects = false
+
+    if defined? Rack::Cors
+      Rails.configuration.middleware.insert_before 0, Rack::Cors do
+       allow do
+        origins [
+        %r{^https?://dahlia-[a-zA-Z0-9\-]*\.herokuapp\.com$},
+        'https://housing.sfgov.org',
+        ]
+        resource '/assets/*'
+        resource '/storybook/*'
+        end
+      end
+    end
   end
 end
