@@ -27,6 +27,9 @@ Rails.application.configure do
     config.logger = ActiveSupport::TaggedLogging.new(logger)
   end
 
+  # Enable serving static files from the `/public` folder
+  config.public_file_server.enabled = true
+
   # cache for 1 year
   config.public_file_server.headers = {
     'Cache-Control' => 'public, max-age=31536000'
