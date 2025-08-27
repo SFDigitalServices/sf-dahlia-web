@@ -27,7 +27,6 @@ import {
 import { RailsLotteryResult } from "../api/types/rails/listings/RailsLotteryResult"
 import { getLotteryBucketDetails } from "../api/listingApiService"
 import { ListingDetailsLotterySearchForm } from "../modules/listingDetailsLottery/ListingDetailsLotterySearchForm"
-import { useFeatureFlag } from "../hooks/useFeatureFlag"
 
 interface ApplicationItemProps {
   applicationURL: string
@@ -41,7 +40,6 @@ interface ApplicationItemProps {
 }
 
 const ApplicationItem = (props: ApplicationItemProps) => {
-  const { unleashFlag: dalpEnabled } = useFeatureFlag("temp.webapp.dalp", false)
   const [lotteryBucketDetails, setLotteryBucketDetails] = React.useState<RailsLotteryResult>()
   const [isModalOpen, setIsModalOpen] = React.useState(false)
   const applicationDueDate = props.listing.Application_Due_Date
@@ -105,7 +103,7 @@ const ApplicationItem = (props: ApplicationItemProps) => {
         </header>
         <section className={"application-item__content"}>
           <div className="w-full mb-3">
-            {(!isDalpListing(props.listing) || !dalpEnabled) && (
+            {!isDalpListing(props.listing) && (
               <p className={"application-item__text text-left w-full"}>{listingAddress}</p>
             )}
             {props.confirmationNumber && props.submitted && (
@@ -202,7 +200,7 @@ const ApplicationItem = (props: ApplicationItemProps) => {
         </section>
         <div className={"application-item__footer"}>
           <span className="text-sm inline-block space-x-3">
-            {(!isDalpListing(props.listing) || !dalpEnabled) && (
+            {!isDalpListing(props.listing) && (
               <Link href={getLocalizedPath(listingURL, getCurrentLanguage())}>
                 {t("myApplications.seeListing")}
               </Link>
