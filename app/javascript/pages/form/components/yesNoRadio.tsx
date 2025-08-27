@@ -7,7 +7,7 @@ interface YesNoRadioProps {
 const YesNoRadio = ({ label }: YesNoRadioProps) => {
   return (
     <div style={{ border: "2px dashed black", padding: "4px", margin: "4px" }}>
-      <p>Phone Component</p>
+      <p>YesNoRadio Component</p>
       <p>label: {t(label)}</p>
     </div>
   )
