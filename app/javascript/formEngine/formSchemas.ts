@@ -102,19 +102,19 @@ const getInvalidComponentNames = (schema: FormSchema): string[] => {
   return schemaComponentNames.filter((el) => !registeredComponentNames.includes(el))
 }
 
-export const parseFormSchema = (schema: FormSchema): FormSchema => {
+export const parseFormSchema = (schema: FormSchema): FormSchema | string => {
   let parsedSchema: FormSchema
   try {
     parsedSchema = FormSchema.parse(schema)
   } catch (error) {
     console.error("Validation failed:", error)
-    return
+    return "Schema structure is invalid"
   }
 
   const invalidComponentNames = getInvalidComponentNames(parsedSchema)
   if (invalidComponentNames.length > 0) {
     console.error("Invalid component names:", invalidComponentNames)
-    return
+    return "Schema contains invalid component names"
   }
 
   return parsedSchema

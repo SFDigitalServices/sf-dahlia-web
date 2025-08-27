@@ -21,8 +21,8 @@ const FormEngine = ({ listing, schema }: FormEngineProps) => {
   const [currentStepIndex, setCurrentStepIndex] = useState<number>(0)
 
   const parsedSchema = parseFormSchema(schema)
-  if (!parsedSchema) {
-    return <h1>Error parsing schema</h1>
+  if (typeof parsedSchema === "string") {
+    return <h1>{parsedSchema}</h1>
   }
 
   const saveFormData = (data: Record<string, unknown>) => {
