@@ -10,6 +10,7 @@ import {
 import { useFeatureFlag } from "../../../hooks/useFeatureFlag"
 import { getListingDetailPath } from "../../../util/routeUtil"
 import { openRentalListing } from "../../data/RailsRentalListing/listing-rental-open"
+import { defineCryptoApi } from "../../__util__/renderUtils"
 
 const axios = require("axios")
 
@@ -25,6 +26,8 @@ jest.mock("react-helmet-async", () => {
 jest.mock("../../../hooks/useFeatureFlag", () => ({
   useFeatureFlag: jest.fn(),
 }))
+
+defineCryptoApi()
 
 describe("<ListingApplyForm />", () => {
   let originalLocation: Location
