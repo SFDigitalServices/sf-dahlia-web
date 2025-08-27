@@ -3,10 +3,10 @@ import type { RailsListing } from "../modules/listings/SharedHelpers"
 import type { StepInfoSchema } from "./formSchemas"
 
 export interface FormEngineContext {
-  listingData?: RailsListing
+  listingData: RailsListing
   formData: Record<string, unknown>
   saveFormData: (formDataFragment: Record<string, unknown>) => void
-  currentStepIndex?: number
+  currentStepIndex: number
   stepInfoMap: StepInfoSchema[]
   sectionNames: string[]
   handleNextStep: () => void
