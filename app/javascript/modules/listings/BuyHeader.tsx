@@ -27,10 +27,7 @@ const DalpHeader = () => {
 
 const BuyHeader = () => {
   const { unleashFlag: dalpDirectoryEnabled } = useFeatureFlag("temp.webapp.directory.dalp", false)
-  const { unleashFlag: translationsReady } = useFeatureFlag(
-    "temp.webapp.listings.sales.seeHomesForSale",
-    false
-  )
+
   return (
     <PageHeader className="buy-header">
       <div className="buy-header_columns">
@@ -40,9 +37,7 @@ const BuyHeader = () => {
         <div className="mb-8 buy-header_right_col">
           {/* TODO: Switch this back to LinkButton or button once this issue is resolvedhttps://github.com/bloom-housing/bloom/issues/2324 */}
           <a href="#nav-bar-container" className="button is-primary is-fullwidth">
-            {translationsReady
-              ? t("saleDirectory.seeHomesForSale")
-              : t("saleDirectory.seeTheListings")}
+            {t("saleDirectory.seeHomesForSale")}
           </a>
         </div>
         <div className="buy-header_left_col">
