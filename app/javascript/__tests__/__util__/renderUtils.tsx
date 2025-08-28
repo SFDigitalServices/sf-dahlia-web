@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { act, render, RenderOptions, RenderResult } from "@testing-library/react"
 import React from "react"
+import crypto from "crypto"
 
 export const mockWindowLocation = (): typeof window.location => {
   const originalLocation = { ...window.location }
@@ -36,4 +37,13 @@ export const renderAndLoadAsync = async (
   })
 
   return renderResponse
+}
+
+// defines crypto methods for test environment
+export const defineCryptoApi = () => {
+  Object.defineProperty(globalThis, "crypto", {
+    value: {
+      randomUUID: () => crypto.randomUUID(),
+    },
+  })
 }
