@@ -2,17 +2,17 @@ import React from "react"
 import { t } from "@bloom-housing/ui-components"
 import { Card } from "@bloom-housing/ui-seeds"
 
-interface PhoneProps {
+interface SelectProps {
   label: string
 }
 
-const Phone = ({ label }: PhoneProps) => {
+const Select = ({ label }: SelectProps) => {
   return (
     <Card>
-      <Card.Header>Phone Component</Card.Header>
+      <Card.Header>Select Component</Card.Header>
       <Card.Section>{t(label)}</Card.Section>
     </Card>
   )
 }
 
-export default Phone
+export default Select

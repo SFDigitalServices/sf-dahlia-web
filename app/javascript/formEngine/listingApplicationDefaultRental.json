@@ -34,7 +34,7 @@
           "componentName":"Name",
           "props":{
             "label":"label.yourName",
-            "fieldnames":{
+            "fieldNames":{
               "firstName":"primaryApplicantFirstName",
               "middleName":"primaryApplicantMiddleName",
               "lastName":"primaryApplicantLastName"
@@ -46,14 +46,14 @@
           "componentName":"DateOfBirth",
           "props":{
             "label":"label.yourDob",
-            "fieldnames":{
+            "fieldNames":{
               "dateOfBirth":"primaryApplicantDob"
             }
           }
         },
         {
           "componentName":"EmailAddress",
-          "fieldnames":{
+          "fieldNames":{
             "email":"primaryApplicantEmail"
           },
           "props":{
@@ -88,7 +88,7 @@
             "showDontHavePhoneNumber":true,
             "showAdditionalPhoneNumbe":true,
             "labelForAdditionalPhoneNumbe":"label.applicantSecondPhone",
-            "fieldnames":{
+            "fieldNames":{
               "phone":"primaryApplicantPhone",
               "additionalPhone":"primaryApplicantAdditionalPhone"
             }
@@ -99,7 +99,7 @@
           "props":{
             "label":"address",
             "showMailingAddress":true,
-            "fieldnames":{
+            "fieldNames":{
               "address":"primaryApplicantAddress",
               "mailingAddress":"primaryApplicantMailingAddress"
             }
@@ -110,7 +110,7 @@
           "props":{
             "label":"label.workInSf",
             "note":"b2Contact.workInSfDesc",
-            "fieldnames":{
+            "fieldNames":{
               "question":"primaryApplicantWorkInSf"
             }
           }
@@ -144,7 +144,7 @@
         {
           "componentName":"AlternateContactType",
           "props":{
-            "fieldnames":{
+            "fieldNames":{
               "alternateContactType":"alternateContactType"
             }
           }
@@ -175,7 +175,7 @@
           "props":{
             "label":"label.alternateContactName",
             "showMiddleName":false,
-            "fieldnames":{
+            "fieldNames":{
               "firstName":"alternateContactFirstName",
               "middleName":"alternateContactMiddleName",
               "lastName":"alternateContactLastName"
@@ -209,7 +209,7 @@
           "componentName":"Phone",
           "props":{
             "label":"label.contactPhoneNumber",
-            "fieldnames":{
+            "fieldNames":{
               "phone":"alternateContactPhone"
             }
           }
@@ -218,7 +218,7 @@
           "componentName":"EmailAddress",
           "props":{
             "label":"label.contactEmail",
-            "fieldnames":{
+            "fieldNames":{
               "email":"alternateContactEmail"
             }
           }
@@ -227,7 +227,7 @@
           "componentName":"Address",
           "props":{
             "label":"label.contactMailingAddress",
-            "fieldnames":{
+            "fieldNames":{
               "address":"alternateContactAddress"
             }
           }
@@ -242,7 +242,7 @@
       "componentType":"step",
       "componentName":"ListingApplyHouseholdIntro",
       "props":{
-        "fieldnames":{
+        "fieldNames":{
           "liveAlone":"_liveAlone"
         }
       }
@@ -271,7 +271,7 @@
       "componentType":"step",
       "componentName":"AddHouseholdMembers",
       "props":{
-        "fieldnames":{
+        "fieldNames":{
           "addHouseHoldMember":"_addHouseHoldMember"
         }
       }
@@ -302,7 +302,7 @@
           "props":{
             "label":"label.householdMemberName",
             "showMiddleName":true,
-            "fieldnames":{
+            "fieldNames":{
               "firstName":"householdMemberFirstName",
               "middleName":"householdMemberMiddleName",
               "lastName":"householdMemberLastName"
@@ -313,7 +313,7 @@
           "componentName":"DateOfBirth",
           "props":{
             "label":"label.dob",
-            "fieldnames":{
+            "fieldNames":{
               "dateOfBirth":"householdMemberDob"
             }
           }
@@ -321,7 +321,7 @@
         {
           "componentName":"HouseholdMemberSameAddress",
           "props":{
-            "fieldnames":{
+            "fieldNames":{
               "address":"householdMemberAddress"
             }
           }
@@ -331,7 +331,7 @@
           "props":{
             "label":"label.memberWorkInSf",
             "description":"c3HouseholdMemberForm.workInSfDesc",
-            "fieldnames":{
+            "fieldNames":{
               "question":"householdMemberWorkInSf"
             }
           }
@@ -351,7 +351,7 @@
                 "value":"Registered Domestic Partner"
               }
             ],
-            "fieldnames":{
+            "fieldNames":{
               "selection":"householdMemberRelation"
             }
           }
@@ -396,7 +396,7 @@
           "componentName":"YesNoRadio",
           "props":{
             "note":"label.pleaseSelectOne",
-            "fieldnames":{
+            "fieldNames":{
               "question":"hasPublicHousing"
             }
           }
@@ -470,7 +470,7 @@
           "props":{
             "note":"label.pleaseSelectOne",
             "yesText":"d1IncomeVouchers.ifSubsidyWarning",
-            "fieldnames":{
+            "fieldNames":{
               "question":"receivesIncomeVouchers"
             }
           }
@@ -486,14 +486,14 @@
       "componentName":"ListingApplyStepWrapper",
       "props":{
         "title":"d2Income.title",
-        "descriptionComponentName":"incomeVoucherDescription"
+        "descriptionComponentName":"HouseholdIncomeDescription"
       },
       "children":[
         {
           "componentName":"Currency",
           "props":{
             "placeholder":"label.incomePlaceholder",
-            "fieldnames":{
+            "fieldNames":{
               "amount":"householdIncome"
             }
           }
@@ -511,7 +511,7 @@
                 "value":"1"
               }
             ],
-            "fieldnames":{
+            "fieldNames":{
               "answer":"householdIncomeMultiplier"
             }
           }
@@ -556,7 +556,7 @@
             "description": "e3aAssistedHousingPreference.preference.description",
             "showProofType": false,
             "members": { "dataSource": "form", "dataKey": "members" },
-            "fieldnames":{
+            "fieldNames":{
               "member":"assistedHousingMember",
               "proofDoc":"assistedHousingProofDoc"
             }
@@ -617,7 +617,7 @@
       "componentType":"step",
       "componentName":"ListingApplyStepWrapper",
       "props":{
-        "title":"label.good_news_for_higher_ranking",
+        "title":"label.goodNewsForHigherRanking",
         "description":"e2aNeighborhoodPreference.instructionsP2"
       },
       "children":[
@@ -628,7 +628,7 @@
             "description": "e2aNeighborhoodPreference.preference.description",
             "showProofType": true,
             "members": { "dataSource": "form", "dataKey": "members" },
-            "fieldnames":{
+            "fieldNames":{
               "member":"neighborhoodPrefMember",
               "proofDocType":"neighborhoodPrefProofDocType",
               "proofDoc":"neighborhoodPrefProofDoc"
@@ -670,7 +670,7 @@
             "description": "e2bAdhpPreference.preference.description",
             "showProofType": true,
             "members": { "dataSource": "form", "dataKey": "members" },
-            "fieldnames":{
+            "fieldNames":{
               "member":"antiDisplacementPrefMember",
               "proofDocType":"antiDisplacementPrefProofDocType",
               "proofDoc":"antiDisplacementPrefProofDoc"
@@ -718,7 +718,7 @@
               "dataSource":"listing",
               "dataKey":"preferences"
             },
-            "fieldnames":{
+            "fieldNames":{
               "liveInSfMember":"liveInSfMember",
               "liveInSfProofType":"liveInSfProofType",
               "liveInSfProofDoc":"liveInSfProofDoc",
@@ -755,26 +755,26 @@
       },
       "children":[
         {
-          "componentName":"CopPreference",
+          "componentName":"CertificateNumberPreference",
           "props":{
-            "listingPreferences":{
-              "dataSource":"listing",
-              "dataKey":"preferences"
-            },
-            "fieldnames":{
+            "name": "e7PreferencesPrograms.certOfPreference",
+            "description": "e7PreferencesPrograms.certOfPreferenceDesc",
+            "numberName": "e7PreferencesPrograms.certOfPreferenceCertificate",
+            "numberDescription": "e7PreferencesPrograms.needCertificateForPreference",
+            "fieldNames":{
               "copMember":"copMember",
               "copNumber":"copNumber"
             }
           }
         },
         {
-          "componentName":"DthpPreference",
+          "componentName":"CertificateNumberPreference",
           "props":{
-            "listingPreferences":{
-              "dataSource":"listing",
-              "dataKey":"preferences"
-            },
-            "fieldnames":{
+            "name": "e7PreferencesPrograms.displace",
+            "description": "e7PreferencesPrograms.displacedTenantsDesc",
+            "numberName": "e7PreferencesPrograms.displacedCertificate",
+            "numberDescription": "e7PreferencesPrograms.needCertificateForPreference",
+            "fieldNames":{
               "dthpMember":"dthpMember",
               "dthpNumber":"dthpNumber"
             }
@@ -807,7 +807,7 @@
       },
       "children":[
         {
-          "componentName":"VeteranRadio",
+          "componentName":"VeteransRadio",
           "props":{
             "fieldNames":{
               "veteranMember":"veteranMember",

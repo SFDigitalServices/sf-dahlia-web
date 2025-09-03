@@ -1,12 +1,12 @@
 import React from "react"
 import { t } from "@bloom-housing/ui-components"
-import { Button, Heading } from "@bloom-housing/ui-seeds"
+import { Button } from "@bloom-housing/ui-seeds"
 import { CardSection } from "@bloom-housing/ui-seeds/src/blocks/Card"
 import { useFormEngineContext } from "../../../formEngine/formEngineContext"
 
-const ListingApplyOverview = () => {
+const ListingApplyTerms = () => {
   const formEngineContext = useFormEngineContext()
-  const { handleNextStep, handlePrevStep } = formEngineContext
+  const { handlePrevStep } = formEngineContext
 
   return (
     <>
@@ -16,15 +16,18 @@ const ListingApplyOverview = () => {
         </Button>
       </CardSection>
       <CardSection>
-        <Heading>ListingApplyOverview Component</Heading>
+        <h1 className="mt-6 mb-4 text-xl md:text-2xl">ListingApplyReviewTerms Component</h1>
       </CardSection>
       <CardSection>
-        <Button variant="primary" onClick={handleNextStep}>
-          {t("t.next")}
+        <Button
+          variant="primary"
+          onClick={() => window.alert("submitting application data (not really)")}
+        >
+          {t("t.submit")}
         </Button>
       </CardSection>
     </>
   )
 }
 
-export default ListingApplyOverview
+export default ListingApplyTerms

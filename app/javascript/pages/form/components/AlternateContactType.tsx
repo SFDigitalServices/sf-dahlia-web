@@ -2,17 +2,17 @@ import React from "react"
 import { t } from "@bloom-housing/ui-components"
 import { Card } from "@bloom-housing/ui-seeds"
 
-interface PhoneProps {
+interface AlternateContactTypeProps {
   label: string
 }
 
-const Phone = ({ label }: PhoneProps) => {
+const AlternateContactType = ({ label }: AlternateContactTypeProps) => {
   return (
     <Card>
-      <Card.Header>Phone Component</Card.Header>
+      <Card.Header>AlternateContactType Component</Card.Header>
       <Card.Section>{t(label)}</Card.Section>
     </Card>
   )
 }
 
-export default Phone
+export default AlternateContactType

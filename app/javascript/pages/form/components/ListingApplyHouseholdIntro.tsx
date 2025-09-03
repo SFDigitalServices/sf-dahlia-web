@@ -4,7 +4,7 @@ import { Button, Heading } from "@bloom-housing/ui-seeds"
 import { CardSection } from "@bloom-housing/ui-seeds/src/blocks/Card"
 import { useFormEngineContext } from "../../../formEngine/formEngineContext"
 
-const ListingApplyOverview = () => {
+const ListingApplyHouseholdIntro = () => {
   const formEngineContext = useFormEngineContext()
   const { handleNextStep, handlePrevStep } = formEngineContext
 
@@ -16,7 +16,7 @@ const ListingApplyOverview = () => {
         </Button>
       </CardSection>
       <CardSection>
-        <Heading>ListingApplyOverview Component</Heading>
+        <Heading>ListingApplyHouseholdIntro Component</Heading>
       </CardSection>
       <CardSection>
         <Button variant="primary" onClick={handleNextStep}>
@@ -27,4 +27,4 @@ const ListingApplyOverview = () => {
   )
 }
 
-export default ListingApplyOverview
+export default ListingApplyHouseholdIntro

@@ -4,9 +4,9 @@ import React from "react"
 import { t } from "@bloom-housing/ui-components"
 import { render, screen } from "@testing-library/react"
 import { FormEngineProvider } from "../../../../formEngine/formEngineContext"
-import ListingApplyStepWrapper from "../../../../pages/form/components/listingApplyStepWrapper"
+import ListingApplyStepWrapper from "../../../../pages/form/components/ListingApplyStepWrapper"
 import { openRentalListing } from "../../../data/RailsRentalListing/listing-rental-open"
-import Name from "../../../../pages/form/components/name"
+import Name from "../../../../pages/form/components/Name"
 
 describe("<ListingApplyStepWrapper />", () => {
   it("renders a form step and child components", () => {

@@ -2,17 +2,17 @@ import React from "react"
 import { t } from "@bloom-housing/ui-components"
 import { Card } from "@bloom-housing/ui-seeds"
 
-interface PhoneProps {
+interface LiveWorkPreferenceProps {
   label: string
 }
 
-const Phone = ({ label }: PhoneProps) => {
+const LiveWorkPreference = ({ label }: LiveWorkPreferenceProps) => {
   return (
     <Card>
-      <Card.Header>Phone Component</Card.Header>
+      <Card.Header>MonthlyRent Component</Card.Header>
       <Card.Section>{t(label)}</Card.Section>
     </Card>
   )
 }
 
-export default Phone
+export default LiveWorkPreference
