@@ -33,9 +33,9 @@ const schema = {
           props: {
             label: "label.yourName",
             fieldNames: {
-              firstName: "primaryApplicantFirstName",
-              middleName: "primaryApplicantMiddleName",
-              lastName: "primaryApplicantLastName",
+              firstName: "label.firstName.sentenceCase",
+              middleName: "label.middleName.sentenceCase",
+              lastName: "label.lastName.sentenceCase",
             },
             showMiddleName: true,
           },
