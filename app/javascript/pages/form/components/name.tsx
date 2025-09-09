@@ -6,12 +6,18 @@ import { useFormStepContext } from "../../../formEngine/formStepContext"
 
 type NameProps = {
   label?: string
-  fieldNames: {
-    firstName?: string
-    middleName?: string
-    lastName?: string
+  fieldNames?: {
+    firstName: string
+    middleName: string
+    lastName: string
   }
   showMiddleName?: true
+}
+
+const defaultFieldNames = {
+  firstName: "label.firstName.sentenceCase",
+  middleName: "label.firstName.sentenceCase",
+  lastName: "label.firstName.sentenceCase",
 }
 
 const getValidation = (fieldName: string, required: boolean) => ({
@@ -26,7 +32,11 @@ const getValidation = (fieldName: string, required: boolean) => ({
   },
 })
 
-const Name = ({ label, fieldNames, showMiddleName }: NameProps) => {
+const Name = ({
+  label = "label.yourName",
+  fieldNames = defaultFieldNames,
+  showMiddleName,
+}: NameProps) => {
   const { register, errors, trigger } = useFormStepContext()
 
   const fieldProps = (name: string) => ({
