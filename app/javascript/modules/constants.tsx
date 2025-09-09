@@ -174,4 +174,4 @@ export const INPUT_MAX_LENGTH = {
   raceEthnicityOther: 50,
 }
 
-export const LATIN_REGEX = /^[A-z0-9\u00C0-\u017E\\s'\.,-\/\+#%$:=\-_`~()]+$/
+export const LATIN_REGEX = /^[A-Za-z0-9\u00C0-\u017E\\s'\.,-\/\+#%$:=\-_`~()]+$/
