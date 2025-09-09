@@ -41,8 +41,9 @@ const Name = ({
 
   const fieldProps = (name: string) => ({
     name: t(name),
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-    label: t(fieldNames[name]),
+    label:
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+      t(fieldNames[name]) + (name === "middleName" ? " (" + t("t.optional.lowercase") + ")" : ""),
     register,
     validation: getValidation(name, name !== "middleName"),
     error: !!errors?.[name],
