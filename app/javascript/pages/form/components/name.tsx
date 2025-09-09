@@ -1,26 +1,54 @@
 import React from "react"
 import { t, Field } from "@bloom-housing/ui-components"
+import { Heading } from "@bloom-housing/ui-seeds"
+import { INPUT_MAX_LENGTH, LATIN_REGEX } from "../../../modules/constants"
 import { useFormStepContext } from "../../../formEngine/formStepContext"
 
-interface NameProps {
-  label: string
+type NameProps = {
+  label?: string
   fieldNames: {
-    firstName: string
-    middleName: string
-    lastName: string
+    firstName?: string
+    middleName?: string
+    lastName?: string
   }
+  showMiddleName?: true
 }
 
-const Name = ({ label, fieldNames }: NameProps) => {
-  const { register } = useFormStepContext()
+const getValidation = (fieldName: string, required: boolean) => ({
+  required: required ? t(`error.${fieldName}`) : false,
+  pattern: {
+    value: LATIN_REGEX,
+    message: t(`error.${fieldName}`),
+  },
+  maxLength: {
+    value: INPUT_MAX_LENGTH[fieldName],
+    message: t(`error.${fieldName}`),
+  },
+})
+
+const Name = ({ label, fieldNames, showMiddleName }: NameProps) => {
+  const { register, errors, trigger } = useFormStepContext()
+
+  const fieldProps = (name: string) => ({
+    name: t(name),
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+    label: t(fieldNames[name]),
+    register,
+    validation: getValidation(name, name !== "middleName"),
+    error: !!errors?.[name],
+    errorMessage: errors?.[name]?.message && t(errors[name].message as string),
+    inputProps: { onBlur: () => trigger(name) },
+  })
 
   return (
-    <div style={{ border: "2px dashed black", padding: "4px", margin: "4px" }}>
-      <p>Name Component</p>
-      <fieldset>
-        <Field name={fieldNames.firstName} label={t(label)} register={register} />
-      </fieldset>
-    </div>
+    <fieldset>
+      <Heading priority={2} size="md">
+        {t(label)}
+      </Heading>
+      <Field {...fieldProps("firstName")} />
+      {showMiddleName && <Field {...fieldProps("middleName")} />}
+      <Field {...fieldProps("lastName")} />
+    </fieldset>
   )
 }
 

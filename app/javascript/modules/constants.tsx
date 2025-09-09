@@ -156,3 +156,22 @@ export const UNLEASH_FLAG = {
   CLERK_AUTH: "temp.webapp.auth.clerk",
   FORM_ENGINE: "perm.webapp.formEngine",
 }
+
+export const INPUT_MAX_LENGTH = {
+  firstName: 40,
+  middleName: 20,
+  lastName: 40,
+  email: 50,
+  password: 50,
+  address: 75,
+  city: 75,
+  alternateContactTypeOther: 50,
+  alternateContactAgency: 50,
+  certificateNumber: 50,
+  genderOther: 50,
+  otherLanguage: 50,
+  sexualOrientationOther: 50,
+  raceEthnicityOther: 50,
+}
+
+export const LATIN_REGEX = /^[A-z0-9\u00C0-\u017E\\s'\.,-\/\+#%$:=\-_`~()]+$/
