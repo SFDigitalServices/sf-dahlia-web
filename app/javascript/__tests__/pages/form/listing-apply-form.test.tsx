@@ -6,11 +6,11 @@ import {
   renderAndLoadAsync,
   mockWindowLocation,
   restoreWindowLocation,
+  defineCryptoApi,
 } from "../../__util__/renderUtils"
 import { useFeatureFlag } from "../../../hooks/useFeatureFlag"
 import { getListingDetailPath } from "../../../util/routeUtil"
 import { openRentalListing } from "../../data/RailsRentalListing/listing-rental-open"
-import { defineCryptoApi } from "../../__util__/renderUtils"
 
 const axios = require("axios")
 

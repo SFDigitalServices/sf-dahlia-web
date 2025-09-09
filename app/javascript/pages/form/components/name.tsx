@@ -40,7 +40,7 @@ const Name = ({
   const { register, errors, trigger } = useFormStepContext()
 
   const fieldProps = (name: string) => ({
-    name: t(name),
+    name: name,
     label:
       // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       t(fieldNames[name]) + (name === "middleName" ? " (" + t("t.optional.lowercase") + ")" : ""),

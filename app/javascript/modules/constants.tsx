@@ -174,4 +174,5 @@ export const INPUT_MAX_LENGTH = {
   raceEthnicityOther: 50,
 }
 
-export const LATIN_REGEX = /^[A-Za-z0-9\u00C0-\u017E\\s'\.,-\/\+#%$:=\-_`~()]+$/
+// eslint-disable-next-line prefer-regex-literals
+export const LATIN_REGEX = new RegExp("/^[A-Za-z0-9\u00C0-\u017E\\s'.,-/+#%$:=-_`~()]+$/")
