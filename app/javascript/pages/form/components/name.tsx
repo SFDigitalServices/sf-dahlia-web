@@ -53,7 +53,7 @@ const Name = ({
 
   return (
     <fieldset>
-      <Heading priority={2} size="md">
+      <Heading priority={2} size="sm">
         {t(label)}
       </Heading>
       <Field {...fieldProps("firstName")} />
