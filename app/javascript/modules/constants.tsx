@@ -157,7 +157,7 @@ export const UNLEASH_FLAG = {
   FORM_ENGINE: "perm.webapp.formEngine",
 }
 
-export const INPUT_MAX_LENGTH = {
+export const LISTING_APPLY_FORMS_INPUT_MAX_LENGTH = {
   firstName: 40,
   middleName: 20,
   lastName: 40,

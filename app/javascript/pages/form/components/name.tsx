@@ -28,27 +28,41 @@ const getValidation = (fieldName: string, required: boolean) => ({
 
 const Name = ({ label, fieldNames, showMiddleName }: NameProps) => {
   const { register, errors, trigger } = useFormStepContext()
-
-  const fieldProps = (name: string) => ({
-    name: name,
-    label:
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-      t(fieldNames[name]) + (name === "middleName" ? " (" + t("t.optional.lowercase") + ")" : ""),
-    register,
-    validation: getValidation(name, name !== "middleName"),
-    error: !!errors?.[name],
-    errorMessage: errors?.[name]?.message && t(errors[name].message as string),
-    inputProps: { onBlur: () => trigger(name) },
-  })
-
+  const { firstName, middleName, lastName } = fieldNames
   return (
     <fieldset>
       <Heading priority={2} size="sm">
         {t(label)}
       </Heading>
-      <Field {...fieldProps("firstName")} />
-      {showMiddleName && <Field {...fieldProps("middleName")} />}
-      <Field {...fieldProps("lastName")} />
+      <Field
+        name={firstName}
+        label={t("label.firstName.sentenceCase")}
+        register={register}
+        validation={getValidation("firstName", true)}
+        error={errors.firstName}
+        errorMessage={errors?.firstName && t("error.firstName")}
+        inputProps={{ onBlur: () => trigger(firstName) }}
+      />
+      {showMiddleName && (
+        <Field
+          name={middleName}
+          label={`${t("label.middleName.sentenceCase")} (${t("t.optional.lowercase")})`}
+          register={register}
+          validation={getValidation("middleName", false)}
+          error={errors.middleName}
+          errorMessage={errors?.middleName && t("error.pleaseProvideAnswersInEnglish")}
+          inputProps={{ onBlur: () => trigger(middleName) }}
+        />
+      )}
+      <Field
+        name={lastName}
+        label={t("label.lastName.sentenceCase")}
+        register={register}
+        validation={getValidation("lastName", true)}
+        error={errors.lastName}
+        errorMessage={errors?.lastName && t("error.lastName")}
+        inputProps={{ onBlur: () => trigger(lastName) }}
+      />
     </fieldset>
   )
 }
