@@ -1,7 +1,7 @@
 import React from "react"
 import { t, Field } from "@bloom-housing/ui-components"
 import { Heading } from "@bloom-housing/ui-seeds"
-import { INPUT_MAX_LENGTH, LATIN_REGEX } from "../../../modules/constants"
+import { LATIN_REGEX, LISTING_APPLY_FORMS_INPUT_MAX_LENGTH } from "../../../modules/constants"
 import { useFormStepContext } from "../../../formEngine/formStepContext"
 
 type NameProps = {
@@ -27,7 +27,7 @@ const getValidation = (fieldName: string, required: boolean) => ({
     message: t(`error.${fieldName}`),
   },
   maxLength: {
-    value: INPUT_MAX_LENGTH[fieldName],
+    value: LISTING_APPLY_FORMS_INPUT_MAX_LENGTH[fieldName],
     message: t(`error.${fieldName}`),
   },
 })
