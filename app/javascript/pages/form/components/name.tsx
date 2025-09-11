@@ -11,7 +11,7 @@ type NameProps = {
     middleName: string
     lastName: string
   }
-  showMiddleName: true
+  showMiddleName: boolean
 }
 
 const Name = ({

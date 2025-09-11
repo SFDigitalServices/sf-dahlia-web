@@ -10,7 +10,7 @@ import Name from "../../../../pages/form/components/name"
 
 describe("<ListingApplyStepWrapper />", () => {
   it("renders a form step and child components", () => {
-    const fieldNames = ["label.firstName", "label.middleName", "label.lastName"]
+    const fieldNames = ["firstName", "middleName", "lastName"]
     const formEngineContextValue = {
       listingData: openRentalListing,
       formData: { testField: null },
@@ -33,6 +33,7 @@ describe("<ListingApplyStepWrapper />", () => {
         middleName: "label.middleName.sentenceCase",
         lastName: "label.lastName.sentenceCase",
       },
+      showMiddleName: true,
     }
 
     render(
