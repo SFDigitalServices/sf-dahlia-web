@@ -155,7 +155,7 @@
       "stepInfo":{
         "slug":"alternate-contact-name",
         "sectionName":"household",
-        "navigation":{
+        "navigationArrival":{
           "showStepIfAnyPresent":[
             {
               "dataSource":"form",
@@ -188,7 +188,7 @@
       "stepInfo":{
         "slug":"alternate-contact-phone-address",
         "sectionName":"household",
-        "navigation":{
+        "navigationArrival":{
           "showStepIfAnyPresent":[
             {
               "dataSource":"form",
@@ -258,37 +258,15 @@
     {
       "stepInfo":{
         "slug":"household-members",
-        "sectionName":"household",
-        "navigation":{
-          "hideStepIfAnyPresent":[
-            {
-              "dataSource":"form",
-              "dataKey":"liveAlone"
-            }
-          ]
-        }
+        "sectionName":"household"
       },
       "componentType":"step",
-      "componentName":"AddHouseholdMembers",
-      "props":{
-        "fieldNames":{
-          "addHouseHoldMember":"_addHouseHoldMember"
-        }
-      }
+      "componentName":"AddHouseholdMembers"
     },
     {
       "stepInfo":{
         "slug":"household-member-form",
-        "sectionName":"household",
-        "navigation":{
-          "showStepIfAnyPresent":[
-            {
-              "dataSource":"form",
-              "dataKey":"_addHouseHoldMember"
-            }
-          ],
-          "nextStep":"household-members"
-        }
+        "sectionName":"household"
       },
       "componentType":"step",
       "componentName":"ListingApplyStepWrapper",
@@ -340,7 +318,7 @@
           "componentName":"Select",
           "props":{
             "label":"label.householdMemberRelationship",
-            "defaultOptionName": "label.selectOne",
+            "defaultOptionName":"label.selectOne",
             "options":[
               {
                 "name":"label.spouse",
@@ -362,7 +340,7 @@
       "stepInfo":{
         "slug":"verify-address-household-member",
         "sectionName":"household",
-        "navigation":{
+        "navigationArrival":{
           "showStepIfAnyPresent":[
             {
               "dataSource":"form",
@@ -383,7 +361,10 @@
     {
       "stepInfo":{
         "slug":"household-public-housing",
-        "sectionName":"household"
+        "sectionName":"household",
+        "navigationDeparture":{
+          "prevStep":"household-members"
+        }
       },
       "componentType":"step",
       "componentName":"ListingApplyStepWrapper",
@@ -529,7 +510,7 @@
       "stepInfo":{
         "slug":"assisted-housing-preference",
         "sectionName":"preferences",
-        "navigation":{
+        "navigationArrival":{
           "showStepIfAllPresent":[
             {
               "dataSource":"listing",
@@ -552,10 +533,13 @@
         {
           "componentName":"PreferenceCheckboxGroup",
           "props":{
-            "name": "e3aAssistedHousingPreference.preference.title",
-            "description": "e3aAssistedHousingPreference.preference.description",
-            "showProofType": false,
-            "members": { "dataSource": "form", "dataKey": "members" },
+            "name":"e3aAssistedHousingPreference.preference.title",
+            "description":"e3aAssistedHousingPreference.preference.description",
+            "showProofType":false,
+            "members":{
+              "dataSource":"form",
+              "dataKey":"members"
+            },
             "fieldNames":{
               "member":"assistedHousingMember",
               "proofDoc":"assistedHousingProofDoc"
@@ -568,32 +552,31 @@
       "stepInfo":{
         "slug":"rent-burdened-preference",
         "sectionName":"preferences",
-        "navigation":{
+        "navigationArrival":{
           "showStepIfAllPresent":[
             {
-              "dataSource":"listing",
-              "dataKey":"preferences.rentBurden"
+              "dataSource":"preferences",
+              "dataKey":"rentBurden"
             },
             {
-              "dataSource":"function",
-              "dataKey":"checkIfRentOverHalfOfIncome"
-            }
-          ],
-          "hideStepIfAnyPresent": [
+              "dataSource":"form",
+              "dataKey":"_rentOverHalfOfIncome"
+            },
             {
               "dataSource":"form",
-              "dataKey":"assistedHousingProofDoc"
+              "dataKey":"assistedHousingProofDoc",
+              "negate":true
             }
           ]
         }
       },
       "componentType":"step",
       "componentName":"ListingApplyRentBurdenPreference",
-      "props": {
-        "fieldNames": {
-          "member": "rentBurdenPrefMember",
-          "proofDocType": "rentBurdenPrefProofDocType",
-          "proofDoc": "rentBurdenPrefProofDocType"
+      "props":{
+        "fieldNames":{
+          "member":"rentBurdenPrefMember",
+          "proofDocType":"rentBurdenPrefProofDocType",
+          "proofDoc":"rentBurdenPrefProofDocType"
         }
       }
     },
@@ -601,15 +584,15 @@
       "stepInfo":{
         "slug":"neighborhood-preference",
         "sectionName":"preferences",
-        "navigation":{
+        "navigationArrival":{
           "showStepIfAllPresent":[
             {
-              "dataSource":"listing",
-              "dataKey":"preferences.neighborhoodResidence"
+              "dataSource":"preferences",
+              "dataKey":"neighborhoodResidence"
             },
             {
-              "dataSource":"function",
-              "dataKey":"preferenceAddressMatch"
+              "dataSource":"form",
+              "dataKey":"_preferenceAddressMatch"
             }
           ]
         }
@@ -624,10 +607,13 @@
         {
           "componentName":"PreferenceCheckboxGroup",
           "props":{
-            "name": "e2aNeighborhoodPreference.preference.title",
-            "description": "e2aNeighborhoodPreference.preference.description",
-            "showProofType": true,
-            "members": { "dataSource": "form", "dataKey": "members" },
+            "name":"e2aNeighborhoodPreference.preference.title",
+            "description":"e2aNeighborhoodPreference.preference.description",
+            "showProofType":true,
+            "members":{
+              "dataSource":"form",
+              "dataKey":"members"
+            },
             "fieldNames":{
               "member":"neighborhoodPrefMember",
               "proofDocType":"neighborhoodPrefProofDocType",
@@ -641,17 +627,16 @@
       "stepInfo":{
         "slug":"adhp-preference",
         "sectionName":"preferences",
-        "navigation":{
+        "navigationArrival":{
           "showStepIfAllPresent":[
             {
-              "dataSource":"listing",
-              "dataKey":"preferences.antiDisplacement"
-            }
-          ],
-          "hideStepIfAnyPresent": [
+              "dataSource":"preferences",
+              "dataKey":"antiDisplacement"
+            },
             {
               "dataSource":"form",
-              "dataKey":"neighborhoodPrefProofDoc"
+              "dataKey":"neighborhoodPrefProofDoc",
+              "negate":true
             }
           ]
         }
@@ -666,10 +651,13 @@
         {
           "componentName":"PreferenceCheckboxGroup",
           "props":{
-            "name": "e2bAdhpPreference.preference.title",
-            "description": "e2bAdhpPreference.preference.description",
-            "showProofType": true,
-            "members": { "dataSource": "form", "dataKey": "members" },
+            "name":"e2bAdhpPreference.preference.title",
+            "description":"e2bAdhpPreference.preference.description",
+            "showProofType":true,
+            "members":{
+              "dataSource":"form",
+              "dataKey":"members"
+            },
             "fieldNames":{
               "member":"antiDisplacementPrefMember",
               "proofDocType":"antiDisplacementPrefProofDocType",
@@ -683,23 +671,15 @@
       "stepInfo":{
         "slug":"live-work-preference",
         "sectionName":"preferences",
-        "navigation":{
+        "navigationArrival":{
           "showStepIfAnyPresent":[
             {
               "dataSource":"form",
               "dataKey":"_addressNeighborhoodMatch"
             },
             {
-              "dataSource":"listing",
-              "dataKey":"preferences.liveWorkInSf"
-            },
-            {
-              "dataSource":"listing",
-              "dataKey":"preferences.liveInSf"
-            },
-            {
-              "dataSource":"listing",
-              "dataKey":"preferences.workInSf"
+              "dataSource":"preferences",
+              "dataKey":"liveWorkInSf"
             }
           ]
         }
@@ -734,15 +714,15 @@
       "stepInfo":{
         "slug":"preferences-programs",
         "sectionName":"preferences",
-        "navigation":{
+        "navigationArrival":{
           "showStepIfAnyPresent":[
             {
-              "dataSource":"listing",
-              "dataKey":"preferences.certOfPreference"
+              "dataSource":"preferences",
+              "dataKey":"certificateOfPreference"
             },
             {
-              "dataSource":"listing",
-              "dataKey":"preferences.displaced"
+              "dataSource":"preferences",
+              "dataKey":"displacedTenant"
             }
           ]
         }
@@ -757,10 +737,10 @@
         {
           "componentName":"CertificateNumberPreference",
           "props":{
-            "name": "e7PreferencesPrograms.certOfPreference",
-            "description": "e7PreferencesPrograms.certOfPreferenceDesc",
-            "numberName": "e7PreferencesPrograms.certOfPreferenceCertificate",
-            "numberDescription": "e7PreferencesPrograms.needCertificateForPreference",
+            "name":"e7PreferencesPrograms.certOfPreference",
+            "description":"e7PreferencesPrograms.certOfPreferenceDesc",
+            "numberName":"e7PreferencesPrograms.certOfPreferenceCertificate",
+            "numberDescription":"e7PreferencesPrograms.needCertificateForPreference",
             "fieldNames":{
               "copMember":"copMember",
               "copNumber":"copNumber"
@@ -770,10 +750,10 @@
         {
           "componentName":"CertificateNumberPreference",
           "props":{
-            "name": "e7PreferencesPrograms.displace",
-            "description": "e7PreferencesPrograms.displacedTenantsDesc",
-            "numberName": "e7PreferencesPrograms.displacedCertificate",
-            "numberDescription": "e7PreferencesPrograms.needCertificateForPreference",
+            "name":"e7PreferencesPrograms.displace",
+            "description":"e7PreferencesPrograms.displacedTenantsDesc",
+            "numberName":"e7PreferencesPrograms.displacedCertificate",
+            "numberDescription":"e7PreferencesPrograms.needCertificateForPreference",
             "fieldNames":{
               "dthpMember":"dthpMember",
               "dthpNumber":"dthpNumber"
@@ -786,15 +766,11 @@
       "stepInfo":{
         "slug":"veterans-programs",
         "sectionName":"preferences",
-        "navigation":{
+        "navigationArrival":{
           "showStepIfAnyPresent":[
             {
-              "dataSource":"listing",
-              "dataKey":"preferences.certOfPreference"
-            },
-            {
-              "dataSource":"listing",
-              "dataKey":"preferences.displaced"
+              "dataSource":"preferences",
+              "dataKey":"veteran"
             }
           ]
         }

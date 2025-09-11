@@ -8,7 +8,6 @@ interface FormEngineProps {
 
 const componentRegistry = getFormComponentRegistry()
 
-// Recursively
 const RecursiveRenderer = ({ schema }: FormEngineProps) => {
   const ComponentToRender: React.FC = componentRegistry[schema.componentName]
 
@@ -23,8 +22,6 @@ const RecursiveRenderer = ({ schema }: FormEngineProps) => {
 
   // set key property to avoid weird behavior when navigating between form steps
   const props = { ...schema.props, key: crypto.randomUUID() }
-
-  console.log(schema.componentName, schema.props)
 
   return React.createElement(ComponentToRender, props, ...children)
 }

@@ -12,7 +12,7 @@ interface ListingApplyFormWrapperProps {
 
 const ListingApplyFormWrapper = ({ children }: ListingApplyFormWrapperProps) => {
   const formEngineContext = useFormEngineContext()
-  const { listingData, currentStepIndex, stepInfoMap, sectionNames } = formEngineContext
+  const { listing, currentStepIndex, stepInfoMap, sectionNames } = formEngineContext
   const currentStepChild = children[currentStepIndex]
   const currentStepInfo = stepInfoMap[currentStepIndex]
   const showLayout = !currentStepInfo.hideLayout
@@ -25,7 +25,7 @@ const ListingApplyFormWrapper = ({ children }: ListingApplyFormWrapperProps) => 
             <Card className="application-form-header ">
               <Card.Section className="application-form-header-title">
                 <Heading priority={1} className="application-form-header-heading">
-                  {t("pageTitle.listingApplication", { listing: listingData.Name })}
+                  {t("pageTitle.listingApplication", { listing: listing.Name })}
                 </Heading>
               </Card.Section>
               <Card.Section>
