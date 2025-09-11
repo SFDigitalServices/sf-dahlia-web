@@ -1,829 +1,829 @@
 {
-  "formType":"listingApplication",
-  "formSubType":"defaultRental",
-  "componentType":"multiStepLayout",
-  "componentName":"ListingApplyFormWrapper",
-  "children":[
+  "formType": "listingApplication",
+  "formSubType": "defaultRental",
+  "componentType": "multiStepLayout",
+  "componentName": "ListingApplyFormWrapper",
+  "children": [
     {
-      "stepInfo":{
-        "slug":"intro",
-        "hideLayout":true
+      "stepInfo": {
+        "slug": "intro",
+        "hideLayout": true
       },
-      "componentType":"step",
-      "componentName":"ListingApplyIntro"
+      "componentType": "step",
+      "componentName": "ListingApplyIntro"
     },
     {
-      "stepInfo":{
-        "slug":"overview"
+      "stepInfo": {
+        "slug": "overview"
       },
-      "componentType":"step",
-      "componentName":"ListingApplyOverview"
+      "componentType": "step",
+      "componentName": "ListingApplyOverview"
     },
     {
-      "stepInfo":{
-        "slug":"name",
-        "sectionName":"you"
+      "stepInfo": {
+        "slug": "name",
+        "sectionName": "you"
       },
-      "componentType":"step",
-      "componentName":"ListingApplyStepWrapper",
-      "props":{
-        "title":"b1Name.title"
+      "componentType": "step",
+      "componentName": "ListingApplyStepWrapper",
+      "props": {
+        "title": "b1Name.title"
       },
-      "children":[
+      "children": [
         {
-          "componentName":"Name",
-          "props":{
-            "label":"label.yourName",
-            "fieldNames":{
-              "firstName":"primaryApplicantFirstName",
-              "middleName":"primaryApplicantMiddleName",
-              "lastName":"primaryApplicantLastName"
+          "componentName": "Name",
+          "props": {
+            "label": "label.yourName",
+            "fieldNames": {
+              "firstName": "primaryApplicantFirstName",
+              "middleName": "primaryApplicantMiddleName",
+              "lastName": "primaryApplicantLastName"
             },
-            "showMiddleName":true
+            "showMiddleName": true
           }
         },
         {
-          "componentName":"DateOfBirth",
-          "props":{
-            "label":"label.yourDob",
-            "fieldNames":{
-              "dateOfBirth":"primaryApplicantDob"
+          "componentName": "DateOfBirth",
+          "props": {
+            "label": "label.yourDob",
+            "fieldNames": {
+              "dateOfBirth": "primaryApplicantDob"
             }
           }
         },
         {
-          "componentName":"EmailAddress",
-          "fieldNames":{
-            "email":"primaryApplicantEmail"
+          "componentName": "EmailAddress",
+          "fieldNames": {
+            "email": "primaryApplicantEmail"
           },
-          "props":{
-            "label":"label.applicantEmail",
-            "showDontHaveEmailAddress":true
+          "props": {
+            "label": "label.applicantEmail",
+            "showDontHaveEmailAddress": true
           }
         }
       ]
     },
     {
-      "stepInfo":{
-        "slug":"contact",
-        "sectionName":"you"
+      "stepInfo": {
+        "slug": "contact",
+        "sectionName": "you"
       },
-      "componentType":"step",
-      "componentName":"ListingApplyStepWrapper",
-      "props":{
-        "title":"b2Contact.title",
-        "titleVars":{
-          "name":{
-            "dataSource":"form",
-            "dataKey":"primaryApplicantFirstName"
+      "componentType": "step",
+      "componentName": "ListingApplyStepWrapper",
+      "props": {
+        "title": "b2Contact.title",
+        "titleVars": {
+          "name": {
+            "dataSource": "form",
+            "dataKey": "primaryApplicantFirstName"
           }
         }
       },
-      "children":[
+      "children": [
         {
-          "componentName":"Phone",
-          "props":{
-            "label":"your phone number",
-            "showTypeOfNumber":true,
-            "showDontHavePhoneNumber":true,
-            "showAdditionalPhoneNumbe":true,
-            "labelForAdditionalPhoneNumbe":"label.applicantSecondPhone",
-            "fieldNames":{
-              "phone":"primaryApplicantPhone",
-              "additionalPhone":"primaryApplicantAdditionalPhone"
+          "componentName": "Phone",
+          "props": {
+            "label": "your phone number",
+            "showTypeOfNumber": true,
+            "showDontHavePhoneNumber": true,
+            "showAdditionalPhoneNumbe": true,
+            "labelForAdditionalPhoneNumbe": "label.applicantSecondPhone",
+            "fieldNames": {
+              "phone": "primaryApplicantPhone",
+              "additionalPhone": "primaryApplicantAdditionalPhone"
             }
           }
         },
         {
-          "componentName":"Address",
-          "props":{
-            "label":"address",
-            "showMailingAddress":true,
-            "fieldNames":{
-              "address":"primaryApplicantAddress",
-              "mailingAddress":"primaryApplicantMailingAddress"
+          "componentName": "Address",
+          "props": {
+            "label": "address",
+            "showMailingAddress": true,
+            "fieldNames": {
+              "address": "primaryApplicantAddress",
+              "mailingAddress": "primaryApplicantMailingAddress"
             }
           }
         },
         {
-          "componentName":"YesNoRadio",
-          "props":{
-            "label":"label.workInSf",
-            "note":"b2Contact.workInSfDesc",
-            "fieldNames":{
-              "question":"primaryApplicantWorkInSf"
+          "componentName": "YesNoRadio",
+          "props": {
+            "label": "label.workInSf",
+            "note": "b2Contact.workInSfDesc",
+            "fieldNames": {
+              "question": "primaryApplicantWorkInSf"
             }
           }
         }
       ]
     },
     {
-      "stepInfo":{
-        "slug":"verify-address",
-        "sectionName":"you"
+      "stepInfo": {
+        "slug": "verify-address",
+        "sectionName": "you"
       },
-      "componentType":"step",
-      "componentName":"VerifyAddress",
-      "props":{
-        "address":"primaryApplicantAddress"
+      "componentType": "step",
+      "componentName": "VerifyAddress",
+      "props": {
+        "address": "primaryApplicantAddress"
       }
     },
     {
-      "stepInfo":{
-        "slug":"alternate-contact-type",
-        "sectionName":"household"
+      "stepInfo": {
+        "slug": "alternate-contact-type",
+        "sectionName": "household"
       },
-      "componentType":"step",
-      "componentName":"ListingApplyStepWrapper",
-      "props":{
-        "section":"you",
-        "title":"b3AlternateContactType.title",
-        "description":"b3AlternateContactType.allowingToDiscuss"
+      "componentType": "step",
+      "componentName": "ListingApplyStepWrapper",
+      "props": {
+        "section": "you",
+        "title": "b3AlternateContactType.title",
+        "description": "b3AlternateContactType.allowingToDiscuss"
       },
-      "children":[
+      "children": [
         {
-          "componentName":"AlternateContactType",
-          "props":{
-            "fieldNames":{
-              "alternateContactType":"alternateContactType"
+          "componentName": "AlternateContactType",
+          "props": {
+            "fieldNames": {
+              "alternateContactType": "alternateContactType"
             }
           }
         }
       ]
     },
     {
-      "stepInfo":{
-        "slug":"alternate-contact-name",
-        "sectionName":"household",
-        "navigationArrival":{
-          "showStepIfAnyPresent":[
+      "stepInfo": {
+        "slug": "alternate-contact-name",
+        "sectionName": "household",
+        "navigationArrival": {
+          "showStepIfAnyPresent": [
             {
-              "dataSource":"form",
-              "dataKey":"alternateContactType"
+              "dataSource": "form",
+              "dataKey": "alternateContactType"
             }
           ]
         }
       },
-      "componentType":"step",
-      "componentName":"ListingApplyStepWrapper",
-      "props":{
-        "title":"b4AlternateContactName.title"
+      "componentType": "step",
+      "componentName": "ListingApplyStepWrapper",
+      "props": {
+        "title": "b4AlternateContactName.title"
       },
-      "children":[
+      "children": [
         {
-          "componentName":"Name",
-          "props":{
-            "label":"label.alternateContactName",
-            "showMiddleName":false,
-            "fieldNames":{
-              "firstName":"alternateContactFirstName",
-              "middleName":"alternateContactMiddleName",
-              "lastName":"alternateContactLastName"
+          "componentName": "Name",
+          "props": {
+            "label": "label.alternateContactName",
+            "showMiddleName": false,
+            "fieldNames": {
+              "firstName": "alternateContactFirstName",
+              "middleName": "alternateContactMiddleName",
+              "lastName": "alternateContactLastName"
             }
           }
         }
       ]
     },
     {
-      "stepInfo":{
-        "slug":"alternate-contact-phone-address",
-        "sectionName":"household",
-        "navigationArrival":{
-          "showStepIfAnyPresent":[
+      "stepInfo": {
+        "slug": "alternate-contact-phone-address",
+        "sectionName": "household",
+        "navigationArrival": {
+          "showStepIfAnyPresent": [
             {
-              "dataSource":"form",
-              "dataKey":"alternateContactType"
+              "dataSource": "form",
+              "dataKey": "alternateContactType"
             }
           ]
         }
       },
-      "componentType":"step",
-      "componentName":"ListingApplyStepWrapper",
-      "props":{
-        "section":"",
-        "title":"b4aAlternateContactPhoneAddress.title",
-        "description":"b4aAlternateContactPhoneAddress.onlyUseInfo"
+      "componentType": "step",
+      "componentName": "ListingApplyStepWrapper",
+      "props": {
+        "section": "",
+        "title": "b4aAlternateContactPhoneAddress.title",
+        "description": "b4aAlternateContactPhoneAddress.onlyUseInfo"
       },
-      "children":[
+      "children": [
         {
-          "componentName":"Phone",
-          "props":{
-            "label":"label.contactPhoneNumber",
-            "fieldNames":{
-              "phone":"alternateContactPhone"
+          "componentName": "Phone",
+          "props": {
+            "label": "label.contactPhoneNumber",
+            "fieldNames": {
+              "phone": "alternateContactPhone"
             }
           }
         },
         {
-          "componentName":"EmailAddress",
-          "props":{
-            "label":"label.contactEmail",
-            "fieldNames":{
-              "email":"alternateContactEmail"
+          "componentName": "EmailAddress",
+          "props": {
+            "label": "label.contactEmail",
+            "fieldNames": {
+              "email": "alternateContactEmail"
             }
           }
         },
         {
-          "componentName":"Address",
-          "props":{
-            "label":"label.contactMailingAddress",
-            "fieldNames":{
-              "address":"alternateContactAddress"
+          "componentName": "Address",
+          "props": {
+            "label": "label.contactMailingAddress",
+            "fieldNames": {
+              "address": "alternateContactAddress"
             }
           }
         }
       ]
     },
     {
-      "stepInfo":{
-        "slug":"household-intro",
-        "sectionName":"household"
+      "stepInfo": {
+        "slug": "household-intro",
+        "sectionName": "household"
       },
-      "componentType":"step",
-      "componentName":"ListingApplyHouseholdIntro",
-      "props":{
-        "fieldNames":{
-          "liveAlone":"_liveAlone"
+      "componentType": "step",
+      "componentName": "ListingApplyHouseholdIntro",
+      "props": {
+        "fieldNames": {
+          "liveAlone": "_liveAlone"
         }
       }
     },
     {
-      "stepInfo":{
-        "slug":"household-overview",
-        "sectionName":"household"
+      "stepInfo": {
+        "slug": "household-overview",
+        "sectionName": "household"
       },
-      "componentType":"step",
-      "componentName":"ListingApplyHouseholdOverview"
+      "componentType": "step",
+      "componentName": "ListingApplyHouseholdOverview"
     },
     {
-      "stepInfo":{
-        "slug":"household-members",
-        "sectionName":"household"
+      "stepInfo": {
+        "slug": "household-members",
+        "sectionName": "household"
       },
-      "componentType":"step",
-      "componentName":"AddHouseholdMembers"
+      "componentType": "step",
+      "componentName": "AddHouseholdMembers"
     },
     {
-      "stepInfo":{
-        "slug":"household-member-form",
-        "sectionName":"household"
+      "stepInfo": {
+        "slug": "household-member-form",
+        "sectionName": "household"
       },
-      "componentType":"step",
-      "componentName":"ListingApplyStepWrapper",
-      "props":{
-        "title":"c3HouseholdMemberForm.title",
-        "description":"c3HouseholdMemberForm.p1"
+      "componentType": "step",
+      "componentName": "ListingApplyStepWrapper",
+      "props": {
+        "title": "c3HouseholdMemberForm.title",
+        "description": "c3HouseholdMemberForm.p1"
       },
-      "children":[
+      "children": [
         {
-          "componentName":"Name",
-          "props":{
-            "label":"label.householdMemberName",
-            "showMiddleName":true,
-            "fieldNames":{
-              "firstName":"householdMemberFirstName",
-              "middleName":"householdMemberMiddleName",
-              "lastName":"householdMemberLastName"
+          "componentName": "Name",
+          "props": {
+            "label": "label.householdMemberName",
+            "showMiddleName": true,
+            "fieldNames": {
+              "firstName": "householdMemberFirstName",
+              "middleName": "householdMemberMiddleName",
+              "lastName": "householdMemberLastName"
             }
           }
         },
         {
-          "componentName":"DateOfBirth",
-          "props":{
-            "label":"label.dob",
-            "fieldNames":{
-              "dateOfBirth":"householdMemberDob"
+          "componentName": "DateOfBirth",
+          "props": {
+            "label": "label.dob",
+            "fieldNames": {
+              "dateOfBirth": "householdMemberDob"
             }
           }
         },
         {
-          "componentName":"HouseholdMemberSameAddress",
-          "props":{
-            "fieldNames":{
-              "address":"householdMemberAddress"
+          "componentName": "HouseholdMemberSameAddress",
+          "props": {
+            "fieldNames": {
+              "address": "householdMemberAddress"
             }
           }
         },
         {
-          "componentName":"YesNoRadio",
-          "props":{
-            "label":"label.memberWorkInSf",
-            "description":"c3HouseholdMemberForm.workInSfDesc",
-            "fieldNames":{
-              "question":"householdMemberWorkInSf"
+          "componentName": "YesNoRadio",
+          "props": {
+            "label": "label.memberWorkInSf",
+            "description": "c3HouseholdMemberForm.workInSfDesc",
+            "fieldNames": {
+              "question": "householdMemberWorkInSf"
             }
           }
         },
         {
-          "componentName":"Select",
-          "props":{
-            "label":"label.householdMemberRelationship",
-            "defaultOptionName":"label.selectOne",
-            "options":[
+          "componentName": "Select",
+          "props": {
+            "label": "label.householdMemberRelationship",
+            "defaultOptionName": "label.selectOne",
+            "options": [
               {
-                "name":"label.spouse",
-                "value":"spouse"
+                "name": "label.spouse",
+                "value": "spouse"
               },
               {
-                "name":"label.registeredDomesticPartner",
-                "value":"Registered Domestic Partner"
+                "name": "label.registeredDomesticPartner",
+                "value": "Registered Domestic Partner"
               }
             ],
-            "fieldNames":{
-              "selection":"householdMemberRelation"
+            "fieldNames": {
+              "selection": "householdMemberRelation"
             }
           }
         }
       ]
     },
     {
-      "stepInfo":{
-        "slug":"verify-address-household-member",
-        "sectionName":"household",
-        "navigationArrival":{
-          "showStepIfAnyPresent":[
+      "stepInfo": {
+        "slug": "verify-address-household-member",
+        "sectionName": "household",
+        "navigationArrival": {
+          "showStepIfAnyPresent": [
             {
-              "dataSource":"form",
-              "dataKey":"householdMemberAddress"
+              "dataSource": "form",
+              "dataKey": "householdMemberAddress"
             }
           ]
         }
       },
-      "componentType":"step",
-      "componentName":"VerifyAddress",
-      "props":{
-        "address":{
-          "dataSource":"form",
-          "dataKey":"householdMemberAddress"
+      "componentType": "step",
+      "componentName": "VerifyAddress",
+      "props": {
+        "address": {
+          "dataSource": "form",
+          "dataKey": "householdMemberAddress"
         }
       }
     },
     {
-      "stepInfo":{
-        "slug":"household-public-housing",
-        "sectionName":"household",
-        "navigationDeparture":{
-          "prevStep":"household-members"
+      "stepInfo": {
+        "slug": "household-public-housing",
+        "sectionName": "household",
+        "navigationDeparture": {
+          "prevStep": "household-members"
         }
       },
-      "componentType":"step",
-      "componentName":"ListingApplyStepWrapper",
-      "props":{
-        "title":"c4HouseholdPublicHousing.titleHousehold",
-        "description":"c4HouseholdPublicHousing.p1"
+      "componentType": "step",
+      "componentName": "ListingApplyStepWrapper",
+      "props": {
+        "title": "c4HouseholdPublicHousing.titleHousehold",
+        "description": "c4HouseholdPublicHousing.p1"
       },
-      "children":[
+      "children": [
         {
-          "componentName":"YesNoRadio",
-          "props":{
-            "note":"label.pleaseSelectOne",
-            "fieldNames":{
-              "question":"hasPublicHousing"
+          "componentName": "YesNoRadio",
+          "props": {
+            "note": "label.pleaseSelectOne",
+            "fieldNames": {
+              "question": "hasPublicHousing"
             }
           }
         }
       ]
     },
     {
-      "stepInfo":{
-        "slug":"household-monthly-rent",
-        "sectionName":"household"
+      "stepInfo": {
+        "slug": "household-monthly-rent",
+        "sectionName": "household"
       },
-      "componentType":"step",
-      "componentName":"ListingApplyStepWrapper",
-      "props":{
-        "title":"c5HouseholdMonthlyRent.titleHousehold",
-        "description":"c5HouseholdMonthlyRent.description"
+      "componentType": "step",
+      "componentName": "ListingApplyStepWrapper",
+      "props": {
+        "title": "c5HouseholdMonthlyRent.titleHousehold",
+        "description": "c5HouseholdMonthlyRent.description"
       },
-      "children":[
+      "children": [
         {
-          "componentName":"MonthlyRent",
-          "props":{
-            "fieldNames":{
-              "monthlyRent":"householdMonthlyRent",
-              "doesNotPayRent":"householdDoesNotPayRent"
+          "componentName": "MonthlyRent",
+          "props": {
+            "fieldNames": {
+              "monthlyRent": "householdMonthlyRent",
+              "doesNotPayRent": "householdDoesNotPayRent"
             }
           }
         }
       ]
     },
     {
-      "stepInfo":{
-        "slug":"household-priorities",
-        "sectionName":"household"
+      "stepInfo": {
+        "slug": "household-priorities",
+        "sectionName": "household"
       },
-      "componentType":"step",
-      "componentName":"ListingApplyStepWrapper",
-      "props":{
-        "title":"c7HouseholdPriorities.titleHousehold",
-        "description":"c7HouseholdPriorities.p1"
+      "componentType": "step",
+      "componentName": "ListingApplyStepWrapper",
+      "props": {
+        "title": "c7HouseholdPriorities.titleHousehold",
+        "description": "c7HouseholdPriorities.p1"
       },
-      "children":[
+      "children": [
         {
-          "componentName":"PrioritiesCheckbox",
-          "props":{
-            "description":"label.pleaseSelectAllThatApply",
-            "members":{
-              "dataSource":"form",
-              "dataKey":"householdMembersArray"
+          "componentName": "PrioritiesCheckbox",
+          "props": {
+            "description": "label.pleaseSelectAllThatApply",
+            "members": {
+              "dataSource": "form",
+              "dataKey": "householdMembersArray"
             },
-            "fieldNames":{
-              "members":"priorityMembers"
+            "fieldNames": {
+              "members": "priorityMembers"
             }
           }
         }
       ]
     },
     {
-      "stepInfo":{
-        "slug":"income-vouchers",
-        "sectionName":"income"
+      "stepInfo": {
+        "slug": "income-vouchers",
+        "sectionName": "income"
       },
-      "componentType":"step",
-      "componentName":"ListingApplyStepWrapper",
-      "props":{
-        "title":"d1IncomeVouchers.titleHousehold",
-        "descriptionComponentName":"incomeVoucherDescription"
+      "componentType": "step",
+      "componentName": "ListingApplyStepWrapper",
+      "props": {
+        "title": "d1IncomeVouchers.titleHousehold",
+        "descriptionComponentName": "incomeVoucherDescription"
       },
-      "children":[
+      "children": [
         {
-          "componentName":"YesNoRadio",
-          "props":{
-            "note":"label.pleaseSelectOne",
-            "yesText":"d1IncomeVouchers.ifSubsidyWarning",
-            "fieldNames":{
-              "question":"receivesIncomeVouchers"
+          "componentName": "YesNoRadio",
+          "props": {
+            "note": "label.pleaseSelectOne",
+            "yesText": "d1IncomeVouchers.ifSubsidyWarning",
+            "fieldNames": {
+              "question": "receivesIncomeVouchers"
             }
           }
         }
       ]
     },
     {
-      "stepInfo":{
-        "slug":"income-household",
-        "sectionName":"income"
+      "stepInfo": {
+        "slug": "income-household",
+        "sectionName": "income"
       },
-      "componentType":"step",
-      "componentName":"ListingApplyStepWrapper",
-      "props":{
-        "title":"d2Income.title",
-        "descriptionComponentName":"HouseholdIncomeDescription"
+      "componentType": "step",
+      "componentName": "ListingApplyStepWrapper",
+      "props": {
+        "title": "d2Income.title",
+        "descriptionComponentName": "HouseholdIncomeDescription"
       },
-      "children":[
+      "children": [
         {
-          "componentName":"Currency",
-          "props":{
-            "placeholder":"label.incomePlaceholder",
-            "fieldNames":{
-              "amount":"householdIncome"
+          "componentName": "Currency",
+          "props": {
+            "placeholder": "label.incomePlaceholder",
+            "fieldNames": {
+              "amount": "householdIncome"
             }
           }
         },
         {
-          "componentName":"Radio",
-          "props":{
-            "options":[
+          "componentName": "Radio",
+          "props": {
+            "options": [
               {
-                "name":"label.perMonth",
-                "value":"12"
+                "name": "label.perMonth",
+                "value": "12"
               },
               {
-                "name":"label.perYear",
-                "value":"1"
+                "name": "label.perYear",
+                "value": "1"
               }
             ],
-            "fieldNames":{
-              "answer":"householdIncomeMultiplier"
+            "fieldNames": {
+              "answer": "householdIncomeMultiplier"
             }
           }
         }
       ]
     },
     {
-      "stepInfo":{
-        "slug":"preferences-intro",
-        "sectionName":"preferences"
+      "stepInfo": {
+        "slug": "preferences-intro",
+        "sectionName": "preferences"
       },
-      "componentName":"ListingApplyPreferencesIntro"
+      "componentName": "ListingApplyPreferencesIntro"
     },
     {
-      "stepInfo":{
-        "slug":"assisted-housing-preference",
-        "sectionName":"preferences",
-        "navigationArrival":{
-          "showStepIfAllPresent":[
+      "stepInfo": {
+        "slug": "assisted-housing-preference",
+        "sectionName": "preferences",
+        "navigationArrival": {
+          "showStepIfAllPresent": [
             {
-              "dataSource":"listing",
-              "dataKey":"preferences.publicHousing"
+              "dataSource": "listing",
+              "dataKey": "preferences.publicHousing"
             },
             {
-              "dataSource":"form",
-              "dataKey":"hasPublicHousing"
+              "dataSource": "form",
+              "dataKey": "hasPublicHousing"
             }
           ]
         }
       },
-      "componentType":"step",
-      "componentName":"ListingApplyStepWrapper",
-      "props":{
-        "title":"label.goodNewsForHigherRanking",
-        "description":"e3aAssistedHousingPreference.instructions"
+      "componentType": "step",
+      "componentName": "ListingApplyStepWrapper",
+      "props": {
+        "title": "label.goodNewsForHigherRanking",
+        "description": "e3aAssistedHousingPreference.instructions"
       },
-      "children":[
+      "children": [
         {
-          "componentName":"PreferenceCheckboxGroup",
-          "props":{
-            "name":"e3aAssistedHousingPreference.preference.title",
-            "description":"e3aAssistedHousingPreference.preference.description",
-            "showProofType":false,
-            "members":{
-              "dataSource":"form",
-              "dataKey":"members"
+          "componentName": "PreferenceCheckboxGroup",
+          "props": {
+            "name": "e3aAssistedHousingPreference.preference.title",
+            "description": "e3aAssistedHousingPreference.preference.description",
+            "showProofType": false,
+            "members": {
+              "dataSource": "form",
+              "dataKey": "members"
             },
-            "fieldNames":{
-              "member":"assistedHousingMember",
-              "proofDoc":"assistedHousingProofDoc"
+            "fieldNames": {
+              "member": "assistedHousingMember",
+              "proofDoc": "assistedHousingProofDoc"
             }
           }
         }
       ]
     },
     {
-      "stepInfo":{
-        "slug":"rent-burdened-preference",
-        "sectionName":"preferences",
-        "navigationArrival":{
-          "showStepIfAllPresent":[
+      "stepInfo": {
+        "slug": "rent-burdened-preference",
+        "sectionName": "preferences",
+        "navigationArrival": {
+          "showStepIfAllPresent": [
             {
-              "dataSource":"preferences",
-              "dataKey":"rentBurden"
+              "dataSource": "preferences",
+              "dataKey": "rentBurden"
             },
             {
-              "dataSource":"form",
-              "dataKey":"_rentOverHalfOfIncome"
+              "dataSource": "form",
+              "dataKey": "_rentOverHalfOfIncome"
             },
             {
-              "dataSource":"form",
-              "dataKey":"assistedHousingProofDoc",
-              "negate":true
+              "dataSource": "form",
+              "dataKey": "assistedHousingProofDoc",
+              "negate": true
             }
           ]
         }
       },
-      "componentType":"step",
-      "componentName":"ListingApplyRentBurdenPreference",
-      "props":{
-        "fieldNames":{
-          "member":"rentBurdenPrefMember",
-          "proofDocType":"rentBurdenPrefProofDocType",
-          "proofDoc":"rentBurdenPrefProofDocType"
+      "componentType": "step",
+      "componentName": "ListingApplyRentBurdenPreference",
+      "props": {
+        "fieldNames": {
+          "member": "rentBurdenPrefMember",
+          "proofDocType": "rentBurdenPrefProofDocType",
+          "proofDoc": "rentBurdenPrefProofDocType"
         }
       }
     },
     {
-      "stepInfo":{
-        "slug":"neighborhood-preference",
-        "sectionName":"preferences",
-        "navigationArrival":{
-          "showStepIfAllPresent":[
+      "stepInfo": {
+        "slug": "neighborhood-preference",
+        "sectionName": "preferences",
+        "navigationArrival": {
+          "showStepIfAllPresent": [
             {
-              "dataSource":"preferences",
-              "dataKey":"neighborhoodResidence"
+              "dataSource": "preferences",
+              "dataKey": "neighborhoodResidence"
             },
             {
-              "dataSource":"form",
-              "dataKey":"_preferenceAddressMatch"
+              "dataSource": "form",
+              "dataKey": "_preferenceAddressMatch"
             }
           ]
         }
       },
-      "componentType":"step",
-      "componentName":"ListingApplyStepWrapper",
-      "props":{
-        "title":"label.goodNewsForHigherRanking",
-        "description":"e2aNeighborhoodPreference.instructionsP2"
+      "componentType": "step",
+      "componentName": "ListingApplyStepWrapper",
+      "props": {
+        "title": "label.goodNewsForHigherRanking",
+        "description": "e2aNeighborhoodPreference.instructionsP2"
       },
-      "children":[
+      "children": [
         {
-          "componentName":"PreferenceCheckboxGroup",
-          "props":{
-            "name":"e2aNeighborhoodPreference.preference.title",
-            "description":"e2aNeighborhoodPreference.preference.description",
-            "showProofType":true,
-            "members":{
-              "dataSource":"form",
-              "dataKey":"members"
+          "componentName": "PreferenceCheckboxGroup",
+          "props": {
+            "name": "e2aNeighborhoodPreference.preference.title",
+            "description": "e2aNeighborhoodPreference.preference.description",
+            "showProofType": true,
+            "members": {
+              "dataSource": "form",
+              "dataKey": "members"
             },
-            "fieldNames":{
-              "member":"neighborhoodPrefMember",
-              "proofDocType":"neighborhoodPrefProofDocType",
-              "proofDoc":"neighborhoodPrefProofDoc"
+            "fieldNames": {
+              "member": "neighborhoodPrefMember",
+              "proofDocType": "neighborhoodPrefProofDocType",
+              "proofDoc": "neighborhoodPrefProofDoc"
             }
           }
         }
       ]
     },
     {
-      "stepInfo":{
-        "slug":"adhp-preference",
-        "sectionName":"preferences",
-        "navigationArrival":{
-          "showStepIfAllPresent":[
+      "stepInfo": {
+        "slug": "adhp-preference",
+        "sectionName": "preferences",
+        "navigationArrival": {
+          "showStepIfAllPresent": [
             {
-              "dataSource":"preferences",
-              "dataKey":"antiDisplacement"
+              "dataSource": "preferences",
+              "dataKey": "antiDisplacement"
             },
             {
-              "dataSource":"form",
-              "dataKey":"neighborhoodPrefProofDoc",
-              "negate":true
+              "dataSource": "form",
+              "dataKey": "neighborhoodPrefProofDoc",
+              "negate": true
             }
           ]
         }
       },
-      "componentType":"step",
-      "componentName":"ListingApplyStepWrapper",
-      "props":{
-        "title":"label.good_news_for_higher_ranking",
-        "description":"e2bAdhpPreference.instructionsP2"
+      "componentType": "step",
+      "componentName": "ListingApplyStepWrapper",
+      "props": {
+        "title": "label.good_news_for_higher_ranking",
+        "description": "e2bAdhpPreference.instructionsP2"
       },
-      "children":[
+      "children": [
         {
-          "componentName":"PreferenceCheckboxGroup",
-          "props":{
-            "name":"e2bAdhpPreference.preference.title",
-            "description":"e2bAdhpPreference.preference.description",
-            "showProofType":true,
-            "members":{
-              "dataSource":"form",
-              "dataKey":"members"
+          "componentName": "PreferenceCheckboxGroup",
+          "props": {
+            "name": "e2bAdhpPreference.preference.title",
+            "description": "e2bAdhpPreference.preference.description",
+            "showProofType": true,
+            "members": {
+              "dataSource": "form",
+              "dataKey": "members"
             },
-            "fieldNames":{
-              "member":"antiDisplacementPrefMember",
-              "proofDocType":"antiDisplacementPrefProofDocType",
-              "proofDoc":"antiDisplacementPrefProofDoc"
+            "fieldNames": {
+              "member": "antiDisplacementPrefMember",
+              "proofDocType": "antiDisplacementPrefProofDocType",
+              "proofDoc": "antiDisplacementPrefProofDoc"
             }
           }
         }
       ]
     },
     {
-      "stepInfo":{
-        "slug":"live-work-preference",
-        "sectionName":"preferences",
-        "navigationArrival":{
-          "showStepIfAnyPresent":[
+      "stepInfo": {
+        "slug": "live-work-preference",
+        "sectionName": "preferences",
+        "navigationArrival": {
+          "showStepIfAnyPresent": [
             {
-              "dataSource":"form",
-              "dataKey":"_addressNeighborhoodMatch"
+              "dataSource": "form",
+              "dataKey": "_addressNeighborhoodMatch"
             },
             {
-              "dataSource":"preferences",
-              "dataKey":"liveWorkInSf"
+              "dataSource": "preferences",
+              "dataKey": "liveWorkInSf"
             }
           ]
         }
       },
-      "componentType":"step",
-      "componentName":"ListingApplyStepWrapper",
-      "props":{
-        "title":"e2cLiveWorkPreference.title",
-        "description":"e2cLiveWorkPreference.instructions"
+      "componentType": "step",
+      "componentName": "ListingApplyStepWrapper",
+      "props": {
+        "title": "e2cLiveWorkPreference.title",
+        "description": "e2cLiveWorkPreference.instructions"
       },
-      "children":[
+      "children": [
         {
-          "componentName":"LiveWorkPreference",
-          "props":{
-            "listingPreferences":{
-              "dataSource":"listing",
-              "dataKey":"preferences"
+          "componentName": "LiveWorkPreference",
+          "props": {
+            "listingPreferences": {
+              "dataSource": "listing",
+              "dataKey": "preferences"
             },
-            "fieldNames":{
-              "liveInSfMember":"liveInSfMember",
-              "liveInSfProofType":"liveInSfProofType",
-              "liveInSfProofDoc":"liveInSfProofDoc",
-              "workInSfMember":"workInSfMember",
-              "workInSfProofType":"workInSfProofType",
-              "workInSfProofDoc":"workInSfProofDoc"
+            "fieldNames": {
+              "liveInSfMember": "liveInSfMember",
+              "liveInSfProofType": "liveInSfProofType",
+              "liveInSfProofDoc": "liveInSfProofDoc",
+              "workInSfMember": "workInSfMember",
+              "workInSfProofType": "workInSfProofType",
+              "workInSfProofDoc": "workInSfProofDoc"
             }
           }
         }
       ]
     },
     {
-      "stepInfo":{
-        "slug":"preferences-programs",
-        "sectionName":"preferences",
-        "navigationArrival":{
-          "showStepIfAnyPresent":[
+      "stepInfo": {
+        "slug": "preferences-programs",
+        "sectionName": "preferences",
+        "navigationArrival": {
+          "showStepIfAnyPresent": [
             {
-              "dataSource":"preferences",
-              "dataKey":"certificateOfPreference"
+              "dataSource": "preferences",
+              "dataKey": "certificateOfPreference"
             },
             {
-              "dataSource":"preferences",
-              "dataKey":"displacedTenant"
+              "dataSource": "preferences",
+              "dataKey": "displacedTenant"
             }
           ]
         }
       },
-      "componentType":"step",
-      "componentName":"ListingApplyStepWrapper",
-      "props":{
-        "title":"e7PreferencesPrograms.title",
-        "description":"e7PreferencesPrograms.haveNotHeardOfPreferences"
+      "componentType": "step",
+      "componentName": "ListingApplyStepWrapper",
+      "props": {
+        "title": "e7PreferencesPrograms.title",
+        "description": "e7PreferencesPrograms.haveNotHeardOfPreferences"
       },
-      "children":[
+      "children": [
         {
-          "componentName":"CertificateNumberPreference",
-          "props":{
-            "name":"e7PreferencesPrograms.certOfPreference",
-            "description":"e7PreferencesPrograms.certOfPreferenceDesc",
-            "numberName":"e7PreferencesPrograms.certOfPreferenceCertificate",
-            "numberDescription":"e7PreferencesPrograms.needCertificateForPreference",
-            "fieldNames":{
-              "copMember":"copMember",
-              "copNumber":"copNumber"
+          "componentName": "CertificateNumberPreference",
+          "props": {
+            "name": "e7PreferencesPrograms.certOfPreference",
+            "description": "e7PreferencesPrograms.certOfPreferenceDesc",
+            "numberName": "e7PreferencesPrograms.certOfPreferenceCertificate",
+            "numberDescription": "e7PreferencesPrograms.needCertificateForPreference",
+            "fieldNames": {
+              "copMember": "copMember",
+              "copNumber": "copNumber"
             }
           }
         },
         {
-          "componentName":"CertificateNumberPreference",
-          "props":{
-            "name":"e7PreferencesPrograms.displace",
-            "description":"e7PreferencesPrograms.displacedTenantsDesc",
-            "numberName":"e7PreferencesPrograms.displacedCertificate",
-            "numberDescription":"e7PreferencesPrograms.needCertificateForPreference",
-            "fieldNames":{
-              "dthpMember":"dthpMember",
-              "dthpNumber":"dthpNumber"
+          "componentName": "CertificateNumberPreference",
+          "props": {
+            "name": "e7PreferencesPrograms.displace",
+            "description": "e7PreferencesPrograms.displacedTenantsDesc",
+            "numberName": "e7PreferencesPrograms.displacedCertificate",
+            "numberDescription": "e7PreferencesPrograms.needCertificateForPreference",
+            "fieldNames": {
+              "dthpMember": "dthpMember",
+              "dthpNumber": "dthpNumber"
             }
           }
         }
       ]
     },
     {
-      "stepInfo":{
-        "slug":"veterans-programs",
-        "sectionName":"preferences",
-        "navigationArrival":{
-          "showStepIfAnyPresent":[
+      "stepInfo": {
+        "slug": "veterans-programs",
+        "sectionName": "preferences",
+        "navigationArrival": {
+          "showStepIfAnyPresent": [
             {
-              "dataSource":"preferences",
-              "dataKey":"veteran"
+              "dataSource": "preferences",
+              "dataKey": "veteran"
             }
           ]
         }
       },
-      "componentType":"step",
-      "componentName":"ListingApplyStepWrapper",
-      "props":{
-        "title":"e7a_veterans_preference.title",
-        "descriptionComponentName":"veteransDescription"
+      "componentType": "step",
+      "componentName": "ListingApplyStepWrapper",
+      "props": {
+        "title": "e7a_veterans_preference.title",
+        "descriptionComponentName": "veteransDescription"
       },
-      "children":[
+      "children": [
         {
-          "componentName":"VeteransRadio",
-          "props":{
-            "fieldNames":{
-              "veteranMember":"veteranMember",
-              "veteranAnswer":"veteranAnswer"
+          "componentName": "VeteransRadio",
+          "props": {
+            "fieldNames": {
+              "veteranMember": "veteranMember",
+              "veteranAnswer": "veteranAnswer"
             }
           }
         }
       ]
     },
     {
-      "stepInfo":{
-        "slug":"review-optional",
-        "sectionName":"review"
+      "stepInfo": {
+        "slug": "review-optional",
+        "sectionName": "review"
       },
-      "componentType":"step",
-      "componentName":"ListingApplyDemographics"
+      "componentType": "step",
+      "componentName": "ListingApplyDemographics"
     },
     {
-      "stepInfo":{
-        "slug":"review-summary",
-        "sectionName":"review"
+      "stepInfo": {
+        "slug": "review-summary",
+        "sectionName": "review"
       },
-      "componentType":"step",
-      "componentName":"ListingApplyReviewSummary"
+      "componentType": "step",
+      "componentName": "ListingApplyReviewSummary"
     },
     {
-      "stepInfo":{
-        "slug":"review-terms",
-        "sectionName":"review"
+      "stepInfo": {
+        "slug": "review-terms",
+        "sectionName": "review"
       },
-      "componentType":"step",
-      "componentName":"ListingApplyTerms"
+      "componentType": "step",
+      "componentName": "ListingApplyTerms"
     },
     {
-      "stepInfo":{
-        "slug":"review-application",
-        "sectionName":"review"
+      "stepInfo": {
+        "slug": "review-application",
+        "sectionName": "review"
       },
-      "componentType":"step",
-      "componentName":"ListingApplyReviewApplication"
+      "componentType": "step",
+      "componentName": "ListingApplyReviewApplication"
     }
   ]
 }
