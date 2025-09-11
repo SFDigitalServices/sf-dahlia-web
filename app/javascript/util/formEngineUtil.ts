@@ -17,7 +17,7 @@ export const translationFromDataSchema = (
   return t(translationKey, translationVars)
 }
 
-const showStep = (
+export const showStep = (
   operation: string,
   conditions: DataSchema[],
   dataSources: DataSources
