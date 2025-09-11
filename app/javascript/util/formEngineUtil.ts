@@ -58,7 +58,6 @@ export const calculateNextStep = (
       const [operation, conditions] = Object.entries(step.navigationArrival)[0]
       if (showStep(operation, conditions, dataSources)) return idx
     }
-    continue
   }
 }
 
@@ -75,10 +74,10 @@ export const calculatePrevStep = (
   const reversedCurrentStepIndex = stepInfoMap.length - 1 - currentStepIndex
   for (const [idx, step] of stepInfoMap.reverse().entries()) {
     if (idx <= reversedCurrentStepIndex) continue
+    if (!step.navigationArrival) return stepInfoMap.length - 1 - idx
     if (step.navigationArrival) {
       const [operation, conditions] = Object.entries(step.navigationArrival)[0]
       if (showStep(operation, conditions, dataSources)) return stepInfoMap.length - 1 - idx
     }
-    return stepInfoMap.length - 1 - idx
   }
 }
