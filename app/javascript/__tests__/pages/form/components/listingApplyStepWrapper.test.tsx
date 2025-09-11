@@ -25,10 +25,15 @@ describe("<ListingApplyStepWrapper />", () => {
     const title = "b1Name.title"
     const listingApplyStepWrapperProps = { title }
 
-    const label = "label.name"
+    const label = "label.yourName"
     const nameProps = {
-      label: "label.name",
-      fieldNames: { firstName: "test", middleName: "test", lastName: "test" },
+      label: "label.yourName",
+      fieldNames: {
+        firstName: "label.firstName.sentenceCase",
+        middleName: "label.middleName.sentenceCase",
+        lastName: "label.lastName.sentenceCase",
+      },
+      showMiddleName: true,
     }
 
     render(
