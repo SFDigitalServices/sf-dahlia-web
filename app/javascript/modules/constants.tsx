@@ -175,4 +175,4 @@ export const LISTING_APPLY_FORMS_INPUT_MAX_LENGTH = {
 }
 
 // eslint-disable-next-line prefer-regex-literals
-export const LATIN_REGEX = new RegExp("/^[A-Za-z0-9\u00C0-\u017E\\s'.,-/+#%$:=-_`~()]+$/")
+export const LATIN_REGEX = new RegExp("^[A-Za-z0-9\\u00C0-\\u017E\\s'.,\\-/+#%$:=-_`~()]+")

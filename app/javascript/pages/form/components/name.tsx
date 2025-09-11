@@ -14,21 +14,12 @@ type NameProps = {
   showMiddleName: true
 }
 
-const getValidation = (fieldName: string, required: boolean) => ({
-  required: required ? t(`error.${fieldName}`) : false,
-  pattern: {
-    value: LATIN_REGEX,
-    message: t(`error.${fieldName}`),
-  },
-  maxLength: {
-    value: LISTING_APPLY_FORMS_INPUT_MAX_LENGTH[fieldName],
-    message: t(`error.${fieldName}`),
-  },
-})
-
-const Name = ({ label, fieldNames, showMiddleName }: NameProps) => {
-  const { register, errors, trigger } = useFormStepContext()
-  const { firstName, middleName, lastName } = fieldNames
+const Name = ({
+  label,
+  fieldNames: { firstName, middleName, lastName },
+  showMiddleName,
+}: NameProps) => {
+  const { register, errors } = useFormStepContext()
   return (
     <fieldset>
       <Heading priority={2} size="sm">
@@ -38,30 +29,38 @@ const Name = ({ label, fieldNames, showMiddleName }: NameProps) => {
         name={firstName}
         label={t("label.firstName.sentenceCase")}
         register={register}
-        validation={getValidation("firstName", true)}
-        error={errors.firstName}
-        errorMessage={errors?.firstName && t("error.firstName")}
-        inputProps={{ onBlur: () => trigger(firstName) }}
+        validation={{
+          required: true,
+          maxLength: LISTING_APPLY_FORMS_INPUT_MAX_LENGTH.firstName,
+          pattern: LATIN_REGEX,
+        }}
+        error={!!errors?.[firstName]}
+        errorMessage={errors?.[firstName] ? t("error.firstName") : ""}
       />
       {showMiddleName && (
         <Field
           name={middleName}
           label={`${t("label.middleName.sentenceCase")} (${t("t.optional.lowercase")})`}
           register={register}
-          validation={getValidation("middleName", false)}
-          error={errors.middleName}
-          errorMessage={errors?.middleName && t("error.pleaseProvideAnswersInEnglish")}
-          inputProps={{ onBlur: () => trigger(middleName) }}
+          validation={{
+            maxLength: LISTING_APPLY_FORMS_INPUT_MAX_LENGTH.middleName,
+            pattern: LATIN_REGEX,
+          }}
+          error={!!errors?.[middleName]}
+          errorMessage={errors?.[middleName] ? t("error.pleaseProvideAnswersInEnglish") : ""}
         />
       )}
       <Field
         name={lastName}
         label={t("label.lastName.sentenceCase")}
         register={register}
-        validation={getValidation("lastName", true)}
-        error={errors.lastName}
-        errorMessage={errors?.lastName && t("error.lastName")}
-        inputProps={{ onBlur: () => trigger(lastName) }}
+        validation={{
+          required: true,
+          maxLength: LISTING_APPLY_FORMS_INPUT_MAX_LENGTH.lastName,
+          pattern: LATIN_REGEX,
+        }}
+        error={!!errors?.[lastName]}
+        errorMessage={errors?.[lastName] ? t("error.lastName") : ""}
       />
     </fieldset>
   )

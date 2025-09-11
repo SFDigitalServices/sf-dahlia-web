@@ -57,7 +57,7 @@ const ListingApplyStepWrapper = ({
   const titleString = translationFromDataSchema(title, titleVars, { formData, listingData })
 
   return (
-    <FormStepProvider value={{ register, errors, trigger }}>
+    <FormStepProvider value={{ register, errors }}>
       <CardSection>
         <Button variant="text" onClick={handlePrevStep}>
           {t("t.back")}
