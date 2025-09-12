@@ -22,7 +22,7 @@ const ListingApplyFormWrapper = ({ children }: ListingApplyFormWrapperProps) => 
       <div className="md:mb-20 md:mt-12 mx-auto max-w-lg print:my-0 print:max-w-full">
         {showLayout ? (
           <>
-            <Card className="application-form-header ">
+            <Card className="application-form-header">
               <Card.Section className="application-form-header-title">
                 <Heading priority={1} className="application-form-header-heading">
                   {t("pageTitle.listingApplication", { listing: listing.Name })}
@@ -32,6 +32,9 @@ const ListingApplyFormWrapper = ({ children }: ListingApplyFormWrapperProps) => 
                 <p>currentSection: {currentStepInfo.sectionName}</p>
                 <p>sections: {JSON.stringify(sectionNames)}</p>
               </Card.Section>
+            </Card>
+            <Card>
+              <Heading>debug current step slug: {JSON.stringify(currentStepInfo.slug)}</Heading>
             </Card>
             <Card>{currentStepChild}</Card>
           </>
