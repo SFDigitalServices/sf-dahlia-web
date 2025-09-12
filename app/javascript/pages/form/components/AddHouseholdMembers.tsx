@@ -19,8 +19,8 @@ const AddHouseholdMembers = () => {
         <Heading>AddHouseholdMembers Component</Heading>
       </CardSection>
       <CardSection>
-        <Button onClick={() => handleNextStep}>{t("label.addHouseholdMember")}</Button>
-        <Button onClick={() => handleNextStep()}>{t("label.doneAddingPeople")}</Button>
+        <Button onClick={handleNextStep}>{t("label.addHouseholdMember")}</Button>
+        <Button onClick={handleNextStep}>{t("label.doneAddingPeople")}</Button>
       </CardSection>
     </>
   )
