@@ -3,13 +3,16 @@ import { FormEngineProvider, type FormEngineContext } from "./formEngineContext"
 import {
   type FormSchema,
   type StepComponentSchema,
+  type StepInfoSchema,
   parseFormSchema,
   getFieldNames,
   generateInitialFormData,
   generateSectionNames,
 } from "./formSchemas"
 import type { RailsListing } from "../modules/listings/SharedHelpers"
+import { listingPreferences } from "../util/listingUtil"
 import RecursiveRenderer from "./recursiveRenderer"
+import { calculateNextStep, calculatePrevStep } from "../util/formEngineUtil"
 
 interface FormEngineProps {
   listing: RailsListing
@@ -29,7 +32,17 @@ const FormEngine = ({ listing, schema }: FormEngineProps) => {
     setFormData({ ...formData, ...data })
   }
 
-  let stepInfoMap, sectionNames, handleNextStep, handlePrevStep
+  const dataSources = {
+    listing,
+    form: formData,
+    preferences: listingPreferences(listing),
+  }
+
+  let stepInfoMap: StepInfoSchema[],
+    sectionNames: string[],
+    handleNextStep: () => void,
+    handlePrevStep: () => void
+
   if (parsedSchema.componentType === "multiStepLayout") {
     sectionNames = generateSectionNames(parsedSchema)
     stepInfoMap = parsedSchema.children.map((child: StepComponentSchema) => ({
@@ -37,19 +50,21 @@ const FormEngine = ({ listing, schema }: FormEngineProps) => {
       fieldNames: getFieldNames(child),
     }))
     const totalSteps = parsedSchema.children.length
+    // console.log(stepInfoMap)
     handleNextStep = () => {
-      const newStepIndex = currentStepIndex + 1
+      const newStepIndex = calculateNextStep(currentStepIndex, stepInfoMap, dataSources)
       if (newStepIndex < totalSteps) setCurrentStepIndex(newStepIndex)
     }
     handlePrevStep = () => {
-      const newStepIndex = currentStepIndex - 1
+      const newStepIndex = calculatePrevStep(currentStepIndex, stepInfoMap, dataSources)
       if (newStepIndex >= 0) setCurrentStepIndex(newStepIndex)
     }
   }
 
   const formEngineContextValue: FormEngineContext = {
-    listingData: listing,
+    listing,
     formData: formData,
+    dataSources,
     saveFormData: saveFormData,
     stepInfoMap: stepInfoMap,
     sectionNames: sectionNames,
