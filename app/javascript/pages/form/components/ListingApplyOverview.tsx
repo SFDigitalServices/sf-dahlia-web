@@ -5,7 +5,7 @@ import { CardSection } from "@bloom-housing/ui-seeds/src/blocks/Card"
 import { useFormEngineContext } from "../../../formEngine/formEngineContext"
 import "./ListingApplyOverview.scss"
 import { getDocumentChecklistPath } from "../../../util/routeUtil"
-import { renderInlineMarkup } from "../../../util/languageUtil"
+import { getCurrentLanguage, LanguagePrefix, renderInlineMarkup } from "../../../util/languageUtil"
 
 const ListingApplyOverview = () => {
   const formEngineContext = useFormEngineContext()
@@ -22,6 +22,7 @@ const ListingApplyOverview = () => {
         <Heading priority={2} size="2xl" className="listing-apply-overview-title">
           {t("a4Overview.title")}
         </Heading>
+        {getCurrentLanguage() === LanguagePrefix.Chinese && <p>{t("a4Overview.subtitle")}</p>}
         <hr />
         <div className="listing-apply-overview-text">
           <p>{t("a4Overview.p1")}</p>
