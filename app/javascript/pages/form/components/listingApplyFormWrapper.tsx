@@ -1,5 +1,5 @@
 import React from "react"
-import { t } from "@bloom-housing/ui-components"
+import { ProgressNav, t } from "@bloom-housing/ui-components"
 import { Card, Heading } from "@bloom-housing/ui-seeds"
 import { CardSection } from "@bloom-housing/ui-seeds/src/blocks/Card"
 import { useFormEngineContext } from "../../../formEngine/formEngineContext"
@@ -16,6 +16,7 @@ const ListingApplyFormWrapper = ({ children }: ListingApplyFormWrapperProps) => 
   const currentStepChild = children[currentStepIndex]
   const currentStepInfo = stepInfoMap[currentStepIndex]
   const showLayout = !currentStepInfo.hideLayout
+  const sectionsTest = ["You", "Household", "Income", "Preferences", "Review"]
 
   return (
     <section className="bg-gray-300">
@@ -28,7 +29,15 @@ const ListingApplyFormWrapper = ({ children }: ListingApplyFormWrapperProps) => 
                   {t("pageTitle.listingApplication", { listing: listingData.Name })}
                 </Heading>
               </CardSection>
-              <CardSection>
+              <CardSection className="application-form-nav">
+                <ProgressNav
+                  labels={sectionsTest}
+                  currentPageSection={currentStepIndex}
+                  completedSections={currentStepIndex}
+                  mounted={true}
+                  removeSrHeader
+                />
+
                 <p>currentSection: {currentStepInfo.sectionName}</p>
                 <p>sections: {JSON.stringify(sectionNames)}</p>
               </CardSection>
