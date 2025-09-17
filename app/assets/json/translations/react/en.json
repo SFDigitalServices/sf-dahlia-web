@@ -19,7 +19,7 @@
   "a2CommunityScreening.veteran.youOrAnyone": "Are you or anyone on this application a veteran?",
   "a2CommunityScreening.veteran.youOrAnyoneDesc": "This is a veterans building and at least one applicant must have served in the U.S. Military.<br><br>Should your application be chosen, be prepared to provide more information.",
   "a4Overview.p1": "First we'll ask about you and the people you plan to live with. Then, we'll ask about your income. Finally, we'll see if you qualify for any affordable housing lottery preference, and if so, ask you to upload proof of those preferences.",
-  "a4Overview.p2": "<a ui-sref='%{sref}' target='_blank'>See our checklist</a> for information about required documents and claiming preferences.",
+  "a4Overview.p2": "<a href='%{href}' target='_blank'>See our checklist</a> for information about required documents and claiming preferences.",
   "a4Overview.p2b-ownership": "Make sure your documents are up to date. Your loan pre-approval letter must be dated within the past 120 days, and your Homebuyer Education verification form must be dated within the past year.",
   "a4Overview.p3": "You may also start the application now and save it and upload documents later.",
   "a4Overview.p4": "Please be aware that each household member can only appear on one application for each listing. If your application contains household members that are on other applications for this listing, all of them will be disqualified.",
