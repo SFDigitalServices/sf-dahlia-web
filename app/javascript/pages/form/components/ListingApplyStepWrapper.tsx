@@ -25,9 +25,9 @@ const ListingApplyStepWrapper = ({
 }: ListingApplyStepWrapperProps) => {
   const formEngineContext = useFormEngineContext()
   const {
-    listingData,
     formData,
     saveFormData,
+    dataSources,
     stepInfoMap,
     currentStepIndex,
     handleNextStep,
@@ -54,7 +54,7 @@ const ListingApplyStepWrapper = ({
     handleNextStep()
   }
 
-  const titleString = translationFromDataSchema(title, titleVars, { formData, listingData })
+  const titleString = translationFromDataSchema(title, titleVars, dataSources)
 
   return (
     <FormStepProvider value={{ register, errors }}>
