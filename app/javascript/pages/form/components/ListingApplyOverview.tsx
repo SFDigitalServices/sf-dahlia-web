@@ -22,7 +22,9 @@ const ListingApplyOverview = () => {
         <Heading priority={2} size="2xl" className="listing-apply-overview-title">
           {t("a4Overview.title")}
         </Heading>
-        {getCurrentLanguage() === LanguagePrefix.Chinese && <p>{t("a4Overview.subtitle")}</p>}
+        {getCurrentLanguage() === LanguagePrefix.Chinese && (
+          <p className="listing-apply-overview-chinese">{t("a4Overview.subtitle")}</p>
+        )}
         <hr />
         <div className="listing-apply-overview-text">
           <p>{t("a4Overview.p1")}</p>
