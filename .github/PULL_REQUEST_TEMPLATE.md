@@ -21,6 +21,10 @@ https://sfgovdt.jira.com/browse/<JIRA TICKET NUMBER>
 - [ ] all automated code checks pass (linting, tests, coverage, etc.)
 - [ ] if the PR is a bugfix, there are tests and logs around the bug
 
+### Code conventions
+
+- [ ] web pages are formatted with `.scss` stylesheets and `ui-seeds` tokens, rather than inline styles or Tailwind
+
 ### Review instructions
 
 - [ ] instructions specify which environment(s) it applies to
