@@ -17,6 +17,7 @@ import type {
 import dayjs from "dayjs"
 import customParseFormat from "dayjs/plugin/customParseFormat"
 import {
+  PREFERENCES,
   RESERVED_COMMUNITY_TYPES,
   TENURE_TYPES,
   CUSTOM_LISTING_TYPES,
@@ -704,6 +705,23 @@ export const listingHasVeteransPreference = (listing: RailsListing): boolean => 
   return !!listing.Listing_Lottery_Preferences?.some((preference: ListingLotteryPreference) =>
     preferenceNameHasVeteran(preference?.Lottery_Preference?.Name)
   )
+}
+
+export const listingPreferences = (listing: RailsListing): Record<string, string> => {
+  const listingPrefNames = listing.Listing_Lottery_Preferences.map(
+    (pref) => pref.Lottery_Preference.Name
+  )
+  const listingPrefs: Record<string, string> = {}
+  for (const prefKey in PREFERENCES) {
+    if (listingPrefNames.includes(PREFERENCES[prefKey] as string)) {
+      listingPrefs[prefKey] = PREFERENCES[prefKey]
+    }
+  }
+  // special case for veterans preference
+  if (listingPrefNames.some((name) => name.match(/veteran/i))) {
+    listingPrefs.veteran = PREFERENCES.veteran
+  }
+  return listingPrefs
 }
 
 export const forceRecacheParam = () => ({

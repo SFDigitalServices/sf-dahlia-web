@@ -4,13 +4,20 @@ import getFormComponentRegistry from "./formComponentRegistry"
 const DataSchema = z.object({
   dataSource: z.string(), // "listing", "form"
   dataKey: z.string(),
+  negate: z.optional(z.boolean()),
 })
 export type DataSchema = z.infer<typeof DataSchema>
 
-const NavigationSchema = z.object({
+const NavigationArrivalSchema = z.object({
+  showStepIfAllPresent: z.optional(z.array(DataSchema)),
   showStepIfAnyPresent: z.optional(z.array(DataSchema)),
+  hideStepIfAllPresent: z.optional(z.array(DataSchema)),
   hideStepIfAnyPresent: z.optional(z.array(DataSchema)),
+})
+
+const NavigationDepartureSchema = z.object({
   nextStep: z.optional(z.string()),
+  prevStep: z.optional(z.string()),
 })
 
 const ComponentSchema = z.object({
@@ -28,7 +35,8 @@ const StepInfoSchema = z.object({
   slug: z.string(),
   sectionName: z.optional(z.string()),
   hideLayout: z.optional(z.boolean()),
-  navigation: z.optional(NavigationSchema),
+  navigationArrival: z.optional(NavigationArrivalSchema),
+  navigationDeparture: z.optional(NavigationDepartureSchema),
   fieldNames: z.optional(z.array(z.string())),
 })
 export type StepInfoSchema = z.infer<typeof StepInfoSchema>

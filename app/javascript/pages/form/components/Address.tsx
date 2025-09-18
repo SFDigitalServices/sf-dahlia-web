@@ -1,5 +1,6 @@
 import React from "react"
 import { t } from "@bloom-housing/ui-components"
+import { Card } from "@bloom-housing/ui-seeds"
 
 interface AddressProps {
   label: string
@@ -7,10 +8,10 @@ interface AddressProps {
 
 const Address = ({ label }: AddressProps) => {
   return (
-    <div style={{ border: "2px dashed black", padding: "4px", margin: "4px" }}>
-      <p>Address Component</p>
-      <p>label: {t(label)}</p>
-    </div>
+    <Card>
+      <Card.Header>Address Component</Card.Header>
+      <Card.Section>{t(label)}</Card.Section>
+    </Card>
   )
 }
 

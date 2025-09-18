@@ -7,22 +7,22 @@ import fallbackImg from "../../../../assets/images/bg@1200.jpg"
 
 const ListingApplyIntro = () => {
   const formEngineContext = useFormEngineContext()
-  const { listingData, handleNextStep } = formEngineContext
+  const { listing, handleNextStep } = formEngineContext
 
   const imageUrl =
-    listingData?.Listing_Images?.length > 0
-      ? listingData.Listing_Images[0].displayImageURL
-      : listingData?.imageURL ?? fallbackImg
+    listing?.Listing_Images?.length > 0
+      ? listing.Listing_Images[0].displayImageURL
+      : listing?.imageURL ?? fallbackImg
 
   return (
     <>
       <h1>{t("a1Intro.title")}</h1>
-      <p>{listingData.Name}</p>
-      <p>{getListingAddressString(listingData)}</p>
+      <p>{listing.Name}</p>
+      <p>{getListingAddressString(listing)}</p>
       <p>
         {t("listingDetails.applicationsDeadline.withDateTime", {
-          date: localizedFormat(listingData.Application_Due_Date, "LL"),
-          time: formatTimeOfDay(listingData.Application_Due_Date),
+          date: localizedFormat(listing.Application_Due_Date, "LL"),
+          time: formatTimeOfDay(listing.Application_Due_Date),
         })}
       </p>
       <img src={imageUrl} alt="" />
