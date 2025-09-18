@@ -2,9 +2,16 @@ import React, { createContext, ReactNode, useContext } from "react"
 import type { RailsListing } from "../modules/listings/SharedHelpers"
 import type { StepInfoSchema } from "./formSchemas"
 
+export interface DataSources {
+  listing: RailsListing
+  form: Record<string, unknown>
+  preferences: Record<string, string>
+}
+
 export interface FormEngineContext {
-  listingData: RailsListing
+  listing: RailsListing
   formData: Record<string, unknown>
+  dataSources: DataSources
   saveFormData: (formDataFragment: Record<string, unknown>) => void
   currentStepIndex: number
   stepInfoMap: StepInfoSchema[]
