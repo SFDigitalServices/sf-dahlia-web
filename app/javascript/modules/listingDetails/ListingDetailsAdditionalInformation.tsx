@@ -5,6 +5,7 @@ import { TextTruncate } from "../../components/TextTruncate"
 import { isHabitatListing, isOpen, isSale, isLotterySalesListing } from "../../util/listingUtil"
 import { stripMostTags } from "../../util/filterUtil"
 import { getTranslatedString, localizedFormat } from "../../util/languageUtil"
+import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 
 export interface ListingDetailsAdditionalInformationProps {
   listing: RailsListing
@@ -43,6 +44,11 @@ export const ListingDetailsAdditionalInformation = ({
   listing,
   imageSrc,
 }: ListingDetailsAdditionalInformationProps) => {
+  const { unleashFlag: translationsReady } = useFeatureFlag(
+    "temp.webapp.listingDetail.realtorSection",
+    false
+  )
+
   const showCommissionSection = () =>
     listing.Realtor_Commission_Amount && listing.Realtor_Commission_Unit
 
@@ -135,7 +141,7 @@ export const ListingDetailsAdditionalInformation = ({
             </div>
           </div>
         )}
-        {isSale(listing) && listing.Allows_Realtor_Commission && (
+        {isSale(listing) && listing.Allows_Realtor_Commission && translationsReady && (
           <div className="info-card bg-gray-100 border-0">
             <h3 className="text-serif-xl">{t("listings.agentCompensationTitle")}</h3>
             <div className="text-xs">
