@@ -38,10 +38,6 @@ const ListingApplyFormWrapper = ({ children }: ListingApplyFormWrapperProps) => 
                   mounted={true}
                   removeSrHeader
                 />
-
-                {/* TODO: Delete after nav bar functionality is finished */}
-                <p>currentSection: {currentStepInfo.sectionName}</p>
-                <p>sections: {JSON.stringify(sectionNames)}</p>
               </CardSection>
             </Card>
             <Card>{currentStepChild}</Card>
