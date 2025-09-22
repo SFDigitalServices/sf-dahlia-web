@@ -1,5 +1,5 @@
 import type { RailsListing } from "../modules/listings/SharedHelpers"
-import type { DataSchema } from "../formEngine/formSchemas"
+import type { DataSchema, StepInfoSchema } from "../formEngine/formSchemas"
 import { t } from "@bloom-housing/ui-components"
 
 const getData = (
@@ -24,4 +24,17 @@ export const translationFromDataSchema = (
     translationVars[varName] = getData(data, formData, listingData)
   }
   return t(translationKey, translationVars)
+}
+
+export const getNavigationSectionIndex = (
+  currentStepIndex: number,
+  stepInfoMap: StepInfoSchema[],
+  sectionNames: string[]
+): number => {
+  const currentStepInfo = stepInfoMap[currentStepIndex]
+  if (!currentStepInfo.sectionName) {
+    return -1
+  }
+
+  return sectionNames.indexOf(currentStepInfo.sectionName)
 }

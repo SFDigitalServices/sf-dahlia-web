@@ -4,6 +4,7 @@ import { Card, Heading } from "@bloom-housing/ui-seeds"
 import { CardSection } from "@bloom-housing/ui-seeds/src/blocks/Card"
 import { useFormEngineContext } from "../../../formEngine/formEngineContext"
 import "./listingApplyFormWrapper.scss"
+import { getNavigationSectionIndex } from "../../../util/formEngineUtil"
 
 interface ListingApplyFormWrapperProps {
   currentStepIndex: number
@@ -15,6 +16,7 @@ const ListingApplyFormWrapper = ({ children }: ListingApplyFormWrapperProps) => 
   const { listingData, currentStepIndex, stepInfoMap, sectionNames } = formEngineContext
   const currentStepChild = children[currentStepIndex]
   const currentStepInfo = stepInfoMap[currentStepIndex]
+  const currentSectionIndex = getNavigationSectionIndex(currentStepIndex, stepInfoMap, sectionNames)
   const showLayout = !currentStepInfo.hideLayout
   const sectionsTest = ["You", "Household", "Income", "Preferences", "Review"]
 
@@ -32,8 +34,8 @@ const ListingApplyFormWrapper = ({ children }: ListingApplyFormWrapperProps) => 
               <CardSection className="application-form-nav">
                 <ProgressNav
                   labels={sectionsTest}
-                  currentPageSection={currentStepIndex}
-                  completedSections={currentStepIndex}
+                  currentPageSection={currentSectionIndex + 1}
+                  completedSections={currentSectionIndex}
                   mounted={true}
                   removeSrHeader
                 />
