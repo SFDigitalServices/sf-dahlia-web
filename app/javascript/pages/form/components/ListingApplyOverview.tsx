@@ -9,15 +9,10 @@ import { getCurrentLanguage, LanguagePrefix, renderInlineMarkup } from "../../..
 
 const ListingApplyOverview = () => {
   const formEngineContext = useFormEngineContext()
-  const { handleNextStep, handlePrevStep } = formEngineContext
+  const { handleNextStep } = formEngineContext
 
   return (
     <div className="listing-apply-overview">
-      <CardSection>
-        <Button variant="text" onClick={handlePrevStep}>
-          {t("t.back")}
-        </Button>
-      </CardSection>
       <CardSection>
         <Heading priority={2} size="2xl" className="listing-apply-overview-title">
           {t("a4Overview.title")}
