@@ -20,8 +20,12 @@
   }
 
   .application-form-nav {
+    overflow: auto;
     padding: var(--seeds-s4) var(--seeds-s2) var(--seeds-s6);
-
+    @media (max-width: theme("screens.md")) {
+      background-color: var(--seeds-color-blue-100);
+      padding: var(--seeds-s4) 0 var(--seeds-s6);
+    }
     .progress-nav {
       width: 100%;
     }
@@ -32,7 +36,6 @@
     }
 
     .progress-nav__dot-item {
-      text-transform: uppercase;
       text-align: center;
       top: var(--seeds-s0_5);
 
@@ -73,18 +76,6 @@
       &.is-active .progress-nav__item-container {
         color: var(--seeds-color-gray-850);
         font-weight: var(--seeds-font-weight-bold);
-      }
-
-      @media only screen and (max-width: 48em) {
-        padding-top: 0;
-        padding-bottom: 0;
-        padding-left: 0.75rem;
-        padding-right: 0.75rem;
-      }
-
-      @media only screen and (min-width: 48.0625em) {
-        font-size: 0.8125rem;
-        line-height: 1.25;
       }
     }
   }
