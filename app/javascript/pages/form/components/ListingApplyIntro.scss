@@ -3,6 +3,10 @@
     flex-direction: column;
     text-align: center;
     gap: var(--seeds-s4);
+    max-width: var(--seeds-screen-md);
+    padding: var(--seeds-s12);
+    margin: 0 auto;
+    width: 100%;
     @media (max-width: theme("screens.sm")) {
        gap: 0;
     }
@@ -16,10 +20,14 @@
         position: relative;
         height: 100%;
         width: 100%;
+        max-width: 100%;
         text-align: left;
         margin-bottom: calc(-1 * var(--seeds-s4));
-        overflow: hidden;
-        
+        img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
         &::after {
             content: '';
             position: absolute;
