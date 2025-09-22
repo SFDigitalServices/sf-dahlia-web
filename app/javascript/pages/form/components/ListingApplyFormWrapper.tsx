@@ -28,13 +28,6 @@ const ListingApplyFormWrapper = ({ children }: ListingApplyFormWrapperProps) => 
                   {t("pageTitle.listingApplication", { listing: listing.Name })}
                 </Heading>
               </Card.Section>
-              <Card.Section>
-                <p>currentSection: {currentStepInfo.sectionName}</p>
-                <p>sections: {JSON.stringify(sectionNames)}</p>
-              </Card.Section>
-            </Card>
-            <Card>
-              <Heading>debug current step slug: {JSON.stringify(currentStepInfo.slug)}</Heading>
             </Card>
             <Card>{currentStepChild}</Card>
           </>
