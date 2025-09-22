@@ -38,12 +38,15 @@
     .progress-nav__dot-item {
       text-align: center;
       top: var(--seeds-s0_5);
+      @media (max-width: theme("screens.md")) {
+       font-size: var(--seeds-font-size-xs);
+      }
 
       &:before {
         position: absolute;
         left: 50%;
         background-color: #99cd00;
-        border: 1px solid #fff;
+        border: var(--seeds-border-1) solid #fff;
       }
 
       &:after {
