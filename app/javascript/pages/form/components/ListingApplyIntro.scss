@@ -18,18 +18,33 @@
         width: 100%;
         text-align: left;
         margin-bottom: calc(-1 * var(--seeds-s4));
+        overflow: hidden;
+        
+        &::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 50%;
+            background: linear-gradient(to bottom, transparent 0%, var(--seeds-color-black) 100%);
+            @media (max-width: theme("screens.sm")) {
+                display: none;
+            }
+        }
+        
         @media (max-width: theme("screens.sm")) {
             margin-bottom: 0;
         }
         .listing-apply-intro-image-text {
             position: absolute;
             left: var(--seeds-s3);
-            bottom: var(--seeds-s3);
+            bottom: 0;
             color: var(--seeds-color-white);
+            z-index: 1;
             @media (max-width: theme("screens.sm")) {
                 position: relative;
                 left: 0;
-                bottom: 0;
                 text-align: center;
                 color: var(--seeds-color-black);
             }
