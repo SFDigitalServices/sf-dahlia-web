@@ -2,6 +2,7 @@ export const PREFERENCES = {
   aliceGriffith: "Alice Griffith Housing Development Resident",
   antiDisplacement: "Anti-Displacement Housing Preference (ADHP)",
   assistedHousing: "Rent Burdened / Assisted Housing Preference",
+  rentBurden: "Rent Burdened / Assisted Housing Preference",
   certificateOfPreference: "Certificate of Preference (COP)",
   dalpEducators: "DALP SFUSD Educators",
   dalpFirstResponders: "DALP First Responders",
@@ -16,6 +17,7 @@ export const PREFERENCES = {
   rightToReturnHuntersView: "Right to Return - Hunters View",
   rightToReturnPotrero: "Right to Return - Potrero",
   treasureIsland: "Treasure Island Resident (TIR) Preference",
+  veteran: "Veteran",
 }
 
 export const PREFERENCES_IDS = {
@@ -156,3 +158,23 @@ export const UNLEASH_FLAG = {
   CLERK_AUTH: "temp.webapp.auth.clerk",
   FORM_ENGINE: "perm.webapp.formEngine",
 }
+
+export const LISTING_APPLY_FORMS_INPUT_MAX_LENGTH = {
+  firstName: 40,
+  middleName: 20,
+  lastName: 40,
+  email: 50,
+  password: 50,
+  address: 75,
+  city: 75,
+  alternateContactTypeOther: 50,
+  alternateContactAgency: 50,
+  certificateNumber: 50,
+  genderOther: 50,
+  otherLanguage: 50,
+  sexualOrientationOther: 50,
+  raceEthnicityOther: 50,
+}
+
+// eslint-disable-next-line prefer-regex-literals
+export const LATIN_REGEX = new RegExp("^[A-Za-z0-9\\u00C0-\\u017E\\s'.,\\-/+#%$:=-_`~()]+")

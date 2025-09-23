@@ -3,6 +3,7 @@ import { UseFormMethods } from "react-hook-form"
 
 export interface FormStepContext {
   register: UseFormMethods["register"]
+  errors: UseFormMethods["errors"]
 }
 
 export const FormStepContext = createContext<FormStepContext | undefined>(undefined)

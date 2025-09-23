@@ -1,15 +1,17 @@
 import React from "react"
 import { t } from "@bloom-housing/ui-components"
+import { Card } from "@bloom-housing/ui-seeds"
+
 interface YesNoRadioProps {
   label: string
 }
 
 const YesNoRadio = ({ label }: YesNoRadioProps) => {
   return (
-    <div style={{ border: "2px dashed black", padding: "4px", margin: "4px" }}>
-      <p>YesNoRadio Component</p>
-      <p>label: {t(label)}</p>
-    </div>
+    <Card>
+      <Card.Header>YesNoRadio Component</Card.Header>
+      <Card.Section>{t(label)}</Card.Section>
+    </Card>
   )
 }
 

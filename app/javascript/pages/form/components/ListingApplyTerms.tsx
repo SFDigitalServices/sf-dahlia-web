@@ -5,7 +5,7 @@ import { CardSection } from "@bloom-housing/ui-seeds/src/blocks/Card"
 import { useFormEngineContext } from "../../../formEngine/formEngineContext"
 import { submitForm } from "../../../api/formApiService"
 
-const ListingApplyReviewTerms = () => {
+const ListingApplyTerms = () => {
   const formEngineContext = useFormEngineContext()
   const { handlePrevStep, formData } = formEngineContext
   const handleSubmit = () => {
@@ -37,4 +37,4 @@ const ListingApplyReviewTerms = () => {
   )
 }
 
-export default ListingApplyReviewTerms
+export default ListingApplyTerms

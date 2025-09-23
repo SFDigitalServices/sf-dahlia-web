@@ -25,9 +25,9 @@ const ListingApplyStepWrapper = ({
 }: ListingApplyStepWrapperProps) => {
   const formEngineContext = useFormEngineContext()
   const {
-    listingData,
     formData,
     saveFormData,
+    dataSources,
     stepInfoMap,
     currentStepIndex,
     handleNextStep,
@@ -42,7 +42,9 @@ const ListingApplyStepWrapper = ({
 
   // https://github.com/react-hook-form/react-hook-form/issues/2887#issuecomment-802577357
   // eslint-disable-next-line @typescript-eslint/unbound-method
-  const { register, handleSubmit } = useForm({
+  const { register, errors, handleSubmit } = useForm({
+    mode: "onBlur",
+    reValidateMode: "onBlur",
     shouldFocusError: false,
     defaultValues,
   })
@@ -52,10 +54,10 @@ const ListingApplyStepWrapper = ({
     handleNextStep()
   }
 
-  const titleString = translationFromDataSchema(title, titleVars, { formData, listingData })
+  const titleString = translationFromDataSchema(title, titleVars, dataSources)
 
   return (
-    <FormStepProvider value={{ register }}>
+    <FormStepProvider value={{ register, errors }}>
       <CardSection>
         <Button variant="text" onClick={handlePrevStep}>
           {t("t.back")}
