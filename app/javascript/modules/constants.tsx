@@ -2,6 +2,7 @@ export const PREFERENCES = {
   aliceGriffith: "Alice Griffith Housing Development Resident",
   antiDisplacement: "Anti-Displacement Housing Preference (ADHP)",
   assistedHousing: "Rent Burdened / Assisted Housing Preference",
+  rentBurden: "Rent Burdened / Assisted Housing Preference",
   certificateOfPreference: "Certificate of Preference (COP)",
   dalpEducators: "DALP SFUSD Educators",
   dalpFirstResponders: "DALP First Responders",
@@ -16,6 +17,7 @@ export const PREFERENCES = {
   rightToReturnHuntersView: "Right to Return - Hunters View",
   rightToReturnPotrero: "Right to Return - Potrero",
   treasureIsland: "Treasure Island Resident (TIR) Preference",
+  veteran: "Veteran",
 }
 
 export const PREFERENCES_IDS = {
