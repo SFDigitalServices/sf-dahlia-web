@@ -12,7 +12,7 @@ interface ListingApplyFormWrapperProps {
 
 const ListingApplyFormWrapper = ({ children }: ListingApplyFormWrapperProps) => {
   const formEngineContext = useFormEngineContext()
-  const { listing, currentStepIndex, stepInfoMap, sectionNames } = formEngineContext
+  const { listing, currentStepIndex, stepInfoMap } = formEngineContext
   const currentStepChild = children[currentStepIndex]
   const currentStepInfo = stepInfoMap[currentStepIndex]
   const showLayout = !currentStepInfo.hideLayout
