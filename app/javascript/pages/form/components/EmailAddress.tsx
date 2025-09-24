@@ -1,5 +1,6 @@
 import React from "react"
 import { t } from "@bloom-housing/ui-components"
+import { Card } from "@bloom-housing/ui-seeds"
 
 interface EmailAddressProps {
   label: string
@@ -7,10 +8,10 @@ interface EmailAddressProps {
 
 const Name = ({ label }: EmailAddressProps) => {
   return (
-    <div style={{ border: "2px dashed black", padding: "4px", margin: "4px" }}>
-      <p>EmailAddress Component</p>
-      <p>label: {t(label)}</p>
-    </div>
+    <Card>
+      <Card.Header>EamilAddress Component</Card.Header>
+      <Card.Section>{t(label)}</Card.Section>
+    </Card>
   )
 }
 
