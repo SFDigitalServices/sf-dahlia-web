@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react-webpack5"
 
 import { fn } from "storybook/test"
 
-import { Button } from "../app/javascript/pages/forms/components/Button"
+import { Button } from "../app/javascript/pages/form/components/Button"
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta = {
