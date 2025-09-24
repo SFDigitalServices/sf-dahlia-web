@@ -16,7 +16,6 @@ const ListingApplyFormWrapper = ({ children }: ListingApplyFormWrapperProps) => 
   const currentStepInfo = stepInfoMap[currentStepIndex]
   const currentSectionIndex = sectionNames.indexOf(currentStepInfo.sectionName)
   const showLayout = !currentStepInfo.hideLayout
-  const sectionsTest = ["You", "Household", "Income", "Preferences", "Review"]
 
   return (
     <section className="bg-gray-300">
@@ -31,7 +30,7 @@ const ListingApplyFormWrapper = ({ children }: ListingApplyFormWrapperProps) => 
               </Card.Section>
               <Card.Section className="application-form-nav">
                 <ProgressNav
-                  labels={sectionsTest}
+                  labels={sectionNames}
                   currentPageSection={currentSectionIndex + 1}
                   completedSections={currentSectionIndex}
                   mounted={true}
