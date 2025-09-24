@@ -49,8 +49,7 @@ export const ListingDetailsAdditionalInformation = ({
     false
   )
 
-  const showCommissionSection = () =>
-    listing.Realtor_Commission_Amount && listing.Realtor_Commission_Unit
+  const showCommissionSection = listing.Realtor_Commission_Amount && listing.Realtor_Commission_Unit
 
   const getCommissionString = () => {
     return listing.Realtor_Commission_Unit === "percent"
@@ -59,6 +58,12 @@ export const ListingDetailsAdditionalInformation = ({
         })
       : `$${listing.Realtor_Commission_Amount.toLocaleString()}`
   }
+
+  const showAgentCompensationSection =
+    isSale(listing) &&
+    listing.Allows_Realtor_Commission &&
+    translationsReady &&
+    (showCommissionSection || listing.Realtor_Commission_Info)
 
   return (
     <ListingDetailItem
@@ -141,11 +146,11 @@ export const ListingDetailsAdditionalInformation = ({
             </div>
           </div>
         )}
-        {isSale(listing) && listing.Allows_Realtor_Commission && translationsReady && (
+        {showAgentCompensationSection && (
           <div className="info-card bg-gray-100 border-0">
             <h3 className="text-serif-xl">{t("listings.agentCompensationTitle")}</h3>
             <div className="text-xs">
-              {showCommissionSection() && (
+              {showCommissionSection && (
                 <>
                   <span className={"font-bold"}>{t("listings.agentCompensationHeader")}</span>
                   {getCommissionString()}

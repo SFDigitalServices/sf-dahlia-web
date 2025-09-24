@@ -274,7 +274,7 @@ exports[`ListingDetailsAdditionalInformation displays additional information sec
           <span
             class="font-bold"
           >
-            Agent Compensation: 
+            Agent compensation: 
           </span>
            3% of the sales price
           <div
@@ -283,7 +283,7 @@ exports[`ListingDetailsAdditionalInformation displays additional information sec
             <span
               class="font-bold"
             >
-              More Information: 
+              More information: 
             </span>
             <span>
               <div
@@ -507,7 +507,7 @@ exports[`ListingDetailsAdditionalInformation displays realtor commission section
           <span
             class="font-bold"
           >
-            Agent Compensation: 
+            Agent compensation: 
           </span>
            3% of the sales price
           <div
@@ -516,7 +516,7 @@ exports[`ListingDetailsAdditionalInformation displays realtor commission section
             <span
               class="font-bold"
             >
-              More Information: 
+              More information: 
             </span>
             <span>
               <div
@@ -740,7 +740,7 @@ exports[`ListingDetailsAdditionalInformation displays realtor commission text if
           <span
             class="font-bold"
           >
-            Agent Compensation: 
+            Agent compensation: 
           </span>
            3% of the sales price
           <div
@@ -749,7 +749,7 @@ exports[`ListingDetailsAdditionalInformation displays realtor commission text if
             <span
               class="font-bold"
             >
-              More Information: 
+              More information: 
             </span>
             <span>
               <div
