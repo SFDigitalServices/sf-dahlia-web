@@ -9,6 +9,7 @@
     width: 100%;
     @media (max-width: theme("screens.sm")) {
        gap: 0;
+       padding: 0;
     }
     .listing-apply-intro-title {
         @media (max-width: theme("screens.sm")) {
