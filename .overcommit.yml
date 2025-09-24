@@ -64,16 +64,8 @@ PreCommit:
     required_executable: "./bin/overcommit-pre-commit"
 
   EsLint:
-    command:
-      [
-        "env",
-        "LANG=en_US.UTF-8",
-        "LC_ALL=en_US.UTF-8",
-        "yarn",
-        "eslint",
-        "--quiet",
-        "--format=compact",
-      ]
+    command: ["yarn"]
+    flags: ["eslint", "--quiet", "--format=compact"]
     description: "Linting React with Eslint"
     enabled: true
     include:
