@@ -5,12 +5,12 @@
     padding-left: var(--seeds-s10);
     padding-right: var(--seeds-s10);
     h3 {
-        font-weight: bold;
+        font-weight: var(--seeds-font-weight-bold);
         padding-bottom: var(--seeds-s8);
     }
     text-align: left;
     li {
-        font-weight: normal;
+        font-weight: var(--seeds-font-weight-regular);
         position: relative;
         counter-increment: list;
         margin-block-end: var(--seeds-s8);
@@ -22,7 +22,7 @@
             left: 0;
             top: var(--seeds-letter-spacing-tight);
             color: var(--seeds-color-primary);
-            font-weight: normal;
+            font-weight: var(--seeds-font-weight-regular);
             font-size: var(--seeds-font-size-2xl);
         }
     }
