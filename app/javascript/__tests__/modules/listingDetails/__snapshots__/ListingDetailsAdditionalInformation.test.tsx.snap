@@ -266,6 +266,509 @@ exports[`ListingDetailsAdditionalInformation displays additional information sec
         <h3
           class="text-serif-xl"
         >
+          For the Buyer's Agent
+        </h3>
+        <div
+          class="text-xs"
+        >
+          <span
+            class="font-bold"
+          >
+            Agent compensation: 
+          </span>
+           3% of the sales price
+          <div
+            class="mt-4"
+          >
+            <span
+              class="font-bold"
+            >
+              More information: 
+            </span>
+            <span>
+              <div
+                class="text-xs inline primary-lighter-markup-link translate"
+              >
+                <span>
+                  Register with the Leasing Agent
+                </span>
+              </div>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        class="info-card bg-gray-100 border-0"
+      >
+        <h3
+          class="text-serif-xl"
+        >
+          Resale Price Restrictions
+        </h3>
+        <div
+          class="text-xs"
+        >
+          <div
+            class="text-xs inline primary-lighter-markup-link translate"
+          >
+            <span>
+              A BMR unit will be resold at a restricted price to a household that meets the first‐time homebuyer and income qualifications for the program. Please review the 
+              <a
+                href="http://sf-moh.org/index.aspx?page=295"
+                target="_blank"
+              >
+                Inclusionary Housing Procedures Manual
+              </a>
+               for specific information.
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        class="info-card bg-gray-100 border-0"
+      >
+        <h3
+          class="text-serif-xl"
+        >
+          Housing Program
+        </h3>
+        <a
+          class="text-xs"
+          href="https://www.sf.gov/resource--2022--apply-homebuyer-programs"
+          target="_blank"
+        >
+          Below Market Rate
+        </a>
+      </div>
+      <div
+        class="info-card bg-gray-100 border-0"
+      >
+        <p
+          class="text-xs"
+        >
+          Listing Updated: April 11, 2022
+        </p>
+      </div>
+    </div>
+  </li>
+</DocumentFragment>
+`;
+
+exports[`ListingDetailsAdditionalInformation displays realtor commission section if Allows_Realtor_Commission is true for a sales listing 1`] = `
+<DocumentFragment>
+  <li
+    class="responsive-content-item "
+  >
+    <header
+      class="detail-header "
+    >
+      <span
+        class="detail-header__image-container"
+      >
+        <img
+          alt=""
+          class="detail-header__image "
+          src="/image-url"
+        />
+      </span>
+      <hgroup
+        class="detail-header__hgroup"
+      >
+        <h2
+          class="detail-header__title"
+        >
+          Additional Information
+        </h2>
+        <span
+          class="detail-header__subtitle"
+        >
+          Required documents and selection criteria
+        </span>
+        <span
+          class="ui-icon ui-medium"
+        >
+          <svg
+            fill="currentColor"
+            viewBox="0 0 32 32"
+          >
+            <path
+              d="M28.267 6.133l-12.267 12.267-12.267-12.267-3.733 3.733 16 16 16-16z"
+            />
+          </svg>
+        </span>
+      </hgroup>
+    </header>
+    <div
+      class="listing-detail-panel"
+    >
+      <div
+        class="info-card bg-gray-100 border-0"
+      >
+        <h3
+          class="text-serif-xl"
+        >
+          Special Notes
+        </h3>
+        <div
+          class="text-xs inline primary-lighter-markup-link translate"
+        >
+          <span>
+            Some other excessively formatted listing notes.
+          </span>
+        </div>
+      </div>
+      <div
+        class="info-card bg-gray-100 border-0"
+      >
+        <h3
+          class="text-serif-xl"
+        >
+          Required Documents
+        </h3>
+        <div
+          class="text-xs"
+        >
+          <div
+            class="text-xs inline primary-lighter-markup-link translate"
+          >
+            <span>
+              Proof of residence
+
+              <br />
+              Bank statements
+
+              <br />
+              Concert tickets
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        class="info-card bg-gray-100 border-0"
+      >
+        <h3
+          class="text-serif-xl"
+        >
+          Important Program Rules
+        </h3>
+        <div
+          class="text-xs"
+        >
+          <div
+            class="text-xs inline primary-lighter-markup-link translate"
+          >
+            <span>
+              Some important program rules with bullets:
+              <br />
+              Rule oneRule two
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        class="info-card bg-gray-100 border-0"
+      >
+        <h3
+          class="text-serif-xl"
+        >
+          Covenants, Conditions and Restrictions (CC&R's)
+        </h3>
+        <div
+          class="text-xs"
+        >
+          <div
+            class="text-xs inline primary-lighter-markup-link translate"
+          >
+            <span>
+              The CC&R's explain the rules of the homeowners' association, and restrict how you can modify the property.
+            </span>
+          </div>
+          <br />
+          <a
+            class="button mt-4"
+            href="http://www.duckduckgo.com"
+            target="_blank"
+          >
+            Download PDF
+          </a>
+        </div>
+      </div>
+      <div
+        class="info-card bg-gray-100 border-0"
+      >
+        <h3
+          class="text-serif-xl"
+        >
+          For the Buyer's Agent
+        </h3>
+        <div
+          class="text-xs"
+        >
+          <span
+            class="font-bold"
+          >
+            Agent compensation: 
+          </span>
+           3% of the sales price
+          <div
+            class="mt-4"
+          >
+            <span
+              class="font-bold"
+            >
+              More information: 
+            </span>
+            <span>
+              <div
+                class="text-xs inline primary-lighter-markup-link translate"
+              >
+                <span>
+                  Register with the Leasing Agent
+                </span>
+              </div>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        class="info-card bg-gray-100 border-0"
+      >
+        <h3
+          class="text-serif-xl"
+        >
+          Resale Price Restrictions
+        </h3>
+        <div
+          class="text-xs"
+        >
+          <div
+            class="text-xs inline primary-lighter-markup-link translate"
+          >
+            <span>
+              A BMR unit will be resold at a restricted price to a household that meets the first‐time homebuyer and income qualifications for the program. Please review the 
+              <a
+                href="http://sf-moh.org/index.aspx?page=295"
+                target="_blank"
+              >
+                Inclusionary Housing Procedures Manual
+              </a>
+               for specific information.
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        class="info-card bg-gray-100 border-0"
+      >
+        <h3
+          class="text-serif-xl"
+        >
+          Housing Program
+        </h3>
+        <a
+          class="text-xs"
+          href="https://www.sf.gov/resource--2022--apply-homebuyer-programs"
+          target="_blank"
+        >
+          Below Market Rate
+        </a>
+      </div>
+      <div
+        class="info-card bg-gray-100 border-0"
+      >
+        <p
+          class="text-xs"
+        >
+          Listing Updated: April 11, 2022
+        </p>
+      </div>
+    </div>
+  </li>
+</DocumentFragment>
+`;
+
+exports[`ListingDetailsAdditionalInformation displays realtor commission text if Realtor_Commission_Amount and Realtor_Commission_Unit are present for a sales listing 1`] = `
+<DocumentFragment>
+  <li
+    class="responsive-content-item "
+  >
+    <header
+      class="detail-header "
+    >
+      <span
+        class="detail-header__image-container"
+      >
+        <img
+          alt=""
+          class="detail-header__image "
+          src="/image-url"
+        />
+      </span>
+      <hgroup
+        class="detail-header__hgroup"
+      >
+        <h2
+          class="detail-header__title"
+        >
+          Additional Information
+        </h2>
+        <span
+          class="detail-header__subtitle"
+        >
+          Required documents and selection criteria
+        </span>
+        <span
+          class="ui-icon ui-medium"
+        >
+          <svg
+            fill="currentColor"
+            viewBox="0 0 32 32"
+          >
+            <path
+              d="M28.267 6.133l-12.267 12.267-12.267-12.267-3.733 3.733 16 16 16-16z"
+            />
+          </svg>
+        </span>
+      </hgroup>
+    </header>
+    <div
+      class="listing-detail-panel"
+    >
+      <div
+        class="info-card bg-gray-100 border-0"
+      >
+        <h3
+          class="text-serif-xl"
+        >
+          Special Notes
+        </h3>
+        <div
+          class="text-xs inline primary-lighter-markup-link translate"
+        >
+          <span>
+            Some other excessively formatted listing notes.
+          </span>
+        </div>
+      </div>
+      <div
+        class="info-card bg-gray-100 border-0"
+      >
+        <h3
+          class="text-serif-xl"
+        >
+          Required Documents
+        </h3>
+        <div
+          class="text-xs"
+        >
+          <div
+            class="text-xs inline primary-lighter-markup-link translate"
+          >
+            <span>
+              Proof of residence
+
+              <br />
+              Bank statements
+
+              <br />
+              Concert tickets
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        class="info-card bg-gray-100 border-0"
+      >
+        <h3
+          class="text-serif-xl"
+        >
+          Important Program Rules
+        </h3>
+        <div
+          class="text-xs"
+        >
+          <div
+            class="text-xs inline primary-lighter-markup-link translate"
+          >
+            <span>
+              Some important program rules with bullets:
+              <br />
+              Rule oneRule two
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        class="info-card bg-gray-100 border-0"
+      >
+        <h3
+          class="text-serif-xl"
+        >
+          Covenants, Conditions and Restrictions (CC&R's)
+        </h3>
+        <div
+          class="text-xs"
+        >
+          <div
+            class="text-xs inline primary-lighter-markup-link translate"
+          >
+            <span>
+              The CC&R's explain the rules of the homeowners' association, and restrict how you can modify the property.
+            </span>
+          </div>
+          <br />
+          <a
+            class="button mt-4"
+            href="http://www.duckduckgo.com"
+            target="_blank"
+          >
+            Download PDF
+          </a>
+        </div>
+      </div>
+      <div
+        class="info-card bg-gray-100 border-0"
+      >
+        <h3
+          class="text-serif-xl"
+        >
+          For the Buyer's Agent
+        </h3>
+        <div
+          class="text-xs"
+        >
+          <span
+            class="font-bold"
+          >
+            Agent compensation: 
+          </span>
+           3% of the sales price
+          <div
+            class="mt-4"
+          >
+            <span
+              class="font-bold"
+            >
+              More information: 
+            </span>
+            <span>
+              <div
+                class="text-xs inline primary-lighter-markup-link translate"
+              >
+                <span>
+                  Register with the Leasing Agent
+                </span>
+              </div>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        class="info-card bg-gray-100 border-0"
+      >
+        <h3
+          class="text-serif-xl"
+        >
           Resale Price Restrictions
         </h3>
         <div
