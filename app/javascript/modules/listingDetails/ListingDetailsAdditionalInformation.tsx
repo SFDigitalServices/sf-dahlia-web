@@ -5,6 +5,7 @@ import { TextTruncate } from "../../components/TextTruncate"
 import { isHabitatListing, isOpen, isSale, isLotterySalesListing } from "../../util/listingUtil"
 import { stripMostTags } from "../../util/filterUtil"
 import { getTranslatedString, localizedFormat } from "../../util/languageUtil"
+import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 
 export interface ListingDetailsAdditionalInformationProps {
   listing: RailsListing
@@ -43,13 +44,26 @@ export const ListingDetailsAdditionalInformation = ({
   listing,
   imageSrc,
 }: ListingDetailsAdditionalInformationProps) => {
-  // const getCommissionString = () => {
-  //   return listing.Realtor_Commission_Unit === "percent"
-  //     ? t("listings.realtorCommissionPercentage", {
-  //         percentage: listing.Realtor_Commission_Amount,
-  //       })
-  //     : `$${listing.Realtor_Commission_Amount.toLocaleString()}`
-  // }
+  const { unleashFlag: translationsReady } = useFeatureFlag(
+    "temp.webapp.listingDetail.realtorSection",
+    false
+  )
+
+  const showCommissionSection = listing.Realtor_Commission_Amount && listing.Realtor_Commission_Unit
+
+  const getCommissionString = () => {
+    return listing.Realtor_Commission_Unit === "percent"
+      ? t("listings.realtorCommissionPercentage", {
+          percentage: listing.Realtor_Commission_Amount,
+        })
+      : `$${listing.Realtor_Commission_Amount.toLocaleString()}`
+  }
+
+  const showAgentCompensationSection =
+    isSale(listing) &&
+    listing.Allows_Realtor_Commission &&
+    translationsReady &&
+    (showCommissionSection || listing.Realtor_Commission_Info)
 
   return (
     <ListingDetailItem
@@ -132,22 +146,19 @@ export const ListingDetailsAdditionalInformation = ({
             </div>
           </div>
         )}
-        {/*  DAH-3242: Realtor section hidden until future configuration */}
-        {/* {isSale(listing) && (
+        {showAgentCompensationSection && (
           <div className="info-card bg-gray-100 border-0">
-            <h3 className="text-serif-xl">{t("listings.realtorCommission")}</h3>
+            <h3 className="text-serif-xl">{t("listings.agentCompensationTitle")}</h3>
             <div className="text-xs">
-              {listing.Allows_Realtor_Commission ? (
+              {showCommissionSection && (
                 <>
-                  <span className={"font-bold"}>{t("listings.realtorCommissionHeader")}</span>
+                  <span className={"font-bold"}>{t("listings.agentCompensationHeader")}</span>
                   {getCommissionString()}
                 </>
-              ) : (
-                t("listings.realtorCommissionNotEligible")
               )}
               {listing.Realtor_Commission_Info && (
                 <div className={"mt-4"}>
-                  <span className={"font-bold"}>{t("listings.realtorCommissionHowTo")}</span>
+                  <span className={"font-bold"}>{t("listings.agentCompensationInfo")}</span>
                   <span>
                     <TextTruncate
                       className="primary-lighter-markup-link translate"
@@ -165,7 +176,7 @@ export const ListingDetailsAdditionalInformation = ({
               )}
             </div>
           </div>
-        )} */}
+        )}
         {listing.Repricing_Mechanism && (
           <div className="info-card bg-gray-100 border-0">
             <h3 className="text-serif-xl">{t("listings.rePricing")}</h3>
