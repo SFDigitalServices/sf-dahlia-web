@@ -1,0 +1,94 @@
+.listing-apply-intro {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  gap: var(--seeds-s4);
+  max-width: var(--seeds-screen-md);
+  padding: var(--seeds-s12);
+  margin: 0 auto;
+  width: 100%;
+  @media (max-width: theme("screens.sm")) {
+    gap: 0;
+    padding: 0;
+  }
+  .listing-apply-intro-title {
+    @media (max-width: theme("screens.sm")) {
+      font-size: var(--seeds-font-size-xl);
+      padding: var(--seeds-s4);
+    }
+  }
+  .listing-apply-intro-image {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    max-width: 100%;
+    text-align: left;
+    margin-bottom: calc(-1 * var(--seeds-s4));
+    img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 100%;
+      background: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.8) 100%);
+      @media (max-width: theme("screens.sm")) {
+        display: none;
+      }
+    }
+
+    @media (max-width: theme("screens.sm")) {
+      margin-bottom: 0;
+    }
+    .listing-apply-intro-image-text {
+      position: absolute;
+      left: var(--seeds-s3);
+      bottom: 0;
+      color: var(--seeds-color-white);
+      z-index: 1;
+      @media (max-width: theme("screens.sm")) {
+        position: relative;
+        left: 0;
+        text-align: center;
+        color: var(--seeds-color-black);
+      }
+    }
+    .listing-apply-intro-address {
+      font-size: var(--seeds-font-size-sm);
+      padding-bottom: var(--seeds-s4);
+    }
+    .listing-apply-intro-name {
+      font-size: var(--seeds-font-size-3xl);
+    }
+  }
+  .listing-apply-intro-message {
+    text-align: left;
+    margin-bottom: var(--seeds-s4);
+  }
+  .listing-apply-intro-buttons {
+    display: flex;
+    justify-content: center;
+    gap: var(--seeds-s1);
+    padding-bottom: var(--seeds-s4);
+    @media (max-width: theme("screens.sm")) {
+      flex-direction: column;
+      gap: var(--seeds-s4);
+      padding: var(--seeds-s4);
+      margin-bottom: var(--seeds-s4);
+    }
+  }
+  .listing-apply-intro-footer {
+    display: flex;
+    flex-direction: column;
+    gap: var(--seeds-s4);
+    align-items: center;
+    @media (max-width: theme("screens.sm")) {
+      padding: var(--seeds-s4);
+    }
+  }
+}
