@@ -230,24 +230,20 @@ exports[`Listing Interest Page renders listing interest page with error response
           class="bg-gray-300"
         >
           <div
-            class="md:mb-20 md:mt-12 mx-auto max-w-lg print:my-0 print:max-w-full"
+            class="mt-4 bg-white rounded-lg border border-solid"
           >
             <div
-              class="mt-4 bg-white rounded-lg border border-solid"
+              class="pt-8 pb-8 text-center border-b border-solid"
             >
               <div
-                class="pt-8 pb-8 text-center border-b border-solid"
+                class="text-2xl"
               >
-                <div
-                  class="text-2xl"
-                >
-                  ERROR
-                </div>
-                <div
-                  class="mt-4 text-sm"
-                >
-                  INVALID REQUEST
-                </div>
+                ERROR
+              </div>
+              <div
+                class="mt-4 text-sm"
+              >
+                INVALID REQUEST
               </div>
             </div>
           </div>
@@ -610,96 +606,92 @@ exports[`Listing Interest Page renders listing interest page with expired respon
         <section
           class="bg-gray-300"
         >
-          <div
-            class="md:mb-20 md:mt-12 mx-auto max-w-lg print:my-0 print:max-w-full"
+          <article
+            class="form-card "
           >
-            <article
-              class="form-card "
-            >
-              <div
-                class="form-card__header"
-              >
-                <header
-                  class="form-card__header_group form-card__header_title"
-                >
-                  <h1
-                    class=""
-                  >
-                    TEST 1300 22nd (Knox)
-                  </h1>
-                </header>
-                <div
-                  class="form-card__header_nav"
-                >
-                  <a
-                    href="/listings/a0W0P00000DZYzVUAX"
-                    target="_blank"
-                  >
-                    Go to building details
-                  </a>
-                </div>
-              </div>
-            </article>
             <div
-              class="mt-4 bg-white rounded-lg border border-solid"
+              class="form-card__header"
+            >
+              <header
+                class="form-card__header_group form-card__header_title"
+              >
+                <h1
+                  class=""
+                >
+                  TEST 1300 22nd (Knox)
+                </h1>
+              </header>
+              <div
+                class="form-card__header_nav"
+              >
+                <a
+                  href="/listings/a0W0P00000DZYzVUAX"
+                  target="_blank"
+                >
+                  Go to building details
+                </a>
+              </div>
+            </div>
+          </article>
+          <div
+            class="mt-4 bg-white rounded-lg border border-solid"
+          >
+            <div
+              class="pt-8 pb-8 text-center border-b border-solid"
             >
               <div
-                class="pt-8 pb-8 text-center border-b border-solid"
+                class="text-2xl"
               >
-                <div
-                  class="text-2xl"
-                >
-                  The deadline to respond has already passed
-                </div>
-                <div
-                  class="mt-4 text-sm"
-                >
-                  Your answer was not submitted
-                </div>
+                The deadline to respond has already passed
               </div>
               <div
-                class="p-8 bg-blue-100"
+                class="mt-4 text-sm"
               >
-                <p>
-                  If you are still interested in an apartment at 
-                  <a
-                    href="/listings/a0W0P00000DZYzVUAX"
-                    target="_self"
-                  >
-                    TEST 1300 22nd (Knox)
-                  </a>
-                  <span
-                    class="text-neutral-600"
-                  >
-                    , contact: 
-                  </span>
-                </p>
-                <ul
-                  class="mt-6"
-                >
-                  <li>
-                    <span
-                      class="text-lg leading-6"
-                    >
-                      Test Test
-                    </span>
-                  </li>
-                  <li>
-                    <a
-                      href="tel:+1XXXXXXXXXX"
-                    >
-                      (XXX) XXX-XXXX
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="mailto:test@test.com"
-                    >
-                      test@test.com
-                    </a>
-                  </li>
-                </ul>
+                Your answer was not submitted
               </div>
+            </div>
+            <div
+              class="p-8 bg-blue-100"
+            >
+              <p>
+                If you are still interested in an apartment at 
+                <a
+                  href="/listings/a0W0P00000DZYzVUAX"
+                  target="_self"
+                >
+                  TEST 1300 22nd (Knox)
+                </a>
+                <span
+                  class="text-neutral-600"
+                >
+                  , contact: 
+                </span>
+              </p>
+              <ul
+                class="mt-6"
+              >
+                <li>
+                  <span
+                    class="text-lg leading-6"
+                  >
+                    Test Test
+                  </span>
+                </li>
+                <li>
+                  <a
+                    href="tel:+1XXXXXXXXXX"
+                  >
+                    (XXX) XXX-XXXX
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="mailto:test@test.com"
+                  >
+                    test@test.com
+                  </a>
+                </li>
+              </ul>
             </div>
           </div>
         </section>
@@ -1061,57 +1053,53 @@ exports[`Listing Interest Page renders listing interest page with no response 1`
         <section
           class="bg-gray-300"
         >
-          <div
-            class="md:mb-20 md:mt-12 mx-auto max-w-lg print:my-0 print:max-w-full"
+          <article
+            class="form-card "
           >
-            <article
-              class="form-card "
-            >
-              <div
-                class="form-card__header"
-              >
-                <header
-                  class="form-card__header_group form-card__header_title"
-                >
-                  <h1
-                    class=""
-                  >
-                    TEST 1300 22nd (Knox)
-                  </h1>
-                </header>
-                <div
-                  class="form-card__header_nav"
-                >
-                  <a
-                    href="/listings/a0W0P00000DZYzVUAX"
-                    target="_blank"
-                  >
-                    Go to building details
-                  </a>
-                </div>
-              </div>
-            </article>
             <div
-              class="mt-4 bg-white rounded-lg border border-solid"
+              class="form-card__header"
+            >
+              <header
+                class="form-card__header_group form-card__header_title"
+              >
+                <h1
+                  class=""
+                >
+                  TEST 1300 22nd (Knox)
+                </h1>
+              </header>
+              <div
+                class="form-card__header_nav"
+              >
+                <a
+                  href="/listings/a0W0P00000DZYzVUAX"
+                  target="_blank"
+                >
+                  Go to building details
+                </a>
+              </div>
+            </div>
+          </article>
+          <div
+            class="mt-4 bg-white rounded-lg border border-solid"
+          >
+            <div
+              class="pt-8 pb-8 text-center border-b border-solid"
             >
               <div
-                class="pt-8 pb-8 text-center border-b border-solid"
+                class="text-2xl"
               >
-                <div
-                  class="text-2xl"
+                Thank you for your response
+              </div>
+              <div
+                class="mt-4 text-sm"
+              >
+                You answered: 
+                <span
+                  class="font-bold"
                 >
-                  Thank you for your response
-                </div>
-                <div
-                  class="mt-4 text-sm"
-                >
-                  You answered: 
-                  <span
-                    class="font-bold"
-                  >
-                    No, withdraw my application
-                  </span>
-                </div>
+                  No, withdraw my application
+                </span>
               </div>
             </div>
           </div>
@@ -1474,86 +1462,82 @@ exports[`Listing Interest Page renders listing interest page with yes response 1
         <section
           class="bg-gray-300"
         >
-          <div
-            class="md:mb-20 md:mt-12 mx-auto max-w-lg print:my-0 print:max-w-full"
+          <article
+            class="form-card "
           >
-            <article
-              class="form-card "
-            >
-              <div
-                class="form-card__header"
-              >
-                <header
-                  class="form-card__header_group form-card__header_title"
-                >
-                  <h1
-                    class=""
-                  >
-                    TEST 1300 22nd (Knox)
-                  </h1>
-                </header>
-                <div
-                  class="form-card__header_nav"
-                >
-                  <a
-                    href="/listings/a0W0P00000DZYzVUAX"
-                    target="_blank"
-                  >
-                    Go to building details
-                  </a>
-                </div>
-              </div>
-            </article>
             <div
-              class="mt-4 bg-white rounded-lg border border-solid"
+              class="form-card__header"
+            >
+              <header
+                class="form-card__header_group form-card__header_title"
+              >
+                <h1
+                  class=""
+                >
+                  TEST 1300 22nd (Knox)
+                </h1>
+              </header>
+              <div
+                class="form-card__header_nav"
+              >
+                <a
+                  href="/listings/a0W0P00000DZYzVUAX"
+                  target="_blank"
+                >
+                  Go to building details
+                </a>
+              </div>
+            </div>
+          </article>
+          <div
+            class="mt-4 bg-white rounded-lg border border-solid"
+          >
+            <div
+              class="pt-8 pb-8 text-center border-b border-solid"
             >
               <div
-                class="pt-8 pb-8 text-center border-b border-solid"
+                class="text-2xl"
               >
-                <div
-                  class="text-2xl"
-                >
-                  Thank you for your response
-                </div>
-                <div
-                  class="mt-4 text-sm"
-                >
-                  You answered: 
-                  <span
-                    class="font-bold"
-                  >
-                    Yes, I'm still interested
-                  </span>
-                </div>
+                Thank you for your response
               </div>
               <div
-                class="p-8 bg-blue-100"
+                class="mt-4 text-sm"
               >
+                You answered: 
                 <span
                   class="font-bold"
                 >
-                  What to expect
+                  Yes, I'm still interested
                 </span>
-                <ul
-                  class="p-4 space-y-4 list-disc"
-                >
-                  <li>
-                    The leasing agent will contact you when it's your turn to move forward with your application.
-                  </li>
-                  <li>
-                    We will send you an email to let you know once all units get leased.
-                  </li>
-                  <li>
-                    We will contact you again if more units become available in the next 12 months.
-                  </li>
-                </ul>
-                <a
-                  href="https://www.sf.gov/after-rental-housing-lottery"
-                  target="_blank"
-                >
-                  Learn more about what happens after the housing lottery.
-                </a>
               </div>
+            </div>
+            <div
+              class="p-8 bg-blue-100"
+            >
+              <span
+                class="font-bold"
+              >
+                What to expect
+              </span>
+              <ul
+                class="p-4 space-y-4 list-disc"
+              >
+                <li>
+                  The leasing agent will contact you when it's your turn to move forward with your application.
+                </li>
+                <li>
+                  We will send you an email to let you know once all units get leased.
+                </li>
+                <li>
+                  We will contact you again if more units become available in the next 12 months.
+                </li>
+              </ul>
+              <a
+                href="https://www.sf.gov/after-rental-housing-lottery"
+                target="_blank"
+              >
+                Learn more about what happens after the housing lottery.
+              </a>
             </div>
           </div>
         </section>
