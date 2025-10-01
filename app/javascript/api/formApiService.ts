@@ -1,38 +1,56 @@
 import { AxiosResponse } from "axios"
 import { post } from "./apiService"
 import { getCurrentLanguage } from "../util/languageUtil"
-import { whitelistFields, type applicationData } from "../util/formEngineUtil"
-
-const formatApplication = (formData: Record<string, unknown>): applicationData => {
-  const application: Partial<applicationData> = formData
-  return application
-}
+import { type applicationDataFields } from "../util/formEngineUtil"
 
 export const submitForm = async (
-  formData: Record<string, unknown>
+  formData: Record<string, unknown>,
+  listingId: string
 ): Promise<Record<string, unknown>> => {
-  formData.status = "submitted"
-  formData.session_uid = sessionStorage.getItem("session_uid")
-  formData.externalSessionId = sessionStorage.getItem("session_uid")
-  const formattedApplication = formatApplication(formData)
-
-  const date = new Date()
-  const yyyy = date.getFullYear()
-  const mm = String(date.getMonth() + 1).padStart(2, "0")
-  const dd = String(date.getDate()).padStart(2, "0")
-  const formattedDate = `${yyyy}-${mm}-${dd}`
-  formData.applicationSubmittedDate = formattedDate
-
+  const applicationData: applicationDataFields = {
+    listingID: listingId,
+    applicationLanguage: getCurrentLanguage(),
+    status: "submitted",
+    primaryApplicant: {
+      firstName: formData.primaryApplicantFirstName as string,
+      middleName: formData.primaryApplicantMiddleName as string,
+      lastName: formData.primaryApplicantLastName as string,
+      dob: (formData.primaryApplicantDob as string) || "1990-01-01", // TODO: remove after DAH-3543
+      // email: formData.primaryApplicantEmail as string,
+      // phone: formData.primaryApplicantPhone as string,
+      // additionalPhone: formData.primaryApplicantAdditionalPhone as string,
+      // address: formData.primaryApplicantAddress as string,
+      // hasAltMailingAddress: formData.primaryApplicantMailingAddress as string,
+      // workInSf: formData.primaryApplicantWorkInSf as string,
+    },
+    // alternateContact: {
+    //   firstName: formData.alternateContactFirstName as string,
+    //   lastName: formData.alternateContactLastName as string,
+    //   email: formData.alternateContactEmail as string,
+    //   phone: formData.alternateContactPhone as string,
+    //   mailingAddress: formData.alternateContactAddress as string,
+    //   alternateContactType: formData.alternateContactType as string,
+    // },
+    householdMembers: [],
+    annualIncome: formData.householdIncome as string,
+  }
+  console.log("Test log of application data:", applicationData)
   return post<Record<string, unknown>>("/api/v1/short-form/application", {
-    application: formattedApplication,
+    application: applicationData,
     autosave: false,
     initialSave: true,
     locale: getCurrentLanguage(),
+    // TODO: required field for uploaded file
     uploaded_file: {
-      session_uid: formData.session_uid,
+      file: "todo.png",
     },
-  }).then(({ data }: AxiosResponse<Record<string, unknown>>) => {
-    console.log("Submitted short form application.", data)
-    return data
   })
+    .then(({ data }: AxiosResponse<Record<string, unknown>>) => {
+      console.log("Submission response:", data)
+      return data
+    })
+    .catch((error) => {
+      console.error("Submission failed:", error)
+      throw error
+    })
 }

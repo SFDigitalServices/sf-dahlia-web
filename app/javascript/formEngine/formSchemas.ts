@@ -79,10 +79,8 @@ const getNestedValuesByKey = (keyName: string, object: unknown, values: unknown[
 // [{ firstName: 'applicantFirstName' }, { middleName: 'applicantMiddleName' }, { lastName: 'applicantLastName' }] ->
 //   ['applicantFirstName', 'applicantMiddleName', 'applicantLastName']
 export const getFieldNames = (schema: unknown): string[] => {
-  const fieldNameGroups = getNestedValuesByKey("fieldNames", schema, [])
-  return Object.values(Object.assign({}, ...fieldNameGroups) as Record<string, unknown>).filter(
-    (name) => typeof name === "string"
-  )
+  const fieldNameGroups = getNestedValuesByKey("fieldNames", schema, []) as Record<string, string>[]
+  return fieldNameGroups.flatMap((group) => Object.values(group))
 }
 
 const getSectionNames = (schema: unknown): string[] => {

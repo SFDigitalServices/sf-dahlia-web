@@ -7,11 +7,11 @@ import { submitForm } from "../../../api/formApiService"
 
 const ListingApplyTerms = () => {
   const formEngineContext = useFormEngineContext()
-  const { handlePrevStep, formData } = formEngineContext
+  const { handlePrevStep, formData, listing } = formEngineContext
   const handleSubmit = () => {
-    submitForm(formData)
+    submitForm(formData, listing.listingID)
       .then(() => {
-        console.log("Submitted short form application.")
+        window.alert("Submitted short form application.")
       })
       .catch((error) => {
         console.error("Error submitting application:", error)
