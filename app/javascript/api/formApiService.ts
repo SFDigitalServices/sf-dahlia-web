@@ -7,6 +7,14 @@ export const submitForm = async (
   formData: Record<string, unknown>,
   listingId: string
 ): Promise<Record<string, unknown>> => {
+  // Veterans preference
+  const isVeteran = (householdName: string): boolean => {
+    return formData.veteranAnswer === "No" ? false : formData.veteranMember === householdName
+  }
+
+  const isNonPrimaryMemberVeteran =
+    formData.veteranAnswer === "Yes" && isVeteran("primaryApplicant") ? "false" : "true"
+
   const applicationData: applicationDataFields = {
     listingID: listingId,
     applicationLanguage: getCurrentLanguage(),
@@ -22,6 +30,7 @@ export const submitForm = async (
       // address: formData.primaryApplicantAddress as string,
       // hasAltMailingAddress: formData.primaryApplicantMailingAddress as string,
       // workInSf: formData.primaryApplicantWorkInSf as string,
+      // isVeteran: isVeteran("primaryApplicant") as string
     },
     // alternateContact: {
     //   firstName: formData.alternateContactFirstName as string,
@@ -33,6 +42,8 @@ export const submitForm = async (
     // },
     householdMembers: [],
     annualIncome: formData.householdIncome as string,
+    applicationSubmittedDate: new Date().toISOString().split("T")[0],
+    // isNonPrimaryMemberVeteran: isNonPrimaryMemberVeteran,
   }
   console.log("Test log of application data:", applicationData)
   return post<Record<string, unknown>>("/api/v1/short-form/application", {
