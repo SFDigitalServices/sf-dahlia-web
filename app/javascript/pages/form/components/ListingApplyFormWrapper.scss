@@ -2,6 +2,7 @@
   margin-block: var(--seeds-s6);
   @media (max-width: theme("screens.sm")) {
     margin-block: 0;
+    border-radius: 0;
   }
 
   .application-form-header-heading {
