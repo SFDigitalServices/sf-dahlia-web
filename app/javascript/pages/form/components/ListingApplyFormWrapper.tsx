@@ -18,7 +18,7 @@ const ListingApplyFormWrapper = ({ children }: ListingApplyFormWrapperProps) => 
   const showLayout = !currentStepInfo.hideLayout
 
   return (
-    <section className="bg-gray-300">
+    <section className="md:bg-gray-300">
       {showLayout ? (
         <div className="md:mb-20 md:mt-12 mx-auto max-w-lg print:my-0 print:max-w-full">
           <Card className="application-form-header">
