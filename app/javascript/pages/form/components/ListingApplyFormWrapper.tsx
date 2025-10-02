@@ -1,7 +1,6 @@
 import React from "react"
-import { t } from "@bloom-housing/ui-components"
+import { ProgressNav, t } from "@bloom-housing/ui-components"
 import { Card, Heading } from "@bloom-housing/ui-seeds"
-// import { CardSection } from "@bloom-housing/ui-seeds/src/blocks/Card"
 import { useFormEngineContext } from "../../../formEngine/formEngineContext"
 import "./ListingApplyFormWrapper.scss"
 
@@ -15,6 +14,7 @@ const ListingApplyFormWrapper = ({ children }: ListingApplyFormWrapperProps) => 
   const { listing, currentStepIndex, stepInfoMap, sectionNames } = formEngineContext
   const currentStepChild = children[currentStepIndex]
   const currentStepInfo = stepInfoMap[currentStepIndex]
+  const currentSectionIndex = sectionNames.indexOf(currentStepInfo.sectionName)
   const showLayout = !currentStepInfo.hideLayout
 
   return (
@@ -28,13 +28,15 @@ const ListingApplyFormWrapper = ({ children }: ListingApplyFormWrapperProps) => 
                   {t("pageTitle.listingApplication", { listing: listing.Name })}
                 </Heading>
               </Card.Section>
-              <Card.Section>
-                <p>currentSection: {currentStepInfo.sectionName}</p>
-                <p>sections: {JSON.stringify(sectionNames)}</p>
+              <Card.Section className="application-form-nav">
+                <ProgressNav
+                  labels={sectionNames}
+                  currentPageSection={currentSectionIndex + 1}
+                  completedSections={currentSectionIndex}
+                  mounted={true}
+                  removeSrHeader
+                />
               </Card.Section>
-            </Card>
-            <Card>
-              <Heading>debug current step slug: {JSON.stringify(currentStepInfo.slug)}</Heading>
             </Card>
             <Card>{currentStepChild}</Card>
           </>
