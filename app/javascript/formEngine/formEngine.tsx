@@ -50,7 +50,7 @@ const FormEngine = ({ listing, schema }: FormEngineProps) => {
       fieldNames: getFieldNames(child),
     }))
     const totalSteps = parsedSchema.children.length
-    // console.log(stepInfoMap)
+
     handleNextStep = () => {
       const newStepIndex = calculateNextStep(currentStepIndex, stepInfoMap, dataSources)
       if (newStepIndex < totalSteps) setCurrentStepIndex(newStepIndex)
