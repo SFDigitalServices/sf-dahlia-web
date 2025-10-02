@@ -56,7 +56,6 @@ const FormEngine = ({ listing, schema }: FormEngineProps) => {
     const totalSteps = parsedSchema.children.length
 
     handleNextStep = () => {
-      console.log(formEngineNav)
       const newStepIndex = formEngineNav
         ? calculateNextStep(currentStepIndex, stepInfoMap, dataSources)
         : currentStepIndex + 1

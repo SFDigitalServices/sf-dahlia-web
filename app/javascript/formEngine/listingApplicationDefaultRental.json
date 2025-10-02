@@ -47,7 +47,9 @@
           "props": {
             "label": "label.yourDob",
             "fieldNames": {
-              "dateOfBirth": "primaryApplicantDob"
+              "birthMonth": "primaryApplicantBirthMonth",
+              "birthDay": "primaryApplicantBirthDate",
+              "birthYear": "primaryApplicantBirthYear"
             }
           }
         },
