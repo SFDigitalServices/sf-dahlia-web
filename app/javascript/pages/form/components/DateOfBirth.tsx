@@ -1,9 +1,16 @@
 import React from "react"
 import { t, Field } from "@bloom-housing/ui-components"
+import { useFormEngineContext } from "../../../formEngine/formEngineContext"
 import { useFormStepContext } from "../../../formEngine/formStepContext"
+import {
+  validDayRange,
+  validMonthRange,
+  validYearRange,
+  parseDate,
+} from "../../../util/formEngineUtil"
 import dayjs from "dayjs"
-import customParseFormat from "dayjs/plugin/customParseFormat"
 import "./DateOfBirth.scss"
+
 interface DateOfBirthProps {
   label: string
   fieldNames: {
@@ -11,42 +18,53 @@ interface DateOfBirthProps {
     birthDay: string
     birthYear: string
   }
+  minimumAge?: number
 }
 
 const DateOfBirth = ({
   label,
   fieldNames: { birthMonth, birthDay, birthYear },
+  minimumAge,
 }: DateOfBirthProps) => {
   const { register, errors, watch, trigger } = useFormStepContext()
+  const {
+    dataSources: { seniorBuildingAgeRequirement },
+  } = useFormEngineContext()
+
   const hasError = !!errors?.[birthMonth] || !!errors?.[birthDay] || !!errors?.[birthYear]
   const birthDayValue = watch(birthDay)
   const birthMonthValue = watch(birthMonth)
   const birthYearValue = watch(birthYear)
-  const currentYear = dayjs().year()
-
-  // TODO: validate min age for 18 years, ~60 years, -10 months
 
   // handle leap years and months with less than 31 days
   const validDate = () => {
     if (!birthDayValue || !birthMonthValue || !birthYearValue) return true
-    dayjs.extend(customParseFormat)
-    return dayjs(
-      `${birthYearValue}-${birthMonthValue.padStart(2, "0")}-${birthDayValue.padStart(2, "0")}`,
-      "YYYY-MM-DD",
-      true
-    ).isValid()
+    return parseDate(birthYearValue, birthMonthValue, birthDayValue).isValid()
   }
 
-  const triggerDayValidation = async () => {
+  const validAge = () => {
+    const birthDate = parseDate(birthYearValue, birthMonthValue, birthDayValue)
+    if (seniorBuildingAgeRequirement?.entireHousehold) {
+      return dayjs().diff(birthDate, "year") >= seniorBuildingAgeRequirement.minimumAge
+    }
+    if (minimumAge) {
+      return dayjs().diff(birthDate, "year") >= minimumAge
+    }
+    // "unborn baby" rule
+    return dayjs().diff(birthDate, "month") > -10
+  }
+
+  const triggerValidation = async () => {
     !!birthDayValue && (await trigger(birthDay))
+    !!birthYearValue && (await trigger(birthYear))
   }
 
-  const labelClasses = ["field-group--title"]
+  const labelClasses = ["field-group-title"]
   if (hasError) labelClasses.push("text-alert")
 
   return (
     <>
-      <fieldset className="field-group--date">
+      <fieldset className="field-group-date">
         <legend className={labelClasses.join(" ")}>{t(label)}</legend>
         <Field
           label={t("label.dobMonth")}
@@ -57,12 +75,11 @@ const DateOfBirth = ({
           validation={{
             required: true,
             validate: {
-              monthRange: (value: string) =>
-                Number.parseInt(value, 10) > 0 && Number.parseInt(value, 10) <= 12,
+              validMonthRange,
             },
           }}
           // eslint-disable-next-line @typescript-eslint/no-misused-promises
-          onChange={triggerDayValidation}
+          onChange={triggerValidation}
         />
         <Field
           label={t("label.dobDay")}
@@ -73,11 +90,12 @@ const DateOfBirth = ({
           validation={{
             required: true,
             validate: {
-              dayRange: (value: string) =>
-                Number.parseInt(value, 10) > 0 && Number.parseInt(value, 10) <= 31,
-              dayValidity: validDate,
+              validDayRange,
+              validDate,
             },
           }}
+          // eslint-disable-next-line @typescript-eslint/no-misused-promises
+          onChange={triggerValidation}
         />
         <Field
           label={t("label.dobYear")}
@@ -88,12 +106,12 @@ const DateOfBirth = ({
           validation={{
             required: true,
             validate: {
-              yearRange: (value: string) =>
-                Number.parseInt(value, 10) > 1900 && Number.parseInt(value, 10) <= currentYear,
+              validYearRange,
+              validAge,
             },
           }}
           // eslint-disable-next-line @typescript-eslint/no-misused-promises
-          onChange={triggerDayValidation}
+          onChange={triggerValidation}
         />
       </fieldset>
       {hasError && (

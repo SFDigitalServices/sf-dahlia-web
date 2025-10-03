@@ -46,6 +46,7 @@
           "componentName": "DateOfBirth",
           "props": {
             "label": "label.yourDob",
+            "minimumAge": 18,
             "fieldNames": {
               "birthMonth": "primaryApplicantBirthMonth",
               "birthDay": "primaryApplicantBirthDate",

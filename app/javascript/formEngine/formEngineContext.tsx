@@ -6,6 +6,7 @@ export interface DataSources {
   listing: RailsListing
   form: Record<string, unknown>
   preferences: Record<string, string>
+  seniorBuildingAgeRequirement?: { entireHousehold: boolean; minimumAge: number }
 }
 
 export interface FormEngineContext {

@@ -1,5 +1,7 @@
 import type { DataSchema, StepInfoSchema } from "../formEngine/formSchemas"
 import type { DataSources } from "../formEngine/formEngineContext"
+import dayjs from "dayjs"
+import customParseFormat from "dayjs/plugin/customParseFormat"
 import { t } from "@bloom-housing/ui-components"
 
 export const translationFromDataSchema = (
@@ -80,4 +82,18 @@ export const calculatePrevStep = (
       if (showStep(operation, conditions, dataSources)) return stepInfoMap.length - 1 - idx
     }
   }
+}
+
+export const validDayRange = (value: string) =>
+  Number.parseInt(value, 10) > 0 && Number.parseInt(value, 10) <= 31
+
+export const validMonthRange = (value: string) =>
+  Number.parseInt(value, 10) > 0 && Number.parseInt(value, 10) <= 12
+
+export const validYearRange = (value: string) =>
+  Number.parseInt(value, 10) > 1900 && Number.parseInt(value, 10) <= dayjs().year() + 1
+
+export const parseDate = (year, month, day) => {
+  dayjs.extend(customParseFormat)
+  return dayjs(`${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`, "YYYY-MM-DD", true)
 }
