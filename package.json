@@ -34,6 +34,7 @@
     "dotenv": "2.0.0",
     "markdown-to-jsx": "7.4.3",
     "mini-css-extract-plugin": "^2.7.6",
+    "mockdate": "3.0.5",
     "postcss": "^8.4.31",
     "postcss-flexbugs-fixes": "^5.0.2",
     "postcss-loader": "^7.3.3",

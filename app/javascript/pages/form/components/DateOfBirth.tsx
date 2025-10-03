@@ -6,9 +6,10 @@ import {
   validDayRange,
   validMonthRange,
   validYearRange,
+  validDate,
+  validAge,
   parseDate,
 } from "../../../util/formEngineUtil"
-import dayjs from "dayjs"
 import "./DateOfBirth.scss"
 
 interface DateOfBirthProps {
@@ -35,24 +36,7 @@ const DateOfBirth = ({
   const birthDayValue = watch(birthDay)
   const birthMonthValue = watch(birthMonth)
   const birthYearValue = watch(birthYear)
-
-  // handle leap years and months with less than 31 days
-  const validDate = () => {
-    if (!birthDayValue || !birthMonthValue || !birthYearValue) return true
-    return parseDate(birthYearValue, birthMonthValue, birthDayValue).isValid()
-  }
-
-  const validAge = () => {
-    const birthDate = parseDate(birthYearValue, birthMonthValue, birthDayValue)
-    if (seniorBuildingAgeRequirement?.entireHousehold) {
-      return dayjs().diff(birthDate, "year") >= seniorBuildingAgeRequirement.minimumAge
-    }
-    if (minimumAge) {
-      return dayjs().diff(birthDate, "year") >= minimumAge
-    }
-    // "unborn baby" rule
-    return dayjs().diff(birthDate, "month") > -10
-  }
+  const birthDate = () => parseDate(birthYearValue, birthMonthValue, birthDayValue)
 
   const triggerValidation = async () => {
     !!birthDayValue && (await trigger(birthDay))
@@ -91,7 +75,7 @@ const DateOfBirth = ({
             required: true,
             validate: {
               validDayRange,
-              validDate,
+              validDate: () => validDate(birthYearValue, birthMonthValue, birthDayValue),
             },
           }}
           // eslint-disable-next-line @typescript-eslint/no-misused-promises
@@ -107,7 +91,7 @@ const DateOfBirth = ({
             required: true,
             validate: {
               validYearRange,
-              validAge,
+              validAge: () => validAge(birthDate(), minimumAge, seniorBuildingAgeRequirement),
             },
           }}
           // eslint-disable-next-line @typescript-eslint/no-misused-promises

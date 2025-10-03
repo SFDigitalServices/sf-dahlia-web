@@ -10,7 +10,7 @@ import {
   generateSectionNames,
 } from "./formSchemas"
 import type { RailsListing } from "../modules/listings/SharedHelpers"
-import { listingPreferences, seniorBuildingAgeRequirement } from "../util/listingUtil"
+import { listingPreferences, getSeniorBuildingAgeRequirement } from "../util/listingUtil"
 import RecursiveRenderer from "./recursiveRenderer"
 import { calculateNextStep, calculatePrevStep } from "../util/formEngineUtil"
 import { useFeatureFlag } from "../hooks/useFeatureFlag"
@@ -40,7 +40,7 @@ const FormEngine = ({ listing, schema }: FormEngineProps) => {
     listing,
     form: formData,
     preferences: listingPreferences(listing),
-    seniorBuildingAgeRequirement: seniorBuildingAgeRequirement(listing),
+    seniorBuildingAgeRequirement: getSeniorBuildingAgeRequirement(listing),
   }
 
   let stepInfoMap: StepInfoSchema[],

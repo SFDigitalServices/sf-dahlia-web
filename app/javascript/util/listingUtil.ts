@@ -728,8 +728,20 @@ export const forceRecacheParam = () => ({
   params: window.location.search.includes("preview=true") ? { force: true } : {},
 })
 
-export const seniorBuildingAgeRequirement = (listing: RailsListing) => {
-  if (!listing.Reserved_community_type?.match(/senior/i)) return null
+export type SeniorBuildingAgeRequirement = {
+  entireHousehold: boolean
+  minimumAge: number
+}
+
+export const getSeniorBuildingAgeRequirement = (
+  listing: RailsListing
+): SeniorBuildingAgeRequirement | null => {
+  if (
+    !listing.Reserved_community_type?.match(/senior/i) ||
+    !listing.Reserved_Community_Requirement ||
+    !listing.Reserved_community_minimum_age
+  )
+    return null
 
   const entireHousehold = !!listing.Reserved_Community_Requirement?.match(/entire household/i)
   const minimumAge = listing.Reserved_community_minimum_age
