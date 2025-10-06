@@ -1,3 +1,4 @@
+import React from "react"
 import { useForm } from "react-hook-form"
 import { render } from "@testing-library/react"
 import DateOfBirth from "../../../../pages/form/components/DateOfBirth"
@@ -15,6 +16,7 @@ const FieldSetWrapper = () => {
   }
   const fieldNameValues = Object.values(fieldNames)
 
+  // eslint-disable-next-line @typescript-eslint/unbound-method
   const { register, watch, trigger, errors } = useForm({
     mode: "onBlur",
     reValidateMode: "onBlur",

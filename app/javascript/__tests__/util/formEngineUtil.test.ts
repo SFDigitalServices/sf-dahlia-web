@@ -205,6 +205,9 @@ describe("formEngineUtil", () => {
   })
 
   describe("validDate", () => {
+    it("returns true if an paramter is blank", () => {
+      expect(validDate("2000", "", "29")).toBe(true)
+    })
     it("returns true for a valid date", () => {
       expect(validDate("2000", "2", "29")).toBe(true)
     })
@@ -218,16 +221,16 @@ describe("formEngineUtil", () => {
     it("returns true for birth dates greater than minimum age", () => {
       const birthDate = dayjs("2000-01-01")
       const minimumAge = 18
-      expect(validAge(birthDate, minimumAge, null)).toBe(true)
+      expect(validAge(birthDate, minimumAge, undefined)).toBe(true)
     })
     it("returns false for birth dates less than minimum age", () => {
       const birthDate = dayjs("2010-01-01")
       const minimumAge = 18
-      expect(validAge(birthDate, minimumAge, null)).toBe(false)
+      expect(validAge(birthDate, minimumAge, undefined)).toBe(false)
     })
     it("returns true for birth dates that are less than 10 months in the futue", () => {
       const birthDate = dayjs("2020-09-01")
-      expect(validAge(birthDate, null, null)).toBe(true)
+      expect(validAge(birthDate, null, undefined)).toBe(true)
     })
     it("overrides minimum age with senior building age requirements", () => {
       const birthDate = dayjs("2000-01-01")

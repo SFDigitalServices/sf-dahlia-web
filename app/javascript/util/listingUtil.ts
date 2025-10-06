@@ -735,13 +735,13 @@ export type SeniorBuildingAgeRequirement = {
 
 export const getSeniorBuildingAgeRequirement = (
   listing: RailsListing
-): SeniorBuildingAgeRequirement | null => {
+): SeniorBuildingAgeRequirement | undefined => {
   if (
     !listing.Reserved_community_type?.match(/senior/i) ||
     !listing.Reserved_Community_Requirement ||
     !listing.Reserved_community_minimum_age
   )
-    return null
+    return undefined
 
   const entireHousehold = !!listing.Reserved_Community_Requirement?.match(/entire household/i)
   const minimumAge = listing.Reserved_community_minimum_age

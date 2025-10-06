@@ -112,7 +112,7 @@ export const validDate = (
 export const validAge = (
   birthDate: Dayjs,
   minimumAge: number | null,
-  seniorBuildingAgeRequirement: SeniorBuildingAgeRequirement | null
+  seniorBuildingAgeRequirement?: SeniorBuildingAgeRequirement
 ): boolean => {
   if (seniorBuildingAgeRequirement?.entireHousehold) {
     return dayjs().diff(birthDate, "year") >= seniorBuildingAgeRequirement.minimumAge

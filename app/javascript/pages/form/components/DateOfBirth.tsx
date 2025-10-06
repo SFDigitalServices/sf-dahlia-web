@@ -33,9 +33,9 @@ const DateOfBirth = ({
   } = useFormEngineContext()
 
   const hasError = !!errors?.[birthMonth] || !!errors?.[birthDay] || !!errors?.[birthYear]
-  const birthDayValue = watch(birthDay)
-  const birthMonthValue = watch(birthMonth)
-  const birthYearValue = watch(birthYear)
+  const birthDayValue: string = watch(birthDay)
+  const birthMonthValue: string = watch(birthMonth)
+  const birthYearValue: string = watch(birthYear)
   const birthDate = () => parseDate(birthYearValue, birthMonthValue, birthDayValue)
 
   const triggerValidation = async () => {
