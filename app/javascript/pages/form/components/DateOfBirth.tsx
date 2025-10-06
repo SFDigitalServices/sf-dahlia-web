@@ -14,6 +14,7 @@ import "./DateOfBirth.scss"
 
 interface DateOfBirthProps {
   label: string
+  ageErrorMessage: string
   fieldNames: {
     birthMonth: string
     birthDay: string
@@ -24,6 +25,7 @@ interface DateOfBirthProps {
 
 const DateOfBirth = ({
   label,
+  ageErrorMessage,
   fieldNames: { birthMonth, birthDay, birthYear },
   minimumAge,
 }: DateOfBirthProps) => {
@@ -32,7 +34,9 @@ const DateOfBirth = ({
     dataSources: { seniorBuildingAgeRequirement },
   } = useFormEngineContext()
 
+  const VALID_AGE = "validAge"
   const hasError = !!errors?.[birthMonth] || !!errors?.[birthDay] || !!errors?.[birthYear]
+  const ageError = errors?.[birthYear]?.type === VALID_AGE
   const birthDayValue: string = watch(birthDay)
   const birthMonthValue: string = watch(birthMonth)
   const birthYearValue: string = watch(birthYear)
@@ -91,16 +95,21 @@ const DateOfBirth = ({
             required: true,
             validate: {
               validYearRange,
-              validAge: () => validAge(birthDate(), minimumAge, seniorBuildingAgeRequirement),
+              [VALID_AGE]: () => validAge(birthDate(), minimumAge, seniorBuildingAgeRequirement),
             },
           }}
           // eslint-disable-next-line @typescript-eslint/no-misused-promises
           onChange={triggerValidation}
         />
       </fieldset>
-      {hasError && (
+      {hasError && !ageError && (
         <div className="field error">
           <span className="error-message">{t("error.dob")}</span>
+        </div>
+      )}
+      {hasError && ageError && (
+        <div className="field error">
+          <span className="error-message">{t(ageErrorMessage)}</span>
         </div>
       )}
     </>

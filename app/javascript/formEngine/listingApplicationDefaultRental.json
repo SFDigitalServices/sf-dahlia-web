@@ -46,6 +46,7 @@
           "componentName": "DateOfBirth",
           "props": {
             "label": "label.yourDob",
+            "ageErrorMessage": "error.dobPrimaryApplicantAge",
             "minimumAge": 18,
             "fieldNames": {
               "birthMonth": "primaryApplicantBirthMonth",

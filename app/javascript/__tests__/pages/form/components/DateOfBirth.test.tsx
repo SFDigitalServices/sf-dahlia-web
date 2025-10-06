@@ -45,7 +45,12 @@ const FieldSetWrapper = () => {
   return (
     <FormEngineProvider value={formEngineContextValue}>
       <FormStepProvider value={formStepContextValue}>
-        <DateOfBirth label={label} fieldNames={fieldNames} minimumAge={minimumAge} />
+        <DateOfBirth
+          label={label}
+          ageErrorMessage="error.dobPrimaryApplicantAge"
+          fieldNames={fieldNames}
+          minimumAge={minimumAge}
+        />
       </FormStepProvider>
     </FormEngineProvider>
   )
