@@ -2,6 +2,7 @@ import { AxiosResponse } from "axios"
 import { post } from "./apiService"
 import { getCurrentLanguage } from "../util/languageUtil"
 import { Application } from "./types/rails/application/RailsApplication"
+import { getPrimaryApplicantData } from "../util/formEngineUtil"
 
 export enum LanguagePrefix {
   English = "English",
@@ -18,12 +19,7 @@ export const submitForm = async (
     listingID: listingId,
     applicationLanguage: LanguagePrefix[getCurrentLanguage()],
     status: "Submitted",
-    primaryApplicant: {
-      firstName: formData.primaryApplicantFirstName as string,
-      middleName: formData.primaryApplicantMiddleName as string,
-      lastName: formData.primaryApplicantLastName as string,
-      dob: (formData.primaryApplicantDob as string) || "1990-01-01", // TODO: update after DAH-3543
-    },
+    primaryApplicant: getPrimaryApplicantData(formData),
     householdMembers: [],
     annualIncome: 0, // TODO: update after DAH-3683
     applicationSubmittedDate: new Date().toISOString().split("T")[0],
