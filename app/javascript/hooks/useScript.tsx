@@ -1,6 +1,6 @@
-/* eslint-disable unicorn/prefer-dom-node-dataset */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
+ 
+ 
+ 
 import { useState, useEffect } from "react"
 
 const useScript = (src, disable) => {

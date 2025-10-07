@@ -84,7 +84,7 @@ export const getAmiCharts = async (
   chartsToFetch: RailsAmiChartMetaData[]
 ): Promise<RailsAmiChart[]> => {
   const queryParams = chartsToFetch.reduce((queryParam, amiChart) => {
-    // eslint-disable-next-line unicorn/prefer-spread
+     
     return queryParam.concat(
       `year[]=${amiChart.year}&percent[]=${amiChart.percent}&chartType[]=${amiChart.type}&`
     )

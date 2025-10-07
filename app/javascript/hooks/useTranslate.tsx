@@ -15,14 +15,14 @@ import { useEffect } from "react"
 import usePollElementRender from "./usePollElementRender"
 import useScript from "./useScript"
 import { getCurrentLanguage } from "../util/languageUtil"
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+ 
 const tWindow = window as any
 const languageMap = {
   zh: "zh-TW",
 }
 
 const initGoogleTranslate = () => {
-  // eslint-disable-next-line no-new
+   
   new tWindow.google.translate.TranslateElement(
     {
       pageLanguage: "en",

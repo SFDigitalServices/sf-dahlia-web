@@ -31,7 +31,7 @@ export const ListingDetailsLotterySearchForm = ({
   lotteryBucketDetails,
   lotteryNumber,
 }: ListingDetailsLotterySearchFormProps) => {
-  // eslint-disable-next-line @typescript-eslint/unbound-method
+   
   const { errors, handleSubmit, register } = useForm({ reValidateMode: "onSubmit" })
   const lotteryNumberField = "lotterySearchNumber"
   const [lotterySearchResult, setLotterySearchResult] = useState<RailsLotteryResult>()
@@ -143,7 +143,7 @@ export const ListingDetailsLotterySearchForm = ({
       <form
         id="search-form"
         className="bg-gray-100 flex mb-4 px-6 py-4"
-        // eslint-disable-next-line @typescript-eslint/no-misused-promises
+         
         onSubmit={handleSubmit(onSubmit)}
       >
         <Field

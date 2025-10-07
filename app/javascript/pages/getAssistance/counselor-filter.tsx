@@ -46,7 +46,7 @@ const CounselorFilter = ({ handleFilterData, clearClick }: CounselorFilterProps)
     { label: t("assistance.housingCounselors.services.languages.vietnamese"), value: "vietnamese" },
   ]
   // TODO(DAH-1575)
-  // eslint-disable-next-line @typescript-eslint/unbound-method
+   
   const { register, handleSubmit, reset } = useForm({
     defaultValues: { language: LANGUAGES_DATA[0].value, services: [] },
   })

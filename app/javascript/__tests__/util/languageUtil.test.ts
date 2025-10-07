@@ -165,12 +165,12 @@ describe("languageUtil", () => {
     // errors are expected for these tests, suppress console
     beforeEach(() => {
       jest.spyOn(console, "error")
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+       
       // @ts-ignore
       console.error.mockImplementation(() => null)
     })
     afterEach(() => {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+       
       // @ts-ignore
       console.error.mockRestore()
     })

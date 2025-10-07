@@ -95,12 +95,12 @@ describe("ErrorSummaryBanner", () => {
     const button = screen.getByText("First name is required")
     fireEvent.click(button)
 
-    // eslint-disable-next-line @typescript-eslint/unbound-method
+     
     expect(errorRef.current.scrollIntoView).toHaveBeenCalledWith({
       behavior: "smooth",
       block: "center",
     })
-    // eslint-disable-next-line @typescript-eslint/unbound-method
+     
     expect(errorRef.current.focus).toHaveBeenCalled()
   })
 
@@ -118,7 +118,7 @@ describe("ErrorSummaryBanner", () => {
       const scrollToError = scrollToErrorOnSubmit(bannerRef)
       scrollToError(errors)
 
-      // eslint-disable-next-line @typescript-eslint/unbound-method
+       
       expect(window.HTMLElement.prototype.scrollIntoView).not.toHaveBeenCalled()
     })
 
@@ -132,7 +132,7 @@ describe("ErrorSummaryBanner", () => {
       const scrollToError = scrollToErrorOnSubmit(bannerRef)
       scrollToError(errors)
 
-      // eslint-disable-next-line @typescript-eslint/unbound-method
+       
       expect(errorRef.current.scrollIntoView).toHaveBeenCalledWith({
         behavior: "smooth",
         block: "center",
@@ -153,7 +153,7 @@ describe("ErrorSummaryBanner", () => {
       const scrollToError = scrollToErrorOnSubmit(bannerRef)
       scrollToError(errors)
 
-      // eslint-disable-next-line @typescript-eslint/unbound-method
+       
       expect(errorRef.current.scrollIntoView).toHaveBeenCalledWith({
         behavior: "smooth",
         block: "center",
@@ -171,7 +171,7 @@ describe("ErrorSummaryBanner", () => {
       const scrollToError = scrollToErrorOnSubmit(bannerRef)
       scrollToError(errors)
 
-      // eslint-disable-next-line @typescript-eslint/unbound-method
+       
       expect(bannerRef.current.scrollIntoView).toHaveBeenCalledWith({
         behavior: "smooth",
         block: "center",

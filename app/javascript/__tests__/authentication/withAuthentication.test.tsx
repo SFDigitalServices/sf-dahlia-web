@@ -1,5 +1,5 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/unbound-method */
+ 
+ 
 import React from "react"
 import { render } from "@testing-library/react"
 import { mockWindowLocation, restoreWindowLocation } from "../__util__/renderUtils"
@@ -170,7 +170,7 @@ describe("withAuthentication", () => {
     })
 
     // Mock window.history.replaceState
-    // eslint-disable-next-line @typescript-eslint/unbound-method
+     
     const originalReplaceState = window.history.replaceState
     window.history.replaceState = jest.fn()
 
@@ -199,7 +199,7 @@ describe("withAuthentication", () => {
     )
 
     // Verify URL params were cleaned up
-    // eslint-disable-next-line @typescript-eslint/unbound-method
+     
     expect(window.history.replaceState).toHaveBeenCalledWith(
       {},
       document.title,

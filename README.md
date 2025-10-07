@@ -79,6 +79,10 @@ More information about getting started can be found on the team confluence.
 
 See [docs/migrating-to-react](docs/migrating-to-react.md) for a step-by-step guide.
 
+## ESLint Setup
+
+For information about ESLint configuration, linting commands, and troubleshooting, see [docs/eslint-setup.md](docs/eslint-setup.md).
+
 ## Running Tests
 
 To run ruby tests:
@@ -190,9 +194,23 @@ Temporary "acceptance" apps are created upon opening a pull request for a featur
 
 ### Code style and quality
 
-#### Javascript
+#### Javascript/TypeScript
 
-Javascript code quality is ensured by two npm packages: JsHint and JSCS. They will run automatically as a pre-commit hooks. Follow the [Airbnb JavaScript Style guide](http://nerds.airbnb.com/our-javascript-style-guide/).
+Javascript and TypeScript code quality is ensured by ESLint v9 with flat config format. ESLint runs automatically as a pre-commit hook via overcommit. The configuration is in `eslint.config.mjs` at the project root.
+
+**Common ESLint commands:**
+- `yarn lint` - Check all JS/TS files for linting errors
+- `yarn lint:fix` - Automatically fix linting errors where possible
+
+**Configuration:**
+- ESLint v9 uses the new flat config format (`eslint.config.mjs`)
+- Supports TypeScript, React, Jest, and Cypress
+- Integrates with Prettier for code formatting
+- See `.kiro/specs/eslint-v9-migration/MIGRATION-SUMMARY.md` for migration details
+
+**Node.js Requirements:**
+- ESLint v9 requires Node.js >= 18.18.0
+- Current project uses Node.js 18.7.0 (upgrade recommended to >= 18.18.0)
 
 #### Ruby
 

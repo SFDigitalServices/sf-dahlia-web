@@ -32,7 +32,7 @@ const ForgotPassword = () => {
   const [emailSubmitted, setEmailSubmitted] = useState(false)
   const [serverError, setServerError] = React.useState<string | null>(null)
 
-  // eslint-disable-next-line @typescript-eslint/unbound-method
+   
   const { register, handleSubmit, errors } = useForm()
   const onSubmit = (data: { email: string }) => {
     forgotPassword(data.email)

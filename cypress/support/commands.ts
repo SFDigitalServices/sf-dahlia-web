@@ -20,7 +20,7 @@ Cypress.Commands.add("signIn", (email: string = "test@test.com") => {
 
 Cypress.Commands.add("addReactQueryParam", () => {
   cy.url().then((url) => {
-    // eslint-disable-next-line unicorn/prefer-includes
+     
     const newUrl = url.indexOf("?") !== -1 ? `${url}&react=true` : `${url}?react=true`
     cy.visit(newUrl)
   })

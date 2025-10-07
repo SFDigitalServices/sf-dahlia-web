@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/unbound-method */
+ 
 import React from "react"
 import { AppearanceStyleType, Button, Form, t } from "@bloom-housing/ui-components"
 import { Card } from "@bloom-housing/ui-seeds"

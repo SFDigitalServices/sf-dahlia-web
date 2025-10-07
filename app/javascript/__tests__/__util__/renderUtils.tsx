@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+ 
 import { act, render, RenderOptions, RenderResult } from "@testing-library/react"
 import React from "react"
 import crypto from "crypto"
@@ -31,7 +31,7 @@ export const renderAndLoadAsync = async (
   options?: Omit<RenderOptions, "queries">
 ): Promise<RenderResult> => {
   let renderResponse: RenderResult = {} as RenderResult
-  // eslint-disable-next-line @typescript-eslint/require-await
+   
   await act(async () => {
     renderResponse = render(ui, options)
   })

@@ -70,7 +70,7 @@ const SignInFormCard = ({
     if (emailSubmitField) {
       emailSubmitField.addEventListener("keypress", function (event: KeyboardEvent) {
         if (event.key === "Enter") {
-          // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+           
           const button = document.querySelector("#sign-in-button") as HTMLElement
           button.click()
         }
@@ -80,7 +80,7 @@ const SignInFormCard = ({
     if (passwordSubmitField) {
       passwordSubmitField.addEventListener("keypress", function (event: KeyboardEvent) {
         if (event.key === "Enter") {
-          // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+           
           const button = document.querySelector("#sign-in-button") as HTMLElement
           button.click()
         }
@@ -92,7 +92,7 @@ const SignInFormCard = ({
   // TODO(DAH-1575): Upgrade React-Hook-Form. Note: When you update to Version 7 of react-hook-form, "errors" becomes: "formState: { errors }""
   // This is causing a linting issue with unbound-method, see open issue as of 10/21/2020:
   // https://github.com/react-hook-form/react-hook-form/issues/2887
-  // eslint-disable-next-line @typescript-eslint/unbound-method
+   
   const { register, handleSubmit, watch } = useForm({ shouldFocusError: false })
   const emailField = watch("email", undefined)
   const alertRef = useRef<HTMLDivElement>(null)

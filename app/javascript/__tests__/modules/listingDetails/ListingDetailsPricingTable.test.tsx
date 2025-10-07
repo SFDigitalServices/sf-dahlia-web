@@ -243,7 +243,7 @@ describe("ListingDetailsPricingTable", () => {
     })
   })
 
-  // eslint-disable-next-line @typescript-eslint/require-await
+   
   it("renders ListingDetailsPricingTable component with spinner before api call", () => {
     const { asFragment } = render(
       <ListingDetailsContext.Provider

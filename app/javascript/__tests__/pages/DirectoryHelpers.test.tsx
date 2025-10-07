@@ -29,9 +29,9 @@ describe("DirectoryHelpers", () => {
       expect(getCurrencyString(100)).toBe("$100")
     })
     it("does not display decimal values if they're empty", () => {
-      // eslint-disable-next-line unicorn/no-zero-fractions
+       
       expect(getCurrencyString(1.0)).toBe("$1")
-      // eslint-disable-next-line unicorn/no-zero-fractions, prettier/prettier
+       
       expect(getCurrencyString(1000.0)).toBe("$1,000")
     })
     it("displays two digits after the decimal if not empty", () => {

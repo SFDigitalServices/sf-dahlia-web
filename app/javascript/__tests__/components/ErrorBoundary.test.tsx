@@ -11,22 +11,22 @@ describe("ErrorBoundary", () => {
   // Suppress console errors for this test because we intentionally throw errors
   beforeEach(() => {
     jest.spyOn(console, "error")
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+     
     // @ts-ignore
     console.error.mockImplementation(() => null)
 
     jest.spyOn(console, "debug")
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+     
     // @ts-ignore
     console.debug.mockImplementation(() => null)
   })
 
   afterEach(() => {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+     
     // @ts-ignore
     console.error.mockRestore()
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+     
     // @ts-ignore
     console.debug.mockRestore()
   })

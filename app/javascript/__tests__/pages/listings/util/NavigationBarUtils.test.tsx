@@ -42,7 +42,6 @@ describe("navBarUtils", () => {
     jest
       .spyOn(window, "requestAnimationFrame")
       .mockImplementation((cb: FrameRequestCallback): number => {
-        // eslint-disable-next-line node/no-callback-literal
         cb(0)
         return 0
       })
@@ -117,11 +116,11 @@ describe("navBarUtils", () => {
         height: 100,
       },
     }
-    // eslint-disable-next-line dot-notation
+     
     navBarUtils.elementHeights["entry_id"] = 100
     const initObserversSpy = jest.spyOn(navBarUtils, "initObservers")
 
-    // eslint-disable-next-line dot-notation, import/namespace
+     
     navBarUtils.handleResize([entry], setActiveItem)
     expect(initObserversSpy).not.toHaveBeenCalled()
   })
@@ -136,11 +135,11 @@ describe("navBarUtils", () => {
         height: 200,
       },
     }
-    // eslint-disable-next-line dot-notation
+     
     navBarUtils.elementHeights["entry_id"] = 100
     const initObserversSpy = jest.spyOn(navBarUtils, "initObservers")
 
-    // eslint-disable-next-line dot-notation, import/namespace
+     
     navBarUtils.handleResize([entry], setActiveItem)
     expect(initObserversSpy).toHaveBeenCalled()
   })

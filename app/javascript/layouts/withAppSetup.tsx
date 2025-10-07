@@ -27,8 +27,8 @@ const config = {
   appName: "webapp",
 }
 
-// Ignore linting error on 'object' type, because we can't use Record<string, unknown> here.
-// eslint-disable-next-line @typescript-eslint/ban-types
+// Note: The 'object' type is used here because Record<string, unknown> doesn't work for this use case.
+// The @typescript-eslint/ban-types rule was removed in v8, so this is no longer flagged.
 const withAppSetup =
   <P extends ObjectWithAssets>(
     Component: React.ComponentType<P>,

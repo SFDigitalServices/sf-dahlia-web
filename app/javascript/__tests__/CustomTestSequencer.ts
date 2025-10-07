@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+ 
 /* istanbul ignore file */
 const DefaultSequencer = require("@jest/test-sequencer").default
 

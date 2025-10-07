@@ -71,8 +71,8 @@ PreCommit:
         "LC_ALL=en_US.UTF-8",
         "yarn",
         "eslint",
-        "--quiet",
-        "--format=compact",
+        "--max-warnings",
+        "0",
       ]
     description: "Linting React with Eslint"
     enabled: true

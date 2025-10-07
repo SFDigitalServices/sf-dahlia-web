@@ -52,7 +52,7 @@ const FormButtons = () => {
 const ResetPassword = (_props: ResetPasswordProps) => {
   const [serverError, setServerError] = React.useState<string | null>(null)
   const { profile, loading: authLoading, initialStateLoaded } = React.useContext(UserContext)
-  // eslint-disable-next-line @typescript-eslint/unbound-method
+   
   const { register, handleSubmit, errors, watch } = useForm()
 
   if (!profile && !authLoading && initialStateLoaded) {
