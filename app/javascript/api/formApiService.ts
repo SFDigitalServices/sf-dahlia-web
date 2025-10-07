@@ -1,16 +1,23 @@
 import { AxiosResponse } from "axios"
 import { post } from "./apiService"
 import { getCurrentLanguage } from "../util/languageUtil"
-import { type applicationDataFields } from "../util/formEngineUtil"
+import { Application } from "./types/rails/application/RailsApplication"
+
+export enum LanguagePrefix {
+  English = "English",
+  Spanish = "Spanish",
+  Chinese = "Chinese",
+  Tagalog = "Tagalog",
+}
 
 export const submitForm = async (
   formData: Record<string, unknown>,
   listingId: string
 ): Promise<Record<string, unknown>> => {
-  const applicationData: applicationDataFields = {
+  const applicationData: Partial<Application> = {
     listingID: listingId,
-    applicationLanguage: getCurrentLanguage(),
-    status: "submitted",
+    applicationLanguage: LanguagePrefix[getCurrentLanguage()],
+    status: "Submitted",
     primaryApplicant: {
       firstName: formData.primaryApplicantFirstName as string,
       middleName: formData.primaryApplicantMiddleName as string,
@@ -18,7 +25,7 @@ export const submitForm = async (
       dob: (formData.primaryApplicantDob as string) || "1990-01-01", // TODO: update after DAH-3543
     },
     householdMembers: [],
-    annualIncome: "0", // TODO: update after DAH-3683
+    annualIncome: 0, // TODO: update after DAH-3683
     applicationSubmittedDate: new Date().toISOString().split("T")[0],
   }
   return post<Record<string, unknown>>("/api/v1/short-form/application", {
