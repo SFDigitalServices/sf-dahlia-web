@@ -11,7 +11,11 @@ export interface FormLayoutProps {
 
 const FormLayout = (props: FormLayoutProps) => (
   <Layout title={props.title} image={props.image} description={props.description}>
-    <section className="bg-gray-300">{props.children}</section>
+    <section className="bg-gray-300">
+      <div className="md:mb-20 md:mt-12 mx-auto max-w-lg print:my-0 print:max-w-full">
+        {props.children}
+      </div>
+    </section>
   </Layout>
 )
 
