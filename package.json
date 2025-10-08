@@ -160,7 +160,7 @@
     "server": "bundle exec rails s -p 3000",
     "client": "./bin/shakapacker-dev-server",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build -c .storybook -o ./public/storybook"
   },
   "cacheDirectories": [
     "node_modules",
