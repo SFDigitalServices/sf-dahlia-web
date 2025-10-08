@@ -3,8 +3,6 @@
   flex-direction: column;
   text-align: center;
   gap: var(--seeds-s4);
-  max-width: var(--seeds-screen-md);
-  padding: var(--seeds-s12);
   margin: 0 auto;
   width: 100%;
   @media (max-width: theme("screens.sm")) {
