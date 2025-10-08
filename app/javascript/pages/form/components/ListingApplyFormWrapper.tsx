@@ -19,7 +19,7 @@ const ListingApplyFormWrapper = ({ children }: ListingApplyFormWrapperProps) => 
 
   return (
     <section className="bg-gray-300">
-      <div className="md:mb-20 md:mt-12 mx-auto max-w-lg print:my-0 print:max-w-full">
+      <div className="md:mb-20 md:mt-12 md:max-w-lg max-w-full mx-auto print:my-0 print:max-w-full">
         {showLayout ? (
           <>
             <Card className="application-form-header">
@@ -38,7 +38,7 @@ const ListingApplyFormWrapper = ({ children }: ListingApplyFormWrapperProps) => 
                 />
               </Card.Section>
             </Card>
-            <Card>{currentStepChild}</Card>
+            <Card className="application-form-header">{currentStepChild}</Card>
           </>
         ) : (
           <>{currentStepChild}</>
