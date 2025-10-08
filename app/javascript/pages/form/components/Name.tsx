@@ -32,10 +32,17 @@ const Name = ({
         validation={{
           required: true,
           maxLength: LISTING_APPLY_FORMS_INPUT_MAX_LENGTH.firstName,
-          pattern: LATIN_REGEX,
+          pattern: {
+            value: LATIN_REGEX,
+            message: t("error.pleaseProvideAnswersInEnglish"),
+          },
         }}
         error={!!errors?.[firstName]}
-        errorMessage={errors?.[firstName] ? t("error.firstName") : ""}
+        errorMessage={
+          errors?.[firstName]?.type === "required"
+            ? t("error.firstName")
+            : errors?.[firstName]?.message
+        }
       />
       {showMiddleName && (
         <Field
@@ -57,10 +64,17 @@ const Name = ({
         validation={{
           required: true,
           maxLength: LISTING_APPLY_FORMS_INPUT_MAX_LENGTH.lastName,
-          pattern: LATIN_REGEX,
+          pattern: {
+            value: LATIN_REGEX,
+            message: t("error.pleaseProvideAnswersInEnglish"),
+          },
         }}
         error={!!errors?.[lastName]}
-        errorMessage={errors?.[lastName] ? t("error.lastName") : ""}
+        errorMessage={
+          errors?.[lastName]?.type === "required"
+            ? t("error.lastName")
+            : errors?.[lastName]?.message
+        }
       />
     </fieldset>
   )
