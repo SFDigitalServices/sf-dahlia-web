@@ -123,3 +123,12 @@ export const validAge = (
   // "unborn baby" rule
   return dayjs().diff(birthDate, "month") > -10
 }
+
+export const getPrimaryApplicantData = (formData: Record<string, unknown>) => {
+  return {
+    firstName: formData.primaryApplicantFirstName as string,
+    middleName: formData.primaryApplicantMiddleName as string,
+    lastName: formData.primaryApplicantLastName as string,
+    dob: (formData.primaryApplicantDob as string) || "1990-01-01", // TODO: update after DAH-3543
+  }
+}

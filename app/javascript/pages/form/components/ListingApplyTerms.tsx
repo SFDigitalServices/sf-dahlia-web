@@ -3,10 +3,20 @@ import { t } from "@bloom-housing/ui-components"
 import { Button } from "@bloom-housing/ui-seeds"
 import { CardSection } from "@bloom-housing/ui-seeds/src/blocks/Card"
 import { useFormEngineContext } from "../../../formEngine/formEngineContext"
+import { submitForm } from "../../../api/formApiService"
 
 const ListingApplyTerms = () => {
   const formEngineContext = useFormEngineContext()
-  const { handlePrevStep } = formEngineContext
+  const { handlePrevStep, formData, listing } = formEngineContext
+  const handleSubmit = () => {
+    submitForm(formData, listing.listingID)
+      .then(() => {
+        window.alert("Submitted short form application.")
+      })
+      .catch((error) => {
+        console.error("Error submitting application:", error)
+      })
+  }
 
   return (
     <>
@@ -19,10 +29,7 @@ const ListingApplyTerms = () => {
         <h1 className="mt-6 mb-4 text-xl md:text-2xl">ListingApplyReviewTerms Component</h1>
       </CardSection>
       <CardSection>
-        <Button
-          variant="primary"
-          onClick={() => window.alert("submitting application data (not really)")}
-        >
+        <Button variant="primary" onClick={handleSubmit}>
           {t("t.submit")}
         </Button>
       </CardSection>
