@@ -38,7 +38,7 @@ const ListingApplyFormWrapper = ({ children }: ListingApplyFormWrapperProps) => 
                 />
               </Card.Section>
             </Card>
-            <Card>{currentStepChild}</Card>
+            <Card className="application-form-header">{currentStepChild}</Card>
           </>
         ) : (
           <>{currentStepChild}</>
