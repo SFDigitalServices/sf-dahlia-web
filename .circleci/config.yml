@@ -110,7 +110,8 @@ commands:
   setup:
     description: "Basic setup"
     steps:
-      - checkout
+      - checkout:
+          method: blobless
       - prepare_workspace
       - upgrade-bundler
       - run: bundle --path vendor/bundle
@@ -145,7 +146,8 @@ jobs:
   build:
     <<: *defaults
     steps:
-      - checkout
+      - checkout:
+          method: blobless
       - prepare_workspace
       - install-node
       - save_cache:
@@ -230,7 +232,8 @@ jobs:
   coverage:
     <<: *defaults
     steps:
-      - checkout
+      - checkout:
+          method: blobless
       - *attach_workspace
       - qlty/coverage_publish:
           files: app/javascript/test-coverage/lcov.info, coverage/coverage.json
