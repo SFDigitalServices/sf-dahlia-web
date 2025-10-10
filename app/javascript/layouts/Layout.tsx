@@ -129,7 +129,6 @@ const Layout = (props: LayoutProps) => {
   const { getAssetPath } = useContext(ConfigContext)
   const { signOut } = useContext(UserContext)
 
-  // eslint-disable-next-line dot-notation
   if (window.document["documentMode"]) {
     window.location.href = "/ie-deprecated.html"
     return

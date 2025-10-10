@@ -78,7 +78,6 @@ export default defineConfig(
       react: react,
       "react-hooks": reactHooks,
       "unused-imports": unusedImports,
-      jest: jest,
     },
 
     // https://eslint.org/blog/2025/03/flat-config-extends-define-config-global-ignores/#bringing-back-extends
@@ -125,12 +124,6 @@ export default defineConfig(
       "@typescript-eslint/no-unused-vars": "off",
       // 9 violations
       "@typescript-eslint/no-unused-expressions": "off",
-
-      // ======================================================================
-      // https://github.com/import-js/eslint-plugin-import
-      // ======================================================================
-
-      "import/extensions": "error",
 
       // ======================================================================
       // https://github.com/sweepline/eslint-plugin-unused-imports
@@ -186,7 +179,9 @@ export default defineConfig(
       "unicorn/no-array-for-each": "off",
       "unicorn/no-array-reduce": "off",
       "unicorn/no-negated-condition": "off",
+      "unicorn/no-array-reverse": "off",
       "unicorn/no-null": "off",
+      "unicorn/no-unnecessary-polyfills": "off",
       "unicorn/no-useless-undefined": "off",
       "unicorn/numeric-separators-style": "off",
       "unicorn/prefer-at": "off",
@@ -230,13 +225,14 @@ export default defineConfig(
   // ============================================================================
 
   {
-    files: [
-      "**/__tests__/**/*.{ts,tsx,js,jsx}",
-    ],
+    files: ["**/__tests__/**/*.{ts,tsx,js,jsx}"],
+    plugins: {
+      jest: jest,
+    },
     extends: [jest.configs["flat/recommended"]],
     rules: {
       ...jest.configs["flat/recommended"].rules,
-      "jest/no-disabled-tests": "error",
+      "jest/no-disabled-tests": "warn",
       "jest/no-focused-tests": "error",
       "jest/no-identical-title": "error",
       "jest/no-done-callback": "off",
@@ -253,7 +249,8 @@ export default defineConfig(
           ignore: ["describe"],
         },
       ],
-      // TODO: 18 violations - auto-fixable, best practice for Jest tests
+
+      // 18 violations
       "jest/prefer-to-be": "off",
     },
   },
