@@ -78,3 +78,5 @@ storybook-static
 !.qlty/configs
 !.qlty/configs/**
 !.qlty/qlty.toml
+
+.eslintcache

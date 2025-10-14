@@ -266,6 +266,7 @@ export default defineConfig(
       // Cypress uses Chai's expect(), not Jest's expect()
       // Disable Jest's expect validation to avoid false positives
       "jest/valid-expect": "off",
+
       // 3 violations
       "cypress/no-unnecessary-waiting": "off",
       // 37 violations
@@ -273,4 +274,3 @@ export default defineConfig(
     },
   }
 )
-
