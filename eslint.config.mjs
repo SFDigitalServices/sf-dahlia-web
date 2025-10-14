@@ -194,7 +194,7 @@ export default defineConfig(
       "unicorn/prefer-string-raw": "off",
       // 5 violations
       "unicorn/no-named-default": "off",
-      // 5 violations - requires ES2021 support, auto-fixable
+      // 5 violations
       "unicorn/prefer-string-replace-all": "off",
       // 4 violations
       "unicorn/no-array-sort": "off",
@@ -202,6 +202,8 @@ export default defineConfig(
       "unicorn/prefer-node-protocol": "off",
       // 2 violations
       "unicorn/prefer-structured-clone": "off",
+      // 1 violation
+      "unicorn/no-await-expression-member": "off",
     },
 
     // Shared settings (available to all rules)

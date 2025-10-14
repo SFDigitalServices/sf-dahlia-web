@@ -409,6 +409,7 @@ const AccountSettings = ({ profile }: { profile: User }) => {
     if (dobString) {
       const parts = dobString.split("-")
       const birth = { birthYear: parts[0], birthMonth: parts[1], birthDay: parts[2] }
+      /* eslint-disable-next-line react-hooks/immutability */
       profile.dobObject = birth
     }
 
