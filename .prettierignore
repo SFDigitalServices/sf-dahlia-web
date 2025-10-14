@@ -1,8 +1,5 @@
-*.json
-/app/assets
+*
+!*/
+!/app/javascript/**
+!/cypress/**
 /app/javascript/test-coverage
-/lib
-/public
-/spec/javascripts
-/spec/e2e
-/Gruntfile.js
