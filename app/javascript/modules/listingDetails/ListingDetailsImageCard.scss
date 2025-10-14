@@ -1,8 +1,8 @@
 .share-button {
-    &:focus {
-        @apply rounded-full;
-        transition: all 200ms ease-out;
-        outline: none;
-        box-shadow: 0 0 0 2px #fff, 0 0 3px 4px var(--bloom-color-accent-cool);
-    }
+  &:focus {
+    @apply rounded-full;
+    transition: all 200ms ease-out;
+    outline: none;
+    box-shadow: 0 0 0 2px #fff, 0 0 3px 4px var(--bloom-color-accent-cool);
+  }
 }
