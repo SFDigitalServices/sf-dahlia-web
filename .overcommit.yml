@@ -64,12 +64,23 @@ PreCommit:
     required_executable: "./bin/overcommit-pre-commit"
 
   EsLint:
-    command: ["yarn"]
-    flags: ["eslint", "--quiet"]
+    command: ["yarn", "eslint"]
+    flags: ["--quiet", "--format", "compact"]
     description: "Linting React with Eslint"
     enabled: true
     include:
-      - "**/*.ts"
-      - "**/*.tsx"
-      - "**/*.js"
-      - "**/*.jsx"
+      - "app/javascript/**/*.js"
+      - "app/javascript/**/*.jxs"
+      - "app/javascript/**/*.ts"
+      - "app/javascript/**/*.tsx"
+      - "cypress/**/*.js"
+      - "cypress/**/*.jsx"
+      - "cypress/**/*.ts"
+      - "cypress/**/*.tsx"
+
+  Prettier:
+    command: ["yarn", "prettier"]
+    flags: ["--check", "app/javascript", "cypress"]
+    description: "Formatting React with Prettier"
+    enabled: true
+    on_warn: "fail"

@@ -6358,6 +6358,11 @@ escodegen@^2.0.0, escodegen@^2.1.0:
   optionalDependencies:
     source-map "~0.6.1"
 
+eslint-formatter-compact@8.39.0:
+  version "8.39.0"
+  resolved "https://registry.yarnpkg.com/eslint-formatter-compact/-/eslint-formatter-compact-8.39.0.tgz#9ecf2f2d881c72959198c3eee1e17a92b6955bfe"
+  integrity sha512-Y2mwNsk4p/5Qu6MBl7KaHm9nV8GrjrCab9vYhD0kK1VFKPDGpifVSVjv/nztcNetXLlBvqhsdIjVcZYor/w8PA==
+
 eslint-import-context@^0.1.8:
   version "0.1.9"
   resolved "https://registry.yarnpkg.com/eslint-import-context/-/eslint-import-context-0.1.9.tgz#967b0b2f0a90ef4b689125e088f790f0b7756dbe"
