@@ -21,19 +21,18 @@ export default defineConfig(
     ignores: [
       "app/assets/**", // Legacy Rails assets
       "lib/**", // Ruby library code
-      "*.config.js", // Config files (webpack, etc.)
-      "config/webpack/**/*", // Webpack configuration
-      "lighthouserc.js", // Lighthouse CI config
-      "public/**", // Static public assets
-      "node_modules/**", // Dependencies
+      "*.config.js",
+      "config/webpack/**/*",
+      "lighthouserc.js",
+      "public/**",
+      "node_modules/**",
       "spec/e2e/**", // Legacy E2E tests
       "spec/javascripts/**", // Legacy Jasmine tests
       "**/.eslintrc.js", // Old ESLint config files
-      "cypress.config.ts", // Cypress config
-      "Gruntfile.js", // Grunt config
-      ".storybook/**", // Storybook config
-      "stories/**", // Storybook stories
-      "app/javascript/test-coverage/**", // Test coverage reports
+      "cypress.config.ts",
+      "Gruntfile.js",
+      ".storybook/**",
+      "app/javascript/test-coverage/**",
     ],
   },
 

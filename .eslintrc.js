@@ -1,3 +1,5 @@
+// This ESLint configuration file is no longer in use, we now use eslint.config.mjs
+
 module.exports = {
   env: {
     browser: true,
