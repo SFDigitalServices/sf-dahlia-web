@@ -1,4 +1,4 @@
-import React from "react"
+import React, { Children } from "react"
 import { useForm } from "react-hook-form"
 import { Form, t } from "@bloom-housing/ui-components"
 import { Button } from "@bloom-housing/ui-seeds"
@@ -42,7 +42,7 @@ const ListingApplyStepWrapper = ({
 
   // https://github.com/react-hook-form/react-hook-form/issues/2887#issuecomment-802577357
   // eslint-disable-next-line @typescript-eslint/unbound-method
-  const { register, errors, watch, handleSubmit } = useForm({
+  const { register, errors, watch, trigger, handleSubmit } = useForm({
     mode: "onBlur",
     reValidateMode: "onBlur",
     shouldFocusError: false,
@@ -57,7 +57,7 @@ const ListingApplyStepWrapper = ({
   const titleString = translationFromDataSchema(title, titleVars, dataSources)
 
   return (
-    <FormStepProvider value={{ register, errors, watch }}>
+    <FormStepProvider value={{ register, errors, watch, trigger }}>
       <CardSection>
         <Button variant="text" onClick={handlePrevStep}>
           {t("t.back")}
@@ -69,7 +69,9 @@ const ListingApplyStepWrapper = ({
         {!!descriptionComponent && descriptionComponent}
       </CardSection>
       <Form onSubmit={handleSubmit(onSubmit)}>
-        <CardSection>{children}</CardSection>
+        {Children.map(children, (child) => (
+          <CardSection>{child}</CardSection>
+        ))}
         <CardSection>
           <Button variant="primary" type="submit">
             {t("t.next")}

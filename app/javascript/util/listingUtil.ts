@@ -727,3 +727,23 @@ export const listingPreferences = (listing: RailsListing): Record<string, string
 export const forceRecacheParam = () => ({
   params: window.location.search.includes("preview=true") ? { force: true } : {},
 })
+
+export type SeniorBuildingAgeRequirement = {
+  entireHousehold: boolean
+  minimumAge: number
+}
+
+export const getSeniorBuildingAgeRequirement = (
+  listing: RailsListing
+): SeniorBuildingAgeRequirement | undefined => {
+  if (
+    !listing.Reserved_community_type?.match(/senior/i) ||
+    !listing.Reserved_Community_Requirement ||
+    !listing.Reserved_community_minimum_age
+  )
+    return undefined
+
+  const entireHousehold = !!listing.Reserved_Community_Requirement?.match(/entire household/i)
+  const minimumAge = listing.Reserved_community_minimum_age
+  return { entireHousehold, minimumAge }
+}

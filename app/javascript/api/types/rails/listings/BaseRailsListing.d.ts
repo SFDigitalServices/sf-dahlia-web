@@ -147,6 +147,7 @@ type BaseRailsListing = {
   Required_Documents?: string
   Reserved_community_maximum_age: number
   Reserved_community_minimum_age: number
+  Reserved_Community_Requirement?: string
   Reserved_community_type?: string
   Reserved_community_type_Description?: string
   SASE_Required_for_Lottery_Ticket: boolean

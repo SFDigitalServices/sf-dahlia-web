@@ -1,8 +1,16 @@
+import dayjs from "dayjs"
+import MockDate from "mockdate"
 import {
   translationFromDataSchema,
   showStep,
   calculateNextStep,
   calculatePrevStep,
+  validDayRange,
+  validMonthRange,
+  validYearRange,
+  validDate,
+  validAge,
+  parseDate,
 } from "../../util/formEngineUtil"
 import { openRentalListing } from "../data/RailsRentalListing/listing-rental-open"
 
@@ -157,6 +165,81 @@ describe("formEngineUtil", () => {
         const stepInfoMap = [step0, step1, step2NavigationDeparture]
         expect(calculatePrevStep(currentStepIndex, stepInfoMap, dataSources)).toBe(0)
       })
+    })
+  })
+
+  describe("validDayRange", () => {
+    it("returns true for in-range day", () => {
+      expect(validDayRange("01")).toBe(true)
+    })
+    it("returns false for out-of-range day", () => {
+      expect(validDayRange("0")).toBe(false)
+      expect(validDayRange("32")).toBe(false)
+    })
+  })
+
+  describe("validMonthRange", () => {
+    it("returns true for in-range month", () => {
+      expect(validMonthRange("01")).toBe(true)
+    })
+    it("returns false for out-of-range month", () => {
+      expect(validMonthRange("0")).toBe(false)
+      expect(validMonthRange("13")).toBe(false)
+    })
+  })
+
+  describe("validYearRange", () => {
+    it("returns true for in-range year", () => {
+      expect(validYearRange("1900")).toBe(true)
+    })
+    it("returns false for out-of-range year", () => {
+      expect(validYearRange("1899")).toBe(false)
+      expect(validYearRange("3000")).toBe(false) // will fail in the year 3000
+    })
+  })
+
+  describe("parseDate", () => {
+    it("returns a dayjs object", () => {
+      expect(parseDate("2000", "1", "01") instanceof dayjs).toBe(true)
+    })
+  })
+
+  describe("validDate", () => {
+    it("returns true if an paramter is blank", () => {
+      expect(validDate("2000", "", "29")).toBe(true)
+    })
+    it("returns true for a valid date", () => {
+      expect(validDate("2000", "2", "29")).toBe(true)
+    })
+    it("returns false for a valid date", () => {
+      expect(validDate("2001", "2", "29")).toBe(false)
+    })
+  })
+
+  describe("validAge", () => {
+    MockDate.set("2020-01-01")
+    it("returns true for birth dates greater than minimum age", () => {
+      const birthDate = dayjs("2000-01-01")
+      const minimumAge = 18
+      expect(validAge(birthDate, minimumAge, undefined)).toBe(true)
+    })
+    it("returns false for birth dates less than minimum age", () => {
+      const birthDate = dayjs("2010-01-01")
+      const minimumAge = 18
+      expect(validAge(birthDate, minimumAge, undefined)).toBe(false)
+    })
+    it("returns true for birth dates that are less than 10 months in the futue", () => {
+      const birthDate = dayjs("2020-09-01")
+      expect(validAge(birthDate, null, undefined)).toBe(true)
+    })
+    it("overrides minimum age with senior building age requirements", () => {
+      const birthDate = dayjs("2000-01-01")
+      const minimumAge = 18
+      const seniorBuildingAgeRequirement = {
+        entireHousehold: true,
+        minimumAge: 65,
+      }
+      expect(validAge(birthDate, minimumAge, seniorBuildingAgeRequirement)).toBe(false)
     })
   })
 })
