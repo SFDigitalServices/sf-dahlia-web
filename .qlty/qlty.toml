@@ -97,9 +97,24 @@ mode = "comment"
 
 [[plugin]]
 name = "eslint"
+script = "eslint --ext .js,.jsx,.ts,.tsx app/javascript cypress"
 version = "9.37.0"
 package_file = "package.json"
-package_filters = ["eslint", "jest"]
+package_filters = [
+  "eslint",
+  "@eslint/jst",
+  "globals",
+  "typescript-eslint",
+  "@typescript-eslint/parser",
+  "eslint-plugin-unicorn",
+  "eslint-plugin-react",
+  "eslint-plugin-react-hooks",
+  "eslint-plugin-jsx-a11y",
+  "eslint-plugin-jest",
+  "eslint-plugin-cypress",
+  "eslint-plugin-import",
+  "eslint-plugin-unused-imports"
+]
 
 [[plugin]]
 name = "markdownlint"

@@ -153,6 +153,7 @@
     "test:e2e:open": "cypress open --browser chrome",
     "lint": "eslint --cache --ext .js,.jsx,.ts,.tsx app/javascript cypress",
     "lint:fix": "eslint --fix --ext .js,.jsx,.ts,.tsx app/javascript cypress",
+    "lint:config": "eslint --insepct-config",
     "lint:benchmark": "TIMING=all eslint --stats --ext .js,.jsx,.ts,.tsx app/javascript cypress",
     "format": "prettier --write .",
     "webpack:analyze": "yarn webpack:build_json && yarn webpack:analyze_json",
