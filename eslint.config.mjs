@@ -32,7 +32,7 @@ export default defineConfig(
       "cypress.config.ts",
       "Gruntfile.js",
       ".storybook/**",
-      "app/javascript/test-coverage/**",
+      "jest-test-coverage/**",
     ],
   },
 

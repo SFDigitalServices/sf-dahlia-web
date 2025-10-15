@@ -185,13 +185,12 @@ jobs:
       - run: yarn cache clean
       - run: yarn install
       - run: yarn test
-      # path configured in jest.config.js as <rootDir>/<coverageDirectory>
       - store_artifacts:
-          path: app/javascript/test-coverage
+          path: jest-test-coverage
       - persist_to_workspace:
           root: .
           paths:
-            - app/javascript/test-coverage
+            - jest-test-coverage
   unit-rspec:
     <<: *defaults
     steps:
@@ -233,7 +232,7 @@ jobs:
       - checkout
       - *attach_workspace
       - qlty/coverage_publish:
-          files: app/javascript/test-coverage/lcov.info, coverage/coverage.json
+          files: jest-test-coverage/lcov.info, coverage/coverage.json
   e2e-legacy:
     <<: *defaults
     parallelism: 4

@@ -2,4 +2,3 @@
 !*/
 !/app/javascript/**
 !/cypress/**
-/app/javascript/test-coverage
