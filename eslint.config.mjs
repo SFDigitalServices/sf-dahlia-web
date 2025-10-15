@@ -37,24 +37,10 @@ export default defineConfig(
   },
 
   // ==========================================================================
-  // Shared Configs (Spread into Array)
-  // ==========================================================================
-
-  js.configs.recommended,
-  tsEslint.configs.recommendedTypeChecked,
-  // tsEslint.configs.stylisticTypeChecked,
-  unicorn.configs.recommended,
-  react.configs.flat.recommended,
-  reactHooks.configs.flat.recommended,
-  jsxA11y.flatConfigs.recommended,
-
-  // ==========================================================================
-  // Base Configuration for All JS/TS Files
+  // Language Options
   // ==========================================================================
 
   {
-    files: ["**/*.{js,jsx,ts,tsx}"],
-
     languageOptions: {
       ecmaVersion: 2021,
       sourceType: "module",
@@ -72,6 +58,26 @@ export default defineConfig(
         SharedArrayBuffer: "readonly",
       },
     },
+  },
+
+  // ==========================================================================
+  // Shared Configs (Spread into Array)
+  // ==========================================================================
+
+  js.configs.recommended,
+  tsEslint.configs.recommendedTypeChecked,
+  // tsEslint.configs.stylisticTypeChecked,
+  unicorn.configs.recommended,
+  react.configs.flat.recommended,
+  reactHooks.configs.flat.recommended,
+  jsxA11y.flatConfigs.recommended,
+
+  // ==========================================================================
+  // Base Configuration for All JS/TS Files
+  // ==========================================================================
+
+  {
+    files: ["**/*.{js,jsx,ts,tsx}"],
 
     plugins: {
       react: react,
