@@ -95,7 +95,10 @@ const DateOfBirth = ({
             required: true,
             validate: {
               validYearRange,
-              [VALID_AGE]: () => validAge(birthDate(), minimumAge, seniorBuildingAgeRequirement),
+              [VALID_AGE]: () =>
+                // do not validate age for invalid dates, let date validation raise errors
+                !validDate(birthYearValue, birthMonthValue, birthDayValue) ||
+                validAge(birthDate(), minimumAge, seniorBuildingAgeRequirement),
             },
           }}
           // eslint-disable-next-line @typescript-eslint/no-misused-promises
