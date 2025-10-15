@@ -178,6 +178,7 @@ jobs:
     steps:
       - setup
       - run: yarn lint
+      - run: yarn prettier --check .
   unit-react:
     <<: *defaults
     steps:
