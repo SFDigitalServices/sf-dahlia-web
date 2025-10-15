@@ -18,32 +18,30 @@ const YesNoRadio = ({ label, note, description, yesText, fieldNames }: YesNoRadi
   const { register, errors, watch } = useFormStepContext()
   const selected = watch(fieldNames?.question)
   return (
-    <Card>
-      <Card.Section>{t(label)}</Card.Section>
-      <Card.Section>
-        <fieldset>
-          <FieldGroup
-            fieldGroupClassName="radio-field-group"
-            fieldClassName="radio-field"
-            type="radio"
-            name={fieldNames?.question}
-            groupLabel={t(description)}
-            groupNote={t(note)}
-            {...(selected === "true" && { groupSubNote: t(yesText) })}
-            error={errors?.[fieldNames?.question]}
-            errorMessage={t("error.pleaseSelectAnOption")}
-            register={register}
-            fields={[
-              { id: "yes", value: "true", label: t("t.yes") },
-              { id: "no", value: "false", label: t("t.no") },
-            ]}
-            validation={{
-              required: true,
-            }}
-          />
-        </fieldset>
-      </Card.Section>
-    </Card>
+    <>
+      {t(label)}
+      <fieldset>
+        <FieldGroup
+          fieldGroupClassName="radio-field-group"
+          fieldClassName="radio-field"
+          type="radio"
+          name={fieldNames?.question}
+          groupLabel={t(description)}
+          groupNote={t(note)}
+          {...(selected === "true" && { groupSubNote: t(yesText) })}
+          error={errors?.[fieldNames?.question]}
+          errorMessage={t("error.pleaseSelectAnOption")}
+          register={register}
+          fields={[
+            { id: "yes", value: "true", label: t("t.yes") },
+            { id: "no", value: "false", label: t("t.no") },
+          ]}
+          validation={{
+            required: true,
+          }}
+        />
+      </fieldset>
+    </>
   )
 }
 
