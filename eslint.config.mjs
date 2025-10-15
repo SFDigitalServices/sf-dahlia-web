@@ -48,13 +48,7 @@ export default defineConfig(
   reactHooks.configs.flat.recommended,
   jsxA11y.flatConfigs.recommended,
 
-  // ==========================================================================
-  // Base Configuration for All JS/TS Files
-  // ==========================================================================
-
   {
-    files: ["**/*.{js,jsx,ts,tsx}"],
-
     languageOptions: {
       ecmaVersion: 2021,
       sourceType: "module",
@@ -72,6 +66,14 @@ export default defineConfig(
         SharedArrayBuffer: "readonly",
       },
     },
+  },
+
+  // ==========================================================================
+  // Base Configuration for All JS/TS Files
+  // ==========================================================================
+
+  {
+    files: ["**/*.{js,jsx,ts,tsx}"],
 
     plugins: {
       react: react,

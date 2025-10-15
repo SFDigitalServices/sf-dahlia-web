@@ -151,7 +151,7 @@
     "test:inspect": "TZ='UTC' NODE_OPTIONS=\"--inspect --max-old-space-size=4096\" INSPECT_MODE=true jest --runInBand --logHeapUsage 2>&1 | tee jestInspectOutput.txt",
     "test:e2e": "cypress run --browser chrome",
     "test:e2e:open": "cypress open --browser chrome",
-    "lint": "eslint --cache --ext .js,.jsx,.ts,.tsx app/javascript cypress",
+    "lint": "eslint --cache --ext .js,.jsx,.ts,.tsx app/javascript cypress ",
     "lint:fix": "eslint --fix --ext .js,.jsx,.ts,.tsx app/javascript cypress",
     "lint:benchmark": "TIMING=all eslint --stats --ext .js,.jsx,.ts,.tsx app/javascript cypress",
     "format": "prettier --write .",

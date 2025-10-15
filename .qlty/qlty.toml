@@ -97,6 +97,7 @@ mode = "comment"
 
 [[plugin]]
 name = "eslint"
+script = "eslint --ext .js,.jsx,.ts,.tsx app/javascript cypress"
 version = "9.37.0"
 package_file = "package.json"
 package_filters = [
