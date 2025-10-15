@@ -1,6 +1,5 @@
 import React from "react"
 import { t, FieldGroup } from "@bloom-housing/ui-components"
-import { Card } from "@bloom-housing/ui-seeds"
 import { useFormStepContext } from "../../../formEngine/formStepContext"
 import "./YesNoRadio.scss"
 
