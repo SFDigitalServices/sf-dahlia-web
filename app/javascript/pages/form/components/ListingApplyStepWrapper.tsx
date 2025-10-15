@@ -42,7 +42,7 @@ const ListingApplyStepWrapper = ({
 
   // https://github.com/react-hook-form/react-hook-form/issues/2887#issuecomment-802577357
   // eslint-disable-next-line @typescript-eslint/unbound-method
-  const { register, errors, handleSubmit } = useForm({
+  const { register, errors, watch, handleSubmit } = useForm({
     mode: "onBlur",
     reValidateMode: "onBlur",
     shouldFocusError: false,
@@ -57,7 +57,7 @@ const ListingApplyStepWrapper = ({
   const titleString = translationFromDataSchema(title, titleVars, dataSources)
 
   return (
-    <FormStepProvider value={{ register, errors }}>
+    <FormStepProvider value={{ register, errors, watch }}>
       <CardSection>
         <Button variant="text" onClick={handlePrevStep}>
           {t("t.back")}

@@ -110,6 +110,7 @@
           "props": {
             "label": "label.workInSf",
             "note": "b2Contact.workInSfDesc",
+            "yesText": "b2Contact.claimWorkInSf",
             "fieldNames": {
               "question": "primaryApplicantWorkInSf"
             }

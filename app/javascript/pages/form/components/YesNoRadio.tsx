@@ -2,6 +2,7 @@ import React from "react"
 import { t, FieldGroup } from "@bloom-housing/ui-components"
 import { Card } from "@bloom-housing/ui-seeds"
 import { useFormStepContext } from "../../../formEngine/formStepContext"
+import "./YesNoRadio.scss"
 
 interface YesNoRadioProps {
   label?: string
@@ -14,20 +15,23 @@ interface YesNoRadioProps {
 }
 
 const YesNoRadio = ({ label, note, description, yesText, fieldNames }: YesNoRadioProps) => {
-  const { register, errors } = useFormStepContext()
+  const { register, errors, watch } = useFormStepContext()
+  const selected = watch(fieldNames?.question)
   return (
     <Card>
       <Card.Section>{t(label)}</Card.Section>
       <Card.Section>
         <fieldset>
           <FieldGroup
-            fieldGroupClassName="grid grid-cols-1"
-            fieldClassName="ml-0"
+            fieldGroupClassName="radio-field-group"
+            fieldClassName="radio-field"
             type="radio"
             name={fieldNames?.question}
+            groupLabel={t(description)}
             groupNote={t(note)}
+            {...(selected === "true" && { groupSubNote: t(yesText) })}
             error={errors?.[fieldNames?.question]}
-            errorMessage={t("errorMessage")}
+            errorMessage={t("error.pleaseSelectAnOption")}
             register={register}
             fields={[
               { id: "yes", value: "true", label: t("t.yes") },
