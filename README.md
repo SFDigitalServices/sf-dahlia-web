@@ -69,7 +69,6 @@ More information about getting started can be found on the team confluence.
 - `yarn server` to start rails server alone, which will now be running at <http://localhost:3000> by default
 - `yarn start` to start both servers with a single command
 - Alternatively you can start the servers using the webpack and rails command directly
-
   - `./bin/shakapacker-dev-server` to start webpack
     - This command might fail with `Command "webpack-dev-server" not found.`. In that case, you'll need to reinstall webpacker with `bundle exec rails:shakapacker:install`. During the install it will ask if you want to overwrite a few config files, do not overwrite them.
 
