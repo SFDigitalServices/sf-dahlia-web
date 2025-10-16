@@ -18,9 +18,9 @@ const ListingApplyFormWrapper = ({ children }: ListingApplyFormWrapperProps) => 
   const showLayout = !currentStepInfo.hideLayout
 
   return (
-    <section className="md:bg-gray-300">
+    <section className="application-form-section">
       {showLayout ? (
-        <div className="md:mb-20 md:mt-12 mx-auto max-w-lg print:my-0 print:max-w-full">
+        <div className="application-form-container">
           <Card className="application-form-header">
             <Card.Section className="application-form-header-title">
               <Heading priority={1} className="application-form-header-heading">
@@ -37,7 +37,7 @@ const ListingApplyFormWrapper = ({ children }: ListingApplyFormWrapperProps) => 
               />
             </Card.Section>
           </Card>
-          <Card>{currentStepChild}</Card>
+          <Card className="application-form-content-container">{currentStepChild}</Card>
         </div>
       ) : (
         <div className="md:mb-20 md:mt-12 mx-auto max-w-2xl">{currentStepChild}</div>
