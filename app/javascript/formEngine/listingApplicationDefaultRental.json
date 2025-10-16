@@ -57,10 +57,10 @@
         },
         {
           "componentName": "EmailAddress",
-          "fieldNames": {
-            "email": "primaryApplicantEmail"
-          },
           "props": {
+            "fieldNames": {
+              "email": "primaryApplicantEmail"
+            },
             "label": "label.applicantEmail",
             "showDontHaveEmailAddress": true
           }
