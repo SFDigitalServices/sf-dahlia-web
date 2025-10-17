@@ -21,6 +21,7 @@ export default defineConfig(
     ignores: [
       "app/assets/**", // Legacy Rails assets
       "lib/**", // Ruby library code
+      "vendor/**", // Ruby gems
       "*.config.js",
       "config/webpack/**/*",
       "lighthouserc.js",
