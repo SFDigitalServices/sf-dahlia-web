@@ -61,32 +61,30 @@ export default defineConfig(
   },
 
   // ==========================================================================
-  // Shared Configs (Spread into Array)
-  // ==========================================================================
-
-  js.configs.recommended,
-  tsEslint.configs.recommendedTypeChecked,
-  // tsEslint.configs.stylisticTypeChecked,
-  unicorn.configs.recommended,
-  react.configs.flat.recommended,
-  reactHooks.configs.flat.recommended,
-  jsxA11y.flatConfigs.recommended,
-
-  // ==========================================================================
   // Base Configuration for All JS/TS Files
   // ==========================================================================
 
   {
-    files: ["**/*.{js,jsx,ts,tsx}"],
+    files: [
+      "app/javascript/**/*.{js,jsx,ts,tsx}",
+      "cypress/**/*.{js,jsx,ts,tsx}",
+    ],
 
     plugins: {
-      react: react,
-      "react-hooks": reactHooks,
       "unused-imports": unusedImports,
     },
 
     // https://eslint.org/blog/2025/03/flat-config-extends-define-config-global-ignores/#bringing-back-extends
-    extends: [importPlugin.flatConfigs.recommended, importPlugin.flatConfigs.typescript],
+    extends: [
+      js.configs.recommended,
+      react.configs.flat.recommended,
+      reactHooks.configs.flat.recommended,
+      jsxA11y.flatConfigs.recommended,
+      tsEslint.configs.recommendedTypeChecked,
+      importPlugin.flatConfigs.recommended,
+      importPlugin.flatConfigs.typescript,
+      unicorn.configs.recommended,
+    ],
 
     rules: {
       "no-use-before-define": "off", // disabled to allow usage of typescript/no-use-before-define
@@ -233,12 +231,11 @@ export default defineConfig(
 
   {
     files: ["**/__tests__/**/*.{ts,tsx,js,jsx}"],
-    plugins: {
-      jest: jest,
-    },
-    extends: [jest.configs["flat/recommended"]],
+    extends: [
+      jest.configs["flat/recommended"],
+      // jest.configs["flat/style"], // 1873 violations
+    ],
     rules: {
-      ...jest.configs["flat/recommended"].rules,
       "jest/no-disabled-tests": "warn",
       "jest/no-focused-tests": "error",
       "jest/no-identical-title": "error",
@@ -256,9 +253,6 @@ export default defineConfig(
           ignore: ["describe"],
         },
       ],
-
-      // 18 violations
-      "jest/prefer-to-be": "off",
     },
   },
 
