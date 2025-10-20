@@ -67,7 +67,8 @@
             ],
             "website": "https://medasf.org/programs/housing-opportunities/",
             "email": "homeownership@medasf.org",
-            "phone": "(415) 282-3334 Ext: 115"
+            "phone": "(415) 282-3334",
+            "extension": "Ext: 115"
         },
         {
             "fullName": "SF LGBT Center",
