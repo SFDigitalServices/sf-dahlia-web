@@ -40,7 +40,7 @@ const ListingApplyFormWrapper = ({ children }: ListingApplyFormWrapperProps) => 
           <Card className="application-form-content-container">{currentStepChild}</Card>
         </div>
       ) : (
-        <div className="md:mb-20 md:mt-12 mx-auto max-w-2xl">{currentStepChild}</div>
+        <div className="application-form-minimal-container">{currentStepChild}</div>
       )}
     </section>
   )

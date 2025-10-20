@@ -42,7 +42,7 @@
     padding-block: var(--seeds-s4);
     color: var(--seeds-color-white);
     --card-content-padding-inline: var(--seeds-s8);
-    @media (max-width: theme("screens.sm")) {
+    @media (max-width: theme("screens.md")) {
       --card-content-padding-inline: var(--seeds-s4);
     }
     text-transform: uppercase;
@@ -117,5 +117,16 @@
   @media (max-width: theme("screens.md")) {
     border: none;
     border-radius: 0;
+  }
+}
+
+.application-form-minimal-container {
+  margin-left: auto;
+  margin-right: auto;
+
+  @media (min-width: theme("screens.md")) {
+    margin-top: var(--bloom-s12);
+    margin-bottom: var(--bloom-s20);
+    max-width: var(--bloom-width-2xl);
   }
 }
