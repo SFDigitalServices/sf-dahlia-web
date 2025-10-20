@@ -1,6 +1,7 @@
 .application-form-section {
-  @media (min-width: theme("screens.md")) {
-    background-color: var(--seeds-color-gray-300);
+  background-color: var(--seeds-color-gray-300);
+  @media (max-width: theme("screens.md")) {
+    background-color: none;
   }
 }
 
@@ -121,12 +122,15 @@
 }
 
 .application-form-minimal-container {
+  margin-top: var(--bloom-s12);
+  margin-bottom: var(--bloom-s20);
+  max-width: var(--bloom-width-2xl);
   margin-left: auto;
   margin-right: auto;
 
-  @media (min-width: theme("screens.md")) {
-    margin-top: var(--bloom-s12);
-    margin-bottom: var(--bloom-s20);
-    max-width: var(--bloom-width-2xl);
+  @media (max-width: theme("screens.md")) {
+    margin-top: 0;
+    margin-bottom: 0;
+    max-width: none;
   }
 }
