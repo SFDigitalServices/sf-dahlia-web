@@ -1,28 +1,28 @@
 .listing-apply-overview {
+  display: flex;
+  flex-direction: column;
+  .listing-apply-overview-title {
+    text-align: center;
+    padding: var(--seeds-s8);
+  }
+
+  .listing-apply-overview-chinese {
+    text-align: center;
+    font-size: var(--seeds-font-size-xl);
+    padding-bottom: var(--seeds-s4);
+  }
+
+  .listing-apply-overview-text {
     display: flex;
     flex-direction: column;
-    .listing-apply-overview-title {
-        text-align: center;
-        padding: var(--seeds-s8);
-    }   
+    gap: var(--seeds-s4);
+    padding-top: var(--seeds-s8);
+    padding-bottom: var(--seeds-s8);
+  }
 
-    .listing-apply-overview-chinese {
-        text-align: center;
-        font-size: var(--seeds-font-size-xl);
-        padding-bottom: var(--seeds-s4);
-    }
-
-    .listing-apply-overview-text {
-        display: flex;
-        flex-direction: column;
-        gap: var(--seeds-s4);
-        padding-top: var(--seeds-s8);
-        padding-bottom: var(--seeds-s8);
-    }
-
-    .listing-apply-overview-footer {
-        display: flex;
-        background: var(--seeds-color-blue-100);
-        justify-content: center;
-    }
+  .listing-apply-overview-footer {
+    display: flex;
+    background: var(--seeds-color-blue-100);
+    justify-content: center;
+  }
 }

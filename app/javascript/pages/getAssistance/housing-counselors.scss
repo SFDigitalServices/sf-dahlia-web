@@ -1,38 +1,38 @@
 .tag {
-    --normal-rounded: 4px;
-    --small-pill-padding: 0px 6px;
+  --normal-rounded: 4px;
+  --small-pill-padding: 0px 6px;
 
-    color: var(--bloom-color-gray-750);
+  color: var(--bloom-color-gray-750);
 
-    &.service {
-        background-color: var(--bloom-color-yellow-100);
-    }
+  &.service {
+    background-color: var(--bloom-color-yellow-100);
+  }
 
-    &.language {
-        background-color: var(--bloom-color-blue-300);
-    }
+  &.language {
+    background-color: var(--bloom-color-blue-300);
+  }
 
-    &.is-small {
-        padding-inline: var(--bloom-s1_5);
-        padding-top: 0;
-        padding-bottom: 0;
-    }
+  &.is-small {
+    padding-inline: var(--bloom-s1_5);
+    padding-top: 0;
+    padding-bottom: 0;
+  }
 }
 
 .address-icon {
-    padding-right: var(--bloom-s2)
+  padding-right: var(--bloom-s2);
 }
 
 .counselor-icon {
-    @media (min-width: $screen-md) {
-        padding-right: var(--bloom-s2);
-    }
-    padding-right: 0;
+  @media (min-width: $screen-md) {
+    padding-right: var(--bloom-s2);
+  }
+  padding-right: 0;
 }
 
 .page-main {
-    @media (min-width: $screen-lg) {
-        @apply ml-0;
-    }
-    @apply md:ml-8;
+  @media (min-width: $screen-lg) {
+    @apply ml-0;
+  }
+  @apply md:ml-8;
 }

@@ -136,7 +136,7 @@ const ListingDetail = () => {
   return (
     <LoadingOverlay isLoading={!listing}>
       <Layout
-        title={listing?.Name ? listing?.Name : null}
+        title={listing?.Name || null}
         description={listing ? getDescription(listing) : null}
         image={listing?.Listing_Images ? listing?.Listing_Images[0].displayImageURL : null}
       >
