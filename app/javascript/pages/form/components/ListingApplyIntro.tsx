@@ -15,7 +15,7 @@ const ListingApplyIntro = () => {
   const imageUrl =
     listing?.Listing_Images?.length > 0
       ? listing.Listing_Images[0].displayImageURL
-      : (listing?.imageURL ?? fallbackImg)
+      : listing?.imageURL ?? fallbackImg
 
   return (
     <div className="listing-apply-intro">
