@@ -1,1 +1,4 @@
-*.json
+*
+!*/
+!/app/javascript/**
+!/cypress/**

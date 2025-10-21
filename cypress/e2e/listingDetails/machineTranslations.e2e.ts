@@ -43,7 +43,6 @@ const INFORMATION_SESSION_SALE_TEXT = {
 
 // These tests have been flaky, due to changes with the Google Translate implementation that are out of our control
 // Manual testing of machine translations will suffice
-// eslint-disable-next-line jest/no-disabled-tests
 describe.skip("Listing Detail Machine Translations", () => {
   describe(`Rental Listing: ${TEST_LISTINGS.OPEN_RENTAL.id}`, () => {
     describe("When a user views rental listing detail in English", () => {

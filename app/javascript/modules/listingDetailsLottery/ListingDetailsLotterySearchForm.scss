@@ -1,9 +1,9 @@
 .lottery-search-form {
-    #search-form input {
-        border-radius: initial
-    }
+  #search-form input {
+    border-radius: initial;
+  }
 
-    #search-form input::placeholder {
-        @apply text-gray-750;
-    }
+  #search-form input::placeholder {
+    @apply text-gray-750;
+  }
 }

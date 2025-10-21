@@ -94,6 +94,7 @@ const SignInFormCard = ({
   // https://github.com/react-hook-form/react-hook-form/issues/2887
   // eslint-disable-next-line @typescript-eslint/unbound-method
   const { register, handleSubmit, watch } = useForm({ shouldFocusError: false })
+  /* eslint-disable-next-line react-hooks/incompatible-library */
   const emailField = watch("email", undefined)
   const alertRef = useRef<HTMLDivElement>(null)
 
