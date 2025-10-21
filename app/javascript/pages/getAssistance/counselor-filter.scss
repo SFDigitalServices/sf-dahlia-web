@@ -1,27 +1,27 @@
 .service-checkbox {
-    @apply mb-0;
-    margin-top: var(--bloom-s4);
+  @apply mb-0;
+  margin-top: var(--bloom-s4);
 }
 
 select {
-    @apply w-64;
+  @apply w-64;
 }
 
 .field {
-    label {
-        @apply pb-0;
-        @apply text-gray-950;
-        font-weight: 400 !important;
-    }
-    input[type=checkbox] + label::before {
-        @apply rounded-sm;
-        box-shadow: 0 0 0 1px var(--bloom-color-gray-500);
-    }
-    select {
-        border-color: var(--bloom-color-gray-500);
-        @apply text-gray-750;
-    }
-    input::placeholder {
-        @apply overflow-visible;
-    }
+  label {
+    @apply pb-0;
+    @apply text-gray-950;
+    font-weight: 400 !important;
+  }
+  input[type="checkbox"] + label::before {
+    @apply rounded-sm;
+    box-shadow: 0 0 0 1px var(--bloom-color-gray-500);
+  }
+  select {
+    border-color: var(--bloom-color-gray-500);
+    @apply text-gray-750;
+  }
+  input::placeholder {
+    @apply overflow-visible;
+  }
 }

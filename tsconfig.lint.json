@@ -3,6 +3,6 @@
   "compilerOptions": {
     "noEmit": true
   },
-  "include": ["app/javascript/**/*", "cypress/**/*"],
+  "include": ["app/javascript/**/*", "cypress/**/*", "eslint.config.mjs"],
   "exclude": []
 }

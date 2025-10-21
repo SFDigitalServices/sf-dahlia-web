@@ -89,7 +89,7 @@ export const ListingDetailsPreferences = ({
                 `listings.lotteryPreference.${preference.preferenceName}.additionalDocumentation`
               ),
               url:
-                typeof routePrefix === "undefined"
+                routePrefix === undefined
                   ? `/document-checklist#${anchorMap[preference.preferenceName]}`
                   : getLocalizedPath(
                       `/document-checklist#${anchorMap[preference.preferenceName]}`,

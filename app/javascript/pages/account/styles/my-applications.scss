@@ -1,13 +1,13 @@
 .delete-buttons {
-    display: flex;
-    @media (max-width: theme("screens.sm")) {
-        position: relative;
-        flex-direction: column;
-        align-items: stretch;
-    }
+  display: flex;
+  @media (max-width: theme("screens.sm")) {
+    position: relative;
+    flex-direction: column;
+    align-items: stretch;
+  }
 }
 
 .delete-title {
-    @apply font-normal;
-    font-family: var(--seeds-font-serif);
+  @apply font-normal;
+  font-family: var(--seeds-font-serif);
 }

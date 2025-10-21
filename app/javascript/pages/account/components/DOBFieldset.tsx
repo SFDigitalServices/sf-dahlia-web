@@ -29,23 +29,29 @@ export interface DOBFieldProps {
 export const deduplicateDOBErrors = (
   errors: DeepMap<DOBFieldValues, FieldError>
 ): DeepMap<DOBFieldValues, FieldError> => {
-  const messageMap = Object.entries(errors).reduce((acc, [key, error]) => {
-    if (error && error.message) {
-      acc[error.message] = acc[error.message] || []
-      acc[error.message].push(key)
-    }
-    return acc
-  }, {} as { [message: string]: string[] })
+  const messageMap = Object.entries(errors).reduce(
+    (acc, [key, error]) => {
+      if (error && error.message) {
+        acc[error.message] = acc[error.message] || []
+        acc[error.message].push(key)
+      }
+      return acc
+    },
+    {} as { [message: string]: string[] }
+  )
 
-  const consolidatedErrors = Object.entries(messageMap).reduce((acc, [message, keys]) => {
-    const consolidatedKey = keys[0] as keyof DOBFieldValues
-    acc[consolidatedKey] = {
-      message,
-      ref: errors[consolidatedKey]?.ref,
-      type: errors[consolidatedKey]?.type || "required",
-    } as FieldError
-    return acc
-  }, {} as DeepMap<DOBFieldValues, FieldError>)
+  const consolidatedErrors = Object.entries(messageMap).reduce(
+    (acc, [message, keys]) => {
+      const consolidatedKey = keys[0] as keyof DOBFieldValues
+      acc[consolidatedKey] = {
+        message,
+        ref: errors[consolidatedKey]?.ref,
+        type: errors[consolidatedKey]?.type || "required",
+      } as FieldError
+      return acc
+    },
+    {} as DeepMap<DOBFieldValues, FieldError>
+  )
 
   return consolidatedErrors
 }
