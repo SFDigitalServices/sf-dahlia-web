@@ -62,6 +62,7 @@
               "email": "primaryApplicantEmail"
             },
             "label": "label.applicantEmail",
+            "note": "b2Contact.onlyUseYourEmail",
             "showDontHaveEmailAddress": true
           }
         }
