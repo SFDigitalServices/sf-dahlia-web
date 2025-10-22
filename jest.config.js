@@ -10,7 +10,7 @@ module.exports = {
   collectCoverageFrom: ["**/*.(tsx|ts)"],
   coveragePathIgnorePatterns: ["<rootDir>/packs"],
   coverageReporters: ["lcov"],
-  coverageDirectory: "test-coverage",
+  coverageDirectory: "<rootDir>/../../jest-test-coverage",
   coverageThreshold: {
     global: {
       branches: 70,

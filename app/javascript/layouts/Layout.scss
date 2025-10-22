@@ -1,9 +1,13 @@
 .site-header__dropdown-container {
-  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  box-shadow:
+    0 4px 6px -1px rgb(0 0 0 / 0.1),
+    0 2px 4px -2px rgb(0 0 0 / 0.1);
 }
 
 .site-header__mobile-drawer-dropdown-container {
-  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  box-shadow:
+    0 4px 6px -1px rgb(0 0 0 / 0.1),
+    0 2px 4px -2px rgb(0 0 0 / 0.1);
 }
 
 .site-header__mobile-drawer-dropdown-item {
@@ -41,7 +45,9 @@
 }
 
 .feedback-link a:focus {
-        transition: all 200ms ease-out;
-        outline: none;
-        box-shadow: 0 0 0 2px #fff, 0 0 3px 4px var(--bloom-color-accent-cool);
+  transition: all 200ms ease-out;
+  outline: none;
+  box-shadow:
+    0 0 0 2px #fff,
+    0 0 3px 4px var(--bloom-color-accent-cool);
 }

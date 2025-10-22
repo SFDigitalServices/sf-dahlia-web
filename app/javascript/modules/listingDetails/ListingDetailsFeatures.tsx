@@ -186,7 +186,7 @@ export const ListingDetailsFeatures = ({ listing, imageSrc }: ListingDetailsFeat
             )}
             applicationFee={listing.Fee ? `$${listing.Fee.toFixed(2)?.toLocaleString()}` : null}
             footerContent={[
-              <span className="translate">
+              <span className="translate" key="Costs_Not_Included__c">
                 {renderMarkup(
                   getTranslatedString(
                     listing?.Costs_Not_Included,

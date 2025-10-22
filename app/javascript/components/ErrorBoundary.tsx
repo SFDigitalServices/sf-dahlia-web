@@ -61,6 +61,7 @@ class ErrorBoundary extends React.Component<Props, State> {
                 <Button
                   onClick={() => (window.location.href = localizedPath("/"))}
                   styleType={AppearanceStyleType.info}
+                  key="goHome"
                 >
                   {t("errorBoundary.goHome")}
                 </Button>,

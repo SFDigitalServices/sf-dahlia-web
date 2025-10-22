@@ -56,7 +56,7 @@ yarn-debug.log*
 
 # Test output
 coverage
-app/javascript/test-coverage
+jest-test-coverage
 junit.xml
 cypress/screenshots/*
 jestInspectOutput.txt
@@ -78,3 +78,5 @@ storybook-static
 !.qlty/configs
 !.qlty/configs/**
 !.qlty/qlty.toml
+
+.eslintcache
