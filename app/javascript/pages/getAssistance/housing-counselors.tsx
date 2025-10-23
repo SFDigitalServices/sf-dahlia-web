@@ -45,6 +45,7 @@ interface CounselorData {
   website: string
   email: string
   phone: string
+  extension?: string
 }
 
 const Label = (type: "language" | "service", text: string) => {
@@ -105,6 +106,7 @@ const HousingCounselor = (housingCounselor: CounselorData) => {
             {t("assistance.housingCounselors.counselor.call.upper", {
               phoneNumber: housingCounselor.phone,
             })}
+            {housingCounselor.extension && <span>&nbsp;{housingCounselor.extension}</span>}
           </Button>
           <Button
             size={AppearanceSizeType.small}
@@ -135,18 +137,20 @@ const HousingCounselor = (housingCounselor: CounselorData) => {
         </div>
       </Mobile>
       <Desktop>
-        <a className="icon-item pb-2" href={`tel:+1${housingCounselor.phone}`}>
-          <Icon
-            className="counselor-icon"
-            symbol="phone"
-            size="medium"
-            fill={IconFillColors.primary}
-          />
-          {t("assistance.housingCounselors.counselor.call.lower", {
-            phoneNumber: housingCounselor.phone,
-          })}
-        </a>
-
+        <p className="flex">
+          <a className="icon-item pb-2" href={`tel:+1${housingCounselor.phone}`}>
+            <Icon
+              className="counselor-icon"
+              symbol="phone"
+              size="medium"
+              fill={IconFillColors.primary}
+            />
+            {t("assistance.housingCounselors.counselor.call.lower", {
+              phoneNumber: housingCounselor.phone,
+            })}
+          </a>
+          {housingCounselor.extension && <span>&nbsp;{housingCounselor.extension}</span>}
+        </p>
         <a className="icon-item pb-2" href={`mailto:${housingCounselor.email}`}>
           <Icon
             className="counselor-icon"
