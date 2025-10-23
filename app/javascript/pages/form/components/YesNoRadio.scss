@@ -11,3 +11,13 @@
 .field-sub-note {
   color: var(--seeds-color-success);
 }
+
+.text__caps-spaced {
+  text-transform: none;
+  font-variant: normal;
+  letter-spacing: normal;
+  font-weight: normal;
+  text-decoration: none;
+  font-style: normal;
+  font-size: 100%;
+}
