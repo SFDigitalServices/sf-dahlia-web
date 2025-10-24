@@ -15,6 +15,7 @@ import RecursiveRenderer from "./recursiveRenderer"
 import { calculateNextStep, calculatePrevStep } from "../util/formEngineUtil"
 import { useFeatureFlag } from "../hooks/useFeatureFlag"
 import { UNLEASH_FLAG } from "../modules/constants"
+import FormEngineDebug from "./FormEngineDebug"
 
 interface FormEngineProps {
   listing: RailsListing
@@ -25,7 +26,7 @@ const FormEngine = ({ listing, schema }: FormEngineProps) => {
   const [formData, setFormData] = useState<Record<string, unknown>>(generateInitialFormData(schema))
   const [currentStepIndex, setCurrentStepIndex] = useState<number>(0)
 
-  const { unleashFlag: formEngineNav } = useFeatureFlag(UNLEASH_FLAG.FORM_ENGINE_NAV, false)
+  const { unleashFlag: formEngineDebug } = useFeatureFlag(UNLEASH_FLAG.FORM_ENGINE_DEBUG, false)
 
   const parsedSchema = parseFormSchema(schema)
   if (typeof parsedSchema === "string") {
@@ -57,15 +58,12 @@ const FormEngine = ({ listing, schema }: FormEngineProps) => {
     const totalSteps = parsedSchema.children.length
 
     handleNextStep = () => {
-      const newStepIndex = formEngineNav
-        ? calculateNextStep(currentStepIndex, stepInfoMap, dataSources)
-        : currentStepIndex + 1
+      const newStepIndex = calculateNextStep(currentStepIndex, stepInfoMap, dataSources)
       if (newStepIndex < totalSteps) setCurrentStepIndex(newStepIndex)
     }
+
     handlePrevStep = () => {
-      const newStepIndex = formEngineNav
-        ? calculatePrevStep(currentStepIndex, stepInfoMap, dataSources)
-        : currentStepIndex - 1
+      const newStepIndex = calculatePrevStep(currentStepIndex, stepInfoMap, dataSources)
       if (newStepIndex >= 0) setCurrentStepIndex(newStepIndex)
     }
   }
@@ -84,6 +82,14 @@ const FormEngine = ({ listing, schema }: FormEngineProps) => {
 
   return (
     <FormEngineProvider value={formEngineContextValue}>
+      {formEngineDebug && (
+        <FormEngineDebug
+          currentStepIndex={currentStepIndex}
+          setCurrentStepIndex={setCurrentStepIndex}
+          stepInfoMap={stepInfoMap}
+          dataSources={dataSources}
+        />
+      )}
       <RecursiveRenderer schema={parsedSchema} />
     </FormEngineProvider>
   )
