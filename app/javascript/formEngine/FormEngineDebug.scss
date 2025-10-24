@@ -5,7 +5,6 @@
   left: 0;
   background-color: white;
   color: gray;
-  // height: 1200px;
   border: 4px solid red;
   font-size: 16px;
   max-height: 80vw;
@@ -25,6 +24,12 @@
     overflow: auto;
     margin: 8px;
     overflow: auto;
+    button {
+      text-decoration: underline;
+      color: blue;
+      padding: 0;
+      border: none;
+    }
   }
 
   .dbg-view-json {
@@ -51,6 +56,7 @@
 
   .dbg-current-step {
     font-weight: 900;
+    color: black;
   }
 
   .dbg-other-step {
