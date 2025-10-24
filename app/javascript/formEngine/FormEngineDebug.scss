@@ -7,7 +7,7 @@
   color: gray;
   border: 4px solid red;
   font-size: 16px;
-  max-height: 80vw;
+  max-height: 100vh;
   overflow: auto;
 
   > div {
@@ -18,9 +18,22 @@
     }
   }
 
+  @media (max-width: 768px) {
+    > div > div {
+      display: none;
+    }
+    .dbg-steps-wrapper {
+      display: block;
+      width: 90vw;
+      > button {
+        font-size: 24px;
+      }
+    }
+  }
+
   .dbg-steps {
     max-width: 400px;
-    max-height: 60vw;
+    max-height: 90vh;
     overflow: auto;
     margin: 8px;
     overflow: auto;
@@ -34,7 +47,7 @@
 
   .dbg-view-json {
     max-width: 600px;
-    max-height: 80vw;
+    max-height: 80vh;
     overflow: auto;
     margin: 8px;
     overflow: auto;

@@ -58,7 +58,7 @@ const FormEngineDebug = ({
   return (
     <div id="form-engine-debug">
       <div>
-        <div>
+        <div className="dbg-steps-wrapper">
           <button onClick={() => setShowSteps(!showSteps)}>
             {showSteps ? "hide" : "show"} steps
           </button>
