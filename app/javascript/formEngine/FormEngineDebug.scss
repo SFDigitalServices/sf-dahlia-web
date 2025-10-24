@@ -1,0 +1,70 @@
+#form-engine-debug {
+  z-index: 999;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: white;
+  color: gray;
+  // height: 1200px;
+  border: 4px solid red;
+  font-size: 16px;
+  max-height: 80vw;
+  overflow: auto;
+
+  > div {
+    display: flex;
+    margin: 8px;
+    > div {
+      margin: 8px;
+    }
+  }
+
+  .dbg-steps {
+    max-width: 400px;
+    max-height: 60vw;
+    overflow: auto;
+    margin: 8px;
+    overflow: auto;
+  }
+
+  .dbg-view-json {
+    max-width: 600px;
+    max-height: 80vw;
+    overflow: auto;
+    margin: 8px;
+    overflow: auto;
+  }
+
+  pre {
+    font-size: 12px;
+  }
+
+  button {
+    border: 1px solid gray;
+    padding: 8px;
+  }
+
+  ul {
+    list-style-type: numeric;
+    list-style-position: inside;
+  }
+
+  .dbg-current-step {
+    font-weight: 900;
+  }
+
+  .dbg-other-step {
+    cursor: pointer;
+  }
+}
+
+#form-engine-debug::before {
+  z-index: -999;
+  content: "⚠️⚠️";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  font-size: 128px;
+  opacity: 0.05;
+}
