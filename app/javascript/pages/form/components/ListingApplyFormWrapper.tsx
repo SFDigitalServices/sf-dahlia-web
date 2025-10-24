@@ -18,16 +18,16 @@ const ListingApplyFormWrapper = ({ children }: ListingApplyFormWrapperProps) => 
   const showLayout = !currentStepInfo.hideLayout
 
   return (
-    <section className="application-form-section">
+    <section className="listing-apply-form-section">
       {showLayout ? (
-        <div className="application-form-container">
-          <Card className="application-form-header">
-            <Card.Section className="application-form-header-title">
-              <Heading priority={1} className="application-form-header-heading">
+        <div className="listing-apply-form-container">
+          <Card className="listing-apply-form-header">
+            <Card.Section className="listing-apply-form-header-title">
+              <Heading priority={1} className="listing-apply-form-header-heading">
                 {t("pageTitle.listingApplication", { listing: listing.Name })}
               </Heading>
             </Card.Section>
-            <Card.Section className="application-form-nav">
+            <Card.Section className="listing-apply-form-nav">
               <ProgressNav
                 labels={sectionNames}
                 currentPageSection={currentSectionIndex + 1}
@@ -37,10 +37,10 @@ const ListingApplyFormWrapper = ({ children }: ListingApplyFormWrapperProps) => 
               />
             </Card.Section>
           </Card>
-          <Card className="application-form-content-container">{currentStepChild}</Card>
+          <Card className="listing-apply-form-content-container">{currentStepChild}</Card>
         </div>
       ) : (
-        <div className="application-form-minimal-container">{currentStepChild}</div>
+        <div className="listing-apply-form-minimal-container">{currentStepChild}</div>
       )}
     </section>
   )
