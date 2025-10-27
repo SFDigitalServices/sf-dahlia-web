@@ -10,7 +10,7 @@ import {
   validAge,
   parseDate,
 } from "../../../util/formEngineUtil"
-import "./DateOfBirth.scss"
+// import "./DateOfBirth.scss"
 
 interface DateOfBirthProps {
   label: string

@@ -2,7 +2,7 @@ import React from "react"
 import { ProgressNav, t } from "@bloom-housing/ui-components"
 import { Card, Heading } from "@bloom-housing/ui-seeds"
 import { useFormEngineContext } from "../../../formEngine/formEngineContext"
-import "./ListingApplyFormWrapper.scss"
+// import "./ListingApplyFormWrapper.scss"
 
 interface ListingApplyFormWrapperProps {
   currentStepIndex: number

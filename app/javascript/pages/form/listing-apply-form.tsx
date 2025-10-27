@@ -9,6 +9,7 @@ import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import { UNLEASH_FLAG } from "../../modules/constants"
 import FormEngine from "../../formEngine/formEngine"
 import listingApplicationDefaultRental from "../../formEngine/listingApplicationDefaultRental.json"
+import "./listing-apply-form.scss"
 
 interface ListingApplyFormProps {
   assetPaths: unknown

@@ -3,7 +3,7 @@ import { t } from "@bloom-housing/ui-components"
 import { Button, Heading } from "@bloom-housing/ui-seeds"
 import { CardSection } from "@bloom-housing/ui-seeds/src/blocks/Card"
 import { useFormEngineContext } from "../../../formEngine/formEngineContext"
-import "./ListingApplyOverview.scss"
+// import "./ListingApplyOverview.scss"
 import { getDocumentChecklistPath } from "../../../util/routeUtil"
 import { getCurrentLanguage, LanguagePrefix, renderInlineMarkup } from "../../../util/languageUtil"
 
