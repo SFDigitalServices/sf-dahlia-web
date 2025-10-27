@@ -19,7 +19,7 @@ const EmailAddress = ({
   showDontHaveEmailAddress,
   note,
 }: EmailAddressProps) => {
-  const { register, errors } = useFormStepContext()
+  const { register, errors, setValue, clearErrors } = useFormStepContext()
   const [noEmailCheckbox, setNoEmailCheckbox] = React.useState(false)
   return (
     <fieldset>
@@ -47,8 +47,13 @@ const EmailAddress = ({
           label={t("label.applicantNoEmail")}
           register={register}
           onChange={(e) => {
-            setNoEmailCheckbox(e.target.checked)
-          }}
+            const isChecked = e.target.checked
+            setNoEmailCheckbox(isChecked)
+            if (isChecked) {
+              setValue(email, "")
+              clearErrors(email)
+            }
+  }}
         />
       )}
     </fieldset>
