@@ -1,17 +1,40 @@
 import React from "react"
-import { t } from "@bloom-housing/ui-components"
-import { Card } from "@bloom-housing/ui-seeds"
+import { t, FieldGroup } from "@bloom-housing/ui-components"
+import { useFormStepContext } from "../../../formEngine/formStepContext"
+import "./YesNoRadio.scss"
 
 interface YesNoRadioProps {
-  label: string
+  label?: string
+  note?: string
+  yesText?: string
+  fieldNames?: {
+    question?: string
+  }
 }
 
-const YesNoRadio = ({ label }: YesNoRadioProps) => {
+const YesNoRadio = ({ label, note, yesText, fieldNames }: YesNoRadioProps) => {
+  const { register, errors, watch } = useFormStepContext()
+  const selected = watch(fieldNames?.question)
   return (
-    <Card>
-      <Card.Header>YesNoRadio Component</Card.Header>
-      <Card.Section>{t(label)}</Card.Section>
-    </Card>
+    <FieldGroup
+      fieldGroupClassName="radio-field-group"
+      fieldClassName="radio-field"
+      type="radio"
+      name={fieldNames?.question}
+      groupLabel={t(label)}
+      groupNote={t(note)}
+      {...(selected === "true" && { groupSubNote: t(yesText) })}
+      error={errors?.[fieldNames?.question]}
+      errorMessage={t("error.pleaseSelectAnOption")}
+      register={register}
+      fields={[
+        { id: "yes", value: "true", label: t("t.yes") },
+        { id: "no", value: "false", label: t("t.no") },
+      ]}
+      validation={{
+        required: true,
+      }}
+    />
   )
 }
 
