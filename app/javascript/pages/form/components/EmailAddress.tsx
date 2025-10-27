@@ -8,7 +8,7 @@ interface EmailAddressProps {
   label: string
   fieldNames: {
     email: string
-    noEmail: string
+    noEmail?: string
   }
   showDontHaveEmailAddress?: boolean
   note?: string
@@ -55,7 +55,7 @@ const EmailAddress = ({
               setValue(email, "")
               clearErrors(email)
             }
-  }}
+          }}
         />
       )}
     </fieldset>
