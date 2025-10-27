@@ -22,40 +22,36 @@ const EmailAddress = ({
   const { register, errors } = useFormStepContext()
   const [noEmail, setNoEmail] = React.useState(false)
   return (
-    <>
-      <Heading priority={2} size="sm">
-        {t(label)}
-      </Heading>
-      <fieldset>
+    <fieldset>
+      <Field
+        name={email}
+        label={t(label)}
+        register={register}
+        disabled={noEmail}
+        subNote={t(note)}
+        validation={{
+          required: !noEmail,
+          maxLength: LISTING_APPLY_FORMS_INPUT_MAX_LENGTH.email,
+          pattern: {
+            value: EMAIL_REGEX,
+            message: t("error.email"),
+          },
+        }}
+        error={!!errors?.[email]}
+        errorMessage={t("error.email")}
+      />
+      {showDontHaveEmailAddress && (
         <Field
-          name={email}
-          label={t(note)}
+          type="checkbox"
+          name="showDontHaveEmailAddress"
+          label={t("label.applicantNoEmail")}
           register={register}
-          disabled={noEmail}
-          validation={{
-            required: !noEmail,
-            maxLength: LISTING_APPLY_FORMS_INPUT_MAX_LENGTH.email,
-            pattern: {
-              value: EMAIL_REGEX,
-              message: t("error.email"),
-            },
+          onChange={(e) => {
+            setNoEmail(e.target.checked)
           }}
-          error={!!errors?.[email]}
-          errorMessage={t("error.email")}
         />
-        {showDontHaveEmailAddress && (
-          <Field
-            type="checkbox"
-            name="showDontHaveEmailAddress"
-            label={t("label.applicantNoEmail")}
-            register={register}
-            onChange={(e) => {
-              setNoEmail(e.target.checked)
-            }}
-          />
-        )}
-      </fieldset>
-    </>
+      )}
+    </fieldset>
   )
 }
 
