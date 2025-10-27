@@ -1,6 +1,5 @@
 import React from "react"
 import { t, Field } from "@bloom-housing/ui-components"
-import { Heading } from "@bloom-housing/ui-seeds"
 import { useFormStepContext } from "../../../formEngine/formStepContext"
 import { EMAIL_REGEX, LISTING_APPLY_FORMS_INPUT_MAX_LENGTH } from "../../../modules/constants"
 
@@ -8,6 +7,7 @@ interface EmailAddressProps {
   label: string
   fieldNames: {
     email: string
+    noEmail: string
   }
   showDontHaveEmailAddress?: boolean
   note?: string
@@ -15,22 +15,22 @@ interface EmailAddressProps {
 
 const EmailAddress = ({
   label,
-  fieldNames: { email },
+  fieldNames: { email, noEmail },
   showDontHaveEmailAddress,
   note,
 }: EmailAddressProps) => {
   const { register, errors } = useFormStepContext()
-  const [noEmail, setNoEmail] = React.useState(false)
+  const [noEmailCheckbox, setNoEmailCheckbox] = React.useState(false)
   return (
     <fieldset>
       <Field
         name={email}
         label={t(label)}
         register={register}
-        disabled={noEmail}
+        disabled={noEmailCheckbox}
         subNote={t(note)}
         validation={{
-          required: !noEmail,
+          required: !noEmailCheckbox,
           maxLength: LISTING_APPLY_FORMS_INPUT_MAX_LENGTH.email,
           pattern: {
             value: EMAIL_REGEX,
@@ -43,11 +43,11 @@ const EmailAddress = ({
       {showDontHaveEmailAddress && (
         <Field
           type="checkbox"
-          name="showDontHaveEmailAddress"
+          name={noEmail}
           label={t("label.applicantNoEmail")}
           register={register}
           onChange={(e) => {
-            setNoEmail(e.target.checked)
+            setNoEmailCheckbox(e.target.checked)
           }}
         />
       )}
