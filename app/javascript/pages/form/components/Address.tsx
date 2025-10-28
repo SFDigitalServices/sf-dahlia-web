@@ -3,7 +3,7 @@ import { t, Field, Select } from "@bloom-housing/ui-components"
 import { Heading } from "@bloom-housing/ui-seeds"
 import { LISTING_APPLY_FORMS_INPUT_MAX_LENGTH } from "../../../modules/constants"
 import { useFormStepContext } from "../../../formEngine/formStepContext"
-import "./Address.scss"
+import styles from "./Address.module.scss"
 
 interface AddressProps {
   label?: string
@@ -119,7 +119,7 @@ const Address = ({
           validation={{ maxLength: LISTING_APPLY_FORMS_INPUT_MAX_LENGTH.address }}
         />
       )}
-      <div className="address-field-group">
+      <div className={styles["address-field-group"]}>
         <Field
           name={addressCity}
           label={t("label.city")}
@@ -174,7 +174,7 @@ const Address = ({
             error={!!errors?.[mailingAddressStreet]}
             register={register}
           />
-          <div className="address-field-group">
+          <div className={styles["address-field-group"]}>
             <Field
               name={mailingAddressCity}
               label={t("label.city")}
