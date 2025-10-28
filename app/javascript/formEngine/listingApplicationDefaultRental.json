@@ -101,7 +101,8 @@
         {
           "componentName": "Address",
           "props": {
-            "label": "address",
+            "label": "label.address",
+            "note": "b2Contact.applicantAddressDesc",
             "showMailingAddress": true,
             "fieldNames": {
               "address": "primaryApplicantAddress",
