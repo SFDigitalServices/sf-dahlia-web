@@ -32,11 +32,11 @@ const FieldSetWrapper = () => {
       {
         slug: "test",
         fieldNames: Object.values({
-              phone: "primaryApplicantPhone",
-              phoneType: "primaryApplicantPhoneType",
-              additionalPhone: "primaryApplicantAdditionalPhone",
-              additionalPhoneType: "primaryApplicantAdditionalPhoneType"
-        })
+          phone: "primaryApplicantPhone",
+          phoneType: "primaryApplicantPhoneType",
+          additionalPhone: "primaryApplicantAdditionalPhone",
+          additionalPhoneType: "primaryApplicantAdditionalPhoneType",
+        }),
       },
     ],
     sectionNames: [],
@@ -49,17 +49,17 @@ const FieldSetWrapper = () => {
     <FormEngineProvider value={formEngineContextValue}>
       <FormStepProvider value={formStepContextValue}>
         <Phone
-            label = "label.applicantPhone"
-            showTypeOfNumber
-            showDontHavePhoneNumber
-            showAdditionalPhoneNumber
-            labelForAdditionalPhoneNumber = "label.applicantSecondPhone"
-            fieldNames = {{
-              phone: "primaryApplicantPhone",
-              phoneType: "primaryApplicantPhoneType",
-              additionalPhone: "primaryApplicantAdditionalPhone",
-              additionalPhoneType: "primaryApplicantAdditionalPhoneType"
-            }}
+          label="label.applicantPhone"
+          showTypeOfNumber
+          showDontHavePhoneNumber
+          showAdditionalPhoneNumber
+          labelForAdditionalPhoneNumber="label.applicantSecondPhone"
+          fieldNames={{
+            phone: "primaryApplicantPhone",
+            phoneType: "primaryApplicantPhoneType",
+            additionalPhone: "primaryApplicantAdditionalPhone",
+            additionalPhoneType: "primaryApplicantAdditionalPhoneType",
+          }}
         />
       </FormStepProvider>
     </FormEngineProvider>
@@ -75,28 +75,34 @@ describe("Phone", () => {
     expect(screen.getByText(t("label.applicantAdditionalPhone"))).toBeInTheDocument()
   })
 
-    it("disables the inputs if the no phone checkbox is checked", async () => {
-        render(<FieldSetWrapper />)
-        const noPhoneCheckbox = screen.getByRole("checkbox", { name: t("label.applicantNoPhone") })
-        const user = userEvent.setup()
-        await user.click(noPhoneCheckbox)
-        expect(screen.getByRole("textbox", { name: t("label.applicantPhone")})).toBeDisabled()
-        expect(screen.getByRole("combobox")).toBeDisabled()
-    })
+  it("disables the inputs if the no phone checkbox is checked", async () => {
+    render(<FieldSetWrapper />)
+    const noPhoneCheckbox = screen.getByRole("checkbox", { name: t("label.applicantNoPhone") })
+    const user = userEvent.setup()
+    await user.click(noPhoneCheckbox)
+    expect(screen.getByRole("textbox", { name: t("label.applicantPhone") })).toBeDisabled()
+    expect(screen.getByRole("combobox")).toBeDisabled()
+  })
 
-    it("displays the additional input if the additional phone checkbox is checked", async () => {
-        render(<FieldSetWrapper />)
-        const additionalPhoneCheckbox = screen.getByRole("checkbox", { name: t("label.applicantAdditionalPhone") })
-        const user = userEvent.setup()
-        await user.click(additionalPhoneCheckbox)
-        expect(screen.getByRole("textbox", { name: t("label.applicantSecondPhone")})).toBeInTheDocument()
+  it("displays the additional input if the additional phone checkbox is checked", async () => {
+    render(<FieldSetWrapper />)
+    const additionalPhoneCheckbox = screen.getByRole("checkbox", {
+      name: t("label.applicantAdditionalPhone"),
     })
+    const user = userEvent.setup()
+    await user.click(additionalPhoneCheckbox)
+    expect(
+      screen.getByRole("textbox", { name: t("label.applicantSecondPhone") })
+    ).toBeInTheDocument()
+  })
 
-    it("disables the no phone checkbox if the additional phone checkbox is checked", async () => {
-        render(<FieldSetWrapper />)
-        const additionalPhoneCheckbox = screen.getByRole("checkbox", { name: t("label.applicantAdditionalPhone") })
-        const user = userEvent.setup()
-        await user.click(additionalPhoneCheckbox)
-        expect(screen.getByRole("checkbox", { name: t("label.applicantNoPhone")})).toBeDisabled()
+  it("disables the no phone checkbox if the additional phone checkbox is checked", async () => {
+    render(<FieldSetWrapper />)
+    const additionalPhoneCheckbox = screen.getByRole("checkbox", {
+      name: t("label.applicantAdditionalPhone"),
     })
+    const user = userEvent.setup()
+    await user.click(additionalPhoneCheckbox)
+    expect(screen.getByRole("checkbox", { name: t("label.applicantNoPhone") })).toBeDisabled()
+  })
 })
