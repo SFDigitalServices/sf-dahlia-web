@@ -22,10 +22,13 @@ const FieldSetWrapper = ({ showDontHaveEmailAddress = false }: FieldSetWrapperPr
   const formStepContextValue = { register, errors, watch, trigger, setValue, clearErrors }
 
   const listing = openRentalListing
-  const formData = Object.assign({}, ...Object.values({
-    email: "primaryApplicantEmail",
-    noEmail: "primaryApplicantNoEmail",
-  }).map((name) => ({ [name]: null })))
+  const formData = Object.assign(
+    {},
+    ...Object.values({
+      email: "primaryApplicantEmail",
+      noEmail: "primaryApplicantNoEmail",
+    }).map((name) => ({ [name]: null }))
+  )
   const formEngineContextValue = {
     listing,
     formData,
@@ -35,10 +38,15 @@ const FieldSetWrapper = ({ showDontHaveEmailAddress = false }: FieldSetWrapperPr
       form: formData,
       preferences: {},
     },
-    stepInfoMap: [{ slug: "test", fieldNames: Object.values({
-      email: "primaryApplicantEmail",
-      noEmail: "primaryApplicantNoEmail",
-    }) }],
+    stepInfoMap: [
+      {
+        slug: "test",
+        fieldNames: Object.values({
+          email: "primaryApplicantEmail",
+          noEmail: "primaryApplicantNoEmail",
+        }),
+      },
+    ],
     sectionNames: [],
     currentStepIndex: 0,
     handleNextStep: jest.fn(),
@@ -49,13 +57,13 @@ const FieldSetWrapper = ({ showDontHaveEmailAddress = false }: FieldSetWrapperPr
     <FormEngineProvider value={formEngineContextValue}>
       <FormStepProvider value={formStepContextValue}>
         <EmailAddress
-                  fieldNames={{
-          email: "primaryApplicantEmail",
-          noEmail: "primaryApplicantNoEmail",
-        }}
-        label="label.applicantEmail"
-        note="b2Contact.onlyUseYourEmail"
-        showDontHaveEmailAddress={showDontHaveEmailAddress}
+          fieldNames={{
+            email: "primaryApplicantEmail",
+            noEmail: "primaryApplicantNoEmail",
+          }}
+          label="label.applicantEmail"
+          note="b2Contact.onlyUseYourEmail"
+          showDontHaveEmailAddress={showDontHaveEmailAddress}
         />
       </FormStepProvider>
     </FormEngineProvider>
@@ -63,7 +71,7 @@ const FieldSetWrapper = ({ showDontHaveEmailAddress = false }: FieldSetWrapperPr
 }
 
 describe("EmailAddress", () => {
-   it("displays the provided label and note for the email address", () => {
+  it("displays the provided label and note for the email address", () => {
     render(<FieldSetWrapper />)
     expect(screen.getByText(t("label.applicantEmail"))).toBeInTheDocument()
     expect(screen.getByText(t("b2Contact.onlyUseYourEmail"))).toBeInTheDocument()
@@ -86,7 +94,7 @@ describe("EmailAddress", () => {
   it("disables the field if the checkbox is selected", async () => {
     render(<FieldSetWrapper showDontHaveEmailAddress />)
     const user = userEvent.setup()
-    const emailInput = screen.getByLabelText(t("label.applicantEmail"))
+    const emailInput = screen.getByLabelText(t("label.applicantEmail")) as HTMLInputElement
     expect(emailInput.disabled).toBe(false)
     await user.click(screen.getByRole("checkbox", { name: t("label.applicantNoEmail") }))
     expect(emailInput.disabled).toBe(true)
