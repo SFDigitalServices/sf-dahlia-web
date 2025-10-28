@@ -1,5 +1,5 @@
 import React from "react"
-import { t, Field, Select } from "@bloom-housing/ui-components"
+import { t, Field, PhoneField, Select } from "@bloom-housing/ui-components"
 import { useFormStepContext } from "../../../formEngine/formStepContext"
 
 interface PhoneProps {
@@ -24,21 +24,20 @@ const Phone = ({
   labelForAdditionalPhoneNumber,
   fieldNames: { phone, additionalPhone, phoneType, additionalPhoneType },
 }: PhoneProps) => {
-  const { register, errors, setValue, clearErrors } = useFormStepContext()
+  const { control, register, errors, setValue, clearErrors } = useFormStepContext()
   const [noPhoneCheckbox, setNoPhoneCheckbox] = React.useState(false)
   const [noAdditionalPhoneCheckbox, setNoAdditionalPhoneCheckbox] = React.useState(false)
   return (
     <fieldset>
-      <Field
+      <PhoneField
         name={phone}
         label={t(label)}
-        register={register}
+        control={control}
         disabled={noPhoneCheckbox}
-        validation={{
-          required: !noPhoneCheckbox,
-        }}
+        required={!noPhoneCheckbox}
         error={!!errors?.[phone]}
         errorMessage={t("error.phoneNumber")}
+        controlClassName="control"
       />
       {showTypeOfNumber && (
         <Select
@@ -101,34 +100,29 @@ const Phone = ({
         />
       )}
       {noAdditionalPhoneCheckbox && (
-        <Field
+        <><PhoneField
           name={additionalPhone}
           label={t(labelForAdditionalPhoneNumber)}
-          register={register}
-          validation={{
-            required: true,
-          }}
-          error={!!errors?.[additionalPhone]}
-          errorMessage={t("error.phoneNumber")}
-        />
-      )}
-      {noAdditionalPhoneCheckbox && (
-        <Select
-          name={additionalPhoneType}
-          label={t("label.whatTypeOfNumber")}
-          options={[
-            { label: t("label.phoneHome"), value: "home" },
-            { label: t("label.phoneWork"), value: "work" },
-            { label: t("label.phoneCell"), value: "cell" },
-          ]}
-          register={register}
+          control={control}
           controlClassName="control"
-          error={!!errors?.[additionalPhoneType]}
-          errorMessage={t("error.phoneNumberType")}
-          validation={{
-            required: true,
-          }}
-        />
+          required={true}
+          error={!!errors?.[additionalPhone]}
+          errorMessage={t("error.phoneNumber")} />
+          <Select
+            name={additionalPhoneType}
+            label={t("label.whatTypeOfNumber")}
+            options={[
+              { label: t("label.phoneHome"), value: "home" },
+              { label: t("label.phoneWork"), value: "work" },
+              { label: t("label.phoneCell"), value: "cell" },
+            ]}
+            register={register}
+            controlClassName="control"
+            error={!!errors?.[additionalPhoneType]}
+            errorMessage={t("error.phoneNumberType")}
+            validation={{
+              required: true,
+            }} /></>
       )}
     </fieldset>
   )
