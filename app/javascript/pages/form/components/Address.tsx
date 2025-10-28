@@ -106,7 +106,10 @@ const Address = ({
       <Field
         name={addressStreet}
         label={t("label.address1")}
-        validation={{ required: requireAddress, maxLength: LISTING_APPLY_FORMS_INPUT_MAX_LENGTH.address }}
+        validation={{
+          required: requireAddress,
+          maxLength: LISTING_APPLY_FORMS_INPUT_MAX_LENGTH.address,
+        }}
         errorMessage={t("error.address")}
         error={!!errors?.[addressStreet]}
         register={register}
@@ -123,7 +126,10 @@ const Address = ({
         <Field
           name={addressCity}
           label={t("label.city")}
-          validation={{ required: requireAddress, maxLength: LISTING_APPLY_FORMS_INPUT_MAX_LENGTH.city }}
+          validation={{
+            required: requireAddress,
+            maxLength: LISTING_APPLY_FORMS_INPUT_MAX_LENGTH.city,
+          }}
           errorMessage={t("error.city")}
           error={!!errors?.[addressCity]}
           register={register}
@@ -131,7 +137,10 @@ const Address = ({
         <Select
           name={addressState}
           label={t("label.state")}
-          validation={{ required: requireAddress, maxLength: LISTING_APPLY_FORMS_INPUT_MAX_LENGTH.address }}
+          validation={{
+            required: requireAddress,
+            maxLength: LISTING_APPLY_FORMS_INPUT_MAX_LENGTH.address,
+          }}
           error={!!errors?.[addressState]}
           errorMessage={t("error.state")}
           register={register}
@@ -169,7 +178,10 @@ const Address = ({
           <Field
             name={mailingAddressStreet}
             label={t("label.address1")}
-            validation={{ required: requireAddress, maxLength: LISTING_APPLY_FORMS_INPUT_MAX_LENGTH.address }}
+            validation={{
+              required: requireAddress,
+              maxLength: LISTING_APPLY_FORMS_INPUT_MAX_LENGTH.address,
+            }}
             errorMessage={t("error.address")}
             error={!!errors?.[mailingAddressStreet]}
             register={register}
@@ -178,7 +190,10 @@ const Address = ({
             <Field
               name={mailingAddressCity}
               label={t("label.city")}
-              validation={{ required: requireAddress, maxLength: LISTING_APPLY_FORMS_INPUT_MAX_LENGTH.city }}
+              validation={{
+                required: requireAddress,
+                maxLength: LISTING_APPLY_FORMS_INPUT_MAX_LENGTH.city,
+              }}
               errorMessage={t("error.city")}
               error={!!errors?.[mailingAddressCity]}
               register={register}
