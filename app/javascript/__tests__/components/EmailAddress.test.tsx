@@ -94,6 +94,7 @@ describe("EmailAddress", () => {
   it("disables the field if the checkbox is selected", async () => {
     render(<FieldSetWrapper showDontHaveEmailAddress />)
     const user = userEvent.setup()
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
     const emailInput = screen.getByLabelText(t("label.applicantEmail")) as HTMLInputElement
     expect(emailInput.disabled).toBe(false)
     await user.click(screen.getByRole("checkbox", { name: t("label.applicantNoEmail") }))
