@@ -10,12 +10,12 @@ import { openRentalListing } from "../data/RailsRentalListing/listing-rental-ope
 
 const FieldSetWrapper = () => {
   // eslint-disable-next-line @typescript-eslint/unbound-method
-  const { register, watch, trigger, errors, setValue, clearErrors } = useForm({
+  const { register, watch, trigger, errors, setValue, clearErrors, control } = useForm({
     mode: "onBlur",
     reValidateMode: "onBlur",
     shouldFocusError: false,
   })
-  const formStepContextValue = { register, errors, watch, trigger, setValue, clearErrors }
+  const formStepContextValue = { register, errors, watch, trigger, setValue, clearErrors, control }
 
   const listing = openRentalListing
   const formData = {}
@@ -91,9 +91,7 @@ describe("Phone", () => {
     })
     const user = userEvent.setup()
     await user.click(additionalPhoneCheckbox)
-    expect(
-      screen.getByRole("textbox", { name: t("label.applicantSecondPhone") })
-    ).toBeInTheDocument()
+    expect(screen.getByText(t("label.applicantSecondPhone"))).toBeInTheDocument()
   })
 
   it("disables the no phone checkbox if the additional phone checkbox is checked", async () => {

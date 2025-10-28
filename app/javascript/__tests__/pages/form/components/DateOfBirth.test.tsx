@@ -23,12 +23,12 @@ const FieldSetWrapper = () => {
   const fieldNameValues = Object.values(fieldNames)
 
   // eslint-disable-next-line @typescript-eslint/unbound-method
-  const { register, watch, trigger, errors, setValue, clearErrors } = useForm({
+  const { register, watch, trigger, errors, setValue, clearErrors, control } = useForm({
     mode: "onBlur",
     reValidateMode: "onBlur",
     shouldFocusError: false,
   })
-  const formStepContextValue = { register, errors, watch, trigger, setValue, clearErrors }
+  const formStepContextValue = { register, errors, watch, trigger, setValue, clearErrors, control }
 
   const listing = openRentalListing
   const formData = Object.assign({}, ...fieldNameValues.map((name) => ({ [name]: null })))
