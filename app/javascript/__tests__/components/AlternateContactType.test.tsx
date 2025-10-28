@@ -73,11 +73,13 @@ describe("AlternateContactType", () => {
     await user.click(screen.getByRole("radio", { name: t("label.Other") }))
     expect(screen.getByText(t("label.whatIsYourRelationship"))).toBeInTheDocument()
   })
-   it("displays an error message if the field is left empty", async () => {
+  it("displays an error message if the field is left empty", async () => {
     render(<FieldSetWrapper />)
     const user = userEvent.setup()
     await user.click(screen.getByRole("radio", { name: t("label.Other") }))
-    const relationshipInput = screen.getByRole("textbox", { name: t("label.whatIsYourRelationship") })
+    const relationshipInput = screen.getByRole("textbox", {
+      name: t("label.whatIsYourRelationship"),
+    })
     await user.click(relationshipInput)
     await user.tab()
     expect(screen.getByText(t("error.relationship"))).toBeInTheDocument()
