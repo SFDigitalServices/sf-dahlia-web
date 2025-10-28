@@ -87,14 +87,16 @@
         {
           "componentName": "Phone",
           "props": {
-            "label": "your phone number",
+            "label": "label.applicantPhone",
             "showTypeOfNumber": true,
             "showDontHavePhoneNumber": true,
-            "showAdditionalPhoneNumbe": true,
-            "labelForAdditionalPhoneNumbe": "label.applicantSecondPhone",
+            "showAdditionalPhoneNumber": true,
+            "labelForAdditionalPhoneNumber": "label.applicantSecondPhone",
             "fieldNames": {
               "phone": "primaryApplicantPhone",
-              "additionalPhone": "primaryApplicantAdditionalPhone"
+              "phoneType": "primaryApplicantPhoneType",
+              "additionalPhone": "primaryApplicantAdditionalPhone",
+              "additionalPhoneType": "primaryApplicantAdditionalPhoneType"
             }
           }
         },
