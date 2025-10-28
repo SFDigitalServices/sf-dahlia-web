@@ -8,7 +8,11 @@ import { FormStepProvider } from "../../formEngine/formStepContext"
 import { FormEngineProvider } from "../../formEngine/formEngineContext"
 import { openRentalListing } from "../data/RailsRentalListing/listing-rental-open"
 
-const FieldSetWrapper = ({ showDontHaveEmailAddress = false }) => {
+interface FieldSetWrapperProps {
+  showDontHaveEmailAddress?: boolean
+}
+
+const FieldSetWrapper = ({ showDontHaveEmailAddress = false }: FieldSetWrapperProps) => {
   // eslint-disable-next-line @typescript-eslint/unbound-method
   const { register, watch, trigger, errors, setValue, clearErrors } = useForm({
     mode: "onBlur",
@@ -80,9 +84,9 @@ describe("EmailAddress", () => {
   })
 
   it("disables the field if the checkbox is selected", async () => {
-    render(<FieldSetWrapper showDontHaveEmailAddress={true} />)
+    render(<FieldSetWrapper showDontHaveEmailAddress />)
     const user = userEvent.setup()
-    const emailInput = screen.getByLabelText(t("label.applicantEmail")) as HTMLInputElement
+    const emailInput = screen.getByLabelText(t("label.applicantEmail"))
     expect(emailInput.disabled).toBe(false)
     await user.click(screen.getByRole("checkbox", { name: t("label.applicantNoEmail") }))
     expect(emailInput.disabled).toBe(true)
