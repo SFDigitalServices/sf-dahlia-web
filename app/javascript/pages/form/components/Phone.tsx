@@ -34,7 +34,7 @@ const Phone = ({
         label={t(label)}
         control={control}
         disabled={noPhoneCheckbox}
-        required={!noPhoneCheckbox}
+        required={true}
         error={!!errors?.[phone]}
         errorMessage={t("error.phoneNumber")}
         controlClassName="control"
@@ -87,6 +87,7 @@ const Phone = ({
           name={"additionalPhone"}
           label={t("label.applicantAdditionalPhone")}
           error={!!errors?.["additionalPhone"]}
+          disabled={noPhoneCheckbox}
           errorMessage={t("error.phoneNumberType")}
           validation={{
             required: true,
@@ -94,20 +95,20 @@ const Phone = ({
           onChange={(e) => {
             const isChecked = e.target.checked
             setNoAdditionalPhoneCheckbox(isChecked)
-            setValue("noPhone", false)
-            setNoPhoneCheckbox(false)
           }}
         />
       )}
       {noAdditionalPhoneCheckbox && (
-        <><PhoneField
-          name={additionalPhone}
-          label={t(labelForAdditionalPhoneNumber)}
-          control={control}
-          controlClassName="control"
-          required={true}
-          error={!!errors?.[additionalPhone]}
-          errorMessage={t("error.phoneNumber")} />
+        <>
+          <PhoneField
+            name={additionalPhone}
+            label={t(labelForAdditionalPhoneNumber)}
+            control={control}
+            controlClassName="control"
+            required={true}
+            error={!!errors?.[additionalPhone]}
+            errorMessage={t("error.phoneNumber")}
+          />
           <Select
             name={additionalPhoneType}
             label={t("label.whatTypeOfNumber")}
@@ -122,7 +123,9 @@ const Phone = ({
             errorMessage={t("error.phoneNumberType")}
             validation={{
               required: true,
-            }} /></>
+            }}
+          />
+        </>
       )}
     </fieldset>
   )
