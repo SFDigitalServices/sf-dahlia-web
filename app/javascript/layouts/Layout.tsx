@@ -43,7 +43,6 @@ const asAlertType = (alertType: string): AlertTypes => {
       return "notice"
     case "success":
       return "success"
-    case "alert":
     default:
       return "alert"
   }
@@ -129,8 +128,8 @@ const Layout = (props: LayoutProps) => {
   const { getAssetPath } = useContext(ConfigContext)
   const { signOut } = useContext(UserContext)
 
-  // eslint-disable-next-line dot-notation
   if (window.document["documentMode"]) {
+    /* eslint-disable-next-line react-hooks/immutability */
     window.location.href = "/ie-deprecated.html"
     return
   }

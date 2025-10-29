@@ -46,8 +46,12 @@
           "componentName": "DateOfBirth",
           "props": {
             "label": "label.yourDob",
+            "ageErrorMessage": "error.dobPrimaryApplicantAge",
+            "minimumAge": 18,
             "fieldNames": {
-              "dateOfBirth": "primaryApplicantDob"
+              "birthMonth": "primaryApplicantBirthMonth",
+              "birthDay": "primaryApplicantBirthDate",
+              "birthYear": "primaryApplicantBirthYear"
             }
           }
         },
@@ -110,6 +114,7 @@
           "props": {
             "label": "label.workInSf",
             "note": "b2Contact.workInSfDesc",
+            "yesText": "b2Contact.claimWorkInSf",
             "fieldNames": {
               "question": "primaryApplicantWorkInSf"
             }
@@ -308,7 +313,8 @@
           "componentName": "YesNoRadio",
           "props": {
             "label": "label.memberWorkInSf",
-            "description": "c3HouseholdMemberForm.workInSfDesc",
+            "note": "c3HouseholdMemberForm.workInSfDesc",
+            "yesText": "b2Contact.claimWorkInSf",
             "fieldNames": {
               "question": "householdMemberWorkInSf"
             }

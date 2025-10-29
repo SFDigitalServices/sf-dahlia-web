@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-/// <reference types="cypress" />
-export {}
+// <reference types="cypress" />
+// export {}
 
 declare global {
   namespace Cypress {

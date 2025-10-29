@@ -52,55 +52,55 @@ export type Application = {
 }
 
 type PrimaryApplicant = {
-  contactId: string
-  appMemberId: string
-  phone: string // html attr: type="tel", Salesforce type: Phone
+  contactId?: string
+  appMemberId?: string
+  phone?: string // html attr: type="tel", Salesforce type: Phone
   firstName: string
   lastName: string
   middleName?: string
-  noPhone: boolean
-  phoneType: "Home" | "Work" | "Cell"
-  alternatePhone: string // html attr: type="tel", Salesforce type: Phone
-  alternatePhoneType: "Home" | "Work" | "Cell"
-  email: string
-  noEmail: boolean
-  noAddress: boolean
-  hasAltMailingAddress: boolean
-  workInSf: "true" | "false"
-  gender: Gender
-  genderOther: string
-  primaryLanguage: PrimaryLanguage
-  otherLanguage: string
-  raceEthnicity: RaceAndEthnicity
-  asianOther: string
-  blackOther: string
-  indigenousOther: string
-  latinoOther: string
-  menaOther: string
-  pacificIslanderOther: string
-  whiteOther: string
-  sexualOrientation: SexualOrientation
-  sexualOrientationOther: string
-  isVeteran: "Yes" | "No" | "Decline to state"
-  indigenousCentralSouthAmericaGroup: string
-  hiv: boolean
+  noPhone?: boolean
+  phoneType?: "Home" | "Work" | "Cell"
+  alternatePhone?: string // html attr: type="tel", Salesforce type: Phone
+  alternatePhoneType?: "Home" | "Work" | "Cell"
+  email?: string
+  noEmail?: boolean
+  noAddress?: boolean
+  hasAltMailingAddress?: boolean
+  workInSf?: "true" | "false"
+  gender?: Gender
+  genderOther?: string
+  primaryLanguage?: PrimaryLanguage
+  otherLanguage?: string
+  raceEthnicity?: RaceAndEthnicity
+  asianOther?: string
+  blackOther?: string
+  indigenousOther?: string
+  latinoOther?: string
+  menaOther?: string
+  pacificIslanderOther?: string
+  whiteOther?: string
+  sexualOrientation?: SexualOrientation
+  sexualOrientationOther?: string
+  isVeteran?: "Yes" | "No" | "Decline to state"
+  indigenousCentralSouthAmericaGroup?: string
+  hiv?: boolean
   dob: string // "YYYY-MM-DD"
-  address: string // aka street adress
-  city: string
-  state: string // only two letter abbreviations
-  zip: string
-  mailingAddress: string // aka street adress
-  mailingCity: string
-  mailingState: string // only two letter abbreviations
-  mailingZip: string
-  preferenceAddressMatch: "Matched" | "Not Matched"
-  xCoordinate: string
-  yCoordinate: string
-  whichComponentOfLocatorWasUsed: string
-  candidateScore: number
-  isSFUSDEmployee: "Yes" | "No"
-  jobClassification: string
-  webAppID: string
+  address?: string // aka street adress
+  city?: string
+  state?: string // only two letter abbreviations
+  zip?: string
+  mailingAddress?: string // aka street adress
+  mailingCity?: string
+  mailingState?: string // only two letter abbreviations
+  mailingZip?: string
+  preferenceAddressMatch?: "Matched" | "Not Matched"
+  xCoordinate?: string
+  yCoordinate?: string
+  whichComponentOfLocatorWasUsed?: string
+  candidateScore?: number
+  isSFUSDEmployee?: "Yes" | "No"
+  jobClassification?: string
+  webAppID?: string
 }
 
 type AlternateContact = {

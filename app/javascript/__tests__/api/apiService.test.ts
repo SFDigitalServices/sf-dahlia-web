@@ -110,9 +110,9 @@ describe("apiService", () => {
         await authenticatedPost(url, data, config)
         console.error("This console error should not be called")
       } catch (error) {
-        // eslint-disable-next-line jest/no-conditional-expect, jest/no-try-expect
+        // eslint-disable-next-line jest/no-conditional-expect
         expect(error).toBeInstanceOf(Error)
-        // eslint-disable-next-line jest/no-conditional-expect, jest/no-try-expect
+        // eslint-disable-next-line jest/no-conditional-expect
         expect(error.message).toBe("Token expired")
       }
     })
