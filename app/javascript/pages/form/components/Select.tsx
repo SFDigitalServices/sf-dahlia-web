@@ -5,6 +5,7 @@ import { useFormStepContext } from "../../../formEngine/formStepContext"
 interface FormSelectProps {
   label: string
   defaultOptionName: string
+  errorMessage: string
   options: { name: string; value: string }[]
   fieldNames: {
     selection: string
@@ -14,6 +15,7 @@ interface FormSelectProps {
 const FormSelect = ({
   label,
   defaultOptionName,
+  errorMessage,
   options,
   fieldNames: { selection },
 }: FormSelectProps) => {
@@ -34,7 +36,7 @@ const FormSelect = ({
         controlClassName="control"
         register={register}
         error={!!errors?.[selection]}
-        errorMessage={t("error.householdMemberRelationship")}
+        errorMessage={t(errorMessage)}
         validation={{
           required: true,
         }}
