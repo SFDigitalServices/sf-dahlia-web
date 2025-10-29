@@ -155,7 +155,10 @@ const Address = ({
         validation={{
           required: requireAddress,
           maxLength: LISTING_APPLY_FORMS_INPUT_MAX_LENGTH.zipcode,
-          pattern: { value: /^\d+$/, message: t("error.zip") },
+          pattern: {
+            value: /^\d{5}(-\d{4})?$/,
+            message: t("error.zip"),
+          },
         }}
         errorMessage={t("error.zip")}
         error={!!errors?.[addressZipcode]}
@@ -220,7 +223,7 @@ const Address = ({
               required: requireAddress,
               maxLength: LISTING_APPLY_FORMS_INPUT_MAX_LENGTH.zipcode,
               pattern: {
-                value: /^\d+$/,
+                value: /^\d{5}(-\d{4})?$/,
                 message: t("error.zip"),
               },
             }}
