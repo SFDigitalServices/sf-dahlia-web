@@ -1,7 +1,7 @@
 import React from "react"
 import { t, Field, Select } from "@bloom-housing/ui-components"
 import { Heading } from "@bloom-housing/ui-seeds"
-import { LISTING_APPLY_FORMS_INPUT_MAX_LENGTH } from "../../../modules/constants"
+import { LISTING_APPLY_FORMS_INPUT_MAX_LENGTH, LATIN_REGEX } from "../../../modules/constants"
 import { useFormStepContext } from "../../../formEngine/formStepContext"
 import styles from "./Address.module.scss"
 
@@ -108,9 +108,17 @@ const Address = ({
         label={t("label.address1")}
         validation={{
           required: requireAddress,
+          pattern: {
+            value: LATIN_REGEX,
+            message: t("error.pleaseProvideAnswersInEnglish"),
+          },
           maxLength: LISTING_APPLY_FORMS_INPUT_MAX_LENGTH.address,
         }}
-        errorMessage={t("error.address")}
+        errorMessage={
+          errors?.[addressStreet]?.type === "required"
+            ? t("error.address")
+            : errors?.[addressStreet]?.message
+        }
         error={!!errors?.[addressStreet]}
         register={register}
       />
@@ -128,9 +136,17 @@ const Address = ({
           label={t("label.city")}
           validation={{
             required: requireAddress,
+            pattern: {
+              value: LATIN_REGEX,
+              message: t("error.pleaseProvideAnswersInEnglish"),
+            },
             maxLength: LISTING_APPLY_FORMS_INPUT_MAX_LENGTH.city,
           }}
-          errorMessage={t("error.city")}
+          errorMessage={
+            errors?.[addressCity]?.type === "required"
+              ? t("error.city")
+              : errors?.[addressCity]?.message
+          }
           error={!!errors?.[addressCity]}
           register={register}
         />
@@ -183,9 +199,17 @@ const Address = ({
             label={t("label.address1")}
             validation={{
               required: requireAddress,
+              pattern: {
+                value: LATIN_REGEX,
+                message: t("error.pleaseProvideAnswersInEnglish"),
+              },
               maxLength: LISTING_APPLY_FORMS_INPUT_MAX_LENGTH.address,
             }}
-            errorMessage={t("error.address")}
+            errorMessage={
+              errors?.[mailingAddressStreet]?.type === "required"
+                ? t("error.address")
+                : errors?.[mailingAddressStreet]?.message
+            }
             error={!!errors?.[mailingAddressStreet]}
             register={register}
           />
@@ -195,9 +219,17 @@ const Address = ({
               label={t("label.city")}
               validation={{
                 required: requireAddress,
+                pattern: {
+                  value: LATIN_REGEX,
+                  message: t("error.pleaseProvideAnswersInEnglish"),
+                },
                 maxLength: LISTING_APPLY_FORMS_INPUT_MAX_LENGTH.city,
               }}
-              errorMessage={t("error.city")}
+              errorMessage={
+                errors?.[mailingAddressCity]?.type === "required"
+                  ? t("error.city")
+                  : errors?.[mailingAddressCity]?.message
+              }
               error={!!errors?.[mailingAddressCity]}
               register={register}
             />
