@@ -297,7 +297,9 @@
           "props": {
             "label": "label.dob",
             "fieldNames": {
-              "dateOfBirth": "householdMemberDob"
+              "birthMonth": "houseMemberBirthMonth",
+              "birthDay": "houseMemberBirthDate",
+              "birthYear": "houseMemberBirthYear"
             }
           }
         },
