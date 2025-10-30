@@ -53,9 +53,7 @@ export const defineCryptoApi = () => {
 }
 
 // Wrapper for application form component tests
-export const formContextWrapper = (
-  formComponent: React.ReactElement
-) => {
+export const formContextWrapper = (formComponent: React.ReactElement) => {
   const Wrapper = ({ children }: { children: React.ReactNode }) => {
     const formMethods = useForm({
       mode: "onBlur",
