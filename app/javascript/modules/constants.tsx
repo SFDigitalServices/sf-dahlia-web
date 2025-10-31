@@ -168,6 +168,7 @@ export const LISTING_APPLY_FORMS_INPUT_MAX_LENGTH = {
   password: 50,
   address: 75,
   city: 75,
+  zipcode: 10,
   alternateContactTypeOther: 50,
   alternateContactAgency: 50,
   certificateNumber: 50,
