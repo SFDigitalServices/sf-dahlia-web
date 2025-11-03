@@ -1,7 +1,7 @@
 import React from "react"
 import { t, FieldGroup } from "@bloom-housing/ui-components"
 import { useFormStepContext } from "../../../formEngine/formStepContext"
-import "./YesNoRadio.scss"
+import styles from "./YesNoRadio.module.scss"
 
 interface YesNoRadioProps {
   label?: string
@@ -17,8 +17,7 @@ const YesNoRadio = ({ label, note, yesText, fieldNames }: YesNoRadioProps) => {
   const selected = watch(fieldNames?.question)
   return (
     <FieldGroup
-      fieldGroupClassName="radio-field-group"
-      fieldClassName="radio-field"
+      fieldGroupClassName={`${styles['radio-field-group']} ${styles['radio-field']}`}
       type="radio"
       name={fieldNames?.question}
       groupLabel={t(label)}
