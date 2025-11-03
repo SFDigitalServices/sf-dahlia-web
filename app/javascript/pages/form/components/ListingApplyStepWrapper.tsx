@@ -44,8 +44,7 @@ const ListingApplyStepWrapper = ({
   // eslint-disable-next-line @typescript-eslint/unbound-method
   const { register, errors, watch, trigger, handleSubmit, setValue, clearErrors, control } =
     useForm({
-      mode: "onBlur",
-      reValidateMode: "onBlur",
+      mode: "onChange",
       shouldFocusError: false,
       defaultValues,
     })

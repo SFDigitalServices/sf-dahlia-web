@@ -44,9 +44,9 @@ const Phone = ({
           name={phoneType}
           label={t("label.whatTypeOfNumber")}
           options={[
+            { label: t("label.phoneCell"), value: "cell" },
             { label: t("label.phoneHome"), value: "home" },
             { label: t("label.phoneWork"), value: "work" },
-            { label: t("label.phoneCell"), value: "cell" },
           ]}
           register={register}
           disabled={noPhoneCheckbox}
@@ -113,9 +113,9 @@ const Phone = ({
             name={additionalPhoneType}
             label={t("label.whatTypeOfNumber")}
             options={[
+              { label: t("label.phoneCell"), value: "cell" },
               { label: t("label.phoneHome"), value: "home" },
               { label: t("label.phoneWork"), value: "work" },
-              { label: t("label.phoneCell"), value: "cell" },
             ]}
             register={register}
             controlClassName="control"
