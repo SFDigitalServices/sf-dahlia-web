@@ -19,72 +19,6 @@ interface HomePageProps {
   urlParams: UrlParams
 }
 
-const baysideVillage = {
-  name: "Bayside Village",
-  agent: "TaJuana Caruthers",
-  phoneDisplay: "(216) 273-1159",
-  phone: "+12162731159",
-  email: "tajuana.caruthers@bpapartments.com",
-  removeLinks: true,
-}
-
-const listingIdToNameMap = {
-  a0W0P00000DZYzVUAX: {
-    name: "TEST 1300 22nd (Knox)",
-    agent: "Test Test",
-    phoneDisplay: "(XXX) XXX-XXXX",
-    phone: "+1XXXXXXXXXX",
-    email: "test@test.com",
-  },
-  a0W4U00000KnLRMUA3: {
-    name: "1830 Alemany",
-    agent: "Brian Minall",
-    phoneDisplay: "(415) 647-7191 x127",
-    phone: "+14156477191,127",
-    email: "brian.minall@caritasmanagement.com",
-  },
-  a0W4U00000IYEb4UAH: {
-    name: "The Canyon",
-    agent: "Joshua Schodorf",
-    phoneDisplay: "(415) 605-9958",
-    phone: "+14156059958",
-    email: "bmr@thecanyonsf.com",
-  },
-  a0W4U00000IYSM4UAP: {
-    name: "The Fitzgerald",
-    agent: "Lisa Moorehead-Carr",
-    phoneDisplay: "(916) 686-4126",
-    phone: "+19166864126",
-    email: "fitzgeraldbmr@gmail.com",
-  },
-  a0W4U00000Ih1V2UAJ: {
-    name: "Ventana Residences",
-    agent: "Sara Lipowsky",
-    phoneDisplay: "(209) 809-4112",
-    phone: "+12098094112",
-    email: "ventanabmr@gmail.com",
-  },
-  a0W4U00000KnCZRUA3: {
-    name: "The George",
-    agent: "Lisa Moorehead-Carr",
-    phoneDisplay: "(916) 686-4126",
-    phone: "+19166864126",
-    email: "imaginethatconsulting@gmail.com",
-  },
-  a0W4U00000NlYn3UAF: baysideVillage,
-  a0W4U00000NlTJxUAN: baysideVillage,
-  a0W4U00000IYLReUAP: baysideVillage,
-}
-
-export const leasingAgentListingLink = (listing) => {
-  const component = listingIdToNameMap[listing].removeLinks ? (
-    listingIdToNameMap[listing].name
-  ) : (
-    <Link href={`/listings/${listing}`}>{listingIdToNameMap[listing].name}</Link>
-  )
-  return component
-}
-
 const ListingInterestPage = (_props: HomePageProps) => {
   const [listing, setListing] = useState<RailsListing>(null)
   useEffect(() => {
@@ -97,7 +31,7 @@ const ListingInterestPage = (_props: HomePageProps) => {
       {_props.urlParams.response !== "e" && (
         <Card className={styles.listingCard}>
           <Card.Header className={styles.listingHeader}>
-            <Heading className={styles.listingHeading} priority={1} size="md">{listing?.Name}</Heading>
+            <Heading className={styles.listingHeading} priority={1} size="lg">{listing?.Name}</Heading>
           </Card.Header>
           <Card.Section className={styles.listingSection}>
             <Button href={`/listings/${listing?.Id}`} variant="text" size="sm" newWindowTarget>
