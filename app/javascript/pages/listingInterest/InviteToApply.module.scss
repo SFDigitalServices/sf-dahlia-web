@@ -1,0 +1,26 @@
+.listingCard {
+    @media (max-width: theme("screens.sm")) {
+        border: none;
+        border-radius: 0;
+        margin-bottom: 0;
+    }
+    margin-bottom: var(--seeds-spacer-label);
+    .listingHeader {
+        text-align: center;
+        padding: var(--seeds-spacer-header);
+        background: var(--seeds-color-primary);
+
+        .listingHeading {
+            color: var(--seeds-color-white);
+            
+        }
+    }
+
+    .listingSection {
+        padding: var(--seeds-spacer-text) !important;
+        text-align: center;
+        @media (max-width: theme("screens.sm")) {
+            background: var(--seeds-color-primary-lighter);
+        }
+    }
+}

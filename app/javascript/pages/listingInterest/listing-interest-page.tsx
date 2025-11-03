@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react"
 import withAppSetup from "../../layouts/withAppSetup"
-import { FormCard, Heading } from "@bloom-housing/ui-components"
+import { Card, Button, Heading } from "@bloom-housing/ui-seeds"
 import FormLayout from "../../layouts/FormLayout"
 import Link from "../../navigation/Link"
 import { AppPages } from "../../util/routeUtil"
 import InviteToApplyDeadlinePassed from "./InviteToApplyDeadlinePassed"
 import { getListing } from "../../api/listingApiService"
 import { RailsListing } from "../../modules/listings/SharedHelpers"
+import styles from "./InviteToApply.module.scss"
 
 interface UrlParams {
   listing: string
@@ -75,17 +76,6 @@ const listingIdToNameMap = {
   a0W4U00000IYLReUAP: baysideVillage,
 }
 
-const headingListingLink = (listing) => {
-  const component = listingIdToNameMap[listing].removeLinks ? (
-    <></>
-  ) : (
-    <Link href={`/listings/${listing}`} target="_blank">
-      Go to building details
-    </Link>
-  )
-  return component
-}
-
 export const leasingAgentListingLink = (listing) => {
   const component = listingIdToNameMap[listing].removeLinks ? (
     listingIdToNameMap[listing].name
@@ -105,9 +95,16 @@ const ListingInterestPage = (_props: HomePageProps) => {
   return (
     <FormLayout>
       {_props.urlParams.response !== "e" && (
-        <FormCard header={<Heading priority={1}>{listing?.Name}</Heading>}>
-          {headingListingLink(_props.urlParams.listing)}
-        </FormCard>
+        <Card className={styles.listingCard}>
+          <Card.Header className={styles.listingHeader}>
+            <Heading className={styles.listingHeading} priority={1} size="md">{listing?.Name}</Heading>
+          </Card.Header>
+          <Card.Section className={styles.listingSection}>
+            <Button href={`/listings/${listing?.Id}`} variant="text" size="sm" newWindowTarget>
+              Go to building details
+            </Button>
+          </Card.Section>
+        </Card>
       )}
       {_props.urlParams.response === "y" && (
         <div className="mt-4 bg-white rounded-lg border border-solid">

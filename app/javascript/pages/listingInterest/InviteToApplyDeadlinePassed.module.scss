@@ -1,16 +1,27 @@
 .deadlinePassedCard {
+   @media (max-width: theme("screens.sm")) {
+    border: none;
+   }
+
   .deadlinePassedHeader {
-    margin: var(--seeds-spacer-content);
+    padding: var(--seeds-spacer-container);
     text-align: center;
-    gap: var(--seeds-spacer-content);
+    @media (max-width: theme("screens.sm")) {
+      text-align: left;
+      padding: var(--seeds-spacer-section);
+    }
   }
   .deadlinePassedSection {
-    padding: var(--seeds-spacer-container);
+    padding: var(--seeds-spacer-section);
     background: var(--seeds-color-primary-lighter);
-    gap: var(--seeds-spacer-content);
+    line-height: var(--seeds-line-height-relaxed);
   }
   .deadlinePassedIcon {
     display: flex;
     gap: var(--seeds-spacer-label);
+  }
+
+  .deadlinePassedHeading {
+    margin-bottom: var(--seeds-spacer-label);
   }
 }
