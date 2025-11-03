@@ -15,13 +15,13 @@ interface YesNoRadioProps {
 const YesNoRadio = ({ label, note, yesText, fieldNames }: YesNoRadioProps) => {
   const { register, errors, watch, trigger } = useFormStepContext()
   const selected = watch(fieldNames?.question)
-  
+
   const handleRadioChange = () => {
     if (fieldNames?.question && errors?.[fieldNames.question]) {
       void trigger(fieldNames.question)
     }
   }
-  
+
   return (
     <FieldGroup
       fieldGroupClassName="radio-field-group"
