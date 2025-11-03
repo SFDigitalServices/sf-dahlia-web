@@ -34,8 +34,8 @@ class Api::V1::ListingInterestController < ApiController
                                          { verify_expiration: false })
       m = decoded_expired_token[0]['m']
       listing_id = listing_id_map(m)
-      # when token is expired redirect with a response of x (expired)
-      redirect_to "/listing_interest?listing=#{listing_id}&response=x"
+      # when token is expired redirect to deadline passed page
+      redirect_to "/invite-to-apply/deadline-passed?listing=#{listing_id}"
     rescue StandardError => e
       Rails.logger.error("Error when creating fieldUpdateComment #{e}")
       # when there is an error redirect with a response of e (error)

@@ -7,6 +7,17 @@ class ListingInterestPageController < ApplicationController
     render 'listing_interest'
   end
 
+  def deadline_passed
+    @listing_interest_props = { 
+      assetPaths: static_asset_paths,
+      urlParams: { 
+        listing: params['listing'],
+        response: 'x'
+      } 
+    }
+    render 'listing_interest'
+  end
+
   def use_react_app
     true
   end
