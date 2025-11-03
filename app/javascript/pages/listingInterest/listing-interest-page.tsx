@@ -1,9 +1,12 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import withAppSetup from "../../layouts/withAppSetup"
 import { FormCard, Heading } from "@bloom-housing/ui-components"
 import FormLayout from "../../layouts/FormLayout"
 import Link from "../../navigation/Link"
 import { AppPages } from "../../util/routeUtil"
+import InviteToApplyDeadlinePassed from "./InviteToApplyDeadlinePassed"
+import { getListing } from "../../api/listingApiService"
+import { RailsListing } from "../../modules/listings/SharedHelpers"
 
 interface UrlParams {
   listing: string
@@ -83,7 +86,7 @@ const headingListingLink = (listing) => {
   return component
 }
 
-const leasingAgentListingLink = (listing) => {
+export const leasingAgentListingLink = (listing) => {
   const component = listingIdToNameMap[listing].removeLinks ? (
     listingIdToNameMap[listing].name
   ) : (
@@ -93,15 +96,21 @@ const leasingAgentListingLink = (listing) => {
 }
 
 const ListingInterestPage = (_props: HomePageProps) => {
+  const [listing, setListing] = useState<RailsListing>(null)
+  useEffect(() => {
+    void getListing(_props.urlParams.listing).then((listing: RailsListing) => {
+      setListing(listing)
+    })
+  }, [_props.urlParams.listing])
   return (
     <FormLayout>
       {_props.urlParams.response !== "e" && (
         <FormCard
           header={
-            <Heading priority={1}>{listingIdToNameMap[_props.urlParams.listing].name}</Heading>
+            <Heading priority={1}>{listing?.Name}</Heading>
           }
         >
-          {headingListingLink(_props.urlParams.listing)}
+          {headingListingLink(_props.urlParams. listing)}
         </FormCard>
       )}
       {_props.urlParams.response === "y" && (
@@ -140,38 +149,7 @@ const ListingInterestPage = (_props: HomePageProps) => {
           </div>
         </div>
       )}
-      {_props.urlParams.response === "x" && (
-        <div className="mt-4 bg-white rounded-lg border border-solid">
-          <div className="pt-8 pb-8 text-center border-b border-solid">
-            <div className="text-2xl">The deadline to respond has already passed</div>
-            <div className="mt-4 text-sm">Your answer was not submitted</div>
-          </div>
-          <div className="p-8 bg-blue-100">
-            <p>
-              If you are still interested in an apartment at{" "}
-              {leasingAgentListingLink(_props.urlParams.listing)}
-              <span className="text-neutral-600">, contact: </span>
-            </p>
-            <ul className="mt-6">
-              <li>
-                <span className="text-lg leading-6">
-                  {listingIdToNameMap[_props.urlParams.listing].agent}
-                </span>
-              </li>
-              <li>
-                <a href={`tel:${listingIdToNameMap[_props.urlParams.listing].phone}`}>
-                  {listingIdToNameMap[_props.urlParams.listing].phoneDisplay}
-                </a>
-              </li>
-              <li>
-                <a href={`mailto:${listingIdToNameMap[_props.urlParams.listing].email}`}>
-                  {listingIdToNameMap[_props.urlParams.listing].email}
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      )}
+      {_props.urlParams.response === "x" && <InviteToApplyDeadlinePassed listingName={listing?.Name} leasingAgentName={listing?.Leasing_Agent_Name} leasingAgentPhone={listing?.Leasing_Agent_Phone} leasingAgentEmail={listing?.Leasing_Agent_Email} />}
       {_props.urlParams.response === "e" && (
         <div className="mt-4 bg-white rounded-lg border border-solid">
           <div className="pt-8 pb-8 text-center border-b border-solid">
