@@ -13,8 +13,15 @@ interface YesNoRadioProps {
 }
 
 const YesNoRadio = ({ label, note, yesText, fieldNames }: YesNoRadioProps) => {
-  const { register, errors, watch } = useFormStepContext()
+  const { register, errors, watch, trigger } = useFormStepContext()
   const selected = watch(fieldNames?.question)
+  
+  const handleRadioChange = () => {
+    if (fieldNames?.question && errors?.[fieldNames.question]) {
+      void trigger(fieldNames.question)
+    }
+  }
+  
   return (
     <FieldGroup
       fieldGroupClassName="radio-field-group"
@@ -28,8 +35,8 @@ const YesNoRadio = ({ label, note, yesText, fieldNames }: YesNoRadioProps) => {
       errorMessage={t("error.pleaseSelectAnOption")}
       register={register}
       fields={[
-        { id: "yes", value: "true", label: t("t.yes") },
-        { id: "no", value: "false", label: t("t.no") },
+        { id: "yes", value: "true", label: t("t.yes"), inputProps: { onClick: handleRadioChange } },
+        { id: "no", value: "false", label: t("t.no"), inputProps: { onClick: handleRadioChange } },
       ]}
       validation={{
         required: true,
