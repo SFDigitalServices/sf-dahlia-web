@@ -11,7 +11,7 @@ class ListingInterestPageController < ApplicationController
     @listing_interest_props = { 
       assetPaths: static_asset_paths,
       urlParams: { 
-        listing: params['listing'],
+        listingId: params['listingId'],
         response: 'x'
       } 
     }
