@@ -108,8 +108,8 @@ Rails.application.routes.draw do
   get '(:lang)/privacy' => 'assistance#privacy', lang: /(en|es|zh|tl)/
   get '(:lang)/disclaimer' => 'assistance#disclaimer', lang: /(en|es|zh|tl)/
 
-  get '(:lang)/listing_interest' => 'listing_interest_page#index', lang: /(en|es|zh|tl)/
-  get '(:lang)/invite-to-apply/deadline-passed' => 'listing_interest_page#deadline_passed', as: :invite_to_apply_deadline_passed, lang: /(en|es|zh|tl)/
+  get '(:lang)/invite-to-apply' => 'invite_to_apply_page#index', as: :invite_to_apply, lang: /(en|es|zh|tl)/
+  get '(:lang)/invite-to-apply/deadline-passed' => 'invite_to_apply_page#deadline_passed', as: :invite_to_apply_deadline_passed, lang: /(en|es|zh|tl)/
 
   get '(:lang)/my-account' => 'account#my_account', lang: /(en|es|zh|tl)/
   get '(:lang)/account-settings' => 'account#account_settings', lang: /(en|es|zh|tl)/

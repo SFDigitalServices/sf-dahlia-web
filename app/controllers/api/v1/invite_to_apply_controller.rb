@@ -1,5 +1,5 @@
 # Backend API for are you interested email
-class Api::V1::ListingInterestController < ApiController
+class Api::V1::InviteToApplyController < ApiController
   def index
     token = params[:t]
     secret = env_secret
@@ -27,7 +27,7 @@ class Api::V1::ListingInterestController < ApiController
 
       # when fieldupdatecomment is successfully created redirect with a response of y (yes) or n (no)
       listing_id = listing_id_map(m)
-      redirect_to "/listing_interest?listing=#{listing_id}&response=#{r}"
+      redirect_to "/invite-to-apply?listing=#{listing_id}&response=#{r}"
     rescue JWT::ExpiredSignature
       Rails.logger.error('Token expired, not able to create fieldUpdateComment')
       decoded_expired_token = JWT.decode(token, secret, true,

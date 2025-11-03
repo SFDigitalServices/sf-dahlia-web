@@ -1,5 +1,5 @@
 import React from "react"
-import ListingInterestPage from "../../../../javascript/pages/listingInterest/listing-interest-page"
+import InviteToApplyPage from "../../../../javascript/pages/inviteToApply/invite-to-apply"
 import { renderAndLoadAsync } from "../../__util__/renderUtils"
 
 describe("Listing Interest Page", () => {
@@ -9,7 +9,7 @@ describe("Listing Interest Page", () => {
 
   it("renders listing interest page with yes response", async () => {
     const { asFragment } = await renderAndLoadAsync(
-      <ListingInterestPage
+      <InviteToApplyPage
         assetPaths="/"
         urlParams={{ listing: "a0W0P00000DZYzVUAX", response: "y" }}
       />
@@ -19,7 +19,7 @@ describe("Listing Interest Page", () => {
   })
   it("renders listing interest page with no response", async () => {
     const { asFragment } = await renderAndLoadAsync(
-      <ListingInterestPage
+      <InviteToApplyPage
         assetPaths="/"
         urlParams={{ listing: "a0W0P00000DZYzVUAX", response: "n" }}
       />
@@ -29,7 +29,7 @@ describe("Listing Interest Page", () => {
   })
   it("renders listing interest page with expired response", async () => {
     const { asFragment } = await renderAndLoadAsync(
-      <ListingInterestPage
+      <InviteToApplyPage
         assetPaths="/"
         urlParams={{ listing: "a0W0P00000DZYzVUAX", response: "x" }}
       />
@@ -39,7 +39,7 @@ describe("Listing Interest Page", () => {
   })
   it("renders listing interest page with error response", async () => {
     const { asFragment } = await renderAndLoadAsync(
-      <ListingInterestPage
+      <InviteToApplyPage
         assetPaths="/"
         urlParams={{ listing: "a0W0P00000DZYzVUAX", response: "e" }}
       />

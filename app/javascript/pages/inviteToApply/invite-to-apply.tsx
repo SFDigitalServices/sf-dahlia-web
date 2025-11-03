@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react"
 import withAppSetup from "../../layouts/withAppSetup"
-import { Card, Button, Heading } from "@bloom-housing/ui-seeds"
+import { t, Icon } from "@bloom-housing/ui-components"
+import { Card, Button, Heading, Message } from "@bloom-housing/ui-seeds"
 import FormLayout from "../../layouts/FormLayout"
 import Link from "../../navigation/Link"
 import { AppPages } from "../../util/routeUtil"
@@ -8,15 +9,29 @@ import InviteToApplyDeadlinePassed from "./InviteToApplyDeadlinePassed"
 import { getListing } from "../../api/listingApiService"
 import { RailsListing } from "../../modules/listings/SharedHelpers"
 import styles from "./InviteToApply.module.scss"
+import { localizedFormat, formatTimeOfDay } from "../../util/languageUtil"
 
 interface UrlParams {
   listing: string
   response: string
+  deadline?: string
 }
 
 interface HomePageProps {
   assetPaths: unknown
   urlParams: UrlParams
+}
+
+const DeadlinePassedBanner = ({ deadline }: { deadline: string }) => {
+  return (
+    <Message fullwidth variant="alert" customIcon={<Icon symbol="clock" size="medium" className={styles.bannerIcon} />}>
+      <strong>{t("inviteToApplyPage.deadlinePassed.banner")}</strong> {" "}
+      <span>{t("myApplications.applicationDeadlineTime", {
+        date: localizedFormat(deadline, "ll"),
+        time: formatTimeOfDay(deadline),
+      })}</span> 
+    </Message>
+  )
 }
 
 const ListingInterestPage = (_props: HomePageProps) => {
@@ -28,6 +43,7 @@ const ListingInterestPage = (_props: HomePageProps) => {
   }, [_props.urlParams.listing])
   return (
     <FormLayout>
+      {_props.urlParams.deadline && <DeadlinePassedBanner deadline={_props.urlParams.deadline} />}
       {_props.urlParams.response !== "e" && (
         <Card className={styles.listingCard}>
           <Card.Header className={styles.listingHeader}>
