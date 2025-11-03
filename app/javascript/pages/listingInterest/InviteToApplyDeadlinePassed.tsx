@@ -1,46 +1,47 @@
 import React from "react"
-import { t } from "@bloom-housing/ui-components"
+import { t, Icon, IconFillColors } from "@bloom-housing/ui-components"
+import { faEnvelope } from "@fortawesome/free-solid-svg-icons"
+import { Card, Heading } from "@bloom-housing/ui-seeds"
 import styles from "./InviteToApplyDeadlinePassed.module.scss"
 
 interface InviteToApplyDeadlinePassedProps {
-    listingName: string
-    leasingAgentName: string
-    leasingAgentPhone: string
-    leasingAgentEmail: string
+  listingName: string
+  leasingAgentName: string
+  leasingAgentPhone: string
+  leasingAgentEmail: string
 }
 
-const InviteToApplyDeadlinePassed = ({ listingName, leasingAgentName, leasingAgentPhone, leasingAgentEmail }: InviteToApplyDeadlinePassedProps) => {
-    return (
-        <div className="mt-4 bg-white rounded-lg border border-solid">
-          <div className="pt-8 pb-8 text-center border-b border-solid">
-            <div className="text-2xl">{t("inviteToApplyPage.deadlinePassed.title")}</div>
-            <div className="mt-4 text-sm">{t("inviteToApplyPage.deadlinePassed.subtitle")}</div>
-          </div>
-          <div className="p-8 bg-blue-100">
-            <p>
-              {t("inviteToApplyPage.deadlinePassed.p1", { listingName: listingName })}
-              <span className="text-neutral-600">, {t("inviteToApplyPage.deadlinePassed.p2")}: </span>
-            </p>
-            <ul className="mt-6">
-              <li>
-                <span className="text-lg leading-6">
-                  {leasingAgentName}
-                </span>
-              </li>
-              <li>
-                <a href={`tel:${leasingAgentPhone}`}>
-                  {leasingAgentPhone}
-                </a>
-              </li>
-              <li>
-                <a href={`mailto:${leasingAgentEmail}`}>
-                  {leasingAgentEmail}
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-    )
+const InviteToApplyDeadlinePassed = ({
+  listingName,
+  leasingAgentName,
+  leasingAgentPhone,
+  leasingAgentEmail,
+}: InviteToApplyDeadlinePassedProps) => {
+  return (
+    <Card className={styles.deadlinePassedCard}>
+      <Card.Header className={styles.deadlinePassedHeader}>
+        <Heading priority={2} size="2xl">
+          {t("inviteToApplyPage.deadlinePassed.title")}
+        </Heading>
+        <p>{t("inviteToApplyPage.deadlinePassed.subtitle")}</p>
+      </Card.Header>
+      <Card.Section className={styles.deadlinePassedSection}>
+        <Heading priority={3} size="xl">
+          {t("inviteToApplyPage.deadlinePassed.p1", { listingName })}
+        </Heading>
+        <p>{leasingAgentName}</p>
+        <p className="field-note">{t("inviteToApplyPage.deadlinePassed.p2")}</p>
+        <a className={styles.deadlinePassedIcon} href={`tel:+1${leasingAgentPhone}`}>
+          <Icon symbol="phone" size="medium" fill={IconFillColors.primary} />
+          {leasingAgentPhone}
+        </a>
+        <a className={styles.deadlinePassedIcon} href={`mailto:${leasingAgentEmail}`}>
+          <Icon symbol={faEnvelope} size="medium" fill={IconFillColors.primary} />
+          {leasingAgentEmail}
+        </a>
+      </Card.Section>
+    </Card>
+  )
 }
 
 export default InviteToApplyDeadlinePassed

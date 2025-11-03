@@ -1,0 +1,16 @@
+.deadlinePassedCard {
+  .deadlinePassedHeader {
+    margin: var(--seeds-spacer-content);
+    text-align: center;
+    gap: var(--seeds-spacer-content);
+  }
+  .deadlinePassedSection {
+    padding: var(--seeds-spacer-container);
+    background: var(--seeds-color-primary-lighter);
+    gap: var(--seeds-spacer-content);
+  }
+  .deadlinePassedIcon {
+    display: flex;
+    gap: var(--seeds-spacer-label);
+  }
+}

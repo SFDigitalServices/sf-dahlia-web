@@ -105,12 +105,8 @@ const ListingInterestPage = (_props: HomePageProps) => {
   return (
     <FormLayout>
       {_props.urlParams.response !== "e" && (
-        <FormCard
-          header={
-            <Heading priority={1}>{listing?.Name}</Heading>
-          }
-        >
-          {headingListingLink(_props.urlParams. listing)}
+        <FormCard header={<Heading priority={1}>{listing?.Name}</Heading>}>
+          {headingListingLink(_props.urlParams.listing)}
         </FormCard>
       )}
       {_props.urlParams.response === "y" && (
@@ -149,7 +145,14 @@ const ListingInterestPage = (_props: HomePageProps) => {
           </div>
         </div>
       )}
-      {_props.urlParams.response === "x" && <InviteToApplyDeadlinePassed listingName={listing?.Name} leasingAgentName={listing?.Leasing_Agent_Name} leasingAgentPhone={listing?.Leasing_Agent_Phone} leasingAgentEmail={listing?.Leasing_Agent_Email} />}
+      {_props.urlParams.response === "x" && (
+        <InviteToApplyDeadlinePassed
+          listingName={listing?.Name}
+          leasingAgentName={listing?.Leasing_Agent_Name}
+          leasingAgentPhone={listing?.Leasing_Agent_Phone}
+          leasingAgentEmail={listing?.Leasing_Agent_Email}
+        />
+      )}
       {_props.urlParams.response === "e" && (
         <div className="mt-4 bg-white rounded-lg border border-solid">
           <div className="pt-8 pb-8 text-center border-b border-solid">
