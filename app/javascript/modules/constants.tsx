@@ -157,7 +157,7 @@ export const DIRECTORY_PAGE_HEADER = "page-header"
 export const UNLEASH_FLAG = {
   CLERK_AUTH: "temp.webapp.auth.clerk",
   FORM_ENGINE: "perm.webapp.formEngine",
-  FORM_ENGINE_NAV: "perm.webapp.formEngine.nav",
+  FORM_ENGINE_DEBUG: "perm.webapp.formEngine.debug",
 }
 
 export const LISTING_APPLY_FORMS_INPUT_MAX_LENGTH = {
