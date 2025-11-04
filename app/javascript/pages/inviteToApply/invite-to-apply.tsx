@@ -60,9 +60,8 @@ const InviteToApplyPage = (_props: HomePageProps) => {
   const { unleashFlag: inviteToApplyFlag } = useFeatureFlag("partners.inviteToApply", false)
 
   return inviteToApplyFlag ? (
-    
     <FormLayout>
-            {_props.urlParams.response !== "e" && (
+      {_props.urlParams.response !== "e" && (
         <Card className={styles.listingCard}>
           <Card.Header className={styles.listingHeader}>
             <Heading className={styles.listingHeading} priority={1} size="lg">
