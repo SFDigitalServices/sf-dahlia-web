@@ -26,22 +26,20 @@ const FormSelect = ({
   }))
 
   return (
-    <>
-      <Select
-        id={selection}
-        name={selection}
-        label={t(label)}
-        options={selectOptions}
-        placeholder={t(defaultOptionName)}
-        controlClassName="control"
-        register={register}
-        error={!!errors?.[selection]}
-        errorMessage={t(errorMessage)}
-        validation={{
-          required: true,
-        }}
-      />
-    </>
+    <Select
+      id={selection}
+      name={selection}
+      label={t(label)}
+      options={selectOptions}
+      placeholder={t(defaultOptionName)}
+      controlClassName="control"
+      register={register}
+      error={!!errors?.[selection]}
+      errorMessage={t(errorMessage)}
+      validation={{
+        required: true,
+      }}
+    />
   )
 }
 
