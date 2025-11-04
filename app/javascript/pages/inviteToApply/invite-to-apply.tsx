@@ -5,7 +5,6 @@ import withAppSetup from "../../layouts/withAppSetup"
 import FormLayout from "../../layouts/FormLayout"
 import { AppPages } from "../../util/routeUtil"
 import { getListing } from "../../api/listingApiService"
-import { localizedFormat, formatTimeOfDay } from "../../util/languageUtil"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import InviteToApplyDeadlinePassed from "./InviteToApplyDeadlinePassed"
 import InviteToApplyWithdrawn from "./InviteToApplyWithdrawn"
@@ -45,11 +44,6 @@ const InviteToApplyPage = ({ urlParams: { response, applicationNumber, deadline,
   const [listing, setListing] = useState<RailsSaleListing>(null)
 
   const submitLink = `/invite-to-apply?response=${response}&applicationNumber=${applicationNumber}&deadline=${deadline}&listingId=${listingId}`
-  
-  const formattedDeadline = t("myApplications.applicationDeadlineTime", {
-    date: localizedFormat(deadline, "ll"),
-    time: formatTimeOfDay(deadline),
-  })
 
   const { router } = useContext(NavigationContext)
   useEffect(() => {
@@ -65,20 +59,20 @@ const InviteToApplyPage = ({ urlParams: { response, applicationNumber, deadline,
 
   return inviteToApplyFlag ? (
     response === "yes" ? (
-      <InviteToApplySubmitYourInfo listing={listing} formattedDeadline={formattedDeadline} />
+      <InviteToApplySubmitYourInfo listing={listing} deadline={deadline} />
     ) : (
       <FormLayout>
         {<InviteToApplyHeader listing={listing} />}
         if(response === "contact") {
           <InviteToApplyContactMeLater
             listing={listing}
-            formattedDeadline={formattedDeadline}
+            deadline={deadline}
             submitLink={submitLink} 
           />
         } else if(_props.urlParams.response === "no") {
           <InviteToApplyWithdrawn
             listing={listing}
-            formattedDeadline={formattedDeadline}
+            deadline={deadline}
             submitLink={submitLink}
           />
         } else if(window.location.pathname.includes("/deadline-passed")) {

@@ -5,12 +5,12 @@ import HeaderSidebarLayout from "../../layouts/HeaderSidebarLayout"
 import RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
 import { getListingAddressString } from "../../util/listingUtil"
 import { LeasingAgent } from "../../modules/listings/components/LeasingAgent"
-
+import { getApplicationDeadline } from "../../util/languageUtil"
 import styles from "./InviteToApply.module.scss"
 
 interface InviteToApplySubmitYourInfoProps {
   listing: RailsSaleListing
-  formattedDeadline: string
+  deadline: string
 }
 
 const DeadlineBanner = ({ deadline }: { deadline: string }) => {
@@ -28,7 +28,7 @@ const DeadlineBanner = ({ deadline }: { deadline: string }) => {
           ? t("inviteToApplyPage.submitYourInfo.deadlinePassed")
           : t("inviteToApplyPage.submitYourInfo.submitByDeadline")}
       </strong>
-      <span>{deadline}</span>
+      <span>{getApplicationDeadline(deadline)}</span>
     </Message>
   )
 }
@@ -86,13 +86,13 @@ const WhatHappensNext = () => {
   )
 }
 
-const SubmitYourInfoHeader = ({ listing, formattedDeadline }: InviteToApplySubmitYourInfoProps) => {
+const SubmitYourInfoHeader = ({ listing, deadline }: InviteToApplySubmitYourInfoProps) => {
   return (
     <>
       <p>{listing.Name}</p>
       <p>{getListingAddressString(listing)}</p>
       <p>{t("inviteToApplyPage.submitYourInfo.p1")}</p>
-      <p>{formattedDeadline}</p>
+      <p>{deadline}</p>
     </>
   )
 }
@@ -109,15 +109,15 @@ const SubmitYourInfoSidebarBlock = ({ listing }: { listing: RailsSaleListing }) 
 
 const InviteToApplySubmitYourInfo = ({
   listing,
-  formattedDeadline,
+  deadline,
 }: InviteToApplySubmitYourInfoProps) => {
   return (
     <HeaderSidebarLayout
       title={`${t("pageTitle.submitYourInfo.title", { listingName: listing.Name })}`}
       sidebarContent={<SubmitYourInfoSidebarBlock listing={listing} />}
     >
-      <SubmitYourInfoHeader listing={listing} formattedDeadline={formattedDeadline} />
-      <DeadlineBanner deadline={formattedDeadline} />
+      <SubmitYourInfoHeader listing={listing} deadline={deadline} />
+      <DeadlineBanner deadline={deadline} />
       <PreparingYourApplication />
       <WhatToDo />
       <WhatHappensNext />

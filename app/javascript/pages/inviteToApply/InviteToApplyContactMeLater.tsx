@@ -3,18 +3,18 @@ import { t, Icon, IconFillColors } from "@bloom-housing/ui-components"
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons"
 import { Card, Heading } from "@bloom-housing/ui-seeds"
 import styles from "./InviteToApply.module.scss"
-import { renderMarkup } from "../../util/languageUtil"
+import { getApplicationDeadline, renderMarkup } from "../../util/languageUtil"
 import RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
 
 interface InviteToApplyContactMeLaterProps {
   listing: RailsSaleListing
-  formattedDeadline: string
+  deadline: string
   submitLink: string
 }
 
 const InviteToApplyContactMeLater = ({
   listing,
-  formattedDeadline,
+  deadline,
   submitLink,
 }: InviteToApplyContactMeLaterProps) => {
   return (
@@ -45,7 +45,7 @@ const InviteToApplyContactMeLater = ({
           `${t("inviteToApplyPage.submitYourInfo", {
             listingName: listing.Name,
             link: submitLink,
-            deadline: formattedDeadline,
+            deadline: getApplicationDeadline(deadline),
           })}`,
           "<strong></strong><a></a>"
         )}

@@ -248,6 +248,19 @@ export const formatTimeOfDay = (time: string) => {
 }
 
 /**
+ * Format application deadline string
+ *
+ * @param deadline {string} - deadline to format
+ * @returns {string} formatted deadline
+ */
+export const getApplicationDeadline = (deadline: string) => {
+  return t("myApplications.applicationDeadlineTime", {
+    date: localizedFormat(deadline, "ll"),
+    time: formatTimeOfDay(deadline),
+  })
+}
+
+/**
  * Get the current language prefix as a capitalized string, or default to the english prefix if there is no explicit prefix in
  * the path.
  * @returns {string} - language code: ES, ZH, TL, EN
