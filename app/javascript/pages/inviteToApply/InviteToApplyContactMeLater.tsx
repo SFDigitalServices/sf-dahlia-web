@@ -5,7 +5,7 @@ import { Card, Heading } from "@bloom-housing/ui-seeds"
 import styles from "./InviteToApplyResponse.module.scss"
 import { renderMarkup } from "../../util/languageUtil"
 
-interface InviteToApplyWithdrawnProps {
+interface InviteToApplyContactMeLaterProps {
   listingName: string
   leasingAgentName: string
   leasingAgentPhone: string
@@ -14,20 +14,21 @@ interface InviteToApplyWithdrawnProps {
   submitLink: string
 }
 
-const InviteToApplyWithdrawn = ({
+const InviteToApplyContactMeLater = ({
   listingName,
   leasingAgentName,
   leasingAgentPhone,
   leasingAgentEmail,
   formattedDeadline,
   submitLink,
-}: InviteToApplyWithdrawnProps) => {
+}: InviteToApplyContactMeLaterProps) => {
   return (
     <Card className={styles.responseCard}>
       <Card.Header className={styles.responseHeader} divider="flush">
         <Heading priority={2} size="2xl" className={styles.responseHeading}>
-          {t("inviteToApplyPage.withdrawn.title")}
+          {t("inviteToApplyPage.contact.title", { listingName: listingName })}
         </Heading>
+        <p className={styles.responseSubtitle}>{t("inviteToApplyPage.contact.subtitle")}</p>
       </Card.Header>
       <Card.Section className={styles.responseSection}>
         <Heading priority={3} size="xl" className={styles.responseHeading}>
@@ -58,4 +59,4 @@ const InviteToApplyWithdrawn = ({
   )
 }
 
-export default InviteToApplyWithdrawn
+export default InviteToApplyContactMeLater

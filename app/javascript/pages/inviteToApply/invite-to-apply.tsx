@@ -12,6 +12,7 @@ import { localizedFormat, formatTimeOfDay } from "../../util/languageUtil"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import InviteToApplyDeadlinePassed from "./InviteToApplyDeadlinePassed"
 import InviteToApplyWithdrawn from "./InviteToApplyWithdrawn"
+import InviteToApplyContactMeLater from "./InviteToApplyContactMeLater"
 
 interface UrlParams {
   listing: string
@@ -113,7 +114,16 @@ const InviteToApplyPage = (_props: HomePageProps) => {
       {_props.urlParams.response && isDeadlinePassed(_props.urlParams.deadline) && (
         <DeadlinePassedBanner deadline={_props.urlParams.deadline} />
       )}
-      {_props.urlParams.response === "yes" && <InviteToApplyInterested listing={listing} />}
+      {_props.urlParams.response === "contact" && (
+        <InviteToApplyContactMeLater
+          listingName={listing?.Name}
+          leasingAgentName={listing?.Leasing_Agent_Name}
+          leasingAgentPhone={listing?.Leasing_Agent_Phone}
+          leasingAgentEmail={listing?.Leasing_Agent_Email}
+          formattedDeadline={formattedDeadline}
+          submitLink={submitLink}
+        />
+      )}
       {_props.urlParams.response === "no" && (
         <InviteToApplyWithdrawn
           listingName={listing?.Name}
