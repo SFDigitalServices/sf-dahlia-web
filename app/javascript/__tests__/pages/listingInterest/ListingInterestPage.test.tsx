@@ -56,6 +56,7 @@ describe("Invite to Apply Page", () => {
         urlParams={{
           listing: mockListing.Id,
           deadline: mockDeadline,
+          response: "yes",
         }}
       />
     )
