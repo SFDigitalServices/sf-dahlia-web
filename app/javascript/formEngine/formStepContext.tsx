@@ -6,6 +6,8 @@ export interface FormStepContext {
   errors: UseFormMethods["errors"]
   watch: UseFormMethods["watch"]
   trigger: UseFormMethods["trigger"]
+  setValue: UseFormMethods["setValue"]
+  clearErrors: UseFormMethods["clearErrors"]
 }
 
 export const FormStepContext = createContext<FormStepContext | undefined>(undefined)
