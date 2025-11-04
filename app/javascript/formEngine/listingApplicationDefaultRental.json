@@ -57,11 +57,13 @@
         },
         {
           "componentName": "EmailAddress",
-          "fieldNames": {
-            "email": "primaryApplicantEmail"
-          },
           "props": {
+            "fieldNames": {
+              "email": "primaryApplicantEmail",
+              "noEmail": "primaryApplicantNoEmail"
+            },
             "label": "label.applicantEmail",
+            "note": "b2Contact.onlyUseYourEmail",
             "showDontHaveEmailAddress": true
           }
         }
@@ -101,11 +103,21 @@
         {
           "componentName": "Address",
           "props": {
-            "label": "address",
+            "showAptOrUnit": true,
+            "requireAddress": true,
+            "label": "label.address",
+            "note": "b2Contact.applicantAddressDesc",
             "showMailingAddress": true,
             "fieldNames": {
-              "address": "primaryApplicantAddress",
-              "mailingAddress": "primaryApplicantMailingAddress"
+              "addressStreet": "primaryApplicantAddressStreet",
+              "addressAptOrUnit": "primaryApplicantAddressAptOrUnit",
+              "addressCity": "primaryApplicantAddressCity",
+              "addressState": "primaryApplicantAddressState",
+              "addressZipcode": "primaryApplicantAddressZipcode",
+              "mailingAddressStreet": "primaryApplicantMailingAddressStreet",
+              "mailingAddressCity": "primaryApplicantMailingAddressCity",
+              "mailingAddressState": "primaryApplicantMailingAddressState",
+              "mailingAddressZipcode": "primaryApplicantMailingAddressZipcode"
             }
           }
         },
@@ -114,6 +126,7 @@
           "props": {
             "label": "label.workInSf",
             "note": "b2Contact.workInSfDesc",
+            "yesText": "b2Contact.claimWorkInSf",
             "fieldNames": {
               "question": "primaryApplicantWorkInSf"
             }
@@ -230,9 +243,15 @@
         {
           "componentName": "Address",
           "props": {
+            "showAptOrUnit": false,
+            "requireAddress": false,
             "label": "label.contactMailingAddress",
+            "note": "b4aAlternateContactPhoneAddress.chooseAnAddress",
             "fieldNames": {
-              "address": "alternateContactAddress"
+              "addressStreet": "alternateContactAddressStreet",
+              "addressCity": "alternateContactAddressCity",
+              "addressState": "alternateContactAddressState",
+              "addressZipcode": "alternateContactAddressZipcode"
             }
           }
         }
@@ -296,7 +315,9 @@
           "props": {
             "label": "label.dob",
             "fieldNames": {
-              "dateOfBirth": "householdMemberDob"
+              "birthMonth": "householdMemberBirthMonth",
+              "birthDay": "householdMemberBirthDate",
+              "birthYear": "householdMemberBirthYear"
             }
           }
         },
@@ -312,7 +333,8 @@
           "componentName": "YesNoRadio",
           "props": {
             "label": "label.memberWorkInSf",
-            "description": "c3HouseholdMemberForm.workInSfDesc",
+            "note": "c3HouseholdMemberForm.workInSfDesc",
+            "yesText": "b2Contact.claimWorkInSf",
             "fieldNames": {
               "question": "householdMemberWorkInSf"
             }

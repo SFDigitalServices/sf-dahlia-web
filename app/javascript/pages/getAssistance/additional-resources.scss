@@ -1,23 +1,23 @@
 .info-card-additional-resources {
-    --subtitle-font-weight:600;
-    --subtitle-color: var(--bloom-color-gray-950);
-    .info-card__title {
-        --title-color: var(--bloom-color-blue-700);
-        a {
-            color: var(--title-color);
-        }
+  --subtitle-font-weight: 600;
+  --subtitle-color: var(--bloom-color-gray-950);
+  .info-card__title {
+    --title-color: var(--bloom-color-blue-700);
+    a {
+      color: var(--title-color);
     }
+  }
 }
 
 .info-card-grid-additional-resources {
-    .info-cards__title {
-        --title-font-size: var(--bloom-font-size-2xl);
-    }
-    .info-cards__header {
-       margin-right: 0;
-    }
-    .info-cards__subtitle {
-        margin-top: 1rem;
-        margin-bottom: 1.5rem;
-    }
+  .info-cards__title {
+    --title-font-size: var(--bloom-font-size-2xl);
+  }
+  .info-cards__header {
+    margin-right: 0;
+  }
+  .info-cards__subtitle {
+    margin-top: 1rem;
+    margin-bottom: 1.5rem;
+  }
 }

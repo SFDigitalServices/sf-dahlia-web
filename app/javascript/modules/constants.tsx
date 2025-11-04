@@ -157,7 +157,7 @@ export const DIRECTORY_PAGE_HEADER = "page-header"
 export const UNLEASH_FLAG = {
   CLERK_AUTH: "temp.webapp.auth.clerk",
   FORM_ENGINE: "perm.webapp.formEngine",
-  FORM_ENGINE_NAV: "perm.webapp.formEngine.nav",
+  FORM_ENGINE_DEBUG: "perm.webapp.formEngine.debug",
 }
 
 export const LISTING_APPLY_FORMS_INPUT_MAX_LENGTH = {
@@ -168,6 +168,7 @@ export const LISTING_APPLY_FORMS_INPUT_MAX_LENGTH = {
   password: 50,
   address: 75,
   city: 75,
+  zipcode: 10,
   alternateContactTypeOther: 50,
   alternateContactAgency: 50,
   certificateNumber: 50,
@@ -177,5 +178,12 @@ export const LISTING_APPLY_FORMS_INPUT_MAX_LENGTH = {
   raceEthnicityOther: 50,
 }
 
-// eslint-disable-next-line prefer-regex-literals
 export const LATIN_REGEX = new RegExp("^[A-z0-9\u00C0-\u017E\\s'.,-/+#%$:=-_`~()]+$")
+
+export const EMAIL_REGEX = new RegExp(
+  [
+    "[a-zA-Z0-9!#$%&'*+\\/=?^_`{|}~-]+(?:\\.[a-zA-Z0-9!#$%&'*+\\/=?^_`{|}~-]+)*",
+    "@",
+    "(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?",
+  ].join("")
+)

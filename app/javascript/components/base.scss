@@ -14,7 +14,7 @@ body {
   @apply font-sans;
   @apply bg-white;
   @apply text-gray-950;
-  top:0px !important;
+  top: 0px !important;
 }
 
 .-top {
@@ -243,32 +243,31 @@ nav {
 @import "tailwindcss/utilities";
 
 // Hide container for Google Translate widget
- #google_translate_element{
-   display:none !important;
+#google_translate_element {
+  display: none !important;
 }
 
- // Hide element for Google Translate widget
-.goog-te-banner-frame{
-  display:none !important;
- }
+// Hide element for Google Translate widget
+.goog-te-banner-frame {
+  display: none !important;
+}
 
 .numbered-list li:before {
   color: var(--bloom-color-gray-700);
-  box-shadow: inset 0 0 0 1px  var(--bloom-color-gray-700);
+  box-shadow: inset 0 0 0 1px var(--bloom-color-gray-700);
 }
 
-.primary-lighter-markup-link a{
-    color:var(--bloom-color-blue-700);
+.primary-lighter-markup-link a {
+  color: var(--bloom-color-blue-700);
 }
 
-
-.primary-lighter-markup-link-desktop a{
+.primary-lighter-markup-link-desktop a {
   @media (min-width: $screen-md) {
-    color:var(--bloom-color-blue-700);
+    color: var(--bloom-color-blue-700);
   }
 }
 
 // Hide another container for Google Translate widget
-#\:1\.container{
-  display:none !important;
+#\:1\.container {
+  display: none !important;
 }

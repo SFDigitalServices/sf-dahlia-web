@@ -22,7 +22,6 @@ const languageMap = {
 }
 
 const initGoogleTranslate = () => {
-  // eslint-disable-next-line no-new
   new tWindow.google.translate.TranslateElement(
     {
       pageLanguage: "en",

@@ -257,6 +257,7 @@ const CreateAccount = (_props: CreateAccountProps) => {
             <Form
               onSubmit={handleSubmit(
                 onSubmit(setError, pushToDataLayer),
+                /* eslint-disable-next-line react-hooks/refs */
                 scrollToErrorOnSubmit(errorBannerRef)
               )}
             >

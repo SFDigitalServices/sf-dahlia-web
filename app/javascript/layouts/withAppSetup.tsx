@@ -15,6 +15,7 @@ import "@bloom-housing/ui-seeds/src/global/app-css.scss"
 import { useGTMInitializer } from "../hooks/analytics/useInitializeGTM"
 import { AppPages } from "../util/routeUtil"
 import { UNLEASH_FLAG } from "../modules/constants"
+import "../layouts/overrides.scss"
 
 interface ObjectWithAssets {
   assetPaths: unknown
@@ -27,8 +28,6 @@ const config = {
   appName: "webapp",
 }
 
-// Ignore linting error on 'object' type, because we can't use Record<string, unknown> here.
-// eslint-disable-next-line @typescript-eslint/ban-types
 const withAppSetup =
   <P extends ObjectWithAssets>(
     Component: React.ComponentType<P>,

@@ -28,6 +28,7 @@ import ListingApplyForm from "../pages/form/listing-apply-form"
 
 const currentLanguage = getCurrentLanguage(window.location.pathname)
 
+/* eslint-disable-next-line unicorn/prefer-top-level-await */
 void loadTranslations(currentLanguage).then(() =>
   ReactOnRails.register({
     // Add additional components here for each react component entrypoint

@@ -1,52 +1,52 @@
 {
-    "test": true,
-    "URL": null,
-    "publishLotteryResultsDAHLIA": null,
-    "publishLotteryResults": true,
-    "officeHours": null,
-    "lotteryStatus": "Lottery Complete",
-    "lotteryResultsURL": null,
-    "lotteryPreferences": null,
-    "lotteryEndTime": null,
-    "lotteryDate": "2023-01-13T20:00:00.000Z",
-    "lotteryCity": "San Francisco",
-    "lotteryBuckets": [
+  "test": true,
+  "URL": null,
+  "publishLotteryResultsDAHLIA": null,
+  "publishLotteryResults": true,
+  "officeHours": null,
+  "lotteryStatus": "Lottery Complete",
+  "lotteryResultsURL": null,
+  "lotteryPreferences": null,
+  "lotteryEndTime": null,
+  "lotteryDate": "2023-01-13T20:00:00.000Z",
+  "lotteryCity": "San Francisco",
+  "lotteryBuckets": [
+    {
+      "unitsAvailable": 3,
+      "totalSubmittedApps": 2,
+      "preferenceResults": [],
+      "preferenceOrder": 1,
+      "preferenceName": "Certificate of Preference (COP)"
+    },
+    {
+      "unitsAvailable": 2,
+      "totalSubmittedApps": 4,
+      "preferenceResults": [],
+      "preferenceOrder": 2,
+      "preferenceName": "Displaced Tenant Housing Preference (DTHP)"
+    },
+    {
+      "unitsAvailable": 3,
+      "totalSubmittedApps": 6,
+      "preferenceResults": [
         {
-            "unitsAvailable": 3,
-            "totalSubmittedApps": 2,
-            "preferenceResults": [],
-            "preferenceOrder": 1,
-            "preferenceName": "Certificate of Preference (COP)"
-        },
-        {
-            "unitsAvailable": 2,
-            "totalSubmittedApps": 4,
-            "preferenceResults": [],
-            "preferenceOrder": 2,
-            "preferenceName": "Displaced Tenant Housing Preference (DTHP)"
-        },
-        {
-            "unitsAvailable": 3,
-            "totalSubmittedApps": 6,
-            "preferenceResults": [
-                {
-                    "preferenceRank": 6,
-                    "lotteryRank": 6,
-                    "lotteryNumber": "01150047",
-                    "applicationID": "a0o8H000000tMcLQAU"
-                }
-            ],
-            "preferenceOrder": 3,
-            "preferenceName": "Live or Work in San Francisco Preference"
-        },
-        {
-            "unitsAvailable": 3,
-            "totalSubmittedApps": 0,
-            "preferenceResults": [],
-            "preferenceOrder": null,
-            "preferenceName": "generalLottery"
+          "preferenceRank": 6,
+          "lotteryRank": 6,
+          "lotteryNumber": "01150047",
+          "applicationID": "a0o8H000000tMcLQAU"
         }
-    ],
-    "lotteryAppTotal": 7,
-    "listingId": "a0W8H000000AmpKUAS"
+      ],
+      "preferenceOrder": 3,
+      "preferenceName": "Live or Work in San Francisco Preference"
+    },
+    {
+      "unitsAvailable": 3,
+      "totalSubmittedApps": 0,
+      "preferenceResults": [],
+      "preferenceOrder": null,
+      "preferenceName": "generalLottery"
+    }
+  ],
+  "lotteryAppTotal": 7,
+  "listingId": "a0W8H000000AmpKUAS"
 }
