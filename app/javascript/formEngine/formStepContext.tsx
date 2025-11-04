@@ -7,6 +7,7 @@ export interface FormStepContext {
   watch: UseFormMethods["watch"]
   trigger: UseFormMethods["trigger"]
   setValue: UseFormMethods["setValue"]
+  getValues: UseFormMethods["getValues"]
   clearErrors: UseFormMethods["clearErrors"]
   control: UseFormMethods["control"]
 }
