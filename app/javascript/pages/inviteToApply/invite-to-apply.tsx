@@ -63,23 +63,23 @@ const InviteToApplyPage = ({ urlParams: { response, applicationNumber, deadline,
     ) : (
       <FormLayout>
         {<InviteToApplyHeader listing={listing} />}
-        if(response === "contact") {
+        {response === "contact" && (
           <InviteToApplyContactMeLater
             listing={listing}
             deadline={deadline}
             submitLink={submitLink} 
           />
-        } else if(_props.urlParams.response === "no") {
+        )}
+        {response === "no" && (
           <InviteToApplyWithdrawn
             listing={listing}
             deadline={deadline}
             submitLink={submitLink}
           />
-        } else if(window.location.pathname.includes("/deadline-passed")) {
+        )}
+        {window.location.pathname.includes("/deadline-passed") && (
           <InviteToApplyDeadlinePassed listing={listing} />
-        } else {
-          <div>Error: invalid response</div>
-        }
+        )}
       </FormLayout>
     )
   ) : null
