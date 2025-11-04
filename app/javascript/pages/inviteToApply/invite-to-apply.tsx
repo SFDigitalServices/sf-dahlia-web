@@ -11,6 +11,7 @@ import { RailsListing } from "../../modules/listings/SharedHelpers"
 import styles from "./InviteToApply.module.scss"
 import { localizedFormat, formatTimeOfDay } from "../../util/languageUtil"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
+import InviteToApplyWithdrawn from "./InviteToApplyWithdrawn"
 
 interface UrlParams {
   listing: string
@@ -104,15 +105,13 @@ const InviteToApplyPage = (_props: HomePageProps) => {
           </div>
         </div>
       )}
-      {_props.urlParams.response === "n" && (
-        <div className="mt-4 bg-white rounded-lg border border-solid">
-          <div className="pt-8 pb-8 text-center border-b border-solid">
-            <div className="text-2xl">Thank you for your response</div>
-            <div className="mt-4 text-sm">
-              You answered: <span className="font-bold">No, withdraw my application</span>
-            </div>
-          </div>
-        </div>
+      {_props.urlParams.response === "no" && (
+     <InviteToApplyWithdrawn
+     listingName={listing?.Name}
+     leasingAgentName={listing?.Leasing_Agent_Name}
+     leasingAgentPhone={listing?.Leasing_Agent_Phone}
+     leasingAgentEmail={listing?.Leasing_Agent_Email}
+     />
       )}
       {window.location.pathname.includes("/deadline-passed") && (
         <InviteToApplyDeadlinePassed
