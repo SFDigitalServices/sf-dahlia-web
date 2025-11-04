@@ -1,9 +1,9 @@
-.deadlinePassedCard {
+.responseCard {
   @media (max-width: theme("screens.sm")) {
     border: none;
   }
 
-  .deadlinePassedHeader {
+  .responseHeader {
     padding: var(--seeds-spacer-container);
     text-align: center;
     @media (max-width: theme("screens.sm")) {
@@ -11,17 +11,17 @@
       padding: var(--seeds-spacer-section);
     }
   }
-  .deadlinePassedSection {
+  .responseSection {
     padding: var(--seeds-spacer-section);
     background: var(--seeds-color-primary-lighter);
     line-height: var(--seeds-line-height-relaxed);
   }
-  .deadlinePassedIcon {
+  .responseIcon {
     display: flex;
     gap: var(--seeds-spacer-label);
   }
 
-  .deadlinePassedHeading {
+  .responseHeading {
     margin-bottom: var(--seeds-spacer-label);
   }
 }

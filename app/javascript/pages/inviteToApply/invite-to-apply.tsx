@@ -5,12 +5,13 @@ import { Card, Button, Heading, Message } from "@bloom-housing/ui-seeds"
 import FormLayout from "../../layouts/FormLayout"
 import Link from "../../navigation/Link"
 import { AppPages } from "../../util/routeUtil"
-import InviteToApplyDeadlinePassed from "./InviteToApplyDeadlinePassed"
 import { getListing } from "../../api/listingApiService"
 import { RailsListing } from "../../modules/listings/SharedHelpers"
 import styles from "./InviteToApply.module.scss"
 import { localizedFormat, formatTimeOfDay } from "../../util/languageUtil"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
+import InviteToApplyDeadlinePassed from "./InviteToApplyDeadlinePassed"
+import InviteToApplyWithdrawn from "./InviteToApplyWithdrawn"
 
 interface UrlParams {
   listing: string
@@ -88,17 +89,6 @@ const InviteToApplyInterested = ({ listing }: { listing: RailsListing }) => (
   </div>
 )
 
-const InviteToApplyWithdrawn = () => (
-  <div className="mt-4 bg-white rounded-lg border border-solid">
-    <div className="pt-8 pb-8 text-center border-b border-solid">
-      <div className="text-2xl">Thank you for your response</div>
-      <div className="mt-4 text-sm">
-        You answered: <span className="font-bold">No, withdraw my application</span>
-      </div>
-    </div>
-  </div>
-)
-
 const InviteToApplyPage = (_props: HomePageProps) => {
   const [listing, setListing] = useState<RailsListing>(null)
 
@@ -112,12 +102,19 @@ const InviteToApplyPage = (_props: HomePageProps) => {
 
   return inviteToApplyFlag ? (
     <FormLayout>
-      {!_props.urlParams.response && <InviteToApplyHeader listing={listing} />}
+      {<InviteToApplyHeader listing={listing} />}
       {_props.urlParams.response && isDeadlinePassed(_props.urlParams.deadline) && (
         <DeadlinePassedBanner deadline={_props.urlParams.deadline} />
       )}
-      {_props.urlParams.response === "y" && <InviteToApplyInterested listing={listing} />}
-      {_props.urlParams.response === "n" && <InviteToApplyWithdrawn />}
+      {_props.urlParams.response === "yes" && <InviteToApplyInterested listing={listing} />}
+      {_props.urlParams.response === "no" && (
+        <InviteToApplyWithdrawn
+          listingName={listing?.Name}
+          leasingAgentName={listing?.Leasing_Agent_Name}
+          leasingAgentPhone={listing?.Leasing_Agent_Phone}
+          leasingAgentEmail={listing?.Leasing_Agent_Email}
+        />
+      )}
       {window.location.pathname.includes("/deadline-passed") && (
         <InviteToApplyDeadlinePassed
           listingName={listing?.Name}
