@@ -15,6 +15,7 @@ import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 interface UrlParams {
   listing: string
   response?: string
+  applicationNumber?: string
   deadline?: string
 }
 
@@ -59,7 +60,22 @@ const InviteToApplyPage = (_props: HomePageProps) => {
   const { unleashFlag: inviteToApplyFlag } = useFeatureFlag("partners.inviteToApply", false)
 
   return inviteToApplyFlag ? (
+    
     <FormLayout>
+            {_props.urlParams.response !== "e" && (
+        <Card className={styles.listingCard}>
+          <Card.Header className={styles.listingHeader}>
+            <Heading className={styles.listingHeading} priority={1} size="lg">
+              {listing?.Name}
+            </Heading>
+          </Card.Header>
+          <Card.Section className={styles.listingSection}>
+            <Button href={`/listings/${listing?.Id}`} variant="text" size="sm" newWindowTarget>
+              Go to building details
+            </Button>
+          </Card.Section>
+        </Card>
+      )}
       {isDeadlinePassed(_props.urlParams.deadline) && (
         <DeadlinePassedBanner deadline={_props.urlParams.deadline} />
       )}
@@ -114,20 +130,6 @@ const InviteToApplyPage = (_props: HomePageProps) => {
             <div className="mt-4 text-sm">INVALID REQUEST</div>
           </div>
         </div>
-      )}
-      {_props.urlParams.response !== "e" && (
-        <Card className={styles.listingCard}>
-          <Card.Header className={styles.listingHeader}>
-            <Heading className={styles.listingHeading} priority={1} size="lg">
-              {listing?.Name}
-            </Heading>
-          </Card.Header>
-          <Card.Section className={styles.listingSection}>
-            <Button href={`/listings/${listing?.Id}`} variant="text" size="sm" newWindowTarget>
-              Go to building details
-            </Button>
-          </Card.Section>
-        </Card>
       )}
     </FormLayout>
   ) : null

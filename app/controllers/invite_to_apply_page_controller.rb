@@ -5,7 +5,9 @@ class InviteToApplyPageController < ApplicationController
       assetPaths: static_asset_paths,
       urlParams: { 
         listing: params['listingId'],
-        deadline: params['deadline']
+        deadline: params['deadline'],
+        response: params['response'],
+        applicationNumber: params['applicationNumber']
       } 
     }
     render 'invite_to_apply'
@@ -15,8 +17,11 @@ class InviteToApplyPageController < ApplicationController
     @invite_to_apply_props = { 
       assetPaths: static_asset_paths,
       urlParams: { 
-        listing: params['listingId']
-      } 
+        listing: params['listingId'],
+        deadline: params['deadline'],
+        response: "params['response']",
+        applicationNumber: params['applicationNumber']
+      }
     }
     render 'invite_to_apply'
   end
