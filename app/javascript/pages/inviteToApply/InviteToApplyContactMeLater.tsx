@@ -2,23 +2,18 @@ import React from "react"
 import { t, Icon, IconFillColors } from "@bloom-housing/ui-components"
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons"
 import { Card, Heading } from "@bloom-housing/ui-seeds"
-import styles from "./InviteToApplyResponse.module.scss"
+import styles from "./InviteToApply.module.scss"
 import { renderMarkup } from "../../util/languageUtil"
+import RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
 
 interface InviteToApplyContactMeLaterProps {
-  listingName: string
-  leasingAgentName: string
-  leasingAgentPhone: string
-  leasingAgentEmail: string
+  listing: RailsSaleListing
   formattedDeadline: string
   submitLink: string
 }
 
 const InviteToApplyContactMeLater = ({
-  listingName,
-  leasingAgentName,
-  leasingAgentPhone,
-  leasingAgentEmail,
+  listing,
   formattedDeadline,
   submitLink,
 }: InviteToApplyContactMeLaterProps) => {
@@ -26,7 +21,7 @@ const InviteToApplyContactMeLater = ({
     <Card className={styles.responseCard}>
       <Card.Header className={styles.responseHeader} divider="flush">
         <Heading priority={2} size="2xl" className={styles.responseHeading}>
-          {t("inviteToApplyPage.contact.title", { listingName: listingName })}
+          {t("inviteToApplyPage.contact.title", { listingName: listing.Name })}
         </Heading>
         <p className={styles.responseSubtitle}>{t("inviteToApplyPage.contact.subtitle")}</p>
       </Card.Header>
@@ -36,19 +31,19 @@ const InviteToApplyContactMeLater = ({
         </Heading>
         <p>{t("inviteToApplyPage.leasingAgent.p2")}</p>
         <p>{t("inviteToApplyPage.leasingAgent.p3")}</p>
-        <p>{leasingAgentName}</p>
+        <p>{listing.Leasing_Agent_Name}</p>
         <p className="field-note">{t("inviteToApplyPage.leasingAgent")}</p>
-        <a className={styles.responseIcon} href={`tel:+1${leasingAgentPhone}`}>
+        <a className={styles.responseIcon} href={`tel:+1${listing.Leasing_Agent_Phone}`}>
           <Icon symbol="phone" size="medium" fill={IconFillColors.primary} />
-          {leasingAgentPhone}
+          {listing.Leasing_Agent_Phone}
         </a>
-        <a className={styles.responseIcon} href={`mailto:${leasingAgentEmail}`}>
+        <a className={styles.responseIcon} href={`mailto:${listing.Leasing_Agent_Email}`}>
           <Icon symbol={faEnvelope} size="medium" fill={IconFillColors.primary} />
-          {leasingAgentEmail}
+          {listing.Leasing_Agent_Email}
         </a>
         {renderMarkup(
           `${t("inviteToApplyPage.submitYourInfo", {
-            listingName: listingName,
+            listingName: listing.Name,
             link: submitLink,
             deadline: formattedDeadline,
           })}`,

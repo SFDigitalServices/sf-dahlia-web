@@ -2,21 +2,14 @@ import React from "react"
 import { t, Icon, IconFillColors } from "@bloom-housing/ui-components"
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons"
 import { Card, Heading } from "@bloom-housing/ui-seeds"
-import styles from "./InviteToApplyResponse.module.scss"
+import styles from "./InviteToApply.module.scss"
+import RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
 
 interface InviteToApplyDeadlinePassedProps {
-  listingName: string
-  leasingAgentName: string
-  leasingAgentPhone: string
-  leasingAgentEmail: string
+  listing: RailsSaleListing
 }
 
-const InviteToApplyDeadlinePassed = ({
-  listingName,
-  leasingAgentName,
-  leasingAgentPhone,
-  leasingAgentEmail,
-}: InviteToApplyDeadlinePassedProps) => {
+const InviteToApplyDeadlinePassed = ({ listing }: InviteToApplyDeadlinePassedProps) => {
   return (
     <Card className={styles.responseCard}>
       <Card.Header className={styles.responseHeader} divider="flush">
@@ -27,17 +20,17 @@ const InviteToApplyDeadlinePassed = ({
       </Card.Header>
       <Card.Section className={styles.responseSection}>
         <Heading priority={3} size="xl" className={styles.responseHeading}>
-          {t("inviteToApplyPage.deadlinePassed.p1", { listingName })}
+          {t("inviteToApplyPage.deadlinePassed.p1", { listingName: listing.Name })}
         </Heading>
-        <p>{leasingAgentName}</p>
+        <p>{listing.Leasing_Agent_Name}</p>
         <p className="field-note">{t("inviteToApplyPage.leasingAgent")}</p>
-        <a className={styles.responseIcon} href={`tel:+1${leasingAgentPhone}`}>
+        <a className={styles.responseIcon} href={`tel:+1${listing.Leasing_Agent_Phone}`}>
           <Icon symbol="phone" size="medium" fill={IconFillColors.primary} />
-          {leasingAgentPhone}
+          {listing.Leasing_Agent_Phone}
         </a>
-        <a className={styles.responseIcon} href={`mailto:${leasingAgentEmail}`}>
+        <a className={styles.responseIcon} href={`mailto:${listing.Leasing_Agent_Email}`}>
           <Icon symbol={faEnvelope} size="medium" fill={IconFillColors.primary} />
-          {leasingAgentEmail}
+          {listing.Leasing_Agent_Email}
         </a>
       </Card.Section>
     </Card>

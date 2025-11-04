@@ -1,11 +1,10 @@
 import React, { useContext, useEffect, useState } from "react"
+import { t, NavigationContext } from "@bloom-housing/ui-components"
+import { Card, Button, Heading } from "@bloom-housing/ui-seeds"
 import withAppSetup from "../../layouts/withAppSetup"
-import { t, Icon, NavigationContext } from "@bloom-housing/ui-components"
-import { Card, Button, Heading, Message } from "@bloom-housing/ui-seeds"
 import FormLayout from "../../layouts/FormLayout"
 import { AppPages } from "../../util/routeUtil"
 import { getListing } from "../../api/listingApiService"
-import styles from "./InviteToApply.module.scss"
 import { localizedFormat, formatTimeOfDay } from "../../util/languageUtil"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import InviteToApplyDeadlinePassed from "./InviteToApplyDeadlinePassed"
@@ -13,6 +12,7 @@ import InviteToApplyWithdrawn from "./InviteToApplyWithdrawn"
 import InviteToApplyContactMeLater from "./InviteToApplyContactMeLater"
 import InviteToApplySubmitYourInfo from "./InviteToApplySubmitYourInfo"
 import RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
+import styles from "./InviteToApply.module.scss"
 
 interface UrlParams {
   listing: string
@@ -26,30 +26,6 @@ interface HomePageProps {
   urlParams: UrlParams
 }
 
-const isDeadlinePassed = (deadline: string) => {
-  const today = new Date()
-  const deadlineDate = new Date(deadline)
-  return today > deadlineDate
-}
-
-const DeadlinePassedBanner = ({ deadline }: { deadline: string }) => {
-  return (
-    <Message
-      fullwidth
-      variant="alert"
-      customIcon={<Icon symbol="clock" size="medium" className={styles.bannerIcon} />}
-    >
-      <strong>{t("inviteToApplyPage.deadlinePassed.banner")}</strong>{" "}
-      <span>
-        {t("myApplications.applicationDeadlineTime", {
-          date: localizedFormat(deadline, "ll"),
-          time: formatTimeOfDay(deadline),
-        })}
-      </span>
-    </Message>
-  )
-}
-
 const InviteToApplyHeader = ({ listing }: { listing: RailsSaleListing }) => (
   <Card className={styles.listingCard}>
     <Card.Header className={styles.listingHeader}>
@@ -59,26 +35,26 @@ const InviteToApplyHeader = ({ listing }: { listing: RailsSaleListing }) => (
     </Card.Header>
     <Card.Section className={styles.listingSection}>
       <Button href={`/listings/${listing?.Id}`} variant="text" size="sm" newWindowTarget>
-        Go to building details
+        {t("inviteToApplyPage.buildingDetails")}
       </Button>
     </Card.Section>
   </Card>
 )
 
-const InviteToApplyPage = (_props: HomePageProps) => {
+const InviteToApplyPage = ({ urlParams: { response, applicationNumber, deadline, listing: listingId } }: HomePageProps) => {
   const [listing, setListing] = useState<RailsSaleListing>(null)
 
-  const submitLink = `/invite-to-apply?response=${_props.urlParams.response}&applicationNumber=${_props.urlParams.applicationNumber}&deadline=${_props.urlParams.deadline}&listingId=${_props.urlParams.listing}`
-
+  const submitLink = `/invite-to-apply?response=${response}&applicationNumber=${applicationNumber}&deadline=${deadline}&listingId=${listingId}`
+  
   const formattedDeadline = t("myApplications.applicationDeadlineTime", {
-    date: localizedFormat(_props.urlParams.deadline, "ll"),
-    time: formatTimeOfDay(_props.urlParams.deadline),
+    date: localizedFormat(deadline, "ll"),
+    time: formatTimeOfDay(deadline),
   })
 
   const { router } = useContext(NavigationContext)
   useEffect(() => {
-    void getListing(_props.urlParams.listing).then((listing: RailsSaleListing) => {
-      if (!listing) {
+    void getListing(listingId).then((listing: RailsSaleListing) => {
+      if (!listing) { 
         router.push("/")
       }
       setListing(listing)
@@ -88,46 +64,28 @@ const InviteToApplyPage = (_props: HomePageProps) => {
   const { unleashFlag: inviteToApplyFlag } = useFeatureFlag("partners.inviteToApply", false)
 
   return inviteToApplyFlag ? (
-    _props.urlParams.response === "yes" ? (
-      <InviteToApplySubmitYourInfo
-        listing={listing}
-        formattedDeadline={formattedDeadline}
-      />
+    response === "yes" ? (
+      <InviteToApplySubmitYourInfo listing={listing} formattedDeadline={formattedDeadline} />
     ) : (
       <FormLayout>
         {<InviteToApplyHeader listing={listing} />}
-        {_props.urlParams.response && isDeadlinePassed(_props.urlParams.deadline) && (
-          <DeadlinePassedBanner deadline={_props.urlParams.deadline} />
-        )}
-        {_props.urlParams.response === "contact" && (
+        if(response === "contact") {
           <InviteToApplyContactMeLater
-            listingName={listing?.Name}
-            leasingAgentName={listing?.Leasing_Agent_Name}
-            leasingAgentPhone={listing?.Leasing_Agent_Phone}
-            leasingAgentEmail={listing?.Leasing_Agent_Email}
+            listing={listing}
             formattedDeadline={formattedDeadline}
-            submitLink={submitLink}
+            submitLink={submitLink} 
           />
-        )}
-        {_props.urlParams.response === "no" && (
+        } else if(_props.urlParams.response === "no") {
           <InviteToApplyWithdrawn
-            listingName={listing?.Name}
-            leasingAgentName={listing?.Leasing_Agent_Name}
-            leasingAgentPhone={listing?.Leasing_Agent_Phone}
-            leasingAgentEmail={listing?.Leasing_Agent_Email}
+            listing={listing}
             formattedDeadline={formattedDeadline}
             submitLink={submitLink}
           />
-        )}
-        {window.location.pathname.includes("/deadline-passed") && (
-          <InviteToApplyDeadlinePassed
-            listingName={listing?.Name}
-            leasingAgentName={listing?.Leasing_Agent_Name}
-            leasingAgentPhone={listing?.Leasing_Agent_Phone}
-            leasingAgentEmail={listing?.Leasing_Agent_Email}
-          />
-        )}
-        {_props.urlParams.response === "e" && <div className="text-2xl">ERROR</div>}
+        } else if(window.location.pathname.includes("/deadline-passed")) {
+          <InviteToApplyDeadlinePassed listing={listing} />
+        } else {
+          <div>Error: invalid response</div>
+        }
       </FormLayout>
     )
   ) : null

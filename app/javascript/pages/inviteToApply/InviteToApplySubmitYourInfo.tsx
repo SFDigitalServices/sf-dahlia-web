@@ -1,13 +1,36 @@
 import React from "react"
-import { t } from "@bloom-housing/ui-components"
-import { Heading, Button } from "@bloom-housing/ui-seeds"
+import { Icon, t } from "@bloom-housing/ui-components"
+import { Heading, Button, Message } from "@bloom-housing/ui-seeds"
 import HeaderSidebarLayout from "../../layouts/HeaderSidebarLayout"
 import RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
 import { getListingAddressString } from "../../util/listingUtil"
-import { LeasingAgentBox } from "../howToApply/how-to-apply"
+import { LeasingAgent } from "../../modules/listings/components/LeasingAgent"
+
+import styles from "./InviteToApply.module.scss"
+
 interface InviteToApplySubmitYourInfoProps {
   listing: RailsSaleListing
   formattedDeadline: string
+}
+
+const DeadlineBanner = ({ deadline }: { deadline: string }) => {
+  const today = new Date()
+  const deadlineDate = new Date(deadline)
+  const isDeadlinePassed = today > deadlineDate
+  return (
+    <Message
+      fullwidth
+      variant={isDeadlinePassed ? "alert" : "warn"}
+      customIcon={<Icon symbol="clock" size="medium" />}
+    >
+      <strong>
+        {isDeadlinePassed
+          ? t("inviteToApplyPage.submitYourInfo.deadlinePassed")
+          : t("inviteToApplyPage.submitYourInfo.submitByDeadline")}
+      </strong>
+      <span>{deadline}</span>
+    </Message>
+  )
 }
 
 const PreparingYourApplication = () => {
@@ -63,41 +86,41 @@ const WhatHappensNext = () => {
   )
 }
 
-const SubmitYourInfoHeader = ({
-  listing, formattedDeadline,
-}: InviteToApplySubmitYourInfoProps) => {
+const SubmitYourInfoHeader = ({ listing, formattedDeadline }: InviteToApplySubmitYourInfoProps) => {
   return (
     <>
-        <p>{listing.Name}</p>
-        <p>{getListingAddressString(listing)}</p>
-        <p>{t("inviteToApplyPage.submitYourInfo.p1")}</p>
-        <p>{formattedDeadline}</p>
+      <p>{listing.Name}</p>
+      <p>{getListingAddressString(listing)}</p>
+      <p>{t("inviteToApplyPage.submitYourInfo.p1")}</p>
+      <p>{formattedDeadline}</p>
     </>
   )
 }
 
-const SubmitYourInfoSidebarBlock = ({listing}: {listing: RailsSaleListing}) => {
+const SubmitYourInfoSidebarBlock = ({ listing }: { listing: RailsSaleListing }) => {
   return (
     <>
       <p>{t("contactAgent.contact")}</p>
       <p>{t("inviteToApplyPage.submitYourInfo.sidebar")}</p>
-      <LeasingAgentBox listing={listing} />
+      <LeasingAgent listing={listing} />
     </>
   )
 }
 
 const InviteToApplySubmitYourInfo = ({
-  listing, formattedDeadline,
+  listing,
+  formattedDeadline,
 }: InviteToApplySubmitYourInfoProps) => {
   return (
     <HeaderSidebarLayout
       title={`${t("pageTitle.submitYourInfo.title", { listingName: listing.Name })}`}
       sidebarContent={<SubmitYourInfoSidebarBlock listing={listing} />}
     >
-        <SubmitYourInfoHeader listing={listing} formattedDeadline={formattedDeadline} />
-        <PreparingYourApplication />
-        <WhatToDo />
-        <WhatHappensNext />
+      <SubmitYourInfoHeader listing={listing} formattedDeadline={formattedDeadline} />
+      <DeadlineBanner deadline={formattedDeadline} />
+      <PreparingYourApplication />
+      <WhatToDo />
+      <WhatHappensNext />
     </HeaderSidebarLayout>
   )
 }

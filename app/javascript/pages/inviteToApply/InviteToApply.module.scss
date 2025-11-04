@@ -24,6 +24,34 @@
   }
 }
 
-.bannerIcon {
-  color: var(--seeds-color-red-700);
+.responseCard {
+  @media (max-width: theme("screens.sm")) {
+    border: none;
+  }
+
+  .responseHeader {
+    padding: var(--seeds-spacer-container);
+    text-align: center;
+    @media (max-width: theme("screens.sm")) {
+      text-align: left;
+      padding: var(--seeds-spacer-section);
+    }
+  }
+
+  .responseIcon {
+    display: flex;
+    gap: var(--seeds-spacer-label);
+  }
+
+  .responseSubtitle {
+    margin-top: var(--seeds-spacer-label);
+  }
+
+  .responseSection {
+    display: flex;
+    flex-direction: column;
+    padding: var(--seeds-spacer-section);
+    background: var(--seeds-color-primary-lighter);
+    gap: var(--seeds-spacer-text);
+  }
 }
