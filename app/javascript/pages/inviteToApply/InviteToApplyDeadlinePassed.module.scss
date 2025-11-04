@@ -1,7 +1,7 @@
 .deadlinePassedCard {
-   @media (max-width: theme("screens.sm")) {
+  @media (max-width: theme("screens.sm")) {
     border: none;
-   }
+  }
 
   .deadlinePassedHeader {
     padding: var(--seeds-spacer-container);

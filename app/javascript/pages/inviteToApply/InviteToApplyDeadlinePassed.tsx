@@ -19,7 +19,7 @@ const InviteToApplyDeadlinePassed = ({
 }: InviteToApplyDeadlinePassedProps) => {
   return (
     <Card className={styles.deadlinePassedCard}>
-      <Card.Header className={styles.deadlinePassedHeader} divider="flush"> 
+      <Card.Header className={styles.deadlinePassedHeader} divider="flush">
         <Heading priority={2} size="2xl" className={styles.deadlinePassedHeading}>
           {t("inviteToApplyPage.deadlinePassed.title")}
         </Heading>
