@@ -23,7 +23,7 @@ const InviteToApplyDeadlinePassed = ({
         <Heading priority={2} size="2xl" className={styles.responseHeading}>
           {t("inviteToApplyPage.deadlinePassed.title")}
         </Heading>
-        <p>{t("inviteToApplyPage.deadlinePassed.subtitle")}</p>
+        <p className={styles.responseSubtitle}>{t("inviteToApplyPage.deadlinePassed.subtitle")}</p>
       </Card.Header>
       <Card.Section className={styles.responseSection}>
         <Heading priority={3} size="xl" className={styles.responseHeading}>

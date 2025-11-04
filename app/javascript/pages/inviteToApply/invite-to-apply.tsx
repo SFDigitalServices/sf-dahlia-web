@@ -92,6 +92,13 @@ const InviteToApplyInterested = ({ listing }: { listing: RailsListing }) => (
 const InviteToApplyPage = (_props: HomePageProps) => {
   const [listing, setListing] = useState<RailsListing>(null)
 
+  const submitLink = `/invite-to-apply?response=${_props.urlParams.response}&applicationNumber=${_props.urlParams.applicationNumber}&deadline=${_props.urlParams.deadline}&listingId=${_props.urlParams.listing}`
+
+  const formattedDeadline = t("myApplications.applicationDeadlineTime", {
+    date: localizedFormat(_props.urlParams.deadline, "ll"),
+    time: formatTimeOfDay(_props.urlParams.deadline),
+  })
+
   useEffect(() => {
     void getListing(_props.urlParams.listing).then((listing: RailsListing) => {
       setListing(listing)
@@ -113,6 +120,8 @@ const InviteToApplyPage = (_props: HomePageProps) => {
           leasingAgentName={listing?.Leasing_Agent_Name}
           leasingAgentPhone={listing?.Leasing_Agent_Phone}
           leasingAgentEmail={listing?.Leasing_Agent_Email}
+          formattedDeadline={formattedDeadline}
+          submitLink={submitLink}
         />
       )}
       {window.location.pathname.includes("/deadline-passed") && (

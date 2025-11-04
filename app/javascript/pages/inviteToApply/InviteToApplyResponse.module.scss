@@ -12,16 +12,18 @@
     }
   }
   .responseSection {
+    display: flex;
+    flex-direction: column;
     padding: var(--seeds-spacer-section);
     background: var(--seeds-color-primary-lighter);
-    line-height: var(--seeds-line-height-relaxed);
+    gap: var(--seeds-spacer-text);
   }
   .responseIcon {
     display: flex;
     gap: var(--seeds-spacer-label);
   }
 
-  .responseHeading {
-    margin-bottom: var(--seeds-spacer-label);
+  .responseSubtitle {
+    margin-top: var(--seeds-spacer-label);
   }
 }

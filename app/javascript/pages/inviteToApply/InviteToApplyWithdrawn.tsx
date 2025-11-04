@@ -3,12 +3,15 @@ import { t, Icon, IconFillColors } from "@bloom-housing/ui-components"
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons"
 import { Card, Heading } from "@bloom-housing/ui-seeds"
 import styles from "./InviteToApplyResponse.module.scss"
+import { renderMarkup } from "../../util/languageUtil"
 
 interface InviteToApplyWithdrawnProps {
   listingName: string
   leasingAgentName: string
   leasingAgentPhone: string
   leasingAgentEmail: string
+  formattedDeadline: string
+  submitLink: string
 }
 
 const InviteToApplyWithdrawn = ({
@@ -16,6 +19,8 @@ const InviteToApplyWithdrawn = ({
   leasingAgentName,
   leasingAgentPhone,
   leasingAgentEmail,
+  formattedDeadline,
+  submitLink,
 }: InviteToApplyWithdrawnProps) => {
   return (
     <Card className={styles.responseCard}>
@@ -23,7 +28,6 @@ const InviteToApplyWithdrawn = ({
         <Heading priority={2} size="2xl" className={styles.responseHeading}>
           {t("inviteToApplyPage.withdrawn.title")}
         </Heading>
-        
       </Card.Header>
       <Card.Section className={styles.responseSection}>
         <Heading priority={3} size="xl" className={styles.responseHeading}>
@@ -41,7 +45,14 @@ const InviteToApplyWithdrawn = ({
           <Icon symbol={faEnvelope} size="medium" fill={IconFillColors.primary} />
           {leasingAgentEmail}
         </a>
-        <p>{t("inviteToApplyPage.withdrawn.footer", { listingName })}</p>
+        {renderMarkup(
+          `${t("inviteToApplyPage.withdrawn.footer", {
+            listingName: listingName,
+            link: submitLink,
+            deadline: formattedDeadline,
+          })}`,
+          "<strong></strong><a></a>"
+        )}
       </Card.Section>
     </Card>
   )
