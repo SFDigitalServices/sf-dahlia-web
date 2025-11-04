@@ -11,7 +11,6 @@ import { RailsListing } from "../../modules/listings/SharedHelpers"
 import styles from "./InviteToApply.module.scss"
 import { localizedFormat, formatTimeOfDay } from "../../util/languageUtil"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
-import InviteToApplyWithdrawn from "./InviteToApplyWithdrawn"
 
 interface UrlParams {
   listing: string
@@ -49,6 +48,57 @@ const DeadlinePassedBanner = ({ deadline }: { deadline: string }) => {
   )
 }
 
+const InviteToApplyHeader = ({ listing }: { listing: RailsListing }) => (
+  <Card className={styles.listingCard}>
+    <Card.Header className={styles.listingHeader}>
+      <Heading className={styles.listingHeading} priority={1} size="lg">
+        {listing?.Name}
+      </Heading>
+    </Card.Header>
+    <Card.Section className={styles.listingSection}>
+      <Button href={`/listings/${listing?.Id}`} variant="text" size="sm" newWindowTarget>
+        Go to building details
+      </Button>
+    </Card.Section>
+  </Card>
+)
+
+const InviteToApplyInterested = ({ listing }: { listing: RailsListing }) => (
+  <div className="mt-4 bg-white rounded-lg border border-solid">
+    <div className="pt-8 pb-8 text-center border-b border-solid">
+      <div className="text-2xl">Thank you for your response</div>
+      <div className="mt-4 text-sm">
+        You answered: <span className="font-bold">Yes, I'm still interested</span>
+      </div>
+    </div>
+    <div className="p-8 bg-blue-100">
+      <span className="font-bold">What to expect</span>
+      <ul className="p-4 space-y-4 list-disc">
+        <li>
+          The leasing agent will contact you when it's your turn to move forward with your
+          application.
+        </li>
+        <li>We will send you an email to let you know once all units get leased.</li>
+        <li>We will contact you again if more units become available in the next 12 months.</li>
+      </ul>
+      <Link external href="https://www.sf.gov/after-rental-housing-lottery" target="_blank">
+        Learn more about what happens after the housing lottery.
+      </Link>
+    </div>
+  </div>
+)
+
+const InviteToApplyWithdrawn = () => (
+  <div className="mt-4 bg-white rounded-lg border border-solid">
+    <div className="pt-8 pb-8 text-center border-b border-solid">
+      <div className="text-2xl">Thank you for your response</div>
+      <div className="mt-4 text-sm">
+        You answered: <span className="font-bold">No, withdraw my application</span>
+      </div>
+    </div>
+  </div>
+)
+
 const InviteToApplyPage = (_props: HomePageProps) => {
   const [listing, setListing] = useState<RailsListing>(null)
 
@@ -62,57 +112,12 @@ const InviteToApplyPage = (_props: HomePageProps) => {
 
   return inviteToApplyFlag ? (
     <FormLayout>
-      {_props.urlParams.response !== "e" && (
-        <Card className={styles.listingCard}>
-          <Card.Header className={styles.listingHeader}>
-            <Heading className={styles.listingHeading} priority={1} size="lg">
-              {listing?.Name}
-            </Heading>
-          </Card.Header>
-          <Card.Section className={styles.listingSection}>
-            <Button href={`/listings/${listing?.Id}`} variant="text" size="sm" newWindowTarget>
-              Go to building details
-            </Button>
-          </Card.Section>
-        </Card>
-      )}
-      {isDeadlinePassed(_props.urlParams.deadline) && (
+      {!_props.urlParams.response && <InviteToApplyHeader listing={listing} />}
+      {_props.urlParams.response && isDeadlinePassed(_props.urlParams.deadline) && (
         <DeadlinePassedBanner deadline={_props.urlParams.deadline} />
       )}
-      {_props.urlParams.response === "y" && (
-        <div className="mt-4 bg-white rounded-lg border border-solid">
-          <div className="pt-8 pb-8 text-center border-b border-solid">
-            <div className="text-2xl">Thank you for your response</div>
-            <div className="mt-4 text-sm">
-              You answered: <span className="font-bold">Yes, I'm still interested</span>
-            </div>
-          </div>
-          <div className="p-8 bg-blue-100">
-            <span className="font-bold">What to expect</span>
-            <ul className="p-4 space-y-4 list-disc">
-              <li>
-                The leasing agent will contact you when it's your turn to move forward with your
-                application.
-              </li>
-              <li>We will send you an email to let you know once all units get leased.</li>
-              <li>
-                We will contact you again if more units become available in the next 12 months.
-              </li>
-            </ul>
-            <Link external href="https://www.sf.gov/after-rental-housing-lottery" target="_blank">
-              Learn more about what happens after the housing lottery.
-            </Link>
-          </div>
-        </div>
-      )}
-      {_props.urlParams.response === "no" && (
-     <InviteToApplyWithdrawn
-     listingName={listing?.Name}
-     leasingAgentName={listing?.Leasing_Agent_Name}
-     leasingAgentPhone={listing?.Leasing_Agent_Phone}
-     leasingAgentEmail={listing?.Leasing_Agent_Email}
-     />
-      )}
+      {_props.urlParams.response === "y" && <InviteToApplyInterested listing={listing} />}
+      {_props.urlParams.response === "n" && <InviteToApplyWithdrawn />}
       {window.location.pathname.includes("/deadline-passed") && (
         <InviteToApplyDeadlinePassed
           listingName={listing?.Name}
@@ -121,14 +126,7 @@ const InviteToApplyPage = (_props: HomePageProps) => {
           leasingAgentEmail={listing?.Leasing_Agent_Email}
         />
       )}
-      {_props.urlParams.response === "e" && (
-        <div className="mt-4 bg-white rounded-lg border border-solid">
-          <div className="pt-8 pb-8 text-center border-b border-solid">
-            <div className="text-2xl">ERROR</div>
-            <div className="mt-4 text-sm">INVALID REQUEST</div>
-          </div>
-        </div>
-      )}
+      {_props.urlParams.response === "e" && <div className="text-2xl">ERROR</div>}
     </FormLayout>
   ) : null
 }
