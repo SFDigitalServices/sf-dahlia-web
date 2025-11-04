@@ -74,7 +74,9 @@ describe("Invite to Apply Page", () => {
       expect(screen.getByText(t("inviteToApplyPage.withdrawn.title"))).toBeInTheDocument()
       expect(screen.getByText(mockListing.Name)).toBeInTheDocument()
       expect(screen.getByText(formattedDate)).toBeInTheDocument()
-      expect(screen.getByRole('link', { name: "submit an application and documents" })).toHaveAttribute('href', submitLink)
+      expect(
+        screen.getByRole("link", { name: "submit an application and documents" })
+      ).toHaveAttribute("href", submitLink)
     })
     it("renders contact me later card", async () => {
       await renderAndLoadAsync(
@@ -96,10 +98,14 @@ describe("Invite to Apply Page", () => {
 
       const submitLink = `/invite-to-apply?response=contact&applicationNumber=0000&deadline=${mockFutureDeadline}&listingId=${mockListing.Id}`
 
-      expect(screen.getByText(t("inviteToApplyPage.contact.title", { listingName: mockListing.Name }))).toBeInTheDocument()
-       expect(screen.getByText(t("inviteToApplyPage.contact.subtitle"))).toBeInTheDocument()
+      expect(
+        screen.getByText(t("inviteToApplyPage.contact.title", { listingName: mockListing.Name }))
+      ).toBeInTheDocument()
+      expect(screen.getByText(t("inviteToApplyPage.contact.subtitle"))).toBeInTheDocument()
       expect(screen.getByText(formattedDate)).toBeInTheDocument()
-      expect(screen.getByRole('link', { name: "submit an application and documents" })).toHaveAttribute('href', submitLink)
+      expect(
+        screen.getByRole("link", { name: "submit an application and documents" })
+      ).toHaveAttribute("href", submitLink)
     })
   })
 
