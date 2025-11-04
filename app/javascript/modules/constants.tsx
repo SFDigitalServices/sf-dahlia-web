@@ -179,3 +179,11 @@ export const LISTING_APPLY_FORMS_INPUT_MAX_LENGTH = {
 }
 
 export const LATIN_REGEX = new RegExp("^[A-z0-9\u00C0-\u017E\\s'.,-/+#%$:=-_`~()]+$")
+
+export const EMAIL_REGEX = new RegExp(
+  [
+    "[a-zA-Z0-9!#$%&'*+\\/=?^_`{|}~-]+(?:\\.[a-zA-Z0-9!#$%&'*+\\/=?^_`{|}~-]+)*",
+    "@",
+    "(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?",
+  ].join("")
+)
