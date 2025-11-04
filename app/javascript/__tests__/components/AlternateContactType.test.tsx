@@ -10,12 +10,12 @@ import { openRentalListing } from "../data/RailsRentalListing/listing-rental-ope
 
 const FieldSetWrapper = () => {
   // eslint-disable-next-line @typescript-eslint/unbound-method
-  const { register, watch, trigger, errors, setValue, clearErrors } = useForm({
+  const { register, watch, trigger, errors, control, setValue, clearErrors } = useForm({
     mode: "onBlur",
     reValidateMode: "onBlur",
     shouldFocusError: false,
   })
-  const formStepContextValue = { register, errors, watch, trigger, setValue, clearErrors }
+  const formStepContextValue = { register, errors, watch, trigger, control, setValue, clearErrors }
 
   const listing = openRentalListing
   const formData = Object.assign(
