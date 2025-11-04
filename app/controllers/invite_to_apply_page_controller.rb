@@ -19,7 +19,7 @@ class InviteToApplyPageController < ApplicationController
       urlParams: { 
         listing: params['listingId'],
         deadline: params['deadline'],
-        response: "params['response']",
+        response: "",
         applicationNumber: params['applicationNumber']
       }
     }
