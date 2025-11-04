@@ -57,11 +57,13 @@
         },
         {
           "componentName": "EmailAddress",
-          "fieldNames": {
-            "email": "primaryApplicantEmail"
-          },
           "props": {
+            "fieldNames": {
+              "email": "primaryApplicantEmail",
+              "noEmail": "primaryApplicantNoEmail"
+            },
             "label": "label.applicantEmail",
+            "note": "b2Contact.onlyUseYourEmail",
             "showDontHaveEmailAddress": true
           }
         }
@@ -297,7 +299,9 @@
           "props": {
             "label": "label.dob",
             "fieldNames": {
-              "dateOfBirth": "householdMemberDob"
+              "birthMonth": "householdMemberBirthMonth",
+              "birthDay": "householdMemberBirthDate",
+              "birthYear": "householdMemberBirthYear"
             }
           }
         },
