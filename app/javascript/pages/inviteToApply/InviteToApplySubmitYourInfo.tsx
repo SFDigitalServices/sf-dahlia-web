@@ -6,10 +6,9 @@ import RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
 import { getListingAddressString } from "../../util/listingUtil"
 import { LeasingAgent } from "../../modules/listings/components/LeasingAgent"
 import { getApplicationDeadline } from "../../util/languageUtil"
-import styles from "./InviteToApply.module.scss"
 
 interface InviteToApplySubmitYourInfoProps {
-  listing: RailsSaleListing
+  listing: RailsSaleListing | null
   deadline: string
 }
 
@@ -89,8 +88,8 @@ const WhatHappensNext = () => {
 const SubmitYourInfoHeader = ({ listing, deadline }: InviteToApplySubmitYourInfoProps) => {
   return (
     <>
-      <p>{listing.Name}</p>
-      <p>{getListingAddressString(listing)}</p>
+      <p>{listing?.Name}</p>
+      <p>{listing && getListingAddressString(listing)}</p>
       <p>{t("inviteToApplyPage.submitYourInfo.p1")}</p>
       <p>{deadline}</p>
     </>
@@ -107,13 +106,10 @@ const SubmitYourInfoSidebarBlock = ({ listing }: { listing: RailsSaleListing }) 
   )
 }
 
-const InviteToApplySubmitYourInfo = ({
-  listing,
-  deadline,
-}: InviteToApplySubmitYourInfoProps) => {
+const InviteToApplySubmitYourInfo = ({ listing, deadline }: InviteToApplySubmitYourInfoProps) => {
   return (
     <HeaderSidebarLayout
-      title={`${t("pageTitle.submitYourInfo.title", { listingName: listing.Name })}`}
+      title={`${t("inviteToApplyPage.submitYourInfo.title", { listingName: listing?.Name })}`}
       sidebarContent={<SubmitYourInfoSidebarBlock listing={listing} />}
     >
       <SubmitYourInfoHeader listing={listing} deadline={deadline} />

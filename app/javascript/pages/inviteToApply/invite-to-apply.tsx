@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react"
-import { t, NavigationContext } from "@bloom-housing/ui-components"
+import { t, NavigationContext, LoadingOverlay } from "@bloom-housing/ui-components"
 import { Card, Button, Heading } from "@bloom-housing/ui-seeds"
 import withAppSetup from "../../layouts/withAppSetup"
 import FormLayout from "../../layouts/FormLayout"
@@ -40,7 +40,9 @@ const InviteToApplyHeader = ({ listing }: { listing: RailsSaleListing }) => (
   </Card>
 )
 
-const InviteToApplyPage = ({ urlParams: { response, applicationNumber, deadline, listing: listingId } }: HomePageProps) => {
+const InviteToApplyPage = ({
+  urlParams: { response, applicationNumber, deadline, listing: listingId },
+}: HomePageProps) => {
   const [listing, setListing] = useState<RailsSaleListing>(null)
 
   const submitLink = `/invite-to-apply?response=${response}&applicationNumber=${applicationNumber}&deadline=${deadline}&listingId=${listingId}`
@@ -48,7 +50,7 @@ const InviteToApplyPage = ({ urlParams: { response, applicationNumber, deadline,
   const { router } = useContext(NavigationContext)
   useEffect(() => {
     void getListing(listingId).then((listing: RailsSaleListing) => {
-      if (!listing) { 
+      if (!listing) {
         router.push("/")
       }
       setListing(listing)
@@ -58,30 +60,28 @@ const InviteToApplyPage = ({ urlParams: { response, applicationNumber, deadline,
   const { unleashFlag: inviteToApplyFlag } = useFeatureFlag("partners.inviteToApply", false)
 
   return inviteToApplyFlag ? (
-    response === "yes" ? (
-      <InviteToApplySubmitYourInfo listing={listing} deadline={deadline} />
-    ) : (
-      <FormLayout>
-        {<InviteToApplyHeader listing={listing} />}
-        {response === "contact" && (
-          <InviteToApplyContactMeLater
-            listing={listing}
-            deadline={deadline}
-            submitLink={submitLink} 
-          />
-        )}
-        {response === "no" && (
-          <InviteToApplyWithdrawn
-            listing={listing}
-            deadline={deadline}
-            submitLink={submitLink}
-          />
-        )}
-        {window.location.pathname.includes("/deadline-passed") && (
-          <InviteToApplyDeadlinePassed listing={listing} />
-        )}
-      </FormLayout>
-    )
+    <LoadingOverlay isLoading={!listing}>
+      {response === "yes" ? (
+        <InviteToApplySubmitYourInfo listing={listing} deadline={deadline} />
+      ) : (
+        <FormLayout>
+          {<InviteToApplyHeader listing={listing} />}
+          {response === "contact" && (
+            <InviteToApplyContactMeLater
+              listing={listing}
+              deadline={deadline}
+              submitLink={submitLink}
+            />
+          )}
+          {response === "no" && (
+            <InviteToApplyWithdrawn listing={listing} deadline={deadline} submitLink={submitLink} />
+          )}
+          {window.location.pathname.includes("/deadline-passed") && (
+            <InviteToApplyDeadlinePassed listing={listing} />
+          )}
+        </FormLayout>
+      )}
+    </LoadingOverlay>
   ) : null
 }
 
