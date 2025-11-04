@@ -10,6 +10,7 @@ import { getListing } from "../../api/listingApiService"
 import { RailsListing } from "../../modules/listings/SharedHelpers"
 import styles from "./InviteToApply.module.scss"
 import { localizedFormat, formatTimeOfDay } from "../../util/languageUtil"
+import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 
 interface UrlParams {
   listing: string
@@ -24,30 +25,42 @@ interface HomePageProps {
 
 const DeadlinePassedBanner = ({ deadline }: { deadline: string }) => {
   return (
-    <Message fullwidth variant="alert" customIcon={<Icon symbol="clock" size="medium" className={styles.bannerIcon} />}>
-      <strong>{t("inviteToApplyPage.deadlinePassed.banner")}</strong> {" "}
-      <span>{t("myApplications.applicationDeadlineTime", {
-        date: localizedFormat(deadline, "ll"),
-        time: formatTimeOfDay(deadline),
-      })}</span> 
+    <Message
+      fullwidth
+      variant="alert"
+      customIcon={<Icon symbol="clock" size="medium" className={styles.bannerIcon} />}
+    >
+      <strong>{t("inviteToApplyPage.deadlinePassed.banner")}</strong>{" "}
+      <span>
+        {t("myApplications.applicationDeadlineTime", {
+          date: localizedFormat(deadline, "ll"),
+          time: formatTimeOfDay(deadline),
+        })}
+      </span>
     </Message>
   )
 }
 
-const ListingInterestPage = (_props: HomePageProps) => {
+const InviteToApplyPage = (_props: HomePageProps) => {
   const [listing, setListing] = useState<RailsListing>(null)
+
   useEffect(() => {
     void getListing(_props.urlParams.listing).then((listing: RailsListing) => {
       setListing(listing)
     })
-  }, [_props.urlParams.listing])
-  return (
+  })
+
+  const { unleashFlag: inviteToApplyFlag } = useFeatureFlag("partners.inviteToApply", false)
+
+  return inviteToApplyFlag ? (
     <FormLayout>
       {_props.urlParams.deadline && <DeadlinePassedBanner deadline={_props.urlParams.deadline} />}
       {_props.urlParams.response !== "e" && (
         <Card className={styles.listingCard}>
           <Card.Header className={styles.listingHeader}>
-            <Heading className={styles.listingHeading} priority={1} size="lg">{listing?.Name}</Heading>
+            <Heading className={styles.listingHeading} priority={1} size="lg">
+              {listing?.Name}
+            </Heading>
           </Card.Header>
           <Card.Section className={styles.listingSection}>
             <Button href={`/listings/${listing?.Id}`} variant="text" size="sm" newWindowTarget>
@@ -109,7 +122,7 @@ const ListingInterestPage = (_props: HomePageProps) => {
         </div>
       )}
     </FormLayout>
-  )
+  ) : null
 }
 
-export default withAppSetup(ListingInterestPage, { pageName: AppPages.ListingInterest })
+export default withAppSetup(InviteToApplyPage, { pageName: AppPages.InviteToApply })
