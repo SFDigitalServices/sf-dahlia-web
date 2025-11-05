@@ -19,6 +19,7 @@ export interface FormStepProviderProps {
   children: ReactNode
 }
 
+// TODO: replace with react-hook-form FormProvider
 export const FormStepProvider = ({ value, children }: FormStepProviderProps) => {
   return <FormStepContext.Provider value={value}>{children}</FormStepContext.Provider>
 }
