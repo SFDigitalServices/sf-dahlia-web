@@ -30,7 +30,7 @@ import "./how-to-apply.scss"
 import HeaderSidebarLayout from "../../layouts/HeaderSidebarLayout"
 import GetHelpSidebarBlock from "../../layouts/Sidebar/GetHelpSidebarBlock"
 import { AppPages } from "../../util/routeUtil"
-import LeasingAgent from "../../modules/listings/components/LeasingAgent"
+import { LeasingAgent } from "../../modules/listings/components/LeasingAgent"
 
 interface HowToApplyProps {
   assetPaths: unknown

@@ -20,7 +20,7 @@ import {
 } from "../../util/languageUtil"
 import styles from "./InviteToApply.module.scss"
 import Layout from "../../layouts/Layout"
-import ConfigContext from "../../lib/ConfigContext"
+import { ConfigContext } from "../../lib/ConfigContext"
 
 interface InviteToApplySubmitYourInfoProps {
   listing: RailsSaleListing | null

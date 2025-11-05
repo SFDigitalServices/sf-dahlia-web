@@ -2,12 +2,12 @@ import React from "react"
 import { screen } from "@testing-library/react"
 import "@testing-library/jest-dom"
 import { t } from "@bloom-housing/ui-components"
-import InviteToApplyPage from "../../../../javascript/pages/inviteToApply/invite-to-apply"
-import { renderAndLoadAsync } from "../../__util__/renderUtils"
-import { formatTimeOfDay, localizedFormat } from "../../../util/languageUtil"
-import { getListing } from "../../../api/listingApiService"
+import InviteToApplyPage from "../../pages/inviteToApply/invite-to-apply"
+import { renderAndLoadAsync } from "../__util__/renderUtils"
+import { formatTimeOfDay, getApplicationDeadline, localizedFormat } from "../../util/languageUtil"
+import { getListing } from "../../api/listingApiService"
 
-jest.mock("../../../api/listingApiService")
+jest.mock("../../api/listingApiService")
 
 const mockListing = {
   Id: "listing-id",
@@ -15,6 +15,13 @@ const mockListing = {
   Leasing_Agent_Name: "test-agent",
   Leasing_Agent_Phone: "123-456-7890",
   Leasing_Agent_Email: "test-agent@test-agent.com",
+  Listing_Images: [
+    {
+      Image_URL: "example-image-url",
+      Image_Description: "example-image-alt",
+    },
+  ],
+  Building_Street_Address: "test-address",
 }
 const mockPastDeadline = "2000-01-01"
 const mockFutureDeadline = "3000-01-01"
@@ -121,12 +128,49 @@ describe("Invite to Apply Page", () => {
           }}
         />
       )
-      expect(screen.getByText(t("inviteToApplyPage.deadlinePassed.banner"))).toBeInTheDocument()
-      const formattedDate = t("myApplications.applicationDeadlineTime", {
-        date: localizedFormat(mockPastDeadline, "ll"),
-        time: formatTimeOfDay(mockPastDeadline),
-      })
-      expect(screen.getByText(formattedDate)).toBeInTheDocument()
+      expect(screen.getByText(getApplicationDeadline(mockPastDeadline))).toBeInTheDocument()
+    })
+
+    it("renders submit your info banner", async () => {
+      await renderAndLoadAsync(
+        <InviteToApplyPage
+          assetPaths={"/"}
+          urlParams={{
+            listing: mockListing.Id,
+            deadline: mockFutureDeadline,
+            response: "yes",
+          }}
+        />
+      )
+      expect(screen.getByText(getApplicationDeadline(mockFutureDeadline))).toBeInTheDocument()
+    })
+    it("renders listing details", async () => {
+      await renderAndLoadAsync(
+        <InviteToApplyPage
+          assetPaths={"/"}
+          urlParams={{
+            listing: mockListing.Id,
+            deadline: mockFutureDeadline,
+            response: "yes",
+          }}
+        />
+      )
+      expect(
+        screen.getByText(
+          t("inviteToApplyPage.submitYourInfo.title", { listingName: mockListing.Name })
+        )
+      ).toBeInTheDocument()
+      expect(screen.getByText(mockListing.Name)).toBeInTheDocument()
+      expect(screen.getByText(mockListing.Building_Street_Address)).toBeInTheDocument()
+      expect(screen.getByRole("img")).toBeInTheDocument()
+      expect(screen.getByRole("img")).toHaveAttribute(
+        "src",
+        mockListing.Listing_Images?.[0]?.Image_URL
+      )
+      expect(screen.getByRole("img")).toHaveAttribute(
+        "alt",
+        mockListing.Listing_Images?.[0]?.Image_Description
+      )
     })
   })
 })
