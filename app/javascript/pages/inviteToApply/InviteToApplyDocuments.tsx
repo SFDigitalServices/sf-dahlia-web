@@ -6,7 +6,7 @@ interface InviteToApplyDocumentsProps {
 }
 
 const InviteToApplyDocuments = ({ listing }: InviteToApplyDocumentsProps) => {
-  return <h1>{listing?.Name || ""}</h1>
+  return <h1>{listing?.Name}</h1>
 }
 
 export default InviteToApplyDocuments

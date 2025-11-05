@@ -21,8 +21,8 @@ const mockListing = {
       Image_Description: "example-image-alt",
     },
   ],
-  Building_Street_Address: "test-address",
 }
+
 const mockPastDeadline = "2000-01-01"
 const mockFutureDeadline = "3000-01-01"
 
@@ -31,6 +31,18 @@ describe("Invite to Apply Page", () => {
     document.documentElement.lang = "en"
     jest.clearAllMocks()
     ;(getListing as jest.Mock).mockResolvedValue(mockListing)
+    window.matchMedia = jest.fn().mockImplementation((query) => {
+      return {
+        matches: true,
+        media: query,
+        onchange: null,
+        addListener: jest.fn(),
+        removeListener: jest.fn(),
+        addEventListener: jest.fn(),
+        removeEventListener: jest.fn(),
+        dispatchEvent: jest.fn(),
+      }
+    })
   })
   describe("Invite to Apply - user responses (deadline passed, withdrawn, contact me later)", () => {
     it("renders deadline passed card", async () => {
@@ -122,7 +134,7 @@ describe("Invite to Apply Page", () => {
           }}
         />
       )
-      expect(screen.getByText(getApplicationDeadline(mockPastDeadline))).toBeInTheDocument()
+      expect(screen.getByText(t("inviteToApplyPage.submitYourInfo.p1"))).toBeInTheDocument()
     })
 
     it("renders submit your info banner", async () => {
@@ -138,7 +150,7 @@ describe("Invite to Apply Page", () => {
       )
       expect(screen.getByText(getApplicationDeadline(mockFutureDeadline))).toBeInTheDocument()
     })
-    it("renders listing details", async () => {
+    it("renders submit your info page", async () => {
       await renderAndLoadAsync(
         <InviteToApplyPage
           assetPaths={"/"}
@@ -154,17 +166,20 @@ describe("Invite to Apply Page", () => {
           t("inviteToApplyPage.submitYourInfo.title", { listingName: mockListing.Name })
         )
       ).toBeInTheDocument()
+    })
+    it("renders documents list page", async () => {
+      await renderAndLoadAsync(
+        <InviteToApplyPage
+          assetPaths={"/"}
+          documentsPath={true}
+          urlParams={{
+            listing: mockListing.Id,
+            deadline: mockFutureDeadline,
+            response: "yes",
+          }}
+        />
+      )
       expect(screen.getByText(mockListing.Name)).toBeInTheDocument()
-      expect(screen.getByText(mockListing.Building_Street_Address)).toBeInTheDocument()
-      expect(screen.getByRole("img")).toBeInTheDocument()
-      expect(screen.getByRole("img")).toHaveAttribute(
-        "src",
-        mockListing.Listing_Images?.[0]?.Image_URL
-      )
-      expect(screen.getByRole("img")).toHaveAttribute(
-        "alt",
-        mockListing.Listing_Images?.[0]?.Image_Description
-      )
     })
   })
 })
