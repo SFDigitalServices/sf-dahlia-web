@@ -1,11 +1,17 @@
 import React from "react"
-import { Icon, t } from "@bloom-housing/ui-components"
+import { faEnvelope } from "@fortawesome/free-solid-svg-icons"
+import { t, Icon, IconFillColors, SidebarBlock, PageHeader } from "@bloom-housing/ui-components"
 import { Heading, Button, Message } from "@bloom-housing/ui-seeds"
-import HeaderSidebarLayout from "../../layouts/HeaderSidebarLayout"
 import RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
 import { getListingAddressString } from "../../util/listingUtil"
-import { LeasingAgent } from "../../modules/listings/components/LeasingAgent"
-import { getApplicationDeadline } from "../../util/languageUtil"
+import {
+  getApplicationDeadline,
+  getTranslatedString,
+  renderInlineMarkup,
+} from "../../util/languageUtil"
+import styles from "./InviteToApply.module.scss"
+import Layout from "../../layouts/Layout"
+import ConfigContext from "../../lib/ConfigContext"
 
 interface InviteToApplySubmitYourInfoProps {
   listing: RailsSaleListing | null
@@ -35,36 +41,82 @@ const DeadlineBanner = ({ deadline }: { deadline: string }) => {
 const PreparingYourApplication = () => {
   return (
     <>
-      <Heading priority={2}>{t("inviteToApplyPage.submitYourInfo.title")}</Heading>
-      <p>{t("inviteToApplyPage.submitYourInfo.p2")}</p>
+      <Heading priority={2} size="2xl">
+        {t("howToApplyPage.howLongItTakesSection.subtitle1")}
+      </Heading>
       <p>{t("inviteToApplyPage.submitYourInfo.prepare.p1")}</p>
-      <p>{t("inviteToApplyPage.submitYourInfo.prepare.p2")}</p>
-      <p>{t("inviteToApplyPage.submitYourInfo.prepare.p3")}</p>
-      <p>{t("inviteToApplyPage.submitYourInfo.prepare.p4")}</p>
-      <Button>{t("inviteToApplyPage.submitYourInfo.prepare.p5")}</Button>
+      <div className={styles.submitYourInfoSection}>
+        <p>{t("inviteToApplyPage.submitYourInfo.prepare.p2")}</p>
+        <p>{t("inviteToApplyPage.submitYourInfo.prepare.p3")}</p>
+        {renderInlineMarkup(t("inviteToApplyPage.submitYourInfo.prepare.p4"))}
+        <span className={styles.submitYourInfoIcons}>
+          <a className={styles.responseIcon} href={`tel:+14152025464`}>
+            <Icon symbol="phone" size="medium" fill={IconFillColors.primary} />
+            {"415-202-5464"}
+          </a>
+          <a className={styles.responseIcon} href={`mailto:${"info@homesanfrancisco.org"}`}>
+            <Icon symbol={faEnvelope} size="medium" fill={IconFillColors.primary} />
+            {"info@homesanfrancisco.org"}
+          </a>
+        </span>
+      </div>
+      <Button variant="primary-outlined">{t("inviteToApplyPage.submitYourInfo.prepare.p5")}</Button>
     </>
   )
 }
 
-const WhatToDo = () => {
+const WhatToDo = ({ listing }: { listing: RailsSaleListing }) => {
   return (
     <>
-      <Heading priority={2}>{t("inviteToApplyPage.submitYourInfo.title")}</Heading>
-      <p>{t("inviteToApplyPage.submitYourInfo.whatToDo.step1.p1")}</p>
-      <p>{t("inviteToApplyPage.submitYourInfo.whatToDo.step1.p2")}</p>
-      <p>{t("inviteToApplyPage.submitYourInfo.whatToDo.step1.p3")}</p>
-      <p>{t("inviteToApplyPage.submitYourInfo.whatToDo.step2.p1")}</p>
-      <p>{t("inviteToApplyPage.submitYourInfo.whatToDo.step2.p2")}</p>
-      <p>{t("inviteToApplyPage.submitYourInfo.whatToDo.step2.p3")}</p>
-      <p>{t("inviteToApplyPage.submitYourInfo.whatToDo.step3.p1")}</p>
-      <p>{t("inviteToApplyPage.submitYourInfo.whatToDo.step3.p2")}</p>
-      <p>{t("inviteToApplyPage.submitYourInfo.whatToDo.step3.p3")}</p>
-      <p>{t("inviteToApplyPage.submitYourInfo.whatToDo.step3.p4")}</p>
-      <p>{t("inviteToApplyPage.submitYourInfo.whatToDo.step3.p5")}</p>
-      <p>{t("inviteToApplyPage.submitYourInfo.whatToDo.step3.p6")}</p>
-      <p>{t("inviteToApplyPage.submitYourInfo.whatToDo.step3.p7")}</p>
-      <p>{t("inviteToApplyPage.submitYourInfo.whatToDo.step3.p8")}</p>
-      <p>{t("inviteToApplyPage.submitYourInfo.whatToDo.step3.p9")}</p>
+      <Heading priority={2} size="2xl">
+        {t("inviteToApplyPage.submitYourInfo.whatToDo.title")}
+      </Heading>
+      <ol className="numbered-list">
+        <li>
+          <Heading priority={3} size="md">
+            {t("inviteToApplyPage.submitYourInfo.whatToDo.step1.title")}
+          </Heading>
+          <p>{t("inviteToApplyPage.submitYourInfo.whatToDo.step1.p1")}</p>
+          <p>{t("inviteToApplyPage.submitYourInfo.whatToDo.step1.p2")}</p>
+          <Button variant="primary-outlined" size="sm">
+            {t("inviteToApplyPage.submitYourInfo.whatToDo.step1.p3")}
+          </Button>
+        </li>
+        <li>
+          <Heading priority={3} size="md">
+            {t("inviteToApplyPage.submitYourInfo.whatToDo.step2.title")}
+          </Heading>
+          <p>{t("inviteToApplyPage.submitYourInfo.whatToDo.step2.p1")}</p>
+          <p>{t("inviteToApplyPage.submitYourInfo.whatToDo.step2.p2")}</p>
+          {renderInlineMarkup(
+            t("inviteToApplyPage.submitYourInfo.whatToDo.step2.p3", {
+              link: `/listings/${listing?.Id}/documents`,
+            })
+          )}
+        </li>
+        <li>
+          <Heading priority={3} size="md">
+            {t("inviteToApplyPage.submitYourInfo.whatToDo.step3.title")}
+          </Heading>
+          <p>{t("inviteToApplyPage.submitYourInfo.whatToDo.step3.p1")}</p>
+          <ul>
+            <li>{t("inviteToApplyPage.submitYourInfo.whatToDo.step3.p2")}</li>
+            <li>{t("inviteToApplyPage.submitYourInfo.whatToDo.step3.p3")}</li>
+          </ul>
+          <Button>{t("inviteToApplyPage.submitYourInfo.whatToDo.step3.p4")}</Button>
+          <Heading priority={3} size="md">
+            {t("inviteToApplyPage.submitYourInfo.whatToDo.step3.p5")}
+          </Heading>
+          <p>{t("inviteToApplyPage.submitYourInfo.whatToDo.step3.p6")}</p>
+          <p>{t("inviteToApplyPage.submitYourInfo.whatToDo.step3.p7")}</p>
+        </li>
+      </ol>
+      <div className={styles.submitYourInfoSection}>
+        <Heading priority={4} size="md">
+          {t("inviteToApplyPage.submitYourInfo.whatToDo.step3.p8")}
+        </Heading>
+        <p>{t("inviteToApplyPage.submitYourInfo.whatToDo.step3.p9")}</p>
+      </div>
     </>
   )
 }
@@ -72,52 +124,89 @@ const WhatToDo = () => {
 const WhatHappensNext = () => {
   return (
     <>
-      <Heading priority={2}>{t("howToApplyPage.whatHappensNext.title")}</Heading>
-      <p>{t("inviteToApplyPage.submitYourInfo.whatHappensNext.p1")}</p>
+      <Heading priority={2} size="2xl">
+        {t("howToApplyPage.whatHappensNext.title")}
+      </Heading>
+      <Heading priority={3} size="md">
+        {t("inviteToApplyPage.submitYourInfo.whatHappensNext.p1")}
+      </Heading>
       <p>{t("inviteToApplyPage.submitYourInfo.whatHappensNext.p2")}</p>
       <p>{t("inviteToApplyPage.submitYourInfo.whatHappensNext.p3")}</p>
-      <p>{t("inviteToApplyPage.submitYourInfo.whatHappensNext.p4")}</p>
-      <p>{t("inviteToApplyPage.submitYourInfo.whatHappensNext.p5")}</p>
+      <ul>
+        <li>{t("inviteToApplyPage.submitYourInfo.whatHappensNext.p4")}</li>
+        <li>{t("inviteToApplyPage.submitYourInfo.whatHappensNext.p5")}</li>
+      </ul>
       <p>{t("inviteToApplyPage.submitYourInfo.whatHappensNext.p6")}</p>
-      <p>{t("inviteToApplyPage.submitYourInfo.whatHappensNext.p7")}</p>
+      <Heading priority={3} size="md">
+        {t("inviteToApplyPage.submitYourInfo.whatHappensNext.p7")}
+      </Heading>
       <p>{t("inviteToApplyPage.submitYourInfo.whatHappensNext.p8")}</p>
     </>
   )
 }
 
-const SubmitYourInfoHeader = ({ listing, deadline }: InviteToApplySubmitYourInfoProps) => {
+const SubmitYourInfoHeader = ({ listing }: { listing: RailsSaleListing }) => {
   return (
     <>
-      <p>{listing?.Name}</p>
+      <img
+        src={listing?.Listing_Images?.[0]?.Image_URL}
+        alt={listing?.Listing_Images?.[0]?.Image_Description}
+      />
+      <strong>{listing?.Name}</strong>
       <p>{listing && getListingAddressString(listing)}</p>
-      <p>{t("inviteToApplyPage.submitYourInfo.p1")}</p>
-      <p>{deadline}</p>
+      <a href={`/listings/${listing?.Id}`}>{t("inviteToApplyPage.submitYourInfo.p1")}</a>
     </>
   )
 }
 
 const SubmitYourInfoSidebarBlock = ({ listing }: { listing: RailsSaleListing }) => {
   return (
-    <>
-      <p>{t("contactAgent.contact")}</p>
-      <p>{t("inviteToApplyPage.submitYourInfo.sidebar")}</p>
-      <LeasingAgent listing={listing} />
-    </>
+    <SidebarBlock title={t("contactAgent.contact")} priority={2}>
+      <Heading priority={3} size="lg" className={styles.responseHeading}>
+        {t("inviteToApplyPage.submitYourInfo.sidebar")}
+      </Heading>
+      <p>{listing?.Leasing_Agent_Name}</p>
+      <p className="field-note">{t("inviteToApplyPage.leasingAgent")}</p>
+      <a className={styles.responseIcon} href={`tel:+1${listing?.Leasing_Agent_Phone}`}>
+        <Icon symbol="phone" size="medium" fill={IconFillColors.primary} />
+        {listing?.Leasing_Agent_Phone}
+      </a>
+      <a className={styles.responseIcon} href={`mailto:${listing?.Leasing_Agent_Email}`}>
+        <Icon symbol={faEnvelope} size="medium" fill={IconFillColors.primary} />
+        {listing?.Leasing_Agent_Email}
+      </a>
+      <Heading size="sm" priority={3}>
+        {t("contactAgent.officeHours.seeTheUnit")}
+      </Heading>
+      <p className="text-sm">
+        {getTranslatedString(listing?.Office_Hours, "Office_Hours__c", listing?.translations)}
+      </p>
+    </SidebarBlock>
   )
 }
 
 const InviteToApplySubmitYourInfo = ({ listing, deadline }: InviteToApplySubmitYourInfoProps) => {
+  const { getAssetPath } = React.useContext(ConfigContext)
   return (
-    <HeaderSidebarLayout
-      title={`${t("inviteToApplyPage.submitYourInfo.title", { listingName: listing?.Name })}`}
-      sidebarContent={<SubmitYourInfoSidebarBlock listing={listing} />}
-    >
-      <SubmitYourInfoHeader listing={listing} deadline={deadline} />
-      <DeadlineBanner deadline={deadline} />
-      <PreparingYourApplication />
-      <WhatToDo />
-      <WhatHappensNext />
-    </HeaderSidebarLayout>
+    <Layout>
+      <PageHeader
+        title={t("inviteToApplyPage.submitYourInfo.title", { listingName: listing?.Name })}
+        inverse
+        backgroundImage={getAssetPath("bg@1200.jpg")}
+      />
+      <div className="flex flex-col md:flex-row max-w-5xl mx-auto px-4 py-8 gap-8">
+        <main className="w-full md:w-2/3">
+          <SubmitYourInfoHeader listing={listing} />
+          <DeadlineBanner deadline={deadline} />
+          <PreparingYourApplication />
+          <WhatToDo listing={listing} />
+          <WhatHappensNext />
+        </main>
+        <aside className="w-full md:w-1/3">
+          <SubmitYourInfoSidebarBlock listing={listing} />
+        </aside>
+      </div>
+    </Layout>
   )
 }
 

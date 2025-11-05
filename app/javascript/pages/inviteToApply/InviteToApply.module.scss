@@ -55,3 +55,19 @@
     gap: var(--seeds-spacer-text);
   }
 }
+
+.submitYourInfo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--seeds-spacer-text);
+  .submitYourInfoSection {
+    background-color: var(--seeds-color-gray-200);
+    padding: var(--seeds-spacer-section);
+  }
+
+  .submitYourInfoIcons {
+    display: flex;
+    flex-direction: row;
+    gap: var(--seeds-spacer-label);
+  }
+}
