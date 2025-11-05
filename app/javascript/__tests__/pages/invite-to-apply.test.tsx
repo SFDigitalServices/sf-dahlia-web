@@ -34,16 +34,10 @@ describe("Invite to Apply Page", () => {
   })
   describe("Invite to Apply - user responses (deadline passed, withdrawn, contact me later)", () => {
     it("renders deadline passed card", async () => {
-      Object.defineProperty(window, "location", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: { ...window.location, pathname: "/invite-to-apply/deadline-passed" },
-      })
-
       await renderAndLoadAsync(
         <InviteToApplyPage
           assetPaths={"/"}
+          deadlinePassedPath={true}
           urlParams={{
             listing: mockListing.Id,
             deadline: mockPastDeadline,

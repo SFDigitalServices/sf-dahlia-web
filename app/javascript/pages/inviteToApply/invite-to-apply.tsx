@@ -10,6 +10,7 @@ import InviteToApplyDeadlinePassed from "./InviteToApplyDeadlinePassed"
 import InviteToApplyWithdrawn from "./InviteToApplyWithdrawn"
 import InviteToApplyContactMeLater from "./InviteToApplyContactMeLater"
 import InviteToApplySubmitYourInfo from "./InviteToApplySubmitYourInfo"
+import InviteToApplyDocuments from "./InviteToApplyDocuments"
 import RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
 import styles from "./invite-to-apply.module.scss"
 
@@ -23,6 +24,8 @@ interface UrlParams {
 interface HomePageProps {
   assetPaths: unknown
   urlParams: UrlParams
+  deadlinePassedPath?: boolean
+  documentsPath?: boolean
 }
 
 const InviteToApplyHeader = ({ listing }: { listing: RailsSaleListing }) => (
@@ -42,6 +45,8 @@ const InviteToApplyHeader = ({ listing }: { listing: RailsSaleListing }) => (
 
 const InviteToApplyPage = ({
   urlParams: { response, applicationNumber, deadline, listing: listingId },
+  deadlinePassedPath,
+  documentsPath,
 }: HomePageProps) => {
   const [listing, setListing] = useState<RailsSaleListing>(null)
 
@@ -76,9 +81,8 @@ const InviteToApplyPage = ({
           {response === "no" && (
             <InviteToApplyWithdrawn listing={listing} deadline={deadline} submitLink={submitLink} />
           )}
-          {window.location.pathname.includes("/deadline-passed") && (
-            <InviteToApplyDeadlinePassed listing={listing} />
-          )}
+          {deadlinePassedPath && <InviteToApplyDeadlinePassed listing={listing} />}
+          {documentsPath && <InviteToApplyDocuments listing={listing} />}
         </FormLayout>
       )}
     </LoadingOverlay>
