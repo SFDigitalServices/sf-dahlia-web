@@ -12,7 +12,7 @@ interface RadioProps {
   }
 }
 
-const Radio = ({ label, hideLabel, options, fieldNames: { answer } }: RadioProps) => {
+const Radio = ({ label, errorMessage, hideLabel, options, fieldNames: { answer } }: RadioProps) => {
   const { register, errors } = useFormStepContext()
 
   const translatedOptions = options.map((option) => ({ ...option, label: t(option.label) }))
@@ -26,7 +26,7 @@ const Radio = ({ label, hideLabel, options, fieldNames: { answer } }: RadioProps
         type="radio"
         name={answer}
         error={!!errors?.[answer]}
-        errorMessage={t("errors.selectOption")}
+        errorMessage={t(errorMessage)}
         register={register}
         validation={{ required: true }}
         fields={translatedOptions}

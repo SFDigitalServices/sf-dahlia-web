@@ -77,9 +77,19 @@ export const renderWithFormContextWrapper = (formComponent: React.ReactElement) 
       defaultValues: {},
     })
 
+    const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+      event.preventDefault()
+      void formMethods.handleSubmit(jest.fn())(event)
+    }
+
     return (
       <FormEngineProvider value={formEngineContextValue}>
-        <FormStepProvider value={formMethods}>{children}</FormStepProvider>
+        <FormStepProvider value={formMethods}>
+          <form onSubmit={onSubmit}>
+            {children}
+            <button type="submit">next</button>
+          </form>
+        </FormStepProvider>
       </FormEngineProvider>
     )
   }

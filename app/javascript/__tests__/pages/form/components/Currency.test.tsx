@@ -1,5 +1,6 @@
 import React from "react"
 import { screen } from "@testing-library/react"
+import { userEvent } from "@testing-library/user-event"
 import { t } from "@bloom-housing/ui-components"
 import { renderWithFormContextWrapper } from "../../../../__tests__/__util__/renderUtils"
 import Currency from "../../../../pages/form/components/Currency"
@@ -19,7 +20,15 @@ describe("Currency", () => {
   it("renders", () => {
     renderCurrencyComponent()
 
-    expect(screen.getByLabelText(t(LABEL))).not.toBeNull()
-    expect(screen.getByText(t(NOTE))).not.toBeNull()
+    expect(screen.queryByLabelText(t(LABEL))).not.toBeNull()
+    expect(screen.queryByText(t(NOTE))).not.toBeNull()
+  })
+
+  it("displays an error emssage", async () => {
+    const user = userEvent.setup()
+    renderCurrencyComponent()
+
+    await user.click(screen.getByRole("button", { name: "next" }))
+    expect(screen.queryByText(t(ERROR_MESSAGE))).not.toBeNull()
   })
 })
