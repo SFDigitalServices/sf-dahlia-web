@@ -346,6 +346,7 @@
           "componentName": "Select",
           "props": {
             "label": "label.householdMemberRelationship",
+            "errorMessage": "error.householdMemberRelationship",
             "defaultOptionName": "label.selectOne",
             "options": [
               {
