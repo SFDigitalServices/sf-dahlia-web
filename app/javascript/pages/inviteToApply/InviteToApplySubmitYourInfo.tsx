@@ -1,6 +1,14 @@
 import React from "react"
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons"
-import { t, Icon, IconFillColors, SidebarBlock, PageHeader } from "@bloom-housing/ui-components"
+import {
+  t,
+  Icon,
+  IconFillColors,
+  SidebarBlock,
+  PageHeader,
+  Mobile,
+  Desktop,
+} from "@bloom-housing/ui-components"
 import { Heading, Button, Message } from "@bloom-housing/ui-seeds"
 import RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
 import { getListingAddressString } from "../../util/listingUtil"
@@ -194,17 +202,24 @@ const InviteToApplySubmitYourInfo = ({ listing, deadline }: InviteToApplySubmitY
         inverse
         backgroundImage={getAssetPath("bg@1200.jpg")}
       />
-      <div className="flex flex-col md:flex-row max-w-5xl mx-auto px-4 py-8 gap-8">
-        <main className="w-full md:w-2/3">
-          <SubmitYourInfoHeader listing={listing} />
-          <DeadlineBanner deadline={deadline} />
-          <PreparingYourApplication />
-          <WhatToDo listing={listing} />
-          <WhatHappensNext />
-        </main>
-        <aside className="w-full md:w-1/3">
-          <SubmitYourInfoSidebarBlock listing={listing} />
-        </aside>
+      <div className={styles.submitYourInfo}>
+        <div className={styles.submitYourInfoPage}>
+          <main className={styles.submitYourInfoMain}>
+            <SubmitYourInfoHeader listing={listing} />
+            <DeadlineBanner deadline={deadline} />
+            <PreparingYourApplication />
+            <WhatToDo listing={listing} />
+            <Mobile>
+              <SubmitYourInfoSidebarBlock listing={listing} />
+            </Mobile>
+            <WhatHappensNext />
+          </main>
+          <Desktop>
+            <aside className={styles.submitYourInfoSidebar}>
+              <SubmitYourInfoSidebarBlock listing={listing} />
+            </aside>
+          </Desktop>
+        </div>
       </div>
     </Layout>
   )

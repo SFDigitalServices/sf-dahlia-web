@@ -59,7 +59,32 @@
 .submitYourInfo {
   display: flex;
   flex-direction: column;
-  gap: var(--seeds-spacer-text);
+  gap: var(--seeds-spacer-content);
+  .submitYourInfoPage {
+    display: flex;
+    flex-direction: row;
+    gap: var(--seeds-spacer-content);
+    @media (max-width: theme("screens.sm")) {
+      flex-direction: column;
+    }
+  }
+  .submitYourInfoMain {
+    width: 66.66%;
+    gap: var(--seeds-spacer-text);
+    @media (max-width: theme("screens.sm")) {
+      width: 100%;
+    }
+    padding: 0 var(--seeds-spacer-container) 0 var(--seeds-s24);
+    margin: var(--seeds-spacer-section);
+  }
+  .submitYourInfoSidebar {
+    width: 33.33%;
+    @media (max-width: theme("screens.sm")) {
+      width: 100%;
+    }
+    padding: var(--seeds-spacer-section);
+    border-left: 1px solid var(--seeds-color-gray-450);
+  }
   .submitYourInfoSection {
     background-color: var(--seeds-color-gray-200);
     padding: var(--seeds-spacer-section);
