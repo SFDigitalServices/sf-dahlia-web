@@ -661,7 +661,7 @@
   "inviteToApplyPage.submitYourInfo.title": "Submit your application and documents to %{listingName}",
   "inviteToApplyPage.submitYourInfo.whatToDo.title": "What to do",
   "inviteToApplyPage.submitYourInfo.whatToDo.step1.title": "Fill out a detailed application",
-  "inviteToApplyPage.submitYourInfo.whatToDo.step1.p1": "Download and fill out the Below Market Rate Rental Application.",
+  "inviteToApplyPage.submitYourInfo.whatToDo.step1.p1": "Download and fill out the <strong>Below Market Rate Rental Application</strong>.",
   "inviteToApplyPage.submitYourInfo.whatToDo.step1.p2": "If you print the application, you will need to scan it back into your computer later.",
   "inviteToApplyPage.submitYourInfo.whatToDo.step1.p3": "Download application (PDF)",
   "inviteToApplyPage.submitYourInfo.whatToDo.step2.title": "Gather documents",

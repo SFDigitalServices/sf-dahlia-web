@@ -1,5 +1,5 @@
 import React from "react"
-import { faEnvelope } from "@fortawesome/free-solid-svg-icons"
+import { faEnvelope, faPrint } from "@fortawesome/free-solid-svg-icons"
 import {
   t,
   Icon,
@@ -16,6 +16,7 @@ import {
   getApplicationDeadline,
   getTranslatedString,
   renderInlineMarkup,
+  getCurrentLanguage,
 } from "../../util/languageUtil"
 import styles from "./InviteToApply.module.scss"
 import Layout from "../../layouts/Layout"
@@ -48,13 +49,15 @@ const DeadlineBanner = ({ deadline }: { deadline: string }) => {
 
 const PreparingYourApplication = () => {
   return (
-    <>
+    <div className={styles.submitYourInfoSection}>
       <Heading priority={2} size="2xl">
         {t("howToApplyPage.howLongItTakesSection.subtitle1")}
       </Heading>
       <p>{t("inviteToApplyPage.submitYourInfo.prepare.p1")}</p>
-      <div className={styles.submitYourInfoSection}>
-        <p>{t("inviteToApplyPage.submitYourInfo.prepare.p2")}</p>
+      <div className={styles.submitYourInfoBox}>
+        <Heading priority={3} size="lg">
+          {t("inviteToApplyPage.submitYourInfo.prepare.p2")}
+        </Heading>
         <p>{t("inviteToApplyPage.submitYourInfo.prepare.p3")}</p>
         {renderInlineMarkup(t("inviteToApplyPage.submitYourInfo.prepare.p4"))}
         <span className={styles.submitYourInfoIcons}>
@@ -68,102 +71,113 @@ const PreparingYourApplication = () => {
           </a>
         </span>
       </div>
-      <Button variant="primary-outlined">{t("inviteToApplyPage.submitYourInfo.prepare.p5")}</Button>
-    </>
+      <Button
+        leadIcon={<Icon symbol={faPrint} size="medium" fill={IconFillColors.primary} />}
+        variant="primary-outlined"
+        onClick={() => window.print()}
+      >
+        {t("inviteToApplyPage.submitYourInfo.prepare.p5")}
+      </Button>
+    </div>
   )
 }
 
 const WhatToDo = ({ listing }: { listing: RailsSaleListing }) => {
   return (
-    <>
+    <div className={styles.whatToDoList}>
       <Heading priority={2} size="2xl">
         {t("inviteToApplyPage.submitYourInfo.whatToDo.title")}
       </Heading>
-      <ol className="numbered-list">
+      <ol className={`${styles.numberedList} numbered-list`}>
         <li>
-          <Heading priority={3} size="md">
+          <Heading priority={3} size="lg">
             {t("inviteToApplyPage.submitYourInfo.whatToDo.step1.title")}
           </Heading>
-          <p>{t("inviteToApplyPage.submitYourInfo.whatToDo.step1.p1")}</p>
+          {renderInlineMarkup(
+            t("inviteToApplyPage.submitYourInfo.whatToDo.step1.p1"),
+            "<strong></strong>"
+          )}
           <p>{t("inviteToApplyPage.submitYourInfo.whatToDo.step1.p2")}</p>
-          <Button variant="primary-outlined" size="sm">
+          <Button variant="primary-outlined" href={"tbd"} newWindowTarget>
             {t("inviteToApplyPage.submitYourInfo.whatToDo.step1.p3")}
           </Button>
         </li>
         <li>
-          <Heading priority={3} size="md">
+          <Heading priority={3} size="lg">
             {t("inviteToApplyPage.submitYourInfo.whatToDo.step2.title")}
           </Heading>
           <p>{t("inviteToApplyPage.submitYourInfo.whatToDo.step2.p1")}</p>
           <p>{t("inviteToApplyPage.submitYourInfo.whatToDo.step2.p2")}</p>
           {renderInlineMarkup(
             t("inviteToApplyPage.submitYourInfo.whatToDo.step2.p3", {
-              link: `/listings/${listing?.Id}/documents`,
+              link: `${getCurrentLanguage()}/listings/documents?listingId=${listing?.Id}`,
             })
           )}
         </li>
         <li>
-          <Heading priority={3} size="md">
+          <Heading priority={3} size="lg">
             {t("inviteToApplyPage.submitYourInfo.whatToDo.step3.title")}
           </Heading>
           <p>{t("inviteToApplyPage.submitYourInfo.whatToDo.step3.p1")}</p>
-          <ul>
+          <ul className={styles.submitYourInfoList}>
             <li>{t("inviteToApplyPage.submitYourInfo.whatToDo.step3.p2")}</li>
             <li>{t("inviteToApplyPage.submitYourInfo.whatToDo.step3.p3")}</li>
           </ul>
           <Button>{t("inviteToApplyPage.submitYourInfo.whatToDo.step3.p4")}</Button>
-          <Heading priority={3} size="md">
+          <Heading priority={3} size="lg">
             {t("inviteToApplyPage.submitYourInfo.whatToDo.step3.p5")}
           </Heading>
           <p>{t("inviteToApplyPage.submitYourInfo.whatToDo.step3.p6")}</p>
           <p>{t("inviteToApplyPage.submitYourInfo.whatToDo.step3.p7")}</p>
         </li>
       </ol>
-      <div className={styles.submitYourInfoSection}>
-        <Heading priority={4} size="md">
+      <div className={styles.submitYourInfoBox}>
+        <Heading priority={4} size="lg">
           {t("inviteToApplyPage.submitYourInfo.whatToDo.step3.p8")}
         </Heading>
         <p>{t("inviteToApplyPage.submitYourInfo.whatToDo.step3.p9")}</p>
       </div>
-    </>
+    </div>
   )
 }
 
 const WhatHappensNext = () => {
   return (
-    <>
+    <div className={styles.submitYourInfoSection}>
       <Heading priority={2} size="2xl">
         {t("howToApplyPage.whatHappensNext.title")}
       </Heading>
-      <Heading priority={3} size="md">
+      <Heading priority={3} size="lg">
         {t("inviteToApplyPage.submitYourInfo.whatHappensNext.p1")}
       </Heading>
       <p>{t("inviteToApplyPage.submitYourInfo.whatHappensNext.p2")}</p>
       <p>{t("inviteToApplyPage.submitYourInfo.whatHappensNext.p3")}</p>
-      <ul>
+      <ul className={styles.submitYourInfoList}>
         <li>{t("inviteToApplyPage.submitYourInfo.whatHappensNext.p4")}</li>
         <li>{t("inviteToApplyPage.submitYourInfo.whatHappensNext.p5")}</li>
       </ul>
       <p>{t("inviteToApplyPage.submitYourInfo.whatHappensNext.p6")}</p>
-      <Heading priority={3} size="md">
+      <Heading priority={3} size="lg">
         {t("inviteToApplyPage.submitYourInfo.whatHappensNext.p7")}
       </Heading>
       <p>{t("inviteToApplyPage.submitYourInfo.whatHappensNext.p8")}</p>
-    </>
+    </div>
   )
 }
 
 const SubmitYourInfoHeader = ({ listing }: { listing: RailsSaleListing }) => {
   return (
-    <>
+    <div className={styles.submitYourInfoSection}>
       <img
         src={listing?.Listing_Images?.[0]?.Image_URL}
         alt={listing?.Listing_Images?.[0]?.Image_Description}
       />
       <strong>{listing?.Name}</strong>
       <p>{listing && getListingAddressString(listing)}</p>
-      <a href={`/listings/${listing?.Id}`}>{t("inviteToApplyPage.submitYourInfo.p1")}</a>
-    </>
+      <a href={`${getCurrentLanguage()}/listings/${listing?.Id}`}>
+        {t("inviteToApplyPage.submitYourInfo.p1")}
+      </a>
+    </div>
   )
 }
 
@@ -186,9 +200,7 @@ const SubmitYourInfoSidebarBlock = ({ listing }: { listing: RailsSaleListing }) 
       <Heading size="sm" priority={3}>
         {t("contactAgent.officeHours.seeTheUnit")}
       </Heading>
-      <p className="text-sm">
-        {getTranslatedString(listing?.Office_Hours, "Office_Hours__c", listing?.translations)}
-      </p>
+      <p>{getTranslatedString(listing?.Office_Hours, "Office_Hours__c", listing?.translations)}</p>
     </SidebarBlock>
   )
 }
