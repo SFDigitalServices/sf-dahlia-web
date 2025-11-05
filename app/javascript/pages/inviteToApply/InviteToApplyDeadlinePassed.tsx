@@ -2,7 +2,7 @@ import React from "react"
 import { t, Icon, IconFillColors, LoadingOverlay } from "@bloom-housing/ui-components"
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons"
 import { Card, Heading } from "@bloom-housing/ui-seeds"
-import styles from "./InviteToApply.module.scss"
+import styles from "./invite-to-apply.module.scss"
 import RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
 
 interface InviteToApplyDeadlinePassedProps {

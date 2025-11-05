@@ -18,7 +18,7 @@ import {
   renderInlineMarkup,
   getCurrentLanguage,
 } from "../../util/languageUtil"
-import styles from "./InviteToApply.module.scss"
+import styles from "./invite-to-apply.module.scss"
 import Layout from "../../layouts/Layout"
 import { ConfigContext } from "../../lib/ConfigContext"
 
@@ -98,7 +98,7 @@ const WhatToDo = ({ listing }: { listing: RailsSaleListing }) => {
             "<strong></strong>"
           )}
           <p>{t("inviteToApplyPage.submitYourInfo.whatToDo.step1.p2")}</p>
-          <Button variant="primary-outlined" href={"tbd"} newWindowTarget>
+          <Button variant="primary-outlined" onClick={() => (window.location.href = "tbd")}>
             {t("inviteToApplyPage.submitYourInfo.whatToDo.step1.p3")}
           </Button>
         </li>
@@ -181,9 +181,9 @@ const SubmitYourInfoHeader = ({ listing }: { listing: RailsSaleListing }) => {
   )
 }
 
-const SubmitYourInfoSidebarBlock = ({ listing }: { listing: RailsSaleListing }) => {
+const LeasingAgentInfo = ({ listing }: { listing: RailsSaleListing }) => {
   return (
-    <SidebarBlock title={t("contactAgent.contact")} priority={2}>
+    <>
       <Heading priority={3} size="lg" className={styles.responseHeading}>
         {t("inviteToApplyPage.submitYourInfo.sidebar")}
       </Heading>
@@ -201,6 +201,14 @@ const SubmitYourInfoSidebarBlock = ({ listing }: { listing: RailsSaleListing }) 
         {t("contactAgent.officeHours.seeTheUnit")}
       </Heading>
       <p>{getTranslatedString(listing?.Office_Hours, "Office_Hours__c", listing?.translations)}</p>
+    </>
+  )
+}
+
+const SubmitYourInfoSidebarBlock = ({ listing }: { listing: RailsSaleListing }) => {
+  return (
+    <SidebarBlock title={t("contactAgent.contact")} priority={2}>
+      <LeasingAgentInfo listing={listing} />
     </SidebarBlock>
   )
 }
@@ -222,7 +230,7 @@ const InviteToApplySubmitYourInfo = ({ listing, deadline }: InviteToApplySubmitY
             <PreparingYourApplication />
             <WhatToDo listing={listing} />
             <Mobile>
-              <SubmitYourInfoSidebarBlock listing={listing} />
+              <LeasingAgentInfo listing={listing} />
             </Mobile>
             <WhatHappensNext />
           </main>

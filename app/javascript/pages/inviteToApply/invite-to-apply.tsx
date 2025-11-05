@@ -11,7 +11,7 @@ import InviteToApplyWithdrawn from "./InviteToApplyWithdrawn"
 import InviteToApplyContactMeLater from "./InviteToApplyContactMeLater"
 import InviteToApplySubmitYourInfo from "./InviteToApplySubmitYourInfo"
 import RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
-import styles from "./InviteToApply.module.scss"
+import styles from "./invite-to-apply.module.scss"
 
 interface UrlParams {
   listing: string

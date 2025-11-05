@@ -75,11 +75,14 @@
   .submitYourInfoMain {
     width: 66.66%;
     gap: var(--seeds-spacer-text);
-    @media (max-width: theme("screens.sm")) {
-      width: 100%;
-    }
     padding: 0 var(--seeds-spacer-container) 0 var(--seeds-s24);
     margin: var(--seeds-spacer-section);
+    @media (max-width: theme("screens.sm")) {
+      width: 100%;
+      padding: var(--seeds-spacer-section);
+      padding-top: 0;
+      margin: 0;
+    }
   }
   .submitYourInfoSidebar {
     display: flex;
