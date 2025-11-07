@@ -21,11 +21,11 @@ class InviteToApplyPageController < ApplicationController
     {
       assetPaths: static_asset_paths,
       urlParams: {
-      listing: params['listingId'],
-      deadline: params['deadline'],
-      response: params['response'],
-      applicationNumber: params['applicationNumber']
-    }
+        listing: params['listingId'],
+        deadline: params['deadline'],
+        response: params['response'],
+        applicationNumber: params['applicationNumber']
+      }
     }
   end
 
