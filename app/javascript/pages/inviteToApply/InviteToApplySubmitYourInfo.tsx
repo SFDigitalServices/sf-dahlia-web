@@ -21,6 +21,7 @@ import {
 import styles from "./invite-to-apply.module.scss"
 import Layout from "../../layouts/Layout"
 import { ConfigContext } from "../../lib/ConfigContext"
+import { LeasingAgentInfo } from "./invite-to-apply"
 
 interface InviteToApplySubmitYourInfoProps {
   listing: RailsSaleListing | null
@@ -183,34 +184,14 @@ const SubmitYourInfoHeader = ({ listing }: { listing: RailsSaleListing }) => {
   )
 }
 
-const LeasingAgentInfo = ({ listing }: { listing: RailsSaleListing }) => {
-  return (
-    <>
-      <Heading priority={3} size="lg" className={styles.responseHeading}>
-        {t("inviteToApplyPage.submitYourInfo.sidebar")}
-      </Heading>
-      <p>{listing?.Leasing_Agent_Name}</p>
-      <p className="field-note">{t("inviteToApplyPage.leasingAgent")}</p>
-      <a className={styles.responseIcon} href={`tel:+1${listing?.Leasing_Agent_Phone}`}>
-        <Icon symbol="phone" size="medium" fill={IconFillColors.primary} />
-        {listing?.Leasing_Agent_Phone}
-      </a>
-      <a className={styles.responseIcon} href={`mailto:${listing?.Leasing_Agent_Email}`}>
-        <Icon symbol={faEnvelope} size="medium" fill={IconFillColors.primary} />
-        {listing?.Leasing_Agent_Email}
-      </a>
-      <Heading size="sm" priority={3}>
-        {t("contactAgent.officeHours.seeTheUnit")}
-      </Heading>
-      <p>{getTranslatedString(listing?.Office_Hours, "Office_Hours__c", listing?.translations)}</p>
-    </>
-  )
-}
-
 const SubmitYourInfoSidebarBlock = ({ listing }: { listing: RailsSaleListing }) => {
   return (
     <SidebarBlock title={t("contactAgent.contact")} priority={2}>
       <LeasingAgentInfo listing={listing} />
+      <Heading size="sm" priority={3}>
+        {t("contactAgent.officeHours.seeTheUnit")}
+      </Heading>
+      <p>{getTranslatedString(listing?.Office_Hours, "Office_Hours__c", listing?.translations)}</p>
     </SidebarBlock>
   )
 }
