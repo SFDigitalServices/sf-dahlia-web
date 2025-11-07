@@ -93,10 +93,7 @@ const WhatToDo = ({ listing }: { listing: RailsSaleListing }) => {
           <Heading priority={3} size="lg">
             {t("inviteToApplyPage.submitYourInfo.whatToDo.step1.title")}
           </Heading>
-          {renderInlineMarkup(
-            t("inviteToApplyPage.submitYourInfo.whatToDo.step1.p1"),
-            "<strong></strong>"
-          )}
+          <p>{t("inviteToApplyPage.submitYourInfo.whatToDo.step1.p1")}</p>
           <p>{t("inviteToApplyPage.submitYourInfo.whatToDo.step1.p2")}</p>
           <Button variant="primary-outlined" onClick={() => (window.location.href = "tbd")}>
             {t("inviteToApplyPage.submitYourInfo.whatToDo.step1.p3")}
@@ -181,7 +178,7 @@ const SubmitYourInfoHeader = ({ listing }: { listing: RailsSaleListing }) => {
   )
 }
 
-const LeasingAgentInfo = ({ listing }: { listing: RailsSaleListing }) => {
+export const LeasingAgentInfo = ({ listing }: { listing: RailsSaleListing }) => {
   return (
     <>
       <Heading priority={3} size="lg" className={styles.responseHeading}>

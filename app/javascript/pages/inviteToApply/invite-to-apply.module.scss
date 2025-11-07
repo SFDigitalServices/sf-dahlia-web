@@ -128,6 +128,12 @@
       margin-top: var(--seeds-spacer-section);
       margin-bottom: var(--seeds-spacer-header);
     }
+    li {
+      all: unset;
+      display: list-item;
+      list-style-type: disc;
+      margin-left: var(--seeds-spacer-label);
+    }
   }
 
   .whatToDoList {
