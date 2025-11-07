@@ -13,6 +13,9 @@ interface InviteToApplyWithdrawnProps {
 }
 
 const InviteToApplyWithdrawn = ({ listing, deadline, submitLink }: InviteToApplyWithdrawnProps) => {
+  const today = new Date()
+  const deadlineDate = new Date(deadline)
+  const isDeadlinePassed = today > deadlineDate
   return (
     <LoadingOverlay isLoading={!listing}>
       <Card className={styles.responseCard}>
@@ -21,22 +24,24 @@ const InviteToApplyWithdrawn = ({ listing, deadline, submitLink }: InviteToApply
             {t("inviteToApplyPage.withdrawn.title")}
           </Heading>
         </Card.Header>
-        <Card.Section className={styles.responseSection}>
-          <Heading priority={3} size="xl" className={styles.responseHeading}>
-            {t("inviteToApplyPage.leasingAgent.p1")}
-          </Heading>
-          <p>{t("inviteToApplyPage.leasingAgent.p2")}</p>
-          <p>{t("inviteToApplyPage.leasingAgent.p3")}</p>
-          <LeasingAgentInfo listing={listing} />
-          {renderMarkup(
-            `${t("inviteToApplyPage.submitYourInfo", {
-              listingName: listing?.Name,
-              link: submitLink,
-              deadline: getApplicationDeadline(deadline),
-            })}`,
-            "<strong></strong><a></a>"
-          )}
-        </Card.Section>
+        {!isDeadlinePassed && (
+          <Card.Section className={styles.responseSection}>
+            <Heading priority={3} size="xl" className={styles.responseHeading}>
+              {t("inviteToApplyPage.leasingAgent.p1")}
+            </Heading>
+            <p>{t("inviteToApplyPage.leasingAgent.p2")}</p>
+            <p>{t("inviteToApplyPage.leasingAgent.p3")}</p>
+            <LeasingAgentInfo listing={listing} />
+            {renderMarkup(
+              `${t("inviteToApplyPage.submitYourInfo", {
+                listingName: listing?.Name,
+                link: submitLink,
+                deadline: getApplicationDeadline(deadline),
+              })}`,
+              "<strong></strong><a></a>"
+            )}
+          </Card.Section>
+        )}
       </Card>
     </LoadingOverlay>
   )
