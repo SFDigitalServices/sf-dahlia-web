@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react"
-import { t, NavigationContext, LoadingOverlay } from "@bloom-housing/ui-components"
+import { t, NavigationContext } from "@bloom-housing/ui-components"
 import { Card, Button, Heading } from "@bloom-housing/ui-seeds"
 import withAppSetup from "../../layouts/withAppSetup"
 import FormLayout from "../../layouts/FormLayout"
@@ -83,29 +83,31 @@ const InviteToApplyPage = ({
 
   const { unleashFlag: inviteToApplyFlag } = useFeatureFlag("partners.inviteToApply", false)
 
-  return inviteToApplyFlag ? (
-    <LoadingOverlay isLoading={!listing}>
-      {response === "yes" ? (
-        <InviteToApplySubmitYourInfo listing={listing} deadline={deadline} />
-      ) : (
-        <FormLayout>
-          {<InviteToApplyHeader listing={listing} />}
-          {response === "contact" && (
-            <InviteToApplyContactMeLater
-              listing={listing}
-              deadline={deadline}
-              submitLink={submitLink}
-            />
-          )}
-          {response === "no" && (
-            <InviteToApplyWithdrawn listing={listing} deadline={deadline} submitLink={submitLink} />
-          )}
-          {deadlinePassedPath && <InviteToApplyDeadlinePassed listing={listing} />}
-          {documentsPath && <InviteToApplyDocuments listing={listing} />}
-        </FormLayout>
-      )}
-    </LoadingOverlay>
-  ) : null
+  if (!inviteToApplyFlag) {
+    return null
+  }
+  if (response === "yes") {
+    return <InviteToApplySubmitYourInfo listing={listing} deadline={deadline} />
+  } else if (documentsPath) {
+    return <InviteToApplyDocuments listing={listing} />
+  } else {
+    return (
+      <FormLayout>
+        {<InviteToApplyHeader listing={listing} />}
+        {response === "contact" && (
+          <InviteToApplyContactMeLater
+            listing={listing}
+            deadline={deadline}
+            submitLink={submitLink}
+          />
+        )}
+        {response === "no" && (
+          <InviteToApplyWithdrawn listing={listing} deadline={deadline} submitLink={submitLink} />
+        )}
+        {deadlinePassedPath && <InviteToApplyDeadlinePassed listing={listing} />}
+      </FormLayout>
+    )
+  }
 }
 
 export default withAppSetup(InviteToApplyPage, { pageName: AppPages.InviteToApply })

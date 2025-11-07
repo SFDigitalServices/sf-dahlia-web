@@ -45,9 +45,9 @@
   .responseSection {
     display: flex;
     flex-direction: column;
-    gap: var(--seeds-spacer-text);
     padding: var(--seeds-spacer-section);
     background: var(--seeds-color-primary-lighter);
+    gap: var(--seeds-spacer-text);
   }
 }
 
@@ -128,6 +128,12 @@
       margin-top: var(--seeds-spacer-section);
       margin-bottom: var(--seeds-spacer-header);
     }
+    li {
+      all: unset;
+      display: list-item;
+      list-style-type: disc;
+      margin-left: var(--seeds-spacer-label);
+    }
   }
 
   .whatToDoList {
@@ -170,4 +176,10 @@
 .responseIcon {
   display: flex;
   gap: var(--seeds-spacer-text);
+}
+
+.accordionContent {
+  padding: var(--seeds-spacer-content);
+  border: 2px solid var(--seeds-color-gray-400);
+  border-radius: var(--seeds-rounded-lg);
 }

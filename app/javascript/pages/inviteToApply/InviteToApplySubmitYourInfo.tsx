@@ -187,6 +187,10 @@ const SubmitYourInfoHeader = ({ listing }: { listing: RailsSaleListing }) => {
 const SubmitYourInfoSidebarBlock = ({ listing }: { listing: RailsSaleListing }) => {
   return (
     <SidebarBlock title={t("contactAgent.contact")} priority={2}>
+      <Heading size="lg" priority={3}>
+        {" "}
+        {t("inviteToApplyPage.submitYourInfo.sidebar")}
+      </Heading>
       <LeasingAgentInfo listing={listing} />
       <Heading size="sm" priority={3}>
         {t("contactAgent.officeHours.seeTheUnit")}
