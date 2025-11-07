@@ -179,6 +179,7 @@
     "Accepting_applications_by_PO_Box": false,
     "Blank_paper_application_can_be_picked_up": false,
     "Fee": 0,
+    "File_Upload_URL": "http://duckduckgo.com",
     "Deposit_Min": 0,
     "Building_Selection_Criteria": "https://sfmohcd.org/homebuyer-program-eligibility",
     "Required_Documents": "Proof of residence\r\nBank statements\r\nConcert tickets",

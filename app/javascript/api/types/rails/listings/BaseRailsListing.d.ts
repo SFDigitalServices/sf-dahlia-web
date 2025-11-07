@@ -97,7 +97,7 @@ type BaseRailsListing = {
   Expected_Move_in_Date?: string
   Eviction_History?: string
   Fee?: number
-  File_Upload_URL__c?: string
+  File_Upload_URL?: string
   First_Come_First_Served: boolean
   Id: string
   In_Lottery: number

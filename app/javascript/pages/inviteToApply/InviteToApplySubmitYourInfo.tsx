@@ -123,7 +123,7 @@ const WhatToDo = ({ listing }: { listing: RailsSaleListing }) => {
             <li>{t("inviteToApplyPage.submitYourInfo.whatToDo.step3.p2")}</li>
             <li>{t("inviteToApplyPage.submitYourInfo.whatToDo.step3.p3")}</li>
           </ul>
-          <Button onClick={() => (window.location.href = listing?.File_Upload_URL__c)}>
+          <Button onClick={() => (window.location.href = listing?.File_Upload_URL)}>
             {t("inviteToApplyPage.submitYourInfo.whatToDo.step3.p4")}
           </Button>
           <Heading priority={3} size="lg">
