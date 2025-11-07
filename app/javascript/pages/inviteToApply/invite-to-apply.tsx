@@ -13,9 +13,9 @@ import InviteToApplySubmitYourInfo from "./InviteToApplySubmitYourInfo"
 import InviteToApplyDocuments from "./InviteToApplyDocuments"
 import RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
 import styles from "./invite-to-apply.module.scss"
+import { getPathWithoutLanguagePrefix } from "../../util/languageUtil"
 
 interface UrlParams {
-  listing: string
   response?: string
   applicationNumber?: string
   deadline?: string
@@ -44,23 +44,25 @@ const InviteToApplyHeader = ({ listing }: { listing: RailsSaleListing }) => (
 )
 
 const InviteToApplyPage = ({
-  urlParams: { response, applicationNumber, deadline, listing: listingId },
+  urlParams: { response, applicationNumber, deadline },
   deadlinePassedPath,
   documentsPath,
 }: HomePageProps) => {
   const [listing, setListing] = useState<RailsSaleListing>(null)
 
-  const submitLink = `/invite-to-apply?response="yes"&applicationNumber=${applicationNumber}&deadline=${deadline}&listingId=${listingId}`
+  const submitLink = `/invite-to-apply?response="yes"&applicationNumber=${applicationNumber}&deadline=${deadline}&listingId=${listing?.Id}`
 
   const { router } = useContext(NavigationContext)
+
   useEffect(() => {
-    void getListing(listingId).then((listing: RailsSaleListing) => {
+    const path = getPathWithoutLanguagePrefix(router.pathname)
+    void getListing(path.split("/")[2]).then((listing: RailsSaleListing) => {
       if (!listing) {
         router.push("/")
       }
       setListing(listing)
     })
-  })
+  }, [router, router.pathname])
 
   const { unleashFlag: inviteToApplyFlag } = useFeatureFlag("partners.inviteToApply", false)
 
