@@ -51,7 +51,6 @@ describe("Invite to Apply Page", () => {
           assetPaths={"/"}
           deadlinePassedPath={true}
           urlParams={{
-            listing: mockListing.Id,
             deadline: mockPastDeadline,
           }}
         />
@@ -69,7 +68,6 @@ describe("Invite to Apply Page", () => {
         <InviteToApplyPage
           assetPaths={"/"}
           urlParams={{
-            listing: mockListing.Id,
             deadline: mockFutureDeadline,
             response: "no",
             applicationNumber: "0000",
@@ -82,7 +80,7 @@ describe("Invite to Apply Page", () => {
         time: formatTimeOfDay(mockFutureDeadline),
       })
 
-      const submitLink = `/invite-to-apply?response=no&applicationNumber=0000&deadline=${mockFutureDeadline}&listingId=${mockListing.Id}`
+      const submitLink = `listings/${mockListing.Id}/invite-to-apply?response=yes&applicationNumber=0000&deadline=${mockFutureDeadline}`
 
       expect(screen.getByText(t("inviteToApplyPage.withdrawn.title"))).toBeInTheDocument()
       expect(screen.getByText(mockListing.Name)).toBeInTheDocument()
@@ -96,7 +94,6 @@ describe("Invite to Apply Page", () => {
         <InviteToApplyPage
           assetPaths={"/"}
           urlParams={{
-            listing: mockListing.Id,
             deadline: mockFutureDeadline,
             response: "contact",
             applicationNumber: "0000",
@@ -109,7 +106,7 @@ describe("Invite to Apply Page", () => {
         time: formatTimeOfDay(mockFutureDeadline),
       })
 
-      const submitLink = `/invite-to-apply?response=contact&applicationNumber=0000&deadline=${mockFutureDeadline}&listingId=${mockListing.Id}`
+      const submitLink = `listings/${mockListing.Id}/invite-to-apply?response=yes&applicationNumber=0000&deadline=${mockFutureDeadline}`
 
       expect(
         screen.getByText(t("inviteToApplyPage.contact.title", { listingName: mockListing.Name }))
@@ -128,7 +125,6 @@ describe("Invite to Apply Page", () => {
         <InviteToApplyPage
           assetPaths={"/"}
           urlParams={{
-            listing: mockListing.Id,
             deadline: mockPastDeadline,
             response: "yes",
           }}
@@ -142,7 +138,6 @@ describe("Invite to Apply Page", () => {
         <InviteToApplyPage
           assetPaths={"/"}
           urlParams={{
-            listing: mockListing.Id,
             deadline: mockFutureDeadline,
             response: "yes",
           }}
@@ -155,7 +150,6 @@ describe("Invite to Apply Page", () => {
         <InviteToApplyPage
           assetPaths={"/"}
           urlParams={{
-            listing: mockListing.Id,
             deadline: mockFutureDeadline,
             response: "yes",
           }}
@@ -173,7 +167,6 @@ describe("Invite to Apply Page", () => {
           assetPaths={"/"}
           documentsPath={true}
           urlParams={{
-            listing: mockListing.Id,
             deadline: mockFutureDeadline,
             response: "yes",
           }}

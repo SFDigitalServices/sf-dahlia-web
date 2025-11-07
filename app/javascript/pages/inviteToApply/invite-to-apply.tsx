@@ -50,7 +50,7 @@ const InviteToApplyPage = ({
 }: HomePageProps) => {
   const [listing, setListing] = useState<RailsSaleListing>(null)
 
-  const submitLink = `/invite-to-apply?response="yes"&applicationNumber=${applicationNumber}&deadline=${deadline}&listingId=${listing?.Id}`
+  const submitLink = `listings/${listing?.Id}/invite-to-apply?response=yes&applicationNumber=${applicationNumber}&deadline=${deadline}`
 
   const { router } = useContext(NavigationContext)
 
