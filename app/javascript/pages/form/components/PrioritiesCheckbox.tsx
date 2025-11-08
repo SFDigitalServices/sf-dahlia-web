@@ -1,6 +1,7 @@
 import { FieldGroup, t } from "@bloom-housing/ui-components"
 import React, { useEffect, useRef } from "react"
 import { useFormStepContext } from "../../../formEngine/formStepContext"
+import styles from "./PrioritiesCheckbox.module.scss"
 
 interface PrioritiesCheckboxProps {
   description: string
@@ -40,41 +41,42 @@ const PrioritiesCheckbox = ({
   }, [selectedCheckboxValues, setValue, priorityMembers])
 
   return (
-    <FieldGroup
-      name={priorityMembers}
-      type="checkbox"
-      groupLabel={t(description)}
-      fields={[
-        {
-          label: t("label.mobilityImpairments"),
-          value: "mobilityImpairment",
-          id: "mobilityImpairment",
-        },
-        {
-          label: t("label.visionImpairments"),
-          value: "visionImpairment",
-          id: "visionImpairment",
-        },
-        {
-          label: t("label.hearingImpairments"),
-          value: "hearingImpairment",
-          id: "hearingImpairment",
-        },
-        {
-          label: t("t.no"),
-          value: "noImpairments",
-          id: "noImpairments",
-        },
-      ]}
-      fieldGroupClassName="radio-field-group"
-      fieldClassName="radio-field"
-      register={register}
-      error={!!errors?.[priorityMembers]}
-      errorMessage={t("error.pleaseSelectAnOption")}
-      validation={{
-        required: true,
-      }}
-    />
+    <div className={styles["listing-priorities-checkbox-group"]}>
+      <FieldGroup
+        name={priorityMembers}
+        type="checkbox"
+        groupLabel={t(description)}
+        fields={[
+          {
+            label: t("label.mobilityImpairments"),
+            value: "mobilityImpairment",
+            id: "mobilityImpairment",
+          },
+          {
+            label: t("label.visionImpairments"),
+            value: "visionImpairment",
+            id: "visionImpairment",
+          },
+          {
+            label: t("label.hearingImpairments"),
+            value: "hearingImpairment",
+            id: "hearingImpairment",
+          },
+          {
+            label: t("t.no"),
+            value: "noImpairments",
+            id: "noImpairments",
+          },
+        ]}
+        fieldGroupClassName="radio-field-group"
+        register={register}
+        error={!!errors?.[priorityMembers]}
+        errorMessage={t("error.pleaseSelectAnOption")}
+        validation={{
+          required: true,
+        }}
+      />
+    </div>
   )
 }
 
