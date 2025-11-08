@@ -9,7 +9,7 @@ import {
   FieldGroup,
 } from "@bloom-housing/ui-components"
 import { useForm } from "react-hook-form"
-import "./counselor-filter.scss"
+import "./counselor-filter.module.scss"
 
 interface CounselorFilterProps {
   handleFilterData: (filterData: { language: string; services: string[] }) => void
