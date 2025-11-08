@@ -5,10 +5,6 @@ import styles from "./PrioritiesCheckbox.module.scss"
 
 interface PrioritiesCheckboxProps {
   description: string
-  members: {
-    dataSource: string
-    dataKey: string
-  }
   fieldNames: {
     priorityMembers: string
   }
