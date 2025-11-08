@@ -347,6 +347,9 @@ ShortFormNavigationService = (
 
   Service.previousPage = ->
     application = ShortFormApplicationService.application
+    # This function gets called every time a new application page loads,
+    # it is useful to debug form data here, e.g.:
+    # console.log('application preferences: ', application.preferences)
     page = switch Service._currentPage()
       # -- Pages that follow normal deterministic order
       when 'welcome-back'
