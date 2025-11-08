@@ -758,30 +758,29 @@
         }
       },
       "componentType": "step",
-      "componentName": "ListingApplyStepWrapper",
+      "componentName": "ListingApplyLiveWorkPreference",
       "props": {
-        "title": "e2cLiveWorkPreference.title",
-        "description": "e2cLiveWorkPreference.instructions"
-      },
-      "children": [
-        {
-          "componentName": "LiveWorkPreference",
-          "props": {
-            "listingPreferences": {
-              "dataSource": "listing",
-              "dataKey": "preferences"
-            },
-            "fieldNames": {
-              "liveInSfMember": "liveInSfMember",
-              "liveInSfProofType": "liveInSfProofType",
-              "liveInSfProofDoc": "liveInSfProofDoc",
-              "workInSfMember": "workInSfMember",
-              "workInSfProofType": "workInSfProofType",
-              "workInSfProofDoc": "workInSfProofDoc"
-            }
-          }
+        "listingPreferences": {
+          "dataSource": "listing",
+          "dataKey": "preferences"
+        },
+        "fieldNames": {
+          "liveOrWorkInSf": "_liveOrWorkInSf",
+          "liveOrWorkInSfClaimedOption": "_liveOrWorkInSfClaimedOption",
+          "liveInSf": "_liveInSf",
+          "workInSf": "_workInSf",
+          "liveInSfMember": "liveInSfMember",
+          "liveInSfProofType": "liveInSfProofType",
+          "liveInSfFileName": "liveInSfFileName",
+          "liveInSfFileUploadedAt": "liveInSfFileUploadedAt",
+          "workInSfMember": "workInSfMember",
+          "workInSfProofType": "workInSfProofType",
+          "workInSfProofDoc": "workInSfProofDoc",
+          "workInSfFileName": "workInSfFileName",
+          "workInSfUploadedAt": "workInSfUploadedAt",
+          "optOutLiveWork": "optOutLiveWork"
         }
-      ]
+      }
     },
     {
       "stepInfo": {
