@@ -723,6 +723,7 @@ export const listingPreferences = (listing: RailsListing): Record<string, string
   if (listingPrefNames.some((name) => name.match(/veteran/i))) {
     listingPrefs.veteran = PREFERENCES.veteran
   }
+
   return listingPrefs
 }
 

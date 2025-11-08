@@ -26,7 +26,7 @@ import AlternateContactType from "../pages/form/components/AlternateContactType"
 import MonthlyRent from "../pages/form/components/MonthlyRent"
 import PrioritiesCheckbox from "../pages/form/components/PrioritiesCheckbox"
 import PreferenceCheckboxGroup from "../pages/form/components/PreferenceCheckboxGroup"
-import LiveWorkPreference from "../pages/form/components/LiveWorkPreference"
+import ListingApplyLiveWorkPreference from "../pages/form/components/ListingApplyLiveWorkPreference"
 import CertificateNumberPreference from "../pages/form/components/CertificateNumberPreference"
 import IncomeVoucherDescription from "../pages/form/components/IncomeVoucherDescription"
 import HouseholdIncomeDescription from "../pages/form/components/HouseholdIncomeDescription"
@@ -44,6 +44,7 @@ export default function getFormComponentRegistry() {
     ListingApplyHouseholdOverview,
     HouseholdMemberMultiStepWrapper,
     ListingApplyPreferencesIntro,
+    ListingApplyLiveWorkPreference,
     ListingApplyRentBurdenPreference,
     ListingApplyDemographics,
     ListingApplyReviewSummary,
@@ -64,7 +65,6 @@ export default function getFormComponentRegistry() {
     MonthlyRent,
     PrioritiesCheckbox,
     PreferenceCheckboxGroup,
-    LiveWorkPreference,
     CertificateNumberPreference,
     // Other components
     IncomeVoucherDescription,

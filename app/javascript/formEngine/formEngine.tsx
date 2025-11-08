@@ -10,7 +10,8 @@ import {
   generateSectionNames,
 } from "./formSchemas"
 import type { RailsListing } from "../modules/listings/SharedHelpers"
-import { listingPreferences, getSeniorBuildingAgeRequirement } from "../util/listingUtil"
+import type { RailsListingPreference } from "../api/types/rails/listings/RailsListingPreferences"
+import { getSeniorBuildingAgeRequirement } from "../util/listingUtil"
 import RecursiveRenderer from "./recursiveRenderer"
 import { calculateNextStep, calculatePrevStep, updateFormPath } from "../util/formEngineUtil"
 import { useFeatureFlag } from "../hooks/useFeatureFlag"
@@ -19,10 +20,11 @@ import FormEngineDebug from "./FormEngineDebug"
 
 interface FormEngineProps {
   listing: RailsListing
+  preferences: RailsListingPreference[]
   schema: FormSchema
 }
 
-const FormEngine = ({ listing, schema }: FormEngineProps) => {
+const FormEngine = ({ listing, preferences, schema }: FormEngineProps) => {
   const [formData, setFormData] = useState<Record<string, unknown>>(generateInitialFormData(schema))
   const [currentStepIndex, setCurrentStepIndex] = useState<number>(0)
   const { unleashFlag: formEngineDebug } = useFeatureFlag(UNLEASH_FLAG.FORM_ENGINE_DEBUG, false)
@@ -32,7 +34,7 @@ const FormEngine = ({ listing, schema }: FormEngineProps) => {
     () => ({
       listing,
       form: formData,
-      preferences: listingPreferences(listing),
+      preferences,
       seniorBuildingAgeRequirement: getSeniorBuildingAgeRequirement(listing),
     }),
     [listing, formData]
@@ -89,7 +91,9 @@ const FormEngine = ({ listing, schema }: FormEngineProps) => {
 
   const formEngineContextValue: FormEngineContext = {
     listing,
+    preferences,
     formData: formData,
+    sessionId: self.crypto.randomUUID(), // ShortFormApplicationService.js.coffee#L19
     dataSources,
     saveFormData: saveFormData,
     stepInfoMap: stepInfoMap,
