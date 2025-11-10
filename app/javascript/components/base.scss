@@ -252,11 +252,6 @@ nav {
   display: none !important;
 }
 
-.numbered-list li:before {
-  color: var(--bloom-color-gray-700);
-  box-shadow: inset 0 0 0 1px var(--bloom-color-gray-700);
-}
-
 .primary-lighter-markup-link a {
   color: var(--bloom-color-blue-700);
 }
