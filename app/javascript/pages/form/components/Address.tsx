@@ -2,7 +2,7 @@ import React from "react"
 import { t, Field, Select } from "@bloom-housing/ui-components"
 import { Heading } from "@bloom-housing/ui-seeds"
 import { LISTING_APPLY_FORMS_INPUT_MAX_LENGTH, LATIN_REGEX } from "../../../modules/constants"
-import { useFormStepContext } from "../../../formEngine/formStepContext"
+import { useFormContext } from "react-hook-form"
 import styles from "./Address.module.scss"
 
 interface AddressProps {
@@ -95,7 +95,8 @@ const Address = ({
     mailingAddressZipcode,
   },
 }: AddressProps) => {
-  const { register, errors } = useFormStepContext()
+  // eslint-disable-next-line @typescript-eslint/unbound-method
+  const { register, errors } = useFormContext()
   const [mailingAddressChecked, setMailingAddressChecked] = React.useState(false)
   return (
     <fieldset>

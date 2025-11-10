@@ -1,10 +1,9 @@
 import React, { Children } from "react"
-import { useForm } from "react-hook-form"
+import { useForm, FormProvider } from "react-hook-form"
 import { Form, t } from "@bloom-housing/ui-components"
 import { Button } from "@bloom-housing/ui-seeds"
 import { CardSection } from "@bloom-housing/ui-seeds/src/blocks/Card"
 import { useFormEngineContext } from "../../../formEngine/formEngineContext"
-import { FormStepProvider } from "../../../formEngine/formStepContext"
 import type { DataSchema } from "../../../formEngine/formSchemas"
 import { translationFromDataSchema } from "../../../util/formEngineUtil"
 
@@ -40,14 +39,11 @@ const ListingApplyStepWrapper = ({
     return acc
   }, {})
 
-  // https://github.com/react-hook-form/react-hook-form/issues/2887#issuecomment-802577357
-  // eslint-disable-next-line @typescript-eslint/unbound-method
-  const { register, errors, watch, trigger, handleSubmit, setValue, clearErrors, control } =
-    useForm({
-      mode: "onChange",
-      shouldFocusError: false,
-      defaultValues,
-    })
+  const methods = useForm({
+    mode: "onChange",
+    shouldFocusError: false,
+    defaultValues,
+  })
 
   const onSubmit = (data: Record<string, unknown>) => {
     saveFormData(data)
@@ -57,7 +53,7 @@ const ListingApplyStepWrapper = ({
   const titleString = translationFromDataSchema(title, titleVars, dataSources)
 
   return (
-    <FormStepProvider value={{ register, errors, watch, trigger, setValue, clearErrors, control }}>
+    <FormProvider {...methods}>
       <CardSection>
         <Button variant="text" onClick={handlePrevStep}>
           {t("t.back")}
@@ -68,7 +64,7 @@ const ListingApplyStepWrapper = ({
         {description && <p className="field-note text-base">{t(description)}</p>}
         {!!descriptionComponent && descriptionComponent}
       </CardSection>
-      <Form onSubmit={handleSubmit(onSubmit)}>
+      <Form onSubmit={methods.handleSubmit(onSubmit)}>
         {Children.map(children, (child) => (
           <CardSection>{child}</CardSection>
         ))}
@@ -78,7 +74,7 @@ const ListingApplyStepWrapper = ({
           </Button>
         </CardSection>
       </Form>
-    </FormStepProvider>
+    </FormProvider>
   )
 }
 

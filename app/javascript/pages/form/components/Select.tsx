@@ -1,6 +1,6 @@
 import React from "react"
 import { t, Select } from "@bloom-housing/ui-components"
-import { useFormStepContext } from "../../../formEngine/formStepContext"
+import { useFormContext } from "react-hook-form"
 
 interface FormSelectProps {
   label: string
@@ -19,7 +19,8 @@ const FormSelect = ({
   options,
   fieldNames: { selection },
 }: FormSelectProps) => {
-  const { register, errors } = useFormStepContext()
+  // eslint-disable-next-line @typescript-eslint/unbound-method
+  const { register, errors } = useFormContext()
   const selectOptions = options.map((option) => ({
     label: t(option.name),
     value: option.value,

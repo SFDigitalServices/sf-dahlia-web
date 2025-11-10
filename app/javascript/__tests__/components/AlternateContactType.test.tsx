@@ -1,80 +1,35 @@
 import React from "react"
-import { useForm } from "react-hook-form"
-import { render, screen } from "@testing-library/react"
-import { userEvent } from "@testing-library/user-event"
 import { t } from "@bloom-housing/ui-components"
+import { screen } from "@testing-library/react"
+import { userEvent } from "@testing-library/user-event"
 import AlternateContactType from "../../pages/form/components/AlternateContactType"
-import { FormStepProvider } from "../../formEngine/formStepContext"
-import { FormEngineProvider } from "../../formEngine/formEngineContext"
-import { openRentalListing } from "../data/RailsRentalListing/listing-rental-open"
+import { formContextWrapper } from "../__util__/renderUtils"
 
-const FieldSetWrapper = () => {
-  // eslint-disable-next-line @typescript-eslint/unbound-method
-  const { register, watch, trigger, errors, control, setValue, clearErrors } = useForm({
-    mode: "onBlur",
-    reValidateMode: "onBlur",
-    shouldFocusError: false,
-  })
-  const formStepContextValue = { register, errors, watch, trigger, control, setValue, clearErrors }
-
-  const listing = openRentalListing
-  const formData = Object.assign(
-    {},
-    ...Object.values({
-      alternateContactType: "alternateContactType",
-    }).map((name) => ({ [name]: null }))
-  )
-  const formEngineContextValue = {
-    listing,
-    formData,
-    saveFormData: jest.fn(),
-    dataSources: {
-      listing,
-      form: formData,
-      preferences: {},
-    },
-    stepInfoMap: [
-      {
-        slug: "test",
-        fieldNames: Object.values({
-          alternateContactType: "alternateContactType",
-        }),
-      },
-    ],
-    sectionNames: [],
-    currentStepIndex: 0,
-    handleNextStep: jest.fn(),
-    handlePrevStep: jest.fn(),
-  }
-
-  return (
-    <FormEngineProvider value={formEngineContextValue}>
-      <FormStepProvider value={formStepContextValue}>
-        <AlternateContactType
-          fieldNames={{
-            alternateContactType: "alternateContactType",
-          }}
-        />
-      </FormStepProvider>
-    </FormEngineProvider>
+const renderFieldSetWrapper = () => {
+  return formContextWrapper(
+    <AlternateContactType
+      fieldNames={{
+        alternateContactType: "alternateContactType",
+      }}
+    />
   )
 }
 
 describe("AlternateContactType", () => {
   it("displays the alternate contact type heading and note", () => {
-    render(<FieldSetWrapper />)
+    renderFieldSetWrapper()
     expect(screen.getByText(t("label.alternateContact"))).toBeInTheDocument()
     expect(screen.getByText(t("label.pleaseSelectOne"))).toBeInTheDocument()
   })
 
   it("displays the other field if the other radio is selected", async () => {
-    render(<FieldSetWrapper />)
+    renderFieldSetWrapper()
     const user = userEvent.setup()
     await user.click(screen.getByRole("radio", { name: t("label.Other") }))
     expect(screen.getByText(t("label.whatIsYourRelationship"))).toBeInTheDocument()
   })
   it("displays an error message if the field is left empty", async () => {
-    render(<FieldSetWrapper />)
+    renderFieldSetWrapper()
     const user = userEvent.setup()
     await user.click(screen.getByRole("radio", { name: t("label.Other") }))
     const relationshipInput = screen.getByRole("textbox", {

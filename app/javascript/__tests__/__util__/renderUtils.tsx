@@ -5,7 +5,6 @@ import crypto from "crypto"
 import { useForm, FormProvider } from "react-hook-form"
 import { FormEngineProvider } from "../../formEngine/formEngineContext"
 import { openRentalListing } from "../data/RailsRentalListing/listing-rental-open"
-import { FormStepProvider } from "../../formEngine/formStepContext"
 
 export const mockWindowLocation = (): typeof window.location => {
   const originalLocation = { ...window.location }
@@ -61,28 +60,27 @@ export const formContextWrapper = (formComponent: React.ReactElement) => {
       shouldFocusError: false,
       defaultValues: {},
     })
+
     return (
-      <FormStepProvider value={formMethods}>
-        <FormEngineProvider
-          value={{
+      <FormEngineProvider
+        value={{
+          listing: openRentalListing,
+          formData: {},
+          saveFormData: jest.fn(),
+          dataSources: {
             listing: openRentalListing,
-            formData: {},
-            saveFormData: jest.fn(),
-            dataSources: {
-              listing: openRentalListing,
-              form: {},
-              preferences: {},
-            },
-            stepInfoMap: [{ slug: "test", fieldNames: [] }],
-            sectionNames: [],
-            currentStepIndex: 0,
-            handleNextStep: jest.fn(),
-            handlePrevStep: jest.fn(),
-          }}
-        >
-          <FormProvider {...formMethods}>{children}</FormProvider>
-        </FormEngineProvider>
-      </FormStepProvider>
+            form: {},
+            preferences: {},
+          },
+          stepInfoMap: [{ slug: "test", fieldNames: [] }],
+          sectionNames: [],
+          currentStepIndex: 0,
+          handleNextStep: jest.fn(),
+          handlePrevStep: jest.fn(),
+        }}
+      >
+        <FormProvider {...formMethods}>{children}</FormProvider>
+      </FormEngineProvider>
     )
   }
   return render(formComponent, { wrapper: Wrapper })
