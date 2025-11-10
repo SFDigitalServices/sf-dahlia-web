@@ -1,7 +1,6 @@
 import React from "react"
 import { t, FieldGroup } from "@bloom-housing/ui-components"
 import { useFormStepContext } from "../../../formEngine/formStepContext"
-import "./YesNoRadio.scss"
 
 interface YesNoRadioProps {
   label?: string

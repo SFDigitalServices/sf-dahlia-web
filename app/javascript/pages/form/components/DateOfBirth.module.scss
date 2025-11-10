@@ -1,12 +1,12 @@
-.field-group-title {
+.dob-field-group-title {
   font-size: var(--seeds-type-heading-size-sm);
   font-weight: var(--seeds-font-weight-bold);
 }
 
-.field-group-date {
+.dob-field-group-date {
   display: flex;
 
-  .field {
+  .dob-field {
     flex: 1 1 auto;
     max-width: var(--seeds-s16);
     margin-left: var(--seeds-s1_5);

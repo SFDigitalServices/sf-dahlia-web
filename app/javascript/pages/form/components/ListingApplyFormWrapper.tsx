@@ -2,7 +2,7 @@ import React from "react"
 import { ProgressNav, t } from "@bloom-housing/ui-components"
 import { Card, Heading } from "@bloom-housing/ui-seeds"
 import { useFormEngineContext } from "../../../formEngine/formEngineContext"
-import "./ListingApplyFormWrapper.scss"
+import styles from "./ListingApplyFormWrapper.module.scss"
 
 interface ListingApplyFormWrapperProps {
   currentStepIndex: number
@@ -18,16 +18,16 @@ const ListingApplyFormWrapper = ({ children }: ListingApplyFormWrapperProps) => 
   const showLayout = !currentStepInfo.hideLayout
 
   return (
-    <section className="listing-apply-form-section">
+    <section className={styles["listing-apply-form-section"]}>
       {showLayout ? (
-        <div className="listing-apply-form-container">
-          <Card className="listing-apply-form-header">
-            <Card.Section className="listing-apply-form-header-title">
-              <Heading priority={1} className="listing-apply-form-header-heading">
+        <div className={styles["listing-apply-form-container"]}>
+          <Card className={styles["listing-apply-form-header"]}>
+            <Card.Section className={styles["listing-apply-form-header-title"]}>
+              <Heading priority={1} className={styles["listing-apply-form-header-heading"]}>
                 {t("pageTitle.listingApplication", { listing: listing.Name })}
               </Heading>
             </Card.Section>
-            <Card.Section className="listing-apply-form-nav">
+            <Card.Section className={styles["listing-apply-form-nav"]}>
               <ProgressNav
                 labels={sectionNames}
                 currentPageSection={currentSectionIndex + 1}
@@ -37,10 +37,10 @@ const ListingApplyFormWrapper = ({ children }: ListingApplyFormWrapperProps) => 
               />
             </Card.Section>
           </Card>
-          <Card className="listing-apply-form-content-container">{currentStepChild}</Card>
+          <Card className={styles["listing-apply-form-content-container"]}>{currentStepChild}</Card>
         </div>
       ) : (
-        <div className="listing-apply-form-minimal-container">{currentStepChild}</div>
+        <div className={styles["listing-apply-form-minimal-container"]}>{currentStepChild}</div>
       )}
     </section>
   )

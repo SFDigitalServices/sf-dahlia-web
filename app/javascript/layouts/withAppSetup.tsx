@@ -15,7 +15,6 @@ import "@bloom-housing/ui-seeds/src/global/app-css.scss"
 import { useGTMInitializer } from "../hooks/analytics/useInitializeGTM"
 import { AppPages } from "../util/routeUtil"
 import { UNLEASH_FLAG } from "../modules/constants"
-import "../layouts/overrides.scss"
 
 interface ObjectWithAssets {
   assetPaths: unknown
