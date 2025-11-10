@@ -2,7 +2,7 @@ import React from "react"
 import { t, Field } from "@bloom-housing/ui-components"
 import { useFormStepContext } from "../../../formEngine/formStepContext"
 import { EMAIL_REGEX, LISTING_APPLY_FORMS_INPUT_MAX_LENGTH } from "../../../modules/constants"
-import "./EmailAddress.scss"
+import styles from "./EmailAddress.module.scss"
 
 interface EmailAddressProps {
   label: string
@@ -30,7 +30,7 @@ const EmailAddress = ({
         register={register}
         disabled={noEmailCheckbox}
         subNote={t(note)}
-        className="email-address-field"
+        className={styles["email-address-field"]}
         validation={{
           required: !noEmailCheckbox,
           maxLength: LISTING_APPLY_FORMS_INPUT_MAX_LENGTH.email,
