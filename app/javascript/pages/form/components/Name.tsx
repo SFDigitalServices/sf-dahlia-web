@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/unbound-method */
 import React from "react"
 import { t, Field } from "@bloom-housing/ui-components"
 import { Heading } from "@bloom-housing/ui-seeds"
@@ -19,8 +20,10 @@ const Name = ({
   fieldNames: { firstName, middleName, lastName },
   showMiddleName,
 }: NameProps) => {
-  // eslint-disable-next-line @typescript-eslint/unbound-method
-  const { register, errors } = useFormContext()
+  const {
+    register,
+    formState: { errors },
+  } = useFormContext()
   return (
     <fieldset>
       <Heading priority={2} size="sm">

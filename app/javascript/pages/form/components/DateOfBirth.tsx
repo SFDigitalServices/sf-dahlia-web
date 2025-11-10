@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/unbound-method */
 import React from "react"
 import { t, Field } from "@bloom-housing/ui-components"
 import { useFormEngineContext } from "../../../formEngine/formEngineContext"
@@ -29,8 +30,12 @@ const DateOfBirth = ({
   fieldNames: { birthMonth, birthDay, birthYear },
   minimumAge,
 }: DateOfBirthProps) => {
-  // eslint-disable-next-line @typescript-eslint/unbound-method
-  const { register, errors, watch, trigger } = useFormContext()
+  const {
+    register,
+    formState: { errors },
+    watch,
+    trigger,
+  } = useFormContext()
   const {
     dataSources: { seniorBuildingAgeRequirement },
   } = useFormEngineContext()

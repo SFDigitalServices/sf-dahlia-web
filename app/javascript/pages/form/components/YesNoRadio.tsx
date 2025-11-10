@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/unbound-method */
 import React from "react"
 import { t, FieldGroup } from "@bloom-housing/ui-components"
 import { useFormContext } from "react-hook-form"
@@ -13,8 +14,11 @@ interface YesNoRadioProps {
 }
 
 const YesNoRadio = ({ label, note, yesText, fieldNames }: YesNoRadioProps) => {
-  // eslint-disable-next-line @typescript-eslint/unbound-method
-  const { register, errors, watch } = useFormContext()
+  const {
+    register,
+    formState: { errors },
+    watch,
+  } = useFormContext()
   const selected = watch(fieldNames?.question)
   return (
     <FieldGroup

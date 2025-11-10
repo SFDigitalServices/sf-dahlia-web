@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/unbound-method */
 import React from "react"
 import { t, Field, Select } from "@bloom-housing/ui-components"
 import { Heading } from "@bloom-housing/ui-seeds"
@@ -95,8 +96,10 @@ const Address = ({
     mailingAddressZipcode,
   },
 }: AddressProps) => {
-  // eslint-disable-next-line @typescript-eslint/unbound-method
-  const { register, errors } = useFormContext()
+  const {
+    register,
+    formState: { errors },
+  } = useFormContext()
   const [mailingAddressChecked, setMailingAddressChecked] = React.useState(false)
   return (
     <fieldset>

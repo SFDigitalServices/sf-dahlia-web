@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/unbound-method */
 import React from "react"
 import { t, Field } from "@bloom-housing/ui-components"
 import { Heading, FormErrorMessage } from "@bloom-housing/ui-seeds"
@@ -13,8 +14,11 @@ interface AlternateContactTypeProps {
 const AlternateContactType = ({
   fieldNames: { alternateContactType },
 }: AlternateContactTypeProps) => {
-  // eslint-disable-next-line @typescript-eslint/unbound-method
-  const { register, errors, watch } = useFormContext()
+  const {
+    register,
+    formState: { errors },
+    watch,
+  } = useFormContext()
   const selected = watch(alternateContactType)
   return (
     <fieldset>

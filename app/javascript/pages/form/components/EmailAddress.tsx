@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/unbound-method */
 import React from "react"
 import { t, Field } from "@bloom-housing/ui-components"
 import { useFormContext } from "react-hook-form"
@@ -20,8 +21,12 @@ const EmailAddress = ({
   showDontHaveEmailAddress,
   note,
 }: EmailAddressProps) => {
-  // eslint-disable-next-line @typescript-eslint/unbound-method
-  const { register, errors, setValue, clearErrors } = useFormContext()
+  const {
+    register,
+    formState: { errors },
+    setValue,
+    clearErrors,
+  } = useFormContext()
   const [noEmailCheckbox, setNoEmailCheckbox] = React.useState(false)
   return (
     <fieldset>
