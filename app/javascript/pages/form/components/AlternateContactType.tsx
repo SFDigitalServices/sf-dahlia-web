@@ -2,7 +2,7 @@ import React from "react"
 import { t, Field } from "@bloom-housing/ui-components"
 import { Heading, FormErrorMessage } from "@bloom-housing/ui-seeds"
 import { useFormStepContext } from "../../../formEngine/formStepContext"
-import "./AlternateContactType.scss"
+import styles from "./AlternateContactType.module.scss"
 
 interface AlternateContactTypeProps {
   fieldNames: {
@@ -24,6 +24,7 @@ const AlternateContactType = ({
       <div className="radio-field-group">
         <Field
           name={alternateContactType}
+          className={styles["alternate-contact-field"]}
           type="radio"
           id="familyMember"
           label={t("label.familyMember")}
@@ -35,6 +36,7 @@ const AlternateContactType = ({
         />
         <Field
           name={alternateContactType}
+          className={styles["alternate-contact-field"]}
           type="radio"
           id="friend"
           label={t("label.friend")}
@@ -44,6 +46,7 @@ const AlternateContactType = ({
         />
         <Field
           name={alternateContactType}
+          className={styles["alternate-contact-field"]}
           type="radio"
           id="socialWorkerOrHousingCounselor"
           label={t("label.socialWorkerOrHousingCounselor")}
@@ -53,6 +56,7 @@ const AlternateContactType = ({
         />
         <Field
           name={alternateContactType}
+          className={styles["alternate-contact-field"]}
           type="radio"
           id="other"
           label={t("label.Other")}
@@ -74,6 +78,7 @@ const AlternateContactType = ({
         )}
         <Field
           name={alternateContactType}
+          className={styles["alternate-contact-field"]}
           type="radio"
           id="noAlternateContact"
           label={t("label.noAlternateContact")}

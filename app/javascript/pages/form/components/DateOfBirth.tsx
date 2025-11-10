@@ -10,7 +10,7 @@ import {
   validAge,
   parseDate,
 } from "../../../util/formEngineUtil"
-import "./DateOfBirth.scss"
+import styles from "./DateOfBirth.module.scss"
 
 interface DateOfBirthProps {
   label: string
@@ -47,15 +47,16 @@ const DateOfBirth = ({
     !!birthYearValue && (await trigger(birthYear))
   }
 
-  const labelClasses = ["field-group-title"]
-  if (hasError) labelClasses.push("text-alert")
+  const labelClasses = [styles["dob-field-group-title"]]
+  if (hasError) labelClasses.push(styles["text-alert"])
 
   return (
     <>
-      <fieldset className="field-group-date">
+      <fieldset className={styles["dob-field-group-date"]}>
         <legend className={labelClasses.join(" ")}>{t(label)}</legend>
         <Field
           label={t("label.dobMonth")}
+          className={styles["dob-field"]}
           name={birthMonth}
           register={register}
           inputProps={{ maxLength: 2 }}
@@ -71,6 +72,7 @@ const DateOfBirth = ({
         />
         <Field
           label={t("label.dobDay")}
+          className={styles["dob-field"]}
           name={birthDay}
           register={register}
           inputProps={{ maxLength: 2 }}
@@ -87,6 +89,7 @@ const DateOfBirth = ({
         />
         <Field
           label={t("label.dobYear")}
+          className={styles["dob-field"]}
           name={birthYear}
           register={register}
           inputProps={{ maxLength: 4 }}
