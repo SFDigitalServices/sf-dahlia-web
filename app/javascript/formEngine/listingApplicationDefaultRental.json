@@ -502,7 +502,9 @@
         {
           "componentName": "Currency",
           "props": {
-            "placeholder": "label.incomePlaceholder",
+            "label": "label.applicantIncomeTotal",
+            "note": "label.incomePlaceholder",
+            "errorMessage": "error.income",
             "fieldNames": {
               "amount": "householdIncome"
             }
@@ -511,13 +513,18 @@
         {
           "componentName": "Radio",
           "props": {
+            "label": "label.income",
+            "errorMessage": "error.pleaseSelectAnOption",
+            "hideLabel": true,
             "options": [
               {
-                "name": "label.perMonth",
+                "id": "incomePerMonth",
+                "label": "label.perMonth",
                 "value": "12"
               },
               {
-                "name": "label.perYear",
+                "id": "incomePerYear",
+                "label": "label.perYear",
                 "value": "1"
               }
             ],
