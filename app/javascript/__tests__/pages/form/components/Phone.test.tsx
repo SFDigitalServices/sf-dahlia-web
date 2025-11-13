@@ -1,12 +1,12 @@
 import React from "react"
 import { screen } from "@testing-library/react"
 import { t } from "@bloom-housing/ui-components"
-import Phone from "../../pages/form/components/Phone"
-import { formContextWrapper } from "../__util__/renderUtils"
+import Phone from "../../../../pages/form/components/Phone"
+import { renderWithFormContextWrapper } from "../../../__util__/renderUtils"
 import userEvent from "@testing-library/user-event"
 
 const renderPhone = () => {
-  return formContextWrapper(
+  renderWithFormContextWrapper(
     <Phone
       label="label.applicantPhone"
       showTypeOfNumber

@@ -1,14 +1,11 @@
 import React from "react"
-import { useForm } from "react-hook-form"
-import { render, screen } from "@testing-library/react"
+import { screen } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
 import { t } from "@bloom-housing/ui-components"
 import Address from "../../../../pages/form/components/Address"
-import { FormStepProvider } from "../../../../formEngine/formStepContext"
-import { FormEngineProvider } from "../../../../formEngine/formEngineContext"
-import { openRentalListing } from "../../../data/RailsRentalListing/listing-rental-open"
+import { renderWithFormContextWrapper } from "../../../__util__/renderUtils"
 
-const FieldSetWrapper = () => {
+const renderAddressComponent = () => {
   const fieldNames = {
     addressStreet: "primaryApplicantAddressStreet",
     addressAptOrUnit: "primaryApplicantAddressAptOrUnit",
@@ -20,53 +17,22 @@ const FieldSetWrapper = () => {
     mailingAddressState: "primaryApplicantMailingAddressState",
     mailingAddressZipcode: "primaryApplicantMailingAddressZipcode",
   }
-  const fieldNameValues = Object.values(fieldNames)
 
-  // eslint-disable-next-line @typescript-eslint/unbound-method
-  const { register, watch, trigger, errors, control, clearErrors, setValue } = useForm({
-    mode: "onBlur",
-    reValidateMode: "onBlur",
-    shouldFocusError: false,
-  })
-  const formStepContextValue = { register, errors, watch, trigger, control, clearErrors, setValue }
-
-  const listing = openRentalListing
-  const formData = Object.assign({}, ...fieldNameValues.map((name) => ({ [name]: null })))
-  const formEngineContextValue = {
-    listing,
-    formData,
-    saveFormData: jest.fn(),
-    dataSources: {
-      listing,
-      form: formData,
-      preferences: {},
-    },
-    stepInfoMap: [{ slug: "test", fieldNames: fieldNameValues }],
-    sectionNames: [],
-    currentStepIndex: 0,
-    handleNextStep: jest.fn(),
-    handlePrevStep: jest.fn(),
-  }
-
-  return (
-    <FormEngineProvider value={formEngineContextValue}>
-      <FormStepProvider value={formStepContextValue}>
-        <Address
-          showAptOrUnit={true}
-          requireAddress={true}
-          label="label.address"
-          note="b2Contact.applicantAddressDesc"
-          showMailingAddress={true}
-          fieldNames={fieldNames}
-        />
-      </FormStepProvider>
-    </FormEngineProvider>
+  renderWithFormContextWrapper(
+    <Address
+      showAptOrUnit={true}
+      requireAddress={true}
+      label="label.address"
+      note="b2Contact.applicantAddressDesc"
+      showMailingAddress={true}
+      fieldNames={fieldNames}
+    />
   )
 }
 
 describe("Address", () => {
   it("renders the address input labels", () => {
-    render(<FieldSetWrapper />)
+    renderAddressComponent()
     expect(screen.getByText(t("label.address1"))).toBeInTheDocument()
     expect(screen.getByText(t("label.address2"))).toBeInTheDocument()
     expect(screen.getByText(t("label.city"))).toBeInTheDocument()
@@ -75,12 +41,12 @@ describe("Address", () => {
   })
 
   it("renders the mailing address checkbox", () => {
-    render(<FieldSetWrapper />)
+    renderAddressComponent()
     expect(screen.getByText(t("label.applicantSeparateAddress"))).toBeInTheDocument()
   })
 
   it("renders the mailing address inputs if the checkbox is checked", async () => {
-    render(<FieldSetWrapper />)
+    renderAddressComponent()
     const checkbox = screen.getByText(t("label.applicantSeparateAddress"))
     const user = userEvent.setup()
     await user.click(checkbox)
@@ -88,7 +54,7 @@ describe("Address", () => {
   })
 
   it("displays an error message if a required field is empty", async () => {
-    render(<FieldSetWrapper />)
+    renderAddressComponent()
     const user = userEvent.setup()
     await user.click(screen.getByLabelText(t("label.address1")))
     await user.tab()
