@@ -139,6 +139,10 @@
       margin-left: var(--seeds-spacer-section);
       padding-bottom: var(--seeds-spacer-header);
     }
+    .iconList {
+      list-style-image: url("/images/icon-document.svg");
+      margin-left: var(--seeds-spacer-section);
+    }
     .messageBanner {
       margin-bottom: var(--seeds-spacer-label);
       line-height: var(--seeds-line-height-relaxed);

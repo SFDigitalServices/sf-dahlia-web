@@ -84,7 +84,7 @@ const TaxDocuments = () => {
         {t("inviteToApplyPage.documents.taxDocuments.p1")}
       </Heading>
       <p>{t("inviteToApplyPage.documents.provide")}</p>
-      <ul>
+      <ul className={styles.iconList}>
         <li>{renderInlineMarkup(t("inviteToApplyPage.documents.taxDocuments.p2"))}</li>
         <li>{renderInlineMarkup(t("inviteToApplyPage.documents.taxDocuments.p3"))}</li>
       </ul>
@@ -151,7 +151,7 @@ const ProofOfIncome = () => {
         {t("inviteToApplyPage.documents.proofOfIncome.p3")}
       </Heading>
       <p>{t("inviteToApplyPage.documents.provide")}</p>
-      <ul>
+      <ul className={styles.iconList}>
         <li>{renderInlineMarkup(t("inviteToApplyPage.documents.proofOfIncome.p4"))}</li>
       </ul>
       <p>{t("inviteToApplyPage.documents.proofOfIncome.p5")}</p>
@@ -191,7 +191,7 @@ const ProofOfIncome = () => {
         {t("inviteToApplyPage.documents.proofOfIncome.p14")}
       </Heading>
       <p>{t("inviteToApplyPage.documents.provide")}</p>
-      <ul>
+      <ul className={styles.iconList}>
         <li>{renderInlineMarkup(t("inviteToApplyPage.documents.proofOfIncome.p15"))}</li>
       </ul>
       <p>{renderInlineMarkup(t("inviteToApplyPage.documents.proofOfIncome.p16"))}</p>
@@ -224,7 +224,7 @@ const BankAndFinancials = () => {
         <p>{t("inviteToApplyPage.documents.bankAndFinancial.p2")}</p>
       </Message>
       <p>{t("inviteToApplyPage.documents.provide")}</p>
-      <ul>
+      <ul className={styles.iconList}>
         <li>{renderInlineMarkup(t("inviteToApplyPage.documents.bankAndFinancial.p3"))}</li>
       </ul>
       <p>{t("inviteToApplyPage.documents.bankAndFinancial.p4")}</p>
@@ -251,7 +251,7 @@ const HousingAssistance = () => {
         {"4. " + t("inviteToApplyPage.documents.housingAssistance.title")}
       </Heading>
       <p>{t("inviteToApplyPage.documents.provide")}</p>
-      <ul>
+      <ul className={styles.iconList}>
         <li>{renderInlineMarkup(t("inviteToApplyPage.documents.housingAssistance.p1"))}</li>
       </ul>
       <p>{t("inviteToApplyPage.documents.housingAssistance.p2")}</p>
