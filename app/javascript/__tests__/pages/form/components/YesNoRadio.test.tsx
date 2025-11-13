@@ -3,10 +3,10 @@ import { t } from "@bloom-housing/ui-components"
 import { screen } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
 import YesNoRadio from "../../../../pages/form/components/YesNoRadio"
-import { formContextWrapper } from "../../../__util__/renderUtils"
+import { renderWithFormContextWrapper } from "../../../__util__/renderUtils"
 
 const renderYesNoRadio = () => {
-  return formContextWrapper(
+  renderWithFormContextWrapper(
     <YesNoRadio
       label="label.workInSf"
       note="b2Contact.workInSfDesc"
