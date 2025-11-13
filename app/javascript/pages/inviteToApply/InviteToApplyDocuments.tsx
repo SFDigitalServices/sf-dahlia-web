@@ -313,7 +313,7 @@ const InviteToApplyDocuments = ({ listing }: InviteToApplyDocumentsProps) => {
   return (
     <Layout>
       <PageHeader
-        title={t("inviteToApplyPage.submitYourInfo.title", { listingName: listing?.Name })}
+        title={t("inviteToApplyPage.documents.title", { listingName: listing?.Name })}
         inverse
         backgroundImage={getAssetPath("bg@1200.jpg")}
       />

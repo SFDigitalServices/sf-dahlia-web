@@ -79,8 +79,7 @@
     margin: var(--seeds-spacer-section);
     @media (max-width: theme("screens.sm")) {
       width: 100%;
-      padding: var(--seeds-spacer-section);
-      padding-top: 0;
+      padding: 0 var(--seeds-spacer-section);
       margin: 0;
     }
   }
@@ -95,6 +94,7 @@
     width: 33.33%;
     @media (max-width: theme("screens.sm")) {
       width: 100%;
+      padding: 0 var(--seeds-spacer-section);
     }
     padding: var(--seeds-spacer-section) var(--seeds-s24) 0 var(--seeds-spacer-section);
     border-left: 1px solid var(--seeds-color-gray-450);
@@ -107,21 +107,32 @@
 
   .submitYourInfoSection {
     padding-bottom: var(--seeds-spacer-header);
+    @media (max-width: theme("screens.sm")) {
+      padding-bottom: 0;
+    }
     > * {
       margin: var(--seeds-spacer-text) 0;
     }
     h2 {
       padding: var(--seeds-spacer-header) 0;
+      @media (max-width: theme("screens.sm")) {
+        padding-top: var(--seeds-spacer-label);
+      }
     }
     h3 {
       padding-bottom: var(--seeds-spacer-text);
+      @media (max-width: theme("screens.sm")) {
+        padding-bottom: 0;
+      }
     }
     h4 {
       padding-bottom: var(--seeds-spacer-text);
+      @media (max-width: theme("screens.sm")) {
+        padding-bottom: 0;
+      }
     }
     .actionButton {
       margin-top: var(--seeds-spacer-section);
-      margin-bottom: var(--seeds-spacer-text);
     }
     img {
       margin-top: var(--seeds-spacer-section);
