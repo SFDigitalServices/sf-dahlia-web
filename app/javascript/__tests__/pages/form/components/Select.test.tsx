@@ -3,10 +3,10 @@ import { t } from "@bloom-housing/ui-components"
 import { screen } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
 import FormSelect from "../../../../pages/form/components/Select"
-import { formContextWrapper } from "../../../__util__/renderUtils"
+import { renderWithFormContextWrapper } from "../../../__util__/renderUtils"
 
 const renderSelect = () => {
-  return formContextWrapper(
+  renderWithFormContextWrapper(
     <FormSelect
       label="label.householdMemberRelationship"
       errorMessage="error.householdMemberRelationship"

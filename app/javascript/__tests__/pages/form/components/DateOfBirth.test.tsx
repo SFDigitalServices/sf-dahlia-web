@@ -1,29 +1,29 @@
 import React from "react"
-import { t } from "@bloom-housing/ui-components"
 import { screen } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
+import { t } from "@bloom-housing/ui-components"
 import MockDate from "mockdate"
 import DateOfBirth from "../../../../pages/form/components/DateOfBirth"
-import { formContextWrapper } from "../../../__util__/renderUtils"
+import { renderWithFormContextWrapper } from "../../../__util__/renderUtils"
 
+const LABEL = "label.yourDob"
+const MINIMUM_AGE = 18
 const INVALID_DATE_ERROR_MSG = "error.dob"
 const INVALID_AGE_ERROR_MSG = "error.dobPrimaryApplicantAge"
 
-const label = "label.yourDob"
-const minimumAge = 18
-const fieldNames = {
-  birthMonth: "primaryApplicantBirthMonth",
-  birthDay: "primaryApplicantBirthDate",
-  birthYear: "primaryApplicantBirthYear",
-}
+const renderDateOfBirthComponent = () => {
+  const fieldNames = {
+    birthMonth: "primaryApplicantBirthMonth",
+    birthDay: "primaryApplicantBirthDate",
+    birthYear: "primaryApplicantBirthYear",
+  }
 
-const renderFieldSetWrapper = () => {
-  return formContextWrapper(
+  renderWithFormContextWrapper(
     <DateOfBirth
-      label={label}
-      ageErrorMessage="error.dobPrimaryApplicantAge"
+      label={LABEL}
+      ageErrorMessage={INVALID_AGE_ERROR_MSG}
       fieldNames={fieldNames}
-      minimumAge={minimumAge}
+      minimumAge={MINIMUM_AGE}
     />
   )
 }
@@ -42,11 +42,11 @@ describe("DateOfBirth", () => {
   })
 
   it("renders without errors", () => {
-    renderFieldSetWrapper()
+    renderDateOfBirthComponent()
   })
 
   it("renders invalid date error for invalid dates", async () => {
-    renderFieldSetWrapper()
+    renderDateOfBirthComponent()
     await inputDate("13", "1", "2000")
 
     expect(screen.queryByText(t(INVALID_DATE_ERROR_MSG))).not.toBeNull()
@@ -54,7 +54,7 @@ describe("DateOfBirth", () => {
   })
 
   it("renders invalid age error for invalid ages", async () => {
-    renderFieldSetWrapper()
+    renderDateOfBirthComponent()
     await inputDate("1", "1", "2010")
 
     expect(screen.queryByText(t(INVALID_DATE_ERROR_MSG))).toBeNull()
