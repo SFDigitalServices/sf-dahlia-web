@@ -14,8 +14,9 @@ import {
   amiCharts,
 } from "./apiEndpoints"
 import { forceRecacheParam } from "../util/listingUtil"
+import RailsSaleListing from "./types/rails/listings/RailsSaleListing"
 
-type ListingsResponse = { listing: RailsRentalListing }
+type ListingsResponse = { listing: RailsRentalListing | RailsSaleListing }
 type ListingPreferencesResponse = { preferences: RailsListingPreference[] }
 type ListingUnitsResponse = { units: RailsUnit[] }
 type ListingAmiChartsResponse = { ami: RailsAmiChart[] }

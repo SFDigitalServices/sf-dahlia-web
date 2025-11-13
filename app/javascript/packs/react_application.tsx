@@ -14,7 +14,7 @@ import HousingCounselors from "../pages/getAssistance/housing-counselors"
 import HowToApply from "../pages/howToApply/how-to-apply"
 import GetAssistance from "../pages/getAssistance/get-assistance"
 import DocumentChecklist from "../pages/getAssistance/document-checklist"
-import ListingInterestPage from "../pages/listingInterest/listing-interest-page"
+import InviteToApplyPage from "../pages/inviteToApply/invite-to-apply"
 import AdditionalResources from "../pages/getAssistance/additional-resources"
 import Disclaimer from "../pages/getAssistance/disclaimer"
 import Privacy from "../pages/getAssistance/privacy"
@@ -47,7 +47,7 @@ void loadTranslations(currentLanguage).then(() =>
     AdditionalResources,
     Disclaimer,
     Privacy,
-    ListingInterestPage,
+    InviteToApplyPage,
     MyApplications,
     AccountSettings,
     MyAccount,

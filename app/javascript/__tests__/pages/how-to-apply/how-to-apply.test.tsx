@@ -1,12 +1,12 @@
 import React from "react"
 import { cleanup, render, screen, waitFor } from "@testing-library/react"
 import { renderAndLoadAsync } from "../../__util__/renderUtils"
-import HowToApply, { LeasingAgentBox } from "../../../pages/howToApply/how-to-apply"
+import HowToApply from "../../../pages/howToApply/how-to-apply"
+import LeasingAgent from "../../../modules/listings/components/LeasingAgent"
 import { notYetOpenSaleFcfsListing } from "../../data/RailsSaleListing/listing-sale-fcfs-not-yet-open"
 import { fcfsSaleListing } from "../../data/RailsSaleListing/listing-sale-fcfs"
 import { openFcfsSaleListing } from "../../data/RailsSaleListing/listing-sale-fcfs-open"
 import { localizedFormat, formatTimeOfDay } from "../../../util/languageUtil"
-
 const axios = require("axios")
 
 jest.mock("axios")
@@ -98,7 +98,7 @@ describe("<HowToApply />", () => {
   })
 
   it("shows the correct leasing agent box for the listing", async () => {
-    const { asFragment } = await renderAndLoadAsync(<LeasingAgentBox listing={fcfsSaleListing} />)
+    const { asFragment } = await renderAndLoadAsync(<LeasingAgent listing={fcfsSaleListing} />)
     expect(asFragment()).toMatchSnapshot()
   })
 })

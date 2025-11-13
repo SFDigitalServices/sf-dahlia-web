@@ -57,11 +57,13 @@
         },
         {
           "componentName": "EmailAddress",
-          "fieldNames": {
-            "email": "primaryApplicantEmail"
-          },
           "props": {
+            "fieldNames": {
+              "email": "primaryApplicantEmail",
+              "noEmail": "primaryApplicantNoEmail"
+            },
             "label": "label.applicantEmail",
+            "note": "b2Contact.onlyUseYourEmail",
             "showDontHaveEmailAddress": true
           }
         }
@@ -87,25 +89,37 @@
         {
           "componentName": "Phone",
           "props": {
-            "label": "your phone number",
+            "label": "label.applicantPhone",
             "showTypeOfNumber": true,
             "showDontHavePhoneNumber": true,
-            "showAdditionalPhoneNumbe": true,
-            "labelForAdditionalPhoneNumbe": "label.applicantSecondPhone",
+            "showAdditionalPhoneNumber": true,
+            "labelForAdditionalPhoneNumber": "label.applicantSecondPhone",
             "fieldNames": {
               "phone": "primaryApplicantPhone",
-              "additionalPhone": "primaryApplicantAdditionalPhone"
+              "phoneType": "primaryApplicantPhoneType",
+              "additionalPhone": "primaryApplicantAdditionalPhone",
+              "additionalPhoneType": "primaryApplicantAdditionalPhoneType"
             }
           }
         },
         {
           "componentName": "Address",
           "props": {
-            "label": "address",
+            "showAptOrUnit": true,
+            "requireAddress": true,
+            "label": "label.address",
+            "note": "b2Contact.applicantAddressDesc",
             "showMailingAddress": true,
             "fieldNames": {
-              "address": "primaryApplicantAddress",
-              "mailingAddress": "primaryApplicantMailingAddress"
+              "addressStreet": "primaryApplicantAddressStreet",
+              "addressAptOrUnit": "primaryApplicantAddressAptOrUnit",
+              "addressCity": "primaryApplicantAddressCity",
+              "addressState": "primaryApplicantAddressState",
+              "addressZipcode": "primaryApplicantAddressZipcode",
+              "mailingAddressStreet": "primaryApplicantMailingAddressStreet",
+              "mailingAddressCity": "primaryApplicantMailingAddressCity",
+              "mailingAddressState": "primaryApplicantMailingAddressState",
+              "mailingAddressZipcode": "primaryApplicantMailingAddressZipcode"
             }
           }
         },
@@ -231,9 +245,15 @@
         {
           "componentName": "Address",
           "props": {
+            "showAptOrUnit": false,
+            "requireAddress": false,
             "label": "label.contactMailingAddress",
+            "note": "b4aAlternateContactPhoneAddress.chooseAnAddress",
             "fieldNames": {
-              "address": "alternateContactAddress"
+              "addressStreet": "alternateContactAddressStreet",
+              "addressCity": "alternateContactAddressCity",
+              "addressState": "alternateContactAddressState",
+              "addressZipcode": "alternateContactAddressZipcode"
             }
           }
         }
@@ -297,7 +317,9 @@
           "props": {
             "label": "label.dob",
             "fieldNames": {
-              "dateOfBirth": "householdMemberDob"
+              "birthMonth": "householdMemberBirthMonth",
+              "birthDay": "householdMemberBirthDate",
+              "birthYear": "householdMemberBirthYear"
             }
           }
         },
@@ -324,6 +346,7 @@
           "componentName": "Select",
           "props": {
             "label": "label.householdMemberRelationship",
+            "errorMessage": "error.householdMemberRelationship",
             "defaultOptionName": "label.selectOne",
             "options": [
               {
@@ -479,7 +502,9 @@
         {
           "componentName": "Currency",
           "props": {
-            "placeholder": "label.incomePlaceholder",
+            "label": "label.applicantIncomeTotal",
+            "note": "label.incomePlaceholder",
+            "errorMessage": "error.income",
             "fieldNames": {
               "amount": "householdIncome"
             }
@@ -488,13 +513,18 @@
         {
           "componentName": "Radio",
           "props": {
+            "label": "label.income",
+            "errorMessage": "error.pleaseSelectAnOption",
+            "hideLabel": true,
             "options": [
               {
-                "name": "label.perMonth",
+                "id": "incomePerMonth",
+                "label": "label.perMonth",
                 "value": "12"
               },
               {
-                "name": "label.perYear",
+                "id": "incomePerYear",
+                "label": "label.perYear",
                 "value": "1"
               }
             ],

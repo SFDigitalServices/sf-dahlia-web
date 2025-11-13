@@ -2,6 +2,10 @@
 import { act, render, RenderOptions, RenderResult } from "@testing-library/react"
 import React from "react"
 import crypto from "crypto"
+import { useForm } from "react-hook-form"
+import { FormEngineProvider } from "../../formEngine/formEngineContext"
+import { FormStepProvider } from "../../formEngine/formStepContext"
+import { openRentalListing } from "../data/RailsRentalListing/listing-rental-open"
 
 export const mockWindowLocation = (): typeof window.location => {
   const originalLocation = { ...window.location }
@@ -46,4 +50,48 @@ export const defineCryptoApi = () => {
       randomUUID: () => crypto.randomUUID(),
     },
   })
+}
+
+// Wrapper for application form component tests
+export const renderWithFormContextWrapper = (formComponent: React.ReactElement) => {
+  const formEngineContextValue = {
+    listing: openRentalListing,
+    formData: {},
+    saveFormData: jest.fn(),
+    dataSources: {
+      listing: openRentalListing,
+      form: {},
+      preferences: {},
+    },
+    stepInfoMap: [{ slug: "test", fieldNames: [] }],
+    sectionNames: [],
+    currentStepIndex: 0,
+    handleNextStep: jest.fn(),
+    handlePrevStep: jest.fn(),
+  }
+
+  const Wrapper = ({ children }: { children: React.ReactNode }) => {
+    const formMethods = useForm({
+      mode: "all",
+      shouldFocusError: false,
+      defaultValues: {},
+    })
+
+    const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+      event.preventDefault()
+      void formMethods.handleSubmit(jest.fn())(event)
+    }
+
+    return (
+      <FormEngineProvider value={formEngineContextValue}>
+        <FormStepProvider value={formMethods}>
+          <form onSubmit={onSubmit}>
+            {children}
+            <button type="submit">next</button>
+          </form>
+        </FormStepProvider>
+      </FormEngineProvider>
+    )
+  }
+  render(formComponent, { wrapper: Wrapper })
 }

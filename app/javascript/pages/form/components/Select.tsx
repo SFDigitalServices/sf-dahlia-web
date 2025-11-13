@@ -1,18 +1,46 @@
 import React from "react"
-import { t } from "@bloom-housing/ui-components"
-import { Card } from "@bloom-housing/ui-seeds"
+import { t, Select } from "@bloom-housing/ui-components"
+import { useFormStepContext } from "../../../formEngine/formStepContext"
 
-interface SelectProps {
+interface FormSelectProps {
   label: string
+  defaultOptionName: string
+  errorMessage: string
+  options: { name: string; value: string }[]
+  fieldNames: {
+    selection: string
+  }
 }
 
-const Select = ({ label }: SelectProps) => {
+const FormSelect = ({
+  label,
+  defaultOptionName,
+  errorMessage,
+  options,
+  fieldNames: { selection },
+}: FormSelectProps) => {
+  const { register, errors } = useFormStepContext()
+  const selectOptions = options.map((option) => ({
+    label: t(option.name),
+    value: option.value,
+  }))
+
   return (
-    <Card>
-      <Card.Header>Select Component</Card.Header>
-      <Card.Section>{t(label)}</Card.Section>
-    </Card>
+    <Select
+      id={selection}
+      name={selection}
+      label={t(label)}
+      options={selectOptions}
+      placeholder={t(defaultOptionName)}
+      controlClassName="control"
+      register={register}
+      error={!!errors?.[selection]}
+      errorMessage={t(errorMessage)}
+      validation={{
+        required: true,
+      }}
+    />
   )
 }
 
-export default Select
+export default FormSelect

@@ -1,3 +1,6 @@
+// https://github.com/react-hook-form/react-hook-form/issues/2887#issuecomment-802577357
+/* eslint-disable @typescript-eslint/unbound-method */
+
 import React, { Children } from "react"
 import { useForm } from "react-hook-form"
 import { Form, t } from "@bloom-housing/ui-components"
@@ -40,11 +43,18 @@ const ListingApplyStepWrapper = ({
     return acc
   }, {})
 
-  // https://github.com/react-hook-form/react-hook-form/issues/2887#issuecomment-802577357
-  // eslint-disable-next-line @typescript-eslint/unbound-method
-  const { register, errors, watch, trigger, handleSubmit } = useForm({
-    mode: "onBlur",
-    reValidateMode: "onBlur",
+  const {
+    register,
+    errors,
+    watch,
+    trigger,
+    handleSubmit,
+    setValue,
+    getValues,
+    clearErrors,
+    control,
+  } = useForm({
+    mode: "onChange",
     shouldFocusError: false,
     defaultValues,
   })
@@ -57,7 +67,9 @@ const ListingApplyStepWrapper = ({
   const titleString = translationFromDataSchema(title, titleVars, dataSources)
 
   return (
-    <FormStepProvider value={{ register, errors, watch, trigger }}>
+    <FormStepProvider
+      value={{ register, errors, watch, trigger, setValue, getValues, clearErrors, control }}
+    >
       <CardSection>
         <Button variant="text" onClick={handlePrevStep}>
           {t("t.back")}

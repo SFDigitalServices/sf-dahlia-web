@@ -6,6 +6,10 @@ export interface FormStepContext {
   errors: UseFormMethods["errors"]
   watch: UseFormMethods["watch"]
   trigger: UseFormMethods["trigger"]
+  setValue: UseFormMethods["setValue"]
+  getValues: UseFormMethods["getValues"]
+  clearErrors: UseFormMethods["clearErrors"]
+  control: UseFormMethods["control"]
 }
 
 export const FormStepContext = createContext<FormStepContext | undefined>(undefined)
@@ -15,6 +19,7 @@ export interface FormStepProviderProps {
   children: ReactNode
 }
 
+// TODO: replace with react-hook-form FormProvider
 export const FormStepProvider = ({ value, children }: FormStepProviderProps) => {
   return <FormStepContext.Provider value={value}>{children}</FormStepContext.Provider>
 }
