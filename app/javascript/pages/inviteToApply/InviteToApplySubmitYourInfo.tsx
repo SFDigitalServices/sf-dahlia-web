@@ -76,6 +76,7 @@ const PreparingYourApplication = () => {
         leadIcon={<Icon symbol={faPrint} size="medium" fill={IconFillColors.primary} />}
         variant="primary-outlined"
         onClick={() => window.print()}
+        className={styles.actionButton}
       >
         {t("inviteToApplyPage.submitYourInfo.prepare.p5")}
       </Button>
@@ -99,7 +100,11 @@ const WhatToDo = ({ listing }: { listing: RailsSaleListing }) => {
             "<strong></strong>"
           )}
           <p>{t("inviteToApplyPage.submitYourInfo.whatToDo.step1.p2")}</p>
-          <Button variant="primary-outlined" onClick={() => (window.location.href = "tbd")}>
+          <Button
+            className={styles.actionButton}
+            variant="primary-outlined"
+            onClick={() => (window.location.href = "tbd")}
+          >
             {t("inviteToApplyPage.submitYourInfo.whatToDo.step1.p3")}
           </Button>
         </li>
@@ -124,7 +129,10 @@ const WhatToDo = ({ listing }: { listing: RailsSaleListing }) => {
             <li>{t("inviteToApplyPage.submitYourInfo.whatToDo.step3.p2")}</li>
             <li>{t("inviteToApplyPage.submitYourInfo.whatToDo.step3.p3")}</li>
           </ul>
-          <Button onClick={() => (window.location.href = listing?.File_Upload_URL)}>
+          <Button
+            className={styles.actionButton}
+            onClick={() => (window.location.href = listing?.File_Upload_URL)}
+          >
             {t("inviteToApplyPage.submitYourInfo.whatToDo.step3.p4")}
           </Button>
           <Heading priority={3} size="lg">

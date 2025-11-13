@@ -66,6 +66,7 @@ const CheckWhatYouNeed = () => {
         leadIcon={<Icon symbol={faPrint} size="medium" />}
         variant="primary-outlined"
         onClick={() => window.print()}
+        className={styles.actionButton}
       >
         {t("inviteToApplyPage.submitYourInfo.prepare.p5")}
       </Button>
@@ -77,7 +78,7 @@ const TaxDocuments = () => {
   return (
     <div className={styles.submitYourInfoSection} id="taxDocuments">
       <Heading priority={2} size="2xl">
-        {t("inviteToApplyPage.documents.taxDocuments.title")}
+        {"1. " + t("inviteToApplyPage.documents.taxDocuments.title")}
       </Heading>
       <Heading priority={3} size="lg">
         {t("inviteToApplyPage.documents.taxDocuments.p1")}
@@ -94,7 +95,11 @@ const TaxDocuments = () => {
         <li>{renderInlineMarkup(t("inviteToApplyPage.documents.taxDocuments.p7"))}</li>
       </ul>
       <ContentAccordion
-        customBarContent={t("inviteToApplyPage.documents.taxDocuments.p8")}
+        customBarContent={
+          <div className={styles.accordionBar}>
+            {t("inviteToApplyPage.documents.taxDocuments.p8")}
+          </div>
+        }
         customExpandedContent={
           <div className={styles.accordionContent}>
             {renderInlineMarkup(t("inviteToApplyPage.documents.taxDocuments.p9"))}
@@ -103,7 +108,11 @@ const TaxDocuments = () => {
         accordionTheme={"gray"}
       />
       <ContentAccordion
-        customBarContent={t("inviteToApplyPage.documents.taxDocuments.p10")}
+        customBarContent={
+          <div className={styles.accordionBar}>
+            {t("inviteToApplyPage.documents.taxDocuments.p10")}
+          </div>
+        }
         customExpandedContent={
           <div className={styles.accordionContent}>
             {renderInlineMarkup(t("inviteToApplyPage.documents.taxDocuments.p11"))}
@@ -112,7 +121,11 @@ const TaxDocuments = () => {
         accordionTheme={"gray"}
       />
       <ContentAccordion
-        customBarContent={t("inviteToApplyPage.documents.taxDocuments.p12")}
+        customBarContent={
+          <div className={styles.accordionBar}>
+            {t("inviteToApplyPage.documents.taxDocuments.p12")}
+          </div>
+        }
         customExpandedContent={
           <div className={styles.accordionContent}>
             {renderInlineMarkup(t("inviteToApplyPage.documents.taxDocuments.p13"))}
@@ -128,10 +141,10 @@ const ProofOfIncome = () => {
   return (
     <div className={styles.submitYourInfoSection} id="proofOfIncome">
       <Heading priority={2} size="2xl">
-        {t("inviteToApplyPage.documents.proofOfIncome.title")}
+        {"2. " + t("inviteToApplyPage.documents.proofOfIncome.title")}
       </Heading>
-      <Message fullwidth variant="primary">
-        <p>{t("inviteToApplyPage.documents.proofOfIncome.p1")}</p>
+      <Message fullwidth variant="primary" className={styles.messageBanner}>
+        <strong>{t("inviteToApplyPage.documents.proofOfIncome.p1")}</strong>
         <p>{t("inviteToApplyPage.documents.proofOfIncome.p2")}</p>
       </Message>
       <Heading priority={3} size="lg">
@@ -149,7 +162,11 @@ const ProofOfIncome = () => {
         <li>{renderInlineMarkup(t("inviteToApplyPage.documents.proofOfIncome.p9"))}</li>
       </ul>
       <ContentAccordion
-        customBarContent={t("inviteToApplyPage.documents.proofOfIncome.p10")}
+        customBarContent={
+          <div className={styles.accordionBar}>
+            {t("inviteToApplyPage.documents.proofOfIncome.p10")}
+          </div>
+        }
         customExpandedContent={
           <div className={styles.accordionContent}>
             {renderInlineMarkup(t("inviteToApplyPage.documents.proofOfIncome.p11"))}
@@ -158,7 +175,11 @@ const ProofOfIncome = () => {
         accordionTheme={"gray"}
       />
       <ContentAccordion
-        customBarContent={t("inviteToApplyPage.documents.proofOfIncome.p12")}
+        customBarContent={
+          <div className={styles.accordionBar}>
+            {t("inviteToApplyPage.documents.proofOfIncome.p12")}
+          </div>
+        }
         customExpandedContent={
           <div className={styles.accordionContent}>
             {renderInlineMarkup(t("inviteToApplyPage.documents.proofOfIncome.p13"))}
@@ -173,8 +194,8 @@ const ProofOfIncome = () => {
       <ul>
         <li>{renderInlineMarkup(t("inviteToApplyPage.documents.proofOfIncome.p15"))}</li>
       </ul>
+      <p>{renderInlineMarkup(t("inviteToApplyPage.documents.proofOfIncome.p16"))}</p>
       <ul>
-        <li>{renderInlineMarkup(t("inviteToApplyPage.documents.proofOfIncome.p16"))}</li>
         <li>{renderInlineMarkup(t("inviteToApplyPage.documents.proofOfIncome.p17"))}</li>
         <li>{renderInlineMarkup(t("inviteToApplyPage.documents.proofOfIncome.p18"))}</li>
         <li>{renderInlineMarkup(t("inviteToApplyPage.documents.proofOfIncome.p19"))}</li>
@@ -196,11 +217,10 @@ const BankAndFinancials = () => {
   return (
     <div className={styles.submitYourInfoSection} id="bankAndFinancial">
       <Heading priority={2} size="2xl">
-        {t("inviteToApplyPage.documents.bankAndFinancial.title")}
+        {"3. " + t("inviteToApplyPage.documents.bankAndFinancial.title")}
       </Heading>
-      <Message fullwidth variant="primary">
-        {" "}
-        <p>{t("inviteToApplyPage.documents.bankAndFinancial.p1")}</p>
+      <Message fullwidth variant="primary" className={styles.messageBanner}>
+        <strong>{t("inviteToApplyPage.documents.bankAndFinancial.p1")}</strong>
         <p>{t("inviteToApplyPage.documents.bankAndFinancial.p2")}</p>
       </Message>
       <p>{t("inviteToApplyPage.documents.provide")}</p>
@@ -228,7 +248,7 @@ const HousingAssistance = () => {
   return (
     <div className={styles.submitYourInfoSection} id="housingAssistance">
       <Heading priority={2} size="2xl">
-        {t("inviteToApplyPage.documents.housingAssistance.title")}
+        {"4. " + t("inviteToApplyPage.documents.housingAssistance.title")}
       </Heading>
       <p>{t("inviteToApplyPage.documents.provide")}</p>
       <ul>

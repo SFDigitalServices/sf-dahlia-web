@@ -96,7 +96,7 @@
     @media (max-width: theme("screens.sm")) {
       width: 100%;
     }
-    padding: var(--seeds-spacer-section) var(--seeds-s24) 0 var(--seeds-spacer-container);
+    padding: var(--seeds-spacer-section) var(--seeds-s24) 0 var(--seeds-spacer-section);
     border-left: 1px solid var(--seeds-color-gray-450);
   }
   .submitYourInfoBox {
@@ -106,11 +106,10 @@
   }
 
   .submitYourInfoSection {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: var(--seeds-spacer-text);
     padding-bottom: var(--seeds-spacer-header);
+    > * {
+      margin: var(--seeds-spacer-text) 0;
+    }
     h2 {
       padding: var(--seeds-spacer-header) 0;
     }
@@ -120,7 +119,7 @@
     h4 {
       padding-bottom: var(--seeds-spacer-text);
     }
-    button {
+    .actionButton {
       margin-top: var(--seeds-spacer-section);
       margin-bottom: var(--seeds-spacer-text);
     }
@@ -128,11 +127,31 @@
       margin-top: var(--seeds-spacer-section);
       margin-bottom: var(--seeds-spacer-header);
     }
-    li {
+    ul {
       all: unset;
       display: list-item;
       list-style-type: disc;
-      margin-left: var(--seeds-spacer-label);
+      margin-left: var(--seeds-spacer-section);
+    }
+    ol {
+      display: list-item;
+      list-style-type: decimal;
+      margin-left: var(--seeds-spacer-section);
+      padding-bottom: var(--seeds-spacer-header);
+    }
+    .messageBanner {
+      margin-bottom: var(--seeds-spacer-label);
+      line-height: var(--seeds-line-height-relaxed);
+    }
+    .accordionContent {
+      padding: var(--seeds-spacer-content);
+      border: 2px solid var(--seeds-color-gray-400);
+      border-top: none;
+      border-radius: 0 0 var(--seeds-rounded-lg) var(--seeds-rounded-lg);
+    }
+    .accordionBar {
+      display: block;
+      text-align: left;
     }
   }
 
@@ -176,10 +195,4 @@
 .responseIcon {
   display: flex;
   gap: var(--seeds-spacer-text);
-}
-
-.accordionContent {
-  padding: var(--seeds-spacer-content);
-  border: 2px solid var(--seeds-color-gray-400);
-  border-radius: var(--seeds-rounded-lg);
 }
