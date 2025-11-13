@@ -306,7 +306,7 @@ const buildHabitatText = (
   )
 }
 
-const filterAvailableUnits = (units: RailsUnit[]): RailsUnit[] => {
+export const filterAvailableUnits = (units: RailsUnit[]): RailsUnit[] => {
   return units.filter((unit) => unit.Status === "Available")
 }
 
