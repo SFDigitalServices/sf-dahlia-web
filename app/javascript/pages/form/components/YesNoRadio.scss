@@ -1,3 +1,13 @@
+.radio-field-group {
+  display: flex;
+  gap: var(--seeds-spacer-label);
+  flex-direction: column;
+}
+
+.radio-field {
+  margin-left: 0 !important;
+}
+
 .field-sub-note {
   color: var(--seeds-color-success);
 }

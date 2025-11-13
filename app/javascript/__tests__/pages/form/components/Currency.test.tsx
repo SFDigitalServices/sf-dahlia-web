@@ -24,7 +24,7 @@ describe("Currency", () => {
     expect(screen.queryByText(t(NOTE))).not.toBeNull()
   })
 
-  it("displays an error emssage", async () => {
+  it("displays an error message", async () => {
     const user = userEvent.setup()
     renderCurrencyComponent()
 
