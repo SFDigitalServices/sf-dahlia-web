@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/unbound-method */
 import React from "react"
 import { t, Field } from "@bloom-housing/ui-components"
 import { Heading, FormErrorMessage } from "@bloom-housing/ui-seeds"
-import { useFormStepContext } from "../../../formEngine/formStepContext"
+import { useFormContext } from "react-hook-form"
 import "./AlternateContactType.scss"
 
 interface AlternateContactTypeProps {
@@ -13,7 +14,11 @@ interface AlternateContactTypeProps {
 const AlternateContactType = ({
   fieldNames: { alternateContactType },
 }: AlternateContactTypeProps) => {
-  const { register, errors, watch } = useFormStepContext()
+  const {
+    register,
+    formState: { errors },
+    watch,
+  } = useFormContext()
   const selected = watch(alternateContactType)
   return (
     <fieldset>

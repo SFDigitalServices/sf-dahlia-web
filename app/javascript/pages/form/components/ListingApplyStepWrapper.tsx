@@ -2,12 +2,11 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 
 import React, { Children } from "react"
-import { useForm } from "react-hook-form"
+import { useForm, FormProvider } from "react-hook-form"
 import { Form, t } from "@bloom-housing/ui-components"
 import { Button } from "@bloom-housing/ui-seeds"
 import { CardSection } from "@bloom-housing/ui-seeds/src/blocks/Card"
 import { useFormEngineContext } from "../../../formEngine/formEngineContext"
-import { FormStepProvider } from "../../../formEngine/formStepContext"
 import type { DataSchema } from "../../../formEngine/formSchemas"
 import { translationFromDataSchema } from "../../../util/formEngineUtil"
 
@@ -43,17 +42,7 @@ const ListingApplyStepWrapper = ({
     return acc
   }, {})
 
-  const {
-    register,
-    errors,
-    watch,
-    trigger,
-    handleSubmit,
-    setValue,
-    getValues,
-    clearErrors,
-    control,
-  } = useForm({
+  const methods = useForm({
     mode: "onChange",
     shouldFocusError: false,
     defaultValues,
@@ -67,9 +56,7 @@ const ListingApplyStepWrapper = ({
   const titleString = translationFromDataSchema(title, titleVars, dataSources)
 
   return (
-    <FormStepProvider
-      value={{ register, errors, watch, trigger, setValue, getValues, clearErrors, control }}
-    >
+    <FormProvider {...methods}>
       <CardSection>
         <Button variant="text" onClick={handlePrevStep}>
           {t("t.back")}
@@ -80,7 +67,7 @@ const ListingApplyStepWrapper = ({
         {description && <p className="field-note text-base">{t(description)}</p>}
         {!!descriptionComponent && descriptionComponent}
       </CardSection>
-      <Form onSubmit={handleSubmit(onSubmit)}>
+      <Form onSubmit={methods.handleSubmit(onSubmit)}>
         {Children.map(children, (child) => (
           <CardSection>{child}</CardSection>
         ))}
@@ -90,7 +77,7 @@ const ListingApplyStepWrapper = ({
           </Button>
         </CardSection>
       </Form>
-    </FormStepProvider>
+    </FormProvider>
   )
 }
 
