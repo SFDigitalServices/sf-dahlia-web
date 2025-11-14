@@ -2,11 +2,11 @@ import React from "react"
 import { screen } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
 import { t } from "@bloom-housing/ui-components"
-import { formContextWrapper } from "../../../__util__/renderUtils"
+import { renderWithFormContextWrapper } from "../../../__util__/renderUtils"
 import PrioritiesCheckbox from "../../../../pages/form/components/PrioritiesCheckbox"
 
 const renderPrioritiesCheckbox = () =>
-  formContextWrapper(
+  renderWithFormContextWrapper(
     <PrioritiesCheckbox
       description="label.pleaseSelectAllThatApply"
       fieldNames={{ priorityMembers: "priorityMembers" }}
