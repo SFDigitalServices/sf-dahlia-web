@@ -187,3 +187,22 @@ export const EMAIL_REGEX = new RegExp(
     "(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?",
   ].join("")
 )
+
+export const LISTING_PRIORITY_OPTIONS = [
+  {
+    value: "Mobility impairments",
+    label: "label.mobilityImpairments",
+  },
+  {
+    value: "Vision impairments",
+    label: "label.visionImpairments",
+  },
+  {
+    value: "Hearing impairments",
+    label: "label.hearingImpairments",
+  },
+  {
+    value: "No impairments",
+    label: "t.no",
+  },
+]

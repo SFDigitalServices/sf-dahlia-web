@@ -2,6 +2,7 @@ import { FieldGroup, t } from "@bloom-housing/ui-components"
 import React, { useEffect, useRef } from "react"
 import { useFormStepContext } from "../../../formEngine/formStepContext"
 import styles from "./PrioritiesCheckbox.module.scss"
+import { LISTING_PRIORITY_OPTIONS } from "../../../modules/constants"
 
 interface PrioritiesCheckboxProps {
   description: string
@@ -17,6 +18,11 @@ const PrioritiesCheckbox = ({
   const { register, errors, watch, setValue } = useFormStepContext()
   const selectedCheckboxValues = watch(priorityMembers)
   const previousValuesRef = useRef(selectedCheckboxValues || [])
+  const priority_fields = LISTING_PRIORITY_OPTIONS.map((option) => ({
+    label: t(option.label),
+    value: option.value,
+    id: option.value,
+  }))
 
   useEffect(() => {
     if (!selectedCheckboxValues) return
@@ -42,28 +48,7 @@ const PrioritiesCheckbox = ({
         name={priorityMembers}
         type="checkbox"
         groupLabel={t(description)}
-        fields={[
-          {
-            label: t("label.mobilityImpairments"),
-            value: "mobilityImpairment",
-            id: "mobilityImpairment",
-          },
-          {
-            label: t("label.visionImpairments"),
-            value: "visionImpairment",
-            id: "visionImpairment",
-          },
-          {
-            label: t("label.hearingImpairments"),
-            value: "hearingImpairment",
-            id: "hearingImpairment",
-          },
-          {
-            label: t("t.no"),
-            value: "noImpairments",
-            id: "noImpairments",
-          },
-        ]}
+        fields={priority_fields}
         fieldGroupClassName="radio-field-group"
         register={register}
         error={!!errors?.[priorityMembers]}
