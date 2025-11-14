@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/unbound-method */
 import React from "react"
 import { t, Field } from "@bloom-housing/ui-components"
 import { Heading } from "@bloom-housing/ui-seeds"
 import { LATIN_REGEX, LISTING_APPLY_FORMS_INPUT_MAX_LENGTH } from "../../../modules/constants"
-import { useFormStepContext } from "../../../formEngine/formStepContext"
+import { useFormContext } from "react-hook-form"
 
 type NameProps = {
   label: string
@@ -19,7 +20,10 @@ const Name = ({
   fieldNames: { firstName, middleName, lastName },
   showMiddleName,
 }: NameProps) => {
-  const { register, errors } = useFormStepContext()
+  const {
+    register,
+    formState: { errors },
+  } = useFormContext()
   return (
     <fieldset>
       <Heading priority={2} size="sm">

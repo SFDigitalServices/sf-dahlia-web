@@ -2,9 +2,8 @@
 import { act, render, RenderOptions, RenderResult } from "@testing-library/react"
 import React from "react"
 import crypto from "crypto"
-import { useForm } from "react-hook-form"
+import { useForm, FormProvider } from "react-hook-form"
 import { FormEngineProvider } from "../../formEngine/formEngineContext"
-import { FormStepProvider } from "../../formEngine/formStepContext"
 import { openRentalListing } from "../data/RailsRentalListing/listing-rental-open"
 
 export const mockWindowLocation = (): typeof window.location => {
@@ -84,12 +83,12 @@ export const renderWithFormContextWrapper = (formComponent: React.ReactElement) 
 
     return (
       <FormEngineProvider value={formEngineContextValue}>
-        <FormStepProvider value={formMethods}>
+        <FormProvider {...formMethods}>
           <form onSubmit={onSubmit}>
             {children}
             <button type="submit">next</button>
           </form>
-        </FormStepProvider>
+        </FormProvider>
       </FormEngineProvider>
     )
   }
