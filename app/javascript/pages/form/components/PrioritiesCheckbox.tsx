@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/unbound-method */
 import { FieldGroup, t } from "@bloom-housing/ui-components"
 import React, { useEffect, useRef } from "react"
-import { useFormStepContext } from "../../../formEngine/formStepContext"
+import { useFormContext } from "react-hook-form"
 import styles from "./PrioritiesCheckbox.module.scss"
 import { LISTING_PRIORITY_OPTIONS } from "../../../modules/constants"
 
@@ -15,7 +16,12 @@ const PrioritiesCheckbox = ({
   description,
   fieldNames: { priorityMembers },
 }: PrioritiesCheckboxProps) => {
-  const { register, errors, watch, setValue } = useFormStepContext()
+  const {
+    register,
+    formState: { errors },
+    watch,
+    setValue,
+  } = useFormContext()
   const selectedCheckboxValues = watch(priorityMembers)
   const previousValuesRef = useRef(selectedCheckboxValues || [])
   const priority_fields = LISTING_PRIORITY_OPTIONS.map((option) => ({
@@ -30,12 +36,12 @@ const PrioritiesCheckbox = ({
       (value) => !previousValuesRef.current.includes(value)
     )
 
-    if (newCheckboxValue.includes("noImpairments")) {
-      setValue(priorityMembers, ["noImpairments"])
-    } else if (selectedCheckboxValues.includes("noImpairments") && newCheckboxValue.length > 0) {
+    if (newCheckboxValue.includes("No impairments")) {
+      setValue(priorityMembers, ["No impairments"])
+    } else if (selectedCheckboxValues.includes("No impairments") && newCheckboxValue.length > 0) {
       setValue(
         priorityMembers,
-        selectedCheckboxValues.filter((value) => value !== "noImpairments")
+        selectedCheckboxValues.filter((value) => value !== "No impairments")
       )
     }
 
