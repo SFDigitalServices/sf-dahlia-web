@@ -11,7 +11,7 @@ import { Heading, Button, Message } from "@bloom-housing/ui-seeds"
 import { faPrint, faEnvelope } from "@fortawesome/free-solid-svg-icons"
 import RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
 import Layout from "../../layouts/Layout"
-import { renderInlineMarkup } from "../../util/languageUtil"
+import { renderInlineMarkup, getBMRApplicationUrl } from "../../util/languageUtil"
 import { ConfigContext } from "../../lib/ConfigContext"
 import { LeasingAgentInfo } from "./invite-to-apply"
 
@@ -103,7 +103,9 @@ const TaxDocuments = () => {
         }
         customExpandedContent={
           <div className={styles.accordionContent}>
-            {renderInlineMarkup(t("inviteToApplyPage.documents.taxDocuments.p9"))}
+            {renderInlineMarkup(
+              t("inviteToApplyPage.documents.taxDocuments.p9", getBMRApplicationUrl())
+            )}
           </div>
         }
         accordionTheme={"gray"}
@@ -170,7 +172,9 @@ const ProofOfIncome = () => {
         }
         customExpandedContent={
           <div className={styles.accordionContent}>
-            {renderInlineMarkup(t("inviteToApplyPage.documents.proofOfIncome.p11"))}
+            {renderInlineMarkup(
+              t("inviteToApplyPage.documents.proofOfIncome.p11", getBMRApplicationUrl())
+            )}
           </div>
         }
         accordionTheme={"gray"}
@@ -183,7 +187,9 @@ const ProofOfIncome = () => {
         }
         customExpandedContent={
           <div className={styles.accordionContent}>
-            {renderInlineMarkup(t("inviteToApplyPage.documents.proofOfIncome.p13"))}
+            {renderInlineMarkup(
+              t("inviteToApplyPage.documents.proofOfIncome.p13", getBMRApplicationUrl())
+            )}
           </div>
         }
         accordionTheme={"gray"}

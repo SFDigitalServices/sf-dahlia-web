@@ -272,6 +272,23 @@ export const getPageLanguageCode = (): string => {
 }
 
 /**
+ * Get the BMR application URL for the current language
+ * @returns {string} - BMR application URL
+ */
+export const getBMRApplicationUrl = (): string => {
+  switch (getPageLanguageCode()) {
+    case "ES":
+      return "https://media.api.sf.gov/documents/BMR_Rental_Application_ES.pdf"
+    case "TL":
+      return "https://media.api.sf.gov/documents/BMR_Rental_Application_FIL.pdf"
+    case "ZH":
+      return "https://media.api.sf.gov/documents/BMR_Rental_Application_ZH.pdf"
+    default:
+      return "https://media.api.sf.gov/documents/BMR_Rental_Application_EN.pdf"
+  }
+}
+
+/**
  * Get the translated string for a given field name from the translations object.
  * @param originalValue {string} - original value of the field
  * @param fieldName {string} - field name to get the translation for in Saleforce notation: Credit_Rating__c

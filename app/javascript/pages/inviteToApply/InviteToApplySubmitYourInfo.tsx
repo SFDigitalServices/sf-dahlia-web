@@ -17,6 +17,7 @@ import {
   getTranslatedString,
   renderInlineMarkup,
   getCurrentLanguage,
+  getBMRApplicationUrl,
 } from "../../util/languageUtil"
 import styles from "./invite-to-apply.module.scss"
 import Layout from "../../layouts/Layout"
@@ -104,7 +105,7 @@ const WhatToDo = ({ listing }: { listing: RailsSaleListing }) => {
           <Button
             className={styles.actionButton}
             variant="primary-outlined"
-            onClick={() => (window.location.href = "tbd")}
+            onClick={() => (window.location.href = getBMRApplicationUrl())}
           >
             {t("inviteToApplyPage.submitYourInfo.whatToDo.step1.p3")}
           </Button>
