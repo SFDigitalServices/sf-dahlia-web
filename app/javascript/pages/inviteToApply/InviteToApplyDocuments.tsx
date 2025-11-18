@@ -16,6 +16,7 @@ import { ConfigContext } from "../../lib/ConfigContext"
 import { LeasingAgentInfo } from "./invite-to-apply"
 
 import styles from "./invite-to-apply.module.scss"
+import { HOME_SF_PHONE } from "../../modules/constants"
 
 interface InviteToApplyDocumentsProps {
   listing: RailsSaleListing | null
@@ -269,7 +270,7 @@ const HousingAssistance = () => {
         <span className={styles.submitYourInfoIcons}>
           <a className={styles.responseIcon} href={`tel:+14152025464`}>
             <Icon symbol="phone" size="medium" fill={IconFillColors.primary} />
-            {"415-202-5464"}
+            {HOME_SF_PHONE}
           </a>
           <a className={styles.responseIcon} href={`mailto:${"info@homesanfrancisco.org"}`}>
             <Icon symbol={faEnvelope} size="medium" fill={IconFillColors.primary} />
@@ -291,9 +292,9 @@ const InviteToApplyDocumentsSidebar = ({ listing }: { listing: RailsSaleListing 
         <p>{t("inviteToApplyPage.submitYourInfo.prepare.p3")}</p>
         {renderInlineMarkup(t("inviteToApplyPage.submitYourInfo.prepare.p4"))}
         <span className={styles.submitYourInfoIcons}>
-          <a className={styles.responseIcon} href={`tel:+14152025464`}>
+          <a className={styles.responseIcon} href={`tel:+1${HOME_SF_PHONE}`}>
             <Icon symbol="phone" size="medium" fill={IconFillColors.primary} />
-            {"415-202-5464"}
+            {HOME_SF_PHONE}
           </a>
           <a className={styles.responseIcon} href={`mailto:${"info@homesanfrancisco.org"}`}>
             <Icon symbol={faEnvelope} size="medium" fill={IconFillColors.primary} />

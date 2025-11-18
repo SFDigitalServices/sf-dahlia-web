@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react"
-import { t, NavigationContext } from "@bloom-housing/ui-components"
+import { t, NavigationContext, Icon, IconFillColors } from "@bloom-housing/ui-components"
 import { Card, Button, Heading } from "@bloom-housing/ui-seeds"
 import withAppSetup from "../../layouts/withAppSetup"
 import FormLayout from "../../layouts/FormLayout"
@@ -14,7 +14,6 @@ import InviteToApplyDocuments from "./InviteToApplyDocuments"
 import RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
 import styles from "./invite-to-apply.module.scss"
 import { getPathWithoutLanguagePrefix } from "../../util/languageUtil"
-import { Icon, IconFillColors } from "@bloom-housing/ui-components"
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons"
 
 interface UrlParams {
@@ -81,9 +80,11 @@ const InviteToApplyPage = ({
     })
   }, [router, router.pathname])
 
-  const { unleashFlag: inviteToApplyFlag } = useFeatureFlag("partners.inviteToApply", false)
+  const { unleashFlag: inviteApplyFlag, variant } = useFeatureFlag("partners.inviteToApply", false)
+  const enabledListingIds = variant.payload === undefined ? [] : variant.payload.value.split(",")
+  const isInviteApplyEnabled = inviteApplyFlag && enabledListingIds.includes(listing?.Id)
 
-  if (!inviteToApplyFlag) {
+  if (!isInviteApplyEnabled) {
     return null
   }
   if (response === "yes") {
