@@ -117,7 +117,7 @@ const WhatToDo = ({ listing }: { listing: RailsSaleListing }) => {
           <p>{t("inviteToApplyPage.submitYourInfo.whatToDo.step2.p2")}</p>
           {renderInlineMarkup(
             t("inviteToApplyPage.submitYourInfo.whatToDo.step2.p3", {
-              link: `${getCurrentLanguage()}/listings/${listing?.Id}/invite-to-apply/documents`,
+              link: `/${getCurrentLanguage()}/listings/${listing?.Id}/invite-to-apply/documents`,
             })
           )}
         </li>
