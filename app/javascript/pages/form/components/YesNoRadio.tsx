@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/unbound-method */
 import React from "react"
 import { t, FieldGroup } from "@bloom-housing/ui-components"
-import { useFormStepContext } from "../../../formEngine/formStepContext"
+import { useFormContext } from "react-hook-form"
 import "./YesNoRadio.scss"
 
 interface YesNoRadioProps {
@@ -13,7 +14,11 @@ interface YesNoRadioProps {
 }
 
 const YesNoRadio = ({ label, note, yesText, fieldNames }: YesNoRadioProps) => {
-  const { register, errors, watch } = useFormStepContext()
+  const {
+    register,
+    formState: { errors },
+    watch,
+  } = useFormContext()
   const selected = watch(fieldNames?.question)
   return (
     <FieldGroup

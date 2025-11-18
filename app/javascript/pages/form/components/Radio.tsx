@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/unbound-method */
 import React from "react"
 import { t, FieldGroup } from "@bloom-housing/ui-components"
-import { useFormStepContext } from "../../../formEngine/formStepContext"
+import { useFormContext } from "react-hook-form"
 
 interface RadioProps {
   label: string
@@ -13,7 +14,10 @@ interface RadioProps {
 }
 
 const Radio = ({ label, errorMessage, hideLabel, options, fieldNames: { answer } }: RadioProps) => {
-  const { register, errors } = useFormStepContext()
+  const {
+    register,
+    formState: { errors },
+  } = useFormContext()
 
   const translatedOptions = options.map((option) => ({ ...option, label: t(option.label) }))
 
