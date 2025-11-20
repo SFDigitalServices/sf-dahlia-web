@@ -41,10 +41,37 @@ module DahliaBackend
       nil
     end
 
+    def send_invite_to_apply_response(_deadline, _application_number, _response,
+                                      listing_id, force = nil)
+      # Get contacts from salesforce of the application with applicationNumber
+      #
+      puts "applicationNumber param: #{_application_number}"
+      application = Force::ShortFormService.get(_application_number)
+      puts "Fetched application from Salesforce: #{application.inspect}"
+
+      puts "Listing ID param: #{listing_id}"
+      listing = Force::ListingService.listing(listing_id, force: force)
+      Rails.logger.info("Fetched listing from Salesforce: #{listing.inspect}")
+      application = Force::ShortFormService.get(_application_number)
+      puts "Fetched application from Salesforce: #{application.inspect}"
+
+      puts "Listing ID param: #{listing_id}"
+      listing = Force::ListingService.listing(listing_id, force: force)
+      Rails.logger.info("Fetched listing from Salesforce: #{listing.inspect}")
+
+      fields = prepare_submission_fields_invite_to_apply(application, listing)
+      return if fields.nil?
+
+      send_message("invite-to-apply/response/#{_response}", fields)
+    rescue StandardError => e
+      log_error('Error sending Invite to Apply', e)
+      nil
+    end
+
     private
 
     def prepare_submission_fields(application_params, application_response,
-                                  locale = 'en')
+                                  _locale = 'en')
       listing_id = application_params[:listingID]
       email = application_params.dig(:primaryApplicant, :email).to_s
 
@@ -66,7 +93,19 @@ module DahliaBackend
           phone: listing.Leasing_Agent_Phone.to_s,
           officeHours: listing.Office_Hours.to_s,
         },
-        lang: locale,
+        applicants: [application[:primaryApplicant],
+                     application[:alternateContact]].compact,
+      }
+    end
+
+    def prepare_submission_fields_invite_to_apply(application, listing)
+      {
+        applicants: [application[:primaryApplicant], application[:alternateContact]],
+        listingId: listing[:id],
+        listingName: listing[:name],
+        leasingAgent: listing[:leasingAgent],
+        lotteryDate: format_lottery_date(listing[:lotteryDate]),
+        deadline: application[:inviteToApplyDeadline],
       }
     end
 

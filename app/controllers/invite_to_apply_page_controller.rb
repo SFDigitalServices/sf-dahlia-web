@@ -2,6 +2,13 @@
 class InviteToApplyPageController < ApplicationController
   def index
     @invite_to_apply_props = props
+
+    # TODO: isTestEmail toggle
+    record_response(
+      params['deadline'],
+      params['applicationNumber'],
+      params['response'],
+    )
     render 'invite_to_apply'
   end
 
@@ -23,9 +30,18 @@ class InviteToApplyPageController < ApplicationController
       urlParams: {
         deadline: params['deadline'],
         response: params['response'],
-        applicationNumber: params['applicationNumber']
-      }
+        applicationNumber: params['applicationNumber'],
+      },
     }
+  end
+
+  def record_response(deadline, application_number, response)
+    DahliaBackend::MessageService.send_invite_to_apply_response(
+      deadline,
+      application_number,
+      response,
+      params['id'],
+    )
   end
 
   def use_react_app
