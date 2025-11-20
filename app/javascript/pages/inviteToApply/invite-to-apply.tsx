@@ -52,7 +52,13 @@ const InviteToApplyHeader = ({ listing }: { listing: RailsSaleListing }) => (
       </Heading>
     </Card.Header>
     <Card.Section className={styles.listingSection}>
-      <Button href={`/listings/${listing?.Id}`} variant="text" size="sm" newWindowTarget>
+      <Button
+        className={styles.headerButton}
+        href={`/listings/${listing?.Id}`}
+        variant="text"
+        size="sm"
+        newWindowTarget
+      >
         {t("inviteToApplyPage.buildingDetails")}
       </Button>
     </Card.Section>
