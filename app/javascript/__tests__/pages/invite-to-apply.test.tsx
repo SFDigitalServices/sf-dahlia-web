@@ -8,10 +8,28 @@ import { formatTimeOfDay, getApplicationDeadline, localizedFormat } from "../../
 import { getListing } from "../../api/listingApiService"
 
 jest.mock("../../api/listingApiService")
+jest.mock("../../hooks/useFeatureFlag", () => ({
+  useFeatureFlag: () => ({
+    isEnabled: true,
+    isLoading: false,
+    unleashFlag: true,
+  }),
+  useVariantFlag: () => ({
+    isEnabled: true,
+    isLoading: false,
+    unleashFlag: true,
+    variant: {
+      payload: {
+        value: "listing-id",
+      },
+    },
+  }),
+}))
 
 const mockListing = {
   Id: "listing-id",
   Name: "Test Listing",
+  Building_Name: "Test Building",
   Leasing_Agent_Name: "test-agent",
   Leasing_Agent_Phone: "123-456-7890",
   Leasing_Agent_Email: "test-agent@test-agent.com",
@@ -168,11 +186,14 @@ describe("Invite to Apply Page", () => {
           documentsPath={true}
           urlParams={{
             deadline: mockFutureDeadline,
-            response: "yes",
           }}
         />
       )
-      expect(screen.getByText(mockListing.Name)).toBeInTheDocument()
+      expect(
+        screen.getByText(
+          t("inviteToApplyPage.documents.title", { listingName: mockListing.Building_Name })
+        )
+      ).toBeInTheDocument()
     })
   })
 })

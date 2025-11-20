@@ -722,7 +722,7 @@
   "inviteToApplyPage.leasingAgent.p2": "We sent you an email confirming your answer. Follow the link in your email if you need to change it.",
   "inviteToApplyPage.leasingAgent.p3": "Or, contact the leasing agent:",
   "inviteToApplyPage.submitYourInfo": "If you decide to apply for an apartment at %{listingName}, you will need to <a target='_blank' href='%{link}'>submit an application and documents</a> before: <strong>%{deadline}</strong>.",
-  "inviteToApplyPage.submitYourInfo.deadlinePassed": "The deadline to submit your information has passed:",
+  "inviteToApplyPage.submitYourInfo.deadlinePassed": "The deadline to submit your information has passed: ",
   "inviteToApplyPage.submitYourInfo.p1": "See apartment features and photos",
   "inviteToApplyPage.submitYourInfo.prepare.p1": "You will need documents like tax returns, proof of income, and bank statements.",
   "inviteToApplyPage.submitYourInfo.prepare.p2": "Get help from a housing counselor",
