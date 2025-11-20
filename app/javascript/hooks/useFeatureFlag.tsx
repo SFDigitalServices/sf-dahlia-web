@@ -14,20 +14,31 @@ export const useFeatureFlag = (flagName: string, defaultValue: boolean) => {
   const { flagsError, flagsReady } = useFlagsStatus()
 
   const unleashFlag = useFlagUnleash(flagName)
-  const variant = useVariant(flagName)
 
   const allowUrlOverride = urlWhiteList.has(flagName) || process.env.UNLEASH_ENV === "development"
   if (doesURLHaveFlag && allowUrlOverride) {
     if (flagFromUrl === "true") {
-      return { flagsReady: true, unleashFlag: true, variant }
+      return { flagsReady: true, unleashFlag: true }
     } else if (flagFromUrl === "false") {
-      return { flagsReady: true, unleashFlag: false, variant }
+      return { flagsReady: true, unleashFlag: false }
     }
   }
 
   if (flagsError || unleashFlag === undefined) {
     console.error(flagsError)
-    return { flagsReady, unleashFlag: defaultValue, variant }
+    return { flagsReady, unleashFlag: defaultValue }
+  } else {
+    return { flagsReady, unleashFlag }
+  }
+}
+
+export const useVariantFlag = (flagName: string, defaultValue: boolean) => {
+  const { flagsError, flagsReady } = useFlagsStatus()
+  const unleashFlag = useFlagUnleash(flagName)
+  const variant = useVariant(flagName)
+  if (flagsError || variant === undefined) {
+    console.error(flagsError)
+    return { flagsReady, unleashFlag: defaultValue, variant: defaultValue }
   } else {
     return { flagsReady, unleashFlag, variant }
   }
