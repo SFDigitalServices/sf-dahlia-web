@@ -11,7 +11,7 @@ import { Heading, Button, Message } from "@bloom-housing/ui-seeds"
 import { faPrint, faEnvelope } from "@fortawesome/free-solid-svg-icons"
 import RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
 import Layout from "../../layouts/Layout"
-import { renderInlineMarkup, getBMRApplicationUrl } from "../../util/languageUtil"
+import { renderInlineMarkup, getCurrentLanguage } from "../../util/languageUtil"
 import { ConfigContext } from "../../lib/ConfigContext"
 import { LeasingAgentInfo } from "./invite-to-apply"
 
@@ -75,7 +75,7 @@ const CheckWhatYouNeed = () => {
   )
 }
 
-const TaxDocuments = () => {
+const TaxDocuments = ({ submitYourInfoLink }: { submitYourInfoLink: string }) => {
   return (
     <div className={styles.submitYourInfoSection} id="taxDocuments">
       <Heading priority={2} size="2xl">
@@ -104,7 +104,7 @@ const TaxDocuments = () => {
         customExpandedContent={
           <div className={styles.accordionContent}>
             {renderInlineMarkup(
-              t("inviteToApplyPage.documents.taxDocuments.p9", getBMRApplicationUrl())
+              t("inviteToApplyPage.documents.taxDocuments.p9", submitYourInfoLink)
             )}
           </div>
         }
@@ -140,7 +140,7 @@ const TaxDocuments = () => {
   )
 }
 
-const ProofOfIncome = () => {
+const ProofOfIncome = ({ submitYourInfoLink }: { submitYourInfoLink: string }) => {
   return (
     <div className={styles.submitYourInfoSection} id="proofOfIncome">
       <Heading priority={2} size="2xl">
@@ -173,7 +173,7 @@ const ProofOfIncome = () => {
         customExpandedContent={
           <div className={styles.accordionContent}>
             {renderInlineMarkup(
-              t("inviteToApplyPage.documents.proofOfIncome.p11", getBMRApplicationUrl())
+              t("inviteToApplyPage.documents.proofOfIncome.p11", submitYourInfoLink)
             )}
           </div>
         }
@@ -188,7 +188,7 @@ const ProofOfIncome = () => {
         customExpandedContent={
           <div className={styles.accordionContent}>
             {renderInlineMarkup(
-              t("inviteToApplyPage.documents.proofOfIncome.p13", getBMRApplicationUrl())
+              t("inviteToApplyPage.documents.proofOfIncome.p13", submitYourInfoLink)
             )}
           </div>
         }
@@ -317,10 +317,11 @@ const InviteToApplyDocumentsSidebar = ({ listing }: { listing: RailsSaleListing 
 
 const InviteToApplyDocuments = ({ listing }: InviteToApplyDocumentsProps) => {
   const { getAssetPath } = React.useContext(ConfigContext)
+  const submitYourInfoLink = `/${getCurrentLanguage()}/listings/${listing?.Id}/invite-to-apply/documents`
   return (
     <Layout>
       <PageHeader
-        title={t("inviteToApplyPage.documents.title", { listingName: listing?.Name })}
+        title={t("inviteToApplyPage.documents.title", { listingName: listing?.Building_Name })}
         inverse
         backgroundImage={getAssetPath("bg@1200.jpg")}
       />
@@ -328,8 +329,8 @@ const InviteToApplyDocuments = ({ listing }: InviteToApplyDocumentsProps) => {
         <div className={styles.submitYourInfoPage}>
           <main className={styles.submitYourInfoMain}>
             <CheckWhatYouNeed />
-            <TaxDocuments />
-            <ProofOfIncome />
+            <TaxDocuments submitYourInfoLink={submitYourInfoLink} />
+            <ProofOfIncome submitYourInfoLink={submitYourInfoLink} />
             <BankAndFinancials />
             <HousingAssistance />
           </main>
