@@ -230,11 +230,10 @@ const SubmitYourInfoSidebarBlock = ({ listing }: { listing: RailsSaleListing }) 
 
 const InviteToApplySubmitYourInfo = ({ listing, deadline }: InviteToApplySubmitYourInfoProps) => {
   const { getAssetPath } = React.useContext(ConfigContext)
-  const titleName = listing?.Building_Name || listing?.Name
   return (
     <Layout>
       <PageHeader
-        title={t("inviteToApplyPage.submitYourInfo.title", { listingName: titleName })}
+        title={t("inviteToApplyPage.submitYourInfo.title", { listingName: listing?.Building_Name })}
         inverse
         backgroundImage={getAssetPath("bg@1200.jpg")}
       />
