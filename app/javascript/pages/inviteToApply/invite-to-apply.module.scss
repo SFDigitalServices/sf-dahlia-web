@@ -68,6 +68,7 @@
     display: flex;
     flex-direction: row;
     gap: var(--seeds-spacer-content);
+    max-width: var(--seeds-screen-2xl);
     @media (max-width: theme("screens.sm")) {
       flex-direction: column;
     }
@@ -75,7 +76,7 @@
   .submitYourInfoMain {
     width: 66.66%;
     gap: var(--seeds-spacer-text);
-    padding: 0 var(--seeds-spacer-container) 0 var(--seeds-s24);
+    padding: 0 var(--seeds-spacer-container) 0 var(--seeds-s40);
     margin: var(--seeds-spacer-section);
     @media (max-width: theme("screens.sm")) {
       width: 100%;
@@ -202,7 +203,6 @@
   .submitYourInfoBox {
     background-color: var(--seeds-color-gray-200);
     padding: var(--seeds-spacer-content);
-    padding-top: var(--seeds-spacer-text);
     margin-top: var(--seeds-spacer-section);
   }
 

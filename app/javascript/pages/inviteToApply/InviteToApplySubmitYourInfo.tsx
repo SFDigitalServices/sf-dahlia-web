@@ -182,9 +182,13 @@ const WhatHappensNext = () => {
       </Heading>
       <p>{t("inviteToApplyPage.submitYourInfo.whatHappensNext.p2")}</p>
       <p>{t("inviteToApplyPage.submitYourInfo.whatHappensNext.p3")}</p>
-      <ul className={styles.submitYourInfoList}>
-        <li>{t("inviteToApplyPage.submitYourInfo.whatHappensNext.p4")}</li>
-        <li>{t("inviteToApplyPage.submitYourInfo.whatHappensNext.p5")}</li>
+      <ul>
+        <li className={styles.submitYourInfoList}>
+          {t("inviteToApplyPage.submitYourInfo.whatHappensNext.p4")}
+        </li>
+        <li className={styles.submitYourInfoList}>
+          {t("inviteToApplyPage.submitYourInfo.whatHappensNext.p5")}
+        </li>
       </ul>
       <p>{t("inviteToApplyPage.submitYourInfo.whatHappensNext.p6")}</p>
       <Heading priority={3} size="lg">
@@ -232,7 +236,7 @@ const InviteToApplySubmitYourInfo = ({ listing, deadline }: InviteToApplySubmitY
   return (
     <Layout>
       <PageHeader
-        title={t("inviteToApplyPage.submitYourInfo.title", { listingName: listing?.Name })}
+        title={t("inviteToApplyPage.submitYourInfo.title", { listingName: listing?.Building_Name })}
         inverse
         backgroundImage={getAssetPath("bg@1200.jpg")}
       />

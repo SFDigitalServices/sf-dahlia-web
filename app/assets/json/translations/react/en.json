@@ -722,7 +722,7 @@
   "inviteToApplyPage.leasingAgent.p2": "We sent you an email confirming your answer. Follow the link in your email if you need to change it.",
   "inviteToApplyPage.leasingAgent.p3": "Or, contact the leasing agent:",
   "inviteToApplyPage.submitYourInfo": "If you decide to apply for an apartment at %{listingName}, you will need to <a target='_blank' href='%{link}'>submit an application and documents</a> before: <strong>%{deadline}</strong>.",
-  "inviteToApplyPage.submitYourInfo.deadline": "${day} at 11:59 pm Pacific Time",
+  "inviteToApplyPage.submitYourInfo.deadline": "%{day} at 11:59 pm Pacific Time",
   "inviteToApplyPage.submitYourInfo.deadlineInfo": "<strong>The deadline to submit your application and documents has passed:</strong> %{day} at 11:59 pm Pacific Time. If you are still interested in an apartment at %{listingName}, contact the leasing agent.",
   "inviteToApplyPage.submitYourInfo.deadlinePassed": "The deadline to submit your information has passed: ",
   "inviteToApplyPage.submitYourInfo.p1": "See apartment features and photos",
