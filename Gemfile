@@ -7,9 +7,9 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-gem 'rails', '~> 8.0.0'
+gem 'rails', '~> 8.0.2.1'
 
-gem 'unleash', '~> 5.0.4'
+gem 'unleash', '~> 6.3.0'
 
 # Use SCSS for stylesheets
 gem 'sassc-rails'
@@ -41,7 +41,7 @@ gem 'bower-rails'
 gem 'angular-rails-templates'
 
 # Javascript packages pre-processor
-gem "shakapacker", "8.4.0"
+gem "shakapacker", '~> 7.0.1'
 gem "react_on_rails", "13.3.3"
 
 gem 'psych', '< 4'
