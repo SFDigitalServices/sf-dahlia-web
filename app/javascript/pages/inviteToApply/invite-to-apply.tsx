@@ -13,7 +13,7 @@ import InviteToApplySubmitYourInfo from "./InviteToApplySubmitYourInfo"
 import InviteToApplyDocuments from "./InviteToApplyDocuments"
 import RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
 import styles from "./invite-to-apply.module.scss"
-import { getPathWithoutLanguagePrefix } from "../../util/languageUtil"
+import { getCurrentLanguage, getPathWithoutLanguagePrefix } from "../../util/languageUtil"
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons"
 
 interface UrlParams {
@@ -72,7 +72,7 @@ const InviteToApplyPage = ({
 }: HomePageProps) => {
   const [listing, setListing] = useState<RailsSaleListing>(null)
 
-  const submitLink = `listings/${listing?.Id}/invite-to-apply?response=yes&applicationNumber=${applicationNumber}&deadline=${deadline}`
+  const submitLink = `/${getCurrentLanguage()}/listings/${listing?.Id}/invite-to-apply?response=yes&applicationNumber=${applicationNumber}&deadline=${deadline}`
 
   const { router } = useContext(NavigationContext)
 
