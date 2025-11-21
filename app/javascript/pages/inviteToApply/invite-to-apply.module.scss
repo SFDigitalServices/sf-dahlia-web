@@ -67,16 +67,14 @@
   .submitYourInfoPage {
     display: flex;
     flex-direction: row;
-    gap: var(--seeds-spacer-content);
-    max-width: var(--seeds-screen-2xl);
     @media (max-width: theme("screens.sm")) {
       flex-direction: column;
     }
   }
   .submitYourInfoMain {
-    width: 66.66%;
     gap: var(--seeds-spacer-text);
-    padding: 0 var(--seeds-spacer-container) 0 var(--seeds-s40);
+    max-width: var(--seeds-screen-lg);
+    padding-left: 26rem;
     margin: var(--seeds-spacer-section);
     @media (max-width: theme("screens.sm")) {
       width: 100%;
@@ -89,10 +87,10 @@
     flex-direction: column;
     gap: var(--seeds-spacer-text);
     line-height: var(--seeds-line-height-relaxed);
+    max-width: var(--seeds-width-lg);
     h3 {
       margin: var(--seeds-spacer-text) 0;
     }
-    width: 33.33%;
     @media (max-width: theme("screens.sm")) {
       width: 100%;
       padding: 0 var(--seeds-spacer-section);
