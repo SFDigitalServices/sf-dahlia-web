@@ -749,3 +749,9 @@ export const getSeniorBuildingAgeRequirement = (
   const minimumAge = listing.Reserved_community_minimum_age
   return { entireHousehold, minimumAge }
 }
+
+export const isDeadlinePassed = (deadline: string) => {
+  const today = new Date()
+  const deadlineDate = new Date(deadline)
+  return today > deadlineDate
+}

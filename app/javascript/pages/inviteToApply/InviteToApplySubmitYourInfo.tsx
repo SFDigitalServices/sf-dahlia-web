@@ -11,7 +11,7 @@ import {
 } from "@bloom-housing/ui-components"
 import { Heading, Button, Message } from "@bloom-housing/ui-seeds"
 import RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
-import { getListingAddressString } from "../../util/listingUtil"
+import { getListingAddressString, isDeadlinePassed } from "../../util/listingUtil"
 import {
   getTranslatedString,
   renderInlineMarkup,
@@ -89,9 +89,6 @@ const PreparingYourApplication = () => {
 }
 
 const WhatToDo = ({ listing, deadline }: { listing: RailsSaleListing; deadline: string }) => {
-  const today = new Date()
-  const deadlineDate = new Date(deadline)
-  const isDeadlinePassed = today > deadlineDate
   return (
     <div className={styles.whatToDoList}>
       <Heading priority={2} size="2xl">
@@ -136,7 +133,7 @@ const WhatToDo = ({ listing, deadline }: { listing: RailsSaleListing; deadline: 
             <li>{t("inviteToApplyPage.submitYourInfo.whatToDo.step3.p2")}</li>
             <li>{t("inviteToApplyPage.submitYourInfo.whatToDo.step3.p3")}</li>
           </ul>
-          {!isDeadlinePassed && (
+          {!isDeadlinePassed(deadline) && (
             <Button
               className={styles.actionButton}
               onClick={() => (window.location.href = listing?.File_Upload_URL)}
@@ -151,7 +148,7 @@ const WhatToDo = ({ listing, deadline }: { listing: RailsSaleListing; deadline: 
           <p>{t("inviteToApplyPage.submitYourInfo.whatToDo.step3.p7")}</p>
         </li>
       </ol>
-      {isDeadlinePassed && (
+      {isDeadlinePassed(deadline) && (
         <Message variant="secondary" fullwidth customIcon={<Icon symbol="clock" size="medium" />}>
           {renderInlineMarkup(
             t("inviteToApplyPage.submitYourInfo.deadlineInfo", {
