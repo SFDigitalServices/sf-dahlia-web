@@ -121,6 +121,7 @@
     }
     h3 {
       padding-bottom: var(--seeds-spacer-text);
+      margin-top: var(--seeds-spacer-content);
       @media (max-width: theme("screens.sm")) {
         padding-bottom: 0;
       }
@@ -150,9 +151,18 @@
       margin-left: var(--seeds-spacer-section);
       padding-bottom: var(--seeds-spacer-header);
     }
+    strong {
+      font-weight: var(--seeds-font-weight-semibold);
+    }
     .iconList {
-      list-style-image: url("/images/icon-document.svg");
-      margin-left: var(--seeds-spacer-section);
+      margin-left: var(--seeds-spacer-text);
+      list-style-type: none;
+      li {
+        background-image: url("/images/icon-document.svg");
+        background-repeat: no-repeat;
+        padding: var(--seeds-spacer-text) 0 0 var(--seeds-spacer-section);
+        background-position: left var(--seeds-spacer-text);
+      }
     }
     .messageBanner {
       margin-bottom: var(--seeds-spacer-label);
@@ -168,6 +178,10 @@
       display: block;
       text-align: left;
     }
+  }
+
+  .infoSubSection {
+    padding-top: var(--seeds-spacer-content);
   }
 
   .whatToDoList {

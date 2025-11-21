@@ -95,47 +95,49 @@ const TaxDocuments = ({ submitYourInfoLink }: { submitYourInfoLink: string }) =>
         <li>{renderInlineMarkup(t("inviteToApplyPage.documents.taxDocuments.p6"))}</li>
         <li>{renderInlineMarkup(t("inviteToApplyPage.documents.taxDocuments.p7"))}</li>
       </ul>
-      <ContentAccordion
-        customBarContent={
-          <div className={styles.accordionBar}>
-            {t("inviteToApplyPage.documents.taxDocuments.p8")}
-          </div>
-        }
-        customExpandedContent={
-          <div className={styles.accordionContent}>
-            {renderInlineMarkup(
-              t("inviteToApplyPage.documents.taxDocuments.p9", submitYourInfoLink)
-            )}
-          </div>
-        }
-        accordionTheme={"gray"}
-      />
-      <ContentAccordion
-        customBarContent={
-          <div className={styles.accordionBar}>
-            {t("inviteToApplyPage.documents.taxDocuments.p10")}
-          </div>
-        }
-        customExpandedContent={
-          <div className={styles.accordionContent}>
-            {renderInlineMarkup(t("inviteToApplyPage.documents.taxDocuments.p11"))}
-          </div>
-        }
-        accordionTheme={"gray"}
-      />
-      <ContentAccordion
-        customBarContent={
-          <div className={styles.accordionBar}>
-            {t("inviteToApplyPage.documents.taxDocuments.p12")}
-          </div>
-        }
-        customExpandedContent={
-          <div className={styles.accordionContent}>
-            {renderInlineMarkup(t("inviteToApplyPage.documents.taxDocuments.p13"))}
-          </div>
-        }
-        accordionTheme={"gray"}
-      />
+      <div className={styles.infoSubSection}>
+        <ContentAccordion
+          customBarContent={
+            <div className={styles.accordionBar}>
+              {t("inviteToApplyPage.documents.taxDocuments.p8")}
+            </div>
+          }
+          customExpandedContent={
+            <div className={styles.accordionContent}>
+              {renderInlineMarkup(
+                t("inviteToApplyPage.documents.taxDocuments.p9", submitYourInfoLink)
+              )}
+            </div>
+          }
+          accordionTheme={"gray"}
+        />
+        <ContentAccordion
+          customBarContent={
+            <div className={styles.accordionBar}>
+              {t("inviteToApplyPage.documents.taxDocuments.p10")}
+            </div>
+          }
+          customExpandedContent={
+            <div className={styles.accordionContent}>
+              {renderInlineMarkup(t("inviteToApplyPage.documents.taxDocuments.p11"))}
+            </div>
+          }
+          accordionTheme={"gray"}
+        />
+        <ContentAccordion
+          customBarContent={
+            <div className={styles.accordionBar}>
+              {t("inviteToApplyPage.documents.taxDocuments.p12")}
+            </div>
+          }
+          customExpandedContent={
+            <div className={styles.accordionContent}>
+              {renderInlineMarkup(t("inviteToApplyPage.documents.taxDocuments.p13"))}
+            </div>
+          }
+          accordionTheme={"gray"}
+        />
+      </div>
     </div>
   )
 }
