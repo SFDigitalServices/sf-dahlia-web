@@ -19,6 +19,7 @@ import styles from "./invite-to-apply.module.scss"
 import { HOME_SF_PHONE } from "../../modules/constants"
 
 interface InviteToApplyDocumentsProps {
+  deadline: string
   listing: RailsSaleListing | null
 }
 
@@ -319,9 +320,9 @@ const InviteToApplyDocumentsSidebar = ({ listing }: { listing: RailsSaleListing 
   )
 }
 
-const InviteToApplyDocuments = ({ listing }: InviteToApplyDocumentsProps) => {
+const InviteToApplyDocuments = ({ listing, deadline }: InviteToApplyDocumentsProps) => {
   const { getAssetPath } = React.useContext(ConfigContext)
-  const submitYourInfoLink = `/${getCurrentLanguage()}/listings/${listing?.Id}/invite-to-apply/documents`
+  const submitYourInfoLink = `/${getCurrentLanguage()}/listings/${listing?.Id}/invite-to-apply?response=yes&deadline=${deadline}`
   return (
     <Layout>
       <PageHeader
