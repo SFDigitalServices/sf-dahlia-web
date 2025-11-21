@@ -166,36 +166,38 @@ const ProofOfIncome = ({ submitYourInfoLink }: { submitYourInfoLink: string }) =
         <li>{renderInlineMarkup(t("inviteToApplyPage.documents.proofOfIncome.p8"))}</li>
         <li>{renderInlineMarkup(t("inviteToApplyPage.documents.proofOfIncome.p9"))}</li>
       </ul>
-      <ContentAccordion
-        customBarContent={
-          <div className={styles.accordionBar}>
-            {t("inviteToApplyPage.documents.proofOfIncome.p10")}
-          </div>
-        }
-        customExpandedContent={
-          <div className={styles.accordionContent}>
-            {renderInlineMarkup(
-              t("inviteToApplyPage.documents.proofOfIncome.p11", submitYourInfoLink)
-            )}
-          </div>
-        }
-        accordionTheme={"gray"}
-      />
-      <ContentAccordion
-        customBarContent={
-          <div className={styles.accordionBar}>
-            {t("inviteToApplyPage.documents.proofOfIncome.p12")}
-          </div>
-        }
-        customExpandedContent={
-          <div className={styles.accordionContent}>
-            {renderInlineMarkup(
-              t("inviteToApplyPage.documents.proofOfIncome.p13", submitYourInfoLink)
-            )}
-          </div>
-        }
-        accordionTheme={"gray"}
-      />
+      <div className={styles.infoSubSection}>
+        <ContentAccordion
+          customBarContent={
+            <div className={styles.accordionBar}>
+              {t("inviteToApplyPage.documents.proofOfIncome.p10")}
+            </div>
+          }
+          customExpandedContent={
+            <div className={styles.accordionContent}>
+              {renderInlineMarkup(
+                t("inviteToApplyPage.documents.proofOfIncome.p11", submitYourInfoLink)
+              )}
+            </div>
+          }
+          accordionTheme={"gray"}
+        />
+        <ContentAccordion
+          customBarContent={
+            <div className={styles.accordionBar}>
+              {t("inviteToApplyPage.documents.proofOfIncome.p12")}
+            </div>
+          }
+          customExpandedContent={
+            <div className={styles.accordionContent}>
+              {renderInlineMarkup(
+                t("inviteToApplyPage.documents.proofOfIncome.p13", submitYourInfoLink)
+              )}
+            </div>
+          }
+          accordionTheme={"gray"}
+        />
+      </div>
       <Heading priority={3} size="lg">
         {t("inviteToApplyPage.documents.proofOfIncome.p14")}
       </Heading>

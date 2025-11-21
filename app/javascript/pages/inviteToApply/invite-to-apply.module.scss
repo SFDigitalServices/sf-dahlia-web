@@ -99,11 +99,6 @@
     padding: var(--seeds-spacer-section) var(--seeds-s24) 0 var(--seeds-spacer-section);
     border-left: 1px solid var(--seeds-color-gray-450);
   }
-  .submitYourInfoBox {
-    background-color: var(--seeds-color-gray-200);
-    padding: var(--seeds-spacer-content);
-    margin-top: var(--seeds-spacer-content);
-  }
 
   .submitYourInfoSection {
     padding-bottom: var(--seeds-spacer-header);
@@ -150,9 +145,6 @@
       list-style-type: decimal;
       margin-left: var(--seeds-spacer-section);
       padding-bottom: var(--seeds-spacer-header);
-    }
-    strong {
-      font-weight: var(--seeds-font-weight-semibold);
     }
     .iconList {
       margin-left: var(--seeds-spacer-text);
@@ -205,6 +197,13 @@
     flex-direction: column;
     gap: var(--seeds-spacer-text);
     margin-top: var(--seeds-spacer-text);
+  }
+
+  .submitYourInfoBox {
+    background-color: var(--seeds-color-gray-200);
+    padding: var(--seeds-spacer-content);
+    padding-top: var(--seeds-spacer-text);
+    margin-top: var(--seeds-spacer-section);
   }
 
   .submitYourInfoList {

@@ -13,11 +13,11 @@ import { Heading, Button, Message } from "@bloom-housing/ui-seeds"
 import RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
 import { getListingAddressString } from "../../util/listingUtil"
 import {
-  getApplicationDeadline,
   getTranslatedString,
   renderInlineMarkup,
   getCurrentLanguage,
   getBMRApplicationUrl,
+  localizedFormat,
 } from "../../util/languageUtil"
 import styles from "./invite-to-apply.module.scss"
 import Layout from "../../layouts/Layout"
@@ -45,7 +45,9 @@ const DeadlineBanner = ({ deadline }: { deadline: string }) => {
           ? t("inviteToApplyPage.submitYourInfo.deadlinePassed")
           : t("inviteToApplyPage.submitYourInfo.submitByDeadline")}
       </strong>
-      <span>{getApplicationDeadline(deadline)}</span>
+      <span>
+        {t("inviteToApplyPage.submitYourInfo.deadline", { day: localizedFormat(deadline, "ll") })}
+      </span>
     </Message>
   )
 }
@@ -86,7 +88,10 @@ const PreparingYourApplication = () => {
   )
 }
 
-const WhatToDo = ({ listing }: { listing: RailsSaleListing }) => {
+const WhatToDo = ({ listing, deadline }: { listing: RailsSaleListing; deadline: string }) => {
+  const today = new Date()
+  const deadlineDate = new Date(deadline)
+  const isDeadlinePassed = today > deadlineDate
   return (
     <div className={styles.whatToDoList}>
       <Heading priority={2} size="2xl">
@@ -131,12 +136,14 @@ const WhatToDo = ({ listing }: { listing: RailsSaleListing }) => {
             <li>{t("inviteToApplyPage.submitYourInfo.whatToDo.step3.p2")}</li>
             <li>{t("inviteToApplyPage.submitYourInfo.whatToDo.step3.p3")}</li>
           </ul>
-          <Button
-            className={styles.actionButton}
-            onClick={() => (window.location.href = listing?.File_Upload_URL)}
-          >
-            {t("inviteToApplyPage.submitYourInfo.whatToDo.step3.p4")}
-          </Button>
+          {!isDeadlinePassed && (
+            <Button
+              className={styles.actionButton}
+              onClick={() => (window.location.href = listing?.File_Upload_URL)}
+            >
+              {t("inviteToApplyPage.submitYourInfo.whatToDo.step3.p4")}
+            </Button>
+          )}
           <Heading priority={3} size="lg">
             {t("inviteToApplyPage.submitYourInfo.whatToDo.step3.p5")}
           </Heading>
@@ -144,6 +151,16 @@ const WhatToDo = ({ listing }: { listing: RailsSaleListing }) => {
           <p>{t("inviteToApplyPage.submitYourInfo.whatToDo.step3.p7")}</p>
         </li>
       </ol>
+      {isDeadlinePassed && (
+        <Message variant="secondary" fullwidth customIcon={<Icon symbol="clock" size="medium" />}>
+          {renderInlineMarkup(
+            t("inviteToApplyPage.submitYourInfo.deadlineInfo", {
+              day: localizedFormat(deadline, "ll"),
+              listingName: listing?.Name,
+            })
+          )}
+        </Message>
+      )}
       <div className={styles.submitYourInfoBox}>
         <Heading priority={4} size="lg">
           {t("inviteToApplyPage.submitYourInfo.whatToDo.step3.p8")}
@@ -186,8 +203,8 @@ const SubmitYourInfoHeader = ({ listing }: { listing: RailsSaleListing }) => {
         alt={listing?.Listing_Images?.[0]?.Image_Description}
       />
       <strong>{listing?.Name}</strong>
-      <p>{listing && getListingAddressString(listing)}</p>
-      <a href={`${getCurrentLanguage()}/listings/${listing?.Id}`}>
+      <p>{listing && getListingAddressString(listing, false)}</p>
+      <a href={`/${getCurrentLanguage()}/listings/${listing?.Id}`}>
         {t("inviteToApplyPage.submitYourInfo.p1")}
       </a>
     </div>
@@ -225,7 +242,7 @@ const InviteToApplySubmitYourInfo = ({ listing, deadline }: InviteToApplySubmitY
             <SubmitYourInfoHeader listing={listing} />
             <DeadlineBanner deadline={deadline} />
             <PreparingYourApplication />
-            <WhatToDo listing={listing} />
+            <WhatToDo listing={listing} deadline={deadline} />
             <Mobile>
               <LeasingAgentInfo listing={listing} />
             </Mobile>

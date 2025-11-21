@@ -188,13 +188,15 @@ export const isPluralSRO = (listing: RailsRentalListing | RailsSaleListing): boo
  * @returns {string} the full address string if all required fields are present, empty
  * string otherwise
  */
-export const getListingAddressString = (listing: RailsListing): string => {
+export const getListingAddressString = (
+  listing: RailsListing,
+  includeState: boolean = true
+): string => {
   return (
     (listing.Building_Street_Address &&
       listing.Building_City &&
-      listing.Building_State &&
       listing.Building_Zip_Code &&
-      `${listing.Building_Street_Address}, ${listing.Building_City}, ${listing.Building_State} ${listing.Building_Zip_Code}`) ||
+      `${listing.Building_Street_Address}, ${listing.Building_City}, ${includeState ? listing.Building_State : ""} ${listing.Building_Zip_Code}`) ||
     ""
   )
 }
