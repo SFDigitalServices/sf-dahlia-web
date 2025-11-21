@@ -106,7 +106,7 @@ const TaxDocuments = ({ submitYourInfoLink }: { submitYourInfoLink: string }) =>
           customExpandedContent={
             <div className={styles.accordionContent}>
               {renderInlineMarkup(
-                t("inviteToApplyPage.documents.taxDocuments.p9", submitYourInfoLink)
+                t("inviteToApplyPage.documents.taxDocuments.p9", { link: submitYourInfoLink })
               )}
             </div>
           }
@@ -177,7 +177,7 @@ const ProofOfIncome = ({ submitYourInfoLink }: { submitYourInfoLink: string }) =
           customExpandedContent={
             <div className={styles.accordionContent}>
               {renderInlineMarkup(
-                t("inviteToApplyPage.documents.proofOfIncome.p11", submitYourInfoLink)
+                t("inviteToApplyPage.documents.proofOfIncome.p11", { url: submitYourInfoLink })
               )}
             </div>
           }
@@ -192,7 +192,7 @@ const ProofOfIncome = ({ submitYourInfoLink }: { submitYourInfoLink: string }) =
           customExpandedContent={
             <div className={styles.accordionContent}>
               {renderInlineMarkup(
-                t("inviteToApplyPage.documents.proofOfIncome.p13", submitYourInfoLink)
+                t("inviteToApplyPage.documents.proofOfIncome.p13", { url: submitYourInfoLink })
               )}
             </div>
           }

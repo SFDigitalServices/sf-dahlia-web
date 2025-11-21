@@ -98,7 +98,7 @@ const InviteToApplyPage = ({
   if (response === "yes") {
     return <InviteToApplySubmitYourInfo listing={listing} deadline={deadline} />
   } else if (documentsPath) {
-    return <InviteToApplyDocuments listing={listing} />
+    return <InviteToApplyDocuments listing={listing} deadline={deadline} />
   } else {
     return (
       <FormLayout>
