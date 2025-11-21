@@ -107,7 +107,7 @@ const WhatToDo = ({ listing, deadline }: { listing: RailsSaleListing; deadline: 
           <Button
             className={styles.actionButton}
             variant="primary-outlined"
-            onClick={() => (window.location.href = getBMRApplicationUrl())}
+            onClick={() => window.open(getBMRApplicationUrl(), "_blank")}
           >
             {t("inviteToApplyPage.submitYourInfo.whatToDo.step1.p3")}
           </Button>
@@ -136,7 +136,7 @@ const WhatToDo = ({ listing, deadline }: { listing: RailsSaleListing; deadline: 
           {!isDeadlinePassed(deadline) && (
             <Button
               className={styles.actionButton}
-              onClick={() => (window.location.href = listing?.File_Upload_URL)}
+              onClick={() => window.open(listing?.File_Upload_URL, "_blank")}
             >
               {t("inviteToApplyPage.submitYourInfo.whatToDo.step3.p4")}
             </Button>
