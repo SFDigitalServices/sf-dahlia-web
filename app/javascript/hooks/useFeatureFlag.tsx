@@ -32,3 +32,15 @@ export const useFeatureFlag = (flagName: string, defaultValue: boolean) => {
     return { flagsReady, unleashFlag, variant }
   }
 }
+
+export const useVariantFlag = (flagName: string, defaultValue: boolean) => {
+  const { flagsError, flagsReady } = useFlagsStatus()
+  const unleashFlag = useFlagUnleash(flagName)
+  const variant = useVariant(flagName)
+  if (flagsError || variant === undefined) {
+    console.error(flagsError)
+    return { flagsReady, unleashFlag: defaultValue, variant: defaultValue }
+  } else {
+    return { flagsReady, unleashFlag, variant }
+  }
+}

@@ -5,7 +5,7 @@ import withAppSetup from "../../layouts/withAppSetup"
 import FormLayout from "../../layouts/FormLayout"
 import { AppPages } from "../../util/routeUtil"
 import { getListing } from "../../api/listingApiService"
-import { useFeatureFlag } from "../../hooks/useFeatureFlag"
+import { useVariantFlag } from "../../hooks/useFeatureFlag"
 import InviteToApplyDeadlinePassed from "./InviteToApplyDeadlinePassed"
 import InviteToApplyWithdrawn from "./InviteToApplyWithdrawn"
 import InviteToApplyContactMeLater from "./InviteToApplyContactMeLater"
@@ -80,9 +80,11 @@ const InviteToApplyPage = ({
     })
   }, [router, router.pathname])
 
-  const { unleashFlag: inviteApplyFlag, variant } = useFeatureFlag("partners.inviteToApply", false)
-  const enabledListingIds = variant.payload === undefined ? [] : variant.payload.value.split(",")
-  const isInviteApplyEnabled = inviteApplyFlag && enabledListingIds.includes(listing?.Id)
+  const { unleashFlag: inviteApplyFlag, variant } = useVariantFlag("partners.inviteToApply", false)
+  const enabledListingIds =
+    typeof variant === "object" && variant?.payload?.value ? variant.payload.value.split(",") : []
+  const isInviteApplyEnabled =
+    inviteApplyFlag && listing?.Id && enabledListingIds.includes(listing.Id)
 
   if (!isInviteApplyEnabled) {
     return null
