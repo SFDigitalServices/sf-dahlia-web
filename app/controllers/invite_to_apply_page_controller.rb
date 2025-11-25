@@ -36,6 +36,7 @@ class InviteToApplyPageController < ApplicationController
   end
 
   def record_response(deadline, application_number, response)
+    puts "Recording response: deadline=#{deadline}, application_number=#{application_number}, response=#{response}"
     DahliaBackend::MessageService.send_invite_to_apply_response(
       deadline,
       application_number,

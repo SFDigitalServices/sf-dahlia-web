@@ -15,6 +15,12 @@ module DahliaBackend
         new.send_application_confirmation(application_params, application_response,
                                           locale)
       end
+
+      def send_invite_to_apply_response(_deadline, _application_number, _response,
+                                        listing_id, _force = nil)
+        new.send_invite_to_apply_response(_deadline, _application_number, _response,
+                                          listing_id, nil)
+      end
     end
 
     attr_reader :client
