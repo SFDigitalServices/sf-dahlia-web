@@ -64,7 +64,7 @@ module DahliaBackend
 
       puts "Prepared fields for message: #{fields.inspect}"
 
-      send_message("invite-to-apply/response/#{_response}", fields)
+      send_message("/messages/invite-to-apply/response/#{_response}", fields)
     rescue StandardError => e
       log_error('Error sending Invite to Apply', e)
       nil
