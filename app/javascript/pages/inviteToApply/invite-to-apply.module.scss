@@ -67,15 +67,14 @@
   .submitYourInfoPage {
     display: flex;
     flex-direction: row;
-    gap: var(--seeds-spacer-content);
     @media (max-width: theme("screens.sm")) {
       flex-direction: column;
     }
   }
   .submitYourInfoMain {
-    width: 66.66%;
     gap: var(--seeds-spacer-text);
-    padding: 0 var(--seeds-spacer-container) 0 var(--seeds-s24);
+    max-width: var(--seeds-screen-lg);
+    padding-left: 26rem;
     margin: var(--seeds-spacer-section);
     @media (max-width: theme("screens.sm")) {
       width: 100%;
@@ -88,21 +87,16 @@
     flex-direction: column;
     gap: var(--seeds-spacer-text);
     line-height: var(--seeds-line-height-relaxed);
+    max-width: var(--seeds-width-lg);
     h3 {
       margin: var(--seeds-spacer-text) 0;
     }
-    width: 33.33%;
     @media (max-width: theme("screens.sm")) {
       width: 100%;
       padding: 0 var(--seeds-spacer-section);
     }
     padding: var(--seeds-spacer-section) var(--seeds-s24) 0 var(--seeds-spacer-section);
     border-left: 1px solid var(--seeds-color-gray-450);
-  }
-  .submitYourInfoBox {
-    background-color: var(--seeds-color-gray-200);
-    padding: var(--seeds-spacer-content);
-    margin-top: var(--seeds-spacer-content);
   }
 
   .submitYourInfoSection {
@@ -121,6 +115,7 @@
     }
     h3 {
       padding-bottom: var(--seeds-spacer-text);
+      margin-top: var(--seeds-spacer-content);
       @media (max-width: theme("screens.sm")) {
         padding-bottom: 0;
       }
@@ -151,8 +146,14 @@
       padding-bottom: var(--seeds-spacer-header);
     }
     .iconList {
-      list-style-image: url("/images/icon-document.svg");
-      margin-left: var(--seeds-spacer-section);
+      margin-left: var(--seeds-spacer-text);
+      list-style-type: none;
+      li {
+        background-image: url("/images/icon-document.svg");
+        background-repeat: no-repeat;
+        padding: var(--seeds-spacer-text) 0 0 var(--seeds-spacer-section);
+        background-position: left var(--seeds-spacer-text);
+      }
     }
     .messageBanner {
       margin-bottom: var(--seeds-spacer-label);
@@ -168,6 +169,10 @@
       display: block;
       text-align: left;
     }
+  }
+
+  .infoSubSection {
+    padding-top: var(--seeds-spacer-content);
   }
 
   .whatToDoList {
@@ -193,6 +198,12 @@
     margin-top: var(--seeds-spacer-text);
   }
 
+  .submitYourInfoBox {
+    background-color: var(--seeds-color-gray-200);
+    padding: var(--seeds-spacer-content);
+    margin-top: var(--seeds-spacer-section);
+  }
+
   .submitYourInfoList {
     li {
       all: unset;
@@ -210,4 +221,8 @@
 .responseIcon {
   display: flex;
   gap: var(--seeds-spacer-text);
+}
+
+.headerButton {
+  font-weight: normal;
 }

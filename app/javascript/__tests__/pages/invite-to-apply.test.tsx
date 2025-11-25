@@ -4,7 +4,7 @@ import "@testing-library/jest-dom"
 import { t } from "@bloom-housing/ui-components"
 import InviteToApplyPage from "../../pages/inviteToApply/invite-to-apply"
 import { renderAndLoadAsync } from "../__util__/renderUtils"
-import { formatTimeOfDay, getApplicationDeadline, localizedFormat } from "../../util/languageUtil"
+import { localizedFormat } from "../../util/languageUtil"
 import { getListing } from "../../api/listingApiService"
 
 jest.mock("../../api/listingApiService")
@@ -92,17 +92,17 @@ describe("Invite to Apply Page", () => {
           }}
         />
       )
-
-      const formattedDate = t("myApplications.applicationDeadlineTime", {
-        date: localizedFormat(mockFutureDeadline, "ll"),
-        time: formatTimeOfDay(mockFutureDeadline),
-      })
-
-      const submitLink = `listings/${mockListing.Id}/invite-to-apply?response=yes&applicationNumber=0000&deadline=${mockFutureDeadline}`
+      const submitLink = `/en/listings/${mockListing.Id}/invite-to-apply?response=yes&applicationNumber=0000&deadline=${mockFutureDeadline}`
 
       expect(screen.getByText(t("inviteToApplyPage.withdrawn.title"))).toBeInTheDocument()
       expect(screen.getByText(mockListing.Name)).toBeInTheDocument()
-      expect(screen.getByText(formattedDate)).toBeInTheDocument()
+      expect(
+        screen.getByText(
+          t("inviteToApplyPage.submitYourInfo.deadline", {
+            day: localizedFormat(mockFutureDeadline, "ll"),
+          })
+        )
+      ).toBeInTheDocument()
       expect(
         screen.getByRole("link", { name: "submit an application and documents" })
       ).toHaveAttribute("href", submitLink)
@@ -119,18 +119,19 @@ describe("Invite to Apply Page", () => {
         />
       )
 
-      const formattedDate = t("myApplications.applicationDeadlineTime", {
-        date: localizedFormat(mockFutureDeadline, "ll"),
-        time: formatTimeOfDay(mockFutureDeadline),
-      })
-
-      const submitLink = `listings/${mockListing.Id}/invite-to-apply?response=yes&applicationNumber=0000&deadline=${mockFutureDeadline}`
+      const submitLink = `/en/listings/${mockListing.Id}/invite-to-apply?response=yes&applicationNumber=0000&deadline=${mockFutureDeadline}`
 
       expect(
         screen.getByText(t("inviteToApplyPage.contact.title", { listingName: mockListing.Name }))
       ).toBeInTheDocument()
       expect(screen.getByText(t("inviteToApplyPage.contact.subtitle"))).toBeInTheDocument()
-      expect(screen.getByText(formattedDate)).toBeInTheDocument()
+      expect(
+        screen.getByText(
+          t("inviteToApplyPage.submitYourInfo.deadline", {
+            day: localizedFormat(mockFutureDeadline, "ll"),
+          })
+        )
+      ).toBeInTheDocument()
       expect(
         screen.getByRole("link", { name: "submit an application and documents" })
       ).toHaveAttribute("href", submitLink)
@@ -161,7 +162,13 @@ describe("Invite to Apply Page", () => {
           }}
         />
       )
-      expect(screen.getByText(getApplicationDeadline(mockFutureDeadline))).toBeInTheDocument()
+      expect(
+        screen.getByText(
+          t("inviteToApplyPage.submitYourInfo.deadline", {
+            day: localizedFormat(mockFutureDeadline, "ll"),
+          })
+        )
+      ).toBeInTheDocument()
     })
     it("renders submit your info page", async () => {
       await renderAndLoadAsync(
@@ -175,7 +182,7 @@ describe("Invite to Apply Page", () => {
       )
       expect(
         screen.getByText(
-          t("inviteToApplyPage.submitYourInfo.title", { listingName: mockListing.Name })
+          t("inviteToApplyPage.submitYourInfo.title", { listingName: mockListing.Building_Name })
         )
       ).toBeInTheDocument()
     })

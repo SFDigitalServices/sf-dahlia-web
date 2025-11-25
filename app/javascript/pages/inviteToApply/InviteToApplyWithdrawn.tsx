@@ -2,9 +2,10 @@ import React from "react"
 import { t, LoadingOverlay } from "@bloom-housing/ui-components"
 import { Card, Heading } from "@bloom-housing/ui-seeds"
 import styles from "./invite-to-apply.module.scss"
-import { getApplicationDeadline, renderMarkup } from "../../util/languageUtil"
+import { renderMarkup, localizedFormat } from "../../util/languageUtil"
 import RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
 import { LeasingAgentInfo } from "./invite-to-apply"
+import { isDeadlinePassed } from "../../util/listingUtil"
 
 interface InviteToApplyWithdrawnProps {
   listing: RailsSaleListing | null
@@ -13,9 +14,6 @@ interface InviteToApplyWithdrawnProps {
 }
 
 const InviteToApplyWithdrawn = ({ listing, deadline, submitLink }: InviteToApplyWithdrawnProps) => {
-  const today = new Date()
-  const deadlineDate = new Date(deadline)
-  const isDeadlinePassed = today > deadlineDate
   return (
     <LoadingOverlay isLoading={!listing}>
       <Card className={styles.responseCard}>
@@ -24,7 +22,7 @@ const InviteToApplyWithdrawn = ({ listing, deadline, submitLink }: InviteToApply
             {t("inviteToApplyPage.withdrawn.title")}
           </Heading>
         </Card.Header>
-        {!isDeadlinePassed && (
+        {!isDeadlinePassed(deadline) && (
           <Card.Section className={styles.responseSection}>
             <Heading priority={3} size="xl" className={styles.responseHeading}>
               {t("inviteToApplyPage.leasingAgent.p1")}
@@ -36,7 +34,7 @@ const InviteToApplyWithdrawn = ({ listing, deadline, submitLink }: InviteToApply
               `${t("inviteToApplyPage.submitYourInfo", {
                 listingName: listing?.Name,
                 link: submitLink,
-                deadline: getApplicationDeadline(deadline),
+                deadline: localizedFormat(deadline, "ll"),
               })}`,
               "<strong></strong><a></a>"
             )}

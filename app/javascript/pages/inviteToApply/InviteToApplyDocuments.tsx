@@ -19,6 +19,7 @@ import styles from "./invite-to-apply.module.scss"
 import { HOME_SF_PHONE } from "../../modules/constants"
 
 interface InviteToApplyDocumentsProps {
+  deadline: string
   listing: RailsSaleListing | null
 }
 
@@ -95,47 +96,49 @@ const TaxDocuments = ({ submitYourInfoLink }: { submitYourInfoLink: string }) =>
         <li>{renderInlineMarkup(t("inviteToApplyPage.documents.taxDocuments.p6"))}</li>
         <li>{renderInlineMarkup(t("inviteToApplyPage.documents.taxDocuments.p7"))}</li>
       </ul>
-      <ContentAccordion
-        customBarContent={
-          <div className={styles.accordionBar}>
-            {t("inviteToApplyPage.documents.taxDocuments.p8")}
-          </div>
-        }
-        customExpandedContent={
-          <div className={styles.accordionContent}>
-            {renderInlineMarkup(
-              t("inviteToApplyPage.documents.taxDocuments.p9", submitYourInfoLink)
-            )}
-          </div>
-        }
-        accordionTheme={"gray"}
-      />
-      <ContentAccordion
-        customBarContent={
-          <div className={styles.accordionBar}>
-            {t("inviteToApplyPage.documents.taxDocuments.p10")}
-          </div>
-        }
-        customExpandedContent={
-          <div className={styles.accordionContent}>
-            {renderInlineMarkup(t("inviteToApplyPage.documents.taxDocuments.p11"))}
-          </div>
-        }
-        accordionTheme={"gray"}
-      />
-      <ContentAccordion
-        customBarContent={
-          <div className={styles.accordionBar}>
-            {t("inviteToApplyPage.documents.taxDocuments.p12")}
-          </div>
-        }
-        customExpandedContent={
-          <div className={styles.accordionContent}>
-            {renderInlineMarkup(t("inviteToApplyPage.documents.taxDocuments.p13"))}
-          </div>
-        }
-        accordionTheme={"gray"}
-      />
+      <div className={styles.infoSubSection}>
+        <ContentAccordion
+          customBarContent={
+            <div className={styles.accordionBar}>
+              {t("inviteToApplyPage.documents.taxDocuments.p8")}
+            </div>
+          }
+          customExpandedContent={
+            <div className={styles.accordionContent}>
+              {renderInlineMarkup(
+                t("inviteToApplyPage.documents.taxDocuments.p9", { link: submitYourInfoLink })
+              )}
+            </div>
+          }
+          accordionTheme={"gray"}
+        />
+        <ContentAccordion
+          customBarContent={
+            <div className={styles.accordionBar}>
+              {t("inviteToApplyPage.documents.taxDocuments.p10")}
+            </div>
+          }
+          customExpandedContent={
+            <div className={styles.accordionContent}>
+              {renderInlineMarkup(t("inviteToApplyPage.documents.taxDocuments.p11"))}
+            </div>
+          }
+          accordionTheme={"gray"}
+        />
+        <ContentAccordion
+          customBarContent={
+            <div className={styles.accordionBar}>
+              {t("inviteToApplyPage.documents.taxDocuments.p12")}
+            </div>
+          }
+          customExpandedContent={
+            <div className={styles.accordionContent}>
+              {renderInlineMarkup(t("inviteToApplyPage.documents.taxDocuments.p13"))}
+            </div>
+          }
+          accordionTheme={"gray"}
+        />
+      </div>
     </div>
   )
 }
@@ -164,36 +167,38 @@ const ProofOfIncome = ({ submitYourInfoLink }: { submitYourInfoLink: string }) =
         <li>{renderInlineMarkup(t("inviteToApplyPage.documents.proofOfIncome.p8"))}</li>
         <li>{renderInlineMarkup(t("inviteToApplyPage.documents.proofOfIncome.p9"))}</li>
       </ul>
-      <ContentAccordion
-        customBarContent={
-          <div className={styles.accordionBar}>
-            {t("inviteToApplyPage.documents.proofOfIncome.p10")}
-          </div>
-        }
-        customExpandedContent={
-          <div className={styles.accordionContent}>
-            {renderInlineMarkup(
-              t("inviteToApplyPage.documents.proofOfIncome.p11", submitYourInfoLink)
-            )}
-          </div>
-        }
-        accordionTheme={"gray"}
-      />
-      <ContentAccordion
-        customBarContent={
-          <div className={styles.accordionBar}>
-            {t("inviteToApplyPage.documents.proofOfIncome.p12")}
-          </div>
-        }
-        customExpandedContent={
-          <div className={styles.accordionContent}>
-            {renderInlineMarkup(
-              t("inviteToApplyPage.documents.proofOfIncome.p13", submitYourInfoLink)
-            )}
-          </div>
-        }
-        accordionTheme={"gray"}
-      />
+      <div className={styles.infoSubSection}>
+        <ContentAccordion
+          customBarContent={
+            <div className={styles.accordionBar}>
+              {t("inviteToApplyPage.documents.proofOfIncome.p10")}
+            </div>
+          }
+          customExpandedContent={
+            <div className={styles.accordionContent}>
+              {renderInlineMarkup(
+                t("inviteToApplyPage.documents.proofOfIncome.p11", { url: submitYourInfoLink })
+              )}
+            </div>
+          }
+          accordionTheme={"gray"}
+        />
+        <ContentAccordion
+          customBarContent={
+            <div className={styles.accordionBar}>
+              {t("inviteToApplyPage.documents.proofOfIncome.p12")}
+            </div>
+          }
+          customExpandedContent={
+            <div className={styles.accordionContent}>
+              {renderInlineMarkup(
+                t("inviteToApplyPage.documents.proofOfIncome.p13", { url: submitYourInfoLink })
+              )}
+            </div>
+          }
+          accordionTheme={"gray"}
+        />
+      </div>
       <Heading priority={3} size="lg">
         {t("inviteToApplyPage.documents.proofOfIncome.p14")}
       </Heading>
@@ -315,9 +320,9 @@ const InviteToApplyDocumentsSidebar = ({ listing }: { listing: RailsSaleListing 
   )
 }
 
-const InviteToApplyDocuments = ({ listing }: InviteToApplyDocumentsProps) => {
+const InviteToApplyDocuments = ({ listing, deadline }: InviteToApplyDocumentsProps) => {
   const { getAssetPath } = React.useContext(ConfigContext)
-  const submitYourInfoLink = `/${getCurrentLanguage()}/listings/${listing?.Id}/invite-to-apply/documents`
+  const submitYourInfoLink = `/${getCurrentLanguage()}/listings/${listing?.Id}/invite-to-apply?response=yes&deadline=${deadline}`
   return (
     <Layout>
       <PageHeader
