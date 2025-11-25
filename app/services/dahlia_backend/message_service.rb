@@ -48,25 +48,21 @@ module DahliaBackend
     end
 
     def send_invite_to_apply_response(_deadline, _application_number, _response,
-                                      listing_id, force = nil)
+                                      listing_id, _force = nil)
       # Get contacts from salesforce of the application with applicationNumber
       #
       puts "applicationNumber param: #{_application_number}"
       application = Force::ShortFormService.get(_application_number)
-      puts "Fetched application from Salesforce: #{application.inspect}"
+      # puts "Fetched application from Salesforce: #{application.inspect}"
 
       puts "Listing ID param: #{listing_id}"
-      listing = Force::ListingService.listing(listing_id, force: force)
-      Rails.logger.info("Fetched listing from Salesforce: #{listing.inspect}")
-      application = Force::ShortFormService.get(_application_number)
-      puts "Fetched application from Salesforce: #{application.inspect}"
+      listing = fetch_listing(listing_id)
+      # Rails.logger.info("Fetched listing from Salesforce: #{listing.inspect}")
 
-      puts "Listing ID param: #{listing_id}"
-      listing = Force::ListingService.listing(listing_id, force: force)
-      Rails.logger.info("Fetched listing from Salesforce: #{listing.inspect}")
-
-      fields = prepare_submission_fields_invite_to_apply(application, listing)
+      fields = prepare_submission_fields_invite_to_apply(application, listing, _deadline)
       return if fields.nil?
+
+      puts "Prepared fields for message: #{fields.inspect}"
 
       send_message("invite-to-apply/response/#{_response}", fields)
     rescue StandardError => e
@@ -104,14 +100,37 @@ module DahliaBackend
       }
     end
 
-    def prepare_submission_fields_invite_to_apply(application, listing)
+    def prepare_submission_fields_invite_to_apply(application, listing, deadline)
+      # Rails.logger.info("Preparing submission fields for Invite to Apply: application=#{application.inspect}, listing=#{listing.inspect}")
+      return nil unless application && listing
+
+      # Extract applicant information
+      primary_applicant = {
+        firstName: application.dig('primaryApplicant', 'firstName'),
+        email: application.dig('primaryApplicant', 'email'),
+      }
+
+      alternate_contact = {
+        firstName: application.dig('alternateContact', 'firstName'),
+        email: application.dig('alternateContact', 'email'),
+      }
+
+      leasing_agent = {
+        name: listing.Leasing_Agent_Name.to_s,
+        email: listing.Leasing_Agent_Email.to_s,
+        phone: listing.Leasing_Agent_Phone.to_s,
+        officeHours: listing.Office_Hours.to_s,
+      }
+
+      formatted_date = format_lottery_date(listing.Lottery_Date)
+
       {
-        applicants: [application[:primaryApplicant], application[:alternateContact]],
-        listingId: listing[:id],
-        listingName: listing[:name],
-        leasingAgent: listing[:leasingAgent],
-        lotteryDate: format_lottery_date(listing[:lotteryDate]),
-        deadline: application[:inviteToApplyDeadline],
+        applicants: [primary_applicant, alternate_contact].compact,
+        listingId: listing.dig('Id'),
+        listingName: listing.Name.to_s,
+        leasingAgent: leasing_agent,
+        lotteryDate: formatted_date,
+        deadline: deadline,
       }
     end
 

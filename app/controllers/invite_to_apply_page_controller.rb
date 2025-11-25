@@ -4,6 +4,7 @@ class InviteToApplyPageController < ApplicationController
     @invite_to_apply_props = props
 
     # TODO: isTestEmail toggle
+    puts params.inspect
     record_response(
       params['deadline'],
       params['applicationNumber'],
