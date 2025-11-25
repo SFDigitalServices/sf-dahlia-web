@@ -47,6 +47,14 @@ module DahliaBackend
       nil
     end
 
+    def get_invite_to_apply_response_endpoint(response)
+      case response
+      when 'yes' then '/messages/invite-to-apply/response/yes'
+      when 'no' then '/messages/invite-to-apply/response/no'
+      when 'contact' then '/messages/invite-to-apply/response/contact'
+      end
+    end
+
     def send_invite_to_apply_response(_deadline, _application_number, _response,
                                       listing_id, _force = nil)
       # Get contacts from salesforce of the application with applicationNumber
@@ -59,12 +67,16 @@ module DahliaBackend
       listing = fetch_listing(listing_id)
       # Rails.logger.info("Fetched listing from Salesforce: #{listing.inspect}")
 
-      fields = prepare_submission_fields_invite_to_apply(application, listing, _deadline)
+      fields = prepare_submission_fields_invite_to_apply(application, listing, _deadline,
+                                                         _application_number)
       return if fields.nil?
 
       puts "Prepared fields for message: #{fields.inspect}"
 
-      send_message("/messages/invite-to-apply/response/#{_response}", fields)
+      endpoint = get_invite_to_apply_response_endpoint(_response)
+      return log_error("Invalid response type: #{_response}", nil) unless endpoint
+
+      send_message(endpoint, fields)
     rescue StandardError => e
       log_error('Error sending Invite to Apply', e)
       nil
@@ -100,7 +112,8 @@ module DahliaBackend
       }
     end
 
-    def prepare_submission_fields_invite_to_apply(application, listing, deadline)
+    def prepare_submission_fields_invite_to_apply(application, listing, deadline,
+                                                  application_number)
       # Rails.logger.info("Preparing submission fields for Invite to Apply: application=#{application.inspect}, listing=#{listing.inspect}")
       return nil unless application && listing
 
@@ -125,12 +138,18 @@ module DahliaBackend
       formatted_date = format_lottery_date(listing.Lottery_Date)
 
       {
-        applicants: [primary_applicant, alternate_contact].compact,
+        applicants: [{
+          applicationNumber: application_number,
+          primaryContact: primary_applicant,
+          alternateContact: alternate_contact,
+        }],
         listingId: listing.dig('Id'),
         listingName: listing.Name.to_s,
+        listingAddress: listing.Address__c.to_s,
+        listingNeighborhood: listing.Neighborhood__c.to_s,
         leasingAgent: leasing_agent,
         lotteryDate: formatted_date,
-        deadline: deadline,
+        deadlineDate: deadline,
       }
     end
 
