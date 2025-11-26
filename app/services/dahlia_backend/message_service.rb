@@ -58,20 +58,17 @@ module DahliaBackend
     def send_invite_to_apply_response(_deadline, _application_number, _response,
                                       listing_id, _force = nil)
       # Get contacts from salesforce of the application with applicationNumber
-      #
-      puts "applicationNumber param: #{_application_number}"
-      application = Force::ShortFormService.get(_application_number)
-      # puts "Fetched application from Salesforce: #{application.inspect}"
+      # TODO: Validate params
 
-      puts "Listing ID param: #{listing_id}"
+      application = Force::ShortFormService.get(_application_number)
+
       listing = fetch_listing(listing_id)
-      # Rails.logger.info("Fetched listing from Salesforce: #{listing.inspect}")
 
       fields = prepare_submission_fields_invite_to_apply(application, listing, _deadline,
                                                          _application_number)
       return if fields.nil?
 
-      puts "Prepared fields for message: #{fields.inspect}"
+      log_info("Prepared fields for Invite to Apply response: #{fields.inspect}")
 
       endpoint = get_invite_to_apply_response_endpoint(_response)
       return log_error("Invalid response type: #{_response}", nil) unless endpoint
@@ -114,7 +111,6 @@ module DahliaBackend
 
     def prepare_submission_fields_invite_to_apply(application, listing, deadline,
                                                   application_number)
-      # Rails.logger.info("Preparing submission fields for Invite to Apply: application=#{application.inspect}, listing=#{listing.inspect}")
       return nil unless application && listing
 
       # Extract applicant information
