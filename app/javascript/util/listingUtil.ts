@@ -751,9 +751,7 @@ export const getSeniorBuildingAgeRequirement = (
 }
 
 export const isDeadlinePassed = (deadline: string) => {
-  const today = new Date()
-  today.setHours(0, 0, 0, 0)
-  const deadlineDate = new Date(deadline)
-  deadlineDate.setHours(0, 0, 0, 0)
+  const today = new Date().toISOString().split("T")[0]
+  const deadlineDate = new Date(deadline).toISOString().split("T")[0]
   return today > deadlineDate
 }
