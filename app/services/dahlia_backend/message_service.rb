@@ -82,7 +82,7 @@ module DahliaBackend
     private
 
     def prepare_submission_fields(application_params, application_response,
-                                  _locale = 'en')
+                                  locale = 'en')
       listing_id = application_params[:listingID]
       email = application_params.dig(:primaryApplicant, :email).to_s
 
@@ -104,8 +104,7 @@ module DahliaBackend
           phone: listing.Leasing_Agent_Phone.to_s,
           officeHours: listing.Office_Hours.to_s,
         },
-        applicants: [application[:primaryApplicant],
-                     application[:alternateContact]].compact,
+        lang: locale,
       }
     end
 
