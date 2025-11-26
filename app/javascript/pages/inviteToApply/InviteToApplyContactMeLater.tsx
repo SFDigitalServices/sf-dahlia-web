@@ -2,7 +2,7 @@ import React from "react"
 import { t, LoadingOverlay } from "@bloom-housing/ui-components"
 import { Card, Heading } from "@bloom-housing/ui-seeds"
 import styles from "./invite-to-apply.module.scss"
-import { getApplicationDeadline, renderMarkup } from "../../util/languageUtil"
+import { renderMarkup, localizedFormat } from "../../util/languageUtil"
 import RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
 import { LeasingAgentInfo } from "./invite-to-apply"
 
@@ -37,7 +37,7 @@ const InviteToApplyContactMeLater = ({
             `${t("inviteToApplyPage.submitYourInfo", {
               listingName: listing?.Name,
               link: submitLink,
-              deadline: getApplicationDeadline(deadline),
+              deadline: localizedFormat(deadline, "ll"),
             })}`,
             "<strong></strong><a></a>"
           )}
