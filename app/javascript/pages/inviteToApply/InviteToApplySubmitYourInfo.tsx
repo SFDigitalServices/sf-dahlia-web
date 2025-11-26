@@ -31,19 +31,14 @@ interface InviteToApplySubmitYourInfoProps {
 }
 
 const DeadlineBanner = ({ deadline }: { deadline: string }) => {
-  const today = new Date()
-  today.setHours(0, 0, 0, 0)
-  const deadlineDate = new Date(deadline)
-  deadlineDate.setHours(0, 0, 0, 0)
-  const isDeadlinePassed = today > deadlineDate
   return (
     <Message
       fullwidth
-      variant={isDeadlinePassed ? "alert" : "warn"}
+      variant={isDeadlinePassed(deadline) ? "alert" : "warn"}
       customIcon={<Icon symbol="clock" size="medium" />}
     >
       <strong>
-        {isDeadlinePassed
+        {isDeadlinePassed(deadline)
           ? t("inviteToApplyPage.submitYourInfo.deadlinePassed")
           : t("inviteToApplyPage.submitYourInfo.submitByDeadline")}
       </strong>
