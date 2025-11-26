@@ -49,9 +49,9 @@ module DahliaBackend
 
     def get_invite_to_apply_response_endpoint(response)
       case response
-      when 'yes' then '/messages/invite-to-apply/response/yes'
-      when 'no' then '/messages/invite-to-apply/response/no'
-      when 'contact' then '/messages/invite-to-apply/response/contact'
+      when 'yes' then 'messages/invite-to-apply/response/yes'
+      when 'no' then 'messages/invite-to-apply/response/no'
+      when 'contact' then 'messages/invite-to-apply/response/contact'
       end
     end
 
