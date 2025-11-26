@@ -139,6 +139,7 @@ module DahliaBackend
 
       {
         applicants: [{
+          lotteryNumber: application.dig('lotteryNumber'),
           applicationNumber: application_number,
           primaryContact: primary_applicant,
           alternateContact: alternate_contact,
