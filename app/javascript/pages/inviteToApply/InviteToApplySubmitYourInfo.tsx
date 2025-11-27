@@ -230,7 +230,7 @@ const SubmitYourInfoSidebarBlock = ({ listing }: { listing: RailsSaleListing }) 
 
 const InviteToApplySubmitYourInfo = ({ listing, deadline }: InviteToApplySubmitYourInfoProps) => {
   const { getAssetPath } = React.useContext(ConfigContext)
-  const titleName = listing?.Building_Name || listing?.Name
+  const titleName = listing?.Building_Name_for_Process || listing?.Name
   return (
     <Layout>
       <PageHeader
