@@ -22,7 +22,9 @@ const InviteToApplyContactMeLater = ({
       <Card className={styles.responseCard}>
         <Card.Header className={styles.responseHeader} divider="flush">
           <Heading priority={2} size="2xl" className={styles.responseHeading}>
-            {t("inviteToApplyPage.contact.title", { listingName: listing?.Name })}
+            {t("inviteToApplyPage.contact.title", {
+              listingName: listing?.Building_Name_for_Process,
+            })}
           </Heading>
           <p className={styles.responseSubtitle}>{t("inviteToApplyPage.contact.subtitle")}</p>
         </Card.Header>
@@ -35,7 +37,7 @@ const InviteToApplyContactMeLater = ({
           <LeasingAgentInfo listing={listing} />
           {renderMarkup(
             `${t("inviteToApplyPage.submitYourInfo", {
-              listingName: listing?.Name,
+              listingName: listing?.Building_Name_for_Process,
               link: submitLink,
               deadline: localizedFormat(deadline, "ll"),
             })}`,
