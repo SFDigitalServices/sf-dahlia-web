@@ -148,6 +148,7 @@ export const openSaleListing: RailsSaleListing = {
   Office_Hours: "8-4 Mon-Thurs\r\n9-4 Fri\r\n10-2 Weekends",
   Lottery_Status: "Not Yet Run",
   Building_Name: "Test Homeownership Building I",
+  Building_Name_for_Process: "Test Homeownership Building I",
   Project_ID: "TEST 005",
   Building_Street_Address: "1 South Van Ness Ave",
   Building_City: "San Francisco",

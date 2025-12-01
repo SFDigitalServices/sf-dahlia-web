@@ -70,6 +70,7 @@ export const lotteryCompleteRentalListing: RailsRentalListing = {
   Office_Hours: "Monday - Friday 10:00 AM - 6:00 PM",
   Lottery_Status: "Lottery Complete",
   Building_Name: "855 Brannan",
+  Building_Name_for_Process: "855 Brannan",
   Project_ID: "2013-003",
   Building_Street_Address: "855 Brannan St",
   Building_City: "San Francisco",
