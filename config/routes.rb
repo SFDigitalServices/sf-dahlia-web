@@ -38,6 +38,7 @@ Rails.application.routes.draw do
         end
       end
       get 'trk' => 'listing_interest#index'
+      post 'invite-to-apply/submit' => 'invite_to_apply#submit_docs'
       scope '/short-form' do
         post 'validate-household' => 'short_form#validate_household'
         get 'listing-application/:listing_id' => 'short_form#show_listing_application_for_user'
