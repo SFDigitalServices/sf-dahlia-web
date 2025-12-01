@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useCallback } from "react"
 import { faEnvelope, faPrint } from "@fortawesome/free-solid-svg-icons"
 import {
   t,
@@ -24,10 +24,12 @@ import Layout from "../../layouts/Layout"
 import { ConfigContext } from "../../lib/ConfigContext"
 import { LeasingAgentInfo } from "./invite-to-apply"
 import { HOME_SF_PHONE } from "../../modules/constants"
+import { submitInviteToApplyResponse } from "../../api/inviteToApplyApiService"
 
 interface InviteToApplySubmitYourInfoProps {
   listing: RailsSaleListing | null
   deadline: string
+  applicationNumber?: string
 }
 
 const DeadlineBanner = ({ deadline }: { deadline: string }) => {
@@ -88,7 +90,33 @@ const PreparingYourApplication = () => {
   )
 }
 
-const WhatToDo = ({ listing, deadline }: { listing: RailsSaleListing; deadline: string }) => {
+const WhatToDo = ({
+  listing,
+  deadline,
+  applicationNumber,
+}: {
+  listing: RailsSaleListing
+  deadline: string
+  applicationNumber?: string
+}) => {
+  const handleSubmitClick = useCallback(() => {
+    // Handle the API call and open URL
+    void (async () => {
+      try {
+        // Call the API if applicationNumber is provided
+        if (applicationNumber) {
+          await submitInviteToApplyResponse(applicationNumber)
+        }
+        // Open the file upload URL after API call (or directly if no applicationNumber)
+        window.open(listing?.File_Upload_URL, "_blank")
+      } catch (error) {
+        console.error("Error submitting invite to apply response:", error)
+        // Still open the file upload URL even if API call fails
+        window.open(listing?.File_Upload_URL, "_blank")
+      }
+    })()
+  }, [applicationNumber, listing])
+
   return (
     <div className={styles.whatToDoList}>
       <Heading priority={2} size="2xl">
@@ -134,10 +162,7 @@ const WhatToDo = ({ listing, deadline }: { listing: RailsSaleListing; deadline: 
             <li>{t("inviteToApplyPage.submitYourInfo.whatToDo.step3.p3")}</li>
           </ul>
           {!isDeadlinePassed(deadline) && (
-            <Button
-              className={styles.actionButton}
-              onClick={() => window.open(listing?.File_Upload_URL, "_blank")}
-            >
+            <Button className={styles.actionButton} onClick={handleSubmitClick}>
               {t("inviteToApplyPage.submitYourInfo.whatToDo.step3.p4")}
             </Button>
           )}
@@ -228,7 +253,11 @@ const SubmitYourInfoSidebarBlock = ({ listing }: { listing: RailsSaleListing }) 
   )
 }
 
-const InviteToApplySubmitYourInfo = ({ listing, deadline }: InviteToApplySubmitYourInfoProps) => {
+const InviteToApplySubmitYourInfo = ({
+  listing,
+  deadline,
+  applicationNumber,
+}: InviteToApplySubmitYourInfoProps) => {
   const { getAssetPath } = React.useContext(ConfigContext)
   const titleName = listing?.Building_Name || listing?.Name
   return (
@@ -244,7 +273,7 @@ const InviteToApplySubmitYourInfo = ({ listing, deadline }: InviteToApplySubmitY
             <SubmitYourInfoHeader listing={listing} />
             <DeadlineBanner deadline={deadline} />
             <PreparingYourApplication />
-            <WhatToDo listing={listing} deadline={deadline} />
+            <WhatToDo listing={listing} deadline={deadline} applicationNumber={applicationNumber} />
             <Mobile>
               <LeasingAgentInfo listing={listing} />
             </Mobile>
