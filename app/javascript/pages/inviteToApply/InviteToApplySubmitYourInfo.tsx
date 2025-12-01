@@ -90,7 +90,15 @@ const PreparingYourApplication = () => {
   )
 }
 
-const WhatToDo = ({ listing, deadline, applicationNumber }: { listing: RailsSaleListing; deadline: string; applicationNumber?: string }) => {
+const WhatToDo = ({
+  listing,
+  deadline,
+  applicationNumber,
+}: {
+  listing: RailsSaleListing
+  deadline: string
+  applicationNumber?: string
+}) => {
   const handleSubmitClick = useCallback(() => {
     // Handle the API call and open URL
     void (async () => {
@@ -154,10 +162,7 @@ const WhatToDo = ({ listing, deadline, applicationNumber }: { listing: RailsSale
             <li>{t("inviteToApplyPage.submitYourInfo.whatToDo.step3.p3")}</li>
           </ul>
           {!isDeadlinePassed(deadline) && (
-            <Button
-              className={styles.actionButton}
-              onClick={handleSubmitClick}
-            >
+            <Button className={styles.actionButton} onClick={handleSubmitClick}>
               {t("inviteToApplyPage.submitYourInfo.whatToDo.step3.p4")}
             </Button>
           )}
@@ -248,7 +253,11 @@ const SubmitYourInfoSidebarBlock = ({ listing }: { listing: RailsSaleListing }) 
   )
 }
 
-const InviteToApplySubmitYourInfo = ({ listing, deadline, applicationNumber }: InviteToApplySubmitYourInfoProps) => {
+const InviteToApplySubmitYourInfo = ({
+  listing,
+  deadline,
+  applicationNumber,
+}: InviteToApplySubmitYourInfoProps) => {
   const { getAssetPath } = React.useContext(ConfigContext)
   const titleName = listing?.Building_Name || listing?.Name
   return (
