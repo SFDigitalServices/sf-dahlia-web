@@ -118,10 +118,21 @@ module DahliaBackend
         email: application.dig('primaryApplicant', 'email'),
       }
 
-      alternate_contact = {
-        firstName: application.dig('alternateContact', 'firstName'),
-        email: application.dig('alternateContact', 'email'),
+      # Build applicant data
+      applicant_data = {
+        lotteryNumber: application.dig('lotteryNumber'),
+        applicationNumber: application_number,
+        primaryContact: primary_applicant,
       }
+
+      # Only include alternateContact if it exists in the application
+      if application['alternateContact'].present?
+        alternate_contact = {
+          firstName: application.dig('alternateContact', 'firstName'),
+          email: application.dig('alternateContact', 'email'),
+        }
+        applicant_data[:alternateContact] = alternate_contact
+      end
 
       leasing_agent = {
         name: listing.Leasing_Agent_Name.to_s,
@@ -133,12 +144,7 @@ module DahliaBackend
       formatted_date = format_lottery_date(listing.Lottery_Date)
 
       {
-        applicants: [{
-          lotteryNumber: application.dig('lotteryNumber'),
-          applicationNumber: application_number,
-          primaryContact: primary_applicant,
-          alternateContact: alternate_contact,
-        }],
+        applicants: [applicant_data],
         listingId: listing.dig('Id'),
         listingName: listing.Name.to_s,
         listingAddress: listing.Address__c.to_s,
