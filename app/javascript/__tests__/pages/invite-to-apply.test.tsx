@@ -6,6 +6,7 @@ import InviteToApplyPage from "../../pages/inviteToApply/invite-to-apply"
 import { renderAndLoadAsync } from "../__util__/renderUtils"
 import { localizedFormat } from "../../util/languageUtil"
 import { getListing } from "../../api/listingApiService"
+import { ConfigContext } from "../../lib/ConfigContext"
 
 jest.mock("../../api/listingApiService")
 jest.mock("../../hooks/useFeatureFlag", () => ({
@@ -33,12 +34,27 @@ const mockListing = {
   Leasing_Agent_Name: "test-agent",
   Leasing_Agent_Phone: "123-456-7890",
   Leasing_Agent_Email: "test-agent@test-agent.com",
+  Office_Hours: "9-5 M-F",
+  File_Upload_URL: "https://example.com/upload",
+  translations: {},
   Listing_Images: [
     {
       Image_URL: "example-image-url",
       Image_Description: "example-image-alt",
     },
   ],
+}
+
+const mockConfigContext = {
+  getAssetPath: jest.fn((path) => `/assets/${path}`),
+  assetPaths: {},
+  listingsAlertUrl: "/",
+}
+
+const renderWithContext = async (component: React.ReactElement) => {
+  return renderAndLoadAsync(
+    <ConfigContext.Provider value={mockConfigContext}>{component}</ConfigContext.Provider>
+  )
 }
 
 const mockPastDeadline = "2000-01-01"
@@ -49,6 +65,10 @@ describe("Invite to Apply Page", () => {
     document.documentElement.lang = "en"
     jest.clearAllMocks()
     ;(getListing as jest.Mock).mockResolvedValue(mockListing)
+
+    // Mock console.error to suppress expected errors during tests
+    jest.spyOn(console, "error").mockImplementation(() => {})
+
     window.matchMedia = jest.fn().mockImplementation((query) => {
       return {
         matches: true,
@@ -62,9 +82,14 @@ describe("Invite to Apply Page", () => {
       }
     })
   })
+
+  afterEach(() => {
+    // Restore console.error after each test
+    jest.restoreAllMocks()
+  })
   describe("Invite to Apply - user responses (deadline passed, withdrawn, contact me later)", () => {
     it("renders deadline passed card", async () => {
-      await renderAndLoadAsync(
+      await renderWithContext(
         <InviteToApplyPage
           assetPaths={"/"}
           deadlinePassedPath={true}
@@ -82,7 +107,7 @@ describe("Invite to Apply Page", () => {
     })
 
     it("renders withdrawn card", async () => {
-      await renderAndLoadAsync(
+      await renderWithContext(
         <InviteToApplyPage
           assetPaths={"/"}
           urlParams={{
@@ -108,7 +133,7 @@ describe("Invite to Apply Page", () => {
       ).toHaveAttribute("href", submitLink)
     })
     it("renders contact me later card", async () => {
-      await renderAndLoadAsync(
+      await renderWithContext(
         <InviteToApplyPage
           assetPaths={"/"}
           urlParams={{
@@ -140,7 +165,7 @@ describe("Invite to Apply Page", () => {
 
   describe("Invite to Apply - submit your information", () => {
     it("renders deadline passed banner", async () => {
-      await renderAndLoadAsync(
+      await renderWithContext(
         <InviteToApplyPage
           assetPaths={"/"}
           urlParams={{
@@ -153,7 +178,7 @@ describe("Invite to Apply Page", () => {
     })
 
     it("renders submit your info banner", async () => {
-      await renderAndLoadAsync(
+      await renderWithContext(
         <InviteToApplyPage
           assetPaths={"/"}
           urlParams={{
@@ -171,7 +196,7 @@ describe("Invite to Apply Page", () => {
       ).toBeInTheDocument()
     })
     it("renders submit your info page", async () => {
-      await renderAndLoadAsync(
+      await renderWithContext(
         <InviteToApplyPage
           assetPaths={"/"}
           urlParams={{
@@ -187,7 +212,7 @@ describe("Invite to Apply Page", () => {
       ).toBeInTheDocument()
     })
     it("renders documents list page", async () => {
-      await renderAndLoadAsync(
+      await renderWithContext(
         <InviteToApplyPage
           assetPaths={"/"}
           documentsPath={true}
