@@ -95,7 +95,7 @@ const InviteToApplyPage = ({
   if (!isInviteApplyEnabled) {
     return null
   }
-  if (response === "yes") {
+  if (response === "yes" || response === "preview") {
     return (
       <InviteToApplySubmitYourInfo
         listing={listing}
