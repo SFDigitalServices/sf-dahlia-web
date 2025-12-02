@@ -30,7 +30,7 @@ jest.mock("../../hooks/useFeatureFlag", () => ({
 const mockListing = {
   Id: "listing-id",
   Name: "Test Listing",
-  Building_Name: "Test Building",
+  Building_Name_for_Process: "Test Building",
   Leasing_Agent_Name: "test-agent",
   Leasing_Agent_Phone: "123-456-7890",
   Leasing_Agent_Email: "test-agent@test-agent.com",
@@ -100,7 +100,7 @@ describe("Invite to Apply Page", () => {
       )
 
       expect(screen.getByText(t("inviteToApplyPage.deadlinePassed.title"))).toBeInTheDocument()
-      expect(screen.getByText(mockListing.Name)).toBeInTheDocument()
+      expect(screen.getByText(mockListing.Building_Name_for_Process)).toBeInTheDocument()
       expect(screen.getByText(mockListing.Leasing_Agent_Name)).toBeInTheDocument()
       expect(screen.getByText(mockListing.Leasing_Agent_Phone)).toBeInTheDocument()
       expect(screen.getByText(mockListing.Leasing_Agent_Email)).toBeInTheDocument()
@@ -120,7 +120,7 @@ describe("Invite to Apply Page", () => {
       const submitLink = `/en/listings/${mockListing.Id}/invite-to-apply?response=yes&applicationNumber=0000&deadline=${mockFutureDeadline}`
 
       expect(screen.getByText(t("inviteToApplyPage.withdrawn.title"))).toBeInTheDocument()
-      expect(screen.getByText(mockListing.Name)).toBeInTheDocument()
+      expect(screen.getByText(mockListing.Building_Name_for_Process)).toBeInTheDocument()
       expect(
         screen.getByText(
           t("inviteToApplyPage.submitYourInfo.deadline", {
@@ -147,7 +147,11 @@ describe("Invite to Apply Page", () => {
       const submitLink = `/en/listings/${mockListing.Id}/invite-to-apply?response=yes&applicationNumber=0000&deadline=${mockFutureDeadline}`
 
       expect(
-        screen.getByText(t("inviteToApplyPage.contact.title", { listingName: mockListing.Name }))
+        screen.getByText(
+          t("inviteToApplyPage.contact.title", {
+            listingName: mockListing.Building_Name_for_Process,
+          })
+        )
       ).toBeInTheDocument()
       expect(screen.getByText(t("inviteToApplyPage.contact.subtitle"))).toBeInTheDocument()
       expect(
@@ -207,7 +211,9 @@ describe("Invite to Apply Page", () => {
       )
       expect(
         screen.getByText(
-          t("inviteToApplyPage.submitYourInfo.title", { listingName: mockListing.Building_Name })
+          t("inviteToApplyPage.submitYourInfo.title", {
+            listingName: mockListing.Building_Name_for_Process,
+          })
         )
       ).toBeInTheDocument()
     })
@@ -223,7 +229,9 @@ describe("Invite to Apply Page", () => {
       )
       expect(
         screen.getByText(
-          t("inviteToApplyPage.documents.title", { listingName: mockListing.Building_Name })
+          t("inviteToApplyPage.documents.title", {
+            listingName: mockListing.Building_Name_for_Process,
+          })
         )
       ).toBeInTheDocument()
     })

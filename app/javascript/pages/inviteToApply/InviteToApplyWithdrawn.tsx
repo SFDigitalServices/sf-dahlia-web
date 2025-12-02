@@ -32,7 +32,7 @@ const InviteToApplyWithdrawn = ({ listing, deadline, submitLink }: InviteToApply
             <LeasingAgentInfo listing={listing} />
             {renderMarkup(
               `${t("inviteToApplyPage.submitYourInfo", {
-                listingName: listing?.Name,
+                listingName: listing?.Building_Name_for_Process,
                 link: submitLink,
                 deadline: localizedFormat(deadline, "ll"),
               })}`,

@@ -48,7 +48,7 @@ const InviteToApplyHeader = ({ listing }: { listing: RailsSaleListing }) => (
   <Card className={styles.listingCard}>
     <Card.Header className={styles.listingHeader}>
       <Heading className={styles.listingHeading} priority={1} size="lg">
-        {listing?.Name}
+        {listing?.Building_Name_for_Process}
       </Heading>
     </Card.Header>
     <Card.Section className={styles.listingSection}>

@@ -91,6 +91,7 @@ export const rpiRentalListing: RailsRentalListing = {
   Office_Hours: "Monday- Friday, 8:00AM – 4:00PM",
   Lottery_Status: "Needs Review",
   Building_Name: "John King Senior Community",
+  Building_Name_for_Process: "John King Senior Community",
   Project_ID: "1996-009",
   Building_Street_Address: "500 Raymond Ave",
   Building_City: "San Francisco",

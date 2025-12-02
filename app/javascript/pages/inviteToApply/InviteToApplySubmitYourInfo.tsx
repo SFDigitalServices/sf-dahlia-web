@@ -175,7 +175,7 @@ const WhatToDo = ({
           {renderInlineMarkup(
             t("inviteToApplyPage.submitYourInfo.deadlineInfo", {
               day: localizedFormat(deadline, "ll"),
-              listingName: listing?.Name,
+              listingName: listing?.Building_Name_for_Process,
             })
           )}
         </Message>
@@ -225,7 +225,7 @@ const SubmitYourInfoHeader = ({ listing }: { listing: RailsSaleListing }) => {
         src={listing?.Listing_Images?.[0]?.Image_URL}
         alt={listing?.Listing_Images?.[0]?.Image_Description}
       />
-      <strong>{listing?.Name}</strong>
+      <strong>{listing?.Building_Name_for_Process}</strong>
       <p>{listing && getListingAddressString(listing, false)}</p>
       <a href={`/${getCurrentLanguage()}/listings/${listing?.Id}`}>
         {t("inviteToApplyPage.submitYourInfo.p1")}
@@ -256,7 +256,7 @@ const InviteToApplySubmitYourInfo = ({
   applicationNumber,
 }: InviteToApplySubmitYourInfoProps) => {
   const { getAssetPath } = React.useContext(ConfigContext)
-  const titleName = listing?.Building_Name || listing?.Name
+  const titleName = listing?.Building_Name_for_Process || listing?.Name
   return (
     <Layout>
       <PageHeader

@@ -326,7 +326,9 @@ const InviteToApplyDocuments = ({ listing, deadline }: InviteToApplyDocumentsPro
   return (
     <Layout>
       <PageHeader
-        title={t("inviteToApplyPage.documents.title", { listingName: listing?.Building_Name })}
+        title={t("inviteToApplyPage.documents.title", {
+          listingName: listing?.Building_Name_for_Process,
+        })}
         inverse
         backgroundImage={getAssetPath("bg@1200.jpg")}
       />
