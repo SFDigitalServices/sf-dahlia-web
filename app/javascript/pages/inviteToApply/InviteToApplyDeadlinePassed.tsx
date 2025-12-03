@@ -23,7 +23,9 @@ const InviteToApplyDeadlinePassed = ({ listing }: InviteToApplyDeadlinePassedPro
         </Card.Header>
         <Card.Section className={styles.responseSection}>
           <Heading priority={3} size="xl" className={styles.responseHeading}>
-            {t("inviteToApplyPage.deadlinePassed.p1", { listingName: listing?.Name })}
+            {t("inviteToApplyPage.deadlinePassed.p1", {
+              listingName: listing?.Building_Name_for_Process,
+            })}
           </Heading>
           <LeasingAgentInfo listing={listing} />
         </Card.Section>
