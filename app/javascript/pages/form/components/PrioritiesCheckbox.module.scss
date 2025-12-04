@@ -1,0 +1,8 @@
+.listing-priorities-checkbox-group {
+  padding: 0 var(--seeds-s8) var(--seeds-s8);
+
+  @media (max-width: theme("screens.md")) {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
