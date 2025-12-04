@@ -113,7 +113,8 @@ commands:
       - checkout
       - prepare_workspace
       - upgrade-bundler
-      - run: bundle --path vendor/bundle
+      - run: bundle config set path vendor/bundle
+      - run: bundle install
       - run: bundle exec rails db:migrate
   start-server:
     description: "Start Rails server in background"
