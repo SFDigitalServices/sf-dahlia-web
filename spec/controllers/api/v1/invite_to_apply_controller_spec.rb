@@ -39,8 +39,7 @@ describe Api::V1::InviteToApplyController do
               ],
               listingId: '',
               listingName: '',
-              listingAddress: '',
-              listingNeighborhood: '',
+              buildingName: '',
               deadlineDate: '',
             },
           )
