@@ -68,8 +68,7 @@ class Api::V1::InviteToApplyController < ApiController
         ],
         listingId: '',
         listingName: '',
-        listingAddress: '',
-        listingNeighborhood: '',
+        buildingName: '',
         deadlineDate: '',
       },
     )
