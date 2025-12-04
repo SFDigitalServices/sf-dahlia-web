@@ -159,8 +159,10 @@ jobs:
           name: Bundle install
           command: |
             sudo apt-get install pkg-config
-            bundle config build.nokogiri --use-system-libraries
-            bundle install --deployment --path vendor/bundle
+            bundle config set build.nokogiri --use-system-libraries
+            bundle config set deployment true
+            bundle config set path vendor/bundle
+            bundle install
       - save_cache:
           name: Save Bundle cache
           key: webapp-{{ .Environment.CACHE_VERSION }}-bundle-dependencies-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
