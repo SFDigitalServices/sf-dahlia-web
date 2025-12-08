@@ -3,6 +3,7 @@ import { ContentAccordion, Icon, StandardTable, t } from "@bloom-housing/ui-comp
 import type RailsUnit from "../../api/types/rails/listings/RailsUnit"
 import ListingDetailsContext from "../../contexts/listingDetails/listingDetailsContext"
 import { getPriorityTypeText } from "../../util/listingUtil"
+import { filterAvailableUnits } from "./ListingDetailsPricingTable"
 
 export interface UnitGroupType {
   units: RailsUnit[]
@@ -81,7 +82,7 @@ const sortUnits = (units: RailsUnit[]): Record<RailsUnit["Unit_Type"], UnitType>
 
 export const ListingDetailsUnitAccordions = () => {
   const { fetchingUnits, fetchedUnits, units } = useContext(ListingDetailsContext)
-  const processedUnits = sortUnits(units)
+  const processedUnits = sortUnits(filterAvailableUnits(units))
 
   if (fetchingUnits || !fetchedUnits) {
     return (

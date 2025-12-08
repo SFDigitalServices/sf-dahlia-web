@@ -306,6 +306,10 @@ const buildHabitatText = (
   )
 }
 
+export const filterAvailableUnits = (units: RailsUnit[]): RailsUnit[] => {
+  return units.filter((unit) => unit.Status === "Available")
+}
+
 const buildContent = (
   dataHasBeenFetched: boolean,
   units: RailsUnit[],
@@ -320,13 +324,13 @@ const buildContent = (
       </div>
     )
   }
-
-  const forceZeroInRange = units?.some((unit) => unit.Rent_percent_of_income)
+  const availableUnits = filterAvailableUnits(units)
+  const forceZeroInRange = availableUnits?.some((unit) => unit.Rent_percent_of_income)
 
   let groupedUnitsByOccupancy: GroupedUnitsByOccupancy[] = []
 
-  if (units?.length) {
-    groupedUnitsByOccupancy = groupAndSortUnitsByOccupancy(units, amiCharts, listingIsSale)
+  if (availableUnits?.length) {
+    groupedUnitsByOccupancy = groupAndSortUnitsByOccupancy(availableUnits, amiCharts, listingIsSale)
   }
 
   if (listingIsHabitat) {
