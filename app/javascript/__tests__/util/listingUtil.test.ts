@@ -24,6 +24,7 @@ import {
   listingHasVeteransPreference,
   preferenceNameHasVeteran,
   isFcfsSalesListing,
+  isDeadlinePassed,
 } from "../../util/listingUtil"
 import { openSaleListing } from "../data/RailsSaleListing/listing-sale-open"
 import { saleEducatorListing } from "../data/RailsSaleListing/listing-sale-educator"
@@ -540,5 +541,24 @@ describe("first come, first served", () => {
 
   it("returns true when listing is sales fcfs", () => {
     expect(isFcfsSalesListing(fcfsSaleListing)).toBe(true)
+  })
+})
+
+describe("isDeadlinePassed", () => {
+  const today = new Date()
+  const yesterday = new Date(today)
+  yesterday.setDate(today.getDate() - 1)
+  const tomorrow = new Date(today)
+  tomorrow.setDate(today.getDate() + 1)
+  it("returns true when date is past the deadline", () => {
+    expect(isDeadlinePassed(yesterday.toISOString().split("T")[0])).toBe(true)
+  })
+
+  it("returns false when date is the same day as the deadline", () => {
+    expect(isDeadlinePassed(today.toISOString().split("T")[0])).toBe(false)
+  })
+
+  it("returns false when date is before the deadline", () => {
+    expect(isDeadlinePassed(tomorrow.toISOString().split("T")[0])).toBe(false)
   })
 })

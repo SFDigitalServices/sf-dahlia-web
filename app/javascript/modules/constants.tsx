@@ -110,6 +110,8 @@ export const SFGOV_LINKS = [
   "https://www.sf.gov/get-priority-housing-lottery",
 ]
 
+export const HOME_SF_PHONE = "415-202-5464"
+
 export const DIRECTORY_SECTION_OPEN_LOTTERIES = "open"
 export const DIRECTORY_SECTION_FCFS_LISTINGS = "fcfs"
 export const DIRECTORY_SECTION_UPCOMING_LOTTERIES = "upcoming"
@@ -187,3 +189,22 @@ export const EMAIL_REGEX = new RegExp(
     "(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?",
   ].join("")
 )
+
+export const LISTING_PRIORITY_OPTIONS = [
+  {
+    value: "Mobility impairments",
+    label: "label.mobilityImpairments",
+  },
+  {
+    value: "Vision impairments",
+    label: "label.visionImpairments",
+  },
+  {
+    value: "Hearing impairments",
+    label: "label.hearingImpairments",
+  },
+  {
+    value: "No impairments",
+    label: "t.no",
+  },
+]

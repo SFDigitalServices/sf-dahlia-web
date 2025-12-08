@@ -2,133 +2,363 @@ require 'rails_helper'
 
 RSpec.describe DahliaBackend::MessageService do
   let(:client) { instance_double(DahliaBackend::ApiClient) }
-  let(:listing_id) { 'listing-123' }
-  let(:listing) do
-    double('Listing', Name: 'Test Listing', Lottery_Date: '2024-07-01T00:00:00Z',
-                      RecordType: Hashie::Mash.new(Name: 'Rental'),
-                      Leasing_Agent_Name: 'John Doe', Leasing_Agent_Email: 'email', Leasing_Agent_Phone: '123-456-7890', Office_Hours: '9am-5pm')
+  let(:service) { described_class.new(client) }
+
+  let(:listing_id) { 'listing123' }
+  let(:application_number) { 'APP123456' }
+  let(:email) { 'test@example.com' }
+
+  let(:listing_data) do
+    {
+      'Id' => listing_id,
+      'Name' => 'Test Listing',
+      'Address__c' => '123 Main St',
+      'Neighborhood__c' => 'Downtown',
+      'Lottery_Date' => '2024-12-31T10:00:00.000Z',
+      'Leasing_Agent_Name' => 'John Doe',
+      'Leasing_Agent_Email' => 'agent@example.com',
+      'Leasing_Agent_Phone' => '555-1234',
+      'Office_Hours' => '9-5 M-F',
+      'RecordType' => { 'Name' => 'Rental' },
+    }
   end
+
   let(:application_params) do
     {
       listingID: listing_id,
-      primaryApplicant: { email: 'test@example.com' },
+      primaryApplicant: {
+        email: email,
+        firstName: 'Test',
+        lastName: 'User',
+      },
     }
   end
-  let(:application_response) { { 'lotteryNumber' => 'A123' } }
-  let(:formatted_date) { 'July  1, 2024' }
-  let(:fields) do
+
+  let(:application_response) do
     {
-      email: 'test@example.com',
-      listingId: listing_id,
-      lotteryNumber: 'A123',
-      listingName: 'Test Listing',
-      lotteryDate: formatted_date,
+      'lotteryNumber' => '12345',
+    }
+  end
+
+  let(:application_data) do
+    {
+      'primaryApplicant' => {
+        'firstName' => 'John',
+        'email' => 'john@example.com',
+      },
+      'alternateContact' => {
+        'firstName' => 'Jane',
+        'email' => 'jane@example.com',
+      },
+      'lotteryNumber' => '54321',
     }
   end
 
   before do
-    allow(Rails.configuration).to receive_message_chain(:unleash,
-                                                        :is_enabled?).and_return(true)
-    allow(Force::ListingService).to receive(:listing).with(listing_id).and_return(listing)
-    allow(Hashie::Mash).to receive(:new).and_return(listing)
-    allow(Time.zone).to receive(:parse).and_return(Time.parse(listing.Lottery_Date))
+    allow(Rails.logger).to receive(:info)
+    allow(Rails.logger).to receive(:warn)
+    allow(Rails.logger).to receive(:error)
+    allow(Force::ListingService).to receive(:listing).and_return(listing_data)
+    allow(Force::ShortFormService).to receive(:get).and_return(application_data)
   end
 
   describe '.send_application_confirmation' do
-    it 'delegates to instance method' do
+    it 'creates a new instance and calls the instance method' do
       expect_any_instance_of(described_class).to receive(:send_application_confirmation)
         .with(application_params, application_response, 'en')
+
       described_class.send_application_confirmation(application_params,
-                                                    application_response, 'en')
+                                                    application_response)
     end
   end
 
-  describe '#initialize' do
-    it 'uses provided client' do
-      service = described_class.new(client)
-      expect(service.client).to eq(client)
-    end
+  describe '.send_invite_to_apply_response' do
+    it 'creates a new instance and calls the instance method' do
+      expect_any_instance_of(described_class).to receive(:send_invite_to_apply_response)
+        .with('2024-12-31', application_number, 'yes', listing_id, nil)
 
-    it 'creates a new client when none provided' do
-      expect(DahliaBackend::ApiClient).to receive(:new).and_return(client)
-      service = described_class.new
-      expect(service.client).to eq(client)
+      described_class.send_invite_to_apply_response('2024-12-31', application_number,
+                                                    'yes', listing_id)
     end
   end
 
   describe '#send_application_confirmation' do
-    subject { described_class.new(client) }
-
-    context 'with invalid params' do
-      it 'returns nil if application_params missing' do
-        expect(subject.send_application_confirmation(nil, application_response)).to be_nil
+    context 'with valid parameters' do
+      before do
+        allow(client).to receive(:post).and_return({ success: true })
       end
 
-      it 'returns nil if application_response missing' do
-        expect(subject.send_application_confirmation(application_params, nil)).to be_nil
+      it 'sends the confirmation message' do
+        expect(client).to receive(:post).with('/messages/application-submission', hash_including(
+                                                                                    email: email,
+                                                                                    listingId: listing_id,
+                                                                                    lotteryNumber: '12345',
+                                                                                    listingName: 'Test Listing',
+                                                                                    isRental: true,
+                                                                                    lang: 'en',
+                                                                                  ))
+
+        service.send_application_confirmation(application_params, application_response)
       end
 
-      it 'returns nil if listingID missing' do
-        params = application_params.dup
-        params.delete(:listingID)
-        expect(subject.send_application_confirmation(params,
-                                                     application_response)).to be_nil
+      it 'formats the lottery date correctly' do
+        expect(client).to receive(:post).with('/messages/application-submission', hash_including(
+                                                                                    lotteryDate: 'December 31, 2024',
+                                                                                  ))
+
+        service.send_application_confirmation(application_params, application_response)
       end
 
-      it 'returns nil if email missing' do
-        params = application_params.dup
-        params[:primaryApplicant].delete(:email)
-        expect(subject.send_application_confirmation(params,
-                                                     application_response)).to be_nil
+      it 'includes leasing agent information' do
+        expect(client).to receive(:post).with('/messages/application-submission', hash_including(
+                                                                                    leasingAgent: {
+                                                                                      name: 'John Doe',
+                                                                                      email: 'agent@example.com',
+                                                                                      phone: '555-1234',
+                                                                                      officeHours: '9-5 M-F',
+                                                                                    },
+                                                                                  ))
+
+        service.send_application_confirmation(application_params, application_response)
+      end
+
+      it 'uses the provided locale' do
+        expect(client).to receive(:post).with('/messages/application-submission', hash_including(
+                                                                                    lang: 'es',
+                                                                                  ))
+
+        service.send_application_confirmation(application_params, application_response,
+                                              'es')
+      end
+
+      it 'determines rental type correctly for sales' do
+        listing_data['RecordType']['Name'] = 'Sale'
+
+        expect(client).to receive(:post).with('/messages/application-submission', hash_including(
+                                                                                    isRental: false,
+                                                                                  ))
+
+        service.send_application_confirmation(application_params, application_response)
       end
     end
 
-    context 'when listing fetch fails' do
-      it 'returns nil' do
+    context 'with invalid parameters' do
+      it 'returns nil when application_params is nil' do
+        result = service.send_application_confirmation(nil, application_response)
+        expect(result).to be_nil
+      end
+
+      it 'returns nil when application_response is nil' do
+        result = service.send_application_confirmation(application_params, nil)
+        expect(result).to be_nil
+      end
+
+      it 'returns nil when listingID is missing' do
+        application_params.delete(:listingID)
+        result = service.send_application_confirmation(application_params,
+                                                       application_response)
+        expect(result).to be_nil
+      end
+
+      it 'returns nil when email is missing' do
+        application_params[:primaryApplicant].delete(:email)
+        result = service.send_application_confirmation(application_params,
+                                                       application_response)
+        expect(result).to be_nil
+      end
+    end
+
+    context 'when listing cannot be fetched' do
+      before do
         allow(Force::ListingService).to receive(:listing).and_return(nil)
-        expect(subject.send_application_confirmation(application_params,
-                                                     application_response)).to be_nil
       end
 
-      it 'handles exceptions when fetching listing' do
-        allow(Force::ListingService).to receive(:listing).and_raise(StandardError.new('API error'))
-        expect(Rails.logger).to receive(:error).with('[DahliaBackend::MessageService:log_error] Error fetching listing listing-123: StandardError API error')
-        expect(subject.send_application_confirmation(application_params,
-                                                     application_response)).to be_nil
+      it 'returns nil' do
+        result = service.send_application_confirmation(application_params,
+                                                       application_response)
+        expect(result).to be_nil
       end
     end
 
-    context 'when date formatting fails' do
-      it 'uses raw date string and continues' do
-        allow(Time.zone).to receive(:parse).and_raise(ArgumentError.new('invalid date'))
-        expect(Rails.logger).to receive(:warn).with(/Error parsing date: invalid date/)
-        expect(client).to receive(:post).and_return('ok')
-        expect(subject.send_application_confirmation(application_params,
-                                                     application_response)).to eq('ok')
+    context 'when an error occurs' do
+      before do
+        allow(Force::ListingService).to receive(:listing).and_raise(StandardError,
+                                                                    'API Error')
+      end
+
+      it 'logs the error and returns nil' do
+        expect(Rails.logger).to receive(:error).with(/Error fetching listing.*API Error/)
+
+        result = service.send_application_confirmation(application_params,
+                                                       application_response)
+        expect(result).to be_nil
       end
     end
 
-    context 'with valid params' do
-      it 'sends a message and returns response' do
-        expect(client).to receive(:post).with('/messages/application-submission',
-                                              hash_including(email: 'test@example.com')).and_return('ok')
-        expect(subject.send_application_confirmation(application_params,
-                                                     application_response)).to eq('ok')
+    context 'with missing lottery date' do
+      before do
+        listing_data['Lottery_Date'] = nil
+        allow(client).to receive(:post).and_return({ success: true })
       end
 
-      it 'returns nil and logs error if client.post fails' do
-        expect(client).to receive(:post).and_return(nil)
-        expect(Rails.logger).to receive(:error).with(/Failed to send message/)
-        expect(subject.send_application_confirmation(application_params,
-                                                     application_response)).to be_nil
+      it 'sends message with empty lottery date' do
+        expect(client).to receive(:post).with('/messages/application-submission', hash_including(
+                                                                                    lotteryDate: '',
+                                                                                  ))
+
+        service.send_application_confirmation(application_params, application_response)
+      end
+    end
+
+    context 'with invalid lottery date format' do
+      before do
+        listing_data['Lottery_Date'] = 'invalid-date'
+        allow(client).to receive(:post).and_return({ success: true })
       end
 
-      it 'rescues and logs StandardError' do
-        allow(client).to receive(:post).and_raise(StandardError.new('fail'))
-        expect(Rails.logger).to receive(:error).with(/Error sending confirmation: StandardError fail/)
-        expect(subject.send_application_confirmation(application_params,
-                                                     application_response)).to be_nil
+      it 'uses original date string when parsing fails' do
+        expect(client).to receive(:post).with('/messages/application-submission', hash_including(
+                                                                                    lotteryDate: 'invalid-date',
+                                                                                  ))
+
+        service.send_application_confirmation(application_params, application_response)
       end
+    end
+  end
+
+  describe '#send_invite_to_apply_response' do
+    let(:deadline) { '2024-12-31' }
+    let(:response_type) { 'yes' }
+
+    context 'with valid parameters' do
+      before do
+        allow(client).to receive(:post).and_return({ success: true })
+      end
+
+      it 'sends the invite response for "yes"' do
+        expect(client).to receive(:post).with('/messages/invite-to-apply/response/yes', hash_including(
+                                                                                          listingId: listing_id,
+                                                                                          listingName: 'Test Listing',
+                                                                                          deadlineDate: deadline,
+                                                                                        ))
+
+        service.send_invite_to_apply_response(deadline, application_number, 'yes',
+                                              listing_id)
+      end
+
+      it 'sends the invite response for "no"' do
+        expect(client).to receive(:post).with('/messages/invite-to-apply/response/no',
+                                              anything)
+
+        service.send_invite_to_apply_response(deadline, application_number, 'no',
+                                              listing_id)
+      end
+
+      it 'sends the invite response for "contact"' do
+        expect(client).to receive(:post).with(
+          '/messages/invite-to-apply/response/contact', anything
+        )
+
+        service.send_invite_to_apply_response(deadline, application_number, 'contact',
+                                              listing_id)
+      end
+
+      it 'includes applicant information' do
+        expect(client).to receive(:post).with(anything, hash_including(
+                                                          applicants: [{
+                                                            lotteryNumber: '54321',
+                                                            applicationNumber: application_number,
+                                                            primaryContact: {
+                                                              firstName: 'John',
+                                                              email: 'john@example.com',
+                                                            },
+                                                            alternateContact: {
+                                                              firstName: 'Jane',
+                                                              email: 'jane@example.com',
+                                                            },
+                                                          }],
+                                                        ))
+
+        service.send_invite_to_apply_response(deadline, application_number, 'yes',
+                                              listing_id)
+      end
+
+      it 'includes listing details' do
+        expect(client).to receive(:post).with(anything, hash_including(
+                                                          listingAddress: '123 Main St',
+                                                          listingNeighborhood: 'Downtown',
+                                                        ))
+
+        service.send_invite_to_apply_response(deadline, application_number, 'yes',
+                                              listing_id)
+      end
+    end
+
+    context 'with invalid response type' do
+      it 'returns nil for invalid response' do
+        result = service.send_invite_to_apply_response(deadline, application_number,
+                                                       'invalid', listing_id)
+        expect(result).to be_nil
+      end
+    end
+
+    context 'when application cannot be fetched' do
+      before do
+        allow(Force::ShortFormService).to receive(:get).and_return(nil)
+      end
+
+      it 'returns nil' do
+        result = service.send_invite_to_apply_response(deadline, application_number,
+                                                       'yes', listing_id)
+        expect(result).to be_nil
+      end
+    end
+
+    context 'when listing cannot be fetched' do
+      before do
+        allow(Force::ListingService).to receive(:listing).and_return(nil)
+      end
+
+      it 'returns nil' do
+        result = service.send_invite_to_apply_response(deadline, application_number,
+                                                       'yes', listing_id)
+        expect(result).to be_nil
+      end
+    end
+
+    context 'when an error occurs' do
+      before do
+        allow(Force::ShortFormService).to receive(:get).and_raise(StandardError,
+                                                                  'Service Error')
+      end
+
+      it 'returns nil' do
+        result = service.send_invite_to_apply_response(deadline, application_number,
+                                                       'yes', listing_id)
+        expect(result).to be_nil
+      end
+    end
+  end
+
+  describe '#get_invite_to_apply_response_endpoint' do
+    it 'returns correct endpoint for "yes" response' do
+      endpoint = service.get_invite_to_apply_response_endpoint('yes')
+      expect(endpoint).to eq('/messages/invite-to-apply/response/yes')
+    end
+
+    it 'returns correct endpoint for "no" response' do
+      endpoint = service.get_invite_to_apply_response_endpoint('no')
+      expect(endpoint).to eq('/messages/invite-to-apply/response/no')
+    end
+
+    it 'returns correct endpoint for "contact" response' do
+      endpoint = service.get_invite_to_apply_response_endpoint('contact')
+      expect(endpoint).to eq('/messages/invite-to-apply/response/contact')
+    end
+
+    it 'returns nil for invalid response' do
+      endpoint = service.get_invite_to_apply_response_endpoint('invalid')
+      expect(endpoint).to be_nil
     end
   end
 end

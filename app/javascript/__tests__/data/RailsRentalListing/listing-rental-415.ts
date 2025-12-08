@@ -146,6 +146,7 @@ export const fourOneFiveRentalListing: RailsRentalListing = {
   Office_Hours: "9am – 5pm; Monday – Friday not weekends or holidays",
   Lottery_Status: "Lottery Complete",
   Building_Name: "235 Valencia St",
+  Building_Name_for_Process: "235 Valencia St",
   Project_ID: "2018-012",
   Building_Street_Address: "235 Valencia St",
   Building_City: "San Francisco",

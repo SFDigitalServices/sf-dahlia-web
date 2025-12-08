@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/unbound-method */
 import React from "react"
 import { t, Field } from "@bloom-housing/ui-components"
-import { useFormStepContext } from "../../../formEngine/formStepContext"
+import { useFormContext } from "react-hook-form"
 
 interface CurrencyProps {
   label: string
@@ -12,7 +13,12 @@ interface CurrencyProps {
 }
 
 const Currency = ({ label, note, errorMessage, fieldNames: { amount } }: CurrencyProps) => {
-  const { register, setValue, getValues, errors } = useFormStepContext()
+  const {
+    register,
+    setValue,
+    getValues,
+    formState: { errors },
+  } = useFormContext()
 
   return (
     <Field

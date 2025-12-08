@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/unbound-method */
 import React from "react"
 import { t, Field, PhoneField, Select } from "@bloom-housing/ui-components"
-import { useFormStepContext } from "../../../formEngine/formStepContext"
+import { useFormContext } from "react-hook-form"
 
 interface PhoneProps {
   label: string
@@ -24,7 +25,13 @@ const Phone = ({
   labelForAdditionalPhoneNumber,
   fieldNames: { phone, additionalPhone, phoneType, additionalPhoneType },
 }: PhoneProps) => {
-  const { control, register, errors, setValue, clearErrors } = useFormStepContext()
+  const {
+    control,
+    register,
+    formState: { errors },
+    setValue,
+    clearErrors,
+  } = useFormContext()
   const [noPhoneCheckbox, setNoPhoneCheckbox] = React.useState(false)
   const [noAdditionalPhoneCheckbox, setNoAdditionalPhoneCheckbox] = React.useState(false)
   return (

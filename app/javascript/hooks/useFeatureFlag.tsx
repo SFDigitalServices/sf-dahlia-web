@@ -1,4 +1,4 @@
-import { useFlag as useFlagUnleash, useFlagsStatus } from "@unleash/proxy-client-react"
+import { useFlag as useFlagUnleash, useFlagsStatus, useVariant } from "@unleash/proxy-client-react"
 
 // If you want to allow a user to change this feature flag via the URL, you can add it to the urlWhiteList set.
 // Unless set, the feature flag will only be determined by the Unleash API.
@@ -15,8 +15,8 @@ export const useFeatureFlag = (flagName: string, defaultValue: boolean) => {
 
   const unleashFlag = useFlagUnleash(flagName)
 
-  const useUrlOverride = urlWhiteList.has(flagName) || process.env.UNLEASH_ENV === "development"
-  if (doesURLHaveFlag && useUrlOverride) {
+  const allowUrlOverride = urlWhiteList.has(flagName) || process.env.UNLEASH_ENV === "development"
+  if (doesURLHaveFlag && allowUrlOverride) {
     if (flagFromUrl === "true") {
       return { flagsReady: true, unleashFlag: true }
     } else if (flagFromUrl === "false") {
@@ -29,5 +29,17 @@ export const useFeatureFlag = (flagName: string, defaultValue: boolean) => {
     return { flagsReady, unleashFlag: defaultValue }
   } else {
     return { flagsReady, unleashFlag }
+  }
+}
+
+export const useVariantFlag = (flagName: string, defaultValue: boolean) => {
+  const { flagsError, flagsReady } = useFlagsStatus()
+  const unleashFlag = useFlagUnleash(flagName)
+  const variant = useVariant(flagName)
+  if (flagsError || variant === undefined) {
+    console.error(flagsError)
+    return { flagsReady, unleashFlag: defaultValue, variant: defaultValue }
+  } else {
+    return { flagsReady, unleashFlag, variant }
   }
 }

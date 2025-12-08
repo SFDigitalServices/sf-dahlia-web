@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/unbound-method */
 import React from "react"
 import { t, Field } from "@bloom-housing/ui-components"
 import { useFormEngineContext } from "../../../formEngine/formEngineContext"
-import { useFormStepContext } from "../../../formEngine/formStepContext"
+import { useFormContext } from "react-hook-form"
 import {
   validDayRange,
   validMonthRange,
@@ -29,7 +30,12 @@ const DateOfBirth = ({
   fieldNames: { birthMonth, birthDay, birthYear },
   minimumAge,
 }: DateOfBirthProps) => {
-  const { register, errors, watch, trigger } = useFormStepContext()
+  const {
+    register,
+    formState: { errors },
+    watch,
+    trigger,
+  } = useFormContext()
   const {
     dataSources: { seniorBuildingAgeRequirement },
   } = useFormEngineContext()

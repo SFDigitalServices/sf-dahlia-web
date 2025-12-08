@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useState } from "react"
-import { t, NavigationContext, LoadingOverlay } from "@bloom-housing/ui-components"
+import { t, NavigationContext, Icon, IconFillColors } from "@bloom-housing/ui-components"
 import { Card, Button, Heading } from "@bloom-housing/ui-seeds"
 import withAppSetup from "../../layouts/withAppSetup"
 import FormLayout from "../../layouts/FormLayout"
 import { AppPages } from "../../util/routeUtil"
 import { getListing } from "../../api/listingApiService"
-import { useFeatureFlag } from "../../hooks/useFeatureFlag"
+import { useVariantFlag } from "../../hooks/useFeatureFlag"
 import InviteToApplyDeadlinePassed from "./InviteToApplyDeadlinePassed"
 import InviteToApplyWithdrawn from "./InviteToApplyWithdrawn"
 import InviteToApplyContactMeLater from "./InviteToApplyContactMeLater"
@@ -13,8 +13,7 @@ import InviteToApplySubmitYourInfo from "./InviteToApplySubmitYourInfo"
 import InviteToApplyDocuments from "./InviteToApplyDocuments"
 import RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
 import styles from "./invite-to-apply.module.scss"
-import { getPathWithoutLanguagePrefix } from "../../util/languageUtil"
-import { Icon, IconFillColors } from "@bloom-housing/ui-components"
+import { getCurrentLanguage, getPathWithoutLanguagePrefix } from "../../util/languageUtil"
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons"
 
 interface UrlParams {
@@ -49,11 +48,17 @@ const InviteToApplyHeader = ({ listing }: { listing: RailsSaleListing }) => (
   <Card className={styles.listingCard}>
     <Card.Header className={styles.listingHeader}>
       <Heading className={styles.listingHeading} priority={1} size="lg">
-        {listing?.Name}
+        {listing?.Building_Name_for_Process}
       </Heading>
     </Card.Header>
     <Card.Section className={styles.listingSection}>
-      <Button href={`/listings/${listing?.Id}`} variant="text" size="sm" newWindowTarget>
+      <Button
+        className={styles.headerButton}
+        href={`/listings/${listing?.Id}`}
+        variant="text"
+        size="sm"
+        newWindowTarget
+      >
         {t("inviteToApplyPage.buildingDetails")}
       </Button>
     </Card.Section>
@@ -67,7 +72,7 @@ const InviteToApplyPage = ({
 }: HomePageProps) => {
   const [listing, setListing] = useState<RailsSaleListing>(null)
 
-  const submitLink = `listings/${listing?.Id}/invite-to-apply?response=yes&applicationNumber=${applicationNumber}&deadline=${deadline}`
+  const submitLink = `/${getCurrentLanguage()}/listings/${listing?.Id}/invite-to-apply?response=yes&applicationNumber=${applicationNumber}&deadline=${deadline}`
 
   const { router } = useContext(NavigationContext)
 
@@ -81,31 +86,43 @@ const InviteToApplyPage = ({
     })
   }, [router, router.pathname])
 
-  const { unleashFlag: inviteToApplyFlag } = useFeatureFlag("partners.inviteToApply", false)
+  const { unleashFlag: inviteApplyFlag, variant } = useVariantFlag("partners.inviteToApply", false)
+  const enabledListingIds =
+    typeof variant === "object" && variant?.payload?.value ? variant.payload.value.split(",") : []
+  const isInviteApplyEnabled =
+    inviteApplyFlag && listing?.Id && enabledListingIds.includes(listing.Id)
 
-  return inviteToApplyFlag ? (
-    <LoadingOverlay isLoading={!listing}>
-      {response === "yes" ? (
-        <InviteToApplySubmitYourInfo listing={listing} deadline={deadline} />
-      ) : (
-        <FormLayout>
-          {<InviteToApplyHeader listing={listing} />}
-          {response === "contact" && (
-            <InviteToApplyContactMeLater
-              listing={listing}
-              deadline={deadline}
-              submitLink={submitLink}
-            />
-          )}
-          {response === "no" && (
-            <InviteToApplyWithdrawn listing={listing} deadline={deadline} submitLink={submitLink} />
-          )}
-          {deadlinePassedPath && <InviteToApplyDeadlinePassed listing={listing} />}
-          {documentsPath && <InviteToApplyDocuments listing={listing} />}
-        </FormLayout>
-      )}
-    </LoadingOverlay>
-  ) : null
+  if (!isInviteApplyEnabled) {
+    return null
+  }
+  if (response === "yes") {
+    return (
+      <InviteToApplySubmitYourInfo
+        listing={listing}
+        deadline={deadline}
+        applicationNumber={applicationNumber}
+      />
+    )
+  } else if (documentsPath) {
+    return <InviteToApplyDocuments listing={listing} deadline={deadline} />
+  } else {
+    return (
+      <FormLayout>
+        {<InviteToApplyHeader listing={listing} />}
+        {response === "contact" && (
+          <InviteToApplyContactMeLater
+            listing={listing}
+            deadline={deadline}
+            submitLink={submitLink}
+          />
+        )}
+        {response === "no" && (
+          <InviteToApplyWithdrawn listing={listing} deadline={deadline} submitLink={submitLink} />
+        )}
+        {deadlinePassedPath && <InviteToApplyDeadlinePassed listing={listing} />}
+      </FormLayout>
+    )
+  }
 }
 
 export default withAppSetup(InviteToApplyPage, { pageName: AppPages.InviteToApply })

@@ -188,13 +188,15 @@ export const isPluralSRO = (listing: RailsRentalListing | RailsSaleListing): boo
  * @returns {string} the full address string if all required fields are present, empty
  * string otherwise
  */
-export const getListingAddressString = (listing: RailsListing): string => {
+export const getListingAddressString = (
+  listing: RailsListing,
+  includeState: boolean = true
+): string => {
   return (
     (listing.Building_Street_Address &&
       listing.Building_City &&
-      listing.Building_State &&
       listing.Building_Zip_Code &&
-      `${listing.Building_Street_Address}, ${listing.Building_City}, ${listing.Building_State} ${listing.Building_Zip_Code}`) ||
+      `${listing.Building_Street_Address}, ${listing.Building_City}, ${includeState ? listing.Building_State : ""} ${listing.Building_Zip_Code}`) ||
     ""
   )
 }
@@ -746,4 +748,10 @@ export const getSeniorBuildingAgeRequirement = (
   const entireHousehold = !!listing.Reserved_Community_Requirement?.match(/entire household/i)
   const minimumAge = listing.Reserved_community_minimum_age
   return { entireHousehold, minimumAge }
+}
+
+export const isDeadlinePassed = (deadline: string) => {
+  const today = new Date().toISOString().split("T")[0]
+  const deadlineDate = new Date(deadline).toISOString().split("T")[0]
+  return today > deadlineDate
 }

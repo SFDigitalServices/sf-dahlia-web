@@ -2,7 +2,7 @@ import React from "react"
 import { t, LoadingOverlay } from "@bloom-housing/ui-components"
 import { Card, Heading } from "@bloom-housing/ui-seeds"
 import styles from "./invite-to-apply.module.scss"
-import { getApplicationDeadline, renderMarkup } from "../../util/languageUtil"
+import { renderMarkup, localizedFormat } from "../../util/languageUtil"
 import RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
 import { LeasingAgentInfo } from "./invite-to-apply"
 
@@ -22,7 +22,9 @@ const InviteToApplyContactMeLater = ({
       <Card className={styles.responseCard}>
         <Card.Header className={styles.responseHeader} divider="flush">
           <Heading priority={2} size="2xl" className={styles.responseHeading}>
-            {t("inviteToApplyPage.contact.title", { listingName: listing?.Name })}
+            {t("inviteToApplyPage.contact.title", {
+              listingName: listing?.Building_Name_for_Process,
+            })}
           </Heading>
           <p className={styles.responseSubtitle}>{t("inviteToApplyPage.contact.subtitle")}</p>
         </Card.Header>
@@ -35,9 +37,9 @@ const InviteToApplyContactMeLater = ({
           <LeasingAgentInfo listing={listing} />
           {renderMarkup(
             `${t("inviteToApplyPage.submitYourInfo", {
-              listingName: listing?.Name,
+              listingName: listing?.Building_Name_for_Process,
               link: submitLink,
-              deadline: getApplicationDeadline(deadline),
+              deadline: localizedFormat(deadline, "ll"),
             })}`,
             "<strong></strong><a></a>"
           )}

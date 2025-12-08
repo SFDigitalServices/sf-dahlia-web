@@ -80,6 +80,7 @@ type BaseRailsListing = {
   Building: ListingBuilding
   Building_City?: string
   Building_Name: string
+  Building_Name_for_Process: string
   Building_Selection_Criteria?: string
   Building_State?: string
   Building_Street_Address?: string
