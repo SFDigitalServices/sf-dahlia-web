@@ -147,7 +147,7 @@ module DahliaBackend
         applicants: [applicant_data],
         listingId: listing.dig('Id'),
         listingName: listing.Name.to_s,
-        buildingName: listing.Building_Name_for_Processing.to_s,
+        buildingName: listing.Building_Name_for_Process.to_s,
         listingAddress: listing.Address__c.to_s,
         listingNeighborhood: listing.Neighborhood__c.to_s,
         leasingAgent: leasing_agent,
