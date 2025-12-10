@@ -1,11 +1,13 @@
 # Controller for the page shown when applicants respond to invite to apply email
 class InviteToApplyPageController < ApplicationController
   def index
-    decoded_params = use_jwt? ? decode_token(params[:t]) : params
-    if decoded_params[:redirect_url]
-      redirect_to decoded_params[:redirect_url]
+    decoded_params = use_jwt? && decode_token(params[:t])
+    if decoded_params.is_a?(String)
+      redirect_to decoded_params
       return
     end
+
+    decoded_params ||= params
 
     @invite_to_apply_props = props(decoded_params)
 
@@ -58,7 +60,7 @@ class InviteToApplyPageController < ApplicationController
   end
 
   def decode_token(token)
-    return { redirect_url: root_url } if token.blank?
+    return root_url if token.blank?
 
     # [{"exp" => 946598400, "data" => {"deadline" => "1999-12-31", "response" => "yes", "applicationNumber" => "12345678"}, "iat" => 946512000}, {"alg" => "HS256", "typ" => "JWT"}]
     decoded_token = JWT.decode(
@@ -89,7 +91,7 @@ class InviteToApplyPageController < ApplicationController
       'InviteToApplyPageController#decode_token: ' \
       "Invalid JWT in #{request.original_url}",
     )
-    { redirect_url: root_url }
+    root_url
   end
 
   def handle_expired_token(decoded_token_expired)
@@ -98,7 +100,7 @@ class InviteToApplyPageController < ApplicationController
       decoded_token_expired.first['data']
     else
       lang = params[:lang] ? "/#{params[:lang]}" : ''
-      { redirect_url: "#{lang}/listings/#{params[:id]}/invite-to-apply/deadline-passed" }
+      "#{lang}/listings/#{params[:id]}/invite-to-apply/deadline-passed"
     end
   end
 
