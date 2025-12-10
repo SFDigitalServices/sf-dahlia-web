@@ -194,7 +194,7 @@ module DahliaBackend
     def format_lottery_date(lottery_date)
       return '' unless lottery_date.present?
 
-      Time.zone.parse(lottery_date).strftime('%B %e, %Y')
+      Time.zone.parse(lottery_date).strftime('%Y-%m-%d')
     rescue StandardError => e
       log_warn("Error parsing date: #{e.message}")
       lottery_date.to_s
