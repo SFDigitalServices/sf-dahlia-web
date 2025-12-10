@@ -103,7 +103,7 @@ RSpec.describe DahliaBackend::MessageService do
 
       it 'formats the lottery date correctly' do
         expect(client).to receive(:post).with('/messages/application-submission', hash_including(
-                                                                                    lotteryDate: 'December 31, 2024',
+                                                                                    lotteryDate: '2024-12-31',
                                                                                   ))
 
         service.send_application_confirmation(application_params, application_response)
