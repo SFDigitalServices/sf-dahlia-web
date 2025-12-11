@@ -35,7 +35,7 @@ describe("ListingDetailsUnitAccordion", () => {
           fetchingUnitsError: undefined,
         }}
       >
-        <ListingDetailsUnitAccordions />
+        <ListingDetailsUnitAccordions isSale={true} />
       </ListingDetailsContext.Provider>
     )
 
@@ -58,7 +58,7 @@ describe("ListingDetailsUnitAccordion", () => {
           fetchingUnitsError: undefined,
         }}
       >
-        <ListingDetailsUnitAccordions />
+        <ListingDetailsUnitAccordions isSale={true} />
       </ListingDetailsContext.Provider>
     )
 
@@ -79,7 +79,7 @@ describe("ListingDetailsUnitAccordion", () => {
           fetchingUnitsError: undefined,
         }}
       >
-        <ListingDetailsUnitAccordions />
+        <ListingDetailsUnitAccordions isSale={true} />
       </ListingDetailsContext.Provider>
     )
 

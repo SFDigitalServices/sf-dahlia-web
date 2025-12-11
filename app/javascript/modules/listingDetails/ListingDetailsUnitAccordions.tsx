@@ -2,8 +2,7 @@ import React, { useContext } from "react"
 import { ContentAccordion, Icon, StandardTable, t } from "@bloom-housing/ui-components"
 import type RailsUnit from "../../api/types/rails/listings/RailsUnit"
 import ListingDetailsContext from "../../contexts/listingDetails/listingDetailsContext"
-import { getPriorityTypeText } from "../../util/listingUtil"
-import { filterAvailableUnits } from "./ListingDetailsPricingTable"
+import { getPriorityTypeText, filterAvailableUnits } from "../../util/listingUtil"
 
 export interface UnitGroupType {
   units: RailsUnit[]
@@ -80,9 +79,10 @@ const sortUnits = (units: RailsUnit[]): Record<RailsUnit["Unit_Type"], UnitType>
   }, {})
 }
 
-export const ListingDetailsUnitAccordions = () => {
+export const ListingDetailsUnitAccordions = ({ isSale }: { isSale: boolean }) => {
   const { fetchingUnits, fetchedUnits, units } = useContext(ListingDetailsContext)
-  const processedUnits = sortUnits(filterAvailableUnits(units))
+  const availableUnits = isSale ? filterAvailableUnits(units) : units
+  const processedUnits = sortUnits(availableUnits)
 
   if (fetchingUnits || !fetchedUnits) {
     return (

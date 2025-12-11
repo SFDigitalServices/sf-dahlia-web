@@ -1,7 +1,12 @@
 import React, { useContext, useEffect } from "react"
 import { CategoryTable, ContentAccordion, Icon, t } from "@bloom-housing/ui-components"
 import { RailsListing } from "../listings/SharedHelpers"
-import { isHabitatListing, isSale, groupAndSortUnitsByOccupancy } from "../../util/listingUtil"
+import {
+  isHabitatListing,
+  isSale,
+  groupAndSortUnitsByOccupancy,
+  filterAvailableUnits,
+} from "../../util/listingUtil"
 import type { RailsUnitWithOccupancyAndMinMaxIncome } from "../../api/types/rails/listings/RailsUnit"
 import type RailsUnit from "../../api/types/rails/listings/RailsUnit"
 import type { RailsAmiChart } from "../../api/types/rails/listings/RailsAmiChart"
@@ -306,10 +311,6 @@ const buildHabitatText = (
   )
 }
 
-export const filterAvailableUnits = (units: RailsUnit[]): RailsUnit[] => {
-  return units.filter((unit) => unit.Status === "Available")
-}
-
 const buildContent = (
   dataHasBeenFetched: boolean,
   units: RailsUnit[],
@@ -324,7 +325,7 @@ const buildContent = (
       </div>
     )
   }
-  const availableUnits = filterAvailableUnits(units)
+  const availableUnits = listingIsSale ? filterAvailableUnits(units) : units
   const forceZeroInRange = availableUnits?.some((unit) => unit.Rent_percent_of_income)
 
   let groupedUnitsByOccupancy: GroupedUnitsByOccupancy[] = []
