@@ -46,7 +46,7 @@ class InviteToApplyPageController < ApplicationController
 
     if use_jwt? && url_params[:deadline].present?
       submit_link_token_param = encode_token(
-        DateTime.parse(url_params[:deadline]).to_i,
+        Time.zone.parse(url_params[:deadline]).to_i,
         url_params.merge({ response: 'yes' }),
       )
     end

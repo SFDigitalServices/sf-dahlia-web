@@ -130,7 +130,11 @@ const InviteToApplyPage = ({
       <FormLayout>
         {<InviteToApplyHeader listing={listing} />}
         {response === "no" ? (
-          <InviteToApplyWithdrawn listing={listing} deadline={deadline} submitLink={generateSubmitLink(jwtLinkParamsFlag)} />
+          <InviteToApplyWithdrawn
+            listing={listing}
+            deadline={deadline}
+            submitLink={generateSubmitLink(jwtLinkParamsFlag)}
+          />
         ) : (
           <InviteToApplyDeadlinePassed listing={listing} />
         )}
@@ -148,7 +152,11 @@ const InviteToApplyPage = ({
         />
       )}
       {response === "no" && (
-        <InviteToApplyWithdrawn listing={listing} deadline={deadline} submitLink={generateSubmitLink(jwtLinkParamsFlag)} />
+        <InviteToApplyWithdrawn
+          listing={listing}
+          deadline={deadline}
+          submitLink={generateSubmitLink(jwtLinkParamsFlag)}
+        />
       )}
       {deadlinePassedPath && <InviteToApplyDeadlinePassed listing={listing} />}
     </FormLayout>
