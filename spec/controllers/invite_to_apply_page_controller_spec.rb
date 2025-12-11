@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe InviteToApplyPageController do
-  let(:deadline) { '2024-12-31' }
+  let(:deadline) { '2999-12-31' }
   let(:application_number) { 'APP123456' }
   let(:response_value) { 'yes' }
   let(:listing_id) { 'listing123' }
