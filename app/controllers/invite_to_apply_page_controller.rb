@@ -44,7 +44,7 @@ class InviteToApplyPageController < ApplicationController
       applicationNumber: decoded_params['applicationNumber'],
     }
 
-    if url_params[:deadline].present?
+    if use_jwt? && url_params[:deadline].present?
       submit_link_token_param = encode_token(
         DateTime.parse(url_params[:deadline]).to_i,
         url_params.merge({ response: 'yes' }),
@@ -54,8 +54,8 @@ class InviteToApplyPageController < ApplicationController
     {
       assetPaths: static_asset_paths,
       urlParams: url_params,
-      submitLinkTokenParam: submit_link_token_param || '',
-    }
+      submitLinkTokenParam: submit_link_token_param,
+    }.compact
   end
 
   def record_response(deadline, application_number, response)
@@ -78,9 +78,9 @@ class InviteToApplyPageController < ApplicationController
     # [{"exp" => 946598400, "data" => {"deadline" => "1999-12-31", "response" => "yes", "applicationNumber" => "12345678"}, "iat" => 946512000}, {"alg" => "HS256", "typ" => "JWT"}]
     decoded_token = JWT.decode(
       token,
-      ENV.fetch('JWT_TOKEN_SECRET'),
+      ENV.fetch('JWT_TOKEN_SECRET', nil),
       true,
-      { algorithm: ENV.fetch('JWT_ALGORITHM') },
+      { algorithm: ENV.fetch('JWT_ALGORITHM', nil) },
     )
     Rails.logger.info(
       'InviteToApplyPageController#decode_token: ' \
@@ -90,9 +90,9 @@ class InviteToApplyPageController < ApplicationController
   rescue JWT::ExpiredSignature
     decoded_token_expired = JWT.decode(
       token,
-      ENV.fetch('JWT_TOKEN_SECRET'),
+      ENV.fetch('JWT_TOKEN_SECRET', nil),
       true,
-      { algorithm: ENV.fetch('JWT_ALGORITHM'), verify_expiration: false },
+      { algorithm: ENV.fetch('JWT_ALGORITHM', nil), verify_expiration: false },
     )
     Rails.logger.info(
       'InviteToApplyPageController#decode_token: ' \
@@ -127,8 +127,8 @@ class InviteToApplyPageController < ApplicationController
 
   def use_jwt?
     Rails.configuration.unleash.is_enabled?('temp.webapp.inviteToApply.JwtLinkParams') &&
-      ENV.fetch('JWT_TOKEN_SECRET') &&
-      ENV.fetch('JWT_ALGORITHM')
+      ENV.fetch('JWT_TOKEN_SECRET', nil) &&
+      ENV.fetch('JWT_ALGORITHM', nil)
   end
 
   def use_react_app

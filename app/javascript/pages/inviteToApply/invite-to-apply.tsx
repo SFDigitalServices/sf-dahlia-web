@@ -26,7 +26,7 @@ interface UrlParams {
 interface HomePageProps {
   assetPaths: unknown
   urlParams: UrlParams
-  submitLinkTokenParam: string
+  submitLinkTokenParam?: string
   deadlinePassedPath?: boolean
   documentsPath?: boolean
 }
@@ -94,10 +94,11 @@ const InviteToApplyPage = ({
   )
 
   const generateSubmitLink = (signLinkParams: boolean) => {
-    const submitLinkParams = { reponse: "yes", applicationNumber, deadline }
-    const submitLinkQueryStr = signLinkParams
-      ? `t=${submitLinkTokenParam}`
-      : new URLSearchParams(submitLinkParams).toString()
+    const submitLinkParams = { response: "yes", applicationNumber, deadline }
+    const submitLinkQueryStr =
+      signLinkParams && submitLinkTokenParam
+        ? `t=${submitLinkTokenParam}`
+        : new URLSearchParams(submitLinkParams).toString()
     return `/${getCurrentLanguage()}/listings/${listing?.Id}/invite-to-apply?${submitLinkQueryStr}`
   }
 
