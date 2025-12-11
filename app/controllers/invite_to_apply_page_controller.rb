@@ -38,13 +38,19 @@ class InviteToApplyPageController < ApplicationController
   private
 
   def props(decoded_params = params)
+    url_params = {
+      deadline: decoded_params['deadline'],
+      response: decoded_params['response'],
+      applicationNumber: decoded_params['applicationNumber'],
+    }
+
     {
       assetPaths: static_asset_paths,
-      urlParams: {
-        deadline: decoded_params['deadline'],
-        response: decoded_params['response'],
-        applicationNumber: decoded_params['applicationNumber'],
-      },
+      urlParams: url_params,
+      submitLinkTokenParam: encode_token(
+        DateTime.parse(url_params[:deadline]).to_i,
+        url_params.merge({ response: 'yes' }),
+      ),
     }
   end
 
@@ -95,6 +101,14 @@ class InviteToApplyPageController < ApplicationController
       "Invalid JWT in #{request.original_url}",
     )
     root_url
+  end
+
+  def encode_token(expiration, params)
+    payload = {
+      exp: expiration,
+      data: params,
+    }
+    JWT.encode(payload, ENV.fetch('JWT_TOKEN_SECRET'), ENV.fetch('JWT_ALGORITHM'))
   end
 
   def handle_expired_token(decoded_token_expired)
