@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe InviteToApplyPageController do
-  let(:deadline) { '2024-12-31' }
+  let(:deadline) { '2999-12-31' }
   let(:application_number) { 'APP123456' }
   let(:response_value) { 'yes' }
   let(:listing_id) { 'listing123' }
@@ -61,13 +61,8 @@ RSpec.describe InviteToApplyPageController do
         expect(response).to be_ok
       end
 
-      it 'calls record_response with nil values' do
-        expect(DahliaBackend::MessageService).to have_received(:send_invite_to_apply_response).with(
-          nil,
-          nil,
-          nil,
-          listing_id,
-        )
+      it 'does not call record_response' do
+        expect(DahliaBackend::MessageService).not_to have_received(:send_invite_to_apply_response)
       end
     end
 
