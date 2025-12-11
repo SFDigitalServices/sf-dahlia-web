@@ -60,7 +60,10 @@ class InviteToApplyPageController < ApplicationController
   end
 
   def decode_token(token)
-    return root_url if token.blank?
+    if token.blank?
+      lang = params[:lang] ? "/#{params[:lang]}" : ''
+      return "#{lang}/listings/#{params[:id]}"
+    end
 
     # [{"exp" => 946598400, "data" => {"deadline" => "1999-12-31", "response" => "yes", "applicationNumber" => "12345678"}, "iat" => 946512000}, {"alg" => "HS256", "typ" => "JWT"}]
     decoded_token = JWT.decode(
