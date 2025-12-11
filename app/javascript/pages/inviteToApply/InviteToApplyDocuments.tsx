@@ -11,7 +11,7 @@ import { Heading, Button, Message } from "@bloom-housing/ui-seeds"
 import { faPrint, faEnvelope } from "@fortawesome/free-solid-svg-icons"
 import RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
 import Layout from "../../layouts/Layout"
-import { renderInlineMarkup, getCurrentLanguage } from "../../util/languageUtil"
+import { renderInlineMarkup, getBMRApplicationUrl } from "../../util/languageUtil"
 import { ConfigContext } from "../../lib/ConfigContext"
 import { LeasingAgentInfo } from "./invite-to-apply"
 
@@ -320,9 +320,10 @@ const InviteToApplyDocumentsSidebar = ({ listing }: { listing: RailsSaleListing 
   )
 }
 
-const InviteToApplyDocuments = ({ listing, deadline }: InviteToApplyDocumentsProps) => {
+const InviteToApplyDocuments = ({ listing }: InviteToApplyDocumentsProps) => {
   const { getAssetPath } = React.useContext(ConfigContext)
-  const submitYourInfoLink = `/${getCurrentLanguage()}/listings/${listing?.Id}/invite-to-apply?response=yes&deadline=${deadline}`
+  const submitYourInfoLink = getBMRApplicationUrl()
+
   return (
     <Layout>
       <PageHeader
