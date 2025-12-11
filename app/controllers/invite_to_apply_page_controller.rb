@@ -44,13 +44,17 @@ class InviteToApplyPageController < ApplicationController
       applicationNumber: decoded_params['applicationNumber'],
     }
 
+    if url_params[:deadline].present?
+      submit_link_token_param = encode_token(
+        DateTime.parse(url_params[:deadline]).to_i,
+        url_params.merge({ response: 'yes' }),
+      )
+    end
+
     {
       assetPaths: static_asset_paths,
       urlParams: url_params,
-      submitLinkTokenParam: encode_token(
-        DateTime.parse(url_params[:deadline]).to_i,
-        url_params.merge({ response: 'yes' }),
-      ),
+      submitLinkTokenParam: submit_link_token_param || '',
     }
   end
 
