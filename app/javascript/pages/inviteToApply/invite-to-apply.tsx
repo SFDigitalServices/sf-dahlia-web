@@ -143,11 +143,11 @@ const InviteToApplyPage = ({
         <InviteToApplyContactMeLater
           listing={listing}
           deadline={deadline}
-          submitLink={submitLink}
+          submitLink={generateSubmitLink(jwtLinkParamsFlag)}
         />
       )}
       {response === "no" && (
-        <InviteToApplyWithdrawn listing={listing} deadline={deadline} submitLink={submitLink} />
+        <InviteToApplyWithdrawn listing={listing} deadline={deadline} submitLink={generateSubmitLink(jwtLinkParamsFlag)} />
       )}
       {deadlinePassedPath && <InviteToApplyDeadlinePassed listing={listing} />}
     </FormLayout>
