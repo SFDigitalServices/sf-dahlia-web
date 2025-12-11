@@ -15,6 +15,7 @@ import RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
 import styles from "./invite-to-apply.module.scss"
 import { getCurrentLanguage, getPathWithoutLanguagePrefix } from "../../util/languageUtil"
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons"
+import { isDeadlinePassed } from "../../util/listingUtil"
 
 interface UrlParams {
   response?: string
@@ -103,26 +104,41 @@ const InviteToApplyPage = ({
         applicationNumber={applicationNumber}
       />
     )
-  } else if (documentsPath) {
+  }
+  if (documentsPath) {
     return <InviteToApplyDocuments listing={listing} deadline={deadline} />
-  } else {
+  }
+  /**
+   *  If deadline passed, show withdrawn page for "no" and deadline passed page for "yes" and "contact"
+   */
+  if (isDeadlinePassed(deadline)) {
     return (
       <FormLayout>
         {<InviteToApplyHeader listing={listing} />}
-        {response === "contact" && (
-          <InviteToApplyContactMeLater
-            listing={listing}
-            deadline={deadline}
-            submitLink={submitLink}
-          />
-        )}
-        {response === "no" && (
+        {response === "no" ? (
           <InviteToApplyWithdrawn listing={listing} deadline={deadline} submitLink={submitLink} />
+        ) : (
+          <InviteToApplyDeadlinePassed listing={listing} />
         )}
-        {deadlinePassedPath && <InviteToApplyDeadlinePassed listing={listing} />}
       </FormLayout>
     )
   }
+  return (
+    <FormLayout>
+      {<InviteToApplyHeader listing={listing} />}
+      {response === "contact" && (
+        <InviteToApplyContactMeLater
+          listing={listing}
+          deadline={deadline}
+          submitLink={submitLink}
+        />
+      )}
+      {response === "no" && (
+        <InviteToApplyWithdrawn listing={listing} deadline={deadline} submitLink={submitLink} />
+      )}
+      {deadlinePassedPath && <InviteToApplyDeadlinePassed listing={listing} />}
+    </FormLayout>
+  )
 }
 
 export default withAppSetup(InviteToApplyPage, { pageName: AppPages.InviteToApply })
