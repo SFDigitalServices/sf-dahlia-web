@@ -755,3 +755,7 @@ export const isDeadlinePassed = (deadline: string) => {
   const deadlineDate = new Date(deadline).toISOString().split("T")[0]
   return today > deadlineDate
 }
+
+export const filterAvailableUnits = (units: RailsUnit[]): RailsUnit[] => {
+  return units.filter((unit) => unit.Status === "Available")
+}

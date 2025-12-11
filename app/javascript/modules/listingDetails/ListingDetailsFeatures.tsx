@@ -176,7 +176,7 @@ export const ListingDetailsFeatures = ({ listing, imageSrc }: ListingDetailsFeat
           {isSale(listing) && <UnitDetailsFeatureItem pricingMatrixUrl={listing.Pricing_Matrix} />}
         </dl>
         <ErrorBoundary boundaryScope={BoundaryScope.component}>
-          <ListingDetailsUnitAccordions />
+          <ListingDetailsUnitAccordions isSale={isSale(listing)} />
         </ErrorBoundary>
         {isRental(listing) && (
           <AdditionalFees
