@@ -19,7 +19,6 @@ import styles from "./invite-to-apply.module.scss"
 import { HOME_SF_PHONE } from "../../modules/constants"
 
 interface InviteToApplyDocumentsProps {
-  deadline: string
   listing: RailsSaleListing | null
 }
 

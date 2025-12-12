@@ -106,7 +106,7 @@ const InviteToApplyPage = ({
     )
   }
   if (documentsPath) {
-    return <InviteToApplyDocuments listing={listing} deadline={deadline} />
+    return <InviteToApplyDocuments listing={listing} />
   }
   /**
    *  If deadline passed, show withdrawn page for "no" and deadline passed page for "yes" and "contact"
