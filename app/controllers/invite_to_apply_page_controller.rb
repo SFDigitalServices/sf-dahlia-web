@@ -4,12 +4,13 @@ class InviteToApplyPageController < ApplicationController
     @invite_to_apply_props = props
 
     # TODO: isTestEmail toggle
-
-    record_response(
-      params['deadline'],
-      params['applicationNumber'],
-      params['response'],
-    )
+    if params['deadline'].present? && Time.zone.parse(params['deadline']).to_date >= Time.zone.today
+      record_response(
+        params['deadline'],
+        params['applicationNumber'],
+        params['response'],
+      )
+    end
     render 'invite_to_apply'
   end
 
