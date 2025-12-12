@@ -5,7 +5,7 @@ import withAppSetup from "../../layouts/withAppSetup"
 import FormLayout from "../../layouts/FormLayout"
 import { AppPages } from "../../util/routeUtil"
 import { getListing } from "../../api/listingApiService"
-import { useVariantFlag } from "../../hooks/useFeatureFlag"
+import { useVariantFlag, useFeatureFlag } from "../../hooks/useFeatureFlag"
 import InviteToApplyDeadlinePassed from "./InviteToApplyDeadlinePassed"
 import InviteToApplyWithdrawn from "./InviteToApplyWithdrawn"
 import InviteToApplyContactMeLater from "./InviteToApplyContactMeLater"
@@ -26,6 +26,7 @@ interface UrlParams {
 interface HomePageProps {
   assetPaths: unknown
   urlParams: UrlParams
+  submitLinkTokenParam?: string
   deadlinePassedPath?: boolean
   documentsPath?: boolean
 }
@@ -68,12 +69,11 @@ const InviteToApplyHeader = ({ listing }: { listing: RailsSaleListing }) => (
 
 const InviteToApplyPage = ({
   urlParams: { response, applicationNumber, deadline },
+  submitLinkTokenParam,
   deadlinePassedPath,
   documentsPath,
 }: HomePageProps) => {
   const [listing, setListing] = useState<RailsSaleListing>(null)
-
-  const submitLink = `/${getCurrentLanguage()}/listings/${listing?.Id}/invite-to-apply?response=yes&applicationNumber=${applicationNumber}&deadline=${deadline}`
 
   const { router } = useContext(NavigationContext)
 
@@ -88,6 +88,20 @@ const InviteToApplyPage = ({
   }, [router, router.pathname])
 
   const { unleashFlag: inviteApplyFlag, variant } = useVariantFlag("partners.inviteToApply", false)
+  const { unleashFlag: jwtLinkParamsFlag } = useFeatureFlag(
+    "temp.webapp.inviteToApply.JwtLinkParams",
+    false
+  )
+
+  const generateSubmitLink = (signLinkParams: boolean) => {
+    const submitLinkParams = { response: "yes", applicationNumber, deadline }
+    const submitLinkQueryStr =
+      signLinkParams && submitLinkTokenParam
+        ? `t=${submitLinkTokenParam}`
+        : new URLSearchParams(submitLinkParams).toString()
+    return `/${getCurrentLanguage()}/listings/${listing?.Id}/invite-to-apply?${submitLinkQueryStr}`
+  }
+
   const enabledListingIds =
     typeof variant === "object" && variant?.payload?.value ? variant.payload.value.split(",") : []
   const isInviteApplyEnabled =
@@ -116,7 +130,11 @@ const InviteToApplyPage = ({
       <FormLayout>
         {<InviteToApplyHeader listing={listing} />}
         {response === "no" ? (
-          <InviteToApplyWithdrawn listing={listing} deadline={deadline} submitLink={submitLink} />
+          <InviteToApplyWithdrawn
+            listing={listing}
+            deadline={deadline}
+            submitLink={generateSubmitLink(jwtLinkParamsFlag)}
+          />
         ) : (
           <InviteToApplyDeadlinePassed listing={listing} />
         )}
@@ -130,11 +148,15 @@ const InviteToApplyPage = ({
         <InviteToApplyContactMeLater
           listing={listing}
           deadline={deadline}
-          submitLink={submitLink}
+          submitLink={generateSubmitLink(jwtLinkParamsFlag)}
         />
       )}
       {response === "no" && (
-        <InviteToApplyWithdrawn listing={listing} deadline={deadline} submitLink={submitLink} />
+        <InviteToApplyWithdrawn
+          listing={listing}
+          deadline={deadline}
+          submitLink={generateSubmitLink(jwtLinkParamsFlag)}
+        />
       )}
       {deadlinePassedPath && <InviteToApplyDeadlinePassed listing={listing} />}
     </FormLayout>
