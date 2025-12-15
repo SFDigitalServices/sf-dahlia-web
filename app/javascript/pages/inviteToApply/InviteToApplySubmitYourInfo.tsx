@@ -22,7 +22,7 @@ import {
 import styles from "./invite-to-apply.module.scss"
 import Layout from "../../layouts/Layout"
 import { ConfigContext } from "../../lib/ConfigContext"
-import { LeasingAgentInfo } from "./invite-to-apply"
+import InviteToApplyLeasingAgentInfo from "./inviteToApplyLeasingAgentInfo"
 import { HOME_SF_PHONE } from "../../modules/constants"
 import { submitInviteToApplyResponse } from "../../api/inviteToApplyApiService"
 
@@ -241,7 +241,7 @@ const SubmitYourInfoSidebarBlock = ({ listing }: { listing: RailsSaleListing }) 
         {" "}
         {t("inviteToApplyPage.submitYourInfo.sidebar")}
       </Heading>
-      <LeasingAgentInfo listing={listing} />
+      <InviteToApplyLeasingAgentInfo listing={listing} />
       <Heading size="sm" priority={3}>
         {t("contactAgent.officeHours.seeTheUnit")}
       </Heading>
@@ -272,7 +272,7 @@ const InviteToApplySubmitYourInfo = ({
             <PreparingYourApplication />
             <WhatToDo listing={listing} deadline={deadline} applicationNumber={applicationNumber} />
             <Mobile>
-              <LeasingAgentInfo listing={listing} />
+              <InviteToApplyLeasingAgentInfo listing={listing} />
             </Mobile>
             <WhatHappensNext />
           </main>

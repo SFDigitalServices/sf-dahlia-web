@@ -6,15 +6,12 @@ class InviteToApplyPageController < ApplicationController
       redirect_to decoded_params
       return
     end
-
     decoded_params ||= params
-
     @invite_to_apply_props = props(decoded_params)
 
     # TODO: isTestEmail toggle
 
-    if decoded_params['deadline'].present? &&
-       Time.zone.parse(decoded_params['deadline']).to_date >= Time.zone.today
+    if decoded_params['response'].present?
       record_response(
         decoded_params['deadline'],
         decoded_params['applicationNumber'],
@@ -22,11 +19,6 @@ class InviteToApplyPageController < ApplicationController
       )
     end
 
-    render 'invite_to_apply'
-  end
-
-  def deadline_passed
-    @invite_to_apply_props = props.merge(deadlinePassedPath: true)
     render 'invite_to_apply'
   end
 
@@ -45,16 +37,18 @@ class InviteToApplyPageController < ApplicationController
     }
 
     if use_jwt? && url_params[:deadline].present?
-      submit_link_token_param = encode_token(
-        Time.zone.parse(url_params[:deadline]).to_i,
-        url_params.merge({ response: 'yes' }),
+      submit_preview_link_token_param = encode_token(
+        {
+          deadline: Time.zone.parse(url_params[:deadline]).to_i,
+          applicationNumber: decoded_params['applicationNumber'],
+        },
       )
     end
 
     {
       assetPaths: static_asset_paths,
       urlParams: url_params,
-      submitLinkTokenParam: submit_link_token_param,
+      submitPreviewLinkTokenParam: submit_preview_link_token_param,
     }.compact
   end
 
@@ -80,25 +74,13 @@ class InviteToApplyPageController < ApplicationController
       token,
       ENV.fetch('JWT_TOKEN_SECRET', nil),
       true,
-      { algorithm: ENV.fetch('JWT_ALGORITHM', nil) },
+      { algorithm: ENV.fetch('JWT_ALGORITHM', nil), verify_expiration: false },
     )
     Rails.logger.info(
       'InviteToApplyPageController#decode_token: ' \
       "Decoded JWT #{decoded_token}",
     )
     decoded_token.first['data']
-  rescue JWT::ExpiredSignature
-    decoded_token_expired = JWT.decode(
-      token,
-      ENV.fetch('JWT_TOKEN_SECRET', nil),
-      true,
-      { algorithm: ENV.fetch('JWT_ALGORITHM', nil), verify_expiration: false },
-    )
-    Rails.logger.info(
-      'InviteToApplyPageController#decode_token: ' \
-      "Expired JWT #{decoded_token_expired}",
-    )
-    handle_expired_token(decoded_token_expired)
   rescue JWT::VerificationError
     Rails.logger.info(
       'InviteToApplyPageController#decode_token: ' \
@@ -107,22 +89,8 @@ class InviteToApplyPageController < ApplicationController
     root_url
   end
 
-  def encode_token(expiration, params)
-    payload = {
-      exp: expiration,
-      data: params,
-    }
-    JWT.encode(payload, ENV.fetch('JWT_TOKEN_SECRET'), ENV.fetch('JWT_ALGORITHM'))
-  end
-
-  def handle_expired_token(decoded_token_expired)
-    # do not show the deadline-passed page for 'no' responses
-    if decoded_token_expired.first.dig('data', 'response') == 'no'
-      decoded_token_expired.first['data']
-    else
-      lang = params[:lang] ? "/#{params[:lang]}" : ''
-      "#{lang}/listings/#{params[:id]}/invite-to-apply/deadline-passed"
-    end
+  def encode_token(params)
+    JWT.encode({ data: params }, ENV.fetch('JWT_TOKEN_SECRET'), ENV.fetch('JWT_ALGORITHM'))
   end
 
   def use_jwt?
