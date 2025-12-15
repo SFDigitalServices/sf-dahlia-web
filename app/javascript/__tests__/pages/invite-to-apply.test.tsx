@@ -115,6 +115,7 @@ describe("Invite to Apply Page", () => {
             response: "no",
             applicationNumber: "0000",
           }}
+          submitLinkTokenParam={""}
         />
       )
       const submitLink = `/en/listings/${mockListing.Id}/invite-to-apply?response=yes&applicationNumber=0000&deadline=${mockFutureDeadline}`
