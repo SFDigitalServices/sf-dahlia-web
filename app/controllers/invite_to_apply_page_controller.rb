@@ -11,7 +11,8 @@ class InviteToApplyPageController < ApplicationController
 
     # TODO: isTestEmail toggle
 
-    if decoded_params['response'].present?
+    if decoded_params['response'].present? &&
+       !deadline_has_passed(decoded_params['deadline'])
       record_response(
         decoded_params['deadline'],
         decoded_params['applicationNumber'],
@@ -91,6 +92,10 @@ class InviteToApplyPageController < ApplicationController
 
   def encode_token(params)
     JWT.encode({ data: params }, ENV.fetch('JWT_TOKEN_SECRET'), ENV.fetch('JWT_ALGORITHM'))
+  end
+
+  def deadline_has_passed?(deadline)
+    Time.zone.parse(deadline).to_date < Time.zone.today
   end
 
   def use_jwt?
