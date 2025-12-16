@@ -5,8 +5,8 @@ import styles from "./invite-to-apply.module.scss"
 import { renderMarkup, localizedFormat } from "../../util/languageUtil"
 import RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
 import FormLayout from "../../layouts/FormLayout"
-import InviteToApplyHeader from "./inviteToApplyHeader"
-import InviteToApplyLeasingAgentInfo from "./inviteToApplyLeasingAgentInfo"
+import InviteToApplyHeader from "./InviteToApplyHeader"
+import InviteToApplyLeasingAgentInfo from "./InviteToApplyLeasingAgentInfo"
 import { isDeadlinePassed } from "../../util/listingUtil"
 
 interface InviteToApplyWithdrawnProps {

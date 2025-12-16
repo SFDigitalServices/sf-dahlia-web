@@ -22,7 +22,7 @@ import {
 import styles from "./invite-to-apply.module.scss"
 import Layout from "../../layouts/Layout"
 import { ConfigContext } from "../../lib/ConfigContext"
-import InviteToApplyLeasingAgentInfo from "./inviteToApplyLeasingAgentInfo"
+import InviteToApplyLeasingAgentInfo from "./InviteToApplyLeasingAgentInfo"
 import { HOME_SF_PHONE } from "../../modules/constants"
 import { submitInviteToApplyResponse } from "../../api/inviteToApplyApiService"
 

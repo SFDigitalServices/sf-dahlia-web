@@ -4,8 +4,8 @@ import { Card, Heading } from "@bloom-housing/ui-seeds"
 import styles from "./invite-to-apply.module.scss"
 import RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
 import FormLayout from "../../layouts/FormLayout"
-import InviteToApplyLeasingAgentInfo from "./inviteToApplyLeasingAgentInfo"
-import InviteToApplyHeader from "./inviteToApplyHeader"
+import InviteToApplyLeasingAgentInfo from "./InviteToApplyLeasingAgentInfo"
+import InviteToApplyHeader from "./InviteToApplyHeader"
 
 interface InviteToApplyDeadlinePassedProps {
   listing: RailsSaleListing | null

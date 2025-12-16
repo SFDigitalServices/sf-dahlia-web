@@ -13,7 +13,7 @@ import RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
 import Layout from "../../layouts/Layout"
 import { renderInlineMarkup, getBMRApplicationUrl } from "../../util/languageUtil"
 import { ConfigContext } from "../../lib/ConfigContext"
-import InviteToApplyLeasingAgentInfo from "./inviteToApplyLeasingAgentInfo"
+import InviteToApplyLeasingAgentInfo from "./InviteToApplyLeasingAgentInfo"
 
 import styles from "./invite-to-apply.module.scss"
 import { HOME_SF_PHONE } from "../../modules/constants"
