@@ -43,7 +43,7 @@ class InviteToApplyPageController < ApplicationController
     response = decoded_params['response']
     application_number = decoded_params['applicationNumber']
 
-    if response.blank? || (deadline && !deadline_has_passed(deadline))
+    if response.blank? || (deadline && deadline_has_passed?(deadline))
       Rails.logger.info(
         'InviteToApplyPageController#record_response: *NOT* recording ' \
         "deadline=#{deadline}, " \

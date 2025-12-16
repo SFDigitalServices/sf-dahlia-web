@@ -171,7 +171,12 @@ const WhatToDo = ({
         </li>
       </ol>
       {isDeadlinePassed(deadline) && (
-        <Message variant="secondary" fullwidth customIcon={<Icon symbol="clock" size="medium" />}>
+        <Message
+          variant="secondary"
+          fullwidth
+          customIcon={<Icon symbol="clock" size="medium" />}
+          testId="deadline-passed-banner"
+        >
           {renderInlineMarkup(
             t("inviteToApplyPage.submitYourInfo.deadlineInfo", {
               day: localizedFormat(deadline, "ll"),

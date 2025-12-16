@@ -86,41 +86,6 @@ RSpec.describe InviteToApplyPageController do
     end
   end
 
-  describe '#deadline_passed' do
-    before do
-      get :deadline_passed, params: {
-        id: listing_id,
-        deadline: deadline,
-        applicationNumber: application_number,
-        response: response_value,
-      }
-    end
-
-    it 'returns a successful response' do
-      expect(response).to be_ok
-    end
-
-    it 'renders the invite_to_apply template' do
-      expect(response).to render_template('invite_to_apply')
-    end
-
-    it 'sets the invite_to_apply_props with deadlinePassedPath set to true' do
-      expect(assigns(:invite_to_apply_props)).to eq({
-                                                      assetPaths: { logo: 'logo.png' },
-                                                      urlParams: {
-                                                        deadline: deadline,
-                                                        response: response_value,
-                                                        applicationNumber: application_number,
-                                                      },
-                                                      deadlinePassedPath: true,
-                                                    })
-    end
-
-    it 'does not call record_response' do
-      expect(DahliaBackend::MessageService).not_to have_received(:send_invite_to_apply_response)
-    end
-  end
-
   describe '#documents' do
     before do
       get :documents, params: {
