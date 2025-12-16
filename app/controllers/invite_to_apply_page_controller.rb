@@ -6,20 +6,13 @@ class InviteToApplyPageController < ApplicationController
       redirect_to decoded_params
       return
     end
+
     decoded_params ||= params
     @invite_to_apply_props = props(decoded_params)
 
     # TODO: isTestEmail toggle
 
-    if decoded_params['response'].present? &&
-       !deadline_has_passed(decoded_params['deadline'])
-      record_response(
-        decoded_params['deadline'],
-        decoded_params['applicationNumber'],
-        decoded_params['response'],
-      )
-    end
-
+    record_response(decoded_params)
     render 'invite_to_apply'
   end
 
@@ -37,40 +30,63 @@ class InviteToApplyPageController < ApplicationController
       applicationNumber: decoded_params['applicationNumber'],
     }
 
-    if use_jwt? && url_params[:deadline].present?
-      submit_preview_link_token_param = encode_token(
-        {
-          deadline: Time.zone.parse(url_params[:deadline]).to_i,
-          applicationNumber: decoded_params['applicationNumber'],
-        },
-      )
-    end
-
     {
       assetPaths: static_asset_paths,
       urlParams: url_params,
-      submitPreviewLinkTokenParam: submit_preview_link_token_param,
+      submitPreviewLinkTokenParam: encode_token(url_params.except(:response)),
     }.compact
   end
 
-  def record_response(deadline, application_number, response)
-    Rails.logger.info("Recording response: deadline=#{deadline}, application_number=#{application_number}, response=#{response}")
+  # def record_response(deadline, application_number, response)
+  def record_response(decoded_params)
+    deadline = decoded_params['deadline']
+    response = decoded_params['response']
+    application_number = decoded_params['applicationNumber']
+
+    if response.blank? || (deadline && !deadline_has_passed(deadline))
+      Rails.logger.info(
+        'InviteToApplyPageController#record_response: *NOT* recording ' \
+        "deadline=#{deadline}, " \
+        "application_number=#{application_number}, " \
+        "response=#{response.inspect}",
+      )
+      return
+    end
+
+    Rails.logger.info(
+      'InviteToApplyPageController#record_response: recording ' \
+      "deadline=#{deadline}, " \
+      "application_number=#{application_number}, " \
+      "response=#{response}",
+    )
 
     DahliaBackend::MessageService.send_invite_to_apply_response(
       deadline,
       application_number,
       response,
-      params['id'],
+      params['id'], # listing_id
     )
   end
 
   def decode_token(token)
     if token.blank?
-      lang = params[:lang] ? "/#{params[:lang]}" : ''
-      return "#{lang}/listings/#{params[:id]}"
+      return url_for(
+        controller: 'listing', id: params[:id], lang: params[:lang],
+      )
     end
 
-    # [{"exp" => 946598400, "data" => {"deadline" => "1999-12-31", "response" => "yes", "applicationNumber" => "12345678"}, "iat" => 946512000}, {"alg" => "HS256", "typ" => "JWT"}]
+    # [
+    #   {
+    #     "exp" => 946598400,
+    #     "data" => {
+    #       "deadline" => "1999-12-31",
+    #       "response" => "yes",
+    #       "applicationNumber" => "12345678"
+    #     },
+    #     "iat" => 946512000
+    #    },
+    #   {"alg" => "HS256", "typ" => "JWT"}
+    # ]
     decoded_token = JWT.decode(
       token,
       ENV.fetch('JWT_TOKEN_SECRET', nil),
@@ -91,6 +107,8 @@ class InviteToApplyPageController < ApplicationController
   end
 
   def encode_token(params)
+    return nil unless use_jwt?
+
     JWT.encode({ data: params }, ENV.fetch('JWT_TOKEN_SECRET'), ENV.fetch('JWT_ALGORITHM'))
   end
 
