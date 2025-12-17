@@ -110,8 +110,8 @@ class InviteToApplyPageController < ApplicationController
 
     JWT.encode(
       { data: params },
-      ENV.fetch('JWT_TOKEN_SECRET'),
-      ENV.fetch('JWT_ALGORITHM'),
+      ENV.fetch('JWT_TOKEN_SECRET', nil),
+      ENV.fetch('JWT_ALGORITHM', nil),
     )
   end
 
