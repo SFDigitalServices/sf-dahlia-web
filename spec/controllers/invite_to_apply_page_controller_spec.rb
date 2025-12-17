@@ -5,6 +5,17 @@ RSpec.describe InviteToApplyPageController do
   let(:application_number) { 'APP123456' }
   let(:response_value) { 'yes' }
   let(:listing_id) { 'listing123' }
+  let(:decoded_token) do
+    [
+      {
+        data: {
+          deadline: deadline,
+          applicationNumber: application_number,
+          response: response_value,
+        },
+      }
+    ]
+  end
 
   before do
     allow(controller).to receive(:static_asset_paths).and_return({ logo: 'logo.png' })
@@ -82,6 +93,29 @@ RSpec.describe InviteToApplyPageController do
             response: response_value,
           }
         end.to raise_error(StandardError, 'API Error')
+      end
+    end
+
+    context 'with json web tokens' do
+      before do
+        allow(controller).to receive(:use_jwt?).and_return(true)
+        allow(JWT).to receive(:decode).and_return(decoded_token)
+      end
+
+      it 'creates a token for the preview link' do
+        get :index, params: { id: listing_id, t: 'test_token' }
+        expect(assigns(:invite_to_apply_props)).to have_key(:submitPreviewLinkTokenParam)
+      end
+
+      it 'redirects to the listing details page if token is blank' do
+        get :index, params: { id: listing_id }
+        expect(response).to redirect_to("/listings/#{listing_id}")
+      end
+
+      it 'redirects to the listing details page if token is invalid' do
+        allow(JWT).to receive(:decode).and_raise(JWT::VerificationError)
+        get :index, params: { id: listing_id, t: 'invalid_test_token' }
+        expect(response).to redirect_to('/')
       end
     end
   end

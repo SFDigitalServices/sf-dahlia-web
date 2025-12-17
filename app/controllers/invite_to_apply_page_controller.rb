@@ -108,7 +108,11 @@ class InviteToApplyPageController < ApplicationController
   def encode_token(params)
     return nil unless use_jwt?
 
-    JWT.encode({ data: params }, ENV.fetch('JWT_TOKEN_SECRET'), ENV.fetch('JWT_ALGORITHM'))
+    JWT.encode(
+      { data: params },
+      ENV.fetch('JWT_TOKEN_SECRET'),
+      ENV.fetch('JWT_ALGORITHM'),
+    )
   end
 
   def deadline_has_passed?(deadline)
