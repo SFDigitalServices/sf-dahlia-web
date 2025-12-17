@@ -37,6 +37,8 @@ PreCommit:
     description: "Checking YAML syntax"
 
   RailsBestPractices:
+    command: ["bundle", "exec", "rails_best_practices"]
+    flags: ["--config", "config/rails_best_practices.yml"]
     enabled: true
     description: "Checking Rails best practices"
     exclude:

@@ -37,7 +37,6 @@ class InviteToApplyPageController < ApplicationController
     }.compact
   end
 
-  # def record_response(deadline, application_number, response)
   def record_response(decoded_params)
     deadline = decoded_params['deadline']
     response = decoded_params['response']
