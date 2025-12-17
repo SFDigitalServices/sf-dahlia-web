@@ -724,7 +724,7 @@
   "inviteToApplyPage.leasingAgent.p2": "Le enviamos un correo electrónico con la confirmación de su respuesta. Siga el enlace en su correo electrónico si tiene que cambiarla.",
   "inviteToApplyPage.leasingAgent.p3": "O póngase en contacto con el agente inmobiliario:",
   "inviteToApplyPage.submitYourInfo": "Si decide presentar una solicitud para alquilar un departamento de %{listingName}, tendrá que <a target='_blank' href='%{link}'>enviar una solicitud y documentos</a> antes del <strong>%{deadline} a las 11:59 p. m. hora del Pacífico</strong>.",
-  "inviteToApplyPage.submitYourInfo.deadline": "{day} a las 11:59 p. m. hora del Pacífico.",
+  "inviteToApplyPage.submitYourInfo.deadline": "%{day} a las 11:59 p. m. hora del Pacífico.",
   "inviteToApplyPage.submitYourInfo.deadlineInfo": "<strong>Ya ha pasado la hora para la presentación de su solicitud y documentos:</strong> %{day} era a las 11:59 p. m. hora del Pacífico. Si aún tiene interés en un departamento en %{listingName}, comuníquese con el agente inmobiliario.",
   "inviteToApplyPage.submitYourInfo.deadlinePassed": "El plazo para enviar su información ya se ha cumplido: ",
   "inviteToApplyPage.submitYourInfo.p1": "Vea las características del departamento y las fotografías.",
