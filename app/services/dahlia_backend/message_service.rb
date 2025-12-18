@@ -123,6 +123,7 @@ module DahliaBackend
         lotteryNumber: application.dig('lotteryNumber'),
         applicationNumber: application_number,
         primaryContact: primary_applicant,
+        applicationLanguage: application.dig('applicationLanguage'),
       }
 
       # Only include alternateContact if it exists in the application
