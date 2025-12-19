@@ -13,7 +13,7 @@ import RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
 import Layout from "../../layouts/Layout"
 import { renderInlineMarkup, getBMRApplicationUrl } from "../../util/languageUtil"
 import { ConfigContext } from "../../lib/ConfigContext"
-import { LeasingAgentInfo } from "./invite-to-apply"
+import InviteToApplyLeasingAgentInfo from "./InviteToApplyLeasingAgentInfo"
 
 import styles from "./invite-to-apply.module.scss"
 import { HOME_SF_PHONE } from "../../modules/constants"
@@ -313,7 +313,7 @@ const InviteToApplyDocumentsSidebar = ({ listing }: { listing: RailsSaleListing 
         </span>
       </SidebarBlock>
       <SidebarBlock title={t("contactAgent.contact")} priority={2}>
-        <LeasingAgentInfo listing={listing} />
+        <InviteToApplyLeasingAgentInfo listing={listing} />
       </SidebarBlock>
     </>
   )

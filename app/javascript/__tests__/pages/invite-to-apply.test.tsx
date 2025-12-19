@@ -92,8 +92,8 @@ describe("Invite to Apply Page", () => {
       await renderWithContext(
         <InviteToApplyPage
           assetPaths={"/"}
-          deadlinePassedPath={true}
           urlParams={{
+            response: "yes",
             deadline: mockPastDeadline,
           }}
         />
@@ -115,10 +115,9 @@ describe("Invite to Apply Page", () => {
             response: "no",
             applicationNumber: "0000",
           }}
-          submitLinkTokenParam={""}
         />
       )
-      const submitLink = `/en/listings/${mockListing.Id}/invite-to-apply?response=yes&applicationNumber=0000&deadline=${mockFutureDeadline}`
+      const submitPreviewLink = `/en/listings/${mockListing.Id}/invite-to-apply?applicationNumber=0000&deadline=${mockFutureDeadline}`
 
       expect(screen.getByText(t("inviteToApplyPage.withdrawn.title"))).toBeInTheDocument()
       expect(screen.getByText(mockListing.Building_Name_for_Process)).toBeInTheDocument()
@@ -131,8 +130,9 @@ describe("Invite to Apply Page", () => {
       ).toBeInTheDocument()
       expect(
         screen.getByRole("link", { name: "submit an application and documents" })
-      ).toHaveAttribute("href", submitLink)
+      ).toHaveAttribute("href", submitPreviewLink)
     })
+
     it("renders contact me later card", async () => {
       await renderWithContext(
         <InviteToApplyPage
@@ -145,7 +145,7 @@ describe("Invite to Apply Page", () => {
         />
       )
 
-      const submitLink = `/en/listings/${mockListing.Id}/invite-to-apply?response=yes&applicationNumber=0000&deadline=${mockFutureDeadline}`
+      const submitPreviewLink = `/en/listings/${mockListing.Id}/invite-to-apply?applicationNumber=0000&deadline=${mockFutureDeadline}`
 
       expect(
         screen.getByText(
@@ -164,7 +164,7 @@ describe("Invite to Apply Page", () => {
       ).toBeInTheDocument()
       expect(
         screen.getByRole("link", { name: "submit an application and documents" })
-      ).toHaveAttribute("href", submitLink)
+      ).toHaveAttribute("href", submitPreviewLink)
     })
   })
 
@@ -175,11 +175,10 @@ describe("Invite to Apply Page", () => {
           assetPaths={"/"}
           urlParams={{
             deadline: mockPastDeadline,
-            response: "yes",
           }}
         />
       )
-      expect(screen.getByText(t("inviteToApplyPage.submitYourInfo.p1"))).toBeInTheDocument()
+      expect(screen.getByTestId("deadline-passed-banner")).not.toBeNull()
     })
 
     it("renders submit your info banner", async () => {
@@ -200,6 +199,7 @@ describe("Invite to Apply Page", () => {
         )
       ).toBeInTheDocument()
     })
+
     it("renders submit your info page", async () => {
       await renderWithContext(
         <InviteToApplyPage
@@ -218,6 +218,7 @@ describe("Invite to Apply Page", () => {
         )
       ).toBeInTheDocument()
     })
+
     it("renders documents list page", async () => {
       await renderWithContext(
         <InviteToApplyPage

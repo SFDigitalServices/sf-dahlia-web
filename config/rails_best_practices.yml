@@ -40,6 +40,9 @@ RemoveUnusedMethodsInControllersCheck:
         "ListingController#use_react_app",
         "AuthController#sign_in",
         "SitemapsController#generate",
+        "InviteToApplyPageController#index",
+        "InviteToApplyPageController#documents",
+        "InviteToApplyPageController#use_react_app",
       ],
   }
 RemoveUnusedMethodsInHelpersCheck: { except_methods: [] }

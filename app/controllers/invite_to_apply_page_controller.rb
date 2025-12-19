@@ -8,25 +8,11 @@ class InviteToApplyPageController < ApplicationController
     end
 
     decoded_params ||= params
-
     @invite_to_apply_props = props(decoded_params)
 
     # TODO: isTestEmail toggle
 
-    if decoded_params['deadline'].present? &&
-       Time.zone.parse(decoded_params['deadline']).to_date >= Time.zone.today
-      record_response(
-        decoded_params['deadline'],
-        decoded_params['applicationNumber'],
-        decoded_params['response'],
-      )
-    end
-
-    render 'invite_to_apply'
-  end
-
-  def deadline_passed
-    @invite_to_apply_props = props.merge(deadlinePassedPath: true)
+    record_response(decoded_params)
     render 'invite_to_apply'
   end
 
@@ -44,51 +30,63 @@ class InviteToApplyPageController < ApplicationController
       applicationNumber: decoded_params['applicationNumber'],
     }
 
-    if use_jwt? && url_params[:deadline].present?
-      submit_link_token_param = encode_token(
-        Time.zone.parse(url_params[:deadline]).to_i,
-        url_params.merge({ response: 'yes' }),
-      )
-    end
-
     {
       assetPaths: static_asset_paths,
       urlParams: url_params,
-      submitLinkTokenParam: submit_link_token_param,
+      submitPreviewLinkTokenParam: encode_token(url_params.except(:response)),
     }.compact
   end
 
-  def record_response(deadline, application_number, response)
-    Rails.logger.info("Recording response: deadline=#{deadline}, application_number=#{application_number}, response=#{response}")
+  def record_response(decoded_params)
+    deadline = decoded_params['deadline']
+    response = decoded_params['response']
+    application_number = decoded_params['applicationNumber']
+
+    if response.blank? || (deadline && deadline_has_passed?(deadline))
+      Rails.logger.info(
+        'InviteToApplyPageController#record_response: *NOT* recording ' \
+        "deadline=#{deadline}, " \
+        "application_number=#{application_number}, " \
+        "response=#{response.inspect}",
+      )
+      return
+    end
+
+    Rails.logger.info(
+      'InviteToApplyPageController#record_response: recording ' \
+      "deadline=#{deadline}, " \
+      "application_number=#{application_number}, " \
+      "response=#{response}",
+    )
 
     DahliaBackend::MessageService.send_invite_to_apply_response(
       deadline,
       application_number,
       response,
-      params['id'],
+      params['id'], # listing_id
     )
   end
 
   def decode_token(token)
     if token.blank?
-      lang = params[:lang] ? "/#{params[:lang]}" : ''
-      return "#{lang}/listings/#{params[:id]}"
+      return url_for(
+        controller: 'listing', id: params[:id], lang: params[:lang],
+      )
     end
 
-    # [{"exp" => 946598400, "data" => {"deadline" => "1999-12-31", "response" => "yes", "applicationNumber" => "12345678"}, "iat" => 946512000}, {"alg" => "HS256", "typ" => "JWT"}]
+    # [
+    #   {
+    #     "exp" => 946598400,
+    #     "data" => {
+    #       "deadline" => "1999-12-31",
+    #       "response" => "yes",
+    #       "applicationNumber" => "12345678"
+    #     },
+    #     "iat" => 946512000
+    #    },
+    #   {"alg" => "HS256", "typ" => "JWT"}
+    # ]
     decoded_token = JWT.decode(
-      token,
-      ENV.fetch('JWT_TOKEN_SECRET', nil),
-      true,
-      { algorithm: ENV.fetch('JWT_ALGORITHM', nil) },
-    )
-    Rails.logger.info(
-      'InviteToApplyPageController#decode_token: ' \
-      "Decoded JWT #{decoded_token}",
-    )
-    decoded_token.first['data']
-  rescue JWT::ExpiredSignature
-    decoded_token_expired = JWT.decode(
       token,
       ENV.fetch('JWT_TOKEN_SECRET', nil),
       true,
@@ -96,9 +94,9 @@ class InviteToApplyPageController < ApplicationController
     )
     Rails.logger.info(
       'InviteToApplyPageController#decode_token: ' \
-      "Expired JWT #{decoded_token_expired}",
+      "Decoded JWT #{decoded_token}",
     )
-    handle_expired_token(decoded_token_expired)
+    decoded_token.first['data']
   rescue JWT::VerificationError
     Rails.logger.info(
       'InviteToApplyPageController#decode_token: ' \
@@ -107,22 +105,18 @@ class InviteToApplyPageController < ApplicationController
     root_url
   end
 
-  def encode_token(expiration, params)
-    payload = {
-      exp: expiration,
-      data: params,
-    }
-    JWT.encode(payload, ENV.fetch('JWT_TOKEN_SECRET'), ENV.fetch('JWT_ALGORITHM'))
+  def encode_token(params)
+    return nil unless use_jwt?
+
+    JWT.encode(
+      { data: params },
+      ENV.fetch('JWT_TOKEN_SECRET', nil),
+      ENV.fetch('JWT_ALGORITHM', nil),
+    )
   end
 
-  def handle_expired_token(decoded_token_expired)
-    # do not show the deadline-passed page for 'no' responses
-    if decoded_token_expired.first.dig('data', 'response') == 'no'
-      decoded_token_expired.first['data']
-    else
-      lang = params[:lang] ? "/#{params[:lang]}" : ''
-      "#{lang}/listings/#{params[:id]}/invite-to-apply/deadline-passed"
-    end
+  def deadline_has_passed?(deadline)
+    Time.zone.parse(deadline).to_date < Time.zone.today
   end
 
   def use_jwt?
