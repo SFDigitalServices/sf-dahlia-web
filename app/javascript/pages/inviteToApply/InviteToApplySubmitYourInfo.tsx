@@ -24,7 +24,7 @@ import Layout from "../../layouts/Layout"
 import { ConfigContext } from "../../lib/ConfigContext"
 import InviteToApplyLeasingAgentInfo from "./InviteToApplyLeasingAgentInfo"
 import { HOME_SF_PHONE } from "../../modules/constants"
-import { submitInviteToApplyResponse } from "../../api/inviteToApplyApiService"
+import { recordResponse } from "../../api/inviteToApplyApiService"
 
 interface InviteToApplySubmitYourInfoProps {
   listing: RailsSaleListing | null
@@ -102,7 +102,12 @@ const WhatToDo = ({
       try {
         // Call the API if applicationNumber is provided
         if (applicationNumber) {
-          await submitInviteToApplyResponse(applicationNumber)
+          await recordResponse({
+            applicationNumber,
+            listingId: listing.Id,
+            deadline,
+            response: "submit",
+          })
         }
         // Open the file upload URL after API call (or directly if no applicationNumber)
         window.open(listing?.File_Upload_URL, "_blank")
@@ -112,7 +117,7 @@ const WhatToDo = ({
         window.open(listing?.File_Upload_URL, "_blank")
       }
     })()
-  }, [applicationNumber, listing])
+  }, [applicationNumber, listing, deadline])
 
   return (
     <div className={styles.whatToDoList}>
