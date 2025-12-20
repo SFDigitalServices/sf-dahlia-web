@@ -72,15 +72,20 @@ class Api::V1::InviteToApplyController < ApiController
         deadlineDate: '',
       },
     )
+  end
 
-    if response
-      render json: { success: true }, status: :ok
-    else
-      render json: { error: 'Failed to submit response' }, status: :internal_server_error
+  def record_response
+    params.expect(record: %i[deadline applicationNumber response listingId])
+    params[:record].each do |k, v|
+      raise "#{k} cannot be blank: #{v.inspect}" if v.blank?
     end
-  rescue StandardError => e
-    Rails.logger.error("Error submitting invite to apply response: #{e.message}")
-    render json: { error: 'An error occurred' }, status: :internal_server_error
+
+    DahliaBackend::MessageService.send_invite_to_apply_response(
+      params[:deadline],
+      params[:applicationNumber],
+      params[:response],
+      params[:listingId],
+    )
   end
 
   private
@@ -120,6 +125,10 @@ class Api::V1::InviteToApplyController < ApiController
   def convet_date_format(date)
     date = Date.parse(date)
     date.strftime('%B %d, %Y')
+  end
+
+  def deadline_has_passed?(deadline)
+    Time.zone.parse(deadline).to_date < Time.zone.today
   end
 
   def env_secret
