@@ -138,7 +138,7 @@
     "protractor": "^5.4.2",
     "protractor-cucumber-framework": "3.1.2",
     "react-refresh": "^0.14.0",
-    "storybook": "^9.1.2",
+    "storybook": "^9.1.17",
     "ts-jest": "^29.1.2",
     "typescript-eslint": "8.46.0",
     "url-join": "^4.0.1",
