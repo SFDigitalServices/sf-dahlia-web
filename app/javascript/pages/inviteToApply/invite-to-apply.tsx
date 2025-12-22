@@ -1,8 +1,6 @@
 import React, { useContext, useEffect, useState } from "react"
-import { t, NavigationContext, Icon, IconFillColors } from "@bloom-housing/ui-components"
-import { Card, Button, Heading } from "@bloom-housing/ui-seeds"
+import { NavigationContext } from "@bloom-housing/ui-components"
 import withAppSetup from "../../layouts/withAppSetup"
-import FormLayout from "../../layouts/FormLayout"
 import { AppPages } from "../../util/routeUtil"
 import { getListing } from "../../api/listingApiService"
 import { useVariantFlag, useFeatureFlag } from "../../hooks/useFeatureFlag"
@@ -12,9 +10,7 @@ import InviteToApplyContactMeLater from "./InviteToApplyContactMeLater"
 import InviteToApplySubmitYourInfo from "./InviteToApplySubmitYourInfo"
 import InviteToApplyDocuments from "./InviteToApplyDocuments"
 import RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
-import styles from "./invite-to-apply.module.scss"
 import { getCurrentLanguage, getPathWithoutLanguagePrefix } from "../../util/languageUtil"
-import { faEnvelope } from "@fortawesome/free-solid-svg-icons"
 import { isDeadlinePassed } from "../../util/listingUtil"
 
 interface UrlParams {
@@ -26,51 +22,14 @@ interface UrlParams {
 interface HomePageProps {
   assetPaths: unknown
   urlParams: UrlParams
-  submitLinkTokenParam?: string
+  submitPreviewLinkTokenParam?: string
   deadlinePassedPath?: boolean
   documentsPath?: boolean
 }
 
-export const LeasingAgentInfo = ({ listing }: { listing: RailsSaleListing }) => (
-  <span>
-    <p>{listing?.Leasing_Agent_Name}</p>
-    <p className="field-note">{t("inviteToApplyPage.leasingAgent")}</p>
-    <a className={styles.responseIcon} href={`tel:+1${listing?.Leasing_Agent_Phone}`}>
-      <Icon symbol="phone" size="medium" fill={IconFillColors.primary} />
-      {listing?.Leasing_Agent_Phone}
-    </a>
-    <a className={styles.responseIcon} href={`mailto:${listing?.Leasing_Agent_Email}`}>
-      <Icon symbol={faEnvelope} size="medium" fill={IconFillColors.primary} />
-      {listing?.Leasing_Agent_Email}
-    </a>
-  </span>
-)
-
-const InviteToApplyHeader = ({ listing }: { listing: RailsSaleListing }) => (
-  <Card className={styles.listingCard}>
-    <Card.Header className={styles.listingHeader}>
-      <Heading className={styles.listingHeading} priority={1} size="lg">
-        {listing?.Building_Name_for_Process}
-      </Heading>
-    </Card.Header>
-    <Card.Section className={styles.listingSection}>
-      <Button
-        className={styles.headerButton}
-        href={`/listings/${listing?.Id}`}
-        variant="text"
-        size="sm"
-        newWindowTarget
-      >
-        {t("inviteToApplyPage.buildingDetails")}
-      </Button>
-    </Card.Section>
-  </Card>
-)
-
 const InviteToApplyPage = ({
   urlParams: { response, applicationNumber, deadline },
-  submitLinkTokenParam,
-  deadlinePassedPath,
+  submitPreviewLinkTokenParam,
   documentsPath,
 }: HomePageProps) => {
   const [listing, setListing] = useState<RailsSaleListing>(null)
@@ -94,10 +53,10 @@ const InviteToApplyPage = ({
   )
 
   const generateSubmitLink = (signLinkParams: boolean) => {
-    const submitLinkParams = { response: "yes", applicationNumber, deadline }
+    const submitLinkParams = { applicationNumber, deadline }
     const submitLinkQueryStr =
-      signLinkParams && submitLinkTokenParam
-        ? `t=${submitLinkTokenParam}`
+      signLinkParams && submitPreviewLinkTokenParam
+        ? `t=${submitPreviewLinkTokenParam}`
         : new URLSearchParams(submitLinkParams).toString()
     return `/${getCurrentLanguage()}/listings/${listing?.Id}/invite-to-apply?${submitLinkQueryStr}`
   }
@@ -110,6 +69,36 @@ const InviteToApplyPage = ({
   if (!isInviteApplyEnabled) {
     return null
   }
+
+  if (documentsPath) {
+    return <InviteToApplyDocuments listing={listing} />
+  }
+
+  // invitee has not responded, they are merely previewing the submit page
+  if (!response) {
+    return (
+      <InviteToApplySubmitYourInfo
+        listing={listing}
+        deadline={deadline}
+        applicationNumber={applicationNumber}
+      />
+    )
+  }
+
+  if (response === "no") {
+    return (
+      <InviteToApplyWithdrawn
+        listing={listing}
+        deadline={deadline}
+        submitPreviewLink={generateSubmitLink(jwtLinkParamsFlag)}
+      />
+    )
+  }
+
+  if (isDeadlinePassed(deadline)) {
+    return <InviteToApplyDeadlinePassed listing={listing} />
+  }
+
   if (response === "yes") {
     return (
       <InviteToApplySubmitYourInfo
@@ -119,48 +108,15 @@ const InviteToApplyPage = ({
       />
     )
   }
-  if (documentsPath) {
-    return <InviteToApplyDocuments listing={listing} />
-  }
-  /**
-   *  If deadline passed, show withdrawn page for "no" and deadline passed page for "yes" and "contact"
-   */
-  if (isDeadlinePassed(deadline)) {
+  if (response === "contact") {
     return (
-      <FormLayout>
-        {<InviteToApplyHeader listing={listing} />}
-        {response === "no" ? (
-          <InviteToApplyWithdrawn
-            listing={listing}
-            deadline={deadline}
-            submitLink={generateSubmitLink(jwtLinkParamsFlag)}
-          />
-        ) : (
-          <InviteToApplyDeadlinePassed listing={listing} />
-        )}
-      </FormLayout>
+      <InviteToApplyContactMeLater
+        listing={listing}
+        deadline={deadline}
+        submitPreviewLink={generateSubmitLink(jwtLinkParamsFlag)}
+      />
     )
   }
-  return (
-    <FormLayout>
-      {<InviteToApplyHeader listing={listing} />}
-      {response === "contact" && (
-        <InviteToApplyContactMeLater
-          listing={listing}
-          deadline={deadline}
-          submitLink={generateSubmitLink(jwtLinkParamsFlag)}
-        />
-      )}
-      {response === "no" && (
-        <InviteToApplyWithdrawn
-          listing={listing}
-          deadline={deadline}
-          submitLink={generateSubmitLink(jwtLinkParamsFlag)}
-        />
-      )}
-      {deadlinePassedPath && <InviteToApplyDeadlinePassed listing={listing} />}
-    </FormLayout>
-  )
 }
 
 export default withAppSetup(InviteToApplyPage, { pageName: AppPages.InviteToApply })

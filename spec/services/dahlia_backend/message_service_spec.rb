@@ -7,6 +7,8 @@ RSpec.describe DahliaBackend::MessageService do
   let(:listing_id) { 'listing123' }
   let(:application_number) { 'APP123456' }
   let(:email) { 'test@example.com' }
+  let(:application_language) { 'en' }
+
 
   let(:listing_data) do
     {
@@ -51,6 +53,7 @@ RSpec.describe DahliaBackend::MessageService do
         'email' => 'jane@example.com',
       },
       'lotteryNumber' => '54321',
+      'applicationLanguage' => application_language,
     }
   end
 
@@ -268,6 +271,7 @@ RSpec.describe DahliaBackend::MessageService do
                                                           applicants: [{
                                                             lotteryNumber: '54321',
                                                             applicationNumber: application_number,
+                                                            applicationLanguage: application_language,
                                                             primaryContact: {
                                                               firstName: 'John',
                                                               email: 'john@example.com',

@@ -5,8 +5,22 @@ RSpec.describe InviteToApplyPageController do
   let(:application_number) { 'APP123456' }
   let(:response_value) { 'yes' }
   let(:listing_id) { 'listing123' }
+  let(:decoded_token) do
+    [
+      {
+        data: {
+          deadline: deadline,
+          applicationNumber: application_number,
+          response: response_value,
+        },
+      }
+    ]
+  end
 
   before do
+    allow(ENV).to receive(:fetch).with('JWT_TOKEN_SECRET', nil)
+                                 .and_return('TEST_TOKEN_SECRET')
+    allow(ENV).to receive(:fetch).with('JWT_ALGORITHM', nil).and_return('HS256')
     allow(controller).to receive(:static_asset_paths).and_return({ logo: 'logo.png' })
     allow(DahliaBackend::MessageService).to receive(:send_invite_to_apply_response)
     allow(Rails.logger).to receive(:info)
@@ -84,40 +98,28 @@ RSpec.describe InviteToApplyPageController do
         end.to raise_error(StandardError, 'API Error')
       end
     end
-  end
 
-  describe '#deadline_passed' do
-    before do
-      get :deadline_passed, params: {
-        id: listing_id,
-        deadline: deadline,
-        applicationNumber: application_number,
-        response: response_value,
-      }
-    end
+    context 'with json web tokens' do
+      before do
+        allow(controller).to receive(:use_jwt?).and_return(true)
+        allow(JWT).to receive(:decode).and_return(decoded_token)
+      end
 
-    it 'returns a successful response' do
-      expect(response).to be_ok
-    end
+      it 'creates a token for the preview link' do
+        get :index, params: { id: listing_id, t: 'test_token' }
+        expect(assigns(:invite_to_apply_props)).to have_key(:submitPreviewLinkTokenParam)
+      end
 
-    it 'renders the invite_to_apply template' do
-      expect(response).to render_template('invite_to_apply')
-    end
+      it 'redirects to the listing details page if token is blank' do
+        get :index, params: { id: listing_id }
+        expect(response).to redirect_to("/listings/#{listing_id}")
+      end
 
-    it 'sets the invite_to_apply_props with deadlinePassedPath set to true' do
-      expect(assigns(:invite_to_apply_props)).to eq({
-                                                      assetPaths: { logo: 'logo.png' },
-                                                      urlParams: {
-                                                        deadline: deadline,
-                                                        response: response_value,
-                                                        applicationNumber: application_number,
-                                                      },
-                                                      deadlinePassedPath: true,
-                                                    })
-    end
-
-    it 'does not call record_response' do
-      expect(DahliaBackend::MessageService).not_to have_received(:send_invite_to_apply_response)
+      it 'redirects to the listing details page if token is invalid' do
+        allow(JWT).to receive(:decode).and_raise(JWT::VerificationError)
+        get :index, params: { id: listing_id, t: 'invalid_test_token' }
+        expect(response).to redirect_to('/')
+      end
     end
   end
 
