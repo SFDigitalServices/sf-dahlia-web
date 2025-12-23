@@ -24,7 +24,7 @@ import Layout from "../../layouts/Layout"
 import { ConfigContext } from "../../lib/ConfigContext"
 import InviteToApplyLeasingAgentInfo from "./InviteToApplyLeasingAgentInfo"
 import { HOME_SF_PHONE } from "../../modules/constants"
-import { submitInviteToApplyResponse } from "../../api/inviteToApplyApiService"
+import { submitInviteToApplyResponse, recordResponse } from "../../api/inviteToApplyApiService"
 
 interface InviteToApplySubmitYourInfoProps {
   listing: RailsSaleListing | null
@@ -101,8 +101,16 @@ const WhatToDo = ({
     void (async () => {
       try {
         // Call the API if applicationNumber is provided
-        if (applicationNumber) {
-          await submitInviteToApplyResponse(applicationNumber)
+        const mockAppNumber = 'a0obb000001MeMPAA0' // TODO: revert after done debugging
+        // if (applicationNumber) {
+        if (mockAppNumber) {
+          // await submitInviteToApplyResponse(applicationNumber)
+          await recordResponse({
+            applicationNumber: mockAppNumber,
+            listingId: listing.Id,
+            deadline,
+            response: 'submit'
+          })
         }
         // Open the file upload URL after API call (or directly if no applicationNumber)
         window.open(listing?.File_Upload_URL, "_blank")
