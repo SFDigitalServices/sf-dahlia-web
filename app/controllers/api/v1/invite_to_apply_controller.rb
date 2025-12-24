@@ -52,6 +52,8 @@ class Api::V1::InviteToApplyController < ApiController
       return
     end
 
+    Rails.logger.info("Submitting invite to apply response for application number: #{application_number}")
+
     # Call the backend API through our service
     response = DahliaBackend::ApiClient.new.post(
       '/messages/invite-to-apply/response/submit',
@@ -106,14 +108,14 @@ class Api::V1::InviteToApplyController < ApiController
 
     case token_resp
     when 'y'
-      [{ 'Processing_Status__c': 'Processing',
-         'Processing_Comment__c': "MOHCD automated interest email sent on #{formatted_date}. Applicant responded Yes.",
-         'Application__c': application }]
+      [{ Processing_Status__c: 'Processing',
+         Processing_Comment__c: "MOHCD automated interest email sent on #{formatted_date}. Applicant responded Yes.",
+         Application__c: application }]
     when 'n'
-      [{ 'Processing_Status__c': 'Withdrawn',
-         'Processing_Comment__c': "MOHCD automated interest email sent on #{formatted_date}. Applicant responded No.",
-         'Application__c': application,
-         'Sub_Status__c': 'Written withdrawal' }]
+      [{ Processing_Status__c: 'Withdrawn',
+         Processing_Comment__c: "MOHCD automated interest email sent on #{formatted_date}. Applicant responded No.",
+         Application__c: application,
+         Sub_Status__c: 'Written withdrawal' }]
     end
   end
 

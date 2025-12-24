@@ -100,6 +100,7 @@ const WhatToDo = ({
     // Handle the API call and open URL
     void (async () => {
       try {
+        console.log("Submitting invite to apply response for application number:", applicationNumber)
         // Call the API if applicationNumber is provided
         if (applicationNumber) {
           await submitInviteToApplyResponse(applicationNumber)
