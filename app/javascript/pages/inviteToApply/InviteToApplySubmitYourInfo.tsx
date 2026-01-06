@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useCallback } from "react"
 import { faEnvelope, faPrint } from "@fortawesome/free-solid-svg-icons"
 import {
   t,
@@ -11,39 +11,42 @@ import {
 } from "@bloom-housing/ui-components"
 import { Heading, Button, Message } from "@bloom-housing/ui-seeds"
 import RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
-import { getListingAddressString } from "../../util/listingUtil"
+import { getListingAddressString, isDeadlinePassed } from "../../util/listingUtil"
 import {
-  getApplicationDeadline,
   getTranslatedString,
   renderInlineMarkup,
   getCurrentLanguage,
+  getBMRApplicationUrl,
+  localizedFormat,
 } from "../../util/languageUtil"
 import styles from "./invite-to-apply.module.scss"
 import Layout from "../../layouts/Layout"
 import { ConfigContext } from "../../lib/ConfigContext"
-import { LeasingAgentInfo } from "./invite-to-apply"
+import InviteToApplyLeasingAgentInfo from "./InviteToApplyLeasingAgentInfo"
+import { HOME_SF_PHONE } from "../../modules/constants"
+import { submitInviteToApplyResponse } from "../../api/inviteToApplyApiService"
 
 interface InviteToApplySubmitYourInfoProps {
   listing: RailsSaleListing | null
   deadline: string
+  applicationNumber?: string
 }
 
 const DeadlineBanner = ({ deadline }: { deadline: string }) => {
-  const today = new Date()
-  const deadlineDate = new Date(deadline)
-  const isDeadlinePassed = today > deadlineDate
   return (
     <Message
       fullwidth
-      variant={isDeadlinePassed ? "alert" : "warn"}
+      variant={isDeadlinePassed(deadline) ? "alert" : "warn"}
       customIcon={<Icon symbol="clock" size="medium" />}
     >
       <strong>
-        {isDeadlinePassed
+        {isDeadlinePassed(deadline)
           ? t("inviteToApplyPage.submitYourInfo.deadlinePassed")
           : t("inviteToApplyPage.submitYourInfo.submitByDeadline")}
       </strong>
-      <span>{getApplicationDeadline(deadline)}</span>
+      <span>
+        {t("inviteToApplyPage.submitYourInfo.deadline", { day: localizedFormat(deadline, "ll") })}
+      </span>
     </Message>
   )
 }
@@ -62,9 +65,9 @@ const PreparingYourApplication = () => {
         <p>{t("inviteToApplyPage.submitYourInfo.prepare.p3")}</p>
         {renderInlineMarkup(t("inviteToApplyPage.submitYourInfo.prepare.p4"))}
         <span className={styles.submitYourInfoIcons}>
-          <a className={styles.responseIcon} href={`tel:+14152025464`}>
+          <a className={styles.responseIcon} href={`tel:+1${HOME_SF_PHONE}`}>
             <Icon symbol="phone" size="medium" fill={IconFillColors.primary} />
-            {"415-202-5464"}
+            {HOME_SF_PHONE}
           </a>
           <a className={styles.responseIcon} href={`mailto:${"info@homesanfrancisco.org"}`}>
             <Icon symbol={faEnvelope} size="medium" fill={IconFillColors.primary} />
@@ -76,6 +79,7 @@ const PreparingYourApplication = () => {
         leadIcon={<Icon symbol={faPrint} size="medium" fill={IconFillColors.primary} />}
         variant="primary-outlined"
         onClick={() => window.print()}
+        className={styles.actionButton}
       >
         {t("inviteToApplyPage.submitYourInfo.prepare.p5")}
       </Button>
@@ -83,7 +87,33 @@ const PreparingYourApplication = () => {
   )
 }
 
-const WhatToDo = ({ listing }: { listing: RailsSaleListing }) => {
+const WhatToDo = ({
+  listing,
+  deadline,
+  applicationNumber,
+}: {
+  listing: RailsSaleListing
+  deadline: string
+  applicationNumber?: string
+}) => {
+  const handleSubmitClick = useCallback(() => {
+    // Handle the API call and open URL
+    void (async () => {
+      try {
+        // Call the API if applicationNumber is provided
+        if (applicationNumber) {
+          await submitInviteToApplyResponse(applicationNumber)
+        }
+        // Open the file upload URL after API call (or directly if no applicationNumber)
+        window.open(listing?.File_Upload_URL, "_blank")
+      } catch (error) {
+        console.error("Error submitting invite to apply response:", error)
+        // Still open the file upload URL even if API call fails
+        window.open(listing?.File_Upload_URL, "_blank")
+      }
+    })()
+  }, [applicationNumber, listing])
+
   return (
     <div className={styles.whatToDoList}>
       <Heading priority={2} size="2xl">
@@ -99,7 +129,11 @@ const WhatToDo = ({ listing }: { listing: RailsSaleListing }) => {
             "<strong></strong>"
           )}
           <p>{t("inviteToApplyPage.submitYourInfo.whatToDo.step1.p2")}</p>
-          <Button variant="primary-outlined" onClick={() => (window.location.href = "tbd")}>
+          <Button
+            className={styles.actionButton}
+            variant="primary-outlined"
+            onClick={() => window.open(getBMRApplicationUrl(), "_blank")}
+          >
             {t("inviteToApplyPage.submitYourInfo.whatToDo.step1.p3")}
           </Button>
         </li>
@@ -111,7 +145,7 @@ const WhatToDo = ({ listing }: { listing: RailsSaleListing }) => {
           <p>{t("inviteToApplyPage.submitYourInfo.whatToDo.step2.p2")}</p>
           {renderInlineMarkup(
             t("inviteToApplyPage.submitYourInfo.whatToDo.step2.p3", {
-              link: `${getCurrentLanguage()}/invite-to-apply/documents?listingId=${listing?.Id}`,
+              link: `/${getCurrentLanguage()}/listings/${listing?.Id}/invite-to-apply/documents`,
             })
           )}
         </li>
@@ -124,9 +158,11 @@ const WhatToDo = ({ listing }: { listing: RailsSaleListing }) => {
             <li>{t("inviteToApplyPage.submitYourInfo.whatToDo.step3.p2")}</li>
             <li>{t("inviteToApplyPage.submitYourInfo.whatToDo.step3.p3")}</li>
           </ul>
-          <Button onClick={() => (window.location.href = listing?.File_Upload_URL)}>
-            {t("inviteToApplyPage.submitYourInfo.whatToDo.step3.p4")}
-          </Button>
+          {!isDeadlinePassed(deadline) && (
+            <Button className={styles.actionButton} onClick={handleSubmitClick}>
+              {t("inviteToApplyPage.submitYourInfo.whatToDo.step3.p4")}
+            </Button>
+          )}
           <Heading priority={3} size="lg">
             {t("inviteToApplyPage.submitYourInfo.whatToDo.step3.p5")}
           </Heading>
@@ -134,6 +170,21 @@ const WhatToDo = ({ listing }: { listing: RailsSaleListing }) => {
           <p>{t("inviteToApplyPage.submitYourInfo.whatToDo.step3.p7")}</p>
         </li>
       </ol>
+      {isDeadlinePassed(deadline) && (
+        <Message
+          variant="secondary"
+          fullwidth
+          customIcon={<Icon symbol="clock" size="medium" />}
+          testId="deadline-passed-banner"
+        >
+          {renderInlineMarkup(
+            t("inviteToApplyPage.submitYourInfo.deadlineInfo", {
+              day: localizedFormat(deadline, "ll"),
+              listingName: listing?.Building_Name_for_Process,
+            })
+          )}
+        </Message>
+      )}
       <div className={styles.submitYourInfoBox}>
         <Heading priority={4} size="lg">
           {t("inviteToApplyPage.submitYourInfo.whatToDo.step3.p8")}
@@ -155,9 +206,13 @@ const WhatHappensNext = () => {
       </Heading>
       <p>{t("inviteToApplyPage.submitYourInfo.whatHappensNext.p2")}</p>
       <p>{t("inviteToApplyPage.submitYourInfo.whatHappensNext.p3")}</p>
-      <ul className={styles.submitYourInfoList}>
-        <li>{t("inviteToApplyPage.submitYourInfo.whatHappensNext.p4")}</li>
-        <li>{t("inviteToApplyPage.submitYourInfo.whatHappensNext.p5")}</li>
+      <ul>
+        <li className={styles.submitYourInfoList}>
+          {t("inviteToApplyPage.submitYourInfo.whatHappensNext.p4")}
+        </li>
+        <li className={styles.submitYourInfoList}>
+          {t("inviteToApplyPage.submitYourInfo.whatHappensNext.p5")}
+        </li>
       </ul>
       <p>{t("inviteToApplyPage.submitYourInfo.whatHappensNext.p6")}</p>
       <Heading priority={3} size="lg">
@@ -175,9 +230,9 @@ const SubmitYourInfoHeader = ({ listing }: { listing: RailsSaleListing }) => {
         src={listing?.Listing_Images?.[0]?.Image_URL}
         alt={listing?.Listing_Images?.[0]?.Image_Description}
       />
-      <strong>{listing?.Name}</strong>
-      <p>{listing && getListingAddressString(listing)}</p>
-      <a href={`${getCurrentLanguage()}/listings/${listing?.Id}`}>
+      <strong>{listing?.Building_Name_for_Process}</strong>
+      <p>{listing && getListingAddressString(listing, false)}</p>
+      <a href={`/${getCurrentLanguage()}/listings/${listing?.Id}`}>
         {t("inviteToApplyPage.submitYourInfo.p1")}
       </a>
     </div>
@@ -187,7 +242,11 @@ const SubmitYourInfoHeader = ({ listing }: { listing: RailsSaleListing }) => {
 const SubmitYourInfoSidebarBlock = ({ listing }: { listing: RailsSaleListing }) => {
   return (
     <SidebarBlock title={t("contactAgent.contact")} priority={2}>
-      <LeasingAgentInfo listing={listing} />
+      <Heading size="lg" priority={3}>
+        {" "}
+        {t("inviteToApplyPage.submitYourInfo.sidebar")}
+      </Heading>
+      <InviteToApplyLeasingAgentInfo listing={listing} />
       <Heading size="sm" priority={3}>
         {t("contactAgent.officeHours.seeTheUnit")}
       </Heading>
@@ -196,12 +255,17 @@ const SubmitYourInfoSidebarBlock = ({ listing }: { listing: RailsSaleListing }) 
   )
 }
 
-const InviteToApplySubmitYourInfo = ({ listing, deadline }: InviteToApplySubmitYourInfoProps) => {
+const InviteToApplySubmitYourInfo = ({
+  listing,
+  deadline,
+  applicationNumber,
+}: InviteToApplySubmitYourInfoProps) => {
   const { getAssetPath } = React.useContext(ConfigContext)
+  const titleName = listing?.Building_Name_for_Process || listing?.Name
   return (
     <Layout>
       <PageHeader
-        title={t("inviteToApplyPage.submitYourInfo.title", { listingName: listing?.Name })}
+        title={t("inviteToApplyPage.submitYourInfo.title", { listingName: titleName })}
         inverse
         backgroundImage={getAssetPath("bg@1200.jpg")}
       />
@@ -211,9 +275,9 @@ const InviteToApplySubmitYourInfo = ({ listing, deadline }: InviteToApplySubmitY
             <SubmitYourInfoHeader listing={listing} />
             <DeadlineBanner deadline={deadline} />
             <PreparingYourApplication />
-            <WhatToDo listing={listing} />
+            <WhatToDo listing={listing} deadline={deadline} applicationNumber={applicationNumber} />
             <Mobile>
-              <LeasingAgentInfo listing={listing} />
+              <InviteToApplyLeasingAgentInfo listing={listing} />
             </Mobile>
             <WhatHappensNext />
           </main>

@@ -126,6 +126,7 @@ export const saleEducatorListing: RailsSaleListing = {
   nGeneral_Application_Total: 2,
   Lottery_Status: "Not Yet Run",
   Building_Name: "Habitat Amber Drive",
+  Building_Name_for_Process: "Habitat Amber Drive",
   Project_ID: "2022-001",
   Building_Street_Address: "36 Amber Drive",
   Building_City: "San Francisco",

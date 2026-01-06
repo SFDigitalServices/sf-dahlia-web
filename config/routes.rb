@@ -38,6 +38,7 @@ Rails.application.routes.draw do
         end
       end
       get 'trk' => 'listing_interest#index'
+      post 'invite-to-apply/submit' => 'invite_to_apply#submit_docs'
       scope '/short-form' do
         post 'validate-household' => 'short_form#validate_household'
         get 'listing-application/:listing_id' => 'short_form#show_listing_application_for_user'
@@ -109,7 +110,6 @@ Rails.application.routes.draw do
   get '(:lang)/disclaimer' => 'assistance#disclaimer', lang: /(en|es|zh|tl)/
 
   get '(:lang)/listings/:id/invite-to-apply' => 'invite_to_apply_page#index', as: :invite_to_apply, lang: /(en|es|zh|tl)/
-  get '(:lang)/listings/:id/invite-to-apply/deadline-passed' => 'invite_to_apply_page#deadline_passed', as: :invite_to_apply_deadline_passed, lang: /(en|es|zh|tl)/
   get '(:lang)/listings/:id/invite-to-apply/documents' => 'invite_to_apply_page#documents', as: :invite_to_apply_documents, lang: /(en|es|zh|tl)/
 
   get '(:lang)/my-account' => 'account#my_account', lang: /(en|es|zh|tl)/

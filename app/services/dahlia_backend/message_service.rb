@@ -15,6 +15,12 @@ module DahliaBackend
         new.send_application_confirmation(application_params, application_response,
                                           locale)
       end
+
+      def send_invite_to_apply_response(_deadline, _application_number, _response,
+                                        listing_id, _force = nil)
+        new.send_invite_to_apply_response(_deadline, _application_number, _response,
+                                          listing_id, nil)
+      end
     end
 
     attr_reader :client
@@ -38,6 +44,38 @@ module DahliaBackend
       send_message('/messages/application-submission', fields)
     rescue StandardError => e
       log_error('Error sending confirmation', e)
+      nil
+    end
+
+    def get_invite_to_apply_response_endpoint(response)
+      case response
+      when 'yes' then '/messages/invite-to-apply/response/yes'
+      when 'no' then '/messages/invite-to-apply/response/no'
+      when 'contact' then '/messages/invite-to-apply/response/contact'
+      end
+    end
+
+    def send_invite_to_apply_response(_deadline, _application_number, _response,
+                                      listing_id, _force = nil)
+      # Get contacts from salesforce of the application with applicationNumber
+      # TODO: Validate params
+
+      application = Force::ShortFormService.get(_application_number)
+
+      listing = fetch_listing(listing_id)
+
+      fields = prepare_submission_fields_invite_to_apply(application, listing, _deadline,
+                                                         _application_number)
+      return if fields.nil?
+
+      log_info("Prepared fields for Invite to Apply response: #{fields.inspect}")
+
+      endpoint = get_invite_to_apply_response_endpoint(_response)
+      return log_error("Invalid response type: #{_response}", nil) unless endpoint
+
+      send_message(endpoint, fields)
+    rescue StandardError => e
+      log_error('Error sending Invite to Apply', e)
       nil
     end
 
@@ -67,6 +105,55 @@ module DahliaBackend
           officeHours: listing.Office_Hours.to_s,
         },
         lang: locale,
+      }
+    end
+
+    def prepare_submission_fields_invite_to_apply(application, listing, deadline,
+                                                  application_number)
+      return nil unless application && listing
+
+      # Extract applicant information
+      primary_applicant = {
+        firstName: application.dig('primaryApplicant', 'firstName'),
+        email: application.dig('primaryApplicant', 'email'),
+      }
+
+      # Build applicant data
+      applicant_data = {
+        lotteryNumber: application.dig('lotteryNumber'),
+        applicationNumber: application_number,
+        primaryContact: primary_applicant,
+        applicationLanguage: application.dig('applicationLanguage'),
+      }
+
+      # Only include alternateContact if it exists in the application
+      if application['alternateContact'].present?
+        alternate_contact = {
+          firstName: application.dig('alternateContact', 'firstName'),
+          email: application.dig('alternateContact', 'email'),
+        }
+        applicant_data[:alternateContact] = alternate_contact
+      end
+
+      leasing_agent = {
+        name: listing.Leasing_Agent_Name.to_s,
+        email: listing.Leasing_Agent_Email.to_s,
+        phone: listing.Leasing_Agent_Phone.to_s,
+        officeHours: listing.Office_Hours.to_s,
+      }
+
+      formatted_date = format_lottery_date(listing.Lottery_Date)
+
+      {
+        applicants: [applicant_data],
+        listingId: listing.dig('Id'),
+        listingName: listing.Name.to_s,
+        buildingName: listing.Building_Name_for_Process.to_s,
+        listingAddress: listing.Address__c.to_s,
+        listingNeighborhood: listing.Neighborhood__c.to_s,
+        leasingAgent: leasing_agent,
+        lotteryDate: formatted_date,
+        deadlineDate: deadline,
       }
     end
 
@@ -108,7 +195,7 @@ module DahliaBackend
     def format_lottery_date(lottery_date)
       return '' unless lottery_date.present?
 
-      Time.zone.parse(lottery_date).strftime('%B %e, %Y')
+      Time.zone.parse(lottery_date).strftime('%Y-%m-%d')
     rescue StandardError => e
       log_warn("Error parsing date: #{e.message}")
       lottery_date.to_s

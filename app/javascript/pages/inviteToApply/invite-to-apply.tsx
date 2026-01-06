@@ -1,21 +1,17 @@
 import React, { useContext, useEffect, useState } from "react"
-import { t, NavigationContext, LoadingOverlay } from "@bloom-housing/ui-components"
-import { Card, Button, Heading } from "@bloom-housing/ui-seeds"
+import { NavigationContext } from "@bloom-housing/ui-components"
 import withAppSetup from "../../layouts/withAppSetup"
-import FormLayout from "../../layouts/FormLayout"
 import { AppPages } from "../../util/routeUtil"
 import { getListing } from "../../api/listingApiService"
-import { useFeatureFlag } from "../../hooks/useFeatureFlag"
+import { useVariantFlag, useFeatureFlag } from "../../hooks/useFeatureFlag"
 import InviteToApplyDeadlinePassed from "./InviteToApplyDeadlinePassed"
 import InviteToApplyWithdrawn from "./InviteToApplyWithdrawn"
 import InviteToApplyContactMeLater from "./InviteToApplyContactMeLater"
 import InviteToApplySubmitYourInfo from "./InviteToApplySubmitYourInfo"
 import InviteToApplyDocuments from "./InviteToApplyDocuments"
 import RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
-import styles from "./invite-to-apply.module.scss"
-import { getPathWithoutLanguagePrefix } from "../../util/languageUtil"
-import { Icon, IconFillColors } from "@bloom-housing/ui-components"
-import { faEnvelope } from "@fortawesome/free-solid-svg-icons"
+import { getCurrentLanguage, getPathWithoutLanguagePrefix } from "../../util/languageUtil"
+import { isDeadlinePassed } from "../../util/listingUtil"
 
 interface UrlParams {
   response?: string
@@ -26,48 +22,17 @@ interface UrlParams {
 interface HomePageProps {
   assetPaths: unknown
   urlParams: UrlParams
+  submitPreviewLinkTokenParam?: string
   deadlinePassedPath?: boolean
   documentsPath?: boolean
 }
 
-export const LeasingAgentInfo = ({ listing }: { listing: RailsSaleListing }) => (
-  <span>
-    <p>{listing?.Leasing_Agent_Name}</p>
-    <p className="field-note">{t("inviteToApplyPage.leasingAgent")}</p>
-    <a className={styles.responseIcon} href={`tel:+1${listing?.Leasing_Agent_Phone}`}>
-      <Icon symbol="phone" size="medium" fill={IconFillColors.primary} />
-      {listing?.Leasing_Agent_Phone}
-    </a>
-    <a className={styles.responseIcon} href={`mailto:${listing?.Leasing_Agent_Email}`}>
-      <Icon symbol={faEnvelope} size="medium" fill={IconFillColors.primary} />
-      {listing?.Leasing_Agent_Email}
-    </a>
-  </span>
-)
-
-const InviteToApplyHeader = ({ listing }: { listing: RailsSaleListing }) => (
-  <Card className={styles.listingCard}>
-    <Card.Header className={styles.listingHeader}>
-      <Heading className={styles.listingHeading} priority={1} size="lg">
-        {listing?.Name}
-      </Heading>
-    </Card.Header>
-    <Card.Section className={styles.listingSection}>
-      <Button href={`/listings/${listing?.Id}`} variant="text" size="sm" newWindowTarget>
-        {t("inviteToApplyPage.buildingDetails")}
-      </Button>
-    </Card.Section>
-  </Card>
-)
-
 const InviteToApplyPage = ({
   urlParams: { response, applicationNumber, deadline },
-  deadlinePassedPath,
+  submitPreviewLinkTokenParam,
   documentsPath,
 }: HomePageProps) => {
   const [listing, setListing] = useState<RailsSaleListing>(null)
-
-  const submitLink = `listings/${listing?.Id}/invite-to-apply?response=yes&applicationNumber=${applicationNumber}&deadline=${deadline}`
 
   const { router } = useContext(NavigationContext)
 
@@ -81,31 +46,77 @@ const InviteToApplyPage = ({
     })
   }, [router, router.pathname])
 
-  const { unleashFlag: inviteToApplyFlag } = useFeatureFlag("partners.inviteToApply", false)
+  const { unleashFlag: inviteApplyFlag, variant } = useVariantFlag("partners.inviteToApply", false)
+  const { unleashFlag: jwtLinkParamsFlag } = useFeatureFlag(
+    "temp.webapp.inviteToApply.JwtLinkParams",
+    false
+  )
 
-  return inviteToApplyFlag ? (
-    <LoadingOverlay isLoading={!listing}>
-      {response === "yes" ? (
-        <InviteToApplySubmitYourInfo listing={listing} deadline={deadline} />
-      ) : (
-        <FormLayout>
-          {<InviteToApplyHeader listing={listing} />}
-          {response === "contact" && (
-            <InviteToApplyContactMeLater
-              listing={listing}
-              deadline={deadline}
-              submitLink={submitLink}
-            />
-          )}
-          {response === "no" && (
-            <InviteToApplyWithdrawn listing={listing} deadline={deadline} submitLink={submitLink} />
-          )}
-          {deadlinePassedPath && <InviteToApplyDeadlinePassed listing={listing} />}
-          {documentsPath && <InviteToApplyDocuments listing={listing} />}
-        </FormLayout>
-      )}
-    </LoadingOverlay>
-  ) : null
+  const generateSubmitLink = (signLinkParams: boolean) => {
+    const submitLinkParams = { applicationNumber, deadline }
+    const submitLinkQueryStr =
+      signLinkParams && submitPreviewLinkTokenParam
+        ? `t=${submitPreviewLinkTokenParam}`
+        : new URLSearchParams(submitLinkParams).toString()
+    return `/${getCurrentLanguage()}/listings/${listing?.Id}/invite-to-apply?${submitLinkQueryStr}`
+  }
+
+  const enabledListingIds =
+    typeof variant === "object" && variant?.payload?.value ? variant.payload.value.split(",") : []
+  const isInviteApplyEnabled =
+    inviteApplyFlag && listing?.Id && enabledListingIds.includes(listing.Id)
+
+  if (!isInviteApplyEnabled) {
+    return null
+  }
+
+  if (documentsPath) {
+    return <InviteToApplyDocuments listing={listing} />
+  }
+
+  // invitee has not responded, they are merely previewing the submit page
+  if (!response) {
+    return (
+      <InviteToApplySubmitYourInfo
+        listing={listing}
+        deadline={deadline}
+        applicationNumber={applicationNumber}
+      />
+    )
+  }
+
+  if (response === "no") {
+    return (
+      <InviteToApplyWithdrawn
+        listing={listing}
+        deadline={deadline}
+        submitPreviewLink={generateSubmitLink(jwtLinkParamsFlag)}
+      />
+    )
+  }
+
+  if (isDeadlinePassed(deadline)) {
+    return <InviteToApplyDeadlinePassed listing={listing} />
+  }
+
+  if (response === "yes") {
+    return (
+      <InviteToApplySubmitYourInfo
+        listing={listing}
+        deadline={deadline}
+        applicationNumber={applicationNumber}
+      />
+    )
+  }
+  if (response === "contact") {
+    return (
+      <InviteToApplyContactMeLater
+        listing={listing}
+        deadline={deadline}
+        submitPreviewLink={generateSubmitLink(jwtLinkParamsFlag)}
+      />
+    )
+  }
 }
 
 export default withAppSetup(InviteToApplyPage, { pageName: AppPages.InviteToApply })

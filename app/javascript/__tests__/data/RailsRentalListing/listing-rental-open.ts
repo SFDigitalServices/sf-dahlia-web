@@ -195,6 +195,7 @@ export const openRentalListing: RailsRentalListing = {
   Office_Hours: "Monday - Friday \r\n9:00 AM - 5:00 PM",
   Lottery_Status: "Lottery Complete",
   Building_Name: "681 Florida (2070 Bryant) Casa Adelante",
+  Building_Name_for_Process: "681 Florida (2070 Bryant) Casa Adelante",
   Project_ID: "2016-080",
   Building_Street_Address: "681 Florida St",
   Building_City: "San Francisco",

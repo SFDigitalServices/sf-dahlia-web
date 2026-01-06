@@ -5,7 +5,6 @@ import crypto from "crypto"
 import { useForm, FormProvider } from "react-hook-form"
 import { FormEngineProvider } from "../../formEngine/formEngineContext"
 import { openRentalListing } from "../data/RailsRentalListing/listing-rental-open"
-import { FormStepProvider } from "../../formEngine/formStepContext"
 
 export const mockWindowLocation = (): typeof window.location => {
   const originalLocation = { ...window.location }
@@ -53,37 +52,45 @@ export const defineCryptoApi = () => {
 }
 
 // Wrapper for application form component tests
-export const formContextWrapper = (formComponent: React.ReactElement) => {
+export const renderWithFormContextWrapper = (formComponent: React.ReactElement) => {
+  const formEngineContextValue = {
+    listing: openRentalListing,
+    formData: {},
+    saveFormData: jest.fn(),
+    dataSources: {
+      listing: openRentalListing,
+      form: {},
+      preferences: {},
+    },
+    stepInfoMap: [{ slug: "test", fieldNames: [] }],
+    sectionNames: [],
+    currentStepIndex: 0,
+    handleNextStep: jest.fn(),
+    handlePrevStep: jest.fn(),
+  }
+
   const Wrapper = ({ children }: { children: React.ReactNode }) => {
     const formMethods = useForm({
-      mode: "onBlur",
-      reValidateMode: "onBlur",
+      mode: "all",
       shouldFocusError: false,
       defaultValues: {},
     })
+
+    const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+      event.preventDefault()
+      void formMethods.handleSubmit(jest.fn())(event)
+    }
+
     return (
-      <FormStepProvider value={formMethods}>
-        <FormEngineProvider
-          value={{
-            listing: openRentalListing,
-            formData: {},
-            saveFormData: jest.fn(),
-            dataSources: {
-              listing: openRentalListing,
-              form: {},
-              preferences: {},
-            },
-            stepInfoMap: [{ slug: "test", fieldNames: [] }],
-            sectionNames: [],
-            currentStepIndex: 0,
-            handleNextStep: jest.fn(),
-            handlePrevStep: jest.fn(),
-          }}
-        >
-          <FormProvider {...formMethods}>{children}</FormProvider>
-        </FormEngineProvider>
-      </FormStepProvider>
+      <FormEngineProvider value={formEngineContextValue}>
+        <FormProvider {...formMethods}>
+          <form onSubmit={onSubmit}>
+            {children}
+            <button type="submit">next</button>
+          </form>
+        </FormProvider>
+      </FormEngineProvider>
     )
   }
-  return render(formComponent, { wrapper: Wrapper })
+  render(formComponent, { wrapper: Wrapper })
 }

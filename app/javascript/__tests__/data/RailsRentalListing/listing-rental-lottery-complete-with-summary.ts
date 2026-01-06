@@ -84,6 +84,7 @@ export const lotteryCompleteRentalListingWithSummary: RailsRentalListing = {
     "Monday to Friday, 10:00 am to 5:00 pm <br/>Please call, email, or text to schedule an appointment.",
   Lottery_Status: "Lottery Complete",
   Building_Name: "The Hayes",
+  Building_Name_for_Process: "The Hayes",
   Project_ID: "2011-025",
   Building_Street_Address: "55 Page St",
   Building_City: "San Francisco",

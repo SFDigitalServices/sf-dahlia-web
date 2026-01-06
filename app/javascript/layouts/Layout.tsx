@@ -55,7 +55,11 @@ const getLanguageItems = () => {
       active: getCurrentLanguage(window.location.pathname) === item.prefix,
       label: item.getLabel(),
       onClick: () => {
-        window.location.href = getLocalizedPath(window.location.pathname, item.prefix)
+        window.location.href = getLocalizedPath(
+          window.location.pathname,
+          item.prefix,
+          window.location.search
+        )
       },
     })
   }

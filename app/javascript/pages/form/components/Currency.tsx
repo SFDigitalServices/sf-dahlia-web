@@ -1,17 +1,40 @@
+/* eslint-disable @typescript-eslint/unbound-method */
 import React from "react"
-import { t } from "@bloom-housing/ui-components"
-import { Card } from "@bloom-housing/ui-seeds"
+import { t, Field } from "@bloom-housing/ui-components"
+import { useFormContext } from "react-hook-form"
 
 interface CurrencyProps {
   label: string
+  note?: string
+  errorMessage: string
+  fieldNames: {
+    amount: string
+  }
 }
 
-const Currency = ({ label }: CurrencyProps) => {
+const Currency = ({ label, note, errorMessage, fieldNames: { amount } }: CurrencyProps) => {
+  const {
+    register,
+    setValue,
+    getValues,
+    formState: { errors },
+  } = useFormContext()
+
   return (
-    <Card>
-      <Card.Header>Currency Component</Card.Header>
-      <Card.Section>{t(label)}</Card.Section>
-    </Card>
+    <Field
+      id={amount}
+      name={amount}
+      type="currency"
+      label={t(label)}
+      error={!!errors?.[amount]}
+      register={register}
+      errorMessage={t(errorMessage)}
+      prepend={"$"}
+      subNote={t(note)}
+      setValue={setValue} // Field component uses setValue and getValues for currency input types
+      getValues={getValues}
+      validation={{ required: true, min: 0.01 }}
+    />
   )
 }
 

@@ -67,6 +67,7 @@ export const closedRentalListing: RailsRentalListing = {
   nGeneral_Application_Total: 2041,
   Lottery_Status: "Not Yet Run",
   Building_Name: "Automated Test Building",
+  Building_Name_for_Process: "Automated Test Building",
   Project_ID: "Test 001",
   Building_City: "San Francisco",
   Building_State: "CA",
