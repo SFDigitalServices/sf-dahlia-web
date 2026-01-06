@@ -266,6 +266,15 @@ RSpec.describe DahliaBackend::MessageService do
                                               listing_id)
       end
 
+      it 'sends the invite response for "submit"' do
+        expect(client).to receive(:post).with(
+          '/messages/invite-to-apply/response/submit', anything
+        )
+
+        service.send_invite_to_apply_response(deadline, application_number, 'submit',
+                                              listing_id)
+      end
+
       it 'includes applicant information' do
         expect(client).to receive(:post).with(anything, hash_including(
                                                           applicants: [{

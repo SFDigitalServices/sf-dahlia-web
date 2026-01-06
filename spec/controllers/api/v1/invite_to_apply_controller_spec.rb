@@ -3,97 +3,69 @@
 require 'rails_helper'
 
 describe Api::V1::InviteToApplyController do
-  describe '#submit_docs' do
-    let(:api_client) { instance_double(DahliaBackend::ApiClient) }
-    let(:application_number) { 'APP123' }
-
+  let(:deadline) { '2099-01-01' }
+  let(:expired_deadline) { '1999-01-01' }
+  let(:application_number) { 'a0o123' }
+  let(:response_type) { 'submit' }
+  let(:listing_id) { 'a0W123' }
+  let(:valid_params) do
+    {
+      record: {
+        deadline: deadline,
+        applicationNumber: application_number,
+        response: response_type,
+        listingId: listing_id,
+      },
+    }
+  end
+  let(:expired_deadline_params) do
+    {
+      record: {
+        deadline: expired_deadline,
+        applicationNumber: application_number,
+        response: response_type,
+        listingId: listing_id,
+      },
+    }
+  end
+  let(:invalid_params) do
+    {
+      record: {
+        deadline: '',
+        response: response_type,
+        listingId: listing_id,
+      },
+    }
+  end
+  describe '#record_response' do
     before do
-      allow(DahliaBackend::ApiClient).to receive(:new).and_return(api_client)
+      allow(DahliaBackend::MessageService).to receive(:send_invite_to_apply_response)
     end
 
-    context 'with valid application number' do
-      context 'when API call is successful' do
-        before do
-          allow(api_client).to receive(:post).and_return({ success: true })
-        end
-
-        it 'returns success' do
-          post :submit_docs, params: { application_number: application_number }
-          expect(response).to have_http_status(:ok)
-          expect(JSON.parse(response.body)).to eq({ 'success' => true })
-        end
-
-        it 'calls the backend API with correct parameters' do
-          expect(api_client).to receive(:post).with(
-            '/messages/invite-to-apply/response/submit',
-            {
-              applicants: [
-                {
-                  lotteryNumber: '',
-                  applicationNumber: application_number,
-                  primaryContact: {
-                    firstName: '',
-                    email: '',
-                  },
-                },
-              ],
-              listingId: '',
-              listingName: '',
-              buildingName: '',
-              deadlineDate: '',
-            },
-          )
-          post :submit_docs, params: { application_number: application_number }
-        end
-      end
-
-      context 'when API call returns nil' do
-        before do
-          allow(api_client).to receive(:post).and_return(nil)
-        end
-
-        it 'returns internal server error' do
-          post :submit_docs, params: { application_number: application_number }
-          expect(response).to have_http_status(:internal_server_error)
-          expect(JSON.parse(response.body)).to eq({ 'error' => 'Failed to submit response' })
-        end
-      end
-
-      context 'when API call raises an exception' do
-        before do
-          allow(api_client).to receive(:post).and_raise(StandardError, 'API Error')
-        end
-
-        it 'returns internal server error' do
-          post :submit_docs, params: { application_number: application_number }
-          expect(response).to have_http_status(:internal_server_error)
-          expect(JSON.parse(response.body)).to eq({ 'error' => 'An error occurred' })
-        end
-
-        it 'logs the error' do
-          expect(Rails.logger).to receive(:error).with('Error submitting invite to apply response: API Error')
-          post :submit_docs, params: { application_number: application_number }
-        end
-      end
+    it 'passes params to messaging service for valid params' do
+      post :record_response, params: valid_params
+      expect(DahliaBackend::MessageService)
+        .to have_received(:send_invite_to_apply_response).with(
+          deadline,
+          application_number,
+          response_type,
+          listing_id,
+        )
+      expect(response).to be_ok
     end
 
-    context 'with missing application number' do
-      it 'returns unprocessable entity error when application_number is blank' do
-        post :submit_docs, params: { application_number: '' }
-        expect(response).to have_http_status(:unprocessable_entity)
-        expect(JSON.parse(response.body)).to eq({ 'error' => 'Application number is required' })
-      end
+    it 'does not pass params to messaging service for expired deadline' do
+      post :record_response, params: expired_deadline_params
+      expect(DahliaBackend::MessageService)
+        .not_to have_received(:send_invite_to_apply_response)
+      expect(response).to be_ok
+    end
 
-      it 'returns unprocessable entity error when application_number is nil' do
-        post :submit_docs, params: {}
-        expect(response).to have_http_status(:unprocessable_entity)
-        expect(JSON.parse(response.body)).to eq({ 'error' => 'Application number is required' })
-      end
-
-      it 'does not call the backend API when application_number is missing' do
-        expect(api_client).not_to receive(:post)
-        post :submit_docs, params: { application_number: '' }
-      end
+    it 'returns an error for invalid params' do
+      post :record_response, params: invalid_params
+      expect(DahliaBackend::MessageService)
+        .not_to have_received(:send_invite_to_apply_response)
+      expect(response).not_to be_ok
     end
   end
 end

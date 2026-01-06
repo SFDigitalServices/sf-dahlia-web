@@ -61,15 +61,18 @@ class Api::V1::InviteToApplyController < ApiController
         "application_number=#{application_number}, " \
         "response=#{response.inspect}",
       )
-      return
+    else
+      DahliaBackend::MessageService.send_invite_to_apply_response(
+        deadline,
+        application_number,
+        response,
+        listing_id,
+      )
     end
-
-    DahliaBackend::MessageService.send_invite_to_apply_response(
-      deadline,
-      application_number,
-      response,
-      listing_id,
-    )
+    render json: { success: true }, status: :ok
+  rescue StandardError => e
+    Rails.logger.error("Error submitting invite to apply response: #{e.message}")
+    render json: { error: 'An error occurred' }, status: :internal_server_error
   end
 
   private

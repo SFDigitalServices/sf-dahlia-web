@@ -1,14 +1,19 @@
 import React from "react"
 import { screen } from "@testing-library/react"
+import { userEvent } from "@testing-library/user-event"
 import "@testing-library/jest-dom"
 import { t } from "@bloom-housing/ui-components"
 import InviteToApplyPage from "../../pages/inviteToApply/invite-to-apply"
 import { renderAndLoadAsync } from "../__util__/renderUtils"
 import { localizedFormat } from "../../util/languageUtil"
 import { getListing } from "../../api/listingApiService"
+import { recordResponse } from "../../api/inviteToApplyApiService"
 import { ConfigContext } from "../../lib/ConfigContext"
 
 jest.mock("../../api/listingApiService")
+jest.mock("../../api/inviteToApplyApiService", () => ({
+  recordResponse: jest.fn(),
+}))
 jest.mock("../../hooks/useFeatureFlag", () => ({
   useFeatureFlag: () => ({
     isEnabled: true,
@@ -198,6 +203,25 @@ describe("Invite to Apply Page", () => {
           })
         )
       ).toBeInTheDocument()
+    })
+
+    it("renders submit your info button which calls API to record the response", async () => {
+      await renderWithContext(
+        <InviteToApplyPage
+          assetPaths={"/"}
+          urlParams={{
+            deadline: mockFutureDeadline,
+            response: "yes",
+            applicationNumber: "a0o123",
+          }}
+        />
+      )
+      await userEvent.click(
+        screen.getByRole("button", {
+          name: t("inviteToApplyPage.submitYourInfo.whatToDo.step3.p4"),
+        })
+      )
+      expect(recordResponse).toHaveBeenCalled()
     })
 
     it("renders submit your info page", async () => {
