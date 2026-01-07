@@ -38,7 +38,7 @@
             "be_a_current_employee": "Prestar servicio como empleado del Distrito Unificado de Escuelas de SF",
             "enter_your_job_code": "Ingrese su código de empleo",
             "if_you_entered_the_right_information": "Si ingresó los datos correctos y considera que se trata de un error, envíe un correo electrónico al responsable del SFUSD a la siguiente dirección: {{email}}.",
-            "job_classification_number_info": "Su código de empleo tiene entre tres y seis caracteres y puede incluir tanto números como letras. <a href=\"{{url}}\" target=\"_blank\">Encuentre su código de empleo en el sistema EMPowerSF</a>.",
+            "job_classification_number_info": "Su código de empleo tiene entre tres y seis caracteres y puede incluir tanto números como letras.",
             "job_code": "Código de empleo",
             "job_code_is_incorrect": "El código de empleo es incorrecto. Compruebe si hay algún error y vuelva a intentarlo.",
             "no_i_do_not_work": "No, no trabajo en el Distrito Unificado de Escuelas de SF.",

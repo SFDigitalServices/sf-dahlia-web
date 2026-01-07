@@ -38,7 +38,7 @@
             "be_a_current_employee": "為三藩市聯合校區現任雇員",
             "enter_your_job_code": "請輸入您的職業代碼",
             "if_you_entered_the_right_information": "如果您輸入了正確資訊，並認為這是一項錯誤，請傳送電子郵件至 {{email}} 與 SFUSD 聯絡",
-            "job_classification_number_info": "您的職業代碼為 3 至 6 個字元，可包含數字和字母。<a href=\"{{url}}\" target=\"_blank\">在 EMPowerSF 上尋找</a>。",
+            "job_classification_number_info": "您的職業代碼為 3 至 6 個字元，可包含數字和字母。",
             "job_code": "職業代碼",
             "job_code_is_incorrect": "職業代碼不正確。請檢查是否有錯誤，然後再試一次。",
             "no_i_do_not_work": "不，我並不在三藩市聯合校區工作",

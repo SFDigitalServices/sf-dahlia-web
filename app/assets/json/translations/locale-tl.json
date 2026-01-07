@@ -38,7 +38,7 @@
             "be_a_current_employee": "Kasalukuyan kang empleyado ng SF Unified School District",
             "enter_your_job_code": "Ilagay ang iyong Job Code",
             "if_you_entered_the_right_information": "Kung tamang impormasyon ang inilagay mo at sa tingin mo ay pagkakamali ito, i-email ang SFUSD sa {{email}}",
-            "job_classification_number_info": "3 hanggang 6 na character ang iyong Job Code at posibleng mayroon itong mga numero at titik. <a href=\"{{url}}\" target=\"_blank\">Hanapin ito sa EMPowerSF</a>.",
+            "job_classification_number_info": "3 hanggang 6 na character ang iyong Job Code at posibleng mayroon itong mga numero at titik.",
             "job_code": "Job Code",
             "job_code_is_incorrect": "Mali ang Job Code. Suriin kung may mga pagkakamali at subukan ulit.",
             "no_i_do_not_work": "Hindi ako nagtatrabaho sa SF Unified School District",
