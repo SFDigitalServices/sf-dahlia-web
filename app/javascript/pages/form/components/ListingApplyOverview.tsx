@@ -3,7 +3,7 @@ import { t } from "@bloom-housing/ui-components"
 import { Button, Heading } from "@bloom-housing/ui-seeds"
 import { CardSection } from "@bloom-housing/ui-seeds/src/blocks/Card"
 import { useFormEngineContext } from "../../../formEngine/formEngineContext"
-import "./ListingApplyOverview.scss"
+import styles from "./ListingApplyOverview.module.scss"
 import { getDocumentChecklistPath } from "../../../util/routeUtil"
 import { getCurrentLanguage, LanguagePrefix, renderInlineMarkup } from "../../../util/languageUtil"
 
@@ -12,16 +12,16 @@ const ListingApplyOverview = () => {
   const { handleNextStep } = formEngineContext
 
   return (
-    <div className="listing-apply-overview">
+    <div className={styles["listing-apply-overview"]}>
       <CardSection>
-        <Heading priority={2} size="2xl" className="listing-apply-overview-title">
+        <Heading priority={2} size="2xl" className={styles["listing-apply-overview-title"]}>
           {t("a4Overview.title")}
         </Heading>
         {getCurrentLanguage() === LanguagePrefix.Chinese && (
-          <p className="listing-apply-overview-chinese">{t("a4Overview.subtitle")}</p>
+          <p className={styles["listing-apply-overview-chinese"]}>{t("a4Overview.subtitle")}</p>
         )}
         <hr />
-        <div className="listing-apply-overview-text">
+        <div className={styles["listing-apply-overview-text"]}>
           <p>{t("a4Overview.p1")}</p>
           <p>{renderInlineMarkup(t("a4Overview.p2", { href: getDocumentChecklistPath() }))}</p>
           <p>{t("a4Overview.p3")}</p>
@@ -29,7 +29,7 @@ const ListingApplyOverview = () => {
           <p>{t("a4Overview.warning")}</p>
         </div>
       </CardSection>
-      <CardSection className="listing-apply-overview-footer">
+      <CardSection className={styles["listing-apply-overview-footer"]}>
         <Button variant="primary" onClick={handleNextStep}>
           {t("t.next")}
         </Button>

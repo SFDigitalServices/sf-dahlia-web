@@ -2,7 +2,6 @@
 import React from "react"
 import { t, FieldGroup } from "@bloom-housing/ui-components"
 import { useFormContext } from "react-hook-form"
-import "./YesNoRadio.scss"
 
 interface YesNoRadioProps {
   label?: string
