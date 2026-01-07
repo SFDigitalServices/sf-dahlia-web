@@ -5,7 +5,7 @@ import { getListingAddressString } from "../../../util/listingUtil"
 import { localizedFormat, formatTimeOfDay } from "../../../util/languageUtil"
 import { useFormEngineContext } from "../../../formEngine/formEngineContext"
 import fallbackImg from "../../../../assets/images/bg@1200.jpg"
-import "./ListingApplyIntro.scss"
+import styles from "./ListingApplyIntro.module.scss"
 import { getSignInPath } from "../../../util/routeUtil"
 
 const ListingApplyIntro = () => {
@@ -18,18 +18,20 @@ const ListingApplyIntro = () => {
       : (listing?.imageURL ?? fallbackImg)
 
   return (
-    <div className="listing-apply-intro">
-      <Heading priority={1} size="2xl" className="listing-apply-intro-title">
+    <div className={styles["listing-apply-intro"]}>
+      <Heading priority={1} size="2xl" className={styles["listing-apply-intro-title"]}>
         {t("a1Intro.title")}
       </Heading>
-      <div className="listing-apply-intro-image">
-        <div className="listing-apply-intro-image-text">
-          <p className="listing-apply-intro-name">{listing.Name}</p>
-          <p className="listing-apply-intro-address">{getListingAddressString(listing)}</p>
+      <div className={styles["listing-apply-intro-image"]}>
+        <div className={styles["listing-apply-intro-image-text"]}>
+          <p className={styles["listing-apply-intro-name"]}>{listing.Name}</p>
+          <p className={styles["listing-apply-intro-address"]}>
+            {getListingAddressString(listing)}
+          </p>
         </div>
         <img src={imageUrl} alt={`${listing.Name}`} />
       </div>
-      <Message variant="primary-inverse" className="listing-apply-intro-message">
+      <Message variant="primary-inverse" className={styles["listing-apply-intro-message"]}>
         {t("listingDetails.applicationsDeadline.withDateTime", {
           date: localizedFormat(listing.Application_Due_Date, "LL"),
           time: formatTimeOfDay(listing.Application_Due_Date),
@@ -38,7 +40,7 @@ const ListingApplyIntro = () => {
       <Heading priority={2} size="xl">
         {t("languages.choose")}
       </Heading>
-      <div className="listing-apply-intro-buttons">
+      <div className={styles["listing-apply-intro-buttons"]}>
         <Button variant="primary-outlined" onClick={() => handleNextStep()}>
           Begin
         </Button>
@@ -53,7 +55,7 @@ const ListingApplyIntro = () => {
         </Button>
       </div>
       <hr />
-      <div className="listing-apply-intro-footer">
+      <div className={styles["listing-apply-intro-footer"]}>
         <Heading priority={2} size="2xl">
           {t("createAccount.alreadyHaveAccount")}
         </Heading>
