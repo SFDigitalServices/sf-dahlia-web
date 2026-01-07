@@ -52,6 +52,7 @@ module DahliaBackend
       when 'yes' then '/messages/invite-to-apply/response/yes'
       when 'no' then '/messages/invite-to-apply/response/no'
       when 'contact' then '/messages/invite-to-apply/response/contact'
+      when 'submit' then '/messages/invite-to-apply/response/submit'
       end
     end
 

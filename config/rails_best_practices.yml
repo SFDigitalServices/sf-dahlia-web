@@ -43,6 +43,9 @@ RemoveUnusedMethodsInControllersCheck:
         "InviteToApplyPageController#index",
         "InviteToApplyPageController#documents",
         "InviteToApplyPageController#use_react_app",
+        "Api::V1::InviteToApplyController#index",
+        "Api::V1::InviteToApplyController#record_response",
+        "Api::V1::InviteToApplyController#confirmation_params",
       ],
   }
 RemoveUnusedMethodsInHelpersCheck: { except_methods: [] }

@@ -43,41 +43,33 @@ class Api::V1::InviteToApplyController < ApiController
     end
   end
 
-  def submit_docs
-    application_number = params[:application_number]
+  def record_response
+    params.expect(record: %i[deadline applicationNumber response listingId])
 
-    if application_number.blank?
-      render json: { error: 'Application number is required' },
-             status: :unprocessable_entity
-      return
+    params[:record].each do |k, v|
+      raise "#{k} cannot be blank: #{v.inspect}" if v.blank?
     end
 
-    # Call the backend API through our service
-    response = DahliaBackend::ApiClient.new.post(
-      '/messages/invite-to-apply/response/submit',
-      {
-        applicants: [
-          {
-            lotteryNumber: '',
-            applicationNumber: application_number,
-            primaryContact: {
-              firstName: '',
-              email: '',
-            },
-          },
-        ],
-        listingId: '',
-        listingName: '',
-        buildingName: '',
-        deadlineDate: '',
-      },
-    )
+    deadline, application_number, response, listing_id =
+      params[:record].values_at(:deadline, :applicationNumber, :response, :listingId)
 
-    if response
-      render json: { success: true }, status: :ok
+    if deadline_has_passed?(deadline)
+      Rails.logger.info(
+        'InviteToApplyController#record_response: deadline passed so *NOT* recording ' \
+        "listingId=#{listing_id}, " \
+        "deadline=#{deadline}, " \
+        "application_number=#{application_number}, " \
+        "response=#{response.inspect}",
+      )
     else
-      render json: { error: 'Failed to submit response' }, status: :internal_server_error
+      DahliaBackend::MessageService.send_invite_to_apply_response(
+        deadline,
+        application_number,
+        response,
+        listing_id,
+      )
     end
+    render json: { success: true }, status: :ok
   rescue StandardError => e
     Rails.logger.error("Error submitting invite to apply response: #{e.message}")
     render json: { error: 'An error occurred' }, status: :internal_server_error
@@ -120,6 +112,10 @@ class Api::V1::InviteToApplyController < ApiController
   def convet_date_format(date)
     date = Date.parse(date)
     date.strftime('%B %d, %Y')
+  end
+
+  def deadline_has_passed?(deadline)
+    Time.zone.parse(deadline).to_date < Time.zone.today
   end
 
   def env_secret
