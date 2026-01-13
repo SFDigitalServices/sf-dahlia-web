@@ -206,6 +206,9 @@
 
   .submitYourInfoList {
     li {
+      all: unset;
+      display: list-item;
+      list-style-type: disc;
       margin-left: var(--seeds-spacer-label);
     }
   }
