@@ -282,6 +282,9 @@ const InviteToApplySubmitYourInfo = ({
             <PreparingYourApplication />
             <WhatToDo listing={listing} deadline={deadline} applicationNumber={applicationNumber} />
             <Mobile>
+              <Heading size="lg" priority={3}>
+                {t("inviteToApplyPage.submitYourInfo.sidebar")}
+              </Heading>
               <InviteToApplyLeasingAgentInfo listing={listing} />
             </Mobile>
             <WhatHappensNext />
