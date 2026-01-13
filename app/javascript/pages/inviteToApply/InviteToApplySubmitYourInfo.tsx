@@ -211,13 +211,9 @@ const WhatHappensNext = () => {
       </Heading>
       <p>{t("inviteToApplyPage.submitYourInfo.whatHappensNext.p2")}</p>
       <p>{t("inviteToApplyPage.submitYourInfo.whatHappensNext.p3")}</p>
-      <ul>
-        <li className={styles.submitYourInfoList}>
-          {t("inviteToApplyPage.submitYourInfo.whatHappensNext.p4")}
-        </li>
-        <li className={styles.submitYourInfoList}>
-          {t("inviteToApplyPage.submitYourInfo.whatHappensNext.p5")}
-        </li>
+      <ul className={styles.submitYourInfoList}>
+        <li>{t("inviteToApplyPage.submitYourInfo.whatHappensNext.p4")}</li>
+        <li>{t("inviteToApplyPage.submitYourInfo.whatHappensNext.p5")}</li>
       </ul>
       <p>{t("inviteToApplyPage.submitYourInfo.whatHappensNext.p6")}</p>
       <Heading priority={3} size="lg">
@@ -282,6 +278,9 @@ const InviteToApplySubmitYourInfo = ({
             <PreparingYourApplication />
             <WhatToDo listing={listing} deadline={deadline} applicationNumber={applicationNumber} />
             <Mobile>
+              <Heading size="lg" priority={3}>
+                {t("inviteToApplyPage.submitYourInfo.sidebar")}
+              </Heading>
               <InviteToApplyLeasingAgentInfo listing={listing} />
             </Mobile>
             <WhatHappensNext />
