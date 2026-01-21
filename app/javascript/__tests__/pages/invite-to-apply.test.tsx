@@ -71,9 +71,7 @@ describe("Invite to Apply Page", () => {
     document.documentElement.lang = "en"
     jest.clearAllMocks()
     ;(getListing as jest.Mock).mockResolvedValue(mockListing)
-    ;(getApplication as jest.Mock).mockResolvedValue({
-      data: { fileUploadUrl: "www.file-upload-url.com" },
-    })
+    ;(getApplication as jest.Mock).mockResolvedValue({ fileUploadUrl: "www.file-upload-url.com" })
 
     // Mock console.error to suppress expected errors during tests
     jest.spyOn(console, "error").mockImplementation(() => {})
