@@ -322,7 +322,7 @@
   "documentChecklist.copDoc1": "The COP program is for families who were displaced by the SF Redevelopment Agency. COP gives priority in housing lotteries.",
   "documentChecklist.copDoc2": "Learn more about the <a href='%{url}' target='_blank'>Certificate of Preference Program</a>.",
   "documentChecklist.dthpDoc1": "The DTHP program is for tenants who lost their homes because of:",
-  "documentChecklist.dthpDoc2": "<ul className='list-disc ml-7'><li>Ellis Act or owner move-in evictions</li><li>Extensive fire damage</li><li>Unaffordable rent from expired restrictions</li></ul>",
+  "documentChecklist.dthpDoc2": "<ul className='list-disc ml-7'><li>An Ellis Act or Owner Move-In eviction after 2010</li><li>Extensive fire damage</li><li>Unaffordable rent from expired restrictions</li><li>Unlawful residential unit deemed by the Planning Commission</li></ul>",
   "documentChecklist.dthpDoc3": "Learn more about the <a href='%{url}' target='_blank'>Displaced Tenant Housing Preference Program</a>.",
   "documentChecklist.header": "This list outlines the documents your household might need to provide when applying for housing.",
   "documentChecklist.homebuyerDesc": "You must have these documents to apply:",
