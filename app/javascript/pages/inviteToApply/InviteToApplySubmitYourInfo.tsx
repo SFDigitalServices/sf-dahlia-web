@@ -108,6 +108,7 @@ const WhatToDo = ({
   const handleSubmitClick = useCallback(() => {
     // Handle the API call and open URL
     void (async () => {
+      const uploadUrl = await getFileUploadUrl(listing, applicationNumber)
       try {
         // Call the API if applicationNumber is provided
         if (applicationNumber) {
@@ -119,11 +120,11 @@ const WhatToDo = ({
           })
         }
         // Open the file upload URL after API call (or directly if no applicationNumber)
-        window.open(await getFileUploadUrl(listing, applicationNumber), "_blank")
+        window.open(uploadUrl, "_blank")
       } catch (error) {
         console.error("Error submitting invite to apply response:", error)
         // Still open the file upload URL even if API call fails
-        window.open(await getFileUploadUrl(listing, applicationNumber), "_blank")
+        window.open(uploadUrl, "_blank")
       }
     })()
   }, [applicationNumber, listing, deadline])
