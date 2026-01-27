@@ -34,7 +34,6 @@ class InviteToApplyPageController < ApplicationController
       deadline: decoded_params['deadline'],
       response: decoded_params['response'],
       applicationNumber: decoded_params['applicationNumber'],
-      fileUploadUrl: decoded_params['fileUploadUrl'],
     }
 
     {
@@ -48,7 +47,6 @@ class InviteToApplyPageController < ApplicationController
     deadline = decoded_params['deadline']
     response = decoded_params['response']
     application_number = decoded_params['applicationNumber']
-    file_upload_url = decoded_params['fileUploadUrl']
 
     if response.blank? || (deadline && deadline_has_passed?(deadline))
       Rails.logger.info(
@@ -56,7 +54,6 @@ class InviteToApplyPageController < ApplicationController
         "deadline=#{deadline}, " \
         "application_number=#{application_number}, " \
         "response=#{response.inspect}",
-        "file_upload_url=#{file_upload_url}",
       )
       return
     end
@@ -65,8 +62,7 @@ class InviteToApplyPageController < ApplicationController
       'InviteToApplyPageController#record_response: recording ' \
       "deadline=#{deadline}, " \
       "application_number=#{application_number}, " \
-      "response=#{response}, " \
-      "file_upload_url=#{file_upload_url}",
+      "response=#{response}",
     )
 
     DahliaBackend::MessageService.send_invite_to_apply_response(
@@ -74,7 +70,6 @@ class InviteToApplyPageController < ApplicationController
       application_number,
       response,
       params['id'], # listing_id
-      file_upload_url,
     )
   end
 

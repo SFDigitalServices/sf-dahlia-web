@@ -30,7 +30,6 @@ interface InviteToApplySubmitYourInfoProps {
   listing: RailsSaleListing | null
   deadline: string
   applicationNumber?: string
-  fileUploadUrl?: string
 }
 
 const DeadlineBanner = ({ deadline }: { deadline: string }) => {
@@ -92,16 +91,13 @@ const WhatToDo = ({
   listing,
   deadline,
   applicationNumber,
-  fileUploadUrl,
 }: {
   listing: RailsSaleListing
   deadline: string
   applicationNumber?: string
-  fileUploadUrl?: string
 }) => {
   const handleSubmitClick = useCallback(() => {
     // Handle the API call and open URL
-    const url = fileUploadUrl || listing?.File_Upload_URL
     void (async () => {
       try {
         // Call the API if applicationNumber is provided
@@ -114,14 +110,14 @@ const WhatToDo = ({
           })
         }
         // Open the file upload URL after API call (or directly if no applicationNumber)
-        window.open(url, "_blank")
+        window.open(listing?.File_Upload_URL, "_blank")
       } catch (error) {
         console.error("Error submitting invite to apply response:", error)
         // Still open the file upload URL even if API call fails
-        window.open(url, "_blank")
+        window.open(listing?.File_Upload_URL, "_blank")
       }
     })()
-  }, [applicationNumber, listing, deadline, fileUploadUrl])
+  }, [applicationNumber, listing, deadline])
 
   return (
     <div className={styles.whatToDoList}>
@@ -264,7 +260,6 @@ const InviteToApplySubmitYourInfo = ({
   listing,
   deadline,
   applicationNumber,
-  fileUploadUrl,
 }: InviteToApplySubmitYourInfoProps) => {
   const { getAssetPath } = React.useContext(ConfigContext)
   const titleName = listing?.Building_Name_for_Process || listing?.Name
@@ -281,12 +276,7 @@ const InviteToApplySubmitYourInfo = ({
             <SubmitYourInfoHeader listing={listing} />
             <DeadlineBanner deadline={deadline} />
             <PreparingYourApplication />
-            <WhatToDo
-              listing={listing}
-              deadline={deadline}
-              applicationNumber={applicationNumber}
-              fileUploadUrl={fileUploadUrl}
-            />
+            <WhatToDo listing={listing} deadline={deadline} applicationNumber={applicationNumber} />
             <Mobile>
               <Heading size="lg" priority={3}>
                 {t("inviteToApplyPage.submitYourInfo.sidebar")}
