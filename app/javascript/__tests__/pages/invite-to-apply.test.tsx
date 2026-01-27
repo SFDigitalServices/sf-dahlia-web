@@ -119,10 +119,11 @@ describe("Invite to Apply Page", () => {
             deadline: mockFutureDeadline,
             response: "no",
             applicationNumber: "0000",
+            fileUploadUrl: "",
           }}
         />
       )
-      const submitPreviewLink = `/en/listings/${mockListing.Id}/invite-to-apply?applicationNumber=0000&deadline=${mockFutureDeadline}`
+      const submitPreviewLink = `/en/listings/${mockListing.Id}/invite-to-apply?applicationNumber=0000&deadline=${mockFutureDeadline}&fileUploadUrl=`
 
       expect(screen.getByText(t("inviteToApplyPage.withdrawn.title"))).toBeInTheDocument()
       expect(screen.getByText(mockListing.Building_Name_for_Process)).toBeInTheDocument()
@@ -146,11 +147,12 @@ describe("Invite to Apply Page", () => {
             deadline: mockFutureDeadline,
             response: "contact",
             applicationNumber: "0000",
+            fileUploadUrl: "",
           }}
         />
       )
 
-      const submitPreviewLink = `/en/listings/${mockListing.Id}/invite-to-apply?applicationNumber=0000&deadline=${mockFutureDeadline}`
+      const submitPreviewLink = `/en/listings/${mockListing.Id}/invite-to-apply?applicationNumber=0000&deadline=${mockFutureDeadline}&fileUploadUrl=`
 
       expect(
         screen.getByText(
@@ -193,6 +195,7 @@ describe("Invite to Apply Page", () => {
           urlParams={{
             deadline: mockFutureDeadline,
             response: "yes",
+            fileUploadUrl: "",
           }}
         />
       )
@@ -231,6 +234,7 @@ describe("Invite to Apply Page", () => {
           urlParams={{
             deadline: mockFutureDeadline,
             response: "yes",
+            fileUploadUrl: "",
           }}
         />
       )
