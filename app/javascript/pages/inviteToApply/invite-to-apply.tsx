@@ -17,6 +17,7 @@ interface UrlParams {
   response?: string
   applicationNumber?: string
   deadline?: string
+  fileUploadUrl?: string
 }
 
 interface HomePageProps {
@@ -28,7 +29,7 @@ interface HomePageProps {
 }
 
 const InviteToApplyPage = ({
-  urlParams: { response, applicationNumber, deadline },
+  urlParams: { response, applicationNumber, deadline, fileUploadUrl },
   submitPreviewLinkTokenParam,
   documentsPath,
 }: HomePageProps) => {
@@ -53,7 +54,7 @@ const InviteToApplyPage = ({
   )
 
   const generateSubmitLink = (signLinkParams: boolean) => {
-    const submitLinkParams = { applicationNumber, deadline }
+    const submitLinkParams = { applicationNumber, deadline, fileUploadUrl }
     const submitLinkQueryStr =
       signLinkParams && submitPreviewLinkTokenParam
         ? `t=${submitPreviewLinkTokenParam}`
@@ -81,6 +82,7 @@ const InviteToApplyPage = ({
         listing={listing}
         deadline={deadline}
         applicationNumber={applicationNumber}
+        fileUploadUrl={fileUploadUrl}
       />
     )
   }
@@ -91,6 +93,7 @@ const InviteToApplyPage = ({
         listing={listing}
         deadline={deadline}
         submitPreviewLink={generateSubmitLink(jwtLinkParamsFlag)}
+        fileUploadUrl={fileUploadUrl}
       />
     )
   }
@@ -105,6 +108,7 @@ const InviteToApplyPage = ({
         listing={listing}
         deadline={deadline}
         applicationNumber={applicationNumber}
+        fileUploadUrl={fileUploadUrl}
       />
     )
   }
@@ -114,6 +118,7 @@ const InviteToApplyPage = ({
         listing={listing}
         deadline={deadline}
         submitPreviewLink={generateSubmitLink(jwtLinkParamsFlag)}
+        fileUploadUrl={fileUploadUrl}
       />
     )
   }

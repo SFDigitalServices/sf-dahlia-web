@@ -13,12 +13,14 @@ interface InviteToApplyWithdrawnProps {
   listing: RailsSaleListing | null
   deadline: string
   submitPreviewLink: string
+  fileUploadUrl: string
 }
 
 const InviteToApplyWithdrawn = ({
   listing,
   deadline,
   submitPreviewLink,
+  fileUploadUrl,
 }: InviteToApplyWithdrawnProps) => {
   return (
     <FormLayout>
@@ -43,6 +45,7 @@ const InviteToApplyWithdrawn = ({
                   listingName: listing?.Building_Name_for_Process,
                   link: submitPreviewLink,
                   deadline: localizedFormat(deadline, "ll"),
+                  fileUploadUrl,
                 })}`,
                 "<strong></strong><a></a>"
               )}
