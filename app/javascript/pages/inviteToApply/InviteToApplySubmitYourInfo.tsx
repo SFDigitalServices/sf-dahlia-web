@@ -102,6 +102,7 @@ const WhatToDo = ({
   const handleSubmitClick = useCallback(() => {
     // Handle the API call and open URL
     const url = fileUploadUrl || listing?.File_Upload_URL
+    console.log(url, fileUploadUrl, listing?.File_Upload_URL)
     void (async () => {
       try {
         // Call the API if applicationNumber is provided
