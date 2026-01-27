@@ -1,9 +1,8 @@
-import { get, post } from "../../api/apiService"
-import { recordResponse, getApplication } from "../../api/inviteToApplyApiService"
+import { post } from "../../api/apiService"
+import { recordResponse } from "../../api/inviteToApplyApiService"
 
 jest.mock("../../api/apiService", () => ({
   post: jest.fn(),
-  get: jest.fn(),
 }))
 
 describe("inviteToApplyApiService", () => {
@@ -18,15 +17,6 @@ describe("inviteToApplyApiService", () => {
       }
       await recordResponse(record)
       expect(post).toHaveBeenCalled()
-    })
-  })
-
-  describe("getApplication", () => {
-    it("calls apiService get", async () => {
-      const url = "/api/v1/short-form/application/123"
-      ;(get as jest.Mock).mockResolvedValue({ data: { application: {} } })
-      await getApplication("123")
-      expect(get).toHaveBeenCalledWith(url)
     })
   })
 })

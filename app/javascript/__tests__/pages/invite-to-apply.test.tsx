@@ -7,13 +7,12 @@ import InviteToApplyPage from "../../pages/inviteToApply/invite-to-apply"
 import { renderAndLoadAsync } from "../__util__/renderUtils"
 import { localizedFormat } from "../../util/languageUtil"
 import { getListing } from "../../api/listingApiService"
-import { getApplication, recordResponse } from "../../api/inviteToApplyApiService"
+import { recordResponse } from "../../api/inviteToApplyApiService"
 import { ConfigContext } from "../../lib/ConfigContext"
 
 jest.mock("../../api/listingApiService")
 jest.mock("../../api/inviteToApplyApiService", () => ({
   recordResponse: jest.fn(),
-  getApplication: jest.fn(),
 }))
 jest.mock("../../hooks/useFeatureFlag", () => ({
   useFeatureFlag: () => ({
@@ -71,9 +70,6 @@ describe("Invite to Apply Page", () => {
     document.documentElement.lang = "en"
     jest.clearAllMocks()
     ;(getListing as jest.Mock).mockResolvedValue(mockListing)
-    ;(getApplication as jest.Mock).mockResolvedValue({
-      data: { fileUploadUrl: "www.file-upload-url.com" },
-    })
 
     // Mock console.error to suppress expected errors during tests
     jest.spyOn(console, "error").mockImplementation(() => {})
@@ -245,25 +241,6 @@ describe("Invite to Apply Page", () => {
           })
         )
       ).toBeInTheDocument()
-    })
-
-    it("gets the file upload URL", async () => {
-      window.open = jest.fn()
-      await renderWithContext(
-        <InviteToApplyPage
-          assetPaths={"/"}
-          urlParams={{
-            deadline: mockFutureDeadline,
-          }}
-        />
-      )
-      await userEvent.click(
-        screen.getByRole("button", {
-          name: t("inviteToApplyPage.submitYourInfo.whatToDo.step3.p4"),
-        })
-      )
-      expect(getApplication).toHaveBeenCalled()
-      expect(window.open).toHaveBeenCalledWith("www.file-upload-url.com", "_blank")
     })
 
     it("renders documents list page", async () => {
