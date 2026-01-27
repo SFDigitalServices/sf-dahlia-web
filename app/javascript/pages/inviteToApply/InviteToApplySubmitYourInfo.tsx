@@ -25,7 +25,6 @@ import { ConfigContext } from "../../lib/ConfigContext"
 import InviteToApplyLeasingAgentInfo from "./InviteToApplyLeasingAgentInfo"
 import { HOME_SF_PHONE } from "../../modules/constants"
 import { recordResponse } from "../../api/inviteToApplyApiService"
-import { getApplication } from "../../api/authApiService"
 
 interface InviteToApplySubmitYourInfoProps {
   listing: RailsSaleListing | null
@@ -99,16 +98,10 @@ const WhatToDo = ({
 }) => {
   const handleSubmitClick = useCallback(() => {
     // Handle the API call and open URL
-    let fieldUploadUrl = listing?.File_Upload_URL
     void (async () => {
       try {
         // Call the API if applicationNumber is provided
         if (applicationNumber) {
-          const app = await getApplication(applicationNumber)
-          // Use the application URL over the listing URL if available
-          if (app.application?.fileUploadUrl) {
-            fieldUploadUrl = app.application.fileUploadUrl
-          }
           await recordResponse({
             applicationNumber,
             listingId: listing.Id,
@@ -117,11 +110,11 @@ const WhatToDo = ({
           })
         }
         // Open the file upload URL after API call (or directly if no applicationNumber)
-        window.open(fieldUploadUrl, "_blank")
+        window.open(listing?.File_Upload_URL, "_blank")
       } catch (error) {
         console.error("Error submitting invite to apply response:", error)
         // Still open the file upload URL even if API call fails
-        window.open(fieldUploadUrl, "_blank")
+        window.open(listing?.File_Upload_URL, "_blank")
       }
     })()
   }, [applicationNumber, listing, deadline])
