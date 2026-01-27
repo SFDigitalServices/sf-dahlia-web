@@ -66,7 +66,6 @@ RSpec.describe InviteToApplyPageController do
           application_number,
           response_value,
           listing_id,
-          file_upload_url,
         )
       end
     end
