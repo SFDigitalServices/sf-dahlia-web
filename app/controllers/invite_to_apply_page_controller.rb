@@ -9,6 +9,12 @@ class InviteToApplyPageController < ApplicationController
 
     decoded_params ||= params
     @invite_to_apply_props = props(decoded_params)
+    application = Force::ShortFormService.get(decoded_params['applicationNumber'])
+    Rails.logger.info(
+      'Test log: ' \
+      "application_number=#{decoded_params['applicationNumber']}, " \
+      "application=#{application.to_json}",
+    )
 
     # TODO: isTestEmail toggle
 
