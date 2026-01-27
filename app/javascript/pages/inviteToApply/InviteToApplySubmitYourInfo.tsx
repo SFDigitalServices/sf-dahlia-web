@@ -90,8 +90,8 @@ const PreparingYourApplication = () => {
 // Use the application URL over the listing URL if available
 const getFileUploadUrl = async (listing: RailsSaleListing, applicationNumber: string) => {
   const application = await getApplication(applicationNumber)
-  if (application.uploadUrl) {
-    return application.uploadUrl
+  if (application.fileUploadUrl) {
+    return application.fileUploadUrl
   }
   return listing?.File_Upload_URL
 }
