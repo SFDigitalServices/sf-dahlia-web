@@ -12,14 +12,12 @@ interface InviteToApplyContactMeLaterProps {
   listing: RailsSaleListing | null
   deadline: string
   submitPreviewLink: string
-  fileUploadUrl: string
 }
 
 const InviteToApplyContactMeLater = ({
   listing,
   deadline,
   submitPreviewLink,
-  fileUploadUrl,
 }: InviteToApplyContactMeLaterProps) => {
   return (
     <FormLayout>
@@ -46,7 +44,6 @@ const InviteToApplyContactMeLater = ({
                 listingName: listing?.Building_Name_for_Process,
                 link: submitPreviewLink,
                 deadline: localizedFormat(deadline, "ll"),
-                fileUploadUrl,
               })}`,
               "<strong></strong><a></a>"
             )}
