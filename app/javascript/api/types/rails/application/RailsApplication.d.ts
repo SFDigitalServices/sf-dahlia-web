@@ -39,6 +39,7 @@ export type Application = {
   answeredCommunityScreening?: "Yes" | "No"
   listing: RailsListing
   lotteryNumber: number
+  uploadUrl?: string
   // isSFUSDEmployee: ; // calculated by Salesforce
   // jobClassification: ; // calculated by Salesforce
   // hasDisability: ; // calculated by Salesforce
