@@ -25,7 +25,12 @@ SimpleCov.start 'rails' do
 end
 
 require 'database_cleaner/active_record'
-DatabaseCleaner.strategy = :truncation
+
+RSpec.configure do |config|
+  config.before(:suite) { DatabaseCleaner.strategy = :truncation }
+  config.before(:each) { DatabaseCleaner.start }
+  config.append_after(:each) { DatabaseCleaner.clean }
+end
 
 require 'webmock/rspec'
 WebMock.disable_net_connect!(allow_localhost: true)
