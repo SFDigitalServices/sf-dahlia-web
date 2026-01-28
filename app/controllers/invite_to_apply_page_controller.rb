@@ -12,12 +12,12 @@ class InviteToApplyPageController < ApplicationController
     # Get file upload URL for application
     application = Force::ShortFormService.get(decoded_params['applicationNumber'])
     @invite_to_apply_props = props(decoded_params).merge(
-      fileUploadUrl: application['uploadUrl']
+      fileUploadUrl: application['uploadURL']
     )
     Rails.logger.info(
       'Test log: ' \
       "application_number=#{decoded_params['applicationNumber']}, " \
-      "upload_url=#{application['uploadUrl']}, " \
+      "upload_url=#{application['uploadURL']}, " \
       "application=#{application.to_json}",
     )
 
