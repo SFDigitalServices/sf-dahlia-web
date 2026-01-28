@@ -5,6 +5,7 @@ RSpec.describe InviteToApplyPageController do
   let(:application_number) { 'APP123456' }
   let(:response_value) { 'yes' }
   let(:listing_id) { 'listing123' }
+  let(:file_upload_url) { 'url.com' }
   let(:decoded_token) do
     [
       {
@@ -34,6 +35,7 @@ RSpec.describe InviteToApplyPageController do
           deadline: deadline,
           applicationNumber: application_number,
           response: response_value,
+          fileUploadUrl: file_upload_url,
         }
       end
 
@@ -52,6 +54,7 @@ RSpec.describe InviteToApplyPageController do
                                                           deadline: deadline,
                                                           response: response_value,
                                                           applicationNumber: application_number,
+                                                          fileUploadUrl: file_upload_url,
                                                         },
                                                       })
       end
@@ -94,6 +97,7 @@ RSpec.describe InviteToApplyPageController do
             deadline: deadline,
             applicationNumber: application_number,
             response: response_value,
+            fileUploadUrl: file_upload_url,
           }
         end.to raise_error(StandardError, 'API Error')
       end
@@ -130,6 +134,7 @@ RSpec.describe InviteToApplyPageController do
         deadline: deadline,
         applicationNumber: application_number,
         response: response_value,
+        fileUploadUrl: file_upload_url,
       }
     end
 
@@ -148,7 +153,8 @@ RSpec.describe InviteToApplyPageController do
                                                         deadline: deadline,
                                                         response: response_value,
                                                         applicationNumber: application_number,
-                                                      },
+                                                        fileUploadUrl: file_upload_url,
+                                                        },
                                                       documentsPath: true,
                                                     })
     end
