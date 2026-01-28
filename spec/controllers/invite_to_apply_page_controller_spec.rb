@@ -5,7 +5,6 @@ RSpec.describe InviteToApplyPageController do
   let(:application_number) { 'APP123456' }
   let(:response_value) { 'yes' }
   let(:listing_id) { 'listing123' }
-  let(:file_upload_url) { 'url.com' }
   let(:decoded_token) do
     [
       {
@@ -23,6 +22,8 @@ RSpec.describe InviteToApplyPageController do
                                  .and_return('TEST_TOKEN_SECRET')
     allow(ENV).to receive(:fetch).with('JWT_ALGORITHM', nil).and_return('HS256')
     allow(controller).to receive(:static_asset_paths).and_return({ logo: 'logo.png' })
+    allow(ENV).to receive(:fetch).with('SALESFORCE_INSTANCE_URL', nil).and_return('test-salesforce-url')
+    allow(ENV).to receive(:fetch).with('SALESFORCE_API_VERSION', '61.0').and_return('61.0')
     allow(DahliaBackend::MessageService).to receive(:send_invite_to_apply_response)
     allow(Rails.logger).to receive(:info)
   end
@@ -35,7 +36,6 @@ RSpec.describe InviteToApplyPageController do
           deadline: deadline,
           applicationNumber: application_number,
           response: response_value,
-          fileUploadUrl: file_upload_url,
         }
       end
 
@@ -54,7 +54,6 @@ RSpec.describe InviteToApplyPageController do
                                                           deadline: deadline,
                                                           response: response_value,
                                                           applicationNumber: application_number,
-                                                          fileUploadUrl: file_upload_url,
                                                         },
                                                       })
       end
@@ -97,7 +96,6 @@ RSpec.describe InviteToApplyPageController do
             deadline: deadline,
             applicationNumber: application_number,
             response: response_value,
-            fileUploadUrl: file_upload_url,
           }
         end.to raise_error(StandardError, 'API Error')
       end
@@ -134,7 +132,6 @@ RSpec.describe InviteToApplyPageController do
         deadline: deadline,
         applicationNumber: application_number,
         response: response_value,
-        fileUploadUrl: file_upload_url,
       }
     end
 
@@ -153,7 +150,6 @@ RSpec.describe InviteToApplyPageController do
                                                         deadline: deadline,
                                                         response: response_value,
                                                         applicationNumber: application_number,
-                                                        fileUploadUrl: file_upload_url,
                                                         },
                                                       documentsPath: true,
                                                     })
