@@ -9,6 +9,11 @@ class InviteToApplyPageController < ApplicationController
 
     decoded_params ||= params
     @invite_to_apply_props = props(decoded_params)
+    # Get file upload URL for application
+    application = Force::ShortFormService.get(decoded_params['applicationNumber'])
+    @invite_to_apply_props = props(decoded_params).merge(
+      fileUploadUrl: application['uploadURL']
+    )
 
     # TODO: isTestEmail toggle
 
