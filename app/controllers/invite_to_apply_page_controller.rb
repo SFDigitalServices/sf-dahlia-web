@@ -14,12 +14,6 @@ class InviteToApplyPageController < ApplicationController
     @invite_to_apply_props = props(decoded_params).merge(
       fileUploadUrl: application['uploadURL']
     )
-    Rails.logger.info(
-      'Test log: ' \
-      "application_number=#{decoded_params['applicationNumber']}, " \
-      "upload_url=#{application['uploadURL']}, " \
-      "application=#{application.to_json}",
-    )
 
     # TODO: isTestEmail toggle
 
