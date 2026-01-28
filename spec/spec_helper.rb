@@ -24,8 +24,8 @@ SimpleCov.start 'rails' do
   minimum_coverage line: 65, branch: 50
 end
 
-require 'database_cleaner'
-DatabaseCleaner[:active_record].strategy = :truncation
+require 'database_cleaner/active_record'
+DatabaseCleaner.strategy = :truncation
 
 require 'webmock/rspec'
 WebMock.disable_net_connect!(allow_localhost: true)
