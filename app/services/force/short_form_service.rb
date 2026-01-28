@@ -64,6 +64,10 @@ module Force
         status: 'Draft',
         applicationSubmittedDate: nil,
         answeredCommunityScreening: nil,
+        primaryApplicant: {
+          isSFUSDEmployee: nil,
+          jobClassification: nil,
+        },
         lotteryNumber: nil,
         name: nil,
         agreeToTerms: nil,
