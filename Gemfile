@@ -9,7 +9,7 @@ end
 
 gem 'rails', '~> 8.0.0'
 
-gem 'unleash', '~> 5.0.4'
+gem 'unleash', '~> 6.0.0'
 
 # Use SCSS for stylesheets
 gem 'sassc-rails'
@@ -67,7 +67,7 @@ gem 'easypost', '>=3.0.1'
 gem 'StreetAddress', github: 'Exygy/street-address', require: 'street_address'
 
 # google translation
-gem 'faraday'
+gem 'faraday', '~> 2.7.0'
 gem 'google-cloud-translate-v2'
 # JSON optimization
 gem 'oj'
