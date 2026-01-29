@@ -9,7 +9,7 @@ end
 
 gem 'rails', '~> 8.0.0'
 
-gem 'unleash', '~> 6.0.0'
+gem 'unleash', '~> 6.4.1'
 
 # Use SCSS for stylesheets
 gem 'sassc-rails'
