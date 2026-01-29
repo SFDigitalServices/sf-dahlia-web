@@ -64,7 +64,7 @@ const ListingApplyStepWrapper = ({
           </Button>
         </Card.Section>
         <Card.Header divider="inset">
-          <h1 className="mt-6 mb-4 text-xl md:text-2xl">{titleString}</h1>
+          <h1 className={styles["step-title"]}>{titleString}</h1>
           {description && <p className="field-note text-base">{t(description)}</p>}
           {!!descriptionComponent && descriptionComponent}
         </Card.Header>

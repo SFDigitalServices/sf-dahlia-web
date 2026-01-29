@@ -26,7 +26,7 @@ const Name = ({
   } = useFormContext()
   return (
     <fieldset>
-      <Heading priority={2} size="sm">
+      <Heading priority={2} size="md">
         {t(label)}
       </Heading>
       <Field
