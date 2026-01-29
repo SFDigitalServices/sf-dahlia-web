@@ -87,6 +87,7 @@ RSpec.describe InviteToApplyPageController do
 
     context 'when DahliaBackend::MessageService raises an error' do
       before do
+        allow(Force::ShortFormService).to receive(:get).with(application_number).and_return({ 'uploadURL' => 'test-upload-url' })
         allow(DahliaBackend::MessageService).to receive(:send_invite_to_apply_response).and_raise(
           StandardError, 'API Error'
         )
