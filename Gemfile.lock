@@ -589,7 +589,7 @@ GEM
       sentry-ruby (~> 6.3.0)
       sidekiq (>= 5.0)
     sexp_processor (4.17.5)
-    shakapacker (8.4.0)
+    shakapacker (9.5.0)
       activesupport (>= 5.2)
       package_json
       rack-proxy (>= 0.6.1)
@@ -756,7 +756,7 @@ DEPENDENCIES
   sentry-rails
   sentry-ruby
   sentry-sidekiq
-  shakapacker (= 8.4.0)
+  shakapacker (= 9.5.0)
   shoulda-matchers
   sidekiq (~> 6.5.10)
   simplecov (~> 0.22.0)
