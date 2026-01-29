@@ -228,7 +228,7 @@ const Layout = (props: LayoutProps) => {
           <FooterNav copyright={`© ${t("footer.cityCountyOfSf")}`}>
             <Link
               className="text-gray-500"
-              href={`https://airtable.com/appUW1tM8te0Lmf6q/pagyZulZJCm1V4G8D/form?prefill_source=${encodeURIComponent(window.location.pathname)}&hide_source=true`}
+              href={`https://airtable.com/appUW1tM8te0Lmf6q/pagyZulZJCm1V4G8D/form?prefill_Last+visited=${encodeURIComponent(window.location.pathname)}&hide_Last+visited=true`}
               target="_blank"
               external={true}
             >
