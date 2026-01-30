@@ -139,7 +139,9 @@ const Layout = (props: LayoutProps) => {
   }
   const feedbackBanner = (
     <Markdown className="feedback-link">
-      {t("nav.getFeedback", { feedbackUrl: "https://airtable.com/shrw64DubWTQfRkdo" })}
+      {t("nav.getFeedback", {
+        feedbackUrl: `https://airtable.com/appUW1tM8te0Lmf6q/pagyZulZJCm1V4G8D/form?prefill_Last%20visited=${encodeURIComponent(window.location.pathname)}&hide_Last%20visited=true`,
+      })}
     </Markdown>
   )
 
@@ -226,7 +228,7 @@ const Layout = (props: LayoutProps) => {
           <FooterNav copyright={`© ${t("footer.cityCountyOfSf")}`}>
             <Link
               className="text-gray-500"
-              href="https://airtable.com/shrw64DubWTQfRkdo"
+              href={`https://airtable.com/appUW1tM8te0Lmf6q/pagyZulZJCm1V4G8D/form?prefill_Last+visited=${encodeURIComponent(window.location.pathname)}&hide_Last+visited=true`}
               target="_blank"
               external={true}
             >
