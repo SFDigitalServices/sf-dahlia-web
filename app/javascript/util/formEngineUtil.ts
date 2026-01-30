@@ -38,6 +38,11 @@ export const showStep = (
   if (operation === "hideStepIfAllPresent") {
     return !processedConditions.every(Boolean)
   }
+  if (operation === "hideStepIfValuePresent") {
+    const condition = conditions.find((condition) => condition.dataValue)
+    const processedCondition = dataSources[condition.dataSource][condition.dataKey]
+    return processedCondition !== condition.dataValue
+  }
   if (operation === "hideStepIfAnyPresent") {
     return !processedConditions.some(Boolean)
   }
@@ -83,6 +88,7 @@ export const calculatePrevStep = (
       if (showStep(operation, conditions, dataSources)) return stepInfoMap.length - 1 - idx
     }
   }
+  return 0
 }
 
 export const validDayRange = (value: string): boolean =>
