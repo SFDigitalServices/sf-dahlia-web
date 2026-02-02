@@ -234,9 +234,9 @@ export function defaultIfNotTranslated(
  * @param format {string} - format string. see https://day.js.org/docs/en/display/format#list-of-localized-formats
  * @returns {string} localized date
  */
-export function localizedFormat(date: string, format: string): string {
+export function localizedFormat(date: string | Date, format: string): string {
   const lang = getCurrentLanguage(window.location.pathname)
-  return dayjs(date).tz().locale(dayJsLocales[lang]).format(format)
+  if (date) return dayjs(date).tz().locale(dayJsLocales[lang]).format(format)
 }
 
 // Time zone is assumed to be Pacific

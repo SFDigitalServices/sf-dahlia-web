@@ -208,3 +208,61 @@ export const LISTING_PRIORITY_OPTIONS = [
     label: "t.no",
   },
 ]
+
+// ShortFormHelperService.js.coffee#L310
+export const PROOF_OPTIONS = {
+  workInSf: [
+    { value: "Paystub with employer address", label: "label.proof.paystubEmployer" },
+    { value: "Letter from employer", label: "label.proof.letterFromEmployer" },
+  ],
+  // liveInSf, neighborhoodResidence
+  liveInSf: [
+    { value: "Telephone bill", label: "label.proof.telephoneBill" },
+    { value: "Cable and internet bill", label: "label.proof.cableBill" },
+    { value: "Gas bill", label: "label.proof.gasBill" },
+    { value: "Electric bill", label: "label.proof.electricBill" },
+    { value: "Garbage bill", label: "label.proof.garbageBill" },
+    { value: "Water bill", label: "label.proof.waterBill" },
+    { value: "Paystub", label: "label.proof.paystubHome" },
+    { value: "Public benefits record", label: "label.proof.publicBenefits" },
+    { value: "School record", label: "label.proof.schoolRecord" },
+    { value: "Letter documenting homelessness", label: "label.proof.homelessness" },
+  ],
+  rentBurden: [
+    { value: "Money order", label: "label.proof.moneyOrder" },
+    { value: "Cancelled check", label: "label.proof.cancelledCheck" },
+    { value: "Debit from your bank account", label: "label.proof.debitFromBank" },
+    { value: "Screenshot of online payment", label: "label.proof.onlinePayment" },
+  ],
+  aliceGriffith: [
+    { value: "Letter from SFHA verifying address", label: "label.proof.sfhaLetter" },
+    { value: "SFHA Lease", label: "label.proof.sfhaLease" },
+    { value: "Telephone bill (landline only)", label: "label.proof.telephoneBill" },
+    { value: "Cable and internet bill", label: "label.proof.cableBill" },
+    { value: "Paystub (listing home address)", label: "label.proof.paystubHome" },
+    { value: "Public benefits record", label: "label.proof.publicBenefits" },
+    { value: "School record", label: "label.proof.schoolRecord" },
+  ],
+  // rightToReturnSunnydale, rightToReturnHuntersView, rightToReturnPotrero
+  rightToReturn: [
+    { value: "Letter from SFHA verifying address", label: "label.proof.sfhaResidencyLetter" },
+    { value: "SFHA Lease", label: "label.proof.sfhaLease" },
+    { value: "SF City ID", label: "label.proof.sfCityId" },
+    { value: "Telephone bill (landline only)", label: "label.proof.telephoneBill" },
+    { value: "Cable and internet bill", label: "label.proof.cableBill" },
+    { value: "Paystub (listing home address)", label: "label.proof.paystubHome" },
+    { value: "Public benefits record", label: "label.proof.publicBenefits" },
+    { value: "School record", label: "label.proof.schoolRecord" },
+  ],
+  default: [
+    { value: "Telephone bill", label: "label.proof.telephoneBill" },
+    { value: "Cable and internet bill", label: "label.proof.cableBill" },
+    { value: "Gas bill", label: "label.proof.gasBill" },
+    { value: "Electric bill", label: "label.proof.electricBill" },
+    { value: "Garbage bill", label: "label.proof.garbageBill" },
+    { value: "Water bill", label: "label.proof.waterBill" },
+    { value: "Paystub", label: "label.proof.paystubHome" },
+    { value: "Public benefits record", label: "label.proof.publicBenefits" },
+    { value: "School record", label: "label.proof.schoolRecord" },
+  ],
+}

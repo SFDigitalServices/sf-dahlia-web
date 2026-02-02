@@ -1,0 +1,38 @@
+.upload-button {
+  margin-top: var(--seeds-spacer-content);
+  margin-bottom: var(--seeds-spacer-content);
+  width: 100%;
+}
+
+.upload-error {
+  text-align: center;
+  margin-bottom: var(--seeds-spacer-content);
+}
+
+.upload-notes {
+  font-size: var(--seeds-font-size-xs);
+  color: var(--seeds-color-gray-700);
+  text-align: center;
+}
+
+.smartphone-note {
+  margin-bottom: var(--seeds-s3);
+}
+
+.uploaded-file {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  border: none;
+  background-color: var(--seeds-color-gray-200);
+  margin-top: var(--seeds-spacer-content);
+  margin-bottom: var(--seeds-spacer-content);
+  padding: var(--seeds-s2);
+  img {
+    height: 80px;
+    object-fit: cover;
+  }
+  button {
+    color: var(--seeds-color-alert);
+  }
+}

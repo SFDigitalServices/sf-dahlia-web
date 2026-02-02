@@ -1,8 +1,9 @@
 import React, { useMemo, useEffect, useState } from "react"
 import Layout from "../../layouts/Layout"
 import withAppSetup from "../../layouts/withAppSetup"
-import { getListing } from "../../api/listingApiService"
+import { getListing, getPreferences } from "../../api/listingApiService"
 import type { RailsListing } from "../../modules/listings/SharedHelpers"
+import type { RailsListingPreference } from "../../api/types/rails/listings/RailsListingPreferences"
 import { AppPages, getListingDetailPath } from "../../util/routeUtil"
 import { LoadingOverlay } from "@bloom-housing/ui-components"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
@@ -18,6 +19,7 @@ interface ListingApplyFormProps {
 
 const ListingApplyForm = (props: ListingApplyFormProps) => {
   const [listing, setListing] = useState<RailsListing>(null)
+  const [preferences, setPreferences] = useState<RailsListingPreference[]>(null)
 
   const { flagsReady, unleashFlag: formEngine } = useFeatureFlag(UNLEASH_FLAG.FORM_ENGINE, false)
 
@@ -32,10 +34,22 @@ const ListingApplyForm = (props: ListingApplyFormProps) => {
     })
   }, [props.listingId])
 
+  useEffect(() => {
+    void getPreferences(props.listingId).then((preferences: RailsListingPreference[]) => {
+      setPreferences(preferences)
+    })
+  }, [props.listingId])
+
   return (
-    <LoadingOverlay isLoading={!listing && !formEngine}>
+    <LoadingOverlay isLoading={!listing && !preferences && !formEngine}>
       <Layout title={listing?.Name ? `${listing?.Name} Application` : null}>
-        {listing && <FormEngine listing={listing} schema={listingApplicationDefaultRental} />}
+        {listing && (
+          <FormEngine
+            listing={listing}
+            preferences={preferences}
+            schema={listingApplicationDefaultRental}
+          />
+        )}
       </Layout>
     </LoadingOverlay>
   )
