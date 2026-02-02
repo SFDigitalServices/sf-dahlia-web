@@ -774,6 +774,7 @@
           "componentName": "CertificateNumberPreference",
           "props": {
             "name": "e7PreferencesPrograms.certOfPreference",
+            "showDescription": true,
             "description": "e7PreferencesPrograms.certOfPreferenceDesc",
             "numberName": "e7PreferencesPrograms.certOfPreferenceCertificate",
             "numberDescription": "e7PreferencesPrograms.needCertificateForPreference",

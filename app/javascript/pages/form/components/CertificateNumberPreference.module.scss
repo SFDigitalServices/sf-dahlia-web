@@ -1,0 +1,27 @@
+.certificate-number-checkbox {
+  font-size: var(--seeds-font-size-md) !important;
+  margin-bottom: 0 !important;
+  margin-top: var(--seeds-s8);
+}
+
+.certificate-number-description {
+  font-size: var(--seeds-type-heading-size-sm);
+}
+
+.certificate-number-container {
+  margin-left: var(--seeds-s9);
+  margin-right: var(--seeds-s6);
+}
+
+.certificate-member-link {
+  font-size: var(--seeds-font-size-sm);
+  margin-top: var(--seeds-s2);
+}
+
+.certificate-number-container-dropdown {
+  margin-top: var(--seeds-s4);
+
+  .number-name {
+    margin-bottom: var(--seeds-s2);
+  }
+}

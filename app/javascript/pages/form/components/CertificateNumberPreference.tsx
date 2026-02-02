@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import { Field, t } from "@bloom-housing/ui-components"
-import React from "react"
+import React, { useState } from "react"
 import { useFormContext } from "react-hook-form"
-import styles from "./PrioritiesCheckbox.module.scss"
 import { Link } from "@bloom-housing/ui-seeds"
 import Select from "./Select"
 import { useFormEngineContext } from "../../../formEngine/formEngineContext"
 import { getPrimaryApplicantData } from "../../../util/formEngineUtil"
 import { getSfGovUrl, renderInlineMarkup } from "../../../util/languageUtil"
+import styles from "./CertificateNumberPreference.module.scss"
 
 interface CertificateNumberPreferenceProps {
   name: string
@@ -15,6 +15,7 @@ interface CertificateNumberPreferenceProps {
   readMoreUrl: string
   numberName: string
   numberDescription: string
+  showDescription?: boolean
   fieldNames: {
     copMember?: string
     copNumber?: string
@@ -29,25 +30,24 @@ const CertificateNumberPreference = ({
   readMoreUrl,
   numberDescription,
   numberName,
+  showDescription = false,
   fieldNames: { copMember, copNumber, dthpMember, dthpNumber },
 }: CertificateNumberPreferenceProps) => {
-  const {
-    register,
-    formState: { errors },
-  } = useFormContext()
-  const currentPreference = copMember ?? dthpMember
-  const currentNumber = copNumber ?? dthpNumber
-
+  const { register } = useFormContext()
   const { formData } = useFormEngineContext()
+  const [isChecked, setIsChecked] = useState(false)
+  const currentPreference = copMember || dthpMember
+  const currentPreferenceNumber = copNumber || dthpNumber
   const primaryApplicant = getPrimaryApplicantData(formData)
-  //    Need to grab this from householdMembersArray
+  // TODO: Need to grab household info from householdMembersArray datakey
   const householdMember = {
     firstName: formData.householdMemberFirstName as string,
     lastName: formData.householdMemberLastName as string,
   }
-  const allHouseholdMembers = [
+  const showAllHouseholdMembers = [
     {
       name: `${primaryApplicant.firstName} ${primaryApplicant.lastName}`,
+      // TODO: Need to replace value of household members with respective memberIds
       value: `${primaryApplicant.firstName} ${primaryApplicant.lastName}`,
     },
     {
@@ -56,61 +56,52 @@ const CertificateNumberPreference = ({
     },
   ]
 
-  //   If checked, set copMember or DTHP member to True
-  //  Show copMember or dthp member dropdown
-  // set copMember or dthp Member value using register
-  // show certificate number dropdown
-  // set number to copNumber
   return (
-    <div className={styles["listing-priorities-checkbox-group"]}>
+    <div className={styles["certificate-number-checkbox-group"]}>
+      {showDescription && <div className="field-note">{t("label.pleaseSelectPreference")}</div>}
       <Field
-        name={currentPreference}
         type="checkbox"
+        name={`${currentPreference}_checkbox`}
         label={t(name)}
-        // fieldGroupClassName="radio-field-group"
-        register={register}
-        error={!!errors?.[copMember || dthpMember]}
-        errorMessage={t("error.pleaseSelectAnOption")}
-        validation={{
-          required: true,
-        }}
+        onChange={(e) => setIsChecked(e.target.checked)}
+        className={styles["certificate-number-checkbox"]}
+        labelClassName={styles["certificate-number-checkbox"]}
       />
 
-      <div>{t(description)}</div>
+      <div className={styles["certificate-number-container"]}>
+        <div className="field-note">{t(description)}</div>
+        <Link
+          href={getSfGovUrl(readMoreUrl)}
+          hideExternalLinkIcon
+          newWindowTarget
+          className={styles["certificate-member-link"]}
+        >
+          {t("label.findOutMoreAboutPreferences")}
+        </Link>
 
-      <Link href={getSfGovUrl(readMoreUrl)} hideExternalLinkIcon newWindowTarget>
-        {t("label.findOutMoreAboutPreferences")}
-      </Link>
-
-      <Select
-        label={"label.applicantPreferencesHouseholdMember"}
-        // validation={{
-        //   required: requireAddress,
-        //   maxLength: LISTING_APPLY_FORMS_INPUT_MAX_LENGTH.address,
-        // }}
-        // error={!!errors?.[addressState]}
-        fieldNames={{ selection: copMember }}
-        options={allHouseholdMembers}
-        errorMessage={t("error.state")}
-        defaultOptionName={t("label.selectOne")}
-      />
-      <div>{t(numberName)}</div>
-      <div>{renderInlineMarkup(t(numberDescription))}</div>
-      <Field
-        name={currentNumber}
-        placeholder={t("label.certificateNumber")}
-        validation={{
-          //   required: requireAddress,
-          pattern: {
-            value: /^\d{5}(-\d{4})?$/,
-            message: t("error.zip"),
-          },
-        }}
-        errorMessage={t("error.zip")}
-        // error={!!errors?.[mailingAddressZipcode]}
-        register={register}
-      />
-      {/* checkbox */}
+        {isChecked && (
+          <div className={styles["certificate-number-container-dropdown"]}>
+            <Select
+              options={showAllHouseholdMembers}
+              fieldNames={{ selection: currentPreference }}
+              defaultOptionName={t("label.selectOne")}
+              label={"label.applicantPreferencesHouseholdMember"}
+              labelClassName="text-base"
+              errorMessage={t("error.pleaseSelectAnOption")}
+              validation={{
+                required: isChecked,
+              }}
+            />
+            <div className={styles["number-name"]}>{t(numberName)}</div>
+            <div className="field-note">{renderInlineMarkup(t(numberDescription))}</div>
+            <Field
+              name={currentPreferenceNumber}
+              placeholder={t("label.certificateNumber")}
+              register={register}
+            />
+          </div>
+        )}
+      </div>
     </div>
   )
 }
