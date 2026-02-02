@@ -57,30 +57,30 @@ const CertificateNumberPreference = ({
   ]
 
   return (
-    <div className={styles["certificate-number-checkbox-group"]}>
+    <div>
       {showDescription && <div className="field-note">{t("label.pleaseSelectPreference")}</div>}
       <Field
         type="checkbox"
         name={`${currentPreference}_checkbox`}
         label={t(name)}
         onChange={(e) => setIsChecked(e.target.checked)}
-        className={styles["certificate-number-checkbox"]}
-        labelClassName={styles["certificate-number-checkbox"]}
+        className={styles["certificate-preference-checkbox"]}
+        labelClassName={styles["certificate-preference-checkbox"]}
       />
 
-      <div className={styles["certificate-number-container"]}>
+      <div className={styles["certificate-preference-container"]}>
         <div className="field-note">{t(description)}</div>
         <Link
           href={getSfGovUrl(readMoreUrl)}
           hideExternalLinkIcon
           newWindowTarget
-          className={styles["certificate-member-link"]}
+          className={styles["certificate-preference-link"]}
         >
           {t("label.findOutMoreAboutPreferences")}
         </Link>
 
         {isChecked && (
-          <div className={styles["certificate-number-container-dropdown"]}>
+          <div className={styles["certificate-preference-dropdown"]}>
             <Select
               options={showAllHouseholdMembers}
               fieldNames={{ selection: currentPreference }}
