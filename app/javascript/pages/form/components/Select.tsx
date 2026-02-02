@@ -29,7 +29,7 @@ const FormSelect = ({
     formState: { errors },
   } = useFormContext()
   const selectOptions = options.map((option) => ({
-    label: t(option.name),
+    label: option.name,
     value: option.value,
   }))
 

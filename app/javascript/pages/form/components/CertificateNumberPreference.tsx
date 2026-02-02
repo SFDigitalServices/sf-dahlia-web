@@ -84,10 +84,10 @@ const CertificateNumberPreference = ({
             <Select
               options={showAllHouseholdMembers}
               fieldNames={{ selection: currentPreference }}
-              defaultOptionName={t("label.selectOne")}
+              defaultOptionName={"label.selectOne"}
               label={"label.applicantPreferencesHouseholdMember"}
               labelClassName="text-base"
-              errorMessage={t("error.pleaseSelectAnOption")}
+              errorMessage={"error.pleaseSelectAnOption"}
               validation={{
                 required: isChecked,
               }}
