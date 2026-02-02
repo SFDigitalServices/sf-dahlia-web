@@ -49,7 +49,7 @@ class InviteToApplyPageController < ApplicationController
     response = decoded_params['response']
     application_number = decoded_params['applicationNumber']
 
-    if response.blank? || (deadline && deadline_has_passed?(deadline))
+    if response.blank? || (deadline && deadline_has_passed?(deadline)) || language_change?
       Rails.logger.info(
         'InviteToApplyPageController#record_response: *NOT* recording ' \
         "deadline=#{deadline}, " \
@@ -124,6 +124,13 @@ class InviteToApplyPageController < ApplicationController
 
   def deadline_has_passed?(deadline)
     Time.zone.parse(deadline).to_date < Time.zone.today
+  end
+
+  def language_change?
+    # return true when current url and referrer url look like:
+    # '.../listings/a123/invite-to-apply?...'
+    # '.../es/listings/a123/invite-to-apply?...'
+    request.referrer&.include?(request.path.slice(%r{/listings/.+}))
   end
 
   def use_jwt?
