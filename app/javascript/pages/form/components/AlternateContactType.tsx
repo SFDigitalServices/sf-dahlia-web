@@ -21,12 +21,12 @@ const AlternateContactType = ({
   } = useFormContext()
   const selected = watch(alternateContactType)
   return (
-    <fieldset>
+    <fieldset className={styles["alternate-contact-group"]}>
       <Heading priority={2} size="sm">
         {t("label.alternateContact")}
       </Heading>
       <p className="field-note">{t("label.pleaseSelectOne")}</p>
-      <div className="radio-field-group">
+      <div>
         <Field
           name={alternateContactType}
           className={styles["alternate-contact-field"]}
