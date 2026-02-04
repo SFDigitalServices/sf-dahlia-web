@@ -26,7 +26,10 @@ export const showStep = (
   dataSources: DataSources
 ): boolean => {
   const processedConditions = conditions.map((condition) => {
-    const processedCondition = dataSources[condition.dataSource][condition.dataKey]
+    const value = dataSources[condition.dataSource][condition.dataKey]
+    const processedCondition = condition.dataValueToMatch
+      ? condition.dataValueToMatch === value
+      : value
     return condition.negate ? !processedCondition : !!processedCondition
   })
   if (operation === "showStepIfAllPresent") {
@@ -37,11 +40,6 @@ export const showStep = (
   }
   if (operation === "hideStepIfAllPresent") {
     return !processedConditions.every(Boolean)
-  }
-  if (operation === "hideStepIfValuePresent") {
-    const condition = conditions.find((condition) => condition.dataValue)
-    const processedCondition = dataSources[condition.dataSource][condition.dataKey]
-    return processedCondition !== condition.dataValue
   }
   if (operation === "hideStepIfAnyPresent") {
     return !processedConditions.some(Boolean)

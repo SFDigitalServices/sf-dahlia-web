@@ -175,11 +175,11 @@
         "slug": "alternate-contact-name",
         "sectionName": "household",
         "navigationArrival": {
-          "hideStepIfValuePresent": [
+          "hideStepIfAnyPresent": [
             {
               "dataSource": "form",
               "dataKey": "alternateContactType",
-              "dataValue": "noAlternateContact"
+              "dataValueToMatch": "noAlternateContact"
             }
           ]
         }
@@ -209,11 +209,11 @@
         "slug": "alternate-contact-phone-address",
         "sectionName": "household",
         "navigationArrival": {
-          "hideStepIfValuePresent": [
+          "hideStepIfAnyPresent": [
             {
               "dataSource": "form",
               "dataKey": "alternateContactType",
-              "dataValue": "noAlternateContact"
+              "dataValueToMatch": "noAlternateContact"
             }
           ]
         }

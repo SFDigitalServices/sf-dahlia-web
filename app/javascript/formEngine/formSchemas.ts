@@ -4,7 +4,7 @@ import getFormComponentRegistry from "./formComponentRegistry"
 const DataSchema = z.object({
   dataSource: z.string(), // "listing", "form"
   dataKey: z.string(),
-  dataValue: z.optional(z.string()), // value validation for dataKey
+  dataValueToMatch: z.optional(z.string()), // value validation for dataKey
   negate: z.optional(z.boolean()),
 })
 export type DataSchema = z.infer<typeof DataSchema>
@@ -14,7 +14,6 @@ const NavigationArrivalSchema = z.object({
   showStepIfAnyPresent: z.optional(z.array(DataSchema)),
   hideStepIfAllPresent: z.optional(z.array(DataSchema)),
   hideStepIfAnyPresent: z.optional(z.array(DataSchema)),
-  hideStepIfValuePresent: z.optional(z.array(DataSchema)),
 })
 
 const NavigationDepartureSchema = z.object({
