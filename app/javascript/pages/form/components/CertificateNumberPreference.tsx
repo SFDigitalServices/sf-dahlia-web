@@ -47,7 +47,7 @@ const CertificateNumberPreference = ({
   const showAllHouseholdMembers = [
     {
       name: `${primaryApplicant.firstName} ${primaryApplicant.lastName}`,
-      // TODO: Need to replace value of household members with respective memberIds
+      // TODO: Update submitted data values after DAH-3681 and DAH-3677
       value: `${primaryApplicant.firstName} ${primaryApplicant.lastName}`,
     },
     {
