@@ -774,9 +774,11 @@
           "componentName": "CertificateNumberPreference",
           "props": {
             "name": "e7PreferencesPrograms.certOfPreference",
+            "showDescription": true,
             "description": "e7PreferencesPrograms.certOfPreferenceDesc",
             "numberName": "e7PreferencesPrograms.certOfPreferenceCertificate",
             "numberDescription": "e7PreferencesPrograms.needCertificateForPreference",
+            "readMoreUrl": "https://www.sf.gov/learn-about-certificate-preference-cop",
             "fieldNames": {
               "copMember": "copMember",
               "copNumber": "copNumber"
@@ -786,10 +788,11 @@
         {
           "componentName": "CertificateNumberPreference",
           "props": {
-            "name": "e7PreferencesPrograms.displace",
+            "name": "e7PreferencesPrograms.displaced",
             "description": "e7PreferencesPrograms.displacedTenantsDesc",
             "numberName": "e7PreferencesPrograms.displacedCertificate",
             "numberDescription": "e7PreferencesPrograms.needCertificateForPreference",
+            "readMoreUrl": "https://www.sf.gov/learn-about-displaced-tenant-housing-preference-dthp",
             "fieldNames": {
               "dthpMember": "dthpMember",
               "dthpNumber": "dthpNumber"
