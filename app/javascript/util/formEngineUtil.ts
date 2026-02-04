@@ -67,6 +67,7 @@ export const calculateNextStep = (
       if (showStep(operation, conditions, dataSources)) return idx
     }
   }
+  return stepInfoMap.length - 1
 }
 
 export const calculatePrevStep = (
