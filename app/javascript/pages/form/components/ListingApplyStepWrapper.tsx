@@ -4,11 +4,11 @@
 import React, { Children } from "react"
 import { useForm, FormProvider } from "react-hook-form"
 import { Form, t } from "@bloom-housing/ui-components"
-import { Button } from "@bloom-housing/ui-seeds"
-import { CardSection } from "@bloom-housing/ui-seeds/src/blocks/Card"
+import { Button, Card } from "@bloom-housing/ui-seeds"
 import { useFormEngineContext } from "../../../formEngine/formEngineContext"
 import type { DataSchema } from "../../../formEngine/formSchemas"
 import { translationFromDataSchema } from "../../../util/formEngineUtil"
+import styles from "./ListingApplyStepWrapper.module.scss"
 
 interface ListingApplyStepWrapperProps {
   title: string
@@ -57,26 +57,28 @@ const ListingApplyStepWrapper = ({
 
   return (
     <FormProvider {...methods}>
-      <CardSection>
-        <Button variant="text" onClick={handlePrevStep}>
-          {t("t.back")}
-        </Button>
-      </CardSection>
-      <CardSection>
-        <h1 className="mt-6 mb-4 text-xl md:text-2xl">{titleString}</h1>
-        {description && <p className="field-note text-base">{t(description)}</p>}
-        {!!descriptionComponent && descriptionComponent}
-      </CardSection>
-      <Form onSubmit={methods.handleSubmit(onSubmit)}>
-        {Children.map(children, (child) => (
-          <CardSection>{child}</CardSection>
-        ))}
-        <CardSection>
-          <Button variant="primary" type="submit">
-            {t("t.next")}
+      <Card>
+        <Card.Section>
+          <Button variant="text" onClick={handlePrevStep}>
+            {t("t.back")}
           </Button>
-        </CardSection>
-      </Form>
+        </Card.Section>
+        <Card.Header divider="inset">
+          <h1 className={styles["step-title"]}>{titleString}</h1>
+          {description && <p className="field-note text-base">{t(description)}</p>}
+          {!!descriptionComponent && descriptionComponent}
+        </Card.Header>
+        <Form onSubmit={methods.handleSubmit(onSubmit)}>
+          {Children.map(children, (child) => (
+            <Card.Section>{child}</Card.Section>
+          ))}
+          <Card.Footer className={styles["step-footer"]}>
+            <Button variant="primary" type="submit">
+              {t("t.next")}
+            </Button>
+          </Card.Footer>
+        </Form>
+      </Card>
     </FormProvider>
   )
 }
