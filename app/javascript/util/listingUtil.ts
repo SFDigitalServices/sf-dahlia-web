@@ -754,7 +754,7 @@ export const getSeniorBuildingAgeRequirement = (
 // We know that the deadline should pass at midnight Pacific Time on the given date
 export const isDeadlinePassed = (deadline: string) => {
   // Parse deadline as end of day in Pacific Time
-  const deadlineEndOfDay = dayjs.tz(deadline, "America/Los_Angeles").endOf('day')
+  const deadlineEndOfDay = dayjs.tz(deadline, "America/Los_Angeles").endOf("day")
 
   // Get current time in Pacific Time
   const nowPacific = dayjs().tz("America/Los_Angeles")
