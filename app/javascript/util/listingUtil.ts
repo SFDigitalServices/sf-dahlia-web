@@ -750,10 +750,17 @@ export const getSeniorBuildingAgeRequirement = (
   return { entireHousehold, minimumAge }
 }
 
+// I2A deadlines are passed in as just a date (i.e. "2100-01-01") without a time or timezone
+// We know that the deadline should pass at midnight Pacific Time on the given date
 export const isDeadlinePassed = (deadline: string) => {
-  const today = new Date().toISOString().split("T")[0]
-  const deadlineDate = new Date(deadline).toISOString().split("T")[0]
-  return today > deadlineDate
+  // Parse deadline as end of day in Pacific Time
+  const deadlineEndOfDay = dayjs.tz(deadline, "America/Los_Angeles").endOf('day')
+
+  // Get current time in Pacific Time
+  const nowPacific = dayjs().tz("America/Los_Angeles")
+
+  // Check if current time is after deadline end of day
+  return nowPacific.isAfter(deadlineEndOfDay)
 }
 
 export const filterAvailableUnits = (units: RailsUnit[]): RailsUnit[] => {
