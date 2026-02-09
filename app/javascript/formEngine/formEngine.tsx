@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useMemo } from "react"
 import { FormEngineProvider, type FormEngineContext } from "./formEngineContext"
 import {
   type FormSchema,
@@ -29,19 +29,23 @@ const FormEngine = ({ listing, schema }: FormEngineProps) => {
   const { unleashFlag: formEngineDebug } = useFeatureFlag(UNLEASH_FLAG.FORM_ENGINE_DEBUG, false)
 
   const parsedSchema = parseFormSchema(schema)
+
+  const dataSources = useMemo(
+    () => ({
+      listing,
+      form: formData,
+      preferences: listingPreferences(listing),
+      seniorBuildingAgeRequirement: getSeniorBuildingAgeRequirement(listing),
+    }),
+    [listing, formData]
+  )
+
   if (typeof parsedSchema === "string") {
     return <h1>{parsedSchema}</h1>
   }
 
   const saveFormData = (data: Record<string, unknown>) => {
     setFormData({ ...formData, ...data })
-  }
-
-  const dataSources = {
-    listing,
-    form: formData,
-    preferences: listingPreferences(listing),
-    seniorBuildingAgeRequirement: getSeniorBuildingAgeRequirement(listing),
   }
 
   let stepInfoMap: StepInfoSchema[],
