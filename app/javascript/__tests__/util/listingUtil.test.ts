@@ -1,3 +1,6 @@
+import dayjs from "dayjs"
+import timezone from "dayjs/plugin/timezone"
+import utc from "dayjs/plugin/utc"
 import {
   getListingAddressString,
   isHabitatListing,
@@ -26,6 +29,10 @@ import {
   isFcfsSalesListing,
   isDeadlinePassed,
 } from "../../util/listingUtil"
+
+// Configure dayjs with required plugins
+dayjs.extend(utc)
+dayjs.extend(timezone)
 import { openSaleListing } from "../data/RailsSaleListing/listing-sale-open"
 import { saleEducatorListing } from "../data/RailsSaleListing/listing-sale-educator"
 import { saleListingReservedAndCustom } from "../data/RailsSaleListing/listing-sale-reserved-and-custom"
@@ -545,20 +552,26 @@ describe("first come, first served", () => {
 })
 
 describe("isDeadlinePassed", () => {
-  const today = new Date()
-  const yesterday = new Date(today)
-  yesterday.setDate(today.getDate() - 1)
-  const tomorrow = new Date(today)
-  tomorrow.setDate(today.getDate() + 1)
+  // Use dayjs to create dates in Pacific Time to match the function behavior
+  const deadlineTodayPacific = dayjs().tz("America/Los_Angeles")
+  const deadlineYesterdayPacific = deadlineTodayPacific.subtract(1, "day")
+  const deadlineTomorrowPacific = deadlineTodayPacific.add(1, "day")
+
   it("returns true when date is past the deadline", () => {
-    expect(isDeadlinePassed(yesterday.toISOString().split("T")[0])).toBe(true)
+    // Use a date string that's yesterday in Pacific Time
+    const yesterdayString = deadlineYesterdayPacific.format("YYYY-MM-DD")
+    expect(isDeadlinePassed(yesterdayString)).toBe(true)
   })
 
   it("returns false when date is the same day as the deadline", () => {
-    expect(isDeadlinePassed(today.toISOString().split("T")[0])).toBe(false)
+    // Use today's date string in Pacific Time
+    const todayString = deadlineTodayPacific.format("YYYY-MM-DD")
+    expect(isDeadlinePassed(todayString)).toBe(false)
   })
 
   it("returns false when date is before the deadline", () => {
-    expect(isDeadlinePassed(tomorrow.toISOString().split("T")[0])).toBe(false)
+    // Use tomorrow's date string in Pacific Time
+    const tomorrowString = deadlineTomorrowPacific.format("YYYY-MM-DD")
+    expect(isDeadlinePassed(tomorrowString)).toBe(false)
   })
 })
