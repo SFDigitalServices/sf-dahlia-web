@@ -11,6 +11,6 @@ class FormController < ApplicationController
   protected
 
   def use_react_app
-    true
+    Rails.configuration.unleash.is_enabled?('perm.webapp.formEngine')
   end
 end
