@@ -33,7 +33,7 @@ const ListingApplyPreferencesIntro = () => {
           </ol>
         </CardSection>
         <CardSection className={styles["listing-apply-preferences-footer"]}>
-          <Button variant="primary" onClick={handleNextStep}>
+          <Button variant="primary" onClick={() => handleNextStep()}>
             {t("t.getStarted")}
           </Button>
         </CardSection>
