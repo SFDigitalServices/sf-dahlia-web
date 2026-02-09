@@ -116,6 +116,7 @@ module DahliaBackend
       # Extract applicant information
       primary_applicant = {
         firstName: application.dig('primaryApplicant', 'firstName'),
+        lastname: application.dig('primaryApplicant', 'lastname'),
         email: application.dig('primaryApplicant', 'email'),
       }
 
