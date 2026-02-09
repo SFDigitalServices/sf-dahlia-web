@@ -45,7 +45,10 @@
 }
 
 .feedback-link {
-  text-align: right;
+  text-align: left;
+  @media (min-width: theme("screens.md")) {
+    text-align: right;
+  }
 }
 
 .feedback-link a:focus {
