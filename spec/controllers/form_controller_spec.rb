@@ -8,7 +8,7 @@ RSpec.describe FormController do
     end
 
     it 'renders in react by default' do
-      get :listing_apply_form, params: { id: 'a0123' }
+      get :listing_apply_form, params: { id: 'a0123', react: 'true' }
       expect(response).to render_template 'layouts/application-react'
     end
   end
