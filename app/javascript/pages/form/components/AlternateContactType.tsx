@@ -21,7 +21,7 @@ const AlternateContactType = ({
   } = useFormContext()
   const selected = watch(alternateContactType)
   return (
-    <fieldset>
+    <fieldset className={styles["alternate-contact-group"]}>
       <Heading priority={2} size="sm">
         {t("label.alternateContact")}
       </Heading>
