@@ -19,7 +19,7 @@ const ListingApplyReviewApplication = () => {
         <h1 className="mt-6 mb-4 text-xl md:text-2xl">ListingApplyReviewApplication Component</h1>
       </CardSection>
       <CardSection>
-        <Button variant="primary" onClick={handleNextStep}>
+        <Button variant="primary" onClick={() => handleNextStep()}>
           {t("t.next")}
         </Button>
       </CardSection>
