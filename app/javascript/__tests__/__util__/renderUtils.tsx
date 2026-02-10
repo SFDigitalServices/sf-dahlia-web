@@ -52,10 +52,13 @@ export const defineCryptoApi = () => {
 }
 
 // Wrapper for application form component tests
-export const renderWithFormContextWrapper = (formComponent: React.ReactElement) => {
+export const renderWithFormContextWrapper = (
+  formComponent: React.ReactElement,
+  formData: Record<string, unknown> = {}
+) => {
   const formEngineContextValue = {
     listing: openRentalListing,
-    formData: {},
+    formData: formData,
     saveFormData: jest.fn(),
     dataSources: {
       listing: openRentalListing,
