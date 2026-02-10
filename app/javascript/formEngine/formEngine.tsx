@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { FormEngineProvider, type FormEngineContext } from "./formEngineContext"
 import {
   type FormSchema,
@@ -57,14 +57,34 @@ const FormEngine = ({ listing, schema }: FormEngineProps) => {
     }))
     const totalSteps = parsedSchema.children.length
 
+    const handleUrl = (newStepIndex: number) => {
+      const currentPath = window.location.pathname
+      const paths = currentPath.split('/')
+      const slug = stepInfoMap[newStepIndex].slug
+      if (slug === 'intro' || slug === 'overview') {
+        paths[paths.length - 2] = 'apply-welcome'
+      } else {
+        paths[paths.length - 2] = 'apply'
+      }
+      paths[paths.length - 1] = slug
+      const newPath = paths.join('/')
+      window.history.pushState({}, '', newPath)
+    }
+
     handleNextStep = () => {
       const newStepIndex = calculateNextStep(currentStepIndex, stepInfoMap, dataSources)
-      if (newStepIndex < totalSteps) setCurrentStepIndex(newStepIndex)
+      if (newStepIndex < totalSteps) {
+        setCurrentStepIndex(newStepIndex)
+        handleUrl(newStepIndex)
+      }
     }
 
     handlePrevStep = () => {
       const newStepIndex = calculatePrevStep(currentStepIndex, stepInfoMap, dataSources)
-      if (newStepIndex >= 0) setCurrentStepIndex(newStepIndex)
+      if (newStepIndex >= 0) {
+        setCurrentStepIndex(newStepIndex)
+        handleUrl(newStepIndex)
+      }
     }
   }
 
@@ -88,6 +108,8 @@ const FormEngine = ({ listing, schema }: FormEngineProps) => {
           setCurrentStepIndex={setCurrentStepIndex}
           stepInfoMap={stepInfoMap}
           dataSources={dataSources}
+          handleNextStep={handleNextStep}
+          handlePrevStep={handlePrevStep}
         />
       )}
       <RecursiveRenderer schema={parsedSchema} />

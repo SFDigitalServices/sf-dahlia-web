@@ -24,8 +24,6 @@ import { getSfGovUrl, renderInlineMarkup } from "../../util/languageUtil"
 import "./ListingDetailsApply.scss"
 import { localizedPath } from "../../util/routeUtil"
 import { ListingState } from "../listings/ListingState"
-import { useFeatureFlag } from "../../hooks/useFeatureFlag"
-import { UNLEASH_FLAG } from "../../modules/constants"
 
 export interface ListingDetailsApplyProps {
   listing: RailsListing
@@ -77,8 +75,6 @@ const StandardHowToApply = ({
   acceptingPaperApps: boolean
 }) => {
   const [paperApplicationsOpen, setPaperApplicationsOpen] = useState(false)
-  const { unleashFlag: formEngine } = useFeatureFlag(UNLEASH_FLAG.FORM_ENGINE, false)
-
   return (
     <SidebarBlock title={t("listings.apply.howToApply")} priority={2}>
       {!isListingRental && (
@@ -105,16 +101,6 @@ const StandardHowToApply = ({
       >
         {t("label.applyOnline")}
       </LinkButton>
-      {formEngine && (
-        <LinkButton
-          styleType={AppearanceStyleType.alert}
-          className={"w-full my-4"}
-          transition={true}
-          href={`listings/${listingId}/apply-form`}
-        >
-          Form Engine Application
-        </LinkButton>
-      )}
       {process.env.COVID_UPDATE && (
         <div className={"mt-4"}>
           <Heading priority={2} className={"text-base text-gray-800 font-sans"}>
