@@ -40,6 +40,7 @@ describe("formEngineUtil", () => {
       preferences: {
         testKey1: "test key 1",
         testKey2: "test key 2",
+        testKey3: "test key 3",
       },
     }
     const conditions = [
@@ -51,6 +52,14 @@ describe("formEngineUtil", () => {
         dataSource: "preferences",
         dataKey: "testKey2",
         negate: true,
+      },
+    ]
+
+    const valueCondition = [
+      {
+        dataSource: "preferences",
+        dataKey: "testKey3",
+        dataValueToMatch: "dataValue3",
       },
     ]
 
@@ -72,6 +81,30 @@ describe("formEngineUtil", () => {
     it("returns false for operation 'hideStepIfAnyPresent'", () => {
       const operation = "hideStepIfAnyPresent"
       expect(showStep(operation, conditions, dataSources)).toBe(false)
+    })
+
+    it("returns false for operation 'hideStepIfAnyPresent' when dataValueToMatch matches", () => {
+      expect(
+        showStep("hideStepIfAnyPresent", valueCondition, {
+          ...dataSources,
+          preferences: {
+            ...dataSources.preferences,
+            testKey3: "dataValue3",
+          },
+        })
+      ).toBe(false)
+    })
+
+    it("returns true for operation 'hideStepIfAnyPresent' when dataValueToMatch doesn't match", () => {
+      expect(
+        showStep("hideStepIfAnyPresent", valueCondition, {
+          ...dataSources,
+          preferences: {
+            ...dataSources.preferences,
+            testKey3: "notDataValue3",
+          },
+        })
+      ).toBe(true)
     })
   })
 

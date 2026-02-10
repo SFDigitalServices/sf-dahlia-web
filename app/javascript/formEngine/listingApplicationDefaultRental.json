@@ -175,10 +175,11 @@
         "slug": "alternate-contact-name",
         "sectionName": "household",
         "navigationArrival": {
-          "showStepIfAnyPresent": [
+          "hideStepIfAnyPresent": [
             {
               "dataSource": "form",
-              "dataKey": "alternateContactType"
+              "dataKey": "alternateContactType",
+              "dataValueToMatch": "noAlternateContact"
             }
           ]
         }
@@ -208,10 +209,11 @@
         "slug": "alternate-contact-phone-address",
         "sectionName": "household",
         "navigationArrival": {
-          "showStepIfAnyPresent": [
+          "hideStepIfAnyPresent": [
             {
               "dataSource": "form",
-              "dataKey": "alternateContactType"
+              "dataKey": "alternateContactType",
+              "dataValueToMatch": "noAlternateContact"
             }
           ]
         }

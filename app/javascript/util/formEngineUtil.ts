@@ -26,7 +26,10 @@ export const showStep = (
   dataSources: DataSources
 ): boolean => {
   const processedConditions = conditions.map((condition) => {
-    const processedCondition = dataSources[condition.dataSource][condition.dataKey]
+    const value = dataSources[condition.dataSource][condition.dataKey]
+    const processedCondition = condition.dataValueToMatch
+      ? condition.dataValueToMatch === value
+      : value
     return condition.negate ? !processedCondition : !!processedCondition
   })
   if (operation === "showStepIfAllPresent") {
@@ -62,6 +65,7 @@ export const calculateNextStep = (
       if (showStep(operation, conditions, dataSources)) return idx
     }
   }
+  return stepInfoMap.length - 1
 }
 
 export const calculatePrevStep = (
@@ -83,6 +87,7 @@ export const calculatePrevStep = (
       if (showStep(operation, conditions, dataSources)) return stepInfoMap.length - 1 - idx
     }
   }
+  return 0
 }
 
 export const validDayRange = (value: string): boolean =>
