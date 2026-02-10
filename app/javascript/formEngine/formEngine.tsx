@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState } from "react"
 import { FormEngineProvider, type FormEngineContext } from "./formEngineContext"
 import {
   type FormSchema,
@@ -12,7 +12,7 @@ import {
 import type { RailsListing } from "../modules/listings/SharedHelpers"
 import { listingPreferences, getSeniorBuildingAgeRequirement } from "../util/listingUtil"
 import RecursiveRenderer from "./recursiveRenderer"
-import { calculateNextStep, calculatePrevStep } from "../util/formEngineUtil"
+import { calculateNextStep, calculatePrevStep, updateFormPath } from "../util/formEngineUtil"
 import { useFeatureFlag } from "../hooks/useFeatureFlag"
 import { UNLEASH_FLAG } from "../modules/constants"
 import FormEngineDebug from "./FormEngineDebug"
@@ -57,25 +57,11 @@ const FormEngine = ({ listing, schema }: FormEngineProps) => {
     }))
     const totalSteps = parsedSchema.children.length
 
-    const handleUrl = (newStepIndex: number) => {
-      const currentPath = window.location.pathname
-      const paths = currentPath.split('/')
-      const slug = stepInfoMap[newStepIndex].slug
-      if (slug === 'intro' || slug === 'overview') {
-        paths[paths.length - 2] = 'apply-welcome'
-      } else {
-        paths[paths.length - 2] = 'apply'
-      }
-      paths[paths.length - 1] = slug
-      const newPath = paths.join('/')
-      window.history.pushState({}, '', newPath)
-    }
-
     handleNextStep = () => {
       const newStepIndex = calculateNextStep(currentStepIndex, stepInfoMap, dataSources)
       if (newStepIndex < totalSteps) {
         setCurrentStepIndex(newStepIndex)
-        handleUrl(newStepIndex)
+        updateFormPath(newStepIndex, stepInfoMap)
       }
     }
 
@@ -83,7 +69,7 @@ const FormEngine = ({ listing, schema }: FormEngineProps) => {
       const newStepIndex = calculatePrevStep(currentStepIndex, stepInfoMap, dataSources)
       if (newStepIndex >= 0) {
         setCurrentStepIndex(newStepIndex)
-        handleUrl(newStepIndex)
+        updateFormPath(newStepIndex, stepInfoMap)
       }
     }
   }
@@ -108,8 +94,6 @@ const FormEngine = ({ listing, schema }: FormEngineProps) => {
           setCurrentStepIndex={setCurrentStepIndex}
           stepInfoMap={stepInfoMap}
           dataSources={dataSources}
-          handleNextStep={handleNextStep}
-          handlePrevStep={handlePrevStep}
         />
       )}
       <RecursiveRenderer schema={parsedSchema} />

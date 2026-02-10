@@ -132,3 +132,24 @@ export const getPrimaryApplicantData = (formData: Record<string, unknown>) => {
     dob: (formData.primaryApplicantDob as string) || "1990-01-01", // TODO: update after DAH-3543
   }
 }
+
+export const updateFormPath = (newStepIndex: number, stepInfoMap: StepInfoSchema[]) => {
+  const currentPath = window.location.pathname
+  const paths = currentPath.split("/")
+  const slug = stepInfoMap[newStepIndex].slug
+  if (slug === "intro" || slug === "overview") {
+    paths[paths.length - 2] = "apply-welcome"
+  } else {
+    paths[paths.length - 2] = "apply"
+    paths[paths.length - 1] = slug
+    const newPath = paths.join("/")
+    window.history.pushState({}, "", newPath)
+  }
+}
+
+export const URL_SECTIONS = [
+  "apply-welcome",
+  "apply",
+  "custom-educator-screening",
+  "community-screening",
+]
