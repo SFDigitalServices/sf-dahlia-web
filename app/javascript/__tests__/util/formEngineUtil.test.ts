@@ -11,8 +11,11 @@ import {
   validDate,
   validAge,
   parseDate,
+  updateFormPath,
 } from "../../util/formEngineUtil"
 import { openRentalListing } from "../data/RailsRentalListing/listing-rental-open"
+import { StepInfoSchema } from "../../formEngine/formSchemas"
+import { RailsListing } from "../../modules/listings/SharedHelpers"
 
 describe("formEngineUtil", () => {
   describe("translationFromDataSchema", () => {
@@ -240,6 +243,65 @@ describe("formEngineUtil", () => {
         minimumAge: 65,
       }
       expect(validAge(birthDate, minimumAge, seniorBuildingAgeRequirement)).toBe(false)
+    })
+  })
+
+  describe("updateFormPath", () => {
+    const stepInfoMap: StepInfoSchema[] = [
+      { slug: "intro" },
+      { slug: "overview" },
+      { slug: "name" },
+      { slug: "no-alt-contact" },
+      {
+        slug: "skip-over-this",
+        navigationArrival: {
+          hideStepIfAllPresent: [{ dataSource: "form", dataKey: "noAltContact" }],
+        },
+      },
+      { slug: "skip-to-this" },
+    ]
+    it("updates the path of the welcome form pages following the step info map", () => {
+      Object.defineProperty(window, "location", {
+        value: {
+          pathname: "/listing/123/apply-welcome/intro",
+        },
+        writable: true,
+      })
+      const pushStateSpy = jest.spyOn(window.history, "pushState")
+      updateFormPath(1, stepInfoMap)
+      expect(pushStateSpy).toHaveBeenCalledWith({}, "", "/listing/123/apply-welcome/overview")
+    })
+
+    it("updates the path from a welcome form page to an apply form page", () => {
+      Object.defineProperty(window, "location", {
+        value: {
+          pathname: "/listing/123/apply-welcome/overview",
+        },
+        writable: true,
+      })
+      const pushStateSpy = jest.spyOn(window.history, "pushState")
+      updateFormPath(2, stepInfoMap)
+      expect(pushStateSpy).toHaveBeenCalledWith({}, "", "/listing/123/apply/name")
+    })
+
+    it("updates the path from an apply form page to an apply form page that has a condition with a skipped page", () => {
+      Object.defineProperty(window, "location", {
+        value: {
+          pathname: "/listing/123/apply/no-alt-contact",
+        },
+        writable: true,
+      })
+      const dataSources = {
+        listing: {} as RailsListing,
+        form: {
+          noAltContact: true,
+        },
+        preferences: {},
+      }
+      const pushStateSpy = jest.spyOn(window.history, "pushState")
+      const nextStepIndex = calculateNextStep(3, stepInfoMap, dataSources)
+      updateFormPath(nextStepIndex, stepInfoMap)
+      expect(pushStateSpy).toHaveBeenCalledWith({}, "", "/listing/123/apply/skip-to-this")
     })
   })
 })
