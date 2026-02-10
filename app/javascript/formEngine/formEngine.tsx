@@ -61,6 +61,7 @@ const FormEngine = ({ listing, schema }: FormEngineProps) => {
     }))
     const totalSteps = parsedSchema.children.length
 
+    // Update data changes from the current page to calculate next step
     handleNextStep = (currentFormData: Record<string, unknown>) => {
       const newStepIndex = calculateNextStep(currentStepIndex, stepInfoMap, {
         ...dataSources,
