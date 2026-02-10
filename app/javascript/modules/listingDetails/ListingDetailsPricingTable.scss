@@ -1,5 +1,10 @@
 .category-table {
   tr {
+    td:first-child {
+      .stacked-table-cell:first-child {
+        display: block !important; // Override Bloom UI library's display: none to show unit types
+      }
+    }
     td:before {
       font-size: var(--bloom-font-size-sm);
 
