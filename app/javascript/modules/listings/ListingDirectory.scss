@@ -34,6 +34,15 @@
   @apply text-left;
 }
 
+// Override Bloom UI library's right-alignment for listing card tables
+.listings-row_table {
+  table.stacked-table {
+    .stacked-table-cell-container {
+      text-align: unset !important;
+    }
+  }
+}
+
 .match-banner {
   margin: auto;
   max-width: var(--seeds-width-3xl);
