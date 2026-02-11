@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import React from "react"
-import { t, Field, PhoneField, Select } from "@bloom-housing/ui-components"
+import { t, Field, PhoneField } from "@bloom-housing/ui-components"
 import { useFormContext } from "react-hook-form"
+import Select from "./Select"
 
 interface PhoneProps {
   label: string
@@ -27,7 +28,6 @@ const Phone = ({
 }: PhoneProps) => {
   const {
     control,
-    register,
     formState: { errors },
     setValue,
     clearErrors,
@@ -48,21 +48,15 @@ const Phone = ({
       />
       {showTypeOfNumber && (
         <Select
-          name={phoneType}
+          fieldName={phoneType}
           label={t("label.whatTypeOfNumber")}
           options={[
-            { label: t("label.phoneCell"), value: "cell" },
-            { label: t("label.phoneHome"), value: "home" },
-            { label: t("label.phoneWork"), value: "work" },
+            { name: t("label.phoneCell"), value: "cell" },
+            { name: t("label.phoneHome"), value: "home" },
+            { name: t("label.phoneWork"), value: "work" },
           ]}
-          register={register}
           disabled={noPhoneCheckbox}
-          controlClassName="control"
-          error={!!errors?.[phoneType]}
           errorMessage={t("error.phoneNumberType")}
-          validation={{
-            required: !noPhoneCheckbox,
-          }}
         />
       )}
       {showDontHavePhoneNumber && (
@@ -117,20 +111,14 @@ const Phone = ({
             errorMessage={t("error.phoneNumber")}
           />
           <Select
-            name={additionalPhoneType}
+            fieldName={additionalPhoneType}
             label={t("label.whatTypeOfNumber")}
             options={[
-              { label: t("label.phoneCell"), value: "cell" },
-              { label: t("label.phoneHome"), value: "home" },
-              { label: t("label.phoneWork"), value: "work" },
+              { name: t("label.phoneCell"), value: "cell" },
+              { name: t("label.phoneHome"), value: "home" },
+              { name: t("label.phoneWork"), value: "work" },
             ]}
-            register={register}
-            controlClassName="control"
-            error={!!errors?.[additionalPhoneType]}
             errorMessage={t("error.phoneNumberType")}
-            validation={{
-              required: true,
-            }}
           />
         </>
       )}

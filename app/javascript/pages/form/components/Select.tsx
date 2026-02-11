@@ -5,14 +5,13 @@ import { RegisterOptions, useFormContext } from "react-hook-form"
 
 interface FormSelectProps {
   label: string
-  defaultOptionName: string
+  defaultOptionName?: string
   errorMessage: string
   options: { name: string; value: string }[]
   labelClassName?: string
   validation?: RegisterOptions
-  fieldNames: {
-    selection: string
-  }
+  disabled?: boolean
+  fieldName?: string
 }
 
 const FormSelect = ({
@@ -22,7 +21,8 @@ const FormSelect = ({
   options,
   labelClassName,
   validation,
-  fieldNames: { selection },
+  disabled,
+  fieldName,
 }: FormSelectProps) => {
   const {
     register,
@@ -35,15 +35,16 @@ const FormSelect = ({
 
   return (
     <Select
-      id={selection}
-      name={selection}
+      id={fieldName}
+      name={fieldName || ""}
       label={t(label)}
       options={selectOptions}
-      placeholder={t(defaultOptionName)}
+      placeholder={t(defaultOptionName || "")}
       controlClassName="control"
       labelClassName={labelClassName}
+      disabled={disabled}
       register={register}
-      error={!!errors?.[selection]}
+      error={!!errors?.[fieldName || ""]}
       errorMessage={t(errorMessage)}
       validation={
         validation || {

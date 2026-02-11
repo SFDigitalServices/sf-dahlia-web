@@ -83,7 +83,7 @@ const CertificateNumberPreference = ({
           <div className={styles["certificate-preference-dropdown"]}>
             <Select
               options={showAllHouseholdMembers}
-              fieldNames={{ selection: currentPreference }}
+              fieldName={currentPreference}
               defaultOptionName={"label.selectOne"}
               label={"label.applicantPreferencesHouseholdMember"}
               labelClassName="text-base"
