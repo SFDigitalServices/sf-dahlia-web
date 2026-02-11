@@ -30,12 +30,13 @@ const EmailAddress = ({
   const [noEmailCheckbox, setNoEmailCheckbox] = React.useState(false)
   return (
     <fieldset>
+      <legend className={styles["email-address-title"]}>{t(label)}</legend>
       <Field
         name={email}
-        label={t(label)}
         register={register}
         disabled={noEmailCheckbox}
-        subNote={t(note)}
+        subNote={t(note || "")}
+        placeholder={noEmailCheckbox ? t("t.none") : ""}
         className={styles["email-address-field"]}
         validation={{
           required: !noEmailCheckbox,
@@ -51,8 +52,9 @@ const EmailAddress = ({
       {showDontHaveEmailAddress && (
         <Field
           type="checkbox"
-          name={noEmail}
+          name={noEmail || ""}
           label={t("label.applicantNoEmail")}
+          className={styles["email-address-checkbox"]}
           register={register}
           onChange={(e) => {
             const isChecked = e.target.checked
