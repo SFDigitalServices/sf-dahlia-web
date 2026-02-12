@@ -29,3 +29,10 @@
 strong {
   font-weight: var(--seeds-font-weight-semibold);
 }
+
+.checkbox-field-label {
+  label {
+    color: var(--seeds-color-blue-500);
+    font-weight: var(--seeds-font-weight-semibold) !important;
+  }
+}

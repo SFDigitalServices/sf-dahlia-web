@@ -41,6 +41,7 @@ const Phone = ({
         label={t(label)}
         control={control}
         disabled={noPhoneCheckbox}
+        placeholder={noPhoneCheckbox ? t("t.none") : ""}
         required={true}
         error={!!errors?.[phone]}
         errorMessage={t("error.phoneNumber")}
@@ -67,6 +68,7 @@ const Phone = ({
           error={!!errors?.["noPhone"]}
           errorMessage={t("error.phoneNumberType")}
           disabled={noAdditionalPhoneCheckbox}
+          className="checkbox-field-label"
           validation={{
             required: true,
           }}
@@ -90,6 +92,7 @@ const Phone = ({
           error={!!errors?.["additionalPhone"]}
           disabled={noPhoneCheckbox}
           errorMessage={t("error.phoneNumberType")}
+          className="checkbox-field-label"
           validation={{
             required: true,
           }}

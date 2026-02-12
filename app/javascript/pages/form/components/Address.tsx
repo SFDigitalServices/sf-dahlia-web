@@ -189,6 +189,7 @@ const Address = ({
           type="checkbox"
           name="mailingAddressCheckbox"
           label={t("label.applicantSeparateAddress")}
+          className="checkbox-field-label"
           onChange={(e) => setMailingAddressChecked(e.target.checked)}
         />
       )}
