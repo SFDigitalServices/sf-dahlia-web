@@ -17,9 +17,9 @@ interface EmailAddressProps {
 
 const EmailAddress = ({
   label,
-  fieldNames: { email, noEmail },
+  fieldNames: { email, noEmail = "" },
   showDontHaveEmailAddress,
-  note,
+  note = "",
 }: EmailAddressProps) => {
   const {
     register,
@@ -35,7 +35,7 @@ const EmailAddress = ({
         name={email}
         register={register}
         disabled={noEmailCheckbox}
-        subNote={t(note || "")}
+        subNote={t(note)}
         placeholder={noEmailCheckbox ? t("t.none") : ""}
         className={styles["email-address-field"]}
         validation={{
@@ -52,7 +52,7 @@ const EmailAddress = ({
       {showDontHaveEmailAddress && (
         <Field
           type="checkbox"
-          name={noEmail || ""}
+          name={noEmail}
           label={t("label.applicantNoEmail")}
           className={styles["email-address-checkbox"]}
           register={register}
