@@ -16,13 +16,13 @@ interface FormSelectProps {
 
 const FormSelect = ({
   label,
-  defaultOptionName,
+  defaultOptionName = "",
   errorMessage,
   options,
   labelClassName,
   validation,
   disabled,
-  fieldName,
+  fieldName = "",
 }: FormSelectProps) => {
   const {
     register,
@@ -36,15 +36,15 @@ const FormSelect = ({
   return (
     <Select
       id={fieldName}
-      name={fieldName || ""}
+      name={fieldName}
       label={t(label)}
       options={selectOptions}
-      placeholder={t(defaultOptionName || "")}
+      placeholder={t(defaultOptionName)}
       controlClassName="control"
       labelClassName={labelClassName}
       disabled={disabled}
       register={register}
-      error={!!errors?.[fieldName || ""]}
+      error={!!errors?.[fieldName]}
       errorMessage={t(errorMessage)}
       validation={
         validation || {
