@@ -16,7 +16,7 @@ interface FormSelectProps {
 
 const FormSelect = ({
   label,
-  defaultOptionName = "",
+  defaultOptionName,
   errorMessage,
   options,
   labelClassName,
@@ -39,7 +39,7 @@ const FormSelect = ({
       name={fieldName}
       label={t(label)}
       options={selectOptions}
-      placeholder={t(defaultOptionName)}
+      placeholder={defaultOptionName ? t(defaultOptionName) : undefined}
       controlClassName="control"
       labelClassName={labelClassName}
       disabled={disabled}

@@ -15,7 +15,7 @@ const renderSelect = () => {
         { name: "label.spouse", value: "spouse" },
         { name: "label.registeredDomesticPartner", value: "Registered Domestic Partner" },
       ]}
-      fieldNames={{ selection: "householdMemberRelation" }}
+      fieldName="householdMemberRelation"
     />
   )
 }

@@ -50,14 +50,14 @@ const Phone = ({
       {showTypeOfNumber && (
         <Select
           fieldName={phoneType}
-          label={t("label.whatTypeOfNumber")}
+          label={"label.whatTypeOfNumber"}
           options={[
             { name: t("label.phoneCell"), value: "cell" },
             { name: t("label.phoneHome"), value: "home" },
             { name: t("label.phoneWork"), value: "work" },
           ]}
           disabled={noPhoneCheckbox}
-          errorMessage={t("error.phoneNumberType")}
+          errorMessage={"error.phoneNumberType"}
         />
       )}
       {showDontHavePhoneNumber && (
@@ -115,13 +115,13 @@ const Phone = ({
           />
           <Select
             fieldName={additionalPhoneType}
-            label={t("label.whatTypeOfNumber")}
+            label={"label.whatTypeOfNumber"}
             options={[
               { name: t("label.phoneCell"), value: "cell" },
               { name: t("label.phoneHome"), value: "home" },
               { name: t("label.phoneWork"), value: "work" },
             ]}
-            errorMessage={t("error.phoneNumberType")}
+            errorMessage={"error.phoneNumberType"}
           />
         </>
       )}
