@@ -19,7 +19,7 @@ const ListingApplyRentBurdenPreference = () => {
         <Heading>ListingApplyRentBurdenPreference Component</Heading>
       </CardSection>
       <CardSection>
-        <Button variant="primary" onClick={handleNextStep}>
+        <Button variant="primary" onClick={() => handleNextStep()}>
           {t("t.next")}
         </Button>
       </CardSection>
