@@ -316,7 +316,7 @@ exports[`For Rent renders ForRent component 1`] = `
                     />
                   </svg>
                 </span>
-                Upcoming lotteries (0)
+                Upcoming lotteries (1)
               </a>
               <a
                 class="seeds-button directory-page-navigation-bar__button"
@@ -525,7 +525,7 @@ exports[`For Rent renders ForRent component 1`] = `
                     class="button w-full"
                     tabindex="0"
                   >
-                    Show Upcoming Lotteries (0)
+                    Show Upcoming Lotteries (1)
                   </button>
                 </div>
               </div>
