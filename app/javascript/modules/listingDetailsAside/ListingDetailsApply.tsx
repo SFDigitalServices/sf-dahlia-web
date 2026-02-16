@@ -24,6 +24,8 @@ import { getSfGovUrl, renderInlineMarkup } from "../../util/languageUtil"
 import "./ListingDetailsApply.scss"
 import { localizedPath } from "../../util/routeUtil"
 import { ListingState } from "../listings/ListingState"
+import { useFeatureFlag } from "../../hooks/useFeatureFlag"
+import { UNLEASH_FLAG } from "../constants"
 
 export interface ListingDetailsApplyProps {
   listing: RailsListing
@@ -75,6 +77,8 @@ const StandardHowToApply = ({
   acceptingPaperApps: boolean
 }) => {
   const [paperApplicationsOpen, setPaperApplicationsOpen] = useState(false)
+  const { unleashFlag: formEngine } = useFeatureFlag(UNLEASH_FLAG.FORM_ENGINE, false)
+  const formUrl = `listings/${listingId}/${formEngine ? "apply/intro?react=true" : "apply-welcome/intro"}`
   return (
     <SidebarBlock title={t("listings.apply.howToApply")} priority={2}>
       {!isListingRental && (
@@ -97,7 +101,7 @@ const StandardHowToApply = ({
         styleType={AppearanceStyleType.primary}
         className={"w-full"}
         transition={true}
-        href={`listings/${listingId}/apply-welcome/intro`}
+        href={formUrl}
       >
         {t("label.applyOnline")}
       </LinkButton>

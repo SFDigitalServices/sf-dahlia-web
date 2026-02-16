@@ -140,20 +140,10 @@ export const getPrimaryApplicantData = (formData: Record<string, unknown>) => {
   }
 }
 
-export const WELCOME_SECTIONS = [
-  "intro",
-  "overview",
-  "custom-educator-screening",
-  "community-screening",
-]
-
 export const updateFormPath = (newStepIndex: number, stepInfoMap: StepInfoSchema[]) => {
   const currentPath = window.location.pathname
   const paths = currentPath.split("/")
   const slug = stepInfoMap[newStepIndex].slug
-  WELCOME_SECTIONS.includes(slug)
-    ? (paths[paths.length - 2] = "apply-welcome")
-    : (paths[paths.length - 2] = "apply")
   paths[paths.length - 1] = slug
   const newPath = paths.join("/")
   window.history.pushState({}, "", newPath)

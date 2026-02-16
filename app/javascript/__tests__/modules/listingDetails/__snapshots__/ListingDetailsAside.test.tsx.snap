@@ -939,7 +939,7 @@ exports[`ListingDetailsAside renders ListingDetailsAside component sales 1`] = `
                 </p>
                 <a
                   class="button is-primary w-full transition"
-                  href="listings/a0W0P00000GlKfBUAV/apply-welcome/intro"
+                  href="listings/a0W0P00000GlKfBUAV/apply/intro?react=true"
                   tabindex="0"
                 >
                   Apply Online

@@ -296,25 +296,13 @@ describe("formEngineUtil", () => {
     it("updates the path of the welcome form pages following the step info map", () => {
       Object.defineProperty(window, "location", {
         value: {
-          pathname: "/listing/123/apply-welcome/intro",
+          pathname: "/listing/123/apply/intro",
         },
         writable: true,
       })
       const pushStateSpy = jest.spyOn(window.history, "pushState")
       updateFormPath(1, stepInfoMap)
-      expect(pushStateSpy).toHaveBeenCalledWith({}, "", "/listing/123/apply-welcome/overview")
-    })
-
-    it("updates the path from a welcome form page to an apply form page", () => {
-      Object.defineProperty(window, "location", {
-        value: {
-          pathname: "/listing/123/apply-welcome/overview",
-        },
-        writable: true,
-      })
-      const pushStateSpy = jest.spyOn(window.history, "pushState")
-      updateFormPath(2, stepInfoMap)
-      expect(pushStateSpy).toHaveBeenCalledWith({}, "", "/listing/123/apply/name")
+      expect(pushStateSpy).toHaveBeenCalledWith({}, "", "/listing/123/apply/overview")
     })
 
     it("updates the path from an apply form page to an apply form page that has a condition with a skipped page", () => {

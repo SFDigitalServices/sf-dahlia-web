@@ -37,7 +37,7 @@ exports[`ListingDetailsApply displays habitat link for eligibility requirements 
         </p>
         <a
           class="button is-primary w-full transition"
-          href="listings/a0W8H000000HI2uUAG/apply-welcome/intro"
+          href="listings/a0W8H000000HI2uUAG/apply/intro?react=true"
           tabindex="0"
         >
           Apply Online
@@ -87,7 +87,7 @@ exports[`ListingDetailsApply renders if listing is open 1`] = `
         </p>
         <a
           class="button is-primary w-full transition"
-          href="listings/a0W0P00000GlKfBUAV/apply-welcome/intro"
+          href="listings/a0W0P00000GlKfBUAV/apply/intro?react=true"
           tabindex="0"
         >
           Apply Online
