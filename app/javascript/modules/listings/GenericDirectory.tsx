@@ -156,57 +156,56 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
                       `${t("listings.eligibilityCalculator.rent.noMatchingUnits")}`
                     ))}
             </div>
-            {(filters && match) ||
-              (!filters && (
-                <div id="listing-results">
-                  {openListingsView(
-                    listings.open,
+            {(!filters || match) && (
+              <div id="listing-results">
+                {openListingsView(
+                  listings.open,
+                  props.directoryType,
+                  props.getSummaryTable,
+                  addObservedElement,
+                  hasFiltersSet,
+                  listings.fcfs.length,
+                  getAssetPath("house-circle-check.svg")
+                )}
+                {props.directoryType === DIRECTORY_TYPE_SALES &&
+                  FcfsSalesView(
+                    listings.fcfs,
                     props.directoryType,
                     props.getSummaryTable,
                     addObservedElement,
                     hasFiltersSet,
-                    listings.fcfs.length,
+                    listings.open.length,
                     getAssetPath("house-circle-check.svg")
                   )}
-                  {props.directoryType === DIRECTORY_TYPE_SALES &&
-                    FcfsSalesView(
-                      listings.fcfs,
-                      props.directoryType,
-                      props.getSummaryTable,
-                      addObservedElement,
-                      hasFiltersSet,
-                      listings.open.length,
-                      getAssetPath("house-circle-check.svg")
-                    )}
-                  {props.findMoreActionBlock}
-                  {filters &&
-                    additionalView(
-                      listings.additional,
-                      props.directoryType,
-                      props.getSummaryTable,
-                      addObservedElement,
-                      hasFiltersSet,
-                      additionalIsOpen,
-                      setAdditionalIsOpen
-                    )}
-                  {upcomingLotteriesView(
-                    listings.upcoming,
+                {props.findMoreActionBlock}
+                {filters &&
+                  additionalView(
+                    listings.additional,
                     props.directoryType,
                     props.getSummaryTable,
                     addObservedElement,
-                    upcomingIsOpen,
-                    setUpcomingIsOpen
+                    hasFiltersSet,
+                    additionalIsOpen,
+                    setAdditionalIsOpen
                   )}
-                  {lotteryResultsView(
-                    listings.results,
-                    props.directoryType,
-                    props.getSummaryTable,
-                    addObservedElement,
-                    resultsIsOpen,
-                    setResultsIsOpen
-                  )}
-                </div>
-              ))}
+                {upcomingLotteriesView(
+                  listings.upcoming,
+                  props.directoryType,
+                  props.getSummaryTable,
+                  addObservedElement,
+                  upcomingIsOpen,
+                  setUpcomingIsOpen
+                )}
+                {lotteryResultsView(
+                  listings.results,
+                  props.directoryType,
+                  props.getSummaryTable,
+                  addObservedElement,
+                  resultsIsOpen,
+                  setResultsIsOpen
+                )}
+              </div>
+            )}
           </>
         )}
         <MailingListSignup />
