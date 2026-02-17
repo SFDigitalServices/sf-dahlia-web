@@ -3,6 +3,7 @@ import { GenericDirectory } from "../../modules/listings/GenericDirectory"
 import { renderAndLoadAsync } from "../__util__/renderUtils"
 import { openRentalListing } from "../data/RailsRentalListing/listing-rental-open"
 import { waitFor } from "@testing-library/react"
+import { getForRentSummaryTable } from "../../pages/listings/for-rent"
 
 describe("GenericDirectory", () => {
   beforeEach(() => {
@@ -13,6 +14,14 @@ describe("GenericDirectory", () => {
       disconnect: jest.fn(),
     })
     window.ResizeObserver = mockResizeObserver
+
+    const mockIntersectionObserver = jest.fn()
+    mockIntersectionObserver.mockReturnValue({
+      observe: jest.fn(),
+      disconnect: jest.fn(),
+      unobserve: jest.fn(),
+    })
+    window.IntersectionObserver = mockIntersectionObserver
   })
   const filters = {
     household_size: "1",
@@ -22,6 +31,7 @@ describe("GenericDirectory", () => {
     children_under_6: "0",
     type: "",
   }
+
   it("displays the rental directory page with listings", async () => {
     const mockProps = {
       listingsAPI: jest.fn().mockResolvedValue([
@@ -33,7 +43,7 @@ describe("GenericDirectory", () => {
       ]),
       directoryType: "forRent" as const,
       filters: filters,
-      getSummaryTable: jest.fn().mockResolvedValue([]),
+      getSummaryTable: jest.fn().mockReturnValue(getForRentSummaryTable(openRentalListing)),
       getPageHeader: jest.fn(() => <div />),
       findMoreActionBlock: <div />,
     }
@@ -43,12 +53,13 @@ describe("GenericDirectory", () => {
     })
     expect(asFragment()).toMatchSnapshot()
   })
+
   it("displays the directory no matches page with no listings", async () => {
     const mockProps = {
       listingsAPI: jest.fn().mockResolvedValue([]),
       directoryType: "forRent" as const,
       filters: filters,
-      getSummaryTable: jest.fn().mockResolvedValue([]),
+      getSummaryTable: jest.fn().mockReturnValue(getForRentSummaryTable(openRentalListing)),
       getPageHeader: jest.fn(() => <div />),
       findMoreActionBlock: <div />,
     }
