@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useMemo } from "react"
 import { FormEngineProvider, type FormEngineContext } from "./formEngineContext"
 import {
   type FormSchema,
@@ -29,6 +29,17 @@ const FormEngine = ({ listing, schema }: FormEngineProps) => {
   const { unleashFlag: formEngineDebug } = useFeatureFlag(UNLEASH_FLAG.FORM_ENGINE_DEBUG, false)
 
   const parsedSchema = parseFormSchema(schema)
+
+  const dataSources = useMemo(
+    () => ({
+      listing,
+      form: formData,
+      preferences: listingPreferences(listing),
+      seniorBuildingAgeRequirement: getSeniorBuildingAgeRequirement(listing),
+    }),
+    [listing, formData]
+  )
+
   if (typeof parsedSchema === "string") {
     return <h1>{parsedSchema}</h1>
   }
@@ -37,16 +48,9 @@ const FormEngine = ({ listing, schema }: FormEngineProps) => {
     setFormData({ ...formData, ...data })
   }
 
-  const dataSources = {
-    listing,
-    form: formData,
-    preferences: listingPreferences(listing),
-    seniorBuildingAgeRequirement: getSeniorBuildingAgeRequirement(listing),
-  }
-
   let stepInfoMap: StepInfoSchema[],
     sectionNames: string[],
-    handleNextStep: () => void,
+    handleNextStep: (currentFormData: Record<string, unknown>) => void,
     handlePrevStep: () => void
 
   if (parsedSchema.componentType === "multiStepLayout") {
@@ -57,8 +61,12 @@ const FormEngine = ({ listing, schema }: FormEngineProps) => {
     }))
     const totalSteps = parsedSchema.children.length
 
-    handleNextStep = () => {
-      const newStepIndex = calculateNextStep(currentStepIndex, stepInfoMap, dataSources)
+    // Update data changes from the current page to calculate next step
+    handleNextStep = (currentFormData: Record<string, unknown>) => {
+      const newStepIndex = calculateNextStep(currentStepIndex, stepInfoMap, {
+        ...dataSources,
+        form: currentFormData,
+      })
       if (newStepIndex < totalSteps) setCurrentStepIndex(newStepIndex)
     }
 

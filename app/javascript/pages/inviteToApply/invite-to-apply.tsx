@@ -25,12 +25,14 @@ interface HomePageProps {
   submitPreviewLinkTokenParam?: string
   deadlinePassedPath?: boolean
   documentsPath?: boolean
+  fileUploadUrl?: string
 }
 
 const InviteToApplyPage = ({
   urlParams: { response, applicationNumber, deadline },
   submitPreviewLinkTokenParam,
   documentsPath,
+  fileUploadUrl,
 }: HomePageProps) => {
   const [listing, setListing] = useState<RailsSaleListing>(null)
 
@@ -81,6 +83,7 @@ const InviteToApplyPage = ({
         listing={listing}
         deadline={deadline}
         applicationNumber={applicationNumber}
+        fileUploadUrl={fileUploadUrl}
       />
     )
   }
@@ -105,6 +108,7 @@ const InviteToApplyPage = ({
         listing={listing}
         deadline={deadline}
         applicationNumber={applicationNumber}
+        fileUploadUrl={fileUploadUrl}
       />
     )
   }

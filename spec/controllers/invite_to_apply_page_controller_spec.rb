@@ -22,6 +22,9 @@ RSpec.describe InviteToApplyPageController do
                                  .and_return('TEST_TOKEN_SECRET')
     allow(ENV).to receive(:fetch).with('JWT_ALGORITHM', nil).and_return('HS256')
     allow(controller).to receive(:static_asset_paths).and_return({ logo: 'logo.png' })
+    allow(ENV).to receive(:fetch).with('SALESFORCE_INSTANCE_URL', nil).and_return('test-salesforce-url')
+    allow(ENV).to receive(:fetch).with('SALESFORCE_API_VERSION', '61.0').and_return('61.0')
+    allow(ENV).to receive(:fetch).with('SALESFORCE_PROXY_URI', nil).and_return(nil)
     allow(DahliaBackend::MessageService).to receive(:send_invite_to_apply_response)
     allow(Rails.logger).to receive(:info)
   end
@@ -29,6 +32,7 @@ RSpec.describe InviteToApplyPageController do
   describe '#index' do
     context 'with valid parameters' do
       before do
+        allow(Force::ShortFormService).to receive(:get).with(application_number).and_return({ 'uploadURL' => 'test-upload-url' })
         get :index, params: {
           id: listing_id,
           deadline: deadline,
@@ -53,6 +57,7 @@ RSpec.describe InviteToApplyPageController do
                                                           response: response_value,
                                                           applicationNumber: application_number,
                                                         },
+                                                        fileUploadUrl: 'test-upload-url',
                                                       })
       end
 
@@ -82,6 +87,7 @@ RSpec.describe InviteToApplyPageController do
 
     context 'when DahliaBackend::MessageService raises an error' do
       before do
+        allow(Force::ShortFormService).to receive(:get).with(application_number).and_return({ 'uploadURL' => 'test-upload-url' })
         allow(DahliaBackend::MessageService).to receive(:send_invite_to_apply_response).and_raise(
           StandardError, 'API Error'
         )
@@ -103,6 +109,7 @@ RSpec.describe InviteToApplyPageController do
       before do
         allow(controller).to receive(:use_jwt?).and_return(true)
         allow(JWT).to receive(:decode).and_return(decoded_token)
+        allow(Force::ShortFormService).to receive(:get).with(application_number).and_return({ 'uploadURL' => 'test-upload-url' })
       end
 
       it 'creates a token for the preview link' do
@@ -148,8 +155,8 @@ RSpec.describe InviteToApplyPageController do
                                                         deadline: deadline,
                                                         response: response_value,
                                                         applicationNumber: application_number,
-                                                      },
-                                                      documentsPath: true,
+                                                        },
+                                                      documentsPath: true
                                                     })
     end
 

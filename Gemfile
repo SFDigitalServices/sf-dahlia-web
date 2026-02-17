@@ -47,7 +47,7 @@ gem "react_on_rails", "13.3.3"
 gem 'psych', '< 4'
 
 # salesforce
-gem 'restforce', '~> 6.2.2', require: false
+gem 'restforce', '~> 8.0.1', require: false
 gem 'faye'
 gem 'cometd-rails', '~> 3.0', '>= 3.0.3.1'
 gem 'em-http-request'
@@ -67,7 +67,7 @@ gem 'easypost', '>=3.0.1'
 gem 'StreetAddress', github: 'Exygy/street-address', require: 'street_address'
 
 # google translation
-gem 'faraday', '~> 2.7.0'
+gem 'faraday', '~> 2.14.1'
 gem 'google-cloud-translate-v2'
 # JSON optimization
 gem 'oj'

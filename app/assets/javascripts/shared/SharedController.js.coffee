@@ -19,7 +19,7 @@ SharedController = ($scope, $state, $stateParams, $window, SharedService, Extern
   $scope.isEnglish = ->
     $state.params.lang == 'en'
 
-  $scope.feedbackUrl = 'https://airtable.com/shrw64DubWTQfRkdo'
+  $scope.feedbackUrl = "https://airtable.com/appUW1tM8te0Lmf6q/pagyZulZJCm1V4G8D/form?prefill_Last+visited=#{encodeURIComponent(window.location.pathname)}&hide_Last+visited=true"
 
   $scope.researchUrl = $window.env.researchFormUrl
 

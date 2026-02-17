@@ -222,25 +222,6 @@ class Api::V1::ShortFormController < ApiController
 
   def send_submit_app_confirmation(response)
     listing_id = application_params[:listingID]
-
-    use_old_emailer =
-      !Rails.configuration.unleash.is_enabled?('UseMessageService') ||
-      listing_id == ENV.fetch('TEMP_EMAIL_LISTING_ID', nil)
-
-    if use_old_emailer
-      Rails.logger.info(
-        'ShortFormController#send_submit_app_confirmation: ' \
-        "Sending email from old emailer service for #{listing_id}",
-      )
-      Emailer.submission_confirmation(
-        locale: params[:locale],
-        email: application_params[:primaryApplicant][:email],
-        listing_id: application_params[:listingID],
-        lottery_number: response['lotteryNumber'],
-        first_name: response['primaryApplicant']['firstName'],
-        last_name: response['primaryApplicant']['lastName'],
-      ).deliver_later
-    else
       Rails.logger.info(
         'ShortFormController#send_submit_app_confirmation: ' \
         "Sending email from messaging service for #{listing_id}",
@@ -250,7 +231,6 @@ class Api::V1::ShortFormController < ApiController
         response,
         params[:locale],
       )
-    end
   end
 
   def email_draft_link(response)

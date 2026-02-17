@@ -30,7 +30,7 @@ const ListingApplyOverview = () => {
         </div>
       </CardSection>
       <CardSection className={styles["listing-apply-overview-footer"]}>
-        <Button variant="primary" onClick={handleNextStep}>
+        <Button variant="primary" onClick={() => handleNextStep()}>
           {t("t.next")}
         </Button>
       </CardSection>

@@ -1,13 +1,15 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import React from "react"
 import { t, Select } from "@bloom-housing/ui-components"
-import { useFormContext } from "react-hook-form"
+import { RegisterOptions, useFormContext } from "react-hook-form"
 
 interface FormSelectProps {
   label: string
   defaultOptionName: string
   errorMessage: string
   options: { name: string; value: string }[]
+  labelClassName?: string
+  validation?: RegisterOptions
   fieldNames: {
     selection: string
   }
@@ -18,6 +20,8 @@ const FormSelect = ({
   defaultOptionName,
   errorMessage,
   options,
+  labelClassName,
+  validation,
   fieldNames: { selection },
 }: FormSelectProps) => {
   const {
@@ -25,7 +29,7 @@ const FormSelect = ({
     formState: { errors },
   } = useFormContext()
   const selectOptions = options.map((option) => ({
-    label: t(option.name),
+    label: option.name,
     value: option.value,
   }))
 
@@ -37,12 +41,15 @@ const FormSelect = ({
       options={selectOptions}
       placeholder={t(defaultOptionName)}
       controlClassName="control"
+      labelClassName={labelClassName}
       register={register}
       error={!!errors?.[selection]}
       errorMessage={t(errorMessage)}
-      validation={{
-        required: true,
-      }}
+      validation={
+        validation || {
+          required: true,
+        }
+      }
     />
   )
 }

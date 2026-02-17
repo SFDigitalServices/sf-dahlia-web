@@ -17,7 +17,7 @@ export interface FormEngineContext {
   currentStepIndex: number
   stepInfoMap: StepInfoSchema[]
   sectionNames: string[]
-  handleNextStep: () => void
+  handleNextStep: (currentFormData?: Record<string, unknown>) => void
   handlePrevStep: () => void
 }
 
