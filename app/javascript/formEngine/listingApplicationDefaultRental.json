@@ -98,7 +98,9 @@
               "phone": "primaryApplicantPhone",
               "phoneType": "primaryApplicantPhoneType",
               "additionalPhone": "primaryApplicantAdditionalPhone",
-              "additionalPhoneType": "primaryApplicantAdditionalPhoneType"
+              "additionalPhoneType": "primaryApplicantAdditionalPhoneType",
+              "noPhoneCheckbox": "primaryApplicantNoPhoneCheckbox",
+              "additionalPhoneCheckbox": "primaryApplicantAdditionalPhoneCheckbox"
             }
           }
         },
