@@ -77,14 +77,16 @@ export const calculatePrevStep = (
   if (prevStepSlug) {
     return stepInfoMap.findIndex((step) => step.slug === prevStepSlug)
   }
-
-  const reversedCurrentStepIndex = stepInfoMap.length - 1 - currentStepIndex
-  for (const [idx, step] of stepInfoMap.reverse().entries()) {
-    if (idx <= reversedCurrentStepIndex) continue
-    if (!step.navigationArrival) return stepInfoMap.length - 1 - idx
+  for (let i = currentStepIndex - 1; i >= 0; i--) {
+    const step = stepInfoMap[i]
+    if (!step.navigationArrival) {
+      return i
+    }
     if (step.navigationArrival) {
       const [operation, conditions] = Object.entries(step.navigationArrival)[0]
-      if (showStep(operation, conditions, dataSources)) return stepInfoMap.length - 1 - idx
+      if (showStep(operation, conditions, dataSources)) {
+        return i
+      }
     }
   }
   return 0
@@ -136,4 +138,13 @@ export const getPrimaryApplicantData = (formData: Record<string, unknown>) => {
     lastName: formData.primaryApplicantLastName as string,
     dob: (formData.primaryApplicantDob as string) || "1990-01-01", // TODO: update after DAH-3543
   }
+}
+
+export const updateFormPath = (newStepIndex: number, stepInfoMap: StepInfoSchema[]) => {
+  const currentPath = window.location.pathname
+  const paths = currentPath.split("/")
+  const slug = stepInfoMap[newStepIndex].slug
+  paths[paths.length - 1] = slug
+  const newPath = paths.join("/")
+  window.history.pushState({}, "", newPath)
 }
