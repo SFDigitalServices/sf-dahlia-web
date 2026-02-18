@@ -3,7 +3,7 @@ import { NavigationContext } from "@bloom-housing/ui-components"
 import withAppSetup from "../../layouts/withAppSetup"
 import { AppPages } from "../../util/routeUtil"
 import { getListing } from "../../api/listingApiService"
-import { useVariantFlag, useFeatureFlag } from "../../hooks/useFeatureFlag"
+import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import InviteToApplyDeadlinePassed from "./InviteToApplyDeadlinePassed"
 import InviteToApplyWithdrawn from "./InviteToApplyWithdrawn"
 import InviteToApplyContactMeLater from "./InviteToApplyContactMeLater"
@@ -48,7 +48,7 @@ const InviteToApplyPage = ({
     })
   }, [router, router.pathname])
 
-  const { unleashFlag: inviteApplyFlag, variant } = useVariantFlag("partners.inviteToApply", false)
+  const { unleashFlag: isInviteApplyEnabled } = useFeatureFlag("partners.inviteToApply", false)
   const { unleashFlag: jwtLinkParamsFlag } = useFeatureFlag(
     "temp.webapp.inviteToApply.JwtLinkParams",
     false
@@ -62,11 +62,6 @@ const InviteToApplyPage = ({
         : new URLSearchParams(submitLinkParams).toString()
     return `/${getCurrentLanguage()}/listings/${listing?.Id}/invite-to-apply?${submitLinkQueryStr}`
   }
-
-  const enabledListingIds =
-    typeof variant === "object" && variant?.payload?.value ? variant.payload.value.split(",") : []
-  const isInviteApplyEnabled =
-    inviteApplyFlag && listing?.Id && enabledListingIds.includes(listing.Id)
 
   if (!isInviteApplyEnabled) {
     return null
