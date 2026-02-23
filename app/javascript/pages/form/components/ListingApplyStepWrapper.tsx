@@ -72,7 +72,7 @@ const ListingApplyStepWrapper = ({
           {Children.map(children, (child) => {
             const { schema } = (child as React.ReactElement).props
             return (
-              <Card.Section divider={schema.props.divider === false ? undefined : "inset"}>
+              <Card.Section divider={schema?.props?.divider === false ? undefined : "inset"}>
                 {child}
               </Card.Section>
             )
