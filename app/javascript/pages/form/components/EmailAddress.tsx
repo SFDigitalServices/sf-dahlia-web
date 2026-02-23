@@ -17,9 +17,9 @@ interface EmailAddressProps {
 
 const EmailAddress = ({
   label,
-  fieldNames: { email, noEmail = "" },
+  fieldNames: { email, noEmail },
   showDontHaveEmailAddress,
-  note = "",
+  note,
 }: EmailAddressProps) => {
   const {
     register,
