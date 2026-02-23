@@ -44,6 +44,13 @@
   }
 }
 
+.feedback-link {
+  text-align: left;
+  @media (min-width: theme("screens.md")) {
+    text-align: right;
+  }
+}
+
 .feedback-link a:focus {
   transition: all 200ms ease-out;
   outline: none;
