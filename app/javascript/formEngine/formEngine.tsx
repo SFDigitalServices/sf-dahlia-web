@@ -12,7 +12,7 @@ import {
 import type { RailsListing } from "../modules/listings/SharedHelpers"
 import { listingPreferences, getSeniorBuildingAgeRequirement } from "../util/listingUtil"
 import RecursiveRenderer from "./recursiveRenderer"
-import { calculateNextStep, calculatePrevStep } from "../util/formEngineUtil"
+import { calculateNextStep, calculatePrevStep, updateFormPath } from "../util/formEngineUtil"
 import { useFeatureFlag } from "../hooks/useFeatureFlag"
 import { UNLEASH_FLAG } from "../modules/constants"
 import FormEngineDebug from "./FormEngineDebug"
@@ -67,12 +67,18 @@ const FormEngine = ({ listing, schema }: FormEngineProps) => {
         ...dataSources,
         form: currentFormData,
       })
-      if (newStepIndex < totalSteps) setCurrentStepIndex(newStepIndex)
+      if (newStepIndex < totalSteps) {
+        setCurrentStepIndex(newStepIndex)
+        updateFormPath(newStepIndex, stepInfoMap)
+      }
     }
 
     handlePrevStep = () => {
       const newStepIndex = calculatePrevStep(currentStepIndex, stepInfoMap, dataSources)
-      if (newStepIndex >= 0) setCurrentStepIndex(newStepIndex)
+      if (newStepIndex >= 0) {
+        setCurrentStepIndex(newStepIndex)
+        updateFormPath(newStepIndex, stepInfoMap)
+      }
     }
   }
 

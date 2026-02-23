@@ -16,7 +16,12 @@ import Markdown from "markdown-to-jsx"
 import UserContext from "../authentication/context/UserContext"
 import { ConfigContext } from "../lib/ConfigContext"
 import Link from "../navigation/Link"
-import { getCurrentLanguage, getSfGovUrl, LANGUAGE_CONFIGS } from "../util/languageUtil"
+import {
+  getCurrentLanguage,
+  getSfGovUrl,
+  LANGUAGE_CONFIGS,
+  renderInlineMarkup,
+} from "../util/languageUtil"
 import {
   getDisclaimerPath,
   getLocalizedPath,
@@ -138,11 +143,13 @@ const Layout = (props: LayoutProps) => {
     return
   }
   const feedbackBanner = (
-    <Markdown className="feedback-link">
-      {t("nav.getFeedback", {
-        feedbackUrl: `https://airtable.com/appUW1tM8te0Lmf6q/pagyZulZJCm1V4G8D/form?prefill_Last%20visited=${encodeURIComponent(window.location.pathname)}&hide_Last%20visited=true`,
-      })}
-    </Markdown>
+    <div className="feedback-link">
+      {renderInlineMarkup(
+        t("nav.getFeedback", {
+          feedbackUrl: `https://airtable.com/appUW1tM8te0Lmf6q/pagyZulZJCm1V4G8D/form?prefill_Last%20visited=${encodeURIComponent(window.location.pathname)}&hide_Last%20visited=true`,
+        })
+      )}
+    </div>
   )
 
   const topAlert = (
