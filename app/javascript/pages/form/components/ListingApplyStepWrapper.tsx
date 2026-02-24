@@ -69,9 +69,14 @@ const ListingApplyStepWrapper = ({
           {!!descriptionComponent && descriptionComponent}
         </Card.Header>
         <Form onSubmit={methods.handleSubmit(onSubmit)}>
-          {Children.map(children, (child) => (
-            <Card.Section>{child}</Card.Section>
-          ))}
+          {Children.map(children, (child) => {
+            const { schema } = (child as React.ReactElement).props
+            return (
+              <Card.Section divider={schema?.props?.divider === false ? undefined : "inset"}>
+                {child}
+              </Card.Section>
+            )
+          })}
           <Card.Footer className={styles["step-footer"]}>
             <Button variant="primary" type="submit">
               {t("t.next")}
