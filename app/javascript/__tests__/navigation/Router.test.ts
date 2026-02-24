@@ -13,11 +13,7 @@ describe("Router", () => {
     Object.defineProperty(global, "window", {
       value: {
         location: MOCK_LOCATION,
-        history: {
-          pushState: jest.fn(),
-        },
       },
-      writable: true,
     })
   })
 
@@ -49,25 +45,25 @@ describe("Router", () => {
     it("updates the URL when no options are passed", () => {
       expect(window.location.href).toEqual(MOCK_LOCATION.href)
       Router.push("/new/href?with=searchparam")
-      expect(window.history.pushState).toHaveBeenCalledWith({}, "", "/new/href?with=searchparam")
+      expect(window.location.href).toEqual("/new/href?with=searchparam")
     })
 
     it("switches language if param is provided and start url is english", () => {
       expect(window.location.href).toEqual(MOCK_LOCATION.href)
       Router.push("/new/href?with=searchparam", null, { locale: "es" })
-      expect(window.history.pushState).toHaveBeenCalledWith({}, "", "/es/new/href?with=searchparam")
+      expect(window.location.href).toEqual("/es/new/href?with=searchparam")
     })
 
     it("switches language if param is provided and start url is spanish", () => {
       expect(window.location.href).toEqual(MOCK_LOCATION.href)
       Router.push("/es/new/href?with=searchparam", null, { locale: "zh" })
-      expect(window.history.pushState).toHaveBeenCalledWith({}, "", "/zh/new/href?with=searchparam")
+      expect(window.location.href).toEqual("/zh/new/href?with=searchparam")
     })
 
     it("does not change url if locale param is same language as url", () => {
       expect(window.location.href).toEqual(MOCK_LOCATION.href)
       Router.push("/zh/new/href?with=searchparam", null, { locale: "zh" })
-      expect(window.history.pushState).toHaveBeenCalledWith({}, "", "/zh/new/href?with=searchparam")
+      expect(window.location.href).toEqual("/zh/new/href?with=searchparam")
     })
   })
 })

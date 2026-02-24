@@ -20,7 +20,7 @@ const Router: GenericRouter = {
         asUrlObject.search || ""
       )
     }
-    window.history.pushState({}, "", urlString)
+    window.location.href = urlString
   },
   // FIXME: remove when bloom makes this optional
   back: null,
