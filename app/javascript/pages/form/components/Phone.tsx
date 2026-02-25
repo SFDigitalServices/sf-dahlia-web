@@ -58,6 +58,7 @@ const Phone = ({
           ]}
           disabled={noPhoneCheckbox}
           errorMessage={t("error.phoneNumberType")}
+          validation={{ required: !noPhoneCheckbox }}
         />
       )}
       {showDontHavePhoneNumber && (
