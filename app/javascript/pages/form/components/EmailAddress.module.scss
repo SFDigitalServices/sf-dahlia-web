@@ -1,9 +1,15 @@
+.email-address-title {
+  font-size: var(--seeds-type-heading-size-sm);
+  font-weight: var(--seeds-font-weight-semibold);
+}
+
 .email-address-field {
   display: flex;
   flex-direction: column;
   :global {
     .label {
       order: 1;
+      padding: 0;
     }
     .field-sub-note {
       color: var(--seeds-input-text-label-color);
@@ -15,5 +21,12 @@
     .error-message {
       order: 4;
     }
+  }
+}
+
+.email-address-checkbox {
+  label {
+    color: var(--seeds-color-blue-500);
+    font-weight: var(--seeds-font-weight-semibold) !important;
   }
 }
