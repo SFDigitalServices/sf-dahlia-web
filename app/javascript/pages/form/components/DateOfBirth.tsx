@@ -53,8 +53,8 @@ const DateOfBirth = ({
     !!birthYearValue && (await trigger(birthYear))
   }
 
-  const labelClasses = [styles["dob-field-group-title"]]
-  if (hasError) labelClasses.push(styles["text-alert"])
+  const labelClasses = ["legend-header"]
+  if (hasError) labelClasses.push(styles["text-alert"] as string)
 
   return (
     <>

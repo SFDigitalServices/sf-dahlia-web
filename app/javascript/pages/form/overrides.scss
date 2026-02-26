@@ -20,10 +20,11 @@
   text-transform: none;
   font-variant: normal;
   letter-spacing: normal;
-  font-weight: normal;
+  font-weight: var(--seeds-font-weight-semibold);
   text-decoration: none;
   font-style: normal;
   font-size: 100%;
+  color: unset;
 }
 
 strong {
@@ -35,4 +36,9 @@ strong {
     color: var(--seeds-color-blue-500);
     font-weight: var(--seeds-font-weight-semibold) !important;
   }
+}
+
+.legend-header {
+  font-weight: var(--seeds-font-weight-semibold);
+  margin-bottom: var(--seeds-s2);
 }

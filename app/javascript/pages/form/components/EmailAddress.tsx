@@ -30,7 +30,7 @@ const EmailAddress = ({
   const [noEmailCheckbox, setNoEmailCheckbox] = React.useState(false)
   return (
     <fieldset>
-      <legend className={styles["email-address-title"]}>{t(label)}</legend>
+      <legend className="legend-header">{t(label)}</legend>
       <Field
         name={email}
         register={register}

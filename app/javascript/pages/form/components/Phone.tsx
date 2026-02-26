@@ -36,9 +36,9 @@ const Phone = ({
   const [noAdditionalPhoneCheckbox, setNoAdditionalPhoneCheckbox] = React.useState(false)
   return (
     <fieldset>
+      <legend className="legend-header">{t(label)}</legend>
       <PhoneField
         name={phone}
-        label={t(label)}
         control={control}
         disabled={noPhoneCheckbox}
         placeholder={noPhoneCheckbox ? t("t.none") : ""}
