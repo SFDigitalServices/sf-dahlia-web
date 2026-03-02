@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import { Field, t } from "@bloom-housing/ui-components"
-import React, { useState } from "react"
+import React from "react"
 import { useFormContext } from "react-hook-form"
 import { Link } from "@bloom-housing/ui-seeds"
 import Select from "./Select"
@@ -17,6 +17,7 @@ interface CertificateNumberPreferenceProps {
   numberDescription: string
   showDescription?: boolean
   fieldNames: {
+    checkbox: string
     copMember?: string
     copNumber?: string
     dthpMember?: string
@@ -31,11 +32,11 @@ const CertificateNumberPreference = ({
   numberDescription,
   numberName,
   showDescription = false,
-  fieldNames: { copMember, copNumber, dthpMember, dthpNumber },
+  fieldNames: { checkbox, copMember, copNumber, dthpMember, dthpNumber },
 }: CertificateNumberPreferenceProps) => {
-  const { register } = useFormContext()
+  const { register, watch } = useFormContext()
   const { formData } = useFormEngineContext()
-  const [isChecked, setIsChecked] = useState(false)
+  const checkboxValue = watch(checkbox, false)
   const currentPreference = copMember || dthpMember
   const currentPreferenceNumber = copNumber || dthpNumber
   const primaryApplicant = getPrimaryApplicantData(formData)
@@ -61,9 +62,9 @@ const CertificateNumberPreference = ({
       {showDescription && <div className="field-note">{t("label.pleaseSelectPreference")}</div>}
       <Field
         type="checkbox"
-        name={`${currentPreference}_checkbox`}
+        name={checkbox}
+        register={register}
         label={t(name)}
-        onChange={(e) => setIsChecked(e.target.checked)}
         className={styles["certificate-preference-checkbox"]}
         labelClassName={styles["certificate-preference-checkbox"]}
       />
@@ -79,7 +80,7 @@ const CertificateNumberPreference = ({
           {t("label.findOutMoreAboutPreferences")}
         </Link>
 
-        {isChecked && (
+        {checkboxValue && (
           <div className={styles["certificate-preference-dropdown"]}>
             <Select
               options={showAllHouseholdMembers}
@@ -89,7 +90,7 @@ const CertificateNumberPreference = ({
               labelClassName="text-base"
               errorMessage={t("error.pleaseSelectAnOption")}
               validation={{
-                required: isChecked,
+                required: checkboxValue,
               }}
             />
             <div className={styles["number-name"]}>{t(numberName)}</div>
