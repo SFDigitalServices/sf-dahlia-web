@@ -83,11 +83,11 @@ const CertificateNumberPreference = ({
           <div className={styles["certificate-preference-dropdown"]}>
             <Select
               options={showAllHouseholdMembers}
-              fieldNames={{ selection: currentPreference }}
-              defaultOptionName={"label.selectOne"}
-              label={"label.applicantPreferencesHouseholdMember"}
+              fieldName={currentPreference}
+              defaultOptionName={t("label.selectOne")}
+              label={t("label.applicantPreferencesHouseholdMember")}
               labelClassName="text-base"
-              errorMessage={"error.pleaseSelectAnOption"}
+              errorMessage={t("error.pleaseSelectAnOption")}
               validation={{
                 required: isChecked,
               }}
