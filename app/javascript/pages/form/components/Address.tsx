@@ -103,9 +103,7 @@ const Address = ({
   const [mailingAddressChecked, setMailingAddressChecked] = React.useState(false)
   return (
     <fieldset>
-      <Heading priority={2} size="sm">
-        {t(label)}
-      </Heading>
+      <legend className="legend-header">{t(label)}</legend>
       <p className="field-note">{t(note)}</p>
       <Field
         name={addressStreet}
@@ -189,6 +187,7 @@ const Address = ({
           type="checkbox"
           name="mailingAddressCheckbox"
           label={t("label.applicantSeparateAddress")}
+          className="checkbox-field-label"
           onChange={(e) => setMailingAddressChecked(e.target.checked)}
         />
       )}
