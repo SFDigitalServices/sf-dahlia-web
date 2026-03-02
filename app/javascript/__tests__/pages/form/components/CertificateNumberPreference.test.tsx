@@ -9,6 +9,7 @@ const renderCertificateNumberPreference = () => {
   const fieldNames = {
     copMember: "copMember",
     copNumber: "copNumber",
+    checkbox: "copCheckbox",
   }
 
   const formData = {

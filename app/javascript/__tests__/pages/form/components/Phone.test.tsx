@@ -16,6 +16,7 @@ const renderPhone = () => {
       fieldNames={{
         phone: "primaryApplicantPhone",
         phoneType: "primaryApplicantPhoneType",
+        noPhoneCheckbox: "primaryApplicantNoPhone",
         additionalPhone: "primaryApplicantAdditionalPhone",
         additionalPhoneType: "primaryApplicantAdditionalPhoneType",
       }}
