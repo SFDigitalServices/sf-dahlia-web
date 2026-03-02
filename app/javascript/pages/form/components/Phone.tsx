@@ -41,6 +41,7 @@ const Phone = ({
     setValue,
     clearErrors,
     watch,
+    register,
   } = useFormContext()
 
   const noPhoneCheckboxValue = watch(noPhoneCheckbox, false)
@@ -67,10 +68,7 @@ const Phone = ({
             { name: t("label.phoneHome"), value: "home" },
             { name: t("label.phoneWork"), value: "work" },
           ]}
-          register={register}
           disabled={noPhoneCheckboxValue}
-          controlClassName="control"
-          error={!!errors?.[phoneType]}
           errorMessage={t("error.phoneNumberType")}
           validation={{
             required: !noPhoneCheckboxValue,
