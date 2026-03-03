@@ -283,10 +283,11 @@
       "componentType": "step",
       "componentName": "ListingApplyHouseholdOverview",
       "navigationArrival": {
-        "hideStepIfAllPresent": [
+        "hideStepIfAnyPresent": [
           {
             "dataSource": "form",
-            "dataKey": "liveAlone"
+            "dataKey": "liveAlone",
+            "dataValueToMatch": "true"
           }
         ]
       }
@@ -299,10 +300,11 @@
       "componentType": "step",
       "componentName": "AddHouseholdMembers",
       "navigationArrival": {
-        "hideStepIfAllPresent": [
+        "hideStepIfAnyPresent": [
           {
             "dataSource": "form",
-            "dataKey": "liveAlone"
+            "dataKey": "liveAlone",
+            "dataValueToMatch": "true"
           }
         ]
       }
@@ -319,10 +321,11 @@
         "description": "c3HouseholdMemberForm.p1"
       },
       "navigationArrival": {
-        "hideStepIfAllPresent": [
+        "hideStepIfAnyPresent": [
           {
             "dataSource": "form",
-            "dataKey": "liveAlone"
+            "dataKey": "liveAlone",
+            "dataValueToMatch": "true"
           }
         ]
       },
@@ -403,10 +406,11 @@
               "dataKey": "householdMemberAddress"
             }
           ],
-          "hideStepIfAllPresent": [
+          "hideStepIfAnyPresent": [
             {
               "dataSource": "form",
-              "dataKey": "liveAlone"
+              "dataKey": "liveAlone",
+              "dataValueToMatch": "true"
             }
           ]
         }
@@ -420,10 +424,11 @@
         }
       },
       "navigationArrival": {
-        "hideStepIfAllPresent": [
+        "hideStepIfAnyPresent": [
           {
             "dataSource": "form",
-            "dataKey": "liveAlone"
+            "dataKey": "liveAlone",
+            "dataValueToMatch": "true"
           }
         ]
       }

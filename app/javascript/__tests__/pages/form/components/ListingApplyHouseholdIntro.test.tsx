@@ -21,7 +21,6 @@ describe("ListingApplyHouseholdIntro", () => {
     currentStepIndex: 0,
     handleNextStep: jest.fn(),
     handlePrevStep: jest.fn(),
-    jumpToStep: jest.fn(),
   }
 
   beforeEach(() => {
@@ -38,11 +37,10 @@ describe("ListingApplyHouseholdIntro", () => {
   })
   it("skips to the next section if alone", async () => {
     await user.click(screen.getByText(t("label.liveAlone")))
-    expect(formEngineContextValue.jumpToStep).toHaveBeenCalledWith("household-public-housing")
+    expect(formEngineContextValue.handleNextStep).toHaveBeenCalled()
   })
   it("goes to the next page if there are household members", async () => {
     await user.click(screen.getByText(t("label.otherPeople")))
     expect(formEngineContextValue.handleNextStep).toHaveBeenCalled()
-    expect(formEngineContextValue.jumpToStep).not.toHaveBeenCalled()
   })
 })
