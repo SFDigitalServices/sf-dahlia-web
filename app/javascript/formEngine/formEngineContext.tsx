@@ -19,6 +19,7 @@ export interface FormEngineContext {
   sectionNames: string[]
   handleNextStep: (currentFormData?: Record<string, unknown>) => void
   handlePrevStep: () => void
+  jumpToStep: (stepSlug: string) => void
 }
 
 export const FormEngineContext = createContext<FormEngineContext | undefined>(undefined)
