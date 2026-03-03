@@ -25,14 +25,19 @@ const ListingApplyHouseholdIntro = () => {
         <Button
           variant="primary-outlined"
           onClick={() => {
-            const updatedFormData = { ...formData, liveAlone: true }
-            saveFormData(updatedFormData)
-            handleNextStep(updatedFormData)
+            saveFormData({ liveAlone: "true" })
+            handleNextStep({ ...formData, liveAlone: "true" })
           }}
         >
           {t("label.liveAlone")}
         </Button>
-        <Button variant="primary-outlined" onClick={() => handleNextStep()}>
+        <Button
+          variant="primary-outlined"
+          onClick={() => {
+            saveFormData({ liveAlone: "false" })
+            handleNextStep({ ...formData, liveAlone: "false" })
+          }}
+        >
           {t("label.otherPeople")}
         </Button>
       </Card.Section>
