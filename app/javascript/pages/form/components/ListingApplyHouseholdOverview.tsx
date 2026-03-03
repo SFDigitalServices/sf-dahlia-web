@@ -3,6 +3,7 @@ import { t } from "@bloom-housing/ui-components"
 import { Button, Heading } from "@bloom-housing/ui-seeds"
 import { CardSection } from "@bloom-housing/ui-seeds/src/blocks/Card"
 import { useFormEngineContext } from "../../../formEngine/formEngineContext"
+import styles from "./ListingApplyHouseholdOverview.module.scss"
 
 const ListingApplyHouseholdOverview = () => {
   const formEngineContext = useFormEngineContext()
@@ -16,9 +17,16 @@ const ListingApplyHouseholdOverview = () => {
         </Button>
       </CardSection>
       <CardSection>
-        <Heading>ListingApplyHouseholdOverview Component</Heading>
+        <Heading
+          priority={2}
+          size="2xl"
+          className={styles["listing-apply-household-overview-body"]}
+        >
+          <span>{t("c1aHouseholdOverview.title1")}</span>
+          <span>{t("c1aHouseholdOverview.title2")}</span>
+        </Heading>{" "}
       </CardSection>
-      <CardSection>
+      <CardSection className={styles["listing-apply-household-overview-footer"]}>
         <Button variant="primary" onClick={() => handleNextStep()}>
           {t("t.next")}
         </Button>
