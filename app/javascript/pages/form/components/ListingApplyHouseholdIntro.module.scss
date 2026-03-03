@@ -1,0 +1,7 @@
+.household-intro {
+  display: flex;
+  flex-direction: column;
+  gap: var(--seeds-spacer-content);
+  padding: var(--seeds-s8) var(--seeds-spacer-container) var(--seeds-spacer-label)
+    var(--seeds-spacer-container);
+}
