@@ -4,7 +4,6 @@ import {
   translationFromDataSchema,
   showStep,
   calculateNextStep,
-  calculatePrevStep,
   validDayRange,
   validMonthRange,
   validYearRange,
@@ -154,14 +153,6 @@ describe("formEngineUtil", () => {
       },
       fieldNames: [],
     }
-    const step2NavigationDeparture = {
-      slug: "step-2",
-      sectionName: "testSection",
-      navigationDeparture: {
-        prevStep: "step-0",
-      },
-      fieldNames: [],
-    }
 
     describe("calculateNextStep", () => {
       const currentStepIndex = 0
@@ -180,26 +171,6 @@ describe("formEngineUtil", () => {
       it("skips to the step specified in 'navigationDeparture.nextStep'", () => {
         const stepInfoMap = [step0NavigationDeparture, step1, step2]
         expect(calculateNextStep(currentStepIndex, stepInfoMap, dataSources)).toBe(2)
-      })
-    })
-
-    describe("calculatePrevStep", () => {
-      const currentStepIndex = 2
-      it("goes to the previous step by default", () => {
-        const stepInfoMap = [step0, step1, step2]
-        expect(calculatePrevStep(currentStepIndex, stepInfoMap, dataSources)).toBe(
-          currentStepIndex - 1
-        )
-      })
-      it("skips the previous step if the previous step has 'navigationArrival' that evaluates to false", () => {
-        const stepInfoMap = [step0, step1NavigationArrivalSkip, step2]
-        expect(calculatePrevStep(currentStepIndex, stepInfoMap, dataSources)).toBe(
-          currentStepIndex - 2
-        )
-      })
-      it("skips to the step specified in 'navigationDeparture.prevStep'", () => {
-        const stepInfoMap = [step0, step1, step2NavigationDeparture]
-        expect(calculatePrevStep(currentStepIndex, stepInfoMap, dataSources)).toBe(0)
       })
     })
   })
