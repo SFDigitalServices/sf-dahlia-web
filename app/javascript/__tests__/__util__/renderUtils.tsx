@@ -68,8 +68,10 @@ export const renderWithFormContextWrapper = (
     stepInfoMap: [{ slug: "test", fieldNames: [] }],
     sectionNames: [],
     currentStepIndex: 0,
+    previousStepIndex: 0,
     handleNextStep: jest.fn(),
     handlePrevStep: jest.fn(),
+    jumpToStep: jest.fn(),
   }
 
   const Wrapper = ({ children }: { children: React.ReactNode }) => {
