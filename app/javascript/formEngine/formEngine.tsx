@@ -12,7 +12,7 @@ import {
 import type { RailsListing } from "../modules/listings/SharedHelpers"
 import { listingPreferences, getSeniorBuildingAgeRequirement } from "../util/listingUtil"
 import RecursiveRenderer from "./recursiveRenderer"
-import { calculateNextStep, updateFormPath } from "../util/formEngineUtil"
+import { calculateNextStep, calculatePrevStep, updateFormPath } from "../util/formEngineUtil"
 import { useFeatureFlag } from "../hooks/useFeatureFlag"
 import { UNLEASH_FLAG } from "../modules/constants"
 import FormEngineDebug from "./FormEngineDebug"
@@ -25,7 +25,6 @@ interface FormEngineProps {
 const FormEngine = ({ listing, schema }: FormEngineProps) => {
   const [formData, setFormData] = useState<Record<string, unknown>>(generateInitialFormData(schema))
   const [currentStepIndex, setCurrentStepIndex] = useState<number>(0)
-  const [previousStepIndex, setPreviousStepIndex] = useState<number>(0)
 
   const { unleashFlag: formEngineDebug } = useFeatureFlag(UNLEASH_FLAG.FORM_ENGINE_DEBUG, false)
 
@@ -69,23 +68,23 @@ const FormEngine = ({ listing, schema }: FormEngineProps) => {
         ...dataSources,
         form: currentFormData,
       })
-      if (newStepIndex < totalSteps && newStepIndex !== currentStepIndex) {
-        setPreviousStepIndex(currentStepIndex)
+      if (newStepIndex < totalSteps) {
         setCurrentStepIndex(newStepIndex)
         updateFormPath(newStepIndex, stepInfoMap)
       }
     }
 
     handlePrevStep = () => {
-      setPreviousStepIndex(currentStepIndex)
-      setCurrentStepIndex(previousStepIndex)
-      updateFormPath(previousStepIndex, stepInfoMap)
+      const newStepIndex = calculatePrevStep(currentStepIndex, stepInfoMap, dataSources)
+      if (newStepIndex >= 0) {
+        setCurrentStepIndex(newStepIndex)
+        updateFormPath(newStepIndex, stepInfoMap)
+      }
     }
 
     jumpToStep = (stepSlug: string) => {
       const stepIndex = stepInfoMap.findIndex((step) => step.slug === stepSlug)
-      if (stepIndex !== -1 && stepIndex < totalSteps && stepIndex !== currentStepIndex) {
-        setPreviousStepIndex(currentStepIndex)
+      if (stepIndex !== -1 && stepIndex < totalSteps) {
         setCurrentStepIndex(stepIndex)
         updateFormPath(stepIndex, stepInfoMap)
       }
@@ -99,7 +98,6 @@ const FormEngine = ({ listing, schema }: FormEngineProps) => {
     saveFormData: saveFormData,
     stepInfoMap: stepInfoMap,
     sectionNames: sectionNames,
-    previousStepIndex: previousStepIndex,
     currentStepIndex: currentStepIndex,
     handleNextStep,
     handlePrevStep,

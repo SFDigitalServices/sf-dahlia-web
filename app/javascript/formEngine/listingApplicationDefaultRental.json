@@ -271,7 +271,7 @@
       "componentName": "ListingApplyHouseholdIntro",
       "props": {
         "fieldNames": {
-          "liveAlone": "_liveAlone"
+          "liveAlone": "liveAlone"
         }
       }
     },
@@ -281,7 +281,15 @@
         "sectionName": "household"
       },
       "componentType": "step",
-      "componentName": "ListingApplyHouseholdOverview"
+      "componentName": "ListingApplyHouseholdOverview",
+      "navigationArrival": {
+        "hideStepIfAllPresent": [
+          {
+            "dataSource": "form",
+            "dataKey": "liveAlone"
+          }
+        ]
+      }
     },
     {
       "stepInfo": {
@@ -289,7 +297,15 @@
         "sectionName": "household"
       },
       "componentType": "step",
-      "componentName": "AddHouseholdMembers"
+      "componentName": "AddHouseholdMembers",
+      "navigationArrival": {
+        "hideStepIfAllPresent": [
+          {
+            "dataSource": "form",
+            "dataKey": "liveAlone"
+          }
+        ]
+      }
     },
     {
       "stepInfo": {
@@ -301,6 +317,14 @@
       "props": {
         "title": "c3HouseholdMemberForm.title",
         "description": "c3HouseholdMemberForm.p1"
+      },
+      "navigationArrival": {
+        "hideStepIfAllPresent": [
+          {
+            "dataSource": "form",
+            "dataKey": "liveAlone"
+          }
+        ]
       },
       "children": [
         {
@@ -378,6 +402,12 @@
               "dataSource": "form",
               "dataKey": "householdMemberAddress"
             }
+          ],
+          "hideStepIfAllPresent": [
+            {
+              "dataSource": "form",
+              "dataKey": "liveAlone"
+            }
           ]
         }
       },
@@ -388,6 +418,14 @@
           "dataSource": "form",
           "dataKey": "householdMemberAddress"
         }
+      },
+      "navigationArrival": {
+        "hideStepIfAllPresent": [
+          {
+            "dataSource": "form",
+            "dataKey": "liveAlone"
+          }
+        ]
       }
     },
     {

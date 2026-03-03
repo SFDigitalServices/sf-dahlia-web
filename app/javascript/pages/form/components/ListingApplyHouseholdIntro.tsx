@@ -7,7 +7,7 @@ import stepStyles from "./ListingApplyStepWrapper.module.scss"
 
 const ListingApplyHouseholdIntro = () => {
   const formEngineContext = useFormEngineContext()
-  const { handleNextStep, handlePrevStep, jumpToStep } = formEngineContext
+  const { formData, saveFormData, handleNextStep, handlePrevStep } = formEngineContext
 
   return (
     <>
@@ -22,7 +22,14 @@ const ListingApplyHouseholdIntro = () => {
         </Heading>
       </Card.Header>
       <Card.Section className={styles["household-intro"]}>
-        <Button variant="primary-outlined" onClick={() => jumpToStep("household-public-housing")}>
+        <Button
+          variant="primary-outlined"
+          onClick={() => {
+            const updatedFormData = { ...formData, liveAlone: true }
+            saveFormData(updatedFormData)
+            handleNextStep(updatedFormData)
+          }}
+        >
           {t("label.liveAlone")}
         </Button>
         <Button variant="primary-outlined" onClick={() => handleNextStep()}>

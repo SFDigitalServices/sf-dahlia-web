@@ -19,7 +19,6 @@ describe("ListingApplyHouseholdIntro", () => {
     stepInfoMap: [{ slug: "test", fieldNames: [] }],
     sectionNames: [],
     currentStepIndex: 0,
-    previousStepIndex: 0,
     handleNextStep: jest.fn(),
     handlePrevStep: jest.fn(),
     jumpToStep: jest.fn(),

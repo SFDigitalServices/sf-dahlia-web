@@ -68,6 +68,30 @@ export const calculateNextStep = (
   return stepInfoMap.length - 1
 }
 
+export const calculatePrevStep = (
+  currentStepIndex: number,
+  stepInfoMap: StepInfoSchema[],
+  dataSources: DataSources
+): number => {
+  const prevStepSlug = stepInfoMap[currentStepIndex]?.navigationDeparture?.prevStep
+  if (prevStepSlug) {
+    return stepInfoMap.findIndex((step) => step.slug === prevStepSlug)
+  }
+  for (let i = currentStepIndex - 1; i >= 0; i--) {
+    const step = stepInfoMap[i]
+    if (!step.navigationArrival) {
+      return i
+    }
+    if (step.navigationArrival) {
+      const [operation, conditions] = Object.entries(step.navigationArrival)[0]
+      if (showStep(operation, conditions, dataSources)) {
+        return i
+      }
+    }
+  }
+  return 0
+}
+
 export const validDayRange = (value: string): boolean =>
   Number.parseInt(value, 10) > 0 && Number.parseInt(value, 10) <= 31
 
