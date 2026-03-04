@@ -32,8 +32,8 @@ const YesNoRadio = ({ label, note, yesText, fieldNames }: YesNoRadioProps) => {
       errorMessage={t("error.pleaseSelectAnOption")}
       register={register}
       fields={[
-        { id: "yes", value: "true", label: t("t.yes") },
-        { id: "no", value: "false", label: t("t.no") },
+        { id: `${fieldNames?.question}-yes`, value: "true", label: t("t.yes") },
+        { id: `${fieldNames?.question}-no`, value: "false", label: t("t.no") },
       ]}
       validation={{
         required: true,
