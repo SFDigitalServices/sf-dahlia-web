@@ -297,7 +297,14 @@
     {
       "stepInfo": {
         "slug": "household-member-form",
-        "sectionName": "household"
+        "sectionName": "household",
+        "navigationDeparture": {
+          "nextStep": "household-members"
+        },
+        "dynamicNextStep": {
+          "dataSource": "listing",
+          "dataKey": "TODO: maxOccupancy"
+        }
       },
       "componentType": "step",
       "componentName": "ListingApplyStepWrapper",
@@ -324,7 +331,7 @@
             "label": "label.dob",
             "fieldNames": {
               "birthMonth": "householdMemberBirthMonth",
-              "birthDay": "householdMemberBirthDate",
+              "birthDay": "householdMemberBirthDay",
               "birthYear": "householdMemberBirthYear"
             }
           }

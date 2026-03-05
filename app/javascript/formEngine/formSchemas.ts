@@ -39,6 +39,7 @@ const StepInfoSchema = z.object({
   navigationArrival: z.optional(NavigationArrivalSchema),
   navigationDeparture: z.optional(NavigationDepartureSchema),
   fieldNames: z.optional(z.array(z.string())),
+  dynamicNextStep: z.optional(DataSchema),
 })
 export type StepInfoSchema = z.infer<typeof StepInfoSchema>
 
@@ -94,11 +95,22 @@ export const generateSectionNames = (schema: FormSchema): string[] => {
     .filter((val, idx, ary) => ary.indexOf(val) === idx) // remove duplicates
 }
 
-export const generateInitialFormData = (schema: FormSchema): Record<string, null> => {
-  return getFieldNames(schema).reduce((acc, fieldName) => {
-    acc[fieldName] = null
-    return acc
-  }, {})
+export const generateInitialFormData = (schema: FormSchema): Record<string, unknown> => {
+  const formData = getFieldNames(schema).reduce(
+    (acc, fieldName) => {
+      acc[fieldName] = null
+      return acc
+    },
+    {} as Record<string, unknown>
+  )
+
+  const dynamicSteps = getNestedValuesByKey("stepInfo", schema, []).filter(
+    (stepInfo: Record<string, unknown>) => stepInfo.dynamicNextStep
+  )
+  dynamicSteps.forEach((stepInfo: StepInfoSchema) => {
+    formData[stepInfo.slug] = []
+  })
+  return formData
 }
 
 const getInvalidComponentNames = (schema: FormSchema): string[] => {

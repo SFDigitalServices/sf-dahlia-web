@@ -132,10 +132,14 @@ export const validAge = (
 }
 
 export const getPrimaryApplicantData = (formData: Record<string, unknown>) => {
+  const firstName = formData.primaryApplicantFirstName as string
+  const middleName = formData.primaryApplicantMiddleName as string
+  const lastName = formData.primaryApplicantLastName as string
   return {
-    firstName: formData.primaryApplicantFirstName as string,
-    middleName: formData.primaryApplicantMiddleName as string,
-    lastName: formData.primaryApplicantLastName as string,
+    firstName,
+    middleName,
+    lastName,
+    fullName: `${firstName} ${middleName} ${lastName}`,
     dob: (formData.primaryApplicantDob as string) || "1990-01-01", // TODO: update after DAH-3543
   }
 }

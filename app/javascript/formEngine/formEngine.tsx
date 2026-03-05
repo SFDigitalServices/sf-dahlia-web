@@ -25,6 +25,7 @@ interface FormEngineProps {
 const FormEngine = ({ listing, schema }: FormEngineProps) => {
   const [formData, setFormData] = useState<Record<string, unknown>>(generateInitialFormData(schema))
   const [currentStepIndex, setCurrentStepIndex] = useState<number>(0)
+  const [currentMemberIndex, setCurrentMemberIndex] = useState<number>(0)
 
   const { unleashFlag: formEngineDebug } = useFeatureFlag(UNLEASH_FLAG.FORM_ENGINE_DEBUG, false)
 
@@ -67,6 +68,18 @@ const FormEngine = ({ listing, schema }: FormEngineProps) => {
         ...dataSources,
         form: currentFormData,
       })
+      if (stepInfoMap[newStepIndex]?.dynamicNextStep) {
+        const fieldNames = stepInfoMap[newStepIndex]?.fieldNames
+        const newMember = Object.fromEntries(fieldNames.map((fieldName) => [fieldName, null]))
+        const currentArray = currentFormData[stepInfoMap[newStepIndex]?.slug] as unknown[]
+        const updatedFormData = {
+          ...currentFormData,
+          [stepInfoMap[newStepIndex]?.slug]: [...currentArray, newMember],
+        }
+        setFormData(updatedFormData)
+        setCurrentMemberIndex((index) => index + 1)
+      }
+
       if (newStepIndex < totalSteps) {
         setCurrentStepIndex(newStepIndex)
         updateFormPath(newStepIndex, stepInfoMap)
@@ -90,6 +103,7 @@ const FormEngine = ({ listing, schema }: FormEngineProps) => {
     stepInfoMap: stepInfoMap,
     sectionNames: sectionNames,
     currentStepIndex: currentStepIndex,
+    currentMemberIndex: currentMemberIndex,
     handleNextStep,
     handlePrevStep,
   }
