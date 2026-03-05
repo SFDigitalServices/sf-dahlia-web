@@ -332,8 +332,13 @@
         {
           "componentName": "HouseholdMemberSameAddress",
           "props": {
+            "label": "label.memberSameAddress",
             "fieldNames": {
-              "address": "householdMemberAddress"
+              "addressStreet": "householdMemberAddressStreet",
+              "addressAptOrUnit": "householdMemberAddressAptOrUnit",
+              "addressCity": "householdMemberAddressCity",
+              "addressState": "householdMemberAddressState",
+              "addressZipcode": "householdMemberAddressZipcode"
             }
           }
         },
