@@ -26,6 +26,7 @@ const AddHouseholdMembers = () => {
   const formEngineContext = useFormEngineContext()
   const { handleNextStep, formData } = formEngineContext
   const primaryApplicant = getPrimaryApplicantData(formData)
+  console.log("formData", formData)
 
   return (
     <Card>
@@ -36,7 +37,7 @@ const AddHouseholdMembers = () => {
       </Card.Header>
       <HouseholdMember name={primaryApplicant.fullName} />
       <Card.Section className={styles["add-member"]}>
-        <Button variant="primary-outlined" onClick={() => handleNextStep()}>
+        <Button variant="primary-outlined" onClick={() => handleNextStep(formData)}>
           {"+ " + t("label.addHouseholdMember")}
         </Button>
       </Card.Section>

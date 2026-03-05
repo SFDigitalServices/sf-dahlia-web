@@ -301,7 +301,7 @@
         "navigationDeparture": {
           "nextStep": "household-members"
         },
-        "dynamicSize": {
+        "dynamicNextStep": {
           "dataSource": "listing",
           "dataKey": "TODO: maxOccupancy"
         }

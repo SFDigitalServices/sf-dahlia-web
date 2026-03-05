@@ -39,7 +39,7 @@ const StepInfoSchema = z.object({
   navigationArrival: z.optional(NavigationArrivalSchema),
   navigationDeparture: z.optional(NavigationDepartureSchema),
   fieldNames: z.optional(z.array(z.string())),
-  dynamicSize: z.optional(DataSchema),
+  dynamicNextStep: z.optional(DataSchema),
 })
 export type StepInfoSchema = z.infer<typeof StepInfoSchema>
 
@@ -105,7 +105,7 @@ export const generateInitialFormData = (schema: FormSchema): Record<string, unkn
   )
 
   const dynamicSteps = getNestedValuesByKey("stepInfo", schema, []).filter(
-    (stepInfo: Record<string, unknown>) => stepInfo.dynamicSize
+    (stepInfo: Record<string, unknown>) => stepInfo.dynamicNextStep
   )
   dynamicSteps.forEach((stepInfo: StepInfoSchema) => {
     formData[stepInfo.slug] = []

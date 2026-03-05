@@ -64,14 +64,22 @@ const FormEngine = ({ listing, schema }: FormEngineProps) => {
 
     // Update data changes from the current page to calculate next step
     handleNextStep = (currentFormData: Record<string, unknown>) => {
-      if (stepInfoMap[currentStepIndex]?.slug === "household-members") {
-        setCurrentMemberIndex((index) => index + 1)
-      }
-
       const newStepIndex = calculateNextStep(currentStepIndex, stepInfoMap, {
         ...dataSources,
         form: currentFormData,
       })
+      if (stepInfoMap[newStepIndex]?.dynamicNextStep) {
+        const fieldNames = stepInfoMap[newStepIndex]?.fieldNames
+        const newMember = Object.fromEntries(fieldNames.map((fieldName) => [fieldName, null]))
+        const currentArray = currentFormData[stepInfoMap[newStepIndex]?.slug] as unknown[]
+        const updatedFormData = {
+          ...currentFormData,
+          [stepInfoMap[newStepIndex]?.slug]: [...currentArray, newMember],
+        }
+        setFormData(updatedFormData)
+        setCurrentMemberIndex((index) => index + 1)
+      }
+
       if (newStepIndex < totalSteps) {
         setCurrentStepIndex(newStepIndex)
         updateFormPath(newStepIndex, stepInfoMap)
