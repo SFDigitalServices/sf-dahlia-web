@@ -1,4 +1,4 @@
-import React, { useCallback } from "react"
+import React, { useCallback, useState } from "react"
 import { faEnvelope, faPrint } from "@fortawesome/free-solid-svg-icons"
 import {
   t,
@@ -9,7 +9,7 @@ import {
   Mobile,
   Desktop,
 } from "@bloom-housing/ui-components"
-import { Heading, Button, Message } from "@bloom-housing/ui-seeds"
+import { Heading, Button, Message, LoadingState } from "@bloom-housing/ui-seeds"
 import RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
 import { getListingAddressString, isDeadlinePassed } from "../../util/listingUtil"
 import {
@@ -99,10 +99,12 @@ const WhatToDo = ({
   applicationNumber?: string
   fileUploadUrl?: string
 }) => {
+  const [isSubmitting, setIsSubmitting] = useState(false)
   const handleSubmitClick = useCallback(() => {
     const url = fileUploadUrl || listing?.File_Upload_URL
     // Handle the API call and open URL
     void (async () => {
+      setIsSubmitting(true)
       try {
         // Call the API if applicationNumber is provided
         if (applicationNumber) {
@@ -115,10 +117,12 @@ const WhatToDo = ({
         }
         // Open the file upload URL after API call (or directly if no applicationNumber)
         window.open(url, "_blank")
+        setIsSubmitting(false)
       } catch (error) {
         console.error("Error submitting invite to apply response:", error)
         // Still open the file upload URL even if API call fails
         window.open(url, "_blank")
+        setIsSubmitting(false)
       }
     })()
   }, [applicationNumber, listing, deadline, fileUploadUrl])
@@ -168,9 +172,11 @@ const WhatToDo = ({
             <li>{t("inviteToApplyPage.submitYourInfo.whatToDo.step3.p3")}</li>
           </ul>
           {!isDeadlinePassed(deadline) && (
-            <Button className={styles.actionButton} onClick={handleSubmitClick}>
-              {t("inviteToApplyPage.submitYourInfo.whatToDo.step3.p4")}
-            </Button>
+            <LoadingState loading={isSubmitting} className={styles.loadingOverlay}>
+              <Button className={styles.actionButton} onClick={handleSubmitClick}>
+                {t("inviteToApplyPage.submitYourInfo.whatToDo.step3.p4")}
+              </Button>
+            </LoadingState>
           )}
           <Heading priority={3} size="lg">
             {t("inviteToApplyPage.submitYourInfo.whatToDo.step3.p5")}

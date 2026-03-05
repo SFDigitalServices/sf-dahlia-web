@@ -189,6 +189,16 @@
     button {
       margin: var(--seeds-spacer-header) 0;
     }
+    .loadingOverlay {
+      --loading-state-height: none;
+      padding: var(--seeds-s1) 0;
+
+      :global {
+        .loading-state-spinner {
+          padding: var(--seeds-s3);
+        }
+      }
+    }
   }
 
   .submitYourInfoIcons {
