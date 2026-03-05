@@ -61,7 +61,7 @@
           "props": {
             "fieldNames": {
               "email": "primaryApplicantEmail",
-              "noEmail": "primaryApplicantNoEmail"
+              "noEmailCheckbox": "primaryApplicantNoEmailCheckbox"
             },
             "label": "label.applicantEmail",
             "note": "b2Contact.onlyUseYourEmail",
@@ -99,7 +99,9 @@
               "phone": "primaryApplicantPhone",
               "phoneType": "primaryApplicantPhoneType",
               "additionalPhone": "primaryApplicantAdditionalPhone",
-              "additionalPhoneType": "primaryApplicantAdditionalPhoneType"
+              "additionalPhoneType": "primaryApplicantAdditionalPhoneType",
+              "noPhoneCheckbox": "_primaryApplicantNoPhoneCheckbox",
+              "additionalPhoneCheckbox": "_primaryApplicantAdditionalPhoneCheckbox"
             }
           }
         },
@@ -117,6 +119,7 @@
               "addressCity": "primaryApplicantAddressCity",
               "addressState": "primaryApplicantAddressState",
               "addressZipcode": "primaryApplicantAddressZipcode",
+              "mailingAddressCheckbox": "_primaryApplicantMailingAddressCheckbox",
               "mailingAddressStreet": "primaryApplicantMailingAddressStreet",
               "mailingAddressCity": "primaryApplicantMailingAddressCity",
               "mailingAddressState": "primaryApplicantMailingAddressState",
@@ -788,6 +791,7 @@
             "numberDescription": "e7PreferencesPrograms.needCertificateForPreference",
             "readMoreUrl": "https://www.sf.gov/learn-about-certificate-preference-cop",
             "fieldNames": {
+              "checkbox": "_copMemberCheckbox",
               "copMember": "copMember",
               "copNumber": "copNumber"
             }
@@ -802,6 +806,7 @@
             "numberDescription": "e7PreferencesPrograms.needCertificateForPreference",
             "readMoreUrl": "https://www.sf.gov/learn-about-displaced-tenant-housing-preference-dthp",
             "fieldNames": {
+              "checkbox": "_dthpMemberCheckbox",
               "dthpMember": "dthpMember",
               "dthpNumber": "dthpNumber"
             }
