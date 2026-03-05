@@ -297,7 +297,10 @@
     {
       "stepInfo": {
         "slug": "household-member-form",
-        "sectionName": "household"
+        "sectionName": "household",
+        "navigationDeparture": {
+          "nextStep": "household-members"
+        }
       },
       "componentType": "step",
       "componentName": "ListingApplyStepWrapper",
@@ -312,9 +315,9 @@
             "label": "label.householdMemberName",
             "showMiddleName": true,
             "fieldNames": {
-              "firstName": "householdMemberFirstName",
-              "middleName": "householdMemberMiddleName",
-              "lastName": "householdMemberLastName"
+              "firstName": "householdMembers[%{member}].firstName",
+              "middleName": "householdMembers[%{member}].middleName",
+              "lastName": "householdMembers[%{member}].lastName"
             }
           }
         },
@@ -323,9 +326,9 @@
           "props": {
             "label": "label.dob",
             "fieldNames": {
-              "birthMonth": "householdMemberBirthMonth",
-              "birthDay": "householdMemberBirthDate",
-              "birthYear": "householdMemberBirthYear"
+              "birthMonth": "householdMembers[%{member}].birthMonth",
+              "birthDay": "householdMembers[%{member}].birthDay",
+              "birthYear": "householdMembers[%{member}].birthYear"
             }
           }
         },
@@ -333,7 +336,7 @@
           "componentName": "HouseholdMemberSameAddress",
           "props": {
             "fieldNames": {
-              "address": "householdMemberAddress"
+              "address": "householdMembers[%{member}].address"
             }
           }
         },
@@ -344,7 +347,7 @@
             "note": "c3HouseholdMemberForm.workInSfDesc",
             "yesText": "b2Contact.claimWorkInSf",
             "fieldNames": {
-              "question": "householdMemberWorkInSf"
+              "question": "householdMembers[%{member}].workInSf"
             }
           }
         },
@@ -365,7 +368,7 @@
               }
             ],
             "fieldNames": {
-              "selection": "householdMemberRelation"
+              "selection": "householdMembers[%{member}].relation"
             }
           }
         }
@@ -379,7 +382,7 @@
           "showStepIfAnyPresent": [
             {
               "dataSource": "form",
-              "dataKey": "householdMemberAddress"
+              "dataKey": "householdMembers[%{member}].address"
             }
           ]
         }
@@ -389,7 +392,7 @@
       "props": {
         "address": {
           "dataSource": "form",
-          "dataKey": "householdMemberAddress"
+          "dataKey": "householdMembers[%{member}].address"
         }
       }
     },

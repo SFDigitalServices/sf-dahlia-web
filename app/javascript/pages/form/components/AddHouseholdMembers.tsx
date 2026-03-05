@@ -36,7 +36,9 @@ const AddHouseholdMembers = () => {
       </Card.Header>
       <HouseholdMember name={primaryApplicant.fullName} />
       <Card.Section className={styles["add-member"]}>
-        <Button variant="primary-outlined">{"+ " + t("label.addHouseholdMember")}</Button>
+        <Button variant="primary-outlined" onClick={() => handleNextStep()}>
+          {"+ " + t("label.addHouseholdMember")}
+        </Button>
       </Card.Section>
       <Card.Section className={stepStyles["step-footer"]}>
         <Button onClick={() => handleNextStep()}>{t("label.doneAddingPeople")}</Button>
