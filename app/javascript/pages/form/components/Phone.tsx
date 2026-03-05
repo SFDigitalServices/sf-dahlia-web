@@ -15,6 +15,8 @@ interface PhoneProps {
     additionalPhone?: string
     phoneType?: string
     additionalPhoneType?: string
+    noPhoneCheckbox?: string
+    additionalPhoneCheckbox?: string
   }
 }
 
@@ -24,24 +26,34 @@ const Phone = ({
   showDontHavePhoneNumber,
   showAdditionalPhoneNumber,
   labelForAdditionalPhoneNumber,
-  fieldNames: { phone, additionalPhone, phoneType, additionalPhoneType },
+  fieldNames: {
+    phone,
+    additionalPhone,
+    noPhoneCheckbox,
+    additionalPhoneCheckbox,
+    phoneType,
+    additionalPhoneType,
+  },
 }: PhoneProps) => {
   const {
     control,
     formState: { errors },
     setValue,
     clearErrors,
+    watch,
+    register,
   } = useFormContext()
-  const [noPhoneCheckbox, setNoPhoneCheckbox] = React.useState(false)
-  const [noAdditionalPhoneCheckbox, setNoAdditionalPhoneCheckbox] = React.useState(false)
+
+  const noPhoneCheckboxValue = watch(noPhoneCheckbox, false)
+  const additionalPhoneCheckboxValue = watch(additionalPhoneCheckbox, false)
+
   return (
     <fieldset>
       <legend className="legend-header">{t(label)}</legend>
       <PhoneField
         name={phone}
         control={control}
-        disabled={noPhoneCheckbox}
-        placeholder={noPhoneCheckbox ? t("t.none") : ""}
+        disabled={noPhoneCheckboxValue}
         required={true}
         error={!!errors?.[phone]}
         errorMessage={t("error.phoneNumber")}
@@ -56,27 +68,22 @@ const Phone = ({
             { name: t("label.phoneHome"), value: "home" },
             { name: t("label.phoneWork"), value: "work" },
           ]}
-          disabled={noPhoneCheckbox}
+          disabled={noPhoneCheckboxValue}
           errorMessage={t("error.phoneNumberType")}
-          validation={{ required: !noPhoneCheckbox }}
+          validation={{
+            required: !noPhoneCheckboxValue,
+          }}
         />
       )}
       {showDontHavePhoneNumber && (
         <Field
           type="checkbox"
-          name={"noPhone"}
+          name={noPhoneCheckbox}
+          register={register}
           label={t("label.applicantNoPhone")}
-          error={!!errors?.["noPhone"]}
-          errorMessage={t("error.phoneNumberType")}
-          disabled={noAdditionalPhoneCheckbox}
-          className="checkbox-field-label"
-          validation={{
-            required: true,
-          }}
+          disabled={additionalPhoneCheckboxValue}
           onChange={(e) => {
-            const isChecked = e.target.checked
-            setNoPhoneCheckbox(isChecked)
-            if (isChecked) {
+            if (e.target.checked) {
               setValue(phone, "")
               clearErrors(phone)
               setValue(phoneType, "")
@@ -87,30 +94,29 @@ const Phone = ({
       )}
       {showAdditionalPhoneNumber && (
         <Field
+          register={register}
           type="checkbox"
-          name={"additionalPhone"}
+          name={additionalPhoneCheckbox}
           label={t("label.applicantAdditionalPhone")}
-          error={!!errors?.["additionalPhone"]}
-          disabled={noPhoneCheckbox}
-          errorMessage={t("error.phoneNumberType")}
-          className="checkbox-field-label"
-          validation={{
-            required: true,
-          }}
+          disabled={noPhoneCheckboxValue}
           onChange={(e) => {
-            const isChecked = e.target.checked
-            setNoAdditionalPhoneCheckbox(isChecked)
+            if (!e.target.checked) {
+              setValue(additionalPhone, "")
+              clearErrors(additionalPhone)
+              setValue(additionalPhoneType, "")
+              clearErrors(additionalPhoneType)
+            }
           }}
         />
       )}
-      {noAdditionalPhoneCheckbox && (
+      {additionalPhoneCheckboxValue && (
         <>
           <PhoneField
             name={additionalPhone}
             label={t(labelForAdditionalPhoneNumber)}
             control={control}
             controlClassName="control"
-            required={true}
+            required={additionalPhoneCheckboxValue}
             error={!!errors?.[additionalPhone]}
             errorMessage={t("error.phoneNumber")}
           />
@@ -123,6 +129,9 @@ const Phone = ({
               { name: t("label.phoneWork"), value: "work" },
             ]}
             errorMessage={t("error.phoneNumberType")}
+            validation={{
+              required: additionalPhoneCheckboxValue,
+            }}
           />
         </>
       )}
