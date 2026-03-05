@@ -100,8 +100,8 @@
               "phoneType": "primaryApplicantPhoneType",
               "additionalPhone": "primaryApplicantAdditionalPhone",
               "additionalPhoneType": "primaryApplicantAdditionalPhoneType",
-              "noPhoneCheckbox": "primaryApplicantNoPhoneCheckbox",
-              "additionalPhoneCheckbox": "primaryApplicantAdditionalPhoneCheckbox"
+              "noPhoneCheckbox": "_primaryApplicantNoPhoneCheckbox",
+              "additionalPhoneCheckbox": "_primaryApplicantAdditionalPhoneCheckbox"
             }
           }
         },
@@ -119,7 +119,7 @@
               "addressCity": "primaryApplicantAddressCity",
               "addressState": "primaryApplicantAddressState",
               "addressZipcode": "primaryApplicantAddressZipcode",
-              "mailingAddressCheckbox": "primaryApplicantMailingAddressCheckbox",
+              "mailingAddressCheckbox": "_primaryApplicantMailingAddressCheckbox",
               "mailingAddressStreet": "primaryApplicantMailingAddressStreet",
               "mailingAddressCity": "primaryApplicantMailingAddressCity",
               "mailingAddressState": "primaryApplicantMailingAddressState",
@@ -786,7 +786,7 @@
             "numberDescription": "e7PreferencesPrograms.needCertificateForPreference",
             "readMoreUrl": "https://www.sf.gov/learn-about-certificate-preference-cop",
             "fieldNames": {
-              "checkbox": "copMemberCheckbox",
+              "checkbox": "_copMemberCheckbox",
               "copMember": "copMember",
               "copNumber": "copNumber"
             }
@@ -801,7 +801,7 @@
             "numberDescription": "e7PreferencesPrograms.needCertificateForPreference",
             "readMoreUrl": "https://www.sf.gov/learn-about-displaced-tenant-housing-preference-dthp",
             "fieldNames": {
-              "checkbox": "dthpMemberCheckbox",
+              "checkbox": "_dthpMemberCheckbox",
               "dthpMember": "dthpMember",
               "dthpNumber": "dthpNumber"
             }
