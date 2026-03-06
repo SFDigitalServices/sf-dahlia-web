@@ -628,7 +628,7 @@
         "navigationArrival": {
           "showStepIfAllPresent": [
             {
-              "dataSource": "preferences",
+              "dataSource": "preferenceNames",
               "dataKey": "rentBurden"
             },
             {
@@ -660,7 +660,7 @@
         "navigationArrival": {
           "showStepIfAllPresent": [
             {
-              "dataSource": "preferences",
+              "dataSource": "preferenceNames",
               "dataKey": "neighborhoodResidence"
             },
             {
@@ -703,7 +703,7 @@
         "navigationArrival": {
           "showStepIfAllPresent": [
             {
-              "dataSource": "preferences",
+              "dataSource": "preferenceNames",
               "dataKey": "antiDisplacement"
             },
             {
@@ -751,7 +751,7 @@
               "dataKey": "_addressNeighborhoodMatch"
             },
             {
-              "dataSource": "preferences",
+              "dataSource": "preferenceNames",
               "dataKey": "liveWorkInSf"
             }
           ]
@@ -789,11 +789,11 @@
         "navigationArrival": {
           "showStepIfAnyPresent": [
             {
-              "dataSource": "preferences",
+              "dataSource": "preferenceNames",
               "dataKey": "certificateOfPreference"
             },
             {
-              "dataSource": "preferences",
+              "dataSource": "preferenceNames",
               "dataKey": "displacedTenant"
             }
           ]
@@ -846,7 +846,7 @@
         "navigationArrival": {
           "showStepIfAnyPresent": [
             {
-              "dataSource": "preferences",
+              "dataSource": "preferenceNames",
               "dataKey": "veteran"
             }
           ]

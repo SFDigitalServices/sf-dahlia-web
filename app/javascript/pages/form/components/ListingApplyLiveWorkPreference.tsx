@@ -54,7 +54,6 @@ const ListingApplyLiveWorkPreference = ({
     preferences,
     formData,
     saveFormData,
-    // dataSources,
     stepInfoMap,
     currentStepIndex,
     handleNextStep,

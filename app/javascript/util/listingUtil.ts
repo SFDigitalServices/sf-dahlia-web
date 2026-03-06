@@ -709,7 +709,8 @@ export const listingHasVeteransPreference = (listing: RailsListing): boolean => 
   )
 }
 
-export const listingPreferences = (listing: RailsListing): Record<string, string> => {
+// replicates logic in ListingDataService.loadListing()
+export const listingPreferenceNames = (listing: RailsListing): Record<string, string> => {
   const listingPrefNames = listing.Listing_Lottery_Preferences.map(
     (pref) => pref.Lottery_Preference.Name
   )

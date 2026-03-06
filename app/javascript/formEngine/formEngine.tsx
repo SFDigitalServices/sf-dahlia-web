@@ -11,7 +11,7 @@ import {
 } from "./formSchemas"
 import type { RailsListing } from "../modules/listings/SharedHelpers"
 import type { RailsListingPreference } from "../api/types/rails/listings/RailsListingPreferences"
-import { getSeniorBuildingAgeRequirement } from "../util/listingUtil"
+import { getSeniorBuildingAgeRequirement, listingPreferenceNames } from "../util/listingUtil"
 import RecursiveRenderer from "./recursiveRenderer"
 import { calculateNextStep, calculatePrevStep, updateFormPath } from "../util/formEngineUtil"
 import { useFeatureFlag } from "../hooks/useFeatureFlag"
@@ -36,10 +36,10 @@ const FormEngine = ({ listing, preferences, schema }: FormEngineProps) => {
     () => ({
       listing,
       form: formData,
-      preferences,
+      preferenceNames: listingPreferenceNames(listing),
       seniorBuildingAgeRequirement: getSeniorBuildingAgeRequirement(listing),
     }),
-    [listing, formData, preferences]
+    [listing, formData]
   )
 
   if (typeof parsedSchema === "string") {

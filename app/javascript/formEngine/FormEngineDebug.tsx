@@ -97,7 +97,7 @@ const FormEngineDebug = ({
           <button onClick={() => setShowPrefData(!showPrefData)}>
             {showPrefData ? "hide" : "show"} prefs data
           </button>
-          {showPrefData && <ViewJson data={dataSources.preferences} />}
+          {showPrefData && <ViewJson data={dataSources.preferenceNames} />}
         </div>
       </div>
     </div>
