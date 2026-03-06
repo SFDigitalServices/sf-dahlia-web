@@ -67,37 +67,38 @@ const ListingApplyLiveWorkPreference = ({
     return acc
   }, {})
 
-  // https://github.com/react-hook-form/react-hook-form/issues/2887#issuecomment-802577357
-  // eslint-disable-next-line @typescript-eslint/unbound-method
   const formMethods = useForm({
     mode: "onChange",
     shouldFocusError: false,
     defaultValues,
   })
 
+  // https://github.com/react-hook-form/react-hook-form/issues/2887#issuecomment-802577357
+  // eslint-disable-next-line @typescript-eslint/unbound-method
   const { register, watch, handleSubmit } = formMethods
   // workaround for react-hook-form typescript issue with these function signatures
+  // eslint-disable-next-line @typescript-eslint/unbound-method
   const setValue = formMethods.setValue as UseFormMethods["setValue"]
-  const getValues = formMethods.getValues as UseFormMethods["getValues"]
 
   const [showRequiredCheckboxError, setShowRequiredCheckboxError] = useState(false)
 
-  const showLiveOrWorkPrefCheckbox = true
-  const showLivePrefCheckbox = false
-  const showWorkPrefCheckbox = false
   // TODO: implement similar logic from Angular, once we have household member data
   // const showLiveOrWorkCheckbox = Service.workInSfMembers().length > 0 && Service.liveInSfMembers().length > 0
   // const showLiveCheckbox = Service.liveInSfMembers().length > 0 && Service.workInSfMembers().length == 0
   // const showWorkCheckbox = Service.workInSfMembers().length > 0 && Service.liveInSfMembers().length == 0
+  const showLiveOrWorkPrefCheckbox = true
+  const showLivePrefCheckbox = false
+  const showWorkPrefCheckbox = false
 
-  const liveOrWorkInSfValue = watch(liveOrWorkInSf)
-  const liveInSfValue = watch(liveInSf)
-  const liveInSfFileNameValue = watch(liveInSfFileName)
-  const workInSfValue = watch(workInSf)
-  const workInSfFileNameValue = watch(workInSfFileName)
-  const optOutLiveWorkValue = watch(optOutLiveWork)
+  const liveOrWorkInSfValue: boolean = watch(liveOrWorkInSf)
+  const liveInSfValue: boolean = watch(liveInSf)
+  const liveInSfFileNameValue: string = watch(liveInSfFileName)
+  const workInSfValue: boolean = watch(workInSf)
+  const workInSfFileNameValue: string = watch(workInSfFileName)
+  const optOutLiveWorkValue: boolean = watch(optOutLiveWork)
 
-  const handleLiveWorkCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => { // TODO not needed?
+  const handleLiveWorkCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // TODO not needed?
     const isChecked = e.target.checked
     if (isChecked) {
       setShowRequiredCheckboxError(false)
@@ -138,14 +139,11 @@ const ListingApplyLiveWorkPreference = ({
       (pref) => pref.preferenceName === PREFERENCES.liveWorkInSf
     ).listingPreferenceID
 
-    deleteUploadedProofFile(sessionId, listing.Id, listingPreferenceId, proofType)
-      .catch((error) => {
-        console.error("file delete error: ", error)
-      })
-  }
-
-  const foo = (data: Record<string, unknown>) => {
-    
+    deleteUploadedProofFile(sessionId, listing.Id, listingPreferenceId, proofType).catch(
+      (error) => {
+        console.error("file delete error:", error)
+      }
+    )
   }
 
   const onSubmit = (data: Record<string, unknown>) => {
@@ -162,9 +160,9 @@ const ListingApplyLiveWorkPreference = ({
     // make sure all fields are in the form object so that we remove old field data
     // e.g. applicant claims a preference, then goes back and opts out of it
     const allFields = {}
-    Object.values(fieldNames).forEach((field) => allFields[field] = '')
+    Object.values(fieldNames).forEach((field) => (allFields[field] = ""))
 
-    saveFormData({ ...allFields, ...data})
+    saveFormData({ ...allFields, ...data })
     handleNextStep()
   }
 

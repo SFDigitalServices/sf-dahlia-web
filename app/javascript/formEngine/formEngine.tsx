@@ -39,7 +39,7 @@ const FormEngine = ({ listing, preferences, schema }: FormEngineProps) => {
       preferences,
       seniorBuildingAgeRequirement: getSeniorBuildingAgeRequirement(listing),
     }),
-    [listing, formData]
+    [listing, formData, preferences]
   )
 
   if (typeof parsedSchema === "string") {
