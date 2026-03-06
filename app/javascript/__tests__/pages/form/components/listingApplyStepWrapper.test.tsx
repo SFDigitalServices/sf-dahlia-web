@@ -10,15 +10,18 @@ describe("<ListingApplyStepWrapper />", () => {
   it("renders a form step and child components", () => {
     const fieldNames = ["firstName", "middleName", "lastName"]
     const listing = openRentalListing
+    const sessionId = "test-session-id-1234"
     const formData = { testField: null }
     const formEngineContextValue = {
       listing,
+      preferences: [],
+      sessionId,
       formData,
       saveFormData: jest.fn(),
       dataSources: {
         listing,
         form: formData,
-        preferences: {},
+        preferenceNames: {},
       },
       stepInfoMap: [{ slug: "test", fieldNames }],
       sectionNames: [],
