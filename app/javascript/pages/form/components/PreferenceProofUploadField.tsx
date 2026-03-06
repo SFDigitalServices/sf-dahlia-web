@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react"
-import { useDropzone } from "react-dropzone"
+import { useDropzone, type FileWithPath } from "react-dropzone"
 import { localizedFormat, renderInlineMarkup } from "../../../util/languageUtil"
 import { t, Field, Select, Icon } from "@bloom-housing/ui-components"
 import { Card, Button, FormErrorMessage } from "@bloom-housing/ui-seeds"
@@ -31,6 +31,8 @@ const PreferenceProofUploadField = ({
   proofFileName,
   proofFileUploadedAt,
 }: PreferenceProofUploadFieldProps) => {
+  // https://github.com/react-hook-form/react-hook-form/issues/2887#issuecomment-802577357
+  // eslint-disable-next-line @typescript-eslint/unbound-method
   const { register, watch, setValue, errors } = useFormContext()
   const { getAssetPath } = useContext(ConfigContext)
 
@@ -43,15 +45,17 @@ const PreferenceProofUploadField = ({
 
   const onDrop = (acceptedFiles, rejectedFiles) => {
     const rejectedFile = rejectedFiles[0]
-    const acceptedFile = acceptedFiles[0]
+    const acceptedFile: FileWithPath = acceptedFiles[0]
 
     if (rejectedFile) {
-      console.error("file error: ", rejectedFile.errors)
+      console.error("file error:", rejectedFile.errors)
       setUploadErrorMessage(t("error.fileUpload"))
       return
     }
 
-    const acceptedFileName = acceptedFile.path.substring(acceptedFile.path.lastIndexOf("/") + 1)
+    const acceptedFileName = acceptedFile.path.slice(
+      Math.max(0, acceptedFile.path.lastIndexOf("/") + 1)
+    )
     if (acceptedFileName.length > 80) {
       setUploadErrorMessage(t("error.fileNameTooLong"))
       return
@@ -66,7 +70,7 @@ const PreferenceProofUploadField = ({
         setValue(proofFileUploadedAt, data.created_at)
       })
       .catch((error) => {
-        console.error("file upload error: ", error)
+        console.error("file upload error:", error)
         setUploadErrorMessage(t("error.fileUploadFailed"))
         setUploadStatus("error")
       })
@@ -81,7 +85,7 @@ const PreferenceProofUploadField = ({
         setValue(proofFileUploadedAt, null)
       })
       .catch((error) => {
-        console.error("file delete error: ", error)
+        console.error("file delete error:", error)
         setUploadErrorMessage(t("error.fileUploadFailed"))
         setUploadStatus("error")
       })
@@ -104,7 +108,7 @@ const PreferenceProofUploadField = ({
 
   return (
     <>
-      <div style={!!fileName ? { display: "none" } : {}}>
+      <div style={fileName ? { display: "none" } : {}}>
         <Select
           id={proofTypeFieldName}
           name={proofTypeFieldName}
