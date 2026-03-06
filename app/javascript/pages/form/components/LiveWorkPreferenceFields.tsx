@@ -24,6 +24,8 @@ const LiveWorkPreferenceFields = ({
 }: LiveWorkPreferenceFieldsProps) => {
   const { sessionId, listing, preferences } = useFormEngineContext()
 
+  // https://github.com/react-hook-form/react-hook-form/issues/2887#issuecomment-802577357
+  // eslint-disable-next-line @typescript-eslint/unbound-method
   const { register, errors } = useFormContext()
 
   const listingPreferenceId = preferences.find(
