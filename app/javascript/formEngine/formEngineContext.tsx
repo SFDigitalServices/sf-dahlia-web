@@ -6,7 +6,7 @@ import type { RailsListingPreference } from "../api/types/rails/listings/RailsLi
 export interface DataSources {
   listing: RailsListing
   form: Record<string, unknown>
-  preferences: RailsListingPreference[]
+  preferenceNames: Record<string, string>
   seniorBuildingAgeRequirement?: { entireHousehold: boolean; minimumAge: number }
 }
 
