@@ -40,14 +40,7 @@ const HouseholdMember = ({
 
 const AddHouseholdMembers = () => {
   const formEngineContext = useFormEngineContext()
-  const {
-    handleNextStep,
-    formData,
-    jumpToStep,
-    stepInfoMap,
-    setCurrentMemberIndex,
-    currentMemberIndex,
-  } = formEngineContext
+  const { handleNextStep, formData, jumpToStep, setCurrentMemberIndex } = formEngineContext
   const primaryApplicant = getPrimaryApplicantData(formData)
   const householdMembers = formData["household-member-form"] as Array<Record<string, unknown>>
   const getHouseholdMemberName = (member: Record<string, unknown>) => {
@@ -56,16 +49,6 @@ const AddHouseholdMembers = () => {
     const lastName = member.householdMemberLastName as string
     return `${firstName} ${middleName} ${lastName}`
   }
-
-  const handleEdit = (index: number) => {
-    const householdMemberStepIndex = stepInfoMap.findIndex(
-      (step) => step.slug === "household-member-form"
-    )
-    if (householdMemberStepIndex !== -1) {
-      jumpToStep(householdMemberStepIndex, index - 1)
-    }
-  }
-
   return (
     <Card>
       <Card.Header divider="inset">
@@ -78,7 +61,7 @@ const AddHouseholdMembers = () => {
         name={primaryApplicant.fullName}
         isPrimary={true}
         index={0}
-        onEdit={() => handleEdit(0)}
+        onEdit={() => jumpToStep("name")}
       />
       {householdMembers.map((member, index) => (
         <HouseholdMember
@@ -86,23 +69,22 @@ const AddHouseholdMembers = () => {
           name={getHouseholdMemberName(member)}
           isPrimary={false}
           index={index}
-          onEdit={() => handleEdit(index)}
+          onEdit={(memberIndex) => {
+            setCurrentMemberIndex(memberIndex + 1)
+            jumpToStep("household-member-form")
+          }}
         />
       ))}
 
       <Card.Section className={styles["add-member"]}>
-        <Button
-          variant="primary-outlined"
-          onClick={() => {
-            setCurrentMemberIndex(currentMemberIndex + 1)
-            handleNextStep(formData)
-          }}
-        >
+        <Button variant="primary-outlined" onClick={() => handleNextStep(formData)}>
           {"+ " + t("label.addHouseholdMember")}
         </Button>
       </Card.Section>
       <Card.Section className={stepStyles["step-footer"]}>
-        <Button onClick={() => handleNextStep(formData)}>{t("label.doneAddingPeople")}</Button>
+        <Button onClick={() => jumpToStep("household-public-housing")}>
+          {t("label.doneAddingPeople")}
+        </Button>
       </Card.Section>
     </Card>
   )

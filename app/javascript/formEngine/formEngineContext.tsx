@@ -20,7 +20,7 @@ export interface FormEngineContext {
   sectionNames: string[]
   handleNextStep: (currentFormData?: Record<string, unknown>) => void
   handlePrevStep: () => void
-  jumpToStep: (stepIndex: number, memberIndex: number) => void
+  jumpToStep: (stepSlug: string) => void
   setCurrentMemberIndex: (memberIndex: number) => void
 }
 

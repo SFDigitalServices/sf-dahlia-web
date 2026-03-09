@@ -31,7 +31,6 @@ const HouseholdMemberStepWrapper = ({
     currentStepIndex,
     currentMemberIndex,
     handleNextStep,
-    handlePrevStep,
   } = formEngineContext
 
   const currentStepInfo = stepInfoMap[currentStepIndex]
@@ -79,11 +78,6 @@ const HouseholdMemberStepWrapper = ({
   return (
     <FormProvider {...methods}>
       <Card>
-        <Card.Section>
-          <Button variant="text" onClick={handlePrevStep}>
-            {t("t.back")}
-          </Button>
-        </Card.Section>
         <Card.Header divider="inset">
           <h1 className={styles["step-title"]}>{titleString}</h1>
           {description && <p className="field-note text-base">{t(description)}</p>}
