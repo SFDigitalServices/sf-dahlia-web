@@ -60,7 +60,7 @@ const HouseholdMemberStepWrapper = ({
     <FormProvider {...methods}>
       <Card>
         <Card.Header divider="inset">
-          <h1 className={styles["step-title"]}>{title}</h1>
+          <h1 className={styles["step-title"]}>{t(title)}</h1>
           <p className="field-note text-base">{t(description)}</p>
         </Card.Header>
         <Form onSubmit={methods.handleSubmit(onSubmit)}>
