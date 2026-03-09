@@ -31,6 +31,7 @@ describe("formApiService", () => {
           firstName: "First name",
           middleName: "Middle name",
           lastName: "Last name",
+          fullName: "First name Middle name Last name",
           dob: "1990-01-01",
         },
         householdMembers: [],

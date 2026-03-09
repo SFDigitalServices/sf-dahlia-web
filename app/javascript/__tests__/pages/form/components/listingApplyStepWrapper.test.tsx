@@ -23,8 +23,11 @@ describe("<ListingApplyStepWrapper />", () => {
       stepInfoMap: [{ slug: "test", fieldNames }],
       sectionNames: [],
       currentStepIndex: 0,
+      currentMemberIndex: 0,
       handleNextStep: jest.fn(),
       handlePrevStep: jest.fn(),
+      jumpToStep: jest.fn(),
+      setCurrentMemberIndex: jest.fn(),
     }
 
     const title = "b1Name.title"

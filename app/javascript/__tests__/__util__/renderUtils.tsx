@@ -71,6 +71,7 @@ export const renderWithFormContextWrapper = (
     handleNextStep: jest.fn(),
     handlePrevStep: jest.fn(),
     jumpToStep: jest.fn(),
+    currentMemberIndex: 0,
     setCurrentMemberIndex: jest.fn(),
   }
 

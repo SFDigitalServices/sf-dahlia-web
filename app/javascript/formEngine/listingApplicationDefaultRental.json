@@ -298,12 +298,9 @@
       "stepInfo": {
         "slug": "household-member-form",
         "sectionName": "household",
+        "dynamicStep": true,
         "navigationDeparture": {
           "nextStep": "household-members"
-        },
-        "dynamicNextStep": {
-          "dataSource": "listing",
-          "dataKey": "TODO: maxOccupancy"
         }
       },
       "componentType": "step",

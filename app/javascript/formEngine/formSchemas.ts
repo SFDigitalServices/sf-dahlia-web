@@ -39,7 +39,7 @@ const StepInfoSchema = z.object({
   navigationArrival: z.optional(NavigationArrivalSchema),
   navigationDeparture: z.optional(NavigationDepartureSchema),
   fieldNames: z.optional(z.array(z.string())),
-  dynamicNextStep: z.optional(DataSchema),
+  dynamicStep: z.optional(z.boolean()),
 })
 export type StepInfoSchema = z.infer<typeof StepInfoSchema>
 
@@ -99,7 +99,7 @@ export const generateInitialFormData = (schema: FormSchema): Record<string, unkn
   const allFieldNames = getFieldNames(schema)
   const dynamicStepFieldNames = new Set(
     schema.children
-      .filter((step: StepComponentSchema) => step.stepInfo?.dynamicNextStep)
+      .filter((step: StepComponentSchema) => step.stepInfo?.dynamicStep)
       .flatMap(
         (step: StepComponentSchema) =>
           step.children?.flatMap((child: ComponentSchema) =>
@@ -118,7 +118,7 @@ export const generateInitialFormData = (schema: FormSchema): Record<string, unkn
     {} as Record<string, unknown>
   )
   schema.children
-    .filter((step: StepComponentSchema) => step.stepInfo?.dynamicNextStep)
+    .filter((step: StepComponentSchema) => step.stepInfo?.dynamicStep)
     .forEach((step: StepComponentSchema) => {
       formData[step.stepInfo.slug] = []
     })

@@ -68,7 +68,7 @@ const FormEngine = ({ listing, schema }: FormEngineProps) => {
         ...dataSources,
         form: currentFormData,
       })
-      if (stepInfoMap[newStepIndex]?.dynamicNextStep) {
+      if (stepInfoMap[newStepIndex]?.dynamicStep) {
         const fieldNames = stepInfoMap[newStepIndex]?.fieldNames
         const newMember = Object.fromEntries(fieldNames.map((fieldName) => [fieldName, null]))
         const currentArray = currentFormData[stepInfoMap[newStepIndex]?.slug] as unknown[]
