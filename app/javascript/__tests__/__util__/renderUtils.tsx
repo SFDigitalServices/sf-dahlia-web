@@ -70,6 +70,8 @@ export const renderWithFormContextWrapper = (
     currentStepIndex: 0,
     handleNextStep: jest.fn(),
     handlePrevStep: jest.fn(),
+    jumpToStep: jest.fn(),
+    setCurrentMemberIndex: jest.fn(),
   }
 
   const Wrapper = ({ children }: { children: React.ReactNode }) => {

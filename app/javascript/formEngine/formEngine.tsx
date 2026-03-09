@@ -26,7 +26,6 @@ const FormEngine = ({ listing, schema }: FormEngineProps) => {
   const [formData, setFormData] = useState<Record<string, unknown>>(generateInitialFormData(schema))
   const [currentStepIndex, setCurrentStepIndex] = useState<number>(0)
   const [currentMemberIndex, setCurrentMemberIndex] = useState<number>(0)
-
   const { unleashFlag: formEngineDebug } = useFeatureFlag(UNLEASH_FLAG.FORM_ENGINE_DEBUG, false)
 
   const parsedSchema = parseFormSchema(schema)
@@ -52,7 +51,8 @@ const FormEngine = ({ listing, schema }: FormEngineProps) => {
   let stepInfoMap: StepInfoSchema[],
     sectionNames: string[],
     handleNextStep: (currentFormData: Record<string, unknown>) => void,
-    handlePrevStep: () => void
+    handlePrevStep: () => void,
+    jumpToStep: (stepIndex: number, dynamicIndex: number) => void
 
   if (parsedSchema.componentType === "multiStepLayout") {
     sectionNames = generateSectionNames(parsedSchema)
@@ -77,7 +77,6 @@ const FormEngine = ({ listing, schema }: FormEngineProps) => {
           [stepInfoMap[newStepIndex]?.slug]: [...currentArray, newMember],
         }
         setFormData(updatedFormData)
-        setCurrentMemberIndex((index) => index + 1)
       }
 
       if (newStepIndex < totalSteps) {
@@ -93,6 +92,12 @@ const FormEngine = ({ listing, schema }: FormEngineProps) => {
         updateFormPath(newStepIndex, stepInfoMap)
       }
     }
+
+    jumpToStep = (stepIndex: number, dynamicIndex: number) => {
+      setCurrentMemberIndex(dynamicIndex)
+      setCurrentStepIndex(stepIndex)
+      updateFormPath(stepIndex, stepInfoMap)
+    }
   }
 
   const formEngineContextValue: FormEngineContext = {
@@ -104,8 +109,10 @@ const FormEngine = ({ listing, schema }: FormEngineProps) => {
     sectionNames: sectionNames,
     currentStepIndex: currentStepIndex,
     currentMemberIndex: currentMemberIndex,
+    setCurrentMemberIndex: setCurrentMemberIndex,
     handleNextStep,
     handlePrevStep,
+    jumpToStep,
   }
 
   return (
