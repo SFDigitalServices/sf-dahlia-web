@@ -96,31 +96,23 @@ export const generateSectionNames = (schema: FormSchema): string[] => {
 }
 
 export const generateInitialFormData = (schema: FormSchema): Record<string, unknown> => {
-  const allFieldNames = getFieldNames(schema)
-  const dynamicStepFieldNames = new Set(
+  const dynamicFieldNames = new Set(
     schema.children
-      .filter((step: StepComponentSchema) => step.stepInfo?.dynamicStep)
-      .flatMap(
-        (step: StepComponentSchema) =>
-          step.children?.flatMap((child: ComponentSchema) =>
-            child.props?.fieldNames ? Object.values(child.props.fieldNames) : []
-          ) || []
-      )
+      .filter((step) => step.stepInfo?.dynamicStep)
+      .flatMap((step) => getFieldNames(step))
   )
-  const rootLevelFieldNames = allFieldNames.filter(
-    (fieldName) => !dynamicStepFieldNames.has(fieldName)
+  const rootLevelFieldNames = getFieldNames(schema).filter(
+    (fieldName) => !dynamicFieldNames.has(fieldName)
   )
-  const formData = rootLevelFieldNames.reduce(
-    (acc, fieldName) => {
-      acc[fieldName] = null
-      return acc
-    },
-    {} as Record<string, unknown>
-  )
+  const formData = rootLevelFieldNames.reduce((acc, fieldName) => {
+    acc[fieldName] = null
+    return acc
+  }, {})
+
   schema.children
-    .filter((step: StepComponentSchema) => step.stepInfo?.dynamicStep)
-    .forEach((step: StepComponentSchema) => {
-      formData[step.stepInfo.slug] = []
+    .filter((step) => step.stepInfo?.dynamicStep)
+    .forEach((step) => {
+      formData[step.stepInfo.slug] = [] //add initial array for dynamic step
     })
   return formData
 }
