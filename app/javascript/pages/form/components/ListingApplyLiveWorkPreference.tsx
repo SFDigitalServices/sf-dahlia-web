@@ -81,7 +81,7 @@ const ListingApplyLiveWorkPreference = ({
 
   const [showRequiredCheckboxError, setShowRequiredCheckboxError] = useState(false)
 
-  // TODO: implement similar logic from Angular, once we have household member data
+  // TODO: implement similar logic from Angular, once we have household member data (tests will need updates as well)
   // const showLiveOrWorkCheckbox = Service.workInSfMembers().length > 0 && Service.liveInSfMembers().length > 0
   // const showLiveCheckbox = Service.liveInSfMembers().length > 0 && Service.workInSfMembers().length == 0
   // const showWorkCheckbox = Service.workInSfMembers().length > 0 && Service.liveInSfMembers().length == 0
@@ -97,7 +97,6 @@ const ListingApplyLiveWorkPreference = ({
   const optOutLiveWorkValue: boolean = watch(optOutLiveWork)
 
   const handleLiveWorkCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // TODO not needed?
     const isChecked = e.target.checked
     if (isChecked) {
       setShowRequiredCheckboxError(false)
@@ -138,11 +137,7 @@ const ListingApplyLiveWorkPreference = ({
       (pref) => pref.preferenceName === PREFERENCES.liveWorkInSf
     ).listingPreferenceID
 
-    deleteUploadedProofFile(sessionId, listing.Id, listingPreferenceId, proofType).catch(
-      (error) => {
-        console.error("file delete error:", error)
-      }
-    )
+    void deleteUploadedProofFile(sessionId, listing.Id, listingPreferenceId, proofType)
   }
 
   const onSubmit = (data: Record<string, unknown>) => {
