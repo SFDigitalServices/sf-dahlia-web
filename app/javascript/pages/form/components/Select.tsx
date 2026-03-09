@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import React from "react"
-import { Select } from "@bloom-housing/ui-components"
+import { Select, t } from "@bloom-housing/ui-components"
 import { RegisterOptions, useFormContext } from "react-hook-form"
 
 interface FormSelectProps {
@@ -11,7 +11,9 @@ interface FormSelectProps {
   labelClassName?: string
   validation?: RegisterOptions
   disabled?: boolean
-  fieldName?: string
+  fieldNames: {
+    selection?: string
+  }
 }
 
 const FormSelect = ({
@@ -22,30 +24,30 @@ const FormSelect = ({
   labelClassName,
   validation,
   disabled,
-  fieldName = "",
+  fieldNames: { selection },
 }: FormSelectProps) => {
   const {
     register,
     formState: { errors },
   } = useFormContext()
   const selectOptions = options.map((option) => ({
-    label: option.name,
+    label: t(option.name),
     value: option.value,
   }))
 
   return (
     <Select
-      id={fieldName}
-      name={fieldName}
-      label={label}
+      id={selection}
+      name={selection}
+      label={t(label)}
       options={selectOptions}
-      placeholder={defaultOptionName ?? undefined}
+      placeholder={defaultOptionName ? t(defaultOptionName) : undefined}
       controlClassName="control"
       labelClassName={labelClassName}
       disabled={disabled}
       register={register}
-      error={!!errors?.[fieldName]}
-      errorMessage={errorMessage}
+      error={!!errors?.[selection]}
+      errorMessage={t(errorMessage)}
       validation={
         validation || {
           required: true,

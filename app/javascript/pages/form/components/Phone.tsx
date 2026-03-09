@@ -61,15 +61,15 @@ const Phone = ({
       />
       {showTypeOfNumber && (
         <Select
-          fieldName={phoneType}
-          label={t("label.whatTypeOfNumber")}
+          fieldNames={{ selection: phoneType }}
+          label={"label.whatTypeOfNumber"}
           options={[
-            { name: t("label.phoneCell"), value: "cell" },
-            { name: t("label.phoneHome"), value: "home" },
-            { name: t("label.phoneWork"), value: "work" },
+            { name: "label.phoneCell", value: "cell" },
+            { name: "label.phoneHome", value: "home" },
+            { name: "label.phoneWork", value: "work" },
           ]}
           disabled={noPhoneCheckboxValue}
-          errorMessage={t("error.phoneNumberType")}
+          errorMessage={"error.phoneNumberType"}
           validation={{
             required: !noPhoneCheckboxValue,
           }}
@@ -121,14 +121,14 @@ const Phone = ({
             errorMessage={t("error.phoneNumber")}
           />
           <Select
-            fieldName={additionalPhoneType}
-            label={t("label.whatTypeOfNumber")}
+            fieldNames={{ selection: additionalPhoneType }}
+            label={"label.whatTypeOfNumber"}
             options={[
-              { name: t("label.phoneCell"), value: "cell" },
-              { name: t("label.phoneHome"), value: "home" },
-              { name: t("label.phoneWork"), value: "work" },
+              { name: "label.phoneCell", value: "cell" },
+              { name: "label.phoneHome", value: "home" },
+              { name: "label.phoneWork", value: "work" },
             ]}
-            errorMessage={t("error.phoneNumberType")}
+            errorMessage={"error.phoneNumberType"}
             validation={{
               required: additionalPhoneCheckboxValue,
             }}

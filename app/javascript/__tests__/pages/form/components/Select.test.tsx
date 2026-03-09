@@ -8,14 +8,14 @@ import { renderWithFormContextWrapper } from "../../../__util__/renderUtils"
 const renderSelect = () => {
   renderWithFormContextWrapper(
     <FormSelect
-      label={t("label.householdMemberRelationship")}
-      errorMessage={t("error.householdMemberRelationship")}
-      defaultOptionName={t("label.selectOne")}
+      label={"label.householdMemberRelationship"}
+      errorMessage={"error.householdMemberRelationship"}
+      defaultOptionName={"label.selectOne"}
       options={[
-        { name: t("label.spouse"), value: "spouse" },
-        { name: t("label.registeredDomesticPartner"), value: "Registered Domestic Partner" },
+        { name: "label.spouse", value: "spouse" },
+        { name: "label.registeredDomesticPartner", value: "Registered Domestic Partner" },
       ]}
-      fieldName="householdMemberRelation"
+      fieldNames={{ selection: "householdMemberRelation" }}
     />
   )
 }
