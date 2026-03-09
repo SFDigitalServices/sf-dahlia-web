@@ -139,7 +139,7 @@ export const getPrimaryApplicantData = (formData: Record<string, unknown>) => {
     firstName,
     middleName,
     lastName,
-    fullName: `${firstName} ${middleName} ${lastName}`,
+    fullName: `${firstName || ""} ${middleName || ""} ${lastName || ""}`,
     dob: (formData.primaryApplicantDob as string) || "1990-01-01", // TODO: update after DAH-3543
   }
 }
