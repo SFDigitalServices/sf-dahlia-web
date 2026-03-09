@@ -103,7 +103,7 @@ const Address = ({
     watch,
     formState: { errors },
   } = useFormContext()
-  const mailingAddressCheckboxValue = watch(mailingAddressCheckbox, false)
+  const mailingAddressCheckboxValue = mailingAddressCheckbox && watch(mailingAddressCheckbox, false)
   return (
     <fieldset>
       <legend className="legend-header">{t(label)}</legend>
