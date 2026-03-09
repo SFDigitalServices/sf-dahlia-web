@@ -165,9 +165,8 @@ const Address = ({
           error={!!errors?.[addressState]}
           errorMessage={t("error.state")}
           register={register}
-          controlClassName="control form-select"
+          controlClassName="control"
           options={stateOptions}
-          placeholder={t("label.selectOne")}
         />
       </div>
       <Field
@@ -249,9 +248,8 @@ const Address = ({
               error={!!errors?.[mailingAddressState]}
               errorMessage={t("error.state")}
               register={register}
-              controlClassName="control form-select"
+              controlClassName="control"
               options={stateOptions}
-              placeholder={t("label.selectOne")}
             />
           </div>
           <Field
