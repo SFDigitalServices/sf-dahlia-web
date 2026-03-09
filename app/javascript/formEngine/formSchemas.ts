@@ -96,20 +96,32 @@ export const generateSectionNames = (schema: FormSchema): string[] => {
 }
 
 export const generateInitialFormData = (schema: FormSchema): Record<string, unknown> => {
-  const formData = getFieldNames(schema).reduce(
+  const allFieldNames = getFieldNames(schema)
+  const dynamicStepFieldNames = new Set(
+    schema.children
+      .filter((step: StepComponentSchema) => step.stepInfo?.dynamicNextStep)
+      .flatMap(
+        (step: StepComponentSchema) =>
+          step.children?.flatMap((child: ComponentSchema) =>
+            child.props?.fieldNames ? Object.values(child.props.fieldNames) : []
+          ) || []
+      )
+  )
+  const rootLevelFieldNames = allFieldNames.filter(
+    (fieldName) => !dynamicStepFieldNames.has(fieldName)
+  )
+  const formData = rootLevelFieldNames.reduce(
     (acc, fieldName) => {
       acc[fieldName] = null
       return acc
     },
     {} as Record<string, unknown>
   )
-
-  const dynamicSteps = getNestedValuesByKey("stepInfo", schema, []).filter(
-    (stepInfo: Record<string, unknown>) => stepInfo.dynamicNextStep
-  )
-  dynamicSteps.forEach((stepInfo: StepInfoSchema) => {
-    formData[stepInfo.slug] = []
-  })
+  schema.children
+    .filter((step: StepComponentSchema) => step.stepInfo?.dynamicNextStep)
+    .forEach((step: StepComponentSchema) => {
+      formData[step.stepInfo.slug] = []
+    })
   return formData
 }
 
