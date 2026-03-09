@@ -30,9 +30,8 @@ const HouseholdMemberSameAddress = ({ label, fieldNames }: HouseholdMemberSameAd
         <div className={styles["household-member-address-field"]}>
           <Address
             showAptOrUnit={true}
-            requireAddress={true}
+            requireAddress={showAddressField}
             note="c3HouseholdMemberForm.memberAddressDesc"
-            showMailingAddress={false}
             fieldNames={fieldNames}
           />
         </div>
