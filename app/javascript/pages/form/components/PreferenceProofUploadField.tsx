@@ -78,7 +78,8 @@ const PreferenceProofUploadField = ({
       })
   }
 
-  const handleDeleteFile = () => {
+  const handleDeleteFile = (event) => {
+    event.preventDefault()
     setUploadStatus("loading")
     deleteUploadedProofFile(sessionId, listingId, listingPreferenceId, documentType)
       .then(() => {
