@@ -89,7 +89,6 @@ const CertificateNumberPreference = ({
               id={currentPreference}
               name={currentPreference}
               options={showAllHouseholdMembers}
-              placeholder={t("label.selectOne")}
               label={t("label.applicantPreferencesHouseholdMember")}
               labelClassName="text-base"
               controlClassName="control"
