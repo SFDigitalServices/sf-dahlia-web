@@ -132,16 +132,23 @@ export const validAge = (
 }
 
 export const getPrimaryApplicantData = (formData: Record<string, unknown>) => {
-  const firstName = formData.primaryApplicantFirstName as string
+  const firstName = formData.primaryApplicantFirstxName as string
   const middleName = formData.primaryApplicantMiddleName as string
   const lastName = formData.primaryApplicantLastName as string
   return {
     firstName,
     middleName,
     lastName,
-    fullName: `${firstName || ""} ${middleName || ""} ${lastName || ""}`,
     dob: (formData.primaryApplicantDob as string) || "1990-01-01", // TODO: update after DAH-3543
   }
+}
+
+export const getFullName = (person: {
+  firstName: string
+  middleName: string
+  lastName: string
+}) => {
+  return `${person.firstName || ""} ${person.middleName || ""} ${person.lastName || ""}`
 }
 
 export const updateFormPath = (newStepIndex: number, stepInfoMap: StepInfoSchema[]) => {

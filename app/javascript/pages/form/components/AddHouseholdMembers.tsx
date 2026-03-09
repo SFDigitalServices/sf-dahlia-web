@@ -2,7 +2,7 @@ import React from "react"
 import { t } from "@bloom-housing/ui-components"
 import { Button, Card, Heading } from "@bloom-housing/ui-seeds"
 import { useFormEngineContext } from "../../../formEngine/formEngineContext"
-import { getPrimaryApplicantData } from "../../../util/formEngineUtil"
+import { getPrimaryApplicantData, getFullName } from "../../../util/formEngineUtil"
 import stepStyles from "./ListingApplyStepWrapper.module.scss"
 import styles from "./AddHouseholdMembers.module.scss"
 
@@ -43,12 +43,6 @@ const AddHouseholdMembers = () => {
   const { handleNextStep, formData, jumpToStep, setCurrentMemberIndex } = formEngineContext
   const primaryApplicant = getPrimaryApplicantData(formData)
   const householdMembers = formData["household-member-form"] as Array<Record<string, unknown>>
-  const getHouseholdMemberName = (member: Record<string, unknown>) => {
-    const firstName = member.householdMemberFirstName as string
-    const middleName = member.householdMemberMiddleName as string
-    const lastName = member.householdMemberLastName as string
-    return `${firstName} ${middleName} ${lastName}`
-  }
   return (
     <Card>
       <Card.Header divider="inset">
@@ -58,7 +52,7 @@ const AddHouseholdMembers = () => {
       </Card.Header>
       {/* Primary applicant is visible from start */}
       <HouseholdMember
-        name={primaryApplicant.fullName}
+        name={getFullName(primaryApplicant)}
         isPrimary={true}
         index={0}
         onEdit={() => jumpToStep("name")}
@@ -66,7 +60,11 @@ const AddHouseholdMembers = () => {
       {householdMembers.map((member, index) => (
         <HouseholdMember
           key={index}
-          name={getHouseholdMemberName(member)}
+          name={getFullName({
+            firstName: member.householdMemberFirstName as string,
+            middleName: member.householdMemberMiddleName as string,
+            lastName: member.householdMemberLastName as string,
+          })}
           isPrimary={false}
           index={index}
           onEdit={(memberIndex) => {
