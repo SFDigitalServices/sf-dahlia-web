@@ -6,14 +6,16 @@ import { getPrimaryApplicantData } from "../../../util/formEngineUtil"
 import stepStyles from "./ListingApplyStepWrapper.module.scss"
 import styles from "./AddHouseholdMembers.module.scss"
 
-const HouseholdMember = ({ name }: { name: string }) => {
+const HouseholdMember = ({ name, isPrimary = false }: { name: string; isPrimary?: boolean }) => {
   return (
     <Card.Section divider="inset" className={styles["household-member"]}>
       <div className={styles["household-member-info"]}>
         <Heading priority={2} size="md">
           {name}
         </Heading>
-        <p className="field-note">{t("label.primaryUser")}</p>
+        <p className="field-note">
+          {isPrimary ? t("label.primaryUser") : t("label.householdMember")}
+        </p>
       </div>
       <Button variant="text" className={styles["household-member-edit"]}>
         {t("t.edit")}
@@ -26,7 +28,16 @@ const AddHouseholdMembers = () => {
   const formEngineContext = useFormEngineContext()
   const { handleNextStep, formData } = formEngineContext
   const primaryApplicant = getPrimaryApplicantData(formData)
+  const householdMembers = formData["household-member-form"] as Array<Record<string, unknown>>
+
   console.log("formData", formData)
+
+  const getHouseholdMemberName = (member: Record<string, unknown>) => {
+    const firstName = member.householdMemberFirstName as string
+    const middleName = member.householdMemberMiddleName as string
+    const lastName = member.householdMemberLastName as string
+    return `${firstName} ${middleName} ${lastName}`
+  }
 
   return (
     <Card>
@@ -35,7 +46,12 @@ const AddHouseholdMembers = () => {
           {t("c2HouseholdMembers.title")}
         </Heading>
       </Card.Header>
-      <HouseholdMember name={primaryApplicant.fullName} />
+      {/* Primary applicant is visible from start */}
+      <HouseholdMember name={primaryApplicant.fullName} isPrimary={true} />
+      {householdMembers.map((member, index) => (
+        <HouseholdMember key={index} name={getHouseholdMemberName(member)} isPrimary={false} />
+      ))}
+
       <Card.Section className={styles["add-member"]}>
         <Button variant="primary-outlined" onClick={() => handleNextStep(formData)}>
           {"+ " + t("label.addHouseholdMember")}

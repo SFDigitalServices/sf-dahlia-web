@@ -307,7 +307,7 @@
         }
       },
       "componentType": "step",
-      "componentName": "ListingApplyStepWrapper",
+      "componentName": "HouseholdMemberStepWrapper",
       "props": {
         "title": "c3HouseholdMemberForm.title",
         "description": "c3HouseholdMemberForm.p1"
