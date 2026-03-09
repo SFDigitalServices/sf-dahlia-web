@@ -106,8 +106,8 @@ const Address = ({
   const mailingAddressCheckboxValue = mailingAddressCheckbox && watch(mailingAddressCheckbox, false)
   return (
     <fieldset>
-      <legend className="legend-header">{t(label)}</legend>
-      <p className="field-note">{t(note)}</p>
+      {label && <legend className="legend-header">{t(label)}</legend>}{" "}
+      {note && <p className="field-note">{t(note)}</p>}
       <Field
         name={addressStreet}
         label={t("label.address1")}

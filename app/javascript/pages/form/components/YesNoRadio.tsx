@@ -25,9 +25,9 @@ const YesNoRadio = ({ label, note, yesText, fieldNames }: YesNoRadioProps) => {
       fieldClassName="radio-field"
       type="radio"
       name={fieldNames?.question}
-      groupLabel={t(label)}
-      groupNote={t(note)}
-      {...(selected === "true" && { groupSubNote: t(yesText) })}
+      groupLabel={label ? t(label) : ""}
+      groupNote={note ? t(note) : ""}
+      {...(selected === "true" && yesText && { groupSubNote: t(yesText) })}
       error={errors?.[fieldNames?.question]}
       errorMessage={t("error.pleaseSelectAnOption")}
       register={register}
