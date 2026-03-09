@@ -50,6 +50,7 @@ const PreferenceProofUploadField = ({
     if (rejectedFile) {
       console.error("file error:", rejectedFile.errors)
       setUploadErrorMessage(t("error.fileUpload"))
+      setUploadStatus("error")
       return
     }
 
@@ -58,6 +59,7 @@ const PreferenceProofUploadField = ({
     )
     if (acceptedFileName.length > 80) {
       setUploadErrorMessage(t("error.fileNameTooLong"))
+      setUploadStatus("error")
       return
     }
 
