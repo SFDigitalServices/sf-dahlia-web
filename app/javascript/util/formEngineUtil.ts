@@ -132,7 +132,7 @@ export const validAge = (
 }
 
 export const getPrimaryApplicantData = (formData: Record<string, unknown>) => {
-  const firstName = formData.primaryApplicantFirstxName as string
+  const firstName = formData.primaryApplicantFirstName as string
   const middleName = formData.primaryApplicantMiddleName as string
   const lastName = formData.primaryApplicantLastName as string
   return {
