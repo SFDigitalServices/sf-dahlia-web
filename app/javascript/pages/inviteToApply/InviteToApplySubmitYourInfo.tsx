@@ -106,6 +106,8 @@ const WhatToDo = ({
     void (async () => {
       setIsSubmitting(true)
       try {
+        // Open the file upload URL after API call (or directly if no applicationNumber)
+        window.open(url, "_blank")
         // Call the API if applicationNumber is provided
         if (applicationNumber) {
           await recordResponse({
@@ -115,8 +117,6 @@ const WhatToDo = ({
             response: "submit",
           })
         }
-        // Open the file upload URL after API call (or directly if no applicationNumber)
-        window.open(url, "_blank")
         setIsSubmitting(false)
       } catch (error) {
         console.error("Error submitting invite to apply response:", error)

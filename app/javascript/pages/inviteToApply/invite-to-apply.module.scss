@@ -192,6 +192,7 @@
     .loadingOverlay {
       --loading-state-height: none;
       padding: var(--seeds-s1) 0;
+      width: var(--seeds-width-xs);
 
       :global {
         .loading-state-spinner {
