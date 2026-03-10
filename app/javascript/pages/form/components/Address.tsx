@@ -103,7 +103,7 @@ const Address = ({
     watch,
     formState: { errors },
   } = useFormContext()
-  const mailingAddressCheckboxValue = watch(mailingAddressCheckbox, false)
+  const mailingAddressCheckboxValue = mailingAddressCheckbox && watch(mailingAddressCheckbox, false)
   return (
     <fieldset>
       <legend className="legend-header">{t(label)}</legend>
@@ -167,7 +167,6 @@ const Address = ({
           register={register}
           controlClassName="control"
           options={stateOptions}
-          placeholder={t("label.selectOne")}
         />
       </div>
       <Field
@@ -251,7 +250,6 @@ const Address = ({
               register={register}
               controlClassName="control"
               options={stateOptions}
-              placeholder={t("label.selectOne")}
             />
           </div>
           <Field

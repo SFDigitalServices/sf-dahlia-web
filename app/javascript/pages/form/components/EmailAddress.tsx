@@ -28,7 +28,7 @@ const EmailAddress = ({
     clearErrors,
     watch,
   } = useFormContext()
-  const noEmailCheckboxValue = watch(noEmailCheckbox, false)
+  const noEmailCheckboxValue = noEmailCheckbox && watch(noEmailCheckbox, false)
   return (
     <fieldset>
       <legend className="legend-header">{t(label)}</legend>
