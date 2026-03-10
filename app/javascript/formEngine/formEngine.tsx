@@ -19,12 +19,13 @@ import { UNLEASH_FLAG } from "../modules/constants"
 import FormEngineDebug from "./FormEngineDebug"
 
 interface FormEngineProps {
+  sessionId: string
   listing: RailsListing
   preferences: RailsListingPreference[]
   schema: FormSchema
 }
 
-const FormEngine = ({ listing, preferences, schema }: FormEngineProps) => {
+const FormEngine = ({ sessionId, listing, preferences, schema }: FormEngineProps) => {
   const [formData, setFormData] = useState<Record<string, unknown>>(generateInitialFormData(schema))
   const [currentStepIndex, setCurrentStepIndex] = useState<number>(0)
 
@@ -88,7 +89,7 @@ const FormEngine = ({ listing, preferences, schema }: FormEngineProps) => {
     listing,
     preferences,
     formData: formData,
-    sessionId: self.crypto.randomUUID(), // ShortFormApplicationService.js.coffee#L19
+    sessionId,
     dataSources,
     saveFormData: saveFormData,
     stepInfoMap: stepInfoMap,
