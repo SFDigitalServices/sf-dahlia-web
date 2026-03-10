@@ -21,7 +21,6 @@ const FormSelect = ({
   defaultOptionName,
   errorMessage,
   options,
-  labelClassName,
   validation,
   disabled,
   fieldNames: { selection },
@@ -43,7 +42,7 @@ const FormSelect = ({
       options={selectOptions}
       placeholder={defaultOptionName ? t(defaultOptionName) : undefined}
       controlClassName="control"
-      labelClassName={labelClassName}
+      labelClassName="text__caps-spaced"
       disabled={disabled}
       register={register}
       error={!!errors?.[selection]}
