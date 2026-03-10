@@ -437,6 +437,14 @@
         "sectionName": "household",
         "navigationDeparture": {
           "prevStep": "household-intro"
+        },
+        "navigationArrival": {
+          "showStepIfAnyPresent": [
+            {
+              "dataSource": "preferences",
+              "dataKey": "assistedHousing"
+            }
+          ]
         }
       },
       "componentType": "step",

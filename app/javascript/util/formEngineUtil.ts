@@ -3,7 +3,7 @@ import type { DataSources } from "../formEngine/formEngineContext"
 import dayjs, { type Dayjs } from "dayjs"
 import customParseFormat from "dayjs/plugin/customParseFormat"
 import { t } from "@bloom-housing/ui-components"
-import { type SeniorBuildingAgeRequirement } from "./listingUtil"
+import { type SeniorBuildingAgeRequirement, listingPreferences } from "./listingUtil"
 
 export const translationFromDataSchema = (
   translationKey: string,
@@ -37,7 +37,10 @@ export const showStep = (
   dataSources: DataSources
 ): boolean => {
   const processedConditions = conditions.map((condition) => {
-    const value = dataSources[condition.dataSource][condition.dataKey]
+    let value = dataSources[condition.dataSource][condition.dataKey]
+    if (condition.dataSource === "preferences") {
+      value = listingPreferences(dataSources.listing)[condition.dataKey]
+    }
     const processedCondition = condition.dataValueToMatch
       ? condition.dataValueToMatch === value
       : value

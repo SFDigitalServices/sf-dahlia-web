@@ -12,7 +12,12 @@ import {
 import type { RailsListing } from "../modules/listings/SharedHelpers"
 import { listingPreferences, getSeniorBuildingAgeRequirement } from "../util/listingUtil"
 import RecursiveRenderer from "./recursiveRenderer"
-import { calculateNextStep, calculatePrevStep, updateFormPath } from "../util/formEngineUtil"
+import {
+  calculateNextStep,
+  calculatePrevStep,
+  updateFormPath,
+  showStep,
+} from "../util/formEngineUtil"
 import { useFeatureFlag } from "../hooks/useFeatureFlag"
 import { UNLEASH_FLAG } from "../modules/constants"
 import FormEngineDebug from "./FormEngineDebug"
@@ -96,8 +101,21 @@ const FormEngine = ({ listing, schema }: FormEngineProps) => {
       }
     }
 
+    // Jump to the specified step and step through until navigation arrival conditions are met
     jumpToStep = (stepSlug: string) => {
-      const stepIndex = stepInfoMap.findIndex((step) => step.slug === stepSlug)
+      let stepIndex = stepInfoMap.findIndex((step) => step.slug === stepSlug)
+      while (stepIndex < stepInfoMap.length) {
+        const targetStep = stepInfoMap[stepIndex]
+        if (targetStep?.navigationArrival) {
+          const [operation, conditions] = Object.entries(targetStep.navigationArrival)[0]
+          if (showStep(operation, conditions, dataSources)) {
+            break
+          }
+        } else {
+          break
+        }
+        stepIndex++
+      }
       setCurrentStepIndex(stepIndex)
       updateFormPath(stepIndex, stepInfoMap)
     }

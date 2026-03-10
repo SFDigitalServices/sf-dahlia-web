@@ -2,7 +2,7 @@ import * as z from "zod"
 import getFormComponentRegistry from "./formComponentRegistry"
 
 const DataSchema = z.object({
-  dataSource: z.string(), // "listing", "form"
+  dataSource: z.string(), // "listing", "form", "preferences"
   dataKey: z.string(),
   dataValueToMatch: z.optional(z.string()), // value validation for dataKey
   negate: z.optional(z.boolean()),
