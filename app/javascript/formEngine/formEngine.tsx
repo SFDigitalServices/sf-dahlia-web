@@ -25,7 +25,7 @@ interface FormEngineProps {
 const FormEngine = ({ listing, schema }: FormEngineProps) => {
   const [formData, setFormData] = useState<Record<string, unknown>>(generateInitialFormData(schema))
   const [currentStepIndex, setCurrentStepIndex] = useState<number>(0)
-
+  const [currentMemberIndex, setCurrentMemberIndex] = useState<number>(0)
   const { unleashFlag: formEngineDebug } = useFeatureFlag(UNLEASH_FLAG.FORM_ENGINE_DEBUG, false)
 
   const parsedSchema = parseFormSchema(schema)
@@ -51,7 +51,8 @@ const FormEngine = ({ listing, schema }: FormEngineProps) => {
   let stepInfoMap: StepInfoSchema[],
     sectionNames: string[],
     handleNextStep: (currentFormData: Record<string, unknown>) => void,
-    handlePrevStep: () => void
+    handlePrevStep: () => void,
+    jumpToStep: (stepSlug: string) => void
 
   if (parsedSchema.componentType === "multiStepLayout") {
     sectionNames = generateSectionNames(parsedSchema)
@@ -67,6 +68,20 @@ const FormEngine = ({ listing, schema }: FormEngineProps) => {
         ...dataSources,
         form: currentFormData,
       })
+      if (stepInfoMap[newStepIndex]?.dynamicStep) {
+        const fieldNames = stepInfoMap[newStepIndex]?.fieldNames
+        const newMember = Object.fromEntries(fieldNames.map((fieldName) => [fieldName, null]))
+        const currentArray = currentFormData[stepInfoMap[newStepIndex]?.slug] as unknown[]
+        const updatedFormData = {
+          ...currentFormData,
+          [stepInfoMap[newStepIndex]?.slug]: [...currentArray, newMember],
+        }
+        setFormData(updatedFormData)
+        setCurrentMemberIndex(
+          (currentFormData[stepInfoMap[newStepIndex]?.slug] as unknown[]).length + 1
+        )
+      }
+
       if (newStepIndex < totalSteps) {
         setCurrentStepIndex(newStepIndex)
         updateFormPath(newStepIndex, stepInfoMap)
@@ -80,6 +95,12 @@ const FormEngine = ({ listing, schema }: FormEngineProps) => {
         updateFormPath(newStepIndex, stepInfoMap)
       }
     }
+
+    jumpToStep = (stepSlug: string) => {
+      const stepIndex = stepInfoMap.findIndex((step) => step.slug === stepSlug)
+      setCurrentStepIndex(stepIndex)
+      updateFormPath(stepIndex, stepInfoMap)
+    }
   }
 
   const formEngineContextValue: FormEngineContext = {
@@ -90,8 +111,11 @@ const FormEngine = ({ listing, schema }: FormEngineProps) => {
     stepInfoMap: stepInfoMap,
     sectionNames: sectionNames,
     currentStepIndex: currentStepIndex,
+    currentMemberIndex: currentMemberIndex,
+    setCurrentMemberIndex: setCurrentMemberIndex,
     handleNextStep,
     handlePrevStep,
+    jumpToStep,
   }
 
   return (

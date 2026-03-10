@@ -18,6 +18,7 @@ import ListingApplyReviewApplication from "../pages/form/components/ListingApply
 import ListingApplyHouseholdIntro from "../pages/form/components/ListingApplyHouseholdIntro"
 import ListingApplyHouseholdOverview from "../pages/form/components/ListingApplyHouseholdOverview"
 import AddHouseholdMembers from "../pages/form/components/AddHouseholdMembers"
+import HouseholdMemberStepWrapper from "../pages/form/components/HouseholdMemberStepWrapper"
 import Select from "../pages/form/components/Select"
 import Radio from "../pages/form/components/Radio"
 import VeteransRadio from "../pages/form/components/VeteransRadio"
@@ -44,6 +45,7 @@ export default function getFormComponentRegistry() {
     ListingApplyHouseholdIntro,
     ListingApplyHouseholdOverview,
     AddHouseholdMembers,
+    HouseholdMemberStepWrapper,
     ListingApplyPreferencesIntro,
     ListingApplyRentBurdenPreference,
     ListingApplyDemographics,
