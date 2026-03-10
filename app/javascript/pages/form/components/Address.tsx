@@ -18,6 +18,7 @@ interface AddressProps {
     addressCity: string
     addressState: string
     addressZipcode: string
+    mailingAddressCheckbox?: string
     mailingAddressStreet?: string
     mailingAddressCity?: string
     mailingAddressState?: string
@@ -90,6 +91,7 @@ const Address = ({
     addressCity,
     addressState,
     addressZipcode,
+    mailingAddressCheckbox,
     mailingAddressStreet,
     mailingAddressCity,
     mailingAddressState,
@@ -98,9 +100,10 @@ const Address = ({
 }: AddressProps) => {
   const {
     register,
+    watch,
     formState: { errors },
   } = useFormContext()
-  const [mailingAddressChecked, setMailingAddressChecked] = React.useState(false)
+  const mailingAddressCheckboxValue = mailingAddressCheckbox && watch(mailingAddressCheckbox, false)
   return (
     <fieldset>
       <legend className="legend-header">{t(label)}</legend>
@@ -164,7 +167,6 @@ const Address = ({
           register={register}
           controlClassName="control"
           options={stateOptions}
-          placeholder={t("label.selectOne")}
         />
       </div>
       <Field
@@ -185,13 +187,13 @@ const Address = ({
       {showMailingAddress && (
         <Field
           type="checkbox"
-          name="mailingAddressCheckbox"
+          name={mailingAddressCheckbox}
           label={t("label.applicantSeparateAddress")}
           className="checkbox-field-label"
-          onChange={(e) => setMailingAddressChecked(e.target.checked)}
+          register={register}
         />
       )}
-      {mailingAddressChecked && (
+      {mailingAddressCheckboxValue && (
         <>
           <Heading priority={2} size="sm">
             {t("label.mailingAddress")}
@@ -248,7 +250,6 @@ const Address = ({
               register={register}
               controlClassName="control"
               options={stateOptions}
-              placeholder={t("label.selectOne")}
             />
           </div>
           <Field

@@ -10,7 +10,7 @@ const renderEmailAddressComponent = (showDontHaveEmailAddress = false) => {
     <EmailAddress
       fieldNames={{
         email: "primaryApplicantEmail",
-        noEmail: "primaryApplicantNoEmail",
+        noEmailCheckbox: "primaryApplicantNoEmail",
       }}
       label="label.applicantEmail"
       note="b2Contact.onlyUseYourEmail"
