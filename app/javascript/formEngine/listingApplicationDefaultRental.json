@@ -442,7 +442,13 @@
       "componentType": "step",
       "componentName": "ListingApplyStepWrapper",
       "props": {
-        "title": "c4HouseholdPublicHousing.titleHousehold",
+        "title": "c4HouseholdPublicHousing.titleYou",
+        "titleCondition": {
+          "title": "c4HouseholdPublicHousing.titleHousehold",
+          "dataSource": "form",
+          "dataKey": "liveAlone",
+          "dataValueToMatch": "false"
+        },
         "description": "c4HouseholdPublicHousing.p1"
       },
       "children": [

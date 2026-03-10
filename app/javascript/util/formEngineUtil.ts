@@ -8,16 +8,27 @@ import { type SeniorBuildingAgeRequirement } from "./listingUtil"
 export const translationFromDataSchema = (
   translationKey: string,
   translationVarsData: Record<string, DataSchema>,
-  dataSources: DataSources
+  dataSources: DataSources,
+  titleCondition?: DataSchema & { title?: string }
 ): string => {
-  if (!translationVarsData) return t(translationKey)
-
-  const translationVars = {}
-  for (const [varName, data] of Object.entries(translationVarsData)) {
-    const { dataSource, dataKey } = data
-    translationVars[varName] = dataSources[dataSource][dataKey]
+  // Alternative text with condition
+  if (titleCondition) {
+    const { dataSource, dataKey, dataValueToMatch } = titleCondition
+    const currentValue = dataSources[dataSource][dataKey]
+    if (currentValue === dataValueToMatch && titleCondition.title) {
+      return t(titleCondition.title)
+    }
   }
-  return t(translationKey, translationVars)
+  // Text with interpolated variables
+  if (translationVarsData) {
+    const translationVars = {}
+    for (const [varName, data] of Object.entries(translationVarsData)) {
+      const { dataSource, dataKey } = data
+      translationVars[varName] = dataSources[dataSource][dataKey]
+    }
+    return t(translationKey, translationVars)
+  }
+  return t(translationKey)
 }
 
 export const showStep = (
