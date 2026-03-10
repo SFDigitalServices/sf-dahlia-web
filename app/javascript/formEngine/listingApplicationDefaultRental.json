@@ -319,6 +319,7 @@
         "dynamicStep": true,
         "navigationDeparture": {
           "nextStep": "household-members"
+        },
         "navigationArrival": {
           "hideStepIfAnyPresent": [
             {
