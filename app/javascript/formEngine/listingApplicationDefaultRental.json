@@ -274,14 +274,23 @@
       "componentName": "ListingApplyHouseholdIntro",
       "props": {
         "fieldNames": {
-          "liveAlone": "_liveAlone"
+          "liveAlone": "liveAlone"
         }
       }
     },
     {
       "stepInfo": {
         "slug": "household-overview",
-        "sectionName": "household"
+        "sectionName": "household",
+        "navigationArrival": {
+          "hideStepIfAnyPresent": [
+            {
+              "dataSource": "form",
+              "dataKey": "liveAlone",
+              "dataValueToMatch": "true"
+            }
+          ]
+        }
       },
       "componentType": "step",
       "componentName": "ListingApplyHouseholdOverview"
@@ -289,7 +298,16 @@
     {
       "stepInfo": {
         "slug": "household-members",
-        "sectionName": "household"
+        "sectionName": "household",
+        "navigationArrival": {
+          "hideStepIfAnyPresent": [
+            {
+              "dataSource": "form",
+              "dataKey": "liveAlone",
+              "dataValueToMatch": "true"
+            }
+          ]
+        }
       },
       "componentType": "step",
       "componentName": "AddHouseholdMembers"
@@ -297,7 +315,16 @@
     {
       "stepInfo": {
         "slug": "household-member-form",
-        "sectionName": "household"
+        "sectionName": "household",
+        "navigationArrival": {
+          "hideStepIfAnyPresent": [
+            {
+              "dataSource": "form",
+              "dataKey": "liveAlone",
+              "dataValueToMatch": "true"
+            }
+          ]
+        }
       },
       "componentType": "step",
       "componentName": "ListingApplyStepWrapper",
@@ -386,6 +413,13 @@
               "dataSource": "form",
               "dataKey": "householdMemberAddress"
             }
+          ],
+          "hideStepIfAnyPresent": [
+            {
+              "dataSource": "form",
+              "dataKey": "liveAlone",
+              "dataValueToMatch": "true"
+            }
           ]
         }
       },
@@ -401,10 +435,7 @@
     {
       "stepInfo": {
         "slug": "household-public-housing",
-        "sectionName": "household",
-        "navigationDeparture": {
-          "prevStep": "household-members"
-        }
+        "sectionName": "household"
       },
       "componentType": "step",
       "componentName": "ListingApplyStepWrapper",
