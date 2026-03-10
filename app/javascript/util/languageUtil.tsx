@@ -237,6 +237,7 @@ export function defaultIfNotTranslated(
 export function localizedFormat(date: string | Date, format: string): string {
   const lang = getCurrentLanguage(window.location.pathname)
   if (date) return dayjs(date).tz().locale(dayJsLocales[lang]).format(format)
+  return ""
 }
 
 // Time zone is assumed to be Pacific

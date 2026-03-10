@@ -46,7 +46,7 @@ const ListingApplyForm = (props: ListingApplyFormProps) => {
   return (
     <LoadingOverlay isLoading={!listing && !preferences && !formEngine}>
       <Layout title={listing?.Name ? `${listing?.Name} Application` : null}>
-        {listing && (
+        {listing && preferences && (
           <FormEngine
             sessionId={sessionId}
             listing={listing}

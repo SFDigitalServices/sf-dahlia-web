@@ -683,7 +683,7 @@
           "workInSfProofType": "workInSfProofType",
           "workInSfProofDoc": "workInSfProofDoc",
           "workInSfFileName": "workInSfFileName",
-          "workInSfUploadedAt": "workInSfUploadedAt",
+          "workInSfFileUploadedAt": "workInSfFileUploadedAt",
           "optOutLiveWork": "optOutLiveWork"
         }
       }

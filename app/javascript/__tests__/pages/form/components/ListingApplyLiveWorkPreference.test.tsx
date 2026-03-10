@@ -234,7 +234,7 @@ describe("ListingApplyLiveWorkPreference", () => {
     expect(screen.getByText(t("error.pleaseSelectPreferenceOption"))).toBeInTheDocument()
     expect(screen.getByText(t("error.pleaseSelectAnOption"))).toBeInTheDocument()
 
-    await user.click(screen.getByTestId("listing-apply-step-error-message-close-button"))
+    await user.click(screen.getByLabelText(t("t.close")))
     expect(screen.queryByText(t("error.pleaseSelectPreferenceOption"))).not.toBeInTheDocument()
     expect(screen.queryByText(t("error.pleaseSelectAnOption"))).not.toBeInTheDocument()
   })
@@ -249,7 +249,7 @@ describe("ListingApplyLiveWorkPreference", () => {
     await user.click(screen.getByText(t("t.next")))
     expect(screen.getByText(t("error.pleaseCompletePreference"))).toBeInTheDocument()
 
-    await user.click(screen.getByTestId("listing-apply-step-error-message-close-button"))
+    await user.click(screen.getByLabelText(t("t.close")))
     expect(screen.queryByText(t("error.pleaseCompletePreference"))).not.toBeInTheDocument()
   })
 

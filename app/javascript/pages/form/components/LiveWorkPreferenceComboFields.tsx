@@ -52,7 +52,7 @@ const LiveOrWorkComboPreferenceFields = ({
           required: true,
         }}
       />
-      {liveOrWorkInSfClaimedOptionValue == "liveInSf" && (
+      {liveOrWorkInSfClaimedOptionValue === "liveInSf" && (
         <LiveWorkPreferenceFields
           householdMemberFieldName={liveInSfMember}
           proofTypeFieldName={liveInSfProofType}
@@ -62,7 +62,7 @@ const LiveOrWorkComboPreferenceFields = ({
           proofFileUploadedAt={liveInSfFileUploadedAt}
         />
       )}
-      {liveOrWorkInSfClaimedOptionValue == "workInSf" && (
+      {liveOrWorkInSfClaimedOptionValue === "workInSf" && (
         <LiveWorkPreferenceFields
           householdMemberFieldName={workInSfMember}
           proofTypeFieldName={workInSfProofType}
