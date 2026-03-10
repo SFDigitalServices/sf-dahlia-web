@@ -6,6 +6,7 @@ import { CardSection } from "@bloom-housing/ui-seeds/src/blocks/Card"
 import { useFormEngineContext } from "../../../formEngine/formEngineContext"
 import LiveWorkPreferenceFields from "./LiveWorkPreferenceFields"
 import LiveWorkPreferenceComboFields from "./LiveWorkPreferenceComboFields"
+import ListingApplyStepErrorMessage from "./ListingApplyStepErrorMessage"
 import styles from "./ListingApplyLiveWorkPreference.module.scss"
 import { deleteUploadedProofFile } from "../../../api/formApiService"
 import { PREFERENCES } from "../../../modules/constants"
@@ -33,6 +34,7 @@ interface ListingApplyLiveWorkPreferenceProps {
 const ListingApplyLiveWorkPreference = ({
   fieldNames,
   fieldNames: {
+    liveOrWorkInSfClaimedOption,
     liveOrWorkInSf,
     liveInSf,
     workInSf,
@@ -74,10 +76,12 @@ const ListingApplyLiveWorkPreference = ({
 
   // https://github.com/react-hook-form/react-hook-form/issues/2887#issuecomment-802577357
   // eslint-disable-next-line @typescript-eslint/unbound-method
-  const { register, watch, handleSubmit } = formMethods
+  const { register, watch, handleSubmit, errors, clearErrors } = formMethods
   // workaround for react-hook-form typescript issue with these function signatures
   // eslint-disable-next-line @typescript-eslint/unbound-method
   const setValue = formMethods.setValue as UseFormMethods["setValue"]
+  // eslint-disable-next-line @typescript-eslint/unbound-method
+  const setError = formMethods.setError as UseFormMethods["setError"]
 
   const [showRequiredCheckboxError, setShowRequiredCheckboxError] = useState(false)
 
@@ -91,10 +95,17 @@ const ListingApplyLiveWorkPreference = ({
 
   const liveOrWorkInSfValue: boolean = watch(liveOrWorkInSf)
   const liveInSfValue: boolean = watch(liveInSf)
+  const liveInSfMemberValue: string = watch(liveInSfMember)
   const liveInSfFileNameValue: string = watch(liveInSfFileName)
   const workInSfValue: boolean = watch(workInSf)
+  const workInSfMemberValue: string = watch(workInSfMember)
   const workInSfFileNameValue: string = watch(workInSfFileName)
   const optOutLiveWorkValue: boolean = watch(optOutLiveWork)
+
+  const clearAllErrors = () => {
+    clearErrors()
+    setShowRequiredCheckboxError(false)
+  }
 
   const handleLiveWorkCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const isChecked = e.target.checked
@@ -123,7 +134,7 @@ const ListingApplyLiveWorkPreference = ({
   const handleOptOutCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const isChecked = e.target.checked
     if (isChecked) {
-      setShowRequiredCheckboxError(false)
+      clearAllErrors()
       setValue(liveOrWorkInSf, false)
       setValue(liveInSf, false)
       setValue(liveInSfProofType, null)
@@ -131,6 +142,15 @@ const ListingApplyLiveWorkPreference = ({
       setValue(workInSfProofType, null)
     }
   }
+
+  const showIncompleteDocumentError =
+    errors?.[liveOrWorkInSfClaimedOption] ||
+    errors?.[liveInSfMember] ||
+    errors?.[liveInSfProofType] ||
+    errors?.[liveInSfFileName] ||
+    errors?.[workInSfMember] ||
+    errors?.[workInSfProofType] ||
+    errors?.[workInSfFileName]
 
   const deleteUploadedFile = (proofType: string) => {
     const listingPreferenceId = preferences.find(
@@ -143,6 +163,20 @@ const ListingApplyLiveWorkPreference = ({
   const onSubmit = (data: Record<string, unknown>) => {
     if (!liveOrWorkInSfValue && !liveInSfValue && !workInSfValue && !optOutLiveWorkValue) {
       setShowRequiredCheckboxError(true)
+      return
+    }
+
+    if (liveInSfMemberValue && !liveInSfFileNameValue) {
+      setError(liveInSfFileName, {
+        message: t("error.fileMissing"),
+      })
+      return
+    }
+
+    if (workInSfMemberValue && !workInSfFileNameValue) {
+      setError(workInSfFileName, {
+        message: t("error.fileMissing"),
+      })
       return
     }
 
@@ -171,8 +205,26 @@ const ListingApplyLiveWorkPreference = ({
         <h1 className="mt-6 mb-4 text-xl md:text-2xl">{t("e2cLiveWorkPreference.title")}</h1>
         <p className="field-note text-base">{t("e2cLiveWorkPreference.instructions")}</p>
       </CardSection>
+
+      {showRequiredCheckboxError && (
+        <ListingApplyStepErrorMessage
+          errorMessage={t("error.pleaseSelectPreferenceOption")}
+          errorNote={t("error.pleaseSelectPreferenceContent")}
+          onClose={() => clearAllErrors()}
+        />
+      )}
+
+      {!showRequiredCheckboxError && showIncompleteDocumentError && (
+        <ListingApplyStepErrorMessage
+          errorMessage={t("error.pleaseCompletePreference")}
+          errorNote={t("error.pleaseCompletePreferenceContent")}
+          onClose={() => clearAllErrors()}
+        />
+      )}
+
       <Form onSubmit={handleSubmit(onSubmit)}>
         <CardSection>
+          <p className={styles["checkbox-label"]}>{t("label.pleaseSelectPreference")}</p>
           {showLiveOrWorkPrefCheckbox && (
             <div className={styles["checkbox-section"]}>
               <Field
@@ -181,6 +233,7 @@ const ListingApplyLiveWorkPreference = ({
                 className={styles["live-work-pref-field"]}
                 label={t("e2cLiveWorkPreference.liveWorkSfPreference.title")}
                 subNote={t("e2cLiveWorkPreference.liveWorkSfPreference.description")}
+                error={showRequiredCheckboxError}
                 register={register}
                 onChange={handleLiveWorkCheckboxChange}
               />
@@ -196,6 +249,7 @@ const ListingApplyLiveWorkPreference = ({
                 label={t("e2cLiveWorkPreference.liveSfPreference.title")}
                 subNote={t("e2cLiveWorkPreference.liveSfPreference.description")}
                 register={register}
+                error={showRequiredCheckboxError}
                 onChange={handleLiveCheckboxChange}
               />
               {liveInSfValue && (
@@ -219,6 +273,7 @@ const ListingApplyLiveWorkPreference = ({
                 label={t("e2cLiveWorkPreference.workSfPreference.title")}
                 subNote={t("e2cLiveWorkPreference.workSfPreference.description")}
                 register={register}
+                error={showRequiredCheckboxError}
                 onChange={handleWorkCheckboxChange}
               />
               {workInSfValue && (
@@ -240,6 +295,7 @@ const ListingApplyLiveWorkPreference = ({
             label={t("label.dontWantPreference")}
             subNote={t("label.stillHaveOpportunityToClaim")}
             register={register}
+            error={showRequiredCheckboxError}
             onChange={handleOptOutCheckboxChange}
           />
 

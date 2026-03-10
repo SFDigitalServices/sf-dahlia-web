@@ -158,7 +158,7 @@ describe("ListingApplyLiveWorkPreference", () => {
   })
 
   it("calls saveFormData and handleNextStep on valid submit with live/work checked", async () => {
-    renderComponent()
+    renderComponent({ liveInSfFileName: "test-file.pdf" })
     const user = userEvent.setup()
 
     await user.click(screen.getByText(t("e2cLiveWorkPreference.liveWorkSfPreference.title")))
@@ -224,6 +224,33 @@ describe("ListingApplyLiveWorkPreference", () => {
 
     await user.click(screen.getByText(t("label.dontWantPreference")))
     expect(screen.queryByText(t("error.pleaseSelectAnOption"))).not.toBeInTheDocument()
+  })
+
+  it("closes the required checkbox error message when close button is clicked", async () => {
+    renderComponent()
+    const user = userEvent.setup()
+
+    await user.click(screen.getByText(t("t.next")))
+    expect(screen.getByText(t("error.pleaseSelectPreferenceOption"))).toBeInTheDocument()
+    expect(screen.getByText(t("error.pleaseSelectAnOption"))).toBeInTheDocument()
+
+    await user.click(screen.getByTestId("listing-apply-step-error-message-close-button"))
+    expect(screen.queryByText(t("error.pleaseSelectPreferenceOption"))).not.toBeInTheDocument()
+    expect(screen.queryByText(t("error.pleaseSelectAnOption"))).not.toBeInTheDocument()
+  })
+
+  it("closes the incomplete document error message when close button is clicked", async () => {
+    renderComponent()
+    const user = userEvent.setup()
+
+    await user.click(screen.getByText(t("e2cLiveWorkPreference.liveWorkSfPreference.title")))
+    const comboSelect = screen.getByLabelText(t("label.preferenceOptionToClaim"))
+    await user.selectOptions(comboSelect, "liveInSf")
+    await user.click(screen.getByText(t("t.next")))
+    expect(screen.getByText(t("error.pleaseCompletePreference"))).toBeInTheDocument()
+
+    await user.click(screen.getByTestId("listing-apply-step-error-message-close-button"))
+    expect(screen.queryByText(t("error.pleaseCompletePreference"))).not.toBeInTheDocument()
   })
 
   it("populates default values from formData", () => {
