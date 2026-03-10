@@ -40,11 +40,15 @@ const ListingApplyForm = (props: ListingApplyFormProps) => {
     })
   }, [props.listingId])
 
+  // ShortFormApplicationService.js.coffee#L19
+  const sessionId = self.crypto.randomUUID()
+
   return (
     <LoadingOverlay isLoading={!listing && !preferences && !formEngine}>
       <Layout title={listing?.Name ? `${listing?.Name} Application` : null}>
         {listing && (
           <FormEngine
+            sessionId={sessionId}
             listing={listing}
             preferences={preferences}
             schema={listingApplicationDefaultRental}
