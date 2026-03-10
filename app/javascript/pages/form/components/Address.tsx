@@ -167,7 +167,6 @@ const Address = ({
           register={register}
           controlClassName="control"
           options={stateOptions}
-          placeholder={t("label.selectOne")}
         />
       </div>
       <Field
@@ -251,7 +250,6 @@ const Address = ({
               register={register}
               controlClassName="control"
               options={stateOptions}
-              placeholder={t("label.selectOne")}
             />
           </div>
           <Field
