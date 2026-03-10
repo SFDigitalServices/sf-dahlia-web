@@ -434,7 +434,10 @@
     {
       "stepInfo": {
         "slug": "household-public-housing",
-        "sectionName": "household"
+        "sectionName": "household",
+        "navigationDeparture": {
+          "prevStep": "household-intro"
+        }
       },
       "componentType": "step",
       "componentName": "ListingApplyStepWrapper",
