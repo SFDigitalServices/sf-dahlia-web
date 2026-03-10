@@ -9,12 +9,14 @@ import userEvent from "@testing-library/user-event"
 describe("ListingApplyHouseholdIntro", () => {
   const formEngineContextValue = {
     listing: openRentalListing,
+    preferences: [],
+    sessionId: "test-session-id",
     formData: {},
     saveFormData: jest.fn(),
     dataSources: {
       listing: openRentalListing,
       form: {},
-      preferences: {},
+      preferenceNames: {},
     },
     stepInfoMap: [{ slug: "test", fieldNames: [] }],
     sectionNames: [],

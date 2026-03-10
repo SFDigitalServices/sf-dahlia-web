@@ -96,9 +96,11 @@ const ListingApplyLiveWorkPreference = ({
   const liveOrWorkInSfValue: boolean = watch(liveOrWorkInSf)
   const liveInSfValue: boolean = watch(liveInSf)
   const liveInSfMemberValue: string = watch(liveInSfMember)
+  const liveInSfProofTypeValue: string = watch(liveInSfProofType)
   const liveInSfFileNameValue: string = watch(liveInSfFileName)
   const workInSfValue: boolean = watch(workInSf)
   const workInSfMemberValue: string = watch(workInSfMember)
+  const workInSfProofTypeValue: string = watch(workInSfProofType)
   const workInSfFileNameValue: string = watch(workInSfFileName)
   const optOutLiveWorkValue: boolean = watch(optOutLiveWork)
 
@@ -157,6 +159,8 @@ const ListingApplyLiveWorkPreference = ({
       (pref) => pref.preferenceName === PREFERENCES.liveWorkInSf
     ).listingPreferenceID
 
+    if (!listingPreferenceId) return
+
     void deleteUploadedProofFile(sessionId, listing.Id, listingPreferenceId, proofType)
   }
 
@@ -181,8 +185,8 @@ const ListingApplyLiveWorkPreference = ({
     }
 
     // applicant may have uploaded a file, and then opted out
-    if (!liveInSfFileNameValue) deleteUploadedFile(liveInSfProofType)
-    if (!workInSfFileNameValue) deleteUploadedFile(workInSfProofType)
+    if (!liveInSfFileNameValue) deleteUploadedFile(liveInSfProofTypeValue)
+    if (!workInSfFileNameValue) deleteUploadedFile(workInSfProofTypeValue)
 
     // conditional rendering of fields may remove them from the form object
     // make sure all fields are in the form object so that we remove old field data

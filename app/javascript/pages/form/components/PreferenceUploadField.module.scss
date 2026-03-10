@@ -32,7 +32,9 @@
     height: 80px;
     object-fit: cover;
   }
-  button {
+  .delete-button {
+    margin: auto 0;
+    text-decoration: none;
     color: var(--seeds-color-alert);
   }
 }

@@ -78,8 +78,7 @@ const PreferenceProofUploadField = ({
       })
   }
 
-  const handleDeleteFile = (event) => {
-    event.preventDefault()
+  const handleDeleteFile = () => {
     setUploadStatus("loading")
     deleteUploadedProofFile(sessionId, listingId, listingPreferenceId, documentType)
       .then(() => {
@@ -111,7 +110,7 @@ const PreferenceProofUploadField = ({
 
   return (
     <>
-      <div style={fileName ? { display: "none" } : {}}>
+      <div className={fileName ? "hidden" : ""}>
         <Select
           id={proofTypeFieldName}
           name={proofTypeFieldName}
@@ -166,7 +165,14 @@ const PreferenceProofUploadField = ({
               {t("label.uploaded")}: {localizedFormat(fileUploadedAt, "MMMM D")}
             </p>
           </div>
-          <button onClick={handleDeleteFile}>{t("t.delete")}</button>
+          <Button
+            variant="text"
+            size="sm"
+            onClick={handleDeleteFile}
+            className={styles["delete-button"]}
+          >
+            {t("t.delete")}
+          </Button>
         </Card>
       )}
     </>
