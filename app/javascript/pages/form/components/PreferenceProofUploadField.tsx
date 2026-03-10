@@ -127,9 +127,19 @@ const PreferenceProofUploadField = ({
             required: true,
           }}
         />
-        <Button onClick={open} disabled={!documentType} className={styles["upload-button"]}>
+        <Button
+          onClick={open}
+          disabled={!documentType}
+          variant={errors?.[proofFileName] ? "alert-outlined" : "primary"}
+          className={styles["upload-button"]}
+        >
           {t("label.uploadProofOfPreference")}
         </Button>
+        {errors?.[proofFileName] && (
+          <p className={styles["upload-error"]}>
+            <FormErrorMessage>{errors?.[proofFileName].message}</FormErrorMessage>
+          </p>
+        )}
         {uploadStatus === "error" && (
           <p className={styles["upload-error"]}>
             <FormErrorMessage>{uploadErrorMessage}</FormErrorMessage>
