@@ -133,8 +133,22 @@ const ListingApplyLiveWorkPreference = ({
     }
   }
 
+  const deleteUploadedFile = (proofType: string) => {
+    const listingPreferenceId = preferences.find(
+      (pref) => pref.preferenceName === PREFERENCES.liveWorkInSf
+    )?.listingPreferenceID
+
+    if (!listingPreferenceId) return
+
+    void deleteUploadedProofFile(sessionId, listing.Id, listingPreferenceId, proofType)
+  }
+
   const handleOptOutCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const isChecked = e.target.checked
+    if (isChecked && !liveInSfFileNameValue && liveInSfProofTypeValue)
+      deleteUploadedFile(liveInSfProofTypeValue)
+    if (isChecked && !workInSfFileNameValue && workInSfProofTypeValue)
+      deleteUploadedFile(workInSfProofTypeValue)
     if (isChecked) {
       clearAllErrors()
       setValue(liveOrWorkInSf, false)
@@ -158,16 +172,6 @@ const ListingApplyLiveWorkPreference = ({
     errors?.[workInSfProofType] ||
     errors?.[workInSfFileName]
 
-  const deleteUploadedFile = (proofType: string) => {
-    const listingPreferenceId = preferences.find(
-      (pref) => pref.preferenceName === PREFERENCES.liveWorkInSf
-    )?.listingPreferenceID
-
-    if (!listingPreferenceId) return
-
-    void deleteUploadedProofFile(sessionId, listing.Id, listingPreferenceId, proofType)
-  }
-
   const onSubmit = (data: Record<string, unknown>) => {
     if (!liveOrWorkInSfValue && !liveInSfValue && !workInSfValue && !optOutLiveWorkValue) {
       setShowRequiredCheckboxError(true)
@@ -187,10 +191,6 @@ const ListingApplyLiveWorkPreference = ({
       })
       return
     }
-
-    // applicant may have uploaded a file, and then opted out
-    if (!liveInSfFileNameValue && liveInSfProofTypeValue) deleteUploadedFile(liveInSfProofTypeValue)
-    if (!workInSfFileNameValue && workInSfProofTypeValue) deleteUploadedFile(workInSfProofTypeValue)
 
     // conditional rendering of fields may remove them from the form object
     // make sure all fields are in the form object so that we remove old field data
