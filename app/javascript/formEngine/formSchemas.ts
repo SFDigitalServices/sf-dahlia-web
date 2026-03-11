@@ -101,10 +101,10 @@ export const generateInitialFormData = (schema: FormSchema): Record<string, unkn
       .filter((step) => step.stepInfo?.dynamicStep)
       .flatMap((step) => getFieldNames(step))
   )
-  const rootLevelFieldNames = getFieldNames(schema).filter(
+  const staticFieldNames = getFieldNames(schema).filter(
     (fieldName) => !dynamicFieldNames.has(fieldName)
   )
-  const formData = rootLevelFieldNames.reduce((acc, fieldName) => {
+  const formData = staticFieldNames.reduce((acc, fieldName) => {
     acc[fieldName] = null
     return acc
   }, {})
