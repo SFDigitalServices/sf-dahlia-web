@@ -2,6 +2,7 @@ import React from "react"
 import { Select, t } from "@bloom-housing/ui-components"
 import LiveWorkPreferenceFields from "./LiveWorkPreferenceFields"
 import { useFormContext } from "react-hook-form"
+import { PROOF_OPTIONS } from "../../../modules/constants"
 
 interface LiveOrWorkComboPreferenceFieldsProps {
   liveOrWorkInSf: string
@@ -60,6 +61,7 @@ const LiveOrWorkComboPreferenceFields = ({
           proofTypeNote={t("e2cLiveWorkPreference.documentMustShowCorrectName")}
           proofFileName={liveInSfFileName}
           proofFileUploadedAt={liveInSfFileUploadedAt}
+          proofTypeOptions={PROOF_OPTIONS.liveInSf}
         />
       )}
       {liveOrWorkInSfClaimedOptionValue === "workInSf" && (
@@ -70,6 +72,7 @@ const LiveOrWorkComboPreferenceFields = ({
           proofTypeNote={t("e2cLiveWorkPreference.documentMustShowCorrectNameForWork")}
           proofFileName={workInSfFileName}
           proofFileUploadedAt={workInSfFileUploadedAt}
+          proofTypeOptions={PROOF_OPTIONS.workInSf}
         />
       )}
     </>

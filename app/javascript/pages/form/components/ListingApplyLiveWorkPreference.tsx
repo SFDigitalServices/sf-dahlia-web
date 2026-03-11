@@ -9,7 +9,7 @@ import LiveWorkPreferenceComboFields from "./LiveWorkPreferenceComboFields"
 import ListingApplyStepErrorMessage from "./ListingApplyStepErrorMessage"
 import styles from "./ListingApplyLiveWorkPreference.module.scss"
 import { deleteUploadedProofFile } from "../../../api/formApiService"
-import { PREFERENCES } from "../../../modules/constants"
+import { PREFERENCES, PROOF_OPTIONS } from "../../../modules/constants"
 
 interface ListingApplyLiveWorkPreferenceProps {
   fieldNames: {
@@ -140,8 +140,12 @@ const ListingApplyLiveWorkPreference = ({
       setValue(liveOrWorkInSf, false)
       setValue(liveInSf, false)
       setValue(liveInSfProofType, null)
+      setValue(liveInSfFileName, null)
+      setValue(liveInSfFileUploadedAt, null)
       setValue(workInSf, false)
       setValue(workInSfProofType, null)
+      setValue(workInSfFileName, null)
+      setValue(workInSfFileUploadedAt, null)
     }
   }
 
@@ -157,7 +161,7 @@ const ListingApplyLiveWorkPreference = ({
   const deleteUploadedFile = (proofType: string) => {
     const listingPreferenceId = preferences.find(
       (pref) => pref.preferenceName === PREFERENCES.liveWorkInSf
-    ).listingPreferenceID
+    )?.listingPreferenceID
 
     if (!listingPreferenceId) return
 
@@ -234,7 +238,6 @@ const ListingApplyLiveWorkPreference = ({
               <Field
                 type="checkbox"
                 name={liveOrWorkInSf}
-                className={styles["live-work-pref-field"]}
                 label={t("e2cLiveWorkPreference.liveWorkSfPreference.title")}
                 subNote={t("e2cLiveWorkPreference.liveWorkSfPreference.description")}
                 error={showRequiredCheckboxError}
@@ -264,6 +267,7 @@ const ListingApplyLiveWorkPreference = ({
                   proofTypeNote={t("e2cLiveWorkPreference.documentMustShowCorrectName")}
                   proofFileName={liveInSfFileName}
                   proofFileUploadedAt={liveInSfFileUploadedAt}
+                  proofTypeOptions={PROOF_OPTIONS.liveInSf}
                 />
               )}
             </div>
@@ -288,6 +292,7 @@ const ListingApplyLiveWorkPreference = ({
                   proofTypeNote={t("e2cLiveWorkPreference.documentMustShowCorrectNameForWork")}
                   proofFileName={workInSfFileName}
                   proofFileUploadedAt={workInSfFileUploadedAt}
+                  proofTypeOptions={PROOF_OPTIONS.workInSf}
                 />
               )}
             </div>
