@@ -40,7 +40,10 @@ describe("ListingApplyHouseholdIntro", () => {
   })
   it("skips to the next section if alone", async () => {
     await user.click(screen.getByText(t("label.liveAlone")))
-    expect(formEngineContextValue.handleNextStep).toHaveBeenCalledWith({ liveAlone: "true" })
+    expect(formEngineContextValue.handleNextStep).toHaveBeenCalledWith({
+      "household-member-form": [],
+      liveAlone: "true",
+    })
   })
   it("goes to the next page if there are household members", async () => {
     await user.click(screen.getByText(t("label.otherPeople")))
