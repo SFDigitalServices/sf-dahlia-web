@@ -33,7 +33,7 @@ const PreferenceProofUploadField = ({
 }: PreferenceProofUploadFieldProps) => {
   // https://github.com/react-hook-form/react-hook-form/issues/2887#issuecomment-802577357
   // eslint-disable-next-line @typescript-eslint/unbound-method
-  const { register, watch, setValue, errors } = useFormContext()
+  const { register, watch, setValue, errors, clearErrors } = useFormContext()
   const { getAssetPath } = useContext(ConfigContext)
 
   const [uploadStatus, setUploadStatus] = useState<null | "loading" | "done" | "error">(null)
@@ -54,17 +54,14 @@ const PreferenceProofUploadField = ({
       return
     }
 
-    const acceptedFileName = acceptedFile.path.slice(
-      Math.max(0, acceptedFile.path.lastIndexOf("/") + 1)
-    )
-    if (acceptedFileName.length > 80) {
-      setUploadErrorMessage(t("error.fileNameTooLong"))
+    if (!documentType || !acceptedFile) {
+      setUploadErrorMessage(t("error.fileMissing"))
       setUploadStatus("error")
       return
     }
 
-    if (!documentType || !acceptedFile) {
-      setUploadErrorMessage(t("error.fileMissing"))
+    if (acceptedFile.name.length > 80) {
+      setUploadErrorMessage(t("error.fileNameTooLong"))
       setUploadStatus("error")
       return
     }
@@ -74,6 +71,7 @@ const PreferenceProofUploadField = ({
       .then((data) => {
         if (!data.success) throw new Error("Upload failed")
         setUploadStatus("done")
+        clearErrors(proofFileName)
         setValue(proofFileName, data.name)
         setValue(proofFileUploadedAt, data.created_at)
       })

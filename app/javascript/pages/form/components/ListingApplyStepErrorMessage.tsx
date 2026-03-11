@@ -2,7 +2,7 @@ import React from "react"
 import { faTriangleExclamation, faXmark } from "@fortawesome/free-solid-svg-icons"
 import { t, Icon } from "@bloom-housing/ui-components"
 import { CardSection } from "@bloom-housing/ui-seeds/src/blocks/Card"
-import { Button } from "@bloom-housing/ui-seeds/"
+import { Button } from "@bloom-housing/ui-seeds"
 import styles from "./ListingApplyStepErrorMessage.module.scss"
 
 interface ListingApplyStepErrorMessageProps {

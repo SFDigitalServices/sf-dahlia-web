@@ -32,7 +32,7 @@ const LiveWorkPreferenceFields = ({
 
   const listingPreferenceId = preferences.find(
     (pref) => pref.preferenceName === PREFERENCES.liveWorkInSf
-  ).listingPreferenceID
+  )?.listingPreferenceID
 
   return (
     <>
