@@ -189,14 +189,14 @@ const ListingApplyLiveWorkPreference = ({
     }
 
     // applicant may have uploaded a file, and then opted out
-    if (!liveInSfFileNameValue) deleteUploadedFile(liveInSfProofTypeValue)
-    if (!workInSfFileNameValue) deleteUploadedFile(workInSfProofTypeValue)
+    if (!liveInSfFileNameValue && liveInSfProofTypeValue) deleteUploadedFile(liveInSfProofTypeValue)
+    if (!workInSfFileNameValue && workInSfProofTypeValue) deleteUploadedFile(workInSfProofTypeValue)
 
     // conditional rendering of fields may remove them from the form object
     // make sure all fields are in the form object so that we remove old field data
     // e.g. applicant claims a preference, then goes back and opts out of it
     const allFields = {}
-    Object.values(fieldNames).forEach((field) => (allFields[field] = ""))
+    Object.values(fieldNames).forEach((field) => (allFields[field] = null))
 
     saveFormData({ ...allFields, ...data })
     handleNextStep()
