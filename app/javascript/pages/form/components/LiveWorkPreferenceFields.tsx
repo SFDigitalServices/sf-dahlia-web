@@ -3,7 +3,7 @@ import { useFormContext } from "react-hook-form"
 import { t, Select } from "@bloom-housing/ui-components"
 import { useFormEngineContext } from "../../../formEngine/formEngineContext"
 import PreferenceProofUploadField from "./PreferenceProofUploadField"
-import { PREFERENCES, PROOF_OPTIONS } from "../../../modules/constants"
+import { PREFERENCES } from "../../../modules/constants"
 
 interface LiveWorkPreferenceFieldsProps {
   householdMemberFieldName: string
@@ -12,6 +12,7 @@ interface LiveWorkPreferenceFieldsProps {
   proofTypeNote: string
   proofFileName: string
   proofFileUploadedAt: string
+  proofTypeOptions: { value: string; label: string }[]
 }
 
 const LiveWorkPreferenceFields = ({
@@ -21,6 +22,7 @@ const LiveWorkPreferenceFields = ({
   proofTypeNote,
   proofFileName,
   proofFileUploadedAt,
+  proofTypeOptions,
 }: LiveWorkPreferenceFieldsProps) => {
   const { sessionId, listing, preferences } = useFormEngineContext()
 
@@ -53,7 +55,7 @@ const LiveWorkPreferenceFields = ({
         proofTypeFieldName={proofTypeFieldName}
         proofTypeLabel={proofTypeLabel}
         proofTypeNote={proofTypeNote}
-        proofTypeOptions={PROOF_OPTIONS.liveInSf}
+        proofTypeOptions={proofTypeOptions}
         listingId={listing.Id}
         listingPreferenceId={listingPreferenceId}
         proofFileName={proofFileName}

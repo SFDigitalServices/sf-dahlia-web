@@ -63,6 +63,12 @@ const PreferenceProofUploadField = ({
       return
     }
 
+    if (!documentType || !acceptedFile) {
+      setUploadErrorMessage(t("error.fileMissing"))
+      setUploadStatus("error")
+      return
+    }
+
     setUploadStatus("loading")
     uploadProofFile(sessionId, listingId, listingPreferenceId, documentType, acceptedFile)
       .then((data) => {
@@ -104,7 +110,7 @@ const PreferenceProofUploadField = ({
       "image/*": [".png", ".jpeg", ".jpg", ".heic"],
       "application/pdf": [".pdf"],
     },
-    maxSize: 6_000_000, // about 5 megabytes
+    maxSize: 6_000_000, // about 6 megabytes (≈5.7 MiB)
     multiple: false,
   })
 
@@ -150,7 +156,7 @@ const PreferenceProofUploadField = ({
           <p>{t("label.uploadProofInstructions3")}</p>
         </div>
       </div>
-      <input {...getInputProps()} />
+      <input className="hidden" {...getInputProps()} />
       {/* use hidden fields to register form data, but manually update them with setValue()  */}
       <Field name={proofFileName} register={register} hidden />
       <Field name={proofFileUploadedAt} register={register} hidden />
