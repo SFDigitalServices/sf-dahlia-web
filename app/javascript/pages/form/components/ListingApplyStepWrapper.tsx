@@ -43,6 +43,12 @@ const ListingApplyStepWrapper = ({
     return acc
   }, {})
 
+  // used to clear values for some types of fields that get un-rendered and therefore get de-registered from react-hook-form
+  const blankValues = currentStepInfo.fieldNames.reduce((acc, fieldName) => {
+    acc[fieldName] = null
+    return acc
+  }, {})
+
   const methods = useForm({
     mode: "onChange",
     shouldFocusError: false,
@@ -50,7 +56,7 @@ const ListingApplyStepWrapper = ({
   })
 
   const onSubmit = (data: Record<string, unknown>) => {
-    saveFormData(data)
+    saveFormData({ ...blankValues, ...data })
     handleNextStep({ ...formData, ...data })
   }
 
