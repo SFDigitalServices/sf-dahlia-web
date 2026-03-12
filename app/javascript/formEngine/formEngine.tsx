@@ -16,6 +16,7 @@ import { calculateNextStep, calculatePrevStep, updateFormPath } from "../util/fo
 import { useFeatureFlag } from "../hooks/useFeatureFlag"
 import { UNLEASH_FLAG } from "../modules/constants"
 import FormEngineDebug from "./FormEngineDebug"
+import getFormComponentRegistry from "./formComponentRegistry"
 
 interface FormEngineProps {
   listing: RailsListing
@@ -111,7 +112,7 @@ const FormEngine = ({ listing, schema }: FormEngineProps) => {
           dataSources={dataSources}
         />
       )}
-      <RecursiveRenderer schema={parsedSchema} />
+      <RecursiveRenderer schema={parsedSchema} componentRegistry={getFormComponentRegistry()} />
     </FormEngineProvider>
   )
 }
