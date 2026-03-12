@@ -31,6 +31,24 @@ describe("formEngineUtil", () => {
         "for Jane"
       )
     })
+
+    it("supports translations with conditions", () => {
+      const translationKey = "label.forUser"
+      const titleCondition = {
+        dataSource: "form",
+        dataKey: "userName",
+        dataValueToMatch: "Jane",
+        title: "label.forYourHousehold",
+      }
+      const dataSources = {
+        form: { userName: "Jane" },
+        listing: openRentalListing,
+        preferences: {},
+      }
+      expect(translationFromDataSchema(translationKey, {}, dataSources, titleCondition)).toBe(
+        "for your household"
+      )
+    })
   })
 
   describe("showStep", () => {
@@ -45,11 +63,11 @@ describe("formEngineUtil", () => {
     }
     const conditions = [
       {
-        dataSource: "preferences",
+        dataSource: "form",
         dataKey: "testKey1",
       },
       {
-        dataSource: "preferences",
+        dataSource: "form",
         dataKey: "testKey2",
         negate: true,
       },
@@ -57,7 +75,7 @@ describe("formEngineUtil", () => {
 
     const valueCondition = [
       {
-        dataSource: "preferences",
+        dataSource: "form",
         dataKey: "testKey3",
         dataValueToMatch: "dataValue3",
       },
@@ -87,8 +105,8 @@ describe("formEngineUtil", () => {
       expect(
         showStep("hideStepIfAnyPresent", valueCondition, {
           ...dataSources,
-          preferences: {
-            ...dataSources.preferences,
+          form: {
+            ...dataSources.form,
             testKey3: "dataValue3",
           },
         })
@@ -99,8 +117,8 @@ describe("formEngineUtil", () => {
       expect(
         showStep("hideStepIfAnyPresent", valueCondition, {
           ...dataSources,
-          preferences: {
-            ...dataSources.preferences,
+          form: {
+            ...dataSources.form,
             testKey3: "notDataValue3",
           },
         })
@@ -110,11 +128,11 @@ describe("formEngineUtil", () => {
 
   describe("calculate next and previous steps", () => {
     const dataSources = {
-      form: {},
       listing: openRentalListing,
-      preferences: {
+      form: {
         testKey1: "test key 1",
       },
+      preferences: {},
     }
 
     const step0 = {
@@ -139,7 +157,7 @@ describe("formEngineUtil", () => {
       navigationArrival: {
         hideStepIfAnyPresent: [
           {
-            dataSource: "preferences",
+            dataSource: "form",
             dataKey: "testKey1",
           },
         ],

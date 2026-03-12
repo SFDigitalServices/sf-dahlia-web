@@ -3,21 +3,32 @@ import type { DataSources } from "../formEngine/formEngineContext"
 import dayjs, { type Dayjs } from "dayjs"
 import customParseFormat from "dayjs/plugin/customParseFormat"
 import { t } from "@bloom-housing/ui-components"
-import { type SeniorBuildingAgeRequirement } from "./listingUtil"
+import { type SeniorBuildingAgeRequirement, listingPreferences } from "./listingUtil"
 
 export const translationFromDataSchema = (
   translationKey: string,
   translationVarsData: Record<string, DataSchema>,
-  dataSources: DataSources
+  dataSources: DataSources,
+  titleCondition?: DataSchema & { title?: string }
 ): string => {
-  if (!translationVarsData) return t(translationKey)
-
-  const translationVars = {}
-  for (const [varName, data] of Object.entries(translationVarsData)) {
-    const { dataSource, dataKey } = data
-    translationVars[varName] = dataSources[dataSource][dataKey]
+  // Alternative text with condition
+  if (titleCondition) {
+    const { dataSource, dataKey, dataValueToMatch } = titleCondition
+    const currentValue = dataSources[dataSource][dataKey]
+    if (currentValue === dataValueToMatch && titleCondition.title) {
+      return t(titleCondition.title)
+    }
   }
-  return t(translationKey, translationVars)
+  // Text with interpolated variables
+  if (translationVarsData) {
+    const translationVars = {}
+    for (const [varName, data] of Object.entries(translationVarsData)) {
+      const { dataSource, dataKey } = data
+      translationVars[varName] = dataSources[dataSource][dataKey]
+    }
+    return t(translationKey, translationVars)
+  }
+  return t(translationKey)
 }
 
 export const showStep = (
@@ -26,7 +37,10 @@ export const showStep = (
   dataSources: DataSources
 ): boolean => {
   const processedConditions = conditions.map((condition) => {
-    const value = dataSources[condition.dataSource][condition.dataKey]
+    let value = dataSources[condition.dataSource][condition.dataKey]
+    if (condition.dataSource === "preferences") {
+      value = listingPreferences(dataSources.listing)[condition.dataKey]
+    }
     const processedCondition = condition.dataValueToMatch
       ? condition.dataValueToMatch === value
       : value
@@ -132,12 +146,23 @@ export const validAge = (
 }
 
 export const getPrimaryApplicantData = (formData: Record<string, unknown>) => {
+  const firstName = formData.primaryApplicantFirstName as string
+  const middleName = formData.primaryApplicantMiddleName as string
+  const lastName = formData.primaryApplicantLastName as string
   return {
-    firstName: formData.primaryApplicantFirstName as string,
-    middleName: formData.primaryApplicantMiddleName as string,
-    lastName: formData.primaryApplicantLastName as string,
+    firstName,
+    middleName,
+    lastName,
     dob: (formData.primaryApplicantDob as string) || "1990-01-01", // TODO: update after DAH-3543
   }
+}
+
+export const getFullName = (person: {
+  firstName: string
+  middleName: string
+  lastName: string
+}) => {
+  return `${person.firstName || ""} ${person.middleName || ""} ${person.lastName || ""}`
 }
 
 export const updateFormPath = (newStepIndex: number, stepInfoMap: StepInfoSchema[]) => {

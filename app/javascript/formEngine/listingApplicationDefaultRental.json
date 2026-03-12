@@ -316,6 +316,10 @@
       "stepInfo": {
         "slug": "household-member-form",
         "sectionName": "household",
+        "dynamicStep": true,
+        "navigationDeparture": {
+          "nextStep": "household-members"
+        },
         "navigationArrival": {
           "hideStepIfAnyPresent": [
             {
@@ -327,7 +331,7 @@
         }
       },
       "componentType": "step",
-      "componentName": "ListingApplyStepWrapper",
+      "componentName": "HouseholdMemberStepWrapper",
       "props": {
         "title": "c3HouseholdMemberForm.title",
         "description": "c3HouseholdMemberForm.p1"
@@ -351,7 +355,7 @@
             "label": "label.dob",
             "fieldNames": {
               "birthMonth": "householdMemberBirthMonth",
-              "birthDay": "householdMemberBirthDate",
+              "birthDay": "householdMemberBirthDay",
               "birthYear": "householdMemberBirthYear"
             }
           }
@@ -430,12 +434,29 @@
     {
       "stepInfo": {
         "slug": "household-public-housing",
-        "sectionName": "household"
+        "sectionName": "household",
+        "navigationDeparture": {
+          "prevStep": "household-intro"
+        },
+        "navigationArrival": {
+          "showStepIfAnyPresent": [
+            {
+              "dataSource": "preferences",
+              "dataKey": "assistedHousing"
+            }
+          ]
+        }
       },
       "componentType": "step",
       "componentName": "ListingApplyStepWrapper",
       "props": {
-        "title": "c4HouseholdPublicHousing.titleHousehold",
+        "title": "c4HouseholdPublicHousing.titleYou",
+        "titleCondition": {
+          "title": "c4HouseholdPublicHousing.titleHousehold",
+          "dataSource": "form",
+          "dataKey": "liveAlone",
+          "dataValueToMatch": "false"
+        },
         "description": "c4HouseholdPublicHousing.p1"
       },
       "children": [

@@ -1,46 +1,36 @@
-// https://github.com/react-hook-form/react-hook-form/issues/2887#issuecomment-802577357
-/* eslint-disable @typescript-eslint/unbound-method */
-
 import React, { Children } from "react"
 import { useForm, FormProvider } from "react-hook-form"
 import { Form, t } from "@bloom-housing/ui-components"
 import { Button, Card } from "@bloom-housing/ui-seeds"
 import { useFormEngineContext } from "../../../formEngine/formEngineContext"
-import type { DataSchema } from "../../../formEngine/formSchemas"
-import { translationFromDataSchema } from "../../../util/formEngineUtil"
 import styles from "./ListingApplyStepWrapper.module.scss"
 
-interface ListingApplyStepWrapperProps {
+interface HouseholdMemberStepWrapperProps {
   title: string
-  titleVars?: Record<string, DataSchema>
-  titleCondition?: DataSchema & { title?: string }
-  description?: string
-  descriptionComponent?: React.ReactNode
+  description: string
   children: React.ReactNode
 }
 
-const ListingApplyStepWrapper = ({
+const HouseholdMemberStepWrapper = ({
   title,
-  titleVars,
-  titleCondition,
   description,
-  descriptionComponent,
   children,
-}: ListingApplyStepWrapperProps) => {
-  const formEngineContext = useFormEngineContext()
+}: HouseholdMemberStepWrapperProps) => {
   const {
     formData,
     saveFormData,
-    dataSources,
     stepInfoMap,
     currentStepIndex,
+    currentMemberIndex,
     handleNextStep,
-    handlePrevStep,
-  } = formEngineContext
-
+  } = useFormEngineContext()
   const currentStepInfo = stepInfoMap[currentStepIndex]
+  const householdMemberArray =
+    (formData["household-member-form"] as Record<string, unknown>[]) || []
+  const currentMemberData = householdMemberArray[currentMemberIndex - 1] || {}
+
   const defaultValues = currentStepInfo.fieldNames.reduce((acc, fieldName) => {
-    acc[fieldName] = formData[fieldName]
+    acc[fieldName] = currentMemberData[fieldName]
     return acc
   }, {})
 
@@ -51,24 +41,27 @@ const ListingApplyStepWrapper = ({
   })
 
   const onSubmit = (data: Record<string, unknown>) => {
-    saveFormData(data)
-    handleNextStep({ ...formData, ...data })
+    const updatedHouseholdArray = [...householdMemberArray]
+    updatedHouseholdArray[currentMemberIndex - 1] = {
+      ...updatedHouseholdArray[currentMemberIndex - 1],
+      ...data,
+    }
+    saveFormData({
+      ...formData,
+      "household-member-form": updatedHouseholdArray,
+    })
+    handleNextStep({
+      ...formData,
+      "household-member-form": updatedHouseholdArray,
+    })
   }
-
-  const titleString = translationFromDataSchema(title, titleVars, dataSources, titleCondition)
 
   return (
     <FormProvider {...methods}>
       <Card>
-        <Card.Section>
-          <Button variant="text" onClick={handlePrevStep}>
-            {t("t.back")}
-          </Button>
-        </Card.Section>
         <Card.Header divider="inset">
-          <h1 className={styles["step-title"]}>{titleString}</h1>
-          {description && <p className="field-note text-base">{t(description)}</p>}
-          {!!descriptionComponent && descriptionComponent}
+          <h1 className={styles["step-title"]}>{t(title)}</h1>
+          <p className="field-note text-base">{t(description)}</p>
         </Card.Header>
         <Form onSubmit={methods.handleSubmit(onSubmit)}>
           {Children.map(children, (child) => {
@@ -81,7 +74,7 @@ const ListingApplyStepWrapper = ({
           })}
           <Card.Footer className={styles["step-footer"]}>
             <Button variant="primary" type="submit">
-              {t("t.next")}
+              {t("label.householdMemberSave")}
             </Button>
           </Card.Footer>
         </Form>
@@ -90,4 +83,4 @@ const ListingApplyStepWrapper = ({
   )
 }
 
-export default ListingApplyStepWrapper
+export default HouseholdMemberStepWrapper

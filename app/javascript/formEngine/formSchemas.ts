@@ -2,7 +2,7 @@ import * as z from "zod"
 import getFormComponentRegistry from "./formComponentRegistry"
 
 const DataSchema = z.object({
-  dataSource: z.string(), // "listing", "form"
+  dataSource: z.string(), // "listing", "form", "preferences"
   dataKey: z.string(),
   dataValueToMatch: z.optional(z.string()), // value validation for dataKey
   negate: z.optional(z.boolean()),
@@ -39,6 +39,7 @@ const StepInfoSchema = z.object({
   navigationArrival: z.optional(NavigationArrivalSchema),
   navigationDeparture: z.optional(NavigationDepartureSchema),
   fieldNames: z.optional(z.array(z.string())),
+  dynamicStep: z.optional(z.boolean()),
 })
 export type StepInfoSchema = z.infer<typeof StepInfoSchema>
 
@@ -94,11 +95,26 @@ export const generateSectionNames = (schema: FormSchema): string[] => {
     .filter((val, idx, ary) => ary.indexOf(val) === idx) // remove duplicates
 }
 
-export const generateInitialFormData = (schema: FormSchema): Record<string, null> => {
-  return getFieldNames(schema).reduce((acc, fieldName) => {
+export const generateInitialFormData = (schema: FormSchema): Record<string, unknown> => {
+  const dynamicFieldNames = new Set(
+    schema.children
+      .filter((step) => step.stepInfo?.dynamicStep)
+      .flatMap((step) => getFieldNames(step))
+  )
+  const rootLevelFieldNames = getFieldNames(schema).filter(
+    (fieldName) => !dynamicFieldNames.has(fieldName)
+  )
+  const formData = rootLevelFieldNames.reduce((acc, fieldName) => {
     acc[fieldName] = null
     return acc
   }, {})
+
+  schema.children
+    .filter((step) => step.stepInfo?.dynamicStep)
+    .forEach((step) => {
+      formData[step.stepInfo.slug] = [] //add initial array for dynamic step
+    })
+  return formData
 }
 
 const getInvalidComponentNames = (schema: FormSchema): string[] => {
