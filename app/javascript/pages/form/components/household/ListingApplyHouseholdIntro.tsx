@@ -25,8 +25,8 @@ const ListingApplyHouseholdIntro = () => {
         <Button
           variant="primary-outlined"
           onClick={() => {
-            saveFormData({ liveAlone: "true", "household-member-form": [] })
-            handleNextStep({ ...formData, liveAlone: "true", "household-member-form": [] })
+            saveFormData({ liveAlone: "true" })
+            handleNextStep({ ...formData, liveAlone: "true" })
           }}
         >
           {t("label.liveAlone")}

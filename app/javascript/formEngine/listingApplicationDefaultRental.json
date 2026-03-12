@@ -355,7 +355,7 @@
             "label": "label.dob",
             "fieldNames": {
               "birthMonth": "householdMemberBirthMonth",
-              "birthDay": "householdMemberBirthDay",
+              "birthDay": "householdMemberBirthDate",
               "birthYear": "householdMemberBirthYear"
             }
           }
