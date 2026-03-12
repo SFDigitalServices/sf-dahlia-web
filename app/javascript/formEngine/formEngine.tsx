@@ -16,6 +16,7 @@ import { calculateNextStep, calculatePrevStep, updateFormPath } from "../util/fo
 import { useFeatureFlag } from "../hooks/useFeatureFlag"
 import { UNLEASH_FLAG } from "../modules/constants"
 import FormEngineDebug from "./FormEngineDebug"
+import getFormComponentRegistry from "./formComponentRegistry"
 
 interface FormEngineProps {
   listing: RailsListing
@@ -25,7 +26,6 @@ interface FormEngineProps {
 const FormEngine = ({ listing, schema }: FormEngineProps) => {
   const [formData, setFormData] = useState<Record<string, unknown>>(generateInitialFormData(schema))
   const [currentStepIndex, setCurrentStepIndex] = useState<number>(0)
-
   const { unleashFlag: formEngineDebug } = useFeatureFlag(UNLEASH_FLAG.FORM_ENGINE_DEBUG, false)
 
   const parsedSchema = parseFormSchema(schema)
@@ -51,7 +51,8 @@ const FormEngine = ({ listing, schema }: FormEngineProps) => {
   let stepInfoMap: StepInfoSchema[],
     sectionNames: string[],
     handleNextStep: (currentFormData: Record<string, unknown>) => void,
-    handlePrevStep: () => void
+    handlePrevStep: () => void,
+    jumpToStep: (stepSlug: string) => void
 
   if (parsedSchema.componentType === "multiStepLayout") {
     sectionNames = generateSectionNames(parsedSchema)
@@ -80,6 +81,12 @@ const FormEngine = ({ listing, schema }: FormEngineProps) => {
         updateFormPath(newStepIndex, stepInfoMap)
       }
     }
+
+    jumpToStep = (stepSlug: string) => {
+      const stepIndex = stepInfoMap.findIndex((step) => step.slug === stepSlug)
+      setCurrentStepIndex(stepIndex)
+      updateFormPath(stepIndex, stepInfoMap)
+    }
   }
 
   const formEngineContextValue: FormEngineContext = {
@@ -92,6 +99,7 @@ const FormEngine = ({ listing, schema }: FormEngineProps) => {
     currentStepIndex: currentStepIndex,
     handleNextStep,
     handlePrevStep,
+    jumpToStep,
   }
 
   return (
@@ -104,7 +112,7 @@ const FormEngine = ({ listing, schema }: FormEngineProps) => {
           dataSources={dataSources}
         />
       )}
-      <RecursiveRenderer schema={parsedSchema} />
+      <RecursiveRenderer schema={parsedSchema} componentRegistry={getFormComponentRegistry()} />
     </FormEngineProvider>
   )
 }

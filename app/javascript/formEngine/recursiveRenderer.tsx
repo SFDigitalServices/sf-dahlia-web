@@ -1,14 +1,12 @@
 import React from "react"
 import type { ComponentSchema } from "./formSchemas"
-import getFormComponentRegistry from "./formComponentRegistry"
 
 interface FormEngineProps {
   schema: ComponentSchema & Record<string, unknown>
+  componentRegistry: Record<string, React.FC>
 }
 
-const componentRegistry = getFormComponentRegistry()
-
-const RecursiveRenderer = ({ schema }: FormEngineProps) => {
+const RecursiveRenderer = ({ schema, componentRegistry }: FormEngineProps) => {
   if (!self || !self.crypto || typeof self.crypto.randomUUID !== "function") {
     console.error(self.crypto.randomUUID())
   }
@@ -18,7 +16,11 @@ const RecursiveRenderer = ({ schema }: FormEngineProps) => {
   let children: React.ReactNode[] = []
   if (schema.children && schema.children.length > 0) {
     children = schema.children.map((childSchema) => (
-      <RecursiveRenderer schema={childSchema} key={crypto.randomUUID()} />
+      <RecursiveRenderer
+        schema={childSchema}
+        componentRegistry={componentRegistry}
+        key={crypto.randomUUID()}
+      />
     ))
   }
   // set key property to avoid weird behavior when navigating between form steps

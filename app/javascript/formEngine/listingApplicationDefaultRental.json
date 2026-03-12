@@ -316,6 +316,10 @@
       "stepInfo": {
         "slug": "household-member-form",
         "sectionName": "household",
+        "dynamicStep": true,
+        "navigationDeparture": {
+          "nextStep": "household-members"
+        },
         "navigationArrival": {
           "hideStepIfAnyPresent": [
             {
@@ -327,7 +331,7 @@
         }
       },
       "componentType": "step",
-      "componentName": "ListingApplyStepWrapper",
+      "componentName": "HouseholdMemberStepWrapper",
       "props": {
         "title": "c3HouseholdMemberForm.title",
         "description": "c3HouseholdMemberForm.p1"
@@ -430,7 +434,10 @@
     {
       "stepInfo": {
         "slug": "household-public-housing",
-        "sectionName": "household"
+        "sectionName": "household",
+        "navigationDeparture": {
+          "prevStep": "household-intro"
+        }
       },
       "componentType": "step",
       "componentName": "ListingApplyStepWrapper",
