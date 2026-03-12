@@ -1,0 +1,1149 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GenericDirectory displays the directory no matches page with no listings 1`] = `
+<DocumentFragment>
+  <div>
+    <div />
+    <div
+      class="directory-page-navigation-bar__container"
+      id="nav-bar-container"
+    >
+      <div
+        class="directory-page-navigation-bar"
+      >
+        <a
+          class="seeds-button directory-page-navigation-bar__button"
+          href="#enter-a-lottery"
+          id="nav-bar-button-enter-a-lottery"
+        >
+          <span
+            class="ui-icon ui-medium"
+          >
+            <svg
+              fill="currentColor"
+              viewBox="0 0 51 45"
+            >
+              <path
+                d="M49.7173 21.1504C50.2904 21.6532 50.3425 22.4593 49.7608 23.1094C49.3353 23.6815 48.4496 23.7335 47.8766 23.1528L44.6292 20.2923V37.4466C44.6292 41.278 41.5207 44.3812 37.6829 44.3812H12.6762C8.84011 44.3812 5.72991 41.278 5.72991 37.4466V20.2923L2.48165 23.1528C1.90597 23.7335 1.02805 23.6815 0.520446 23.1094C0.0127579 22.4593 0.0676337 21.6532 0.642961 21.1504L24.2592 0.346902C24.7888 -0.115634 25.5703 -0.115634 26.0999 0.346902L49.7173 21.1504ZM12.6762 41.6074H18.2332V27.7383C18.2332 26.204 19.4749 24.9644 21.0118 24.9644H29.3473C30.8842 24.9644 32.1258 26.204 32.1258 27.7383V41.6074H37.6829C39.9838 41.6074 41.8507 39.7437 41.8507 37.4466V17.9172L25.1795 3.23671L8.50843 17.9172V37.4466C8.50843 39.7437 10.3752 41.6074 12.6762 41.6074ZM21.0118 41.6074H29.3473V27.7383H21.0118V41.6074Z"
+              />
+            </svg>
+          </span>
+          Enter a lottery (0)
+        </a>
+        <a
+          class="seeds-button directory-page-navigation-bar__button"
+          href="#upcoming-lotteries"
+          id="nav-bar-button-upcoming-lotteries"
+        >
+          <span
+            class="ui-icon ui-medium"
+          >
+            <svg
+              fill="currentColor"
+              viewBox="0 0 32 32"
+            >
+              <path
+                d="M23.258 15.994h-7.251v-11.266c0-0.368-0.299-0.667-0.667-0.667s-0.667 0.299-0.667 0.667v11.931c0 0.368 0.299 0.667 0.667 0.667h7.917c0.368 0 0.667-0.299 0.667-0.667s-0.298-0.667-0.667-0.667z"
+              />
+              <path
+                d="M16 0.333c-8.64 0-15.669 7.029-15.669 15.669s7.029 15.669 15.669 15.669c8.64 0 15.669-7.027 15.669-15.667s-7.029-15.67-15.669-15.67zM16 30.338c-7.906 0-14.336-6.43-14.336-14.334s6.43-14.338 14.336-14.338 14.336 6.43 14.336 14.336c0 7.904-6.43 14.336-14.336 14.336z"
+              />
+            </svg>
+          </span>
+          Upcoming lotteries (0)
+        </a>
+        <a
+          class="seeds-button directory-page-navigation-bar__button"
+          href="#lottery-results"
+          id="nav-bar-button-lottery-results"
+        >
+          <span
+            class="ui-icon ui-medium"
+          >
+            <svg
+              fill="currentColor"
+              viewBox="0 0 32 32"
+            >
+              <path
+                d="M22.754 22.68h-13.387c-0.368 0-0.667 0.299-0.667 0.667s0.299 0.667 0.667 0.667h13.389c0.368 0 0.667-0.299 0.667-0.667s-0.299-0.667-0.667-0.667z"
+              />
+              <path
+                d="M22.754 18.68h-13.387c-0.368 0-0.667 0.299-0.667 0.667s0.299 0.667 0.667 0.667h13.389c0.368 0 0.667-0.299 0.667-0.667s-0.299-0.667-0.667-0.667z"
+              />
+              <path
+                d="M22.754 14.68h-13.387c-0.368 0-0.667 0.299-0.667 0.667s0.299 0.667 0.667 0.667h13.389c0.368 0 0.667-0.299 0.667-0.667s-0.299-0.667-0.667-0.667z"
+              />
+              <path
+                d="M9.365 12.013h7.438c0.368 0 0.667-0.299 0.667-0.667s-0.299-0.667-0.667-0.667h-7.438c-0.368 0-0.667 0.299-0.667 0.667s0.299 0.667 0.667 0.667z"
+              />
+              <path
+                d="M27.526 4.877l-4.416-4.358c-0.216-0.213-0.514-0.506-1.072-0.506h-16.285c-0.947 0-1.717 0.781-1.717 1.741v26.014c0 0.205 0.098 0.387 0.246 0.51l3.142 3.36c0.126 0.134 0.302 0.211 0.486 0.211s0.362-0.077 0.486-0.211l3.506-3.747 3.629 3.875c0.251 0.269 0.722 0.269 0.973 0l3.629-3.875 3.629 3.875c0.126 0.134 0.301 0.21 0.483 0.211 0.002 0 0.002 0 0.003 0 0.182 0 0.357-0.075 0.483-0.206l3.117-3.27c0.117-0.123 0.184-0.29 0.184-0.459v-22.029c0.002-0.562-0.274-0.902-0.509-1.138zM26.102 5.347h-3.398v-3.355l3.398 3.355zM24.259 30.341l-3.634-3.88c-0.126-0.134-0.302-0.211-0.486-0.211s-0.362 0.077-0.486 0.211l-3.629 3.875-3.629-3.875c-0.251-0.269-0.722-0.269-0.973 0l-3.506 3.747-2.544-2.718v-25.736c0-0.221 0.174-0.408 0.382-0.408l15.616-0.010v4.677c0 0.368 0.299 0.667 0.667 0.667h4.667v21.094l-2.445 2.566z"
+              />
+            </svg>
+          </span>
+          Lottery results (0)
+        </a>
+      </div>
+    </div>
+    <div
+      class="match-banner"
+    >
+      <div
+        class="listings-group__header"
+      >
+        <div
+          class="flex px-8 pb-8 max-w-5xl"
+        >
+          <div
+            class="mt-10 max-w-5xl flex flex-col items-start"
+          >
+            <h2
+              class="page-header-subheader"
+            >
+              No Matches
+            </h2>
+            <p
+              class="page-header-text-block"
+            >
+              Based on information you entered, you don't match any current listings for rent.
+            </p>
+            <p
+              class="page-header-text-block"
+            >
+              <span>
+                For more help, we suggest talking with a housing counselor to explore your options. 
+                <a
+                  href="/housing-counselors"
+                  target="_blank"
+                >
+                  Find a housing counselor
+                </a>
+                .
+              </span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="action-block mt-4 primary-lighter action-block__block"
+    >
+      <div
+        class="action-block__head"
+      >
+        <div
+          class="action-block__icon"
+        >
+          <span
+            class="ui-icon ui-3xl"
+          >
+            <svg
+              fill="transparent"
+              height="35"
+              viewBox="0 0 80 35"
+              width="80"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect
+                fill="transparent"
+                height="75"
+                width="80"
+              />
+              <g
+                clip-path="url(#clip0)"
+              >
+                <rect
+                  fill="transparent"
+                  height="1390"
+                  transform="translate(-284 -530)"
+                  width="1280"
+                />
+                <path
+                  d="M61.3749 24.2402L43.2061 39.7424C41.8262 40.8341 39.7563 40.8341 38.3764 39.7424L19.9775 24.2402"
+                  stroke="black"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-miterlimit="10"
+                  stroke-width="2"
+                />
+                <path
+                  d="M49.1858 41.271L61.375 50.878"
+                  stroke="black"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-miterlimit="10"
+                  stroke-width="2"
+                />
+                <path
+                  d="M32.1668 41.271L19.9775 50.878"
+                  stroke="black"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-miterlimit="10"
+                  stroke-width="2"
+                />
+                <path
+                  d="M14.458 24.0218V51.0961C14.458 53.9345 16.7579 56.1179 19.7477 56.1179H61.835C64.8248 56.1179 67.1247 53.9345 67.1247 51.0961V24.0218C67.1247 21.1834 64.8248 19 61.835 19H19.7477C16.7579 19 14.458 21.1834 14.458 24.0218Z"
+                  stroke="black"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-miterlimit="10"
+                  stroke-width="2"
+                />
+              </g>
+              <defs>
+                <clippath
+                  id="clip0"
+                >
+                  <rect
+                    fill="white"
+                    height="1390"
+                    transform="translate(-284 -530)"
+                    width="1280"
+                  />
+                </clippath>
+              </defs>
+            </svg>
+          </span>
+        </div>
+        <div
+          class="action-block__header"
+        >
+          <h2
+            class=""
+          >
+            Get emailed whenever a new listing is posted.
+          </h2>
+        </div>
+      </div>
+      <div
+        class="action-block__actions"
+      >
+        <a
+          class="button"
+          href=""
+          target="_blank"
+        >
+          Sign Up today
+        </a>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`GenericDirectory displays the rental directory page with listings 1`] = `
+<DocumentFragment>
+  <div>
+    <div />
+    <div
+      class="directory-page-navigation-bar__container"
+      id="nav-bar-container"
+    >
+      <div
+        class="directory-page-navigation-bar"
+      >
+        <a
+          class="seeds-button directory-page-navigation-bar__button"
+          href="#enter-a-lottery"
+          id="nav-bar-button-enter-a-lottery"
+        >
+          <span
+            class="ui-icon ui-medium"
+          >
+            <svg
+              fill="currentColor"
+              viewBox="0 0 51 45"
+            >
+              <path
+                d="M49.7173 21.1504C50.2904 21.6532 50.3425 22.4593 49.7608 23.1094C49.3353 23.6815 48.4496 23.7335 47.8766 23.1528L44.6292 20.2923V37.4466C44.6292 41.278 41.5207 44.3812 37.6829 44.3812H12.6762C8.84011 44.3812 5.72991 41.278 5.72991 37.4466V20.2923L2.48165 23.1528C1.90597 23.7335 1.02805 23.6815 0.520446 23.1094C0.0127579 22.4593 0.0676337 21.6532 0.642961 21.1504L24.2592 0.346902C24.7888 -0.115634 25.5703 -0.115634 26.0999 0.346902L49.7173 21.1504ZM12.6762 41.6074H18.2332V27.7383C18.2332 26.204 19.4749 24.9644 21.0118 24.9644H29.3473C30.8842 24.9644 32.1258 26.204 32.1258 27.7383V41.6074H37.6829C39.9838 41.6074 41.8507 39.7437 41.8507 37.4466V17.9172L25.1795 3.23671L8.50843 17.9172V37.4466C8.50843 39.7437 10.3752 41.6074 12.6762 41.6074ZM21.0118 41.6074H29.3473V27.7383H21.0118V41.6074Z"
+              />
+            </svg>
+          </span>
+          Enter a lottery (1)
+        </a>
+        <a
+          class="seeds-button directory-page-navigation-bar__button"
+          href="#upcoming-lotteries"
+          id="nav-bar-button-upcoming-lotteries"
+        >
+          <span
+            class="ui-icon ui-medium"
+          >
+            <svg
+              fill="currentColor"
+              viewBox="0 0 32 32"
+            >
+              <path
+                d="M23.258 15.994h-7.251v-11.266c0-0.368-0.299-0.667-0.667-0.667s-0.667 0.299-0.667 0.667v11.931c0 0.368 0.299 0.667 0.667 0.667h7.917c0.368 0 0.667-0.299 0.667-0.667s-0.298-0.667-0.667-0.667z"
+              />
+              <path
+                d="M16 0.333c-8.64 0-15.669 7.029-15.669 15.669s7.029 15.669 15.669 15.669c8.64 0 15.669-7.027 15.669-15.667s-7.029-15.67-15.669-15.67zM16 30.338c-7.906 0-14.336-6.43-14.336-14.334s6.43-14.338 14.336-14.338 14.336 6.43 14.336 14.336c0 7.904-6.43 14.336-14.336 14.336z"
+              />
+            </svg>
+          </span>
+          Upcoming lotteries (0)
+        </a>
+        <a
+          class="seeds-button directory-page-navigation-bar__button"
+          href="#lottery-results"
+          id="nav-bar-button-lottery-results"
+        >
+          <span
+            class="ui-icon ui-medium"
+          >
+            <svg
+              fill="currentColor"
+              viewBox="0 0 32 32"
+            >
+              <path
+                d="M22.754 22.68h-13.387c-0.368 0-0.667 0.299-0.667 0.667s0.299 0.667 0.667 0.667h13.389c0.368 0 0.667-0.299 0.667-0.667s-0.299-0.667-0.667-0.667z"
+              />
+              <path
+                d="M22.754 18.68h-13.387c-0.368 0-0.667 0.299-0.667 0.667s0.299 0.667 0.667 0.667h13.389c0.368 0 0.667-0.299 0.667-0.667s-0.299-0.667-0.667-0.667z"
+              />
+              <path
+                d="M22.754 14.68h-13.387c-0.368 0-0.667 0.299-0.667 0.667s0.299 0.667 0.667 0.667h13.389c0.368 0 0.667-0.299 0.667-0.667s-0.299-0.667-0.667-0.667z"
+              />
+              <path
+                d="M9.365 12.013h7.438c0.368 0 0.667-0.299 0.667-0.667s-0.299-0.667-0.667-0.667h-7.438c-0.368 0-0.667 0.299-0.667 0.667s0.299 0.667 0.667 0.667z"
+              />
+              <path
+                d="M27.526 4.877l-4.416-4.358c-0.216-0.213-0.514-0.506-1.072-0.506h-16.285c-0.947 0-1.717 0.781-1.717 1.741v26.014c0 0.205 0.098 0.387 0.246 0.51l3.142 3.36c0.126 0.134 0.302 0.211 0.486 0.211s0.362-0.077 0.486-0.211l3.506-3.747 3.629 3.875c0.251 0.269 0.722 0.269 0.973 0l3.629-3.875 3.629 3.875c0.126 0.134 0.301 0.21 0.483 0.211 0.002 0 0.002 0 0.003 0 0.182 0 0.357-0.075 0.483-0.206l3.117-3.27c0.117-0.123 0.184-0.29 0.184-0.459v-22.029c0.002-0.562-0.274-0.902-0.509-1.138zM26.102 5.347h-3.398v-3.355l3.398 3.355zM24.259 30.341l-3.634-3.88c-0.126-0.134-0.302-0.211-0.486-0.211s-0.362 0.077-0.486 0.211l-3.629 3.875-3.629-3.875c-0.251-0.269-0.722-0.269-0.973 0l-3.506 3.747-2.544-2.718v-25.736c0-0.221 0.174-0.408 0.382-0.408l15.616-0.010v4.677c0 0.368 0.299 0.667 0.667 0.667h4.667v21.094l-2.445 2.566z"
+              />
+            </svg>
+          </span>
+          Lottery results (0)
+        </a>
+      </div>
+    </div>
+    <div
+      class="match-banner"
+    >
+      <div
+        class="text-banner"
+      >
+        <div
+          class="text-banner-inner"
+        >
+          <span
+            class="ui-icon ui-large text-banner-icon"
+          >
+            <svg
+              fill="currentColor"
+              viewBox="0 0 32 32"
+            >
+              <path
+                d="M31.733 5.733c-0.4-0.4-1.067-0.4-1.467 0l-19.333 19.333-9.2-9.2c-0.133-0.133-0.267-0.133-0.4-0.267 0 0-0.133 0-0.133 0-0.133 0-0.133 0-0.267 0 0 0 0 0 0 0-0.267 0-0.533 0.133-0.667 0.267 0 0 0 0 0 0-0.133 0.133-0.267 0.4-0.267 0.667s0.133 0.533 0.267 0.667c0 0 0 0 0 0v0c0 0 0 0 0 0l9.867 9.867c0 0 0 0 0 0s0 0 0 0c0.4 0.4 1.067 0.4 1.467 0l20-20c0.533-0.267 0.533-0.933 0.133-1.333z"
+              />
+            </svg>
+          </span>
+          <div
+            class="text-banner-content"
+          >
+            <h2
+              class="text-banner-header"
+            >
+              Matched
+            </h2>
+            <p
+              class="text-banner-text"
+            >
+              Based on information you entered, you may be eligible for units at the following property.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      id="listing-results"
+    >
+      <div
+        id="enter-a-lottery"
+      >
+        <div
+          class="listings-group__header listings-group__customHeader"
+        >
+          <div
+            class="listings-group__content"
+          >
+            <div
+              class="listings-group__icon"
+            >
+              <span
+                class="ui-icon ui-xlarge"
+              >
+                <svg
+                  fill="currentColor"
+                  viewBox="0 0 51 45"
+                >
+                  <path
+                    d="M49.7173 21.1504C50.2904 21.6532 50.3425 22.4593 49.7608 23.1094C49.3353 23.6815 48.4496 23.7335 47.8766 23.1528L44.6292 20.2923V37.4466C44.6292 41.278 41.5207 44.3812 37.6829 44.3812H12.6762C8.84011 44.3812 5.72991 41.278 5.72991 37.4466V20.2923L2.48165 23.1528C1.90597 23.7335 1.02805 23.6815 0.520446 23.1094C0.0127579 22.4593 0.0676337 21.6532 0.642961 21.1504L24.2592 0.346902C24.7888 -0.115634 25.5703 -0.115634 26.0999 0.346902L49.7173 21.1504ZM12.6762 41.6074H18.2332V27.7383C18.2332 26.204 19.4749 24.9644 21.0118 24.9644H29.3473C30.8842 24.9644 32.1258 26.204 32.1258 27.7383V41.6074H37.6829C39.9838 41.6074 41.8507 39.7437 41.8507 37.4466V17.9172L25.1795 3.23671L8.50843 17.9172V37.4466C8.50843 39.7437 10.3752 41.6074 12.6762 41.6074ZM21.0118 41.6074H29.3473V27.7383H21.0118V41.6074Z"
+                  />
+                </svg>
+              </span>
+            </div>
+            <div>
+              <h2
+                class="listings-group__title"
+              >
+                Enter a lottery
+              </h2>
+              <div
+                class="listings-group__info"
+              >
+                Enter a lottery to rent a unit at a below-market-rate (BMR) price.
+              </div>
+            </div>
+          </div>
+        </div>
+        <article
+          class="listings-row"
+          data-testid="listing-card-component"
+        >
+          <div
+            class="listings-row_figure"
+          >
+            <a
+              class="block"
+              href="/listings/a0W4U00000KnXGsUAN"
+            >
+              <div
+                class="image-card"
+              >
+                <figure
+                  class="image-card__inner"
+                >
+                  <img
+                    alt="This is a listing image"
+                    src="https://sfmohcd.org/sites/default/files/Documents/MOH/Housing%20Listing%20Photos/test-apologies.png"
+                  />
+                </figure>
+                <aside
+                  aria-label="This is a listing image Statuses"
+                >
+                  <div
+                    class="application-status text-2xs text-white bg-green-500"
+                  >
+                    <span
+                      class="ui-icon ui-medium"
+                    >
+                      <svg
+                        fill="#ffffff"
+                        viewBox="0 0 32 32"
+                      >
+                        <path
+                          d="M31.733 5.733c-0.4-0.4-1.067-0.4-1.467 0l-19.333 19.333-9.2-9.2c-0.133-0.133-0.267-0.133-0.4-0.267 0 0-0.133 0-0.133 0-0.133 0-0.133 0-0.267 0 0 0 0 0 0 0-0.267 0-0.533 0.133-0.667 0.267 0 0 0 0 0 0-0.133 0.133-0.267 0.4-0.267 0.667s0.133 0.533 0.267 0.667c0 0 0 0 0 0v0c0 0 0 0 0 0l9.867 9.867c0 0 0 0 0 0s0 0 0 0c0.4 0.4 1.067 0.4 1.467 0l20-20c0.533-0.267 0.533-0.933 0.133-1.333z"
+                        />
+                      </svg>
+                    </span>
+                    <span>
+                      Matched
+                    </span>
+                  </div>
+                </aside>
+                <div
+                  class="image-card-tag__wrapper"
+                />
+              </div>
+            </a>
+          </div>
+          <div
+            class="listings-row_content"
+          >
+            <div
+              class="listings-row_headers"
+            >
+              <h2
+                class="text__large-primary order-1"
+              >
+                <a
+                  class="is-card-link"
+                  href="/listings/a0W4U00000KnXGsUAN"
+                >
+                  681 Florida - Casa Adelante
+                </a>
+              </h2>
+              <p
+                class="card-subheader order-2"
+              >
+                <span>
+                  681 Florida St, San Francisco, 
+                  <abbr
+                    class="no-underline"
+                    title="California"
+                  >
+                    CA
+                  </abbr>
+                   94110
+                </span>
+              </p>
+            </div>
+            <div
+              class="listings-row_table"
+            >
+              <hr
+                class="mb-2"
+              />
+              <div
+                class="listings-row_headers"
+              >
+                <h3
+                  class="text__small-weighted"
+                >
+                  Available Units & Open Waitlist
+                </h3>
+                <div
+                  class="text__small-normal"
+                >
+                  Includes Priority Units for:
+                  <ul
+                    class="list-disc ml-4"
+                  >
+                    <li>
+                      Mobility Impairments
+                    </li>
+                    <li>
+                      Hearing/Vision (Communication)
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div
+                style="overflow-x: auto;"
+              >
+                <table
+                  class="w-full text-xs responsive-collapse td-plain th-plain base stacked-table "
+                >
+                  <thead>
+                    <tr>
+                      <th
+                        class="text-base text-gray-700 border-b stacked-table-header"
+                      >
+                        <span
+                          class=""
+                        >
+                          Units
+                        </span>
+                      </th>
+                      <th
+                        class="stacked-table-header text-base text-gray-700 border-b md:hidden"
+                      >
+                        <span
+                          class=""
+                        >
+                          available
+                        </span>
+                      </th>
+                      <th
+                        class="text-base text-gray-700 border-b stacked-table-header"
+                      >
+                        <span
+                          class=""
+                        >
+                          Income Range
+                        </span>
+                      </th>
+                      <th
+                        class="text-base text-gray-700 border-b stacked-table-header"
+                      >
+                        <span
+                          class=""
+                        >
+                          Rent
+                        </span>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr
+                      class=""
+                      id="standardrow-0"
+                    >
+                      <td
+                        class="text-base text-gray-700 border-b stacked-table-header b-0"
+                        data-cell="Studio"
+                        data-label="Units"
+                      >
+                        <div
+                          class="stacked-table-cell-container "
+                        >
+                          <p
+                            class="stacked-table-cell"
+                          >
+                            Studio
+                          </p>
+                          <p
+                            class="stacked-table-subtext   "
+                          >
+                            44 available
+                          </p>
+                        </div>
+                      </td>
+                      <td
+                        class="stacked-table-header text-base text-gray-700 border-b md:hidden b-0"
+                        data-cell="44"
+                        data-label="available"
+                      >
+                        <div
+                          class="stacked-table-cell-container md:hidden"
+                        >
+                          <p
+                            class="stacked-table-cell"
+                          >
+                            44
+                          </p>
+                          <p
+                            class="stacked-table-subtext   "
+                          >
+                            available
+                          </p>
+                        </div>
+                      </td>
+                      <td
+                        class="text-base text-gray-700 border-b stacked-table-header b-0"
+                        data-cell="$1,436 to $7,545"
+                        data-label="Income Range"
+                      >
+                        <div
+                          class="stacked-table-cell-container "
+                        >
+                          <p
+                            class="stacked-table-cell"
+                          >
+                            $1,436 to $7,545
+                          </p>
+                          <p
+                            class="stacked-table-subtext   "
+                          >
+                            per month
+                          </p>
+                        </div>
+                      </td>
+                      <td
+                        class="text-base text-gray-700 border-b stacked-table-header b-0"
+                        data-cell="$718 to $1,883"
+                        data-label="Rent"
+                      >
+                        <div
+                          class="stacked-table-cell-container "
+                        >
+                          <p
+                            class="stacked-table-cell"
+                          >
+                            $718 to $1,883
+                          </p>
+                          <p
+                            class="stacked-table-subtext   "
+                          >
+                            per month
+                          </p>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr
+                      class=""
+                      id="standardrow-1"
+                    >
+                      <td
+                        class="text-base text-gray-700 border-b stacked-table-header b-0"
+                        data-cell="1 Bedroom"
+                        data-label="Units"
+                      >
+                        <div
+                          class="stacked-table-cell-container "
+                        >
+                          <p
+                            class="stacked-table-cell"
+                          >
+                            1 Bedroom
+                          </p>
+                          <p
+                            class="stacked-table-subtext   "
+                          >
+                            12 available
+                          </p>
+                        </div>
+                      </td>
+                      <td
+                        class="stacked-table-header text-base text-gray-700 border-b md:hidden b-0"
+                        data-cell="12"
+                        data-label="available"
+                      >
+                        <div
+                          class="stacked-table-cell-container md:hidden"
+                        >
+                          <p
+                            class="stacked-table-cell"
+                          >
+                            12
+                          </p>
+                          <p
+                            class="stacked-table-subtext   "
+                          >
+                            available
+                          </p>
+                        </div>
+                      </td>
+                      <td
+                        class="text-base text-gray-700 border-b stacked-table-header b-0"
+                        data-cell="$1,634 to $8,491"
+                        data-label="Income Range"
+                      >
+                        <div
+                          class="stacked-table-cell-container "
+                        >
+                          <p
+                            class="stacked-table-cell"
+                          >
+                            $1,634 to $8,491
+                          </p>
+                          <p
+                            class="stacked-table-subtext   "
+                          >
+                            per month
+                          </p>
+                        </div>
+                      </td>
+                      <td
+                        class="text-base text-gray-700 border-b stacked-table-header b-0"
+                        data-cell="$817 to $2,148"
+                        data-label="Rent"
+                      >
+                        <div
+                          class="stacked-table-cell-container "
+                        >
+                          <p
+                            class="stacked-table-cell"
+                          >
+                            $817 to $2,148
+                          </p>
+                          <p
+                            class="stacked-table-subtext   "
+                          >
+                            per month
+                          </p>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr
+                      class=""
+                      id="standardrow-2"
+                    >
+                      <td
+                        class="text-base text-gray-700 border-b stacked-table-header b-0"
+                        data-cell="2 Bedroom"
+                        data-label="Units"
+                      >
+                        <div
+                          class="stacked-table-cell-container "
+                        >
+                          <p
+                            class="stacked-table-cell"
+                          >
+                            2 Bedroom
+                          </p>
+                          <p
+                            class="stacked-table-subtext   "
+                          >
+                            24 available
+                          </p>
+                        </div>
+                      </td>
+                      <td
+                        class="stacked-table-header text-base text-gray-700 border-b md:hidden b-0"
+                        data-cell="24"
+                        data-label="available"
+                      >
+                        <div
+                          class="stacked-table-cell-container md:hidden"
+                        >
+                          <p
+                            class="stacked-table-cell"
+                          >
+                            24
+                          </p>
+                          <p
+                            class="stacked-table-subtext   "
+                          >
+                            available
+                          </p>
+                        </div>
+                      </td>
+                      <td
+                        class="text-base text-gray-700 border-b stacked-table-header b-0"
+                        data-cell="$1,776 to $10,187"
+                        data-label="Income Range"
+                      >
+                        <div
+                          class="stacked-table-cell-container "
+                        >
+                          <p
+                            class="stacked-table-cell"
+                          >
+                            $1,776 to $10,187
+                          </p>
+                          <p
+                            class="stacked-table-subtext   "
+                          >
+                            per month
+                          </p>
+                        </div>
+                      </td>
+                      <td
+                        class="text-base text-gray-700 border-b stacked-table-header b-0"
+                        data-cell="$888 to $2,387"
+                        data-label="Rent"
+                      >
+                        <div
+                          class="stacked-table-cell-container "
+                        >
+                          <p
+                            class="stacked-table-cell"
+                          >
+                            $888 to $2,387
+                          </p>
+                          <p
+                            class="stacked-table-subtext   "
+                          >
+                            per month
+                          </p>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr
+                      class=""
+                      id="standardrow-3"
+                    >
+                      <td
+                        class="text-base text-gray-700 border-b stacked-table-header b-0"
+                        data-cell="3 Bedroom"
+                        data-label="Units"
+                      >
+                        <div
+                          class="stacked-table-cell-container "
+                        >
+                          <p
+                            class="stacked-table-cell"
+                          >
+                            3 Bedroom
+                          </p>
+                          <p
+                            class="stacked-table-subtext   "
+                          >
+                            10 available
+                          </p>
+                        </div>
+                      </td>
+                      <td
+                        class="stacked-table-header text-base text-gray-700 border-b md:hidden b-0"
+                        data-cell="10"
+                        data-label="available"
+                      >
+                        <div
+                          class="stacked-table-cell-container md:hidden"
+                        >
+                          <p
+                            class="stacked-table-cell"
+                          >
+                            10
+                          </p>
+                          <p
+                            class="stacked-table-subtext   "
+                          >
+                            available
+                          </p>
+                        </div>
+                      </td>
+                      <td
+                        class="text-base text-gray-700 border-b stacked-table-header b-0"
+                        data-cell="$1,918 to $11,700"
+                        data-label="Income Range"
+                      >
+                        <div
+                          class="stacked-table-cell-container "
+                        >
+                          <p
+                            class="stacked-table-cell"
+                          >
+                            $1,918 to $11,700
+                          </p>
+                          <p
+                            class="stacked-table-subtext   "
+                          >
+                            per month
+                          </p>
+                        </div>
+                      </td>
+                      <td
+                        class="text-base text-gray-700 border-b stacked-table-header b-0"
+                        data-cell="$959 to $2,624"
+                        data-label="Rent"
+                      >
+                        <div
+                          class="stacked-table-cell-container "
+                        >
+                          <p
+                            class="stacked-table-cell"
+                          >
+                            $959 to $2,624
+                          </p>
+                          <p
+                            class="stacked-table-subtext   "
+                          >
+                            per month
+                          </p>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div
+              class="listings-row_footer_container"
+            >
+              <div
+                class="listings-row_footer"
+              >
+                <a
+                  class="button"
+                  href="/listings/a0W4U00000KnXGsUAN"
+                  tabindex="0"
+                >
+                  See Details
+                </a>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+      <div />
+      <div
+        class="listings-group"
+        id="upcoming-lotteries"
+      >
+        <div
+          class="listings-group__header"
+        >
+          <div
+            class="listings-group__content"
+          >
+            <div
+              class="listings-group__icon"
+            >
+              <span
+                class="ui-icon ui-xlarge"
+              >
+                <svg
+                  fill="currentColor"
+                  viewBox="0 0 32 32"
+                >
+                  <path
+                    d="M23.258 15.994h-7.251v-11.266c0-0.368-0.299-0.667-0.667-0.667s-0.667 0.299-0.667 0.667v11.931c0 0.368 0.299 0.667 0.667 0.667h7.917c0.368 0 0.667-0.299 0.667-0.667s-0.298-0.667-0.667-0.667z"
+                  />
+                  <path
+                    d="M16 0.333c-8.64 0-15.669 7.029-15.669 15.669s7.029 15.669 15.669 15.669c8.64 0 15.669-7.027 15.669-15.667s-7.029-15.67-15.669-15.67zM16 30.338c-7.906 0-14.336-6.43-14.336-14.334s6.43-14.338 14.336-14.338 14.336 6.43 14.336 14.336c0 7.904-6.43 14.336-14.336 14.336z"
+                  />
+                </svg>
+              </span>
+            </div>
+            <div
+              class="listings-group__header-group"
+            >
+              <h2
+                class="listings-group__title"
+              >
+                Upcoming Lotteries
+              </h2>
+              <div
+                class="listings-group__info"
+              >
+                The application deadline has passed on the following listings, and you can still get information on the lottery date and time.
+              </div>
+            </div>
+          </div>
+          <div
+            class="listings-group__button"
+          >
+            <button
+              class="button w-full"
+              tabindex="0"
+            >
+              Show Upcoming Lotteries (0)
+            </button>
+          </div>
+        </div>
+      </div>
+      <div
+        class="listings-group"
+        id="lottery-results"
+      >
+        <div
+          class="listings-group__header"
+        >
+          <div
+            class="listings-group__content"
+          >
+            <div
+              class="listings-group__icon"
+            >
+              <span
+                class="ui-icon ui-xlarge"
+              >
+                <svg
+                  fill="currentColor"
+                  viewBox="0 0 32 32"
+                >
+                  <path
+                    d="M22.754 22.68h-13.387c-0.368 0-0.667 0.299-0.667 0.667s0.299 0.667 0.667 0.667h13.389c0.368 0 0.667-0.299 0.667-0.667s-0.299-0.667-0.667-0.667z"
+                  />
+                  <path
+                    d="M22.754 18.68h-13.387c-0.368 0-0.667 0.299-0.667 0.667s0.299 0.667 0.667 0.667h13.389c0.368 0 0.667-0.299 0.667-0.667s-0.299-0.667-0.667-0.667z"
+                  />
+                  <path
+                    d="M22.754 14.68h-13.387c-0.368 0-0.667 0.299-0.667 0.667s0.299 0.667 0.667 0.667h13.389c0.368 0 0.667-0.299 0.667-0.667s-0.299-0.667-0.667-0.667z"
+                  />
+                  <path
+                    d="M9.365 12.013h7.438c0.368 0 0.667-0.299 0.667-0.667s-0.299-0.667-0.667-0.667h-7.438c-0.368 0-0.667 0.299-0.667 0.667s0.299 0.667 0.667 0.667z"
+                  />
+                  <path
+                    d="M27.526 4.877l-4.416-4.358c-0.216-0.213-0.514-0.506-1.072-0.506h-16.285c-0.947 0-1.717 0.781-1.717 1.741v26.014c0 0.205 0.098 0.387 0.246 0.51l3.142 3.36c0.126 0.134 0.302 0.211 0.486 0.211s0.362-0.077 0.486-0.211l3.506-3.747 3.629 3.875c0.251 0.269 0.722 0.269 0.973 0l3.629-3.875 3.629 3.875c0.126 0.134 0.301 0.21 0.483 0.211 0.002 0 0.002 0 0.003 0 0.182 0 0.357-0.075 0.483-0.206l3.117-3.27c0.117-0.123 0.184-0.29 0.184-0.459v-22.029c0.002-0.562-0.274-0.902-0.509-1.138zM26.102 5.347h-3.398v-3.355l3.398 3.355zM24.259 30.341l-3.634-3.88c-0.126-0.134-0.302-0.211-0.486-0.211s-0.362 0.077-0.486 0.211l-3.629 3.875-3.629-3.875c-0.251-0.269-0.722-0.269-0.973 0l-3.506 3.747-2.544-2.718v-25.736c0-0.221 0.174-0.408 0.382-0.408l15.616-0.010v4.677c0 0.368 0.299 0.667 0.667 0.667h4.667v21.094l-2.445 2.566z"
+                  />
+                </svg>
+              </span>
+            </div>
+            <div
+              class="listings-group__header-group"
+            >
+              <h2
+                class="listings-group__title"
+              >
+                Lottery Results
+              </h2>
+              <div
+                class="listings-group__info"
+              >
+                You can now check lottery results on the remaining listings.
+              </div>
+            </div>
+          </div>
+          <div
+            class="listings-group__button"
+          >
+            <button
+              class="button w-full"
+              tabindex="0"
+            >
+              Show Lottery Results (0)
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="action-block mt-4 primary-lighter action-block__block"
+    >
+      <div
+        class="action-block__head"
+      >
+        <div
+          class="action-block__icon"
+        >
+          <span
+            class="ui-icon ui-3xl"
+          >
+            <svg
+              fill="transparent"
+              height="35"
+              viewBox="0 0 80 35"
+              width="80"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect
+                fill="transparent"
+                height="75"
+                width="80"
+              />
+              <g
+                clip-path="url(#clip0)"
+              >
+                <rect
+                  fill="transparent"
+                  height="1390"
+                  transform="translate(-284 -530)"
+                  width="1280"
+                />
+                <path
+                  d="M61.3749 24.2402L43.2061 39.7424C41.8262 40.8341 39.7563 40.8341 38.3764 39.7424L19.9775 24.2402"
+                  stroke="black"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-miterlimit="10"
+                  stroke-width="2"
+                />
+                <path
+                  d="M49.1858 41.271L61.375 50.878"
+                  stroke="black"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-miterlimit="10"
+                  stroke-width="2"
+                />
+                <path
+                  d="M32.1668 41.271L19.9775 50.878"
+                  stroke="black"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-miterlimit="10"
+                  stroke-width="2"
+                />
+                <path
+                  d="M14.458 24.0218V51.0961C14.458 53.9345 16.7579 56.1179 19.7477 56.1179H61.835C64.8248 56.1179 67.1247 53.9345 67.1247 51.0961V24.0218C67.1247 21.1834 64.8248 19 61.835 19H19.7477C16.7579 19 14.458 21.1834 14.458 24.0218Z"
+                  stroke="black"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-miterlimit="10"
+                  stroke-width="2"
+                />
+              </g>
+              <defs>
+                <clippath
+                  id="clip0"
+                >
+                  <rect
+                    fill="white"
+                    height="1390"
+                    transform="translate(-284 -530)"
+                    width="1280"
+                  />
+                </clippath>
+              </defs>
+            </svg>
+          </span>
+        </div>
+        <div
+          class="action-block__header"
+        >
+          <h2
+            class=""
+          >
+            Get emailed whenever a new listing is posted.
+          </h2>
+        </div>
+      </div>
+      <div
+        class="action-block__actions"
+      >
+        <a
+          class="button"
+          href=""
+          target="_blank"
+        >
+          Sign Up today
+        </a>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

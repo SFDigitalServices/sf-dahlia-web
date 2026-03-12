@@ -33,7 +33,7 @@ import {
 } from "../../modules/listings/DirectoryHelpers"
 import { PageHeaderWithRef } from "../../modules/listings/util/NavigationBarUtils"
 
-const getForRentSummaryTable = (listing: RailsRentalListing) => {
+export const getForRentSummaryTable = (listing: RailsRentalListing) => {
   const summary = listing.unitSummaries.general ?? listing.unitSummaries.reserved
   if (!summary) return null
 
