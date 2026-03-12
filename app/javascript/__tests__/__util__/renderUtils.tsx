@@ -56,7 +56,6 @@ export const renderWithFormContextWrapper = (
   formComponent: React.ReactElement,
   formData: Record<string, unknown> = {}
 ) => {
-  defineCryptoApi()
   const formEngineContextValue = {
     listing: openRentalListing,
     formData: formData,
