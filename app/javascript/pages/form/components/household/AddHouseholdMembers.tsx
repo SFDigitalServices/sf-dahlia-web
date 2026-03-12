@@ -12,6 +12,7 @@ import styles from "./AddHouseholdMembers.module.scss"
 import HouseholdMemberStepWrapper from "./HouseholdMemberStepWrapper"
 import formSchema from "../../../../formEngine/listingApplicationDefaultRental.json"
 import RecursiveRenderer from "../../../../formEngine/recursiveRenderer"
+import getFormComponentRegistry from "../../../../formEngine/formComponentRegistry"
 
 const HouseholdMember = ({
   name,
@@ -51,22 +52,45 @@ const AddHouseholdMembers = () => {
   const primaryApplicant = getPrimaryApplicantData(formData)
   const [currentMemberIndex, setCurrentMemberIndex] = useState<number>(0)
   const [addMember, setAddMember] = useState<boolean>(false)
-  const newHouseholdMember = stepInfoMap.find((step) => step.dynamicStep)?.fieldNames?.[0]
-  const householdMembers = []
 
   const householdMemberFormSchema = formSchema.children?.find(
     (child) => child.stepInfo?.slug === "household-member-form"
   )
+
+  const createEmptyHouseholdMember = (): Record<string, unknown> => {
+    const newHouseholdMember = {}
+    householdMemberFormSchema.children.forEach((child) => {
+      Object.keys(child.props.fieldNames as Record<string, string>).forEach((key) => {
+        newHouseholdMember[child.props.fieldNames[key]] = null
+      })
+    })
+    return newHouseholdMember
+  }
+
+  const [householdMembers, setHouseholdMembers] = useState<Record<string, unknown>[]>([])
+
+  const updateHouseholdMember = (data: Record<string, unknown>) => {
+    const updatedHouseholdMembers = [...householdMembers]
+    updatedHouseholdMembers[currentMemberIndex] = data
+    setHouseholdMembers(updatedHouseholdMembers)
+  }
+
+  console.log("householdMembers", householdMembers)
+  console.log("currentMemberIndex", currentMemberIndex)
+  console.log("addMember", addMember)
+
+  const componentRegistry = getFormComponentRegistry()
   if (addMember) {
     return (
       <HouseholdMemberStepWrapper
         title={householdMemberFormSchema.props?.title}
         description={householdMemberFormSchema.props?.description}
-        currentMemberIndex={currentMemberIndex}
         setAddMember={setAddMember}
+        householdMember={householdMembers[currentMemberIndex]}
+        updateHouseholdMember={updateHouseholdMember}
       >
         {householdMemberFormSchema.children?.map((child, index) => (
-          <RecursiveRenderer key={index} schema={child} />
+          <RecursiveRenderer key={index} schema={child} componentRegistry={componentRegistry} />
         ))}
       </HouseholdMemberStepWrapper>
     )
@@ -95,20 +119,20 @@ const AddHouseholdMembers = () => {
           })}
           isPrimary={false}
           index={index}
-          onEdit={(memberIndex) => {
-            setCurrentMemberIndex(memberIndex + 1)
+          onEdit={(index) => {
+            setAddMember(true)
+            setCurrentMemberIndex(index)
             updateFormPath(currentStepIndex + 1, stepInfoMap)
           }}
         />
       ))}
-
       <Card.Section className={styles["add-member"]}>
         <Button
           variant="primary-outlined"
           onClick={() => {
-            const newMember = newHouseholdMember
-            const updatedMembers = [...householdMembers, newMember]
-            setCurrentMemberIndex(updatedMembers.length + 1)
+            const newHouseholdMember = createEmptyHouseholdMember()
+            setHouseholdMembers([...householdMembers, newHouseholdMember])
+            setCurrentMemberIndex(householdMembers.length)
             setAddMember(true)
           }}
         >
