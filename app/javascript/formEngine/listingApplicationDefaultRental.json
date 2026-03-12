@@ -363,6 +363,7 @@
         {
           "componentName": "HouseholdMemberSameAddress",
           "props": {
+            "label": "label.memberSameAddress",
             "fieldNames": {
               "address": "householdMemberAddress"
             }
