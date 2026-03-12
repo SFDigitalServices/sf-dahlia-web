@@ -2,7 +2,7 @@ import React from "react"
 import { t } from "@bloom-housing/ui-components"
 import { render, screen } from "@testing-library/react"
 import { FormEngineProvider } from "../../../../formEngine/formEngineContext"
-import ListingApplyHouseholdIntro from "../../../../pages/form/components/ListingApplyHouseholdIntro"
+import ListingApplyHouseholdIntro from "../../../../pages/form/components/household/ListingApplyHouseholdIntro"
 import { openRentalListing } from "../../../data/RailsRentalListing/listing-rental-open"
 import userEvent from "@testing-library/user-event"
 
@@ -19,11 +19,9 @@ describe("ListingApplyHouseholdIntro", () => {
     stepInfoMap: [{ slug: "test", fieldNames: [] }],
     sectionNames: [],
     currentStepIndex: 0,
-    currentMemberIndex: 0,
     handleNextStep: jest.fn(),
     handlePrevStep: jest.fn(),
     jumpToStep: jest.fn(),
-    setCurrentMemberIndex: jest.fn(),
   }
 
   beforeEach(() => {
