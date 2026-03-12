@@ -95,26 +95,25 @@ export const generateSectionNames = (schema: FormSchema): string[] => {
     .filter((val, idx, ary) => ary.indexOf(val) === idx) // remove duplicates
 }
 
+export const getDynamicFieldNames = (schema: FormSchema): string[] => {
+  return [
+    ...new Set(
+      schema.children
+        .filter((step) => step.stepInfo?.dynamicStep)
+        .flatMap((step) => getFieldNames(step))
+    ),
+  ]
+}
+
 export const generateInitialFormData = (schema: FormSchema): Record<string, unknown> => {
-  const dynamicFieldNames = new Set(
-    schema.children
-      .filter((step) => step.stepInfo?.dynamicStep)
-      .flatMap((step) => getFieldNames(step))
-  )
+  const dynamicFieldNames = getDynamicFieldNames(schema)
   const staticFieldNames = getFieldNames(schema).filter(
-    (fieldName) => !dynamicFieldNames.has(fieldName)
+    (fieldName) => !dynamicFieldNames.includes(fieldName)
   )
-  const formData = staticFieldNames.reduce((acc, fieldName) => {
+  return staticFieldNames.reduce((acc, fieldName) => {
     acc[fieldName] = null
     return acc
   }, {})
-
-  schema.children
-    .filter((step) => step.stepInfo?.dynamicStep)
-    .forEach((step) => {
-      formData[step.stepInfo.slug] = [] //add initial array for dynamic step
-    })
-  return formData
 }
 
 const getInvalidComponentNames = (schema: FormSchema): string[] => {

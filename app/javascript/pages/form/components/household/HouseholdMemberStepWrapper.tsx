@@ -9,21 +9,18 @@ interface HouseholdMemberStepWrapperProps {
   title: string
   description: string
   children: React.ReactNode
+  currentMemberIndex: number
+  setAddMember: (addMember: boolean) => void
 }
 
 const HouseholdMemberStepWrapper = ({
   title,
   description,
   children,
+  currentMemberIndex,
+  setAddMember,
 }: HouseholdMemberStepWrapperProps) => {
-  const {
-    formData,
-    saveFormData,
-    stepInfoMap,
-    currentStepIndex,
-    currentMemberIndex,
-    handleNextStep,
-  } = useFormEngineContext()
+  const { formData, stepInfoMap, currentStepIndex } = useFormEngineContext()
   const currentStepInfo = stepInfoMap[currentStepIndex]
   const householdMemberArray =
     (formData["household-member-form"] as Record<string, unknown>[]) || []
@@ -46,14 +43,7 @@ const HouseholdMemberStepWrapper = ({
       ...updatedHouseholdArray[currentMemberIndex - 1],
       ...data,
     }
-    saveFormData({
-      ...formData,
-      "household-member-form": updatedHouseholdArray,
-    })
-    handleNextStep({
-      ...formData,
-      "household-member-form": updatedHouseholdArray,
-    })
+    setAddMember(false)
   }
 
   return (
@@ -65,12 +55,7 @@ const HouseholdMemberStepWrapper = ({
         </Card.Header>
         <Form onSubmit={methods.handleSubmit(onSubmit)}>
           {Children.map(children, (child) => {
-            const { schema } = (child as React.ReactElement).props
-            return (
-              <Card.Section divider={schema?.props?.divider === false ? undefined : "inset"}>
-                {child}
-              </Card.Section>
-            )
+            return <Card.Section divider="inset">{child}</Card.Section>
           })}
           <Card.Footer className={styles["step-footer"]}>
             <Button variant="primary" type="submit">
