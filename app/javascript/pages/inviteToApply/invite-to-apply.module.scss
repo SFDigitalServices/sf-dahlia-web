@@ -142,8 +142,8 @@
       margin-left: var(--seeds-spacer-section);
       padding-bottom: var(--seeds-spacer-header);
     }
-    .iconList {
-      margin-left: var(--seeds-spacer-text);
+    ul.iconList {
+      margin-left: 0;
       li {
         list-style-type: none;
         background-image: url("/images/icon-document.svg");
