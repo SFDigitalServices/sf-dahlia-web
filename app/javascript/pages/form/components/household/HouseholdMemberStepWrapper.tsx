@@ -2,8 +2,8 @@ import React, { Children } from "react"
 import { useForm, FormProvider } from "react-hook-form"
 import { Form, t } from "@bloom-housing/ui-components"
 import { Button, Card } from "@bloom-housing/ui-seeds"
-import { useFormEngineContext } from "../../../formEngine/formEngineContext"
-import styles from "./ListingApplyStepWrapper.module.scss"
+import { useFormEngineContext } from "../../../../formEngine/formEngineContext"
+import styles from "../ListingApplyStepWrapper.module.scss"
 
 interface HouseholdMemberStepWrapperProps {
   title: string
