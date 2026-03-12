@@ -10,7 +10,8 @@ import {
   generateSectionNames,
 } from "./formSchemas"
 import type { RailsListing } from "../modules/listings/SharedHelpers"
-import { listingPreferences, getSeniorBuildingAgeRequirement } from "../util/listingUtil"
+import type { RailsListingPreference } from "../api/types/rails/listings/RailsListingPreferences"
+import { getSeniorBuildingAgeRequirement, listingPreferenceNames } from "../util/listingUtil"
 import RecursiveRenderer from "./recursiveRenderer"
 import { calculateNextStep, calculatePrevStep, updateFormPath } from "../util/formEngineUtil"
 import { useFeatureFlag } from "../hooks/useFeatureFlag"
@@ -18,11 +19,13 @@ import { UNLEASH_FLAG } from "../modules/constants"
 import FormEngineDebug from "./FormEngineDebug"
 
 interface FormEngineProps {
+  sessionId: string
   listing: RailsListing
+  preferences: RailsListingPreference[]
   schema: FormSchema
 }
 
-const FormEngine = ({ listing, schema }: FormEngineProps) => {
+const FormEngine = ({ sessionId, listing, preferences, schema }: FormEngineProps) => {
   const [formData, setFormData] = useState<Record<string, unknown>>(generateInitialFormData(schema))
   const [currentStepIndex, setCurrentStepIndex] = useState<number>(0)
 
@@ -34,7 +37,7 @@ const FormEngine = ({ listing, schema }: FormEngineProps) => {
     () => ({
       listing,
       form: formData,
-      preferences: listingPreferences(listing),
+      preferenceNames: listingPreferenceNames(listing),
       seniorBuildingAgeRequirement: getSeniorBuildingAgeRequirement(listing),
     }),
     [listing, formData]
@@ -84,7 +87,9 @@ const FormEngine = ({ listing, schema }: FormEngineProps) => {
 
   const formEngineContextValue: FormEngineContext = {
     listing,
+    preferences,
     formData: formData,
+    sessionId,
     dataSources,
     saveFormData: saveFormData,
     stepInfoMap: stepInfoMap,

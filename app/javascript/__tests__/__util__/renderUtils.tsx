@@ -58,12 +58,14 @@ export const renderWithFormContextWrapper = (
 ) => {
   const formEngineContextValue = {
     listing: openRentalListing,
+    preferences: [],
+    sessionId: "test-session-id-1234",
     formData: formData,
     saveFormData: jest.fn(),
     dataSources: {
       listing: openRentalListing,
       form: {},
-      preferences: {},
+      preferenceNames: {},
     },
     stepInfoMap: [{ slug: "test", fieldNames: [] }],
     sectionNames: [],
