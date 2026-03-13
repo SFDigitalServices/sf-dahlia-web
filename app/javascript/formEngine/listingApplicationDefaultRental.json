@@ -135,21 +135,21 @@
     {
       "stepInfo": {
         "slug": "alternate-contact-type",
-        "sectionName": "household"
+        "sectionName": "you"
       },
       "componentType": "step",
       "componentName": "ListingApplyStepWrapper",
       "props": {
-        "section": "you",
-        "title": "b3AlternateContactType.title",
-        "description": "b3AlternateContactType.allowingToDiscuss"
+        "title": "b3_alternate_contact_type.title",
+        "description": "b3_alternate_contact_type.allowing_to_discuss"
       },
       "children": [
         {
           "componentName": "AlternateContactType",
           "props": {
             "fieldNames": {
-              "alternateContactType": "alternateContactType"
+              "alternateContactType": "alternateContactType",
+              "alternateContactTypeOther": "alternateContactTypeOther"
             }
           }
         }
@@ -158,12 +158,18 @@
     {
       "stepInfo": {
         "slug": "alternate-contact-name",
-        "sectionName": "household",
+        "sectionName": "you",
         "navigationArrival": {
-          "showStepIfAnyPresent": [
+          "showStepIfAllPresent": [
             {
               "dataSource": "form",
               "dataKey": "alternateContactType"
+            },
+            {
+              "dataSource": "form",
+              "dataKey": "alternateContactType",
+              "dataValueToMatch": "None",
+              "negate": true
             }
           ]
         }
@@ -171,7 +177,7 @@
       "componentType": "step",
       "componentName": "ListingApplyStepWrapper",
       "props": {
-        "title": "b4AlternateContactName.title"
+        "title": "b4_alternate_contact_name.title"
       },
       "children": [
         {
@@ -191,12 +197,18 @@
     {
       "stepInfo": {
         "slug": "alternate-contact-phone-address",
-        "sectionName": "household",
+        "sectionName": "you",
         "navigationArrival": {
-          "showStepIfAnyPresent": [
+          "showStepIfAllPresent": [
             {
               "dataSource": "form",
               "dataKey": "alternateContactType"
+            },
+            {
+              "dataSource": "form",
+              "dataKey": "alternateContactType",
+              "dataValueToMatch": "None",
+              "negate": true
             }
           ]
         }
@@ -204,9 +216,8 @@
       "componentType": "step",
       "componentName": "ListingApplyStepWrapper",
       "props": {
-        "section": "",
-        "title": "b4aAlternateContactPhoneAddress.title",
-        "description": "b4aAlternateContactPhoneAddress.onlyUseInfo"
+        "title": "b4a_alternate_contact_phone_address.title",
+        "description": "b4a_alternate_contact_phone_address.only_use_info"
       },
       "children": [
         {

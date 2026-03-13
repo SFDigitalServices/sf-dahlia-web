@@ -26,8 +26,12 @@ export const showStep = (
   dataSources: DataSources
 ): boolean => {
   const processedConditions = conditions.map((condition) => {
-    const processedCondition = dataSources[condition.dataSource][condition.dataKey]
-    return condition.negate ? !processedCondition : !!processedCondition
+    const rawValue = dataSources[condition.dataSource][condition.dataKey]
+    const processedCondition =
+      condition.dataValueToMatch !== undefined
+        ? String(rawValue) === condition.dataValueToMatch
+        : !!rawValue
+    return condition.negate ? !processedCondition : processedCondition
   })
   if (operation === "showStepIfAllPresent") {
     return processedConditions.every(Boolean)
