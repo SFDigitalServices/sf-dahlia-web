@@ -298,110 +298,26 @@
     {
       "stepInfo": {
         "slug": "household-members",
-        "sectionName": "household",
-        "navigationArrival": {
-          "hideStepIfAnyPresent": [
-            {
-              "dataSource": "form",
-              "dataKey": "liveAlone",
-              "dataValueToMatch": "true"
-            }
-          ]
-        }
+        "sectionName": "household"
       },
-      "componentType": "step",
-      "componentName": "AddHouseholdMembers"
-    },
-    {
-      "stepInfo": {
-        "slug": "household-member-form",
-        "sectionName": "household",
-        "dynamicStep": true,
-        "navigationDeparture": {
-          "nextStep": "household-members"
-        },
-        "navigationArrival": {
-          "hideStepIfAnyPresent": [
-            {
-              "dataSource": "form",
-              "dataKey": "liveAlone",
-              "dataValueToMatch": "true"
-            }
-          ]
-        }
-      },
-      "componentType": "step",
-      "componentName": "HouseholdMemberStepWrapper",
+      "componentType": "multiStep",
+      "componentName": "HouseholdMemberMultiStepWrapper",
       "props": {
-        "title": "c3HouseholdMemberForm.title",
-        "description": "c3HouseholdMemberForm.p1"
-      },
-      "children": [
-        {
-          "componentName": "Name",
-          "props": {
-            "label": "label.householdMemberName",
-            "showMiddleName": true,
-            "fieldNames": {
-              "firstName": "householdMemberFirstName",
-              "middleName": "householdMemberMiddleName",
-              "lastName": "householdMemberLastName"
-            }
-          }
+        "fieldNames": {
+          "name": "householdMembers"
         },
-        {
-          "componentName": "DateOfBirth",
-          "props": {
-            "label": "label.dob",
-            "fieldNames": {
-              "birthMonth": "householdMemberBirthMonth",
-              "birthDay": "householdMemberBirthDate",
-              "birthYear": "householdMemberBirthYear"
-            }
-          }
-        },
-        {
-          "componentName": "HouseholdMemberSameAddress",
-          "props": {
-            "label": "label.memberSameAddress",
-            "fieldNames": {
-              "address": "householdMemberAddress"
-            }
-          }
-        },
-        {
-          "componentName": "YesNoRadio",
-          "props": {
-            "label": "label.memberWorkInSf",
-            "note": "c3HouseholdMemberForm.workInSfDesc",
-            "yesText": "b2Contact.claimWorkInSf",
-            "fieldNames": {
-              "question": "householdMemberWorkInSf"
-            }
-          }
-        },
-        {
-          "componentName": "Select",
-          "props": {
-            "label": "label.householdMemberRelationship",
-            "errorMessage": "error.householdMemberRelationship",
-            "defaultOptionName": "label.selectOne",
-            "options": [
-              {
-                "name": "label.spouse",
-                "value": "spouse"
-              },
-              {
-                "name": "label.registeredDomesticPartner",
-                "value": "Registered Domestic Partner"
-              }
-            ],
-            "fieldNames": {
-              "selection": "householdMemberRelation"
-            }
-          }
+        "multiStepFieldNames": {
+          "firstName": "householdMemberFirstName",
+          "middleName": "householdMemberMiddleName",
+          "lastName": "householdMemberLastName",
+          "birthMonth": "householdMemberBirthMonth",
+          "birthDay": "householdMemberBirthDate",
+          "birthYear": "householdMemberBirthYear",
+          "address": "householdMemberAddress",
+          "workInSf": "householdMemberWorkInSf",
+          "relation": "householdMemberRelation"
         }
-      ]
+      }
     },
     {
       "stepInfo": {
