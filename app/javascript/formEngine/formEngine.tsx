@@ -1,5 +1,5 @@
-import React, { useState, useMemo } from "react"
-import { FormEngineProvider, type FormEngineContext } from "./formEngineContext"
+import React, { useState } from "react"
+import { FormEngineProvider, type StaticData, type FormEngineContext } from "./formEngineContext"
 import {
   type FormSchema,
   type StepComponentSchema,
@@ -9,9 +9,6 @@ import {
   generateInitialFormData,
   generateSectionNames,
 } from "./formSchemas"
-import type { RailsListing } from "../modules/listings/SharedHelpers"
-import type { RailsListingPreference } from "../api/types/rails/listings/RailsListingPreferences"
-import { getSeniorBuildingAgeRequirement, listingPreferenceNames } from "../util/listingUtil"
 import RecursiveRenderer from "./recursiveRenderer"
 import { calculateNextStep, calculatePrevStep, updateFormPath } from "../util/formEngineUtil"
 import { useFeatureFlag } from "../hooks/useFeatureFlag"
@@ -20,26 +17,15 @@ import FormEngineDebug from "./FormEngineDebug"
 
 interface FormEngineProps {
   sessionId: string
-  listing: RailsListing
-  preferences: RailsListingPreference[]
   schema: FormSchema
+  staticData: StaticData
 }
 
-const FormEngine = ({ sessionId, listing, preferences, schema }: FormEngineProps) => {
+const FormEngine = ({ sessionId, schema, staticData }: FormEngineProps) => {
   const [formData, setFormData] = useState<Record<string, unknown>>(generateInitialFormData(schema))
   const [currentStepIndex, setCurrentStepIndex] = useState<number>(0)
   const { unleashFlag: formEngineDebug } = useFeatureFlag(UNLEASH_FLAG.FORM_ENGINE_DEBUG, false)
   const parsedSchema = parseFormSchema(schema)
-
-  const dataSources = useMemo(
-    () => ({
-      listing,
-      form: formData,
-      preferenceNames: listingPreferenceNames(listing),
-      seniorBuildingAgeRequirement: getSeniorBuildingAgeRequirement(listing),
-    }),
-    [listing, formData]
-  )
 
   if (typeof parsedSchema === "string") {
     return <h1>{parsedSchema}</h1>
@@ -64,11 +50,13 @@ const FormEngine = ({ sessionId, listing, preferences, schema }: FormEngineProps
     const totalSteps = parsedSchema.children.length
 
     // Update data changes from the current page to calculate next step
-    handleNextStep = (currentFormData: Record<string, unknown>) => {
-      const newStepIndex = calculateNextStep(currentStepIndex, stepInfoMap, {
-        ...dataSources,
-        form: currentFormData,
-      })
+    handleNextStep = () => {
+      const newStepIndex = calculateNextStep(
+        currentStepIndex,
+        stepInfoMap,
+        staticData as Record<string, unknown>,
+        formData
+      )
       if (newStepIndex < totalSteps) {
         setCurrentStepIndex(newStepIndex)
         updateFormPath(newStepIndex, stepInfoMap)
@@ -76,7 +64,12 @@ const FormEngine = ({ sessionId, listing, preferences, schema }: FormEngineProps
     }
 
     handlePrevStep = () => {
-      const newStepIndex = calculatePrevStep(currentStepIndex, stepInfoMap, dataSources)
+      const newStepIndex = calculatePrevStep(
+        currentStepIndex,
+        stepInfoMap,
+        staticData as Record<string, unknown>,
+        formData
+      )
       if (newStepIndex >= 0) {
         setCurrentStepIndex(newStepIndex)
         updateFormPath(newStepIndex, stepInfoMap)
@@ -91,11 +84,9 @@ const FormEngine = ({ sessionId, listing, preferences, schema }: FormEngineProps
   }
 
   const formEngineContextValue: FormEngineContext = {
-    listing,
-    preferences,
-    formData: formData,
     sessionId,
-    dataSources,
+    staticData,
+    formData: formData,
     saveFormData: saveFormData,
     stepInfoMap: stepInfoMap,
     sectionNames: sectionNames,
@@ -112,7 +103,8 @@ const FormEngine = ({ sessionId, listing, preferences, schema }: FormEngineProps
           currentStepIndex={currentStepIndex}
           setCurrentStepIndex={setCurrentStepIndex}
           stepInfoMap={stepInfoMap}
-          dataSources={dataSources}
+          staticData={staticData as Record<string, unknown>}
+          formData={formData}
         />
       )}
       <RecursiveRenderer schema={parsedSchema} />
