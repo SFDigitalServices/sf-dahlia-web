@@ -65,7 +65,10 @@ export const renderWithFormContextWrapper = (
       form: {},
       preferences: {},
     },
-    stepInfoMap: [{ slug: "test", fieldNames: [] }],
+    stepInfoMap: [
+      { slug: "test", fieldNames: [] },
+      { slug: "household-member-form", fieldNames: [] },
+    ],
     sectionNames: [],
     currentStepIndex: 0,
     handleNextStep: jest.fn(),

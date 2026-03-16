@@ -50,7 +50,7 @@ const HouseholdMemberForm = ({
       <Card.Section divider="inset">
         <DateOfBirth
           label={t("label.dob")}
-          ageErrorMessage={t("TODO: error")}
+          ageErrorMessage={"TODO: error"}
           fieldNames={{
             birthMonth: multiStepFieldNames.birthMonth,
             birthDay: multiStepFieldNames.birthDay,

@@ -11,7 +11,7 @@ describe("AddHouseholdMembers", () => {
   const renderAddHouseholdMembers = () => {
     renderWithFormContextWrapper(
       <AddHouseholdMembers
-        householdMembers={[]}
+        householdMembers={[{ householdMemberFirstName: "Member first name" }]}
         handleAddHouseholdMember={jest.fn()}
         handleEditHouseholdMember={jest.fn()}
         handleSubmitHouseholdMembers={jest.fn()}
@@ -27,5 +27,16 @@ describe("AddHouseholdMembers", () => {
   it("renders the primary applicant", () => {
     renderAddHouseholdMembers()
     expect(screen.queryByText("Primary Applicant")).toBeInTheDocument()
+  })
+
+  it("renders the household member", () => {
+    renderAddHouseholdMembers()
+    expect(screen.queryByText("Member first name")).toBeInTheDocument()
+  })
+
+  it("renders the edit and add buttons", () => {
+    renderAddHouseholdMembers()
+    expect(screen.queryByText("+ Add household member")).toBeInTheDocument()
+    expect(screen.getAllByText("Edit")).toHaveLength(2)
   })
 })
