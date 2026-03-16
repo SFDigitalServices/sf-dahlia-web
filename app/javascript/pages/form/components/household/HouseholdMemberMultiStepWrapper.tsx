@@ -22,16 +22,21 @@ interface HouseholdMemberMultiStepWrapperProps {
   }
 }
 
+type multiStepComponents = "AddHouseholdMembers" | "HouseholdMemberForm"
+
 const HouseholdMemberMultiStepWrapper = ({
   fieldNames,
   multiStepFieldNames,
 }: HouseholdMemberMultiStepWrapperProps) => {
-  const formEngineContext = useFormEngineContext()
-  const { currentStepIndex, stepInfoMap, saveFormData } = formEngineContext
+  const { currentStepIndex, stepInfoMap, saveFormData, formData, jumpToStep } =
+    useFormEngineContext()
   const [currentMemberIndex, setCurrentMemberIndex] = useState<number>(0)
-  const [componentToRender, setComponentToRender] = useState<string>("AddHouseholdMembers")
+  const [componentToRender, setComponentToRender] =
+    useState<multiStepComponents>("AddHouseholdMembers")
 
-  const [householdMembers, setHouseholdMembers] = useState<Record<string, unknown>[]>([])
+  const [householdMembers, setHouseholdMembers] = useState<Record<string, unknown>[]>(
+    (formData[fieldNames.name] as Record<string, unknown>[]) || []
+  )
 
   const methods = useForm({
     mode: "onChange",
@@ -40,7 +45,7 @@ const HouseholdMemberMultiStepWrapper = ({
   })
 
   const handleAddHouseholdMember = () => {
-    setHouseholdMembers([...householdMembers, { ...multiStepFieldNames }])
+    setHouseholdMembers([...householdMembers, {}])
     setCurrentMemberIndex(householdMembers.length)
     setComponentToRender("HouseholdMemberForm")
     updateFormPath(currentStepIndex + 1, stepInfoMap)
@@ -50,6 +55,7 @@ const HouseholdMemberMultiStepWrapper = ({
     setCurrentMemberIndex(index)
     setComponentToRender("HouseholdMemberForm")
     updateFormPath(currentStepIndex + 1, stepInfoMap)
+    methods.reset(householdMembers[index] || {})
   }
 
   const handleUpdateHouseholdMember = (data: Record<string, unknown>) => {
@@ -61,7 +67,7 @@ const HouseholdMemberMultiStepWrapper = ({
 
   const handleSubmitHouseholdMembers = () => {
     saveFormData({ [fieldNames.name]: householdMembers })
-    formEngineContext.jumpToStep("household-public-housing")
+    jumpToStep("household-public-housing")
     setComponentToRender("AddHouseholdMembers")
   }
 
