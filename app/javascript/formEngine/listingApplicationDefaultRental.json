@@ -666,10 +666,6 @@
       "componentType": "step",
       "componentName": "ListingApplyLiveWorkPreference",
       "props": {
-        "listingPreferences": {
-          "dataSource": "listing",
-          "dataKey": "preferences"
-        },
         "fieldNames": {
           "liveOrWorkInSf": "_liveOrWorkInSf",
           "liveOrWorkInSfClaimedOption": "_liveOrWorkInSfClaimedOption",
