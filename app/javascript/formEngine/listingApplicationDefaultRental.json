@@ -298,7 +298,16 @@
     {
       "stepInfo": {
         "slug": "household-members",
-        "sectionName": "household"
+        "sectionName": "household",
+        "navigationArrival": {
+          "hideStepIfAnyPresent": [
+            {
+              "dataSource": "form",
+              "dataKey": "liveAlone",
+              "dataValueToMatch": "true"
+            }
+          ]
+        }
       },
       "componentType": "multiStep",
       "componentName": "HouseholdMemberMultiStepWrapper",

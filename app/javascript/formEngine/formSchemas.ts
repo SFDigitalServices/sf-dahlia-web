@@ -85,6 +85,16 @@ export const getFieldNames = (schema: unknown): string[] => {
   return fieldNameGroups.flatMap((group) => Object.values(group))
 }
 
+export const getArrayFieldNames = (schema: unknown): Record<string, string>[] => {
+  const arrayFieldNameGroups = getNestedValuesByKey("arrayFieldNames", schema, []) as Record<
+    string,
+    Record<string, string>
+  >[]
+  return arrayFieldNameGroups.flatMap((group) =>
+    Object.entries(group).map(([key, value]) => ({ name: value.name, [key]: key }))
+  )
+}
+
 const getSectionNames = (schema: unknown): string[] => {
   return getNestedValuesByKey("sectionName", schema, []).filter((name) => typeof name === "string")
 }
@@ -106,14 +116,21 @@ export const getDynamicFieldNames = (schema: FormSchema): string[] => {
 }
 
 export const generateInitialFormData = (schema: FormSchema): Record<string, unknown> => {
-  const dynamicFieldNames = getDynamicFieldNames(schema)
-  const staticFieldNames = getFieldNames(schema).filter(
-    (fieldName) => !dynamicFieldNames.includes(fieldName)
+  const fieldNames = getFieldNames(schema).reduce(
+    (acc, fieldName) => {
+      acc[fieldName] = null
+      return acc
+    },
+    {} as Record<string, unknown>
   )
-  return staticFieldNames.reduce((acc, fieldName) => {
-    acc[fieldName] = null
-    return acc
-  }, {})
+  const arrayFieldNames = getArrayFieldNames(schema).reduce(
+    (acc, field) => {
+      acc[field.name] = []
+      return acc
+    },
+    {} as Record<string, unknown>
+  )
+  return { ...fieldNames, ...arrayFieldNames }
 }
 
 const getInvalidComponentNames = (schema: FormSchema): string[] => {

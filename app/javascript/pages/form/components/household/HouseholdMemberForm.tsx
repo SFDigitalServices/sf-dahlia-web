@@ -26,7 +26,7 @@ const HouseholdMemberForm = ({
     relation: string
   }
   handleUpdateHouseholdMember: (member: Record<string, string>) => void
-  methods: UseFormMethods<Record<string, string>>
+  methods: UseFormMethods<Record<string, unknown>>
 }) => {
   return (
     <Card>
