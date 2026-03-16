@@ -17,9 +17,8 @@ const buildFormEngineContextValue = (
     listing,
     formData,
     saveFormData: jest.fn(),
-    dataSources: {
+    staticData: {
       listing,
-      form: formData,
       preferences: {},
     },
     stepInfoMap: [{ slug: "test", fieldNames }],

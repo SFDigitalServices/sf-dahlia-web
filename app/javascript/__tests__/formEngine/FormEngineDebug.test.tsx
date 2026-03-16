@@ -3,7 +3,6 @@ import { render, screen } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
 import FormEngineDebug from "../../formEngine/FormEngineDebug"
 import { type StepInfoSchema } from "../../formEngine/formSchemas"
-import { type DataSources } from "../../formEngine/formEngineContext"
 import { openRentalListing } from "../data/RailsRentalListing/listing-rental-open"
 
 describe("FormEngineDebug", () => {
@@ -13,20 +12,21 @@ describe("FormEngineDebug", () => {
     { slug: "step-2" },
     { slug: "step-3" },
   ]
-  const dataSources: DataSources = {
-    form: {
-      testField: "test value",
-    },
+  const staticData = {
     listing: openRentalListing,
     preferenceNames: {
       testPref: "test pref",
     },
   }
+  const formData = {
+    testField: "test value",
+  }
   const props = {
     currentStepIndex: 0,
     setCurrentStepIndex,
     stepInfoMap,
-    dataSources,
+    staticData,
+    formData,
   }
 
   const user = userEvent.setup()

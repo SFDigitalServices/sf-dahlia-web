@@ -13,7 +13,7 @@ describe("ListingApplyHouseholdIntro", () => {
     sessionId: "test-session-id",
     formData: {},
     saveFormData: jest.fn(),
-    dataSources: {
+    staticData: {
       listing: openRentalListing,
       form: {},
       preferenceNames: {},

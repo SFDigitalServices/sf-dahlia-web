@@ -8,9 +8,21 @@ import { AppPages, getListingDetailPath } from "../../util/routeUtil"
 import { LoadingOverlay } from "@bloom-housing/ui-components"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import { UNLEASH_FLAG } from "../../modules/constants"
+import {
+  listingPreferenceNames,
+  getSeniorBuildingAgeRequirement,
+  type SeniorBuildingAgeRequirement,
+} from "../../util/listingUtil"
 import FormEngine from "../../formEngine/formEngine"
 import listingApplicationDefaultRental from "../../formEngine/listingApplicationDefaultRental.json"
 import "./overrides.scss"
+
+export interface ListingApplicationStaticData {
+  listing?: RailsListing
+  preferences?: RailsListingPreference[]
+  preferenceNames?: Record<string, string>
+  seniorBuildingAgeRequirement?: SeniorBuildingAgeRequirement | undefined
+}
 
 interface ListingApplyFormProps {
   assetPaths: unknown
@@ -46,11 +58,15 @@ const ListingApplyForm = (props: ListingApplyFormProps) => {
   return (
     <LoadingOverlay isLoading={!flagsReady || (!listing && !preferences)}>
       <Layout title={listing?.Name ? `${listing?.Name} Application` : null}>
-        {formEngine && listing && preferences && (
+        {listing && (
           <FormEngine
             sessionId={sessionId}
-            listing={listing}
-            preferences={preferences}
+            staticData={{
+              listing: listing,
+              preferences: preferences,
+              preferencesNames: listingPreferenceNames(listing),
+              seniorBuildingAgeRequirement: getSeniorBuildingAgeRequirement(listing),
+            }}
             schema={listingApplicationDefaultRental}
           />
         )}

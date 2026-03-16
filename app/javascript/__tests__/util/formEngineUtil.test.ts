@@ -127,8 +127,8 @@ describe("formEngineUtil", () => {
   })
 
   describe("calculate next and previous steps", () => {
+    const formData = {}
     const dataSources = {
-      form: {},
       listing: openRentalListing,
       preferenceNames: {
         testKey1: "test key 1",
@@ -185,19 +185,19 @@ describe("formEngineUtil", () => {
       const currentStepIndex = 0
       it("goes to the next step by default", () => {
         const stepInfoMap = [step0, step1, step2]
-        expect(calculateNextStep(currentStepIndex, stepInfoMap, dataSources)).toBe(
+        expect(calculateNextStep(currentStepIndex, stepInfoMap, dataSources, formData)).toBe(
           currentStepIndex + 1
         )
       })
       it("skips the next step if the next step has 'navigationArrival' that evaluates to false", () => {
         const stepInfoMap = [step0, step1NavigationArrivalSkip, step2]
-        expect(calculateNextStep(currentStepIndex, stepInfoMap, dataSources)).toBe(
+        expect(calculateNextStep(currentStepIndex, stepInfoMap, dataSources, formData)).toBe(
           currentStepIndex + 2
         )
       })
       it("skips to the step specified in 'navigationDeparture.nextStep'", () => {
         const stepInfoMap = [step0NavigationDeparture, step1, step2]
-        expect(calculateNextStep(currentStepIndex, stepInfoMap, dataSources)).toBe(2)
+        expect(calculateNextStep(currentStepIndex, stepInfoMap, dataSources, formData)).toBe(2)
       })
     })
 
@@ -205,19 +205,19 @@ describe("formEngineUtil", () => {
       const currentStepIndex = 2
       it("goes to the previous step by default", () => {
         const stepInfoMap = [step0, step1, step2]
-        expect(calculatePrevStep(currentStepIndex, stepInfoMap, dataSources)).toBe(
+        expect(calculatePrevStep(currentStepIndex, stepInfoMap, dataSources, formData)).toBe(
           currentStepIndex - 1
         )
       })
       it("skips the previous step if the previous step has 'navigationArrival' that evaluates to false", () => {
         const stepInfoMap = [step0, step1NavigationArrivalSkip, step2]
-        expect(calculatePrevStep(currentStepIndex, stepInfoMap, dataSources)).toBe(
+        expect(calculatePrevStep(currentStepIndex, stepInfoMap, dataSources, formData)).toBe(
           currentStepIndex - 2
         )
       })
       it("skips to the step specified in 'navigationDeparture.prevStep'", () => {
         const stepInfoMap = [step0, step1, step2NavigationDeparture]
-        expect(calculatePrevStep(currentStepIndex, stepInfoMap, dataSources)).toBe(0)
+        expect(calculatePrevStep(currentStepIndex, stepInfoMap, dataSources, formData)).toBe(0)
       })
     })
   })
@@ -330,6 +330,7 @@ describe("formEngineUtil", () => {
         },
         writable: true,
       })
+      const formData = {}
       const dataSources = {
         listing: {} as RailsListing,
         form: {
@@ -338,7 +339,7 @@ describe("formEngineUtil", () => {
         preferenceNames: {},
       }
       const pushStateSpy = jest.spyOn(window.history, "pushState")
-      const nextStepIndex = calculateNextStep(3, stepInfoMap, dataSources)
+      const nextStepIndex = calculateNextStep(3, stepInfoMap, dataSources, formData)
       updateFormPath(nextStepIndex, stepInfoMap)
       expect(pushStateSpy).toHaveBeenCalledWith({}, "", "/listing/123/apply/skip-to-this")
     })

@@ -62,7 +62,7 @@ export const renderWithFormContextWrapper = (
     sessionId: "test-session-id-1234",
     formData: formData,
     saveFormData: jest.fn(),
-    dataSources: {
+    staticData: {
       listing: openRentalListing,
       form: {},
       preferenceNames: {},

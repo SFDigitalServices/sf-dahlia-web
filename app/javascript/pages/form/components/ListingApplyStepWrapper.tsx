@@ -28,9 +28,9 @@ const ListingApplyStepWrapper = ({
 }: ListingApplyStepWrapperProps) => {
   const formEngineContext = useFormEngineContext()
   const {
+    staticData,
     formData,
     saveFormData,
-    dataSources,
     stepInfoMap,
     currentStepIndex,
     handleNextStep,
@@ -57,10 +57,10 @@ const ListingApplyStepWrapper = ({
 
   const onSubmit = (data: Record<string, unknown>) => {
     saveFormData({ ...blankValues, ...data })
-    handleNextStep({ ...formData, ...data })
+    handleNextStep()
   }
 
-  const titleString = translationFromDataSchema(title, titleVars, dataSources, householdTitle)
+  const titleString = translationFromDataSchema(title, titleVars, staticData)
 
   return (
     <FormProvider {...methods}>

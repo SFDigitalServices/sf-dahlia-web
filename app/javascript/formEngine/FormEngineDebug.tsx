@@ -1,6 +1,5 @@
 import React, { useState } from "react"
 import { type StepInfoSchema } from "./formSchemas"
-import { type DataSources } from "./formEngineContext"
 import "./FormEngineDebug.scss"
 import { updateFormPath } from "../util/formEngineUtil"
 
@@ -8,7 +7,8 @@ interface FormEngineDebugProps {
   currentStepIndex: number
   stepInfoMap: StepInfoSchema[]
   setCurrentStepIndex: (step: number) => void
-  dataSources: DataSources
+  staticData: Record<string, unknown>
+  formData: Record<string, unknown>
 }
 
 const Steps = ({
@@ -54,7 +54,8 @@ const FormEngineDebug = ({
   currentStepIndex,
   stepInfoMap,
   setCurrentStepIndex,
-  dataSources,
+  staticData,
+  formData,
 }: FormEngineDebugProps) => {
   const [showSteps, setShowSteps] = useState(false)
   const [showStepInfo, setShowStepInfo] = useState(false)
@@ -83,7 +84,7 @@ const FormEngineDebug = ({
           <button onClick={() => setShowFormData(!showFormData)}>
             {showFormData ? "hide" : "show"} form data
           </button>
-          {showFormData && <ViewJson data={dataSources.form} />}
+          {showFormData && <ViewJson data={formData} />}
         </div>
       </div>
       <div>
@@ -91,13 +92,13 @@ const FormEngineDebug = ({
           <button onClick={() => setShowListingData(!showListingData)}>
             {showListingData ? "hide" : "show"} listing data
           </button>
-          {showListingData && <ViewJson data={dataSources.listing} />}
+          {showListingData && <ViewJson data={staticData.listing} />}
         </div>
         <div>
           <button onClick={() => setShowPrefData(!showPrefData)}>
             {showPrefData ? "hide" : "show"} prefs data
           </button>
-          {showPrefData && <ViewJson data={dataSources.preferenceNames} />}
+          {showPrefData && <ViewJson data={staticData.preferences} />}
         </div>
       </div>
     </div>
