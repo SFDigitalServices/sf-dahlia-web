@@ -16,7 +16,6 @@ import { calculateNextStep, calculatePrevStep, updateFormPath } from "../util/fo
 import { useFeatureFlag } from "../hooks/useFeatureFlag"
 import { UNLEASH_FLAG } from "../modules/constants"
 import FormEngineDebug from "./FormEngineDebug"
-import getFormComponentRegistry from "./formComponentRegistry"
 
 interface FormEngineProps {
   listing: RailsListing
@@ -27,7 +26,6 @@ const FormEngine = ({ listing, schema }: FormEngineProps) => {
   const [formData, setFormData] = useState<Record<string, unknown>>(generateInitialFormData(schema))
   const [currentStepIndex, setCurrentStepIndex] = useState<number>(0)
   const { unleashFlag: formEngineDebug } = useFeatureFlag(UNLEASH_FLAG.FORM_ENGINE_DEBUG, false)
-
   const parsedSchema = parseFormSchema(schema)
 
   const dataSources = useMemo(
@@ -112,7 +110,7 @@ const FormEngine = ({ listing, schema }: FormEngineProps) => {
           dataSources={dataSources}
         />
       )}
-      <RecursiveRenderer schema={parsedSchema} componentRegistry={getFormComponentRegistry()} />
+      <RecursiveRenderer schema={parsedSchema} />
     </FormEngineProvider>
   )
 }

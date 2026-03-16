@@ -9,7 +9,14 @@ describe("AddHouseholdMembers", () => {
   })
 
   const renderAddHouseholdMembers = () => {
-    renderWithFormContextWrapper(<AddHouseholdMembers />)
+    renderWithFormContextWrapper(
+      <AddHouseholdMembers
+        householdMembers={[]}
+        handleAddHouseholdMember={jest.fn()}
+        handleEditHouseholdMember={jest.fn()}
+        handleSubmitHouseholdMembers={jest.fn()}
+      />
+    )
   }
 
   it("renders the component", () => {
