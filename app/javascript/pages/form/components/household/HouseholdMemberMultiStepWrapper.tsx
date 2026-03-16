@@ -49,13 +49,14 @@ const HouseholdMemberMultiStepWrapper = ({
     setCurrentMemberIndex(householdMembers.length)
     setComponentToRender("HouseholdMemberForm")
     updateFormPath(currentStepIndex + 1, stepInfoMap)
+    methods.reset({})
   }
 
   const handleEditHouseholdMember = (index: number) => {
     setCurrentMemberIndex(index)
     setComponentToRender("HouseholdMemberForm")
     updateFormPath(currentStepIndex + 1, stepInfoMap)
-    methods.reset(householdMembers[index] || {})
+    methods.reset(householdMembers[index])
   }
 
   const handleUpdateHouseholdMember = (data: Record<string, unknown>) => {
