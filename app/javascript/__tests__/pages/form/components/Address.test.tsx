@@ -12,6 +12,7 @@ const renderAddressComponent = () => {
     addressCity: "primaryApplicantAddressCity",
     addressState: "primaryApplicantAddressState",
     addressZipcode: "primaryApplicantAddressZipcode",
+    mailingAddressCheckbox: "primaryApplicantMailingAddressCheckbox",
     mailingAddressStreet: "primaryApplicantMailingAddressStreet",
     mailingAddressCity: "primaryApplicantMailingAddressCity",
     mailingAddressState: "primaryApplicantMailingAddressState",

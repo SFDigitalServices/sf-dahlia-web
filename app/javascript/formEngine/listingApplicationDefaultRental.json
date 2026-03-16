@@ -61,7 +61,7 @@
           "props": {
             "fieldNames": {
               "email": "primaryApplicantEmail",
-              "noEmail": "primaryApplicantNoEmail"
+              "noEmailCheckbox": "primaryApplicantNoEmailCheckbox"
             },
             "label": "label.applicantEmail",
             "note": "b2Contact.onlyUseYourEmail",
@@ -99,7 +99,9 @@
               "phone": "primaryApplicantPhone",
               "phoneType": "primaryApplicantPhoneType",
               "additionalPhone": "primaryApplicantAdditionalPhone",
-              "additionalPhoneType": "primaryApplicantAdditionalPhoneType"
+              "additionalPhoneType": "primaryApplicantAdditionalPhoneType",
+              "noPhoneCheckbox": "_primaryApplicantNoPhoneCheckbox",
+              "additionalPhoneCheckbox": "_primaryApplicantAdditionalPhoneCheckbox"
             }
           }
         },
@@ -117,6 +119,7 @@
               "addressCity": "primaryApplicantAddressCity",
               "addressState": "primaryApplicantAddressState",
               "addressZipcode": "primaryApplicantAddressZipcode",
+              "mailingAddressCheckbox": "_primaryApplicantMailingAddressCheckbox",
               "mailingAddressStreet": "primaryApplicantMailingAddressStreet",
               "mailingAddressCity": "primaryApplicantMailingAddressCity",
               "mailingAddressState": "primaryApplicantMailingAddressState",
@@ -271,14 +274,23 @@
       "componentName": "ListingApplyHouseholdIntro",
       "props": {
         "fieldNames": {
-          "liveAlone": "_liveAlone"
+          "liveAlone": "liveAlone"
         }
       }
     },
     {
       "stepInfo": {
         "slug": "household-overview",
-        "sectionName": "household"
+        "sectionName": "household",
+        "navigationArrival": {
+          "hideStepIfAnyPresent": [
+            {
+              "dataSource": "form",
+              "dataKey": "liveAlone",
+              "dataValueToMatch": "true"
+            }
+          ]
+        }
       },
       "componentType": "step",
       "componentName": "ListingApplyHouseholdOverview"
@@ -286,7 +298,16 @@
     {
       "stepInfo": {
         "slug": "household-members",
-        "sectionName": "household"
+        "sectionName": "household",
+        "navigationArrival": {
+          "hideStepIfAnyPresent": [
+            {
+              "dataSource": "form",
+              "dataKey": "liveAlone",
+              "dataValueToMatch": "true"
+            }
+          ]
+        }
       },
       "componentType": "step",
       "componentName": "AddHouseholdMembers"
@@ -294,7 +315,16 @@
     {
       "stepInfo": {
         "slug": "household-member-form",
-        "sectionName": "household"
+        "sectionName": "household",
+        "navigationArrival": {
+          "hideStepIfAnyPresent": [
+            {
+              "dataSource": "form",
+              "dataKey": "liveAlone",
+              "dataValueToMatch": "true"
+            }
+          ]
+        }
       },
       "componentType": "step",
       "componentName": "ListingApplyStepWrapper",
@@ -378,6 +408,13 @@
               "dataSource": "form",
               "dataKey": "householdMemberAddress"
             }
+          ],
+          "hideStepIfAnyPresent": [
+            {
+              "dataSource": "form",
+              "dataKey": "liveAlone",
+              "dataValueToMatch": "true"
+            }
           ]
         }
       },
@@ -393,10 +430,7 @@
     {
       "stepInfo": {
         "slug": "household-public-housing",
-        "sectionName": "household",
-        "navigationDeparture": {
-          "prevStep": "household-members"
-        }
+        "sectionName": "household"
       },
       "componentType": "step",
       "componentName": "ListingApplyStepWrapper",
@@ -783,6 +817,7 @@
             "numberDescription": "e7PreferencesPrograms.needCertificateForPreference",
             "readMoreUrl": "https://www.sf.gov/learn-about-certificate-preference-cop",
             "fieldNames": {
+              "checkbox": "_copMemberCheckbox",
               "copMember": "copMember",
               "copNumber": "copNumber"
             }
@@ -797,6 +832,7 @@
             "numberDescription": "e7PreferencesPrograms.needCertificateForPreference",
             "readMoreUrl": "https://www.sf.gov/learn-about-displaced-tenant-housing-preference-dthp",
             "fieldNames": {
+              "checkbox": "_dthpMemberCheckbox",
               "dthpMember": "dthpMember",
               "dthpNumber": "dthpNumber"
             }
