@@ -39,7 +39,6 @@ const StepInfoSchema = z.object({
   navigationArrival: z.optional(NavigationArrivalSchema),
   navigationDeparture: z.optional(NavigationDepartureSchema),
   fieldNames: z.optional(z.array(z.string())),
-  dynamicStep: z.optional(z.boolean()),
 })
 export type StepInfoSchema = z.infer<typeof StepInfoSchema>
 
@@ -103,16 +102,6 @@ export const generateSectionNames = (schema: FormSchema): string[] => {
   return getSectionNames(schema)
     .filter((name) => typeof name === "string")
     .filter((val, idx, ary) => ary.indexOf(val) === idx) // remove duplicates
-}
-
-export const getDynamicFieldNames = (schema: FormSchema): string[] => {
-  return [
-    ...new Set(
-      schema.children
-        .filter((step) => step.stepInfo?.dynamicStep)
-        .flatMap((step) => getFieldNames(step))
-    ),
-  ]
 }
 
 export const generateInitialFormData = (schema: FormSchema): Record<string, unknown> => {
