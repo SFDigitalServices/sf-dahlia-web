@@ -312,10 +312,8 @@
       "componentType": "multiStep",
       "componentName": "HouseholdMemberMultiStepWrapper",
       "props": {
+        "name": "householdMembers",
         "fieldNames": {
-          "name": "householdMembers"
-        },
-        "multiStepFieldNames": {
           "firstName": "householdMemberFirstName",
           "middleName": "householdMemberMiddleName",
           "lastName": "householdMemberLastName",

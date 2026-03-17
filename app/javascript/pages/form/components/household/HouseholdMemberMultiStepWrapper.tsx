@@ -6,10 +6,8 @@ import HouseholdMemberForm from "./HouseholdMemberForm"
 import AddHouseholdMembers from "./AddHouseholdMembers"
 
 interface HouseholdMemberMultiStepWrapperProps {
+  name: string
   fieldNames: {
-    name: string
-  }
-  multiStepFieldNames: {
     firstName: string
     middleName: string
     lastName: string
@@ -26,7 +24,7 @@ type multiStepComponents = "AddHouseholdMembers" | "HouseholdMemberForm"
 
 const HouseholdMemberMultiStepWrapper = ({
   fieldNames,
-  multiStepFieldNames,
+  name,
 }: HouseholdMemberMultiStepWrapperProps) => {
   const { currentStepIndex, stepInfoMap, saveFormData, formData, jumpToStep } =
     useFormEngineContext()
@@ -35,7 +33,7 @@ const HouseholdMemberMultiStepWrapper = ({
     useState<multiStepComponents>("AddHouseholdMembers")
 
   const [householdMembers, setHouseholdMembers] = useState<Record<string, unknown>[]>(
-    (formData[fieldNames.name] as Record<string, unknown>[]) || []
+    (formData[name] as Record<string, unknown>[]) || []
   )
 
   const methods = useForm({
@@ -67,7 +65,7 @@ const HouseholdMemberMultiStepWrapper = ({
   }
 
   const handleSubmitHouseholdMembers = () => {
-    saveFormData({ [fieldNames.name]: householdMembers })
+    saveFormData({ [name]: householdMembers })
     jumpToStep("household-public-housing")
     setComponentToRender("AddHouseholdMembers")
   }
@@ -76,7 +74,7 @@ const HouseholdMemberMultiStepWrapper = ({
     return (
       <FormProvider {...methods}>
         <HouseholdMemberForm
-          multiStepFieldNames={multiStepFieldNames}
+          fieldNames={fieldNames}
           handleUpdateHouseholdMember={handleUpdateHouseholdMember}
           methods={methods}
         />

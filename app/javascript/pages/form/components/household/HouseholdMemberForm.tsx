@@ -10,11 +10,11 @@ import YesNoRadio from "../YesNoRadio"
 import Select from "../Select"
 
 const HouseholdMemberForm = ({
-  multiStepFieldNames,
+  fieldNames,
   handleUpdateHouseholdMember,
   methods,
 }: {
-  multiStepFieldNames: {
+  fieldNames: {
     firstName: string
     middleName: string
     lastName: string
@@ -41,9 +41,9 @@ const HouseholdMemberForm = ({
           label={t("label.householdMemberName")}
           showMiddleName={true}
           fieldNames={{
-            firstName: multiStepFieldNames.firstName,
-            middleName: multiStepFieldNames.middleName,
-            lastName: multiStepFieldNames.lastName,
+            firstName: fieldNames.firstName,
+            middleName: fieldNames.middleName,
+            lastName: fieldNames.lastName,
           }}
         />
       </Card.Section>
@@ -52,9 +52,9 @@ const HouseholdMemberForm = ({
           label={t("label.dob")}
           ageErrorMessage={"TODO: error"}
           fieldNames={{
-            birthMonth: multiStepFieldNames.birthMonth,
-            birthDay: multiStepFieldNames.birthDay,
-            birthYear: multiStepFieldNames.birthYear,
+            birthMonth: fieldNames.birthMonth,
+            birthDay: fieldNames.birthDay,
+            birthYear: fieldNames.birthYear,
           }}
         />
       </Card.Section>
@@ -67,7 +67,7 @@ const HouseholdMemberForm = ({
           note={t("c3HouseholdMemberForm.workInSfDesc")}
           yesText={t("b2Contact.claimWorkInSf")}
           fieldNames={{
-            question: multiStepFieldNames.workInSf,
+            question: fieldNames.workInSf,
           }}
         />
       </Card.Section>
@@ -86,7 +86,7 @@ const HouseholdMemberForm = ({
               value: "Registered Domestic Partner",
             },
           ]}
-          fieldName={multiStepFieldNames.relation}
+          fieldName={fieldNames.relation}
         />
       </Card.Section>
       <Card.Footer className={stepStyles["step-footer"]}>
