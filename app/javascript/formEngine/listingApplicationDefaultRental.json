@@ -328,35 +328,6 @@
     },
     {
       "stepInfo": {
-        "slug": "verify-address-household-member",
-        "sectionName": "household",
-        "navigationArrival": {
-          "showStepIfAnyPresent": [
-            {
-              "dataSource": "form",
-              "dataKey": "householdMemberAddress"
-            }
-          ],
-          "hideStepIfAnyPresent": [
-            {
-              "dataSource": "form",
-              "dataKey": "liveAlone",
-              "dataValueToMatch": "true"
-            }
-          ]
-        }
-      },
-      "componentType": "step",
-      "componentName": "VerifyAddress",
-      "props": {
-        "address": {
-          "dataSource": "form",
-          "dataKey": "householdMemberAddress"
-        }
-      }
-    },
-    {
-      "stepInfo": {
         "slug": "household-public-housing",
         "sectionName": "household",
         "navigationDeparture": {
