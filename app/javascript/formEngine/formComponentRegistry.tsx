@@ -17,14 +17,12 @@ import ListingApplyReviewSummary from "../pages/form/components/ListingApplyRevi
 import ListingApplyReviewApplication from "../pages/form/components/ListingApplyReviewApplication"
 import ListingApplyHouseholdIntro from "../pages/form/components/household/ListingApplyHouseholdIntro"
 import ListingApplyHouseholdOverview from "../pages/form/components/household/ListingApplyHouseholdOverview"
-import AddHouseholdMembers from "../pages/form/components/household/AddHouseholdMembers"
 import HouseholdMemberMultiStepWrapper from "../pages/form/components/household/HouseholdMemberMultiStepWrapper"
 import Select from "../pages/form/components/Select"
 import Radio from "../pages/form/components/Radio"
 import VeteransRadio from "../pages/form/components/VeteransRadio"
 import Currency from "../pages/form/components/Currency"
 import AlternateContactType from "../pages/form/components/AlternateContactType"
-import HouseholdMemberSameAddress from "../pages/form/components/household/HouseholdMemberSameAddress"
 import MonthlyRent from "../pages/form/components/MonthlyRent"
 import PrioritiesCheckbox from "../pages/form/components/PrioritiesCheckbox"
 import PreferenceCheckboxGroup from "../pages/form/components/PreferenceCheckboxGroup"
@@ -44,7 +42,6 @@ export default function getFormComponentRegistry() {
     VerifyAddress,
     ListingApplyHouseholdIntro,
     ListingApplyHouseholdOverview,
-    AddHouseholdMembers,
     HouseholdMemberMultiStepWrapper,
     ListingApplyPreferencesIntro,
     ListingApplyRentBurdenPreference,
@@ -64,7 +61,6 @@ export default function getFormComponentRegistry() {
     Address,
     Currency,
     AlternateContactType,
-    HouseholdMemberSameAddress,
     MonthlyRent,
     PrioritiesCheckbox,
     PreferenceCheckboxGroup,
