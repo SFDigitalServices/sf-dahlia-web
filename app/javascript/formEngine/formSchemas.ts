@@ -84,16 +84,6 @@ export const getFieldNames = (schema: unknown): string[] => {
   return fieldNameGroups.flatMap((group) => Object.values(group))
 }
 
-export const getArrayFieldNames = (schema: unknown): Record<string, string>[] => {
-  const arrayFieldNameGroups = getNestedValuesByKey("arrayFieldNames", schema, []) as Record<
-    string,
-    Record<string, string>
-  >[]
-  return arrayFieldNameGroups.flatMap((group) =>
-    Object.entries(group).map(([key, value]) => ({ name: value.name, [key]: key }))
-  )
-}
-
 const getSectionNames = (schema: unknown): string[] => {
   return getNestedValuesByKey("sectionName", schema, []).filter((name) => typeof name === "string")
 }
@@ -112,14 +102,7 @@ export const generateInitialFormData = (schema: FormSchema): Record<string, unkn
     },
     {} as Record<string, unknown>
   )
-  const arrayFieldNames = getArrayFieldNames(schema).reduce(
-    (acc, field) => {
-      acc[field.name] = []
-      return acc
-    },
-    {} as Record<string, unknown>
-  )
-  return { ...fieldNames, ...arrayFieldNames }
+  return fieldNames
 }
 
 const getInvalidComponentNames = (schema: FormSchema): string[] => {
