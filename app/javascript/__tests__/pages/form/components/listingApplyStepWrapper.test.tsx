@@ -25,6 +25,7 @@ describe("<ListingApplyStepWrapper />", () => {
       currentStepIndex: 0,
       handleNextStep: jest.fn(),
       handlePrevStep: jest.fn(),
+      jumpToStep: jest.fn(),
     }
 
     const title = "b1Name.title"

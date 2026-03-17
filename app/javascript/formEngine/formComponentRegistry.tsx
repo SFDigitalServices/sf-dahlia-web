@@ -15,15 +15,14 @@ import ListingApplyPreferencesIntro from "../pages/form/components/ListingApplyP
 import ListingApplyRentBurdenPreference from "../pages/form/components/ListingApplyRentBurdenPreference"
 import ListingApplyReviewSummary from "../pages/form/components/ListingApplyReviewSummary"
 import ListingApplyReviewApplication from "../pages/form/components/ListingApplyReviewApplication"
-import ListingApplyHouseholdIntro from "../pages/form/components/ListingApplyHouseholdIntro"
-import ListingApplyHouseholdOverview from "../pages/form/components/ListingApplyHouseholdOverview"
-import AddHouseholdMembers from "../pages/form/components/AddHouseholdMembers"
+import ListingApplyHouseholdIntro from "../pages/form/components/household/ListingApplyHouseholdIntro"
+import ListingApplyHouseholdOverview from "../pages/form/components/household/ListingApplyHouseholdOverview"
+import HouseholdMemberMultiStepWrapper from "../pages/form/components/household/HouseholdMemberMultiStepWrapper"
 import Select from "../pages/form/components/Select"
 import Radio from "../pages/form/components/Radio"
 import VeteransRadio from "../pages/form/components/VeteransRadio"
 import Currency from "../pages/form/components/Currency"
 import AlternateContactType from "../pages/form/components/AlternateContactType"
-import HouseholdMemberSameAddress from "../pages/form/components/HouseholdMemberSameAddress"
 import MonthlyRent from "../pages/form/components/MonthlyRent"
 import PrioritiesCheckbox from "../pages/form/components/PrioritiesCheckbox"
 import PreferenceCheckboxGroup from "../pages/form/components/PreferenceCheckboxGroup"
@@ -43,7 +42,7 @@ export default function getFormComponentRegistry() {
     VerifyAddress,
     ListingApplyHouseholdIntro,
     ListingApplyHouseholdOverview,
-    AddHouseholdMembers,
+    HouseholdMemberMultiStepWrapper,
     ListingApplyPreferencesIntro,
     ListingApplyRentBurdenPreference,
     ListingApplyDemographics,
@@ -62,7 +61,6 @@ export default function getFormComponentRegistry() {
     Address,
     Currency,
     AlternateContactType,
-    HouseholdMemberSameAddress,
     MonthlyRent,
     PrioritiesCheckbox,
     PreferenceCheckboxGroup,
