@@ -6,17 +6,8 @@ import AddHouseholdMembers from "./AddHouseholdMembers"
 import VerifyAddress from "../VerifyAddress"
 
 interface HouseholdMemberMultiStepWrapperProps {
-  name: string
   fieldNames: {
-    firstName: string
-    middleName: string
-    lastName: string
-    birthMonth: string
-    birthDay: string
-    birthYear: string
-    address: string
-    workInSf: string
-    relation: string
+    householdMembers: string
   }
 }
 
@@ -26,27 +17,26 @@ type multiStepComponents =
   | "HouseholdMemberVerifyAddress"
 
 const HouseholdMemberMultiStepWrapper = ({
-  fieldNames,
-  name,
+  fieldNames: { householdMembers },
 }: HouseholdMemberMultiStepWrapperProps) => {
   const { saveFormData, formData, handleNextStep } = useFormEngineContext()
   const [currentMemberIndex, setCurrentMemberIndex] = useState<number>(0)
   const [componentToRender, setComponentToRender] =
     useState<multiStepComponents>("AddHouseholdMembers")
 
-  const [householdMembers, setHouseholdMembers] = useState<Record<string, unknown>[]>(
-    (formData[name] as Record<string, unknown>[]) || []
+  const [householdMembersArray, setHouseholdMembersArray] = useState<Record<string, unknown>[]>(
+    (formData[householdMembers] as Record<string, unknown>[]) || []
   )
 
   const methods = useForm({
     mode: "onChange",
     shouldFocusError: false,
-    defaultValues: householdMembers[currentMemberIndex] || {},
+    defaultValues: householdMembersArray[currentMemberIndex],
   })
 
   const handleAddHouseholdMember = () => {
-    setHouseholdMembers([...householdMembers, {}])
-    setCurrentMemberIndex(householdMembers.length)
+    setHouseholdMembersArray([...householdMembersArray, {}])
+    setCurrentMemberIndex(householdMembersArray.length)
     setComponentToRender("HouseholdMemberForm")
     methods.reset({})
   }
@@ -54,20 +44,20 @@ const HouseholdMemberMultiStepWrapper = ({
   const handleEditHouseholdMember = (index: number) => {
     setCurrentMemberIndex(index)
     setComponentToRender("HouseholdMemberForm")
-    methods.reset(householdMembers[index])
+    methods.reset(householdMembersArray[index])
   }
 
   const handleUpdateHouseholdMember = (data: Record<string, unknown>) => {
-    const updatedHouseholdMembers = [...householdMembers]
+    const updatedHouseholdMembers = [...householdMembersArray]
     updatedHouseholdMembers[currentMemberIndex] = data
     saveFormData({ ...formData, householdMembers: updatedHouseholdMembers })
-    setHouseholdMembers(updatedHouseholdMembers)
+    setHouseholdMembersArray(updatedHouseholdMembers)
     setComponentToRender("AddHouseholdMembers")
   }
 
   const handleSubmitHouseholdMembers = () => {
-    saveFormData({ ...formData, householdMembers })
-    handleNextStep({ ...formData, householdMembers })
+    saveFormData({ ...formData, householdMembers: householdMembersArray })
+    handleNextStep({ ...formData, householdMembers: householdMembersArray })
     setComponentToRender("AddHouseholdMembers")
   }
 
@@ -76,7 +66,6 @@ const HouseholdMemberMultiStepWrapper = ({
       return (
         <FormProvider {...methods}>
           <HouseholdMemberForm
-            fieldNames={fieldNames}
             handleUpdateHouseholdMember={handleUpdateHouseholdMember}
             methods={methods}
           />
@@ -86,7 +75,7 @@ const HouseholdMemberMultiStepWrapper = ({
     case "AddHouseholdMembers": {
       return (
         <AddHouseholdMembers
-          householdMembers={householdMembers}
+          householdMembers={householdMembersArray}
           handleAddHouseholdMember={handleAddHouseholdMember}
           handleEditHouseholdMember={handleEditHouseholdMember}
           handleSubmitHouseholdMembers={handleSubmitHouseholdMembers}

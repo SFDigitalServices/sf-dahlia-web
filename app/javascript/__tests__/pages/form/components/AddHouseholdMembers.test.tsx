@@ -11,7 +11,7 @@ describe("AddHouseholdMembers", () => {
   const renderAddHouseholdMembers = () => {
     renderWithFormContextWrapper(
       <AddHouseholdMembers
-        householdMembers={[{ householdMemberFirstName: "Member first name" }]}
+        householdMembers={[{ firstName: "Member first name" }]}
         handleAddHouseholdMember={jest.fn()}
         handleEditHouseholdMember={jest.fn()}
         handleSubmitHouseholdMembers={jest.fn()}

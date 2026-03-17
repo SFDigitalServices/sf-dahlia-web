@@ -328,17 +328,8 @@
       "componentType": "multiStep",
       "componentName": "HouseholdMemberMultiStepWrapper",
       "props": {
-        "name": "householdMembers",
         "fieldNames": {
-          "firstName": "householdMemberFirstName",
-          "middleName": "householdMemberMiddleName",
-          "lastName": "householdMemberLastName",
-          "birthMonth": "householdMemberBirthMonth",
-          "birthDay": "householdMemberBirthDate",
-          "birthYear": "householdMemberBirthYear",
-          "address": "householdMemberAddress",
-          "workInSf": "householdMemberWorkInSf",
-          "relation": "householdMemberRelation"
+          "householdMembers": "householdMembers"
         }
       }
     },

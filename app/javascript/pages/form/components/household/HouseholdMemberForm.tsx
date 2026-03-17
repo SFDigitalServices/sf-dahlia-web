@@ -10,21 +10,9 @@ import YesNoRadio from "../YesNoRadio"
 import Select from "../Select"
 
 const HouseholdMemberForm = ({
-  fieldNames,
   handleUpdateHouseholdMember,
   methods,
 }: {
-  fieldNames: {
-    firstName: string
-    middleName: string
-    lastName: string
-    birthMonth: string
-    birthDay: string
-    birthYear: string
-    address: string
-    workInSf: string
-    relation: string
-  }
   handleUpdateHouseholdMember: (member: Record<string, string>) => void
   methods: UseFormMethods<Record<string, unknown>>
 }) => {
@@ -41,9 +29,9 @@ const HouseholdMemberForm = ({
           label={t("label.householdMemberName")}
           showMiddleName={true}
           fieldNames={{
-            firstName: fieldNames.firstName,
-            middleName: fieldNames.middleName,
-            lastName: fieldNames.lastName,
+            firstName: "firstName",
+            middleName: "middleName",
+            lastName: "lastName",
           }}
         />
       </Card.Section>
@@ -52,9 +40,9 @@ const HouseholdMemberForm = ({
           label={t("label.dob")}
           ageErrorMessage={"TODO: error"}
           fieldNames={{
-            birthMonth: fieldNames.birthMonth,
-            birthDay: fieldNames.birthDay,
-            birthYear: fieldNames.birthYear,
+            birthMonth: "birthMonth",
+            birthDay: "birthDay",
+            birthYear: "birthYear",
           }}
         />
       </Card.Section>
@@ -67,7 +55,7 @@ const HouseholdMemberForm = ({
           note={t("c3HouseholdMemberForm.workInSfDesc")}
           yesText={t("b2Contact.claimWorkInSf")}
           fieldNames={{
-            question: fieldNames.workInSf,
+            question: "workInSf",
           }}
         />
       </Card.Section>
@@ -86,7 +74,7 @@ const HouseholdMemberForm = ({
               value: "Registered Domestic Partner",
             },
           ]}
-          fieldName={fieldNames.relation}
+          fieldName="relation"
         />
       </Card.Section>
       <Card.Footer className={stepStyles["step-footer"]}>

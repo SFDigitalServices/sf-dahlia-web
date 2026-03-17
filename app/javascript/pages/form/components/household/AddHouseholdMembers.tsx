@@ -70,9 +70,9 @@ const AddHouseholdMembers = ({
         <HouseholdMember
           key={index}
           name={getFullName({
-            firstName: member.householdMemberFirstName as string,
-            middleName: member.householdMemberMiddleName as string,
-            lastName: member.householdMemberLastName as string,
+            firstName: member.firstName as string,
+            middleName: member.middleName as string,
+            lastName: member.lastName as string,
           })}
           isPrimary={false}
           index={index}

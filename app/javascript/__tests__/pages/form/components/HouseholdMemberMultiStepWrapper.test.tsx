@@ -10,20 +10,7 @@ describe("HouseholdMemberMultiStepWrapper", () => {
 
   const renderHouseholdMemberMultiStepWrapper = () => {
     renderWithFormContextWrapper(
-      <HouseholdMemberMultiStepWrapper
-        name="householdMembers"
-        fieldNames={{
-          firstName: "firstName",
-          middleName: "middleName",
-          lastName: "lastName",
-          birthMonth: "birthMonth",
-          birthDay: "birthDay",
-          birthYear: "birthYear",
-          address: "address",
-          workInSf: "workInSf",
-          relation: "relation",
-        }}
-      />
+      <HouseholdMemberMultiStepWrapper fieldNames={{ householdMembers: "householdMembers" }} />
     )
   }
 
