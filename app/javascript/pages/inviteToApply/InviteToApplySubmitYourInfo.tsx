@@ -105,9 +105,8 @@ const WhatToDo = ({
     // Handle the API call and open URL
     void (async () => {
       setIsSubmitting(true)
+      window.open(url, "_blank")
       try {
-        // Open the file upload URL after API call (or directly if no applicationNumber)
-        window.open(url, "_blank")
         // Call the API if applicationNumber is provided
         if (applicationNumber) {
           await recordResponse({
