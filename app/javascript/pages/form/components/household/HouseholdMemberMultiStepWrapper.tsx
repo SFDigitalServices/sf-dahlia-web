@@ -60,14 +60,14 @@ const HouseholdMemberMultiStepWrapper = ({
   const handleUpdateHouseholdMember = (data: Record<string, unknown>) => {
     const updatedHouseholdMembers = [...householdMembers]
     updatedHouseholdMembers[currentMemberIndex] = data
-    saveFormData({ ...formData, name: [updatedHouseholdMembers] })
+    saveFormData({ ...formData, householdMembers: updatedHouseholdMembers })
     setHouseholdMembers(updatedHouseholdMembers)
     setComponentToRender("AddHouseholdMembers")
   }
 
   const handleSubmitHouseholdMembers = () => {
-    saveFormData({ name: householdMembers })
-    handleNextStep({ ...formData, name: householdMembers })
+    saveFormData({ ...formData, householdMembers })
+    handleNextStep({ ...formData, householdMembers })
     setComponentToRender("AddHouseholdMembers")
   }
 
