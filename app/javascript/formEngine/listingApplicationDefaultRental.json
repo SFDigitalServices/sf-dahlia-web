@@ -268,7 +268,17 @@
     {
       "stepInfo": {
         "slug": "household-intro",
-        "sectionName": "household"
+        "sectionName": "household",
+        "navigationArrival": {
+          "hideStepIfAnyPresent": [
+            {
+              "dataSource": "form",
+              "dataKey": "householdMembers",
+              "dataValueToMatch": "null",
+              "negate": true
+            }
+          ]
+        }
       },
       "componentType": "step",
       "componentName": "ListingApplyHouseholdIntro",
@@ -288,6 +298,12 @@
               "dataSource": "form",
               "dataKey": "liveAlone",
               "dataValueToMatch": "true"
+            },
+            {
+              "dataSource": "form",
+              "dataKey": "householdMembers",
+              "dataValueToMatch": "null",
+              "negate": true
             }
           ]
         }
