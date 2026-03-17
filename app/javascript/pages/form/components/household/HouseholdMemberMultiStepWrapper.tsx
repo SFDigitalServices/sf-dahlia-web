@@ -26,7 +26,7 @@ const HouseholdMemberMultiStepWrapper = ({
   fieldNames,
   name,
 }: HouseholdMemberMultiStepWrapperProps) => {
-  const { currentStepIndex, stepInfoMap, saveFormData, formData, jumpToStep } =
+  const { currentStepIndex, stepInfoMap, saveFormData, formData, handleNextStep } =
     useFormEngineContext()
   const [currentMemberIndex, setCurrentMemberIndex] = useState<number>(0)
   const [componentToRender, setComponentToRender] =
@@ -65,8 +65,8 @@ const HouseholdMemberMultiStepWrapper = ({
   }
 
   const handleSubmitHouseholdMembers = () => {
-    saveFormData({ [name]: householdMembers })
-    jumpToStep("household-public-housing")
+    saveFormData({ name: householdMembers })
+    handleNextStep({ ...formData, name: householdMembers })
     setComponentToRender("AddHouseholdMembers")
   }
 
