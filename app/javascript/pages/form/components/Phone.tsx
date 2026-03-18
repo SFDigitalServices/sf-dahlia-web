@@ -44,8 +44,9 @@ const Phone = ({
     register,
   } = useFormContext()
 
-  const noPhoneCheckboxValue = watch(noPhoneCheckbox, false)
-  const additionalPhoneCheckboxValue = watch(additionalPhoneCheckbox, false)
+  const noPhoneCheckboxValue = noPhoneCheckbox && watch(noPhoneCheckbox, false)
+  const additionalPhoneCheckboxValue =
+    additionalPhoneCheckbox && watch(additionalPhoneCheckbox, false)
 
   return (
     <fieldset>

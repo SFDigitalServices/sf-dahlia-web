@@ -1,9 +1,9 @@
 import React from "react"
 import { t } from "@bloom-housing/ui-components"
 import { Button, Heading, Card } from "@bloom-housing/ui-seeds"
-import { useFormEngineContext } from "../../../formEngine/formEngineContext"
+import { useFormEngineContext } from "../../../../formEngine/formEngineContext"
 import styles from "./ListingApplyHouseholdIntro.module.scss"
-import stepStyles from "./ListingApplyStepWrapper.module.scss"
+import stepStyles from "../ListingApplyStepWrapper.module.scss"
 
 const ListingApplyHouseholdIntro = () => {
   const formEngineContext = useFormEngineContext()
@@ -25,8 +25,8 @@ const ListingApplyHouseholdIntro = () => {
         <Button
           variant="primary-outlined"
           onClick={() => {
-            saveFormData({ liveAlone: "true" })
-            handleNextStep({ ...formData, liveAlone: "true" })
+            saveFormData({ liveAlone: "true", householdMembers: null })
+            handleNextStep({ ...formData, liveAlone: "true", householdMembers: null })
           }}
         >
           {t("label.liveAlone")}
