@@ -16,7 +16,7 @@ const buildFormEngineContextValue = (
     formData,
     saveFormData: jest.fn(),
     staticData: {
-      openRentalListing,
+      listing: openRentalListing,
       preferences: [],
       preferenceNames: {},
     },

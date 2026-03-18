@@ -37,7 +37,7 @@ const FormEngine = ({ sessionId, schema, staticData }: FormEngineProps) => {
 
   let stepInfoMap: StepInfoSchema[],
     sectionNames: string[],
-    handleNextStep: (currentFormData: Record<string, unknown>) => void,
+    handleNextStep: (currentFormData?: Record<string, unknown>) => void,
     handlePrevStep: () => void,
     jumpToStep: (stepSlug: string) => void
 
@@ -50,12 +50,12 @@ const FormEngine = ({ sessionId, schema, staticData }: FormEngineProps) => {
     const totalSteps = parsedSchema.children.length
 
     // Update data changes from the current page to calculate next step
-    handleNextStep = () => {
+    handleNextStep = (currentFormData?: Record<string, unknown>) => {
       const newStepIndex = calculateNextStep(
         currentStepIndex,
         stepInfoMap,
         staticData as Record<string, unknown>,
-        formData
+        currentFormData || formData
       )
       if (newStepIndex < totalSteps) {
         setCurrentStepIndex(newStepIndex)
