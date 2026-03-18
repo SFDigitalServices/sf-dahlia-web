@@ -1,5 +1,4 @@
 // https://github.com/react-hook-form/react-hook-form/issues/2887#issuecomment-802577357
-/* eslint-disable @typescript-eslint/unbound-method */
 
 import React, { Children } from "react"
 import { useForm, FormProvider } from "react-hook-form"
