@@ -7,7 +7,8 @@ import { type SeniorBuildingAgeRequirement } from "./listingUtil"
 export const translationFromDataSchema = (
   translationKey: string,
   translationVarsData: Record<string, DataSchema>,
-  staticData: Record<string, unknown>
+  staticData: Record<string, unknown>,
+  formData: Record<string, unknown>
 ): string => {
   // TODO WIP
   if (translationHousehold && dataSources.form?.liveAlone === "false") {
@@ -19,7 +20,7 @@ export const translationFromDataSchema = (
   const translationVars = {}
   for (const [varName, data] of Object.entries(translationVarsData)) {
     const { dataSource, dataKey } = data
-    translationVars[varName] = staticData[dataSource][dataKey]
+    translationVars[varName] = { ...staticData, form: formData }[dataSource][dataKey]
   }
   return t(translationKey, translationVars)
 }
@@ -67,7 +68,7 @@ export const calculateNextStep = (
     if (!step.navigationArrival) return idx
     if (step.navigationArrival) {
       const [operation, conditions] = Object.entries(step.navigationArrival)[0]
-      if (showStep(operation, conditions, { ...staticData, ...formData })) return idx
+      if (showStep(operation, conditions, { ...staticData, form: formData })) return idx
     }
   }
   return stepInfoMap.length - 1
@@ -90,7 +91,7 @@ export const calculatePrevStep = (
     }
     if (step.navigationArrival) {
       const [operation, conditions] = Object.entries(step.navigationArrival)[0]
-      if (showStep(operation, conditions, { ...staticData, ...formData })) {
+      if (showStep(operation, conditions, { ...staticData, form: formData })) {
         return i
       }
     }

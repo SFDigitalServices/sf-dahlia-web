@@ -60,7 +60,7 @@ const ListingApplyStepWrapper = ({
     handleNextStep()
   }
 
-  const titleString = translationFromDataSchema(title, titleVars, staticData)
+  const titleString = translationFromDataSchema(title, titleVars, staticData, formData)
 
   return (
     <FormProvider {...methods}>
