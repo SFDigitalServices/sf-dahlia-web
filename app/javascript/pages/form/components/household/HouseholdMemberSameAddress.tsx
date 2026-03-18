@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import React from "react"
 import { t } from "@bloom-housing/ui-components"
-import YesNoRadio from "./YesNoRadio"
-import Address from "./Address"
 import { useFormContext } from "react-hook-form"
 import styles from "./HouseholdMemberSameAddress.module.scss"
+import YesNoRadio from "../YesNoRadio"
+import Address from "../Address"
 
 interface HouseholdMemberSameAddressProps {
   label: string

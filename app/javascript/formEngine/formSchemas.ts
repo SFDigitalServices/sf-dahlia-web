@@ -94,11 +94,15 @@ export const generateSectionNames = (schema: FormSchema): string[] => {
     .filter((val, idx, ary) => ary.indexOf(val) === idx) // remove duplicates
 }
 
-export const generateInitialFormData = (schema: FormSchema): Record<string, null> => {
-  return getFieldNames(schema).reduce((acc, fieldName) => {
-    acc[fieldName] = null
-    return acc
-  }, {})
+export const generateInitialFormData = (schema: FormSchema): Record<string, unknown> => {
+  const fieldNames = getFieldNames(schema).reduce(
+    (acc, fieldName) => {
+      acc[fieldName] = null
+      return acc
+    },
+    {} as Record<string, unknown>
+  )
+  return fieldNames
 }
 
 const getInvalidComponentNames = (schema: FormSchema): string[] => {

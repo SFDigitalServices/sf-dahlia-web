@@ -64,7 +64,7 @@ const CounselorFilter = ({ handleFilterData, clearClick }: CounselorFilterProps)
     clearClick()
   }
   return (
-    <div>
+    <div id="counselor-filter">
       <Heading priority={2}>{t("assistance.housingCounselors.findACounselor.title")}</Heading>
       <p className="text-base my-4">{t("assistance.housingCounselors.findACounselor.subtitle")}</p>
       <Form className="bg-blue-100 mb-6 md:mb-9 p-6" onSubmit={handleSubmit(onSubmit)}>

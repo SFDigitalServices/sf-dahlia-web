@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/unbound-method */
 import Router from "../../navigation/Router"
 
 const MOCK_LOCATION = {

@@ -25,7 +25,7 @@ describe("formEngineUtil", () => {
       const dataSources = {
         form: { userName: "Jane" },
         listing: openRentalListing,
-        preferences: {},
+        preferenceNames: {},
       }
       expect(translationFromDataSchema(translationKey, translationVars, dataSources)).toBe(
         "for Jane"
@@ -37,7 +37,7 @@ describe("formEngineUtil", () => {
     const dataSources = {
       form: {},
       listing: openRentalListing,
-      preferences: {
+      preferenceNames: {
         testKey1: "test key 1",
         testKey2: "test key 2",
         testKey3: "test key 3",
@@ -45,11 +45,11 @@ describe("formEngineUtil", () => {
     }
     const conditions = [
       {
-        dataSource: "preferences",
+        dataSource: "preferenceNames",
         dataKey: "testKey1",
       },
       {
-        dataSource: "preferences",
+        dataSource: "preferenceNames",
         dataKey: "testKey2",
         negate: true,
       },
@@ -57,7 +57,7 @@ describe("formEngineUtil", () => {
 
     const valueCondition = [
       {
-        dataSource: "preferences",
+        dataSource: "preferenceNames",
         dataKey: "testKey3",
         dataValueToMatch: "dataValue3",
       },
@@ -87,8 +87,8 @@ describe("formEngineUtil", () => {
       expect(
         showStep("hideStepIfAnyPresent", valueCondition, {
           ...dataSources,
-          preferences: {
-            ...dataSources.preferences,
+          preferenceNames: {
+            ...dataSources.preferenceNames,
             testKey3: "dataValue3",
           },
         })
@@ -99,8 +99,8 @@ describe("formEngineUtil", () => {
       expect(
         showStep("hideStepIfAnyPresent", valueCondition, {
           ...dataSources,
-          preferences: {
-            ...dataSources.preferences,
+          preferenceNames: {
+            ...dataSources.preferenceNames,
             testKey3: "notDataValue3",
           },
         })
@@ -112,7 +112,7 @@ describe("formEngineUtil", () => {
     const dataSources = {
       form: {},
       listing: openRentalListing,
-      preferences: {
+      preferenceNames: {
         testKey1: "test key 1",
       },
     }
@@ -139,7 +139,7 @@ describe("formEngineUtil", () => {
       navigationArrival: {
         hideStepIfAnyPresent: [
           {
-            dataSource: "preferences",
+            dataSource: "preferenceNames",
             dataKey: "testKey1",
           },
         ],
@@ -317,7 +317,7 @@ describe("formEngineUtil", () => {
         form: {
           noAltContact: true,
         },
-        preferences: {},
+        preferenceNames: {},
       }
       const pushStateSpy = jest.spyOn(window.history, "pushState")
       const nextStepIndex = calculateNextStep(3, stepInfoMap, dataSources)

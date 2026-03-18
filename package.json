@@ -26,6 +26,7 @@
     "babel-loader": "^9.1.2",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
     "bower": "1.8.8",
+    "react-dropzone": "^14.3.8",
     "clone-deep": "^4.0.1",
     "compression-webpack-plugin": "^10.0.0",
     "core-js": "^3.19",
