@@ -359,25 +359,27 @@
     {
       "stepInfo": {
         "slug": "household-monthly-rent",
-        "sectionName": "household"
+        "sectionName": "household",
+        "navigationArrival": {
+          "showStepIfAnyPresent": [
+            {
+              "dataSource": "form",
+              "dataKey": "hasPublicHousing",
+              "dataValueToMatch": "false"
+            }
+          ]
+        }
       },
       "componentType": "step",
-      "componentName": "ListingApplyStepWrapper",
+      "componentName": "ListingApplyMonthlyRent",
       "props": {
-        "title": "c5HouseholdMonthlyRent.titleHousehold",
-        "description": "c5HouseholdMonthlyRent.description"
-      },
-      "children": [
-        {
-          "componentName": "MonthlyRent",
-          "props": {
-            "fieldNames": {
-              "monthlyRent": "householdMonthlyRent",
-              "doesNotPayRent": "householdDoesNotPayRent"
-            }
-          }
+        "title": "c5HouseholdMonthlyRent.titleYou",
+        "householdTitle": "c5HouseholdMonthlyRent.titleHousehold",
+        "description": "c5HouseholdMonthlyRent.description",
+        "fieldNames": {
+          "groupedAddresses": "groupedAddresses"
         }
-      ]
+      }
     },
     {
       "stepInfo": {

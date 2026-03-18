@@ -8,8 +8,13 @@ import { type SeniorBuildingAgeRequirement } from "./listingUtil"
 export const translationFromDataSchema = (
   translationKey: string,
   translationVarsData: Record<string, DataSchema>,
-  dataSources: DataSources
+  dataSources: DataSources,
+  translationHousehold?: string
 ): string => {
+  if (translationHousehold && dataSources.form?.liveAlone === "false") {
+    return t(translationHousehold)
+  }
+
   if (!translationVarsData) return t(translationKey)
 
   const translationVars = {}
@@ -149,6 +154,16 @@ export const getFullName = (person: {
   lastName: string
 }) => {
   return `${person.firstName || ""} ${person.middleName || ""} ${person.lastName || ""}`
+}
+
+export const getAddress = (
+  addressStreet: string,
+  addressCity: string,
+  addressState: string,
+  addressZipcode: string,
+  addressAptOrUnit?: string
+) => {
+  return [addressStreet, addressAptOrUnit, addressCity, addressState, addressZipcode].join(", ")
 }
 
 export const updateFormPath = (newStepIndex: number, stepInfoMap: StepInfoSchema[]) => {

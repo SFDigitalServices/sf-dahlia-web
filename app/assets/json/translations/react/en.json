@@ -179,7 +179,7 @@
   "c4HouseholdPublicHousing.titleYou": "Do you currently live in public housing or HUD project-based housing?",
   "c5HouseholdMonthlyRent.description": "Please enter the total amount that you personally pay toward rent.",
   "c5HouseholdMonthlyRent.howMuchDoMembersPay": "How much do %{members} pay at %{address}?",
-  "c5HouseholdMonthlyRent.howMuchDoYouAndMembersPay": "How much do %{members} pay at %{address}?",
+  "c5HouseholdMonthlyRent.howMuchDoYouAndMembersPay": "How much do you and %{members} pay at %{address}?",
   "c5HouseholdMonthlyRent.howMuchDoYouPay": "How much do You pay at %{address}?",
   "c5HouseholdMonthlyRent.howMuchDoesMemberPay": "How much does %{member} pay at %{address}?",
   "c5HouseholdMonthlyRent.titleHousehold": "How much does your household pay in monthly rent?",
