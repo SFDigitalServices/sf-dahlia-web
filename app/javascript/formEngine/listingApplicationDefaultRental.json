@@ -534,7 +534,7 @@
         "navigationArrival": {
           "showStepIfAllPresent": [
             {
-              "dataSource": "preferences",
+              "dataSource": "preferenceNames",
               "dataKey": "rentBurden"
             },
             {
@@ -566,7 +566,7 @@
         "navigationArrival": {
           "showStepIfAllPresent": [
             {
-              "dataSource": "preferences",
+              "dataSource": "preferenceNames",
               "dataKey": "neighborhoodResidence"
             },
             {
@@ -609,7 +609,7 @@
         "navigationArrival": {
           "showStepIfAllPresent": [
             {
-              "dataSource": "preferences",
+              "dataSource": "preferenceNames",
               "dataKey": "antiDisplacement"
             },
             {
@@ -657,37 +657,32 @@
               "dataKey": "_addressNeighborhoodMatch"
             },
             {
-              "dataSource": "preferences",
+              "dataSource": "preferenceNames",
               "dataKey": "liveWorkInSf"
             }
           ]
         }
       },
       "componentType": "step",
-      "componentName": "ListingApplyStepWrapper",
+      "componentName": "ListingApplyLiveWorkPreference",
       "props": {
-        "title": "e2cLiveWorkPreference.title",
-        "description": "e2cLiveWorkPreference.instructions"
-      },
-      "children": [
-        {
-          "componentName": "LiveWorkPreference",
-          "props": {
-            "listingPreferences": {
-              "dataSource": "listing",
-              "dataKey": "preferences"
-            },
-            "fieldNames": {
-              "liveInSfMember": "liveInSfMember",
-              "liveInSfProofType": "liveInSfProofType",
-              "liveInSfProofDoc": "liveInSfProofDoc",
-              "workInSfMember": "workInSfMember",
-              "workInSfProofType": "workInSfProofType",
-              "workInSfProofDoc": "workInSfProofDoc"
-            }
-          }
+        "fieldNames": {
+          "liveOrWorkInSf": "_liveOrWorkInSf",
+          "liveOrWorkInSfClaimedOption": "_liveOrWorkInSfClaimedOption",
+          "liveInSf": "_liveInSf",
+          "workInSf": "_workInSf",
+          "liveInSfMember": "liveInSfMember",
+          "liveInSfProofType": "liveInSfProofType",
+          "liveInSfFileName": "liveInSfFileName",
+          "liveInSfFileUploadedAt": "liveInSfFileUploadedAt",
+          "workInSfMember": "workInSfMember",
+          "workInSfProofType": "workInSfProofType",
+          "workInSfProofDoc": "workInSfProofDoc",
+          "workInSfFileName": "workInSfFileName",
+          "workInSfFileUploadedAt": "workInSfFileUploadedAt",
+          "optOutLiveWork": "optOutLiveWork"
         }
-      ]
+      }
     },
     {
       "stepInfo": {
@@ -696,11 +691,11 @@
         "navigationArrival": {
           "showStepIfAnyPresent": [
             {
-              "dataSource": "preferences",
+              "dataSource": "preferenceNames",
               "dataKey": "certificateOfPreference"
             },
             {
-              "dataSource": "preferences",
+              "dataSource": "preferenceNames",
               "dataKey": "displacedTenant"
             }
           ]
@@ -753,7 +748,7 @@
         "navigationArrival": {
           "showStepIfAnyPresent": [
             {
-              "dataSource": "preferences",
+              "dataSource": "preferenceNames",
               "dataKey": "veteran"
             }
           ]

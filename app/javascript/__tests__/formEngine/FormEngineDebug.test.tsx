@@ -18,7 +18,7 @@ describe("FormEngineDebug", () => {
       testField: "test value",
     },
     listing: openRentalListing,
-    preferences: {
+    preferenceNames: {
       testPref: "test pref",
     },
   }

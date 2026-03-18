@@ -34,6 +34,7 @@ export default defineConfig(
       "Gruntfile.js",
       ".storybook/**",
       "jest-test-coverage/**",
+      "coverage/**",
     ],
   },
 
