@@ -66,6 +66,7 @@ const renderComponent = (formData: Record<string, unknown> = {}) => {
     currentStepIndex: 0,
     handleNextStep: mockHandleNextStep,
     handlePrevStep: mockHandlePrevStep,
+    jumpToStep: jest.fn(),
   }
 
   render(
