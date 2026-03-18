@@ -4,7 +4,7 @@ import { userEvent } from "@testing-library/user-event"
 import { t } from "@bloom-housing/ui-components"
 import ListingApplyLiveWorkPreference from "../../../../pages/form/components/ListingApplyLiveWorkPreference"
 import { PREFERENCES } from "../../../../modules/constants"
-import { RailsListingPreference } from "../../../../api/types/rails/listings/RailsListingPreferences"
+import type { RailsListingPreference } from "../../../../api/types/rails/listings/RailsListingPreferences"
 import { deleteUploadedProofFile } from "../../../../api/formApiService"
 import { renderWithFormContextWrapper } from "../../../__util__/renderUtils"
 

@@ -56,9 +56,9 @@ const ListingApplyForm = (props: ListingApplyFormProps) => {
   const sessionId = useMemo(() => self.crypto.randomUUID(), [])
 
   return (
-    <LoadingOverlay isLoading={!flagsReady || (!listing && !preferences)}>
+    <LoadingOverlay isLoading={!flagsReady || !listing || !preferences}>
       <Layout title={listing?.Name ? `${listing?.Name} Application` : null}>
-        {listing && (
+        {listing && preferences && (
           <FormEngine
             sessionId={sessionId}
             staticData={{

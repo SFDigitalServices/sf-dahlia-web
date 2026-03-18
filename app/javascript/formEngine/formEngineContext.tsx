@@ -1,6 +1,6 @@
 import React, { createContext, ReactNode, useContext } from "react"
 import type { StepInfoSchema } from "./formSchemas"
-import { ListingApplicationStaticData } from "../pages/form/listing-apply-form"
+import type { ListingApplicationStaticData } from "../pages/form/listing-apply-form"
 
 export type StaticData = Record<string, unknown> & ListingApplicationStaticData
 
