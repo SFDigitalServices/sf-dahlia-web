@@ -46,13 +46,15 @@ const mockSaveFormData = jest.fn()
 
 const renderComponent = (formData: Record<string, unknown> = {}) => {
   const formEngineContextValue = {
-    listing: openRentalListing,
-    preferences: [
-      {
-        preferenceName: PREFERENCES.liveWorkInSf,
-        listingPreferenceID: "test-pref-id",
-      } as RailsListingPreference,
-    ],
+    staticData: {
+      listing: openRentalListing,
+      preferences: [
+        {
+          preferenceName: PREFERENCES.liveWorkInSf,
+          listingPreferenceID: "test-pref-id",
+        } as RailsListingPreference,
+      ],
+    },
     sessionId: "test-session-id",
     formData,
     saveFormData: mockSaveFormData,

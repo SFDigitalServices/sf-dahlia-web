@@ -64,7 +64,7 @@ const ListingApplyForm = (props: ListingApplyFormProps) => {
             staticData={{
               listing: listing,
               preferences: preferences,
-              preferencesNames: listingPreferenceNames(listing),
+              preferenceNames: listingPreferenceNames(listing),
               seniorBuildingAgeRequirement: getSeniorBuildingAgeRequirement(listing),
             }}
             schema={listingApplicationDefaultRental}

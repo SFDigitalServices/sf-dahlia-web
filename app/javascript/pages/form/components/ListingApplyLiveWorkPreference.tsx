@@ -52,8 +52,7 @@ const ListingApplyLiveWorkPreference = ({
   const formEngineContext = useFormEngineContext()
   const {
     sessionId,
-    listing,
-    preferences,
+    staticData: { listing, preferences },
     formData,
     saveFormData,
     stepInfoMap,

@@ -61,6 +61,7 @@ const FormEngineDebug = ({
   const [showStepInfo, setShowStepInfo] = useState(false)
   const [showListingData, setShowListingData] = useState(false)
   const [showFormData, setShowFormData] = useState(false)
+  const [showPrefNameData, setShowPrefNameData] = useState(false)
   const [showPrefData, setShowPrefData] = useState(false)
 
   return (
@@ -93,6 +94,12 @@ const FormEngineDebug = ({
             {showListingData ? "hide" : "show"} listing data
           </button>
           {showListingData && <ViewJson data={staticData.listing} />}
+        </div>
+        <div>
+          <button onClick={() => setShowPrefNameData(!showPrefNameData)}>
+            {showPrefNameData ? "hide" : "show"} pref names data
+          </button>
+          {showPrefNameData && <ViewJson data={staticData.preferenceNames} />}
         </div>
         <div>
           <button onClick={() => setShowPrefData(!showPrefData)}>

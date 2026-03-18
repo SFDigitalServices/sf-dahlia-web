@@ -7,52 +7,33 @@ import ListingApplyStepWrapper from "../../../../pages/form/components/ListingAp
 import { openRentalListing } from "../../../data/RailsRentalListing/listing-rental-open"
 import Phone from "../../../../pages/form/components/Phone"
 
-const listing = openRentalListing
-
 const buildFormEngineContextValue = (
   fieldNames: string[],
   formData: Record<string, unknown> = {}
 ) => {
   return {
-    listing,
+    sessionId: "test-session-id",
     formData,
     saveFormData: jest.fn(),
     staticData: {
-      listing,
-      preferences: {},
+      openRentalListing,
+      preferences: [],
+      preferenceNames: {},
     },
     stepInfoMap: [{ slug: "test", fieldNames }],
     sectionNames: [],
     currentStepIndex: 0,
     handleNextStep: jest.fn(),
     handlePrevStep: jest.fn(),
+    jumpToStep: jest.fn(),
   }
 }
 
 describe("<ListingApplyStepWrapper />", () => {
   it("renders a form step and child components", () => {
     const fieldNames = ["firstName", "middleName", "lastName"]
-    const listing = openRentalListing
-    const sessionId = "test-session-id-1234"
     const formData = { testField: null }
-    const formEngineContextValue = {
-      listing,
-      preferences: [],
-      sessionId,
-      formData,
-      saveFormData: jest.fn(),
-      dataSources: {
-        listing,
-        form: formData,
-        preferenceNames: {},
-      },
-      stepInfoMap: [{ slug: "test", fieldNames }],
-      sectionNames: [],
-      currentStepIndex: 0,
-      handleNextStep: jest.fn(),
-      handlePrevStep: jest.fn(),
-      jumpToStep: jest.fn(),
-    }
+    const formEngineContextValue = buildFormEngineContextValue(fieldNames, formData)
 
     const title = "b1Name.title"
     const label = "label.applicantPhone"
