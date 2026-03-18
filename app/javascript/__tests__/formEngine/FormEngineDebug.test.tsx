@@ -17,6 +17,13 @@ describe("FormEngineDebug", () => {
     preferenceNames: {
       testPref: "test pref",
     },
+    preferences: {
+      unitsAvailable: 1,
+      preferenceProofRequirementDescription: null,
+      preferenceName: "Test Preference Name",
+      listingPreferenceID: "test-preference-id",
+      listingId: "test-listing-id",
+    },
   }
   const formData = {
     testField: "test value",
@@ -83,13 +90,23 @@ describe("FormEngineDebug", () => {
     expect(screen.queryByText(/"Lottery_Status":/)).toBeNull()
   })
 
+  it("toggles preference name data with button", async () => {
+    render(<FormEngineDebug {...props} />)
+
+    await user.click(screen.getByRole("button", { name: /show pref names data/i }))
+    expect(screen.queryByText(/"testPref": "test pref"/)).not.toBeNull()
+
+    await user.click(screen.getByRole("button", { name: /hide pref names data/i }))
+    expect(screen.queryByText(/"testPref": "test pref"/)).toBeNull()
+  })
+
   it("toggles preference data with button", async () => {
     render(<FormEngineDebug {...props} />)
 
     await user.click(screen.getByRole("button", { name: /show prefs data/i }))
-    expect(screen.queryByText(/"testPref": "test pref"/)).not.toBeNull()
+    expect(screen.queryByText(/"preferenceName": "Test Preference Name"/)).not.toBeNull()
 
     await user.click(screen.getByRole("button", { name: /hide prefs data/i }))
-    expect(screen.queryByText(/"testPref": "test pref"/)).toBeNull()
+    expect(screen.queryByText(/"preferenceName": "Test Preference Name"/)).toBeNull()
   })
 })
