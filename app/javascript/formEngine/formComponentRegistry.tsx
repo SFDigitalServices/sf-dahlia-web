@@ -23,7 +23,7 @@ import Radio from "../pages/form/components/Radio"
 import VeteransRadio from "../pages/form/components/VeteransRadio"
 import Currency from "../pages/form/components/Currency"
 import AlternateContactType from "../pages/form/components/AlternateContactType"
-import MonthlyRent from "../pages/form/components/MonthlyRent"
+import ListingApplyMonthlyRent from "../pages/form/components/ListingApplyMonthlyRent"
 import PrioritiesCheckbox from "../pages/form/components/PrioritiesCheckbox"
 import PreferenceCheckboxGroup from "../pages/form/components/PreferenceCheckboxGroup"
 import ListingApplyLiveWorkPreference from "../pages/form/components/ListingApplyLiveWorkPreference"
@@ -43,6 +43,7 @@ export default function getFormComponentRegistry() {
     ListingApplyHouseholdIntro,
     ListingApplyHouseholdOverview,
     HouseholdMemberMultiStepWrapper,
+    ListingApplyMonthlyRent,
     ListingApplyPreferencesIntro,
     ListingApplyLiveWorkPreference,
     ListingApplyRentBurdenPreference,
@@ -62,7 +63,6 @@ export default function getFormComponentRegistry() {
     Address,
     Currency,
     AlternateContactType,
-    MonthlyRent,
     PrioritiesCheckbox,
     PreferenceCheckboxGroup,
     CertificateNumberPreference,
