@@ -206,12 +206,38 @@ describe("Invite to Apply Page", () => {
           }}
         />
       )
+      const button = screen.getByRole("button", {
+        name: t("inviteToApplyPage.submitYourInfo.whatToDo.step3.p4"),
+      })
+
+      await userEvent.click(button)
+      await userEvent.click(button)
+      await userEvent.click(button)
+
+      expect(recordResponse).toHaveBeenCalledTimes(1)
+    })
+
+    it("catches submission error and resets loading overlay state", async () => {
+      ;(recordResponse as jest.Mock).mockRejectedValue(new Error("API error"))
+
+      await renderWithContext(
+        <InviteToApplyPage
+          assetPaths={"/"}
+          urlParams={{
+            deadline: mockFutureDeadline,
+            response: "yes",
+            applicationNumber: "a0o123",
+          }}
+        />
+      )
+
       await userEvent.click(
         screen.getByRole("button", {
           name: t("inviteToApplyPage.submitYourInfo.whatToDo.step3.p4"),
         })
       )
-      expect(recordResponse).toHaveBeenCalled()
+
+      expect(document.querySelector(".loading-state-spinner")).not.toBeInTheDocument()
     })
 
     it("renders submit your info page", async () => {
