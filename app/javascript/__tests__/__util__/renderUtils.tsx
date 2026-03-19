@@ -89,10 +89,9 @@ export const renderWithFormContextWrapper = (
 
   const formEngineContextValue = {
     listing: openRentalListing,
-    preferences: [],
     sessionId: "test-session-id-1234",
-    formData: formData,
     saveFormData: mockSaveFormData,
+    formData: { ...formData },
     staticData: { ...defaultStaticData, ...staticData },
     stepInfoMap: [...stepInfoMap, ...defaultStepInfoMap],
     sectionNames: [],
