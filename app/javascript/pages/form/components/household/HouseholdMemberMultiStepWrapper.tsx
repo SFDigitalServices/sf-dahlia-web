@@ -61,12 +61,21 @@ const HouseholdMemberMultiStepWrapper = ({
     setComponentToRender("AddHouseholdMembers")
   }
 
+  const handleDeleteHouseholdMember = () => {
+    const updatedHouseholdMembers = [...householdMembersArray]
+    updatedHouseholdMembers.splice(currentMemberIndex, 1)
+    saveFormData({ ...formData, householdMembers: updatedHouseholdMembers })
+    setHouseholdMembersArray(updatedHouseholdMembers)
+    setComponentToRender("AddHouseholdMembers")
+  }
+
   switch (componentToRender) {
     case "HouseholdMemberForm": {
       return (
         <FormProvider {...methods}>
           <HouseholdMemberForm
             handleUpdateHouseholdMember={handleUpdateHouseholdMember}
+            handleDeleteHouseholdMember={handleDeleteHouseholdMember}
             methods={methods}
           />
         </FormProvider>

@@ -6,25 +6,22 @@ import styles from "./HouseholdMemberSameAddress.module.scss"
 import YesNoRadio from "../YesNoRadio"
 import Address from "../Address"
 
-interface HouseholdMemberSameAddressProps {
-  label: string
-  fieldNames: {
-    addressStreet: string
-    addressAptOrUnit: string
-    addressCity: string
-    addressState: string
-    addressZipcode: string
-  }
+const fieldNames = {
+  addressStreet: "householdMemberAddressStreet",
+  addressAptOrUnit: "householdMemberAddressAptOrUnit",
+  addressCity: "householdMemberAddressCity",
+  addressState: "householdMemberAddressState",
+  addressZipcode: "householdMemberAddressZipcode",
 }
 
-const HouseholdMemberSameAddress = ({ label, fieldNames }: HouseholdMemberSameAddressProps) => {
+const HouseholdMemberSameAddress = () => {
   const { watch } = useFormContext()
   const hasSameAddress = watch("hasSameAddressAsApplicant")
   const showAddressField = hasSameAddress === "false"
 
   return (
     <fieldset>
-      <legend className="legend-header">{t(label)}</legend>
+      <legend className="legend-header">{t("label.memberSameAddress")}</legend>
       <YesNoRadio fieldNames={{ question: "hasSameAddressAsApplicant" }} />
       {showAddressField && (
         <div className={styles["household-member-address-field"]}>

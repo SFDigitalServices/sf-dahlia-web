@@ -11,9 +11,11 @@ import Select from "../Select"
 
 const HouseholdMemberForm = ({
   handleUpdateHouseholdMember,
+  handleDeleteHouseholdMember,
   methods,
 }: {
   handleUpdateHouseholdMember: (member: Record<string, string>) => void
+  handleDeleteHouseholdMember: () => void
   methods: UseFormMethods<Record<string, unknown>>
 }) => {
   return (
@@ -47,7 +49,7 @@ const HouseholdMemberForm = ({
         />
       </Card.Section>
       <Card.Section divider="inset">
-        <HouseholdMemberSameAddress label={t("label.memberSameAddress")} />
+        <HouseholdMemberSameAddress />
       </Card.Section>
       <Card.Section divider="inset">
         <YesNoRadio
@@ -59,7 +61,7 @@ const HouseholdMemberForm = ({
           }}
         />
       </Card.Section>
-      <Card.Section divider="inset">
+      <Card.Section>
         <Select
           label={t("label.householdMemberRelationship")}
           errorMessage={t("error.householdMemberRelationship")}
@@ -74,7 +76,7 @@ const HouseholdMemberForm = ({
               value: "Registered Domestic Partner",
             },
           ]}
-          fieldName="relation"
+          fieldNames={{ selection: "relation" }}
         />
       </Card.Section>
       <Card.Footer className={stepStyles["step-footer"]}>
@@ -82,8 +84,12 @@ const HouseholdMemberForm = ({
           onClick={() => handleUpdateHouseholdMember(methods.getValues() as Record<string, string>)}
         >
           {t("label.householdMemberSave")}
+          {/* label.householdMemberUpdate */}
         </Button>
       </Card.Footer>
+      <Card.Section className={stepStyles["step-delete-member-subfooter"]}>
+        <button onClick={handleDeleteHouseholdMember}>Delete this person</button>
+      </Card.Section>
     </Card>
   )
 }
