@@ -3,6 +3,7 @@ import { render, cleanup, screen, waitFor } from "@testing-library/react"
 import ForRent from "../../../../javascript/pages/listings/for-rent"
 import { sroRentalListing } from "../../data/RailsRentalListing/listing-rental-sro"
 import { useFeatureFlag } from "../../../hooks/useFeatureFlag"
+import { openRentalListing } from "../../data/RailsRentalListing/listing-rental-open"
 
 const axios = require("axios")
 
@@ -38,6 +39,13 @@ describe("For Rent", () => {
       disconnect: mockResizeDisconnectFunction,
     })
     window.ResizeObserver = mockResizeObserver
+    Object.defineProperty(window, "localStorage", {
+      value: {
+        getItem: jest.fn(() => null),
+        removeItem: jest.fn(),
+      },
+      writable: true,
+    })
   })
   afterEach(() => {
     cleanup()
@@ -46,8 +54,11 @@ describe("For Rent", () => {
   })
 
   it("renders ForRent component", async () => {
-    axios.get.mockResolvedValue({ data: { listings: [] } })
-
+    axios.get.mockResolvedValue({
+      data: {
+        listings: [openRentalListing],
+      },
+    })
     const { findByText, asFragment } = render(<ForRent assetPaths="/" />)
 
     expect(await findByText("Rent affordable housing")).toBeDefined()

@@ -10,7 +10,7 @@ const renderEmailAddressComponent = (showDontHaveEmailAddress = false) => {
     <EmailAddress
       fieldNames={{
         email: "primaryApplicantEmail",
-        noEmail: "primaryApplicantNoEmail",
+        noEmailCheckbox: "primaryApplicantNoEmail",
       }}
       label="label.applicantEmail"
       note="b2Contact.onlyUseYourEmail"
@@ -35,7 +35,8 @@ describe("EmailAddress", () => {
   it("displays an error message if validation fails", async () => {
     renderEmailAddressComponent()
     const user = userEvent.setup()
-    await user.type(screen.getByLabelText(t("label.applicantEmail")), "invalid-email")
+    const emailInput = screen.getByRole("textbox")
+    await user.type(emailInput, "invalid-email")
     await user.tab()
     expect(screen.getByText(t("error.email"))).toBeInTheDocument()
   })
@@ -44,7 +45,7 @@ describe("EmailAddress", () => {
     renderEmailAddressComponent(true)
     const user = userEvent.setup()
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
-    const emailInput = screen.getByLabelText(t("label.applicantEmail")) as HTMLInputElement
+    const emailInput = screen.getByRole("textbox") as HTMLInputElement
     expect(emailInput.disabled).toBe(false)
     await user.click(screen.getByRole("checkbox", { name: t("label.applicantNoEmail") }))
     expect(emailInput.disabled).toBe(true)

@@ -16,6 +16,8 @@ const renderPhone = () => {
       fieldNames={{
         phone: "primaryApplicantPhone",
         phoneType: "primaryApplicantPhoneType",
+        noPhoneCheckbox: "primaryApplicantNoPhone",
+        additionalPhoneCheckbox: "primaryApplicantAdditionalPhone",
         additionalPhone: "primaryApplicantAdditionalPhone",
         additionalPhoneType: "primaryApplicantAdditionalPhoneType",
       }}
@@ -37,7 +39,7 @@ describe("Phone", () => {
     const noPhoneCheckbox = screen.getByRole("checkbox", { name: t("label.applicantNoPhone") })
     const user = userEvent.setup()
     await user.click(noPhoneCheckbox)
-    expect(screen.getByRole("textbox", { name: t("label.applicantPhone") })).toBeDisabled()
+    expect(screen.getByRole("textbox")).toBeDisabled()
     expect(screen.getByRole("combobox")).toBeDisabled()
   })
 

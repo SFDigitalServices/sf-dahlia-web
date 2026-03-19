@@ -1,0 +1,23 @@
+.household-member {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  .household-member-info {
+    vertical-align: middle;
+    margin: 0 var(--seeds-spacer-label);
+  }
+
+  .household-member-edit {
+    margin: 0 var(--seeds-spacer-label);
+    display: flex;
+    align-items: center;
+    vertical-align: middle;
+  }
+}
+
+.add-member {
+  padding: var(--seeds-spacer-content);
+  display: flex;
+  justify-content: center;
+}

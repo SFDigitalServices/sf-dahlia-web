@@ -1,5 +1,4 @@
 // https://github.com/react-hook-form/react-hook-form/issues/2887#issuecomment-802577357
-/* eslint-disable @typescript-eslint/unbound-method */
 
 import React, { Children } from "react"
 import { useForm, FormProvider } from "react-hook-form"
@@ -69,9 +68,14 @@ const ListingApplyStepWrapper = ({
           {!!descriptionComponent && descriptionComponent}
         </Card.Header>
         <Form onSubmit={methods.handleSubmit(onSubmit)}>
-          {Children.map(children, (child) => (
-            <Card.Section>{child}</Card.Section>
-          ))}
+          {Children.map(children, (child) => {
+            const { schema } = (child as React.ReactElement).props
+            return (
+              <Card.Section divider={schema?.props?.divider === false ? undefined : "inset"}>
+                {child}
+              </Card.Section>
+            )
+          })}
           <Card.Footer className={styles["step-footer"]}>
             <Button variant="primary" type="submit">
               {t("t.next")}

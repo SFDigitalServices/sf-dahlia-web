@@ -9,7 +9,7 @@ interface EmailAddressProps {
   label: string
   fieldNames: {
     email: string
-    noEmail?: string
+    noEmailCheckbox?: string
   }
   showDontHaveEmailAddress?: boolean
   note?: string
@@ -17,7 +17,7 @@ interface EmailAddressProps {
 
 const EmailAddress = ({
   label,
-  fieldNames: { email, noEmail },
+  fieldNames: { email, noEmailCheckbox },
   showDontHaveEmailAddress,
   note,
 }: EmailAddressProps) => {
@@ -26,19 +26,21 @@ const EmailAddress = ({
     formState: { errors },
     setValue,
     clearErrors,
+    watch,
   } = useFormContext()
-  const [noEmailCheckbox, setNoEmailCheckbox] = React.useState(false)
+  const noEmailCheckboxValue = noEmailCheckbox && watch(noEmailCheckbox, false)
   return (
     <fieldset>
+      <legend className="legend-header">{t(label)}</legend>
       <Field
         name={email}
-        label={t(label)}
         register={register}
-        disabled={noEmailCheckbox}
+        disabled={noEmailCheckboxValue}
         subNote={t(note)}
+        placeholder={noEmailCheckboxValue ? t("t.none") : ""}
         className={styles["email-address-field"]}
         validation={{
-          required: !noEmailCheckbox,
+          required: !noEmailCheckboxValue,
           maxLength: LISTING_APPLY_FORMS_INPUT_MAX_LENGTH.email,
           pattern: {
             value: EMAIL_REGEX,
@@ -51,13 +53,12 @@ const EmailAddress = ({
       {showDontHaveEmailAddress && (
         <Field
           type="checkbox"
-          name={noEmail}
+          name={noEmailCheckbox}
           label={t("label.applicantNoEmail")}
+          className={styles["email-address-checkbox"]}
           register={register}
           onChange={(e) => {
-            const isChecked = e.target.checked
-            setNoEmailCheckbox(isChecked)
-            if (isChecked) {
+            if (e.target.checked) {
               setValue(email, "")
               clearErrors(email)
             }

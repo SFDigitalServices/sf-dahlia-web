@@ -34,6 +34,7 @@
           "componentName": "Name",
           "props": {
             "label": "label.yourName",
+            "divider": false,
             "fieldNames": {
               "firstName": "primaryApplicantFirstName",
               "middleName": "primaryApplicantMiddleName",
@@ -60,7 +61,7 @@
           "props": {
             "fieldNames": {
               "email": "primaryApplicantEmail",
-              "noEmail": "primaryApplicantNoEmail"
+              "noEmailCheckbox": "primaryApplicantNoEmailCheckbox"
             },
             "label": "label.applicantEmail",
             "note": "b2Contact.onlyUseYourEmail",
@@ -98,7 +99,9 @@
               "phone": "primaryApplicantPhone",
               "phoneType": "primaryApplicantPhoneType",
               "additionalPhone": "primaryApplicantAdditionalPhone",
-              "additionalPhoneType": "primaryApplicantAdditionalPhoneType"
+              "additionalPhoneType": "primaryApplicantAdditionalPhoneType",
+              "noPhoneCheckbox": "_primaryApplicantNoPhoneCheckbox",
+              "additionalPhoneCheckbox": "_primaryApplicantAdditionalPhoneCheckbox"
             }
           }
         },
@@ -116,6 +119,7 @@
               "addressCity": "primaryApplicantAddressCity",
               "addressState": "primaryApplicantAddressState",
               "addressZipcode": "primaryApplicantAddressZipcode",
+              "mailingAddressCheckbox": "_primaryApplicantMailingAddressCheckbox",
               "mailingAddressStreet": "primaryApplicantMailingAddressStreet",
               "mailingAddressCity": "primaryApplicantMailingAddressCity",
               "mailingAddressState": "primaryApplicantMailingAddressState",
@@ -264,20 +268,45 @@
     {
       "stepInfo": {
         "slug": "household-intro",
-        "sectionName": "household"
+        "sectionName": "household",
+        "navigationArrival": {
+          "hideStepIfAnyPresent": [
+            {
+              "dataSource": "form",
+              "dataKey": "householdMembers",
+              "dataValueToMatch": "null",
+              "negate": true
+            }
+          ]
+        }
       },
       "componentType": "step",
       "componentName": "ListingApplyHouseholdIntro",
       "props": {
         "fieldNames": {
-          "liveAlone": "_liveAlone"
+          "liveAlone": "liveAlone"
         }
       }
     },
     {
       "stepInfo": {
         "slug": "household-overview",
-        "sectionName": "household"
+        "sectionName": "household",
+        "navigationArrival": {
+          "hideStepIfAnyPresent": [
+            {
+              "dataSource": "form",
+              "dataKey": "liveAlone",
+              "dataValueToMatch": "true"
+            },
+            {
+              "dataSource": "form",
+              "dataKey": "householdMembers",
+              "dataValueToMatch": "null",
+              "negate": true
+            }
+          ]
+        }
       },
       "componentType": "step",
       "componentName": "ListingApplyHouseholdOverview"
@@ -285,117 +314,29 @@
     {
       "stepInfo": {
         "slug": "household-members",
-        "sectionName": "household"
-      },
-      "componentType": "step",
-      "componentName": "AddHouseholdMembers"
-    },
-    {
-      "stepInfo": {
-        "slug": "household-member-form",
-        "sectionName": "household"
-      },
-      "componentType": "step",
-      "componentName": "ListingApplyStepWrapper",
-      "props": {
-        "title": "c3HouseholdMemberForm.title",
-        "description": "c3HouseholdMemberForm.p1"
-      },
-      "children": [
-        {
-          "componentName": "Name",
-          "props": {
-            "label": "label.householdMemberName",
-            "showMiddleName": true,
-            "fieldNames": {
-              "firstName": "householdMemberFirstName",
-              "middleName": "householdMemberMiddleName",
-              "lastName": "householdMemberLastName"
-            }
-          }
-        },
-        {
-          "componentName": "DateOfBirth",
-          "props": {
-            "label": "label.dob",
-            "fieldNames": {
-              "birthMonth": "householdMemberBirthMonth",
-              "birthDay": "householdMemberBirthDate",
-              "birthYear": "householdMemberBirthYear"
-            }
-          }
-        },
-        {
-          "componentName": "HouseholdMemberSameAddress",
-          "props": {
-            "fieldNames": {
-              "address": "householdMemberAddress"
-            }
-          }
-        },
-        {
-          "componentName": "YesNoRadio",
-          "props": {
-            "label": "label.memberWorkInSf",
-            "note": "c3HouseholdMemberForm.workInSfDesc",
-            "yesText": "b2Contact.claimWorkInSf",
-            "fieldNames": {
-              "question": "householdMemberWorkInSf"
-            }
-          }
-        },
-        {
-          "componentName": "Select",
-          "props": {
-            "label": "label.householdMemberRelationship",
-            "errorMessage": "error.householdMemberRelationship",
-            "defaultOptionName": "label.selectOne",
-            "options": [
-              {
-                "name": "label.spouse",
-                "value": "spouse"
-              },
-              {
-                "name": "label.registeredDomesticPartner",
-                "value": "Registered Domestic Partner"
-              }
-            ],
-            "fieldNames": {
-              "selection": "householdMemberRelation"
-            }
-          }
-        }
-      ]
-    },
-    {
-      "stepInfo": {
-        "slug": "verify-address-household-member",
         "sectionName": "household",
         "navigationArrival": {
-          "showStepIfAnyPresent": [
+          "hideStepIfAnyPresent": [
             {
               "dataSource": "form",
-              "dataKey": "householdMemberAddress"
+              "dataKey": "liveAlone",
+              "dataValueToMatch": "true"
             }
           ]
         }
       },
-      "componentType": "step",
-      "componentName": "VerifyAddress",
+      "componentType": "multiStep",
+      "componentName": "HouseholdMemberMultiStepWrapper",
       "props": {
-        "address": {
-          "dataSource": "form",
-          "dataKey": "householdMemberAddress"
+        "fieldNames": {
+          "householdMembers": "householdMembers"
         }
       }
     },
     {
       "stepInfo": {
         "slug": "household-public-housing",
-        "sectionName": "household",
-        "navigationDeparture": {
-          "prevStep": "household-members"
-        }
+        "sectionName": "household"
       },
       "componentType": "step",
       "componentName": "ListingApplyStepWrapper",
@@ -593,7 +534,7 @@
         "navigationArrival": {
           "showStepIfAllPresent": [
             {
-              "dataSource": "preferences",
+              "dataSource": "preferenceNames",
               "dataKey": "rentBurden"
             },
             {
@@ -625,7 +566,7 @@
         "navigationArrival": {
           "showStepIfAllPresent": [
             {
-              "dataSource": "preferences",
+              "dataSource": "preferenceNames",
               "dataKey": "neighborhoodResidence"
             },
             {
@@ -668,7 +609,7 @@
         "navigationArrival": {
           "showStepIfAllPresent": [
             {
-              "dataSource": "preferences",
+              "dataSource": "preferenceNames",
               "dataKey": "antiDisplacement"
             },
             {
@@ -716,37 +657,32 @@
               "dataKey": "_addressNeighborhoodMatch"
             },
             {
-              "dataSource": "preferences",
+              "dataSource": "preferenceNames",
               "dataKey": "liveWorkInSf"
             }
           ]
         }
       },
       "componentType": "step",
-      "componentName": "ListingApplyStepWrapper",
+      "componentName": "ListingApplyLiveWorkPreference",
       "props": {
-        "title": "e2cLiveWorkPreference.title",
-        "description": "e2cLiveWorkPreference.instructions"
-      },
-      "children": [
-        {
-          "componentName": "LiveWorkPreference",
-          "props": {
-            "listingPreferences": {
-              "dataSource": "listing",
-              "dataKey": "preferences"
-            },
-            "fieldNames": {
-              "liveInSfMember": "liveInSfMember",
-              "liveInSfProofType": "liveInSfProofType",
-              "liveInSfProofDoc": "liveInSfProofDoc",
-              "workInSfMember": "workInSfMember",
-              "workInSfProofType": "workInSfProofType",
-              "workInSfProofDoc": "workInSfProofDoc"
-            }
-          }
+        "fieldNames": {
+          "liveOrWorkInSf": "_liveOrWorkInSf",
+          "liveOrWorkInSfClaimedOption": "_liveOrWorkInSfClaimedOption",
+          "liveInSf": "_liveInSf",
+          "workInSf": "_workInSf",
+          "liveInSfMember": "liveInSfMember",
+          "liveInSfProofType": "liveInSfProofType",
+          "liveInSfFileName": "liveInSfFileName",
+          "liveInSfFileUploadedAt": "liveInSfFileUploadedAt",
+          "workInSfMember": "workInSfMember",
+          "workInSfProofType": "workInSfProofType",
+          "workInSfProofDoc": "workInSfProofDoc",
+          "workInSfFileName": "workInSfFileName",
+          "workInSfFileUploadedAt": "workInSfFileUploadedAt",
+          "optOutLiveWork": "optOutLiveWork"
         }
-      ]
+      }
     },
     {
       "stepInfo": {
@@ -755,11 +691,11 @@
         "navigationArrival": {
           "showStepIfAnyPresent": [
             {
-              "dataSource": "preferences",
+              "dataSource": "preferenceNames",
               "dataKey": "certificateOfPreference"
             },
             {
-              "dataSource": "preferences",
+              "dataSource": "preferenceNames",
               "dataKey": "displacedTenant"
             }
           ]
@@ -782,6 +718,7 @@
             "numberDescription": "e7PreferencesPrograms.needCertificateForPreference",
             "readMoreUrl": "https://www.sf.gov/learn-about-certificate-preference-cop",
             "fieldNames": {
+              "checkbox": "_copMemberCheckbox",
               "copMember": "copMember",
               "copNumber": "copNumber"
             }
@@ -796,6 +733,7 @@
             "numberDescription": "e7PreferencesPrograms.needCertificateForPreference",
             "readMoreUrl": "https://www.sf.gov/learn-about-displaced-tenant-housing-preference-dthp",
             "fieldNames": {
+              "checkbox": "_dthpMemberCheckbox",
               "dthpMember": "dthpMember",
               "dthpNumber": "dthpNumber"
             }
@@ -810,7 +748,7 @@
         "navigationArrival": {
           "showStepIfAnyPresent": [
             {
-              "dataSource": "preferences",
+              "dataSource": "preferenceNames",
               "dataKey": "veteran"
             }
           ]

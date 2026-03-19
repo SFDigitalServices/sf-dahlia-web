@@ -2,6 +2,7 @@ import React, { useState } from "react"
 import { type StepInfoSchema } from "./formSchemas"
 import { type DataSources } from "./formEngineContext"
 import "./FormEngineDebug.scss"
+import { updateFormPath } from "../util/formEngineUtil"
 
 interface FormEngineDebugProps {
   currentStepIndex: number
@@ -26,7 +27,13 @@ const Steps = ({
           {idx === currentStepIndex ? (
             <span className="dbg-current-step">{stepInfo.slug}</span>
           ) : (
-            <button className="dbg-other-step" onClick={() => setCurrentStepIndex(idx)}>
+            <button
+              className="dbg-other-step"
+              onClick={() => {
+                setCurrentStepIndex(idx)
+                updateFormPath(idx, stepInfoMap)
+              }}
+            >
               {stepInfo.slug}
             </button>
           )}
@@ -90,7 +97,7 @@ const FormEngineDebug = ({
           <button onClick={() => setShowPrefData(!showPrefData)}>
             {showPrefData ? "hide" : "show"} prefs data
           </button>
-          {showPrefData && <ViewJson data={dataSources.preferences} />}
+          {showPrefData && <ViewJson data={dataSources.preferenceNames} />}
         </div>
       </div>
     </div>

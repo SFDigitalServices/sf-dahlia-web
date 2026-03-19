@@ -77,14 +77,16 @@ export const calculatePrevStep = (
   if (prevStepSlug) {
     return stepInfoMap.findIndex((step) => step.slug === prevStepSlug)
   }
-
-  const reversedCurrentStepIndex = stepInfoMap.length - 1 - currentStepIndex
-  for (const [idx, step] of stepInfoMap.reverse().entries()) {
-    if (idx <= reversedCurrentStepIndex) continue
-    if (!step.navigationArrival) return stepInfoMap.length - 1 - idx
+  for (let i = currentStepIndex - 1; i >= 0; i--) {
+    const step = stepInfoMap[i]
+    if (!step.navigationArrival) {
+      return i
+    }
     if (step.navigationArrival) {
       const [operation, conditions] = Object.entries(step.navigationArrival)[0]
-      if (showStep(operation, conditions, dataSources)) return stepInfoMap.length - 1 - idx
+      if (showStep(operation, conditions, dataSources)) {
+        return i
+      }
     }
   }
   return 0
@@ -130,10 +132,30 @@ export const validAge = (
 }
 
 export const getPrimaryApplicantData = (formData: Record<string, unknown>) => {
+  const firstName = formData.primaryApplicantFirstName as string
+  const middleName = formData.primaryApplicantMiddleName as string
+  const lastName = formData.primaryApplicantLastName as string
   return {
-    firstName: formData.primaryApplicantFirstName as string,
-    middleName: formData.primaryApplicantMiddleName as string,
-    lastName: formData.primaryApplicantLastName as string,
+    firstName,
+    middleName,
+    lastName,
     dob: (formData.primaryApplicantDob as string) || "1990-01-01", // TODO: update after DAH-3543
   }
+}
+
+export const getFullName = (person: {
+  firstName: string
+  middleName: string
+  lastName: string
+}) => {
+  return `${person.firstName || ""} ${person.middleName || ""} ${person.lastName || ""}`
+}
+
+export const updateFormPath = (newStepIndex: number, stepInfoMap: StepInfoSchema[]) => {
+  const currentPath = window.location.pathname
+  const paths = currentPath.split("/")
+  const slug = stepInfoMap[newStepIndex].slug
+  paths[paths.length - 1] = slug
+  const newPath = paths.join("/")
+  window.history.pushState({}, "", newPath)
 }

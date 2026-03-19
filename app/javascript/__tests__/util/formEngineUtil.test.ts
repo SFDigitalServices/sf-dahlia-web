@@ -11,8 +11,11 @@ import {
   validDate,
   validAge,
   parseDate,
+  updateFormPath,
 } from "../../util/formEngineUtil"
 import { openRentalListing } from "../data/RailsRentalListing/listing-rental-open"
+import { StepInfoSchema } from "../../formEngine/formSchemas"
+import { RailsListing } from "../../modules/listings/SharedHelpers"
 
 describe("formEngineUtil", () => {
   describe("translationFromDataSchema", () => {
@@ -22,7 +25,7 @@ describe("formEngineUtil", () => {
       const dataSources = {
         form: { userName: "Jane" },
         listing: openRentalListing,
-        preferences: {},
+        preferenceNames: {},
       }
       expect(translationFromDataSchema(translationKey, translationVars, dataSources)).toBe(
         "for Jane"
@@ -34,7 +37,7 @@ describe("formEngineUtil", () => {
     const dataSources = {
       form: {},
       listing: openRentalListing,
-      preferences: {
+      preferenceNames: {
         testKey1: "test key 1",
         testKey2: "test key 2",
         testKey3: "test key 3",
@@ -42,11 +45,11 @@ describe("formEngineUtil", () => {
     }
     const conditions = [
       {
-        dataSource: "preferences",
+        dataSource: "preferenceNames",
         dataKey: "testKey1",
       },
       {
-        dataSource: "preferences",
+        dataSource: "preferenceNames",
         dataKey: "testKey2",
         negate: true,
       },
@@ -54,7 +57,7 @@ describe("formEngineUtil", () => {
 
     const valueCondition = [
       {
-        dataSource: "preferences",
+        dataSource: "preferenceNames",
         dataKey: "testKey3",
         dataValueToMatch: "dataValue3",
       },
@@ -84,8 +87,8 @@ describe("formEngineUtil", () => {
       expect(
         showStep("hideStepIfAnyPresent", valueCondition, {
           ...dataSources,
-          preferences: {
-            ...dataSources.preferences,
+          preferenceNames: {
+            ...dataSources.preferenceNames,
             testKey3: "dataValue3",
           },
         })
@@ -96,8 +99,8 @@ describe("formEngineUtil", () => {
       expect(
         showStep("hideStepIfAnyPresent", valueCondition, {
           ...dataSources,
-          preferences: {
-            ...dataSources.preferences,
+          preferenceNames: {
+            ...dataSources.preferenceNames,
             testKey3: "notDataValue3",
           },
         })
@@ -109,7 +112,7 @@ describe("formEngineUtil", () => {
     const dataSources = {
       form: {},
       listing: openRentalListing,
-      preferences: {
+      preferenceNames: {
         testKey1: "test key 1",
       },
     }
@@ -136,7 +139,7 @@ describe("formEngineUtil", () => {
       navigationArrival: {
         hideStepIfAnyPresent: [
           {
-            dataSource: "preferences",
+            dataSource: "preferenceNames",
             dataKey: "testKey1",
           },
         ],
@@ -273,6 +276,53 @@ describe("formEngineUtil", () => {
         minimumAge: 65,
       }
       expect(validAge(birthDate, minimumAge, seniorBuildingAgeRequirement)).toBe(false)
+    })
+  })
+
+  describe("updateFormPath", () => {
+    const stepInfoMap: StepInfoSchema[] = [
+      { slug: "intro" },
+      { slug: "overview" },
+      { slug: "name" },
+      { slug: "no-alt-contact" },
+      {
+        slug: "skip-over-this",
+        navigationArrival: {
+          hideStepIfAllPresent: [{ dataSource: "form", dataKey: "noAltContact" }],
+        },
+      },
+      { slug: "skip-to-this" },
+    ]
+    it("updates the path of the welcome form pages following the step info map", () => {
+      Object.defineProperty(window, "location", {
+        value: {
+          pathname: "/listing/123/apply/intro",
+        },
+        writable: true,
+      })
+      const pushStateSpy = jest.spyOn(window.history, "pushState")
+      updateFormPath(1, stepInfoMap)
+      expect(pushStateSpy).toHaveBeenCalledWith({}, "", "/listing/123/apply/overview")
+    })
+
+    it("updates the path from an apply form page to an apply form page that has a condition with a skipped page", () => {
+      Object.defineProperty(window, "location", {
+        value: {
+          pathname: "/listing/123/apply/no-alt-contact",
+        },
+        writable: true,
+      })
+      const dataSources = {
+        listing: {} as RailsListing,
+        form: {
+          noAltContact: true,
+        },
+        preferenceNames: {},
+      }
+      const pushStateSpy = jest.spyOn(window.history, "pushState")
+      const nextStepIndex = calculateNextStep(3, stepInfoMap, dataSources)
+      updateFormPath(nextStepIndex, stepInfoMap)
+      expect(pushStateSpy).toHaveBeenCalledWith({}, "", "/listing/123/apply/skip-to-this")
     })
   })
 })
