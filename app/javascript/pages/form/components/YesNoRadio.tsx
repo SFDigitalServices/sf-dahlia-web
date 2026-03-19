@@ -2,6 +2,7 @@
 import React from "react"
 import { t, FieldGroup } from "@bloom-housing/ui-components"
 import { useFormContext } from "react-hook-form"
+import styles from "./YesNoRadio.module.scss"
 
 interface YesNoRadioProps {
   label?: string
@@ -20,25 +21,27 @@ const YesNoRadio = ({ label, note, yesText, fieldNames }: YesNoRadioProps) => {
   } = useFormContext()
   const selected = watch(fieldNames?.question)
   return (
-    <FieldGroup
-      fieldGroupClassName="radio-field-group"
-      fieldClassName="radio-field"
-      type="radio"
-      name={fieldNames?.question}
-      groupLabel={label ? t(label) : ""}
-      groupNote={note ? t(note) : ""}
-      {...(selected === "true" && yesText && { groupSubNote: t(yesText) })}
-      error={errors?.[fieldNames?.question]}
-      errorMessage={t("error.pleaseSelectAnOption")}
-      register={register}
-      fields={[
-        { id: `${fieldNames?.question}-yes`, value: "true", label: t("t.yes") },
-        { id: `${fieldNames?.question}-no`, value: "false", label: t("t.no") },
-      ]}
-      validation={{
-        required: true,
-      }}
-    />
+    <div className={styles["radio-group"]}>
+      <FieldGroup
+        fieldGroupClassName="radio-field-group"
+        fieldClassName="radio-field"
+        type="radio"
+        name={fieldNames?.question}
+        groupLabel={label ? t(label) : ""}
+        groupNote={note ? t(note) : ""}
+        {...(selected === "true" && yesText && { groupSubNote: t(yesText) })}
+        error={errors?.[fieldNames?.question]}
+        errorMessage={t("error.pleaseSelectAnOption")}
+        register={register}
+        fields={[
+          { id: `${fieldNames?.question}-yes`, value: "true", label: t("t.yes") },
+          { id: `${fieldNames?.question}-no`, value: "false", label: t("t.no") },
+        ]}
+        validation={{
+          required: true,
+        }}
+      />
+    </div>
   )
 }
 

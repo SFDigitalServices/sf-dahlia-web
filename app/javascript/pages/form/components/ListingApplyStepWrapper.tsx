@@ -12,6 +12,7 @@ import styles from "./ListingApplyStepWrapper.module.scss"
 interface ListingApplyStepWrapperProps {
   title: string
   titleVars?: Record<string, DataSchema>
+  householdTitle?: string
   description?: string
   descriptionComponent?: React.ReactNode
   children: React.ReactNode
@@ -23,6 +24,7 @@ const ListingApplyStepWrapper = ({
   description,
   descriptionComponent,
   children,
+  householdTitle,
 }: ListingApplyStepWrapperProps) => {
   const formEngineContext = useFormEngineContext()
   const {
@@ -52,7 +54,7 @@ const ListingApplyStepWrapper = ({
     handleNextStep({ ...formData, ...data })
   }
 
-  const titleString = translationFromDataSchema(title, titleVars, dataSources)
+  const titleString = translationFromDataSchema(title, titleVars, dataSources, householdTitle)
 
   return (
     <FormProvider {...methods}>
