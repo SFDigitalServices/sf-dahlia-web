@@ -10,7 +10,8 @@ import {
   generateSectionNames,
 } from "./formSchemas"
 import type { RailsListing } from "../modules/listings/SharedHelpers"
-import { listingPreferences, getSeniorBuildingAgeRequirement } from "../util/listingUtil"
+import type { RailsListingPreference } from "../api/types/rails/listings/RailsListingPreferences"
+import { getSeniorBuildingAgeRequirement, listingPreferenceNames } from "../util/listingUtil"
 import RecursiveRenderer from "./recursiveRenderer"
 import { calculateNextStep, calculatePrevStep, updateFormPath } from "../util/formEngineUtil"
 import { useFeatureFlag } from "../hooks/useFeatureFlag"
@@ -18,23 +19,23 @@ import { UNLEASH_FLAG } from "../modules/constants"
 import FormEngineDebug from "./FormEngineDebug"
 
 interface FormEngineProps {
+  sessionId: string
   listing: RailsListing
+  preferences: RailsListingPreference[]
   schema: FormSchema
 }
 
-const FormEngine = ({ listing, schema }: FormEngineProps) => {
+const FormEngine = ({ sessionId, listing, preferences, schema }: FormEngineProps) => {
   const [formData, setFormData] = useState<Record<string, unknown>>(generateInitialFormData(schema))
   const [currentStepIndex, setCurrentStepIndex] = useState<number>(0)
-
   const { unleashFlag: formEngineDebug } = useFeatureFlag(UNLEASH_FLAG.FORM_ENGINE_DEBUG, false)
-
   const parsedSchema = parseFormSchema(schema)
 
   const dataSources = useMemo(
     () => ({
       listing,
       form: formData,
-      preferences: listingPreferences(listing),
+      preferenceNames: listingPreferenceNames(listing),
       seniorBuildingAgeRequirement: getSeniorBuildingAgeRequirement(listing),
     }),
     [listing, formData]
@@ -51,7 +52,8 @@ const FormEngine = ({ listing, schema }: FormEngineProps) => {
   let stepInfoMap: StepInfoSchema[],
     sectionNames: string[],
     handleNextStep: (currentFormData: Record<string, unknown>) => void,
-    handlePrevStep: () => void
+    handlePrevStep: () => void,
+    jumpToStep: (stepSlug: string) => void
 
   if (parsedSchema.componentType === "multiStepLayout") {
     sectionNames = generateSectionNames(parsedSchema)
@@ -80,11 +82,19 @@ const FormEngine = ({ listing, schema }: FormEngineProps) => {
         updateFormPath(newStepIndex, stepInfoMap)
       }
     }
+
+    jumpToStep = (stepSlug: string) => {
+      const stepIndex = stepInfoMap.findIndex((step) => step.slug === stepSlug)
+      setCurrentStepIndex(stepIndex)
+      updateFormPath(stepIndex, stepInfoMap)
+    }
   }
 
   const formEngineContextValue: FormEngineContext = {
     listing,
+    preferences,
     formData: formData,
+    sessionId,
     dataSources,
     saveFormData: saveFormData,
     stepInfoMap: stepInfoMap,
@@ -92,6 +102,7 @@ const FormEngine = ({ listing, schema }: FormEngineProps) => {
     currentStepIndex: currentStepIndex,
     handleNextStep,
     handlePrevStep,
+    jumpToStep,
   }
 
   return (

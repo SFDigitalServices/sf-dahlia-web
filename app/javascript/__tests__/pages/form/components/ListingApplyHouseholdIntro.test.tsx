@@ -2,25 +2,28 @@ import React from "react"
 import { t } from "@bloom-housing/ui-components"
 import { render, screen } from "@testing-library/react"
 import { FormEngineProvider } from "../../../../formEngine/formEngineContext"
-import ListingApplyHouseholdIntro from "../../../../pages/form/components/ListingApplyHouseholdIntro"
+import ListingApplyHouseholdIntro from "../../../../pages/form/components/household/ListingApplyHouseholdIntro"
 import { openRentalListing } from "../../../data/RailsRentalListing/listing-rental-open"
 import userEvent from "@testing-library/user-event"
 
 describe("ListingApplyHouseholdIntro", () => {
   const formEngineContextValue = {
     listing: openRentalListing,
+    preferences: [],
+    sessionId: "test-session-id",
     formData: {},
     saveFormData: jest.fn(),
     dataSources: {
       listing: openRentalListing,
       form: {},
-      preferences: {},
+      preferenceNames: {},
     },
     stepInfoMap: [{ slug: "test", fieldNames: [] }],
     sectionNames: [],
     currentStepIndex: 0,
     handleNextStep: jest.fn(),
     handlePrevStep: jest.fn(),
+    jumpToStep: jest.fn(),
   }
 
   beforeEach(() => {
@@ -37,7 +40,10 @@ describe("ListingApplyHouseholdIntro", () => {
   })
   it("skips to the next section if alone", async () => {
     await user.click(screen.getByText(t("label.liveAlone")))
-    expect(formEngineContextValue.handleNextStep).toHaveBeenCalledWith({ liveAlone: "true" })
+    expect(formEngineContextValue.handleNextStep).toHaveBeenCalledWith({
+      liveAlone: "true",
+      householdMembers: null,
+    })
   })
   it("goes to the next page if there are household members", async () => {
     await user.click(screen.getByText(t("label.otherPeople")))

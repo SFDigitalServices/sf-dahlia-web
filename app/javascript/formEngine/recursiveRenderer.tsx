@@ -5,7 +5,6 @@ import getFormComponentRegistry from "./formComponentRegistry"
 interface FormEngineProps {
   schema: ComponentSchema & Record<string, unknown>
 }
-
 const componentRegistry = getFormComponentRegistry()
 
 const RecursiveRenderer = ({ schema }: FormEngineProps) => {
