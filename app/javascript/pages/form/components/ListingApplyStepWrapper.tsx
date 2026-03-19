@@ -56,9 +56,8 @@ const ListingApplyStepWrapper = ({
   })
 
   const onSubmit = (data: Record<string, unknown>) => {
-    const nextFormData = { ...formData, ...blankValues, ...data }
-    saveFormData(nextFormData)
-    handleNextStep(nextFormData)
+    saveFormData({ ...blankValues, ...data })
+    handleNextStep({ ...formData, ...blankValues, ...data })
   }
 
   const titleString = translationFromDataSchema(title, titleVars, staticData, formData)

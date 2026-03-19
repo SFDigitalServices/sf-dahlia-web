@@ -18,9 +18,10 @@ export const translationFromDataSchema = (
   if (!translationVarsData) return t(translationKey)
 
   const translationVars = {}
+  const dataSources = { ...staticData, form: formData }
   for (const [varName, data] of Object.entries(translationVarsData)) {
     const { dataSource, dataKey } = data
-    translationVars[varName] = { ...staticData, form: formData }[dataSource][dataKey]
+    translationVars[varName] = dataSources[dataSource][dataKey]
   }
   return t(translationKey, translationVars)
 }
@@ -62,13 +63,14 @@ export const calculateNextStep = (
   if (nextStepSlug) {
     return stepInfoMap.findIndex((step) => step.slug === nextStepSlug)
   }
+  const dataSources = { ...staticData, form: formData }
 
   for (const [idx, step] of stepInfoMap.entries()) {
     if (idx <= currentStepIndex) continue
     if (!step.navigationArrival) return idx
     if (step.navigationArrival) {
       const [operation, conditions] = Object.entries(step.navigationArrival)[0]
-      if (showStep(operation, conditions, { ...staticData, form: formData })) return idx
+      if (showStep(operation, conditions, dataSources)) return idx
     }
   }
   return stepInfoMap.length - 1
@@ -84,6 +86,8 @@ export const calculatePrevStep = (
   if (prevStepSlug) {
     return stepInfoMap.findIndex((step) => step.slug === prevStepSlug)
   }
+  const dataSources = { ...staticData, form: formData }
+
   for (let i = currentStepIndex - 1; i >= 0; i--) {
     const step = stepInfoMap[i]
     if (!step.navigationArrival) {
@@ -91,7 +95,7 @@ export const calculatePrevStep = (
     }
     if (step.navigationArrival) {
       const [operation, conditions] = Object.entries(step.navigationArrival)[0]
-      if (showStep(operation, conditions, { ...staticData, form: formData })) {
+      if (showStep(operation, conditions, dataSources)) {
         return i
       }
     }
