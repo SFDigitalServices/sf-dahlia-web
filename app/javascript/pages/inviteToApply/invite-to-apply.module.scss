@@ -134,21 +134,18 @@
       margin-bottom: var(--seeds-spacer-header);
     }
     ul:not(.submitYourInfoList) {
-      all: unset;
-      display: list-item;
       list-style-type: disc;
       margin-left: var(--seeds-spacer-section);
     }
     ol {
-      display: list-item;
       list-style-type: decimal;
       margin-left: var(--seeds-spacer-section);
       padding-bottom: var(--seeds-spacer-header);
     }
-    .iconList {
-      margin-left: var(--seeds-spacer-text);
-      list-style-type: none;
+    ul.iconList {
+      margin-left: 0;
       li {
+        list-style-type: none;
         background-image: url("/images/icon-document.svg");
         background-repeat: no-repeat;
         padding: var(--seeds-spacer-text) 0 0 var(--seeds-spacer-section);
@@ -189,6 +186,17 @@
     button {
       margin: var(--seeds-spacer-header) 0;
     }
+    .loadingOverlay {
+      --loading-state-height: none;
+      padding: var(--seeds-s1) 0;
+      width: var(--seeds-width-xs);
+
+      :global {
+        .loading-state-spinner {
+          padding: var(--seeds-s3);
+        }
+      }
+    }
   }
 
   .submitYourInfoIcons {
@@ -206,8 +214,6 @@
 
   .submitYourInfoList {
     li {
-      all: unset;
-      display: list-item;
       list-style-type: disc;
       margin-left: var(--seeds-spacer-label);
     }
