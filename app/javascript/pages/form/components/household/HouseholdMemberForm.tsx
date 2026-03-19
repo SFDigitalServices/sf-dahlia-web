@@ -13,10 +13,12 @@ const HouseholdMemberForm = ({
   handleUpdateHouseholdMember,
   handleDeleteHouseholdMember,
   methods,
+  isEditing,
 }: {
   handleUpdateHouseholdMember: (member: Record<string, string>) => void
   handleDeleteHouseholdMember: () => void
   methods: UseFormMethods<Record<string, unknown>>
+  isEditing: boolean
 }) => {
   return (
     <Card>
@@ -83,13 +85,14 @@ const HouseholdMemberForm = ({
         <Button
           onClick={() => handleUpdateHouseholdMember(methods.getValues() as Record<string, string>)}
         >
-          {t("label.householdMemberSave")}
-          {/* label.householdMemberUpdate */}
+          {isEditing ? t("label.householdMemberUpdate") : t("label.householdMemberSave")}
         </Button>
       </Card.Footer>
-      <Card.Section className={stepStyles["step-delete-member-subfooter"]}>
-        <button onClick={handleDeleteHouseholdMember}>Delete this person</button>
-      </Card.Section>
+      {isEditing && (
+        <Card.Section className={stepStyles["step-delete-member-subfooter"]}>
+          <button onClick={handleDeleteHouseholdMember}>Delete this person</button>
+        </Card.Section>
+      )}
     </Card>
   )
 }
