@@ -55,10 +55,8 @@ describe("CertificateNumberPreference", () => {
 
     const checkbox = screen.getByText(t("e7PreferencesPrograms.certOfPreference"))
     await user.click(checkbox)
+    await user.click(screen.getByRole("button", { name: "next" }))
 
-    const submitButton = screen.getByText("next")
-    await user.click(submitButton)
-
-    expect(screen.getByText(t("error.pleaseSelectAnOption"))).not.toBeNull()
+    expect(screen.findByText(t("error.pleaseSelectAnOption"))).not.toBeNull()
   })
 })

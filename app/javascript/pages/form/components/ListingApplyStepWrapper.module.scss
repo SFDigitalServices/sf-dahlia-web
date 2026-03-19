@@ -13,3 +13,13 @@
   }
   text-align: center;
 }
+
+.step-delete-member-subfooter {
+  display: flex;
+  justify-content: center;
+
+  button {
+    color: var(--seeds-color-primary);
+    text-decoration: underline;
+  }
+}

@@ -1,9 +1,8 @@
 /* eslint-disable @typescript-eslint/unbound-method */
-import { Field, t } from "@bloom-housing/ui-components"
+import { Field, Select, t } from "@bloom-housing/ui-components"
 import React from "react"
 import { useFormContext } from "react-hook-form"
 import { Link } from "@bloom-housing/ui-seeds"
-import Select from "./Select"
 import { useFormEngineContext } from "../../../formEngine/formEngineContext"
 import { getPrimaryApplicantData } from "../../../util/formEngineUtil"
 import { getSfGovUrl, renderInlineMarkup } from "../../../util/languageUtil"
@@ -34,7 +33,11 @@ const CertificateNumberPreference = ({
   showDescription = false,
   fieldNames: { checkbox, copMember, copNumber, dthpMember, dthpNumber },
 }: CertificateNumberPreferenceProps) => {
-  const { register, watch } = useFormContext()
+  const {
+    register,
+    watch,
+    formState: { errors },
+  } = useFormContext()
   const { formData } = useFormEngineContext()
   const checkboxValue = watch(checkbox, false)
   const currentPreference = copMember || dthpMember
@@ -47,12 +50,12 @@ const CertificateNumberPreference = ({
   }
   const showAllHouseholdMembers = [
     {
-      name: `${primaryApplicant.firstName} ${primaryApplicant.lastName}`,
+      label: `${primaryApplicant.firstName} ${primaryApplicant.lastName}`,
       // TODO: Update submitted data values after DAH-3681 and DAH-3677
       value: `${primaryApplicant.firstName} ${primaryApplicant.lastName}`,
     },
     {
-      name: `${householdMember.firstName} ${householdMember.lastName}`,
+      label: `${householdMember.firstName} ${householdMember.lastName}`,
       value: `${householdMember.firstName} ${householdMember.lastName}`,
     },
   ]
@@ -83,12 +86,15 @@ const CertificateNumberPreference = ({
         {checkboxValue && (
           <div className={styles["certificate-preference-dropdown"]}>
             <Select
+              id={currentPreference}
+              name={currentPreference}
               options={showAllHouseholdMembers}
-              fieldName={currentPreference}
-              defaultOptionName={t("label.selectOne")}
               label={t("label.applicantPreferencesHouseholdMember")}
               labelClassName="text-base"
+              controlClassName="control"
+              error={!!errors?.[currentPreference]}
               errorMessage={t("error.pleaseSelectAnOption")}
+              register={register}
               validation={{
                 required: checkboxValue,
               }}
