@@ -88,7 +88,6 @@ export const renderWithFormContextWrapper = (
   const mockSaveFormData = jest.fn()
 
   const formEngineContextValue = {
-    listing: openRentalListing,
     sessionId: "test-session-id-1234",
     saveFormData: mockSaveFormData,
     formData: { ...formData },
