@@ -1,5 +1,4 @@
 import type { DataSchema, StepInfoSchema } from "../formEngine/formSchemas"
-import type { DataSources } from "../formEngine/formEngineContext"
 import dayjs, { type Dayjs } from "dayjs"
 import customParseFormat from "dayjs/plugin/customParseFormat"
 import { t } from "@bloom-housing/ui-components"
@@ -8,16 +7,13 @@ import { type SeniorBuildingAgeRequirement } from "./listingUtil"
 export const translationFromDataSchema = (
   translationKey: string,
   translationVarsData: Record<string, DataSchema>,
-  dataSources: DataSources,
-  translationHousehold: string
+  staticData: Record<string, unknown>,
+  formData: Record<string, unknown>
 ): string => {
-  if (translationHousehold && dataSources.form?.liveAlone === "false") {
-    return t(translationHousehold)
-  }
-
   if (!translationVarsData) return t(translationKey)
 
   const translationVars = {}
+  const dataSources = { ...staticData, form: formData }
   for (const [varName, data] of Object.entries(translationVarsData)) {
     const { dataSource, dataKey } = data
     translationVars[varName] = dataSources[dataSource][dataKey]
@@ -28,7 +24,7 @@ export const translationFromDataSchema = (
 export const showStep = (
   operation: string,
   conditions: DataSchema[],
-  dataSources: DataSources
+  dataSources: Record<string, unknown>
 ): boolean => {
   const processedConditions = conditions.map((condition) => {
     const value = dataSources[condition.dataSource][condition.dataKey]
@@ -55,12 +51,14 @@ export const showStep = (
 export const calculateNextStep = (
   currentStepIndex: number,
   stepInfoMap: StepInfoSchema[],
-  dataSources: DataSources
+  staticData: Record<string, unknown>,
+  formData: Record<string, unknown>
 ): number => {
   const nextStepSlug = stepInfoMap[currentStepIndex]?.navigationDeparture?.nextStep
   if (nextStepSlug) {
     return stepInfoMap.findIndex((step) => step.slug === nextStepSlug)
   }
+  const dataSources = { ...staticData, form: formData }
 
   for (const [idx, step] of stepInfoMap.entries()) {
     if (idx <= currentStepIndex) continue
@@ -76,12 +74,15 @@ export const calculateNextStep = (
 export const calculatePrevStep = (
   currentStepIndex: number,
   stepInfoMap: StepInfoSchema[],
-  dataSources: DataSources
+  staticData: Record<string, unknown>,
+  formData: Record<string, unknown>
 ): number => {
   const prevStepSlug = stepInfoMap[currentStepIndex]?.navigationDeparture?.prevStep
   if (prevStepSlug) {
     return stepInfoMap.findIndex((step) => step.slug === prevStepSlug)
   }
+  const dataSources = { ...staticData, form: formData }
+
   for (let i = currentStepIndex - 1; i >= 0; i--) {
     const step = stepInfoMap[i]
     if (!step.navigationArrival) {

@@ -10,7 +10,10 @@ import { getSignInPath } from "../../../util/routeUtil"
 
 const ListingApplyIntro = () => {
   const formEngineContext = useFormEngineContext()
-  const { listing, handleNextStep } = formEngineContext
+  const {
+    staticData: { listing },
+    handleNextStep,
+  } = formEngineContext
 
   const imageUrl =
     listing?.Listing_Images?.length > 0

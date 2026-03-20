@@ -11,7 +11,13 @@ interface ListingApplyFormWrapperProps {
 
 const ListingApplyFormWrapper = ({ children }: ListingApplyFormWrapperProps) => {
   const formEngineContext = useFormEngineContext()
-  const { listing, currentStepIndex, stepInfoMap, sectionNames } = formEngineContext
+  const {
+    staticData: { listing },
+    currentStepIndex,
+    stepInfoMap,
+    sectionNames,
+  } = formEngineContext
+
   const currentStepChild = children[currentStepIndex]
   const currentStepInfo = stepInfoMap[currentStepIndex]
   const currentSectionIndex = sectionNames.indexOf(currentStepInfo.sectionName)
