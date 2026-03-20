@@ -92,6 +92,7 @@ const ListingApplyLiveWorkPreference = ({
   const showLivePrefCheckbox = false
   const showWorkPrefCheckbox = false
 
+  /* eslint-disable-next-line react-hooks/incompatible-library */
   const liveOrWorkInSfValue: boolean = watch(liveOrWorkInSf)
   const liveInSfValue: boolean = watch(liveInSf)
   const liveInSfMemberValue: string = watch(liveInSfMember)

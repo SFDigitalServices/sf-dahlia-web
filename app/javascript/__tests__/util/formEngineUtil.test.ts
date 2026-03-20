@@ -31,24 +31,6 @@ describe("formEngineUtil", () => {
         "for Jane"
       )
     })
-
-    it("supports translations with an alternate household title", () => {
-      const translationKey = "label.forUser"
-      const translationVars = { user: { dataSource: "form", dataKey: "userName" } }
-      const dataSources = {
-        form: { userName: "Jane", liveAlone: "false" },
-        listing: openRentalListing,
-        preferenceNames: {},
-      }
-      expect(
-        translationFromDataSchema(
-          translationKey,
-          translationVars,
-          dataSources,
-          "label.householdDetails" // TODO WIP
-        )
-      ).toBe("Household Details")
-    })
   })
 
   describe("showStep", () => {

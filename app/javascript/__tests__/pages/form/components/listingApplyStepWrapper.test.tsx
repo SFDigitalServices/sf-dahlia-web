@@ -6,6 +6,7 @@ import { FormEngineProvider } from "../../../../formEngine/formEngineContext"
 import ListingApplyStepWrapper from "../../../../pages/form/components/ListingApplyStepWrapper"
 import { openRentalListing } from "../../../data/RailsRentalListing/listing-rental-open"
 import Phone from "../../../../pages/form/components/Phone"
+import YesNoRadio from "../../../../pages/form/components/YesNoRadio"
 
 const buildFormEngineContextValue = (
   fieldNames: string[],
@@ -53,6 +54,32 @@ describe("<ListingApplyStepWrapper />", () => {
 
     expect(screen.getByText(t(title))).not.toBeNull()
     expect(screen.getByText(t(label))).not.toBeNull()
+  })
+
+  it("renders the header component when headerComponentName is provided", () => {
+    const fieldNames = ["phone"]
+    const formEngineContextValue = buildFormEngineContextValue(fieldNames)
+    const yesNoRadioProps = {
+      note: "label.pleaseSelectOne",
+      fieldNames: {
+        question: "hasPublicHousing",
+      },
+    }
+
+    render(
+      <FormEngineProvider value={formEngineContextValue}>
+        <ListingApplyStepWrapper
+          title="c4HouseholdPublicHousing.titleYou"
+          headerComponentName="ListingApplyPublicHousingHeader"
+        >
+          <YesNoRadio {...yesNoRadioProps} />
+        </ListingApplyStepWrapper>
+      </FormEngineProvider>
+    )
+
+    expect(
+      screen.getByText("This does not include Section 8 vouchers or VASH housing choice vouchers.")
+    ).not.toBeNull()
   })
 
   it("clears de-registered field values by merging blankValues into saveFormData", async () => {
