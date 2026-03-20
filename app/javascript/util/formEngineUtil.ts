@@ -10,11 +10,6 @@ export const translationFromDataSchema = (
   staticData: Record<string, unknown>,
   formData: Record<string, unknown>
 ): string => {
-  // TODO WIP
-  if (translationHousehold && dataSources.form?.liveAlone === "false") {
-    return t(translationHousehold)
-  }
-
   if (!translationVarsData) return t(translationKey)
 
   const translationVars = {}

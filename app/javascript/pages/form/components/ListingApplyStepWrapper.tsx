@@ -8,23 +8,22 @@ import { useFormEngineContext } from "../../../formEngine/formEngineContext"
 import type { DataSchema } from "../../../formEngine/formSchemas"
 import { translationFromDataSchema } from "../../../util/formEngineUtil"
 import styles from "./ListingApplyStepWrapper.module.scss"
+import getFormComponentRegistry from "../../../formEngine/formComponentRegistry"
 
 interface ListingApplyStepWrapperProps {
   title: string
   titleVars?: Record<string, DataSchema>
-  householdTitle?: string
+  headerComponentName?: string
   description?: string
-  descriptionComponent?: React.ReactNode
   children: React.ReactNode
 }
 
 const ListingApplyStepWrapper = ({
   title,
   titleVars,
+  headerComponentName,
   description,
-  descriptionComponent,
   children,
-  householdTitle,
 }: ListingApplyStepWrapperProps) => {
   const formEngineContext = useFormEngineContext()
   const {
@@ -49,6 +48,12 @@ const ListingApplyStepWrapper = ({
     return acc
   }, {})
 
+  let headerComponent
+  if (headerComponentName) {
+    const componentRegistry = getFormComponentRegistry()
+    headerComponent = React.createElement(componentRegistry[headerComponentName])
+  }
+
   const methods = useForm({
     mode: "onChange",
     shouldFocusError: false,
@@ -70,11 +75,14 @@ const ListingApplyStepWrapper = ({
             {t("t.back")}
           </Button>
         </Card.Section>
-        <Card.Header divider="inset">
-          <h1 className={styles["step-title"]}>{titleString}</h1>
-          {description && <p className="field-note text-base">{t(description)}</p>}
-          {!!descriptionComponent && descriptionComponent}
-        </Card.Header>
+        {headerComponent ? (
+          <>{headerComponent}</>
+        ) : (
+          <Card.Header divider="inset">
+            <h1 className={styles["step-title"]}>{titleString}</h1>
+            {description && <p className="field-note text-base">{t(description)}</p>}
+          </Card.Header>
+        )}
         <Form onSubmit={methods.handleSubmit(onSubmit)}>
           {Children.map(children, (child) => {
             const { schema } = (child as React.ReactElement).props
