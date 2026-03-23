@@ -20,6 +20,12 @@ const HouseholdMemberForm = ({
   methods: UseFormMethods<Record<string, unknown>>
   isEditing: boolean
 }) => {
+  const onMemberSave = () => {
+    void methods.handleSubmit(() =>
+      handleUpdateHouseholdMember(methods.getValues() as Record<string, string>)
+    )()
+  }
+
   return (
     <Card>
       <Card.Header divider="inset">
@@ -82,9 +88,7 @@ const HouseholdMemberForm = ({
         />
       </Card.Section>
       <Card.Footer className={stepStyles["step-footer"]}>
-        <Button
-          onClick={() => handleUpdateHouseholdMember(methods.getValues() as Record<string, string>)}
-        >
+        <Button onClick={onMemberSave}>
           {isEditing ? t("label.householdMemberUpdate") : t("label.householdMemberSave")}
         </Button>
       </Card.Footer>

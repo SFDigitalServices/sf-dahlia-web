@@ -2,22 +2,11 @@ import React from "react"
 import { screen } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
 import { t } from "@bloom-housing/ui-components"
-import HouseholdMemberSameAddress from "../../../../pages/form/components/HouseholdMemberSameAddress"
+import HouseholdMemberSameAddress from "../../../../pages/form/components/household/HouseholdMemberSameAddress"
 import { renderWithFormContextWrapper } from "../../../__util__/renderUtils"
 
 const renderHouseholdMemberSameAddress = () => {
-  renderWithFormContextWrapper(
-    <HouseholdMemberSameAddress
-      label="label.memberSameAddress"
-      fieldNames={{
-        addressStreet: "householdMemberAddressStreet",
-        addressAptOrUnit: "householdMemberAddressAptOrUnit",
-        addressCity: "householdMemberAddressCity",
-        addressState: "householdMemberAddressState",
-        addressZipcode: "householdMemberAddressZipcode",
-      }}
-    />
-  )
+  renderWithFormContextWrapper(<HouseholdMemberSameAddress />)
 }
 
 describe("HouseholdMemberSameAddress", () => {
