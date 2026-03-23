@@ -32,6 +32,7 @@ import CertificateNumberPreference from "../pages/form/components/CertificateNum
 import ListingApplyIncomeVouchersHeader from "../pages/form/components/ListingApplyIncomeVouchersHeader"
 import ListingApplyHouseholdIncomeHeader from "../pages/form/components/ListingApplyHouseholdIncomeHeader"
 import ListingApplyVeteransProgramsHeader from "../pages/form/components/ListingApplyVeteransProgramsHeader"
+import ListingApplyHouseholdPrioritiesHeader from "../pages/form/components/ListingApplyHouseholdPrioritiesHeader"
 
 export default function getFormComponentRegistry() {
   return {
@@ -72,5 +73,6 @@ export default function getFormComponentRegistry() {
     ListingApplyIncomeVouchersHeader,
     ListingApplyHouseholdIncomeHeader,
     ListingApplyVeteransProgramsHeader,
+    ListingApplyHouseholdPrioritiesHeader,
   }
 }

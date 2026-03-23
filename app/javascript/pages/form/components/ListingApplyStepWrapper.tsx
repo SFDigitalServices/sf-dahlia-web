@@ -71,7 +71,7 @@ const ListingApplyStepWrapper = ({
     <FormProvider {...methods}>
       <Card>
         <Card.Section>
-          <Button variant="text" onClick={handlePrevStep}>
+          <Button variant="text" className={styles["back-button"]} onClick={handlePrevStep}>
             {t("t.back")}
           </Button>
         </Card.Section>
