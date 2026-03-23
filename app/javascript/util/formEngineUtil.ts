@@ -8,8 +8,13 @@ import { type SeniorBuildingAgeRequirement } from "./listingUtil"
 export const translationFromDataSchema = (
   translationKey: string,
   translationVarsData: Record<string, DataSchema>,
-  dataSources: DataSources
+  dataSources: DataSources,
+  translationHousehold: string
 ): string => {
+  if (translationHousehold && dataSources.form?.liveAlone === "false") {
+    return t(translationHousehold)
+  }
+
   if (!translationVarsData) return t(translationKey)
 
   const translationVars = {}
