@@ -302,8 +302,7 @@
             {
               "dataSource": "form",
               "dataKey": "householdMembers",
-              "dataValueToMatch": "null",
-              "negate": true
+              "dataValueToMatch": "null"
             }
           ]
         }
