@@ -6,7 +6,7 @@
 }
 
 .step-title {
-  margin: var(--seeds-s4);
+  margin: 0 var(--seeds-s4) var(--seeds-s4);
   font-size: var(--seeds-type-heading-size-2xl-mobile);
   @media (min-width: theme("screens.md")) {
     font-size: var(--seeds-type-heading-size-2xl);
@@ -22,4 +22,13 @@
     color: var(--seeds-color-primary);
     text-decoration: underline;
   }
+}
+
+.step-description {
+  font-size: var(--seeds-font-size-md);
+  color: var(--seeds-color-gray-950);
+}
+
+.back-button {
+  font-weight: var(--seeds-font-weight-bold) !important;
 }
