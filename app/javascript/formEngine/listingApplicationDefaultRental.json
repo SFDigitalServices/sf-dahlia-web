@@ -431,7 +431,7 @@
             "note": "label.pleaseSelectOne",
             "yesText": "d1IncomeVouchers.ifSubsidyWarning",
             "fieldNames": {
-              "question": "receivesIncomeVouchers"
+              "question": "householdVouchersSubsidies"
             }
           }
         }
