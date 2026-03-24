@@ -335,12 +335,21 @@
     {
       "stepInfo": {
         "slug": "household-public-housing",
-        "sectionName": "household"
+        "sectionName": "household",
+        "navigationArrival": {
+          "showStepIfAnyPresent": [
+            {
+              "dataSource": "preferenceNames",
+              "dataKey": "assistedHousing"
+            }
+          ]
+        }
       },
       "componentType": "step",
       "componentName": "ListingApplyStepWrapper",
       "props": {
-        "title": "c4HouseholdPublicHousing.titleHousehold",
+        "title": "c4HouseholdPublicHousing.titleYou",
+        "householdTitle": "c4HouseholdPublicHousing.titleHousehold",
         "description": "c4HouseholdPublicHousing.p1"
       },
       "children": [
