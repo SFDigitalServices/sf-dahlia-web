@@ -5,6 +5,7 @@ import crypto from "crypto"
 import { useForm, FormProvider } from "react-hook-form"
 import { FormEngineProvider } from "../../formEngine/formEngineContext"
 import { openRentalListing } from "../data/RailsRentalListing/listing-rental-open"
+import { type StepInfoSchema } from "../../formEngine/formSchemas"
 
 export const mockWindowLocation = (): typeof window.location => {
   const originalLocation = { ...window.location }
@@ -54,28 +55,49 @@ export const defineCryptoApi = () => {
 // Wrapper for application form component tests
 export const renderWithFormContextWrapper = (
   formComponent: React.ReactElement,
-  formData: Record<string, unknown> = {}
+  {
+    formData = {},
+    staticData = {},
+    stepInfoMap = [],
+    renderForm = true,
+  }: {
+    formData?: Record<string, unknown>
+    staticData?: Record<string, unknown>
+    stepInfoMap?: StepInfoSchema[]
+    renderForm?: boolean
+    // eslint-disable-next-line unicorn/no-object-as-default-parameter
+  } = {
+    formData: {},
+    staticData: {},
+    stepInfoMap: [],
+    renderForm: true,
+  }
 ) => {
-  const formEngineContextValue = {
+  const defaultStepInfoMap = [{ slug: "test", fieldNames: [] }]
+
+  const defaultStaticData = {
     listing: openRentalListing,
+    form: {},
     preferences: [],
+    preferenceNames: {},
+  }
+
+  const mockHandleNextStep = jest.fn()
+  const mockHandlePrevStep = jest.fn()
+  const mockJumpToStep = jest.fn()
+  const mockSaveFormData = jest.fn()
+
+  const formEngineContextValue = {
     sessionId: "test-session-id-1234",
-    formData: formData,
-    saveFormData: jest.fn(),
-    dataSources: {
-      listing: openRentalListing,
-      form: {},
-      preferenceNames: {},
-    },
-    stepInfoMap: [
-      { slug: "test", fieldNames: [] },
-      { slug: "household-member-form", fieldNames: [] },
-    ],
+    saveFormData: mockSaveFormData,
+    formData: { ...formData },
+    staticData: { ...defaultStaticData, ...staticData },
+    stepInfoMap: [...stepInfoMap, ...defaultStepInfoMap],
     sectionNames: [],
     currentStepIndex: 0,
-    handleNextStep: jest.fn(),
-    handlePrevStep: jest.fn(),
-    jumpToStep: jest.fn(),
+    handleNextStep: mockHandleNextStep,
+    handlePrevStep: mockHandlePrevStep,
+    jumpToStep: mockJumpToStep,
   }
 
   const Wrapper = ({ children }: { children: React.ReactNode }) => {
@@ -93,13 +115,23 @@ export const renderWithFormContextWrapper = (
     return (
       <FormEngineProvider value={formEngineContextValue}>
         <FormProvider {...formMethods}>
-          <form onSubmit={onSubmit}>
-            {children}
-            <button type="submit">next</button>
-          </form>
+          {renderForm ? (
+            <form onSubmit={onSubmit}>
+              {children}
+              <button type="submit">next</button>
+            </form>
+          ) : (
+            children
+          )}
         </FormProvider>
       </FormEngineProvider>
     )
   }
   render(formComponent, { wrapper: Wrapper })
+  return {
+    mockHandleNextStep,
+    mockHandlePrevStep,
+    mockJumpToStep,
+    mockSaveFormData,
+  }
 }
