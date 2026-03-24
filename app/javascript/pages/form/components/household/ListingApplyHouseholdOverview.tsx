@@ -23,7 +23,7 @@ const ListingApplyHouseholdOverview = () => {
         >
           <span>{t("c1aHouseholdOverview.title1")}</span>
           <span>{t("c1aHouseholdOverview.title2")}</span>
-        </Heading>{" "}
+        </Heading>
       </CardSection>
       <CardSection className={styles["listing-apply-household-overview-footer"]}>
         <Button variant="primary" onClick={() => handleNextStep(formData)}>
