@@ -302,8 +302,7 @@
             {
               "dataSource": "form",
               "dataKey": "householdMembers",
-              "dataValueToMatch": "null",
-              "negate": true
+              "dataValueToMatch": "null"
             }
           ]
         }
@@ -350,8 +349,7 @@
       "componentName": "ListingApplyStepWrapper",
       "props": {
         "title": "c4HouseholdPublicHousing.titleYou",
-        "householdTitle": "c4HouseholdPublicHousing.titleHousehold",
-        "description": "c4HouseholdPublicHousing.p1"
+        "headerComponentName": "ListingApplyPublicHousingHeader"
       },
       "children": [
         {
@@ -424,7 +422,7 @@
       "componentName": "ListingApplyStepWrapper",
       "props": {
         "title": "d1IncomeVouchers.titleHousehold",
-        "descriptionComponentName": "incomeVoucherDescription"
+        "headerComponentName": "ListingApplyIncomeVouchersHeader"
       },
       "children": [
         {
@@ -448,7 +446,7 @@
       "componentName": "ListingApplyStepWrapper",
       "props": {
         "title": "d2Income.title",
-        "descriptionComponentName": "HouseholdIncomeDescription"
+        "headerComponentName": "ListingApplyHouseholdIncomeHeader"
       },
       "children": [
         {
@@ -767,7 +765,7 @@
       "componentName": "ListingApplyStepWrapper",
       "props": {
         "title": "e7a_veterans_preference.title",
-        "descriptionComponentName": "veteransDescription"
+        "headerComponentName": "ListingApplyVeteransProgramsHeader"
       },
       "children": [
         {

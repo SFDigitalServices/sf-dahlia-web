@@ -27,7 +27,7 @@ const renderCertificateNumberPreference = () => {
       readMoreUrl="https://www.sf.gov/learn-about-certificate-preference-cop"
       fieldNames={fieldNames}
     />,
-    formData
+    { formData: formData }
   )
 }
 

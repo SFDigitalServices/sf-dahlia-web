@@ -37,7 +37,7 @@ const DateOfBirth = ({
     trigger,
   } = useFormContext()
   const {
-    dataSources: { seniorBuildingAgeRequirement },
+    staticData: { seniorBuildingAgeRequirement },
   } = useFormEngineContext()
 
   const VALID_AGE = "validAge"
