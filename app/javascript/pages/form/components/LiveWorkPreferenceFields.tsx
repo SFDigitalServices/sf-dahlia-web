@@ -24,7 +24,10 @@ const LiveWorkPreferenceFields = ({
   proofFileUploadedAt,
   proofTypeOptions,
 }: LiveWorkPreferenceFieldsProps) => {
-  const { sessionId, listing, preferences } = useFormEngineContext()
+  const {
+    sessionId,
+    staticData: { listing, preferences },
+  } = useFormEngineContext()
 
   // https://github.com/react-hook-form/react-hook-form/issues/2887#issuecomment-802577357
   // eslint-disable-next-line @typescript-eslint/unbound-method

@@ -1,13 +1,12 @@
 import React from "react"
-import { render, screen } from "@testing-library/react"
+import { screen } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
 import { t } from "@bloom-housing/ui-components"
 import ListingApplyLiveWorkPreference from "../../../../pages/form/components/ListingApplyLiveWorkPreference"
-import { FormEngineProvider } from "../../../../formEngine/formEngineContext"
-import { openRentalListing } from "../../../data/RailsRentalListing/listing-rental-open"
 import { PREFERENCES } from "../../../../modules/constants"
 import type { RailsListingPreference } from "../../../../api/types/rails/listings/RailsListingPreferences"
 import { deleteUploadedProofFile } from "../../../../api/formApiService"
+import { renderWithFormContextWrapper } from "../../../__util__/renderUtils"
 
 jest.mock("../../../../api/formApiService", () => ({
   uploadProofFile: jest.fn(),
@@ -40,40 +39,24 @@ const fieldNames = {
 
 const allFieldNameValues = Object.values(fieldNames)
 
-const mockHandleNextStep = jest.fn()
-const mockHandlePrevStep = jest.fn()
-const mockSaveFormData = jest.fn()
-
 const renderComponent = (formData: Record<string, unknown> = {}) => {
-  const formEngineContextValue = {
-    listing: openRentalListing,
-    preferences: [
-      {
-        preferenceName: PREFERENCES.liveWorkInSf,
-        listingPreferenceID: "test-pref-id",
-      } as RailsListingPreference,
-    ],
-    sessionId: "test-session-id",
-    formData,
-    saveFormData: mockSaveFormData,
-    dataSources: {
-      listing: openRentalListing,
-      form: {},
-      preferenceNames: {},
-    },
-    stepInfoMap: [{ slug: "live-work", fieldNames: allFieldNameValues }],
-    sectionNames: [],
-    currentStepIndex: 0,
-    handleNextStep: mockHandleNextStep,
-    handlePrevStep: mockHandlePrevStep,
-    jumpToStep: jest.fn(),
-  }
-
-  render(
-    <FormEngineProvider value={formEngineContextValue}>
-      <ListingApplyLiveWorkPreference fieldNames={fieldNames} />
-    </FormEngineProvider>
+  const { mockHandleNextStep, mockHandlePrevStep, mockSaveFormData } = renderWithFormContextWrapper(
+    <ListingApplyLiveWorkPreference fieldNames={fieldNames} />,
+    {
+      formData,
+      renderForm: false,
+      stepInfoMap: [{ slug: "live-work", fieldNames: allFieldNameValues }],
+      staticData: {
+        preferences: [
+          {
+            preferenceName: PREFERENCES.liveWorkInSf,
+            listingPreferenceID: "test-pref-id",
+          } as RailsListingPreference,
+        ],
+      },
+    }
   )
+  return { mockHandleNextStep, mockHandlePrevStep, mockSaveFormData }
 }
 
 describe("ListingApplyLiveWorkPreference", () => {
@@ -99,7 +82,7 @@ describe("ListingApplyLiveWorkPreference", () => {
   })
 
   it("calls handlePrevStep when back button is clicked", async () => {
-    renderComponent()
+    const { mockHandlePrevStep } = renderComponent()
     const user = userEvent.setup()
     await user.click(screen.getByText(t("t.back")))
     expect(mockHandlePrevStep).toHaveBeenCalled()
@@ -159,7 +142,9 @@ describe("ListingApplyLiveWorkPreference", () => {
   })
 
   it("calls saveFormData and handleNextStep on valid submit with live/work checked", async () => {
-    renderComponent({ liveInSfFileName: "test-file.pdf" })
+    const { mockSaveFormData, mockHandleNextStep } = renderComponent({
+      liveInSfFileName: "test-file.pdf",
+    })
     const user = userEvent.setup()
 
     await user.click(screen.getByText(t("e2cLiveWorkPreference.liveWorkSfPreference.title")))
@@ -173,7 +158,7 @@ describe("ListingApplyLiveWorkPreference", () => {
   })
 
   it("calls saveFormData and handleNextStep on valid submit with opt-out checked", async () => {
-    renderComponent()
+    const { mockHandleNextStep, mockSaveFormData } = renderComponent()
     const user = userEvent.setup()
 
     await user.click(screen.getByText(t("label.dontWantPreference")))

@@ -1,21 +1,13 @@
 import React, { createContext, ReactNode, useContext } from "react"
-import type { RailsListing } from "../modules/listings/SharedHelpers"
 import type { StepInfoSchema } from "./formSchemas"
-import type { RailsListingPreference } from "../api/types/rails/listings/RailsListingPreferences"
+import type { ListingApplicationStaticData } from "../pages/form/listing-apply-form"
 
-export interface DataSources {
-  listing: RailsListing
-  form: Record<string, unknown>
-  preferenceNames: Record<string, string>
-  seniorBuildingAgeRequirement?: { entireHousehold: boolean; minimumAge: number }
-}
+export type StaticData = Record<string, unknown> & ListingApplicationStaticData
 
 export interface FormEngineContext {
-  listing: RailsListing
-  preferences: RailsListingPreference[]
-  formData: Record<string, unknown>
   sessionId: string
-  dataSources: DataSources
+  staticData: StaticData
+  formData: Record<string, unknown>
   saveFormData: (formDataFragment: Record<string, unknown>) => void
   currentStepIndex: number
   stepInfoMap: StepInfoSchema[]

@@ -7,7 +7,11 @@ import { submitForm } from "../../../api/formApiService"
 
 const ListingApplyTerms = () => {
   const formEngineContext = useFormEngineContext()
-  const { handlePrevStep, formData, listing } = formEngineContext
+  const {
+    handlePrevStep,
+    formData,
+    staticData: { listing },
+  } = formEngineContext
   const handleSubmit = () => {
     submitForm(formData, listing.listingID)
       .then(() => {

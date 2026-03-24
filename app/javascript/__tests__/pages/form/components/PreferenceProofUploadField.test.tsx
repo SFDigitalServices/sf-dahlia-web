@@ -30,7 +30,7 @@ const props = {
 }
 
 const renderComponent = (formData: Record<string, unknown> = {}) => {
-  renderWithFormContextWrapper(<PreferenceProofUploadField {...props} />, formData)
+  renderWithFormContextWrapper(<PreferenceProofUploadField {...props} />, { formData: formData })
 }
 
 describe("PreferenceProofUploadField", () => {
