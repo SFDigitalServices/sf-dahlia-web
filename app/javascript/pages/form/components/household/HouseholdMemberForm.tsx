@@ -36,7 +36,7 @@ const HouseholdMemberForm = ({
       </Card.Header>
       <Card.Section divider="inset">
         <Name
-          label={t("label.householdMemberName")}
+          label={"label.householdMemberName"}
           showMiddleName={true}
           fieldNames={{
             firstName: "firstName",
@@ -47,7 +47,7 @@ const HouseholdMemberForm = ({
       </Card.Section>
       <Card.Section divider="inset">
         <DateOfBirth
-          label={t("label.dob")}
+          label={"label.dob"}
           ageErrorMessage={"TODO: error"}
           fieldNames={{
             birthMonth: "birthMonth",
@@ -61,9 +61,9 @@ const HouseholdMemberForm = ({
       </Card.Section>
       <Card.Section divider="inset">
         <YesNoRadio
-          label={t("label.memberWorkInSf")}
-          note={t("c3HouseholdMemberForm.workInSfDesc")}
-          yesText={t("b2Contact.claimWorkInSf")}
+          label={"label.memberWorkInSf"}
+          note={"c3HouseholdMemberForm.workInSfDesc"}
+          yesText={"b2Contact.claimWorkInSf"}
           fieldNames={{
             question: "workInSf",
           }}
@@ -71,16 +71,16 @@ const HouseholdMemberForm = ({
       </Card.Section>
       <Card.Section>
         <Select
-          label={t("label.householdMemberRelationship")}
-          errorMessage={t("error.householdMemberRelationship")}
-          defaultOptionName={t("label.selectOne")}
+          label={"label.householdMemberRelationship"}
+          errorMessage={"error.householdMemberRelationship"}
+          defaultOptionName={"label.selectOne"}
           options={[
             {
-              name: t("label.spouse"),
+              name: "label.spouse",
               value: "spouse",
             },
             {
-              name: t("label.registeredDomesticPartner"),
+              name: "label.registeredDomesticPartner",
               value: "Registered Domestic Partner",
             },
           ]}
@@ -94,7 +94,7 @@ const HouseholdMemberForm = ({
       </Card.Footer>
       {isEditing && (
         <Card.Section className={stepStyles["step-delete-member-subfooter"]}>
-          <button onClick={handleDeleteHouseholdMember}>Delete this person</button>
+          <button onClick={handleDeleteHouseholdMember}>{t("label.householdMemberDelete")}</button>
         </Card.Section>
       )}
     </Card>
