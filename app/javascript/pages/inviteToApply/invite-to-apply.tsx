@@ -49,10 +49,6 @@ const InviteToApplyPage = ({
   }, [router, router.pathname])
 
   const { unleashFlag: isInviteApplyEnabled } = useFeatureFlag("partners.inviteToApply", false)
-  const { unleashFlag: jwtLinkParamsFlag } = useFeatureFlag(
-    "temp.webapp.inviteToApply.JwtLinkParams",
-    false
-  )
 
   const generateSubmitLink = (signLinkParams: boolean) => {
     const submitLinkParams = { applicationNumber, deadline }
@@ -88,7 +84,7 @@ const InviteToApplyPage = ({
       <InviteToApplyWithdrawn
         listing={listing}
         deadline={deadline}
-        submitPreviewLink={generateSubmitLink(jwtLinkParamsFlag)}
+        submitPreviewLink={generateSubmitLink(true)}
       />
     )
   }
@@ -112,7 +108,7 @@ const InviteToApplyPage = ({
       <InviteToApplyContactMeLater
         listing={listing}
         deadline={deadline}
-        submitPreviewLink={generateSubmitLink(jwtLinkParamsFlag)}
+        submitPreviewLink={generateSubmitLink(true)}
       />
     )
   }
