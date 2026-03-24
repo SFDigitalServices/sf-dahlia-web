@@ -66,4 +66,25 @@ describe("HouseholdMemberForm", () => {
     await user.click(screen.getByText(t("label.householdMemberDelete")))
     expect(handleDeleteHouseholdMember).toHaveBeenCalledTimes(1)
   })
+  it("clicking save button with populated fields triggers form submission", async () => {
+    const handleUpdateHouseholdMember = jest.fn()
+    renderHouseholdMemberForm({ handleUpdateHouseholdMember })
+    const user = userEvent.setup()
+    const yesButtons = screen.getAllByLabelText(t("t.yes"))
+
+    await user.type(screen.getByLabelText(/first name/i), "John")
+    await user.type(screen.getByLabelText(/last name/i), "Smith")
+    await user.type(screen.getByLabelText("Month"), "12")
+    await user.type(screen.getByLabelText("Day"), "12")
+    await user.type(screen.getByLabelText("Year"), "1990")
+    await user.click(yesButtons[0])
+    await user.click(yesButtons[1])
+    await user.selectOptions(
+      screen.getByLabelText(t("label.householdMemberRelationship")),
+      "spouse"
+    )
+
+    await user.click(screen.getByRole("button", { name: t("label.householdMemberSave") }))
+    expect(handleUpdateHouseholdMember).toHaveBeenCalledTimes(1)
+  })
 })

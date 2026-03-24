@@ -46,7 +46,7 @@ describe("HouseholdMemberMultiStepWrapper", () => {
 
   it("navigates to the form in edit mode when a household member's edit button is clicked", async () => {
     renderHouseholdMemberMultiStepWrapper({
-      householdMembers: [{ firstName: "Jane", lastName: "Doe" }],
+      householdMembers: [{ firstName: "John", lastName: "Doe" }],
     })
     const user = userEvent.setup()
     const editButtons = screen.getAllByRole("button", { name: t("t.edit") })
@@ -58,7 +58,7 @@ describe("HouseholdMemberMultiStepWrapper", () => {
 
   it("removes a member and returns to the list when delete is clicked", async () => {
     renderHouseholdMemberMultiStepWrapper({
-      householdMembers: [{ firstName: "Jane", lastName: "Doe" }],
+      householdMembers: [{ firstName: "John", lastName: "Doe" }],
     })
     const user = userEvent.setup()
     const editButtons = screen.getAllByRole("button", { name: t("t.edit") })
@@ -66,5 +66,30 @@ describe("HouseholdMemberMultiStepWrapper", () => {
     await user.click(screen.getByText(t("label.householdMemberDelete")))
     expect(screen.getByText(t("c2HouseholdMembers.title"))).toBeInTheDocument()
     expect(screen.queryByText("Jane Doe")).not.toBeInTheDocument()
+  })
+
+  it("resets editing state after new member is added", async () => {
+    renderHouseholdMemberMultiStepWrapper({
+      householdMembers: [
+        {
+          firstName: "John",
+          lastName: "Smith",
+          birthMonth: "12",
+          birthDay: "12",
+          birthYear: "1990",
+          hasSameAddressAsApplicant: "true",
+          workInSf: "true",
+          relation: "spouse",
+        },
+      ],
+    })
+    const user = userEvent.setup()
+
+    const editButtons = screen.getAllByRole("button", { name: t("t.edit") })
+    await user.click(editButtons[1])
+
+    await user.click(screen.getByRole("button", { name: t("label.householdMemberUpdate") }))
+    await user.click(screen.getByText("+ " + t("label.addHouseholdMember")))
+    expect(screen.queryByText(t("label.householdMemberDelete"))).not.toBeInTheDocument()
   })
 })
