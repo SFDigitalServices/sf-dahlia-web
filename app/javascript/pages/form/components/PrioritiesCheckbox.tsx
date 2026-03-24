@@ -36,12 +36,12 @@ const PrioritiesCheckbox = ({
       (value) => !previousValuesRef.current.includes(value)
     )
 
-    if (newCheckboxValue.includes("No impairments")) {
-      setValue(selectedPriorities, ["No impairments"])
-    } else if (selectedCheckboxValues.includes("No impairments") && newCheckboxValue.length > 0) {
+    if (newCheckboxValue.includes("None")) {
+      setValue(selectedPriorities, ["None"])
+    } else if (selectedCheckboxValues.includes("None") && newCheckboxValue.length > 0) {
       setValue(
         selectedPriorities,
-        selectedCheckboxValues.filter((value) => value !== "No impairments")
+        selectedCheckboxValues.filter((value) => value !== "None")
       )
     }
 

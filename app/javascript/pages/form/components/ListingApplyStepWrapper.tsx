@@ -80,7 +80,7 @@ const ListingApplyStepWrapper = ({
         ) : (
           <Card.Header divider="inset">
             <h1 className={styles["step-title"]}>{titleString}</h1>
-            {description && <p className="field-note text-base">{t(description)}</p>}
+            {description && <p className={styles["step-description"]}>{t(description)}</p>}
           </Card.Header>
         )}
         <Form onSubmit={methods.handleSubmit(onSubmit)}>
