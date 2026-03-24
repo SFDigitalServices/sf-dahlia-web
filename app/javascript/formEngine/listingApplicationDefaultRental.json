@@ -407,7 +407,7 @@
               "dataKey": "householdMembersArray"
             },
             "fieldNames": {
-              "priorityMembers": "priorityMembers"
+              "selectedPriorities": "adaPrioritiesSelected"
             }
           }
         }

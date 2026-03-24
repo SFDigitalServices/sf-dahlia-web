@@ -8,13 +8,13 @@ import { LISTING_PRIORITY_OPTIONS } from "../../../modules/constants"
 interface PrioritiesCheckboxProps {
   description: string
   fieldNames: {
-    priorityMembers: string
+    selectedPriorities: string
   }
 }
 
 const PrioritiesCheckbox = ({
   description,
-  fieldNames: { priorityMembers },
+  fieldNames: { selectedPriorities },
 }: PrioritiesCheckboxProps) => {
   const {
     register,
@@ -22,7 +22,7 @@ const PrioritiesCheckbox = ({
     watch,
     setValue,
   } = useFormContext()
-  const selectedCheckboxValues = watch(priorityMembers)
+  const selectedCheckboxValues = watch(selectedPriorities)
   const previousValuesRef = useRef(selectedCheckboxValues || [])
   const priority_fields = LISTING_PRIORITY_OPTIONS.map((option) => ({
     label: t(option.label),
@@ -37,27 +37,27 @@ const PrioritiesCheckbox = ({
     )
 
     if (newCheckboxValue.includes("No impairments")) {
-      setValue(priorityMembers, ["No impairments"])
+      setValue(selectedPriorities, ["No impairments"])
     } else if (selectedCheckboxValues.includes("No impairments") && newCheckboxValue.length > 0) {
       setValue(
-        priorityMembers,
+        selectedPriorities,
         selectedCheckboxValues.filter((value) => value !== "No impairments")
       )
     }
 
     previousValuesRef.current = selectedCheckboxValues
-  }, [selectedCheckboxValues, setValue, priorityMembers])
+  }, [selectedCheckboxValues, setValue, selectedPriorities])
 
   return (
     <div className={styles["listing-priorities-checkbox-group"]}>
       <FieldGroup
-        name={priorityMembers}
+        name={selectedPriorities}
         type="checkbox"
         groupLabel={t(description)}
         fields={priority_fields}
         fieldGroupClassName="radio-field-group"
         register={register}
-        error={!!errors?.[priorityMembers]}
+        error={!!errors?.[selectedPriorities]}
         errorMessage={t("error.pleaseSelectAnOption")}
         validation={{
           required: true,
