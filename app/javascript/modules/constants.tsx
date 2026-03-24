@@ -190,6 +190,7 @@ export const EMAIL_REGEX = new RegExp(
   ].join("")
 )
 
+// values are copied from Salesforce picklist field Application__c.Has_ADA_Priorities_Selected__c
 export const LISTING_PRIORITY_OPTIONS = [
   {
     value: "Mobility impairments",
@@ -204,7 +205,7 @@ export const LISTING_PRIORITY_OPTIONS = [
     label: "label.hearingImpairments",
   },
   {
-    value: "No impairments",
+    value: "None",
     label: "t.no",
   },
 ]
