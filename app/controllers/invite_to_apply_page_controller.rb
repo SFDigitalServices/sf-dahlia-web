@@ -104,7 +104,7 @@ class InviteToApplyPageController < ApplicationController
       "Decoded JWT #{decoded_token}",
     )
     decoded_token.first['data']
-  rescue JWT::VerificationError
+  rescue JWT::DecodeError
     Rails.logger.info(
       'InviteToApplyPageController#decode_token: ' \
       "Invalid JWT in #{request.original_url}",
