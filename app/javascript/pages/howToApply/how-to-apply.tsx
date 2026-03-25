@@ -36,12 +36,17 @@ interface HowToApplyProps {
   assetPaths: unknown
 }
 
-const generateSubmissionUrl = (listingId: string) => {
+const generateSubmissionUrl = (listingId: string, listingName: string, fileUploadUrl: string) => {
   const currentLocale = getCurrentLanguage()
-  const formAssemblyUrl = process.env[`FCFS_FORMASSEMBLY_URL_${currentLocale.toUpperCase()}`]
-  if (!isValidUrl(formAssemblyUrl)) return null
+  const formUrl = process.env[`FCFS_FORMASSEMBLY_URL_${currentLocale.toUpperCase()}`]
+  if (!isValidUrl(formUrl)) return null
 
-  return `${formAssemblyUrl}?ListingID=${listingId}`
+  const params = new URLSearchParams({
+    FileUploadURL: fileUploadUrl,
+    ListingName: listingName,
+    ListingID: listingId,
+  })
+  return `${formUrl}?${params.toString()}`
 }
 
 const applicationsNotYetOpen = (listing: RailsSaleListing) =>
@@ -275,7 +280,11 @@ const CreateBoxAccountStep = () => {
 
 const SubmitApplicationStep = ({ listing }: { listing: RailsSaleListing }) => {
   const datetime = listing.Application_Start_Date_Time
-  const submissionUrl = generateSubmissionUrl(listing.listingID)
+  const submissionUrl = generateSubmissionUrl(
+    listing.listingID,
+    listing.Name,
+    listing.File_Upload_URL
+  )
 
   return (
     <HowToApplyListItem headerText={t("howToApplyPage.howToApplySection.step5.title")}>
