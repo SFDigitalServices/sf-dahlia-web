@@ -157,6 +157,16 @@ export const getFullName = (person: {
   return `${person.firstName || ""} ${person.middleName || ""} ${person.lastName || ""}`
 }
 
+export const getAddress = (
+  addressStreet: string,
+  addressCity: string,
+  addressState: string,
+  addressZipcode: string,
+  addressAptOrUnit?: string
+) => {
+  return [addressStreet, addressAptOrUnit, addressCity, addressState, addressZipcode].join(", ")
+}
+
 export const updateFormPath = (newStepIndex: number, stepInfoMap: StepInfoSchema[]) => {
   const currentPath = window.location.pathname
   const paths = currentPath.split("/")

@@ -24,7 +24,7 @@ import Radio from "../pages/form/components/Radio"
 import VeteransRadio from "../pages/form/components/VeteransRadio"
 import Currency from "../pages/form/components/Currency"
 import AlternateContactType from "../pages/form/components/AlternateContactType"
-import MonthlyRent from "../pages/form/components/MonthlyRent"
+import ListingApplyMonthlyRent from "../pages/form/components/ListingApplyMonthlyRent"
 import PrioritiesCheckbox from "../pages/form/components/PrioritiesCheckbox"
 import PreferenceCheckboxGroup from "../pages/form/components/PreferenceCheckboxGroup"
 import ListingApplyLiveWorkPreference from "../pages/form/components/ListingApplyLiveWorkPreference"
@@ -32,7 +32,6 @@ import CertificateNumberPreference from "../pages/form/components/CertificateNum
 import ListingApplyIncomeVouchersHeader from "../pages/form/components/ListingApplyIncomeVouchersHeader"
 import ListingApplyHouseholdIncomeHeader from "../pages/form/components/ListingApplyHouseholdIncomeHeader"
 import ListingApplyVeteransProgramsHeader from "../pages/form/components/ListingApplyVeteransProgramsHeader"
-import ListingApplyHouseholdPrioritiesHeader from "../pages/form/components/ListingApplyHouseholdPrioritiesHeader"
 
 export default function getFormComponentRegistry() {
   return {
@@ -45,6 +44,7 @@ export default function getFormComponentRegistry() {
     ListingApplyHouseholdIntro,
     ListingApplyHouseholdOverview,
     HouseholdMemberMultiStepWrapper,
+    ListingApplyMonthlyRent,
     ListingApplyPreferencesIntro,
     ListingApplyLiveWorkPreference,
     ListingApplyRentBurdenPreference,
@@ -64,7 +64,6 @@ export default function getFormComponentRegistry() {
     Address,
     Currency,
     AlternateContactType,
-    MonthlyRent,
     PrioritiesCheckbox,
     PreferenceCheckboxGroup,
     CertificateNumberPreference,
@@ -73,6 +72,5 @@ export default function getFormComponentRegistry() {
     ListingApplyIncomeVouchersHeader,
     ListingApplyHouseholdIncomeHeader,
     ListingApplyVeteransProgramsHeader,
-    ListingApplyHouseholdPrioritiesHeader,
   }
 }
