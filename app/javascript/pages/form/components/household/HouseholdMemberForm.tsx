@@ -12,11 +12,13 @@ import Select from "../Select"
 const HouseholdMemberForm = ({
   handleUpdateHouseholdMember,
   handleDeleteHouseholdMember,
+  handleCancelAddHouseholdMember,
   methods,
   isEditing,
 }: {
   handleUpdateHouseholdMember: (member: Record<string, string>) => void
   handleDeleteHouseholdMember: () => void
+  handleCancelAddHouseholdMember: () => void
   methods: UseFormMethods<Record<string, unknown>>
   isEditing: boolean
 }) => {
@@ -48,7 +50,7 @@ const HouseholdMemberForm = ({
       <Card.Section divider="inset">
         <DateOfBirth
           label={"label.dob"}
-          ageErrorMessage={"TODO: error"}
+          ageErrorMessage={""}
           fieldNames={{
             birthMonth: "birthMonth",
             birthDay: "birthDay",
@@ -92,11 +94,11 @@ const HouseholdMemberForm = ({
           {isEditing ? t("label.householdMemberUpdate") : t("label.householdMemberSave")}
         </Button>
       </Card.Footer>
-      {isEditing && (
-        <Card.Section className={stepStyles["step-delete-member-subfooter"]}>
-          <button onClick={handleDeleteHouseholdMember}>{t("label.householdMemberDelete")}</button>
-        </Card.Section>
-      )}
+      <Card.Section className={stepStyles["step-delete-member-subfooter"]}>
+        <button onClick={isEditing ? handleDeleteHouseholdMember : handleCancelAddHouseholdMember}>
+          {isEditing ? t("label.householdMemberDelete") : t("label.householdMemberCancel")}
+        </button>
+      </Card.Section>
     </Card>
   )
 }

@@ -72,6 +72,10 @@ const HouseholdMemberMultiStepWrapper = ({
     setComponentToRender("AddHouseholdMembers")
   }
 
+  const handleCancelAddHouseholdMember = () => {
+    setComponentToRender("AddHouseholdMembers")
+  }
+
   switch (componentToRender) {
     case "HouseholdMemberForm": {
       return (
@@ -79,6 +83,7 @@ const HouseholdMemberMultiStepWrapper = ({
           <HouseholdMemberForm
             handleUpdateHouseholdMember={handleUpdateHouseholdMember}
             handleDeleteHouseholdMember={handleDeleteHouseholdMember}
+            handleCancelAddHouseholdMember={handleCancelAddHouseholdMember}
             isEditing={isEditingHouseholdMember}
             methods={methods}
           />

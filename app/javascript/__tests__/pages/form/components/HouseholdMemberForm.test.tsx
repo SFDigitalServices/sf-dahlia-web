@@ -9,10 +9,12 @@ import { renderWithFormContextWrapper } from "../../../__util__/renderUtils"
 const HouseholdMemberFormWrapper = ({
   handleUpdateHouseholdMember = jest.fn(),
   handleDeleteHouseholdMember = jest.fn(),
+  handleCancelAddHouseholdMember = jest.fn(),
   isEditing = false,
 }: {
   handleUpdateHouseholdMember?: jest.Mock
   handleDeleteHouseholdMember?: jest.Mock
+  handleCancelAddHouseholdMember?: jest.Mock
   isEditing?: boolean
 }) => {
   const methods = useForm()
@@ -21,6 +23,7 @@ const HouseholdMemberFormWrapper = ({
       <HouseholdMemberForm
         handleUpdateHouseholdMember={handleUpdateHouseholdMember}
         handleDeleteHouseholdMember={handleDeleteHouseholdMember}
+        handleCancelAddHouseholdMember={handleCancelAddHouseholdMember}
         isEditing={isEditing}
         methods={methods}
       />

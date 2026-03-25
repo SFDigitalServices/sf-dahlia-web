@@ -92,4 +92,15 @@ describe("HouseholdMemberMultiStepWrapper", () => {
     await user.click(screen.getByText("+ " + t("label.addHouseholdMember")))
     expect(screen.queryByText(t("label.householdMemberDelete"))).not.toBeInTheDocument()
   })
+
+  it("returns to the add household members page when cancel is clicked while adding a new member", async () => {
+    renderHouseholdMemberMultiStepWrapper()
+    const user = userEvent.setup()
+
+    await user.click(screen.getByText("+ " + t("label.addHouseholdMember")))
+    expect(screen.getByText(t("c3HouseholdMemberForm.title"))).toBeInTheDocument()
+
+    await user.click(screen.getByText(t("label.householdMemberCancel")))
+    expect(screen.getByText(t("c2HouseholdMembers.title"))).toBeInTheDocument()
+  })
 })
