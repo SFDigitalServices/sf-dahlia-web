@@ -71,7 +71,7 @@ const ListingApplyStepWrapper = ({
     <FormProvider {...methods}>
       <Card>
         <Card.Section>
-          <Button variant="text" className={styles["back-button"]} onClick={handlePrevStep}>
+          <Button variant="text" onClick={handlePrevStep}>
             {t("t.back")}
           </Button>
         </Card.Section>
@@ -80,7 +80,7 @@ const ListingApplyStepWrapper = ({
         ) : (
           <Card.Header divider="inset">
             <h1 className={styles["step-title"]}>{titleString}</h1>
-            {description && <p className={styles["step-description"]}>{t(description)}</p>}
+            {description && <p className="field-note text-base">{t(description)}</p>}
           </Card.Header>
         )}
         <Form onSubmit={methods.handleSubmit(onSubmit)}>

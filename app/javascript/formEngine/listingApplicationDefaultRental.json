@@ -397,7 +397,7 @@
       "componentName": "ListingApplyStepWrapper",
       "props": {
         "title": "c7HouseholdPriorities.titleHousehold",
-        "headerComponentName": "ListingApplyHouseholdPrioritiesHeader"
+        "description": "c7HouseholdPriorities.p1"
       },
       "children": [
         {
@@ -409,7 +409,7 @@
               "dataKey": "householdMembersArray"
             },
             "fieldNames": {
-              "selectedPriorities": "adaPrioritiesSelected"
+              "priorityMembers": "priorityMembers"
             }
           }
         }

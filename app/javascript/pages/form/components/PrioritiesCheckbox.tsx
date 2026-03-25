@@ -8,13 +8,13 @@ import { LISTING_PRIORITY_OPTIONS } from "../../../modules/constants"
 interface PrioritiesCheckboxProps {
   description: string
   fieldNames: {
-    selectedPriorities: string
+    priorityMembers: string
   }
 }
 
 const PrioritiesCheckbox = ({
   description,
-  fieldNames: { selectedPriorities },
+  fieldNames: { priorityMembers },
 }: PrioritiesCheckboxProps) => {
   const {
     register,
@@ -22,7 +22,7 @@ const PrioritiesCheckbox = ({
     watch,
     setValue,
   } = useFormContext()
-  const selectedCheckboxValues = watch(selectedPriorities)
+  const selectedCheckboxValues = watch(priorityMembers)
   const previousValuesRef = useRef(selectedCheckboxValues || [])
   const priority_fields = LISTING_PRIORITY_OPTIONS.map((option) => ({
     label: t(option.label),
@@ -36,28 +36,28 @@ const PrioritiesCheckbox = ({
       (value) => !previousValuesRef.current.includes(value)
     )
 
-    if (newCheckboxValue.includes("None")) {
-      setValue(selectedPriorities, ["None"])
-    } else if (selectedCheckboxValues.includes("None") && newCheckboxValue.length > 0) {
+    if (newCheckboxValue.includes("No impairments")) {
+      setValue(priorityMembers, ["No impairments"])
+    } else if (selectedCheckboxValues.includes("No impairments") && newCheckboxValue.length > 0) {
       setValue(
-        selectedPriorities,
-        selectedCheckboxValues.filter((value) => value !== "None")
+        priorityMembers,
+        selectedCheckboxValues.filter((value) => value !== "No impairments")
       )
     }
 
     previousValuesRef.current = selectedCheckboxValues
-  }, [selectedCheckboxValues, setValue, selectedPriorities])
+  }, [selectedCheckboxValues, setValue, priorityMembers])
 
   return (
     <div className={styles["listing-priorities-checkbox-group"]}>
       <FieldGroup
-        name={selectedPriorities}
+        name={priorityMembers}
         type="checkbox"
         groupLabel={t(description)}
         fields={priority_fields}
         fieldGroupClassName="radio-field-group"
         register={register}
-        error={!!errors?.[selectedPriorities]}
+        error={!!errors?.[priorityMembers]}
         errorMessage={t("error.pleaseSelectAnOption")}
         validation={{
           required: true,

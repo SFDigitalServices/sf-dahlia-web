@@ -9,7 +9,7 @@ const renderPrioritiesCheckbox = () =>
   renderWithFormContextWrapper(
     <PrioritiesCheckbox
       description="label.pleaseSelectAllThatApply"
-      fieldNames={{ selectedPriorities: "adaPrioritiesSelected" }}
+      fieldNames={{ priorityMembers: "priorityMembers" }}
     />
   )
 
