@@ -61,7 +61,7 @@ const HouseholdMemberForm = ({
       <Card.Section divider="inset">
         <HouseholdMemberSameAddress />
       </Card.Section>
-      <Card.Section divider="inset">
+      <Card.Section divider="inset" className={stepStyles["step-household-member-radio"]}>
         <YesNoRadio
           label={"label.memberWorkInSf"}
           note={"c3HouseholdMemberForm.workInSfDesc"}

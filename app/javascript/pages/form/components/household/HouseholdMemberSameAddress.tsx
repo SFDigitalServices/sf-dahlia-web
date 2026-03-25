@@ -22,7 +22,9 @@ const HouseholdMemberSameAddress = () => {
   return (
     <fieldset>
       <legend className="legend-header">{t("label.memberSameAddress")}</legend>
-      <YesNoRadio fieldNames={{ question: "hasSameAddressAsApplicant" }} />
+      <div className={styles["household-member-radio"]}>
+        <YesNoRadio fieldNames={{ question: "hasSameAddressAsApplicant" }} />
+      </div>
       {showAddressField && (
         <div className={styles["household-member-address-field"]}>
           <Address
