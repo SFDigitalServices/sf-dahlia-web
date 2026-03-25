@@ -38,7 +38,7 @@ interface HowToApplyProps {
 
 const generateSubmissionUrl = (listingId: string, listingName: string, fileUploadUrl: string) => {
   const currentLocale = getCurrentLanguage()
-  const formUrl = process.env[`FCFS_FORMASSEMBLY_URL_${currentLocale.toUpperCase()}`]
+  const formUrl = process.env[`FCFS_FORM_URL_${currentLocale.toUpperCase()}`]
   if (!isValidUrl(formUrl)) return null
 
   const params = new URLSearchParams({
