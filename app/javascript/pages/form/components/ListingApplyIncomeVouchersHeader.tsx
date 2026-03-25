@@ -4,7 +4,7 @@ import { CardHeader } from "@bloom-housing/ui-seeds/src/blocks/Card"
 import { useFormEngineContext } from "../../../formEngine/formEngineContext"
 import listingApplyStepWrapperStyles from "./ListingApplyStepWrapper.module.scss"
 import { renderInlineMarkup } from "../../../util/languageUtil"
-import styles from "./ListingApplyIncomeVouchersHeader.module.scss"
+import styles from "./ListingApplyStepWrapper.module.scss"
 
 const ListingApplyIncomeVouchersHeader = () => {
   const formEngineContext = useFormEngineContext()
