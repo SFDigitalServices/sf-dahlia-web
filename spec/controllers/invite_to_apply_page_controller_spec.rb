@@ -8,11 +8,9 @@ RSpec.describe InviteToApplyPageController do
   let(:decoded_token) do
     [
       {
-        data: {
-          deadline: deadline,
-          applicationNumber: application_number,
-          response: response_value,
-        },
+        deadline: deadline,
+        applicationNumber: application_number,
+        response: response_value,
       },
     ]
   end
