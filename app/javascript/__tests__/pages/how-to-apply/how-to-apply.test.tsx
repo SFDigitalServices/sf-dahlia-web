@@ -32,15 +32,15 @@ describe("<HowToApply />", () => {
   })
 
   it("shows 'SUBMIT APPLICATION' button if URL is present", async () => {
-    process.env.FCFS_FORMASSEMBLY_URL_EN = "https://www.test.com"
+    process.env.FCFS_FORM_URL_EN = "https://www.test.com"
     axios.get.mockResolvedValue({ data: { listing: openFcfsSaleListing } })
     const { queryByText } = await renderAndLoadAsync(<HowToApply assetPaths={{}} />)
     expect(queryByText("Submit application")).not.toBeNull()
   })
 
   it("opens correct url for a locale", async () => {
-    process.env.FCFS_FORMASSEMBLY_URL_EN = "https://www.test.com"
-    process.env.FCFS_FORMASSEMBLY_URL_ES = "https://www.test-es.com"
+    process.env.FCFS_FORM_URL_EN = "https://www.test.com"
+    process.env.FCFS_FORM_URL_ES = "https://www.test-es.com"
     // set client to ES locale
     const originalLocation = { ...window.location }
     jest.spyOn(window, "location", "get").mockImplementation(() => ({
@@ -54,7 +54,7 @@ describe("<HowToApply />", () => {
     screen.getByText("Submit application").click()
     await waitFor(() => {
       expect(global.open).toHaveBeenCalledWith(
-        `${process.env.FCFS_FORMASSEMBLY_URL_ES}?ListingID=a0W0P00000GlKfBUAV`,
+        `${process.env.FCFS_FORM_URL_ES}?FileUploadURL=undefined&ListingName=TEST+Sale+Listing+%28do+not+modify%29+-+Homeownership+Acres&ListingID=a0W0P00000GlKfBUAV`,
         "_blank"
       )
     })
@@ -66,7 +66,7 @@ describe("<HowToApply />", () => {
   })
 
   it("does not show 'SUBMIT APPLICATION' button if URL is missing", async () => {
-    process.env.FCFS_FORMASSEMBLY_URL_EN = undefined
+    process.env.FCFS_FORM_URL_EN = undefined
     axios.get.mockResolvedValue({ data: { listing: openFcfsSaleListing } })
     const { queryByText } = await renderAndLoadAsync(<HowToApply assetPaths={{}} />)
     expect(queryByText("Submit application")).toBeNull()
