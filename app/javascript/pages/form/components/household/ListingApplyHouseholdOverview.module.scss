@@ -1,0 +1,13 @@
+.listing-apply-household-overview-body {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  gap: var(--seeds-s4);
+  padding: var(--seeds-s4);
+}
+.listing-apply-household-overview-footer {
+  display: flex;
+  background: var(--seeds-color-blue-100);
+  justify-content: center;
+  margin-top: var(--seeds-s4);
+}

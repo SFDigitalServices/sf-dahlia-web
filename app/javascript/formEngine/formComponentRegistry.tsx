@@ -17,6 +17,7 @@ import ListingApplyReviewSummary from "../pages/form/components/ListingApplyRevi
 import ListingApplyReviewApplication from "../pages/form/components/ListingApplyReviewApplication"
 import ListingApplyHouseholdIntro from "../pages/form/components/household/ListingApplyHouseholdIntro"
 import ListingApplyHouseholdOverview from "../pages/form/components/household/ListingApplyHouseholdOverview"
+import ListingApplyPublicHousingHeader from "../pages/form/components/ListingApplyPublicHousingHeader"
 import HouseholdMemberMultiStepWrapper from "../pages/form/components/household/HouseholdMemberMultiStepWrapper"
 import Select from "../pages/form/components/Select"
 import Radio from "../pages/form/components/Radio"
@@ -28,9 +29,10 @@ import PrioritiesCheckbox from "../pages/form/components/PrioritiesCheckbox"
 import PreferenceCheckboxGroup from "../pages/form/components/PreferenceCheckboxGroup"
 import ListingApplyLiveWorkPreference from "../pages/form/components/ListingApplyLiveWorkPreference"
 import CertificateNumberPreference from "../pages/form/components/CertificateNumberPreference"
-import IncomeVoucherDescription from "../pages/form/components/IncomeVoucherDescription"
-import HouseholdIncomeDescription from "../pages/form/components/HouseholdIncomeDescription"
-import VeteransDescription from "../pages/form/components/VeteransDescription"
+import ListingApplyIncomeVouchersHeader from "../pages/form/components/ListingApplyIncomeVouchersHeader"
+import ListingApplyHouseholdIncomeHeader from "../pages/form/components/ListingApplyHouseholdIncomeHeader"
+import ListingApplyVeteransProgramsHeader from "../pages/form/components/ListingApplyVeteransProgramsHeader"
+import ListingApplyHouseholdPrioritiesHeader from "../pages/form/components/ListingApplyHouseholdPrioritiesHeader"
 
 export default function getFormComponentRegistry() {
   return {
@@ -67,8 +69,10 @@ export default function getFormComponentRegistry() {
     PreferenceCheckboxGroup,
     CertificateNumberPreference,
     // Other components
-    IncomeVoucherDescription,
-    HouseholdIncomeDescription,
-    VeteransDescription,
+    ListingApplyPublicHousingHeader,
+    ListingApplyIncomeVouchersHeader,
+    ListingApplyHouseholdIncomeHeader,
+    ListingApplyVeteransProgramsHeader,
+    ListingApplyHouseholdPrioritiesHeader,
   }
 }

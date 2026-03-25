@@ -302,8 +302,7 @@
             {
               "dataSource": "form",
               "dataKey": "householdMembers",
-              "dataValueToMatch": "null",
-              "negate": true
+              "dataValueToMatch": "null"
             }
           ]
         }
@@ -336,13 +335,21 @@
     {
       "stepInfo": {
         "slug": "household-public-housing",
-        "sectionName": "household"
+        "sectionName": "household",
+        "navigationArrival": {
+          "showStepIfAnyPresent": [
+            {
+              "dataSource": "preferenceNames",
+              "dataKey": "assistedHousing"
+            }
+          ]
+        }
       },
       "componentType": "step",
       "componentName": "ListingApplyStepWrapper",
       "props": {
-        "title": "c4HouseholdPublicHousing.titleHousehold",
-        "description": "c4HouseholdPublicHousing.p1"
+        "title": "c4HouseholdPublicHousing.titleYou",
+        "headerComponentName": "ListingApplyPublicHousingHeader"
       },
       "children": [
         {
@@ -390,7 +397,7 @@
       "componentName": "ListingApplyStepWrapper",
       "props": {
         "title": "c7HouseholdPriorities.titleHousehold",
-        "description": "c7HouseholdPriorities.p1"
+        "headerComponentName": "ListingApplyHouseholdPrioritiesHeader"
       },
       "children": [
         {
@@ -402,7 +409,7 @@
               "dataKey": "householdMembersArray"
             },
             "fieldNames": {
-              "priorityMembers": "priorityMembers"
+              "selectedPriorities": "adaPrioritiesSelected"
             }
           }
         }
@@ -417,7 +424,7 @@
       "componentName": "ListingApplyStepWrapper",
       "props": {
         "title": "d1IncomeVouchers.titleHousehold",
-        "descriptionComponentName": "incomeVoucherDescription"
+        "headerComponentName": "ListingApplyIncomeVouchersHeader"
       },
       "children": [
         {
@@ -441,7 +448,7 @@
       "componentName": "ListingApplyStepWrapper",
       "props": {
         "title": "d2Income.title",
-        "descriptionComponentName": "HouseholdIncomeDescription"
+        "headerComponentName": "ListingApplyHouseholdIncomeHeader"
       },
       "children": [
         {
@@ -760,7 +767,7 @@
       "componentName": "ListingApplyStepWrapper",
       "props": {
         "title": "e7a_veterans_preference.title",
-        "descriptionComponentName": "veteransDescription"
+        "headerComponentName": "ListingApplyVeteransProgramsHeader"
       },
       "children": [
         {
