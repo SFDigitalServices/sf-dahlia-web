@@ -10,7 +10,7 @@ describe("ListingApplyPublicHousingHeader", () => {
       formData: { liveAlone: "false" },
     })
 
-    expect(screen.getByText(t("c4HouseholdPublicHousing.titleHousehold"))).not.toBeNull()
+    expect(screen.getByText(t("c4HouseholdPublicHousing.titleHousehold"))).toBeInTheDocument()
   })
 
   it("renders the individual title when liveAlone is true", () => {
@@ -18,18 +18,18 @@ describe("ListingApplyPublicHousingHeader", () => {
       formData: { liveAlone: "true" },
     })
 
-    expect(screen.getByText(t("c4HouseholdPublicHousing.titleYou"))).not.toBeNull()
+    expect(screen.getByText(t("c4HouseholdPublicHousing.titleYou"))).toBeInTheDocument()
   })
 
   it("renders the individual title when liveAlone is not set", () => {
     renderWithFormContextWrapper(<ListingApplyPublicHousingHeader />)
 
-    expect(screen.getByText(t("c4HouseholdPublicHousing.titleYou"))).not.toBeNull()
+    expect(screen.getByText(t("c4HouseholdPublicHousing.titleYou"))).toBeInTheDocument()
   })
 
   it("renders the description paragraph", () => {
     renderWithFormContextWrapper(<ListingApplyPublicHousingHeader />)
 
-    expect(screen.getByText(t("c4HouseholdPublicHousing.p1"))).not.toBeNull()
+    expect(screen.getByText(t("c4HouseholdPublicHousing.p1"))).toBeInTheDocument()
   })
 })

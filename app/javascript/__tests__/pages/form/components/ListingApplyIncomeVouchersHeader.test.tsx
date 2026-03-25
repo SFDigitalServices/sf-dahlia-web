@@ -10,7 +10,7 @@ describe("ListingApplyIncomeVouchersHeader", () => {
       formData: { liveAlone: "false" },
     })
 
-    expect(screen.getByText(t("d1IncomeVouchers.titleHousehold"))).not.toBeNull()
+    expect(screen.getByText(t("d1IncomeVouchers.titleHousehold"))).toBeInTheDocument()
   })
 
   it("renders the individual title when liveAlone is true", () => {
@@ -18,12 +18,12 @@ describe("ListingApplyIncomeVouchersHeader", () => {
       formData: { liveAlone: "true" },
     })
 
-    expect(screen.getByText(t("d1IncomeVouchers.titleYou"))).not.toBeNull()
+    expect(screen.getByText(t("d1IncomeVouchers.titleYou"))).toBeInTheDocument()
   })
 
   it("renders the individual title when liveAlone is not set", () => {
     renderWithFormContextWrapper(<ListingApplyIncomeVouchersHeader />)
 
-    expect(screen.getByText(t("d1IncomeVouchers.titleYou"))).not.toBeNull()
+    expect(screen.getByText(t("d1IncomeVouchers.titleYou"))).toBeInTheDocument()
   })
 })

@@ -10,7 +10,7 @@ describe("ListingApplyHouseholdPrioritiesHeader", () => {
       formData: { liveAlone: "false" },
     })
 
-    expect(screen.getByText(t("c7HouseholdPriorities.titleHousehold"))).not.toBeNull()
+    expect(screen.getByText(t("c7HouseholdPriorities.titleHousehold"))).toBeInTheDocument()
   })
 
   it("renders the individual title when liveAlone is true", () => {
@@ -18,18 +18,18 @@ describe("ListingApplyHouseholdPrioritiesHeader", () => {
       formData: { liveAlone: "true" },
     })
 
-    expect(screen.getByText(t("c7HouseholdPriorities.titleYou"))).not.toBeNull()
+    expect(screen.getByText(t("c7HouseholdPriorities.titleYou"))).toBeInTheDocument()
   })
 
   it("renders the individual title when liveAlone is not set", () => {
     renderWithFormContextWrapper(<ListingApplyHouseholdPrioritiesHeader />)
 
-    expect(screen.getByText(t("c7HouseholdPriorities.titleYou"))).not.toBeNull()
+    expect(screen.getByText(t("c7HouseholdPriorities.titleYou"))).toBeInTheDocument()
   })
 
   it("renders the description paragraph", () => {
     renderWithFormContextWrapper(<ListingApplyHouseholdPrioritiesHeader />)
 
-    expect(screen.getByText(t("c7HouseholdPriorities.p1"))).not.toBeNull()
+    expect(screen.getByText(t("c7HouseholdPriorities.p1"))).toBeInTheDocument()
   })
 })
