@@ -17,6 +17,10 @@
 .step-description {
   font-size: var(--seeds-font-size-md);
   color: var(--seeds-color-gray-950);
+  margin-bottom: var(--seeds-s4);
+  strong {
+    font-weight: var(--seeds-font-weight-bold);
+  }
 }
 
 .back-button {
