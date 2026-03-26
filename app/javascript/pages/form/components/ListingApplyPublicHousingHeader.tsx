@@ -16,7 +16,9 @@ const ListingApplyPublicHousingHeader = () => {
   return (
     <CardHeader divider="inset">
       <h1 className={listingApplyStepWrapperStyles["step-title"]}>{titleString}</h1>
-      <p className="field-note text-base">{t("c4HouseholdPublicHousing.p1")}</p>
+      <p className={listingApplyStepWrapperStyles["step-description"]}>
+        {t("c4HouseholdPublicHousing.p1")}
+      </p>
     </CardHeader>
   )
 }
