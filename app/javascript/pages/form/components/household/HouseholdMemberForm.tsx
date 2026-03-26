@@ -8,6 +8,7 @@ import DateOfBirth from "../DateOfBirth"
 import HouseholdMemberSameAddress from "./HouseholdMemberSameAddress"
 import YesNoRadio from "../YesNoRadio"
 import Select from "../Select"
+import styles from "./HouseholdMemberForm.module.scss"
 
 const HouseholdMemberForm = ({
   handleUpdateHouseholdMember,
@@ -61,7 +62,7 @@ const HouseholdMemberForm = ({
       <Card.Section divider="inset">
         <HouseholdMemberSameAddress />
       </Card.Section>
-      <Card.Section divider="inset" className={stepStyles["step-household-member-radio"]}>
+      <Card.Section divider="inset" className={styles["household-member-radio"]}>
         <YesNoRadio
           label={"label.memberWorkInSf"}
           note={"c3HouseholdMemberForm.workInSfDesc"}
