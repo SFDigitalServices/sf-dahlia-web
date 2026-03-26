@@ -9,6 +9,7 @@ import HouseholdMemberSameAddress from "./HouseholdMemberSameAddress"
 import YesNoRadio from "../YesNoRadio"
 import Select from "../Select"
 import styles from "./HouseholdMemberForm.module.scss"
+import { RELATIONSHIP_OPTIONS } from "../../../../modules/constants"
 
 const HouseholdMemberForm = ({
   handleUpdateHouseholdMember,
@@ -77,16 +78,7 @@ const HouseholdMemberForm = ({
           label={"label.householdMemberRelationship"}
           errorMessage={"error.householdMemberRelationship"}
           defaultOptionName={"label.selectOne"}
-          options={[
-            {
-              name: "label.spouse",
-              value: "spouse",
-            },
-            {
-              name: "label.registeredDomesticPartner",
-              value: "Registered Domestic Partner",
-            },
-          ]}
+          options={RELATIONSHIP_OPTIONS}
           fieldNames={{ selection: "relation" }}
         />
       </Card.Section>

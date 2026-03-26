@@ -7,7 +7,7 @@ interface FormSelectProps {
   label: string
   defaultOptionName?: string
   errorMessage: string
-  options: { name: string; value: string }[]
+  options: { label: string; value: string }[]
   labelClassName?: string
   validation?: RegisterOptions
   disabled?: boolean
@@ -30,7 +30,7 @@ const FormSelect = ({
     formState: { errors },
   } = useFormContext()
   const selectOptions = options.map((option) => ({
-    label: t(option.name),
+    label: t(option.label),
     value: option.value,
   }))
 
