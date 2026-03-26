@@ -36,7 +36,6 @@ const HouseholdMemberMultiStepWrapper = ({
   })
 
   const handleAddHouseholdMember = () => {
-    setHouseholdMembersArray([...householdMembersArray, {}])
     setCurrentMemberIndex(householdMembersArray.length)
     setComponentToRender("HouseholdMemberForm")
     methods.reset({})
@@ -51,7 +50,11 @@ const HouseholdMemberMultiStepWrapper = ({
 
   const handleUpdateHouseholdMember = (data: Record<string, unknown>) => {
     const updatedHouseholdMembers = [...householdMembersArray]
-    updatedHouseholdMembers[currentMemberIndex] = data
+    if (isEditingHouseholdMember) {
+      updatedHouseholdMembers[currentMemberIndex] = data
+    } else {
+      updatedHouseholdMembers.push(data)
+    }
     saveFormData({ ...formData, householdMembers: updatedHouseholdMembers })
     setHouseholdMembersArray(updatedHouseholdMembers)
     setComponentToRender("AddHouseholdMembers")
