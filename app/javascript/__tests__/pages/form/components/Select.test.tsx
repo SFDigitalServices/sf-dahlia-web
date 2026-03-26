@@ -12,8 +12,8 @@ const renderSelect = () => {
       errorMessage={"error.householdMemberRelationship"}
       defaultOptionName={"label.selectOne"}
       options={[
-        { name: "label.spouse", value: "spouse" },
-        { name: "label.registeredDomesticPartner", value: "Registered Domestic Partner" },
+        { label: "label.spouse", value: "spouse" },
+        { label: "label.registeredDomesticPartner", value: "Registered Domestic Partner" },
       ]}
       fieldNames={{ selection: "householdMemberRelation" }}
     />

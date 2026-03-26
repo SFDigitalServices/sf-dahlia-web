@@ -84,7 +84,7 @@ describe("HouseholdMemberForm", () => {
     await user.click(yesButtons[1])
     await user.selectOptions(
       screen.getByLabelText(t("label.householdMemberRelationship")),
-      "spouse"
+      "Spouse"
     )
 
     await user.click(screen.getByRole("button", { name: t("label.householdMemberSave") }))

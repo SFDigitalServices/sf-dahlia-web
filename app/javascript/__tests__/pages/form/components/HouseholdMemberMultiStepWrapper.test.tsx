@@ -79,7 +79,7 @@ describe("HouseholdMemberMultiStepWrapper", () => {
           birthYear: "1990",
           hasSameAddressAsApplicant: "true",
           workInSf: "true",
-          relation: "spouse",
+          relation: "Spouse",
         },
       ],
     })
