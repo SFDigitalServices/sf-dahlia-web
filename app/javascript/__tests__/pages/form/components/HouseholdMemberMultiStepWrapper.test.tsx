@@ -30,18 +30,34 @@ describe("HouseholdMemberMultiStepWrapper", () => {
     expect(screen.getByText("+ " + t("label.addHouseholdMember"))).toBeInTheDocument()
   })
 
-  it("navigates to the household member form when add is clicked", async () => {
+  it("navigates to the household member form when add is clicked and saves a new member", async () => {
     renderHouseholdMemberMultiStepWrapper()
     const user = userEvent.setup()
     await user.click(screen.getByText("+ " + t("label.addHouseholdMember")))
     expect(screen.getByText(t("c3HouseholdMemberForm.title"))).toBeInTheDocument()
+
+    await user.type(screen.getByLabelText(/first name/i), "John")
+    await user.type(screen.getByLabelText(/last name/i), "Doe")
+    await user.type(screen.getByLabelText("Month"), "6")
+    await user.type(screen.getByLabelText("Day"), "15")
+    await user.type(screen.getByLabelText("Year"), "1985")
+    const yesButtons = screen.getAllByLabelText(t("t.yes"))
+    await user.click(yesButtons[0])
+    await user.click(yesButtons[1])
+    await user.selectOptions(
+      screen.getByLabelText(t("label.householdMemberRelationship")),
+      "Spouse"
+    )
+
+    await user.click(screen.getByRole("button", { name: t("label.householdMemberSave") }))
+    expect(screen.getByText("John Doe")).toBeInTheDocument()
   })
 
   it("renders existing household members from formData", () => {
     renderHouseholdMemberMultiStepWrapper({
-      householdMembers: [{ firstName: "Jane", lastName: "Doe" }],
+      householdMembers: [{ firstName: "John", lastName: "Doe" }],
     })
-    expect(screen.getByText("Jane Doe")).toBeInTheDocument()
+    expect(screen.getByText("John Doe")).toBeInTheDocument()
   })
 
   it("navigates to the form in edit mode when a household member's edit button is clicked", async () => {
@@ -65,7 +81,7 @@ describe("HouseholdMemberMultiStepWrapper", () => {
     await user.click(editButtons[1])
     await user.click(screen.getByText(t("label.householdMemberDelete")))
     expect(screen.getByText(t("c2HouseholdMembers.title"))).toBeInTheDocument()
-    expect(screen.queryByText("Jane Doe")).not.toBeInTheDocument()
+    expect(screen.queryByText("John Doe")).not.toBeInTheDocument()
   })
 
   it("resets editing state after new member is added", async () => {
