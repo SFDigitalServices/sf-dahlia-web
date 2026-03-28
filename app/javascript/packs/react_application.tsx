@@ -15,6 +15,7 @@ import HowToApply from "../pages/howToApply/how-to-apply"
 import GetAssistance from "../pages/getAssistance/get-assistance"
 import DocumentChecklist from "../pages/getAssistance/document-checklist"
 import InviteToApplyPage from "../pages/inviteToApply/invite-to-apply"
+import InviteToInterviewPage from "../pages/inviteToApply/invite-to-interview"
 import AdditionalResources from "../pages/getAssistance/additional-resources"
 import Disclaimer from "../pages/getAssistance/disclaimer"
 import Privacy from "../pages/getAssistance/privacy"
@@ -48,6 +49,7 @@ void loadTranslations(currentLanguage).then(() =>
     Disclaimer,
     Privacy,
     InviteToApplyPage,
+    InviteToInterviewPage,
     MyApplications,
     AccountSettings,
     MyAccount,
