@@ -10,9 +10,10 @@ import { getPathWithoutLanguagePrefix } from "../../util/languageUtil"
 
 interface InviteToInterviewPageProps {
   assetPaths: unknown
+  documentsPath?: boolean
 }
 
-const InviteToInterviewPage = (_props: InviteToInterviewPageProps) => {
+const InviteToInterviewPage = ({ documentsPath }: InviteToInterviewPageProps) => {
   const [listing, setListing] = useState<RailsSaleListing>(null)
   const { router } = useContext(NavigationContext)
 
@@ -35,7 +36,12 @@ const InviteToInterviewPage = (_props: InviteToInterviewPageProps) => {
     return null
   }
 
-  return <InviteToInterviewDocuments listing={listing} />
+  if (documentsPath) {
+    return <InviteToInterviewDocuments listing={listing} />
+  }
+
+  // Future: other I2I landing pages will be rendered here
+  return null
 }
 
 export default withAppSetup(InviteToInterviewPage, { pageName: AppPages.InviteToInterview })
