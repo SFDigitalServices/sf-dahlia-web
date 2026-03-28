@@ -14,6 +14,17 @@
   text-align: center;
 }
 
+.step-delete-member-subfooter {
+  display: flex;
+  justify-content: center;
+
+  button {
+    font-size: var(--seeds-type-heading-size-xs);
+    color: var(--seeds-color-primary);
+    text-decoration: underline;
+  }
+}
+
 .step-description {
   font-size: var(--seeds-font-size-md);
   color: var(--seeds-color-gray-950);
