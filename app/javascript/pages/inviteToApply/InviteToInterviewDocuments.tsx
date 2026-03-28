@@ -563,7 +563,7 @@ const InviteToInterviewDocumentsSidebar = ({ listing }: { listing: RailsSaleList
             {t("inviteToInterviewPage.documents.sidebar.officeHours")}
           </strong>
         </p>
-        <p>{t("inviteToInterviewPage.documents.sidebar.officeHoursValue")}</p>
+        <p>{listing?.Office_Hours}</p>
       </SidebarBlock>
     </>
   )
