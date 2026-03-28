@@ -161,6 +161,23 @@
       border: 2px solid var(--seeds-color-gray-400);
       border-top: none;
       border-radius: 0 0 var(--seeds-rounded-lg) var(--seeds-rounded-lg);
+      > * {
+        margin: var(--seeds-spacer-text) 0;
+      }
+      ul:not(.submitYourInfoList) {
+        list-style-type: disc;
+        margin-left: var(--seeds-spacer-section);
+      }
+      ul.iconList {
+        margin-left: 0;
+        li {
+          list-style-type: none;
+          background-image: url("/images/icon-document.svg");
+          background-repeat: no-repeat;
+          padding: var(--seeds-spacer-text) 0 0 var(--seeds-spacer-section);
+          background-position: left var(--seeds-spacer-text);
+        }
+      }
     }
     .accordionBar {
       display: block;
