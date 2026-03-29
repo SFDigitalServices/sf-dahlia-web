@@ -6,8 +6,12 @@ import { getListing } from "../../api/listingApiService"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import InviteToInterviewDocuments from "./InviteToInterviewDocuments"
 import InviteToInterviewSubmitYourInfo from "./InviteToInterviewSubmitYourInfo"
+import InviteToInterviewWithdrawn from "./InviteToInterviewWithdrawn"
+import InviteToInterviewWaitlist from "./InviteToInterviewWaitlist"
+import InviteToInterviewDeadlinePassed from "./InviteToInterviewDeadlinePassed"
 import RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
-import { getPathWithoutLanguagePrefix } from "../../util/languageUtil"
+import { getCurrentLanguage, getPathWithoutLanguagePrefix } from "../../util/languageUtil"
+import { isDeadlinePassed } from "../../util/listingUtil"
 
 interface UrlParams {
   deadline?: string
@@ -18,10 +22,15 @@ interface UrlParams {
 interface InviteToInterviewPageProps {
   assetPaths: unknown
   urlParams?: UrlParams
+  submitPreviewLinkTokenParam?: string
   documentsPath?: boolean
 }
 
-const InviteToInterviewPage = ({ urlParams, documentsPath }: InviteToInterviewPageProps) => {
+const InviteToInterviewPage = ({
+  urlParams: { response, applicationNumber, deadline } = {},
+  submitPreviewLinkTokenParam,
+  documentsPath,
+}: InviteToInterviewPageProps) => {
   const [listing, setListing] = useState<RailsSaleListing>(null)
   const { router } = useContext(NavigationContext)
 
@@ -39,6 +48,19 @@ const InviteToInterviewPage = ({ urlParams, documentsPath }: InviteToInterviewPa
     "partners.inviteToInterview",
     false
   )
+  const { unleashFlag: jwtLinkParamsFlag } = useFeatureFlag(
+    "temp.webapp.inviteToApply.JwtLinkParams",
+    false
+  )
+
+  const generateSubmitLink = (signLinkParams: boolean) => {
+    const submitLinkParams = { applicationNumber, deadline }
+    const submitLinkQueryStr =
+      signLinkParams && submitPreviewLinkTokenParam
+        ? `t=${submitPreviewLinkTokenParam}`
+        : new URLSearchParams(submitLinkParams).toString()
+    return `/${getCurrentLanguage()}/listings/${listing?.Id}/invite-to-interview?${submitLinkQueryStr}`
+  }
 
   if (!isInviteInterviewEnabled) {
     return null
@@ -48,12 +70,47 @@ const InviteToInterviewPage = ({ urlParams, documentsPath }: InviteToInterviewPa
     return <InviteToInterviewDocuments listing={listing} />
   }
 
-  return (
-    <InviteToInterviewSubmitYourInfo
-      listing={listing}
-      deadline={urlParams?.deadline}
-    />
-  )
+  if (!response) {
+    return (
+      <InviteToInterviewSubmitYourInfo
+        listing={listing}
+        deadline={deadline}
+      />
+    )
+  }
+
+  if (response === "no") {
+    return (
+      <InviteToInterviewWithdrawn
+        listing={listing}
+        deadline={deadline}
+        submitPreviewLink={generateSubmitLink(jwtLinkParamsFlag)}
+      />
+    )
+  }
+
+  if (isDeadlinePassed(deadline)) {
+    return <InviteToInterviewDeadlinePassed listing={listing} />
+  }
+
+  if (response === "yes") {
+    return (
+      <InviteToInterviewSubmitYourInfo
+        listing={listing}
+        deadline={deadline}
+      />
+    )
+  }
+
+  if (response === "contact") {
+    return (
+      <InviteToInterviewWaitlist
+        listing={listing}
+        deadline={deadline}
+        submitPreviewLink={generateSubmitLink(jwtLinkParamsFlag)}
+      />
+    )
+  }
 }
 
 export default withAppSetup(InviteToInterviewPage, { pageName: AppPages.InviteToInterview })
