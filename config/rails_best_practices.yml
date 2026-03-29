@@ -43,6 +43,7 @@ RemoveUnusedMethodsInControllersCheck:
         "InviteToApplyPageController#index",
         "InviteToApplyPageController#documents",
         "InviteToApplyPageController#use_react_app",
+        "InviteToInterviewPageController#index",
         "InviteToInterviewPageController#documents",
         "InviteToInterviewPageController#use_react_app",
         "Api::V1::InviteToApplyController#index",
