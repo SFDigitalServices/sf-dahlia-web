@@ -71,12 +71,7 @@ const InviteToInterviewPage = ({
   }
 
   if (!response) {
-    return (
-      <InviteToInterviewSubmitYourInfo
-        listing={listing}
-        deadline={deadline}
-      />
-    )
+    return <InviteToInterviewSubmitYourInfo listing={listing} deadline={deadline} />
   }
 
   if (response === "no") {
@@ -94,17 +89,12 @@ const InviteToInterviewPage = ({
   }
 
   if (response === "yes") {
-    return (
-      <InviteToInterviewSubmitYourInfo
-        listing={listing}
-        deadline={deadline}
-      />
-    )
+    return <InviteToInterviewSubmitYourInfo listing={listing} deadline={deadline} />
   }
 
   if (response === "contact") {
     return (
-      <InviteToInterviewWaitlist
+      <InviteToInterviewContactMeLater
         listing={listing}
         deadline={deadline}
         submitPreviewLink={generateSubmitLink(jwtLinkParamsFlag)}
