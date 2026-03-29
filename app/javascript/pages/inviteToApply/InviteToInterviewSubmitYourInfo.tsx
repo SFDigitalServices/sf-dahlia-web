@@ -95,7 +95,12 @@ const WhatToDo = ({
           {!isDeadlinePassed(deadline) && (
             <Button
               className={styles.actionButton}
-              onClick={() => window.open(listing?.File_Upload_URL, "_blank")}
+              onClick={() => {
+                // TODO: Replace with dedicated scheduling URL field once available in Salesforce
+                const url = listing?.File_Upload_URL
+                console.warn("Using the File_Upload_URL field for this listing. A dedicated schedule interview Salesforce field is needed.")
+                window.open(url, "_blank")
+              }}
             >
               {t("inviteToInterviewPage.submitYourInfo.whatToDo.step1.p2")}
             </Button>
