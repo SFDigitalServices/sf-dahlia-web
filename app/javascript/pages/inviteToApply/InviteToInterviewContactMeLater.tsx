@@ -14,7 +14,7 @@ interface InviteToInterviewWaitlistProps {
   submitPreviewLink: string
 }
 
-const InviteToInterviewWaitlist = ({
+const InviteToInterviewContactMeLater = ({
   listing,
   deadline,
   submitPreviewLink,
@@ -64,4 +64,4 @@ const InviteToInterviewWaitlist = ({
   )
 }
 
-export default InviteToInterviewWaitlist
+export default InviteToInterviewContactMeLater
