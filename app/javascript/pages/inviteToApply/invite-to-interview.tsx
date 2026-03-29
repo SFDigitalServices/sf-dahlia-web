@@ -5,15 +5,23 @@ import { AppPages } from "../../util/routeUtil"
 import { getListing } from "../../api/listingApiService"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import InviteToInterviewDocuments from "./InviteToInterviewDocuments"
+import InviteToInterviewSubmitYourInfo from "./InviteToInterviewSubmitYourInfo"
 import RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
 import { getPathWithoutLanguagePrefix } from "../../util/languageUtil"
 
+interface UrlParams {
+  deadline?: string
+  response?: string
+  applicationNumber?: string
+}
+
 interface InviteToInterviewPageProps {
   assetPaths: unknown
+  urlParams?: UrlParams
   documentsPath?: boolean
 }
 
-const InviteToInterviewPage = ({ documentsPath }: InviteToInterviewPageProps) => {
+const InviteToInterviewPage = ({ urlParams, documentsPath }: InviteToInterviewPageProps) => {
   const [listing, setListing] = useState<RailsSaleListing>(null)
   const { router } = useContext(NavigationContext)
 
@@ -40,8 +48,12 @@ const InviteToInterviewPage = ({ documentsPath }: InviteToInterviewPageProps) =>
     return <InviteToInterviewDocuments listing={listing} />
   }
 
-  // Future: other I2I landing pages will be rendered here
-  return null
+  return (
+    <InviteToInterviewSubmitYourInfo
+      listing={listing}
+      deadline={urlParams?.deadline}
+    />
+  )
 }
 
 export default withAppSetup(InviteToInterviewPage, { pageName: AppPages.InviteToInterview })
