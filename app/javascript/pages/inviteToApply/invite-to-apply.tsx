@@ -50,12 +50,10 @@ const InviteToApplyPage = ({
 
   const { unleashFlag: isInviteApplyEnabled } = useFeatureFlag("partners.inviteToApply", false)
 
-  const generateSubmitLink = (signLinkParams: boolean) => {
-    const submitLinkParams = { applicationNumber, deadline }
-    const submitLinkQueryStr =
-      signLinkParams && submitPreviewLinkTokenParam
-        ? `t=${submitPreviewLinkTokenParam}`
-        : new URLSearchParams(submitLinkParams).toString()
+  const generateSubmitLink = () => {
+    const submitLinkQueryStr = submitPreviewLinkTokenParam
+      ? `t=${submitPreviewLinkTokenParam}`
+      : new URLSearchParams({ applicationNumber, deadline }).toString()
     return `/${getCurrentLanguage()}/listings/${listing?.Id}/invite-to-apply?${submitLinkQueryStr}`
   }
 
@@ -84,7 +82,7 @@ const InviteToApplyPage = ({
       <InviteToApplyWithdrawn
         listing={listing}
         deadline={deadline}
-        submitPreviewLink={generateSubmitLink(true)}
+        submitPreviewLink={generateSubmitLink()}
       />
     )
   }
@@ -108,7 +106,7 @@ const InviteToApplyPage = ({
       <InviteToApplyContactMeLater
         listing={listing}
         deadline={deadline}
-        submitPreviewLink={generateSubmitLink(true)}
+        submitPreviewLink={generateSubmitLink()}
       />
     )
   }
