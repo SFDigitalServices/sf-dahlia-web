@@ -8,14 +8,28 @@ import DateOfBirth from "../DateOfBirth"
 import HouseholdMemberSameAddress from "./HouseholdMemberSameAddress"
 import YesNoRadio from "../YesNoRadio"
 import Select from "../Select"
+import styles from "./HouseholdMemberForm.module.scss"
+import { RELATIONSHIP_OPTIONS } from "../../../../modules/constants"
 
 const HouseholdMemberForm = ({
   handleUpdateHouseholdMember,
+  handleDeleteHouseholdMember,
+  handleCancelAddHouseholdMember,
   methods,
+  isEditing,
 }: {
   handleUpdateHouseholdMember: (member: Record<string, string>) => void
+  handleDeleteHouseholdMember: () => void
+  handleCancelAddHouseholdMember: () => void
   methods: UseFormMethods<Record<string, unknown>>
+  isEditing: boolean
 }) => {
+  const onMemberSave = () => {
+    void methods.handleSubmit(() =>
+      handleUpdateHouseholdMember(methods.getValues() as Record<string, string>)
+    )()
+  }
+
   return (
     <Card>
       <Card.Header divider="inset">
@@ -26,7 +40,7 @@ const HouseholdMemberForm = ({
       </Card.Header>
       <Card.Section divider="inset">
         <Name
-          label={t("label.householdMemberName")}
+          label={"label.householdMemberName"}
           showMiddleName={true}
           fieldNames={{
             firstName: "firstName",
@@ -37,8 +51,8 @@ const HouseholdMemberForm = ({
       </Card.Section>
       <Card.Section divider="inset">
         <DateOfBirth
-          label={t("label.dob")}
-          ageErrorMessage={"TODO: error"}
+          label={"label.dob"}
+          ageErrorMessage={""}
           fieldNames={{
             birthMonth: "birthMonth",
             birthDay: "birthDay",
@@ -47,43 +61,37 @@ const HouseholdMemberForm = ({
         />
       </Card.Section>
       <Card.Section divider="inset">
-        <HouseholdMemberSameAddress label={t("label.memberSameAddress")} />
+        <HouseholdMemberSameAddress />
       </Card.Section>
-      <Card.Section divider="inset">
+      <Card.Section divider="inset" className={styles["household-member-radio"]}>
         <YesNoRadio
-          label={t("label.memberWorkInSf")}
-          note={t("c3HouseholdMemberForm.workInSfDesc")}
-          yesText={t("b2Contact.claimWorkInSf")}
+          label={"label.memberWorkInSf"}
+          note={"c3HouseholdMemberForm.workInSfDesc"}
+          yesText={"b2Contact.claimWorkInSf"}
           fieldNames={{
             question: "workInSf",
           }}
         />
       </Card.Section>
-      <Card.Section divider="inset">
+      <Card.Section>
         <Select
-          label={t("label.householdMemberRelationship")}
-          errorMessage={t("error.householdMemberRelationship")}
-          defaultOptionName={t("label.selectOne")}
-          options={[
-            {
-              name: t("label.spouse"),
-              value: "spouse",
-            },
-            {
-              name: t("label.registeredDomesticPartner"),
-              value: "Registered Domestic Partner",
-            },
-          ]}
-          fieldName="relation"
+          label={"label.householdMemberRelationship"}
+          errorMessage={"error.householdMemberRelationship"}
+          defaultOptionName={"label.selectOne"}
+          options={RELATIONSHIP_OPTIONS}
+          fieldNames={{ selection: "relation" }}
         />
       </Card.Section>
       <Card.Footer className={stepStyles["step-footer"]}>
-        <Button
-          onClick={() => handleUpdateHouseholdMember(methods.getValues() as Record<string, string>)}
-        >
-          {t("label.householdMemberSave")}
+        <Button onClick={onMemberSave}>
+          {isEditing ? t("label.householdMemberUpdate") : t("label.householdMemberSave")}
         </Button>
       </Card.Footer>
+      <Card.Section className={stepStyles["step-delete-member-subfooter"]}>
+        <button onClick={isEditing ? handleDeleteHouseholdMember : handleCancelAddHouseholdMember}>
+          {isEditing ? t("label.householdMemberDelete") : t("label.householdMemberCancel")}
+        </button>
+      </Card.Section>
     </Card>
   )
 }

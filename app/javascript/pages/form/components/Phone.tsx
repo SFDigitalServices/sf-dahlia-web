@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import React from "react"
-import { t, Field, PhoneField } from "@bloom-housing/ui-components"
+import { t, Field, PhoneField, Select } from "@bloom-housing/ui-components"
 import { useFormContext } from "react-hook-form"
-import Select from "./Select"
 
 interface PhoneProps {
   label: string
@@ -62,15 +61,18 @@ const Phone = ({
       />
       {showTypeOfNumber && (
         <Select
-          fieldName={phoneType}
+          name={phoneType}
           label={t("label.whatTypeOfNumber")}
           options={[
-            { name: t("label.phoneCell"), value: "cell" },
-            { name: t("label.phoneHome"), value: "home" },
-            { name: t("label.phoneWork"), value: "work" },
+            { label: t("label.phoneCell"), value: "cell" },
+            { label: t("label.phoneHome"), value: "home" },
+            { label: t("label.phoneWork"), value: "work" },
           ]}
           disabled={noPhoneCheckboxValue}
+          error={!!errors?.[phoneType]}
           errorMessage={t("error.phoneNumberType")}
+          register={register}
+          controlClassName="control"
           validation={{
             required: !noPhoneCheckboxValue,
           }}
@@ -122,14 +124,17 @@ const Phone = ({
             errorMessage={t("error.phoneNumber")}
           />
           <Select
-            fieldName={additionalPhoneType}
+            name={additionalPhoneType}
             label={t("label.whatTypeOfNumber")}
             options={[
-              { name: t("label.phoneCell"), value: "cell" },
-              { name: t("label.phoneHome"), value: "home" },
-              { name: t("label.phoneWork"), value: "work" },
+              { label: t("label.phoneCell"), value: "cell" },
+              { label: t("label.phoneHome"), value: "home" },
+              { label: t("label.phoneWork"), value: "work" },
             ]}
+            error={!!errors?.[additionalPhoneType]}
             errorMessage={t("error.phoneNumberType")}
+            register={register}
+            controlClassName="control"
             validation={{
               required: additionalPhoneCheckboxValue,
             }}

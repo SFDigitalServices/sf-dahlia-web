@@ -3,31 +3,24 @@ import { t } from "@bloom-housing/ui-components"
 import { CardHeader } from "@bloom-housing/ui-seeds/src/blocks/Card"
 import { useFormEngineContext } from "../../../formEngine/formEngineContext"
 import listingApplyStepWrapperStyles from "./ListingApplyStepWrapper.module.scss"
-import { renderInlineMarkup } from "../../../util/languageUtil"
 
-const ListingApplyIncomeVouchersHeader = () => {
+const ListingApplyHouseholdPrioritiesHeader = () => {
   const formEngineContext = useFormEngineContext()
   const { formData } = formEngineContext
 
   const titleString =
     formData.liveAlone === "false"
-      ? t("d1IncomeVouchers.titleHousehold")
-      : t("d1IncomeVouchers.titleYou")
+      ? t("c7HouseholdPriorities.titleHousehold")
+      : t("c7HouseholdPriorities.titleYou")
 
   return (
     <CardHeader divider="inset">
       <h1 className={listingApplyStepWrapperStyles["step-title"]}>{titleString}</h1>
       <p className={listingApplyStepWrapperStyles["step-description"]}>
-        {renderInlineMarkup(t("d1IncomeVouchers.p1"))}
-      </p>
-      <p className={listingApplyStepWrapperStyles["step-description"]}>
-        {renderInlineMarkup(t("d1IncomeVouchers.p2"))}
-      </p>
-      <p className={listingApplyStepWrapperStyles["step-description"]}>
-        {renderInlineMarkup(t("d1IncomeVouchers.p3"))}
+        {t("c7HouseholdPriorities.p1")}
       </p>
     </CardHeader>
   )
 }
 
-export default ListingApplyIncomeVouchersHeader
+export default ListingApplyHouseholdPrioritiesHeader

@@ -9,7 +9,9 @@ const ListingApplyHouseholdIncomeHeader = () => {
   return (
     <CardHeader divider="inset">
       <h1 className={listingApplyStepWrapperStyles["step-title"]}>{titleString}</h1>
-      <p className="field-note text-base">Household Income Description</p>
+      <p className={listingApplyStepWrapperStyles["step-description"]}>
+        Household Income Description
+      </p>
     </CardHeader>
   )
 }

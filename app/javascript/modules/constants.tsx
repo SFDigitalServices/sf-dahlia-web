@@ -190,6 +190,7 @@ export const EMAIL_REGEX = new RegExp(
   ].join("")
 )
 
+// values are copied from Salesforce picklist field Application__c.Has_ADA_Priorities_Selected__c
 export const LISTING_PRIORITY_OPTIONS = [
   {
     value: "Mobility impairments",
@@ -204,7 +205,7 @@ export const LISTING_PRIORITY_OPTIONS = [
     label: "label.hearingImpairments",
   },
   {
-    value: "No impairments",
+    value: "None",
     label: "t.no",
   },
 ]
@@ -266,3 +267,22 @@ export const PROOF_OPTIONS = {
     { value: "School record", label: "label.proof.schoolRecord" },
   ],
 }
+
+// ShortFormHelperService.js.coffee#L218
+export const RELATIONSHIP_OPTIONS = [
+  { value: "Spouse", label: "label.spouse" },
+  { value: "Registered Domestic Partner", label: "label.registeredDomesticPartner" },
+  { value: "Parent", label: "label.parent" },
+  { value: "Child", label: "label.child" },
+  { value: "Sibling", label: "label.sibling" },
+  { value: "Cousin", label: "label.cousin" },
+  { value: "Aunt", label: "label.aunt" },
+  { value: "Uncle", label: "label.uncle" },
+  { value: "Nephew", label: "label.nephew" },
+  { value: "Niece", label: "label.niece" },
+  { value: "Grandparent", label: "label.grandparent" },
+  { value: "Great Grandparent", label: "label.greatGrandparent" },
+  { value: "In-Law", label: "label.inLaw" },
+  { value: "Friend", label: "label.friend" },
+  { value: "Other", label: "label.Other" },
+]

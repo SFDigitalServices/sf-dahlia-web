@@ -395,7 +395,7 @@
       "componentName": "ListingApplyStepWrapper",
       "props": {
         "title": "c7HouseholdPriorities.titleHousehold",
-        "description": "c7HouseholdPriorities.p1"
+        "headerComponentName": "ListingApplyHouseholdPrioritiesHeader"
       },
       "children": [
         {
@@ -407,7 +407,7 @@
               "dataKey": "householdMembersArray"
             },
             "fieldNames": {
-              "priorityMembers": "priorityMembers"
+              "selectedPriorities": "adaPrioritiesSelected"
             }
           }
         }
@@ -431,7 +431,7 @@
             "note": "label.pleaseSelectOne",
             "yesText": "d1IncomeVouchers.ifSubsidyWarning",
             "fieldNames": {
-              "question": "receivesIncomeVouchers"
+              "question": "householdVouchersSubsidies"
             }
           }
         }
