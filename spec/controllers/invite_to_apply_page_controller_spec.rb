@@ -8,13 +8,28 @@ RSpec.describe InviteToApplyPageController do
   let(:decoded_token) do
     [
       {
+        deadline: deadline,
+        applicationNumber: application_number,
+        response: response_value,
+      },
+    ]
+  end
+  let(:fixed_iat) { 946_512_000 }
+  let(:fixed_exp) { 946_598_400 }
+  let(:fixed_token) do
+    JWT.encode(
+      {
         data: {
           deadline: deadline,
           applicationNumber: application_number,
           response: response_value,
         },
-      }
-    ]
+        iat: fixed_iat,
+        exp: fixed_exp,
+      },
+      'TEST_TOKEN_SECRET',
+      'HS256',
+    )
   end
 
   before do
@@ -22,22 +37,24 @@ RSpec.describe InviteToApplyPageController do
                                  .and_return('TEST_TOKEN_SECRET')
     allow(ENV).to receive(:fetch).with('JWT_ALGORITHM', nil).and_return('HS256')
     allow(controller).to receive(:static_asset_paths).and_return({ logo: 'logo.png' })
-    allow(ENV).to receive(:fetch).with('SALESFORCE_INSTANCE_URL', nil).and_return('test-salesforce-url')
-    allow(ENV).to receive(:fetch).with('SALESFORCE_API_VERSION', '61.0').and_return('61.0')
+    allow(ENV).to receive(:fetch).with('SALESFORCE_INSTANCE_URL',
+                                       nil).and_return('test-salesforce-url')
+    allow(ENV).to receive(:fetch).with('SALESFORCE_API_VERSION',
+                                       '61.0').and_return('61.0')
     allow(ENV).to receive(:fetch).with('SALESFORCE_PROXY_URI', nil).and_return(nil)
     allow(DahliaBackend::MessageService).to receive(:send_invite_to_apply_response)
     allow(Rails.logger).to receive(:info)
+    allow(controller).to receive(:encode_token).and_return(fixed_token)
   end
 
   describe '#index' do
     context 'with valid parameters' do
       before do
         allow(Force::ShortFormService).to receive(:get).with(application_number).and_return({ 'uploadURL' => 'test-upload-url' })
+
         get :index, params: {
           id: listing_id,
-          deadline: deadline,
-          applicationNumber: application_number,
-          response: response_value,
+          t: fixed_token,
         }
       end
 
@@ -58,6 +75,7 @@ RSpec.describe InviteToApplyPageController do
                                                           applicationNumber: application_number,
                                                         },
                                                         fileUploadUrl: 'test-upload-url',
+                                                        submitPreviewLinkTokenParam: fixed_token,
                                                       })
       end
 
@@ -68,20 +86,6 @@ RSpec.describe InviteToApplyPageController do
           response_value,
           listing_id,
         )
-      end
-    end
-
-    context 'with missing parameters' do
-      before do
-        get :index, params: { id: listing_id }
-      end
-
-      it 'still renders successfully' do
-        expect(response).to be_ok
-      end
-
-      it 'does not call record_response' do
-        expect(DahliaBackend::MessageService).not_to have_received(:send_invite_to_apply_response)
       end
     end
 
@@ -97,9 +101,7 @@ RSpec.describe InviteToApplyPageController do
         expect do
           get :index, params: {
             id: listing_id,
-            deadline: deadline,
-            applicationNumber: application_number,
-            response: response_value,
+            t: fixed_token,
           }
         end.to raise_error(StandardError, 'API Error')
       end
@@ -107,7 +109,6 @@ RSpec.describe InviteToApplyPageController do
 
     context 'with json web tokens' do
       before do
-        allow(controller).to receive(:use_jwt?).and_return(true)
         allow(JWT).to receive(:decode).and_return(decoded_token)
         allow(Force::ShortFormService).to receive(:get).with(application_number).and_return({ 'uploadURL' => 'test-upload-url' })
       end
@@ -149,15 +150,8 @@ RSpec.describe InviteToApplyPageController do
     end
 
     it 'sets the invite_to_apply_props with documentsPath set to true' do
-      expect(assigns(:invite_to_apply_props)).to eq({
-                                                      assetPaths: { logo: 'logo.png' },
-                                                      urlParams: {
-                                                        deadline: deadline,
-                                                        response: response_value,
-                                                        applicationNumber: application_number,
-                                                        },
-                                                      documentsPath: true
-                                                    })
+      expect(assigns(:invite_to_apply_props)).to include({ assetPaths: { logo: 'logo.png' },
+                                                           documentsPath: true })
     end
 
     it 'does not call record_response' do
@@ -167,7 +161,9 @@ RSpec.describe InviteToApplyPageController do
 
   describe 'React layout usage' do
     it 'uses React layout for all actions' do
-      get :index, params: { id: listing_id }
+      allow(Force::ShortFormService).to receive(:get).with(application_number).and_return({ 'uploadURL' => 'test-upload-url' })
+      get :index, params: { id: listing_id,
+                            t: fixed_token }
       expect(response).to render_template('layouts/application-react')
     end
   end

@@ -1,7 +1,7 @@
 # Controller for the page shown when applicants respond to invite to apply email
 class InviteToApplyPageController < ApplicationController
   def index
-    decoded_params = use_jwt? && decode_token(params[:t])
+    decoded_params = decode_token(params[:t])
     if decoded_params.is_a?(String)
       redirect_to decoded_params
       return
@@ -13,7 +13,7 @@ class InviteToApplyPageController < ApplicationController
     if decoded_params['applicationNumber'].present?
       application = Force::ShortFormService.get(decoded_params['applicationNumber'])
       @invite_to_apply_props = @invite_to_apply_props.merge(
-        fileUploadUrl: application['uploadURL']
+        fileUploadUrl: application['uploadURL'],
       )
     end
 
@@ -104,7 +104,7 @@ class InviteToApplyPageController < ApplicationController
       "Decoded JWT #{decoded_token}",
     )
     decoded_token.first['data']
-  rescue JWT::VerificationError
+  rescue JWT::DecodeError
     Rails.logger.info(
       'InviteToApplyPageController#decode_token: ' \
       "Invalid JWT in #{request.original_url}",
@@ -113,8 +113,6 @@ class InviteToApplyPageController < ApplicationController
   end
 
   def encode_token(params)
-    return nil unless use_jwt?
-
     JWT.encode(
       { data: params },
       ENV.fetch('JWT_TOKEN_SECRET', nil),
@@ -131,12 +129,6 @@ class InviteToApplyPageController < ApplicationController
     # '.../listings/a123/invite-to-apply?...'
     # '.../es/listings/a123/invite-to-apply?...'
     request.referrer&.include?(request.path.slice(%r{/listings/.+}))
-  end
-
-  def use_jwt?
-    Rails.configuration.unleash.is_enabled?('temp.webapp.inviteToApply.JwtLinkParams') &&
-      ENV.fetch('JWT_TOKEN_SECRET', nil) &&
-      ENV.fetch('JWT_ALGORITHM', nil)
   end
 
   def use_react_app
