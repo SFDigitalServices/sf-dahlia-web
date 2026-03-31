@@ -247,6 +247,7 @@ const InviteToInterviewSubmitYourInfo = ({
               variant="primary-outlined"
               onClick={() => window.print()}
               className={styles.actionButton}
+              style={{ width: "fit-content" }}
             >
               {t("inviteToInterviewPage.submitYourInfo.printThisPage")}
             </Button>
