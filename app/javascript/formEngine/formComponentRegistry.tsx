@@ -21,7 +21,7 @@ import ListingApplyPublicHousingHeader from "../pages/form/components/ListingApp
 import HouseholdMemberMultiStepWrapper from "../pages/form/components/household/HouseholdMemberMultiStepWrapper"
 import Select from "../pages/form/components/Select"
 import Radio from "../pages/form/components/Radio"
-import VeteransRadio from "../pages/form/components/VeteransRadio"
+import VeteransPreferenceRadio from "../pages/form/components/VeteransPreferenceRadio"
 import Currency from "../pages/form/components/Currency"
 import AlternateContactType from "../pages/form/components/AlternateContactType"
 import MonthlyRent from "../pages/form/components/MonthlyRent"
@@ -31,7 +31,7 @@ import ListingApplyLiveWorkPreference from "../pages/form/components/ListingAppl
 import CertificateNumberPreference from "../pages/form/components/CertificateNumberPreference"
 import ListingApplyIncomeVouchersHeader from "../pages/form/components/ListingApplyIncomeVouchersHeader"
 import ListingApplyHouseholdIncomeHeader from "../pages/form/components/ListingApplyHouseholdIncomeHeader"
-import ListingApplyVeteransProgramsHeader from "../pages/form/components/ListingApplyVeteransProgramsHeader"
+import ListingApplyVeteransPreferenceHeader from "../pages/form/components/ListingApplyVeteransPreferenceHeader"
 import ListingApplyHouseholdPrioritiesHeader from "../pages/form/components/ListingApplyHouseholdPrioritiesHeader"
 
 export default function getFormComponentRegistry() {
@@ -56,7 +56,7 @@ export default function getFormComponentRegistry() {
     Select,
     Radio,
     YesNoRadio,
-    VeteransRadio,
+    VeteransPreferenceRadio,
     Name,
     DateOfBirth,
     EmailAddress,
@@ -72,7 +72,7 @@ export default function getFormComponentRegistry() {
     ListingApplyPublicHousingHeader,
     ListingApplyIncomeVouchersHeader,
     ListingApplyHouseholdIncomeHeader,
-    ListingApplyVeteransProgramsHeader,
+    ListingApplyVeteransPreferenceHeader,
     ListingApplyHouseholdPrioritiesHeader,
   }
 }

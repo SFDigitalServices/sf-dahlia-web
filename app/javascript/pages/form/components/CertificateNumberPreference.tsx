@@ -4,7 +4,7 @@ import React from "react"
 import { useFormContext } from "react-hook-form"
 import { Link } from "@bloom-housing/ui-seeds"
 import { useFormEngineContext } from "../../../formEngine/formEngineContext"
-import { getPrimaryApplicantData } from "../../../util/formEngineUtil"
+import { getPrimaryApplicantData } from "../../../util/listingApplyUtil"
 import { getSfGovUrl, renderInlineMarkup } from "../../../util/languageUtil"
 import styles from "./CertificateNumberPreference.module.scss"
 

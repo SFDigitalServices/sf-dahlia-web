@@ -4,7 +4,7 @@ import { useFormEngineContext } from "../../../../formEngine/formEngineContext"
 import HouseholdMemberForm from "./HouseholdMemberForm"
 import AddHouseholdMembers from "./AddHouseholdMembers"
 import VerifyAddress from "../VerifyAddress"
-
+import { generateHouseholdMemberId } from "../../../../util/listingApplyUtil"
 interface HouseholdMemberMultiStepWrapperProps {
   fieldNames: {
     householdMembers: string
@@ -49,11 +49,12 @@ const HouseholdMemberMultiStepWrapper = ({
   }
 
   const handleUpdateHouseholdMember = (data: Record<string, unknown>) => {
+    const dataWithId = { ...data, id: generateHouseholdMemberId(data) }
     const updatedHouseholdMembers = [...householdMembersArray]
     if (isEditingHouseholdMember) {
-      updatedHouseholdMembers[currentMemberIndex] = data
+      updatedHouseholdMembers[currentMemberIndex] = dataWithId
     } else {
-      updatedHouseholdMembers.push(data)
+      updatedHouseholdMembers.push(dataWithId)
     }
     saveFormData({ ...formData, householdMembers: updatedHouseholdMembers })
     setHouseholdMembersArray(updatedHouseholdMembers)
