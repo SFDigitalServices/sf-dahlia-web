@@ -53,6 +53,16 @@
             "you_can_still_apply": "You can still apply, but will be ranked below SF Unified School District employees in the lottery.",
             "you_must_work_at": "You must work at SF Unified School District to apply."
         },
+        "a3a_custom_educator_brightwell_screening": {
+            "employee_id": "Employee ID",
+            "enter_your_employee_id": "Enter your employee ID",
+            "find_your_employee_id": "Find your employee ID on your paystub.",
+            "still_not_working": "Still not working? Contact your employer:",
+            "subtitle": "You can get priority in the housing lottery if you are an educator or employee of the <a target='_blank' href='{{cityCollegeUrl}}'>City College of San Francisco</a> or <a target='_blank' href='{{sfusdUrl}}'>San Francisco Unified School District</a>. You need your employee ID.",
+            "title": "Do you work at City College of San Francisco or San Francisco Unified School District?",
+            "we_could_not_find_that_employee_id": "We could not find that employee ID. Check for mistakes and try again.",
+            "work_at_san_francisco_public_schools_or_city_college": "Work at San Francisco public schools or City College"
+        },
         "a4_overview": {
             "p1": "First we'll ask about you and the people you plan to live with. Then, we'll ask about your income. Finally, we'll see if you qualify for any affordable housing lottery preference, and if so, ask you to upload proof of those preferences.",
             "p2": "<a ui-sref='{{sref}}' target='_blank'>See our checklist</a> for information about required documents and claiming preferences.",
