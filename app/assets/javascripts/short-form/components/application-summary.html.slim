@@ -30,6 +30,16 @@ review-summary-section header="{{'t.you' | translate}}" section-name="name" edit
     review-summary-item label="{{'a3_custom_educator_screening.job_code' | translate}}" identifier="custom-educator-job-classification-number" ng-if="::$ctrl.application.customEducatorScreeningAnswer == 'Yes'"
       | {{::$ctrl.application.customEducatorJobClassificationNumber}}
 
+  / custom educator brightwell
+  div ng-if="::$ctrl.isCustomEducatorBrightwellListing"
+    review-summary-item label="{{'a3a_custom_educator_brightwell_screening.work_at_san_francisco_public_schools_or_city_college' | translate}}" identifier="custom-educator-brightwell-screening-answer"
+      span ng-if="::$ctrl.application.customEducatorScreeningAnswer == 'Yes'"
+        | {{'t.yes' | translate}}
+      span ng-if="::$ctrl.application.customEducatorScreeningAnswer == 'No'"
+        | {{'t.no' | translate}}
+    review-summary-item label="{{'a3a_custom_educator_brightwell_screening.employee_id' | translate}}" identifier="custom-educator-job-classification-number" ng-if="::$ctrl.application.customEducatorScreeningAnswer == 'Yes'"
+      | {{::$ctrl.application.customEducatorJobClassificationNumber}}
+
   / name
   div ng-if="::$ctrl.atContinuePreviousDraft && $ctrl.continueDraftApplicantHasUpdatedInfo('name')"
     review-summary-item label="{{'label.name' | translate}}" identifier="full-name"

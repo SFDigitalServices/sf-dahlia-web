@@ -10,6 +10,7 @@ angular.module('dahlia.components')
     isSale: '<'
     isHabitatListing: '<'
     isCustomEducatorListing: '<'
+    isCustomEducatorBrightwellListing: '<'
     listingHasHomeAndCommunityBasedServicesUnits: '<'
     listing: '<'
     preferences: '<'

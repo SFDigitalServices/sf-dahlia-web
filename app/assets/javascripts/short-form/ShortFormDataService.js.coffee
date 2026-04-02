@@ -163,6 +163,8 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
     sfApp.primaryApplicant.isSFUSDEmployee = application.customEducatorScreeningAnswer
     sfApp.primaryApplicant.jobClassification = application.customEducatorJobClassificationNumber
 
+    console.log('Service.formatApplication', sfApp, application)
+
     # add the HCBS answer to the priorities object, so that it appears with priorities in the Leasing Agent Portal
     if application.hasHomeAndCommunityBasedServices == 'Yes' && sfApp.adaPrioritiesSelected == 'None;'
       sfApp.adaPrioritiesSelected = ListingConstantsService.HCBS_PRIORITY_NAME + ';'
