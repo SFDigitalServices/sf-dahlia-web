@@ -102,6 +102,8 @@ ShortFormNavigationService = (
       scopedCallbacks: [{func: 'validateCommunityEligibility'}]
     'custom-educator-screening':
       scopedCallbacks: [{func: 'customEducatorValidateEligibility'}]
+    'custom-educator-brightwell-screening':
+      scopedCallbacks: [{func: 'customEducatorValidateEligibility'}]
     'dalp-screening':
       scopedCallbacks: [{func: 'afterDalpScreening'}]
     # you
@@ -312,6 +314,7 @@ ShortFormNavigationService = (
       'intro',
       'community-screening',
       'custom-educator-screening',
+      'custom-educator-brightwell-screening',
       'dalp-screening',
       'overview',
       'verify-address',

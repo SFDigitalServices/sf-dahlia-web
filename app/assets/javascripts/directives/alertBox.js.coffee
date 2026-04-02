@@ -15,7 +15,8 @@ angular.module('dahlia.directives')
     eligibilityErrors: '=?'
     # shortEligibilityError is used by choose-applicant-details page
     shortEligibilityError: '=?'
-    customEducatorListing: '=?'
+    isCustomEducatorListing: '=?'
+    isCustomEducatorBrightwellListing: '=?'
 
   templateUrl: 'directives/alert-box.html'
 
