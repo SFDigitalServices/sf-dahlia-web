@@ -1,0 +1,49 @@
+section.app-container.focus-container
+  .row.collapse
+    .medium-6.medium-centered.columns.fixed-width
+      short-form-nav
+      .app-card.form-card
+        short-form-header
+          h2.app-card_question
+            | {{ 'a3a_custom_educator_brightwell_screening.title' | translate }}
+          p.form-note.margin-bottom.text-center translate="a3a_custom_educator_brightwell_screening.subtitle" translate-value-city-college-url="https://www.ccsf.edu/" translate-value-sfusd-url="https://www.sfusd.edu/"
+
+        .app-inner.inset
+          .form-group
+            p.form-note.margin-bottom translate="label.please_select_one"
+            .radio-group.padding-top--half role="radiogroup" aria-label="{{ 'a3a_custom_educator_brightwell_screening.title' | translate }}"
+
+              radio-block-item value='Yes' user='application' name='customEducatorScreeningAnswer' ng-required='true' on-change='customEducatorCheckScreening' ng-class="{ error: inputInvalid('customEducatorScreeningAnswer') }"
+                | {{ 't.yes' | translate }}
+              div.form-group.margin-left--2x ng-if="customEducatorIsEducator()" ng-class="{ error: inputInvalidOnTouched('customEducatorJobClassificationNumber') }"
+                // job classification text field
+                label.form-label for="customEducatorJobClassificationNumber"
+                  | {{ 'a3a_custom_educator_brightwell_screening.enter_your_employee_id' | translate }}
+                p.form-note.margin-bottom--half translate="a3a_custom_educator_brightwell_screening.find_your_employee_id"
+                input(
+                  ng-model="application.customEducatorJobClassificationNumber"
+                  ng-required="true"
+                  name="customEducatorJobClassificationNumber"
+                  placeholder="{{'a3a_custom_educator_brightwell_screening.employee_id' | translate}}"
+                  type="text"
+                  autocomplete="off"
+                  style="margin-bottom:0;"
+                  ui-validate="'customEducatorBrightwellValidJobClassificationNumber($value)'"
+                  aria-describedby="employee_id_error_1 employee_id_error_2"
+                )
+                small#employee_id_error_1.error.margin-bottom ng-if="inputInvalidOnTouched('customEducatorJobClassificationNumber')"
+                  | {{ 'a3a_custom_educator_brightwell_screening.we_could_not_find_that_employee_id' | translate }}
+                small#employee_id_error_2.error.margin-bottom ng-if="inputInvalidOnTouched('customEducatorJobClassificationNumber')"
+                  | {{ 'a3a_custom_educator_brightwell_screening.still_not_working' | translate }}
+                  ul.bullet-list
+                    li.margin-bottom-none
+                      | SFUSD: housing@sfusd.edu
+                    li.margin-bottom-none
+                      | City College: ccsfhousing@ccsf.edu
+
+              radio-block-item value='No' user='application' name='customEducatorScreeningAnswer' ng-required='true' on-change='customEducatorCheckScreening' ng-class="{ error: inputInvalid('customEducatorScreeningAnswer') }"
+                | {{ 't.no' | translate }}
+
+        .button-pager
+          .button-pager_row.primary.text-center
+            input#submit.button.primary.radius type="submit" value="{{'t.next' | translate}}" ng-disabled="inputInvalid('customEducatorScreeningAnswer') || eligibilityErrors.length > 0"

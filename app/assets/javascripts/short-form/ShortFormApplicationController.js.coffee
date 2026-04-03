@@ -227,6 +227,8 @@ ShortFormApplicationController = (
     AnalyticsService.trackApplicationStart($scope.listing.Id, AccountService.loggedInUser?.id || null, 'Begin Application')
     if $scope.isCustomEducatorListing()
       ShortFormNavigationService.goToApplicationPage('dahlia.short-form-welcome.custom-educator-screening', {lang: lang})
+    else if $scope.isCustomEducatorBrightwellListing()
+      ShortFormNavigationService.goToApplicationPage('dahlia.short-form-welcome.custom-educator-brightwell-screening', {lang: lang})
     else if $scope.listing.Reserved_community_type
       ShortFormNavigationService.goToApplicationPage('dahlia.short-form-welcome.community-screening', {lang: lang})
     else
@@ -234,7 +236,8 @@ ShortFormApplicationController = (
 
   $scope.onCommunityScreeningPage = ->
     $state.current.name == 'dahlia.short-form-welcome.community-screening' ||
-    $state.current.name == 'dahlia.short-form-welcome.custom-educator-screening'
+    $state.current.name == 'dahlia.short-form-welcome.custom-educator-screening' ||
+    $state.current.name == 'dahlia.short-form-welcome.custom-educator-brightwell-screening'
 
   $scope.checkCommunityScreening = ->
     # ng-change action for answering 'Yes' to screening
@@ -265,6 +268,9 @@ ShortFormApplicationController = (
   $scope.isCustomEducatorListing = ->
     $scope.customEducatorIsListing1() || $scope.customEducatorIsListing2() || $scope.customEducatorIsListing3()
 
+  $scope.isCustomEducatorBrightwellListing = ->
+    $scope.listing.Custom_Listing_Type == 'Brightwell West educator building'
+
   $scope.customEducatorIsEducator = ->
     $scope.application.customEducatorScreeningAnswer == 'Yes'
 
@@ -280,6 +286,10 @@ ShortFormApplicationController = (
       form['customEducatorJobClassificationNumber'].$viewValue.toUpperCase()
     )
 
+  $scope.customEducatorBrightwellValidJobClassificationNumber = (value) ->
+    !!(value || '').match(/^[A-Z@]\d{8}$/) || # City College employee IDs
+    !!(value || '').match(/^\d{3,6}$/)        # SFUSD employee IDs
+
   $scope.customEducatorValidJobClassificationNumber = (value) ->
     _.includes(
       ShortFormHelperService.customEducatorValidJobClassificationNumbers,
@@ -294,7 +304,7 @@ ShortFormApplicationController = (
       $scope.eligibilityErrors = [$translate.instant('a3_custom_educator_screening.you_must_work_at')]
       $scope.notEligibleErrorMessage = $translate.instant('a3_custom_educator_screening.you_are_not_eligible')
       $scope.handleErrorState()
-    else if $scope.customEducatorIsListing2() || $scope.customEducatorIsListing3()
+    else if $scope.customEducatorIsListing2() || $scope.customEducatorIsListing3() || $scope.isCustomEducatorBrightwellListing()
       $scope.clearEligibilityErrors()
       ShortFormNavigationService.goToApplicationPage('dahlia.short-form-welcome.overview')
 
