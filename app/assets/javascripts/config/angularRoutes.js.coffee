@@ -643,6 +643,10 @@
               if ShortFormApplicationService.listingIsEducator() &&
                 !ShortFormApplicationService.application.customEducatorScreeningAnswer
                   $state.go('dahlia.short-form-welcome.custom-educator-screening', {id: listing.Id, skipConfirm: true, lang: lang})
+              # check if educator brightwell screening has been answered
+              if ShortFormApplicationService.listingIsEducatorBrightwell() &&
+                !ShortFormApplicationService.application.customEducatorScreeningAnswer
+                  $state.go('dahlia.short-form-welcome.custom-educator-brightwell-screening', {id: listing.Id, skipConfirm: true, lang: lang})
             ).catch( (response) ->
               # Verify source of errors in https://www.pivotaltracker.com/story/show/159802520
               console.error('Error getting my application for listing (angularRoutes, application)', $stateParams.id)

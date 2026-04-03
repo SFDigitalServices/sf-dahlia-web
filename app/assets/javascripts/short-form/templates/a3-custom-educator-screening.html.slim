@@ -23,7 +23,7 @@ section.app-container.focus-container
         .app-inner.inset
           .form-group
             p.form-note.margin-bottom translate="label.please_select_one"
-            .radio-group.padding-top--half role="radiogroup" aria-label="mustchange"
+            .radio-group.padding-top--half role="radiogroup" aria-label="{{ 'a3_custom_educator_screening.title' | translate }}"
 
               radio-block-item value='Yes' user='application' name='customEducatorScreeningAnswer' ng-required='true' on-change='customEducatorCheckScreening' ng-class="{ error: inputInvalid('customEducatorScreeningAnswer') }"
                 | {{ 'a3_custom_educator_screening.yes_i_work' | translate }}
