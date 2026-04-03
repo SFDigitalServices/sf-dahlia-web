@@ -130,7 +130,7 @@ export const isEducatorTwo = (listing: RailsRentalListing | RailsSaleListing) =>
 
 /**
  * Check if a listing is the Brightwell West listing
- * @param {RailsRentalListing | RailsRentalListing} listing
+ * @param {RailsRentalListing | RailsSaleListing} listing
  * @returns {boolean} returns true if the listing is the Brightwell West listing, false otherwise
  */
 export const isEducatorBrightwell = (listing: RailsRentalListing | RailsSaleListing) =>
