@@ -45,7 +45,7 @@ const InviteToInterviewPage = ({
   }, [router, router.pathname])
 
   const { unleashFlag: isInviteInterviewEnabled } = useFeatureFlag(
-    "partners.inviteToInterview",
+    "all.i2i",
     false
   )
   const { unleashFlag: jwtLinkParamsFlag } = useFeatureFlag(
