@@ -4,6 +4,8 @@ import {
   PageHeader,
   Icon,
   ContentAccordion,
+  ExpandableContent,
+  Order,
   IconFillColors,
   SidebarBlock,
 } from "@bloom-housing/ui-components"
@@ -149,23 +151,21 @@ const IdentityDocuments = () => {
         </li>
       </ul>
       <div className={styles.infoSubSection}>
-        <ContentAccordion
-          customBarContent={
-            <div className={styles.accordionBar}>
-              {t("inviteToInterviewPage.documents.identity.everyone.whyWeAsk")}
-            </div>
-          }
-          customExpandedContent={
-            <div className={styles.accordionContent}>
-              {renderInlineMarkup(
-                t("inviteToInterviewPage.documents.identity.everyone.whyWeAskContent", {
-                  link: "https://www.sf.gov/information--affordable-housing-protections-people-criminal-history",
-                })
-              )}
-            </div>
-          }
-          accordionTheme={"gray"}
-        />
+        <ExpandableContent
+          strings={{
+            readMore: t("inviteToInterviewPage.documents.identity.everyone.whyWeAsk"),
+            readLess: t("inviteToInterviewPage.documents.identity.everyone.whyWeAsk"),
+          }}
+          order={Order.below}
+        >
+          <div className={styles.accordionContent}>
+            {renderInlineMarkup(
+              t("inviteToInterviewPage.documents.identity.everyone.whyWeAskContent", {
+                link: "https://www.sf.gov/information--affordable-housing-protections-people-criminal-history",
+              })
+            )}
+          </div>
+        </ExpandableContent>
       </div>
     </div>
   )
