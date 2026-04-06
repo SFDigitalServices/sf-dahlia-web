@@ -30,9 +30,7 @@ const CheckWhatYouNeed = () => {
       <Heading priority={2} size="2xl">
         {t("inviteToInterviewPage.documents.checkWhatYouNeed.title")}
       </Heading>
-      <p>
-        {renderInlineMarkup(t("inviteToInterviewPage.documents.checkWhatYouNeed.p1"))}
-      </p>
+      <p>{renderInlineMarkup(t("inviteToInterviewPage.documents.checkWhatYouNeed.p1"))}</p>
       <ol>
         <li>
           {renderInlineMarkup(
@@ -118,37 +116,25 @@ const IdentityDocuments = () => {
         {t("inviteToInterviewPage.documents.identity.adults.title")}
       </Heading>
       <ul className={styles.iconList}>
-        <li>
-          {renderInlineMarkup(t("inviteToInterviewPage.documents.identity.adults.p1"))}
-        </li>
+        <li>{renderInlineMarkup(t("inviteToInterviewPage.documents.identity.adults.p1"))}</li>
       </ul>
       <p>{t("inviteToInterviewPage.documents.identity.adults.p2")}</p>
       <ul>
-        <li>
-          {renderInlineMarkup(t("inviteToInterviewPage.documents.identity.adults.p3"))}
-        </li>
-        <li>
-          {renderInlineMarkup(t("inviteToInterviewPage.documents.identity.adults.p4"))}
-        </li>
-        <li>
-          {renderInlineMarkup(t("inviteToInterviewPage.documents.identity.adults.p5"))}
-        </li>
+        <li>{renderInlineMarkup(t("inviteToInterviewPage.documents.identity.adults.p3"))}</li>
+        <li>{renderInlineMarkup(t("inviteToInterviewPage.documents.identity.adults.p4"))}</li>
+        <li>{renderInlineMarkup(t("inviteToInterviewPage.documents.identity.adults.p5"))}</li>
       </ul>
       <Heading priority={3} size="lg">
         {t("inviteToInterviewPage.documents.identity.children.title")}
       </Heading>
       <ul className={styles.iconList}>
-        <li>
-          {renderInlineMarkup(t("inviteToInterviewPage.documents.identity.children.p1"))}
-        </li>
+        <li>{renderInlineMarkup(t("inviteToInterviewPage.documents.identity.children.p1"))}</li>
       </ul>
       <Heading priority={3} size="lg">
         {t("inviteToInterviewPage.documents.identity.everyone.title")}
       </Heading>
       <ul className={styles.iconList}>
-        <li>
-          {renderInlineMarkup(t("inviteToInterviewPage.documents.identity.everyone.p1"))}
-        </li>
+        <li>{renderInlineMarkup(t("inviteToInterviewPage.documents.identity.everyone.p1"))}</li>
       </ul>
       <div className={styles.infoSubSection}>
         <ExpandableContent
@@ -183,23 +169,15 @@ const ProofOfIncome = () => {
       </Message>
       <p>{t("inviteToInterviewPage.documents.provide")}</p>
       <ul className={styles.iconList}>
-        <li>
-          {renderInlineMarkup(t("inviteToInterviewPage.documents.proofOfIncome.p1"))}
-        </li>
+        <li>{renderInlineMarkup(t("inviteToInterviewPage.documents.proofOfIncome.p1"))}</li>
       </ul>
       <p>{t("inviteToInterviewPage.documents.proofOfIncome.p2")}</p>
       <p>{t("inviteToInterviewPage.documents.proofOfIncome.p3")}</p>
       <p>{t("inviteToInterviewPage.documents.proofOfIncome.p4")}</p>
       <ul>
-        <li>
-          {renderInlineMarkup(t("inviteToInterviewPage.documents.proofOfIncome.p5"))}
-        </li>
-        <li>
-          {renderInlineMarkup(t("inviteToInterviewPage.documents.proofOfIncome.p6"))}
-        </li>
-        <li>
-          {renderInlineMarkup(t("inviteToInterviewPage.documents.proofOfIncome.p7"))}
-        </li>
+        <li>{renderInlineMarkup(t("inviteToInterviewPage.documents.proofOfIncome.p5"))}</li>
+        <li>{renderInlineMarkup(t("inviteToInterviewPage.documents.proofOfIncome.p6"))}</li>
+        <li>{renderInlineMarkup(t("inviteToInterviewPage.documents.proofOfIncome.p7"))}</li>
       </ul>
       <div className={styles.infoSubSection}>
         <ContentAccordion
@@ -360,27 +338,19 @@ const ProofOfIncome = () => {
               <p>{t("inviteToInterviewPage.documents.provide")}</p>
               <ul className={styles.iconList}>
                 <li>
-                  {renderInlineMarkup(
-                    t("inviteToInterviewPage.documents.proofOfIncome.other.p1")
-                  )}
+                  {renderInlineMarkup(t("inviteToInterviewPage.documents.proofOfIncome.other.p1"))}
                 </li>
               </ul>
               <p>{t("inviteToInterviewPage.documents.proofOfIncome.other.p2")}</p>
               <ul>
                 <li>
-                  {renderInlineMarkup(
-                    t("inviteToInterviewPage.documents.proofOfIncome.other.p3")
-                  )}
+                  {renderInlineMarkup(t("inviteToInterviewPage.documents.proofOfIncome.other.p3"))}
                 </li>
                 <li>
-                  {renderInlineMarkup(
-                    t("inviteToInterviewPage.documents.proofOfIncome.other.p4")
-                  )}
+                  {renderInlineMarkup(t("inviteToInterviewPage.documents.proofOfIncome.other.p4"))}
                 </li>
                 <li>
-                  {renderInlineMarkup(
-                    t("inviteToInterviewPage.documents.proofOfIncome.other.p5")
-                  )}
+                  {renderInlineMarkup(t("inviteToInterviewPage.documents.proofOfIncome.other.p5"))}
                 </li>
               </ul>
               <p>{t("inviteToInterviewPage.documents.proofOfIncome.other.p6")}</p>
@@ -417,21 +387,13 @@ const BankAndFinancials = () => {
       </Message>
       <p>{t("inviteToInterviewPage.documents.provide")}</p>
       <ul className={styles.iconList}>
-        <li>
-          {renderInlineMarkup(t("inviteToInterviewPage.documents.bankAndFinancial.p1"))}
-        </li>
+        <li>{renderInlineMarkup(t("inviteToInterviewPage.documents.bankAndFinancial.p1"))}</li>
       </ul>
       <p>{t("inviteToInterviewPage.documents.bankAndFinancial.p2")}</p>
       <ul>
-        <li>
-          {renderInlineMarkup(t("inviteToInterviewPage.documents.bankAndFinancial.p3"))}
-        </li>
-        <li>
-          {renderInlineMarkup(t("inviteToInterviewPage.documents.bankAndFinancial.p4"))}
-        </li>
-        <li>
-          {renderInlineMarkup(t("inviteToInterviewPage.documents.bankAndFinancial.p5"))}
-        </li>
+        <li>{renderInlineMarkup(t("inviteToInterviewPage.documents.bankAndFinancial.p3"))}</li>
+        <li>{renderInlineMarkup(t("inviteToInterviewPage.documents.bankAndFinancial.p4"))}</li>
+        <li>{renderInlineMarkup(t("inviteToInterviewPage.documents.bankAndFinancial.p5"))}</li>
       </ul>
       <p>{t("inviteToInterviewPage.documents.bankAndFinancial.p6")}</p>
       <ul>
@@ -451,16 +413,10 @@ const RentalHistory = () => {
       <Heading priority={2} size="2xl">
         {"4. " + t("inviteToInterviewPage.documents.rentalHistory.title")}
       </Heading>
-      <p>
-        {renderInlineMarkup(t("inviteToInterviewPage.documents.rentalHistory.p1"))}
-      </p>
+      <p>{renderInlineMarkup(t("inviteToInterviewPage.documents.rentalHistory.p1"))}</p>
       <ul className={styles.iconList}>
-        <li>
-          {renderInlineMarkup(t("inviteToInterviewPage.documents.rentalHistory.p2"))}
-        </li>
-        <li>
-          {renderInlineMarkup(t("inviteToInterviewPage.documents.rentalHistory.p3"))}
-        </li>
+        <li>{renderInlineMarkup(t("inviteToInterviewPage.documents.rentalHistory.p2"))}</li>
+        <li>{renderInlineMarkup(t("inviteToInterviewPage.documents.rentalHistory.p3"))}</li>
       </ul>
       <p>{t("inviteToInterviewPage.documents.rentalHistory.p4")}</p>
     </div>
@@ -475,9 +431,7 @@ const ChildCustody = () => {
       </Heading>
       <p>{t("inviteToInterviewPage.documents.provide")}</p>
       <ul className={styles.iconList}>
-        <li>
-          {renderInlineMarkup(t("inviteToInterviewPage.documents.childCustody.p1"))}
-        </li>
+        <li>{renderInlineMarkup(t("inviteToInterviewPage.documents.childCustody.p1"))}</li>
       </ul>
       <p>{t("inviteToInterviewPage.documents.childCustody.p2")}</p>
       <ul>
@@ -501,24 +455,14 @@ const HousingAssistance = () => {
       </Heading>
       <p>{t("inviteToInterviewPage.documents.provide")}</p>
       <ul className={styles.iconList}>
-        <li>
-          {renderInlineMarkup(t("inviteToInterviewPage.documents.housingAssistance.p1"))}
-        </li>
+        <li>{renderInlineMarkup(t("inviteToInterviewPage.documents.housingAssistance.p1"))}</li>
       </ul>
       <p>{t("inviteToInterviewPage.documents.housingAssistance.p2")}</p>
       <ul>
-        <li>
-          {renderInlineMarkup(t("inviteToInterviewPage.documents.housingAssistance.p3"))}
-        </li>
-        <li>
-          {renderInlineMarkup(t("inviteToInterviewPage.documents.housingAssistance.p4"))}
-        </li>
-        <li>
-          {renderInlineMarkup(t("inviteToInterviewPage.documents.housingAssistance.p5"))}
-        </li>
-        <li>
-          {renderInlineMarkup(t("inviteToInterviewPage.documents.housingAssistance.p6"))}
-        </li>
+        <li>{renderInlineMarkup(t("inviteToInterviewPage.documents.housingAssistance.p3"))}</li>
+        <li>{renderInlineMarkup(t("inviteToInterviewPage.documents.housingAssistance.p4"))}</li>
+        <li>{renderInlineMarkup(t("inviteToInterviewPage.documents.housingAssistance.p5"))}</li>
+        <li>{renderInlineMarkup(t("inviteToInterviewPage.documents.housingAssistance.p6"))}</li>
       </ul>
     </div>
   )
@@ -527,10 +471,7 @@ const HousingAssistance = () => {
 const InviteToInterviewDocumentsSidebar = ({ listing }: { listing: RailsSaleListing }) => {
   return (
     <>
-      <SidebarBlock
-        title={t("inviteToInterviewPage.documents.sidebar.needHelp")}
-        priority={2}
-      >
+      <SidebarBlock title={t("inviteToInterviewPage.documents.sidebar.needHelp")} priority={2}>
         <Heading priority={3} size="lg">
           {t("inviteToApplyPage.submitYourInfo.prepare.p2")}
         </Heading>
@@ -547,21 +488,14 @@ const InviteToInterviewDocumentsSidebar = ({ listing }: { listing: RailsSaleList
           </a>
         </span>
       </SidebarBlock>
-      <SidebarBlock
-        title={t("inviteToInterviewPage.documents.sidebar.contact")}
-        priority={2}
-      >
+      <SidebarBlock title={t("inviteToInterviewPage.documents.sidebar.contact")} priority={2}>
         <p>
-          <strong>
-            {t("inviteToInterviewPage.documents.sidebar.contactSubtitle")}
-          </strong>
+          <strong>{t("inviteToInterviewPage.documents.sidebar.contactSubtitle")}</strong>
         </p>
         <p>{t("inviteToInterviewPage.documents.sidebar.contactLabel")}</p>
         <InviteToApplyLeasingAgentInfo listing={listing} />
         <p>
-          <strong>
-            {t("inviteToInterviewPage.documents.sidebar.officeHours")}
-          </strong>
+          <strong>{t("inviteToInterviewPage.documents.sidebar.officeHours")}</strong>
         </p>
         <p>{listing?.Office_Hours}</p>
       </SidebarBlock>

@@ -11,9 +11,7 @@ interface InviteToInterviewDeadlinePassedProps {
   listing: RailsSaleListing | null
 }
 
-const InviteToInterviewDeadlinePassed = ({
-  listing,
-}: InviteToInterviewDeadlinePassedProps) => {
+const InviteToInterviewDeadlinePassed = ({ listing }: InviteToInterviewDeadlinePassedProps) => {
   return (
     <FormLayout>
       <LoadingOverlay isLoading={!listing}>

@@ -74,13 +74,7 @@ const PreparingYourApplication = () => {
   )
 }
 
-const WhatToDo = ({
-  listing,
-  deadline,
-}: {
-  listing: RailsSaleListing
-  deadline: string
-}) => {
+const WhatToDo = ({ listing, deadline }: { listing: RailsSaleListing; deadline: string }) => {
   return (
     <div className={styles.whatToDoList}>
       <Heading priority={2} size="2xl">
@@ -98,7 +92,9 @@ const WhatToDo = ({
               onClick={() => {
                 // TODO: Replace with dedicated scheduling URL field once available in Salesforce
                 const url = listing?.File_Upload_URL
-                console.warn("Using the File_Upload_URL field for this listing. A dedicated schedule interview Salesforce field is needed.")
+                console.warn(
+                  "Using the File_Upload_URL field for this listing. A dedicated schedule interview Salesforce field is needed."
+                )
                 window.open(url, "_blank")
               }}
             >

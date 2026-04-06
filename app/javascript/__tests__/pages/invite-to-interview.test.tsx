@@ -127,9 +127,7 @@ describe("Invite to Interview Page", () => {
         />
       )
 
-      expect(
-        screen.getByText(t("inviteToInterviewPage.waitlist.title"))
-      ).toBeInTheDocument()
+      expect(screen.getByText(t("inviteToInterviewPage.waitlist.title"))).toBeInTheDocument()
       expect(
         screen.getByRole("link", { name: "come to an appointment and submit more documents" })
       ).toBeInTheDocument()

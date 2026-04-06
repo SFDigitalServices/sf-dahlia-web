@@ -38,9 +38,7 @@ const InviteToInterviewContactMeLater = ({
                 "<a></a>"
               )}
             </p>
-            <p className={styles.responseSubtitle}>
-              {t("inviteToInterviewPage.waitlist.p1")}
-            </p>
+            <p className={styles.responseSubtitle}>{t("inviteToInterviewPage.waitlist.p1")}</p>
           </Card.Header>
           <Card.Section className={styles.responseSection}>
             <Heading priority={3} size="xl" className={styles.responseHeading}>
