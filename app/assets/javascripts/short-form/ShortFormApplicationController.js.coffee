@@ -287,7 +287,7 @@ ShortFormApplicationController = (
     )
 
   $scope.customEducatorBrightwellValidJobClassificationNumber = (value) ->
-    !!(value || '').match(/^[A-Z@]\d{8}$/) || # City College employee IDs
+    !!(value || '').match(/^[a-zA-Z@]\d{8}$/) || # City College employee IDs
     !!(value || '').match(/^\d{3,6}$/)        # SFUSD employee IDs
 
   $scope.customEducatorValidJobClassificationNumber = (value) ->
