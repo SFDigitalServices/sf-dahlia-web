@@ -16,6 +16,7 @@ import { habitatListing } from "../../data/RailsSaleListing/listing-sale-habitat
 import {
   rentalEducatorListing1,
   rentalEducatorListing2,
+  rentalEducatorBrightwellListing,
 } from "../../data/RailsRentalListing/listing-rental-educator"
 import { t } from "@bloom-housing/ui-components"
 import { renderAndLoadAsync } from "../../__util__/renderUtils"
@@ -324,6 +325,38 @@ describe("ListingDetailsEligibility", () => {
     )
 
     expect(findByText(t("listings.customListingType.educator.preferences.part1"))).toBeDefined()
+    expect(asFragment()).toMatchSnapshot()
+  })
+
+  it("displays custom listing details 'check if you're eligible' section and 'preferences' section for Brightwell West listing", async () => {
+    axios.get.mockResolvedValue({ data: { preferences: defaultPreferences } })
+
+    const { asFragment, findByText } = render(
+      <ListingDetailsContext.Provider
+        value={{
+          units: unitsWithOneAmi,
+          amiCharts: amiChartsWithOneAmi,
+          fetchingUnits: false,
+          fetchedUnits: true,
+          fetchingAmiCharts: false,
+          fetchedAmiCharts: true,
+          fetchingAmiChartsError: undefined,
+          fetchingUnitsError: undefined,
+        }}
+      >
+        <ListingDetailsEligibility
+          listing={rentalEducatorBrightwellListing}
+          imageSrc={"listing-eligibility.svg"}
+        />
+      </ListingDetailsContext.Provider>
+    )
+
+    expect(
+      await findByText(t("listings.customListingType.educator.brightwell.eligibility.part1"))
+    ).toBeDefined()
+    expect(
+      await findByText(t("listings.customListingType.educator.brightwell.preferences.part1"))
+    ).toBeDefined()
     expect(asFragment()).toMatchSnapshot()
   })
 

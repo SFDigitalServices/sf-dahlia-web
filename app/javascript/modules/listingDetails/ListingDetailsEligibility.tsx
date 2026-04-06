@@ -12,6 +12,7 @@ import { RailsListing } from "../listings/SharedHelpers"
 import {
   isEducator,
   isEducatorOne,
+  isEducatorBrightwell,
   isFcfsSalesListing,
   isHabitatListing,
   isPluralSRO,
@@ -38,7 +39,8 @@ import "./ListingDetailsEligibility.scss"
 import { ListingDetailsChisholmPreferences } from "./ListingDetailsChisholmPreferences"
 import { stripMostTags } from "../../util/filterUtil"
 import Link from "../../navigation/Link"
-
+import ListingDetailsEligibilityCheckBrightwell from "./ListingDetailsEligibilityCheckBrightwell"
+import ListingDetailsEligibilityPrefBrightwell from "./ListingDetailsEligibilityPrefBrightwell"
 export interface ListingDetailsEligibilityProps {
   listing: RailsListing
   imageSrc: string
@@ -223,6 +225,9 @@ export const ListingDetailsEligibility = ({
             </Card>
           </ListSection>
         )}
+
+        {isEducatorBrightwell(listing) && <ListingDetailsEligibilityCheckBrightwell />}
+
         {!!listing.Reserved_community_type && !isHabitatListing(listing) && (
           <ListSection
             title={t(`listings.reservedCommunityType.${listing.Reserved_community_type}.title`)}
@@ -281,56 +286,57 @@ export const ListingDetailsEligibility = ({
           <StandardTable headers={occupancyTableHeaders} data={occupancyTableData} />
         </ListSection>
 
-        {isEducator(listing) ? (
+        {isEducator(listing) && (
           <ErrorBoundary boundaryScope={BoundaryScope.component}>
             <span id="chisholm-preferences">
               <ListingDetailsChisholmPreferences isEducatorOne={isEducatorOne(listing)} />
             </span>
           </ErrorBoundary>
-        ) : (
-          !isFcfsSalesListing(listing) && (
-            <ListSection
-              title={t("listings.lottery.title")}
-              subtitle={
-                <>
-                  <div className="mb-4">
-                    {t("listingsForSale.lotteryPreferences.lotteryPreferencesArePrograms")}
-                  </div>
-                  <div>{t("listingsForSale.lotteryPreferences.weContactApplicants")}</div>
-                  {listingHasVeteransPreference(listing) && (
-                    <>
-                      <div className="mt-4">
-                        <b>
-                          {t("listingsForSale.lotteryPreferences.priorityForUsMilitaryVeterans")}
-                        </b>
-                      </div>
-                      <div className="mb-4">
-                        {t("listingsForSale.lotteryPreferences.veteransGetPriority")}
-                      </div>
-                      <div>
-                        <Link
-                          className="text-blue-700"
-                          external={true}
-                          href="https://www.sf.gov/get-priority-housing-lottery-if-you-are-veteran"
-                          target="_blank"
-                        >
-                          {t("listingsForSale.lotteryPreferences.moreAboutPriority")}
-                        </Link>
-                      </div>
-                    </>
-                  )}
-                </>
-              }
-            >
-              <ErrorBoundary boundaryScope={BoundaryScope.component}>
-                <ListingDetailsPreferences
-                  listingID={listing.listingID}
-                  translations={listing.translations}
-                />
-              </ErrorBoundary>
-            </ListSection>
-          )
         )}
+
+        {isEducatorBrightwell(listing) && <ListingDetailsEligibilityPrefBrightwell />}
+
+        {!isEducator(listing) && !isEducatorBrightwell(listing) && !isFcfsSalesListing(listing) && (
+          <ListSection
+            title={t("listings.lottery.title")}
+            subtitle={
+              <>
+                <div className="mb-4">
+                  {t("listingsForSale.lotteryPreferences.lotteryPreferencesArePrograms")}
+                </div>
+                <div>{t("listingsForSale.lotteryPreferences.weContactApplicants")}</div>
+                {listingHasVeteransPreference(listing) && (
+                  <>
+                    <div className="mt-4">
+                      <b>{t("listingsForSale.lotteryPreferences.priorityForUsMilitaryVeterans")}</b>
+                    </div>
+                    <div className="mb-4">
+                      {t("listingsForSale.lotteryPreferences.veteransGetPriority")}
+                    </div>
+                    <div>
+                      <Link
+                        className="text-blue-700"
+                        external={true}
+                        href="https://www.sf.gov/get-priority-housing-lottery-if-you-are-veteran"
+                        target="_blank"
+                      >
+                        {t("listingsForSale.lotteryPreferences.moreAboutPriority")}
+                      </Link>
+                    </div>
+                  </>
+                )}
+              </>
+            }
+          >
+            <ErrorBoundary boundaryScope={BoundaryScope.component}>
+              <ListingDetailsPreferences
+                listingID={listing.listingID}
+                translations={listing.translations}
+              />
+            </ErrorBoundary>
+          </ListSection>
+        )}
+
         {priorityUnits?.length > 0 ? (
           <ListSection
             title={t("listings.priorityUnits")}

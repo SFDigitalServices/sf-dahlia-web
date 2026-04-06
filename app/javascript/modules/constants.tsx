@@ -62,6 +62,7 @@ export const CUSTOM_LISTING_TYPES = {
   EDUCATOR_ONE: "Educator 1: SFUSD employees only",
   EDUCATOR_TWO: "Educator 2: SFUSD employees & public",
   EDUCATOR_THREE: "Educator 3: Waitlist - SFUSD employees & public",
+  EDUCATOR_BRIGHTWELL: "Brightwell West educator building",
   DALP: "Downpayment Assistance Loan Program",
 }
 
@@ -81,6 +82,7 @@ export const LOTTERY_RANKING_VIDEO_URL = "https://www.youtube.com/watch?v=oW56bU
 export const SFGOV_LINKS = [
   "https://sf.gov/departments/mayors-office-housing-and-community-development",
   "https://sf.gov/information/learn-about-housing-lottery-preference-programs",
+  "https://www.sf.gov/learn-how-lottery-works-brightwell-west",
   "https://www.sf.gov/learn-how-lottery-works-shirley-chisholm-village",
   "https://sf.gov/apply-shirley-chisholm-village-housing",
   "https://sf.gov/reports/january-2023/first-come-first-served-bmr-listings",
