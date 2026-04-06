@@ -7,10 +7,12 @@ import { defaultIfNotTranslated } from "../../util/languageUtil"
 interface LotteryResultsRowProps {
   bucket: RailsLotteryBucket
   listingIsEducator: boolean
+  listingIsEducatorBrightwell: boolean
 }
 
 interface LotteryResultsRowHeadingProps {
   preferenceName: string
+  listingIsEducatorBrightwell?: boolean
 }
 
 const ListingDetailsLotteryResultsRowHeading = ({
@@ -28,14 +30,17 @@ const ListingDetailsLotteryResultsRowHeading = ({
 
 const ListingDetailsLotteryResultsRowHeadingEducator = ({
   preferenceName,
+  listingIsEducatorBrightwell,
 }: LotteryResultsRowHeadingProps) => {
   // Shirley Chisolm Village layered preferences will be prepended with
   // 'Tier 1', 'Tier 2', or nothing
   // 'Tier 1' indicates an educator and another preference
   // 'Tier 2' is someone who works for the school district and has another preference
-  // We don't want to display these values to users
+  // Brightwell West layered preferences will be prepended with 'Tier 1' or nothing
   let subHeading: string
-  if (preferenceName.includes("Tier 1")) {
+  if (preferenceName.includes("Tier 1") && listingIsEducatorBrightwell) {
+    subHeading = t("listings.lotteryPreference.sfusd.educatorsAndEmployees.title")
+  } else if (preferenceName.includes("Tier 1")) {
     subHeading = t("listings.lotteryPreference.sfusd.educators.shortTitle")
   } else if (preferenceName.includes("Tier 2")) {
     subHeading = t("listings.lotteryPreference.sfusd.allOtherEmployees.shortTitle")
@@ -43,6 +48,7 @@ const ListingDetailsLotteryResultsRowHeadingEducator = ({
     subHeading = t("listings.lotteryPreference.sfusd.generalPublic.shortTitle")
   }
 
+  // We don't want to display these 'Tier ...' values to users
   const userFacingPreferenceName = preferenceName.replace("Tier 1 ", "").replace("Tier 2 ", "")
 
   return (
@@ -56,6 +62,7 @@ const ListingDetailsLotteryResultsRowHeadingEducator = ({
 export const ListingDetailsLotteryResultsRow = ({
   bucket,
   listingIsEducator,
+  listingIsEducatorBrightwell,
 }: LotteryResultsRowProps) => {
   return (
     <div className="lottery-results-row border-b border-gray-450 flex mb-4 px-8 pb-4">
@@ -64,8 +71,11 @@ export const ListingDetailsLotteryResultsRow = ({
         <div>{bucket.preferenceResults[0].preferenceRank}</div>
       </div>
       <div className="mx-4">
-        {listingIsEducator ? (
-          <ListingDetailsLotteryResultsRowHeadingEducator preferenceName={bucket.preferenceName} />
+        {listingIsEducator || listingIsEducatorBrightwell ? (
+          <ListingDetailsLotteryResultsRowHeadingEducator
+            preferenceName={bucket.preferenceName}
+            listingIsEducatorBrightwell={listingIsEducatorBrightwell}
+          />
         ) : (
           <ListingDetailsLotteryResultsRowHeading preferenceName={bucket.preferenceName} />
         )}
