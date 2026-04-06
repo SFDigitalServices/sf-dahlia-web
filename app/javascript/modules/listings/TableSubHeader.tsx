@@ -1,6 +1,6 @@
 import { t } from "@bloom-housing/ui-components"
 import React from "react"
-import { isEducatorTwo } from "../../util/listingUtil"
+import { isEducatorTwo, isEducatorBrightwell } from "../../util/listingUtil"
 import { getPriorityTypes } from "./DirectoryHelpers"
 import RailsRentalListing from "../../api/types/rails/listings/RailsRentalListing"
 
@@ -11,12 +11,22 @@ type TableSubHeaderProps = {
 const TableSubHeader = ({ listing }: TableSubHeaderProps) => {
   const priorityTypes = getPriorityTypes(listing)
   return (
-    (priorityTypes || isEducatorTwo(listing)) && (
+    (priorityTypes || isEducatorTwo(listing) || isEducatorBrightwell(listing)) && (
       <div className="text__small-normal">
         {t("listings.includesPriorityUnits")}
         <ul className="list-disc ml-4">
           {isEducatorTwo(listing) && (
             <li>{t("listings.customListingType.educator.priorityUnits")}</li>
+          )}
+          {isEducatorBrightwell(listing) && (
+            <>
+              <li>
+                {t(
+                  "listings.customListingType.educator.brightwell.priorityUnits.cityCollegeEmployees"
+                )}
+              </li>
+              <li>{t("listings.customListingType.educator.priorityUnits")}</li>
+            </>
           )}
           {priorityTypes && priorityTypes.map((name) => <li key={name}>{name}</li>)}
         </ul>
