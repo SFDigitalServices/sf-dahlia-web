@@ -28,4 +28,42 @@ describe("TableSubHeader", () => {
     expect(await findByText(t("listings.prioritiesDescriptor.mobilityHearingVision"))).toBeDefined()
     expect(asFragment()).toMatchSnapshot()
   })
+
+  it("renders the priority units for Brightwell West listing", async () => {
+    const testListing = {
+      Custom_Listing_Type: "Brightwell West educator building",
+    }
+    const { asFragment, findByText } = render(
+      <TableSubHeader listing={testListing as RailsRentalListing} />
+    )
+    expect(await findByText(t("listings.customListingType.educator.priorityUnits"))).toBeDefined()
+    expect(
+      await findByText(
+        t("listings.customListingType.educator.brightwell.priorityUnits.cityCollegeEmployees")
+      )
+    ).toBeDefined()
+    expect(asFragment()).toMatchSnapshot()
+  })
+
+  it("renders the priority units for Brightwell West listing with other priority units", async () => {
+    const testListing = {
+      Custom_Listing_Type: "Brightwell West educator building",
+      prioritiesDescriptor: [
+        {
+          name: "Mobility/Hearing/Vision impairments",
+        },
+      ],
+    }
+    const { asFragment, findByText } = render(
+      <TableSubHeader listing={testListing as RailsRentalListing} />
+    )
+    expect(await findByText(t("listings.customListingType.educator.priorityUnits"))).toBeDefined()
+    expect(
+      await findByText(
+        t("listings.customListingType.educator.brightwell.priorityUnits.cityCollegeEmployees")
+      )
+    ).toBeDefined()
+    expect(await findByText(t("listings.prioritiesDescriptor.mobilityHearingVision"))).toBeDefined()
+    expect(asFragment()).toMatchSnapshot()
+  })
 })
