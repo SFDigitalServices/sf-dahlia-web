@@ -1152,9 +1152,16 @@ ShortFormApplicationService = (
 
   Service.listingIsEducator = ->
     _.includes(
-      ['Educator 1: SFUSD employees only', 'Educator 2: SFUSD employees & public', 'Educator 3: Waitlist - SFUSD employees & public'],
+      [
+        'Educator 1: SFUSD employees only',
+        'Educator 2: SFUSD employees & public',
+        'Educator 3: Waitlist - SFUSD employees & public',
+      ],
       ListingDataService.listing.Custom_Listing_Type
     )
+
+  Service.listingIsEducatorBrightwell = ->
+    ListingDataService.listing.Custom_Listing_Type == 'Brightwell West educator building'
 
   Service.listingIsDalp = ->
     ListingDataService.listing.Custom_Listing_Type == 'Downpayment Assistance Loan Program'
