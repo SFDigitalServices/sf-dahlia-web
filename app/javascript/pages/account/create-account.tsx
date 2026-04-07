@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import React from "react"
-import { AppearanceStyleType, Button, Form, t } from "@bloom-housing/ui-components"
+import { AppearanceStyleType, Button, Form, LinkButton, t } from "@bloom-housing/ui-components"
 import { Card } from "@bloom-housing/ui-seeds"
 import withAppSetup from "../../layouts/withAppSetup"
 import Layout from "../../layouts/Layout"
@@ -107,10 +107,6 @@ const PasswordSection = ({ register, errors, watch }: SectionProps) => {
   )
 }
 
-const signInRedirect = () => {
-  console.log("sign in redirect")
-}
-
 const CreateAccountFooter = () => {
   return (
     <Card.Section
@@ -118,9 +114,9 @@ const CreateAccountFooter = () => {
       className="create-account-footer flex justify-center py-8 text-center w-full flex-col items-center"
     >
       <div className="pb-6">{t("createAccount.alreadyHaveAccount")}</div>
-      <Button className="uppercase" type="button" onClick={signInRedirect}>
+      <LinkButton className="uppercase" href={getSignInPath()}>
         {t("label.signIn")}
-      </Button>
+      </LinkButton>
     </Card.Section>
   )
 }
