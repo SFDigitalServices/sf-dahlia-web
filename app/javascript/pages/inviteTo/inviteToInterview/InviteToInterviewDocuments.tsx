@@ -62,7 +62,7 @@ const CheckWhatYouNeed = () => {
         </li>
       </ol>
       <p>{t("inviteToInterviewPage.documents.checkWhatYouNeed.p6")}</p>
-      <ol>
+      <ol start={5}>
         <li>
           {renderInlineMarkup(
             t("inviteToInterviewPage.documents.checkWhatYouNeed.p7", {
@@ -144,7 +144,7 @@ const IdentityDocuments = () => {
           }}
           order={Order.below}
         >
-          <div className={styles.accordionContent}>
+          <div>
             {renderInlineMarkup(
               t("inviteToInterviewPage.documents.identity.everyone.whyWeAskContent", {
                 link: "https://www.sf.gov/information--affordable-housing-protections-people-criminal-history",
