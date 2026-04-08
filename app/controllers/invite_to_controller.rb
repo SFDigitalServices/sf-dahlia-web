@@ -4,7 +4,7 @@ class InviteToController < ApplicationController
     # TODO: file will be rewritten by API refactor, mocked props for testing
     @invite_to_props = {
       assetPaths: static_asset_paths,
-      urlParams: { type: "I2I", deadline: "2099-04-08", action: "documents", appId: "123" },
+      urlParams: { type: "I2I", deadline: "2099-04-08", action: "yes", appId: "123" },
     }.compact
     # decoded_params = decode_token(params[:t])
     # if decoded_params.is_a?(String)
@@ -22,6 +22,11 @@ class InviteToController < ApplicationController
     # end
     # TODO: isTestEmail toggle
     # record_response(decoded_params)
+    render 'invite_to'
+  end
+
+  def documents
+    @invite_to_props = props.merge(documentsPath: true)
     render 'invite_to'
   end
 

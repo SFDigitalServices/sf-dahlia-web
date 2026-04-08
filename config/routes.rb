@@ -110,6 +110,7 @@ Rails.application.routes.draw do
   get '(:lang)/disclaimer' => 'assistance#disclaimer', lang: /(en|es|zh|tl)/
 
   get '(:lang)/listings/:id/next-steps' => 'invite_to#index', as: :next_steps, lang: /(en|es|zh|tl)/
+  get '(:lang)/listings/:id/next-steps/documents' => 'invite_to#documents', lang: /(en|es|zh|tl)/
 
   get '(:lang)/my-account' => 'account#my_account', lang: /(en|es|zh|tl)/
   get '(:lang)/account-settings' => 'account#account_settings', lang: /(en|es|zh|tl)/

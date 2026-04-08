@@ -64,7 +64,9 @@ const InviteToPage = ({
     if (!isInviteToInterviewEnabled) {
       return null
     }
-    return <InviteToInterviewDocuments listing={listing} />
+    if (documentsPath) {
+      return <InviteToInterviewDocuments listing={listing} />
+    }
   }
 
   if (!isInviteApplyEnabled) {
