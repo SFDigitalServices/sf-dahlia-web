@@ -10,21 +10,21 @@ import {
   Desktop,
 } from "@bloom-housing/ui-components"
 import { Heading, Button, Message, LoadingState } from "@bloom-housing/ui-seeds"
-import RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
-import { getListingAddressString, isDeadlinePassed } from "../../util/listingUtil"
+import RailsSaleListing from "../../../api/types/rails/listings/RailsSaleListing"
+import { getListingAddressString, isDeadlinePassed } from "../../../util/listingUtil"
 import {
   getTranslatedString,
   renderInlineMarkup,
   getCurrentLanguage,
   getBMRApplicationUrl,
   localizedFormat,
-} from "../../util/languageUtil"
-import styles from "./invite-to-apply.module.scss"
-import Layout from "../../layouts/Layout"
-import { ConfigContext } from "../../lib/ConfigContext"
-import InviteToApplyLeasingAgentInfo from "./InviteToApplyLeasingAgentInfo"
-import { HOME_SF_PHONE } from "../../modules/constants"
-import { recordResponse } from "../../api/inviteToApplyApiService"
+} from "../../../util/languageUtil"
+import styles from "../invite-to.module.scss"
+import Layout from "../../../layouts/Layout"
+import { ConfigContext } from "../../../lib/ConfigContext"
+import InviteToApplyLeasingAgentInfo from "../InviteToLeasingAgentInfo"
+import { HOME_SF_PHONE } from "../../../modules/constants"
+import { recordResponse } from "../../../api/inviteToApplyApiService"
 
 interface InviteToApplySubmitYourInfoProps {
   listing: RailsSaleListing | null

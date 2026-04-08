@@ -1,31 +1,28 @@
 # Controller for the page shown when applicants respond to invite to apply email
-class InviteToApplyPageController < ApplicationController
+class InviteToController < ApplicationController
   def index
-    decoded_params = decode_token(params[:t])
-    if decoded_params.is_a?(String)
-      redirect_to decoded_params
-      return
-    end
-
-    decoded_params ||= params
-    @invite_to_apply_props = props(decoded_params)
-    # Get file upload URL for application
-    if decoded_params['applicationNumber'].present?
-      application = Force::ShortFormService.get(decoded_params['applicationNumber'])
-      @invite_to_apply_props = @invite_to_apply_props.merge(
-        fileUploadUrl: application['uploadURL'],
-      )
-    end
-
+    # TODO: file will be rewritten by API refactor, mocked props for testing
+    @invite_to_props = {
+      assetPaths: static_asset_paths,
+      urlParams: { type: "I2I", deadline: "2099-04-08", action: "documents", appId: "123" },
+    }.compact
+    # decoded_params = decode_token(params[:t])
+    # if decoded_params.is_a?(String)
+    #   redirect_to decoded_params
+    #   return
+    # end
+    # decoded_params ||= params
+    # @invite_to_apply_props = props(decoded_params)
+    # # Get file upload URL for application
+    # if decoded_params['applicationNumber'].present?
+    #   application = Force::ShortFormService.get(decoded_params['applicationNumber'])
+    #   @invite_to_apply_props = @invite_to_apply_props.merge(
+    #     fileUploadUrl: application['uploadURL'],
+    #   )
+    # end
     # TODO: isTestEmail toggle
-
-    record_response(decoded_params)
-    render 'invite_to_apply'
-  end
-
-  def documents
-    @invite_to_apply_props = props.merge(documentsPath: true)
-    render 'invite_to_apply'
+    # record_response(decoded_params)
+    render 'invite_to'
   end
 
   private
@@ -51,7 +48,7 @@ class InviteToApplyPageController < ApplicationController
 
     if response.blank? || (deadline && deadline_has_passed?(deadline)) || language_change?
       Rails.logger.info(
-        'InviteToApplyPageController#record_response: *NOT* recording ' \
+        'InviteToController#record_response: *NOT* recording ' \
         "deadline=#{deadline}, " \
         "application_number=#{application_number}, " \
         "response=#{response.inspect}",
@@ -60,7 +57,7 @@ class InviteToApplyPageController < ApplicationController
     end
 
     Rails.logger.info(
-      'InviteToApplyPageController#record_response: recording ' \
+      'InviteToController#record_response: recording ' \
       "deadline=#{deadline}, " \
       "application_number=#{application_number}, " \
       "response=#{response}",
@@ -100,13 +97,13 @@ class InviteToApplyPageController < ApplicationController
       { algorithm: ENV.fetch('JWT_ALGORITHM', nil), verify_expiration: false },
     )
     Rails.logger.info(
-      'InviteToApplyPageController#decode_token: ' \
+      'InviteToController#decode_token: ' \
       "Decoded JWT #{decoded_token}",
     )
     decoded_token.first['data']
   rescue JWT::DecodeError
     Rails.logger.info(
-      'InviteToApplyPageController#decode_token: ' \
+      'InviteToController#decode_token: ' \
       "Invalid JWT in #{request.original_url}",
     )
     root_url
@@ -126,8 +123,8 @@ class InviteToApplyPageController < ApplicationController
 
   def language_change?
     # return true when current url and referrer url look like:
-    # '.../listings/a123/invite-to-apply?...'
-    # '.../es/listings/a123/invite-to-apply?...'
+    # '.../listings/a123/next-steps?...'
+    # '.../es/listings/a123/next-steps?...'
     request.referrer&.include?(request.path.slice(%r{/listings/.+}))
   end
 

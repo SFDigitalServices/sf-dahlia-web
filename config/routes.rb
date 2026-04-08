@@ -109,8 +109,7 @@ Rails.application.routes.draw do
   get '(:lang)/privacy' => 'assistance#privacy', lang: /(en|es|zh|tl)/
   get '(:lang)/disclaimer' => 'assistance#disclaimer', lang: /(en|es|zh|tl)/
 
-  get '(:lang)/listings/:id/invite-to-apply' => 'invite_to_apply_page#index', as: :invite_to_apply, lang: /(en|es|zh|tl)/
-  get '(:lang)/listings/:id/invite-to-apply/documents' => 'invite_to_apply_page#documents', as: :invite_to_apply_documents, lang: /(en|es|zh|tl)/
+  get '(:lang)/listings/:id/next-steps' => 'invite_to#index', as: :next_steps, lang: /(en|es|zh|tl)/
 
   get '(:lang)/my-account' => 'account#my_account', lang: /(en|es|zh|tl)/
   get '(:lang)/account-settings' => 'account#account_settings', lang: /(en|es|zh|tl)/

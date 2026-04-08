@@ -4,19 +4,21 @@ import withAppSetup from "../../layouts/withAppSetup"
 import { AppPages } from "../../util/routeUtil"
 import { getListing } from "../../api/listingApiService"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
-import InviteToApplyDeadlinePassed from "./InviteToApplyDeadlinePassed"
-import InviteToApplyWithdrawn from "./InviteToApplyWithdrawn"
-import InviteToApplyContactMeLater from "./InviteToApplyContactMeLater"
-import InviteToApplySubmitYourInfo from "./InviteToApplySubmitYourInfo"
-import InviteToApplyDocuments from "./InviteToApplyDocuments"
+import InviteToDeadlinePassed from "./InviteToDeadlinePassed"
+import InviteToApplyWithdrawn from "./inviteToApply/InviteToApplyWithdrawn"
+import InviteToApplyContactMeLater from "./inviteToApply/InviteToApplyContactMeLater"
+import InviteToApplySubmitYourInfo from "./inviteToApply/InviteToApplySubmitYourInfo"
+import InviteToApplyDocuments from "./inviteToApply/InviteToApplyDocuments"
+import InviteToInterviewDocuments from "./inviteToInterview/InviteToInterviewDocuments"
 import RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
 import { getCurrentLanguage, getPathWithoutLanguagePrefix } from "../../util/languageUtil"
 import { isDeadlinePassed } from "../../util/listingUtil"
 
 interface UrlParams {
-  response?: string
-  applicationNumber?: string
-  deadline?: string
+  type: string
+  deadline: string
+  action: string
+  appId: string
 }
 
 interface HomePageProps {
@@ -28,8 +30,8 @@ interface HomePageProps {
   fileUploadUrl?: string
 }
 
-const InviteToApplyPage = ({
-  urlParams: { response, applicationNumber, deadline },
+const InviteToPage = ({
+  urlParams: { type, deadline, action, appId },
   submitPreviewLinkTokenParam,
   documentsPath,
   fileUploadUrl,
@@ -49,12 +51,20 @@ const InviteToApplyPage = ({
   }, [router, router.pathname])
 
   const { unleashFlag: isInviteApplyEnabled } = useFeatureFlag("partners.inviteToApply", false)
+  const { unleashFlag: isInviteToInterviewEnabled } = useFeatureFlag("all.i2i", false)
 
   const generateSubmitLink = () => {
     const submitLinkQueryStr = submitPreviewLinkTokenParam
       ? `t=${submitPreviewLinkTokenParam}`
-      : new URLSearchParams({ applicationNumber, deadline }).toString()
+      : new URLSearchParams({ appId, deadline }).toString()
     return `/${getCurrentLanguage()}/listings/${listing?.Id}/invite-to-apply?${submitLinkQueryStr}`
+  }
+
+  if (type === "I2I") {
+    if (!isInviteToInterviewEnabled) {
+      return null
+    }
+    return <InviteToInterviewDocuments listing={listing} />
   }
 
   if (!isInviteApplyEnabled) {
@@ -66,18 +76,18 @@ const InviteToApplyPage = ({
   }
 
   // invitee has not responded, they are merely previewing the submit page
-  if (!response) {
+  if (action === "preview") {
     return (
       <InviteToApplySubmitYourInfo
         listing={listing}
         deadline={deadline}
-        applicationNumber={applicationNumber}
+        applicationNumber={appId}
         fileUploadUrl={fileUploadUrl}
       />
     )
   }
 
-  if (response === "no") {
+  if (action === "no") {
     return (
       <InviteToApplyWithdrawn
         listing={listing}
@@ -88,20 +98,20 @@ const InviteToApplyPage = ({
   }
 
   if (isDeadlinePassed(deadline)) {
-    return <InviteToApplyDeadlinePassed listing={listing} />
+    return <InviteToDeadlinePassed listing={listing} />
   }
 
-  if (response === "yes") {
+  if (action === "yes") {
     return (
       <InviteToApplySubmitYourInfo
         listing={listing}
         deadline={deadline}
-        applicationNumber={applicationNumber}
+        applicationNumber={appId}
         fileUploadUrl={fileUploadUrl}
       />
     )
   }
-  if (response === "contact") {
+  if (action === "contact") {
     return (
       <InviteToApplyContactMeLater
         listing={listing}
@@ -112,4 +122,4 @@ const InviteToApplyPage = ({
   }
 }
 
-export default withAppSetup(InviteToApplyPage, { pageName: AppPages.InviteToApply })
+export default withAppSetup(InviteToPage, { pageName: AppPages.InviteTo })
