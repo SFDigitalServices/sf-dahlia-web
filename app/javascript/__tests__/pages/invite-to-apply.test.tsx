@@ -20,6 +20,16 @@ jest.mock("../../hooks/useFeatureFlag", () => ({
     isLoading: false,
     unleashFlag: true,
   }),
+  useVariantFlag: () => ({
+    isEnabled: true,
+    isLoading: false,
+    unleashFlag: true,
+    variant: {
+      payload: {
+        value: "listing-id",
+      },
+    },
+  }),
 }))
 
 const mockListing = {

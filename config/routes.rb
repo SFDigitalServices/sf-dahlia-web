@@ -111,6 +111,9 @@ Rails.application.routes.draw do
 
   get '(:lang)/listings/:id/next-steps' => 'invite_to#index', as: :next_steps, lang: /(en|es|zh|tl)/
   get '(:lang)/listings/:id/next-steps/documents' => 'invite_to#documents', lang: /(en|es|zh|tl)/
+  # Deprecated I2A pilot - remove in DAH-4045
+  get '(:lang)/listings/:id/invite-to-apply' => 'invite_to#index', as: :invite_to_apply, lang: /(en|es|zh|tl)/
+  get '(:lang)/listings/:id/invite-to-apply/documents' => 'invite_to#documents', lang: /(en|es|zh|tl)/
 
   get '(:lang)/my-account' => 'account#my_account', lang: /(en|es|zh|tl)/
   get '(:lang)/account-settings' => 'account#account_settings', lang: /(en|es|zh|tl)/

@@ -15,6 +15,12 @@ class InviteToController < ApplicationController
         fileUploadUrl: application['uploadURL'],
       )
     end
+    if decoded_params['applicationNumber'].present?
+      application = Force::ShortFormService.get_by_application_number(decoded_params['applicationNumber'])
+      @invite_to_props = @invite_to_props.merge(
+        fileUploadUrl: application['uploadURL'],
+      )
+    end
     record_response(decoded_params)
     render 'invite_to'
   end
@@ -26,25 +32,26 @@ class InviteToController < ApplicationController
 
   private
 
+  # Deprecated I2A pilot - remove references to applicationNumber and response in DAH-4045
   def props(decoded_params = params)
     url_params = {
       type: decoded_params['type'],
       deadline: decoded_params['deadline'],
-      action: decoded_params['action'],
-      appId: decoded_params['appId'],
+      action: decoded_params['action'] || decoded_params['response'],
+      appId: decoded_params['appId'] || decoded_params['applicationNumber'],
     }
 
     {
       assetPaths: static_asset_paths,
       urlParams: url_params,
-      submitPreviewLinkTokenParam: encode_token(url_params.except(:action)),
+      submitPreviewLinkTokenParam: encode_token(url_params.except(:action, :response)),
     }.compact
   end
 
   def record_response(decoded_params)
     deadline = decoded_params['deadline']
-    action = decoded_params['action']
-    app_id = decoded_params['appId']
+    action = decoded_params['action'] || decoded_params['response']
+    app_id = decoded_params['appId'] || decoded_params['applicationNumber']
 
     if action.blank? || (deadline && deadline_has_passed?(deadline)) || language_change?
       Rails.logger.info(

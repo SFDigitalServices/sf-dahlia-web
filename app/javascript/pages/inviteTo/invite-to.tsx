@@ -3,7 +3,7 @@ import { NavigationContext } from "@bloom-housing/ui-components"
 import withAppSetup from "../../layouts/withAppSetup"
 import { AppPages, generateSubmitLink } from "../../util/routeUtil"
 import { getListing } from "../../api/listingApiService"
-import { useFeatureFlag } from "../../hooks/useFeatureFlag"
+import { useFeatureFlag, useVariantFlag } from "../../hooks/useFeatureFlag"
 import InviteToDeadlinePassed from "./InviteToDeadlinePassed"
 import InviteToApplyWithdrawn from "./inviteToApply/InviteToApplyWithdrawn"
 import InviteToApplyContactMeLater from "./inviteToApply/InviteToApplyContactMeLater"
@@ -49,16 +49,22 @@ const InviteToPage = ({
   }, [router, router.pathname])
 
   const { unleashFlag: isI2AEnabled } = useFeatureFlag("partners.inviteToApply", false)
-  const { unleashFlag: isI2IEnabled } = useFeatureFlag("all.i2i", false)
+  const { unleashFlag: isI2IEnabledFlag, variant } = useVariantFlag("all.i2i", false)
+  const enabledListingIds =
+    typeof variant === "object" && variant?.payload?.value ? variant.payload.value.split(",") : []
+  const isI2IEnabled = isI2IEnabledFlag && listing?.Id && enabledListingIds.includes(listing.Id)
 
   /* I2I - Invite to Interview pages */
-  if (type === "I2I" && isI2IEnabled) {
+  if (type === "I2I") {
+    if (!isI2IEnabled) {
+      return null
+    }
     if (documentsPath) return <InviteToInterviewDocuments listing={listing} />
     if (isDeadlinePassed(deadline)) return <InviteToDeadlinePassed listing={listing} />
   }
 
   /* I2A - Invite to Apply pages */
-  if (type === "I2A" && isI2AEnabled) {
+  if (isI2AEnabled) {
     if (documentsPath) return <InviteToApplyDocuments listing={listing} />
     // no action from applicant - preview submit page
     if (!action) {
