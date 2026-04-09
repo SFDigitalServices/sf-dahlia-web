@@ -212,7 +212,13 @@
   .submitYourInfoBox {
     background-color: var(--seeds-color-gray-200);
     padding: var(--seeds-spacer-content);
-    margin-top: var(--seeds-spacer-section);
+    h3 {
+      margin-top: 0;
+      padding-bottom: var(--seeds-spacer-header);
+    }
+    p {
+      margin-bottom: var(--seeds-spacer-text);
+    }
   }
 
   .submitYourInfoList {

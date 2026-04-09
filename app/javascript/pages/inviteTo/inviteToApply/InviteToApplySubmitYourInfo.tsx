@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from "react"
-import { faEnvelope, faPrint } from "@fortawesome/free-solid-svg-icons"
+import { faPrint } from "@fortawesome/free-solid-svg-icons"
 import {
   t,
   Icon,
@@ -22,9 +22,9 @@ import {
 import styles from "../invite-to.module.scss"
 import Layout from "../../../layouts/Layout"
 import { ConfigContext } from "../../../lib/ConfigContext"
-import InviteToApplyLeasingAgentInfo from "../InviteToLeasingAgentInfo"
-import { HOME_SF_PHONE } from "../../../modules/constants"
+import InviteToLeasingAgentInfo from "../InviteToLeasingAgentInfo"
 import { recordResponse } from "../../../api/inviteToApplyApiService"
+import InviteToGetHelp from "../InviteToGetHelp"
 
 interface InviteToApplySubmitYourInfoProps {
   listing: RailsSaleListing | null
@@ -59,23 +59,7 @@ const PreparingYourApplication = () => {
         {t("howToApplyPage.howLongItTakesSection.subtitle1")}
       </Heading>
       <p>{t("inviteToApplyPage.submitYourInfo.prepare.p1")}</p>
-      <div className={styles.submitYourInfoBox}>
-        <Heading priority={3} size="lg">
-          {t("inviteToApplyPage.submitYourInfo.prepare.p2")}
-        </Heading>
-        <p>{t("inviteToApplyPage.submitYourInfo.prepare.p3")}</p>
-        {renderInlineMarkup(t("inviteToApplyPage.submitYourInfo.prepare.p4"))}
-        <span className={styles.submitYourInfoIcons}>
-          <a className={styles.responseIcon} href={`tel:+1${HOME_SF_PHONE}`}>
-            <Icon symbol="phone" size="medium" fill={IconFillColors.primary} />
-            {HOME_SF_PHONE}
-          </a>
-          <a className={styles.responseIcon} href={`mailto:${"info@homesanfrancisco.org"}`}>
-            <Icon symbol={faEnvelope} size="medium" fill={IconFillColors.primary} />
-            {"info@homesanfrancisco.org"}
-          </a>
-        </span>
-      </div>
+      <InviteToGetHelp />
       <Button
         leadIcon={<Icon symbol={faPrint} size="medium" fill={IconFillColors.primary} />}
         variant="primary-outlined"
@@ -109,7 +93,7 @@ const WhatToDo = ({
       try {
         if (appId) {
           await recordResponse({
-            appId,
+            appId: appId,
             listingId: listing.Id,
             deadline,
             action: "submit",
@@ -157,7 +141,7 @@ const WhatToDo = ({
           <p>{t("inviteToApplyPage.submitYourInfo.whatToDo.step2.p2")}</p>
           {renderInlineMarkup(
             t("inviteToApplyPage.submitYourInfo.whatToDo.step2.p3", {
-              link: `/${getCurrentLanguage()}/listings/${listing?.Id}/next-steps/documents`,
+              link: `/${getCurrentLanguage()}/listings/${listing?.Id}/invite-to-apply/documents`,
             })
           )}
         </li>
@@ -256,7 +240,7 @@ const SubmitYourInfoSidebarBlock = ({ listing }: { listing: RailsSaleListing }) 
         {" "}
         {t("inviteToApplyPage.submitYourInfo.sidebar")}
       </Heading>
-      <InviteToApplyLeasingAgentInfo listing={listing} />
+      <InviteToLeasingAgentInfo listing={listing} />
       <Heading size="sm" priority={3}>
         {t("contactAgent.officeHours.seeTheUnit")}
       </Heading>
@@ -296,7 +280,7 @@ const InviteToApplySubmitYourInfo = ({
               <Heading size="lg" priority={3}>
                 {t("inviteToApplyPage.submitYourInfo.sidebar")}
               </Heading>
-              <InviteToApplyLeasingAgentInfo listing={listing} />
+              <InviteToLeasingAgentInfo listing={listing} />
             </Mobile>
             <WhatHappensNext />
           </main>
