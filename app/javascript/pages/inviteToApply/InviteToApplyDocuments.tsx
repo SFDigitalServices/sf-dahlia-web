@@ -14,6 +14,7 @@ import Layout from "../../layouts/Layout"
 import { renderInlineMarkup, getBMRApplicationUrl } from "../../util/languageUtil"
 import { ConfigContext } from "../../lib/ConfigContext"
 import InviteToApplyLeasingAgentInfo from "./InviteToApplyLeasingAgentInfo"
+import InviteToGetHelp from "./InviteToGetHelp"
 
 import styles from "./invite-to-apply.module.scss"
 import { HOME_SF_PHONE } from "../../modules/constants"
@@ -271,23 +272,7 @@ const HousingAssistance = () => {
         <li>{renderInlineMarkup(t("inviteToApplyPage.documents.housingAssistance.p4"))}</li>
         <li>{renderInlineMarkup(t("inviteToApplyPage.documents.housingAssistance.p5"))}</li>
       </ul>
-      <div className={styles.submitYourInfoBox}>
-        <Heading priority={3} size="lg">
-          {t("inviteToApplyPage.submitYourInfo.prepare.p2")}
-        </Heading>
-        <p>{t("inviteToApplyPage.submitYourInfo.prepare.p3")}</p>
-        {renderInlineMarkup(t("inviteToApplyPage.submitYourInfo.prepare.p4"))}
-        <span className={styles.submitYourInfoIcons}>
-          <a className={styles.responseIcon} href={`tel:+14152025464`}>
-            <Icon symbol="phone" size="medium" fill={IconFillColors.primary} />
-            {HOME_SF_PHONE}
-          </a>
-          <a className={styles.responseIcon} href={`mailto:${"info@homesanfrancisco.org"}`}>
-            <Icon symbol={faEnvelope} size="medium" fill={IconFillColors.primary} />
-            {"info@homesanfrancisco.org"}
-          </a>
-        </span>
-      </div>
+      <InviteToGetHelp />
     </div>
   )
 }
