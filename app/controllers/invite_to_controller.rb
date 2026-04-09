@@ -1,27 +1,22 @@
 # Controller for the page shown when applicants respond to invite to apply email
 class InviteToController < ApplicationController
   def index
-    # TODO: file will be rewritten by API refactor, mocked props for testing
-    @invite_to_props = {
-      assetPaths: static_asset_paths,
-      urlParams: { type: "I2I", deadline: "2099-04-08", action: "yes", appId: "123" },
-    }.compact
-    # decoded_params = decode_token(params[:t])
-    # if decoded_params.is_a?(String)
-    #   redirect_to decoded_params
-    #   return
-    # end
-    # decoded_params ||= params
-    # @invite_to_apply_props = props(decoded_params)
-    # # Get file upload URL for application
-    # if decoded_params['applicationNumber'].present?
-    #   application = Force::ShortFormService.get(decoded_params['applicationNumber'])
-    #   @invite_to_apply_props = @invite_to_apply_props.merge(
-    #     fileUploadUrl: application['uploadURL'],
-    #   )
-    # end
+    decoded_params = decode_token(params[:t])
+    if decoded_params.is_a?(String)
+      redirect_to decoded_params
+      return
+    end
+    decoded_params ||= params
+    @invite_to_apply_props = props(decoded_params)
+    # Get file upload URL for application
+    if decoded_params['applicationNumber'].present?
+      application = Force::ShortFormService.get(decoded_params['applicationNumber'])
+      @invite_to_apply_props = @invite_to_apply_props.merge(
+        fileUploadUrl: application['uploadURL'],
+      )
+    end
     # TODO: isTestEmail toggle
-    # record_response(decoded_params)
+    record_response(decoded_params)
     render 'invite_to'
   end
 
