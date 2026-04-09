@@ -46,7 +46,7 @@ module DahliaBackend
   
     # Deprecate I2A pilot in DAH-4045
     def get_response_endpoint(action, response)
-      if response
+      if response && !action
         case response
         when 'yes' then '/messages/invite-to-apply/response/yes'
         when 'no' then '/messages/invite-to-apply/response/no'
@@ -135,6 +135,7 @@ module DahliaBackend
       applicant_data = {
         lotteryNumber: application.dig('lotteryNumber'),
         appId: application_number,
+        applicationNumber: application_number,
         primaryContact: primary_applicant,
         applicationLanguage: application.dig('applicationLanguage'),
       }
