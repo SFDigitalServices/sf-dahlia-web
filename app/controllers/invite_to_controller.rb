@@ -20,7 +20,7 @@ class InviteToController < ApplicationController
   end
 
   def documents
-    @invite_to_props = props(params.merge('type' => 'I2I')).merge(documentsPath: true)
+    @invite_to_props = props(params).merge(documentsPath: true)
     render 'invite_to'
   end
 
