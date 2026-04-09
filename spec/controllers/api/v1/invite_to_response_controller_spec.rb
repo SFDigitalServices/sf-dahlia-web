@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe Api::V1::InviteToApplyController do
+describe Api::V1::InviteToResponseController do
   let(:deadline) { '2099-01-01' }
   let(:expired_deadline) { '1999-01-01' }
   let(:application_number) { 'a0o123' }

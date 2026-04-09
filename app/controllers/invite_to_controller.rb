@@ -37,7 +37,7 @@ class InviteToController < ApplicationController
     {
       assetPaths: static_asset_paths,
       urlParams: url_params,
-      submitPreviewLinkTokenParam: encode_token(url_params.except(:response)),
+      submitPreviewLinkTokenParam: encode_token(url_params.except(:action)),
     }.compact
   end
 

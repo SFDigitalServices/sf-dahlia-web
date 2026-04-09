@@ -18,8 +18,7 @@ class Api::V1::InviteToResponseController < ApiController
         "action=#{action}",
       )
     else
-      DahliaBackend::MessageService.send_invite_to_response(
-        type,
+      DahliaBackend::MessageService.send_invite_to_apply_response(
         deadline,
         application_id,
         action,
@@ -37,3 +36,4 @@ class Api::V1::InviteToResponseController < ApiController
   def deadline_has_passed?(deadline)
     Time.zone.parse(deadline).to_date < Time.zone.today
   end
+end

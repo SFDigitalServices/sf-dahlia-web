@@ -9,8 +9,8 @@ RSpec.describe InviteToController do
     [
       {
         deadline: deadline,
-        applicationNumber: application_number,
-        response: response_value,
+        appId: application_number,
+        action: response_value,
       },
     ]
   end
@@ -21,8 +21,9 @@ RSpec.describe InviteToController do
       {
         data: {
           deadline: deadline,
-          applicationNumber: application_number,
-          response: response_value,
+          appId: application_number,
+          action: response_value,
+          type: 'I2A',
         },
         iat: fixed_iat,
         exp: fixed_exp,
@@ -66,13 +67,14 @@ RSpec.describe InviteToController do
         expect(response).to render_template('invite_to')
       end
 
-      it 'sets the invite_to_apply_props instance variable' do
-        expect(assigns(:invite_to_apply_props)).to eq({
+      it 'sets the invite_to_props instance variable' do
+        expect(assigns(:invite_to_props)).to eq({
                                                         assetPaths: { logo: 'logo.png' },
                                                         urlParams: {
+                                                          type: 'I2A',
                                                           deadline: deadline,
-                                                          response: response_value,
-                                                          applicationNumber: application_number,
+                                                          action: response_value,
+                                                          appId: application_number,
                                                         },
                                                         fileUploadUrl: 'test-upload-url',
                                                         submitPreviewLinkTokenParam: fixed_token,
@@ -115,7 +117,7 @@ RSpec.describe InviteToController do
 
       it 'creates a token for the preview link' do
         get :index, params: { id: listing_id, t: 'test_token' }
-        expect(assigns(:invite_to_apply_props)).to have_key(:submitPreviewLinkTokenParam)
+        expect(assigns(:invite_to_props)).to have_key(:submitPreviewLinkTokenParam)
       end
 
       it 'redirects to the listing details page if token is blank' do
@@ -136,8 +138,8 @@ RSpec.describe InviteToController do
       get :documents, params: {
         id: listing_id,
         deadline: deadline,
-        applicationNumber: application_number,
-        response: response_value,
+        appId: application_number,
+        action: response_value,
       }
     end
 
