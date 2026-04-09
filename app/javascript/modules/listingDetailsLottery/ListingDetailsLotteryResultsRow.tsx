@@ -37,6 +37,7 @@ const ListingDetailsLotteryResultsRowHeadingEducator = ({
   // 'Tier 1' indicates an educator and another preference
   // 'Tier 2' is someone who works for the school district and has another preference
   // Brightwell West layered preferences will be prepended with 'Tier 1' or nothing
+  // We don't want to display these 'Tier...' values to users
   let subHeading: string
   if (preferenceName.includes("Tier 1") && listingIsEducatorBrightwell) {
     subHeading = t("listings.lotteryPreference.sfusd.educatorsAndEmployees.title")
