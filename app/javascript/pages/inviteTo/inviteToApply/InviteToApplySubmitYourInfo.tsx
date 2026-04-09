@@ -94,9 +94,11 @@ const WhatToDo = ({
         if (appId) {
           await recordResponse({
             appId: appId,
+            applicationNumber: appId,
             listingId: listing.Id,
             deadline,
             action: "submit",
+            response: "submit",
             type: "I2A",
           })
         }

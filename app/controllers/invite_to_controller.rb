@@ -55,12 +55,14 @@ class InviteToController < ApplicationController
     action = decoded_params['action']
     app_id = decoded_params['appId']
 
-    if action.blank? || (deadline && deadline_has_passed?(deadline)) || language_change?
+    if (action.blank? && response.blank?) || (deadline && deadline_has_passed?(deadline)) || language_change?
       Rails.logger.info(
         'InviteToController#record_response: *NOT* recording ' \
         "deadline=#{deadline}, " \
         "app_id=#{app_id}, " \
-        "action=#{action.inspect}",
+        "application_number=#{application_number}, " \
+        "action=#{action.inspect}, " \
+        "response=#{response.inspect}",
       )
       return
     end
@@ -69,7 +71,9 @@ class InviteToController < ApplicationController
       'InviteToController#record_response: recording ' \
       "deadline=#{deadline}, " \
       "app_id=#{app_id}, " \
-      "action=#{action}",
+      "application_number=#{application_number}, " \
+      "action=#{action}, " \
+      "response=#{response}",
     )
 
     DahliaBackend::MessageService.send_invite_to_apply_response(

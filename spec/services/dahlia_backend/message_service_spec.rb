@@ -353,24 +353,24 @@ RSpec.describe DahliaBackend::MessageService do
     end
   end
 
-  describe '#get_invite_to_apply_response_endpoint' do
+  describe '#get_response_endpoint' do
     it 'returns correct endpoint for "yes" response' do
-      endpoint = service.get_invite_to_apply_response_endpoint('yes', 'yes')
+      endpoint = service.get_response_endpoint('yes', 'yes')
      expect(endpoint).to eq('/messages/invite-to-apply/response/yes')
     end
 
     it 'returns correct endpoint for "no" response' do
-      endpoint = service.get_invite_to_apply_response_endpoint('no', 'no')
+      endpoint = service.get_response_endpoint('no', 'no')
       expect(endpoint).to eq('/messages/invite-to-apply/response/no')  
     end
 
     it 'returns correct endpoint for "contact" response' do
-      endpoint = service.get_invite_to_apply_response_endpoint('contact', 'contact')
+      endpoint = service.get_response_endpoint('contact', 'contact')
       expect(endpoint).to eq('/messages/invite-to-apply/response/contact')
     end
 
     it 'returns nil for invalid response' do
-      endpoint = service.get_invite_to_apply_response_endpoint('invalid', 'invalid')
+      endpoint = service.get_response_endpoint('invalid', 'invalid')
       expect(endpoint).to be_nil
     end
   end

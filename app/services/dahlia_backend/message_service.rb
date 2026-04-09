@@ -45,7 +45,7 @@ module DahliaBackend
     end
   
     # Deprecate I2A pilot in DAH-4045
-    def get_invite_to_apply_response_endpoint(action, response)
+    def get_response_endpoint(action, response)
       if response
         case response
         when 'yes' then '/messages/invite-to-apply/response/yes'
@@ -72,7 +72,7 @@ module DahliaBackend
 
       log_info("Prepared fields for Invite to Apply response: #{fields.inspect}")
 
-      endpoint = get_invite_to_apply_response_endpoint(_action, _response)
+      endpoint = get_response_endpoint(_action, _response)
       return log_error("Invalid action type: #{_action}", nil) unless endpoint
 
       send_message(endpoint, fields)
