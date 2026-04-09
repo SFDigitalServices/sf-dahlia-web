@@ -50,8 +50,10 @@ class InviteToController < ApplicationController
 
   def record_response(decoded_params)
     deadline = decoded_params['deadline']
-    action = decoded_params['action'] || decoded_params['response']
-    app_id = decoded_params['appId'] || decoded_params['applicationNumber']
+    response = decoded_params['response']
+    application_number = decoded_params['applicationNumber']
+    action = decoded_params['action']
+    app_id = decoded_params['appId']
 
     if action.blank? || (deadline && deadline_has_passed?(deadline)) || language_change?
       Rails.logger.info(
@@ -73,6 +75,8 @@ class InviteToController < ApplicationController
     DahliaBackend::MessageService.send_invite_to_apply_response(
       deadline,
       app_id,
+      application_number,
+      response,
       action,
       params['id'], # listing_id
     )

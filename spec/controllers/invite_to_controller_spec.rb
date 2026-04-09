@@ -85,6 +85,8 @@ RSpec.describe InviteToController do
         expect(DahliaBackend::MessageService).to have_received(:send_invite_to_apply_response).with(
           deadline,
           application_number,
+          nil,
+          nil,
           response_value,
           listing_id,
         )

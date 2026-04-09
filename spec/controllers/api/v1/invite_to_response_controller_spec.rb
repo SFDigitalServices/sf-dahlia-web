@@ -5,6 +5,7 @@ require 'rails_helper'
 describe Api::V1::InviteToResponseController do
   let(:deadline) { '2099-01-01' }
   let(:expired_deadline) { '1999-01-01' }
+  let(:application_id) { 'a0o123' }
   let(:application_number) { 'a0o123' }
   let(:response_type) { 'submit' }
   let(:listing_id) { 'a0W123' }
@@ -12,7 +13,9 @@ describe Api::V1::InviteToResponseController do
     {
       record: {
         deadline: deadline,
-        appId: application_number,
+        appId: application_id,
+        applicationNumber: application_number,
+        response: response_type,
         action: response_type,
         listingId: listing_id,
       },
@@ -22,7 +25,9 @@ describe Api::V1::InviteToResponseController do
     {
       record: {
         deadline: expired_deadline,
-        appId: application_number,
+        appId: application_id,
+        applicationNumber: application_number,
+        response: response_type,
         action: response_type,
         listingId: listing_id,
       },
@@ -32,6 +37,9 @@ describe Api::V1::InviteToResponseController do
     {
       record: {
         deadline: '',
+        appId: application_id,
+        applicationNumber: application_number,
+        response: response_type,
         action: response_type,
         listingId: listing_id,
       },
@@ -47,7 +55,9 @@ describe Api::V1::InviteToResponseController do
       expect(DahliaBackend::MessageService)
         .to have_received(:send_invite_to_apply_response).with(
           deadline,
+          application_id,
           application_number,
+          response_type,
           response_type,
           listing_id,
         )

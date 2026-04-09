@@ -38,6 +38,7 @@ Rails.application.routes.draw do
         end
       end
       get 'trk' => 'listing_interest#index'
+      post 'invite-to-apply/record-response' => 'invite_to_response#record_response'
       post 'next-steps/record-response' => 'invite_to_response#record_response'
       scope '/short-form' do
         post 'validate-household' => 'short_form#validate_household'
