@@ -1,4 +1,4 @@
-# Controller for the page shown when applicants respond to invite to apply email
+# Invite to X controller
 class InviteToController < ApplicationController
   def index
     decoded_params = decode_token(params[:t])
@@ -7,21 +7,20 @@ class InviteToController < ApplicationController
       return
     end
     decoded_params ||= params
-    @invite_to_apply_props = props(decoded_params)
+    @invite_to_props = props(decoded_params)
     # Get file upload URL for application
-    if decoded_params['applicationNumber'].present?
-      application = Force::ShortFormService.get(decoded_params['applicationNumber'])
-      @invite_to_apply_props = @invite_to_apply_props.merge(
+    if decoded_params['appId'].present?
+      application = Force::ShortFormService.get(decoded_params['appId'])
+      @invite_to_props = @invite_to_props.merge(
         fileUploadUrl: application['uploadURL'],
       )
     end
-    # TODO: isTestEmail toggle
     record_response(decoded_params)
     render 'invite_to'
   end
 
   def documents
-    @invite_to_props = props.merge(documentsPath: true)
+    @invite_to_props = props(params.merge('type' => 'I2I')).merge(documentsPath: true)
     render 'invite_to'
   end
 
@@ -29,9 +28,10 @@ class InviteToController < ApplicationController
 
   def props(decoded_params = params)
     url_params = {
+      type: decoded_params['type'],
       deadline: decoded_params['deadline'],
-      response: decoded_params['response'],
-      applicationNumber: decoded_params['applicationNumber'],
+      action: decoded_params['action'],
+      appId: decoded_params['appId'],
     }
 
     {
@@ -43,15 +43,15 @@ class InviteToController < ApplicationController
 
   def record_response(decoded_params)
     deadline = decoded_params['deadline']
-    response = decoded_params['response']
-    application_number = decoded_params['applicationNumber']
+    action = decoded_params['action']
+    app_id = decoded_params['appId']
 
-    if response.blank? || (deadline && deadline_has_passed?(deadline)) || language_change?
+    if action.blank? || (deadline && deadline_has_passed?(deadline)) || language_change?
       Rails.logger.info(
         'InviteToController#record_response: *NOT* recording ' \
         "deadline=#{deadline}, " \
-        "application_number=#{application_number}, " \
-        "response=#{response.inspect}",
+        "app_id=#{app_id}, " \
+        "action=#{action.inspect}",
       )
       return
     end
@@ -59,14 +59,14 @@ class InviteToController < ApplicationController
     Rails.logger.info(
       'InviteToController#record_response: recording ' \
       "deadline=#{deadline}, " \
-      "application_number=#{application_number}, " \
-      "response=#{response}",
+      "app_id=#{app_id}, " \
+      "action=#{action}",
     )
 
     DahliaBackend::MessageService.send_invite_to_apply_response(
       deadline,
-      application_number,
-      response,
+      app_id,
+      action,
       params['id'], # listing_id
     )
   end

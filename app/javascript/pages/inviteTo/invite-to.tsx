@@ -17,7 +17,7 @@ import { isDeadlinePassed } from "../../util/listingUtil"
 interface UrlParams {
   type?: "I2A" | "I2I"
   deadline?: string
-  action?: "yes" | "no" | "contact"
+  action?: "yes" | "no" | "contact" | "submit" | "appointment"
   appId?: string
 }
 
