@@ -7,11 +7,11 @@ import FormLayout from "../../layouts/FormLayout"
 import InviteToApplyLeasingAgentInfo from "./InviteToLeasingAgentInfo"
 import InviteToApplyHeader from "./InviteToHeader"
 
-interface InviteToApplyDeadlinePassedProps {
+interface InviteToDeadlinePassedProps {
   listing: RailsSaleListing | null
 }
 
-const InviteToApplyDeadlinePassed = ({ listing }: InviteToApplyDeadlinePassedProps) => {
+const InviteToDeadlinePassed = ({ listing }: InviteToDeadlinePassedProps) => {
   return (
     <FormLayout>
       <LoadingOverlay isLoading={!listing}>
@@ -39,4 +39,4 @@ const InviteToApplyDeadlinePassed = ({ listing }: InviteToApplyDeadlinePassedPro
   )
 }
 
-export default InviteToApplyDeadlinePassed
+export default InviteToDeadlinePassed

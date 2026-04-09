@@ -27,7 +27,7 @@ class Api::V1::InviteToApplyController < ApiController
 
       # when fieldupdatecomment is successfully created redirect with a response of y (yes) or n (no)
       listing_id = listing_id_map(m)
-      redirect_to "/invite-to-apply?listing=#{listing_id}&response=#{r}"
+      redirect_to "/next-steps?listing=#{listing_id}&response=#{r}"
     rescue JWT::ExpiredSignature
       Rails.logger.error('Token expired, not able to create fieldUpdateComment')
       decoded_expired_token = JWT.decode(token, secret, true,
@@ -35,7 +35,7 @@ class Api::V1::InviteToApplyController < ApiController
       m = decoded_expired_token[0]['m']
       listing_id = listing_id_map(m)
       # when token is expired redirect to deadline passed page
-      redirect_to "/invite-to-apply/deadline-passed?listingId=#{listing_id}"
+      redirect_to "/next-steps/deadline-passed?listingId=#{listing_id}"
     rescue StandardError => e
       Rails.logger.error("Error when creating fieldUpdateComment #{e}")
       # when there is an error redirect with a response of e (error)
