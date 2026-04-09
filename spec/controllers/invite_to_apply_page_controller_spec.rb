@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe InviteToApplyPageController do
+RSpec.describe InviteToController do
   let(:deadline) { '2999-12-31' }
   let(:application_number) { 'APP123456' }
   let(:response_value) { 'yes' }
@@ -62,8 +62,8 @@ RSpec.describe InviteToApplyPageController do
         expect(response).to be_ok
       end
 
-      it 'renders the invite_to_apply template' do
-        expect(response).to render_template('invite_to_apply')
+      it 'renders the invite_to template' do
+        expect(response).to render_template('invite_to')
       end
 
       it 'sets the invite_to_apply_props instance variable' do
@@ -145,13 +145,13 @@ RSpec.describe InviteToApplyPageController do
       expect(response).to be_ok
     end
 
-    it 'renders the invite_to_apply template' do
-      expect(response).to render_template('invite_to_apply')
+    it 'renders the invite_to template' do
+      expect(response).to render_template('invite_to')
     end
 
-    it 'sets the invite_to_apply_props with documentsPath set to true' do
-      expect(assigns(:invite_to_apply_props)).to include({ assetPaths: { logo: 'logo.png' },
-                                                           documentsPath: true })
+    it 'sets the invite_to_props with documentsPath set to true' do
+      expect(assigns(:invite_to_props)).to include({ assetPaths: { logo: 'logo.png' },
+                                                     documentsPath: true })
     end
 
     it 'does not call record_response' do

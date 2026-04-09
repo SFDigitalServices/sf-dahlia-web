@@ -15,9 +15,9 @@ import { getPathWithoutLanguagePrefix } from "../../util/languageUtil"
 import { isDeadlinePassed } from "../../util/listingUtil"
 
 interface UrlParams {
-  type?: string
+  type?: "I2A" | "I2I"
   deadline?: string
-  action?: string
+  action?: "yes" | "no" | "contact"
   appId?: string
 }
 
@@ -48,17 +48,17 @@ const InviteToPage = ({
     })
   }, [router, router.pathname])
 
-  const { unleashFlag: isInviteApplyEnabled } = useFeatureFlag("partners.inviteToApply", false)
-  const { unleashFlag: isInviteToInterviewEnabled } = useFeatureFlag("all.i2i", false)
+  const { unleashFlag: isI2AEnabled } = useFeatureFlag("partners.inviteToApply", false)
+  const { unleashFlag: isI2IEnabled } = useFeatureFlag("all.i2i", false)
 
   /* I2I - Invite to Interview pages */
-  if (type === "I2I" && isInviteToInterviewEnabled) {
+  if (type === "I2I" && isI2IEnabled) {
     if (documentsPath) return <InviteToInterviewDocuments listing={listing} />
     if (isDeadlinePassed(deadline)) return <InviteToDeadlinePassed listing={listing} />
   }
 
   /* I2A - Invite to Apply pages */
-  if (type === "I2A" && isInviteApplyEnabled) {
+  if (type === "I2A" && isI2AEnabled) {
     if (documentsPath) return <InviteToApplyDocuments listing={listing} />
     // no action from applicant - preview submit page
     if (!action) {
