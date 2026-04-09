@@ -156,6 +156,18 @@ export const getSignInRedirectUrl = (redirect: RedirectType) => {
   return getRedirectUrl(redirect || RedirectType.Account)
 }
 
+export const generateSubmitLink = (
+  appId: string,
+  deadline: string,
+  listingId: string,
+  submitPreviewLinkTokenParam?: string
+) => {
+  const submitLinkQueryStr = submitPreviewLinkTokenParam
+    ? `t=${submitPreviewLinkTokenParam}`
+    : new URLSearchParams({ appId, deadline }).toString()
+  return `/${getCurrentLanguage()}/listings/${listingId}/next-steps?${submitLinkQueryStr}`
+}
+
 export enum AppPages {
   Home = "home",
   RentalDirectory = "for rent Listings",

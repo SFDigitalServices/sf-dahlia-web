@@ -88,7 +88,8 @@ describe("Invite to Apply", () => {
         <InviteToPage
           assetPaths={"/"}
           urlParams={{
-            action: "yes",
+            type: "I2A",
+            action: "contact",
             deadline: mockPastDeadline,
           }}
         />
@@ -106,6 +107,7 @@ describe("Invite to Apply", () => {
         <InviteToPage
           assetPaths={"/"}
           urlParams={{
+            type: "I2A",
             deadline: mockFutureDeadline,
             action: "no",
             appId: "0000",
@@ -133,6 +135,7 @@ describe("Invite to Apply", () => {
         <InviteToPage
           assetPaths={"/"}
           urlParams={{
+            type: "I2A",
             deadline: mockFutureDeadline,
             action: "contact",
             appId: "0000",
@@ -169,6 +172,7 @@ describe("Invite to Apply", () => {
         <InviteToPage
           assetPaths={"/"}
           urlParams={{
+            type: "I2A",
             deadline: mockPastDeadline,
             action: "yes",
             appId: "0000",
@@ -183,6 +187,7 @@ describe("Invite to Apply", () => {
         <InviteToPage
           assetPaths={"/"}
           urlParams={{
+            type: "I2A",
             deadline: mockFutureDeadline,
             action: "yes",
           }}
@@ -202,6 +207,7 @@ describe("Invite to Apply", () => {
         <InviteToPage
           assetPaths={"/"}
           urlParams={{
+            type: "I2A",
             deadline: mockFutureDeadline,
             action: "yes",
             appId: "a0o123",
@@ -226,6 +232,7 @@ describe("Invite to Apply", () => {
         <InviteToPage
           assetPaths={"/"}
           urlParams={{
+            type: "I2A",
             deadline: mockFutureDeadline,
             action: "yes",
             appId: "a0o123",
@@ -247,6 +254,7 @@ describe("Invite to Apply", () => {
         <InviteToPage
           assetPaths={"/"}
           urlParams={{
+            type: "I2A",
             deadline: mockFutureDeadline,
             action: "yes",
           }}
@@ -267,7 +275,7 @@ describe("Invite to Apply", () => {
           assetPaths={"/"}
           documentsPath={true}
           urlParams={{
-            deadline: mockFutureDeadline,
+            type: "I2A",
           }}
         />
       )
