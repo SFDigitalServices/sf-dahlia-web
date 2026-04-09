@@ -49,16 +49,16 @@ module DahliaBackend
 
     def get_invite_to_apply_response_endpoint(response)
       case response
-      when 'yes' then '/messages/invite-to-apply/response/yes'
-      when 'no' then '/messages/invite-to-apply/response/no'
-      when 'contact' then '/messages/invite-to-apply/response/contact'
-      when 'submit' then '/messages/invite-to-apply/response/submit'
+      when 'yes' then '/messages/next-steps/response/yes'
+      when 'no' then '/messages/next-steps/response/no'
+      when 'contact' then '/messages/next-steps/response/contact'
+      when 'submit' then '/messages/next-steps/response/submit'
       end
     end
 
     def send_invite_to_apply_response(_deadline, _application_number, _response,
                                       listing_id, _force = nil)
-      # Get contacts from salesforce of the application with applicationNumber
+      # Get contacts from salesforce of the application with appId
       # TODO: Validate params
 
       application = Force::ShortFormService.get(_application_number)
@@ -123,7 +123,7 @@ module DahliaBackend
       # Build applicant data
       applicant_data = {
         lotteryNumber: application.dig('lotteryNumber'),
-        applicationNumber: application_number,
+        appId: application_number,
         primaryContact: primary_applicant,
         applicationLanguage: application.dig('applicationLanguage'),
       }

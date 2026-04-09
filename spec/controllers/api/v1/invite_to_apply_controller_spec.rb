@@ -12,8 +12,8 @@ describe Api::V1::InviteToApplyController do
     {
       record: {
         deadline: deadline,
-        applicationNumber: application_number,
-        response: response_type,
+        appId: application_number,
+        action: response_type,
         listingId: listing_id,
       },
     }
@@ -22,8 +22,8 @@ describe Api::V1::InviteToApplyController do
     {
       record: {
         deadline: expired_deadline,
-        applicationNumber: application_number,
-        response: response_type,
+        appId: application_number,
+        action: response_type,
         listingId: listing_id,
       },
     }
@@ -32,7 +32,7 @@ describe Api::V1::InviteToApplyController do
     {
       record: {
         deadline: '',
-        response: response_type,
+        action: response_type,
         listingId: listing_id,
       },
     }

@@ -82,9 +82,10 @@ class InviteToController < ApplicationController
     #   {
     #     "exp" => 946598400,
     #     "data" => {
+    #       "type" => "I2I",
     #       "deadline" => "1999-12-31",
-    #       "response" => "yes",
-    #       "applicationNumber" => "12345678"
+    #       "action" => "yes",
+    #       "appId" => "12345678"
     #     },
     #     "iat" => 946512000
     #    },

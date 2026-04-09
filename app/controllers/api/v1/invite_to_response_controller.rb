@@ -1,4 +1,4 @@
-class Api::V1::InviteToApplyController < ApiController
+class Api::V1::InviteToResponseController < ApiController
 
   def record_response
     params.expect(record: %i[type deadline appId action listingId])
@@ -11,14 +11,14 @@ class Api::V1::InviteToApplyController < ApiController
 
     if deadline_has_passed?(deadline)
       Rails.logger.info(
-        'InviteToApplyController#record_response: deadline passed - not recording ' \
+        'InviteToResponseController#record_response: deadline passed - not recording ' \
         "listingId=#{listing_id}, " \
         "deadline=#{deadline}, " \
         "appId=#{application_id}, " \
         "action=#{action}",
       )
     else
-      DahliaBackend::MessageService.send_invite_to_apply_response(
+      DahliaBackend::MessageService.send_invite_to_response(
         type,
         deadline,
         application_id,

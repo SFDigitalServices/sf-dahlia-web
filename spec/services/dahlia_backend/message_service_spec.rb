@@ -239,7 +239,7 @@ RSpec.describe DahliaBackend::MessageService do
       end
 
       it 'sends the invite response for "yes"' do
-        expect(client).to receive(:post).with('/messages/invite-to-apply/response/yes', hash_including(
+        expect(client).to receive(:post).with('/messages/next-steps/response/yes', hash_including(
                                                                                           listingId: listing_id,
                                                                                           listingName: 'Test Listing',
                                                                                           deadlineDate: deadline,
@@ -250,7 +250,7 @@ RSpec.describe DahliaBackend::MessageService do
       end
 
       it 'sends the invite response for "no"' do
-        expect(client).to receive(:post).with('/messages/invite-to-apply/response/no',
+        expect(client).to receive(:post).with('/messages/next-steps/response/no',
                                               anything)
 
         service.send_invite_to_apply_response(deadline, application_number, 'no',
@@ -259,7 +259,7 @@ RSpec.describe DahliaBackend::MessageService do
 
       it 'sends the invite response for "contact"' do
         expect(client).to receive(:post).with(
-          '/messages/invite-to-apply/response/contact', anything
+          '/messages/next-steps/response/contact', anything
         )
 
         service.send_invite_to_apply_response(deadline, application_number, 'contact',
@@ -268,7 +268,7 @@ RSpec.describe DahliaBackend::MessageService do
 
       it 'sends the invite response for "submit"' do
         expect(client).to receive(:post).with(
-          '/messages/invite-to-apply/response/submit', anything
+          '/messages/next-steps/response/submit', anything
         )
 
         service.send_invite_to_apply_response(deadline, application_number, 'submit',
@@ -279,7 +279,7 @@ RSpec.describe DahliaBackend::MessageService do
         expect(client).to receive(:post).with(anything, hash_including(
                                                           applicants: [{
                                                             lotteryNumber: '54321',
-                                                            applicationNumber: application_number,
+                                                            appId: application_number,
                                                             applicationLanguage: application_language,
                                                             primaryContact: {
                                                               firstName: 'John',
@@ -356,17 +356,17 @@ RSpec.describe DahliaBackend::MessageService do
   describe '#get_invite_to_apply_response_endpoint' do
     it 'returns correct endpoint for "yes" response' do
       endpoint = service.get_invite_to_apply_response_endpoint('yes')
-      expect(endpoint).to eq('/messages/invite-to-apply/response/yes')
+      expect(endpoint).to eq('/messages/next-steps/response/yes')
     end
 
     it 'returns correct endpoint for "no" response' do
       endpoint = service.get_invite_to_apply_response_endpoint('no')
-      expect(endpoint).to eq('/messages/invite-to-apply/response/no')
+      expect(endpoint).to eq('/messages/next-steps/response/no')
     end
 
     it 'returns correct endpoint for "contact" response' do
       endpoint = service.get_invite_to_apply_response_endpoint('contact')
-      expect(endpoint).to eq('/messages/invite-to-apply/response/contact')
+      expect(endpoint).to eq('/messages/next-steps/response/contact')
     end
 
     it 'returns nil for invalid response' do

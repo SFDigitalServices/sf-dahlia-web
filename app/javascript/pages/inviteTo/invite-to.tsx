@@ -66,7 +66,7 @@ const InviteToPage = ({
         <InviteToApplySubmitYourInfo
           listing={listing}
           deadline={deadline}
-          applicationNumber={appId}
+          appId={appId}
           fileUploadUrl={fileUploadUrl}
         />
       )
@@ -90,7 +90,7 @@ const InviteToPage = ({
         <InviteToApplySubmitYourInfo
           listing={listing}
           deadline={deadline}
-          applicationNumber={appId}
+          appId={appId}
           fileUploadUrl={fileUploadUrl}
         />
       )

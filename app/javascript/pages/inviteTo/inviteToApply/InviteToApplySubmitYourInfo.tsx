@@ -29,7 +29,7 @@ import { recordResponse } from "../../../api/inviteToApplyApiService"
 interface InviteToApplySubmitYourInfoProps {
   listing: RailsSaleListing | null
   deadline: string
-  applicationNumber?: string
+  appId?: string
   fileUploadUrl?: string
 }
 
@@ -91,12 +91,12 @@ const PreparingYourApplication = () => {
 const WhatToDo = ({
   listing,
   deadline,
-  applicationNumber,
+  appId,
   fileUploadUrl,
 }: {
   listing: RailsSaleListing
   deadline: string
-  applicationNumber?: string
+  appId?: string
   fileUploadUrl?: string
 }) => {
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -107,13 +107,13 @@ const WhatToDo = ({
       setIsSubmitting(true)
       window.open(url, "_blank")
       try {
-        // Call the API if applicationNumber is provided
-        if (applicationNumber) {
+        if (appId) {
           await recordResponse({
-            applicationNumber,
+            appId,
             listingId: listing.Id,
             deadline,
-            response: "submit",
+            action: "submit",
+            type: "I2A",
           })
         }
         setIsSubmitting(false)
@@ -124,7 +124,7 @@ const WhatToDo = ({
         setIsSubmitting(false)
       }
     })()
-  }, [applicationNumber, listing, deadline, fileUploadUrl])
+  }, [appId, listing, deadline, fileUploadUrl])
 
   return (
     <div className={styles.whatToDoList}>
@@ -268,7 +268,7 @@ const SubmitYourInfoSidebarBlock = ({ listing }: { listing: RailsSaleListing }) 
 const InviteToApplySubmitYourInfo = ({
   listing,
   deadline,
-  applicationNumber,
+  appId,
   fileUploadUrl,
 }: InviteToApplySubmitYourInfoProps) => {
   const { getAssetPath } = React.useContext(ConfigContext)
@@ -289,7 +289,7 @@ const InviteToApplySubmitYourInfo = ({
             <WhatToDo
               listing={listing}
               deadline={deadline}
-              applicationNumber={applicationNumber}
+              appId={appId}
               fileUploadUrl={fileUploadUrl}
             />
             <Mobile>

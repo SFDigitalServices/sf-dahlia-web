@@ -2,9 +2,10 @@ import { post } from "./apiService"
 
 export const recordResponse = async (record: {
   listingId: string
-  applicationNumber: string
+  appId: string
   deadline: string
-  response: string
+  action: string
+  type: string
 }) => {
-  return post("/api/v1/invite-to-apply/record-response", { record })
+  return post("/api/v1/next-steps/record-response", { record })
 }
