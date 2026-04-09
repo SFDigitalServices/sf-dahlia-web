@@ -12,8 +12,10 @@ describe("inviteToApplyApiService", () => {
       const record = {
         listingId: "a0w123",
         appId: "a0o123",
+        applicationNumber: "12345",
         deadline: "2099-01-01",
         action: "submit",
+        response: "submit",
         type: "I2A",
       }
       await recordResponse(record)

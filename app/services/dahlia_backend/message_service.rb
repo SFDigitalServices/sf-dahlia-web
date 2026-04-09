@@ -53,7 +53,10 @@ module DahliaBackend
         when 'contact' then '/messages/invite-to-apply/response/contact'
         when 'submit' then '/messages/invite-to-apply/response/submit'
         end
-      else '/api/v1/messages'
+      elsif action.present? && ['yes', 'no', 'contact', 'submit'].include?(action)
+        '/api/v1/messages'
+      else
+        nil
       end
     end
 

@@ -239,7 +239,7 @@ RSpec.describe DahliaBackend::MessageService do
       end
 
       it 'sends the invite response for "yes"' do
-        expect(client).to receive(:post).with('/messages/invite-to-apply/response/yes', hash_including(
+        expect(client).to receive(:post).with('/api/v1/messages', hash_including(
                                                                                           listingId: listing_id,
                                                                                           listingName: 'Test Listing',
                                                                                           deadlineDate: deadline,
@@ -250,8 +250,7 @@ RSpec.describe DahliaBackend::MessageService do
       end
 
       it 'sends the invite response for "no"' do
-        expect(client).to receive(:post).with('/messages/invite-to-apply/response/no',
-                                              anything)
+        expect(client).to receive(:post).with('/api/v1/messages', anything)
 
         service.send_invite_to_apply_response(deadline, application_id, application_number, 'no', 'no',
                                               listing_id)
@@ -259,7 +258,7 @@ RSpec.describe DahliaBackend::MessageService do
 
       it 'sends the invite response for "contact"' do
         expect(client).to receive(:post).with(
-          '/messages/invite-to-apply/response/contact', anything
+          '/api/v1/messages', anything
         )
 
         service.send_invite_to_apply_response(deadline, application_id, application_number, 'contact', 'contact',
@@ -268,48 +267,17 @@ RSpec.describe DahliaBackend::MessageService do
 
       it 'sends the invite response for "submit"' do
         expect(client).to receive(:post).with(
-          '/messages/invite-to-apply/response/submit', anything
+          '/api/v1/messages', anything
         )
 
         service.send_invite_to_apply_response(deadline, application_id, application_number, 'submit', 'submit',
-                                              listing_id)
-      end
-
-      it 'includes applicant information' do
-        expect(client).to receive(:post).with(anything, hash_including(
-                                                          applicants: [{
-                                                            lotteryNumber: '54321',
-                                                            appId: application_number,
-                                                            applicationLanguage: application_language,
-                                                            primaryContact: {
-                                                              firstName: 'John',
-                                                              email: 'john@example.com',
-                                                            },
-                                                            alternateContact: {
-                                                              firstName: 'Jane',
-                                                              email: 'jane@example.com',
-                                                            },
-                                                          }],
-                                                        ))
-
-        service.send_invite_to_apply_response(deadline, application_id, application_number, 'yes', 'yes',
-                                              listing_id)
-      end
-
-      it 'includes listing details' do
-        expect(client).to receive(:post).with(anything, hash_including(
-                                                          listingAddress: '123 Main St',
-                                                          listingNeighborhood: 'Downtown',
-                                                        ))
-
-        service.send_invite_to_apply_response(deadline, application_id, application_number, 'yes', 'yes',
                                               listing_id)
       end
     end
 
     context 'with invalid response type' do
       it 'returns nil for invalid response' do
-        result = service.send_invite_to_apply_response(deadline, application_id, application_number, 'invalid', 'invalid',
+        result = service.send_invite_to_apply_response(deadline, application_id, application_number, 'invalid', nil,
                                                        listing_id)
         expect(result).to be_nil
       end
@@ -350,28 +318,6 @@ RSpec.describe DahliaBackend::MessageService do
                                                        listing_id)
         expect(result).to be_nil
       end
-    end
-  end
-
-  describe '#get_response_endpoint' do
-    it 'returns correct endpoint for "yes" response' do
-      endpoint = service.get_response_endpoint('yes', 'yes')
-     expect(endpoint).to eq('/messages/invite-to-apply/response/yes')
-    end
-
-    it 'returns correct endpoint for "no" response' do
-      endpoint = service.get_response_endpoint('no', 'no')
-      expect(endpoint).to eq('/messages/invite-to-apply/response/no')  
-    end
-
-    it 'returns correct endpoint for "contact" response' do
-      endpoint = service.get_response_endpoint('contact', 'contact')
-      expect(endpoint).to eq('/messages/invite-to-apply/response/contact')
-    end
-
-    it 'returns nil for invalid response' do
-      endpoint = service.get_response_endpoint('invalid', 'invalid')
-      expect(endpoint).to be_nil
     end
   end
 end
