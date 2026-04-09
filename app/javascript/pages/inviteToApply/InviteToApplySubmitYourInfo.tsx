@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from "react"
-import { faEnvelope, faPrint } from "@fortawesome/free-solid-svg-icons"
+import { faPrint } from "@fortawesome/free-solid-svg-icons"
 import {
   t,
   Icon,
@@ -23,8 +23,8 @@ import styles from "./invite-to-apply.module.scss"
 import Layout from "../../layouts/Layout"
 import { ConfigContext } from "../../lib/ConfigContext"
 import InviteToApplyLeasingAgentInfo from "./InviteToApplyLeasingAgentInfo"
-import { HOME_SF_PHONE } from "../../modules/constants"
 import { recordResponse } from "../../api/inviteToApplyApiService"
+import InviteToGetHelp from "./InviteToGetHelp"
 
 interface InviteToApplySubmitYourInfoProps {
   listing: RailsSaleListing | null
@@ -59,23 +59,7 @@ const PreparingYourApplication = () => {
         {t("howToApplyPage.howLongItTakesSection.subtitle1")}
       </Heading>
       <p>{t("inviteToApplyPage.submitYourInfo.prepare.p1")}</p>
-      <div className={styles.submitYourInfoBox}>
-        <Heading priority={3} size="lg">
-          {t("inviteToApplyPage.submitYourInfo.prepare.p2")}
-        </Heading>
-        <p>{t("inviteToApplyPage.submitYourInfo.prepare.p3")}</p>
-        {renderInlineMarkup(t("inviteToApplyPage.submitYourInfo.prepare.p4"))}
-        <span className={styles.submitYourInfoIcons}>
-          <a className={styles.responseIcon} href={`tel:+1${HOME_SF_PHONE}`}>
-            <Icon symbol="phone" size="medium" fill={IconFillColors.primary} />
-            {HOME_SF_PHONE}
-          </a>
-          <a className={styles.responseIcon} href={`mailto:${"info@homesanfrancisco.org"}`}>
-            <Icon symbol={faEnvelope} size="medium" fill={IconFillColors.primary} />
-            {"info@homesanfrancisco.org"}
-          </a>
-        </span>
-      </div>
+      <InviteToGetHelp />
       <Button
         leadIcon={<Icon symbol={faPrint} size="medium" fill={IconFillColors.primary} />}
         variant="primary-outlined"
