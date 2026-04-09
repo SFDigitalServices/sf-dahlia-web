@@ -16,7 +16,7 @@ class InviteToController < ApplicationController
       )
     end
     if decoded_params['applicationNumber'].present?
-      application = Force::ShortFormService.get_by_application_number(decoded_params['applicationNumber'])
+      application = Force::ShortFormService.get(decoded_params['applicationNumber'])
       @invite_to_props = @invite_to_props.merge(
         fileUploadUrl: application['uploadURL'],
       )
