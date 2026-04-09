@@ -53,6 +53,16 @@
             "you_can_still_apply": "您仍可以申請，但在抽籤時，您的排名將低於三藩市聯合校區的雇員。",
             "you_must_work_at": "您必須在三藩市聯合校區工作，才能申請。"
         },
+        "a3a_custom_educator_brightwell_screening": {
+            "employee_id": "雇員 ID",
+            "enter_your_employee_id": "輸入您的雇員 ID",
+            "find_your_employee_id": "您可以在薪資單上找到您的雇員 ID。",
+            "still_not_working": "還是行不通？請聯絡您的雇主：",
+            "subtitle": "如果您是 <a target='_blank' href='{{cityCollegeUrl}}'>City College of San Francisco（三藩市城市學院）</a>或 <a target='_blank' href='{{sfusdUrl}}'>San Francisco Unified School District（三藩市聯合學區）</a>的教育工作者或雇員，您在住房抽籤中享有優先權。您需要提供您的雇員 ID。",
+            "title": "您是否在 City College of San Francisco（三藩市城市學院）或 San Francisco Unified School District（三藩市聯合學區）任職？",
+            "we_could_not_find_that_employee_id": "我們找不到您所輸入的雇員 ID。請檢查並修正錯誤後重試。",
+            "work_at_san_francisco_public_schools_or_city_college": "在三藩市公立學校或 City College（城市學院）任職"
+        },
         "a4_overview": {
             "p1": "首先，我們會詢問您本人以及要同住之成員的相關資料。然後我們會詢問您的收入情況。最後，我們會看您是否符合任何可負擔房屋的抽籤優先權利。若符合，便會要求您上傳這些優先權利的證明。",
             "p2": "<a ui-sref='{{sref}}' target='_blank'>請查閱所需文件清單和申請優先權利的相關資訊。</a>",

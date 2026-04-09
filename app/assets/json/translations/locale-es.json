@@ -53,6 +53,16 @@
             "you_can_still_apply": "Aún así, puede presentar una solicitud. Sin embargo, a los fines del sorteo, quedará en una clasificación por debajo de los empleados del Distrito Unificado de Escuelas de SF.",
             "you_must_work_at": "Para presentar una solicitud, debe trabajar en el Distrito Unificado de Escuelas de SF."
         },
+        "a3a_custom_educator_brightwell_screening": {
+            "employee_id": "ID del empleado",
+            "enter_your_employee_id": "Ingrese su ID del empleado",
+            "find_your_employee_id": "Busque su ID del empleado en su recibo de pago.",
+            "still_not_working": "¿Todavía no funciona? Comuníquese con su empleador:",
+            "subtitle": "Puede tener prioridad en el sorteo de viviendas si es docente o empleado del <a target='_blank' href='{{cityCollegeUrl}}'>City College of San Francisco (Instituto de Estudios Superiores de San Francisco)</a> o del <a target='_blank' href='{{sfusdUrl}}'>San Francisco Unified School District (Distrito Escolar Unificado de San Francisco)</a>. Usted necesita su ID del empleado.",
+            "title": "¿Trabaja en el City College of San Francisco o en el San Francisco Unified School District?",
+            "we_could_not_find_that_employee_id": "No pudimos encontrar esa ID del empleado. Compruebe si cometió algún error e inténtelo nuevamente.",
+            "work_at_san_francisco_public_schools_or_city_college": "Trabaje en las escuelas públicas de San Francisco o en el City College"
+        },
         "a4_overview": {
             "p1": "En primer lugar, haremos preguntas sobre usted y las personas con las que planea vivir. Luego, haremos preguntas sobre sus ingresos. Finalmente, veremos si cumple con los requisitos necesarios para alguna de las preferencias de sorteo de viviendas asequibles, y, si es así, le pediremos que suba una prueba de dichas preferencias.",
             "p2": "<a ui-sref='{{sref}}' target='_blank'>Consulte nuestra lista de control</a> para obtener información sobre los documentos requeridos y las preferencias de reclamo.",
