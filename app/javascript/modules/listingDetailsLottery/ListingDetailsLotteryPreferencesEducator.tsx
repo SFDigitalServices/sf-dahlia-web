@@ -9,6 +9,7 @@ import { RailsLotteryBucket } from "../../api/types/rails/listings/RailsLotteryB
 export interface ListingDetailsLotteryPreferencesProps {
   lotteryBucketsDetails: RailsLotteryResult
   isEducatorOne: boolean
+  isEducatorBrightwell: boolean
 }
 interface PreferencesProps {
   unitsAvailable: number
@@ -109,6 +110,7 @@ const LotteryBucketsContent = ({
 export const ListingDetailsLotteryPreferencesEducator = ({
   lotteryBucketsDetails,
   isEducatorOne,
+  isEducatorBrightwell,
 }: ListingDetailsLotteryPreferencesProps) => {
   // First, map all the veteran buckets to their corresponding educator bucket
   const veteranAppsByBucketMap = {}
@@ -132,6 +134,7 @@ export const ListingDetailsLotteryPreferencesEducator = ({
   )
 
   // Then, get all the tier 2 educator buckets, excluding the tier 1 veteran buckets
+  // Brightwell West listing will not have tier 2
   const tier2EducatorBucketWithoutVeteran = lotteryBucketsDetails.lotteryBuckets.filter(
     (bucket) =>
       bucket.preferenceShortCode &&
@@ -141,7 +144,7 @@ export const ListingDetailsLotteryPreferencesEducator = ({
   )
 
   // Then, get all the other non-educator buckets, excluding the veteran buckets
-  // This only applies for SCV 2 & 3 (SCV 1 only allows educators to apply)
+  // This only applies for SCV 2 & 3 & Brightwell West (SCV 1 only allows educators to apply)
   const nonEducatorsWithoutVeterans = lotteryBucketsDetails.lotteryBuckets.filter(
     (bucket) =>
       bucket.preferenceShortCode &&
@@ -156,6 +159,10 @@ export const ListingDetailsLotteryPreferencesEducator = ({
   const generalLottery = lotteryBucketsDetails.lotteryBuckets.filter(
     (bucket) => bucket.preferenceName === PREFERENCES.generalLottery
   )
+
+  const tier1HeaderKey = isEducatorBrightwell
+    ? "listings.lotteryPreference.sfusd.educatorsAndEmployees.title"
+    : "listings.lotteryPreference.sfusd.educators.title"
 
   return (
     <div className="text-sm">
@@ -174,19 +181,24 @@ export const ListingDetailsLotteryPreferencesEducator = ({
           {t("lottery.rankingOrderNote.veterans")}
         </div>
       </header>
-      <LotteryBucketHeader headerKey="listings.lotteryPreference.sfusd.educators.title" />
+      <LotteryBucketHeader headerKey={tier1HeaderKey} />
       <LotteryBucketsContent
         buckets={tier1EducatorBucketWithoutVeteran}
         veteranAppsByBucketMap={veteranAppsByBucketMap}
         preferenceNameKey="Tier 1 "
       />
-      <LotteryBucketHeader headerKey="listings.lotteryPreference.sfusd.allOtherEmployees.title" />
-      <LotteryBucketsContent
-        buckets={tier2EducatorBucketWithoutVeteran}
-        veteranAppsByBucketMap={veteranAppsByBucketMap}
-        preferenceNameKey="Tier 2 "
-        lastPref={isEducatorOne}
-      />
+      {!isEducatorBrightwell && (
+        <>
+          <LotteryBucketHeader headerKey="listings.lotteryPreference.sfusd.allOtherEmployees.title" />
+          <LotteryBucketsContent
+            buckets={tier2EducatorBucketWithoutVeteran}
+            veteranAppsByBucketMap={veteranAppsByBucketMap}
+            preferenceNameKey="Tier 2 "
+            lastPref={isEducatorOne}
+          />
+        </>
+      )}
+
       {!isEducatorOne && (
         <>
           <LotteryBucketHeader headerKey="lottery.generalPublic" />
