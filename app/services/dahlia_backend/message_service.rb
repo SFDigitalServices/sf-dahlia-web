@@ -13,7 +13,7 @@ module DahliaBackend
         new.send_application_confirmation(application_params, application_response,
                                           locale)
       end
-      def send_invite_to__response(_deadline, _app_id, _application_number, _response,_action, 
+      def send_invite_to_response(_deadline, _app_id, _application_number, _response,_action, 
                                         listing_id, _force = nil)
         new.send_invite_to_response(_deadline, _app_id, _application_number, _response, _action,
                                           listing_id, nil)

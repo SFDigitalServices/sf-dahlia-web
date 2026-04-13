@@ -17,7 +17,7 @@ class Api::V1::InviteToResponseController < ApiController
         "action=#{action}",
       )
     else
-      DahliaBackend::MessageService.send_invite_to_apply_response(
+      DahliaBackend::MessageService.send_invite_to_response(
         deadline,
         application_id,
         application_number,

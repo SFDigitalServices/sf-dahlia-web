@@ -76,7 +76,7 @@ class InviteToController < ApplicationController
       "response=#{response}",
     )
 
-    DahliaBackend::MessageService.send_invite_to_apply_response(
+    DahliaBackend::MessageService.send_invite_to_response(
       deadline,
       app_id,
       application_number,
