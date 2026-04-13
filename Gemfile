@@ -42,7 +42,7 @@ gem 'angular-rails-templates'
 
 # Javascript packages pre-processor
 gem "shakapacker", "9.5.0"
-gem "react_on_rails", "13.3.3"
+gem "react_on_rails", "16.2.0"
 
 gem 'psych', '< 4'
 

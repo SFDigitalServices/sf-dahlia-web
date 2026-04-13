@@ -17,6 +17,9 @@ default: &default
 
   javascript_transpiler: 'babel'
 
+  # https://github.com/shakacode/shakapacker/blob/main/docs/css-modules-export-mode.md#reverting-to-default-exports-v8-behavior
+  css_modules_export_mode: default
+
 development:
   <<: *default
   # This is false since we're running `bin/webpacker -w` in Procfile.dev-setic
