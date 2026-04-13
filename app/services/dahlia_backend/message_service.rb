@@ -13,9 +13,9 @@ module DahliaBackend
         new.send_application_confirmation(application_params, application_response,
                                           locale)
       end
-      def send_invite_to_apply_response(_deadline, _app_id, _application_number, _response,_action, 
+      def send_invite_to__response(_deadline, _app_id, _application_number, _response,_action, 
                                         listing_id, _force = nil)
-        new.send_invite_to_apply_response(_deadline, _app_id, _application_number, _response, _action,
+        new.send_invite_to_response(_deadline, _app_id, _application_number, _response, _action,
                                           listing_id, nil)
       end
     end
@@ -60,24 +60,20 @@ module DahliaBackend
       end
     end
 
-    def send_invite_to_apply_response(_deadline, _app_id, _application_number, _response, _action,
+    def send_invite_to_response(_deadline, _app_id, _application_number, _response, _action,
                                       listing_id, _force = nil)
       # Get contacts from salesforce of the application with appId
       # TODO: Validate params
 
       application = Force::ShortFormService.get(_application_number || _app_id)
-
       listing = fetch_listing(listing_id)
 
       fields = prepare_submission_fields_invite_to_apply(application, listing, _deadline,
-                                                         _application_number, _app_id, _action)
+                                                            _application_number, _app_id, _action)
       return if fields.nil?
-
       log_info("Prepared fields for Invite to Apply response: #{fields.inspect}")
-
       endpoint = get_response_endpoint(_action, _response)
       return log_error("Invalid action type: #{_action}", nil) unless endpoint
-
       send_message(endpoint, fields)
     rescue StandardError => e
       log_error('Error sending Invite to Apply', e)

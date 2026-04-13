@@ -76,12 +76,12 @@ RSpec.describe DahliaBackend::MessageService do
     end
   end
 
-  describe '.send_invite_to_apply_response' do
+  describe '.send_invite_to_response' do
     it 'creates a new instance and calls the instance method' do
-      expect_any_instance_of(described_class).to receive(:send_invite_to_apply_response)
+      expect_any_instance_of(described_class).to receive(:send_invite_to_response)
         .with('2024-12-31', application_id, application_number, 'yes', 'yes', listing_id, nil)
 
-      described_class.send_invite_to_apply_response('2024-12-31', application_id, application_number,
+      described_class.send_invite_to_response('2024-12-31', application_id, application_number,
                                                     'yes', 'yes', listing_id)
     end
   end
@@ -230,7 +230,7 @@ RSpec.describe DahliaBackend::MessageService do
     end
   end
 
-  describe '#send_invite_to_apply_response' do
+  describe '#send_invite_to_response' do
     let(:deadline) { '2024-12-31' }
 
     context 'with valid parameters' do
@@ -245,14 +245,14 @@ RSpec.describe DahliaBackend::MessageService do
                                                                                           deadlineDate: deadline,
                                                                                         ))
 
-        service.send_invite_to_apply_response(deadline, application_id, application_number, 'yes', 'yes',
+        service.send_invite_to_response(deadline, application_id, application_number, 'yes', 'yes',
                                               listing_id)
       end
 
       it 'sends the invite response for "no"' do
         expect(client).to receive(:post).with('/api/v1/messages', anything)
 
-        service.send_invite_to_apply_response(deadline, application_id, application_number, 'no', 'no',
+        service.send_invite_to_response(deadline, application_id, application_number, 'no', 'no',
                                               listing_id)
       end
 
@@ -261,7 +261,7 @@ RSpec.describe DahliaBackend::MessageService do
           '/api/v1/messages', anything
         )
 
-        service.send_invite_to_apply_response(deadline, application_id, application_number, 'contact', 'contact',
+        service.send_invite_to_response(deadline, application_id, application_number, 'contact', 'contact',
                                               listing_id)
       end
 
@@ -270,14 +270,14 @@ RSpec.describe DahliaBackend::MessageService do
           '/api/v1/messages', anything
         )
 
-        service.send_invite_to_apply_response(deadline, application_id, application_number, 'submit', 'submit',
+        service.send_invite_to_response(deadline, application_id, application_number, 'submit', 'submit',
                                               listing_id)
       end
     end
 
     context 'with invalid response type' do
       it 'returns nil for invalid response' do
-        result = service.send_invite_to_apply_response(deadline, application_id, application_number, 'invalid', nil,
+        result = service.send_invite_to_response(deadline, application_id, application_number, 'invalid', nil,
                                                        listing_id)
         expect(result).to be_nil
       end
@@ -289,7 +289,7 @@ RSpec.describe DahliaBackend::MessageService do
       end
 
       it 'returns nil' do
-        result = service.send_invite_to_apply_response(deadline, application_id, application_number, 'yes', 'yes',
+        result = service.send_invite_to_response(deadline, application_id, application_number, 'yes', 'yes',
                                                        listing_id)
         expect(result).to be_nil
       end
@@ -301,7 +301,7 @@ RSpec.describe DahliaBackend::MessageService do
       end
 
       it 'returns nil' do
-        result = service.send_invite_to_apply_response(deadline, application_id, application_number, 'yes', 'yes',
+        result = service.send_invite_to_response(deadline, application_id, application_number, 'yes', 'yes',
                                                        listing_id)
         expect(result).to be_nil
       end
@@ -314,7 +314,7 @@ RSpec.describe DahliaBackend::MessageService do
       end
 
       it 'returns nil' do
-        result = service.send_invite_to_apply_response(deadline, application_id, application_number, 'yes', 'yes',
+        result = service.send_invite_to_response(deadline, application_id, application_number, 'yes', 'yes',
                                                        listing_id)
         expect(result).to be_nil
       end
