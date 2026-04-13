@@ -9,7 +9,7 @@ import { ListingDetailsLotteryRanking } from "./ListingDetailsLotteryRanking"
 import { ListingDetailsLotterySearchFooter } from "./ListingDetailsLotterySearchFooter"
 import "./ListingDetailsLotterySearchForm.scss"
 import ErrorBoundary, { BoundaryScope } from "../../components/ErrorBoundary"
-import { isEducator, isEducatorOne } from "../../util/listingUtil"
+import { isEducator, isEducatorOne, isEducatorBrightwell } from "../../util/listingUtil"
 import { ListingDetailsLotteryPreferencesEducator } from "./ListingDetailsLotteryPreferencesEducator"
 
 export enum LOTTERY_SEARCH_FORM_STATUS {
@@ -84,17 +84,19 @@ export const ListingDetailsLotterySearchForm = ({
     case LOTTERY_SEARCH_FORM_STATUS.API_ERROR: {
       // educator listings have a custom lottery modal because there are so many layered preferences
       // the custom modal will make the preferences easier to understand
-      content = isEducator(listing) ? (
-        <ListingDetailsLotteryPreferencesEducator
-          lotteryBucketsDetails={lotteryBucketDetails}
-          isEducatorOne={isEducatorOne(listing)}
-        />
-      ) : (
-        <ListingDetailsLotteryPreferences
-          lotteryBucketsDetails={lotteryBucketDetails}
-          machineTranslations={listing.translations}
-        />
-      )
+      content =
+        isEducator(listing) || isEducatorBrightwell(listing) ? (
+          <ListingDetailsLotteryPreferencesEducator
+            lotteryBucketsDetails={lotteryBucketDetails}
+            isEducatorOne={isEducatorOne(listing)}
+            isEducatorBrightwell={isEducatorBrightwell(listing)}
+          />
+        ) : (
+          <ListingDetailsLotteryPreferences
+            lotteryBucketsDetails={lotteryBucketDetails}
+            machineTranslations={listing.translations}
+          />
+        )
       break
     }
     case LOTTERY_SEARCH_FORM_STATUS.LOADING: {
@@ -120,6 +122,7 @@ export const ListingDetailsLotterySearchForm = ({
           lotteryResult={lotterySearchResult}
           listingIsEducator={isEducator(listing)}
           listingIsEducatorOne={isEducatorOne(listing)}
+          listingIsEducatorBrightwell={isEducatorBrightwell(listing)}
         />
       )
       break
