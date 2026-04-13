@@ -9,6 +9,7 @@ describe("ListingDetailsLotteryPreferencesEducator", () => {
       <ListingDetailsLotteryPreferencesEducator
         lotteryBucketsDetails={lotteryResultRentalEducator}
         isEducatorOne={false}
+        isEducatorBrightwell={false}
       />
     )
 
@@ -20,6 +21,7 @@ describe("ListingDetailsLotteryPreferencesEducator", () => {
       <ListingDetailsLotteryPreferencesEducator
         lotteryBucketsDetails={lotteryResultRentalEducator}
         isEducatorOne={false}
+        isEducatorBrightwell={false}
       />
     )
 
@@ -31,6 +33,7 @@ describe("ListingDetailsLotteryPreferencesEducator", () => {
       <ListingDetailsLotteryPreferencesEducator
         lotteryBucketsDetails={lotteryResultRentalEducator}
         isEducatorOne={true}
+        isEducatorBrightwell={false}
       />
     )
 
@@ -42,6 +45,7 @@ describe("ListingDetailsLotteryPreferencesEducator", () => {
       <ListingDetailsLotteryPreferencesEducator
         lotteryBucketsDetails={lotteryResultRentalEducator}
         isEducatorOne={true}
+        isEducatorBrightwell={false}
       />
     )
 

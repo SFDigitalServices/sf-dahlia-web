@@ -53,6 +53,16 @@
             "you_can_still_apply": "Maaari ka pa ring mag-apply, pero iraranggo ka sa ibaba ng mga empleyado ng SF Unified School District sa lottery.",
             "you_must_work_at": "Nagtatrabaho ka dapat sa SF Unified School District para makapag-apply."
         },
+        "a3a_custom_educator_brightwell_screening": {
+            "employee_id": "ID ng Empleyado",
+            "enter_your_employee_id": "Ilagay ang iyong ID ng Empleyado",
+            "find_your_employee_id": "Hanapin ang iyong ID ng Empleyado sa iyong paystub",
+            "still_not_working": "Hindi pa rin nagtatrabaho? Makipag-ugnayan sa iyong employer:",
+            "subtitle": "Maaari kang maging priyoridad sa lottery sa pabahay kung ikaw ay isang edukador o empleyado ng <a target='_blank' href='{{cityCollegeUrl}}'>City College of San Francisco</a> o <a target='_blank' href='{{sfusdUrl}}'>San Francisco Unified School District</a>. Kailangan mo ang iyong ID ng empleyado.",
+            "title": "Nagtatrabaho ka ba sa City College of San Francisco o San Francisco Unified School District?",
+            "we_could_not_find_that_employee_id": "Hindi namin mahanap ang ID ng empleyado na iyon. Tingnan kung may mga pagkakamali at muling subukan.",
+            "work_at_san_francisco_public_schools_or_city_college": "Magtrabaho sa mga pampublikong paaralan ng San Francisco o City College"
+        },
         "a4_overview": {
             "p1": "Una, magtatanong kami tungkol sa inyo at sa mga taong pinaplano ninyong makasama sa pagtira sa bahay. Pagkatapos, tatanungin namin kayo tungkol sa inyong kita. Panghuli, titingnan namin kung kuwalipikado kayo para sa anumang preperensiya sa lottery o palabunutan sa abot-kayang pabahay (affordable housing).",
             "p2": "<a ui-sref='{{sref}}' target='_blank'>Tingnan ang aming checklist</a> o listahang gabay para sa impormasyon tungkol sa kinakailangang mga dokumento at paggamit n gmga preperensiya.",

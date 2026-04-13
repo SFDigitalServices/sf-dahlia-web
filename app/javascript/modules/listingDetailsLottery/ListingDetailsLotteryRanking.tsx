@@ -10,6 +10,7 @@ interface ListingDetailsLotteryRankingProps {
   lotteryResult: RailsLotteryResult
   listingIsEducator: boolean
   listingIsEducatorOne?: boolean
+  listingIsEducatorBrightwell?: boolean
 }
 
 interface TooltipProps {
@@ -28,6 +29,7 @@ export const ListingDetailsLotteryRanking = ({
   lotteryResult,
   listingIsEducator,
   listingIsEducatorOne = false,
+  listingIsEducatorBrightwell = false,
 }: ListingDetailsLotteryRankingProps) => {
   const highestRankedBucket = lotteryResult?.lotteryBuckets.reduce((maxBucket, currBucket) => {
     if (!maxBucket && currBucket.preferenceOrder && currBucket.totalSubmittedApps > 0) {
@@ -89,12 +91,14 @@ export const ListingDetailsLotteryRanking = ({
             bucket={bucket}
             key={bucket.preferenceName}
             listingIsEducator={listingIsEducator}
+            listingIsEducatorBrightwell={listingIsEducatorBrightwell}
           />
         ))}
         {!applicantSelectedForPreference && (
           <ListingDetailsLotteryResultsRow
             bucket={generalLotteryBucket}
             listingIsEducator={listingIsEducator}
+            listingIsEducatorBrightwell={listingIsEducatorBrightwell}
           />
         )}
         <div className="px-8">
