@@ -510,13 +510,12 @@ GEM
     rainbow (3.1.1)
     rake (13.3.1)
     rdoc (6.3.4.1)
-    react_on_rails (16.2.0)
+    react_on_rails (13.3.3)
       addressable
       connection_pool
       execjs (~> 2.5)
       rails (>= 5.2)
       rainbow (~> 3.0)
-      shakapacker (>= 6.0)
     redis (4.8.1)
     regexp_parser (2.11.3)
     reline (0.6.3)
@@ -748,7 +747,7 @@ DEPENDENCIES
   rails (~> 8.0.0)
   rails-controller-testing
   rails_best_practices
-  react_on_rails (= 16.2.0)
+  react_on_rails (= 13.3.3)
   restforce (~> 8.0.1)
   rspec-core
   rspec-rails
