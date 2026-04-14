@@ -23,7 +23,7 @@ const commonOptions = {
 
 const generatedWebpackConfig = generateWebpackConfig()
 const scssConfigIndex = generatedWebpackConfig.module.rules.findIndex((config) =>
-  config.test && ".scss".match(config.test)
+  config.test && config.test.source && config.test.source.match("scss")
 )
 generatedWebpackConfig.module.rules.splice(scssConfigIndex, 1)
 
