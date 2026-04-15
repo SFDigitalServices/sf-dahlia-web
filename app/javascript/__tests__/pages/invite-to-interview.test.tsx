@@ -82,7 +82,7 @@ describe("Invite to Interview", () => {
   afterEach(() => {
     jest.restoreAllMocks()
   })
-  it("renders the documents page", async () => {
+  it("renders the documents page when documentsPath is true", async () => {
     await renderWithContext(
       <InviteToPage
         assetPaths={"/"}
@@ -95,5 +95,19 @@ describe("Invite to Interview", () => {
     expect(
       screen.getByText(t("inviteToInterviewPage.documents.checkWhatYouNeed.bringDocuments.title"))
     ).toBeInTheDocument()
+  })
+
+  it("renders the deadline passed page if the deadline is passed", async () => {
+    await renderWithContext(
+      <InviteToPage
+        assetPaths={"/"}
+        urlParams={{
+          type: "I2I",
+          deadline: "2020-10-10",
+        }}
+        documentsPath={false}
+      />
+    )
+    expect(screen.getByText(t("inviteToInterviewPage.deadlinePassed.title"))).toBeInTheDocument()
   })
 })
