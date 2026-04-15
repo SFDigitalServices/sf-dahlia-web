@@ -31,8 +31,7 @@ const WhatToDo = ({ listing, deadline }: { listing: RailsSaleListing; deadline: 
           {!isDeadlinePassed(deadline) && (
             <Button
               className={styles.actionButton}
-              // TODO: use new scheduling URL from Salesforce
-              onClick={() => window.open("https://www.youtube.com/watch?v=oW56bUsrSW4", "_blank")}
+              onClick={() => window.open(listing?.Leaseup_Appointment_Scheduling_URL, "_blank")}
             >
               {t("inviteToInterviewPage.submitYourInfo.whatToDo.step1.p2")}
             </Button>
