@@ -37,7 +37,7 @@ Rails.application.routes.draw do
           get 'eligibility' => 'listings#eligibility'
         end
       end
-      get 'trk' => 'listing_interest#index'
+      # Deprecated I2A pilot - remove in DAH-4045
       post 'invite-to-apply/record-response' => 'invite_to_response#record_response'
       post 'next-steps/record-response' => 'invite_to_response#record_response'
       scope '/short-form' do
