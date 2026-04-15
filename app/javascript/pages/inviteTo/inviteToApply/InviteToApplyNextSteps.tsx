@@ -13,7 +13,7 @@ import {
 import styles from "../invite-to.module.scss"
 import { ConfigContext } from "../../../lib/ConfigContext"
 import InviteToLayout from "../InviteToLayout"
-import { recordResponse } from "../../../api/inviteToApplyApiService"
+import { recordResponse } from "../../../api/inviteToApiService"
 import InviteToGetHelp from "../InviteToGetHelp"
 import InviteToLeasingAgentInfo from "../InviteToLeasingAgentInfo"
 

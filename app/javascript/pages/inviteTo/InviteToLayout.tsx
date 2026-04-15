@@ -66,7 +66,7 @@ const DeadlineBanner = ({
       variant={isDeadlinePassed(deadline) ? "alert" : "warn"}
       fullwidth
       customIcon={<Icon symbol="clock" size="medium" />}
-      testId="deadline-passed-banner"
+      testId={isDeadlinePassed(deadline) ? "deadline-passed-banner" : "deadline-not-passed-banner"}
     >
       {isDeadlinePassed(deadline) ? (
         renderInlineMarkup(

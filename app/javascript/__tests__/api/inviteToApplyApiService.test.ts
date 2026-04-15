@@ -1,11 +1,11 @@
 import { post } from "../../api/apiService"
-import { recordResponse } from "../../api/inviteToApplyApiService"
+import { recordResponse } from "../../api/inviteToApiService"
 
 jest.mock("../../api/apiService", () => ({
   post: jest.fn(),
 }))
 
-describe("inviteToApplyApiService", () => {
+describe("inviteToApiService", () => {
   describe("recordResponse", () => {
     it("calls apiService post", async () => {
       post as jest.Mock

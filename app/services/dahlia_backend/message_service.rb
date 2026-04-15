@@ -45,15 +45,15 @@ module DahliaBackend
     end
   
     # Deprecate I2A pilot in DAH-4045
-    def get_response_endpoint(action, response)
-      if response && !action
+    def get_response_endpoint(inviteAction, response)
+      if response && inviteAction.blank?
         case response
         when 'yes' then '/messages/invite-to-apply/response/yes'
         when 'no' then '/messages/invite-to-apply/response/no'
         when 'contact' then '/messages/invite-to-apply/response/contact'
         when 'submit' then '/messages/invite-to-apply/response/submit'
         end
-      elsif action.present?
+      elsif inviteAction.present?
         '/api/v1/messages'
       else
         nil
@@ -65,7 +65,7 @@ module DahliaBackend
       # Get contacts from salesforce of the application with appId
       # TODO: Validate params
 
-      application = Force::ShortFormService.get(_application_number || _app_id)
+      application = Force::ShortFormService.get(_application_number.presence || _app_id)
 
       listing = fetch_listing(listing_id)
 
@@ -118,7 +118,7 @@ module DahliaBackend
       return nil unless application && listing
 
       if application_number.blank? && action.present?
-        {
+        return {
           action: action,
           data: {
             applicationIds: [app_id],
@@ -137,7 +137,7 @@ module DahliaBackend
       # Build applicant data
       applicant_data = {
         lotteryNumber: application.dig('lotteryNumber'),
-        appId: application_number,
+        appId: app_id,
         applicationNumber: application_number,
         primaryContact: primary_applicant,
         applicationLanguage: application.dig('applicationLanguage'),

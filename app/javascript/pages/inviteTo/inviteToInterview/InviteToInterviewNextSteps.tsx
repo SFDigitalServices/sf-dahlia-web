@@ -127,7 +127,6 @@ const InviteToInterviewNextSteps = ({ listing, deadline }: InviteToInterviewNext
         variant="primary-outlined"
         onClick={() => window.print()}
         className={styles.actionButton}
-        nativeButtonProps={{ style: { width: "fit-content" } }}
       >
         {t("inviteToInterviewPage.submitYourInfo.printThisPage")}
       </Button>

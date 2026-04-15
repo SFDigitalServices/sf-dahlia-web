@@ -8,7 +8,7 @@ import { ConfigContext } from "../../lib/ConfigContext"
 import { getListing } from "../../api/listingApiService"
 
 jest.mock("../../api/listingApiService")
-jest.mock("../../api/inviteToApplyApiService", () => ({
+jest.mock("../../api/inviteToApiService", () => ({
   recordResponse: jest.fn(),
 }))
 jest.mock("../../hooks/useFeatureFlag", () => ({
@@ -23,7 +23,7 @@ jest.mock("../../hooks/useFeatureFlag", () => ({
     unleashFlag: true,
     variant: {
       payload: {
-        value: "listing-id",
+        value: JSON.stringify({ enabled_listings: ["listing-id"] }),
       },
     },
   }),
@@ -33,6 +33,7 @@ const mockListing = {
   Id: "listing-id",
   Name: "Test Listing",
   Building_Name_for_Process: "Test Building",
+  Leaseup_Scheduling_Link: "test-link",
   Leasing_Agent_Name: "test-agent",
   Leasing_Agent_Phone: "123-456-7890",
   Leasing_Agent_Email: "test-agent@test-agent.com",
@@ -40,8 +41,8 @@ const mockListing = {
   translations: {},
   Listing_Images: [
     {
-      Image_URL: "example-image-url",
-      Image_Description: "example-image-alt",
+      Image_URL: "image-url",
+      Image_Description: "image-alt",
     },
   ],
 }
@@ -92,7 +93,53 @@ describe("Invite to Interview", () => {
       />
     )
     expect(
-      screen.getByText(t("inviteToInterviewPage.documents.checkWhatYouNeed.bringDocuments.title"))
+      screen.getByText(t("inviteToInterviewPage.documents.checkWhatYouNeed.title"))
     ).toBeInTheDocument()
+  })
+
+  it("renders the next steps page", async () => {
+    await renderWithContext(
+      <InviteToPage
+        assetPaths={"/"}
+        urlParams={{
+          type: "I2I",
+          inviteAction: "yes",
+          deadline: "2030-10-10",
+          appId: "test-id",
+        }}
+        documentsPath={false}
+      />
+    )
+    expect(screen.getByText(t("inviteToInterviewPage.submitYourInfo.subtitle"))).toBeInTheDocument()
+  })
+
+  it("shows the deadline passed banner if deadline is passed", async () => {
+    await renderWithContext(
+      <InviteToPage
+        assetPaths={"/"}
+        urlParams={{
+          type: "I2I",
+          inviteAction: "yes",
+          deadline: "2020-10-10",
+          appId: "test-id",
+        }}
+      />
+    )
+    expect(screen.getByTestId("deadline-passed-banner")).toBeInTheDocument()
+  })
+
+  it("shows the deadline banner when deadline is not passed", async () => {
+    await renderWithContext(
+      <InviteToPage
+        assetPaths={"/"}
+        urlParams={{
+          type: "I2I",
+          inviteAction: "yes",
+          deadline: "2030-10-10",
+          appId: "test-id",
+        }}
+      />
+    )
+    expect(screen.getByTestId("deadline-not-passed-banner")).toBeInTheDocument()
   })
 })

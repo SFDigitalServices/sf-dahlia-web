@@ -53,7 +53,14 @@ const InviteToPage = ({
   const { unleashFlag: isI2IEnabledFlag, variant } = useVariantFlag("all.i2i", false)
   const enabledListingIds =
     typeof variant === "object" && variant?.payload?.value
-      ? JSON.parse(variant.payload.value).enabled_listings
+      ? (() => {
+          try {
+            const parsed = JSON.parse(variant.payload.value)
+            return parsed?.enabled_listings || []
+          } catch {
+            return []
+          }
+        })()
       : []
   const isI2IEnabled = isI2IEnabledFlag && listing?.Id && enabledListingIds.includes(listing.Id)
 
@@ -77,6 +84,7 @@ const InviteToPage = ({
             appId,
             deadline,
             listing?.Id,
+            type,
             submitPreviewLinkTokenParam
           )}
         />
@@ -95,6 +103,7 @@ const InviteToPage = ({
             appId,
             deadline,
             listing?.Id,
+            type,
             submitPreviewLinkTokenParam
           )}
         />
@@ -128,6 +137,7 @@ const InviteToPage = ({
           appId,
           deadline,
           listing?.Id,
+          type,
           submitPreviewLinkTokenParam
         )}
       />
@@ -153,11 +163,13 @@ const InviteToPage = ({
           appId,
           deadline,
           listing?.Id,
+          type,
           submitPreviewLinkTokenParam
         )}
       />
     )
   }
+  return null
 }
 
 export default withAppSetup(InviteToPage, { pageName: AppPages.InviteTo })

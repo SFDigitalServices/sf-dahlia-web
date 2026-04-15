@@ -7,11 +7,11 @@ import InviteToPage from "../../pages/inviteTo/invite-to"
 import { renderAndLoadAsync } from "../__util__/renderUtils"
 import { localizedFormat } from "../../util/languageUtil"
 import { getListing } from "../../api/listingApiService"
-import { recordResponse } from "../../api/inviteToApplyApiService"
+import { recordResponse } from "../../api/inviteToApiService"
 import { ConfigContext } from "../../lib/ConfigContext"
 
 jest.mock("../../api/listingApiService")
-jest.mock("../../api/inviteToApplyApiService", () => ({
+jest.mock("../../api/inviteToApiService", () => ({
   recordResponse: jest.fn(),
 }))
 jest.mock("../../hooks/useFeatureFlag", () => ({
@@ -99,7 +99,7 @@ describe("Invite to Apply", () => {
           assetPaths={"/"}
           urlParams={{
             type: "I2A",
-            action: "contact",
+            inviteAction: "contact",
             deadline: mockPastDeadline,
           }}
         />
@@ -119,12 +119,12 @@ describe("Invite to Apply", () => {
           urlParams={{
             type: "I2A",
             deadline: mockFutureDeadline,
-            action: "no",
+            inviteAction: "no",
             appId: "0000",
           }}
         />
       )
-      const submitPreviewLink = `/en/listings/${mockListing.Id}/next-steps?appId=0000&deadline=${mockFutureDeadline}`
+      const submitPreviewLink = `/en/listings/${mockListing.Id}/next-steps?appId=0000&deadline=${mockFutureDeadline}&type=I2A`
 
       expect(screen.getByText(t("inviteToApplyPage.withdrawn.title"))).toBeInTheDocument()
       expect(screen.getByText(mockListing.Building_Name_for_Process)).toBeInTheDocument()
@@ -147,13 +147,13 @@ describe("Invite to Apply", () => {
           urlParams={{
             type: "I2A",
             deadline: mockFutureDeadline,
-            action: "contact",
+            inviteAction: "contact",
             appId: "0000",
           }}
         />
       )
 
-      const submitPreviewLink = `/en/listings/${mockListing.Id}/next-steps?appId=0000&deadline=${mockFutureDeadline}`
+      const submitPreviewLink = `/en/listings/${mockListing.Id}/next-steps?appId=0000&deadline=${mockFutureDeadline}&type=I2A`
 
       expect(
         screen.getByText(
@@ -184,7 +184,7 @@ describe("Invite to Apply", () => {
           urlParams={{
             type: "I2A",
             deadline: mockPastDeadline,
-            action: "yes",
+            inviteAction: "yes",
             appId: "0000",
           }}
         />
@@ -199,7 +199,7 @@ describe("Invite to Apply", () => {
           urlParams={{
             type: "I2A",
             deadline: mockFutureDeadline,
-            action: "yes",
+            inviteAction: "yes",
           }}
         />
       )
@@ -219,7 +219,7 @@ describe("Invite to Apply", () => {
           urlParams={{
             type: "I2A",
             deadline: mockFutureDeadline,
-            action: "yes",
+            inviteAction: "yes",
             appId: "a0o123",
           }}
         />
@@ -244,7 +244,7 @@ describe("Invite to Apply", () => {
           urlParams={{
             type: "I2A",
             deadline: mockFutureDeadline,
-            action: "yes",
+            inviteAction: "yes",
             appId: "a0o123",
           }}
         />
@@ -266,7 +266,7 @@ describe("Invite to Apply", () => {
           urlParams={{
             type: "I2A",
             deadline: mockFutureDeadline,
-            action: "yes",
+            inviteAction: "yes",
           }}
         />
       )
