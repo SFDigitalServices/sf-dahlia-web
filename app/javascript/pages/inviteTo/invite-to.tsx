@@ -7,7 +7,7 @@ import { useFeatureFlag, useVariantFlag } from "../../hooks/useFeatureFlag"
 import InviteToDeadlinePassed from "./InviteToDeadlinePassed"
 import InviteToApplyWithdrawn from "./inviteToApply/InviteToApplyWithdrawn"
 import InviteToApplyContactMeLater from "./inviteToApply/InviteToApplyContactMeLater"
-import InviteToApplySubmitYourInfo from "./inviteToApply/InviteToApplySubmitYourInfo"
+import InviteToApplyNextSteps from "./inviteToApply/InviteToApplyNextSteps"
 import InviteToApplyDocuments from "./inviteToApply/InviteToApplyDocuments"
 import InviteToInterviewDocuments from "./inviteToInterview/InviteToInterviewDocuments"
 import InviteToInterviewNextSteps from "./inviteToInterview/InviteToInterviewNextSteps"
@@ -57,9 +57,12 @@ const InviteToPage = ({
       : []
   const isI2IEnabled = isI2IEnabledFlag && listing?.Id && enabledListingIds.includes(listing.Id)
 
-  console.log("isI2IEnabled", isI2IEnabled, type, inviteAction)
   /* I2I - Invite to Interview pages */
   if (type === "I2I") {
+    if (!isI2IEnabled) {
+      return null
+    }
+
     if (documentsPath) return <InviteToInterviewDocuments listing={listing} />
     // no action from applicant - preview submit page
     if (!inviteAction) {
@@ -108,7 +111,7 @@ const InviteToPage = ({
   // no action from applicant - preview submit page
   if (!inviteAction) {
     return (
-      <InviteToApplySubmitYourInfo
+      <InviteToApplyNextSteps
         listing={listing}
         deadline={deadline}
         appId={appId}
@@ -132,7 +135,7 @@ const InviteToPage = ({
   }
   if (inviteAction === "yes") {
     return (
-      <InviteToApplySubmitYourInfo
+      <InviteToApplyNextSteps
         listing={listing}
         deadline={deadline}
         appId={appId}
