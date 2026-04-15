@@ -1,3 +1,7 @@
+// Must be imported before "react-on-rails" — prevents the automatic
+// setTimeout(renderInit) so we can load translations first.
+import "../util/deferReactOnRailsAutoRender"
+
 import ReactOnRails from "react-on-rails"
 
 import "../components/base.scss"
@@ -29,7 +33,7 @@ import ListingApplyForm from "../pages/form/listing-apply-form"
 const currentLanguage = getCurrentLanguage(window.location.pathname)
 
 /* eslint-disable-next-line unicorn/prefer-top-level-await */
-void loadTranslations(currentLanguage).then(() =>
+void loadTranslations(currentLanguage).then(() => {
   ReactOnRails.register({
     // Add additional components here for each react component entrypoint
     BuyDirectory,
@@ -53,4 +57,6 @@ void loadTranslations(currentLanguage).then(() =>
     MyAccount,
     ListingApplyForm,
   })
-)
+
+  ReactOnRails.reactOnRailsPageLoaded()
+})
