@@ -9,15 +9,15 @@ import {
 } from "@bloom-housing/ui-components"
 import { Heading, Button, Message } from "@bloom-housing/ui-seeds"
 import { faPrint, faEnvelope } from "@fortawesome/free-solid-svg-icons"
-import RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
-import Layout from "../../layouts/Layout"
-import { renderInlineMarkup, getBMRApplicationUrl } from "../../util/languageUtil"
-import { ConfigContext } from "../../lib/ConfigContext"
-import InviteToApplyLeasingAgentInfo from "./InviteToApplyLeasingAgentInfo"
-import InviteToGetHelp from "./InviteToGetHelp"
+import RailsSaleListing from "../../../api/types/rails/listings/RailsSaleListing"
+import Layout from "../../../layouts/Layout"
+import { renderInlineMarkup, getBMRApplicationUrl } from "../../../util/languageUtil"
+import { ConfigContext } from "../../../lib/ConfigContext"
+import InviteToLeasingAgentInfo from "../InviteToLeasingAgentInfo"
+import InviteToGetHelp from "../InviteToGetHelp"
 
-import styles from "./invite-to-apply.module.scss"
-import { HOME_SF_PHONE } from "../../modules/constants"
+import styles from "../invite-to.module.scss"
+import { HOME_SF_PHONE } from "../../../modules/constants"
 
 interface InviteToApplyDocumentsProps {
   listing: RailsSaleListing | null
@@ -298,7 +298,7 @@ const InviteToApplyDocumentsSidebar = ({ listing }: { listing: RailsSaleListing 
         </span>
       </SidebarBlock>
       <SidebarBlock title={t("contactAgent.contact")} priority={2}>
-        <InviteToApplyLeasingAgentInfo listing={listing} />
+        <InviteToLeasingAgentInfo listing={listing} />
       </SidebarBlock>
     </>
   )

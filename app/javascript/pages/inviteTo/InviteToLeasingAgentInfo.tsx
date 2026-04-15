@@ -2,7 +2,7 @@ import React from "react"
 import { t, Icon, IconFillColors } from "@bloom-housing/ui-components"
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons"
 import RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
-import styles from "./invite-to-apply.module.scss"
+import styles from "./invite-to.module.scss"
 
 const InviteToApplyLeasingAgentInfo = ({ listing }: { listing: RailsSaleListing }) => (
   <span>

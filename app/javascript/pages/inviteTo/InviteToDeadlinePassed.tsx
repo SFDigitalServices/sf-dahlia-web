@@ -1,17 +1,17 @@
 import React from "react"
 import { t, LoadingOverlay } from "@bloom-housing/ui-components"
 import { Card, Heading } from "@bloom-housing/ui-seeds"
-import styles from "./invite-to-apply.module.scss"
+import styles from "./invite-to.module.scss"
 import RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
 import FormLayout from "../../layouts/FormLayout"
-import InviteToApplyLeasingAgentInfo from "./InviteToApplyLeasingAgentInfo"
-import InviteToApplyHeader from "./InviteToApplyHeader"
+import InviteToApplyLeasingAgentInfo from "./InviteToLeasingAgentInfo"
+import InviteToApplyHeader from "./InviteToHeader"
 
-interface InviteToApplyDeadlinePassedProps {
+interface InviteToDeadlinePassedProps {
   listing: RailsSaleListing | null
 }
 
-const InviteToApplyDeadlinePassed = ({ listing }: InviteToApplyDeadlinePassedProps) => {
+const InviteToDeadlinePassed = ({ listing }: InviteToDeadlinePassedProps) => {
   return (
     <FormLayout>
       <LoadingOverlay isLoading={!listing}>
@@ -39,4 +39,4 @@ const InviteToApplyDeadlinePassed = ({ listing }: InviteToApplyDeadlinePassedPro
   )
 }
 
-export default InviteToApplyDeadlinePassed
+export default InviteToDeadlinePassed

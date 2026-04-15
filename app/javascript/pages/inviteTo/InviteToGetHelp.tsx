@@ -4,7 +4,7 @@ import { Heading } from "@bloom-housing/ui-seeds"
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons"
 import { renderInlineMarkup } from "../../util/languageUtil"
 
-import styles from "./invite-to-apply.module.scss"
+import styles from "./invite-to.module.scss"
 import { HOME_SF_PHONE } from "../../modules/constants"
 
 const InviteToGetHelp = () => (

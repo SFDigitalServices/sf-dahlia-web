@@ -37,8 +37,9 @@ Rails.application.routes.draw do
           get 'eligibility' => 'listings#eligibility'
         end
       end
-      get 'trk' => 'listing_interest#index'
-      post 'invite-to-apply/record-response' => 'invite_to_apply#record_response'
+      # Deprecated I2A pilot - remove in DAH-4045
+      post 'invite-to-apply/record-response' => 'invite_to_response#record_response'
+      post 'next-steps/record-response' => 'invite_to_response#record_response'
       scope '/short-form' do
         post 'validate-household' => 'short_form#validate_household'
         get 'listing-application/:listing_id' => 'short_form#show_listing_application_for_user'
@@ -109,8 +110,11 @@ Rails.application.routes.draw do
   get '(:lang)/privacy' => 'assistance#privacy', lang: /(en|es|zh|tl)/
   get '(:lang)/disclaimer' => 'assistance#disclaimer', lang: /(en|es|zh|tl)/
 
-  get '(:lang)/listings/:id/invite-to-apply' => 'invite_to_apply_page#index', as: :invite_to_apply, lang: /(en|es|zh|tl)/
-  get '(:lang)/listings/:id/invite-to-apply/documents' => 'invite_to_apply_page#documents', as: :invite_to_apply_documents, lang: /(en|es|zh|tl)/
+  get '(:lang)/listings/:id/next-steps' => 'invite_to#index', as: :next_steps, lang: /(en|es|zh|tl)/
+  get '(:lang)/listings/:id/next-steps/documents' => 'invite_to#documents', lang: /(en|es|zh|tl)/
+  # Deprecated I2A pilot - remove in DAH-4045
+  get '(:lang)/listings/:id/invite-to-apply' => 'invite_to#index', as: :invite_to_apply, lang: /(en|es|zh|tl)/
+  get '(:lang)/listings/:id/invite-to-apply/documents' => 'invite_to#documents', lang: /(en|es|zh|tl)/
 
   get '(:lang)/my-account' => 'account#my_account', lang: /(en|es|zh|tl)/
   get '(:lang)/account-settings' => 'account#account_settings', lang: /(en|es|zh|tl)/

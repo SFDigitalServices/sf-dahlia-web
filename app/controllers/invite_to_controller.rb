@@ -1,46 +1,50 @@
-# Controller for the page shown when applicants respond to invite to apply email
-class InviteToApplyPageController < ApplicationController
+# Invite to X controller
+class InviteToController < ApplicationController
   def index
     decoded_params = decode_token(params[:t])
     if decoded_params.is_a?(String)
       redirect_to decoded_params
       return
     end
-
     decoded_params ||= params
-    @invite_to_apply_props = props(decoded_params)
+    @invite_to_props = props(decoded_params)
     # Get file upload URL for application
-    if decoded_params['applicationNumber'].present?
-      application = Force::ShortFormService.get(decoded_params['applicationNumber'])
-      @invite_to_apply_props = @invite_to_apply_props.merge(
+    if decoded_params['appId'].present?
+      application = Force::ShortFormService.get(decoded_params['appId'])
+      @invite_to_props = @invite_to_props.merge(
         fileUploadUrl: application['uploadURL'],
       )
     end
-
-    # TODO: isTestEmail toggle
-
+    if decoded_params['applicationNumber'].present?
+      application = Force::ShortFormService.get(decoded_params['applicationNumber'])
+      @invite_to_props = @invite_to_props.merge(
+        fileUploadUrl: application['uploadURL'],
+      )
+    end
     record_response(decoded_params)
-    render 'invite_to_apply'
+    render 'invite_to'
   end
 
   def documents
-    @invite_to_apply_props = props.merge(documentsPath: true)
-    render 'invite_to_apply'
+    @invite_to_props = props(params).merge(documentsPath: true)
+    render 'invite_to'
   end
 
   private
 
+  # Deprecated I2A pilot - remove references to applicationNumber and response in DAH-4045
   def props(decoded_params = params)
     url_params = {
+      type: decoded_params['type'],
       deadline: decoded_params['deadline'],
-      response: decoded_params['response'],
-      applicationNumber: decoded_params['applicationNumber'],
+      action: decoded_params['action'] || decoded_params['response'],
+      appId: decoded_params['appId'] || decoded_params['applicationNumber'],
     }
 
     {
       assetPaths: static_asset_paths,
       urlParams: url_params,
-      submitPreviewLinkTokenParam: encode_token(url_params.except(:response)),
+      submitPreviewLinkTokenParam: encode_token(url_params.except(:action, :response)),
     }.compact
   end
 
@@ -48,28 +52,36 @@ class InviteToApplyPageController < ApplicationController
     deadline = decoded_params['deadline']
     response = decoded_params['response']
     application_number = decoded_params['applicationNumber']
+    action = decoded_params['action']
+    app_id = decoded_params['appId']
 
-    if response.blank? || (deadline && deadline_has_passed?(deadline)) || language_change?
+    if (action.blank? && response.blank?) || (deadline && deadline_has_passed?(deadline)) || language_change?
       Rails.logger.info(
-        'InviteToApplyPageController#record_response: *NOT* recording ' \
+        'InviteToController#record_response: *NOT* recording ' \
         "deadline=#{deadline}, " \
+        "app_id=#{app_id}, " \
         "application_number=#{application_number}, " \
+        "action=#{action.inspect}, " \
         "response=#{response.inspect}",
       )
       return
     end
 
     Rails.logger.info(
-      'InviteToApplyPageController#record_response: recording ' \
+      'InviteToController#record_response: recording ' \
       "deadline=#{deadline}, " \
+      "app_id=#{app_id}, " \
       "application_number=#{application_number}, " \
+      "action=#{action}, " \
       "response=#{response}",
     )
 
-    DahliaBackend::MessageService.send_invite_to_apply_response(
+    DahliaBackend::MessageService.send_invite_to_response(
       deadline,
+      app_id,
       application_number,
       response,
+      action,
       params['id'], # listing_id
     )
   end
@@ -85,9 +97,10 @@ class InviteToApplyPageController < ApplicationController
     #   {
     #     "exp" => 946598400,
     #     "data" => {
+    #       "type" => "I2I",
     #       "deadline" => "1999-12-31",
-    #       "response" => "yes",
-    #       "applicationNumber" => "12345678"
+    #       "action" => "yes",
+    #       "appId" => "12345678"
     #     },
     #     "iat" => 946512000
     #    },
@@ -100,13 +113,13 @@ class InviteToApplyPageController < ApplicationController
       { algorithm: ENV.fetch('JWT_ALGORITHM', nil), verify_expiration: false },
     )
     Rails.logger.info(
-      'InviteToApplyPageController#decode_token: ' \
+      'InviteToController#decode_token: ' \
       "Decoded JWT #{decoded_token}",
     )
     decoded_token.first['data']
   rescue JWT::DecodeError
     Rails.logger.info(
-      'InviteToApplyPageController#decode_token: ' \
+      'InviteToController#decode_token: ' \
       "Invalid JWT in #{request.original_url}",
     )
     root_url
@@ -126,8 +139,8 @@ class InviteToApplyPageController < ApplicationController
 
   def language_change?
     # return true when current url and referrer url look like:
-    # '.../listings/a123/invite-to-apply?...'
-    # '.../es/listings/a123/invite-to-apply?...'
+    # '.../listings/a123/next-steps?...'
+    # '.../es/listings/a123/next-steps?...'
     request.referrer&.include?(request.path.slice(%r{/listings/.+}))
   end
 

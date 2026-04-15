@@ -161,6 +161,9 @@
       border: 2px solid var(--seeds-color-gray-400);
       border-top: none;
       border-radius: 0 0 var(--seeds-rounded-lg) var(--seeds-rounded-lg);
+      ul {
+        padding-bottom: var(--seeds-spacer-label);
+      }
     }
     .accordionBar {
       display: block;

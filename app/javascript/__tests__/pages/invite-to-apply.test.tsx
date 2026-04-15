@@ -3,7 +3,7 @@ import { screen } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
 import "@testing-library/jest-dom"
 import { t } from "@bloom-housing/ui-components"
-import InviteToApplyPage from "../../pages/inviteToApply/invite-to-apply"
+import InviteToPage from "../../pages/inviteTo/invite-to"
 import { renderAndLoadAsync } from "../__util__/renderUtils"
 import { localizedFormat } from "../../util/languageUtil"
 import { getListing } from "../../api/listingApiService"
@@ -19,6 +19,16 @@ jest.mock("../../hooks/useFeatureFlag", () => ({
     isEnabled: true,
     isLoading: false,
     unleashFlag: true,
+  }),
+  useVariantFlag: () => ({
+    isEnabled: true,
+    isLoading: false,
+    unleashFlag: true,
+    variant: {
+      payload: {
+        value: "listing-id",
+      },
+    },
   }),
 }))
 
@@ -55,7 +65,7 @@ const renderWithContext = async (component: React.ReactElement) => {
 const mockPastDeadline = "2000-01-01"
 const mockFutureDeadline = "3000-01-01"
 
-describe("Invite to Apply Page", () => {
+describe("Invite to Apply", () => {
   beforeEach(() => {
     document.documentElement.lang = "en"
     jest.clearAllMocks()
@@ -85,10 +95,11 @@ describe("Invite to Apply Page", () => {
   describe("Invite to Apply - user responses (deadline passed, withdrawn, contact me later)", () => {
     it("renders deadline passed card", async () => {
       await renderWithContext(
-        <InviteToApplyPage
+        <InviteToPage
           assetPaths={"/"}
           urlParams={{
-            response: "yes",
+            type: "I2A",
+            action: "contact",
             deadline: mockPastDeadline,
           }}
         />
@@ -103,16 +114,17 @@ describe("Invite to Apply Page", () => {
 
     it("renders withdrawn card", async () => {
       await renderWithContext(
-        <InviteToApplyPage
+        <InviteToPage
           assetPaths={"/"}
           urlParams={{
+            type: "I2A",
             deadline: mockFutureDeadline,
-            response: "no",
-            applicationNumber: "0000",
+            action: "no",
+            appId: "0000",
           }}
         />
       )
-      const submitPreviewLink = `/en/listings/${mockListing.Id}/invite-to-apply?applicationNumber=0000&deadline=${mockFutureDeadline}`
+      const submitPreviewLink = `/en/listings/${mockListing.Id}/next-steps?appId=0000&deadline=${mockFutureDeadline}`
 
       expect(screen.getByText(t("inviteToApplyPage.withdrawn.title"))).toBeInTheDocument()
       expect(screen.getByText(mockListing.Building_Name_for_Process)).toBeInTheDocument()
@@ -130,17 +142,18 @@ describe("Invite to Apply Page", () => {
 
     it("renders contact me later card", async () => {
       await renderWithContext(
-        <InviteToApplyPage
+        <InviteToPage
           assetPaths={"/"}
           urlParams={{
+            type: "I2A",
             deadline: mockFutureDeadline,
-            response: "contact",
-            applicationNumber: "0000",
+            action: "contact",
+            appId: "0000",
           }}
         />
       )
 
-      const submitPreviewLink = `/en/listings/${mockListing.Id}/invite-to-apply?applicationNumber=0000&deadline=${mockFutureDeadline}`
+      const submitPreviewLink = `/en/listings/${mockListing.Id}/next-steps?appId=0000&deadline=${mockFutureDeadline}`
 
       expect(
         screen.getByText(
@@ -166,10 +179,13 @@ describe("Invite to Apply Page", () => {
   describe("Invite to Apply - submit your information", () => {
     it("renders deadline passed banner", async () => {
       await renderWithContext(
-        <InviteToApplyPage
+        <InviteToPage
           assetPaths={"/"}
           urlParams={{
+            type: "I2A",
             deadline: mockPastDeadline,
+            action: "yes",
+            appId: "0000",
           }}
         />
       )
@@ -178,11 +194,12 @@ describe("Invite to Apply Page", () => {
 
     it("renders submit your info banner", async () => {
       await renderWithContext(
-        <InviteToApplyPage
+        <InviteToPage
           assetPaths={"/"}
           urlParams={{
+            type: "I2A",
             deadline: mockFutureDeadline,
-            response: "yes",
+            action: "yes",
           }}
         />
       )
@@ -197,12 +214,13 @@ describe("Invite to Apply Page", () => {
 
     it("renders submit your info button which calls API to record the response", async () => {
       await renderWithContext(
-        <InviteToApplyPage
+        <InviteToPage
           assetPaths={"/"}
           urlParams={{
+            type: "I2A",
             deadline: mockFutureDeadline,
-            response: "yes",
-            applicationNumber: "a0o123",
+            action: "yes",
+            appId: "a0o123",
           }}
         />
       )
@@ -221,12 +239,13 @@ describe("Invite to Apply Page", () => {
       ;(recordResponse as jest.Mock).mockRejectedValue(new Error("API error"))
 
       await renderWithContext(
-        <InviteToApplyPage
+        <InviteToPage
           assetPaths={"/"}
           urlParams={{
+            type: "I2A",
             deadline: mockFutureDeadline,
-            response: "yes",
-            applicationNumber: "a0o123",
+            action: "yes",
+            appId: "a0o123",
           }}
         />
       )
@@ -242,11 +261,12 @@ describe("Invite to Apply Page", () => {
 
     it("renders submit your info page", async () => {
       await renderWithContext(
-        <InviteToApplyPage
+        <InviteToPage
           assetPaths={"/"}
           urlParams={{
+            type: "I2A",
             deadline: mockFutureDeadline,
-            response: "yes",
+            action: "yes",
           }}
         />
       )
@@ -261,11 +281,11 @@ describe("Invite to Apply Page", () => {
 
     it("renders documents list page", async () => {
       await renderWithContext(
-        <InviteToApplyPage
+        <InviteToPage
           assetPaths={"/"}
           documentsPath={true}
           urlParams={{
-            deadline: mockFutureDeadline,
+            type: "I2A",
           }}
         />
       )

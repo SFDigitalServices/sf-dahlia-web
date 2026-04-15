@@ -1,12 +1,12 @@
 import React from "react"
 import { t, LoadingOverlay } from "@bloom-housing/ui-components"
 import { Card, Heading } from "@bloom-housing/ui-seeds"
-import styles from "./invite-to-apply.module.scss"
-import { renderMarkup, localizedFormat } from "../../util/languageUtil"
-import RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
-import FormLayout from "../../layouts/FormLayout"
-import InviteToApplyHeader from "./InviteToApplyHeader"
-import InviteToApplyLeasingAgentInfo from "./InviteToApplyLeasingAgentInfo"
+import styles from "../invite-to.module.scss"
+import { renderMarkup, localizedFormat } from "../../../util/languageUtil"
+import RailsSaleListing from "../../../api/types/rails/listings/RailsSaleListing"
+import FormLayout from "../../../layouts/FormLayout"
+import InviteToApplyHeader from "../InviteToHeader"
+import InviteToApplyLeasingAgentInfo from "../InviteToLeasingAgentInfo"
 
 interface InviteToApplyContactMeLaterProps {
   listing: RailsSaleListing | null

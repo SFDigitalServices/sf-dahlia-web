@@ -10,26 +10,26 @@ import {
   Desktop,
 } from "@bloom-housing/ui-components"
 import { Heading, Button, Message, LoadingState } from "@bloom-housing/ui-seeds"
-import RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
-import { getListingAddressString, isDeadlinePassed } from "../../util/listingUtil"
+import RailsSaleListing from "../../../api/types/rails/listings/RailsSaleListing"
+import { getListingAddressString, isDeadlinePassed } from "../../../util/listingUtil"
 import {
   getTranslatedString,
   renderInlineMarkup,
   getCurrentLanguage,
   getBMRApplicationUrl,
   localizedFormat,
-} from "../../util/languageUtil"
-import styles from "./invite-to-apply.module.scss"
-import Layout from "../../layouts/Layout"
-import { ConfigContext } from "../../lib/ConfigContext"
-import InviteToApplyLeasingAgentInfo from "./InviteToApplyLeasingAgentInfo"
-import { recordResponse } from "../../api/inviteToApplyApiService"
-import InviteToGetHelp from "./InviteToGetHelp"
+} from "../../../util/languageUtil"
+import styles from "../invite-to.module.scss"
+import Layout from "../../../layouts/Layout"
+import { ConfigContext } from "../../../lib/ConfigContext"
+import InviteToLeasingAgentInfo from "../InviteToLeasingAgentInfo"
+import { recordResponse } from "../../../api/inviteToApplyApiService"
+import InviteToGetHelp from "../InviteToGetHelp"
 
 interface InviteToApplySubmitYourInfoProps {
   listing: RailsSaleListing | null
   deadline: string
-  applicationNumber?: string
+  appId?: string
   fileUploadUrl?: string
 }
 
@@ -75,12 +75,12 @@ const PreparingYourApplication = () => {
 const WhatToDo = ({
   listing,
   deadline,
-  applicationNumber,
+  appId,
   fileUploadUrl,
 }: {
   listing: RailsSaleListing
   deadline: string
-  applicationNumber?: string
+  appId?: string
   fileUploadUrl?: string
 }) => {
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -91,13 +91,15 @@ const WhatToDo = ({
       setIsSubmitting(true)
       window.open(url, "_blank")
       try {
-        // Call the API if applicationNumber is provided
-        if (applicationNumber) {
+        if (appId) {
           await recordResponse({
-            applicationNumber,
+            appId: appId,
+            applicationNumber: appId,
             listingId: listing.Id,
             deadline,
+            action: "submit",
             response: "submit",
+            type: "I2A",
           })
         }
         setIsSubmitting(false)
@@ -108,7 +110,7 @@ const WhatToDo = ({
         setIsSubmitting(false)
       }
     })()
-  }, [applicationNumber, listing, deadline, fileUploadUrl])
+  }, [appId, listing, deadline, fileUploadUrl])
 
   return (
     <div className={styles.whatToDoList}>
@@ -240,7 +242,7 @@ const SubmitYourInfoSidebarBlock = ({ listing }: { listing: RailsSaleListing }) 
         {" "}
         {t("inviteToApplyPage.submitYourInfo.sidebar")}
       </Heading>
-      <InviteToApplyLeasingAgentInfo listing={listing} />
+      <InviteToLeasingAgentInfo listing={listing} />
       <Heading size="sm" priority={3}>
         {t("contactAgent.officeHours.seeTheUnit")}
       </Heading>
@@ -252,7 +254,7 @@ const SubmitYourInfoSidebarBlock = ({ listing }: { listing: RailsSaleListing }) 
 const InviteToApplySubmitYourInfo = ({
   listing,
   deadline,
-  applicationNumber,
+  appId,
   fileUploadUrl,
 }: InviteToApplySubmitYourInfoProps) => {
   const { getAssetPath } = React.useContext(ConfigContext)
@@ -273,14 +275,14 @@ const InviteToApplySubmitYourInfo = ({
             <WhatToDo
               listing={listing}
               deadline={deadline}
-              applicationNumber={applicationNumber}
+              appId={appId}
               fileUploadUrl={fileUploadUrl}
             />
             <Mobile>
               <Heading size="lg" priority={3}>
                 {t("inviteToApplyPage.submitYourInfo.sidebar")}
               </Heading>
-              <InviteToApplyLeasingAgentInfo listing={listing} />
+              <InviteToLeasingAgentInfo listing={listing} />
             </Mobile>
             <WhatHappensNext />
           </main>
