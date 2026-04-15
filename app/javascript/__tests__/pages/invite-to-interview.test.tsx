@@ -37,7 +37,6 @@ const mockListing = {
   Leasing_Agent_Phone: "123-456-7890",
   Leasing_Agent_Email: "test-agent@test-agent.com",
   Office_Hours: "9-5 M-F",
-  File_Upload_URL: "https://example.com/upload",
   translations: {},
   Listing_Images: [
     {

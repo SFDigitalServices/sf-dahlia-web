@@ -1,24 +1,25 @@
 # Invite to X controller
 class InviteToController < ApplicationController
   def index
-    decoded_params = decode_token(params[:t])
-    if decoded_params.is_a?(String)
-      redirect_to decoded_params
-      return
-    end
+    # TODO: uncomment when backend token updated
+    # decoded_params = decode_token(params[:t])
+    # if decoded_params.is_a?(String)
+    #   redirect_to decoded_params
+    #   return
+    # end
     decoded_params ||= params
     @invite_to_props = props(decoded_params)
     # Get file upload URL for application
     if decoded_params['appId'].present?
       application = Force::ShortFormService.get(decoded_params['appId'])
       @invite_to_props = @invite_to_props.merge(
-        fileUploadUrl: application['uploadURL'],
+        url: application['uploadURL'],
       )
     end
     if decoded_params['applicationNumber'].present?
       application = Force::ShortFormService.get(decoded_params['applicationNumber'])
       @invite_to_props = @invite_to_props.merge(
-        fileUploadUrl: application['uploadURL'],
+        url: application['uploadURL'],
       )
     end
     record_response(decoded_params)
@@ -37,14 +38,14 @@ class InviteToController < ApplicationController
     url_params = {
       type: decoded_params['type'],
       deadline: decoded_params['deadline'],
-      action: decoded_params['action'] || decoded_params['response'],
+      inviteAction: decoded_params['inviteAction'] || decoded_params['response'],
       appId: decoded_params['appId'] || decoded_params['applicationNumber'],
     }
 
     {
       assetPaths: static_asset_paths,
       urlParams: url_params,
-      submitPreviewLinkTokenParam: encode_token(url_params.except(:action, :response)),
+      submitPreviewLinkTokenParam: encode_token(url_params.except(:inviteAction, :response)),
     }.compact
   end
 
@@ -52,16 +53,16 @@ class InviteToController < ApplicationController
     deadline = decoded_params['deadline']
     response = decoded_params['response']
     application_number = decoded_params['applicationNumber']
-    action = decoded_params['action']
+    invite_action = decoded_params['inviteAction']
     app_id = decoded_params['appId']
 
-    if (action.blank? && response.blank?) || (deadline && deadline_has_passed?(deadline)) || language_change?
+    if (invite_action.blank? && response.blank?) || (deadline && deadline_has_passed?(deadline)) || language_change?
       Rails.logger.info(
         'InviteToController#record_response: *NOT* recording ' \
         "deadline=#{deadline}, " \
         "app_id=#{app_id}, " \
         "application_number=#{application_number}, " \
-        "action=#{action.inspect}, " \
+        "inviteAction=#{invite_action.inspect}, " \
         "response=#{response.inspect}",
       )
       return
@@ -72,7 +73,7 @@ class InviteToController < ApplicationController
       "deadline=#{deadline}, " \
       "app_id=#{app_id}, " \
       "application_number=#{application_number}, " \
-      "action=#{action}, " \
+      "inviteAction=#{invite_action}, " \
       "response=#{response}",
     )
 
@@ -81,7 +82,7 @@ class InviteToController < ApplicationController
       app_id,
       application_number,
       response,
-      action,
+      invite_action,
       params['id'], # listing_id
     )
   end
@@ -99,7 +100,7 @@ class InviteToController < ApplicationController
     #     "data" => {
     #       "type" => "I2I",
     #       "deadline" => "1999-12-31",
-    #       "action" => "yes",
+    #       "inviteAction" => "yes",
     #       "appId" => "12345678"
     #     },
     #     "iat" => 946512000
