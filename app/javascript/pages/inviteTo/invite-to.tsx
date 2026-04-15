@@ -73,7 +73,7 @@ const InviteToPage = ({
     if (documentsPath) return <InviteToInterviewDocuments listing={listing} />
     // no action from applicant - preview submit page
     if (!inviteAction) {
-      return <InviteToInterviewNextSteps listing={listing} deadline={deadline} />
+      return <InviteToInterviewNextSteps listing={listing} deadline={deadline} appId={appId} />
     }
     if (inviteAction === "no") {
       return (
@@ -91,7 +91,7 @@ const InviteToPage = ({
       )
     }
     if (inviteAction === "yes") {
-      return <InviteToInterviewNextSteps listing={listing} deadline={deadline} />
+      return <InviteToInterviewNextSteps listing={listing} deadline={deadline} appId={appId} />
     }
     if (isDeadlinePassed(deadline)) return <InviteToDeadlinePassed listing={listing} />
     if (inviteAction === "contact") {

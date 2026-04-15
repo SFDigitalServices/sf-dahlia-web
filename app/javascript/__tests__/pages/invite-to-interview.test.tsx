@@ -2,10 +2,12 @@ import React from "react"
 import { screen } from "@testing-library/react"
 import "@testing-library/jest-dom"
 import { t } from "@bloom-housing/ui-components"
+import { userEvent } from "@testing-library/user-event"
 import InviteToPage from "../../pages/inviteTo/invite-to"
 import { renderAndLoadAsync } from "../__util__/renderUtils"
 import { ConfigContext } from "../../lib/ConfigContext"
 import { getListing } from "../../api/listingApiService"
+import { recordResponse } from "../../api/inviteToApiService"
 
 jest.mock("../../api/listingApiService")
 jest.mock("../../api/inviteToApiService", () => ({
@@ -33,7 +35,7 @@ const mockListing = {
   Id: "listing-id",
   Name: "Test Listing",
   Building_Name_for_Process: "Test Building",
-  Leaseup_Scheduling_Link: "test-link",
+  Leaseup_Appointment_Scheduling_URL: "test-link",
   Leasing_Agent_Name: "test-agent",
   Leasing_Agent_Phone: "123-456-7890",
   Leasing_Agent_Email: "test-agent@test-agent.com",
@@ -141,5 +143,24 @@ describe("Invite to Interview", () => {
       />
     )
     expect(screen.getByTestId("deadline-not-passed-banner")).toBeInTheDocument()
+  })
+
+  it("records the response when the scheduling button is clicked", async () => {
+    await renderWithContext(
+      <InviteToPage
+        assetPaths={"/"}
+        urlParams={{
+          type: "I2I",
+          deadline: "2030-10-10",
+          inviteAction: "yes",
+          appId: "test-id",
+        }}
+      />
+    )
+    const button = screen.getByRole("button", {
+      name: t("inviteToInterviewPage.submitYourInfo.whatToDo.step1.p2"),
+    })
+    await userEvent.click(button)
+    expect(recordResponse).toHaveBeenCalled()
   })
 })
