@@ -105,7 +105,7 @@ describe("Invite to Interview", () => {
         assetPaths={"/"}
         urlParams={{
           type: "I2I",
-          inviteAction: "yes",
+          act: "yes",
           deadline: "2030-10-10",
           appId: "test-id",
         }}
@@ -121,7 +121,7 @@ describe("Invite to Interview", () => {
         assetPaths={"/"}
         urlParams={{
           type: "I2I",
-          inviteAction: "yes",
+          act: "yes",
           deadline: "2020-10-10",
           appId: "test-id",
         }}
@@ -136,7 +136,7 @@ describe("Invite to Interview", () => {
         assetPaths={"/"}
         urlParams={{
           type: "I2I",
-          inviteAction: "yes",
+          act: "yes",
           deadline: "2030-10-10",
           appId: "test-id",
         }}
@@ -152,7 +152,7 @@ describe("Invite to Interview", () => {
         urlParams={{
           type: "I2I",
           deadline: "2030-10-10",
-          inviteAction: "yes",
+          act: "yes",
           appId: "test-id",
         }}
       />

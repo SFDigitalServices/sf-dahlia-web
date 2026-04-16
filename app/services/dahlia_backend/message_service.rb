@@ -13,9 +13,9 @@ module DahliaBackend
         new.send_application_confirmation(application_params, application_response,
                                           locale)
       end
-      def send_invite_to_apply_response(_deadline, _app_id, _application_number, _response,_action, 
+      def send_invite_to_response(_deadline, _app_id, _application_number, _response,_action, 
                                         listing_id, _force = nil)
-        new.send_invite_to_apply_response(_deadline, _app_id, _application_number, _response, _action,
+        new.send_invite_to_response(_deadline, _app_id, _application_number, _response, _action,
                                           listing_id, nil)
       end
     end
@@ -45,22 +45,22 @@ module DahliaBackend
     end
   
     # Deprecate I2A pilot in DAH-4045
-    def get_response_endpoint(inviteAction, response)
-      if response && inviteAction.blank?
+    def get_response_endpoint(act, response)
+      if response && act.blank?
         case response
         when 'yes' then '/messages/invite-to-apply/response/yes'
         when 'no' then '/messages/invite-to-apply/response/no'
         when 'contact' then '/messages/invite-to-apply/response/contact'
         when 'submit' then '/messages/invite-to-apply/response/submit'
         end
-      elsif inviteAction.present?
+      elsif act.present?
         '/api/v1/messages'
       else
         nil
       end
     end
 
-    def send_invite_to_apply_response(_deadline, _app_id, _application_number, _response, _action,
+    def send_invite_to_response(_deadline, _app_id, _application_number, _response, _action,
                                       listing_id, _force = nil)
       # Get contacts from salesforce of the application with appId
       # TODO: Validate params
@@ -69,7 +69,7 @@ module DahliaBackend
 
       listing = fetch_listing(listing_id)
 
-      fields = prepare_submission_fields_invite_to_apply(application, listing, _deadline,
+      fields = prepare_submission_fields_invite_to_response(application, listing, _deadline,
                                                          _application_number, _app_id, _action)
       return if fields.nil?
 
@@ -113,7 +113,7 @@ module DahliaBackend
       }
     end
 
-    def prepare_submission_fields_invite_to_apply(application, listing, deadline,
+    def prepare_submission_fields_invite_to_response(application, listing, deadline,
                                                   application_number, app_id, action)
       return nil unless application && listing
 

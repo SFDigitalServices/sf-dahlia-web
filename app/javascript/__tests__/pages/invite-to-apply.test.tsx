@@ -99,7 +99,7 @@ describe("Invite to Apply", () => {
           assetPaths={"/"}
           urlParams={{
             type: "I2A",
-            inviteAction: "contact",
+            act: "contact",
             deadline: mockPastDeadline,
           }}
         />
@@ -119,7 +119,7 @@ describe("Invite to Apply", () => {
           urlParams={{
             type: "I2A",
             deadline: mockFutureDeadline,
-            inviteAction: "no",
+            act: "no",
             appId: "0000",
           }}
         />
@@ -147,7 +147,7 @@ describe("Invite to Apply", () => {
           urlParams={{
             type: "I2A",
             deadline: mockFutureDeadline,
-            inviteAction: "contact",
+            act: "contact",
             appId: "0000",
           }}
         />
@@ -184,7 +184,7 @@ describe("Invite to Apply", () => {
           urlParams={{
             type: "I2A",
             deadline: mockPastDeadline,
-            inviteAction: "yes",
+            act: "yes",
             appId: "0000",
           }}
         />
@@ -199,7 +199,7 @@ describe("Invite to Apply", () => {
           urlParams={{
             type: "I2A",
             deadline: mockFutureDeadline,
-            inviteAction: "yes",
+            act: "yes",
           }}
         />
       )
@@ -219,7 +219,7 @@ describe("Invite to Apply", () => {
           urlParams={{
             type: "I2A",
             deadline: mockFutureDeadline,
-            inviteAction: "yes",
+            act: "yes",
             appId: "a0o123",
           }}
         />
@@ -244,7 +244,7 @@ describe("Invite to Apply", () => {
           urlParams={{
             type: "I2A",
             deadline: mockFutureDeadline,
-            inviteAction: "yes",
+            act: "yes",
             appId: "a0o123",
           }}
         />
@@ -266,7 +266,7 @@ describe("Invite to Apply", () => {
           urlParams={{
             type: "I2A",
             deadline: mockFutureDeadline,
-            inviteAction: "yes",
+            act: "yes",
           }}
         />
       )
