@@ -12,6 +12,7 @@ import {
 import styles from "./invite-to.module.scss"
 import InviteToLeasingAgentInfo from "./InviteToLeasingAgentInfo"
 import Layout from "../../layouts/Layout"
+import { INVITE_TO_X } from "../../modules/constants"
 
 const InviteToHeader = ({
   listing,
@@ -40,9 +41,9 @@ const DeadlineBanner = ({
 }: {
   deadline: string
   listing: RailsSaleListing
-  type: string
+  type: INVITE_TO_X
 }) => {
-  if (type === "I2A") {
+  if (type === INVITE_TO_X.APPLY) {
     return (
       <Message
         fullwidth
@@ -110,7 +111,7 @@ const InviteToSidebarBlock = ({
 
 interface InviteToLayoutProps {
   listing: RailsSaleListing
-  type: "I2I" | "I2A"
+  type: INVITE_TO_X
   title?: string
   subtitle?: string
   children: React.ReactNode
