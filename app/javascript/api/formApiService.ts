@@ -49,6 +49,38 @@ export const deleteUploadedProofFile = async (
   }).then((response) => response.data)
 }
 
+export type VerifiedAddressResponse = {
+  address: {
+    street1?: string
+    street2?: string
+    city?: string
+    state?: string
+    zip?: string
+    invalid?: boolean
+    error?: string
+    verifications?: {
+      delivery: {
+        success: boolean
+      }
+    }
+  }
+  error?: string
+}
+
+export type Address = {
+  street1?: string
+  street2?: string
+  city?: string
+  state?: string
+  zip?: string
+}
+
+export const locateVerifiedAddress = async (address: Address): Promise<VerifiedAddressResponse> => {
+  return post<VerifiedAddressResponse>("/api/v1/addresses/validate.json", {
+    address,
+  }).then((response) => response.data)
+}
+
 export enum LanguagePrefix {
   English = "English",
   Spanish = "Spanish",

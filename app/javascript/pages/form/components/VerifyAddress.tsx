@@ -1,29 +1,102 @@
-import React from "react"
-import { t } from "@bloom-housing/ui-components"
-import { Button, Heading } from "@bloom-housing/ui-seeds"
+import React, { useState, useEffect } from "react"
+import { useForm, FormProvider } from "react-hook-form"
+import { Form, Field, t } from "@bloom-housing/ui-components"
+import { Button, Card, Heading } from "@bloom-housing/ui-seeds"
 import { CardSection } from "@bloom-housing/ui-seeds/src/blocks/Card"
 import { useFormEngineContext } from "../../../formEngine/formEngineContext"
+import { locateVerifiedAddress } from "../../../api/formApiService"
+import { getFormattedAddress } from "../../../util/formEngineUtil"
+import styles from "./ListingApplyStepWrapper.module.scss"
 
-const VerifyAddress = () => {
-  const formEngineContext = useFormEngineContext()
-  const { handleNextStep, handlePrevStep } = formEngineContext
+interface VerifyAddressProps {
+  fieldNames: {
+    verifiedAddress: string
+  }
+}
+
+const VerifyAddress = ({ fieldNames: { verifiedAddress } }: VerifyAddressProps) => {
+  const { formData, saveFormData, handleNextStep, handlePrevStep } = useFormEngineContext()
+  const formMethods = useForm({
+    mode: "onChange",
+    shouldFocusError: false,
+  })
+  // eslint-disable-next-line @typescript-eslint/unbound-method
+  const { register, handleSubmit, errors } = formMethods
+  const [validatedAddress, setValidatedAddress] = useState(null)
+  const onSubmit = (data: Record<string, unknown>) => {
+    const updatedFormData = {
+      primaryApplicantAddressStreet: validatedAddress.street1,
+      primaryApplicantAddressAptOrUnit: validatedAddress.street2,
+      primaryApplicantAddressCity: validatedAddress.city,
+      primaryApplicantAddressState: validatedAddress.state,
+      primaryApplicantAddressZipcode: validatedAddress.zip,
+    }
+    saveFormData({ ...data, ...updatedFormData })
+    handleNextStep()
+  }
+
+  useEffect(() => {
+    void (async () => {
+      try {
+        const response = await locateVerifiedAddress({
+          street1: formData.primaryApplicantAddressStreet as string,
+          street2: formData.primaryApplicantAddressAptOrUnit as string,
+          city: formData.primaryApplicantAddressCity as string,
+          state: formData.primaryApplicantAddressState as string,
+          zip: formData.primaryApplicantAddressZipcode as string,
+        })
+        if (response.address && !response.address.invalid) {
+          setValidatedAddress({
+            street1: response.address.street1,
+            street2: response.address.street2,
+            city: response.address.city,
+            state: response.address.state,
+            zip: response.address.zip,
+          })
+        }
+      } catch {
+        alert(t("error.alert.badRequest"))
+      }
+    })()
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <>
-      <CardSection>
-        <Button variant="text" onClick={handlePrevStep}>
-          {t("t.back")}
-        </Button>
-      </CardSection>
-      <CardSection>
-        <Heading>VerifyAddress Component</Heading>
-      </CardSection>
-      <CardSection>
-        <Button variant="primary" onClick={() => handleNextStep()}>
-          {t("t.next")}
-        </Button>
-      </CardSection>
-    </>
+    <FormProvider {...formMethods}>
+      <Card>
+        <Card.Header divider="inset">
+          <Heading className={styles["step-title"]}>{t("b2aVerifyAddress.title")}</Heading>
+        </Card.Header>
+        <Form onSubmit={handleSubmit(onSubmit)}>
+          <CardSection>
+            <Field
+              type="radio"
+              name={verifiedAddress}
+              register={register}
+              validation={{
+                required: true,
+              }}
+              error={!!errors?.[verifiedAddress]}
+              errorMessage={t("error.confirmedAddress")}
+            />
+            {getFormattedAddress({
+              street1: validatedAddress?.street1,
+              street2: validatedAddress?.street2,
+              city: validatedAddress?.city,
+              state: validatedAddress?.state,
+              zip: validatedAddress?.zip,
+            })}
+            <Button variant="text" onClick={handlePrevStep}>
+              {t("t.edit")}
+            </Button>
+          </CardSection>
+          <Card.Footer className={styles["step-footer"]}>
+            <Button variant="primary" type="submit">
+              {t("t.next")}
+            </Button>
+          </Card.Footer>
+        </Form>
+      </Card>
+    </FormProvider>
   )
 }
 
