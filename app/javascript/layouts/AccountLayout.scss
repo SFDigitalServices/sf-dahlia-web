@@ -1,10 +1,187 @@
 .account-layout {
   &__content {
-    min-height: 50vh;
+    /* min-height: 50vh; */
   }
 }
 
-// Active navigation indicator - blue left border on the current section
-.account-sidebar__item--active {
-  border-left: 3px solid var(--seeds-color-blue-500, #0077da);
+// ── Sidebar ──
+
+.account-sidebar {
+  padding: 0;
+
+  &__heading {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #4a5568; // gray-700
+    margin-bottom: 0.75rem;
+    padding-left: 0.75rem;
+  }
+
+  &__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  &__link {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.625rem 0.75rem;
+    font-size: 0.875rem;
+    color: #a0aec0; // muted gray for inactive
+    text-decoration: none;
+    border-left: 3px solid transparent;
+    transition: color 0.15s;
+    background: none;
+    border-top: none;
+    border-right: none;
+    border-bottom: none;
+    cursor: pointer;
+    width: 100%;
+    text-align: left;
+    font-family: inherit;
+
+    &:hover {
+      color: #2d3748;
+    }
+
+    &--active {
+      border-left-color: #0077da;
+      color: #1a202c;
+      font-weight: 600;
+    }
+  }
+
+  &__signout {
+    margin-top: 0.25rem;
+  }
+}
+
+// ── Overview content area ──
+
+.overview-content {
+  &__greeting {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #1a202c;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #e2e8f0;
+  }
+
+  &__cards {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  &__signout {
+    text-align: center;
+    padding: 1.25rem 0;
+    border-top: 1px solid #e2e8f0;
+  }
+
+  &__signout-link {
+    background: none;
+    border: none;
+    color: #e53e3e;
+    font-size: 0.875rem;
+    cursor: pointer;
+    padding: 0;
+    font-family: inherit;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+// ── Dashboard card ──
+
+.overview-card {
+  display: flex;
+  align-items: center;
+  padding: 1.25rem 0;
+  border-bottom: 1px solid #e2e8f0;
+  gap: 1rem;
+
+  &__icon {
+    flex-shrink: 0;
+    color: #a0aec0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+  }
+
+  &__divider {
+    width: 3px;
+    align-self: stretch;
+    background-color: #0077da;
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  &__body {
+    flex: 1;
+    min-width: 0;
+  }
+
+  &__title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #1a202c;
+    margin: 0 0 0.25rem;
+  }
+
+  &__description {
+    font-size: 0.8rem;
+    color: #a0aec0;
+    margin: 0;
+    line-height: 1.4;
+  }
+
+  &__action {
+    flex-shrink: 0;
+  }
+
+  &__button {
+    display: inline-block;
+    padding: 0.5rem 1.25rem;
+    font-size: 0.8rem;
+    color: #0077da;
+    border: 1px solid #0077da;
+    border-radius: 4px;
+    text-decoration: none;
+    text-align: center;
+    white-space: nowrap;
+    transition: background-color 0.15s, color 0.15s;
+
+    &:hover {
+      background-color: #0077da;
+      color: #fff;
+    }
+  }
+}
+
+// ── Responsive: stack card layout on mobile ──
+
+@media (max-width: 640px) {
+  .overview-card {
+    flex-wrap: wrap;
+
+    &__action {
+      width: 100%;
+      margin-top: 0.5rem;
+      padding-left: calc(3rem + 3px + 1rem); // icon + divider + gap
+    }
+  }
+
+  .account-sidebar {
+    padding: 1rem;
+    border-bottom: 1px solid #e2e8f0;
+  }
 }

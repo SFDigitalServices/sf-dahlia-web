@@ -25,14 +25,14 @@ const NAV_ITEMS: Array<{
 }> = [
   {
     key: "overview",
-    labelKey: "nav.myDashboard",
+    labelKey: "accountDashboard.overview",
     pathGetter: getMyAccountPath,
     icon: "profile",
     section: "overview",
   },
   {
     key: "applications",
-    labelKey: "nav.myApplications",
+    labelKey: "accountDashboard.applicationAndLotteryResultsNav",
     pathGetter: getMyApplicationsPath,
     icon: "application",
     section: "applications",
@@ -58,11 +58,9 @@ const AccountSidebar = () => {
   }
 
   return (
-    <nav aria-label={t("nav.accountNavigation")} className="account-sidebar bg-white p-4 md:p-6">
-      <h2 className="text-xs font-bold tracking-widest text-gray-700 mb-4">
-        {t("nav.account")}
-      </h2>
-      <ul className="list-none p-0 m-0">
+    <nav aria-label={t("nav.accountNavigation")} className="account-sidebar">
+      <h2 className="account-sidebar__heading">{t("nav.account")}</h2>
+      <ul className="account-sidebar__list">
         {NAV_ITEMS.map((item) => {
           const isActive = activeSection === item.section
           return (
@@ -70,8 +68,8 @@ const AccountSidebar = () => {
               <a
                 href={item.pathGetter()}
                 aria-current={isActive ? "page" : undefined}
-                className={`flex items-center gap-3 px-3 py-2 text-sm text-gray-750 no-underline hover:text-blue-500 ${
-                  isActive ? "account-sidebar__item--active" : ""
+                className={`account-sidebar__link ${
+                  isActive ? "account-sidebar__link--active" : ""
                 }`}
               >
                 <Icon size="medium" symbol={item.icon} />
@@ -84,10 +82,10 @@ const AccountSidebar = () => {
           <button
             type="button"
             onClick={handleSignOut}
-            className="flex items-center gap-3 px-3 py-2 text-sm text-gray-750 bg-transparent border-none cursor-pointer hover:text-blue-500 w-full text-left"
+            className="account-sidebar__link account-sidebar__signout"
           >
-            <Icon size="medium" symbol="close" />
-            <span>{t("nav.signOut")}</span>
+            <Icon size="medium" symbol="arrowBack" />
+            <span>{t("accountDashboard.signOut")}</span>
           </button>
         </li>
       </ul>

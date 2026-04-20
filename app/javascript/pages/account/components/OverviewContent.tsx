@@ -1,6 +1,5 @@
 import React, { useContext } from "react"
-import { Card } from "@bloom-housing/ui-seeds"
-import { LinkButton, t } from "@bloom-housing/ui-components"
+import { Icon, t, type UniversalIconType } from "@bloom-housing/ui-components"
 import {
   getMyApplicationsPath,
   getMyAccountSettingsPath,
@@ -15,6 +14,34 @@ export const getGreeting = (firstName?: string): string => {
   return t("accountDashboard.greetingGeneric")
 }
 
+interface DashboardCardProps {
+  icon: UniversalIconType
+  title: string
+  description: string
+  buttonLabel: string
+  href: string
+}
+
+const DashboardCard = ({ icon, title, description, buttonLabel, href }: DashboardCardProps) => {
+  return (
+    <div className="overview-card">
+      <div className="overview-card__icon">
+        <Icon size="xlarge" symbol={icon} />
+      </div>
+      <div className="overview-card__divider" />
+      <div className="overview-card__body">
+        <h2 className="overview-card__title">{title}</h2>
+        <p className="overview-card__description">{description}</p>
+      </div>
+      <div className="overview-card__action">
+        <a href={href} className="overview-card__button">
+          {buttonLabel}
+        </a>
+      </div>
+    </div>
+  )
+}
+
 const OverviewContent = () => {
   const { profile, signOut } = useContext(UserContext)
 
@@ -27,45 +54,32 @@ const OverviewContent = () => {
 
   return (
     <div className="overview-content">
-      <h1 className="text-2xl md:text-3xl font-bold mb-6">
+      <h1 className="overview-content__greeting">
         {getGreeting(profile?.firstName)}
       </h1>
 
-      <div className="flex flex-col gap-4 mb-6">
-        <Card spacing="md" className="rounded-lg">
-          <Card.Header>
-            <h2 className="text-lg font-bold">
-              {t("accountDashboard.applicationsAndLotteryResults")}
-            </h2>
-          </Card.Header>
-          <Card.Section>
-            <LinkButton href={getMyApplicationsPath()}>
-              {t("accountDashboard.seeApplications")}
-            </LinkButton>
-          </Card.Section>
-        </Card>
-
-        <Card spacing="md" className="rounded-lg">
-          <Card.Header>
-            <h2 className="text-lg font-bold">
-              {t("accountSettings.title.sentenceCase")}
-            </h2>
-          </Card.Header>
-          <Card.Section>
-            <LinkButton href={getMyAccountSettingsPath()}>
-              {t("accountDashboard.editSettings")}
-            </LinkButton>
-          </Card.Section>
-        </Card>
+      <div className="overview-content__cards">
+        <DashboardCard
+          icon="application"
+          title={t("accountDashboard.applicationsAndLotteryResults")}
+          description={t("accountDashboard.applicationsDescription")}
+          buttonLabel={t("accountDashboard.seeApplications")}
+          href={getMyApplicationsPath()}
+        />
+        <DashboardCard
+          icon="settings"
+          title={t("accountSettings.title.sentenceCase")}
+          description={t("accountDashboard.settingsDescription")}
+          buttonLabel={t("accountDashboard.editSettings")}
+          href={getMyAccountSettingsPath()}
+        />
       </div>
 
-      <button
-        type="button"
-        onClick={handleSignOut}
-        className="text-sm text-primary underline bg-transparent border-none cursor-pointer p-0"
-      >
-        {t("accountDashboard.signOutOfAccount")}
-      </button>
+      <div className="overview-content__signout">
+        <button type="button" onClick={handleSignOut} className="overview-content__signout-link">
+          {t("accountDashboard.signOutOfAccount")}
+        </button>
+      </div>
     </div>
   )
 }
