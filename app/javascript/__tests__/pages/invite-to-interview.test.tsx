@@ -106,7 +106,7 @@ describe("Invite to Interview", () => {
         assetPaths={"/"}
         urlParams={{
           type: INVITE_TO_X.INTERVIEW,
-          inviteAction: "yes",
+          act: "yes",
           deadline: "2030-10-10",
           appId: "test-id",
         }}
@@ -122,7 +122,7 @@ describe("Invite to Interview", () => {
         assetPaths={"/"}
         urlParams={{
           type: INVITE_TO_X.INTERVIEW,
-          inviteAction: "yes",
+          act: "yes",
           deadline: "2020-10-10",
           appId: "test-id",
         }}
@@ -137,7 +137,7 @@ describe("Invite to Interview", () => {
         assetPaths={"/"}
         urlParams={{
           type: INVITE_TO_X.INTERVIEW,
-          inviteAction: "yes",
+          act: "yes",
           deadline: "2030-10-10",
           appId: "test-id",
         }}
@@ -153,7 +153,8 @@ describe("Invite to Interview", () => {
         urlParams={{
           type: INVITE_TO_X.INTERVIEW,
           deadline: "2030-10-10",
-          inviteAction: "yes",
+          deadline: "2030-10-10",
+          act: "yes",
           appId: "test-id",
         }}
       />
@@ -171,7 +172,7 @@ describe("Invite to Interview", () => {
         assetPaths={"/"}
         urlParams={{
           type: INVITE_TO_X.INTERVIEW,
-          inviteAction: "no",
+          act: "no",
           deadline: "2030-10-10",
           appId: "test-id",
         }}
@@ -185,7 +186,7 @@ describe("Invite to Interview", () => {
         assetPaths={"/"}
         urlParams={{
           type: INVITE_TO_X.INTERVIEW,
-          inviteAction: "no",
+          act: "no",
           deadline: "2020-10-10",
           appId: "test-id",
         }}
@@ -199,7 +200,7 @@ describe("Invite to Interview", () => {
         assetPaths={"/"}
         urlParams={{
           type: INVITE_TO_X.INTERVIEW,
-          inviteAction: "contact",
+          act: "contact",
           deadline: "2030-10-10",
           appId: "test-id",
         }}

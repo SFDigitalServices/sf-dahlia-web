@@ -99,8 +99,8 @@ describe("Invite to Apply", () => {
         <InviteToPage
           assetPaths={"/"}
           urlParams={{
-            type: INVITE_TO_X.APPLY,
-            inviteAction: "contact",
+            type: "I2A",
+            act: "contact",
             deadline: mockPastDeadline,
           }}
         />
@@ -120,7 +120,7 @@ describe("Invite to Apply", () => {
           urlParams={{
             type: INVITE_TO_X.APPLY,
             deadline: mockFutureDeadline,
-            inviteAction: "no",
+            act: "no",
             appId: "0000",
           }}
         />
@@ -148,7 +148,7 @@ describe("Invite to Apply", () => {
           urlParams={{
             type: INVITE_TO_X.APPLY,
             deadline: mockFutureDeadline,
-            inviteAction: "contact",
+            act: "contact",
             appId: "0000",
           }}
         />
@@ -185,7 +185,7 @@ describe("Invite to Apply", () => {
           urlParams={{
             type: INVITE_TO_X.APPLY,
             deadline: mockPastDeadline,
-            inviteAction: "yes",
+            act: "yes",
             appId: "0000",
           }}
         />
@@ -200,7 +200,7 @@ describe("Invite to Apply", () => {
           urlParams={{
             type: INVITE_TO_X.APPLY,
             deadline: mockFutureDeadline,
-            inviteAction: "yes",
+            act: "yes",
           }}
         />
       )
@@ -220,7 +220,7 @@ describe("Invite to Apply", () => {
           urlParams={{
             type: INVITE_TO_X.APPLY,
             deadline: mockFutureDeadline,
-            inviteAction: "yes",
+            act: "yes",
             appId: "a0o123",
           }}
         />
@@ -245,7 +245,7 @@ describe("Invite to Apply", () => {
           urlParams={{
             type: INVITE_TO_X.APPLY,
             deadline: mockFutureDeadline,
-            inviteAction: "yes",
+            act: "yes",
             appId: "a0o123",
           }}
         />
@@ -267,7 +267,7 @@ describe("Invite to Apply", () => {
           urlParams={{
             type: INVITE_TO_X.APPLY,
             deadline: mockFutureDeadline,
-            inviteAction: "yes",
+            act: "yes",
           }}
         />
       )

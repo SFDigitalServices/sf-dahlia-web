@@ -19,7 +19,7 @@ import { isDeadlinePassed } from "../../util/listingUtil"
 interface UrlParams {
   type?: INVITE_TO_X
   deadline?: string
-  inviteAction?: "yes" | "no" | "contact" | "submit" | "appointment"
+  act?: "yes" | "no" | "contact" | "submit" | "appointment"
   appId?: string
   url?: string
 }
@@ -34,7 +34,7 @@ interface HomePageProps {
 }
 
 const InviteToPage = ({
-  urlParams: { type, deadline, inviteAction, appId, url },
+  urlParams: { type, deadline, act, appId, url },
   submitPreviewLinkTokenParam,
   documentsPath,
 }: HomePageProps) => {
@@ -80,10 +80,10 @@ const InviteToPage = ({
 
     if (documentsPath) return <InviteToInterviewDocuments listing={listing} />
     // no action from applicant - preview submit page
-    if (!inviteAction) {
+    if (!act) {
       return <InviteToInterviewNextSteps listing={listing} deadline={deadline} appId={appId} />
     }
-    if (inviteAction === "no") {
+    if (act === "no") {
       return (
         <InviteToWithdrawn
           type={type}
@@ -93,11 +93,11 @@ const InviteToPage = ({
         />
       )
     }
-    if (inviteAction === "yes") {
+    if (act === "yes") {
       return <InviteToInterviewNextSteps listing={listing} deadline={deadline} appId={appId} />
     }
     if (isDeadlinePassed(deadline)) return <InviteToDeadlinePassed listing={listing} />
-    if (inviteAction === "contact") {
+    if (act === "contact") {
       return (
         <InviteToContactMeLater
           type={type}
@@ -116,7 +116,7 @@ const InviteToPage = ({
 
   if (documentsPath) return <InviteToApplyDocuments listing={listing} />
   // no action from applicant - preview submit page
-  if (!inviteAction) {
+  if (!act) {
     return (
       <InviteToApplyNextSteps
         listing={listing}
@@ -126,7 +126,7 @@ const InviteToPage = ({
       />
     )
   }
-  if (inviteAction === "no") {
+  if (act === "no") {
     return (
       <InviteToWithdrawn
         type={type}
@@ -136,7 +136,7 @@ const InviteToPage = ({
       />
     )
   }
-  if (inviteAction === "yes") {
+  if (act === "yes") {
     return (
       <InviteToApplyNextSteps
         listing={listing}
@@ -147,7 +147,7 @@ const InviteToPage = ({
     )
   }
   if (isDeadlinePassed(deadline)) return <InviteToDeadlinePassed listing={listing} />
-  if (inviteAction === "contact") {
+  if (act === "contact") {
     return (
       <InviteToContactMeLater
         type={type}

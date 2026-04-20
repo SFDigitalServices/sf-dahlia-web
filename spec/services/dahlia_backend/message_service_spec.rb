@@ -277,8 +277,8 @@ RSpec.describe DahliaBackend::MessageService do
 
     context 'with invalid response type' do
       it 'returns nil for invalid response' do
-        result = service.send_invite_to_apply_response(deadline, application_id, application_number, 'invalid', nil,
-                                                       listing_id)
+        result = service.send_invite_to_response(deadline, application_id, application_number, 'invalid', nil,
+                                                 listing_id)
         expect(result).to be_nil
       end
     end
@@ -289,8 +289,8 @@ RSpec.describe DahliaBackend::MessageService do
       end
 
       it 'returns nil' do
-        result = service.send_invite_to_apply_response(deadline, application_id, application_number, 'yes', 'yes',
-                                                       listing_id)
+        result = service.send_invite_to_response(deadline, application_id, application_number, 'yes', 'yes',
+                                                 listing_id)
         expect(result).to be_nil
       end
     end
@@ -301,8 +301,8 @@ RSpec.describe DahliaBackend::MessageService do
       end
 
       it 'returns nil' do
-        result = service.send_invite_to_apply_response(deadline, application_id, application_number, 'yes', 'yes',
-                                                       listing_id)
+        result = service.send_invite_to_response(deadline, application_id, application_number, 'yes', 'yes',
+                                                 listing_id)
         expect(result).to be_nil
       end
     end
@@ -314,8 +314,8 @@ RSpec.describe DahliaBackend::MessageService do
       end
 
       it 'returns nil' do
-        result = service.send_invite_to_apply_response(deadline, application_id, application_number, 'yes', 'yes',
-                                                       listing_id)
+        result = service.send_invite_to_response(deadline, application_id, application_number, 'yes', 'yes',
+                                                 listing_id)
         expect(result).to be_nil
       end
     end
