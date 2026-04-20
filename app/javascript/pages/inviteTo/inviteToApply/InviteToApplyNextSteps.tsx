@@ -1,55 +1,27 @@
 import React, { useCallback, useState } from "react"
 import { faPrint } from "@fortawesome/free-solid-svg-icons"
-import {
-  t,
-  Icon,
-  IconFillColors,
-  SidebarBlock,
-  PageHeader,
-  Mobile,
-  Desktop,
-} from "@bloom-housing/ui-components"
+import { t, Icon, IconFillColors, Mobile } from "@bloom-housing/ui-components"
 import { Heading, Button, Message, LoadingState } from "@bloom-housing/ui-seeds"
 import RailsSaleListing from "../../../api/types/rails/listings/RailsSaleListing"
-import { getListingAddressString, isDeadlinePassed } from "../../../util/listingUtil"
+import { isDeadlinePassed } from "../../../util/listingUtil"
 import {
-  getTranslatedString,
   renderInlineMarkup,
   getCurrentLanguage,
   getBMRApplicationUrl,
   localizedFormat,
 } from "../../../util/languageUtil"
 import styles from "../invite-to.module.scss"
-import Layout from "../../../layouts/Layout"
 import { ConfigContext } from "../../../lib/ConfigContext"
-import InviteToLeasingAgentInfo from "../InviteToLeasingAgentInfo"
-import { recordResponse } from "../../../api/inviteToApplyApiService"
+import InviteToLayout from "../InviteToLayout"
+import { recordResponse } from "../../../api/inviteToApiService"
 import InviteToGetHelp from "../InviteToGetHelp"
+import InviteToLeasingAgentInfo from "../InviteToLeasingAgentInfo"
 
-interface InviteToApplySubmitYourInfoProps {
+interface InviteToApplyNextStepsProps {
   listing: RailsSaleListing | null
   deadline: string
   appId?: string
   fileUploadUrl?: string
-}
-
-const DeadlineBanner = ({ deadline }: { deadline: string }) => {
-  return (
-    <Message
-      fullwidth
-      variant={isDeadlinePassed(deadline) ? "alert" : "warn"}
-      customIcon={<Icon symbol="clock" size="medium" />}
-    >
-      <strong>
-        {isDeadlinePassed(deadline)
-          ? t("inviteToApplyPage.submitYourInfo.deadlinePassed")
-          : t("inviteToApplyPage.submitYourInfo.submitByDeadline")}
-      </strong>
-      <span>
-        {t("inviteToApplyPage.submitYourInfo.deadline", { day: localizedFormat(deadline, "ll") })}
-      </span>
-    </Message>
-  )
 }
 
 const PreparingYourApplication = () => {
@@ -219,82 +191,35 @@ const WhatHappensNext = () => {
   )
 }
 
-const SubmitYourInfoHeader = ({ listing }: { listing: RailsSaleListing }) => {
-  return (
-    <div className={styles.submitYourInfoSection}>
-      <img
-        src={listing?.Listing_Images?.[0]?.Image_URL}
-        alt={listing?.Listing_Images?.[0]?.Image_Description}
-      />
-      <strong>{listing?.Building_Name_for_Process}</strong>
-      <p>{listing && getListingAddressString(listing, false)}</p>
-      <a href={`/${getCurrentLanguage()}/listings/${listing?.Id}`}>
-        {t("inviteToApplyPage.submitYourInfo.p1")}
-      </a>
-    </div>
-  )
-}
-
-const SubmitYourInfoSidebarBlock = ({ listing }: { listing: RailsSaleListing }) => {
-  return (
-    <SidebarBlock title={t("contactAgent.contact")} priority={2}>
-      <Heading size="lg" priority={3}>
-        {" "}
-        {t("inviteToApplyPage.submitYourInfo.sidebar")}
-      </Heading>
-      <InviteToLeasingAgentInfo listing={listing} />
-      <Heading size="sm" priority={3}>
-        {t("contactAgent.officeHours.seeTheUnit")}
-      </Heading>
-      <p>{getTranslatedString(listing?.Office_Hours, "Office_Hours__c", listing?.translations)}</p>
-    </SidebarBlock>
-  )
-}
-
-const InviteToApplySubmitYourInfo = ({
+const InviteToApplyNextSteps = ({
   listing,
   deadline,
   appId,
   fileUploadUrl,
-}: InviteToApplySubmitYourInfoProps) => {
+}: InviteToApplyNextStepsProps) => {
   const { getAssetPath } = React.useContext(ConfigContext)
   const titleName = listing?.Building_Name_for_Process || listing?.Name
   return (
-    <Layout>
-      <PageHeader
-        title={t("inviteToApplyPage.submitYourInfo.title", { listingName: titleName })}
-        inverse
-        backgroundImage={getAssetPath("bg@1200.jpg")}
-      />
-      <div className={styles.submitYourInfo}>
-        <div className={styles.submitYourInfoPage}>
-          <main className={styles.submitYourInfoMain}>
-            <SubmitYourInfoHeader listing={listing} />
-            <DeadlineBanner deadline={deadline} />
-            <PreparingYourApplication />
-            <WhatToDo
-              listing={listing}
-              deadline={deadline}
-              appId={appId}
-              fileUploadUrl={fileUploadUrl}
-            />
-            <Mobile>
-              <Heading size="lg" priority={3}>
-                {t("inviteToApplyPage.submitYourInfo.sidebar")}
-              </Heading>
-              <InviteToLeasingAgentInfo listing={listing} />
-            </Mobile>
-            <WhatHappensNext />
-          </main>
-          <Desktop>
-            <aside className={styles.submitYourInfoSidebar}>
-              <SubmitYourInfoSidebarBlock listing={listing} />
-            </aside>
-          </Desktop>
-        </div>
-      </div>
-    </Layout>
+    <InviteToLayout
+      listing={listing}
+      type="I2A"
+      title={t("inviteToApplyPage.submitYourInfo.title", { listingName: titleName })}
+      headerText="inviteToApplyPage.submitYourInfo.p1"
+      sidebarText="inviteToApplyPage.submitYourInfo.sidebar"
+      getAssetPath={getAssetPath}
+      deadline={deadline}
+    >
+      <PreparingYourApplication />
+      <WhatToDo listing={listing} deadline={deadline} appId={appId} fileUploadUrl={fileUploadUrl} />
+      <Mobile>
+        <Heading size="lg" priority={3}>
+          {t("inviteToApplyPage.submitYourInfo.sidebar")}
+        </Heading>
+        <InviteToLeasingAgentInfo listing={listing} />
+      </Mobile>
+      <WhatHappensNext />
+    </InviteToLayout>
   )
 }
 
-export default InviteToApplySubmitYourInfo
+export default InviteToApplyNextSteps

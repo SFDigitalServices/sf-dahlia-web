@@ -4,7 +4,7 @@ import { faEnvelope } from "@fortawesome/free-solid-svg-icons"
 import RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
 import styles from "./invite-to.module.scss"
 
-const InviteToApplyLeasingAgentInfo = ({ listing }: { listing: RailsSaleListing }) => (
+const InviteToLeasingAgentInfo = ({ listing }: { listing: RailsSaleListing }) => (
   <span>
     <p>{listing?.Leasing_Agent_Name}</p>
     <p className="field-note">{t("inviteToApplyPage.leasingAgent")}</p>
@@ -19,4 +19,4 @@ const InviteToApplyLeasingAgentInfo = ({ listing }: { listing: RailsSaleListing 
   </span>
 )
 
-export default InviteToApplyLeasingAgentInfo
+export default InviteToLeasingAgentInfo

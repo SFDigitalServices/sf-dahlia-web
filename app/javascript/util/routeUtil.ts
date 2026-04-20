@@ -160,11 +160,12 @@ export const generateSubmitLink = (
   appId: string,
   deadline: string,
   listingId: string,
+  type: string,
   submitPreviewLinkTokenParam?: string
 ) => {
   const submitLinkQueryStr = submitPreviewLinkTokenParam
     ? `t=${submitPreviewLinkTokenParam}`
-    : new URLSearchParams({ appId, deadline }).toString()
+    : new URLSearchParams({ appId, deadline, type }).toString()
   return `/${getCurrentLanguage()}/listings/${listingId}/next-steps?${submitLinkQueryStr}`
 }
 

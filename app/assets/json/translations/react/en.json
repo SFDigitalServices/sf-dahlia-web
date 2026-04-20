@@ -903,7 +903,7 @@
   "inviteToInterviewPage.leasingAgent.p2": "We sent you an email confirming your answer. Follow the link in your email if you need to change it.",
   "inviteToInterviewPage.leasingAgent.p3": "Or, contact the leasing agent:",
   "inviteToInterviewPage.submitYourInfo.deadline": "%{day} at 11:59 pm Pacific Time",
-  "inviteToInterviewPage.submitYourInfo.deadlineInfo": "<strong>The deadline to schedule your appointment has passed:</strong> %{day} at 11:59 pm Pacific Time. If you are still interested in an apartment at %{listingName}, contact the leasing agent.",
+  "inviteToInterviewPage.submitYourInfo.deadlineInfo": "<strong>The deadline to schedule your appointment has passed:</strong> %{day} at 11:59 pm Pacific Time.\n\nIf you are still interested in an apartment at %{listingName}, contact the leasing agent.",
   "inviteToInterviewPage.submitYourInfo.deadlinePassed": "The deadline to schedule your appointment has passed: ",
   "inviteToInterviewPage.submitYourInfo.prepare.p1": "If you already work with a housing counselor, contact them for help with your application.",
   "inviteToInterviewPage.submitYourInfo.prepare.p2": "Otherwise, <a target='_blank' href='https://www.homesanfrancisco.org'>HomeSF</a> can connect you with someone who can help.",
