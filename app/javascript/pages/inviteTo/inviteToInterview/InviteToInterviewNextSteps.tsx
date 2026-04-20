@@ -30,7 +30,7 @@ const WhatToDo = ({
 }) => {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const handleSubmitClick = useCallback(() => {
-    const url = listing?.Leaseup_Appointment_Scheduling_URL
+    const url = listing.Leaseup_Appointment_Scheduling_URL
     void (async () => {
       setIsSubmitting(true)
       window.open(url, "_blank")
@@ -84,7 +84,7 @@ const WhatToDo = ({
             variant="primary-outlined"
             onClick={() =>
               window.open(
-                `/${getCurrentLanguage()}/listings/${listing?.Id}/next-steps/documents`,
+                `/${getCurrentLanguage()}/listings/${listing.Id}/next-steps/documents`,
                 "_blank"
               )
             }

@@ -107,6 +107,7 @@ const InviteToPage = ({
         />
       )
     }
+    return null
   }
 
   /* I2A - Invite to Apply pages */

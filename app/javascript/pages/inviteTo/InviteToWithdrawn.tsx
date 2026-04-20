@@ -6,7 +6,7 @@ import { renderMarkup, localizedFormat } from "../../util/languageUtil"
 import RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
 import FormLayout from "../../layouts/FormLayout"
 import InviteToApplyHeader from "./InviteToHeader"
-import InviteToApplyLeasingAgentInfo from "./InviteToLeasingAgentInfo"
+import InviteToLeasingAgentInfo from "./InviteToLeasingAgentInfo"
 import { isDeadlinePassed } from "../../util/listingUtil"
 import { INVITE_TO_X } from "../../modules/constants"
 
@@ -40,7 +40,7 @@ const InviteToWithdrawn = ({
               </Heading>
               <p>{t("inviteToApplyPage.leasingAgent.p2")}</p>
               <p>{t("inviteToApplyPage.leasingAgent.p3")}</p>
-              <InviteToApplyLeasingAgentInfo listing={listing} />
+              <InviteToLeasingAgentInfo listing={listing} />
               {type === INVITE_TO_X.APPLY &&
                 renderMarkup(
                   `${t("inviteToApplyPage.submitYourInfo", {

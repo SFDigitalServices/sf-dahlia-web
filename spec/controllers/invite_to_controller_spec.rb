@@ -85,17 +85,16 @@ RSpec.describe InviteToController do
                                                       })
       end
 
-      # TODO: update deprecated I2A pilot 
-      # it 'calls record_response with correct parameters' do
-      #   expect(DahliaBackend::MessageService).to have_received(:send_invite_to_apply_response).with(
-      #     deadline,
-      #     application_number,
-      #     nil,
-      #     response_value,
-      #     nil,
-      #     listing_id,
-      #   )
-      # end
+      it 'calls record_response with correct parameters' do
+        expect(DahliaBackend::MessageService).to have_received(:send_invite_to_apply_response).with(
+          deadline,
+          application_number,
+          nil,
+          response_value,
+          nil,
+          listing_id,
+        )
+      end
     end
 
     context 'when DahliaBackend::MessageService raises an error' do
@@ -131,17 +130,16 @@ RSpec.describe InviteToController do
         expect(assigns(:invite_to_props)).to have_key(:submitPreviewLinkTokenParam)
       end
 
-      # TODO: update deprecated I2A pilot 
-      # it 'redirects to the listing details page if token is blank' do
-      #   get :index, params: { id: listing_id }
-      #   expect(response).to redirect_to("/listings/#{listing_id}")
-      # end
+      it 'redirects to the listing details page if token is blank' do
+        get :index, params: { id: listing_id }
+        expect(response).to redirect_to("/listings/#{listing_id}")
+      end
 
-      # it 'redirects to the listing details page if token is invalid' do
-      #   allow(JWT).to receive(:decode).and_raise(JWT::DecodeError)
-      #   get :index, params: { id: listing_id, t: 'invalid_test_token' }
-      #   expect(response).to redirect_to('/')
-      # end
+      it 'redirects to the listing details page if token is invalid' do
+        allow(JWT).to receive(:decode).and_raise(JWT::DecodeError)
+        get :index, params: { id: listing_id, t: 'invalid_test_token' }
+        expect(response).to redirect_to('/')
+      end
     end
   end
 
