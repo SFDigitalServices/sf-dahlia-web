@@ -1,6 +1,7 @@
 # Invite to X controller
 class InviteToController < ApplicationController
   def index
+    # TODO: deprecated I2A pilot
     # decoded_params = decode_token(params[:t])
     # if decoded_params.is_a?(String)
     #   redirect_to decoded_params
