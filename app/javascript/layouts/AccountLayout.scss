@@ -1,6 +1,5 @@
 .account-layout {
   &__content {
-    /* min-height: 50vh; */
   }
 }
 
@@ -8,13 +7,14 @@
 
 .account-sidebar {
   padding: 0;
+  border-right: 1px solid #e2e8f0;
 
   &__heading {
     font-size: 0.7rem;
     font-weight: 700;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: #4a5568; // gray-700
+    color: #4a5568;
     margin-bottom: 0.75rem;
     padding-left: 0.75rem;
   }
@@ -31,7 +31,7 @@
     gap: 0.75rem;
     padding: 0.625rem 0.75rem;
     font-size: 0.875rem;
-    color: #a0aec0; // muted gray for inactive
+    color: #a0aec0;
     text-decoration: none;
     border-left: 3px solid transparent;
     transition: color 0.15s;
@@ -63,12 +63,20 @@
 // ── Overview content area ──
 
 .overview-content {
+  // Remove padding from the content wrapper so dividers go edge-to-edge.
+  // Inner elements get their own horizontal padding.
+  margin: -1.5rem -2rem; // counteract the AccountLayout p-6 md:p-8
+
+  @media (min-width: 768px) {
+    margin: -2rem;
+  }
+
   &__greeting {
     font-size: 1.75rem;
     font-weight: 700;
     color: #1a202c;
-    margin-bottom: 1.5rem;
-    padding-bottom: 1rem;
+    padding: 1.5rem 2rem 1rem;
+    margin: 0;
     border-bottom: 1px solid #e2e8f0;
   }
 
@@ -80,8 +88,10 @@
 
   &__signout {
     text-align: center;
-    padding: 1.25rem 0;
-    border-top: 1px solid #e2e8f0;
+    padding: 1.25rem 2rem;
+    background-color: #f7fafc;
+    border-bottom-left-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
   }
 
   &__signout-link {
@@ -104,7 +114,7 @@
 .overview-card {
   display: flex;
   align-items: center;
-  padding: 1.25rem 0;
+  padding: 1.25rem 2rem;
   border-bottom: 1px solid #e2e8f0;
   gap: 1rem;
 
@@ -176,12 +186,17 @@
     &__action {
       width: 100%;
       margin-top: 0.5rem;
-      padding-left: calc(3rem + 3px + 1rem); // icon + divider + gap
+      padding-left: calc(3rem + 3px + 1rem);
     }
   }
 
   .account-sidebar {
     padding: 1rem;
+    border-right: none;
     border-bottom: 1px solid #e2e8f0;
+  }
+
+  .overview-content {
+    margin: -1.5rem;
   }
 }
