@@ -53,6 +53,16 @@ generatedWebpackConfig.plugins.unshift(
 // const ignoreWarningsConfig = {
 //   ignoreWarnings: [/Module not found: Error: Can't resolve 'react-dom\/client'/]
 // }
-const base = () => merge({}, generatedWebpackConfig, commonOptions)
+const cacheConfig = {
+  cache: {
+    type: "filesystem",
+    cacheDirectory: require("path").resolve(__dirname, "../../tmp/webpacker/cache"),
+    buildDependencies: {
+      config: [__filename],
+    },
+  },
+}
+
+const base = () => merge({}, generatedWebpackConfig, commonOptions, cacheConfig)
 
 module.exports = base
