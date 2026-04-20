@@ -37,14 +37,14 @@ class InviteToController < ApplicationController
     url_params = {
       type: decoded_params['type'],
       deadline: decoded_params['deadline'],
-      inviteAction: decoded_params['inviteAction'] || decoded_params['response'],
+      act: decoded_params['act'] || decoded_params['response'],
       appId: decoded_params['appId'] || decoded_params['applicationNumber'],
     }
 
     {
       assetPaths: static_asset_paths,
       urlParams: url_params,
-      submitPreviewLinkTokenParam: encode_token(url_params.except(:inviteAction, :response)),
+      submitPreviewLinkTokenParam: encode_token(url_params.except(:act, :response)),
     }.compact
   end
 
@@ -52,7 +52,7 @@ class InviteToController < ApplicationController
     deadline = decoded_params['deadline']
     response = decoded_params['response']
     application_number = decoded_params['applicationNumber']
-    invite_action = decoded_params['inviteAction']
+    invite_action = decoded_params['act']
     app_id = decoded_params['appId']
 
     if (invite_action.blank? && response.blank?) || (deadline && deadline_has_passed?(deadline)) || language_change?
@@ -61,7 +61,7 @@ class InviteToController < ApplicationController
         "deadline=#{deadline}, " \
         "app_id=#{app_id}, " \
         "application_number=#{application_number}, " \
-        "inviteAction=#{invite_action.inspect}, " \
+        "act=#{invite_action.inspect}, " \
         "response=#{response.inspect}",
       )
       return
@@ -72,7 +72,7 @@ class InviteToController < ApplicationController
       "deadline=#{deadline}, " \
       "app_id=#{app_id}, " \
       "application_number=#{application_number}, " \
-      "inviteAction=#{invite_action}, " \
+      "act=#{invite_action}, " \
       "response=#{response}",
     )
 
@@ -99,7 +99,7 @@ class InviteToController < ApplicationController
     #     "data" => {
     #       "type" => "I2I",
     #       "deadline" => "1999-12-31",
-    #       "inviteAction" => "yes",
+    #       "act" => "yes",
     #       "appId" => "12345678"
     #     },
     #     "iat" => 946512000
