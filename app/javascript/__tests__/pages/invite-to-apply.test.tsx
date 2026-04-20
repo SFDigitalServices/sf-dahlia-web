@@ -99,7 +99,7 @@ describe("Invite to Apply", () => {
         <InviteToPage
           assetPaths={"/"}
           urlParams={{
-            type: "I2A",
+            type: INVITE_TO_X.APPLY,
             act: "contact",
             deadline: mockPastDeadline,
           }}

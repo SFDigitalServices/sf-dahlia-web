@@ -1,11 +1,11 @@
 # Invite to X controller
 class InviteToController < ApplicationController
   def index
-    decoded_params = decode_token(params[:t])
-    if decoded_params.is_a?(String)
-      redirect_to decoded_params
-      return
-    end
+    # decoded_params = decode_token(params[:t])
+    # if decoded_params.is_a?(String)
+    #   redirect_to decoded_params
+    #   return
+    # end
     decoded_params ||= params
     @invite_to_props = props(decoded_params)
     # Get file upload URL for application
@@ -76,7 +76,7 @@ class InviteToController < ApplicationController
       "response=#{response}",
     )
 
-    DahliaBackend::MessageService.send_invite_to_apply_response(
+    DahliaBackend::MessageService.send_invite_to_response(
       deadline,
       app_id,
       application_number,

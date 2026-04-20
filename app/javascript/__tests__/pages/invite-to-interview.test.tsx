@@ -153,7 +153,6 @@ describe("Invite to Interview", () => {
         urlParams={{
           type: INVITE_TO_X.INTERVIEW,
           deadline: "2030-10-10",
-          deadline: "2030-10-10",
           act: "yes",
           appId: "test-id",
         }}

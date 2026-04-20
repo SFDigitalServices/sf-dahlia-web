@@ -9,7 +9,7 @@ describe Api::V1::InviteToResponseController do
   let(:listing_id) { 'a0W123' }
   describe '#record_response' do
     before do
-      allow(DahliaBackend::MessageService).to receive(:send_invite_to_apply_response)
+      allow(DahliaBackend::MessageService).to receive(:send_invite_to_response)
     end
 
     it 'passes params to messaging service for valid params' do
@@ -24,7 +24,7 @@ describe Api::V1::InviteToResponseController do
       },
     }
       expect(DahliaBackend::MessageService)
-        .to have_received(:send_invite_to_apply_response).with(
+        .to have_received(:send_invite_to_response).with(
           deadline,
           application_id,
           application_id,
@@ -47,7 +47,7 @@ describe Api::V1::InviteToResponseController do
       },
     }
       expect(DahliaBackend::MessageService)
-        .not_to have_received(:send_invite_to_apply_response)
+        .not_to have_received(:send_invite_to_response)
       expect(response).to be_ok
     end
 
@@ -63,7 +63,7 @@ describe Api::V1::InviteToResponseController do
       },
     }
       expect(DahliaBackend::MessageService)
-        .not_to have_received(:send_invite_to_apply_response)
+        .not_to have_received(:send_invite_to_response)
       expect(response).not_to be_ok
     end
   end

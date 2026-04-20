@@ -43,7 +43,7 @@ RSpec.describe InviteToController do
     allow(ENV).to receive(:fetch).with('SALESFORCE_API_VERSION',
                                        '61.0').and_return('61.0')
     allow(ENV).to receive(:fetch).with('SALESFORCE_PROXY_URI', nil).and_return(nil)
-    allow(DahliaBackend::MessageService).to receive(:send_invite_to_apply_response)
+    allow(DahliaBackend::MessageService).to receive(:send_invite_to_response)
     allow(Rails.logger).to receive(:info)
     allow(controller).to receive(:encode_token).and_return(fixed_token)
   end
@@ -101,7 +101,7 @@ RSpec.describe InviteToController do
     context 'when DahliaBackend::MessageService raises an error' do
       before do
         allow(Force::ShortFormService).to receive(:get).with(application_number).and_return({ 'uploadURL' => 'test-upload-url' })
-        allow(DahliaBackend::MessageService).to receive(:send_invite_to_apply_response).and_raise(
+        allow(DahliaBackend::MessageService).to receive(:send_invite_to_response).and_raise(
           StandardError, 'API Error'
         )
       end
@@ -168,7 +168,7 @@ RSpec.describe InviteToController do
     end
 
     it 'does not call record_response' do
-      expect(DahliaBackend::MessageService).not_to have_received(:send_invite_to_apply_response)
+      expect(DahliaBackend::MessageService).not_to have_received(:send_invite_to_response)
     end
   end
 
