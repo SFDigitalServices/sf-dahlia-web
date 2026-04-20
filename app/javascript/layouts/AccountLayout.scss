@@ -1,0 +1,10 @@
+.account-layout {
+  &__content {
+    min-height: 50vh;
+  }
+}
+
+// Active navigation indicator - blue left border on the current section
+.account-sidebar__item--active {
+  border-left: 3px solid var(--seeds-color-blue-500, #0077da);
+}
