@@ -9,6 +9,7 @@ import { localizedFormat } from "../../util/languageUtil"
 import { getListing } from "../../api/listingApiService"
 import { recordResponse } from "../../api/inviteToApiService"
 import { ConfigContext } from "../../lib/ConfigContext"
+import { INVITE_TO_X } from "../../modules/constants"
 
 jest.mock("../../api/listingApiService")
 jest.mock("../../api/inviteToApiService", () => ({
@@ -98,7 +99,7 @@ describe("Invite to Apply", () => {
         <InviteToPage
           assetPaths={"/"}
           urlParams={{
-            type: "I2A",
+            type: INVITE_TO_X.APPLY,
             act: "contact",
             deadline: mockPastDeadline,
           }}
@@ -117,7 +118,7 @@ describe("Invite to Apply", () => {
         <InviteToPage
           assetPaths={"/"}
           urlParams={{
-            type: "I2A",
+            type: INVITE_TO_X.APPLY,
             deadline: mockFutureDeadline,
             act: "no",
             appId: "0000",
@@ -145,7 +146,7 @@ describe("Invite to Apply", () => {
         <InviteToPage
           assetPaths={"/"}
           urlParams={{
-            type: "I2A",
+            type: INVITE_TO_X.APPLY,
             deadline: mockFutureDeadline,
             act: "contact",
             appId: "0000",
@@ -182,7 +183,7 @@ describe("Invite to Apply", () => {
         <InviteToPage
           assetPaths={"/"}
           urlParams={{
-            type: "I2A",
+            type: INVITE_TO_X.APPLY,
             deadline: mockPastDeadline,
             act: "yes",
             appId: "0000",
@@ -197,7 +198,7 @@ describe("Invite to Apply", () => {
         <InviteToPage
           assetPaths={"/"}
           urlParams={{
-            type: "I2A",
+            type: INVITE_TO_X.APPLY,
             deadline: mockFutureDeadline,
             act: "yes",
           }}
@@ -217,7 +218,7 @@ describe("Invite to Apply", () => {
         <InviteToPage
           assetPaths={"/"}
           urlParams={{
-            type: "I2A",
+            type: INVITE_TO_X.APPLY,
             deadline: mockFutureDeadline,
             act: "yes",
             appId: "a0o123",
@@ -242,7 +243,7 @@ describe("Invite to Apply", () => {
         <InviteToPage
           assetPaths={"/"}
           urlParams={{
-            type: "I2A",
+            type: INVITE_TO_X.APPLY,
             deadline: mockFutureDeadline,
             act: "yes",
             appId: "a0o123",
@@ -264,7 +265,7 @@ describe("Invite to Apply", () => {
         <InviteToPage
           assetPaths={"/"}
           urlParams={{
-            type: "I2A",
+            type: INVITE_TO_X.APPLY,
             deadline: mockFutureDeadline,
             act: "yes",
           }}
@@ -285,7 +286,7 @@ describe("Invite to Apply", () => {
           assetPaths={"/"}
           documentsPath={true}
           urlParams={{
-            type: "I2A",
+            type: INVITE_TO_X.APPLY,
           }}
         />
       )

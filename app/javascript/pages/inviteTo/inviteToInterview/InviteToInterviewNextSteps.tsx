@@ -11,6 +11,7 @@ import InviteToLayout from "../InviteToLayout"
 import InviteToGetHelp from "../InviteToGetHelp"
 import InviteToLeasingAgentInfo from "../InviteToLeasingAgentInfo"
 import { recordResponse } from "../../../api/inviteToApiService"
+import { INVITE_TO_X } from "../../../modules/constants"
 
 interface InviteToInterviewNextStepsProps {
   listing: RailsSaleListing
@@ -29,7 +30,7 @@ const WhatToDo = ({
 }) => {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const handleSubmitClick = useCallback(() => {
-    const url = listing?.Leaseup_Appointment_Scheduling_URL
+    const url = listing.Leaseup_Appointment_Scheduling_URL
     void (async () => {
       setIsSubmitting(true)
       window.open(url, "_blank")
@@ -42,7 +43,7 @@ const WhatToDo = ({
             deadline,
             action: "submit",
             response: "submit",
-            type: "I2I",
+            type: INVITE_TO_X.INTERVIEW,
           })
         }
         setIsSubmitting(false)
@@ -83,7 +84,7 @@ const WhatToDo = ({
             variant="primary-outlined"
             onClick={() =>
               window.open(
-                `/${getCurrentLanguage()}/listings/${listing?.Id}/next-steps/documents`,
+                `/${getCurrentLanguage()}/listings/${listing.Id}/next-steps/documents`,
                 "_blank"
               )
             }
@@ -144,7 +145,7 @@ const InviteToInterviewNextSteps = ({
   return (
     <InviteToLayout
       listing={listing}
-      type={"I2I"}
+      type={INVITE_TO_X.INTERVIEW}
       subtitle={t("inviteToInterviewPage.submitYourInfo.subtitle")}
       getAssetPath={getAssetPath}
       headerText="inviteToInterviewPage.submitYourInfo.seeApartment"

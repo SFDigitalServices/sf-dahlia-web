@@ -131,17 +131,16 @@ RSpec.describe InviteToController do
         expect(assigns(:invite_to_props)).to have_key(:submitPreviewLinkTokenParam)
       end
 
-      # TODO: update deprecated I2A pilot 
-      # it 'redirects to the listing details page if token is blank' do
-      #   get :index, params: { id: listing_id }
-      #   expect(response).to redirect_to("/listings/#{listing_id}")
-      # end
+      it 'redirects to the listing details page if token is blank' do
+        get :index, params: { id: listing_id }
+        expect(response).to redirect_to("/listings/#{listing_id}")
+      end
 
-      # it 'redirects to the listing details page if token is invalid' do
-      #   allow(JWT).to receive(:decode).and_raise(JWT::DecodeError)
-      #   get :index, params: { id: listing_id, t: 'invalid_test_token' }
-      #   expect(response).to redirect_to('/')
-      # end
+      it 'redirects to the listing details page if token is invalid' do
+        allow(JWT).to receive(:decode).and_raise(JWT::DecodeError)
+        get :index, params: { id: listing_id, t: 'invalid_test_token' }
+        expect(response).to redirect_to('/')
+      end
     end
   end
 

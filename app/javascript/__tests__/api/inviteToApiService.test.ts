@@ -1,5 +1,6 @@
 import { post } from "../../api/apiService"
 import { recordResponse } from "../../api/inviteToApiService"
+import { INVITE_TO_X } from "../../modules/constants"
 
 jest.mock("../../api/apiService", () => ({
   post: jest.fn(),
@@ -16,7 +17,7 @@ describe("inviteToApiService", () => {
         deadline: "2099-01-01",
         action: "submit",
         response: "submit",
-        type: "I2A",
+        type: INVITE_TO_X.APPLY,
       }
       await recordResponse(record)
       expect(post).toHaveBeenCalled()

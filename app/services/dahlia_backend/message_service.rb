@@ -73,14 +73,14 @@ module DahliaBackend
                                                          _application_number, _app_id, _action)
       return if fields.nil?
 
-      log_info("Prepared fields for Invite to Apply response: #{fields.inspect}")
+      log_info("Prepared fields for I2X response: #{fields.inspect}")
 
       endpoint = get_response_endpoint(_action, _response)
       return log_error("Invalid action type: #{_action}", nil) unless endpoint
 
       send_message(endpoint, fields)
     rescue StandardError => e
-      log_error('Error sending Invite to Apply', e)
+      log_error('Error sending I2X response', e)
       nil
     end
 

@@ -5,8 +5,9 @@ import { AppPages, generateSubmitLink } from "../../util/routeUtil"
 import { getListing } from "../../api/listingApiService"
 import { useFeatureFlag, useVariantFlag } from "../../hooks/useFeatureFlag"
 import InviteToDeadlinePassed from "./InviteToDeadlinePassed"
-import InviteToApplyWithdrawn from "./inviteToApply/InviteToApplyWithdrawn"
-import InviteToApplyContactMeLater from "./inviteToApply/InviteToApplyContactMeLater"
+import InviteToWithdrawn from "./InviteToWithdrawn"
+import { INVITE_TO_X } from "../../modules/constants"
+import InviteToContactMeLater from "./InviteToContactMeLater"
 import InviteToApplyNextSteps from "./inviteToApply/InviteToApplyNextSteps"
 import InviteToApplyDocuments from "./inviteToApply/InviteToApplyDocuments"
 import InviteToInterviewDocuments from "./inviteToInterview/InviteToInterviewDocuments"
@@ -16,7 +17,7 @@ import { getPathWithoutLanguagePrefix } from "../../util/languageUtil"
 import { isDeadlinePassed } from "../../util/listingUtil"
 
 interface UrlParams {
-  type?: "I2A" | "I2I"
+  type?: INVITE_TO_X
   deadline?: string
   act?: "yes" | "no" | "contact" | "submit" | "appointment"
   appId?: string
@@ -63,9 +64,16 @@ const InviteToPage = ({
         })()
       : []
   const isI2IEnabled = isI2IEnabledFlag && listing?.Id && enabledListingIds.includes(listing.Id)
+  const previewLink = generateSubmitLink(
+    appId,
+    deadline,
+    listing?.Id,
+    type,
+    submitPreviewLinkTokenParam
+  )
 
   /* I2I - Invite to Interview pages */
-  if (type === "I2I") {
+  if (type === INVITE_TO_X.INTERVIEW) {
     if (!isI2IEnabled) {
       return null
     }
@@ -77,16 +85,11 @@ const InviteToPage = ({
     }
     if (act === "no") {
       return (
-        <InviteToApplyWithdrawn
+        <InviteToWithdrawn
+          type={type}
           listing={listing}
           deadline={deadline}
-          submitPreviewLink={generateSubmitLink(
-            appId,
-            deadline,
-            listing?.Id,
-            type,
-            submitPreviewLinkTokenParam
-          )}
+          submitPreviewLink={previewLink}
         />
       )
     }
@@ -96,19 +99,15 @@ const InviteToPage = ({
     if (isDeadlinePassed(deadline)) return <InviteToDeadlinePassed listing={listing} />
     if (act === "contact") {
       return (
-        <InviteToApplyContactMeLater
+        <InviteToContactMeLater
+          type={type}
           listing={listing}
           deadline={deadline}
-          submitPreviewLink={generateSubmitLink(
-            appId,
-            deadline,
-            listing?.Id,
-            type,
-            submitPreviewLinkTokenParam
-          )}
+          submitPreviewLink={previewLink}
         />
       )
     }
+    return null
   }
 
   /* I2A - Invite to Apply pages */
@@ -130,16 +129,11 @@ const InviteToPage = ({
   }
   if (act === "no") {
     return (
-      <InviteToApplyWithdrawn
+      <InviteToWithdrawn
+        type={type}
         listing={listing}
         deadline={deadline}
-        submitPreviewLink={generateSubmitLink(
-          appId,
-          deadline,
-          listing?.Id,
-          type,
-          submitPreviewLinkTokenParam
-        )}
+        submitPreviewLink={previewLink}
       />
     )
   }
@@ -156,16 +150,11 @@ const InviteToPage = ({
   if (isDeadlinePassed(deadline)) return <InviteToDeadlinePassed listing={listing} />
   if (act === "contact") {
     return (
-      <InviteToApplyContactMeLater
+      <InviteToContactMeLater
+        type={type}
         listing={listing}
         deadline={deadline}
-        submitPreviewLink={generateSubmitLink(
-          appId,
-          deadline,
-          listing?.Id,
-          type,
-          submitPreviewLinkTokenParam
-        )}
+        submitPreviewLink={previewLink}
       />
     )
   }

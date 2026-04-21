@@ -16,6 +16,7 @@ import InviteToLayout from "../InviteToLayout"
 import { recordResponse } from "../../../api/inviteToApiService"
 import InviteToGetHelp from "../InviteToGetHelp"
 import InviteToLeasingAgentInfo from "../InviteToLeasingAgentInfo"
+import { INVITE_TO_X } from "../../../modules/constants"
 
 interface InviteToApplyNextStepsProps {
   listing: RailsSaleListing | null
@@ -71,7 +72,7 @@ const WhatToDo = ({
             deadline,
             action: "submit",
             response: "submit",
-            type: "I2A",
+            type: INVITE_TO_X.APPLY,
           })
         }
         setIsSubmitting(false)
@@ -202,7 +203,7 @@ const InviteToApplyNextSteps = ({
   return (
     <InviteToLayout
       listing={listing}
-      type="I2A"
+      type={INVITE_TO_X.APPLY}
       title={t("inviteToApplyPage.submitYourInfo.title", { listingName: titleName })}
       headerText="inviteToApplyPage.submitYourInfo.p1"
       sidebarText="inviteToApplyPage.submitYourInfo.sidebar"

@@ -8,6 +8,7 @@ import { renderAndLoadAsync } from "../__util__/renderUtils"
 import { ConfigContext } from "../../lib/ConfigContext"
 import { getListing } from "../../api/listingApiService"
 import { recordResponse } from "../../api/inviteToApiService"
+import { INVITE_TO_X } from "../../modules/constants"
 
 jest.mock("../../api/listingApiService")
 jest.mock("../../api/inviteToApiService", () => ({
@@ -89,7 +90,7 @@ describe("Invite to Interview", () => {
       <InviteToPage
         assetPaths={"/"}
         urlParams={{
-          type: "I2I",
+          type: INVITE_TO_X.INTERVIEW,
         }}
         documentsPath={true}
       />
@@ -104,7 +105,7 @@ describe("Invite to Interview", () => {
       <InviteToPage
         assetPaths={"/"}
         urlParams={{
-          type: "I2I",
+          type: INVITE_TO_X.INTERVIEW,
           act: "yes",
           deadline: "2030-10-10",
           appId: "test-id",
@@ -120,7 +121,7 @@ describe("Invite to Interview", () => {
       <InviteToPage
         assetPaths={"/"}
         urlParams={{
-          type: "I2I",
+          type: INVITE_TO_X.INTERVIEW,
           act: "yes",
           deadline: "2020-10-10",
           appId: "test-id",
@@ -135,7 +136,7 @@ describe("Invite to Interview", () => {
       <InviteToPage
         assetPaths={"/"}
         urlParams={{
-          type: "I2I",
+          type: INVITE_TO_X.INTERVIEW,
           act: "yes",
           deadline: "2030-10-10",
           appId: "test-id",
@@ -150,7 +151,7 @@ describe("Invite to Interview", () => {
       <InviteToPage
         assetPaths={"/"}
         urlParams={{
-          type: "I2I",
+          type: INVITE_TO_X.INTERVIEW,
           deadline: "2030-10-10",
           act: "yes",
           appId: "test-id",
@@ -162,5 +163,48 @@ describe("Invite to Interview", () => {
     })
     await userEvent.click(button)
     expect(recordResponse).toHaveBeenCalled()
+  })
+
+  it("shows the withdrawn page when the action is no", async () => {
+    await renderWithContext(
+      <InviteToPage
+        assetPaths={"/"}
+        urlParams={{
+          type: INVITE_TO_X.INTERVIEW,
+          act: "no",
+          deadline: "2030-10-10",
+          appId: "test-id",
+        }}
+      />
+    )
+    expect(screen.getByText(t("inviteToInterviewPage.withdrawn.title"))).toBeInTheDocument()
+  })
+  it("shows the withdrawn page without the body when the deadline is passed", async () => {
+    await renderWithContext(
+      <InviteToPage
+        assetPaths={"/"}
+        urlParams={{
+          type: INVITE_TO_X.INTERVIEW,
+          act: "no",
+          deadline: "2020-10-10",
+          appId: "test-id",
+        }}
+      />
+    )
+    expect(screen.queryByText(t("inviteToInterviewPage.withdrawn.body"))).not.toBeInTheDocument()
+  })
+  it("shows the waitlist page when the action is contact", async () => {
+    await renderWithContext(
+      <InviteToPage
+        assetPaths={"/"}
+        urlParams={{
+          type: INVITE_TO_X.INTERVIEW,
+          act: "contact",
+          deadline: "2030-10-10",
+          appId: "test-id",
+        }}
+      />
+    )
+    expect(screen.getByText(t("inviteToInterviewPage.waitlist.title"))).toBeInTheDocument()
   })
 })

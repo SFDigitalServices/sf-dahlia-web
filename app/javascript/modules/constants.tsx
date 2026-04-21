@@ -288,3 +288,8 @@ export const RELATIONSHIP_OPTIONS = [
   { value: "Friend", label: "label.friend" },
   { value: "Other", label: "label.Other" },
 ]
+
+export enum INVITE_TO_X {
+  APPLY = "I2A",
+  INTERVIEW = "I2I",
+}
