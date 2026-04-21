@@ -173,6 +173,10 @@
 
   .infoSubSection {
     padding-top: var(--seeds-spacer-content);
+  }
+
+  .expandableContent {
+    padding-top: var(--seeds-spacer-content);
     button {
       font-size: var(--seeds-font-size-base);
     }

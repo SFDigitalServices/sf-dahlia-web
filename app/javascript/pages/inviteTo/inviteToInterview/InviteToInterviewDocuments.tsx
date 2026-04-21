@@ -136,7 +136,7 @@ const IdentityDocuments = () => {
       <ul className={styles.iconList}>
         <li>{renderInlineMarkup(t("inviteToInterviewPage.documents.identity.everyone.p1"))}</li>
       </ul>
-      <div className={styles.infoSubSection}>
+      <div className={styles.expandableContent}>
         <ExpandableContent
           strings={{
             readMore: t("inviteToInterviewPage.documents.identity.everyone.whyWeAsk"),
@@ -493,10 +493,14 @@ const InviteToInterviewDocumentsSidebar = ({ listing }: { listing: RailsSaleList
           <strong>{t("inviteToApplyPage.submitYourInfo.sidebar")}</strong>
         </Heading>
         <InviteToLeasingAgentInfo listing={listing} />
-        <Heading size="sm" priority={3}>
-          {t("contactAgent.officeHours.seeTheUnit")}
-        </Heading>
-        <p>{listing?.Office_Hours}</p>
+        {listing?.Office_Hours && (
+          <>
+            <Heading size="sm" priority={3}>
+              {t("contactAgent.officeHours.seeTheUnit")}
+            </Heading>
+            <p>{listing?.Office_Hours}</p>
+          </>
+        )}
       </SidebarBlock>
     </>
   )

@@ -302,10 +302,14 @@ const InviteToApplyDocumentsSidebar = ({ listing }: { listing: RailsSaleListing 
           <strong>{t("inviteToApplyPage.submitYourInfo.sidebar")}</strong>
         </Heading>
         <InviteToLeasingAgentInfo listing={listing} />
-        <Heading size="sm" priority={3}>
-          {t("contactAgent.officeHours.seeTheUnit")}
-        </Heading>
-        <p>{listing?.Office_Hours}</p>
+        {listing?.Office_Hours && (
+          <>
+            <Heading size="sm" priority={3}>
+              {t("contactAgent.officeHours.seeTheUnit")}
+            </Heading>
+            <p>{listing?.Office_Hours}</p>
+          </>
+        )}
       </SidebarBlock>
     </>
   )
