@@ -6,7 +6,8 @@ import { CardSection } from "@bloom-housing/ui-seeds/src/blocks/Card"
 import { useFormEngineContext } from "../../../formEngine/formEngineContext"
 import { locateVerifiedAddress } from "../../../api/formApiService"
 import { getFormattedAddress } from "../../../util/formEngineUtil"
-import styles from "./ListingApplyStepWrapper.module.scss"
+import stepStyles from "./ListingApplyStepWrapper.module.scss"
+import styles from "./VerifyAddress.module.scss"
 
 interface VerifyAddressProps {
   fieldNames: {
@@ -60,36 +61,48 @@ const VerifyAddress = ({ fieldNames: { verifiedAddress } }: VerifyAddressProps) 
     })()
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
+  const formattedAddress = getFormattedAddress({
+    street1: validatedAddress?.street1,
+    street2: validatedAddress?.street2,
+    city: validatedAddress?.city,
+    state: validatedAddress?.state,
+    zip: validatedAddress?.zip,
+  })
   return (
     <FormProvider {...formMethods}>
       <Card>
         <Card.Header divider="inset">
-          <Heading className={styles["step-title"]}>{t("b2aVerifyAddress.title")}</Heading>
+          <Heading className={`${stepStyles["step-title"]} ${stepStyles["no-back"]}`}>
+            {t("b2aVerifyAddress.title")}
+          </Heading>
         </Card.Header>
         <Form onSubmit={handleSubmit(onSubmit)}>
           <CardSection>
-            <Field
-              type="radio"
-              name={verifiedAddress}
-              register={register}
-              validation={{
-                required: true,
-              }}
-              error={!!errors?.[verifiedAddress]}
-              errorMessage={t("error.confirmedAddress")}
-            />
-            {getFormattedAddress({
-              street1: validatedAddress?.street1,
-              street2: validatedAddress?.street2,
-              city: validatedAddress?.city,
-              state: validatedAddress?.state,
-              zip: validatedAddress?.zip,
-            })}
-            <Button variant="text" onClick={handlePrevStep}>
-              {t("t.edit")}
-            </Button>
+            <div className={styles.addressSection}>
+              <div>
+                <Field
+                  type="radio"
+                  name={verifiedAddress}
+                  register={register}
+                  validation={{
+                    required: true,
+                  }}
+                  className={styles.addressRadio}
+                  error={!!errors?.[verifiedAddress]}
+                  errorMessage={t("error.confirmedAddress")}
+                />
+              </div>
+              <div className={styles.addressContent}>
+                {formattedAddress.streets}
+                <br />
+                {formattedAddress.cityStateZip}
+                <Button type="button" variant="text" onClick={handlePrevStep}>
+                  {t("t.edit")}
+                </Button>
+              </div>
+            </div>
           </CardSection>
-          <Card.Footer className={styles["step-footer"]}>
+          <Card.Footer className={stepStyles["step-footer"]}>
             <Button variant="primary" type="submit">
               {t("t.next")}
             </Button>

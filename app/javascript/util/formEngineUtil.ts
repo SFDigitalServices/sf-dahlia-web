@@ -173,7 +173,7 @@ export const getFormattedAddress = (address: {
   state?: string
   zip?: string
 }) => {
-  return [address.street1, address.street2, `${address.city}, ${address.state} ${address.zip}`]
-    .filter(Boolean)
-    .join(", ")
+  const streets = [address.street1, address.street2].filter(Boolean).join(" ")
+  const cityStateZip = [address.city, address.state, address.zip].filter(Boolean).join(", ")
+  return { streets, cityStateZip }
 }
