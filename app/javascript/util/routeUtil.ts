@@ -1,3 +1,4 @@
+import { INVITE_TO_X } from "../modules/constants"
 import {
   getCurrentLanguage,
   getPathWithoutLanguagePrefix,
@@ -160,11 +161,12 @@ export const generateSubmitLink = (
   appId: string,
   deadline: string,
   listingId: string,
+  type: INVITE_TO_X,
   submitPreviewLinkTokenParam?: string
 ) => {
   const submitLinkQueryStr = submitPreviewLinkTokenParam
     ? `t=${submitPreviewLinkTokenParam}`
-    : new URLSearchParams({ appId, deadline }).toString()
+    : new URLSearchParams({ appId, deadline, type }).toString()
   return `/${getCurrentLanguage()}/listings/${listingId}/next-steps?${submitLinkQueryStr}`
 }
 

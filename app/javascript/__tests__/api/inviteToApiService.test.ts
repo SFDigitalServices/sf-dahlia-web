@@ -1,11 +1,12 @@
 import { post } from "../../api/apiService"
-import { recordResponse } from "../../api/inviteToApplyApiService"
+import { recordResponse } from "../../api/inviteToApiService"
+import { INVITE_TO_X } from "../../modules/constants"
 
 jest.mock("../../api/apiService", () => ({
   post: jest.fn(),
 }))
 
-describe("inviteToApplyApiService", () => {
+describe("inviteToApiService", () => {
   describe("recordResponse", () => {
     it("calls apiService post", async () => {
       post as jest.Mock
@@ -16,7 +17,7 @@ describe("inviteToApplyApiService", () => {
         deadline: "2099-01-01",
         action: "submit",
         response: "submit",
-        type: "I2A",
+        type: INVITE_TO_X.APPLY,
       }
       await recordResponse(record)
       expect(post).toHaveBeenCalled()

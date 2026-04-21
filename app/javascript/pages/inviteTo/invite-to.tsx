@@ -5,20 +5,23 @@ import { AppPages, generateSubmitLink } from "../../util/routeUtil"
 import { getListing } from "../../api/listingApiService"
 import { useFeatureFlag, useVariantFlag } from "../../hooks/useFeatureFlag"
 import InviteToDeadlinePassed from "./InviteToDeadlinePassed"
-import InviteToApplyWithdrawn from "./inviteToApply/InviteToApplyWithdrawn"
-import InviteToApplyContactMeLater from "./inviteToApply/InviteToApplyContactMeLater"
-import InviteToApplySubmitYourInfo from "./inviteToApply/InviteToApplySubmitYourInfo"
+import InviteToWithdrawn from "./InviteToWithdrawn"
+import { INVITE_TO_X } from "../../modules/constants"
+import InviteToContactMeLater from "./InviteToContactMeLater"
+import InviteToApplyNextSteps from "./inviteToApply/InviteToApplyNextSteps"
 import InviteToApplyDocuments from "./inviteToApply/InviteToApplyDocuments"
 import InviteToInterviewDocuments from "./inviteToInterview/InviteToInterviewDocuments"
+import InviteToInterviewNextSteps from "./inviteToInterview/InviteToInterviewNextSteps"
 import RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
 import { getPathWithoutLanguagePrefix } from "../../util/languageUtil"
 import { isDeadlinePassed } from "../../util/listingUtil"
 
 interface UrlParams {
-  type?: "I2A" | "I2I"
+  type?: INVITE_TO_X
   deadline?: string
-  action?: "yes" | "no" | "contact" | "submit" | "appointment"
+  act?: "yes" | "no" | "contact" | "submit" | "appointment"
   appId?: string
+  url?: string
 }
 
 interface HomePageProps {
@@ -27,14 +30,13 @@ interface HomePageProps {
   submitPreviewLinkTokenParam?: string
   deadlinePassedPath?: boolean
   documentsPath?: boolean
-  fileUploadUrl?: string
+  url?: string
 }
 
 const InviteToPage = ({
-  urlParams: { type, deadline, action, appId },
+  urlParams: { type, deadline, act, appId, url },
   submitPreviewLinkTokenParam,
   documentsPath,
-  fileUploadUrl,
 }: HomePageProps) => {
   const [listing, setListing] = useState<RailsSaleListing>(null)
   const { router } = useContext(NavigationContext)
@@ -51,71 +53,110 @@ const InviteToPage = ({
   const { unleashFlag: isI2AEnabled } = useFeatureFlag("partners.inviteToApply", false)
   const { unleashFlag: isI2IEnabledFlag, variant } = useVariantFlag("all.i2i", false)
   const enabledListingIds =
-    typeof variant === "object" && variant?.payload?.value ? variant.payload.value.split(",") : []
+    typeof variant === "object" && variant?.payload?.value
+      ? (() => {
+          try {
+            const parsed = JSON.parse(variant.payload.value)
+            return parsed?.enabled_listings || []
+          } catch {
+            return []
+          }
+        })()
+      : []
   const isI2IEnabled = isI2IEnabledFlag && listing?.Id && enabledListingIds.includes(listing.Id)
+  const previewLink = generateSubmitLink(
+    appId,
+    deadline,
+    listing?.Id,
+    type,
+    submitPreviewLinkTokenParam
+  )
 
   /* I2I - Invite to Interview pages */
-  if (type === "I2I") {
+  if (type === INVITE_TO_X.INTERVIEW) {
     if (!isI2IEnabled) {
       return null
     }
+
     if (documentsPath) return <InviteToInterviewDocuments listing={listing} />
+    // no action from applicant - preview submit page
+    if (!act) {
+      return <InviteToInterviewNextSteps listing={listing} deadline={deadline} appId={appId} />
+    }
+    if (act === "no") {
+      return (
+        <InviteToWithdrawn
+          type={type}
+          listing={listing}
+          deadline={deadline}
+          submitPreviewLink={previewLink}
+        />
+      )
+    }
+    if (act === "yes") {
+      return <InviteToInterviewNextSteps listing={listing} deadline={deadline} appId={appId} />
+    }
     if (isDeadlinePassed(deadline)) return <InviteToDeadlinePassed listing={listing} />
+    if (act === "contact") {
+      return (
+        <InviteToContactMeLater
+          type={type}
+          listing={listing}
+          deadline={deadline}
+          submitPreviewLink={previewLink}
+        />
+      )
+    }
+    return null
   }
 
   /* I2A - Invite to Apply pages */
-  if (isI2AEnabled) {
-    if (documentsPath) return <InviteToApplyDocuments listing={listing} />
-    // no action from applicant - preview submit page
-    if (!action) {
-      return (
-        <InviteToApplySubmitYourInfo
-          listing={listing}
-          deadline={deadline}
-          appId={appId}
-          fileUploadUrl={fileUploadUrl}
-        />
-      )
-    }
-    if (action === "no") {
-      return (
-        <InviteToApplyWithdrawn
-          listing={listing}
-          deadline={deadline}
-          submitPreviewLink={generateSubmitLink(
-            appId,
-            deadline,
-            listing?.Id,
-            submitPreviewLinkTokenParam
-          )}
-        />
-      )
-    }
-    if (action === "yes") {
-      return (
-        <InviteToApplySubmitYourInfo
-          listing={listing}
-          deadline={deadline}
-          appId={appId}
-          fileUploadUrl={fileUploadUrl}
-        />
-      )
-    }
-    if (isDeadlinePassed(deadline)) return <InviteToDeadlinePassed listing={listing} />
-    if (action === "contact") {
-      return (
-        <InviteToApplyContactMeLater
-          listing={listing}
-          deadline={deadline}
-          submitPreviewLink={generateSubmitLink(
-            appId,
-            deadline,
-            listing?.Id,
-            submitPreviewLinkTokenParam
-          )}
-        />
-      )
-    }
+  if (!isI2AEnabled) {
+    return null
+  }
+
+  if (documentsPath) return <InviteToApplyDocuments listing={listing} />
+  // no action from applicant - preview submit page
+  if (!act) {
+    return (
+      <InviteToApplyNextSteps
+        listing={listing}
+        deadline={deadline}
+        appId={appId}
+        fileUploadUrl={url}
+      />
+    )
+  }
+  if (act === "no") {
+    return (
+      <InviteToWithdrawn
+        type={type}
+        listing={listing}
+        deadline={deadline}
+        submitPreviewLink={previewLink}
+      />
+    )
+  }
+  if (act === "yes") {
+    return (
+      <InviteToApplyNextSteps
+        listing={listing}
+        deadline={deadline}
+        appId={appId}
+        fileUploadUrl={url}
+      />
+    )
+  }
+  if (isDeadlinePassed(deadline)) return <InviteToDeadlinePassed listing={listing} />
+  if (act === "contact") {
+    return (
+      <InviteToContactMeLater
+        type={type}
+        listing={listing}
+        deadline={deadline}
+        submitPreviewLink={previewLink}
+      />
+    )
   }
   return null
 }

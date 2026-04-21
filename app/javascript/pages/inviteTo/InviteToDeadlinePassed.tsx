@@ -4,7 +4,7 @@ import { Card, Heading } from "@bloom-housing/ui-seeds"
 import styles from "./invite-to.module.scss"
 import RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
 import FormLayout from "../../layouts/FormLayout"
-import InviteToApplyLeasingAgentInfo from "./InviteToLeasingAgentInfo"
+import InviteToLeasingAgentInfo from "./InviteToLeasingAgentInfo"
 import InviteToApplyHeader from "./InviteToHeader"
 
 interface InviteToDeadlinePassedProps {
@@ -31,7 +31,7 @@ const InviteToDeadlinePassed = ({ listing }: InviteToDeadlinePassedProps) => {
                 listingName: listing?.Building_Name_for_Process,
               })}
             </Heading>
-            <InviteToApplyLeasingAgentInfo listing={listing} />
+            <InviteToLeasingAgentInfo listing={listing} />
           </Card.Section>
         </Card>
       </LoadingOverlay>

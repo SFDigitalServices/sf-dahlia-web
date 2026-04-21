@@ -104,6 +104,7 @@ type BaseRailsListing = {
   In_Lottery: number
   Information_Sessions?: ListingEvent[]
   LastModifiedDate: string
+  Leaseup_Appointment_Scheduling_URL?: string
   Leasing_Agent_City?: string
   Leasing_Agent_Email?: string
   Leasing_Agent_Name?: string
