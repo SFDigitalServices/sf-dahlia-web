@@ -104,7 +104,7 @@ const HouseholdMemberMultiStepWrapper = ({
       )
     }
     case "HouseholdMemberVerifyAddress": {
-      return <VerifyAddress fieldNames={{ verifiedAddress: "householdMemberAddress" }} />
+      return <VerifyAddress address="householdMemberAddress" />
     }
   }
 }

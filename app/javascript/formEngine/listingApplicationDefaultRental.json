@@ -148,9 +148,7 @@
       "componentType": "step",
       "componentName": "VerifyAddress",
       "props": {
-        "fieldNames": {
-          "verifiedAddress": "primaryApplicantAddress"
-        }
+        "address": "primaryApplicantAddress"
       }
     },
     {

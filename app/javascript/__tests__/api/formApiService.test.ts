@@ -1,5 +1,10 @@
 import { post, apiDelete } from "../../api/apiService"
-import { submitForm, uploadProofFile, deleteUploadedProofFile } from "../../api/formApiService"
+import {
+  submitForm,
+  uploadProofFile,
+  deleteUploadedProofFile,
+  locateVerifiedAddress,
+} from "../../api/formApiService"
 
 jest.mock("axios")
 
@@ -86,6 +91,29 @@ describe("formApiService", () => {
         locale: "en",
         uploaded_file: { file: "todo.png" },
       })
+    })
+  })
+
+  describe("locateVerifiedAddress", () => {
+    it("sends the address fields to validate with the correct payload", async () => {
+      const result = await locateVerifiedAddress({
+        street1: "123 Main St",
+        street2: "Apt 4B",
+        city: "San Francisco",
+        state: "CA",
+        zip: "94105",
+      })
+
+      expect(post).toHaveBeenCalledWith("/api/v1/addresses/validate.json", {
+        address: {
+          street1: "123 Main St",
+          street2: "Apt 4B",
+          city: "San Francisco",
+          state: "CA",
+          zip: "94105",
+        },
+      })
+      expect(result).toEqual({ id: "test-id" })
     })
   })
 })

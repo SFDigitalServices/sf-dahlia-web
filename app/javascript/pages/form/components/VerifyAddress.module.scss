@@ -1,15 +1,6 @@
 .addressSection {
   display: flex;
-  padding: var(--seeds-spacer-content);
-}
-
-.addressRadio {
-  margin-top: var(--seeds-spacer-text);
-}
-
-.addressContent {
-  display: flex;
   flex-direction: row;
-  align-items: center;
+  margin: var(--seeds-spacer-content);
   gap: var(--seeds-spacer-content);
 }
