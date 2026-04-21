@@ -22,7 +22,7 @@ const VerifyAddress = ({ address }: VerifyAddressProps) => {
   // eslint-disable-next-line @typescript-eslint/unbound-method
   const { register, handleSubmit, errors, clearErrors } = formMethods
   const [validatedAddress, setValidatedAddress] = useState(null)
-  const onSubmit = (data: Record<string, unknown>) => {
+  const onSubmit = () => {
     const updatedFormData = {
       [`${address}Street`]: validatedAddress.street1,
       [`${address}AptOrUnit`]: validatedAddress.street2,
@@ -30,7 +30,7 @@ const VerifyAddress = ({ address }: VerifyAddressProps) => {
       [`${address}State`]: validatedAddress.state,
       [`${address}Zipcode`]: validatedAddress.zip,
     }
-    saveFormData({ ...data, ...updatedFormData })
+    saveFormData(updatedFormData)
     handleNextStep()
   }
 
@@ -83,11 +83,12 @@ const VerifyAddress = ({ address }: VerifyAddressProps) => {
                 name={address}
                 register={register}
                 validation={{
-                  required: true,
+                  required: t("error.confirmedAddress"),
                 }}
                 error={!!errors?.[address]}
                 onChange={() => clearErrors(address)}
-                errorMessage={t("error.confirmedAddress")}
+                errorMessage={errors?.[address]?.message}
+                inputProps={{ value: address }}
                 label={
                   <>
                     {formattedAddress.streets}
