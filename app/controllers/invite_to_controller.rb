@@ -1,12 +1,11 @@
 # Invite to X controller
 class InviteToController < ApplicationController
   def index
-    # TODO: deprecated I2A pilot
-    # decoded_params = decode_token(params[:t])
-    # if decoded_params.is_a?(String)
-    #   redirect_to decoded_params
-    #   return
-    # end
+    decoded_params = decode_token(params[:t])
+    if decoded_params.is_a?(String)
+      redirect_to decoded_params
+      return
+    end
     decoded_params ||= params
     @invite_to_props = props(decoded_params)
     # Get file upload URL for application
