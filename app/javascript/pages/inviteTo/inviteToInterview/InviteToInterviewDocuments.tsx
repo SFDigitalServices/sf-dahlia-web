@@ -15,7 +15,7 @@ import RailsSaleListing from "../../../api/types/rails/listings/RailsSaleListing
 import Layout from "../../../layouts/Layout"
 import { renderInlineMarkup } from "../../../util/languageUtil"
 import { ConfigContext } from "../../../lib/ConfigContext"
-import InviteToApplyLeasingAgentInfo from "../InviteToLeasingAgentInfo"
+import InviteToLeasingAgentInfo from "../InviteToLeasingAgentInfo"
 
 import styles from "../invite-to.module.scss"
 import { HOME_SF_PHONE } from "../../../modules/constants"
@@ -172,13 +172,13 @@ const ProofOfIncome = () => {
         <li>{renderInlineMarkup(t("inviteToInterviewPage.documents.proofOfIncome.p1"))}</li>
       </ul>
       <p>{t("inviteToInterviewPage.documents.proofOfIncome.p2")}</p>
-      <p>{t("inviteToInterviewPage.documents.proofOfIncome.p3")}</p>
       <p>{t("inviteToInterviewPage.documents.proofOfIncome.p4")}</p>
       <ul>
         <li>{renderInlineMarkup(t("inviteToInterviewPage.documents.proofOfIncome.p5"))}</li>
         <li>{renderInlineMarkup(t("inviteToInterviewPage.documents.proofOfIncome.p6"))}</li>
         <li>{renderInlineMarkup(t("inviteToInterviewPage.documents.proofOfIncome.p7"))}</li>
       </ul>
+      <p>{t("inviteToInterviewPage.documents.proofOfIncome.p3")}</p>
       <div className={styles.infoSubSection}>
         <ContentAccordion
           customBarContent={
@@ -489,14 +489,13 @@ const InviteToInterviewDocumentsSidebar = ({ listing }: { listing: RailsSaleList
         </span>
       </SidebarBlock>
       <SidebarBlock title={t("inviteToInterviewPage.documents.sidebar.contact")} priority={2}>
-        <p>
-          <strong>{t("inviteToInterviewPage.documents.sidebar.contactSubtitle")}</strong>
-        </p>
-        <p>{t("inviteToInterviewPage.documents.sidebar.contactLabel")}</p>
-        <InviteToApplyLeasingAgentInfo listing={listing} />
-        <p>
-          <strong>{t("inviteToInterviewPage.documents.sidebar.officeHours")}</strong>
-        </p>
+        <Heading priority={3} size="lg">
+          <strong>{t("inviteToApplyPage.submitYourInfo.sidebar")}</strong>
+        </Heading>
+        <InviteToLeasingAgentInfo listing={listing} />
+        <Heading size="sm" priority={3}>
+          {t("contactAgent.officeHours.seeTheUnit")}
+        </Heading>
         <p>{listing?.Office_Hours}</p>
       </SidebarBlock>
     </>
