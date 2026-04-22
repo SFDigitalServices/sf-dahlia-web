@@ -1,8 +1,15 @@
 import dayjs from "dayjs"
 import MockDate from "mockdate"
-import { validAge } from "../../util/listingApplyUtil"
+import {
+  validAge,
+  validVeteranAge,
+  generateHouseholdMemberId,
+  getHouseholdMemberDataFromId,
+  getPrimaryApplicantData,
+  allHouseholdMembers,
+} from "../../util/listingApplyUtil"
 
-describe("formEngineUtil", () => {
+describe("listingApplyUtil", () => {
   describe("validAge", () => {
     MockDate.set("2020-01-01")
     it("returns true for birth dates greater than minimum age", () => {
@@ -19,6 +26,10 @@ describe("formEngineUtil", () => {
       const birthDate = dayjs("2020-09-01")
       expect(validAge(birthDate, null, undefined)).toBe(true)
     })
+    it("returns false for birth dates more than 10 months in the future", () => {
+      const birthDate = dayjs("2020-12-01")
+      expect(validAge(birthDate, null, undefined)).toBe(false)
+    })
     it("overrides minimum age with senior building age requirements", () => {
       const birthDate = dayjs("2000-01-01")
       const minimumAge = 18
@@ -27,6 +38,145 @@ describe("formEngineUtil", () => {
         minimumAge: 65,
       }
       expect(validAge(birthDate, minimumAge, seniorBuildingAgeRequirement)).toBe(false)
+    })
+    it("does not apply senior age requirement when entireHousehold is false", () => {
+      const birthDate = dayjs("2000-01-01")
+      const minimumAge = 18
+      const seniorBuildingAgeRequirement = {
+        entireHousehold: false,
+        minimumAge: 65,
+      }
+      expect(validAge(birthDate, minimumAge, seniorBuildingAgeRequirement)).toBe(true)
+    })
+  })
+
+  describe("validVeteranAge", () => {
+    MockDate.set("2020-01-01")
+    it("returns true when person is 17 or older", () => {
+      expect(validVeteranAge(dayjs("2003-01-01"))).toBe(true)
+    })
+    it("returns true when person is exactly 17", () => {
+      expect(validVeteranAge(dayjs("2003-01-01"))).toBe(true)
+    })
+    it("returns false when person is younger than 17", () => {
+      expect(validVeteranAge(dayjs("2003-01-02"))).toBe(false)
+    })
+  })
+
+  describe("generateHouseholdMemberId", () => {
+    it("joins all fields with the delimiter", () => {
+      const result = generateHouseholdMemberId({
+        firstName: "John",
+        middleName: "M",
+        lastName: "Doe",
+        birthYear: "1990",
+        birthMonth: "3",
+        birthDay: "15",
+      })
+      expect(result).toBe(["John", "M", "Doe", "1990", "3", "15"].join("++++"))
+    })
+
+    it("uses empty strings for missing fields", () => {
+      const result = generateHouseholdMemberId({ firstName: "Jane" })
+      expect(result).toBe(["Jane", "", "", "", "", ""].join("++++"))
+    })
+
+    it("throws when called with all empty fields", () => {
+      expect(() => generateHouseholdMemberId({})).toThrow("Missing info for household member")
+    })
+  })
+
+  describe("getHouseholdMemberDataFromId", () => {
+    it("parses a member id back into its fields", () => {
+      const id = "John++++M++++Doe++++1990++++3++++15"
+      expect(getHouseholdMemberDataFromId(id)).toEqual({
+        firstName: "John",
+        middleName: "M",
+        lastName: "Doe",
+        birthYear: "1990",
+        birthMonth: "3",
+        birthDay: "15",
+      })
+    })
+  })
+
+  describe("getPrimaryApplicantData", () => {
+    it("extracts primary applicant name fields from form data", () => {
+      const formData = {
+        primaryApplicantFirstName: "Alice",
+        primaryApplicantMiddleName: "B",
+        primaryApplicantLastName: "Cooper",
+        primaryApplicantDob: "1985-06-15",
+      }
+      expect(getPrimaryApplicantData(formData)).toEqual({
+        firstName: "Alice",
+        middleName: "B",
+        lastName: "Cooper",
+        dob: "1985-06-15",
+      })
+    })
+
+    it("defaults dob when primaryApplicantDob is not present", () => {
+      const formData = {
+        primaryApplicantFirstName: "Alice",
+        primaryApplicantMiddleName: "",
+        primaryApplicantLastName: "Cooper",
+      }
+      expect(getPrimaryApplicantData(formData).dob).toBe("1990-01-01")
+    })
+  })
+
+  describe("allHouseholdMembers", () => {
+    it("returns household members plus the primary applicant", () => {
+      const householdMember = {
+        id: "Bob--Jones-1995-7-20",
+        firstName: "Bob",
+        middleName: "",
+        lastName: "Jones",
+        birthYear: "1995",
+        birthMonth: "7",
+        birthDay: "20",
+      }
+      const formData = {
+        primaryApplicantFirstName: "Alice",
+        primaryApplicantMiddleName: "M",
+        primaryApplicantLastName: "Smith",
+        primaryApplicantBirthYear: "1990",
+        primaryApplicantBirthMonth: "1",
+        primaryApplicantBirthDate: "15",
+        householdMembers: [householdMember],
+      }
+
+      const result = allHouseholdMembers(formData)
+
+      expect(result).toHaveLength(2)
+      expect(result[0]).toEqual(householdMember)
+      expect(result[1]).toEqual({
+        id: "primaryApplicant",
+        firstName: "Alice",
+        middleName: "M",
+        lastName: "Smith",
+        birthYear: "1990",
+        birthMonth: "1",
+        birthDay: "15",
+      })
+    })
+
+    it("returns only the primary applicant when there are no household members", () => {
+      const formData = {
+        primaryApplicantFirstName: "Alice",
+        primaryApplicantMiddleName: "",
+        primaryApplicantLastName: "Smith",
+        primaryApplicantBirthYear: "1990",
+        primaryApplicantBirthMonth: "1",
+        primaryApplicantBirthDate: "15",
+      }
+
+      const result = allHouseholdMembers(formData)
+
+      expect(result).toHaveLength(1)
+      expect(result[0].id).toBe("primaryApplicant")
+      expect(result[0].firstName).toBe("Alice")
     })
   })
 })

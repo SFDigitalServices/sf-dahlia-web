@@ -28,9 +28,9 @@ export const generateHouseholdMemberId = ({
   birthMonth?: string
   birthDay?: string
 }) => {
-  return [firstName, middleName, lastName, birthYear, birthMonth, birthDay].join(
-    HOUSEHOLD_MEMBER_ID_DELIMITER
-  )
+  const hhAry = [firstName, middleName, lastName, birthYear, birthMonth, birthDay]
+  if (hhAry.every((str) => str.length === 0)) throw new Error("Missing info for household member")
+  return hhAry.join(HOUSEHOLD_MEMBER_ID_DELIMITER)
 }
 
 export const getHouseholdMemberDataFromId = (
