@@ -33,30 +33,6 @@ export const generateHouseholdMemberId = ({
   return hhAry.join(HOUSEHOLD_MEMBER_ID_DELIMITER)
 }
 
-export const getHouseholdMemberDataFromId = (
-  memberId: string
-): {
-  firstName: string
-  middleName: string
-  lastName: string
-  birthYear: string
-  birthMonth: string
-  birthDay: string
-} => {
-  const [firstName, middleName, lastName, birthYear, birthMonth, birthDay] = memberId.split(
-    HOUSEHOLD_MEMBER_ID_DELIMITER
-  )
-
-  return {
-    firstName,
-    middleName,
-    lastName,
-    birthYear,
-    birthMonth,
-    birthDay,
-  }
-}
-
 export const validAge = (
   birthDate: Dayjs,
   minimumAge: number | null,

@@ -48,7 +48,7 @@ const HouseholdMemberMultiStepWrapper = ({
     methods.reset(householdMembersArray[index])
   }
 
-  const handleUpdateHouseholdMember = (data: Record<string, unknown>) => {
+  const handleUpdateHouseholdMember = (data: Record<string, string>) => {
     const dataWithId = { ...data, id: generateHouseholdMemberId(data) }
     const updatedHouseholdMembers = [...householdMembersArray]
     if (isEditingHouseholdMember) {

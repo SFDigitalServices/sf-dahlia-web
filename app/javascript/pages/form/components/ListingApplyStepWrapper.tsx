@@ -61,7 +61,7 @@ const ListingApplyStepWrapper = ({
     defaultValues,
   })
 
-  const hasErrors = () => Object.keys(formMethods.errors).length > 0
+  const hasErrors = () => Object.keys(formMethods.formState.errors).length > 0
 
   const onSubmit = (data: Record<string, unknown>) => {
     saveFormData({ ...blankValues, ...data })

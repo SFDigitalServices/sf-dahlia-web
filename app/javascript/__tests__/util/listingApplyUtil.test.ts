@@ -4,14 +4,18 @@ import {
   validAge,
   validVeteranAge,
   generateHouseholdMemberId,
-  getHouseholdMemberDataFromId,
   getPrimaryApplicantData,
   allHouseholdMembers,
 } from "../../util/listingApplyUtil"
 
 describe("listingApplyUtil", () => {
   describe("validAge", () => {
-    MockDate.set("2020-01-01")
+    beforeAll(() => {
+      MockDate.set("2020-01-01")
+    })
+    afterAll(() => {
+      MockDate.reset()
+    })
     it("returns true for birth dates greater than minimum age", () => {
       const birthDate = dayjs("2000-01-01")
       const minimumAge = 18
@@ -22,7 +26,7 @@ describe("listingApplyUtil", () => {
       const minimumAge = 18
       expect(validAge(birthDate, minimumAge, undefined)).toBe(false)
     })
-    it("returns true for birth dates that are less than 10 months in the futue", () => {
+    it("returns true for birth dates that are less than 10 months in the future", () => {
       const birthDate = dayjs("2020-09-01")
       expect(validAge(birthDate, null, undefined)).toBe(true)
     })
@@ -51,7 +55,12 @@ describe("listingApplyUtil", () => {
   })
 
   describe("validVeteranAge", () => {
-    MockDate.set("2020-01-01")
+    beforeAll(() => {
+      MockDate.set("2020-01-01")
+    })
+    afterAll(() => {
+      MockDate.reset()
+    })
     it("returns true when person is 17 or older", () => {
       expect(validVeteranAge(dayjs("2003-01-01"))).toBe(true)
     })
@@ -83,20 +92,6 @@ describe("listingApplyUtil", () => {
 
     it("throws when called with all empty fields", () => {
       expect(() => generateHouseholdMemberId({})).toThrow("Missing info for household member")
-    })
-  })
-
-  describe("getHouseholdMemberDataFromId", () => {
-    it("parses a member id back into its fields", () => {
-      const id = "John++++M++++Doe++++1990++++3++++15"
-      expect(getHouseholdMemberDataFromId(id)).toEqual({
-        firstName: "John",
-        middleName: "M",
-        lastName: "Doe",
-        birthYear: "1990",
-        birthMonth: "3",
-        birthDay: "15",
-      })
     })
   })
 
