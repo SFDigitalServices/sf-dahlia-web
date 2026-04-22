@@ -10,8 +10,9 @@
   padding: 0;
 
   &__heading {
-    font-size: 0.7rem;
-    font-weight: 700;
+    font-family: "Open Sans";
+    font-size: 14px;
+    font-weight: 400;
     letter-spacing: 0.12em;
     text-transform: uppercase;
     color: #4a5568;
@@ -42,7 +43,7 @@
     color: #4a5568;
     text-decoration: none;
     border-left: 4px solid transparent;
-    transition: color 0.15s;
+    transition: color 0.15s, background-color 0.15s;
     background: none;
     border-top: none;
     border-right: none;
@@ -52,9 +53,10 @@
     text-align: left;
     font-family: inherit;
 
-    &:hover {
+    &:hover,
+    &:hover:visited {
       color: #2d3748;
-      background-color: #F5F8F9;
+      background-color: #F5F8F9 !important;
     }
 
     &--active {
@@ -77,7 +79,7 @@
 
   @media (min-width: 768px) {
     // Align top of card with the sidebar nav card (below the "ACCOUNT" heading)
-    margin-top: calc(0.7rem * 1.4 + 0.75rem);
+    margin-top: 2rem;
   }
 
   &__greeting {
@@ -90,9 +92,8 @@
   }
 
   &__cards {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
+    display: grid;
+    grid-template-columns: auto auto 1fr auto;
   }
 
   &__signout {
@@ -121,7 +122,9 @@
 // ── Dashboard card ──
 
 .overview-card {
-  display: flex;
+  display: grid;
+  grid-column: 1 / -1;
+  grid-template-columns: subgrid;
   align-items: center;
   padding: 1.25rem 2rem;
   border-bottom: 1px solid #e2e8f0;
@@ -168,23 +171,9 @@
 
   &__action {
     flex-shrink: 0;
-  }
 
-  &__button {
-    display: inline-block;
-    padding: 0.5rem 1.25rem;
-    font-size: 0.8rem;
-    color: #0077da;
-    border: 2px solid #0077da;
-    border-radius: 4px;
-    text-decoration: none;
-    text-align: center;
-    white-space: nowrap;
-    transition: background-color 0.15s, color 0.15s;
-
-    &:hover {
-      background-color: #0077da;
-      color: #fff;
+    .seeds-button {
+      width: 100%;
     }
   }
 }
@@ -192,11 +181,15 @@
 // ── Responsive: stack card layout on mobile ──
 
 @media (max-width: 640px) {
+  .overview-content__cards {
+    grid-template-columns: 1fr;
+  }
+
   .overview-card {
-    flex-wrap: wrap;
+    grid-template-columns: auto auto 1fr;
 
     &__action {
-      width: 100%;
+      grid-column: 1 / -1;
       margin-top: 0.5rem;
       padding-left: calc(3rem + 3px + 1rem);
     }

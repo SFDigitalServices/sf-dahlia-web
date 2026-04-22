@@ -1,5 +1,6 @@
 import React, { useContext } from "react"
 import { Icon, t, type UniversalIconType } from "@bloom-housing/ui-components"
+import { Button } from "@bloom-housing/ui-seeds"
 import {
   getMyApplicationsPath,
   getMyAccountSettingsPath,
@@ -34,9 +35,9 @@ const DashboardCard = ({ icon, title, description, buttonLabel, href }: Dashboar
         <p className="overview-card__description">{description}</p>
       </div>
       <div className="overview-card__action">
-        <a href={href} className="overview-card__button">
+        <Button variant="primary-outlined" size="sm" href={href}>
           {buttonLabel}
-        </a>
+        </Button>
       </div>
     </div>
   )
