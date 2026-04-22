@@ -1,10 +1,10 @@
 import React, { useState } from "react"
+import { nanoid } from "nanoid"
 import { useForm, FormProvider } from "react-hook-form"
 import { useFormEngineContext } from "../../../../formEngine/formEngineContext"
 import HouseholdMemberForm from "./HouseholdMemberForm"
 import AddHouseholdMembers from "./AddHouseholdMembers"
 import VerifyAddress from "../VerifyAddress"
-import { generateHouseholdMemberId } from "../../../../util/listingApplyUtil"
 interface HouseholdMemberMultiStepWrapperProps {
   fieldNames: {
     householdMembers: string
@@ -49,12 +49,11 @@ const HouseholdMemberMultiStepWrapper = ({
   }
 
   const handleUpdateHouseholdMember = (data: Record<string, string>) => {
-    const dataWithId = { ...data, id: generateHouseholdMemberId(data) }
     const updatedHouseholdMembers = [...householdMembersArray]
     if (isEditingHouseholdMember) {
-      updatedHouseholdMembers[currentMemberIndex] = dataWithId
+      updatedHouseholdMembers[currentMemberIndex] = data
     } else {
-      updatedHouseholdMembers.push(dataWithId)
+      updatedHouseholdMembers.push({ ...data, id: nanoid(18) })
     }
     saveFormData({ ...formData, householdMembers: updatedHouseholdMembers })
     setHouseholdMembersArray(updatedHouseholdMembers)

@@ -3,7 +3,6 @@ import MockDate from "mockdate"
 import {
   validAge,
   validVeteranAge,
-  generateHouseholdMemberId,
   getPrimaryApplicantData,
   allHouseholdMembers,
 } from "../../util/listingApplyUtil"
@@ -69,29 +68,6 @@ describe("listingApplyUtil", () => {
     })
     it("returns false when person is younger than 17", () => {
       expect(validVeteranAge(dayjs("2003-01-02"))).toBe(false)
-    })
-  })
-
-  describe("generateHouseholdMemberId", () => {
-    it("joins all fields with the delimiter", () => {
-      const result = generateHouseholdMemberId({
-        firstName: "John",
-        middleName: "M",
-        lastName: "Doe",
-        birthYear: "1990",
-        birthMonth: "3",
-        birthDay: "15",
-      })
-      expect(result).toBe(["John", "M", "Doe", "1990", "3", "15"].join("++++"))
-    })
-
-    it("uses empty strings for missing fields", () => {
-      const result = generateHouseholdMemberId({ firstName: "Jane" })
-      expect(result).toBe(["Jane", "", "", "", "", ""].join("++++"))
-    })
-
-    it("throws when called with all empty fields", () => {
-      expect(() => generateHouseholdMemberId({})).toThrow("Missing info for household member")
     })
   })
 

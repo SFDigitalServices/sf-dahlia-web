@@ -11,28 +11,6 @@ export type HouseholdMember = {
   birthDay: string
 }
 
-const HOUSEHOLD_MEMBER_ID_DELIMITER = "++++"
-
-export const generateHouseholdMemberId = ({
-  firstName = "",
-  middleName = "",
-  lastName = "",
-  birthYear = "",
-  birthMonth = "",
-  birthDay = "",
-}: {
-  firstName?: string
-  middleName?: string
-  lastName?: string
-  birthYear?: string
-  birthMonth?: string
-  birthDay?: string
-}) => {
-  const hhAry = [firstName, middleName, lastName, birthYear, birthMonth, birthDay]
-  if (hhAry.every((str) => str.length === 0)) throw new Error("Missing info for household member")
-  return hhAry.join(HOUSEHOLD_MEMBER_ID_DELIMITER)
-}
-
 export const validAge = (
   birthDate: Dayjs,
   minimumAge: number | null,

@@ -6,7 +6,6 @@ import { getPrimaryApplicantData } from "../../../../util/listingApplyUtil"
 import { getFullName } from "../../../../util/formEngineUtil"
 import stepStyles from "../ListingApplyStepWrapper.module.scss"
 import styles from "./AddHouseholdMembers.module.scss"
-
 interface AddHouseholdMemberProps {
   householdMembers: Record<string, unknown>[]
   handleAddHouseholdMember: () => void
