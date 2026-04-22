@@ -2,7 +2,6 @@
 import React from "react"
 import { Select, t } from "@bloom-housing/ui-components"
 import { RegisterOptions, useFormContext } from "react-hook-form"
-
 interface FormSelectProps {
   label: string
   subNote?: string
@@ -43,7 +42,7 @@ const FormSelect = ({
       id={selection}
       name={selection}
       label={t(label)}
-      subNote={t(subNote)}
+      subNote={subNote && t(subNote)}
       options={selectOptions}
       placeholder={defaultOptionName ? t(defaultOptionName) : undefined}
       controlClassName="control"

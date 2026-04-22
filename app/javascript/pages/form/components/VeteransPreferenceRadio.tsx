@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/unbound-method */
 import React from "react"
 import { t, Field } from "@bloom-housing/ui-components"
 import { FormErrorMessage } from "@bloom-housing/ui-seeds"
@@ -21,8 +22,11 @@ interface VeteransRadioProps {
 const VeteransPreferenceRadio = ({
   fieldNames: { isAnyoneAVeteran, veteranMemberId },
 }: VeteransRadioProps) => {
-  // eslint-disable-next-line @typescript-eslint/unbound-method
-  const {register, formState: { errors }, watch } = useFormContext()
+  const {
+    register,
+    formState: { errors },
+    watch,
+  } = useFormContext()
 
   const { formData } = useFormEngineContext()
 
