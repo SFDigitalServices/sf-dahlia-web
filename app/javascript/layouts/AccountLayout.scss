@@ -1,5 +1,6 @@
 .account-layout {
   &__content {
+    box-sizing: border-box;
   }
 }
 
@@ -7,7 +8,6 @@
 
 .account-sidebar {
   padding: 0;
-  border-right: 1px solid #e2e8f0;
 
   &__heading {
     font-size: 0.7rem;
@@ -23,17 +23,25 @@
     list-style: none;
     padding: 0;
     margin: 0;
+    background: #fff;
+    border-radius: 0.5rem;
+    border: 1px solid #e2e8f0;
+    overflow: hidden;
+  }
+
+  &__list > li + li {
+    border-top: 1px solid #e2e8f0;
   }
 
   &__link {
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    padding: 0.625rem 0.75rem;
-    font-size: 0.875rem;
-    color: #a0aec0;
+    padding: 1rem 1rem;
+    font-size: 0.95rem;
+    color: #4a5568;
     text-decoration: none;
-    border-left: 3px solid transparent;
+    border-left: 4px solid transparent;
     transition: color 0.15s;
     background: none;
     border-top: none;
@@ -46,6 +54,7 @@
 
     &:hover {
       color: #2d3748;
+      background-color: #F5F8F9;
     }
 
     &--active {
@@ -56,19 +65,19 @@
   }
 
   &__signout {
-    margin-top: 0.25rem;
+    // Divider comes from li + li border-top
+    font-size: inherit;
   }
 }
 
 // ── Overview content area ──
 
 .overview-content {
-  // Remove padding from the content wrapper so dividers go edge-to-edge.
-  // Inner elements get their own horizontal padding.
-  margin: -1.5rem -2rem; // counteract the AccountLayout p-6 md:p-8
+  overflow: hidden;
 
   @media (min-width: 768px) {
-    margin: -2rem;
+    // Align top of card with the sidebar nav card (below the "ACCOUNT" heading)
+    margin-top: calc(0.7rem * 1.4 + 0.75rem);
   }
 
   &__greeting {
@@ -117,6 +126,7 @@
   padding: 1.25rem 2rem;
   border-bottom: 1px solid #e2e8f0;
   gap: 1rem;
+  font-family: "Open Sans", sans-serif;
 
   &__icon {
     flex-shrink: 0;
@@ -145,6 +155,7 @@
     font-weight: 600;
     color: #1a202c;
     margin: 0 0 0.25rem;
+    font-family: "Open Sans", sans-serif;
   }
 
   &__description {
@@ -152,6 +163,7 @@
     color: #a0aec0;
     margin: 0;
     line-height: 1.4;
+    font-family: "Open Sans", sans-serif;
   }
 
   &__action {
@@ -163,7 +175,7 @@
     padding: 0.5rem 1.25rem;
     font-size: 0.8rem;
     color: #0077da;
-    border: 1px solid #0077da;
+    border: 2px solid #0077da;
     border-radius: 4px;
     text-decoration: none;
     text-align: center;
@@ -192,11 +204,10 @@
 
   .account-sidebar {
     padding: 1rem;
-    border-right: none;
     border-bottom: 1px solid #e2e8f0;
   }
 
   .overview-content {
-    margin: -1.5rem;
+    border-radius: 0;
   }
 }

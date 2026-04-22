@@ -53,7 +53,7 @@ const OverviewContent = () => {
   }
 
   return (
-    <div className="overview-content">
+    <div className="overview-content bg-white md:rounded-lg md:border md:border-gray-450">
       <h1 className="overview-content__greeting">
         {getGreeting(profile?.firstName)}
       </h1>

@@ -14,7 +14,7 @@ const AccountLayout = ({ children }: AccountLayoutProps) => {
         <div className="md:w-56 flex-shrink-0">
           <AccountSidebar />
         </div>
-        <div className="account-layout__content flex-1 min-w-0 bg-white md:rounded-lg md:border md:border-gray-450 p-6 md:p-8">
+        <div className="account-layout__content flex-1 min-w-0">
           {children}
         </div>
       </div>
