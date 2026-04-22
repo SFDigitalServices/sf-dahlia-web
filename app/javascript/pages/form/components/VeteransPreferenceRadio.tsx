@@ -15,17 +15,18 @@ import {
   allHouseholdMembers,
 } from "../../../util/listingApplyUtil"
 
-interface VeteransRadioProps {
+interface VeteransPrefernceRadioProps {
   fieldNames: { isAnyoneAVeteran: string; veteranMemberId: string }
 }
 
 const VeteransPreferenceRadio = ({
   fieldNames: { isAnyoneAVeteran, veteranMemberId },
-}: VeteransRadioProps) => {
+}: VeteransPrefernceRadioProps) => {
   const {
     register,
     formState: { errors },
     watch,
+    setValue,
   } = useFormContext()
 
   const { formData } = useFormEngineContext()
@@ -47,6 +48,11 @@ const VeteransPreferenceRadio = ({
       value: hhMember.id,
     }))
 
+  const handleNoOrPreferNotToAnswer = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const isChecked = e.target.checked
+    if (isChecked) setValue(veteranMemberId, "")
+  }
+
   return (
     <fieldset className={styles["veteran-preference-group"]}>
       <div className="radio-field-group">
@@ -54,7 +60,7 @@ const VeteransPreferenceRadio = ({
           name={isAnyoneAVeteran}
           className={styles["radio-field"]}
           type="radio"
-          id="yes"
+          id="veteranYes"
           label={t("t.yes")}
           register={register}
           inputProps={{
@@ -81,22 +87,24 @@ const VeteransPreferenceRadio = ({
           name={isAnyoneAVeteran}
           className={styles["radio-field"]}
           type="radio"
-          id="no"
+          id="veteranNo"
           label={t("t.no")}
           register={register}
           inputProps={{ value: "no" }}
           validation={{ required: true }}
+          onChange={handleNoOrPreferNotToAnswer}
         />
 
         <Field
           name={isAnyoneAVeteran}
           className={styles["radio-field"]}
           type="radio"
-          id="preferNotToAnswer"
+          id="veteranPreferNotToAnswer"
           label={t("t.preferNotToAnswer")}
           register={register}
           inputProps={{ value: "preferNotToAnswer" }}
           validation={{ required: true }}
+          onChange={handleNoOrPreferNotToAnswer}
         />
         {isAnyoneAVeteranValue === "preferNotToAnswer" && (
           <div className="field-sub-note">

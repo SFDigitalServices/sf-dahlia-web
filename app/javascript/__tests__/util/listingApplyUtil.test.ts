@@ -62,9 +62,7 @@ describe("listingApplyUtil", () => {
     })
     it("returns true when person is 17 or older", () => {
       expect(validVeteranAge(dayjs("2003-01-01"))).toBe(true)
-    })
-    it("returns true when person is exactly 17", () => {
-      expect(validVeteranAge(dayjs("2003-01-01"))).toBe(true)
+      expect(validVeteranAge(dayjs("2002-12-01"))).toBe(true)
     })
     it("returns false when person is younger than 17", () => {
       expect(validVeteranAge(dayjs("2003-01-02"))).toBe(false)

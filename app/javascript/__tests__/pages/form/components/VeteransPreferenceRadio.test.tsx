@@ -6,7 +6,7 @@ import { renderWithFormContextWrapper } from "../../../__util__/renderUtils"
 import VeteransPreferenceRadio from "../../../../pages/form/components/VeteransPreferenceRadio"
 
 const adultMember = {
-  id: "jane--doe-1990-1-15",
+  id: "abcd1234",
   firstName: "Jane",
   middleName: "",
   lastName: "Doe",
@@ -16,7 +16,7 @@ const adultMember = {
 }
 
 const childMember = {
-  id: "kid-smith-doe-2020-6-1",
+  id: "efgh5678",
   firstName: "Kid",
   middleName: "Smith",
   lastName: "Doe",
