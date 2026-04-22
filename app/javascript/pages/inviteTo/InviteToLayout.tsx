@@ -96,7 +96,7 @@ const InviteToSidebarBlock = ({
   sidebarText: string
 }) => {
   return (
-    <SidebarBlock title={t("contactAgent.contact")} priority={2}>
+    <SidebarBlock title={t("contactAgent.contact")} priority={2} className={styles.sidebarBlock}>
       <Heading size="lg" priority={3}>
         {t(sidebarText)}
       </Heading>

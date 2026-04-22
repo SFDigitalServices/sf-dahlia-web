@@ -4,7 +4,7 @@ import { Icon, IconFillColors, Mobile, t } from "@bloom-housing/ui-components"
 import { Heading, Button, LoadingState } from "@bloom-housing/ui-seeds"
 import RailsSaleListing from "../../../api/types/rails/listings/RailsSaleListing"
 import { isDeadlinePassed } from "../../../util/listingUtil"
-import { getCurrentLanguage } from "../../../util/languageUtil"
+import { getCurrentLanguage, getTranslatedString, renderMarkup } from "../../../util/languageUtil"
 import styles from "../invite-to.module.scss"
 import { ConfigContext } from "../../../lib/ConfigContext"
 import InviteToLayout from "../InviteToLayout"
@@ -33,7 +33,6 @@ const WhatToDo = ({
     const url = listing.Leaseup_Appointment_Scheduling_URL
     void (async () => {
       setIsSubmitting(true)
-      window.open(url, "_blank")
       try {
         if (appId) {
           await recordResponse({
@@ -46,6 +45,7 @@ const WhatToDo = ({
             type: INVITE_TO_X.INTERVIEW,
           })
         }
+        window.open(url, "_blank")
         setIsSubmitting(false)
       } catch (error) {
         console.error("Error submitting invite to interview response:", error)
@@ -84,7 +84,7 @@ const WhatToDo = ({
             variant="primary-outlined"
             onClick={() =>
               window.open(
-                `/${getCurrentLanguage()}/listings/${listing.Id}/next-steps/documents`,
+                `/${getCurrentLanguage()}/listings/${listing.Id}/next-steps/documents?type=I2I`,
                 "_blank"
               )
             }
@@ -96,11 +96,16 @@ const WhatToDo = ({
           <Heading priority={3} size="lg">
             {t("inviteToInterviewPage.submitYourInfo.whatToDo.step3.title")}
           </Heading>
-          <p>{t("inviteToInterviewPage.submitYourInfo.whatToDo.step3.p1")}</p>
-          <p>
-            <strong>{t("inviteToInterviewPage.submitYourInfo.whatToDo.step3.p2")}</strong>
-            {t("inviteToInterviewPage.submitYourInfo.whatToDo.step3.p3")}
-          </p>
+          {t("inviteToInterviewPage.submitYourInfo.whatToDo.step3.p1")}
+          {listing.Fee > 0 && (
+            <>
+              {t("inviteToInterviewPage.submitYourInfo.whatToDo.step3.p2")}
+              {renderMarkup(
+                `${t("inviteToInterviewPage.submitYourInfo.whatToDo.step3.p3", { fee: listing.Fee })}`,
+                "<strong></strong>"
+              )}
+            </>
+          )}
         </li>
       </ol>
     </div>
@@ -162,12 +167,18 @@ const InviteToInterviewNextSteps = ({
           {t("inviteToInterviewPage.submitYourInfo.sidebar")}
         </Heading>
         <InviteToLeasingAgentInfo listing={listing} />
+        <Heading size="sm" priority={3}>
+          {t("contactAgent.officeHours.seeTheUnit")}
+        </Heading>
+        <p>
+          {getTranslatedString(listing?.Office_Hours, "Office_Hours__c", listing?.translations)}
+        </p>
       </Mobile>
       <Button
         leadIcon={<Icon symbol={faPrint} size="medium" fill={IconFillColors.primary} />}
         variant="primary-outlined"
         onClick={() => window.print()}
-        className={styles.actionButton}
+        className={styles.printButton}
       >
         {t("inviteToInterviewPage.submitYourInfo.printThisPage")}
       </Button>
