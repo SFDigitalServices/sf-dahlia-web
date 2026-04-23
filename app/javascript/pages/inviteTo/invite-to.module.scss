@@ -150,6 +150,11 @@
       list-style-type: disc;
       margin-left: var(--seeds-spacer-section);
     }
+    ol {
+      list-style-type: decimal;
+      margin-left: var(--seeds-spacer-section);
+      padding-bottom: var(--seeds-spacer-header);
+    }
     ul.iconList {
       margin-left: 0;
       li {
