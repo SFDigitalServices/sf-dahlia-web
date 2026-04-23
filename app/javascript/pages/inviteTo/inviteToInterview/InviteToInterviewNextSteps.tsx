@@ -56,11 +56,11 @@ const WhatToDo = ({
     })()
   }, [appId, listing, deadline])
   return (
-    <div className={`${styles.infoSubSection} ${styles.whatToDoList}`}>
+    <div className={`${styles.infoSubSection} markdown`}>
       <Heading priority={2} size="2xl">
         {t("inviteToInterviewPage.submitYourInfo.whatToDo.title")}
       </Heading>
-      <ol className={`${styles.numberedList} numbered-list`}>
+      <ol className="process-list">
         <li>
           <Heading priority={3} size="lg">
             {t("inviteToInterviewPage.submitYourInfo.whatToDo.step1.title")}
