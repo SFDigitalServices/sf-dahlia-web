@@ -27,7 +27,7 @@ interface InviteToApplyNextStepsProps {
 
 const PreparingYourApplication = () => {
   return (
-    <div className={styles.submitYourInfoSection}>
+    <div className={styles.infoSubSection}>
       <Heading priority={2} size="2xl">
         {t("howToApplyPage.howLongItTakesSection.subtitle1")}
       </Heading>
@@ -86,7 +86,7 @@ const WhatToDo = ({
   }, [appId, listing, deadline, fileUploadUrl])
 
   return (
-    <div className="markdown">
+    <div className={`${styles.whatToDoList} markdown`}>
       <Heading priority={2} size="2xl">
         {t("inviteToApplyPage.submitYourInfo.whatToDo.title")}
       </Heading>
@@ -125,7 +125,7 @@ const WhatToDo = ({
             {t("inviteToApplyPage.submitYourInfo.whatToDo.step3.title")}
           </Heading>
           <p>{t("inviteToApplyPage.submitYourInfo.whatToDo.step3.p1")}</p>
-          <ul className={styles.submitYourInfoList}>
+          <ul>
             <li>{t("inviteToApplyPage.submitYourInfo.whatToDo.step3.p2")}</li>
             <li>{t("inviteToApplyPage.submitYourInfo.whatToDo.step3.p3")}</li>
           </ul>
@@ -159,7 +159,7 @@ const WhatToDo = ({
         </Message>
       )}
       <div className={styles.submitYourInfoBox}>
-        <Heading priority={4} size="lg">
+        <Heading priority={3} size="lg">
           {t("inviteToApplyPage.submitYourInfo.whatToDo.step3.p8")}
         </Heading>
         <p>{t("inviteToApplyPage.submitYourInfo.whatToDo.step3.p9")}</p>
@@ -170,7 +170,7 @@ const WhatToDo = ({
 
 const WhatHappensNext = () => {
   return (
-    <div className={styles.submitYourInfoSection}>
+    <div className={styles.infoSubSection}>
       <Heading priority={2} size="2xl">
         {t("howToApplyPage.whatHappensNext.title")}
       </Heading>
@@ -179,7 +179,7 @@ const WhatHappensNext = () => {
       </Heading>
       <p>{t("inviteToApplyPage.submitYourInfo.whatHappensNext.p2")}</p>
       <p>{t("inviteToApplyPage.submitYourInfo.whatHappensNext.p3")}</p>
-      <ul className={styles.submitYourInfoList}>
+      <ul>
         <li>{t("inviteToApplyPage.submitYourInfo.whatHappensNext.p4")}</li>
         <li>{t("inviteToApplyPage.submitYourInfo.whatHappensNext.p5")}</li>
       </ul>

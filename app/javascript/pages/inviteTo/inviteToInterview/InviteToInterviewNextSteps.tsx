@@ -56,7 +56,7 @@ const WhatToDo = ({
     })()
   }, [appId, listing, deadline])
   return (
-    <div className={`${styles.infoSubSection} markdown`}>
+    <div className={`${styles.whatToDoList} markdown`}>
       <Heading priority={2} size="2xl">
         {t("inviteToInterviewPage.submitYourInfo.whatToDo.title")}
       </Heading>
@@ -114,7 +114,7 @@ const WhatToDo = ({
 
 const WhatToExpectAfter = () => {
   return (
-    <div className={styles.submitYourInfoSection}>
+    <div className={styles.infoSubSection}>
       <Heading priority={2} size="2xl">
         {t("inviteToInterviewPage.submitYourInfo.whatToExpect.title")}
       </Heading>
@@ -123,7 +123,7 @@ const WhatToExpectAfter = () => {
       </Heading>
       <p>{t("inviteToInterviewPage.submitYourInfo.whatToExpect.p2")}</p>
       <p>{t("inviteToInterviewPage.submitYourInfo.whatToExpect.p3")}</p>
-      <ul className={styles.submitYourInfoList}>
+      <ul>
         <li>{t("inviteToInterviewPage.submitYourInfo.whatToExpect.p4")}</li>
         <li>{t("inviteToInterviewPage.submitYourInfo.whatToExpect.p5")}</li>
       </ul>
@@ -132,7 +132,7 @@ const WhatToExpectAfter = () => {
       </Heading>
       <p>{t("inviteToInterviewPage.submitYourInfo.whatToExpect.p7")}</p>
       <div className={styles.submitYourInfoBox}>
-        <Heading priority={4} size="lg">
+        <Heading priority={3} size="lg">
           {t("inviteToInterviewPage.submitYourInfo.whatToExpect.p8")}
         </Heading>
         <p>{t("inviteToInterviewPage.submitYourInfo.whatToExpect.p9")}</p>
@@ -159,7 +159,7 @@ const InviteToInterviewNextSteps = ({
         deadline={deadline}
       >
         <WhatToDo listing={listing} deadline={deadline} appId={appId} />
-        <div className={styles.submitYourInfoSection}>
+        <div className={styles.infoSubSection}>
           <InviteToGetHelp />
         </div>
         <WhatToExpectAfter />
@@ -179,7 +179,6 @@ const InviteToInterviewNextSteps = ({
           leadIcon={<Icon symbol={faPrint} size="medium" fill={IconFillColors.primary} />}
           variant="primary-outlined"
           onClick={() => window.print()}
-          className={styles.printButton}
         >
           {t("inviteToInterviewPage.submitYourInfo.printThisPage")}
         </Button>

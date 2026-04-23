@@ -22,7 +22,7 @@ const InviteToHeader = ({
   headerText: string
 }) => {
   return (
-    <div className={styles.submitYourInfoSection}>
+    <div className={styles.infoSubSection}>
       <img
         src={listing?.Listing_Images?.[0]?.Image_URL}
         alt={listing?.Listing_Images?.[0]?.Image_Description}
@@ -49,6 +49,7 @@ const DeadlineBanner = ({
         fullwidth
         variant={isDeadlinePassed(deadline) ? "alert" : "warn"}
         customIcon={<Icon symbol="clock" size="medium" />}
+        className={styles.messageBanner}
       >
         <strong>
           {isDeadlinePassed(deadline)
@@ -68,6 +69,7 @@ const DeadlineBanner = ({
       fullwidth
       customIcon={<Icon symbol="clock" size="medium" />}
       testId={isDeadlinePassed(deadline) ? "deadline-passed-banner" : "deadline-not-passed-banner"}
+      className={styles.messageBanner}
     >
       {isDeadlinePassed(deadline) ? (
         renderInlineMarkup(
@@ -96,7 +98,7 @@ const InviteToSidebarBlock = ({
   sidebarText: string
 }) => {
   return (
-    <SidebarBlock title={t("contactAgent.contact")} priority={2} className={styles.sidebarBlock}>
+    <SidebarBlock title={t("contactAgent.contact")} priority={3} className={styles.sidebarBlock}>
       <Heading size="lg" priority={3}>
         {t(sidebarText)}
       </Heading>
