@@ -14,7 +14,6 @@ import Layout from "../../../layouts/Layout"
 import { renderInlineMarkup, getBMRApplicationUrl } from "../../../util/languageUtil"
 import { ConfigContext } from "../../../lib/ConfigContext"
 import InviteToLeasingAgentInfo from "../InviteToLeasingAgentInfo"
-import InviteToGetHelp from "../InviteToGetHelp"
 
 import styles from "../invite-to.module.scss"
 import { HOME_SF_PHONE } from "../../../modules/constants"
@@ -272,7 +271,6 @@ const HousingAssistance = () => {
         <li>{renderInlineMarkup(t("inviteToApplyPage.documents.housingAssistance.p4"))}</li>
         <li>{renderInlineMarkup(t("inviteToApplyPage.documents.housingAssistance.p5"))}</li>
       </ul>
-      <InviteToGetHelp />
     </div>
   )
 }
