@@ -164,9 +164,11 @@ export const generateSubmitLink = (
   type: INVITE_TO_X,
   submitPreviewLinkTokenParam?: string
 ) => {
-  const submitLinkQueryStr = submitPreviewLinkTokenParam
-    ? `t=${submitPreviewLinkTokenParam}`
-    : new URLSearchParams({ appId, deadline, type }).toString()
+  const submitLinkQueryStr = new URLSearchParams({
+    appId: appId,
+    deadline: deadline,
+    type: type,
+  }).toString()
   return `/${getCurrentLanguage()}/listings/${listingId}/next-steps?${submitLinkQueryStr}`
 }
 

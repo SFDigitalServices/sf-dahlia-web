@@ -8,23 +8,14 @@ class InviteToController < ApplicationController
     # end
     decoded_params ||= params
     @invite_to_props = props(decoded_params)
-    Rails.logger.info(
-      'TEST' \
-      "deadline=#{decoded_params['deadline']}, " \
-      "app_id=#{decoded_params['appId']}, " \
-      "application_number=#{decoded_params['applicationNumber']}, " \
-      "act=#{decoded_params['act']}, " \
-      "type=#{decoded_params['type']}, " \
-      "response=#{decoded_params['response']}",
-    )
     # Get file upload URL for application
-    if decoded_params['appId'].present?
+    if decoded_params['appId'].present? && decoded_params['appId'] != 'null'
       application = Force::ShortFormService.get(decoded_params['appId'])
       @invite_to_props = @invite_to_props.merge(
         url: application['uploadURL'],
       )
     end
-    if decoded_params['applicationNumber'].present?
+    if decoded_params['applicationNumber'].present? && decoded_params['applicationNumber'] != 'null'
       application = Force::ShortFormService.get(decoded_params['applicationNumber'])
       @invite_to_props = @invite_to_props.merge(
         url: application['uploadURL'],

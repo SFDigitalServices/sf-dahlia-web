@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from "react"
 import { faPrint } from "@fortawesome/free-solid-svg-icons"
-import { Icon, IconFillColors, Mobile, t } from "@bloom-housing/ui-components"
+import { Icon, IconFillColors, LoadingOverlay, Mobile, t } from "@bloom-housing/ui-components"
 import { Heading, Button, LoadingState } from "@bloom-housing/ui-seeds"
 import RailsSaleListing from "../../../api/types/rails/listings/RailsSaleListing"
 import { isDeadlinePassed } from "../../../util/listingUtil"
@@ -148,41 +148,43 @@ const InviteToInterviewNextSteps = ({
 }: InviteToInterviewNextStepsProps) => {
   const { getAssetPath } = React.useContext(ConfigContext)
   return (
-    <InviteToLayout
-      listing={listing}
-      type={INVITE_TO_X.INTERVIEW}
-      subtitle={t("inviteToInterviewPage.submitYourInfo.subtitle")}
-      getAssetPath={getAssetPath}
-      headerText="inviteToInterviewPage.submitYourInfo.seeApartment"
-      sidebarText="inviteToInterviewPage.submitYourInfo.sidebar"
-      deadline={deadline}
-    >
-      <WhatToDo listing={listing} deadline={deadline} appId={appId} />
-      <div className={styles.submitYourInfoSection}>
-        <InviteToGetHelp />
-      </div>
-      <WhatToExpectAfter />
-      <Mobile>
-        <Heading size="lg" priority={3}>
-          {t("inviteToInterviewPage.submitYourInfo.sidebar")}
-        </Heading>
-        <InviteToLeasingAgentInfo listing={listing} />
-        <Heading size="sm" priority={3}>
-          {t("contactAgent.officeHours.seeTheUnit")}
-        </Heading>
-        <p>
-          {getTranslatedString(listing?.Office_Hours, "Office_Hours__c", listing?.translations)}
-        </p>
-      </Mobile>
-      <Button
-        leadIcon={<Icon symbol={faPrint} size="medium" fill={IconFillColors.primary} />}
-        variant="primary-outlined"
-        onClick={() => window.print()}
-        className={styles.printButton}
+    <LoadingOverlay isLoading={!listing}>
+      <InviteToLayout
+        listing={listing}
+        type={INVITE_TO_X.INTERVIEW}
+        subtitle={t("inviteToInterviewPage.submitYourInfo.subtitle")}
+        getAssetPath={getAssetPath}
+        headerText="inviteToInterviewPage.submitYourInfo.seeApartment"
+        sidebarText="inviteToInterviewPage.submitYourInfo.sidebar"
+        deadline={deadline}
       >
-        {t("inviteToInterviewPage.submitYourInfo.printThisPage")}
-      </Button>
-    </InviteToLayout>
+        <WhatToDo listing={listing} deadline={deadline} appId={appId} />
+        <div className={styles.submitYourInfoSection}>
+          <InviteToGetHelp />
+        </div>
+        <WhatToExpectAfter />
+        <Mobile>
+          <Heading size="lg" priority={3}>
+            {t("inviteToInterviewPage.submitYourInfo.sidebar")}
+          </Heading>
+          <InviteToLeasingAgentInfo listing={listing} />
+          <Heading size="sm" priority={3}>
+            {t("contactAgent.officeHours.seeTheUnit")}
+          </Heading>
+          <p>
+            {getTranslatedString(listing?.Office_Hours, "Office_Hours__c", listing?.translations)}
+          </p>
+        </Mobile>
+        <Button
+          leadIcon={<Icon symbol={faPrint} size="medium" fill={IconFillColors.primary} />}
+          variant="primary-outlined"
+          onClick={() => window.print()}
+          className={styles.printButton}
+        >
+          {t("inviteToInterviewPage.submitYourInfo.printThisPage")}
+        </Button>
+      </InviteToLayout>
+    </LoadingOverlay>
   )
 }
 
