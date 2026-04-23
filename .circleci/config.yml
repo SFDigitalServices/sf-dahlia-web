@@ -119,7 +119,6 @@ commands:
   start-server:
     description: "Start Rails server in background"
     steps:
-      - setup-webdriver
       - run:
           name: Run rails server in background
           command: bundle exec rails server -p 3000
@@ -139,6 +138,7 @@ commands:
         default: "./spec/e2e/test-feature-path.feature"
     steps:
       - setup
+      - setup-webdriver
       - start-server
       - run: yarn run protractor spec/e2e/conf.js --specs '<< parameters.path >>'
 
@@ -242,6 +242,7 @@ jobs:
     parallelism: 4
     steps:
       - setup
+      - setup-webdriver
       - start-server
       - run:
           name: Run e2e tests using test splitting
