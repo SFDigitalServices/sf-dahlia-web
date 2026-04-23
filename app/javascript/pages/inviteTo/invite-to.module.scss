@@ -32,10 +32,6 @@
     button {
       margin: var(--seeds-spacer-text) 0;
     }
-    ol {
-      list-style-type: decimal;
-      margin-left: var(--seeds-spacer-header);
-    }
   }
   .submitYourInfoSidebar {
     display: flex;
@@ -66,21 +62,19 @@
     h3 {
       margin-bottom: var(--seeds-spacer-text) 0;
     }
-    > div {
+    ol {
+      list-style-type: decimal;
+      margin-left: var(--seeds-spacer-header);
+    }
+    * > div {
       // Override accordion component margins
       margin: 0 !important;
-    }
-    .messageBanner {
-      margin: var(--seeds-spacer-header) 0 0 0 !important;
     }
     .accordionContent {
       padding: var(--seeds-spacer-content);
       border: 2px solid var(--seeds-color-gray-400);
       border-top: none;
       border-radius: 0 0 var(--seeds-rounded-lg) var(--seeds-rounded-lg);
-      ul {
-        padding-bottom: var(--seeds-spacer-label);
-      }
     }
     .iconList li {
       list-style-type: none;
@@ -92,12 +86,14 @@
     ul {
       list-style-type: disc;
       margin-left: var(--seeds-spacer-content);
+      margin-top: var(--seeds-spacer-text);
     }
     ol {
       list-style-type: decimal;
       margin-left: var(--seeds-spacer-content);
+      margin-top: var(--seeds-spacer-text);
     }
-    p:not(.messageBanner p) {
+    p:not(.messageBanner p):not(.accordionContent p) {
       margin-top: var(--seeds-spacer-header);
     }
     .actionButton {
@@ -133,11 +129,18 @@
   .submitYourInfoBox {
     background-color: var(--seeds-color-gray-200);
     padding: var(--seeds-spacer-content);
+    h3 {
+      padding-top: 0;
+    }
     @media (max-width: theme("screens.sm")) {
       margin-top: var(--seeds-spacer-content);
       margin-bottom: var(--seeds-s10);
     }
   }
+}
+
+.messageBanner {
+  margin-top: var(--seeds-spacer-header);
 }
 
 .responseIcon {

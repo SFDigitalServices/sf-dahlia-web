@@ -806,7 +806,7 @@
   "inviteToInterviewPage.documents.childCustody.p6": "Court orders",
   "inviteToInterviewPage.documents.childCustody.p7": "Parenting orders",
   "inviteToInterviewPage.documents.childCustody.title": "If anyone has child custody agreements or parenting orders",
-  "inviteToInterviewPage.documents.housingAssistance.p1": "A <strong>document showing eligibility</strong> for a housing assistance voucher or subsidy",
+  "inviteToInterviewPage.documents.housingAssistance.p1": "<strong>Document showing eligibility for a housing assistance voucher or subsidy</strong>",
   "inviteToInterviewPage.documents.housingAssistance.p2": "Documents must:",
   "inviteToInterviewPage.documents.housingAssistance.p3": "Be the <strong>most recent document</strong> you have",
   "inviteToInterviewPage.documents.housingAssistance.p4": "Show the <strong>amount of the payment</strong> you are eligible for",

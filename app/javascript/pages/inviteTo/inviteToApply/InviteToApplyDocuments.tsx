@@ -67,6 +67,7 @@ const CheckWhatYouNeed = () => {
         leadIcon={<Icon symbol={faPrint} size="medium" />}
         variant="primary-outlined"
         onClick={() => window.print()}
+        className={styles.actionButton}
       >
         {t("inviteToApplyPage.submitYourInfo.prepare.p5")}
       </Button>
