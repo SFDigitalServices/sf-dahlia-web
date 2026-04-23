@@ -234,9 +234,9 @@
     padding: var(--seeds-spacer-content);
     @media (max-width: theme("screens.sm")) {
       margin-top: 0;
+      margin-bottom: var(--seeds-s10);
     }
     margin-top: var(--seeds-spacer-content);
-    margin-bottom: var(--seeds-s10);
     h3 {
       margin-top: 0;
       padding-bottom: var(--seeds-spacer-header);
