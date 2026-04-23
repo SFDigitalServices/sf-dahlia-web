@@ -62,9 +62,15 @@
     h2 {
       font-size: var(--seeds-font-size-2xl);
     }
+    h3 {
+      margin: var(--seeds-spacer-text) 0;
+    }
     > div {
       // Override accordion component margins
       margin: 0 !important;
+    }
+    .messageBanner {
+      margin: var(--seeds-spacer-header) 0 !important;
     }
     .accordionContent {
       padding: var(--seeds-spacer-content);
