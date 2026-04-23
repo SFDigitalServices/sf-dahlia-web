@@ -56,6 +56,10 @@
   display: flex;
   flex-direction: column;
   gap: var(--seeds-spacer-content);
+  @media (min-width: theme("screens.md")) {
+    padding-left: var(--seeds-s5);
+    margin-left: auto;
+  }
 
   a:not(.responseIcon) {
     text-decoration: underline;
@@ -75,7 +79,6 @@
   .submitYourInfoMain {
     gap: var(--seeds-spacer-text);
     max-width: var(--seeds-screen-lg);
-    padding-left: 26rem;
     margin: var(--seeds-spacer-section);
     @media (max-width: theme("screens.sm")) {
       width: 100%;
