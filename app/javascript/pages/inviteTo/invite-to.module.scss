@@ -23,10 +23,11 @@
     padding: var(--seeds-spacer-container);
     h2 {
       font-size: var(--seeds-font-size-2xl);
-      padding: var(--seeds-spacer-header) 0;
+      padding-top: var(--seeds-spacer-header);
     }
     h3 {
       font-size: var(--seeds-font-size-xl);
+      padding-top: var(--seeds-spacer-header);
     }
     button {
       margin: var(--seeds-spacer-text) 0;
@@ -63,14 +64,14 @@
       font-size: var(--seeds-font-size-2xl);
     }
     h3 {
-      margin: var(--seeds-spacer-text) 0;
+      margin-bottom: var(--seeds-spacer-text) 0;
     }
     > div {
       // Override accordion component margins
       margin: 0 !important;
     }
     .messageBanner {
-      margin: var(--seeds-spacer-header) 0 !important;
+      margin: var(--seeds-spacer-header) 0 0 0 !important;
     }
     .accordionContent {
       padding: var(--seeds-spacer-content);
@@ -91,14 +92,21 @@
     ul {
       list-style-type: disc;
       margin-left: var(--seeds-spacer-content);
-      margin-bottom: var(--seeds-spacer-header);
     }
-    button {
+    ol {
+      list-style-type: decimal;
+      margin-left: var(--seeds-spacer-content);
+    }
+    p:not(.messageBanner p) {
+      margin-top: var(--seeds-spacer-header);
+    }
+    .actionButton {
       align-self: flex-start;
+      margin: var(--seeds-spacer-content) 0;
     }
   }
   .expandableContent {
-    padding: var(--seeds-spacer-header) 0;
+    padding: var(--seeds-spacer-section) 0 var(--seeds-spacer-header) 0;
     button {
       font-size: var(--seeds-font-size-base);
       text-align: left;
