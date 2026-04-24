@@ -161,27 +161,28 @@ const InviteToInterviewNextSteps = ({
         <WhatToDo listing={listing} deadline={deadline} appId={appId} />
         <div className={styles.infoSubSection}>
           <InviteToGetHelp />
+          <WhatToExpectAfter />
+          <Mobile>
+            <Heading size="lg" priority={3}>
+              {t("inviteToInterviewPage.submitYourInfo.sidebar")}
+            </Heading>
+            <InviteToLeasingAgentInfo listing={listing} />
+            <Heading size="sm" priority={3}>
+              {t("contactAgent.officeHours.seeTheUnit")}
+            </Heading>
+            <p>
+              {getTranslatedString(listing?.Office_Hours, "Office_Hours__c", listing?.translations)}
+            </p>
+          </Mobile>
+          <Button
+            leadIcon={<Icon symbol={faPrint} size="medium" fill={IconFillColors.primary} />}
+            variant="primary-outlined"
+            onClick={() => window.print()}
+            className={styles.actionButton}
+          >
+            {t("inviteToInterviewPage.submitYourInfo.printThisPage")}
+          </Button>
         </div>
-        <WhatToExpectAfter />
-        <Mobile>
-          <Heading size="lg" priority={3}>
-            {t("inviteToInterviewPage.submitYourInfo.sidebar")}
-          </Heading>
-          <InviteToLeasingAgentInfo listing={listing} />
-          <Heading size="sm" priority={3}>
-            {t("contactAgent.officeHours.seeTheUnit")}
-          </Heading>
-          <p>
-            {getTranslatedString(listing?.Office_Hours, "Office_Hours__c", listing?.translations)}
-          </p>
-        </Mobile>
-        <Button
-          leadIcon={<Icon symbol={faPrint} size="medium" fill={IconFillColors.primary} />}
-          variant="primary-outlined"
-          onClick={() => window.print()}
-        >
-          {t("inviteToInterviewPage.submitYourInfo.printThisPage")}
-        </Button>
       </InviteToLayout>
     </LoadingOverlay>
   )

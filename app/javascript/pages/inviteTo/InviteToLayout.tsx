@@ -22,7 +22,7 @@ const InviteToHeader = ({
   headerText: string
 }) => {
   return (
-    <div className={styles.infoSubSection}>
+    <div className={styles.inviteToHeader}>
       <img
         src={listing?.Listing_Images?.[0]?.Image_URL}
         alt={listing?.Listing_Images?.[0]?.Image_Description}
