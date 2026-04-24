@@ -11,16 +11,16 @@
   .submitYourInfoPage {
     display: flex;
     flex-direction: row;
+    max-width: var(--seeds-screen-xl);
+    margin: 0 auto;
     @media (max-width: theme("screens.sm")) {
       flex-direction: column;
     }
   }
   .submitYourInfoMain {
-    max-width: var(--seeds-screen-lg);
-    @media (max-width: theme("screens.md")) {
-      padding: var(--seeds-spacer-section);
-    }
-    padding: var(--seeds-spacer-container);
+    flex: 1;
+    padding: var(--seeds-spacer-container) var(--seeds-spacer-container) 0
+      var(--seeds-spacer-container);
     h2 {
       font-size: var(--seeds-font-size-2xl);
       padding-top: var(--seeds-spacer-header);
@@ -41,16 +41,13 @@
   .submitYourInfoSidebar {
     display: flex;
     flex-direction: column;
+    flex: 0 0 33.333%;
     gap: var(--seeds-spacer-text);
-    max-width: var(--seeds-width-md);
     section {
       border: none;
     }
     h3 {
       margin: var(--seeds-spacer-text) 0;
-    }
-    @media (max-width: theme("screens.md")) {
-      padding: 0 var(--seeds-spacer-section);
     }
     padding: var(--seeds-spacer-section) var(--seeds-s24) 0 var(--seeds-spacer-content);
     border-left: 1px solid var(--seeds-color-gray-450);
