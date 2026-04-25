@@ -22,7 +22,7 @@ defaults: &defaults
 defaults_lite: &defaults_lite
   working_directory: ~/web
   docker:
-    - image: cimg/ruby:3.4.1
+    - image: cimg/ruby:3.4.1-node
       environment:
         <<: *common_env
   resource_class: medium+
@@ -30,7 +30,7 @@ defaults_lite: &defaults_lite
 defaults_with_db: &defaults_with_db
   working_directory: ~/web
   docker:
-    - image: cimg/ruby:3.4.1
+    - image: cimg/ruby:3.4.1-node
       environment:
         <<: *common_env
     - image: *postgres_image
@@ -139,7 +139,6 @@ commands:
     steps:
       - checkout
       - prepare_workspace
-      - install-node
   start-server:
     description: "Start Rails server in background"
     steps:
