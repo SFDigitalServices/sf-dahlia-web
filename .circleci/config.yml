@@ -139,6 +139,7 @@ commands:
     steps:
       - checkout
       - prepare_workspace
+      - install-node
   start-server:
     description: "Start Rails server in background"
     steps:
