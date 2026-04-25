@@ -129,7 +129,10 @@ describe("Custom Educator Listing 1", () => {
     clickNext()
 
     // Verify Job Code error
-    cy.get(".alert-box").should("contain.text", "You'll need to resolve any errors before moving on.")
+    cy.get(".alert-box").should(
+      "contain.text",
+      "You'll need to resolve any errors before moving on."
+    )
     cy.get(".error").should(
       "contain.text",
       "Job Code is incorrect. Check for mistakes and try again."
@@ -144,10 +147,7 @@ describe("Custom Educator Listing 1", () => {
 
     // Verify review page shows "Yes" for SFUSD and job code
     cy.get("#custom-educator-screening-answer").should("contain.text", "Yes")
-    cy.get("#custom-educator-job-classification-number").should(
-      "contain.text",
-      VALID_JOB_CODE
-    )
+    cy.get("#custom-educator-job-classification-number").should("contain.text", VALID_JOB_CODE)
 
     // Confirm and submit
     confirmReviewDetails()
@@ -210,7 +210,10 @@ describe("Custom Educator Listing 2", () => {
     clickNext()
 
     // Verify Job Code error
-    cy.get(".alert-box").should("contain.text", "You'll need to resolve any errors before moving on.")
+    cy.get(".alert-box").should(
+      "contain.text",
+      "You'll need to resolve any errors before moving on."
+    )
     cy.get(".error").should(
       "contain.text",
       "Job Code is incorrect. Check for mistakes and try again."
@@ -225,10 +228,7 @@ describe("Custom Educator Listing 2", () => {
 
     // Verify review page shows "Yes" for SFUSD and job code
     cy.get("#custom-educator-screening-answer").should("contain.text", "Yes")
-    cy.get("#custom-educator-job-classification-number").should(
-      "contain.text",
-      VALID_JOB_CODE
-    )
+    cy.get("#custom-educator-job-classification-number").should("contain.text", VALID_JOB_CODE)
 
     // Confirm and submit
     confirmReviewDetails()

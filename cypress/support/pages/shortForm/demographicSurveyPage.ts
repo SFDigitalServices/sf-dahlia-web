@@ -14,6 +14,17 @@ export const DEMOGRAPHIC_DEFAULTS = {
 } as const
 
 /**
+ * Check a checkbox only if it is not already checked.
+ */
+function checkCheckbox(id: string): void {
+  cy.get(`#${id}`).then(($el) => {
+    if (!$el.is(":checked")) {
+      cy.wrap($el).click()
+    }
+  })
+}
+
+/**
  * Fill out the full demographic survey and click submit.
  */
 export function fillDemographicSurvey(): void {
@@ -59,15 +70,4 @@ export function fillDemographicSurvey(): void {
 
   // Submit
   cy.get("#submit").click()
-}
-
-/**
- * Check a checkbox only if it is not already checked.
- */
-function checkCheckbox(id: string): void {
-  cy.get(`#${id}`).then(($el) => {
-    if (!$el.is(":checked")) {
-      cy.wrap($el).click()
-    }
-  })
 }

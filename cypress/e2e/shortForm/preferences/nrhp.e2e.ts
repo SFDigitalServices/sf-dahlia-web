@@ -17,8 +17,6 @@ import {
   optOutOfPreference,
   selectPreference,
   uploadPreferenceProof,
-  selectVeteransPreference,
-  continuePreferences,
   clickNext,
   navigateToSection,
   confirmHouseholdMemberAddress,

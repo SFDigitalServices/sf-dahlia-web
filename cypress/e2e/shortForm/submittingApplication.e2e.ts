@@ -308,12 +308,12 @@ describe("Short Form Application", { testIsolation: false }, () => {
     const altContactFullName = `${ALTERNATE_CONTACT_DEFAULTS.firstName} ${ALTERNATE_CONTACT_DEFAULTS.lastName}`
     expectReviewPageContains({
       "alt-contact-name": altContactFullName,
-      "alt-contact-email": ALTERNATE_CONTACT_DEFAULTS.email!,
+      "alt-contact-email": ALTERNATE_CONTACT_DEFAULTS.email,
       "alt-contact-phone": "(123) 123-1234",
     })
     cy.get("#review-alt-contact-mailing-address .info-item_name").should(
       "contain.text",
-      ALTERNATE_CONTACT_DEFAULTS.address!
+      ALTERNATE_CONTACT_DEFAULTS.address
     )
 
     // Verify household member details
@@ -604,7 +604,7 @@ describe("Short Form Application", { testIsolation: false }, () => {
     const altContactFullName = `${ALTERNATE_CONTACT_DEFAULTS.firstName} ${ALTERNATE_CONTACT_DEFAULTS.lastName}`
     expectReviewPageContains({
       "alt-contact-name": altContactFullName,
-      "alt-contact-email": ALTERNATE_CONTACT_DEFAULTS.email!,
+      "alt-contact-email": ALTERNATE_CONTACT_DEFAULTS.email,
       "alt-contact-phone": "(123) 123-1234",
     })
 

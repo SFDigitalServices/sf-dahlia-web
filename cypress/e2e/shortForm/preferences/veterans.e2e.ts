@@ -117,10 +117,7 @@ describe("Short Form Application - Veterans Preference", () => {
 
     // Verify Veterans preference claimed for "Jen Doe" on submitted application
     if (SHOW_VETERANS_QUESTION) {
-      cy.get("#review-veterans .info-item_name").should(
-        "contain.text",
-        "Yes, someone is a veteran"
-      )
+      cy.get("#review-veterans .info-item_name").should("contain.text", "Yes, someone is a veteran")
       cy.get("#review-veterans .info-item_note").should(
         "contain.text",
         `for ${account.firstName} Doe`

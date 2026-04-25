@@ -79,10 +79,7 @@ describe("Short Form Application - Error Messages", () => {
       "have.value",
       "E2ETEST-Loremipsumloremipsumloremipsumlo"
     )
-    cy.get('[ng-model="applicant.middleName"]').should(
-      "have.value",
-      "Loremipsumloremipsum"
-    )
+    cy.get('[ng-model="applicant.middleName"]').should("have.value", "Loremipsumloremipsum")
     cy.get('[ng-model="applicant.lastName"]').should(
       "have.value",
       "Loremipsumloremipsumloremipsumloremipsum"
@@ -182,11 +179,7 @@ describe("Short Form Application - Error Messages", () => {
     cy.get(".c-alert").should("contain.text", "Your household size is too big")
 
     // Edit last member and cancel to remove them
-    cy.get(".edit-link")
-      .filter(":visible")
-      .contains("Edit")
-      .last()
-      .click()
+    cy.get(".edit-link").filter(":visible").contains("Edit").last().click()
     cy.wait(1000)
     cy.get("#cancel-member").click()
 
@@ -252,10 +245,7 @@ describe("Short Form Application - Error Messages", () => {
       .filter(":visible")
       .first()
       .selectFile("spec/e2e/assets/sf-homes-wide.pdf", { force: true })
-    cy.get(".error").should(
-      "contain.text",
-      "The file is too large or not a supported file type"
-    )
+    cy.get(".error").should("contain.text", "The file is too large or not a supported file type")
 
     // Opt out of Live/Work preference
     optOutOfPreference()

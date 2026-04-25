@@ -56,14 +56,16 @@ export function addHouseholdMember(data: HouseholdMemberData = {}): void {
     cy.get('[ng-model="householdMember.lastName"]').clear().type(merged.lastName)
   }
 
-  cy.get('[ng-model="householdMember.dob_month"]').clear().type(merged.dobMonth!)
-  cy.get('[ng-model="householdMember.dob_day"]').clear().type(merged.dobDay!)
-  cy.get('[ng-model="householdMember.dob_year"]').clear().type(merged.dobYear!)
+  cy.get('[ng-model="householdMember.dob_month"]').clear().type(merged.dobMonth)
+  cy.get('[ng-model="householdMember.dob_day"]').clear().type(merged.dobDay)
+  cy.get('[ng-model="householdMember.dob_year"]').clear().type(merged.dobYear)
 
   if (merged.address1) {
     cy.get("#hasSameAddressAsApplicant_no").click()
     cy.get("#householdMember_home_address_address1").clear().type(merged.address1)
-    cy.get("#householdMember_home_address_city").clear().type(merged.city || "San Francisco")
+    cy.get("#householdMember_home_address_city")
+      .clear()
+      .type(merged.city || "San Francisco")
     cy.get("#householdMember_home_address_state").select("California")
     cy.get("#householdMember_home_address_zip").clear().type("94114")
   } else if (merged.sameAddress) {
@@ -76,7 +78,7 @@ export function addHouseholdMember(data: HouseholdMemberData = {}): void {
     cy.get("#workInSf_no").click()
   }
 
-  cy.get('[ng-model="householdMember.relationship"]').select(merged.relationship!)
+  cy.get('[ng-model="householdMember.relationship"]').select(merged.relationship)
 
   // Submit the household member form
   cy.get("#submit").click()
@@ -106,6 +108,17 @@ export function indicateNotLivingInPublicHousing(): void {
 }
 
 /**
+ * Check a checkbox only if it is not already checked.
+ */
+function checkCheckbox(id: string): void {
+  cy.get(`#${id}`).then(($el) => {
+    if (!$el.is(":checked")) {
+      cy.wrap($el).click()
+    }
+  })
+}
+
+/**
  * Check the "None" ADA priority checkbox and submit.
  */
 export function indicateNoAdaPriority(): void {
@@ -119,15 +132,4 @@ export function indicateNoAdaPriority(): void {
 export function confirmHouseholdMemberAddress(): void {
   cy.get("#confirmed_home_address_yes").click()
   cy.get("#submit").click()
-}
-
-/**
- * Check a checkbox only if it is not already checked.
- */
-function checkCheckbox(id: string): void {
-  cy.get(`#${id}`).then(($el) => {
-    if (!$el.is(":checked")) {
-      cy.wrap($el).click()
-    }
-  })
 }

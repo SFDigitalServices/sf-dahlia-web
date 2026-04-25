@@ -1,6 +1,17 @@
 // cypress/support/pages/shortForm/preferencesPage.ts
 
 /**
+ * Check a checkbox only if it is not already checked.
+ */
+function checkCheckbox(id: string): void {
+  cy.get(`#${id}`).then(($el) => {
+    if (!$el.is(":checked")) {
+      cy.wrap($el).click()
+    }
+  })
+}
+
+/**
  * Select a preference checkbox and choose a household member from the dropdown.
  */
 export function selectPreference(preference: string, memberName: string): void {
@@ -80,10 +91,10 @@ const ALICE_GRIFFITH_DEFAULTS: AliceGriffithAddressData = {
  */
 export function fillAliceGriffithAddress(data: AliceGriffithAddressData = {}): void {
   const merged = { ...ALICE_GRIFFITH_DEFAULTS, ...data }
-  cy.get("#aliceGriffith_aliceGriffith_address_address1").clear().type(merged.address1!)
-  cy.get("#aliceGriffith_aliceGriffith_address_city").clear().type(merged.city!)
-  cy.get("#aliceGriffith_aliceGriffith_address_state").select(merged.state!)
-  cy.get("#aliceGriffith_aliceGriffith_address_zip").clear().type(merged.zip!)
+  cy.get("#aliceGriffith_aliceGriffith_address_address1").clear().type(merged.address1)
+  cy.get("#aliceGriffith_aliceGriffith_address_city").clear().type(merged.city)
+  cy.get("#aliceGriffith_aliceGriffith_address_state").select(merged.state)
+  cy.get("#aliceGriffith_aliceGriffith_address_zip").clear().type(merged.zip)
 }
 
 /**
@@ -116,15 +127,4 @@ export function uploadAssistedHousingProof(): void {
  */
 export function continuePreferences(): void {
   cy.get("#submit").click()
-}
-
-/**
- * Check a checkbox only if it is not already checked.
- */
-function checkCheckbox(id: string): void {
-  cy.get(`#${id}`).then(($el) => {
-    if (!$el.is(":checked")) {
-      cy.wrap($el).click()
-    }
-  })
 }

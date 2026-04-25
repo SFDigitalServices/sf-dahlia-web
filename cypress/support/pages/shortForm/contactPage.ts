@@ -42,16 +42,16 @@ export const CONTACT_DEFAULTS: ContactPageData = {
 export function fillContactPage(data: ContactPageData = {}): void {
   const merged = { ...CONTACT_DEFAULTS, ...data }
 
-  cy.get('[ng-model="applicant.phone"]').clear().type(merged.phone!)
-  cy.get('[ng-model="applicant.phoneType"]').select(merged.phoneType!)
+  cy.get('[ng-model="applicant.phone"]').clear().type(merged.phone)
+  cy.get('[ng-model="applicant.phoneType"]').select(merged.phoneType)
 
-  cy.get("#applicant_home_address_address1").clear().type(merged.address1!)
+  cy.get("#applicant_home_address_address1").clear().type(merged.address1)
   if (merged.address2) {
     cy.get("#applicant_home_address_address2").clear().type(merged.address2)
   }
-  cy.get("#applicant_home_address_city").clear().type(merged.city!)
-  cy.get("#applicant_home_address_state").select(merged.state!)
-  cy.get("#applicant_home_address_zip").clear().type(merged.zip!)
+  cy.get("#applicant_home_address_city").clear().type(merged.city)
+  cy.get("#applicant_home_address_state").select(merged.state)
+  cy.get("#applicant_home_address_zip").clear().type(merged.zip)
 
   if (merged.workInSf === "yes") {
     cy.get("#workInSf_yes").click()
@@ -61,17 +61,27 @@ export function fillContactPage(data: ContactPageData = {}): void {
 
   if (merged.includeAltPhone) {
     cy.get('[ng-model="applicant.additionalPhone"]').click()
-    cy.get('[ng-model="applicant.alternatePhone"]').clear().type(merged.altPhone!)
-    cy.get('[ng-model="applicant.alternatePhoneType"]').select(merged.altPhoneType!)
+    cy.get('[ng-model="applicant.alternatePhone"]').clear().type(merged.altPhone)
+    cy.get('[ng-model="applicant.alternatePhoneType"]').select(merged.altPhoneType)
   }
 
   if (merged.includeMailingAddress) {
     cy.get('[ng-model="applicant.hasAltMailingAddress"]').click()
-    cy.get("#applicant_mailing_address_address1").clear().type(merged.mailingAddress1!)
-    cy.get("#applicant_mailing_address_city").clear().type(merged.mailingCity!)
-    cy.get("#applicant_mailing_address_state").select(merged.mailingState!)
-    cy.get("#applicant_mailing_address_zip").clear().type(merged.mailingZip!)
+    cy.get("#applicant_mailing_address_address1").clear().type(merged.mailingAddress1)
+    cy.get("#applicant_mailing_address_city").clear().type(merged.mailingCity)
+    cy.get("#applicant_mailing_address_state").select(merged.mailingState)
+    cy.get("#applicant_mailing_address_zip").clear().type(merged.mailingZip)
   }
+}
+
+/**
+ * Format a 10-digit phone string as (XXX) XXX-XXXX.
+ */
+function formatPhone(phone: string): string {
+  if (phone.length === 10) {
+    return `(${phone.slice(0, 3)}) ${phone.slice(3, 6)}-${phone.slice(6)}`
+  }
+  return phone
 }
 
 /**
@@ -109,7 +119,7 @@ export function expectContactPageValues(data: ContactPageData = {}): void {
   if (merged.includeAltPhone) {
     cy.get('[ng-model="applicant.alternatePhone"]').should(
       "have.value",
-      formatPhone(merged.altPhone!)
+      formatPhone(merged.altPhone)
     )
   }
 
@@ -132,14 +142,4 @@ export function expectContactFieldsEmpty(): void {
   cy.get("#applicant_home_address_city").should("have.value", "")
   cy.get("#applicant_home_address_state").should("have.value", "")
   cy.get("#applicant_home_address_zip").should("have.value", "")
-}
-
-/**
- * Format a 10-digit phone string as (XXX) XXX-XXXX.
- */
-function formatPhone(phone: string): string {
-  if (phone.length === 10) {
-    return `(${phone.slice(0, 3)}) ${phone.slice(3, 6)}-${phone.slice(6)}`
-  }
-  return phone
 }

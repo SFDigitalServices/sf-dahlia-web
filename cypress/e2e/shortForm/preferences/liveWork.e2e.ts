@@ -17,7 +17,6 @@ import {
   optOutOfPreference,
   uploadPreferenceProof,
   selectLiveWorkPreference,
-  continuePreferences,
   clickNext,
   navigateToSection,
   confirmHouseholdMemberAddress,
@@ -62,7 +61,6 @@ function goBackToLiveWorkPreferencePage(): void {
 }
 
 describe("Short Form Application - Live-Work Preference", () => {
-
   // ─── Scenario 1: Applicant and/or household member living or working in SF, different combinations ───
   it("Applicant and/or household member living or working in SF, different combinations", () => {
     const account = createTestAccount("Jane Doe")
@@ -130,7 +128,9 @@ describe("Short Form Application - Live-Work Preference", () => {
     cy.get("#submit").click()
 
     goBackToLiveWorkPreferencePage()
-    cy.get("strong.form-label").filter(":visible").should("contain.text", "Work in San Francisco Preference")
+    cy.get("strong.form-label")
+      .filter(":visible")
+      .should("contain.text", "Work in San Francisco Preference")
 
     // ── I work and live in SF, alone ──
     goBackToContactPage()
@@ -140,7 +140,9 @@ describe("Short Form Application - Live-Work Preference", () => {
     cy.get("#submit").click()
 
     goBackToLiveWorkPreferencePage()
-    cy.get("strong.form-label").filter(":visible").should("contain.text", "Live or Work in San Francisco Preference")
+    cy.get("strong.form-label")
+      .filter(":visible")
+      .should("contain.text", "Live or Work in San Francisco Preference")
 
     // Make sure the dropdowns are correct
     cy.get("#preferences-liveWorkInSf").then(($el) => {
@@ -163,7 +165,9 @@ describe("Short Form Application - Live-Work Preference", () => {
     cy.get("#submit").click()
 
     goBackToLiveWorkPreferencePage()
-    cy.get("strong.form-label").filter(":visible").should("contain.text", "Live in San Francisco Preference")
+    cy.get("strong.form-label")
+      .filter(":visible")
+      .should("contain.text", "Live in San Francisco Preference")
 
     // ── I live in SF, household member lives in SF ──
     navigateToSection("Household")
@@ -190,7 +194,9 @@ describe("Short Form Application - Live-Work Preference", () => {
     // Opt out of Assisted Housing
     optOutOfPreference()
 
-    cy.get("strong.form-label").filter(":visible").should("contain.text", "Live in San Francisco Preference")
+    cy.get("strong.form-label")
+      .filter(":visible")
+      .should("contain.text", "Live in San Francisco Preference")
 
     // ── I neither live nor work in SF, household member lives in SF ──
     goBackToContactPage()
@@ -204,7 +210,9 @@ describe("Short Form Application - Live-Work Preference", () => {
     cy.get("#submit").click()
 
     goBackToLiveWorkPreferencePage()
-    cy.get("strong.form-label").filter(":visible").should("contain.text", "Live in San Francisco Preference")
+    cy.get("strong.form-label")
+      .filter(":visible")
+      .should("contain.text", "Live in San Francisco Preference")
 
     // ── I work in SF, household member lives in SF ──
     goBackToContactPage()
@@ -214,7 +222,9 @@ describe("Short Form Application - Live-Work Preference", () => {
     cy.get("#submit").click()
 
     goBackToLiveWorkPreferencePage()
-    cy.get("strong.form-label").filter(":visible").should("contain.text", "Live or Work in San Francisco Preference")
+    cy.get("strong.form-label")
+      .filter(":visible")
+      .should("contain.text", "Live or Work in San Francisco Preference")
 
     // Make sure the dropdowns are correct
     cy.get("#preferences-liveWorkInSf").then(($el) => {
@@ -237,7 +247,9 @@ describe("Short Form Application - Live-Work Preference", () => {
     cy.get("#submit").click()
 
     goBackToLiveWorkPreferencePage()
-    cy.get("strong.form-label").filter(":visible").should("contain.text", "Live or Work in San Francisco Preference")
+    cy.get("strong.form-label")
+      .filter(":visible")
+      .should("contain.text", "Live or Work in San Francisco Preference")
 
     // ── I work and live in SF, household member works in SF ──
     navigateToSection("Household")
@@ -262,7 +274,9 @@ describe("Short Form Application - Live-Work Preference", () => {
     clickNext() // Lottery Preferences intro
     optOutOfPreference() // Assisted Housing
 
-    cy.get("strong.form-label").filter(":visible").should("contain.text", "Live or Work in San Francisco Preference")
+    cy.get("strong.form-label")
+      .filter(":visible")
+      .should("contain.text", "Live or Work in San Francisco Preference")
 
     // ── I work in SF, household member works in SF ──
     goBackToContactPage()
@@ -276,7 +290,9 @@ describe("Short Form Application - Live-Work Preference", () => {
     cy.get("#submit").click()
 
     goBackToLiveWorkPreferencePage()
-    cy.get("strong.form-label").filter(":visible").should("contain.text", "Work in San Francisco Preference")
+    cy.get("strong.form-label")
+      .filter(":visible")
+      .should("contain.text", "Work in San Francisco Preference")
 
     // ── I live in SF, household member works in SF ──
     goBackToContactPage()
@@ -286,7 +302,9 @@ describe("Short Form Application - Live-Work Preference", () => {
     cy.get("#submit").click()
 
     goBackToLiveWorkPreferencePage()
-    cy.get("strong.form-label").filter(":visible").should("contain.text", "Live or Work in San Francisco Preference")
+    cy.get("strong.form-label")
+      .filter(":visible")
+      .should("contain.text", "Live or Work in San Francisco Preference")
 
     // Make sure the dropdowns are correct
     cy.get("#preferences-liveWorkInSf").then(($el) => {
@@ -313,7 +331,9 @@ describe("Short Form Application - Live-Work Preference", () => {
     cy.get("#submit").click()
 
     goBackToLiveWorkPreferencePage()
-    cy.get("strong.form-label").filter(":visible").should("contain.text", "Work in San Francisco Preference")
+    cy.get("strong.form-label")
+      .filter(":visible")
+      .should("contain.text", "Work in San Francisco Preference")
 
     // ── I neither work nor live in SF, household member lives and works in SF ──
     navigateToSection("Household")
@@ -337,7 +357,9 @@ describe("Short Form Application - Live-Work Preference", () => {
     clickNext() // Lottery Preferences intro
     optOutOfPreference() // Assisted Housing
 
-    cy.get("strong.form-label").filter(":visible").should("contain.text", "Live or Work in San Francisco Preference")
+    cy.get("strong.form-label")
+      .filter(":visible")
+      .should("contain.text", "Live or Work in San Francisco Preference")
 
     // Make sure the dropdowns are correct
     cy.get("#preferences-liveWorkInSf").then(($el) => {
@@ -364,7 +386,9 @@ describe("Short Form Application - Live-Work Preference", () => {
     cy.get("#submit").click()
 
     goBackToLiveWorkPreferencePage()
-    cy.get("strong.form-label").filter(":visible").should("contain.text", "Live or Work in San Francisco Preference")
+    cy.get("strong.form-label")
+      .filter(":visible")
+      .should("contain.text", "Live or Work in San Francisco Preference")
 
     // ── I live in SF, household member lives and works in SF ──
     goBackToContactPage()
@@ -374,7 +398,9 @@ describe("Short Form Application - Live-Work Preference", () => {
     cy.get("#submit").click()
 
     goBackToLiveWorkPreferencePage()
-    cy.get("strong.form-label").filter(":visible").should("contain.text", "Live or Work in San Francisco Preference")
+    cy.get("strong.form-label")
+      .filter(":visible")
+      .should("contain.text", "Live or Work in San Francisco Preference")
 
     // ── Check that filling it out then changing required info removes from application ──
     selectLiveWorkPreference("Live in San Francisco", "Jane Doe")
