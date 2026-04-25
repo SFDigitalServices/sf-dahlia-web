@@ -21,14 +21,14 @@ export interface ContactPageData {
 
 export const CONTACT_DEFAULTS: ContactPageData = {
   phone: "2222222222",
-  phoneType: "home",
+  phoneType: "Home",
   address1: "4053 18th St.",
   city: "San Francisco",
   state: "California",
   zip: "94114",
   workInSf: "yes",
   altPhone: "5551111111",
-  altPhoneType: "cell",
+  altPhoneType: "Cell",
   mailingAddress1: "1651 Tiburon Blvd",
   mailingCity: "Tiburon",
   mailingState: "California",

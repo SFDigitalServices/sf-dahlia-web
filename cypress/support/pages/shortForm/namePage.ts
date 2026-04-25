@@ -10,13 +10,14 @@ export interface NamePageData {
   email?: string
 }
 
-export const NAME_DEFAULTS: Required<Omit<NamePageData, "email">> = {
+export const NAME_DEFAULTS: Required<NamePageData> = {
   firstName: "Jane",
   middleName: "Valerie",
   lastName: "Doe",
   dobMonth: "2",
   dobDay: "22",
   dobYear: "1990",
+  email: "jane.doe@example.com",
 }
 
 /**

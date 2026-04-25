@@ -17,3 +17,16 @@ import "./commands"
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
+
+// Suppress uncaught exceptions from third-party scripts (e.g. Google Translate)
+// so they don't fail our tests. Errors originating from our own app code will
+// still surface via normal assertion failures.
+Cypress.on("uncaught:exception", (err, runnable) => {
+  // Google Translate injects scripts that throw __closure_events_fn_* errors
+  // when navigating between pages — these are not our bugs.
+  if (err.message.includes("__closure_events_fn_")) {
+    return false
+  }
+  // Let all other uncaught exceptions fail the test as normal
+  return true
+})
