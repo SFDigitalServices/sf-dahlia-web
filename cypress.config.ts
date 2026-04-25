@@ -1,5 +1,7 @@
-import "dotenv/config"
+import dotenv from "dotenv"
 import { defineConfig } from "cypress"
+
+dotenv.config({ path: ".env" })
 
 export default defineConfig({
   defaultCommandTimeout: 180000, // 3 mins
