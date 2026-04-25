@@ -9,6 +9,7 @@
     "target": "es6",
     "lib": ["es5", "es6", "es7", "es2017", "dom"],
     "moduleResolution": "node",
+    "baseUrl": ".",
     "sourceMap": true,
     "jsx": "react",
     "noEmit": false,
