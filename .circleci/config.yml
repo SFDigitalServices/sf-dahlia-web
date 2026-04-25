@@ -8,15 +8,34 @@ defaults: &defaults
   working_directory: ~/web
   docker:
     - image: cimg/ruby:3.4.1-browsers
-      environment:
+      environment: &common_env
         RAILS_ENV: development
         PGHOST: 127.0.0.1
         PGUSER: root
         NODE_OPTIONS: --max_old_space_size=4096
-    - image: cimg/postgres:9.6
-      environment:
+    - image: &postgres_image cimg/postgres:9.6
+      environment: &postgres_env
         POSTGRES_USER: root
         POSTGRES_DB: sf_dahlia
+  resource_class: medium+
+  executor: ruby/default
+defaults_lite: &defaults_lite
+  working_directory: ~/web
+  docker:
+    - image: cimg/ruby:3.4.1
+      environment:
+        <<: *common_env
+  resource_class: medium+
+  executor: ruby/default
+defaults_with_db: &defaults_with_db
+  working_directory: ~/web
+  docker:
+    - image: cimg/ruby:3.4.1
+      environment:
+        <<: *common_env
+    - image: *postgres_image
+      environment:
+        <<: *postgres_env
   resource_class: medium+
   executor: ruby/default
 non_production_jobs: &non_production_jobs
@@ -115,6 +134,11 @@ commands:
       - run: bundle config set path vendor/bundle
       - run: bundle install
       - run: bundle exec rails db:migrate
+  setup-lite:
+    description: "Lightweight setup for jobs that only need node_modules (no Ruby gems or DB)"
+    steps:
+      - checkout
+      - prepare_workspace
   start-server:
     description: "Start Rails server in background"
     steps:
@@ -176,15 +200,15 @@ jobs:
           paths:
             - .
   lint:
-    <<: *defaults
+    <<: *defaults_lite
     steps:
-      - setup
+      - setup-lite
       - run: yarn lint
       - run: yarn prettier --check .
   unit-react:
-    <<: *defaults
+    <<: *defaults_lite
     steps:
-      - setup
+      - setup-lite
       - run: yarn cache clean
       - run: yarn install
       - run: yarn test
@@ -195,7 +219,7 @@ jobs:
           paths:
             - jest-test-coverage
   unit-rspec:
-    <<: *defaults
+    <<: *defaults_with_db
     steps:
       - setup
       - run: wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
@@ -211,7 +235,7 @@ jobs:
           paths:
             - coverage
   unit-angular:
-    <<: *defaults
+    <<: *defaults_with_db
     steps:
       - setup
       - run:
@@ -230,7 +254,7 @@ jobs:
       - start-server
       - run: yarn test:e2e
   coverage:
-    <<: *defaults
+    <<: *defaults_lite
     steps:
       - checkout
       - *attach_workspace
@@ -251,7 +275,7 @@ jobs:
             echo $LIST
             npm run protractor -- --specs $LIST
   cleanup-test-data:
-    <<: *defaults
+    <<: *defaults_with_db
     steps:
       - setup
       - run: bundle exec rails tests:e2e_cleanup
