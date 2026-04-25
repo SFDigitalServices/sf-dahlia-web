@@ -55,5 +55,5 @@ export function continueWithoutSigningIn(): void {
  * Navigate to a specific section using the progress nav sidebar.
  */
 export function navigateToSection(section: string): void {
-  cy.get(".progress-nav").contains("a", section.toUpperCase()).first().click()
+  cy.get(".progress-nav_item").contains(section).first().click()
 }
