@@ -27,7 +27,11 @@ export function fillNamePage(data: NamePageData = {}): void {
   const merged = { ...NAME_DEFAULTS, ...data }
 
   cy.get('[ng-model="applicant.firstName"]').clear().type(merged.firstName)
-  cy.get('[ng-model="applicant.middleName"]').clear().type(merged.middleName)
+  if (merged.middleName) {
+    cy.get('[ng-model="applicant.middleName"]').clear().type(merged.middleName)
+  } else {
+    cy.get('[ng-model="applicant.middleName"]').clear()
+  }
   cy.get('[ng-model="applicant.lastName"]').clear().type(merged.lastName)
   cy.get('[ng-model="applicant.dob_month"]').clear().type(merged.dobMonth)
   cy.get('[ng-model="applicant.dob_day"]').clear().type(merged.dobDay)
