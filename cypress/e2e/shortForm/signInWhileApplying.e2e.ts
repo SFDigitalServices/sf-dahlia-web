@@ -59,7 +59,7 @@ describe("Sign-in while filling out application", { testIsolation: false }, () =
     cy.get("#submit").click()
 
     // Should see senior notice
-    cy.get(".form-note").should("contain.text", "Everyone in your household must be a Senior")
+    cy.get(".alert-notice").should("contain.text", "Everyone in your household must be a Senior")
 
     cy.wait(1000)
 
@@ -87,7 +87,7 @@ describe("Sign-in while filling out application", { testIsolation: false }, () =
     cy.get("#sign-in").click()
 
     // Should see senior notice (account DOB 1/1/2000 disqualifies)
-    cy.get(".form-note").should("contain.text", "Everyone in your household must be a Senior")
+    cy.get(".alert-notice").should("contain.text", "Everyone in your household must be a Senior")
 
     // Choose to create a new account
     cy.get("#create-account").click()
@@ -167,7 +167,7 @@ describe("Sign-in while filling out application", { testIsolation: false }, () =
     cy.get("#sign-in").click()
 
     // Should see senior notice
-    cy.get(".form-note").should("contain.text", "Everyone in your household must be a Senior")
+    cy.get(".alert-notice").should("contain.text", "Everyone in your household must be a Senior")
 
     // Choose to continue without an account
     cy.get("#continue-as-guest").click()
@@ -495,7 +495,7 @@ describe("Sign-in while filling out application", { testIsolation: false }, () =
     selectAssistedHousingPreference()
 
     // Select Alice Walker for assistedHousing preference
-    cy.get("#assistedHousing_household_member").filter(":visible").first().select("Alice Walker")
+    cy.get("#assistedHousing_household_member").filter(":visible").first().select(`${aliceAccount.firstName} ${aliceAccount.lastName}`)
 
     // Upload proof for Assisted Housing
     uploadAssistedHousingProof()
@@ -674,7 +674,7 @@ describe("Sign-in while filling out application", { testIsolation: false }, () =
     selectAssistedHousingPreference()
 
     // Select Alice Walker for assistedHousing preference
-    cy.get("#assistedHousing_household_member").filter(":visible").first().select("Alice Walker")
+    cy.get("#assistedHousing_household_member").filter(":visible").first().select(`${aliceAccount.firstName} ${aliceAccount.lastName}`)
 
     // Upload proof for Assisted Housing
     uploadAssistedHousingProof()
