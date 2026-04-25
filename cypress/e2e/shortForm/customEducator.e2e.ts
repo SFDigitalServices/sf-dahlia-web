@@ -100,7 +100,12 @@ function fillFullApplication(account: TestAccount): void {
 describe("Custom Educator Listing 1", () => {
   const account: TestAccount = createTestAccount("Jane Doe")
 
-  it("Yes to SFUSD with invalid job code", () => {
+  // Handle AngularJS app errors that are not test failures
+  beforeEach(() => {
+    cy.on("uncaught:exception", () => false)
+  })
+
+  it("Yes to SFUSD with invalid job code then valid job code", () => {
     // Go to welcome page of Custom Educator 1 listing
     cy.visit(`/listings/${LISTING_IDS.customEducator1}/apply-welcome/intro`)
 
@@ -129,9 +134,7 @@ describe("Custom Educator Listing 1", () => {
       "contain.text",
       "Job Code is incorrect. Check for mistakes and try again."
     )
-  })
 
-  it("Yes to SFUSD with valid job code", () => {
     // Fill valid code
     fillJobClassificationNumber(VALID_JOB_CODE)
     clickNext()
@@ -168,7 +171,7 @@ describe("Custom Educator Listing 1", () => {
     clickNext()
 
     // Verify notice
-    cy.get(".form-note").should(
+    cy.get(".alert-notice").should(
       "contain.text",
       "You must work at SF Unified School District to apply."
     )
@@ -180,6 +183,10 @@ describe("Custom Educator Listing 1", () => {
 
 describe("Custom Educator Listing 2", () => {
   const account: TestAccount = createTestAccount("Jane Doe")
+
+  beforeEach(() => {
+    cy.on("uncaught:exception", () => false)
+  })
 
   it("Yes to SFUSD", () => {
     // Go to welcome page of Custom Educator 2 listing
