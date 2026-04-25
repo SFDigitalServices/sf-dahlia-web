@@ -5,6 +5,7 @@
     "lib": ["es2015", "es2017", "dom"],
     "module": "commonjs",
     "moduleResolution": "node",
+    "baseUrl": ".",
     "esModuleInterop": true,
     // be explicit about types included
     // to avoid clashing with Jest types

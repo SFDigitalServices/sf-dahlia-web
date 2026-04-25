@@ -7,9 +7,9 @@ if (existsSync(".env")) {
 }
 
 export default defineConfig({
-  defaultCommandTimeout: 180000, // 3 mins
+  defaultCommandTimeout: 30000, // 30s — individual commands can override with { timeout: ... }
   projectId: "dahlia-housing-portal",
-  pageLoadTimeout: 180000, // 3 mins
+  pageLoadTimeout: 60000, // 60s
   reporterOptions: {
     mochaFile: "cypress/results/tests-[hash].xml",
     toConsole: true,
