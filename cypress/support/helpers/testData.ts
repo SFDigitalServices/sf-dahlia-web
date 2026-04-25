@@ -39,21 +39,19 @@ export function confirmAccount(email: string) {
 }
 
 /**
- * Create an account via the AngularJS create-account UI form.
+ * Create an account via the React create-account UI form.
  * Navigates to /create-account, fills the form, submits, and confirms via API.
  */
 export function createAccountViaUI(account: TestAccount): void {
   const [dobMonth, dobDay, dobYear] = account.birthDate.split("/")
   cy.visit("/create-account")
-  cy.get('[ng-model="userAuth.contact.firstName"]').clear().type(account.firstName)
-  cy.get('[ng-model="userAuth.contact.lastName"]').clear().type(account.lastName)
-  cy.get('[ng-model="userAuth.contact.dob_month"]').clear().type(dobMonth)
-  cy.get('[ng-model="userAuth.contact.dob_day"]').clear().type(dobDay)
-  cy.get('[ng-model="userAuth.contact.dob_year"]').clear().type(dobYear)
-  cy.get('[ng-model="userAuth.user.email"]').clear().type(account.email)
-  cy.get('[ng-model="userAuth.user.email_confirmation"]').clear().type(account.email)
-  cy.get('[ng-model="userAuth.user.password"]').clear().type(account.password)
-  cy.get('[ng-model="userAuth.user.password_confirmation"]').clear().type(account.password)
-  cy.get("#submit").click()
+  cy.get('input[name="firstName"]').clear().type(account.firstName)
+  cy.get('input[name="lastName"]').clear().type(account.lastName)
+  cy.get('input[name="dobObject.birthMonth"]').clear().type(dobMonth)
+  cy.get('input[name="dobObject.birthDay"]').clear().type(dobDay)
+  cy.get('input[name="dobObject.birthYear"]').clear().type(dobYear)
+  cy.get('input[name="email"]').clear().type(account.email)
+  cy.get('input[name="password"]').clear().type(account.password)
+  cy.get('button[type="submit"]').click()
   confirmAccount(account.email)
 }
