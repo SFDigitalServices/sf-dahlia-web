@@ -385,7 +385,7 @@ const DateOfBirthSection = ({ user, setUser }: SectionProps) => {
   )
 }
 
-const AccountSettingsV2Content = ({ profile }: { profile: User }) => {
+const AccountSettingsNewContent = ({ profile }: { profile: User }) => {
   const [user, setUser] = useState(null)
   const [nameUpdateBanner, setNameUpdateBanner] = useState(false)
   const [nameSavedBanner, setNameSavedBanner] = useState(false)
@@ -453,18 +453,18 @@ const AccountSettingsV2Content = ({ profile }: { profile: User }) => {
   )
 }
 
-const AccountSettingsV2Page = () => {
+const AccountSettingsNew = () => {
   const { profile, loading, initialStateLoaded } = React.useContext(UserContext)
 
   if (!profile && !loading && initialStateLoaded) {
     return null
   }
 
-  return <AccountSettingsV2Content profile={profile} />
+  return <AccountSettingsNewContent profile={profile} />
 }
 
 export default withAppSetup(
-  withAuthentication(AccountSettingsV2Page, { redirectType: RedirectType.Settings }),
+  withAuthentication(AccountSettingsNew, { redirectType: RedirectType.Settings }),
   {
     pageName: AppPages.AccountSettings,
   }

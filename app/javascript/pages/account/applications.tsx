@@ -23,7 +23,7 @@ import { extractModalParamsFromUrl } from "./components/util"
 import { withAuthentication } from "../../authentication/withAuthentication"
 import { determineApplicationItemList } from "./my-applications"
 
-const MyApplicationsV2 = () => {
+const AccountApplications = () => {
   const [error, setError] = React.useState<string | null>(null)
   const [loading, setLoading] = React.useState<boolean>(true)
   const [applications, setApplications] = React.useState<Application[]>([])
@@ -145,7 +145,7 @@ const MyApplicationsV2 = () => {
 }
 
 export default withAppSetup(
-  withAuthentication(MyApplicationsV2, { redirectType: RedirectType.Applications }),
+  withAuthentication(AccountApplications, { redirectType: RedirectType.Applications }),
   {
     pageName: AppPages.MyApplications,
   }

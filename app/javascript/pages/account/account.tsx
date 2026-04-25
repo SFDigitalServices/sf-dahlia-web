@@ -7,11 +7,11 @@ import { withAuthentication } from "../../authentication/withAuthentication"
 import AccountLayout from "../../layouts/AccountLayout"
 import OverviewContent from "./components/OverviewContent"
 
-interface MyAccountV2Props {
+interface AccountDashboardProps {
   assetPaths: unknown
 }
 
-const MyAccountV2 = (_props: MyAccountV2Props) => {
+const AccountDashboard = (_props: AccountDashboardProps) => {
   return (
     <Layout title={t("nav.myDashboard")}>
       <AccountLayout>
@@ -22,6 +22,6 @@ const MyAccountV2 = (_props: MyAccountV2Props) => {
 }
 
 export default withAppSetup(
-  withAuthentication(MyAccountV2, { redirectType: RedirectType.Account }),
+  withAuthentication(AccountDashboard, { redirectType: RedirectType.Account }),
   { pageName: AppPages.MyAccount }
 )
