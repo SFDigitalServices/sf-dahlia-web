@@ -501,13 +501,7 @@ describe("Sign-in while filling out application", { testIsolation: false }, () =
     selectAssistedHousingPreference()
 
     // Select Alice Walker for assistedHousing preference
-    cy.get("#assistedHousing_household_member").filter(":visible").first().click()
-    cy.get("#assistedHousing_household_member option")
-      .filter(":visible")
-      .contains("Alice Walker")
-      .then(($opt) => {
-        cy.get("#assistedHousing_household_member").filter(":visible").first().select($opt.val()!)
-      })
+    cy.get("#assistedHousing_household_member").filter(":visible").first().select("Alice Walker")
 
     // Upload proof for Assisted Housing
     uploadAssistedHousingProof()
@@ -686,13 +680,7 @@ describe("Sign-in while filling out application", { testIsolation: false }, () =
     selectAssistedHousingPreference()
 
     // Select Alice Walker for assistedHousing preference
-    cy.get("#assistedHousing_household_member").filter(":visible").first().click()
-    cy.get("#assistedHousing_household_member option")
-      .filter(":visible")
-      .contains("Alice Walker")
-      .then(($opt) => {
-        cy.get("#assistedHousing_household_member").filter(":visible").first().select($opt.val()!)
-      })
+    cy.get("#assistedHousing_household_member").filter(":visible").first().select("Alice Walker")
 
     // Upload proof for Assisted Housing
     uploadAssistedHousingProof()

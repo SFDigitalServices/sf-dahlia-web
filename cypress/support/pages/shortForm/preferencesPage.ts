@@ -5,13 +5,7 @@
  */
 export function selectPreference(preference: string, memberName: string): void {
   checkCheckbox(`preferences-${preference}`)
-  cy.get(`#${preference}_household_member`).filter(":visible").first().click()
-  cy.get(`#${preference}_household_member option`)
-    .filter(":visible")
-    .contains(memberName)
-    .then(($opt) => {
-      cy.get(`#${preference}_household_member`).filter(":visible").first().select($opt.val()!)
-    })
+  cy.get(`#${preference}_household_member`).filter(":visible").first().select(memberName)
 }
 
 /**
@@ -42,13 +36,7 @@ export function selectLiveWorkPreference(subPref: string, memberName: string): v
   cy.get("#liveWorkPrefOption").select(subPref)
 
   const pref = subPref === "Live in San Francisco" ? "liveInSf" : "workInSf"
-  cy.get(`#${pref}_household_member`).filter(":visible").first().click()
-  cy.get(`#${pref}_household_member option`)
-    .filter(":visible")
-    .contains(memberName)
-    .then(($opt) => {
-      cy.get(`#${pref}_household_member`).filter(":visible").first().select($opt.val()!)
-    })
+  cy.get(`#${pref}_household_member`).filter(":visible").first().select(memberName)
 }
 
 /**
@@ -70,13 +58,7 @@ export function selectAssistedHousingPreference(): void {
  */
 export function selectVeteransPreference(memberName: string): void {
   cy.get("#isAnyoneAVeteran_yes").click()
-  cy.get("#selected_veteran_member").click()
-  cy.get("#selected_veteran_member option")
-    .filter(":visible")
-    .contains(memberName)
-    .then(($opt) => {
-      cy.get("#selected_veteran_member").select($opt.val()!)
-    })
+  cy.get("#selected_veteran_member").select(memberName)
 }
 
 export interface AliceGriffithAddressData {
