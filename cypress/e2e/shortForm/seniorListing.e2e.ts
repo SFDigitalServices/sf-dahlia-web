@@ -11,7 +11,7 @@ import {
   indicateBeingDoneAddingPeople,
 } from "../../support/pages/shortForm"
 
-describe("Senior Listing Application", () => {
+describe("Senior Listing Application", { testIsolation: false }, () => {
   it("Applicant too young for senior listing", () => {
     // Go to senior listing (community screening page)
     cy.goToApplication("senior")
@@ -35,10 +35,7 @@ describe("Senior Listing Application", () => {
     clickNext()
 
     // Verify senior notice
-    cy.get(".alert-notice").should(
-      "contain.text",
-      "Everyone in your household must be a Senior"
-    )
+    cy.get(".alert-notice").should("contain.text", "Everyone in your household must be a Senior")
   })
 
   it("Applicant qualifies for senior listing", () => {
@@ -87,10 +84,7 @@ describe("Senior Listing Application", () => {
 
     // Click Next — should see senior notice
     clickNext()
-    cy.get(".alert-notice").should(
-      "contain.text",
-      "Everyone in your household must be a Senior"
-    )
+    cy.get(".alert-notice").should("contain.text", "Everyone in your household must be a Senior")
   })
 
   it("Household member qualifies", () => {

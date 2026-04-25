@@ -47,7 +47,7 @@ import { createTestAccount, TestAccount } from "../../support/helpers/testData"
 // We mirror that behavior here.
 const SHOW_VETERANS_QUESTION = false
 
-describe("Short Form Application", () => {
+describe("Short Form Application", { testIsolation: false }, () => {
   // Create test accounts used across scenarios
   const basicAccount: TestAccount = createTestAccount("Jane Doe")
   const fullAccount: TestAccount = createTestAccount("Jane Valerie Doe")
@@ -294,9 +294,9 @@ describe("Short Form Application", () => {
     // Verify review page data
     expectReviewPageContains({
       "full-name": fullAccount.fullName,
-      "dob": fullAccount.birthDate,
-      "email": fullAccount.email,
-      "phone": "(222) 222-2222",
+      dob: fullAccount.birthDate,
+      email: fullAccount.email,
+      phone: "(222) 222-2222",
       "alt-phone": "(555) 111-1111",
     })
 
@@ -362,10 +362,7 @@ describe("Short Form Application", () => {
       "contain.text",
       "Certificate Number: 11223344"
     )
-    cy.get("#review-rentBurden .info-item_name").should(
-      "contain.text",
-      "Rent Burdened Preference"
-    )
+    cy.get("#review-rentBurden .info-item_name").should("contain.text", "Rent Burdened Preference")
     // Draft shows detailed rent burden info
     cy.get("#review-rentBurden .info-item_note").should(
       "contain.text",
@@ -377,10 +374,7 @@ describe("Short Form Application", () => {
     )
 
     if (SHOW_VETERANS_QUESTION) {
-      cy.get("#review-veterans .info-item_name").should(
-        "contain.text",
-        "Yes, someone is a veteran"
-      )
+      cy.get("#review-veterans .info-item_name").should("contain.text", "Yes, someone is a veteran")
       cy.get("#review-veterans .info-item_note").should(
         "contain.text",
         `for ${fullAccount.firstName} Doe`
@@ -422,9 +416,9 @@ describe("Short Form Application", () => {
     // Should land back on the Review page — verify contact details
     expectReviewPageContains({
       "full-name": fullAccount.fullName,
-      "dob": fullAccount.birthDate,
-      "email": fullAccount.email,
-      "phone": "(222) 222-2222",
+      dob: fullAccount.birthDate,
+      email: fullAccount.email,
+      phone: "(222) 222-2222",
       "alt-phone": "(555) 111-1111",
     })
 
@@ -519,10 +513,7 @@ describe("Short Form Application", () => {
       "contain.text",
       "Copy of Lease"
     )
-    cy.get("#uploaded-rentBurden_rentFile .media-body strong").should(
-      "contain.text",
-      "Money order"
-    )
+    cy.get("#uploaded-rentBurden_rentFile .media-body strong").should("contain.text", "Money order")
     clickNext()
 
     // Neighborhood Residence page
@@ -539,10 +530,7 @@ describe("Short Form Application", () => {
       "contain.text",
       "Letter from SFHA verifying address"
     )
-    cy.get("#aliceGriffith_aliceGriffith_address_address1").should(
-      "have.value",
-      "1234 MARKET ST"
-    )
+    cy.get("#aliceGriffith_aliceGriffith_address_address1").should("have.value", "1234 MARKET ST")
     clickNext()
 
     // COP-DTHP Preferences Programs page
@@ -567,7 +555,7 @@ describe("Short Form Application", () => {
     // ── Back on Review page — verify again ──
     expectReviewPageContains({
       "full-name": fullAccount.fullName,
-      "email": fullAccount.email,
+      email: fullAccount.email,
     })
 
     // Verify preference details on draft
@@ -583,10 +571,7 @@ describe("Short Form Application", () => {
       "contain.text",
       "Displaced Tenant Housing Preference (DTHP)"
     )
-    cy.get("#review-rentBurden .info-item_name").should(
-      "contain.text",
-      "Rent Burdened Preference"
-    )
+    cy.get("#review-rentBurden .info-item_name").should("contain.text", "Rent Burdened Preference")
 
     // Confirm and submit
     confirmReviewDetails()
@@ -605,9 +590,9 @@ describe("Short Form Application", () => {
     // Verify all details on submitted application view
     expectReviewPageContains({
       "full-name": fullAccount.fullName,
-      "dob": fullAccount.birthDate,
-      "email": fullAccount.email,
-      "phone": "(222) 222-2222",
+      dob: fullAccount.birthDate,
+      email: fullAccount.email,
+      phone: "(222) 222-2222",
       "alt-phone": "(555) 111-1111",
     })
 
@@ -677,18 +662,12 @@ describe("Short Form Application", () => {
       "contain.text",
       "Certificate Number: 11223344"
     )
-    cy.get("#review-rentBurden .info-item_name").should(
-      "contain.text",
-      "Rent Burdened Preference"
-    )
+    cy.get("#review-rentBurden .info-item_name").should("contain.text", "Rent Burdened Preference")
     // Submitted app shows "for your household" instead of specific address
     cy.get("#review-rentBurden .info-item_note").should("contain.text", "for your household")
 
     if (SHOW_VETERANS_QUESTION) {
-      cy.get("#review-veterans .info-item_name").should(
-        "contain.text",
-        "Yes, someone is a veteran"
-      )
+      cy.get("#review-veterans .info-item_name").should("contain.text", "Yes, someone is a veteran")
       cy.get("#review-veterans .info-item_note").should(
         "contain.text",
         `for ${fullAccount.firstName} Doe`
@@ -706,8 +685,6 @@ describe("Short Form Application", () => {
     cy.contains("h1", "Sign In").should("exist")
 
     // Verify sign out success message
-    cy.contains("p.alert-body", "You have successfully logged out of your account.").should(
-      "exist"
-    )
+    cy.contains("p.alert-body", "You have successfully logged out of your account.").should("exist")
   })
 })

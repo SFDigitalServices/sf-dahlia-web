@@ -17,11 +17,16 @@ import {
   clickNext,
   clickNextTimes,
 } from "../../support/pages/shortForm"
-import { createTestAccount, createAccountViaUI, LISTING_IDS, TestAccount } from "../../support/helpers/testData"
+import {
+  createTestAccount,
+  createAccountViaUI,
+  LISTING_IDS,
+  TestAccount,
+} from "../../support/helpers/testData"
 
 const SHOW_VETERANS_QUESTION = false
 
-describe("Autofill application", () => {
+describe("Autofill application", { testIsolation: false }, () => {
   const account: TestAccount = createTestAccount("Arnold Autofill", "1/1/1950")
 
   // ── Setup: create and confirm account ──
@@ -201,10 +206,7 @@ describe("Autofill application", () => {
     cy.wait(2000)
 
     // Should land on the optional survey page
-    cy.get("h2.app-card_question").should(
-      "contain.text",
-      "Help us ensure we are meeting our goal"
-    )
+    cy.get("h2.app-card_question").should("contain.text", "Help us ensure we are meeting our goal")
   })
 
   // ─── Scenario 4: Autofilled application submission ───

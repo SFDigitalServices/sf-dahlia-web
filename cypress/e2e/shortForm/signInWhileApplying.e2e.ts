@@ -27,12 +27,17 @@ import {
   confirmReviewDetails,
   agreeToTermsAndSubmit,
 } from "../../support/pages/shortForm"
-import { createTestAccount, createAccountViaUI, LISTING_IDS, TestAccount } from "../../support/helpers/testData"
+import {
+  createTestAccount,
+  createAccountViaUI,
+  LISTING_IDS,
+  TestAccount,
+} from "../../support/helpers/testData"
 
 // SHOW_VETERANS_QUESTION = false (same as submittingApplication)
 const SHOW_VETERANS_QUESTION = false
 
-describe("Sign-in while filling out application", () => {
+describe("Sign-in while filling out application", { testIsolation: false }, () => {
   // ── Shared test accounts ──
   const aliceAccount: TestAccount = createTestAccount("Alice Walker", "1/1/2000")
   let octaviaAccount: TestAccount
@@ -501,10 +506,7 @@ describe("Sign-in while filling out application", () => {
       .filter(":visible")
       .contains("Alice Walker")
       .then(($opt) => {
-        cy.get("#assistedHousing_household_member")
-          .filter(":visible")
-          .first()
-          .select($opt.val()!)
+        cy.get("#assistedHousing_household_member").filter(":visible").first().select($opt.val()!)
       })
 
     // Upload proof for Assisted Housing
@@ -549,7 +551,9 @@ describe("Sign-in while filling out application", () => {
     cy.get('[ng-model="userAuth.user.email"]').clear().type(aliceAccount.email)
     cy.get('[ng-model="userAuth.user.email_confirmation"]').clear().type(aliceAccount.email)
     cy.get('[ng-model="userAuth.user.password"]').clear().type(aliceDupeAccount.password)
-    cy.get('[ng-model="userAuth.user.password_confirmation"]').clear().type(aliceDupeAccount.password)
+    cy.get('[ng-model="userAuth.user.password_confirmation"]')
+      .clear()
+      .type(aliceDupeAccount.password)
     cy.get("#submit").click()
 
     // Should see "Email is already in use" error
@@ -687,10 +691,7 @@ describe("Sign-in while filling out application", () => {
       .filter(":visible")
       .contains("Alice Walker")
       .then(($opt) => {
-        cy.get("#assistedHousing_household_member")
-          .filter(":visible")
-          .first()
-          .select($opt.val()!)
+        cy.get("#assistedHousing_household_member").filter(":visible").first().select($opt.val()!)
       })
 
     // Upload proof for Assisted Housing

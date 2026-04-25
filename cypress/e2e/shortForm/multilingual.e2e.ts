@@ -20,7 +20,7 @@ import { createTestAccount, LISTING_IDS, TestAccount } from "../../support/helpe
 
 const SHOW_VETERANS_QUESTION = false
 
-describe("Multilingual application", () => {
+describe("Multilingual application", { testIsolation: false }, () => {
   const account: TestAccount = createTestAccount("Janifer Doe")
 
   // ─── Scenario 1: Spanish language selection and non-English application submission ───
