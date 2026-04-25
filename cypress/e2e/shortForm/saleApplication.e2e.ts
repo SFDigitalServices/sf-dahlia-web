@@ -46,10 +46,10 @@ describe("Sale Listing Application", () => {
     })
 
     // Upload loan pre-approval and homebuyer education certificate
-    cy.get("#ngf-Loan pre-approvalFile").selectFile("app/assets/images/logo-city.png", {
+    cy.get('[id="ngf-Loan pre-approvalFile"]').selectFile("app/assets/images/logo-city.png", {
       force: true,
     })
-    cy.get("#ngf-Homebuyer education certificateFile").selectFile(
+    cy.get('[id="ngf-Homebuyer education certificateFile"]').selectFile(
       "app/assets/images/logo-city.png",
       { force: true }
     )

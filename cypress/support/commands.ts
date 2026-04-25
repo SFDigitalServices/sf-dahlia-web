@@ -50,7 +50,11 @@ Cypress.Commands.add(
   "createAccountFromConfirmation",
   (data: { email: string; password: string; fullName: string; birthDate: string }) => {
     cy.get("#create-account").click()
-    // The create account form should appear with pre-filled name/DOB from the application
+    // Verify the form has pre-filled name/DOB from the application
+    cy.get('input[name="firstName"]').should(($el) => {
+      expect(data.fullName).to.include($el.val() as string)
+    })
+    cy.get('input[name="dob"]').should("have.value", data.birthDate)
     cy.get('input[name="email"]').clear().type(data.email)
     cy.get('input[name="password"]').clear().type(data.password)
     cy.get('input[name="password_confirmation"]').clear().type(data.password)
@@ -66,9 +70,15 @@ Cypress.Commands.add("goToApplication", (listingType: string) => {
     customEducator1: `/listings/${LISTING_IDS.customEducator1}/apply-welcome/custom-educator-screening`,
     customEducator2: `/listings/${LISTING_IDS.customEducator2}/apply-welcome/custom-educator-screening`,
   }
-  cy.visit(urls[listingType])
+  const url = urls[listingType]
+  if (!url) {
+    throw new Error(
+      `Unknown listing type "${listingType}" passed to goToApplication. Supported listing types: ${Object.keys(urls).join(", ")}`
+    )
+  }
+  cy.visit(url)
 })
 
 Cypress.Commands.add("confirmAccountByEmail", (email: string) => {
-  cy.request(`/api/v1/account/confirm/?email=${email}`)
+  cy.request(`/api/v1/account/confirm/?email=${encodeURIComponent(email)}`)
 })

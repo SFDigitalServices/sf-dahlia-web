@@ -34,8 +34,8 @@ export function createTestAccount(name: string, birthDate = "1/1/1902"): TestAcc
   }
 }
 
-export function confirmAccount(email: string): void {
-  cy.request(`/api/v1/account/confirm/?email=${email}`)
+export function confirmAccount(email: string) {
+  return cy.request(`/api/v1/account/confirm/?email=${encodeURIComponent(email)}`)
 }
 
 /**
