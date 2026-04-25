@@ -25,7 +25,7 @@ const NAV_ITEMS: Array<{
 }> = [
   {
     key: "overview",
-    labelKey: "accountDashboard.yourAccount",
+    labelKey: "accountDashboard.overview",
     pathGetter: getMyAccountPath,
     icon: "profile",
     section: "overview",
