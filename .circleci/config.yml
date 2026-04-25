@@ -237,6 +237,20 @@ jobs:
       - *attach_workspace
       - qlty/coverage_publish:
           files: jest-test-coverage/lcov.info, coverage/coverage.json
+  e2e-short-form:
+    <<: *defaults
+    environment:
+      SIGN_IN_PAGE_REACT: "true"
+    steps:
+      - setup
+      - start-server
+      - run:
+          name: Run Cypress short form E2E tests
+          command: yarn test:e2e -- --spec 'cypress/e2e/shortForm/**/*.e2e.ts'
+      - store_test_results:
+          path: cypress/results
+      - store_artifacts:
+          path: cypress/results
   e2e-legacy:
     <<: *defaults
     parallelism: 4
@@ -291,12 +305,17 @@ workflows:
             - unit-react
       - e2e-legacy:
           <<: *angular_jobs
+      - e2e-short-form:
+          <<: *angular_jobs
       - e2e:
           <<: *prod_and_release_jobs
           name: e2e-production
       - e2e-legacy:
           <<: *prod_and_release_jobs
           name: e2e-production-legacy
+      - e2e-short-form:
+          <<: *prod_and_release_jobs
+          name: e2e-short-form-production
       - waiter:
           requires:
             - build
