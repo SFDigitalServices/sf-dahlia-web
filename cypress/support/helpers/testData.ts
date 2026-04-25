@@ -37,3 +37,23 @@ export function createTestAccount(name: string, birthDate = "1/1/1902"): TestAcc
 export function confirmAccount(email: string): void {
   cy.request(`/api/v1/account/confirm/?email=${email}`)
 }
+
+/**
+ * Create an account via the AngularJS create-account UI form.
+ * Navigates to /create-account, fills the form, submits, and confirms via API.
+ */
+export function createAccountViaUI(account: TestAccount): void {
+  const [dobMonth, dobDay, dobYear] = account.birthDate.split("/")
+  cy.visit("/create-account")
+  cy.get('[ng-model="userAuth.contact.firstName"]').clear().type(account.firstName)
+  cy.get('[ng-model="userAuth.contact.lastName"]').clear().type(account.lastName)
+  cy.get('[ng-model="userAuth.contact.dob_month"]').clear().type(dobMonth)
+  cy.get('[ng-model="userAuth.contact.dob_day"]').clear().type(dobDay)
+  cy.get('[ng-model="userAuth.contact.dob_year"]').clear().type(dobYear)
+  cy.get('[ng-model="userAuth.user.email"]').clear().type(account.email)
+  cy.get('[ng-model="userAuth.user.email_confirmation"]').clear().type(account.email)
+  cy.get('[ng-model="userAuth.user.password"]').clear().type(account.password)
+  cy.get('[ng-model="userAuth.user.password_confirmation"]').clear().type(account.password)
+  cy.get("#submit").click()
+  confirmAccount(account.email)
+}

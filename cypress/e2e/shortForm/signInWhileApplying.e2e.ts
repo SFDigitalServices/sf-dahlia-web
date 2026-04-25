@@ -27,7 +27,7 @@ import {
   confirmReviewDetails,
   agreeToTermsAndSubmit,
 } from "../../support/pages/shortForm"
-import { createTestAccount, LISTING_IDS, TestAccount } from "../../support/helpers/testData"
+import { createTestAccount, createAccountViaUI, LISTING_IDS, TestAccount } from "../../support/helpers/testData"
 
 // SHOW_VETERANS_QUESTION = false (same as submittingApplication)
 const SHOW_VETERANS_QUESTION = false
@@ -40,18 +40,7 @@ describe("Sign-in while filling out application", () => {
 
   // ── Setup: create and confirm Alice Walker account ──
   before(() => {
-    cy.visit("/create-account")
-    const [dobMonth, dobDay, dobYear] = aliceAccount.birthDate.split("/")
-    cy.get("#create-account_firstName").clear().type(aliceAccount.firstName)
-    cy.get("#create-account_lastName").clear().type(aliceAccount.lastName)
-    cy.get("#create-account_dob_month").clear().type(dobMonth)
-    cy.get("#create-account_dob_day").clear().type(dobDay)
-    cy.get("#create-account_dob_year").clear().type(dobYear)
-    cy.get("#create-account_email").clear().type(aliceAccount.email)
-    cy.get("#create-account_password").clear().type(aliceAccount.password)
-    cy.get("#create-account_password_confirmation").clear().type(aliceAccount.password)
-    cy.get("#submit").click()
-    cy.confirmAccountByEmail(aliceAccount.email)
+    createAccountViaUI(aliceAccount)
     cy.wait(5000)
   })
 
@@ -111,17 +100,7 @@ describe("Sign-in while filling out application", () => {
 
     // Create account for Octavia Butler
     octaviaAccount = createTestAccount("Octavia Butler")
-    const [obMonth, obDay, obYear] = octaviaAccount.birthDate.split("/")
-    cy.get("#create-account_firstName").clear().type(octaviaAccount.firstName)
-    cy.get("#create-account_lastName").clear().type(octaviaAccount.lastName)
-    cy.get("#create-account_dob_month").clear().type(obMonth)
-    cy.get("#create-account_dob_day").clear().type(obDay)
-    cy.get("#create-account_dob_year").clear().type(obYear)
-    cy.get("#create-account_email").clear().type(octaviaAccount.email)
-    cy.get("#create-account_password").clear().type(octaviaAccount.password)
-    cy.get("#create-account_password_confirmation").clear().type(octaviaAccount.password)
-    cy.get("#submit").click()
-    cy.confirmAccountByEmail(octaviaAccount.email)
+    createAccountViaUI(octaviaAccount)
 
     // Continue saved draft for Senior Test Listing
     cy.visit(`/continue-draft-sign-in/${LISTING_IDS.senior}`)
@@ -562,30 +541,32 @@ describe("Sign-in while filling out application", () => {
     // Try to create account with Alice Walker's email (should fail — already in use)
     const aliceDupeAccount = createTestAccount("Alice Walker")
     const [adMonth, adDay, adYear] = aliceDupeAccount.birthDate.split("/")
-    cy.get("#create-account_firstName").clear().type(aliceDupeAccount.firstName)
-    cy.get("#create-account_lastName").clear().type(aliceDupeAccount.lastName)
-    cy.get("#create-account_dob_month").clear().type(adMonth)
-    cy.get("#create-account_dob_day").clear().type(adDay)
-    cy.get("#create-account_dob_year").clear().type(adYear)
-    cy.get("#create-account_email").clear().type(aliceAccount.email)
-    cy.get("#create-account_password").clear().type(aliceDupeAccount.password)
-    cy.get("#create-account_password_confirmation").clear().type(aliceDupeAccount.password)
+    cy.get('[ng-model="userAuth.contact.firstName"]').clear().type(aliceDupeAccount.firstName)
+    cy.get('[ng-model="userAuth.contact.lastName"]').clear().type(aliceDupeAccount.lastName)
+    cy.get('[ng-model="userAuth.contact.dob_month"]').clear().type(adMonth)
+    cy.get('[ng-model="userAuth.contact.dob_day"]').clear().type(adDay)
+    cy.get('[ng-model="userAuth.contact.dob_year"]').clear().type(adYear)
+    cy.get('[ng-model="userAuth.user.email"]').clear().type(aliceAccount.email)
+    cy.get('[ng-model="userAuth.user.email_confirmation"]').clear().type(aliceAccount.email)
+    cy.get('[ng-model="userAuth.user.password"]').clear().type(aliceDupeAccount.password)
+    cy.get('[ng-model="userAuth.user.password_confirmation"]').clear().type(aliceDupeAccount.password)
     cy.get("#submit").click()
 
     // Should see "Email is already in use" error
     cy.get(".alert-box").should("contain.text", "Email is already in use")
 
-    // Create account for Harper Lee
+    // Create account for Harper Lee (reuses the form already on screen)
     harperAccount = createTestAccount("Harper Lee")
     const [hlMonth, hlDay, hlYear] = harperAccount.birthDate.split("/")
-    cy.get("#create-account_firstName").clear().type(harperAccount.firstName)
-    cy.get("#create-account_lastName").clear().type(harperAccount.lastName)
-    cy.get("#create-account_dob_month").clear().type(hlMonth)
-    cy.get("#create-account_dob_day").clear().type(hlDay)
-    cy.get("#create-account_dob_year").clear().type(hlYear)
-    cy.get("#create-account_email").clear().type(harperAccount.email)
-    cy.get("#create-account_password").clear().type(harperAccount.password)
-    cy.get("#create-account_password_confirmation").clear().type(harperAccount.password)
+    cy.get('[ng-model="userAuth.contact.firstName"]').clear().type(harperAccount.firstName)
+    cy.get('[ng-model="userAuth.contact.lastName"]').clear().type(harperAccount.lastName)
+    cy.get('[ng-model="userAuth.contact.dob_month"]').clear().type(hlMonth)
+    cy.get('[ng-model="userAuth.contact.dob_day"]').clear().type(hlDay)
+    cy.get('[ng-model="userAuth.contact.dob_year"]').clear().type(hlYear)
+    cy.get('[ng-model="userAuth.user.email"]').clear().type(harperAccount.email)
+    cy.get('[ng-model="userAuth.user.email_confirmation"]').clear().type(harperAccount.email)
+    cy.get('[ng-model="userAuth.user.password"]').clear().type(harperAccount.password)
+    cy.get('[ng-model="userAuth.user.password_confirmation"]').clear().type(harperAccount.password)
     cy.get("#submit").click()
     cy.confirmAccountByEmail(harperAccount.email)
 

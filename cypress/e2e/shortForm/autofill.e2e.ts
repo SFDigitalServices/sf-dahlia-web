@@ -17,7 +17,7 @@ import {
   clickNext,
   clickNextTimes,
 } from "../../support/pages/shortForm"
-import { createTestAccount, LISTING_IDS, TestAccount } from "../../support/helpers/testData"
+import { createTestAccount, createAccountViaUI, LISTING_IDS, TestAccount } from "../../support/helpers/testData"
 
 const SHOW_VETERANS_QUESTION = false
 
@@ -26,18 +26,7 @@ describe("Autofill application", () => {
 
   // ── Setup: create and confirm account ──
   before(() => {
-    cy.visit("/create-account")
-    const [dobMonth, dobDay, dobYear] = account.birthDate.split("/")
-    cy.get("#create-account_firstName").clear().type(account.firstName)
-    cy.get("#create-account_lastName").clear().type(account.lastName)
-    cy.get("#create-account_dob_month").clear().type(dobMonth)
-    cy.get("#create-account_dob_day").clear().type(dobDay)
-    cy.get("#create-account_dob_year").clear().type(dobYear)
-    cy.get("#create-account_email").clear().type(account.email)
-    cy.get("#create-account_password").clear().type(account.password)
-    cy.get("#create-account_password_confirmation").clear().type(account.password)
-    cy.get("#submit").click()
-    cy.confirmAccountByEmail(account.email)
+    createAccountViaUI(account)
     cy.wait(5000)
   })
 
