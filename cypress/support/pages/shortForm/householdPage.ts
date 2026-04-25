@@ -38,9 +38,11 @@ export function indicateLivingWithOthers(): void {
 
 /**
  * Click the "Add household member" button to open the form.
+ * Waits for the form to be visible before returning.
  */
 export function openHouseholdMemberForm(): void {
   cy.get("#add-household-member").click()
+  cy.get('[ng-model="householdMember.firstName"]').should("exist")
 }
 
 /**
