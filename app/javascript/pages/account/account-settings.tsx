@@ -9,7 +9,6 @@ import { Card, Alert } from "@bloom-housing/ui-seeds"
 import { AppPages, RedirectType } from "../../util/routeUtil"
 import { User } from "../../authentication/user"
 import Layout from "../../layouts/Layout"
-import AccountLayout from "../../layouts/AccountLayout"
 import EmailFieldset, {
   emailFieldsetErrors,
   emailSortOrder,
@@ -419,8 +418,8 @@ const AccountSettings = ({ profile }: { profile: User }) => {
 
   return (
     <Layout title={t("accountSettings.title")}>
-      <AccountLayout>
-        <div className="flex flex-wrap relative w-full md:py-8">
+      <section className="bg-gray-300 md:border-t md:border-gray-450">
+        <div className="flex flex-wrap relative md:max-w-lg mx-auto md:py-8">
           <Card className="w-full pb-8">
             {nameUpdateBanner || nameSavedBanner ? (
               <FormHeader
@@ -451,7 +450,7 @@ const AccountSettings = ({ profile }: { profile: User }) => {
             <PasswordSection user={user} setUser={setUser} />
           </Card>
         </div>
-      </AccountLayout>
+      </section>
     </Layout>
   )
 }

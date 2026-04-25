@@ -2,17 +2,17 @@ import React, { useContext } from "react"
 import { Icon, t, type UniversalIconType } from "@bloom-housing/ui-components"
 import { getPathWithoutLanguagePrefix } from "../../../util/languageUtil"
 import {
-  getMyAccountPath,
-  getMyApplicationsPath,
-  getMyAccountSettingsPath,
+  getAccountDashboardPath,
+  getAccountApplicationsPath,
+  getAccountSettingsPath,
   getSignInPath,
 } from "../../../util/routeUtil"
 import UserContext from "../../../authentication/context/UserContext"
 
 export const getActiveSection = (pathname: string): string => {
   const pathWithoutLang = getPathWithoutLanguagePrefix(pathname)
-  if (pathWithoutLang.startsWith("/my-applications")) return "applications"
-  if (pathWithoutLang.startsWith("/account-settings")) return "settings"
+  if (pathWithoutLang.startsWith("/account/applications")) return "applications"
+  if (pathWithoutLang.startsWith("/account/settings")) return "settings"
   return "overview"
 }
 
@@ -26,21 +26,21 @@ const NAV_ITEMS: Array<{
   {
     key: "overview",
     labelKey: "accountDashboard.overview",
-    pathGetter: getMyAccountPath,
+    pathGetter: getAccountDashboardPath,
     icon: "profile",
     section: "overview",
   },
   {
     key: "applications",
     labelKey: "accountDashboard.applicationAndLotteryResultsNav",
-    pathGetter: getMyApplicationsPath,
+    pathGetter: getAccountApplicationsPath,
     icon: "application",
     section: "applications",
   },
   {
     key: "settings",
     labelKey: "accountSettings.title.sentenceCase",
-    pathGetter: getMyAccountSettingsPath,
+    pathGetter: getAccountSettingsPath,
     icon: "settings",
     section: "settings",
   },

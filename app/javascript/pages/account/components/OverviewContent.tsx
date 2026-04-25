@@ -2,8 +2,8 @@ import React, { useContext } from "react"
 import { Icon, t, type UniversalIconType } from "@bloom-housing/ui-components"
 import { Button } from "@bloom-housing/ui-seeds"
 import {
-  getMyApplicationsPath,
-  getMyAccountSettingsPath,
+  getAccountApplicationsPath,
+  getAccountSettingsPath,
   getSignInPath,
 } from "../../../util/routeUtil"
 import UserContext from "../../../authentication/context/UserContext"
@@ -65,14 +65,14 @@ const OverviewContent = () => {
           title={t("accountDashboard.applicationsAndLotteryResults")}
           description={t("accountDashboard.applicationsDescription")}
           buttonLabel={t("accountDashboard.seeApplications")}
-          href={getMyApplicationsPath()}
+          href={getAccountApplicationsPath()}
         />
         <DashboardCard
           icon="settings"
           title={t("accountSettings.title.sentenceCase")}
           description={t("accountDashboard.settingsDescription")}
           buttonLabel={t("accountDashboard.editSettings")}
-          href={getMyAccountSettingsPath()}
+          href={getAccountSettingsPath()}
         />
       </div>
 

@@ -1,6 +1,5 @@
 import React, { useState } from "react"
 import Layout from "../../layouts/Layout"
-import AccountLayout from "../../layouts/AccountLayout"
 import withAppSetup from "../../layouts/withAppSetup"
 import {
   t,
@@ -197,8 +196,8 @@ const MyApplications = () => {
 
   return (
     <Layout>
-      <AccountLayout>
-        <div className="flex flex-wrap relative sm:py-8">
+      <section className="bg-gray-300 border-t border-gray-450">
+        <div className="flex flex-wrap relative max-w-2xl mx-auto sm:py-8">
           <Card className="w-full mobile-card">
             <Card.Header className="flex justify-center w-full flex-col items-center pb-8">
               <div
@@ -253,7 +252,7 @@ const MyApplications = () => {
             {determineApplicationItemList(loading, error, applications, handleDeleteApp)}
           </Card>
         </div>
-      </AccountLayout>
+      </section>
     </Layout>
   )
 }

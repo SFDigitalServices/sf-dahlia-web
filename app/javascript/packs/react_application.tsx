@@ -25,6 +25,9 @@ import Privacy from "../pages/getAssistance/privacy"
 import MyApplications from "../pages/account/my-applications"
 import AccountSettings from "../pages/account/account-settings"
 import MyAccount from "../pages/account/my-account"
+import MyAccountV2 from "../pages/account/my-account-v2"
+import MyApplicationsV2 from "../pages/account/my-applications-v2"
+import AccountSettingsV2 from "../pages/account/account-settings-v2"
 import CreateAccount from "../pages/account/create-account"
 import ForgotPassword from "../pages/forgot-password"
 import ResetPassword from "../pages/reset-password"
@@ -55,6 +58,9 @@ void loadTranslations(currentLanguage).then(() => {
     MyApplications,
     AccountSettings,
     MyAccount,
+    MyAccountV2,
+    MyApplicationsV2,
+    AccountSettingsV2,
     ListingApplyForm,
   })
 
