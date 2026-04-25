@@ -62,8 +62,7 @@ describe("Autofill application", { testIsolation: false }, () => {
     // Should see "Welcome back!" title
     cy.get("h2.app-card_question").should("contain.text", "Welcome back!")
 
-    // Sign in with email pre-filled
-    cy.get("#sign-in").click()
+    // Sign in with email pre-filled (email is locked, only password needed)
     cy.get("#auth_password").clear().type(account.password)
     cy.get("#sign-in").click()
 

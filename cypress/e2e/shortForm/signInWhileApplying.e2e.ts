@@ -83,7 +83,6 @@ describe("Sign-in while filling out application", { testIsolation: false }, () =
     clickNext()
 
     // Sign in as Alice Walker with email pre-filled
-    cy.get("#sign-in").click()
     cy.get("#auth_password").clear().type(aliceAccount.password)
     cy.get("#sign-in").click()
 
@@ -164,7 +163,6 @@ describe("Sign-in while filling out application", { testIsolation: false }, () =
     clickNext()
 
     // Sign in as Alice Walker with email pre-filled
-    cy.get("#sign-in").click()
     cy.get("#auth_password").clear().type(aliceAccount.password)
     cy.get("#sign-in").click()
 
@@ -200,7 +198,6 @@ describe("Sign-in while filling out application", { testIsolation: false }, () =
     cy.get("h2.app-card_question").should("contain.text", "Welcome back!")
 
     // Sign in as Alice Walker with email pre-filled
-    cy.get("#sign-in").click()
     cy.get("#auth_password").clear().type(aliceAccount.password)
     cy.get("#sign-in").click()
 
@@ -251,7 +248,6 @@ describe("Sign-in while filling out application", { testIsolation: false }, () =
     clickNext()
 
     // Sign in as Alice Walker with email pre-filled
-    cy.get("#sign-in").click()
     cy.get("#auth_password").clear().type(aliceAccount.password)
     cy.get("#sign-in").click()
 
@@ -301,7 +297,6 @@ describe("Sign-in while filling out application", { testIsolation: false }, () =
     clickNext()
 
     // Sign in as Alice Walker with email pre-filled
-    cy.get("#sign-in").click()
     cy.get("#auth_password").clear().type(aliceAccount.password)
     cy.get("#sign-in").click()
 
@@ -341,7 +336,6 @@ describe("Sign-in while filling out application", { testIsolation: false }, () =
     clickNext()
 
     // Sign in as Alice Walker with email pre-filled
-    cy.get("#sign-in").click()
     cy.get("#auth_password").clear().type(aliceAccount.password)
     cy.get("#sign-in").click()
 
@@ -810,7 +804,6 @@ describe("Sign-in while filling out application", { testIsolation: false }, () =
     clickNext()
 
     // Sign in as Alice Walker with email pre-filled
-    cy.get("#sign-in").click()
     cy.get("#auth_password").clear().type(aliceAccount.password)
     cy.get("#sign-in").click()
 
