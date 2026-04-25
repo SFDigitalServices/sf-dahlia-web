@@ -14,10 +14,18 @@ export const DEMOGRAPHIC_DEFAULTS = {
 } as const
 
 /**
+ * Get an element by its exact ID, using attribute selector to avoid CSS escaping issues
+ * with special characters like /, ,, spaces in IDs.
+ */
+function getById(id: string): Cypress.Chainable {
+  return cy.get(`[id="${id}"]`)
+}
+
+/**
  * Check a checkbox only if it is not already checked.
  */
 function checkCheckbox(id: string): void {
-  cy.get(`#${id}`).then(($el) => {
+  getById(id).then(($el) => {
     if (!$el.is(":checked")) {
       cy.wrap($el).click()
     }
@@ -42,15 +50,15 @@ export function fillDemographicSurvey(): void {
 
   // Race — Indigenous accordion
   cy.get("#panel-Indigenous").click()
-  checkCheckbox("panel-Indigenous-American Indian\\/Native American")
+  checkCheckbox("panel-Indigenous-American Indian/Native American")
   checkCheckbox(
-    "panel-Indigenous-Indigenous from Mexico\\, the Caribbean\\, Central America\\, or South America"
+    "panel-Indigenous-Indigenous from Mexico, the Caribbean, Central America, or South America"
   )
-  cy.get("#panel-Indigenous-American Indian\\/Native American-text")
+  getById("panel-Indigenous-American Indian/Native American-text")
     .clear()
     .type(DEMOGRAPHIC_DEFAULTS.indigenousNativeAmericanGroup)
-  cy.get(
-    "#panel-Indigenous-Indigenous from Mexico\\, the Caribbean\\, Central America\\, or South America-text"
+  getById(
+    "panel-Indigenous-Indigenous from Mexico, the Caribbean, Central America, or South America-text"
   )
     .clear()
     .type(DEMOGRAPHIC_DEFAULTS.indigenousCentralSouthAmericaGroup)
@@ -59,7 +67,7 @@ export function fillDemographicSurvey(): void {
   cy.get("#panel-White").click()
   checkCheckbox("panel-White-European")
   checkCheckbox("panel-White-Other")
-  cy.get("#panel-White-Other-text").clear().type(DEMOGRAPHIC_DEFAULTS.whiteOther)
+  getById("panel-White-Other-text").clear().type(DEMOGRAPHIC_DEFAULTS.whiteOther)
 
   // Language
   cy.get("#user_primary_language").select(DEMOGRAPHIC_DEFAULTS.userPrimaryLanguage)
