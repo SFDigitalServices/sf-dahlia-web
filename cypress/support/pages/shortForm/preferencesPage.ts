@@ -43,7 +43,6 @@ export function uploadPreferenceProof(preference: string, documentType: string):
  */
 export function selectLiveWorkPreference(subPref: string, memberName: string): void {
   checkCheckbox("preferences-liveWorkInSf")
-  cy.get("#liveWorkPrefOption").click()
   cy.get("#liveWorkPrefOption").select(subPref)
 
   const pref = subPref === "Live in San Francisco" ? "liveInSf" : "workInSf"

@@ -79,6 +79,7 @@ describe("Short Form Application - Live-Work Preference", () => {
     fillContactPage({
       address1: "1120 Mar West G",
       city: "Tiburon",
+      zip: "94920",
       workInSf: "no",
     })
     clickNext()
@@ -148,7 +149,6 @@ describe("Short Form Application - Live-Work Preference", () => {
     cy.get("#preferences-liveWorkInSf").then(($el) => {
       if (!$el.is(":checked")) cy.wrap($el).click()
     })
-    cy.get("#liveWorkPrefOption").click()
     cy.get("#liveWorkPrefOption").select("Live in San Francisco")
     cy.get("option").filter(":visible").contains("Jane Doe").should("exist")
     cy.get("option").filter(":visible").contains("Coleman Francis").should("not.exist")
@@ -230,7 +230,6 @@ describe("Short Form Application - Live-Work Preference", () => {
     cy.get("#preferences-liveWorkInSf").then(($el) => {
       if (!$el.is(":checked")) cy.wrap($el).click()
     })
-    cy.get("#liveWorkPrefOption").click()
     cy.get("#liveWorkPrefOption").select("Live in San Francisco")
     cy.get("option").filter(":visible").contains("Coleman Francis").should("exist")
     cy.get("option").filter(":visible").contains("Jane Doe").should("not.exist")
@@ -310,7 +309,6 @@ describe("Short Form Application - Live-Work Preference", () => {
     cy.get("#preferences-liveWorkInSf").then(($el) => {
       if (!$el.is(":checked")) cy.wrap($el).click()
     })
-    cy.get("#liveWorkPrefOption").click()
     cy.get("#liveWorkPrefOption").select("Live in San Francisco")
     cy.get("option").filter(":visible").contains("Jane Doe").should("exist")
     cy.get("option").filter(":visible").contains("Coleman Francis").should("not.exist")
@@ -365,7 +363,6 @@ describe("Short Form Application - Live-Work Preference", () => {
     cy.get("#preferences-liveWorkInSf").then(($el) => {
       if (!$el.is(":checked")) cy.wrap($el).click()
     })
-    cy.get("#liveWorkPrefOption").click()
     cy.get("#liveWorkPrefOption").select("Live in San Francisco")
     cy.get("option").filter(":visible").contains("Coleman Francis").should("exist")
     cy.get("option").filter(":visible").contains("Jane Doe").should("not.exist")
