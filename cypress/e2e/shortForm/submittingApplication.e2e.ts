@@ -258,8 +258,8 @@ describe("Short Form Application", { testIsolation: false }, () => {
     uploadRentBurdenProof("Money order")
     clickNext()
 
-    // Neighborhood Residence preference — select "Jane Doe" and upload Gas bill
-    selectPreference("neighborhoodResidence", "Jane Doe")
+    // Neighborhood Residence preference — select primary applicant and upload Gas bill
+    selectPreference("neighborhoodResidence", `${fullAccount.firstName} ${fullAccount.lastName}`)
     uploadPreferenceProof("neighborhoodResidence", "Gas bill")
     clickNext()
 
@@ -273,17 +273,17 @@ describe("Short Form Application", { testIsolation: false }, () => {
     cy.get("#submit").click()
 
     // COP-DTHP preferences
-    // Select "Jane Doe" for certOfPreference
-    selectPreference("certOfPreference", "Jane Doe")
+    // Select primary applicant for certOfPreference
+    selectPreference("certOfPreference", `${fullAccount.firstName} ${fullAccount.lastName}`)
     cy.get("#certOfPreference-certificate").clear().type("11223344")
     // Select "Coleman Francis" for displaced
     selectPreference("displaced", "Coleman Francis")
     cy.get("#displaced-certificate").clear().type("11223344")
     clickNext()
 
-    // Veterans preference — answer Yes for "Jane Doe" (if shown)
+    // Veterans preference — answer Yes for primary applicant (if shown)
     if (SHOW_VETERANS_QUESTION) {
-      selectVeteransPreference("Jane Doe")
+      selectVeteransPreference(`${fullAccount.firstName} ${fullAccount.lastName}`)
       clickNext()
     }
 

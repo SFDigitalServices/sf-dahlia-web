@@ -403,7 +403,7 @@ describe("Short Form Application - Live-Work Preference", () => {
       .should("contain.text", "Live or Work in San Francisco Preference")
 
     // ── Check that filling it out then changing required info removes from application ──
-    selectLiveWorkPreference("Live in San Francisco", "Jane Doe")
+    selectLiveWorkPreference("Live in San Francisco", `${account.firstName} ${account.lastName}`)
     uploadPreferenceProof("liveInSf", "Gas bill")
 
     // Don't choose COP-DTHP preferences
@@ -507,7 +507,7 @@ describe("Short Form Application - Live-Work Preference", () => {
     optOutOfPreference()
 
     // Select "Jane Doe" for "Live in San Francisco" in Live-Work preference
-    selectLiveWorkPreference("Live in San Francisco", "Jane Doe")
+    selectLiveWorkPreference("Live in San Francisco", `${account.firstName} ${account.lastName}`)
 
     // Go back to Contact page and change WorkInSF to No
     goBackToContactPage()
@@ -588,7 +588,7 @@ describe("Short Form Application - Live-Work Preference", () => {
     optOutOfPreference()
 
     // Select "Jane Doe" for "Live in San Francisco" in Live-Work preference
-    selectLiveWorkPreference("Live in San Francisco", "Jane Doe")
+    selectLiveWorkPreference("Live in San Francisco", `${account.firstName} ${account.lastName}`)
 
     // Use browser back button
     cy.go("back")

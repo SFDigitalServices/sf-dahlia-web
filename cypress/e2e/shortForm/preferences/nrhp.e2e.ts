@@ -209,7 +209,7 @@ describe("Short Form Application - Neighborhood Resident Housing Preference", ()
     })
 
     // Select Jeremy Doe for NRHP
-    selectPreference("neighborhoodResidence", "Jeremy Doe")
+    selectPreference("neighborhoodResidence", `${account.firstName} ${account.lastName}`)
 
     // Upload proof
     uploadPreferenceProof("neighborhoodResidence", "School record")

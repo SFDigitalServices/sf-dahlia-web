@@ -95,7 +95,7 @@ describe("Short Form Application - Assisted Housing Preference", () => {
     )
 
     // Select "Jen Doe" for assistedHousing preference
-    selectPreference("assistedHousing", "Jen Doe")
+    selectPreference("assistedHousing", `${account.firstName} ${account.lastName}`)
 
     // Upload a Copy of Lease as proof for Assisted Housing
     uploadAssistedHousingProof()
