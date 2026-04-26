@@ -24,7 +24,7 @@ import "./commands"
 Cypress.on("uncaught:exception", (err) => {
   // Suppress any error thrown by Google Translate scripts
   if (
-    err.stack?.includes("translate.googleapis.com") ||
+    /https?:\/\/translate\.googleapis\.com[/\s]/.test(err.stack ?? "") ||
     err.stack?.includes("translate_http") ||
     err.message.includes("__closure_events_fn_")
   ) {
