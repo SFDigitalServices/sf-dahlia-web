@@ -210,6 +210,9 @@ describe("Autofill application", { testIsolation: false }, () => {
 
   // ─── Scenario 4: Autofilled application submission ───
   it("Autofilled application submission", () => {
+    // Fill demographic survey (scenario 3 left us on the survey page)
+    fillDemographicSurvey()
+
     // Confirm review details
     confirmReviewDetails()
 

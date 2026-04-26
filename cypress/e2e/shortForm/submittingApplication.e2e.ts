@@ -133,9 +133,6 @@ describe("Short Form Application", { testIsolation: false }, () => {
 
   // ─── Scenario 1 continued: Creating an account on the confirmation page ───
   it("Creating an account on the confirmation page", () => {
-    // Click Create Account button
-    cy.get("#create-account").scrollIntoView().click()
-
     // Create account with pre-filled application details
     cy.createAccountFromConfirmation({
       email: basicAccount.email,
