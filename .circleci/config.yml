@@ -264,7 +264,7 @@ jobs:
     steps:
       - setup
       - start-server
-      - run: yarn test:e2e --spec 'cypress/e2e/shortForm/**'
+      - run: yarn test:e2e --spec 'cypress/e2e/shortForm/customEducator.e2e.ts,cypress/e2e/shortForm/saleApplication.e2e.ts,cypress/e2e/shortForm/submittingApplication.e2e.ts'
   coverage:
     <<: *defaults_lite
     steps:

@@ -7,7 +7,7 @@ if (existsSync(".env")) {
 }
 
 export default defineConfig({
-  defaultCommandTimeout: 30000, // 30s — individual commands can override with { timeout: ... }
+  defaultCommandTimeout: 10000, // 10s — individual commands can override with { timeout: ... }
   projectId: "dahlia-housing-portal",
   pageLoadTimeout: 60000, // 60s
   reporterOptions: {
@@ -26,7 +26,10 @@ export default defineConfig({
     },
     baseUrl: "http://localhost:3000",
     specPattern: "cypress/e2e/**/*.{js,jsx,ts,tsx}",
-    retries: 2,
+    retries: {
+      runMode: 1, // CI only
+      openMode: 0,
+    },
   },
   // workaround see https://github.com/dequelabs/axe-core/issues/3057
   modifyObstructiveCode: false,

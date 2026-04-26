@@ -204,11 +204,8 @@ describe("Autofill application", { testIsolation: false }, () => {
     // Continue past general lottery notice page
     clickNext()
 
-    // Wait for survey page
-    cy.wait(2000)
-
     // Should land on the optional survey page
-    cy.get("h2.app-card_question").should("contain.text", "Help us ensure we are meeting our goal")
+    cy.get("h2.app-card_question", { timeout: 15000 }).should("contain.text", "Help us ensure we are meeting our goal")
   })
 
   // ─── Scenario 4: Autofilled application submission ───
