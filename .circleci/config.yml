@@ -328,11 +328,6 @@ workflows:
           <<: *angular_jobs
       - e2e-short-form:
           <<: *angular_jobs
-      - e2e-short-form:
-          name: e2e-short-form-forced
-          requires:
-            - build
-          when: << pipeline.parameters.run_short_form_e2e >>
       - e2e:
           <<: *prod_and_release_jobs
           name: e2e-production
@@ -345,3 +340,11 @@ workflows:
       - cleanup-test-data:
           requires:
             - waiter
+  run-short-form-e2e:
+    when: << pipeline.parameters.run_short_form_e2e >>
+    jobs:
+      - build
+      - e2e-short-form:
+          name: e2e-short-form-forced
+          requires:
+            - build
