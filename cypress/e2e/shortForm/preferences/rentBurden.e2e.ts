@@ -111,6 +111,10 @@ describe("Short Form Application - Rent Burdened Preference", () => {
       force: true,
     })
 
+    // Wait for both uploads to complete before proceeding
+    cy.get("#uploaded-ngf-rentBurden_leaseFile").filter(":visible").should("exist")
+    cy.get("#uploaded-ngf-rentBurden_rentFile").filter(":visible").should("exist")
+
     clickNext()
 
     // Should see Live/Work preference next
