@@ -40,7 +40,8 @@ export function confirmAccount(email: string) {
 
 /**
  * Create an account via the React create-account UI form.
- * Navigates to /create-account, fills the form, submits, and confirms via API.
+ * Navigates to /create-account, fills the form, submits, waits for the
+ * redirect to /sign-in, and confirms via API.
  */
 export function createAccountViaUI(account: TestAccount): void {
   const [dobMonth, dobDay, dobYear] = account.birthDate.split("/")
@@ -53,5 +54,8 @@ export function createAccountViaUI(account: TestAccount): void {
   cy.get('input[name="email"]').clear().type(account.email)
   cy.get('input[name="password"]').clear().type(account.password)
   cy.get('button[type="submit"]').click()
+  // Wait for the React form to redirect to /sign-in before confirming,
+  // ensuring the account record exists in the database.
+  cy.url({ timeout: 15000 }).should("include", "/sign-in")
   confirmAccount(account.email)
 }

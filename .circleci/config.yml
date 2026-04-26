@@ -1,4 +1,8 @@
 version: 2.1
+parameters:
+  run_short_form_e2e:
+    type: boolean
+    default: false
 orbs:
   ruby: circleci/ruby@0.1.2
   cypress: cypress-io/cypress@1.26.0
@@ -252,7 +256,15 @@ jobs:
     steps:
       - setup
       - start-server
-      - run: yarn test:e2e
+      - run: yarn test:e2e --spec 'cypress/e2e/*.e2e.ts,cypress/e2e/accounts/**,cypress/e2e/getAssistance/**,cypress/e2e/listingDetails/**'
+  e2e-short-form:
+    <<: *defaults
+    environment:
+      SIGN_IN_PAGE_REACT: "true"
+    steps:
+      - setup
+      - start-server
+      - run: yarn test:e2e --spec 'cypress/e2e/shortForm/**'
   coverage:
     <<: *defaults_lite
     steps:
@@ -314,6 +326,13 @@ workflows:
             - unit-react
       - e2e-legacy:
           <<: *angular_jobs
+      - e2e-short-form:
+          <<: *angular_jobs
+      - e2e-short-form:
+          name: e2e-short-form-forced
+          requires:
+            - build
+          when: << pipeline.parameters.run_short_form_e2e >>
       - e2e:
           <<: *prod_and_release_jobs
           name: e2e-production

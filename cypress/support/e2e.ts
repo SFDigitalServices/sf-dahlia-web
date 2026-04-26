@@ -32,3 +32,22 @@ Cypress.on("uncaught:exception", (err) => {
   }
   return true
 })
+
+// Intercept address validation globally and fail fast with a clear message
+// if the external SmartyStreets service returns a 5xx (e.g. not configured locally).
+// This prevents tests from timing out with a cryptic "element not found" error.
+beforeEach(() => {
+  cy.intercept("POST", "/api/v1/addresses/validate.json", (req) => {
+    req.continue((res) => {
+      if (res.statusCode >= 500) {
+        // expect() propagates correctly from intercept response handlers and
+        // fails the test immediately with a readable message.
+        expect(
+          res.statusCode,
+          `Address validation API returned ${res.statusCode} — ` +
+            `SmartyStreets may not be configured. Check your .env SMARTY_STREETS_* keys.`
+        ).to.be.lessThan(500)
+      }
+    })
+  })
+})
