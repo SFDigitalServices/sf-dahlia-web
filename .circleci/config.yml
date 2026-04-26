@@ -309,6 +309,8 @@ jobs:
 workflows:
   version: 2.1
   build-and-deploy:
+    when:
+      not: << pipeline.parameters.run_short_form_e2e >>
     jobs:
       - build
       - lint:
