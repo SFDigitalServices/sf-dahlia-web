@@ -46,7 +46,9 @@ describe("Sign-in while filling out application", { testIsolation: false }, () =
   // ── Setup: create and confirm Alice Walker account ──
   before(() => {
     createAccountViaUI(aliceAccount)
-    cy.wait(5000)
+    // Clear session so the first test starts logged out.
+    cy.clearCookies()
+    cy.clearLocalStorage()
   })
 
   // ─── Scenario 1: Senior listing DOB disqualification — create new account ───
@@ -495,7 +497,10 @@ describe("Sign-in while filling out application", { testIsolation: false }, () =
     selectAssistedHousingPreference()
 
     // Select Alice Walker for assistedHousing preference
-    cy.get("#assistedHousing_household_member").filter(":visible").first().select(`${aliceAccount.firstName} ${aliceAccount.lastName}`)
+    cy.get("#assistedHousing_household_member")
+      .filter(":visible")
+      .first()
+      .select(`${aliceAccount.firstName} ${aliceAccount.lastName}`)
 
     // Upload proof for Assisted Housing
     uploadAssistedHousingProof()
@@ -674,7 +679,10 @@ describe("Sign-in while filling out application", { testIsolation: false }, () =
     selectAssistedHousingPreference()
 
     // Select Alice Walker for assistedHousing preference
-    cy.get("#assistedHousing_household_member").filter(":visible").first().select(`${aliceAccount.firstName} ${aliceAccount.lastName}`)
+    cy.get("#assistedHousing_household_member")
+      .filter(":visible")
+      .first()
+      .select(`${aliceAccount.firstName} ${aliceAccount.lastName}`)
 
     // Upload proof for Assisted Housing
     uploadAssistedHousingProof()

@@ -32,7 +32,10 @@ describe("Autofill application", { testIsolation: false }, () => {
   // ── Setup: create and confirm account ──
   before(() => {
     createAccountViaUI(account)
-    cy.wait(5000)
+    // Clear session so the first test starts logged out — the Angular short-form
+    // needs to detect the email on the name page and show the welcome-back sign-in.
+    cy.clearCookies()
+    cy.clearLocalStorage()
   })
 
   // ─── Scenario 1: Creating base application for autofill ───
