@@ -100,16 +100,20 @@ export function fillAliceGriffithAddress(data: AliceGriffithAddressData = {}): v
  * Upload lease and rent proof files for Rent Burdened preference.
  */
 export function uploadRentBurdenProof(documentType: string): void {
-  // Upload lease file
-  cy.get("#ngf-rentBurden_leaseFile").selectFile("app/assets/images/logo-portal.png", {
+  // Upload lease file (button id is rentBurden_leaseFile, no ngf- prefix)
+  cy.get("#rentBurden_leaseFile").selectFile("app/assets/images/logo-portal.png", {
     force: true,
   })
+  // Wait for lease upload to register
+  cy.get("#uploaded-rentBurden_leaseFile").should("exist")
 
   // Select rent document type and upload rent file
   cy.get("#rentBurden_rentDocument").filter(":visible").first().select(documentType)
-  cy.get("#ngf-rentBurden_rentFile").selectFile("app/assets/images/logo-city.png", {
+  cy.get("#rentBurden_rentFile").selectFile("app/assets/images/logo-city.png", {
     force: true,
   })
+  // Wait for rent upload to register
+  cy.get("#uploaded-rentBurden_rentFile").should("exist")
 }
 
 /**

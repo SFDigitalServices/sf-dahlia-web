@@ -49,16 +49,17 @@ Cypress.Commands.add("signInOnWelcomeBack", (email: string, password: string) =>
 Cypress.Commands.add(
   "createAccountFromConfirmation",
   (data: { email: string; password: string; fullName: string; birthDate: string }) => {
-    cy.get("#create-account").click()
-    // Verify the form has pre-filled name/DOB from the application
-    cy.get('input[name="firstName"]').should(($el) => {
+    cy.get("#create-account").scrollIntoView().click()
+    // Angular create-account form — verify pre-filled name from the application
+    cy.get("#firstName").should(($el) => {
       expect(data.fullName).to.include($el.val() as string)
     })
-    cy.get('input[name="dob"]').should("have.value", data.birthDate)
-    cy.get('input[name="email"]').clear().type(data.email)
-    cy.get('input[name="password"]').clear().type(data.password)
-    cy.get('input[name="password_confirmation"]').clear().type(data.password)
-    cy.get('button[type="submit"]').click()
+    // Fill email (twice — email + confirmation)
+    cy.get("#auth_email").clear().type(data.email)
+    cy.get("#auth_email_confirmation").clear().type(data.email)
+    cy.get("#auth_password").clear().type(data.password)
+    cy.get("#auth_password_confirmation").clear().type(data.password)
+    cy.get("#submit").click()
   }
 )
 
