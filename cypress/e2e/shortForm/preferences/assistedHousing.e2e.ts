@@ -6,6 +6,7 @@ import {
   fillNamePage,
   fillContactPage,
   indicateLivingWithOthers,
+  openHouseholdMemberForm,
   addHouseholdMember,
   indicateBeingDoneAddingPeople,
   indicateLivingInPublicHousing,
@@ -55,7 +56,7 @@ describe("Short Form Application - Assisted Housing Preference", () => {
     clickNext()
 
     // Add household member "Jonny Doe" with same address as primary
-    cy.get("#add-household-member").click()
+    openHouseholdMemberForm()
     addHouseholdMember({
       firstName: "Jonny",
       lastName: "Doe",

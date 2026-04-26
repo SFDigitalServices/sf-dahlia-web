@@ -164,13 +164,13 @@ describe("Short Form Application - Error Messages", () => {
     cy.get("#cancel-member").click()
 
     // Add 3 household members to exceed max (listing allows 1-3 people, 4 is too big)
-    cy.get("#add-household-member").click()
+    openHouseholdMemberForm()
     addHouseholdMember({ firstName: "Jonny", lastName: "Doe", sameAddress: true })
 
-    cy.get("#add-household-member").click()
+    openHouseholdMemberForm()
     addHouseholdMember({ firstName: "Karen", lastName: "Lee", sameAddress: true })
 
-    cy.get("#add-household-member").click()
+    openHouseholdMemberForm()
     addHouseholdMember({ firstName: "Alex", lastName: "McGee", sameAddress: true })
 
     // Indicate done — should see household size error

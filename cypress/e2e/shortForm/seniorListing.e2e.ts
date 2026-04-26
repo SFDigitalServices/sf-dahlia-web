@@ -7,6 +7,7 @@ import {
   fillContactPage,
   clickNext,
   indicateLivingWithOthers,
+  openHouseholdMemberForm,
   addHouseholdMember,
   indicateBeingDoneAddingPeople,
 } from "../../support/pages/shortForm"
@@ -72,7 +73,7 @@ describe("Senior Listing Application", { testIsolation: false }, () => {
     clickNext()
 
     // Add household member with young DOB
-    cy.get("#add-household-member").click()
+    openHouseholdMemberForm()
     addHouseholdMember({
       firstName: "Younger",
       lastName: "sibling",
@@ -92,7 +93,7 @@ describe("Senior Listing Application", { testIsolation: false }, () => {
     cy.get("#cancel-member").click()
 
     // Add household member with qualifying DOB
-    cy.get("#add-household-member").click()
+    openHouseholdMemberForm()
     addHouseholdMember({
       firstName: "Older",
       lastName: "sibling",

@@ -7,6 +7,7 @@ import {
   fillContactPage,
   indicateLivingAlone,
   indicateLivingWithOthers,
+  openHouseholdMemberForm,
   addHouseholdMember,
   indicateBeingDoneAddingPeople,
   indicateLivingInPublicHousing,
@@ -105,7 +106,7 @@ describe("Short Form Application - Neighborhood Resident Housing Preference", ()
     clickNext()
 
     // Add household member "Karen Lee" who lives at a different (non-NRHP) address
-    cy.get("#add-household-member").click()
+    openHouseholdMemberForm()
     addHouseholdMember({
       firstName: "Karen",
       lastName: "Lee",
@@ -116,7 +117,7 @@ describe("Short Form Application - Neighborhood Resident Housing Preference", ()
     confirmHouseholdMemberAddress()
 
     // Add household member "Jonny Doe" with same address as primary
-    cy.get("#add-household-member").click()
+    openHouseholdMemberForm()
     addHouseholdMember({
       firstName: "Jonny",
       lastName: "Doe",

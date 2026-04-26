@@ -15,6 +15,7 @@ import {
   ALTERNATE_CONTACT_DEFAULTS,
   indicateLivingAlone,
   indicateLivingWithOthers,
+  openHouseholdMemberForm,
   addHouseholdMember,
   indicateBeingDoneAddingPeople,
   indicateLivingInPublicHousing,
@@ -213,7 +214,7 @@ describe("Short Form Application", { testIsolation: false }, () => {
     clickNext()
 
     // Add household member "Coleman Francis" with same address
-    cy.get("#add-household-member").click()
+    openHouseholdMemberForm()
     addHouseholdMember({
       firstName: "Coleman",
       lastName: "Francis",

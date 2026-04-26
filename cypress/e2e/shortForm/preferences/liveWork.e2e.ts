@@ -7,6 +7,7 @@ import {
   fillContactPage,
   indicateLivingAlone,
   indicateLivingWithOthers,
+  openHouseholdMemberForm,
   addHouseholdMember,
   indicateBeingDoneAddingPeople,
   indicateLivingInPublicHousing,
@@ -174,7 +175,7 @@ describe("Short Form Application - Live-Work Preference", () => {
     indicateLivingWithOthers()
     clickNext()
 
-    cy.get("#add-household-member").click()
+    openHouseholdMemberForm()
     addHouseholdMember({
       firstName: "Coleman",
       lastName: "Francis",
