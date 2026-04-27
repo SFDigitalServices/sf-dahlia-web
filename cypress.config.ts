@@ -23,6 +23,7 @@ export default defineConfig({
     },
     env: {
       salesforceInstanceUrl: process.env.SALESFORCE_INSTANCE_URL,
+      stubAddressValidation: process.env.STUB_ADDRESS_VALIDATION === "true",
     },
     baseUrl: "http://localhost:3000",
     specPattern: "cypress/e2e/**/*.{js,jsx,ts,tsx}",
