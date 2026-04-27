@@ -15,7 +15,7 @@ import RailsSaleListing from "../../../api/types/rails/listings/RailsSaleListing
 import Layout from "../../../layouts/Layout"
 import { renderInlineMarkup } from "../../../util/languageUtil"
 import { ConfigContext } from "../../../lib/ConfigContext"
-import InviteToApplyLeasingAgentInfo from "../InviteToLeasingAgentInfo"
+import InviteToLeasingAgentInfo from "../InviteToLeasingAgentInfo"
 
 import styles from "../invite-to.module.scss"
 import { HOME_SF_PHONE } from "../../../modules/constants"
@@ -26,7 +26,7 @@ interface InviteToInterviewDocumentsProps {
 
 const CheckWhatYouNeed = () => {
   return (
-    <div className={styles.submitYourInfoSection} id="checkWhatYouNeed">
+    <div className={styles.infoSubSection} id="checkWhatYouNeed">
       <Heading priority={2} size="2xl">
         {t("inviteToInterviewPage.documents.checkWhatYouNeed.title")}
       </Heading>
@@ -108,7 +108,7 @@ const CheckWhatYouNeed = () => {
 
 const IdentityDocuments = () => {
   return (
-    <div className={styles.submitYourInfoSection} id="identityDocuments">
+    <div className={styles.infoSubSection} id="identityDocuments">
       <Heading priority={2} size="2xl">
         {"1. " + t("inviteToInterviewPage.documents.identity.title")}
       </Heading>
@@ -136,7 +136,7 @@ const IdentityDocuments = () => {
       <ul className={styles.iconList}>
         <li>{renderInlineMarkup(t("inviteToInterviewPage.documents.identity.everyone.p1"))}</li>
       </ul>
-      <div className={styles.infoSubSection}>
+      <div className={styles.expandableContent}>
         <ExpandableContent
           strings={{
             readMore: t("inviteToInterviewPage.documents.identity.everyone.whyWeAsk"),
@@ -159,7 +159,7 @@ const IdentityDocuments = () => {
 
 const ProofOfIncome = () => {
   return (
-    <div className={styles.submitYourInfoSection} id="proofOfIncome">
+    <div className={styles.infoSubSection} id="proofOfIncome">
       <Heading priority={2} size="2xl">
         {"2. " + t("inviteToInterviewPage.documents.proofOfIncome.title")}
       </Heading>
@@ -167,25 +167,24 @@ const ProofOfIncome = () => {
         <strong>{t("inviteToInterviewPage.documents.proofOfIncome.messageBold")}</strong>
         <p>{t("inviteToInterviewPage.documents.proofOfIncome.messageBody")}</p>
       </Message>
+      <Heading priority={3} size="lg">
+        {t("inviteToApplyPage.documents.proofOfIncome.p3")}
+      </Heading>
       <p>{t("inviteToInterviewPage.documents.provide")}</p>
       <ul className={styles.iconList}>
         <li>{renderInlineMarkup(t("inviteToInterviewPage.documents.proofOfIncome.p1"))}</li>
       </ul>
       <p>{t("inviteToInterviewPage.documents.proofOfIncome.p2")}</p>
-      <p>{t("inviteToInterviewPage.documents.proofOfIncome.p3")}</p>
       <p>{t("inviteToInterviewPage.documents.proofOfIncome.p4")}</p>
       <ul>
         <li>{renderInlineMarkup(t("inviteToInterviewPage.documents.proofOfIncome.p5"))}</li>
         <li>{renderInlineMarkup(t("inviteToInterviewPage.documents.proofOfIncome.p6"))}</li>
         <li>{renderInlineMarkup(t("inviteToInterviewPage.documents.proofOfIncome.p7"))}</li>
       </ul>
+      <p>{t("inviteToInterviewPage.documents.proofOfIncome.p3")}</p>
       <div className={styles.infoSubSection}>
         <ContentAccordion
-          customBarContent={
-            <div className={styles.accordionBar}>
-              {t("inviteToInterviewPage.documents.proofOfIncome.selfEmployed.title")}
-            </div>
-          }
+          customBarContent={t("inviteToInterviewPage.documents.proofOfIncome.selfEmployed.title")}
           customExpandedContent={
             <div className={styles.accordionContent}>
               <p>{t("inviteToInterviewPage.documents.provide")}</p>
@@ -238,11 +237,7 @@ const ProofOfIncome = () => {
           accordionTheme={"gray"}
         />
         <ContentAccordion
-          customBarContent={
-            <div className={styles.accordionBar}>
-              {t("inviteToInterviewPage.documents.proofOfIncome.government.title")}
-            </div>
-          }
+          customBarContent={t("inviteToInterviewPage.documents.proofOfIncome.government.title")}
           customExpandedContent={
             <div className={styles.accordionContent}>
               <p>{t("inviteToInterviewPage.documents.provide")}</p>
@@ -284,11 +279,7 @@ const ProofOfIncome = () => {
           accordionTheme={"gray"}
         />
         <ContentAccordion
-          customBarContent={
-            <div className={styles.accordionBar}>
-              {t("inviteToInterviewPage.documents.proofOfIncome.retirement.title")}
-            </div>
-          }
+          customBarContent={t("inviteToInterviewPage.documents.proofOfIncome.retirement.title")}
           customExpandedContent={
             <div className={styles.accordionContent}>
               <p>{t("inviteToInterviewPage.documents.provide")}</p>
@@ -328,11 +319,7 @@ const ProofOfIncome = () => {
           accordionTheme={"gray"}
         />
         <ContentAccordion
-          customBarContent={
-            <div className={styles.accordionBar}>
-              {t("inviteToInterviewPage.documents.proofOfIncome.other.title")}
-            </div>
-          }
+          customBarContent={t("inviteToInterviewPage.documents.proofOfIncome.other.title")}
           customExpandedContent={
             <div className={styles.accordionContent}>
               <p>{t("inviteToInterviewPage.documents.provide")}</p>
@@ -377,7 +364,7 @@ const ProofOfIncome = () => {
 
 const BankAndFinancials = () => {
   return (
-    <div className={styles.submitYourInfoSection} id="bankAndFinancial">
+    <div className={styles.infoSubSection} id="bankAndFinancial">
       <Heading priority={2} size="2xl">
         {"3. " + t("inviteToInterviewPage.documents.bankAndFinancial.title")}
       </Heading>
@@ -409,7 +396,7 @@ const BankAndFinancials = () => {
 
 const RentalHistory = () => {
   return (
-    <div className={styles.submitYourInfoSection} id="rentalHistory">
+    <div className={styles.infoSubSection} id="rentalHistory">
       <Heading priority={2} size="2xl">
         {"4. " + t("inviteToInterviewPage.documents.rentalHistory.title")}
       </Heading>
@@ -425,7 +412,7 @@ const RentalHistory = () => {
 
 const ChildCustody = () => {
   return (
-    <div className={styles.submitYourInfoSection} id="childCustody">
+    <div className={styles.infoSubSection} id="childCustody">
       <Heading priority={2} size="2xl">
         {"5. " + t("inviteToInterviewPage.documents.childCustody.title")}
       </Heading>
@@ -449,7 +436,7 @@ const ChildCustody = () => {
 
 const HousingAssistance = () => {
   return (
-    <div className={styles.submitYourInfoSection} id="housingAssistance">
+    <div className={styles.infoSubSection} id="housingAssistance">
       <Heading priority={2} size="2xl">
         {"6. " + t("inviteToInterviewPage.documents.housingAssistance.title")}
       </Heading>
@@ -489,15 +476,18 @@ const InviteToInterviewDocumentsSidebar = ({ listing }: { listing: RailsSaleList
         </span>
       </SidebarBlock>
       <SidebarBlock title={t("inviteToInterviewPage.documents.sidebar.contact")} priority={2}>
-        <p>
-          <strong>{t("inviteToInterviewPage.documents.sidebar.contactSubtitle")}</strong>
-        </p>
-        <p>{t("inviteToInterviewPage.documents.sidebar.contactLabel")}</p>
-        <InviteToApplyLeasingAgentInfo listing={listing} />
-        <p>
-          <strong>{t("inviteToInterviewPage.documents.sidebar.officeHours")}</strong>
-        </p>
-        <p>{listing?.Office_Hours}</p>
+        <Heading priority={3} size="lg">
+          <strong>{t("inviteToApplyPage.submitYourInfo.sidebar")}</strong>
+        </Heading>
+        <InviteToLeasingAgentInfo listing={listing} />
+        {listing?.Office_Hours && (
+          <>
+            <Heading size="sm" priority={3}>
+              {t("contactAgent.officeHours.seeTheUnit")}
+            </Heading>
+            <p>{listing?.Office_Hours}</p>
+          </>
+        )}
       </SidebarBlock>
     </>
   )
