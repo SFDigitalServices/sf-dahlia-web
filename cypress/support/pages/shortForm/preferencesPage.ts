@@ -2,11 +2,12 @@
 
 /**
  * Check a checkbox only if it is not already checked.
+ * Uses .check() which triggers proper change events for Angular ng-model bindings.
  */
 function checkCheckbox(id: string): void {
   cy.get(`#${id}`).then(($el) => {
     if (!$el.is(":checked")) {
-      cy.wrap($el).click()
+      cy.wrap($el).check({ force: true })
     }
   })
 }
@@ -24,6 +25,8 @@ export function selectPreference(preference: string, memberName: string): void {
  */
 export function optOutOfPreference(): void {
   checkCheckbox("preference-optout")
+  // Wait for the checkbox to be checked before submitting
+  cy.get("#preference-optout").should("be.checked")
   cy.get("#submit").click()
 }
 
