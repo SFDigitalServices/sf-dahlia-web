@@ -3,6 +3,7 @@ import { post, apiDelete } from "./apiService"
 import { getCurrentLanguage } from "../util/languageUtil"
 import { Application } from "./types/rails/application/RailsApplication"
 import { getPrimaryApplicantData } from "../util/formEngineUtil"
+import { t } from "@bloom-housing/ui-components"
 
 type UploadProofFileResponse = {
   success: boolean
@@ -79,6 +80,19 @@ export const locateVerifiedAddress = async (address: Address): Promise<VerifiedA
   return post<VerifiedAddressResponse>("/api/v1/addresses/validate.json", {
     address,
   }).then((response) => response.data)
+}
+
+export const getAddressErrorMessage = (error: string): string => {
+  if (error === "not_found") {
+    return t("error.addressValidation.notFound")
+  }
+  if (error === "po_box") {
+    return t("error.addressValidationPoBox")
+  }
+  if (error === "duplicate_unit") {
+    return t("error.addressValidationDuplicateUnit")
+  }
+  return t("error.alert.badRequest")
 }
 
 export enum LanguagePrefix {

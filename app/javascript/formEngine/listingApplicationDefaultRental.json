@@ -76,7 +76,7 @@
         "sectionName": "you"
       },
       "componentType": "step",
-      "componentName": "ListingApplyStepWrapper",
+      "componentName": "ListingAddressMultiStepWrapper",
       "props": {
         "title": "b2Contact.title",
         "titleVars": {
@@ -113,6 +113,7 @@
             "label": "label.address",
             "note": "b2Contact.applicantAddressDesc",
             "showMailingAddress": true,
+            "validateAddress": true,
             "fieldNames": {
               "addressStreet": "primaryApplicantAddressStreet",
               "addressAptOrUnit": "primaryApplicantAddressAptOrUnit",
@@ -139,17 +140,6 @@
           }
         }
       ]
-    },
-    {
-      "stepInfo": {
-        "slug": "verify-address",
-        "sectionName": "you"
-      },
-      "componentType": "step",
-      "componentName": "VerifyAddress",
-      "props": {
-        "address": "primaryApplicantAddress"
-      }
     },
     {
       "stepInfo": {

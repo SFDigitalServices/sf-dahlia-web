@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import React from "react"
 import { t, Field, Select } from "@bloom-housing/ui-components"
-import { Heading } from "@bloom-housing/ui-seeds"
+import { FormErrorMessage, Heading } from "@bloom-housing/ui-seeds"
 import { LISTING_APPLY_FORMS_INPUT_MAX_LENGTH, LATIN_REGEX } from "../../../modules/constants"
 import { useFormContext } from "react-hook-form"
 import styles from "./Address.module.scss"
@@ -12,6 +12,7 @@ interface AddressProps {
   showMailingAddress?: boolean
   showAptOrUnit?: boolean
   requireAddress?: boolean
+  addressValidationError?: string
   fieldNames: {
     addressStreet: string
     addressAptOrUnit?: string
@@ -24,6 +25,7 @@ interface AddressProps {
     mailingAddressState?: string
     mailingAddressZipcode?: string
   }
+  validateAddress?: boolean
 }
 
 const stateOptions = [
@@ -85,6 +87,7 @@ const Address = ({
   showMailingAddress,
   showAptOrUnit,
   requireAddress,
+  addressValidationError,
   fieldNames: {
     addressStreet,
     addressAptOrUnit,
@@ -184,6 +187,7 @@ const Address = ({
         error={!!errors?.[addressZipcode]}
         register={register}
       />
+      {addressValidationError && <FormErrorMessage>{addressValidationError}</FormErrorMessage>}
       {showMailingAddress && (
         <Field
           type="checkbox"
