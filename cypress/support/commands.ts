@@ -56,6 +56,8 @@ Cypress.Commands.add(
     cy.get('[ng-model="userAuth.user.password"]').clear().type(data.password)
     cy.get('[ng-model="userAuth.user.password_confirmation"]').clear().type(data.password)
     cy.get("#submit").click()
+    // Wait for redirect to sign-in page before returning — the test then asserts #confirmation_needed
+    cy.url({ timeout: 15000 }).should("include", "/sign-in")
   }
 )
 

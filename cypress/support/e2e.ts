@@ -52,6 +52,18 @@ beforeEach(() => {
         error: null,
       },
     }).as("validateAddress")
+    // Also stub the GIS boundary check so preferenceAddressMatch is set to 'Matched',
+    // which makes the app correctly show the NRHP preference page instead of Live/Work.
+    cy.intercept("POST", "/api/v1/addresses/gis-data.json", {
+      statusCode: 200,
+      body: {
+        gis_data: {
+          address: "1222 HARRISON ST, San Francisco, California, 94103",
+          score: 100,
+          boundary_match: true,
+        },
+      },
+    }).as("gisData")
   } else {
     cy.intercept("POST", "/api/v1/addresses/validate.json", (req) => {
       req.continue((res) => {
