@@ -29,13 +29,14 @@ export function optOutOfPreference(): void {
 
 /**
  * Upload a proof file for a preference.
+ * ngf-select injects a hidden <input type="file"> with id="ngf-{preference}_proofFile".
  */
 export function uploadPreferenceProof(preference: string, documentType: string): void {
   cy.get(`#${preference}_proofDocument`).filter(":visible").first().select(documentType)
-  cy.get('input[type="file"]')
-    .filter(":visible")
-    .first()
-    .selectFile("app/assets/images/logo-city.png", { force: true })
+  cy.get(`#ngf-${preference}_proofFile`).selectFile("app/assets/images/logo-city.png", {
+    force: true,
+  })
+  cy.get(`#uploaded-${preference}_proofFile`).should("exist")
 }
 
 /**
