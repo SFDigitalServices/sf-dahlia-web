@@ -21,12 +21,13 @@ export const LISTING_IDS = {
 } as const
 
 export function createTestAccount(name: string, birthDate = "1/1/1902"): TestAccount {
-  const [first, ...rest] = name.split(" ")
-  const lastName = rest.join(" ") || first
+  const parts = name.split(" ")
+  const firstName = parts[0]
+  const lastName = parts[parts.length - 1]
 
   return {
     fullName: `E2ETEST-${name}`,
-    firstName: `E2ETEST-${first}`,
+    firstName: `E2ETEST-${firstName}`,
     lastName,
     email: chance.email(),
     birthDate,
