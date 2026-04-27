@@ -1,4 +1,8 @@
 version: 2.1
+parameters:
+  run_short_form_e2e:
+    type: boolean
+    default: false
 orbs:
   ruby: circleci/ruby@0.1.2
   cypress: cypress-io/cypress@1.26.0
@@ -8,16 +12,34 @@ defaults: &defaults
   working_directory: ~/web
   docker:
     - image: cimg/ruby:3.4.1-browsers
-      environment:
+      environment: &common_env
         RAILS_ENV: development
         PGHOST: 127.0.0.1
         PGUSER: root
         NODE_OPTIONS: --max_old_space_size=4096
-    - image: cimg/postgres:9.6
-      environment:
+    - image: &postgres_image cimg/postgres:9.6
+      environment: &postgres_env
         POSTGRES_USER: root
         POSTGRES_DB: sf_dahlia
-    - image: "cypress/base:14.15.0"
+  resource_class: medium+
+  executor: ruby/default
+defaults_lite: &defaults_lite
+  working_directory: ~/web
+  docker:
+    - image: cimg/ruby:3.4.1-node
+      environment:
+        <<: *common_env
+  resource_class: medium+
+  executor: ruby/default
+defaults_with_db: &defaults_with_db
+  working_directory: ~/web
+  docker:
+    - image: cimg/ruby:3.4.1-node
+      environment:
+        <<: *common_env
+    - image: *postgres_image
+      environment:
+        <<: *postgres_env
   resource_class: medium+
   executor: ruby/default
 non_production_jobs: &non_production_jobs
@@ -116,10 +138,14 @@ commands:
       - run: bundle config set path vendor/bundle
       - run: bundle install
       - run: bundle exec rails db:migrate
+  setup-lite:
+    description: "Lightweight setup for jobs that only need node_modules (no Ruby gems or DB)"
+    steps:
+      - checkout
+      - prepare_workspace
   start-server:
     description: "Start Rails server in background"
     steps:
-      - setup-webdriver
       - run:
           name: Run rails server in background
           command: bundle exec rails server -p 3000
@@ -139,6 +165,7 @@ commands:
         default: "./spec/e2e/test-feature-path.feature"
     steps:
       - setup
+      - setup-webdriver
       - start-server
       - run: yarn run protractor spec/e2e/conf.js --specs '<< parameters.path >>'
 
@@ -177,15 +204,15 @@ jobs:
           paths:
             - .
   lint:
-    <<: *defaults
+    <<: *defaults_lite
     steps:
-      - setup
+      - setup-lite
       - run: yarn lint
       - run: yarn prettier --check .
   unit-react:
-    <<: *defaults
+    <<: *defaults_lite
     steps:
-      - setup
+      - setup-lite
       - run: yarn cache clean
       - run: yarn install
       - run: yarn test
@@ -196,7 +223,7 @@ jobs:
           paths:
             - jest-test-coverage
   unit-rspec:
-    <<: *defaults
+    <<: *defaults_with_db
     steps:
       - setup
       - run: wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
@@ -212,7 +239,7 @@ jobs:
           paths:
             - coverage
   unit-angular:
-    <<: *defaults
+    <<: *defaults_with_db
     steps:
       - setup
       - run:
@@ -229,9 +256,17 @@ jobs:
     steps:
       - setup
       - start-server
-      - run: yarn test:e2e
-  coverage:
+      - run: yarn test:e2e --spec 'cypress/e2e/*.e2e.ts,cypress/e2e/accounts/**,cypress/e2e/getAssistance/**,cypress/e2e/listingDetails/**'
+  e2e-short-form:
     <<: *defaults
+    environment:
+      SIGN_IN_PAGE_REACT: "true"
+    steps:
+      - setup
+      - start-server
+      - run: yarn test:e2e --spec 'cypress/e2e/shortForm/customEducator.e2e.ts,cypress/e2e/shortForm/saleApplication.e2e.ts,cypress/e2e/shortForm/submittingApplication.e2e.ts'
+  coverage:
+    <<: *defaults_lite
     steps:
       - checkout
       - *attach_workspace
@@ -242,6 +277,7 @@ jobs:
     parallelism: 4
     steps:
       - setup
+      - setup-webdriver
       - start-server
       - run:
           name: Run e2e tests using test splitting
@@ -251,7 +287,7 @@ jobs:
             echo $LIST
             npm run protractor -- --specs $LIST
   cleanup-test-data:
-    <<: *defaults
+    <<: *defaults_with_db
     steps:
       - setup
       - run: bundle exec rails tests:e2e_cleanup
@@ -273,6 +309,8 @@ jobs:
 workflows:
   version: 2.1
   build-and-deploy:
+    when:
+      not: << pipeline.parameters.run_short_form_e2e >>
     jobs:
       - build
       - lint:
@@ -290,6 +328,8 @@ workflows:
             - unit-react
       - e2e-legacy:
           <<: *angular_jobs
+      - e2e-short-form:
+          <<: *angular_jobs
       - e2e:
           <<: *prod_and_release_jobs
           name: e2e-production
@@ -302,3 +342,11 @@ workflows:
       - cleanup-test-data:
           requires:
             - waiter
+  run-short-form-e2e:
+    when: << pipeline.parameters.run_short_form_e2e >>
+    jobs:
+      - build
+      - e2e-short-form:
+          name: e2e-short-form-forced
+          requires:
+            - build

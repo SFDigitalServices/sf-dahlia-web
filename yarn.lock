@@ -2766,6 +2766,11 @@
     "@types/deep-eql" "*"
     assertion-error "^2.0.1"
 
+"@types/chance@^1.1.7":
+  version "1.1.7"
+  resolved "https://registry.yarnpkg.com/@types/chance/-/chance-1.1.7.tgz#388c19748fe97bbe60552c83a056001a3c973082"
+  integrity sha512-40you9610GTQPJyvjMBgmj9wiDO6qXhbfjizNYod/fmvLSfUUxURAJMTD8tjmbcZSsyYE5iEUox61AAcCjW/wQ==
+
 "@types/connect-history-api-fallback@^1.5.4":
   version "1.5.4"
   resolved "https://registry.yarnpkg.com/@types/connect-history-api-fallback/-/connect-history-api-fallback-1.5.4.tgz#7de71645a103056b48ac3ce07b3520b819c1d5b3"

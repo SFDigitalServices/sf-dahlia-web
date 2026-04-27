@@ -1,10 +1,15 @@
-import "dotenv/config"
+import { existsSync } from "fs"
+import dotenv from "dotenv"
 import { defineConfig } from "cypress"
 
+if (existsSync(".env")) {
+  dotenv.config({ path: ".env" })
+}
+
 export default defineConfig({
-  defaultCommandTimeout: 180000, // 3 mins
+  defaultCommandTimeout: 10000, // 10s — individual commands can override with { timeout: ... }
   projectId: "dahlia-housing-portal",
-  pageLoadTimeout: 180000, // 3 mins
+  pageLoadTimeout: 60000, // 60s
   reporterOptions: {
     mochaFile: "cypress/results/tests-[hash].xml",
     toConsole: true,
@@ -18,10 +23,14 @@ export default defineConfig({
     },
     env: {
       salesforceInstanceUrl: process.env.SALESFORCE_INSTANCE_URL,
+      stubAddressValidation: process.env.STUB_ADDRESS_VALIDATION === "true",
     },
     baseUrl: "http://localhost:3000",
     specPattern: "cypress/e2e/**/*.{js,jsx,ts,tsx}",
-    retries: 2,
+    retries: {
+      runMode: 1, // CI only
+      openMode: 0,
+    },
   },
   // workaround see https://github.com/dequelabs/axe-core/issues/3057
   modifyObstructiveCode: false,

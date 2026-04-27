@@ -35,6 +35,7 @@ export default defineConfig(
       ".storybook/**",
       "jest-test-coverage/**",
       "coverage/**",
+      "app/javascript/test-coverage/**",
     ],
   },
 
