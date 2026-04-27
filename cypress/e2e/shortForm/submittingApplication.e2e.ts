@@ -51,7 +51,11 @@ const SHOW_VETERANS_QUESTION = false
 describe("Short Form Application", { testIsolation: false }, () => {
   // Create test accounts used across scenarios
   const basicAccount: TestAccount = createTestAccount("Jane Doe")
-  const fullAccount: TestAccount = createTestAccount("Jane Valerie Doe")
+  // birthDate must match NAME_DEFAULTS (2/22/1990) since fillNamePage uses those defaults
+  const fullAccount: TestAccount = createTestAccount(
+    "Jane Valerie Doe",
+    `${NAME_DEFAULTS.dobMonth}/${NAME_DEFAULTS.dobDay}/${NAME_DEFAULTS.dobYear}`
+  )
 
   // ─── Scenario 1: Submitting a basic application ───
   it("Submitting a basic application", () => {
