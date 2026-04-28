@@ -54,7 +54,7 @@ module DahliaBackend
         when 'submit' then '/messages/invite-to-apply/response/submit'
         end
       elsif act.present?
-        '/api/v1/messages'
+        '/api/v1/message'
       else
         nil
       end
