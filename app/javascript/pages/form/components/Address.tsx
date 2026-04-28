@@ -25,7 +25,6 @@ interface AddressProps {
     mailingAddressState?: string
     mailingAddressZipcode?: string
   }
-  validateAddress?: boolean
 }
 
 const stateOptions = [

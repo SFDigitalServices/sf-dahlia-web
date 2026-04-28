@@ -1,37 +1,70 @@
-// https://github.com/react-hook-form/react-hook-form/issues/2887#issuecomment-802577357
-
-import React, { Children, useState } from "react"
+import React, { useState } from "react"
 import { useForm, FormProvider } from "react-hook-form"
-import { Form, LoadingOverlay, t } from "@bloom-housing/ui-components"
-import { Button, Card } from "@bloom-housing/ui-seeds"
+import { t } from "@bloom-housing/ui-components"
 import { useFormEngineContext } from "../../../formEngine/formEngineContext"
-import type { DataSchema } from "../../../formEngine/formSchemas"
-import { translationFromDataSchema } from "../../../util/formEngineUtil"
-import styles from "./ListingApplyStepWrapper.module.scss"
-import getFormComponentRegistry from "../../../formEngine/formComponentRegistry"
 import VerifyAddress from "./VerifyAddress"
+import AddressForm from "./AddressForm"
+import { locateVerifiedAddress } from "../../../api/formApiService"
+import { getFormattedAddress } from "../../../util/formEngineUtil"
 
 interface ListingAddressMultiStepWrapperProps {
-  title: string
-  titleVars?: Record<string, DataSchema>
-  headerComponentName?: string
+  title?: string
   description?: string
-  children: React.ReactNode
+  phoneLabel: string
+  showTypeOfNumber: boolean
+  showDontHavePhoneNumber: boolean
+  showAdditionalPhoneNumber: boolean
+  labelForAdditionalPhoneNumber: string
+  showAptOrUnit: boolean
+  addressLabel: string
+  addressNote: string
+  showMailingAddress: boolean
+  workInSfLabel: string
+  workInSfNote: string
+  workInSfYesText: string
+  fieldNames: {
+    phone: string
+    phoneType: string
+    additionalPhone: string
+    additionalPhoneType: string
+    noPhoneCheckbox: string
+    additionalPhoneCheckbox: string
+    addressStreet: string
+    addressAptOrUnit: string
+    addressCity: string
+    addressState: string
+    addressZipcode: string
+    mailingAddressCheckbox?: string
+    mailingAddressStreet?: string
+    mailingAddressCity?: string
+    mailingAddressState?: string
+    mailingAddressZipcode?: string
+    question: string
+  }
 }
 
 const ListingAddressMultiStepWrapper = ({
   title,
-  titleVars,
-  headerComponentName,
   description,
-  children,
+  phoneLabel,
+  showTypeOfNumber,
+  showDontHavePhoneNumber,
+  showAdditionalPhoneNumber,
+  labelForAdditionalPhoneNumber,
+  showAptOrUnit,
+  addressLabel,
+  addressNote,
+  showMailingAddress,
+  workInSfLabel,
+  workInSfNote,
+  workInSfYesText,
+  fieldNames,
 }: ListingAddressMultiStepWrapperProps) => {
-  const [addressError, setAddressError] = useState(null)
-  const [address, setAddress] = useState(null)
   const [loading, setLoading] = useState(false)
-  const [verifyAddress, setVerifyAddress] = useState(false)
-  const formEngineContext = useFormEngineContext()
-  const { staticData, formData, stepInfoMap, currentStepIndex, handlePrevStep } = formEngineContext
+  const [addressError, setAddressError] = useState(null)
+  const [verifyAddress, setVerifyAddress] = useState(true)
+  const { formData, handlePrevStep, staticData, saveFormData, stepInfoMap, currentStepIndex } =
+    useFormEngineContext()
 
   const currentStepInfo = stepInfoMap[currentStepIndex]
   const defaultValues = currentStepInfo.fieldNames.reduce((acc, fieldName) => {
@@ -39,68 +72,94 @@ const ListingAddressMultiStepWrapper = ({
     return acc
   }, {})
 
-  let headerComponent
-  if (headerComponentName) {
-    const componentRegistry = getFormComponentRegistry()
-    headerComponent = React.createElement(componentRegistry[headerComponentName])
-  }
-
   const methods = useForm({
     mode: "onChange",
     shouldFocusError: false,
     defaultValues,
   })
 
-  const onSubmit = () => {
-    setVerifyAddress(true)
+  const getAddressErrorEmailLink = () => {
+    const mailParams = {
+      subject: `[Invalid Address Error] ${t("error.addressValidation.notFoundSubject")}`,
+      body: t("error.addressValidation.notFoundBody", {
+        listing_name: staticData.listing?.Name,
+        home_address: getFormattedAddress({
+          street1: formData[fieldNames.addressStreet] as string,
+          street2: formData[fieldNames.addressAptOrUnit] as string,
+          city: formData[fieldNames.addressCity] as string,
+          state: formData[fieldNames.addressState] as string,
+          zip: formData[fieldNames.addressZipcode] as string,
+        }),
+        first_name: formData.primaryApplicantFirstName,
+        last_name: formData.primaryApplicantLastName,
+        email: formData.primaryApplicantEmail,
+        phone_number: formData.primaryApplicantPhone,
+      }),
+    }
+    return `${"mailto:lotteryappeal@sfgov.org"}?${new URLSearchParams(mailParams).toString()}`
   }
 
-  const titleString = translationFromDataSchema(title, titleVars, staticData, formData)
+  const onNext = async (data: Record<string, unknown>) => {
+    saveFormData({ ...data })
+    setAddressError(null)
+    setLoading(true)
+    try {
+      const response = await locateVerifiedAddress({
+        street1: data[fieldNames.addressStreet] as string,
+        street2: data[fieldNames.addressAptOrUnit] as string,
+        city: data[fieldNames.addressCity] as string,
+        state: data[fieldNames.addressState] as string,
+        zip: data[fieldNames.addressZipcode] as string,
+      })
+      if (response.address?.invalid) {
+        setAddressError(t("error.addressValidation.notFound", { href: getAddressErrorEmailLink() }))
+      }
+      if (response.error) {
+        setAddressError(t(response.error))
+      }
+      saveFormData({
+        ...data,
+        [fieldNames.addressStreet]: response.address?.street1,
+        [fieldNames.addressAptOrUnit]: response.address?.street2,
+        [fieldNames.addressCity]: response.address?.city,
+        [fieldNames.addressState]: response.address?.state,
+        [fieldNames.addressZipcode]: response.address?.zip,
+      })
+      setVerifyAddress(true)
+    } catch (error) {
+      console.error(error)
+      alert(t("error.alert.badRequest"))
+    } finally {
+      setLoading(false)
+    }
+  }
 
-  return verifyAddress ? (
-    <VerifyAddress
-      address={address}
-      setAddressError={setAddressError}
-      setAddress={setAddress}
-      setLoading={setLoading}
-    />
+  return verifyAddress === true && !loading ? (
+    <VerifyAddress onEdit={() => setVerifyAddress(false)} />
   ) : (
     <FormProvider {...methods}>
-      <LoadingOverlay isLoading={loading}>
-        <Card>
-          <Card.Section>
-            <Button variant="text" className={styles["back-button"]} onClick={handlePrevStep}>
-              {t("t.back")}
-            </Button>
-          </Card.Section>
-          {headerComponent ? (
-            <>{headerComponent}</>
-          ) : (
-            <Card.Header divider="inset">
-              <h1 className={styles["step-title"]}>{titleString}</h1>
-              {description && <p className={styles["step-description"]}>{t(description)}</p>}
-            </Card.Header>
-          )}
-          <Form onSubmit={methods.handleSubmit(onSubmit)}>
-            {Children.map(children, (child) => {
-              const { schema } = (child as React.ReactElement).props
-              return (
-                <Card.Section divider={schema?.props?.divider === false ? undefined : "inset"}>
-                  {/* Pass address validation error as prop if address component */}
-                  {schema?.componentName === "Address" && addressError
-                    ? React.cloneElement(child as React.ReactElement, { addressError })
-                    : child}
-                </Card.Section>
-              )
-            })}
-            <Card.Footer className={styles["step-footer"]}>
-              <Button variant="primary" type="submit">
-                {t("t.next")}
-              </Button>
-            </Card.Footer>
-          </Form>
-        </Card>
-      </LoadingOverlay>
+      <AddressForm
+        loading={loading}
+        title={title}
+        description={description}
+        phoneLabel={phoneLabel}
+        showTypeOfNumber={showTypeOfNumber}
+        showDontHavePhoneNumber={showDontHavePhoneNumber}
+        showAdditionalPhoneNumber={showAdditionalPhoneNumber}
+        labelForAdditionalPhoneNumber={labelForAdditionalPhoneNumber}
+        showAptOrUnit={showAptOrUnit}
+        addressError={addressError}
+        addressLabel={addressLabel}
+        addressNote={addressNote}
+        showMailingAddress={showMailingAddress}
+        workInSfLabel={workInSfLabel}
+        workInSfNote={workInSfNote}
+        workInSfYesText={workInSfYesText}
+        fieldNames={fieldNames}
+        onBack={handlePrevStep}
+        onNext={onNext}
+        methods={methods}
+      />
     </FormProvider>
   )
 }

@@ -3,7 +3,6 @@ import { post, apiDelete } from "./apiService"
 import { getCurrentLanguage } from "../util/languageUtil"
 import { Application } from "./types/rails/application/RailsApplication"
 import { getPrimaryApplicantData } from "../util/formEngineUtil"
-import { t } from "@bloom-housing/ui-components"
 
 type UploadProofFileResponse = {
   success: boolean
@@ -62,6 +61,10 @@ export type VerifiedAddressResponse = {
     verifications?: {
       delivery: {
         success: boolean
+        errors?: Array<{
+          code: string
+          message?: string
+        }>
       }
     }
   }
@@ -77,22 +80,26 @@ export type Address = {
 }
 
 export const locateVerifiedAddress = async (address: Address): Promise<VerifiedAddressResponse> => {
-  return post<VerifiedAddressResponse>("/api/v1/addresses/validate.json", {
+  const response = await post<VerifiedAddressResponse>("/api/v1/addresses/validate.json", {
     address,
   }).then((response) => response.data)
-}
-
-export const getAddressErrorMessage = (error: string): string => {
-  if (error === "not_found") {
-    return t("error.addressValidation.notFound")
+  if (address.street1 && address.street2 && address.street1.endsWith(address.street2)) {
+    return {
+      ...response,
+      error: "error.addressValidationDuplicateUnit",
+    }
   }
-  if (error === "po_box") {
-    return t("error.addressValidationPoBox")
+  if (
+    address.street1?.match(/P\.?\s*O\.?\s*BOX/i) ||
+    (!response.address?.verifications?.delivery?.success &&
+      response.address?.verifications?.delivery?.errors?.[0]?.code === "E.BOX_NUMBER.INVALID")
+  ) {
+    return {
+      ...response,
+      error: "error.addressValidationPoBox",
+    }
   }
-  if (error === "duplicate_unit") {
-    return t("error.addressValidationDuplicateUnit")
-  }
-  return t("error.alert.badRequest")
+  return response
 }
 
 export enum LanguagePrefix {
