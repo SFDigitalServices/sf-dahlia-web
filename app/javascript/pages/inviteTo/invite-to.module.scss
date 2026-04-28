@@ -11,7 +11,7 @@
   .submitYourInfoPage {
     display: flex;
     flex-direction: row;
-    max-width: var(--seeds-screen-xl);
+    max-width: var(--bloom-width-5xl);
     margin: 0 auto;
     @media (max-width: theme("screens.sm")) {
       flex-direction: column;
@@ -19,8 +19,15 @@
   }
   .submitYourInfoMain {
     flex: 1;
-    padding: var(--seeds-spacer-container) var(--seeds-spacer-container) 0
-      var(--seeds-spacer-container);
+    padding: var(--seeds-spacer-container) var(--seeds-spacer-container)
+      var(--seeds-spacer-container) 0;
+
+    @media (max-width: 1024px) {
+      padding: var(--seeds-spacer-container);
+    }
+    @media (max-width: theme("screens.sm")) {
+      padding: var(--seeds-s6);
+    }
     h2 {
       font-size: var(--seeds-font-size-2xl);
       padding-top: var(--seeds-spacer-header);
