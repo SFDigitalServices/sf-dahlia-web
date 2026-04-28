@@ -119,7 +119,7 @@ module DahliaBackend
 
       if application_number.blank? && action.present?
         return {
-          action: action,
+          action: action.upcase,
           data: {
             applicationIds: [app_id],
             isTestEmail: false,
