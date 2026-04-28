@@ -28,7 +28,7 @@ export const ListingDetailsHabitat = ({ listing }: ListingDetailsHabitatProps) =
       <span>
         {renderMarkup(
           t("listings.habitat.applicationProcess.p1", {
-            habitatLink: "http://www.habitatgsf.org/innes-ave",
+            habitatLink: "http://www.habitatgsf.org/innes-ave", // TODO: DAH-4080 update link
           })
         )}
       </span>
@@ -36,7 +36,7 @@ export const ListingDetailsHabitat = ({ listing }: ListingDetailsHabitatProps) =
         <li>
           {renderMarkup(
             t("listings.habitat.applicationProcess.ol1", {
-              infoSessionLink: "http://www.habitatgsf.org/innes-ave",
+              infoSessionLink: "http://www.habitatgsf.org/innes-ave", // TODO: DAH-4080 update link
             })
           )}
         </li>

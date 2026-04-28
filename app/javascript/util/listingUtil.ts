@@ -161,6 +161,14 @@ export const isBMR = (listing: RailsRentalListing | RailsSaleListing) =>
   listing.Program_Type === "IH-RENTAL" || listing.Program_Type === "IH-OWN"
 
 /**
+ * Check if a listing is CSLP
+ * @param {RailsRentalListing | RailsRentalListing} listing
+ * @returns {boolean} returns true if the listing is CSLP, false otherwise
+ */
+export const isCSLP = (listing: RailsRentalListing | RailsSaleListing) =>
+  listing.Program_Type === "CSLP"
+
+/**
  * Check if a listing has only SRO units
  * @param {RailsRentalListing | RailsRentalListing} listing
  * @returns {boolean} returns true if the listing has all SRO unit types, false otherwise
