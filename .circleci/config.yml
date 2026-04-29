@@ -251,17 +251,6 @@ jobs:
     steps:
       - checkout
       - *attach_workspace
-      - run:
-          name: Verify coverage files exist
-          command: |
-            echo "=== Jest coverage ==="
-            ls -lh jest-test-coverage/ || echo "MISSING: jest-test-coverage/"
-            echo "=== RSpec coverage ==="
-            ls -lh coverage/ || echo "MISSING: coverage/"
-            echo "=== lcov.info ==="
-            wc -l jest-test-coverage/lcov.info || echo "MISSING: lcov.info"
-            echo "=== coverage.json ==="
-            wc -c coverage/coverage.json || echo "MISSING: coverage.json"
       - qlty/coverage_publish:
           files: jest-test-coverage/lcov.info, coverage/coverage.json
   e2e-legacy:
