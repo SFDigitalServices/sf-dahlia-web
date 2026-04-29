@@ -155,6 +155,7 @@ jobs:
           paths:
             - node_modules/
             - /home/circleci/.cache/Cypress
+            - lib/assets/bower_components
       - upgrade-bundler
       - run:
           name: Bundle install
@@ -179,6 +180,7 @@ jobs:
             - db/schema.rb
             - public/packs
             - public/packs-test
+            - lib/assets/bower_components
   lint:
     <<: *defaults
     steps:
