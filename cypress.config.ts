@@ -1,11 +1,16 @@
-import "dotenv/config"
+import { existsSync } from "fs"
 import { defineConfig } from "cypress"
+
+// Only load .env if it exists (CI may not have one)
+if (existsSync(".env")) {
+  require("dotenv").config()
+}
 
 export default defineConfig({
   defaultCommandTimeout: 180000, // 3 mins
   projectId: "dahlia-housing-portal",
   pageLoadTimeout: 180000, // 3 mins
-  reporter: "mocha-junit-reporter",
+  reporter: "junit",
   reporterOptions: {
     mochaFile: "cypress/results/tests-[hash].xml",
     toConsole: true,

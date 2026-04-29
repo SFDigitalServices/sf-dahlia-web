@@ -243,7 +243,7 @@ jobs:
       - run:
           name: Run Cypress e2e tests using test splitting
           command: |
-            TESTFILES=$(circleci tests glob "cypress/e2e/**/*.e2e.ts" | circleci tests split --split-by=timings)
+            TESTFILES=$(circleci tests glob "cypress/e2e/**/*.e2e.ts" | circleci tests split --split-by=timings | tr '\n' ',' | sed 's/,$//')
             yarn cypress run --browser chrome --spec "$TESTFILES"
           no_output_timeout: 20m
       - store_test_results:
