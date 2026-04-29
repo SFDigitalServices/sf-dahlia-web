@@ -144,7 +144,7 @@ const InviteToLayout = ({
       />
       <div className={styles.submitYourInfo}>
         <div className={styles.submitYourInfoPage}>
-          <main className={styles.submitYourInfoMain}>
+          <main className={`${styles.submitYourInfoMain} ${styles.I2A}`}>
             <InviteToHeader listing={listing} headerText={headerText} />
             <DeadlineBanner deadline={deadline} listing={listing} type={type} />
             {children}

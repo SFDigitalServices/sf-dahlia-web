@@ -62,7 +62,7 @@ const WhatToDo = ({
       </Heading>
       <ol className="process-list">
         <li>
-          <Heading priority={3} size="lg">
+          <Heading priority={3} size="lg" className={styles.listHeading}>
             {t("inviteToInterviewPage.submitYourInfo.whatToDo.step1.title")}
           </Heading>
           <p>{t("inviteToInterviewPage.submitYourInfo.whatToDo.step1.p1")}</p>
@@ -75,7 +75,7 @@ const WhatToDo = ({
           )}
         </li>
         <li>
-          <Heading priority={3} size="lg">
+          <Heading priority={3} size="lg" className={styles.listHeading}>
             {t("inviteToInterviewPage.submitYourInfo.whatToDo.step2.title")}
           </Heading>
           <p>{t("inviteToInterviewPage.submitYourInfo.whatToDo.step2.p1")}</p>
@@ -93,7 +93,7 @@ const WhatToDo = ({
           </Button>
         </li>
         <li>
-          <Heading priority={3} size="lg">
+          <Heading priority={3} size="lg" className={styles.listHeading}>
             {t("inviteToInterviewPage.submitYourInfo.whatToDo.step3.title")}
           </Heading>
           {t("inviteToInterviewPage.submitYourInfo.whatToDo.step3.p1")}

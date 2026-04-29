@@ -92,7 +92,7 @@ const WhatToDo = ({
       </Heading>
       <ol className="process-list">
         <li>
-          <Heading priority={3} size="lg">
+          <Heading priority={3} size="lg" className={styles.listHeading}>
             {t("inviteToApplyPage.submitYourInfo.whatToDo.step1.title")}
           </Heading>
           {renderInlineMarkup(
@@ -109,7 +109,7 @@ const WhatToDo = ({
           </Button>
         </li>
         <li>
-          <Heading priority={3} size="lg">
+          <Heading priority={3} size="lg" className={styles.listHeading}>
             {t("inviteToApplyPage.submitYourInfo.whatToDo.step2.title")}
           </Heading>
           <p>{t("inviteToApplyPage.submitYourInfo.whatToDo.step2.p1")}</p>
@@ -121,7 +121,7 @@ const WhatToDo = ({
           )}
         </li>
         <li>
-          <Heading priority={3} size="lg">
+          <Heading priority={3} size="lg" className={styles.listHeading}>
             {t("inviteToApplyPage.submitYourInfo.whatToDo.step3.title")}
           </Heading>
           <p>{t("inviteToApplyPage.submitYourInfo.whatToDo.step3.p1")}</p>
