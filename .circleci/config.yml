@@ -121,7 +121,7 @@ commands:
     steps:
       - run:
           name: Run rails server in background
-          command: bundle exec rails server -p 3000
+          command: bundle exec rails server -p 3000 2>&1 | tee /tmp/rails-server.log
           background: true
       - run:
           name: Wait for server
@@ -241,6 +241,9 @@ jobs:
           name: Run Cypress e2e tests
           command: yarn test:e2e
           no_output_timeout: 20m
+      - store_artifacts:
+          path: /tmp/rails-server.log
+          destination: rails-server.log
   coverage:
     <<: *defaults
     steps:
@@ -274,6 +277,9 @@ jobs:
             echo $LIST
             npm run protractor -- --specs $LIST
           no_output_timeout: 20m
+      - store_artifacts:
+          path: /tmp/rails-server.log
+          destination: rails-server.log
   cleanup-test-data:
     <<: *defaults
     steps:
