@@ -19,15 +19,23 @@
   }
   .submitYourInfoMain {
     flex: 1;
-    padding: var(--seeds-spacer-container) var(--seeds-spacer-container) 0
-      var(--seeds-spacer-container);
+    padding: 0 var(--seeds-spacer-container) var(--seeds-s10) var(--seeds-spacer-container);
+    @media (max-width: theme("screens.sm")) {
+      padding: var(--seeds-spacer-content) var(--seeds-spacer-content) 0 var(--seeds-spacer-content);
+      &.I2A {
+        padding-bottom: var(--seeds-s10);
+      }
+    }
     h2 {
       font-size: var(--seeds-font-size-2xl);
-      padding-top: var(--seeds-spacer-header);
+      padding-top: var(--seeds-s10);
     }
     h3 {
       font-size: var(--seeds-font-size-xl);
       padding-top: var(--seeds-spacer-header);
+    }
+    .listHeading {
+      padding: 0;
     }
     button {
       margin: var(--seeds-spacer-text) 0;
@@ -37,12 +45,19 @@
     * {
       margin: var(--seeds-spacer-text) 0;
     }
+    img {
+      padding-top: var(--seeds-spacer-content);
+      padding-bottom: var(--seeds-spacer-text);
+    }
   }
   .submitYourInfoSidebar {
     display: flex;
     flex-direction: column;
     flex: 0 0 33.333%;
     gap: var(--seeds-spacer-text);
+    @media (max-width: theme("screens.sm")) {
+      padding-bottom: var(--seeds-s10);
+    }
     section {
       border: none;
     }
@@ -58,6 +73,9 @@
     @media (max-width: theme("screens.sm")) {
       padding-bottom: 0;
     }
+    div button {
+      margin-bottom: 0 !important;
+    }
     h2 {
       font-size: var(--seeds-font-size-2xl);
     }
@@ -67,10 +85,6 @@
     ol {
       list-style-type: decimal;
       margin-left: var(--seeds-spacer-header);
-    }
-    * > div {
-      // Override accordion component margins
-      margin: 0 !important;
     }
     .accordionContent {
       padding: var(--seeds-spacer-content);
@@ -131,11 +145,12 @@
   .submitYourInfoBox {
     background-color: var(--seeds-color-gray-200);
     padding: var(--seeds-spacer-content);
+
+    margin-top: var(--seeds-spacer-content);
     h3 {
       padding-top: 0;
     }
     @media (max-width: theme("screens.sm")) {
-      margin-top: var(--seeds-spacer-content);
       margin-bottom: var(--seeds-s10);
     }
   }
