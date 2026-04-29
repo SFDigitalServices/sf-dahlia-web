@@ -5,6 +5,7 @@ export default defineConfig({
   defaultCommandTimeout: 180000, // 3 mins
   projectId: "dahlia-housing-portal",
   pageLoadTimeout: 180000, // 3 mins
+  reporter: "mocha-junit-reporter",
   reporterOptions: {
     mochaFile: "cypress/results/tests-[hash].xml",
     toConsole: true,
