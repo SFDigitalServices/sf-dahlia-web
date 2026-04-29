@@ -1260,7 +1260,7 @@
   "listings.habitat.applicationProcess.ol9": "MOHCD 和 Habitat Greater San Francisco 會將過戶文件交給第三方托管。",
   "listings.habitat.applicationProcess.p1": "這些單位是由 <a target='_blank' href='%{habitatLink}'>Habitat for Humanity Greater San Francisco</a> 與 MOHCD 共同提供",
   "listings.habitat.applicationProcess.title": "申請流程",
-  "listings.habitat.incomeRange": "%{smart_count} 人一戶：每年 %{minIncome} 至 %{maxIncome}",
+  "listings.habitat.incomeRange": "%{smart_count} 人一戶：每年 $%{minIncome} 至 $%{maxIncome}",
   "listings.habitat.incomeRange.p1": "若要符合本房源的 Habitat for Humanity Greater San Francisco 住戶申請資格，您的家庭收入必須介於下方所列的 76% 至 100% 區域中位收入 (Area Median Income, AMI) 之間。",
   "listings.habitat.incomeRange.p2": "計算收入時，家庭人數包含居住於該單位中的每個人 (不分年齡)。",
   "listings.habitat.incomeRange.p4": "您的收入必須在此範圍內：",

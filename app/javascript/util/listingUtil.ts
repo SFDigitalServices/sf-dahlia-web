@@ -162,7 +162,7 @@ export const isBMR = (listing: RailsRentalListing | RailsSaleListing) =>
 
 /**
  * Check if a listing is CSLP
- * @param {RailsRentalListing | RailsRentalListing} listing
+ * @param {RailsRentalListing | RailsSaleListing} listing
  * @returns {boolean} returns true if the listing is CSLP, false otherwise
  */
 export const isCSLP = (listing: RailsRentalListing | RailsSaleListing) =>

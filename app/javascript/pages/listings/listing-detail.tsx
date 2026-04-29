@@ -187,7 +187,7 @@ const ListingDetail = () => {
                   <ListingDetailsApply listing={listing} />
                 </Mobile>
               )}
-              {isApplicationOpen && !isHabitatListing(listing) && (
+              {isApplicationOpen && !listingIsHabitat && (
                 <Mobile>
                   <div className="border-b border-t m-0">
                     <NeedHelpBlock listing={listing} />
