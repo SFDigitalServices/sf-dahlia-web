@@ -164,6 +164,7 @@ jobs:
             bundle config set deployment true
             bundle config set path vendor/bundle
             bundle install
+          no_output_timeout: 10m
       - save_cache:
           name: Save Bundle cache
           key: webapp-{{ .Environment.CACHE_VERSION }}-bundle-dependencies-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
@@ -175,7 +176,12 @@ jobs:
       - persist_to_workspace:
           root: .
           paths:
-            - .
+            - vendor/bundle
+            - node_modules
+            - .bundle
+            - db/schema.rb
+            - public/packs
+            - public/packs-test
   lint:
     <<: *defaults
     steps:
@@ -186,11 +192,13 @@ jobs:
     <<: *defaults
     steps:
       - setup
-      - run: yarn cache clean
-      - run: yarn install
-      - run: yarn test
+      - run:
+          name: Run React unit tests
+          command: yarn test
+          no_output_timeout: 10m
       - store_artifacts:
           path: jest-test-coverage
+          destination: jest-test-coverage
       - persist_to_workspace:
           root: .
           paths:
@@ -204,9 +212,13 @@ jobs:
       - run: sudo apt-get install graphicsmagick
       - run: RAILS_ENV=test bundle exec rails db:create
       - run: RAILS_ENV=test bundle exec rails db:test:prepare
-      - run: bundle exec rake spec
+      - run:
+          name: Run RSpec tests
+          command: bundle exec rake spec
+          no_output_timeout: 15m
       - store_artifacts:
           path: coverage
+          destination: coverage
       - persist_to_workspace:
           root: .
           paths:
@@ -220,7 +232,6 @@ jobs:
           command: echo "export OPENSSL_CONF=/etc/ssl/" >> $BASH_ENV
       - run: RAILS_ENV=test bundle exec rails db:create
       - run: RAILS_ENV=test bundle exec rails db:test:prepare
-      - run: yarn install
       - run: bundle exec rake jasmine:ci
   e2e:
     <<: *defaults
@@ -229,12 +240,26 @@ jobs:
     steps:
       - setup
       - start-server
-      - run: yarn test:e2e
+      - run:
+          name: Run Cypress e2e tests
+          command: yarn test:e2e
+          no_output_timeout: 20m
   coverage:
     <<: *defaults
     steps:
       - checkout
       - *attach_workspace
+      - run:
+          name: Verify coverage files exist
+          command: |
+            echo "=== Jest coverage ==="
+            ls -lh jest-test-coverage/ || echo "MISSING: jest-test-coverage/"
+            echo "=== RSpec coverage ==="
+            ls -lh coverage/ || echo "MISSING: coverage/"
+            echo "=== lcov.info ==="
+            wc -l jest-test-coverage/lcov.info || echo "MISSING: lcov.info"
+            echo "=== coverage.json ==="
+            wc -c coverage/coverage.json || echo "MISSING: coverage.json"
       - qlty/coverage_publish:
           files: jest-test-coverage/lcov.info, coverage/coverage.json
   e2e-legacy:
@@ -251,6 +276,7 @@ jobs:
             LIST=$(echo $TESTFILES | awk '{ gsub(" ", ",") ; system( "echo "  $0) }')
             echo $LIST
             npm run protractor -- --specs $LIST
+          no_output_timeout: 20m
   cleanup-test-data:
     <<: *defaults
     steps:
