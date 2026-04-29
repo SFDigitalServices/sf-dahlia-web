@@ -67,7 +67,8 @@ export const ListingDetailsHabitat = ({ listing }: ListingDetailsHabitatProps) =
         <li>{t("listings.incomeExceptions.nontaxable")}</li>
       </ul>
       <p className="mt-4">{t("listings.habitat.incomeRange.p4")}</p>
-      {/* TODO: Dependent on DAH-1139 */}
+      {/* The parent component ListingDetail uses conditional renders to make sure the income range appears right after this text */}
+      {/* Income range is rendered by ListingDetailsPricingTable */}
     </div>
   )
 }
