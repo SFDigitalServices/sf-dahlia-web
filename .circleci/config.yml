@@ -176,9 +176,6 @@ jobs:
       - persist_to_workspace:
           root: .
           paths:
-            - vendor/bundle
-            - node_modules
-            - .bundle
             - db/schema.rb
             - public/packs
             - public/packs-test
