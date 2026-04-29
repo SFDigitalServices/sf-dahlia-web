@@ -1,27 +1,23 @@
 # Invite to X controller
 class InviteToController < ApplicationController
   def index
-    decoded_params = decode_token(params[:t])
-    if decoded_params.is_a?(String)
-      redirect_to decoded_params
-      return
-    end
+    # decoded_params = decode_token(params[:t])
+    # if decoded_params.is_a?(String)
+    #   redirect_to decoded_params
+    #   return
+    # end
     decoded_params ||= params
     @invite_to_props = props(decoded_params)
-    # Get file upload URL for application
-    if decoded_params['appId'].present? && decoded_params['appId'] != 'null'
-      application = Force::ShortFormService.get(decoded_params['appId'])
+    # Get URL for application
+    if decoded_params['appId'].present? || decoded_params['applicationNumber'].present?
+      # application = Force::ShortFormService.get(decoded_params['applicationNumber'])
       @invite_to_props = @invite_to_props.merge(
-        url: application['uploadURL'],
+        # uploadUrl: application['uploadURL'],
+        # TODO: use application['schedulingUrl']
+        schedulingUrl: "https://www.google.com",
       )
     end
-    if decoded_params['applicationNumber'].present? && decoded_params['applicationNumber'] != 'null'
-      application = Force::ShortFormService.get(decoded_params['applicationNumber'])
-      @invite_to_props = @invite_to_props.merge(
-        url: application['uploadURL'],
-      )
-    end
-    record_response(decoded_params)
+    # record_response(decoded_params)
     render 'invite_to'
   end
 
