@@ -52,8 +52,8 @@ describe("<ListingApplyStepWrapper />", () => {
       </FormEngineProvider>
     )
 
-    expect(screen.getByText(t(title))).not.toBeNull()
-    expect(screen.getByText(t(label))).not.toBeNull()
+    expect(screen.getByText(t(title))).toBeInTheDocument()
+    expect(screen.getByText(t(label))).toBeInTheDocument()
   })
 
   it("renders the header component when headerComponentName is provided", () => {
@@ -79,7 +79,36 @@ describe("<ListingApplyStepWrapper />", () => {
 
     expect(
       screen.getByText("This does not include Section 8 vouchers or VASH housing choice vouchers.")
-    ).not.toBeNull()
+    ).toBeInTheDocument()
+  })
+
+  it("clears form errors when the error message close button is clicked", async () => {
+    const user = userEvent.setup()
+    const fieldNames = ["phone"]
+    const formEngineContextValue = buildFormEngineContextValue(fieldNames)
+    const phoneProps = {
+      label: "label.applicantPhone",
+      fieldNames: {
+        phone: "phone",
+      },
+    }
+    render(
+      <FormEngineProvider value={formEngineContextValue}>
+        <ListingApplyStepWrapper title="b1Name.title">
+          <Phone {...phoneProps} />
+        </ListingApplyStepWrapper>
+      </FormEngineProvider>
+    )
+
+    await user.click(screen.getByRole("button", { name: t("t.next") }))
+    await waitFor(() => {
+      expect(screen.getByText(t("error.formSubmission"))).toBeInTheDocument()
+    })
+
+    await user.click(screen.getByRole("button", { name: t("t.close") }))
+    await waitFor(() => {
+      expect(screen.queryByText(t("error.formSubmission"))).not.toBeInTheDocument()
+    })
   })
 
   it("clears de-registered field values by merging blankValues into saveFormData", async () => {

@@ -2,7 +2,7 @@ import { AxiosResponse } from "axios"
 import { post, apiDelete } from "./apiService"
 import { getCurrentLanguage } from "../util/languageUtil"
 import { Application } from "./types/rails/application/RailsApplication"
-import { getPrimaryApplicantData } from "../util/formEngineUtil"
+import { getPrimaryApplicantData } from "../util/listingApplyUtil"
 
 type UploadProofFileResponse = {
   success: boolean
