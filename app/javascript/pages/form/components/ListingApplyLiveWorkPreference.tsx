@@ -68,7 +68,8 @@ const ListingApplyLiveWorkPreference = ({
   }, {})
 
   const formMethods = useForm({
-    mode: "onChange",
+    mode: "onSubmit",
+    reValidateMode: "onChange",
     shouldFocusError: false,
     defaultValues,
   })
