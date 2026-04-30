@@ -239,10 +239,8 @@ RSpec.describe DahliaBackend::MessageService do
       end
 
       it 'sends the invite response for "yes"' do
-        expect(client).to receive(:post).with('/api/v1/messages', hash_including(
-                                                                                          listingId: listing_id,
-                                                                                          listingName: 'Test Listing',
-                                                                                          deadlineDate: deadline,
+        expect(client).to receive(:post).with('/api/v1/message', hash_including(
+                                                                                           {action: "YES", data: {applicationIds: ["app123"], isTestEmail: false}}
                                                                                         ))
 
         service.send_invite_to_response(deadline, application_id, application_number, 'yes', 'yes',
@@ -250,7 +248,7 @@ RSpec.describe DahliaBackend::MessageService do
       end
 
       it 'sends the invite response for "no"' do
-        expect(client).to receive(:post).with('/api/v1/messages', anything)
+        expect(client).to receive(:post).with('/api/v1/message', anything)
 
         service.send_invite_to_response(deadline, application_id, application_number, 'no', 'no',
                                               listing_id)
@@ -258,7 +256,7 @@ RSpec.describe DahliaBackend::MessageService do
 
       it 'sends the invite response for "contact"' do
         expect(client).to receive(:post).with(
-          '/api/v1/messages', anything
+          '/api/v1/message', anything
         )
 
         service.send_invite_to_response(deadline, application_id, application_number, 'contact', 'contact',
@@ -267,7 +265,7 @@ RSpec.describe DahliaBackend::MessageService do
 
       it 'sends the invite response for "submit"' do
         expect(client).to receive(:post).with(
-          '/api/v1/messages', anything
+          '/api/v1/message', anything
         )
 
         service.send_invite_to_response(deadline, application_id, application_number, 'submit', 'submit',

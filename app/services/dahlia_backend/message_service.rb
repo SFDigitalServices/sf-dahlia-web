@@ -54,7 +54,7 @@ module DahliaBackend
         when 'submit' then '/messages/invite-to-apply/response/submit'
         end
       elsif act.present?
-        '/api/v1/messages'
+        '/api/v1/message'
       else
         nil
       end
@@ -117,9 +117,9 @@ module DahliaBackend
                                                   application_number, app_id, action)
       return nil unless application && listing
 
-      if application_number.blank? && action.present?
+      if action.present?
         return {
-          action: action,
+          action: action.upcase,
           data: {
             applicationIds: [app_id],
             isTestEmail: false,
