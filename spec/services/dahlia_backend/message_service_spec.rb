@@ -240,9 +240,7 @@ RSpec.describe DahliaBackend::MessageService do
 
       it 'sends the invite response for "yes"' do
         expect(client).to receive(:post).with('/api/v1/message', hash_including(
-                                                                                          listingId: listing_id,
-                                                                                          listingName: 'Test Listing',
-                                                                                          deadlineDate: deadline,
+                                                                                           {action: "YES", data: {applicationIds: ["app123"], isTestEmail: false}}
                                                                                         ))
 
         service.send_invite_to_response(deadline, application_id, application_number, 'yes', 'yes',
