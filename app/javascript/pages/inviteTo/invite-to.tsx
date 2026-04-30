@@ -21,7 +21,6 @@ interface UrlParams {
   deadline?: string
   act?: "yes" | "no" | "contact" | "submit" | "appointment"
   appId?: string
-  url?: string
 }
 
 interface HomePageProps {
@@ -34,7 +33,8 @@ interface HomePageProps {
 }
 
 const InviteToPage = ({
-  urlParams: { type, deadline, act, appId, url },
+  urlParams: { type, deadline, act, appId },
+  url,
   submitPreviewLinkTokenParam,
   documentsPath,
 }: HomePageProps) => {
