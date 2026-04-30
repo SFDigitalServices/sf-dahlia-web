@@ -9,6 +9,7 @@ import {
   isOpen,
   isRental,
   isSale,
+  isHabitatListing,
 } from "../../util/listingUtil"
 import { ListingDetailsApply } from "./ListingDetailsApply"
 import { ListingDetailsApplicationDate } from "./ListingDetailsApplicationDate"
@@ -72,7 +73,7 @@ export const ListingDetailsAside = ({ listing, imageSrc }: ListingDetailsSidebar
             {isApplicationOpen && <ListingDetailsWaitlist listing={listing} />}
             {listing.Accepting_Online_Applications && <ListingDetailsApply listing={listing} />}
             {isSaleListing && <ListingDetailsSeeTheUnit listing={listing} />}
-            {isApplicationOpen && <NeedHelpBlock listing={listing} />}
+            {isApplicationOpen && !isHabitatListing(listing) && <NeedHelpBlock listing={listing} />}
             {isSaleListing && listing.Expected_Move_in_Date && expectedMoveInDateBlock}
             <ListingDetailsProcess listing={listing} isApplicationOpen={isApplicationOpen} />
           </div>

@@ -2,11 +2,16 @@ import React, { ReactNode } from "react"
 import { LinkButton, ListingDetailItem, Mobile, t } from "@bloom-housing/ui-components"
 import { RailsListing } from "../listings/SharedHelpers"
 import { TextTruncate } from "../../components/TextTruncate"
-import { isHabitatListing, isOpen, isSale, isLotterySalesListing } from "../../util/listingUtil"
+import {
+  isHabitatListing,
+  isCSLP,
+  isOpen,
+  isSale,
+  isLotterySalesListing,
+} from "../../util/listingUtil"
 import { stripMostTags } from "../../util/filterUtil"
 import { getTranslatedString, localizedFormat } from "../../util/languageUtil"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
-
 export interface ListingDetailsAdditionalInformationProps {
   listing: RailsListing
   imageSrc: string
@@ -199,21 +204,21 @@ export const ListingDetailsAdditionalInformation = ({
           {isSale(listing) && (
             <div className="info-card bg-gray-100 border-0">
               <h3 className="text-serif-xl">{t("listings.housingProgram")}</h3>
-              {!isHabitatListing(listing) ? (
-                <a
-                  href={`https://www.sf.gov/resource--2022--apply-homebuyer-programs`}
-                  target="_blank"
-                  className="text-xs"
-                >
-                  {t("listings.belowMarketRate")}
-                </a>
-              ) : (
+              {isCSLP(listing) ? (
                 <a
                   href={`https://www.sf.gov/reports--december-2024--city-second-program-current-listings`}
                   target="_blank"
                   className="text-xs"
                 >
                   {t("saleDirectory.callout.citySecondLoan")}
+                </a>
+              ) : (
+                <a
+                  href={`https://www.sf.gov/resource--2022--apply-homebuyer-programs`}
+                  target="_blank"
+                  className="text-xs"
+                >
+                  {t("listings.belowMarketRate")}
                 </a>
               )}
             </div>

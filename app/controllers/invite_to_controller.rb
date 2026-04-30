@@ -8,16 +8,15 @@ class InviteToController < ApplicationController
     # end
     decoded_params ||= params
     @invite_to_props = props(decoded_params)
-    # Get URL for application
+    # Get file upload URL for application
     if decoded_params['appId'].present? || decoded_params['applicationNumber'].present?
-      # application = Force::ShortFormService.get(decoded_params['applicationNumber'])
+      application = Force::ShortFormService.get(decoded_params['appId'] || decoded_params['applicationNumber'])
       @invite_to_props = @invite_to_props.merge(
-        # uploadUrl: application['uploadURL'],
-        # TODO: use application['schedulingUrl']
-        schedulingUrl: "https://www.google.com",
+        uploadUrl: application['uploadURL'],
+        schedulingUrl: application['schedulingURL'],
       )
     end
-    # record_response(decoded_params)
+    record_response(decoded_params)
     render 'invite_to'
   end
 

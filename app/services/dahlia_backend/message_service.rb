@@ -117,7 +117,7 @@ module DahliaBackend
                                                   application_number, app_id, action)
       return nil unless application && listing
 
-      if application_number.blank? && action.present?
+      if action.present?
         return {
           action: action.upcase,
           data: {
