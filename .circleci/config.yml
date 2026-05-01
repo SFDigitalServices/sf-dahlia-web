@@ -114,7 +114,10 @@ commands:
       - prepare_workspace
       - upgrade-bundler
       - run: bundle config set path vendor/bundle
-      - run: bundle install
+      - run:
+          name: Bundle install
+          command: bundle install
+          no_output_timeout: 10m
       - run: bundle exec rails db:migrate
   start-server:
     description: "Start Rails server in background"
@@ -178,8 +181,6 @@ jobs:
           root: .
           paths:
             - db/schema.rb
-            - public/packs
-            - public/packs-test
             - lib/assets/bower_components
   lint:
     <<: *defaults
