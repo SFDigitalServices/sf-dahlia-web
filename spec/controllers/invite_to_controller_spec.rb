@@ -10,7 +10,7 @@ RSpec.describe InviteToController do
       {
         deadline: deadline,
         appId: application_number,
-        action: response_value,
+        act: response_value,
       },
     ]
   end
@@ -51,7 +51,7 @@ RSpec.describe InviteToController do
   describe '#index' do
     context 'with valid parameters' do
       before do
-        allow(Force::ShortFormService).to receive(:get).with(application_number).and_return({ 'uploadURL' => 'test-upload-url' })
+        allow(Force::ShortFormService).to receive(:get).with(application_number).and_return({ 'uploadURL' => 'test-upload-url', 'leaseupAppointmentSchedulingURL' => 'test-scheduling-url' })
 
         get :index, params: {
           id: listing_id,
@@ -80,7 +80,8 @@ RSpec.describe InviteToController do
                                                           act: response_value,
                                                           appId: application_number,
                                                         },
-                                                        url: 'test-upload-url',
+                                                        uploadUrl: 'test-upload-url',
+                                                        schedulingUrl: 'test-scheduling-url',
                                                         submitPreviewLinkTokenParam: fixed_token,
                                                       })
       end
@@ -100,7 +101,7 @@ RSpec.describe InviteToController do
 
     context 'when DahliaBackend::MessageService raises an error' do
       before do
-        allow(Force::ShortFormService).to receive(:get).with(application_number).and_return({ 'uploadURL' => 'test-upload-url' })
+        allow(Force::ShortFormService).to receive(:get).with(application_number).and_return({ 'uploadURL' => 'test-upload-url', 'leaseupAppointmentSchedulingURL' => 'test-scheduling-url' })
         allow(DahliaBackend::MessageService).to receive(:send_invite_to_response).and_raise(
           StandardError, 'API Error'
         )

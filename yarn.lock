@@ -1059,18 +1059,18 @@
     react-tabs "^6.0.0"
     typescript "^4.4.2"
 
-"@clerk/clerk-react@^5.31.8":
-  version "5.60.0"
-  resolved "https://registry.yarnpkg.com/@clerk/clerk-react/-/clerk-react-5.60.0.tgz#96ca8068fd5dbce0f4d96128a8e16e852ded32a1"
-  integrity sha512-P88FncsJpq/3WZJhhlj+md8mYb35BIXpr462C/figwsBGHsinr8VuBQUMcMZZ/6M34C8ABfLTPa6PHVp6+3D5Q==
+"@clerk/clerk-react@^5.61.6":
+  version "5.61.6"
+  resolved "https://registry.yarnpkg.com/@clerk/clerk-react/-/clerk-react-5.61.6.tgz#434358890796785211676490a6f052e192c25d0b"
+  integrity sha512-OiyBlrnkRr9IhZtPd7EwlzhYScBpvNKJ8lgg7Uw6JElzJYz854IeQaez5mAfpiib3LcW/Dn53E2PQhagcuLJ3Q==
   dependencies:
-    "@clerk/shared" "^3.44.0"
+    "@clerk/shared" "^3.47.5"
     tslib "2.8.1"
 
-"@clerk/shared@^3.44.0":
-  version "3.47.4"
-  resolved "https://registry.yarnpkg.com/@clerk/shared/-/shared-3.47.4.tgz#7a5c864ed9b42e0f140ca9313a963bcfd711527f"
-  integrity sha512-0O5/zgB5SO26PKarAIw7uj4j+4JsnT2/uiJ7SPI3LQMb62sM+AjDlVadcXuYc+4sY6w1szrAIVepI5Bkv57hnQ==
+"@clerk/shared@^3.47.5":
+  version "3.47.5"
+  resolved "https://registry.yarnpkg.com/@clerk/shared/-/shared-3.47.5.tgz#77b8d4d3ad6ef308ac84d407dfb45567f29b3f09"
+  integrity sha512-rDVe73/VN2NZXhtrLRHshkUpQDrevAqDRxeXUl2M0IBEBkcl+VMHlV7fep53cVWo0b3gIqLk82pmmi+WoyF/xg==
   dependencies:
     csstype "3.1.3"
     dequal "2.0.3"
