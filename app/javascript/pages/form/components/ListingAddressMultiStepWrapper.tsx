@@ -1,11 +1,15 @@
 import React, { useState } from "react"
 import { useForm, FormProvider } from "react-hook-form"
 import { t } from "@bloom-housing/ui-components"
+import { Button, Card } from "@bloom-housing/ui-seeds"
 import { useFormEngineContext } from "../../../formEngine/formEngineContext"
-import VerifyAddress from "./VerifyAddress"
-import AddressForm from "./AddressForm"
+import VerifyAddressModal from "../../../components/VerifyAddressModal"
 import { locateVerifiedAddress } from "../../../api/formApiService"
 import { getFormattedAddress } from "../../../util/formEngineUtil"
+import styles from "./ListingApplyStepWrapper.module.scss"
+import Phone from "./Phone"
+import Address from "./Address"
+import YesNoRadio from "./YesNoRadio"
 
 interface ListingAddressMultiStepWrapperProps {
   title?: string
@@ -60,12 +64,10 @@ const ListingAddressMultiStepWrapper = ({
   workInSfYesText,
   fieldNames,
 }: ListingAddressMultiStepWrapperProps) => {
-  const [loading, setLoading] = useState(false)
   const [addressError, setAddressError] = useState(null)
-  const [verifyAddress, setVerifyAddress] = useState(true)
+  const [verifiedResponse, setVerifiedResponse] = useState(null)
   const { formData, handlePrevStep, staticData, saveFormData, stepInfoMap, currentStepIndex } =
     useFormEngineContext()
-
   const currentStepInfo = stepInfoMap[currentStepIndex]
   const defaultValues = currentStepInfo.fieldNames.reduce((acc, fieldName) => {
     acc[fieldName] = formData[fieldName]
@@ -73,7 +75,8 @@ const ListingAddressMultiStepWrapper = ({
   }, {})
 
   const methods = useForm({
-    mode: "onChange",
+    mode: "onSubmit",
+    reValidateMode: "onChange",
     shouldFocusError: false,
     defaultValues,
   })
@@ -99,66 +102,115 @@ const ListingAddressMultiStepWrapper = ({
     return `${"mailto:lotteryappeal@sfgov.org"}?${new URLSearchParams(mailParams).toString()}`
   }
 
-  const onNext = async (data: Record<string, unknown>) => {
-    saveFormData({ ...data })
-    setAddressError(null)
-    setLoading(true)
+  const handleAddressVerification = async (data: Record<string, unknown>) => {
     try {
-      const response = await locateVerifiedAddress({
+      setAddressError(null)
+      const addressData = {
         street1: data[fieldNames.addressStreet] as string,
         street2: data[fieldNames.addressAptOrUnit] as string,
         city: data[fieldNames.addressCity] as string,
         state: data[fieldNames.addressState] as string,
         zip: data[fieldNames.addressZipcode] as string,
-      })
+      }
+      const response = await locateVerifiedAddress(addressData)
       if (response.address?.invalid) {
         setAddressError(t("error.addressValidation.notFound", { href: getAddressErrorEmailLink() }))
       }
       if (response.error) {
         setAddressError(t(response.error))
       }
-      saveFormData({
-        ...data,
-        [fieldNames.addressStreet]: response.address?.street1,
-        [fieldNames.addressAptOrUnit]: response.address?.street2,
-        [fieldNames.addressCity]: response.address?.city,
-        [fieldNames.addressState]: response.address?.state,
-        [fieldNames.addressZipcode]: response.address?.zip,
-      })
-      setVerifyAddress(true)
-    } catch (error) {
-      console.error(error)
+      return response
+    } catch {
       alert(t("error.alert.badRequest"))
-    } finally {
-      setLoading(false)
+      return null
     }
   }
 
-  return verifyAddress === true && !loading ? (
-    <VerifyAddress onEdit={() => setVerifyAddress(false)} />
-  ) : (
+  const onNext = (data: Record<string, unknown>) => {
+    handleAddressVerification(data)
+      .then((response) => {
+        if (response) {
+          setVerifiedResponse(response)
+        }
+      })
+      .catch((error) => {
+        console.error(error)
+      })
+  }
+
+  const onClose = () => {
+    if (verifiedResponse) {
+      saveFormData({
+        [fieldNames.addressStreet]: verifiedResponse.address?.street1,
+        [fieldNames.addressAptOrUnit]: verifiedResponse.address?.street2,
+        [fieldNames.addressCity]: verifiedResponse.address?.city,
+        [fieldNames.addressState]: verifiedResponse.address?.state,
+        [fieldNames.addressZipcode]: verifiedResponse.address?.zip,
+      })
+      setVerifiedResponse(null)
+    }
+  }
+
+  return (
     <FormProvider {...methods}>
-      <AddressForm
-        loading={loading}
-        title={title}
-        description={description}
-        phoneLabel={phoneLabel}
-        showTypeOfNumber={showTypeOfNumber}
-        showDontHavePhoneNumber={showDontHavePhoneNumber}
-        showAdditionalPhoneNumber={showAdditionalPhoneNumber}
-        labelForAdditionalPhoneNumber={labelForAdditionalPhoneNumber}
-        showAptOrUnit={showAptOrUnit}
-        addressError={addressError}
-        addressLabel={addressLabel}
-        addressNote={addressNote}
-        showMailingAddress={showMailingAddress}
-        workInSfLabel={workInSfLabel}
-        workInSfNote={workInSfNote}
-        workInSfYesText={workInSfYesText}
-        fieldNames={fieldNames}
-        onBack={handlePrevStep}
-        onNext={onNext}
-        methods={methods}
+      <Card>
+        <Card.Section>
+          <Button variant="text" className={styles["back-button"]} onClick={handlePrevStep}>
+            {t("t.back")}
+          </Button>
+        </Card.Section>
+        <Card.Header divider="inset">
+          <h1 className={styles["step-title"]}>{t(title)}</h1>
+          {description && <p className={styles["step-description"]}>{t(description)}</p>}
+        </Card.Header>
+        <Card.Section divider="inset">
+          <Phone
+            label={t(phoneLabel)}
+            showTypeOfNumber={showTypeOfNumber}
+            showDontHavePhoneNumber={showDontHavePhoneNumber}
+            showAdditionalPhoneNumber={showAdditionalPhoneNumber}
+            labelForAdditionalPhoneNumber={t(labelForAdditionalPhoneNumber)}
+            fieldNames={{
+              phone: fieldNames.phone,
+              phoneType: fieldNames.phoneType,
+              additionalPhone: fieldNames.additionalPhone,
+              additionalPhoneType: fieldNames.additionalPhoneType,
+              noPhoneCheckbox: fieldNames.noPhoneCheckbox,
+              additionalPhoneCheckbox: fieldNames.additionalPhoneCheckbox,
+            }}
+          />
+        </Card.Section>
+        <Card.Section divider="inset">
+          <Address
+            label={t(addressLabel)}
+            note={t(addressNote)}
+            showAptOrUnit={showAptOrUnit}
+            requireAddress={true}
+            showMailingAddress={showMailingAddress}
+            addressValidationError={addressError}
+            fieldNames={fieldNames}
+          />
+        </Card.Section>
+        <Card.Section divider="inset">
+          <YesNoRadio
+            label={t(workInSfLabel)}
+            note={t(workInSfNote)}
+            yesText={t(workInSfYesText)}
+            fieldNames={{
+              question: fieldNames.question,
+            }}
+          />
+        </Card.Section>
+        <Card.Footer className={styles["step-footer"]}>
+          <Button variant="primary" onClick={() => onNext(methods.getValues())}>
+            {t("t.next")}
+          </Button>
+        </Card.Footer>
+      </Card>
+      <VerifyAddressModal
+        isOpen={verifiedResponse !== null}
+        onClose={onClose}
+        verifiedAddress={verifiedResponse?.address}
       />
     </FormProvider>
   )

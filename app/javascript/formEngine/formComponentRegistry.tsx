@@ -9,7 +9,6 @@ import Address from "../pages/form/components/Address"
 import YesNoRadio from "../pages/form/components/YesNoRadio"
 import ListingApplyTerms from "../pages/form/components/ListingApplyTerms"
 import ListingApplyFormWrapper from "../pages/form/components/ListingApplyFormWrapper"
-import VerifyAddress from "../pages/form/components/VerifyAddress"
 import ListingApplyDemographics from "../pages/form/components/ListingApplyDemographics"
 import ListingApplyPreferencesIntro from "../pages/form/components/ListingApplyPreferencesIntro"
 import ListingApplyRentBurdenPreference from "../pages/form/components/ListingApplyRentBurdenPreference"
@@ -42,7 +41,6 @@ export default function getFormComponentRegistry() {
     ListingApplyIntro,
     ListingApplyOverview,
     ListingApplyStepWrapper,
-    VerifyAddress,
     ListingApplyHouseholdIntro,
     ListingApplyHouseholdOverview,
     HouseholdMemberMultiStepWrapper,
