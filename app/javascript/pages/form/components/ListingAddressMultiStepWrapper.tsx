@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { useForm, FormProvider } from "react-hook-form"
-import { t } from "@bloom-housing/ui-components"
+import { Form, t } from "@bloom-housing/ui-components"
 import { Button, Card } from "@bloom-housing/ui-seeds"
 import { useFormEngineContext } from "../../../formEngine/formEngineContext"
 import VerifyAddressModal from "../../../components/VerifyAddressModal"
@@ -10,6 +10,7 @@ import styles from "./ListingApplyStepWrapper.module.scss"
 import Phone from "./Phone"
 import Address from "./Address"
 import YesNoRadio from "./YesNoRadio"
+import { renderMarkup } from "../../../util/languageUtil"
 
 interface ListingAddressMultiStepWrapperProps {
   title?: string
@@ -66,6 +67,7 @@ const ListingAddressMultiStepWrapper = ({
 }: ListingAddressMultiStepWrapperProps) => {
   const [addressError, setAddressError] = useState(null)
   const [verifiedResponse, setVerifiedResponse] = useState(null)
+  const [contactData, setContactData] = useState(null)
   const { formData, handlePrevStep, staticData, saveFormData, stepInfoMap, currentStepIndex } =
     useFormEngineContext()
   const currentStepInfo = stepInfoMap[currentStepIndex]
@@ -81,25 +83,27 @@ const ListingAddressMultiStepWrapper = ({
     defaultValues,
   })
 
-  const getAddressErrorEmailLink = () => {
+  const handleSubmit = methods.handleSubmit
+
+  const getAddressErrorEmailLink = (data: Record<string, unknown>) => {
     const mailParams = {
       subject: `[Invalid Address Error] ${t("error.addressValidation.notFoundSubject")}`,
       body: t("error.addressValidation.notFoundBody", {
         listing_name: staticData.listing?.Name,
         home_address: getFormattedAddress({
-          street1: formData[fieldNames.addressStreet] as string,
-          street2: formData[fieldNames.addressAptOrUnit] as string,
-          city: formData[fieldNames.addressCity] as string,
-          state: formData[fieldNames.addressState] as string,
-          zip: formData[fieldNames.addressZipcode] as string,
+          street1: data[fieldNames.addressStreet] as string,
+          street2: data[fieldNames.addressAptOrUnit] as string,
+          city: data[fieldNames.addressCity] as string,
+          state: data[fieldNames.addressState] as string,
+          zip: data[fieldNames.addressZipcode] as string,
         }),
-        first_name: formData.primaryApplicantFirstName,
-        last_name: formData.primaryApplicantLastName,
-        email: formData.primaryApplicantEmail,
-        phone_number: formData.primaryApplicantPhone,
+        first_name: formData.primaryApplicantFirstName || "",
+        last_name: formData.primaryApplicantLastName || "",
+        email: formData.primaryApplicantEmail || "",
+        phone_number: formData.primaryApplicantPhone || "",
       }),
     }
-    return `${"mailto:lotteryappeal@sfgov.org"}?${new URLSearchParams(mailParams).toString()}`
+    return `${new URLSearchParams(mailParams).toString()}`
   }
 
   const handleAddressVerification = async (data: Record<string, unknown>) => {
@@ -112,21 +116,26 @@ const ListingAddressMultiStepWrapper = ({
         state: data[fieldNames.addressState] as string,
         zip: data[fieldNames.addressZipcode] as string,
       }
-      const response = await locateVerifiedAddress(addressData)
-      if (response.address?.invalid) {
-        setAddressError(t("error.addressValidation.notFound", { href: getAddressErrorEmailLink() }))
+      return await locateVerifiedAddress(addressData)
+    } catch (error) {
+      if (error.response?.status === 422) {
+        setAddressError(
+          renderMarkup(
+            t("error.addressValidation.notFound", {
+              mailParams: getAddressErrorEmailLink(data),
+            }),
+            "<br><a></a>"
+          )
+        )
+      } else {
+        setAddressError(t(error.message as string))
       }
-      if (response.error) {
-        setAddressError(t(response.error))
-      }
-      return response
-    } catch {
-      alert(t("error.alert.badRequest"))
       return null
     }
   }
 
   const onNext = (data: Record<string, unknown>) => {
+    setContactData(data)
     handleAddressVerification(data)
       .then((response) => {
         if (response) {
@@ -140,7 +149,9 @@ const ListingAddressMultiStepWrapper = ({
 
   const onClose = () => {
     if (verifiedResponse) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       saveFormData({
+        ...contactData,
         [fieldNames.addressStreet]: verifiedResponse.address?.street1,
         [fieldNames.addressAptOrUnit]: verifiedResponse.address?.street2,
         [fieldNames.addressCity]: verifiedResponse.address?.city,
@@ -163,49 +174,51 @@ const ListingAddressMultiStepWrapper = ({
           <h1 className={styles["step-title"]}>{t(title)}</h1>
           {description && <p className={styles["step-description"]}>{t(description)}</p>}
         </Card.Header>
-        <Card.Section divider="inset">
-          <Phone
-            label={t(phoneLabel)}
-            showTypeOfNumber={showTypeOfNumber}
-            showDontHavePhoneNumber={showDontHavePhoneNumber}
-            showAdditionalPhoneNumber={showAdditionalPhoneNumber}
-            labelForAdditionalPhoneNumber={t(labelForAdditionalPhoneNumber)}
-            fieldNames={{
-              phone: fieldNames.phone,
-              phoneType: fieldNames.phoneType,
-              additionalPhone: fieldNames.additionalPhone,
-              additionalPhoneType: fieldNames.additionalPhoneType,
-              noPhoneCheckbox: fieldNames.noPhoneCheckbox,
-              additionalPhoneCheckbox: fieldNames.additionalPhoneCheckbox,
-            }}
-          />
-        </Card.Section>
-        <Card.Section divider="inset">
-          <Address
-            label={t(addressLabel)}
-            note={t(addressNote)}
-            showAptOrUnit={showAptOrUnit}
-            requireAddress={true}
-            showMailingAddress={showMailingAddress}
-            addressValidationError={addressError}
-            fieldNames={fieldNames}
-          />
-        </Card.Section>
-        <Card.Section divider="inset">
-          <YesNoRadio
-            label={t(workInSfLabel)}
-            note={t(workInSfNote)}
-            yesText={t(workInSfYesText)}
-            fieldNames={{
-              question: fieldNames.question,
-            }}
-          />
-        </Card.Section>
-        <Card.Footer className={styles["step-footer"]}>
-          <Button variant="primary" onClick={() => onNext(methods.getValues())}>
-            {t("t.next")}
-          </Button>
-        </Card.Footer>
+        <Form onSubmit={handleSubmit(onNext)}>
+          <Card.Section divider="inset">
+            <Phone
+              label={t(phoneLabel)}
+              showTypeOfNumber={showTypeOfNumber}
+              showDontHavePhoneNumber={showDontHavePhoneNumber}
+              showAdditionalPhoneNumber={showAdditionalPhoneNumber}
+              labelForAdditionalPhoneNumber={t(labelForAdditionalPhoneNumber)}
+              fieldNames={{
+                phone: fieldNames.phone,
+                phoneType: fieldNames.phoneType,
+                additionalPhone: fieldNames.additionalPhone,
+                additionalPhoneType: fieldNames.additionalPhoneType,
+                noPhoneCheckbox: fieldNames.noPhoneCheckbox,
+                additionalPhoneCheckbox: fieldNames.additionalPhoneCheckbox,
+              }}
+            />
+          </Card.Section>
+          <Card.Section divider="inset">
+            <Address
+              label={t(addressLabel)}
+              note={t(addressNote)}
+              showAptOrUnit={showAptOrUnit}
+              requireAddress={true}
+              showMailingAddress={showMailingAddress}
+              addressValidationError={addressError}
+              fieldNames={fieldNames}
+            />
+          </Card.Section>
+          <Card.Section divider="inset">
+            <YesNoRadio
+              label={t(workInSfLabel)}
+              note={t(workInSfNote)}
+              yesText={t(workInSfYesText)}
+              fieldNames={{
+                question: fieldNames.question,
+              }}
+            />
+          </Card.Section>
+          <Card.Footer className={styles["step-footer"]}>
+            <Button variant="primary" type="submit">
+              {t("t.next")}
+            </Button>
+          </Card.Footer>
+        </Form>
       </Card>
       <VerifyAddressModal
         isOpen={verifiedResponse !== null}

@@ -1,6 +1,3 @@
 .addressSection {
-  display: flex;
-  flex-direction: row;
-  margin: var(--seeds-spacer-content);
-  gap: var(--seeds-spacer-content);
+  margin: var(--seeds-spacer-text) var(--seeds-spacer-content);
 }

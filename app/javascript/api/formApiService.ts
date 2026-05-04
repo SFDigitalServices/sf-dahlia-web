@@ -56,7 +56,6 @@ export type VerifiedAddressResponse = {
     city?: string
     state?: string
     zip?: string
-    invalid?: boolean
     error?: string
     verifications?: {
       delivery: {

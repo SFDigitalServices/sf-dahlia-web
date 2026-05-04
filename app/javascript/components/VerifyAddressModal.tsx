@@ -1,5 +1,5 @@
 import React from "react"
-import { Dialog, Button } from "@bloom-housing/ui-seeds"
+import { Dialog, Button, Heading } from "@bloom-housing/ui-seeds"
 import { t } from "@bloom-housing/ui-components"
 import { getFormattedAddress } from "../util/formEngineUtil"
 import { useFormEngineContext } from "../formEngine/formEngineContext"
@@ -33,13 +33,11 @@ const VerifyAddressModal = ({ isOpen, onClose, verifiedAddress }: VerifyAddressM
     <Dialog isOpen={isOpen} onClose={onClose} className="verify-address-modal">
       <Dialog.Header>{t("b2aVerifyAddress.title")}</Dialog.Header>
       <Dialog.Content className={styles.addressSection}>
-        {formattedAddress.streets}
-        <br />
-        {formattedAddress.cityStateZip}
-
-        <Button type="button" variant="text" onClick={onClose}>
-          {t("t.edit")}
-        </Button>
+        <Heading priority={2} size="lg">
+          {formattedAddress.streets}
+          <br />
+          {formattedAddress.cityStateZip}
+        </Heading>
       </Dialog.Content>
       <Dialog.Footer>
         <Button
@@ -55,7 +53,10 @@ const VerifyAddressModal = ({ isOpen, onClose, verifiedAddress }: VerifyAddressM
             handleNextStep()
           }}
         >
-          {t("t.next")}
+          {t("t.confirm")}
+        </Button>
+        <Button variant="primary-outlined" onClick={onClose}>
+          {t("t.edit")}
         </Button>
       </Dialog.Footer>
     </Dialog>
