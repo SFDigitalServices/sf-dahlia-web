@@ -38,7 +38,7 @@
     "mini-css-extract-plugin": "^2.7.6",
     "mockdate": "3.0.5",
     "nanoid": "^3.1.12",
-    "postcss": "^8.4.31",
+    "postcss": "^8.5.10",
     "postcss-flexbugs-fixes": "^5.0.2",
     "postcss-loader": "^7.3.3",
     "postcss-nested": "^5.0.3",
