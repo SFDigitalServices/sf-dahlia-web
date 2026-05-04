@@ -13,7 +13,7 @@ module DahliaBackend
         new.send_application_confirmation(application_params, application_response,
                                           locale)
       end
-      def send_invite_to_response(_deadline, _app_id, _application_number, _response,_action, 
+      def send_invite_to_response(_deadline, _app_id, _application_number, _response,_action,
                                         listing_id, _force = nil)
         new.send_invite_to_response(_deadline, _app_id, _application_number, _response, _action,
                                           listing_id, nil)
@@ -43,7 +43,7 @@ module DahliaBackend
       log_error('Error sending confirmation', e)
       nil
     end
-  
+
     # Deprecate I2A pilot in DAH-4045
     def get_response_endpoint(act, response)
       if response && act.blank?
@@ -54,7 +54,7 @@ module DahliaBackend
         when 'submit' then '/messages/invite-to-apply/response/submit'
         end
       elsif act.present?
-        '/api/v1/messages'
+        '/api/v1/message'
       else
         nil
       end
@@ -117,16 +117,16 @@ module DahliaBackend
                                                   application_number, app_id, action)
       return nil unless application && listing
 
-      if application_number.blank? && action.present?
+      if action.present?
         return {
-          action: action,
+          action: action.upcase,
           data: {
             applicationIds: [app_id],
             isTestEmail: false,
           }
         }
       end
-      
+
       # Extract applicant information
       primary_applicant = {
         firstName: application.dig('primaryApplicant', 'firstName'),

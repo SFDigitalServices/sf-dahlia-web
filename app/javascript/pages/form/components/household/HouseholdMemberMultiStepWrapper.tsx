@@ -1,4 +1,5 @@
 import React, { useState } from "react"
+import { nanoid } from "nanoid"
 import { useForm, FormProvider } from "react-hook-form"
 import { useFormEngineContext } from "../../../../formEngine/formEngineContext"
 import HouseholdMemberForm from "./HouseholdMemberForm"
@@ -29,7 +30,8 @@ const HouseholdMemberMultiStepWrapper = ({
   )
 
   const methods = useForm({
-    mode: "onChange",
+    mode: "onSubmit",
+    reValidateMode: "onChange",
     shouldFocusError: false,
     defaultValues: householdMembersArray[currentMemberIndex],
   })
@@ -47,29 +49,29 @@ const HouseholdMemberMultiStepWrapper = ({
     methods.reset(householdMembersArray[index])
   }
 
-  const handleUpdateHouseholdMember = (data: Record<string, unknown>) => {
+  const handleUpdateHouseholdMember = (data: Record<string, string>) => {
     const updatedHouseholdMembers = [...householdMembersArray]
     if (isEditingHouseholdMember) {
       updatedHouseholdMembers[currentMemberIndex] = data
     } else {
-      updatedHouseholdMembers.push(data)
+      updatedHouseholdMembers.push({ ...data, id: nanoid(18) })
     }
-    saveFormData({ ...formData, householdMembers: updatedHouseholdMembers })
+    saveFormData({ ...formData, [householdMembers]: updatedHouseholdMembers })
     setHouseholdMembersArray(updatedHouseholdMembers)
     setComponentToRender("AddHouseholdMembers")
     setIsEditingHouseholdMember(false)
   }
 
   const handleSubmitHouseholdMembers = () => {
-    saveFormData({ ...formData, householdMembers: householdMembersArray })
-    handleNextStep({ ...formData, householdMembers: householdMembersArray })
+    saveFormData({ ...formData, [householdMembers]: householdMembersArray })
+    handleNextStep({ ...formData, [householdMembers]: householdMembersArray })
     setComponentToRender("AddHouseholdMembers")
   }
 
   const handleDeleteHouseholdMember = () => {
     const updatedHouseholdMembers = [...householdMembersArray]
     updatedHouseholdMembers.splice(currentMemberIndex, 1)
-    saveFormData({ ...formData, householdMembers: updatedHouseholdMembers })
+    saveFormData({ ...formData, [householdMembers]: updatedHouseholdMembers })
     setHouseholdMembersArray(updatedHouseholdMembers)
     setComponentToRender("AddHouseholdMembers")
   }

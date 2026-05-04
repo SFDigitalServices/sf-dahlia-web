@@ -21,7 +21,8 @@ interface UrlParams {
   deadline?: string
   act?: "yes" | "no" | "contact" | "submit" | "appointment"
   appId?: string
-  url?: string
+  uploadUrl?: string
+  schedulingUrl?: string
 }
 
 interface HomePageProps {
@@ -30,11 +31,14 @@ interface HomePageProps {
   submitPreviewLinkTokenParam?: string
   deadlinePassedPath?: boolean
   documentsPath?: boolean
-  url?: string
+  uploadUrl?: string
+  schedulingUrl?: string
 }
 
 const InviteToPage = ({
-  urlParams: { type, deadline, act, appId, url },
+  urlParams: { type, deadline, act, appId },
+  uploadUrl,
+  schedulingUrl,
   submitPreviewLinkTokenParam,
   documentsPath,
 }: HomePageProps) => {
@@ -71,7 +75,6 @@ const InviteToPage = ({
     type,
     submitPreviewLinkTokenParam
   )
-
   /* I2I - Invite to Interview pages */
   if (type === INVITE_TO_X.INTERVIEW) {
     if (!isI2IEnabled) {
@@ -81,7 +84,14 @@ const InviteToPage = ({
     if (documentsPath) return <InviteToInterviewDocuments listing={listing} />
     // no action from applicant - preview submit page
     if (!act) {
-      return <InviteToInterviewNextSteps listing={listing} deadline={deadline} appId={appId} />
+      return (
+        <InviteToInterviewNextSteps
+          listing={listing}
+          deadline={deadline}
+          appId={appId}
+          url={schedulingUrl}
+        />
+      )
     }
     if (act === "no") {
       return (
@@ -94,7 +104,14 @@ const InviteToPage = ({
       )
     }
     if (act === "yes") {
-      return <InviteToInterviewNextSteps listing={listing} deadline={deadline} appId={appId} />
+      return (
+        <InviteToInterviewNextSteps
+          listing={listing}
+          deadline={deadline}
+          appId={appId}
+          url={schedulingUrl}
+        />
+      )
     }
     if (isDeadlinePassed(deadline)) return <InviteToDeadlinePassed listing={listing} />
     if (act === "contact") {
@@ -123,7 +140,7 @@ const InviteToPage = ({
         listing={listing}
         deadline={deadline}
         appId={appId}
-        fileUploadUrl={url}
+        fileUploadUrl={uploadUrl}
       />
     )
   }
@@ -143,7 +160,7 @@ const InviteToPage = ({
         listing={listing}
         deadline={deadline}
         appId={appId}
-        fileUploadUrl={url}
+        fileUploadUrl={uploadUrl}
       />
     )
   }

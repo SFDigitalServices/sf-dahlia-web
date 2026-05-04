@@ -28,7 +28,7 @@ export const ListingDetailsHabitat = ({ listing }: ListingDetailsHabitatProps) =
       <span>
         {renderMarkup(
           t("listings.habitat.applicationProcess.p1", {
-            habitatLink: "http://www.habitatgsf.org/innes-ave",
+            habitatLink: "http://www.habitatgsf.org/innes-ave", // TODO: DAH-4080 update link
           })
         )}
       </span>
@@ -36,7 +36,7 @@ export const ListingDetailsHabitat = ({ listing }: ListingDetailsHabitatProps) =
         <li>
           {renderMarkup(
             t("listings.habitat.applicationProcess.ol1", {
-              infoSessionLink: "http://www.habitatgsf.org/innes-ave",
+              infoSessionLink: "http://www.habitatgsf.org/innes-ave", // TODO: DAH-4080 update link
             })
           )}
         </li>
@@ -67,7 +67,8 @@ export const ListingDetailsHabitat = ({ listing }: ListingDetailsHabitatProps) =
         <li>{t("listings.incomeExceptions.nontaxable")}</li>
       </ul>
       <p className="mt-4">{t("listings.habitat.incomeRange.p4")}</p>
-      {/* TODO: Dependent on DAH-1139 */}
+      {/* The parent component ListingDetail uses conditional renders to make sure the income range appears right after this text */}
+      {/* Income range is rendered by ListingDetailsPricingTable */}
     </div>
   )
 }

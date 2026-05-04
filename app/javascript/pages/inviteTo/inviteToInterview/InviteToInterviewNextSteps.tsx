@@ -17,20 +17,22 @@ interface InviteToInterviewNextStepsProps {
   listing: RailsSaleListing
   deadline: string
   appId: string
+  url: string
 }
 
 const WhatToDo = ({
   listing,
   deadline,
   appId,
+  url,
 }: {
   listing: RailsSaleListing
   deadline: string
   appId: string
+  url: string
 }) => {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const handleSubmitClick = useCallback(() => {
-    const url = listing.Leaseup_Appointment_Scheduling_URL
     void (async () => {
       setIsSubmitting(true)
       try {
@@ -54,7 +56,7 @@ const WhatToDo = ({
         setIsSubmitting(false)
       }
     })()
-  }, [appId, listing, deadline])
+  }, [appId, listing, deadline, url])
   return (
     <div className={`${styles.whatToDoList} markdown`}>
       <Heading priority={2} size="2xl">
@@ -62,7 +64,7 @@ const WhatToDo = ({
       </Heading>
       <ol className="process-list">
         <li>
-          <Heading priority={3} size="lg">
+          <Heading priority={3} size="lg" className={styles.listHeading}>
             {t("inviteToInterviewPage.submitYourInfo.whatToDo.step1.title")}
           </Heading>
           <p>{t("inviteToInterviewPage.submitYourInfo.whatToDo.step1.p1")}</p>
@@ -75,7 +77,7 @@ const WhatToDo = ({
           )}
         </li>
         <li>
-          <Heading priority={3} size="lg">
+          <Heading priority={3} size="lg" className={styles.listHeading}>
             {t("inviteToInterviewPage.submitYourInfo.whatToDo.step2.title")}
           </Heading>
           <p>{t("inviteToInterviewPage.submitYourInfo.whatToDo.step2.p1")}</p>
@@ -93,7 +95,7 @@ const WhatToDo = ({
           </Button>
         </li>
         <li>
-          <Heading priority={3} size="lg">
+          <Heading priority={3} size="lg" className={styles.listHeading}>
             {t("inviteToInterviewPage.submitYourInfo.whatToDo.step3.title")}
           </Heading>
           {t("inviteToInterviewPage.submitYourInfo.whatToDo.step3.p1")}
@@ -145,6 +147,7 @@ const InviteToInterviewNextSteps = ({
   listing,
   deadline,
   appId,
+  url,
 }: InviteToInterviewNextStepsProps) => {
   const { getAssetPath } = React.useContext(ConfigContext)
   return (
@@ -158,7 +161,7 @@ const InviteToInterviewNextSteps = ({
         sidebarText="inviteToInterviewPage.submitYourInfo.sidebar"
         deadline={deadline}
       >
-        <WhatToDo listing={listing} deadline={deadline} appId={appId} />
+        <WhatToDo listing={listing} deadline={deadline} appId={appId} url={url} />
         <div className={styles.infoSubSection}>
           <InviteToGetHelp />
           <WhatToExpectAfter />

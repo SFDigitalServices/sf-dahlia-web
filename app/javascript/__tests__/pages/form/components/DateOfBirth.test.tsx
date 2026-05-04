@@ -40,6 +40,9 @@ describe("DateOfBirth", () => {
   beforeEach(() => {
     MockDate.set("2020-01-01")
   })
+  afterEach(() => {
+    MockDate.reset()
+  })
 
   it("renders without errors", () => {
     renderDateOfBirthComponent()
