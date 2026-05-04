@@ -9,6 +9,7 @@ import type { DataSchema } from "../../../formEngine/formSchemas"
 import { translationFromDataSchema } from "../../../util/formEngineUtil"
 import styles from "./ListingApplyStepWrapper.module.scss"
 import getFormComponentRegistry from "../../../formEngine/formComponentRegistry"
+import ListingApplyStepErrorMessage from "./ListingApplyStepErrorMessage"
 
 interface ListingApplyStepWrapperProps {
   title: string
@@ -54,11 +55,14 @@ const ListingApplyStepWrapper = ({
     headerComponent = React.createElement(componentRegistry[headerComponentName])
   }
 
-  const methods = useForm({
-    mode: "onChange",
+  const formMethods = useForm({
+    mode: "onSubmit",
+    reValidateMode: "onChange",
     shouldFocusError: false,
     defaultValues,
   })
+
+  const hasErrors = () => Object.keys(formMethods.formState.errors).length > 0
 
   const onSubmit = (data: Record<string, unknown>) => {
     saveFormData({ ...blankValues, ...data })
@@ -68,7 +72,7 @@ const ListingApplyStepWrapper = ({
   const titleString = translationFromDataSchema(title, titleVars, staticData, formData)
 
   return (
-    <FormProvider {...methods}>
+    <FormProvider {...formMethods}>
       <Card>
         <Card.Section>
           <Button variant="text" className={styles["back-button"]} onClick={handlePrevStep}>
@@ -83,7 +87,13 @@ const ListingApplyStepWrapper = ({
             {description && <p className={styles["step-description"]}>{t(description)}</p>}
           </Card.Header>
         )}
-        <Form onSubmit={methods.handleSubmit(onSubmit)}>
+        {hasErrors() && (
+          <ListingApplyStepErrorMessage
+            errorMessage={t("error.formSubmission")}
+            onClose={() => formMethods.clearErrors()}
+          />
+        )}
+        <Form onSubmit={formMethods.handleSubmit(onSubmit)}>
           {Children.map(children, (child) => {
             const { schema } = (child as React.ReactElement).props
             return (

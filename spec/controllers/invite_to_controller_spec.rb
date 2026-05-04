@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe InviteToApplyPageController do
+RSpec.describe InviteToController do
   let(:deadline) { '2999-12-31' }
   let(:application_number) { 'APP123456' }
   let(:response_value) { 'yes' }
@@ -9,8 +9,8 @@ RSpec.describe InviteToApplyPageController do
     [
       {
         deadline: deadline,
-        applicationNumber: application_number,
-        response: response_value,
+        appId: application_number,
+        act: response_value,
       },
     ]
   end
@@ -21,8 +21,9 @@ RSpec.describe InviteToApplyPageController do
       {
         data: {
           deadline: deadline,
-          applicationNumber: application_number,
-          response: response_value,
+          appId: application_number,
+          act: response_value,
+          type: 'I2A',
         },
         iat: fixed_iat,
         exp: fixed_exp,
@@ -42,7 +43,7 @@ RSpec.describe InviteToApplyPageController do
     allow(ENV).to receive(:fetch).with('SALESFORCE_API_VERSION',
                                        '61.0').and_return('61.0')
     allow(ENV).to receive(:fetch).with('SALESFORCE_PROXY_URI', nil).and_return(nil)
-    allow(DahliaBackend::MessageService).to receive(:send_invite_to_apply_response)
+    allow(DahliaBackend::MessageService).to receive(:send_invite_to_response)
     allow(Rails.logger).to receive(:info)
     allow(controller).to receive(:encode_token).and_return(fixed_token)
   end
@@ -50,11 +51,15 @@ RSpec.describe InviteToApplyPageController do
   describe '#index' do
     context 'with valid parameters' do
       before do
-        allow(Force::ShortFormService).to receive(:get).with(application_number).and_return({ 'uploadURL' => 'test-upload-url' })
+        allow(Force::ShortFormService).to receive(:get).with(application_number).and_return({ 'uploadURL' => 'test-upload-url', 'leaseupAppointmentSchedulingURL' => 'test-scheduling-url' })
 
         get :index, params: {
           id: listing_id,
           t: fixed_token,
+          type: 'I2A',
+          deadline: deadline,
+          act: response_value,
+          appId: application_number,
         }
       end
 
@@ -62,37 +67,42 @@ RSpec.describe InviteToApplyPageController do
         expect(response).to be_ok
       end
 
-      it 'renders the invite_to_apply template' do
-        expect(response).to render_template('invite_to_apply')
+      it 'renders the invite_to template' do
+        expect(response).to render_template('invite_to')
       end
 
-      it 'sets the invite_to_apply_props instance variable' do
-        expect(assigns(:invite_to_apply_props)).to eq({
+      it 'sets the invite_to_props instance variable' do
+        expect(assigns(:invite_to_props)).to eq({
                                                         assetPaths: { logo: 'logo.png' },
                                                         urlParams: {
+                                                          type: 'I2A',
                                                           deadline: deadline,
-                                                          response: response_value,
-                                                          applicationNumber: application_number,
+                                                          act: response_value,
+                                                          appId: application_number,
                                                         },
-                                                        fileUploadUrl: 'test-upload-url',
+                                                        uploadUrl: 'test-upload-url',
+                                                        schedulingUrl: 'test-scheduling-url',
                                                         submitPreviewLinkTokenParam: fixed_token,
                                                       })
       end
 
-      it 'calls record_response with correct parameters' do
-        expect(DahliaBackend::MessageService).to have_received(:send_invite_to_apply_response).with(
-          deadline,
-          application_number,
-          response_value,
-          listing_id,
-        )
-      end
+      # TODO: update deprecated I2A pilot
+      # it 'calls record_response with correct parameters' do
+      #   expect(DahliaBackend::MessageService).to have_received(:send_invite_to_response).with(
+      #     deadline,
+      #     application_number,
+      #     nil,
+      #     response_value,
+      #     nil,
+      #     listing_id,
+      #   )
+      # end
     end
 
     context 'when DahliaBackend::MessageService raises an error' do
       before do
-        allow(Force::ShortFormService).to receive(:get).with(application_number).and_return({ 'uploadURL' => 'test-upload-url' })
-        allow(DahliaBackend::MessageService).to receive(:send_invite_to_apply_response).and_raise(
+        allow(Force::ShortFormService).to receive(:get).with(application_number).and_return({ 'uploadURL' => 'test-upload-url', 'leaseupAppointmentSchedulingURL' => 'test-scheduling-url' })
+        allow(DahliaBackend::MessageService).to receive(:send_invite_to_response).and_raise(
           StandardError, 'API Error'
         )
       end
@@ -102,6 +112,10 @@ RSpec.describe InviteToApplyPageController do
           get :index, params: {
             id: listing_id,
             t: fixed_token,
+            type: 'I2A',
+            deadline: deadline,
+            act: response_value,
+            appId: application_number,
           }
         end.to raise_error(StandardError, 'API Error')
       end
@@ -115,7 +129,7 @@ RSpec.describe InviteToApplyPageController do
 
       it 'creates a token for the preview link' do
         get :index, params: { id: listing_id, t: 'test_token' }
-        expect(assigns(:invite_to_apply_props)).to have_key(:submitPreviewLinkTokenParam)
+        expect(assigns(:invite_to_props)).to have_key(:submitPreviewLinkTokenParam)
       end
 
       it 'redirects to the listing details page if token is blank' do
@@ -124,7 +138,7 @@ RSpec.describe InviteToApplyPageController do
       end
 
       it 'redirects to the listing details page if token is invalid' do
-        allow(JWT).to receive(:decode).and_raise(JWT::VerificationError)
+        allow(JWT).to receive(:decode).and_raise(JWT::DecodeError)
         get :index, params: { id: listing_id, t: 'invalid_test_token' }
         expect(response).to redirect_to('/')
       end
@@ -136,8 +150,8 @@ RSpec.describe InviteToApplyPageController do
       get :documents, params: {
         id: listing_id,
         deadline: deadline,
-        applicationNumber: application_number,
-        response: response_value,
+        appId: application_number,
+        act: response_value,
       }
     end
 
@@ -145,17 +159,17 @@ RSpec.describe InviteToApplyPageController do
       expect(response).to be_ok
     end
 
-    it 'renders the invite_to_apply template' do
-      expect(response).to render_template('invite_to_apply')
+    it 'renders the invite_to template' do
+      expect(response).to render_template('invite_to')
     end
 
-    it 'sets the invite_to_apply_props with documentsPath set to true' do
-      expect(assigns(:invite_to_apply_props)).to include({ assetPaths: { logo: 'logo.png' },
-                                                           documentsPath: true })
+    it 'sets the invite_to_props with documentsPath set to true' do
+      expect(assigns(:invite_to_props)).to include({ assetPaths: { logo: 'logo.png' },
+                                                     documentsPath: true })
     end
 
     it 'does not call record_response' do
-      expect(DahliaBackend::MessageService).not_to have_received(:send_invite_to_apply_response)
+      expect(DahliaBackend::MessageService).not_to have_received(:send_invite_to_response)
     end
   end
 

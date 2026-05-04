@@ -161,6 +161,14 @@ export const isBMR = (listing: RailsRentalListing | RailsSaleListing) =>
   listing.Program_Type === "IH-RENTAL" || listing.Program_Type === "IH-OWN"
 
 /**
+ * Check if a listing is CSLP
+ * @param {RailsRentalListing | RailsSaleListing} listing
+ * @returns {boolean} returns true if the listing is CSLP, false otherwise
+ */
+export const isCSLP = (listing: RailsRentalListing | RailsSaleListing) =>
+  listing.Program_Type === "CSLP"
+
+/**
  * Check if a listing has only SRO units
  * @param {RailsRentalListing | RailsRentalListing} listing
  * @returns {boolean} returns true if the listing has all SRO unit types, false otherwise
@@ -760,7 +768,7 @@ export const getSeniorBuildingAgeRequirement = (
   return { entireHousehold, minimumAge }
 }
 
-// I2A deadlines are passed in as just a date (i.e. "2100-01-01") without a time or timezone
+// I2X deadlines are passed in as just a date (i.e. "2100-01-01") without a time or timezone
 // We know that the deadline should pass at midnight Pacific Time on the given date
 export const isDeadlinePassed = (deadline: string) => {
   // Parse deadline as end of day in Pacific Time

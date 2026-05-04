@@ -1,11 +1,9 @@
 # frozen_string_literal: true
 
 module DahliaBackend
-  # Service for sending messages to applicants through the DAHLIA API
   class MessageService
     class << self
       # Sends application confirmation to the applicant
-      #
       # @param [Hash] application_params Parameters from the application
       # @param [Hash] application_response Response from the application submission
       # @param [String] locale Locale for the message (default is 'en')
@@ -15,10 +13,9 @@ module DahliaBackend
         new.send_application_confirmation(application_params, application_response,
                                           locale)
       end
-
-      def send_invite_to_apply_response(_deadline, _application_number, _response,
+      def send_invite_to_response(_deadline, _app_id, _application_number, _response,_action,
                                         listing_id, _force = nil)
-        new.send_invite_to_apply_response(_deadline, _application_number, _response,
+        new.send_invite_to_response(_deadline, _app_id, _application_number, _response, _action,
                                           listing_id, nil)
       end
     end
@@ -47,36 +44,43 @@ module DahliaBackend
       nil
     end
 
-    def get_invite_to_apply_response_endpoint(response)
-      case response
-      when 'yes' then '/messages/invite-to-apply/response/yes'
-      when 'no' then '/messages/invite-to-apply/response/no'
-      when 'contact' then '/messages/invite-to-apply/response/contact'
-      when 'submit' then '/messages/invite-to-apply/response/submit'
+    # Deprecate I2A pilot in DAH-4045
+    def get_response_endpoint(act, response)
+      if response && act.blank?
+        case response
+        when 'yes' then '/messages/invite-to-apply/response/yes'
+        when 'no' then '/messages/invite-to-apply/response/no'
+        when 'contact' then '/messages/invite-to-apply/response/contact'
+        when 'submit' then '/messages/invite-to-apply/response/submit'
+        end
+      elsif act.present?
+        '/api/v1/message'
+      else
+        nil
       end
     end
 
-    def send_invite_to_apply_response(_deadline, _application_number, _response,
+    def send_invite_to_response(_deadline, _app_id, _application_number, _response, _action,
                                       listing_id, _force = nil)
-      # Get contacts from salesforce of the application with applicationNumber
+      # Get contacts from salesforce of the application with appId
       # TODO: Validate params
 
-      application = Force::ShortFormService.get(_application_number)
+      application = Force::ShortFormService.get(_application_number.presence || _app_id)
 
       listing = fetch_listing(listing_id)
 
-      fields = prepare_submission_fields_invite_to_apply(application, listing, _deadline,
-                                                         _application_number)
+      fields = prepare_submission_fields_invite_to_response(application, listing, _deadline,
+                                                         _application_number, _app_id, _action)
       return if fields.nil?
 
-      log_info("Prepared fields for Invite to Apply response: #{fields.inspect}")
+      log_info("Prepared fields for I2X response: #{fields.inspect}")
 
-      endpoint = get_invite_to_apply_response_endpoint(_response)
-      return log_error("Invalid response type: #{_response}", nil) unless endpoint
+      endpoint = get_response_endpoint(_action, _response)
+      return log_error("Invalid action type: #{_action}", nil) unless endpoint
 
       send_message(endpoint, fields)
     rescue StandardError => e
-      log_error('Error sending Invite to Apply', e)
+      log_error('Error sending I2X response', e)
       nil
     end
 
@@ -109,9 +113,19 @@ module DahliaBackend
       }
     end
 
-    def prepare_submission_fields_invite_to_apply(application, listing, deadline,
-                                                  application_number)
+    def prepare_submission_fields_invite_to_response(application, listing, deadline,
+                                                  application_number, app_id, action)
       return nil unless application && listing
+
+      if action.present?
+        return {
+          action: action.upcase,
+          data: {
+            applicationIds: [app_id],
+            isTestEmail: false,
+          }
+        }
+      end
 
       # Extract applicant information
       primary_applicant = {
@@ -123,6 +137,7 @@ module DahliaBackend
       # Build applicant data
       applicant_data = {
         lotteryNumber: application.dig('lotteryNumber'),
+        appId: app_id,
         applicationNumber: application_number,
         primaryContact: primary_applicant,
         applicationLanguage: application.dig('applicationLanguage'),

@@ -9,14 +9,14 @@ import {
 } from "@bloom-housing/ui-components"
 import { Heading, Button, Message } from "@bloom-housing/ui-seeds"
 import { faPrint, faEnvelope } from "@fortawesome/free-solid-svg-icons"
-import RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
-import Layout from "../../layouts/Layout"
-import { renderInlineMarkup, getBMRApplicationUrl } from "../../util/languageUtil"
-import { ConfigContext } from "../../lib/ConfigContext"
-import InviteToApplyLeasingAgentInfo from "./InviteToApplyLeasingAgentInfo"
+import RailsSaleListing from "../../../api/types/rails/listings/RailsSaleListing"
+import Layout from "../../../layouts/Layout"
+import { renderInlineMarkup, getBMRApplicationUrl } from "../../../util/languageUtil"
+import { ConfigContext } from "../../../lib/ConfigContext"
+import InviteToLeasingAgentInfo from "../InviteToLeasingAgentInfo"
 
-import styles from "./invite-to-apply.module.scss"
-import { HOME_SF_PHONE } from "../../modules/constants"
+import styles from "../invite-to.module.scss"
+import { HOME_SF_PHONE } from "../../../modules/constants"
 
 interface InviteToApplyDocumentsProps {
   listing: RailsSaleListing | null
@@ -24,7 +24,7 @@ interface InviteToApplyDocumentsProps {
 
 const CheckWhatYouNeed = () => {
   return (
-    <div className={styles.submitYourInfoSection} id="checkWhatYouNeed">
+    <div className={styles.infoSubSection} id="checkWhatYouNeed">
       <Heading priority={2} size="2xl">
         {t("inviteToApplyPage.documents.checkWhatYouNeed.title")}
       </Heading>
@@ -77,7 +77,7 @@ const CheckWhatYouNeed = () => {
 
 const TaxDocuments = ({ submitYourInfoLink }: { submitYourInfoLink: string }) => {
   return (
-    <div className={styles.submitYourInfoSection} id="taxDocuments">
+    <div className={styles.infoSubSection} id="taxDocuments">
       <Heading priority={2} size="2xl">
         {"1. " + t("inviteToApplyPage.documents.taxDocuments.title")}
       </Heading>
@@ -97,11 +97,7 @@ const TaxDocuments = ({ submitYourInfoLink }: { submitYourInfoLink: string }) =>
       </ul>
       <div className={styles.infoSubSection}>
         <ContentAccordion
-          customBarContent={
-            <div className={styles.accordionBar}>
-              {t("inviteToApplyPage.documents.taxDocuments.p8")}
-            </div>
-          }
+          customBarContent={t("inviteToApplyPage.documents.taxDocuments.p8")}
           customExpandedContent={
             <div className={styles.accordionContent}>
               {renderInlineMarkup(
@@ -112,11 +108,7 @@ const TaxDocuments = ({ submitYourInfoLink }: { submitYourInfoLink: string }) =>
           accordionTheme={"gray"}
         />
         <ContentAccordion
-          customBarContent={
-            <div className={styles.accordionBar}>
-              {t("inviteToApplyPage.documents.taxDocuments.p10")}
-            </div>
-          }
+          customBarContent={t("inviteToApplyPage.documents.taxDocuments.p10")}
           customExpandedContent={
             <div className={styles.accordionContent}>
               {renderInlineMarkup(t("inviteToApplyPage.documents.taxDocuments.p11"))}
@@ -125,11 +117,7 @@ const TaxDocuments = ({ submitYourInfoLink }: { submitYourInfoLink: string }) =>
           accordionTheme={"gray"}
         />
         <ContentAccordion
-          customBarContent={
-            <div className={styles.accordionBar}>
-              {t("inviteToApplyPage.documents.taxDocuments.p12")}
-            </div>
-          }
+          customBarContent={t("inviteToApplyPage.documents.taxDocuments.p12")}
           customExpandedContent={
             <div className={styles.accordionContent}>
               {renderInlineMarkup(t("inviteToApplyPage.documents.taxDocuments.p13"))}
@@ -144,7 +132,7 @@ const TaxDocuments = ({ submitYourInfoLink }: { submitYourInfoLink: string }) =>
 
 const ProofOfIncome = ({ submitYourInfoLink }: { submitYourInfoLink: string }) => {
   return (
-    <div className={styles.submitYourInfoSection} id="proofOfIncome">
+    <div className={styles.infoSubSection} id="proofOfIncome">
       <Heading priority={2} size="2xl">
         {"2. " + t("inviteToApplyPage.documents.proofOfIncome.title")}
       </Heading>
@@ -168,11 +156,7 @@ const ProofOfIncome = ({ submitYourInfoLink }: { submitYourInfoLink: string }) =
       </ul>
       <div className={styles.infoSubSection}>
         <ContentAccordion
-          customBarContent={
-            <div className={styles.accordionBar}>
-              {t("inviteToApplyPage.documents.proofOfIncome.p10")}
-            </div>
-          }
+          customBarContent={t("inviteToApplyPage.documents.proofOfIncome.p10")}
           customExpandedContent={
             <div className={styles.accordionContent}>
               {renderInlineMarkup(
@@ -183,11 +167,7 @@ const ProofOfIncome = ({ submitYourInfoLink }: { submitYourInfoLink: string }) =
           accordionTheme={"gray"}
         />
         <ContentAccordion
-          customBarContent={
-            <div className={styles.accordionBar}>
-              {t("inviteToApplyPage.documents.proofOfIncome.p12")}
-            </div>
-          }
+          customBarContent={t("inviteToApplyPage.documents.proofOfIncome.p12")}
           customExpandedContent={
             <div className={styles.accordionContent}>
               {renderInlineMarkup(
@@ -226,7 +206,7 @@ const ProofOfIncome = ({ submitYourInfoLink }: { submitYourInfoLink: string }) =
 
 const BankAndFinancials = () => {
   return (
-    <div className={styles.submitYourInfoSection} id="bankAndFinancial">
+    <div className={styles.infoSubSection} id="bankAndFinancial">
       <Heading priority={2} size="2xl">
         {"3. " + t("inviteToApplyPage.documents.bankAndFinancial.title")}
       </Heading>
@@ -257,7 +237,7 @@ const BankAndFinancials = () => {
 
 const HousingAssistance = () => {
   return (
-    <div className={styles.submitYourInfoSection} id="housingAssistance">
+    <div className={styles.infoSubSection} id="housingAssistance">
       <Heading priority={2} size="2xl">
         {"4. " + t("inviteToApplyPage.documents.housingAssistance.title")}
       </Heading>
@@ -271,23 +251,6 @@ const HousingAssistance = () => {
         <li>{renderInlineMarkup(t("inviteToApplyPage.documents.housingAssistance.p4"))}</li>
         <li>{renderInlineMarkup(t("inviteToApplyPage.documents.housingAssistance.p5"))}</li>
       </ul>
-      <div className={styles.submitYourInfoBox}>
-        <Heading priority={3} size="lg">
-          {t("inviteToApplyPage.submitYourInfo.prepare.p2")}
-        </Heading>
-        <p>{t("inviteToApplyPage.submitYourInfo.prepare.p3")}</p>
-        {renderInlineMarkup(t("inviteToApplyPage.submitYourInfo.prepare.p4"))}
-        <span className={styles.submitYourInfoIcons}>
-          <a className={styles.responseIcon} href={`tel:+14152025464`}>
-            <Icon symbol="phone" size="medium" fill={IconFillColors.primary} />
-            {HOME_SF_PHONE}
-          </a>
-          <a className={styles.responseIcon} href={`mailto:${"info@homesanfrancisco.org"}`}>
-            <Icon symbol={faEnvelope} size="medium" fill={IconFillColors.primary} />
-            {"info@homesanfrancisco.org"}
-          </a>
-        </span>
-      </div>
     </div>
   )
 }
@@ -313,7 +276,18 @@ const InviteToApplyDocumentsSidebar = ({ listing }: { listing: RailsSaleListing 
         </span>
       </SidebarBlock>
       <SidebarBlock title={t("contactAgent.contact")} priority={2}>
-        <InviteToApplyLeasingAgentInfo listing={listing} />
+        <Heading priority={3} size="lg">
+          <strong>{t("inviteToApplyPage.submitYourInfo.sidebar")}</strong>
+        </Heading>
+        <InviteToLeasingAgentInfo listing={listing} />
+        {listing?.Office_Hours && (
+          <>
+            <Heading size="sm" priority={3}>
+              {t("contactAgent.officeHours.seeTheUnit")}
+            </Heading>
+            <p>{listing?.Office_Hours}</p>
+          </>
+        )}
       </SidebarBlock>
     </>
   )

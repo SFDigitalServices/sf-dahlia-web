@@ -750,7 +750,7 @@
     },
     {
       "stepInfo": {
-        "slug": "veterans-programs",
+        "slug": "veterans-preference",
         "sectionName": "preferences",
         "navigationArrival": {
           "showStepIfAnyPresent": [
@@ -764,16 +764,16 @@
       "componentType": "step",
       "componentName": "ListingApplyStepWrapper",
       "props": {
-        "title": "e7a_veterans_preference.title",
-        "headerComponentName": "ListingApplyVeteransProgramsHeader"
+        "title": "e7aVeteransPreference.title",
+        "headerComponentName": "ListingApplyVeteransPreferenceHeader"
       },
       "children": [
         {
-          "componentName": "VeteransRadio",
+          "componentName": "VeteransPreferenceRadio",
           "props": {
             "fieldNames": {
-              "veteranMember": "veteranMember",
-              "veteranAnswer": "veteranAnswer"
+              "isAnyoneAVeteran": "_isAnyoneAVeteran",
+              "veteranMemberId": "_veteranMemberId"
             }
           }
         }

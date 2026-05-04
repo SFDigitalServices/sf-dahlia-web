@@ -1,81 +1,38 @@
 import React, { useCallback, useState } from "react"
-import { faEnvelope, faPrint } from "@fortawesome/free-solid-svg-icons"
-import {
-  t,
-  Icon,
-  IconFillColors,
-  SidebarBlock,
-  PageHeader,
-  Mobile,
-  Desktop,
-} from "@bloom-housing/ui-components"
+import { faPrint } from "@fortawesome/free-solid-svg-icons"
+import { t, Icon, IconFillColors, Mobile } from "@bloom-housing/ui-components"
 import { Heading, Button, Message, LoadingState } from "@bloom-housing/ui-seeds"
-import RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
-import { getListingAddressString, isDeadlinePassed } from "../../util/listingUtil"
+import RailsSaleListing from "../../../api/types/rails/listings/RailsSaleListing"
+import { isDeadlinePassed } from "../../../util/listingUtil"
 import {
-  getTranslatedString,
   renderInlineMarkup,
   getCurrentLanguage,
   getBMRApplicationUrl,
   localizedFormat,
-} from "../../util/languageUtil"
-import styles from "./invite-to-apply.module.scss"
-import Layout from "../../layouts/Layout"
-import { ConfigContext } from "../../lib/ConfigContext"
-import InviteToApplyLeasingAgentInfo from "./InviteToApplyLeasingAgentInfo"
-import { HOME_SF_PHONE } from "../../modules/constants"
-import { recordResponse } from "../../api/inviteToApplyApiService"
+} from "../../../util/languageUtil"
+import styles from "../invite-to.module.scss"
+import { ConfigContext } from "../../../lib/ConfigContext"
+import InviteToLayout from "../InviteToLayout"
+import { recordResponse } from "../../../api/inviteToApiService"
+import InviteToGetHelp from "../InviteToGetHelp"
+import InviteToLeasingAgentInfo from "../InviteToLeasingAgentInfo"
+import { INVITE_TO_X } from "../../../modules/constants"
 
-interface InviteToApplySubmitYourInfoProps {
+interface InviteToApplyNextStepsProps {
   listing: RailsSaleListing | null
   deadline: string
-  applicationNumber?: string
+  appId?: string
   fileUploadUrl?: string
-}
-
-const DeadlineBanner = ({ deadline }: { deadline: string }) => {
-  return (
-    <Message
-      fullwidth
-      variant={isDeadlinePassed(deadline) ? "alert" : "warn"}
-      customIcon={<Icon symbol="clock" size="medium" />}
-    >
-      <strong>
-        {isDeadlinePassed(deadline)
-          ? t("inviteToApplyPage.submitYourInfo.deadlinePassed")
-          : t("inviteToApplyPage.submitYourInfo.submitByDeadline")}
-      </strong>
-      <span>
-        {t("inviteToApplyPage.submitYourInfo.deadline", { day: localizedFormat(deadline, "ll") })}
-      </span>
-    </Message>
-  )
 }
 
 const PreparingYourApplication = () => {
   return (
-    <div className={styles.submitYourInfoSection}>
+    <div className={styles.infoSubSection}>
       <Heading priority={2} size="2xl">
         {t("howToApplyPage.howLongItTakesSection.subtitle1")}
       </Heading>
       <p>{t("inviteToApplyPage.submitYourInfo.prepare.p1")}</p>
-      <div className={styles.submitYourInfoBox}>
-        <Heading priority={3} size="lg">
-          {t("inviteToApplyPage.submitYourInfo.prepare.p2")}
-        </Heading>
-        <p>{t("inviteToApplyPage.submitYourInfo.prepare.p3")}</p>
-        {renderInlineMarkup(t("inviteToApplyPage.submitYourInfo.prepare.p4"))}
-        <span className={styles.submitYourInfoIcons}>
-          <a className={styles.responseIcon} href={`tel:+1${HOME_SF_PHONE}`}>
-            <Icon symbol="phone" size="medium" fill={IconFillColors.primary} />
-            {HOME_SF_PHONE}
-          </a>
-          <a className={styles.responseIcon} href={`mailto:${"info@homesanfrancisco.org"}`}>
-            <Icon symbol={faEnvelope} size="medium" fill={IconFillColors.primary} />
-            {"info@homesanfrancisco.org"}
-          </a>
-        </span>
-      </div>
+      <InviteToGetHelp />
       <Button
         leadIcon={<Icon symbol={faPrint} size="medium" fill={IconFillColors.primary} />}
         variant="primary-outlined"
@@ -91,12 +48,12 @@ const PreparingYourApplication = () => {
 const WhatToDo = ({
   listing,
   deadline,
-  applicationNumber,
+  appId,
   fileUploadUrl,
 }: {
   listing: RailsSaleListing
   deadline: string
-  applicationNumber?: string
+  appId?: string
   fileUploadUrl?: string
 }) => {
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -107,13 +64,15 @@ const WhatToDo = ({
       setIsSubmitting(true)
       window.open(url, "_blank")
       try {
-        // Call the API if applicationNumber is provided
-        if (applicationNumber) {
+        if (appId) {
           await recordResponse({
-            applicationNumber,
+            appId: appId,
+            applicationNumber: appId,
             listingId: listing.Id,
             deadline,
+            action: "submit",
             response: "submit",
+            type: INVITE_TO_X.APPLY,
           })
         }
         setIsSubmitting(false)
@@ -124,16 +83,16 @@ const WhatToDo = ({
         setIsSubmitting(false)
       }
     })()
-  }, [applicationNumber, listing, deadline, fileUploadUrl])
+  }, [appId, listing, deadline, fileUploadUrl])
 
   return (
-    <div className={styles.whatToDoList}>
+    <div className={`${styles.whatToDoList} markdown`}>
       <Heading priority={2} size="2xl">
         {t("inviteToApplyPage.submitYourInfo.whatToDo.title")}
       </Heading>
-      <ol className={`${styles.numberedList} numbered-list`}>
+      <ol className="process-list">
         <li>
-          <Heading priority={3} size="lg">
+          <Heading priority={3} size="lg" className={styles.listHeading}>
             {t("inviteToApplyPage.submitYourInfo.whatToDo.step1.title")}
           </Heading>
           {renderInlineMarkup(
@@ -150,7 +109,7 @@ const WhatToDo = ({
           </Button>
         </li>
         <li>
-          <Heading priority={3} size="lg">
+          <Heading priority={3} size="lg" className={styles.listHeading}>
             {t("inviteToApplyPage.submitYourInfo.whatToDo.step2.title")}
           </Heading>
           <p>{t("inviteToApplyPage.submitYourInfo.whatToDo.step2.p1")}</p>
@@ -162,11 +121,11 @@ const WhatToDo = ({
           )}
         </li>
         <li>
-          <Heading priority={3} size="lg">
+          <Heading priority={3} size="lg" className={styles.listHeading}>
             {t("inviteToApplyPage.submitYourInfo.whatToDo.step3.title")}
           </Heading>
           <p>{t("inviteToApplyPage.submitYourInfo.whatToDo.step3.p1")}</p>
-          <ul className={styles.submitYourInfoList}>
+          <ul>
             <li>{t("inviteToApplyPage.submitYourInfo.whatToDo.step3.p2")}</li>
             <li>{t("inviteToApplyPage.submitYourInfo.whatToDo.step3.p3")}</li>
           </ul>
@@ -200,7 +159,7 @@ const WhatToDo = ({
         </Message>
       )}
       <div className={styles.submitYourInfoBox}>
-        <Heading priority={4} size="lg">
+        <Heading priority={3} size="lg">
           {t("inviteToApplyPage.submitYourInfo.whatToDo.step3.p8")}
         </Heading>
         <p>{t("inviteToApplyPage.submitYourInfo.whatToDo.step3.p9")}</p>
@@ -211,7 +170,7 @@ const WhatToDo = ({
 
 const WhatHappensNext = () => {
   return (
-    <div className={styles.submitYourInfoSection}>
+    <div className={styles.infoSubSection}>
       <Heading priority={2} size="2xl">
         {t("howToApplyPage.whatHappensNext.title")}
       </Heading>
@@ -220,7 +179,7 @@ const WhatHappensNext = () => {
       </Heading>
       <p>{t("inviteToApplyPage.submitYourInfo.whatHappensNext.p2")}</p>
       <p>{t("inviteToApplyPage.submitYourInfo.whatHappensNext.p3")}</p>
-      <ul className={styles.submitYourInfoList}>
+      <ul>
         <li>{t("inviteToApplyPage.submitYourInfo.whatHappensNext.p4")}</li>
         <li>{t("inviteToApplyPage.submitYourInfo.whatHappensNext.p5")}</li>
       </ul>
@@ -233,82 +192,35 @@ const WhatHappensNext = () => {
   )
 }
 
-const SubmitYourInfoHeader = ({ listing }: { listing: RailsSaleListing }) => {
-  return (
-    <div className={styles.submitYourInfoSection}>
-      <img
-        src={listing?.Listing_Images?.[0]?.Image_URL}
-        alt={listing?.Listing_Images?.[0]?.Image_Description}
-      />
-      <strong>{listing?.Building_Name_for_Process}</strong>
-      <p>{listing && getListingAddressString(listing, false)}</p>
-      <a href={`/${getCurrentLanguage()}/listings/${listing?.Id}`}>
-        {t("inviteToApplyPage.submitYourInfo.p1")}
-      </a>
-    </div>
-  )
-}
-
-const SubmitYourInfoSidebarBlock = ({ listing }: { listing: RailsSaleListing }) => {
-  return (
-    <SidebarBlock title={t("contactAgent.contact")} priority={2}>
-      <Heading size="lg" priority={3}>
-        {" "}
-        {t("inviteToApplyPage.submitYourInfo.sidebar")}
-      </Heading>
-      <InviteToApplyLeasingAgentInfo listing={listing} />
-      <Heading size="sm" priority={3}>
-        {t("contactAgent.officeHours.seeTheUnit")}
-      </Heading>
-      <p>{getTranslatedString(listing?.Office_Hours, "Office_Hours__c", listing?.translations)}</p>
-    </SidebarBlock>
-  )
-}
-
-const InviteToApplySubmitYourInfo = ({
+const InviteToApplyNextSteps = ({
   listing,
   deadline,
-  applicationNumber,
+  appId,
   fileUploadUrl,
-}: InviteToApplySubmitYourInfoProps) => {
+}: InviteToApplyNextStepsProps) => {
   const { getAssetPath } = React.useContext(ConfigContext)
   const titleName = listing?.Building_Name_for_Process || listing?.Name
   return (
-    <Layout>
-      <PageHeader
-        title={t("inviteToApplyPage.submitYourInfo.title", { listingName: titleName })}
-        inverse
-        backgroundImage={getAssetPath("bg@1200.jpg")}
-      />
-      <div className={styles.submitYourInfo}>
-        <div className={styles.submitYourInfoPage}>
-          <main className={styles.submitYourInfoMain}>
-            <SubmitYourInfoHeader listing={listing} />
-            <DeadlineBanner deadline={deadline} />
-            <PreparingYourApplication />
-            <WhatToDo
-              listing={listing}
-              deadline={deadline}
-              applicationNumber={applicationNumber}
-              fileUploadUrl={fileUploadUrl}
-            />
-            <Mobile>
-              <Heading size="lg" priority={3}>
-                {t("inviteToApplyPage.submitYourInfo.sidebar")}
-              </Heading>
-              <InviteToApplyLeasingAgentInfo listing={listing} />
-            </Mobile>
-            <WhatHappensNext />
-          </main>
-          <Desktop>
-            <aside className={styles.submitYourInfoSidebar}>
-              <SubmitYourInfoSidebarBlock listing={listing} />
-            </aside>
-          </Desktop>
-        </div>
-      </div>
-    </Layout>
+    <InviteToLayout
+      listing={listing}
+      type={INVITE_TO_X.APPLY}
+      title={t("inviteToApplyPage.submitYourInfo.title", { listingName: titleName })}
+      headerText="inviteToApplyPage.submitYourInfo.p1"
+      sidebarText="inviteToApplyPage.submitYourInfo.sidebar"
+      getAssetPath={getAssetPath}
+      deadline={deadline}
+    >
+      <PreparingYourApplication />
+      <WhatToDo listing={listing} deadline={deadline} appId={appId} fileUploadUrl={fileUploadUrl} />
+      <Mobile>
+        <Heading size="lg" priority={3}>
+          {t("inviteToApplyPage.submitYourInfo.sidebar")}
+        </Heading>
+        <InviteToLeasingAgentInfo listing={listing} />
+      </Mobile>
+      <WhatHappensNext />
+    </InviteToLayout>
   )
 }
 
-export default InviteToApplySubmitYourInfo
+export default InviteToApplyNextSteps

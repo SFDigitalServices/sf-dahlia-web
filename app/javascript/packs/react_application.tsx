@@ -1,3 +1,7 @@
+// Must be imported before "react-on-rails" — prevents the automatic
+// setTimeout(renderInit) so we can load translations first.
+import "../util/deferReactOnRailsAutoRender"
+
 import ReactOnRails from "react-on-rails"
 
 import "../components/base.scss"
@@ -14,7 +18,7 @@ import HousingCounselors from "../pages/getAssistance/housing-counselors"
 import HowToApply from "../pages/howToApply/how-to-apply"
 import GetAssistance from "../pages/getAssistance/get-assistance"
 import DocumentChecklist from "../pages/getAssistance/document-checklist"
-import InviteToApplyPage from "../pages/inviteToApply/invite-to-apply"
+import InviteToPage from "../pages/inviteTo/invite-to"
 import AdditionalResources from "../pages/getAssistance/additional-resources"
 import Disclaimer from "../pages/getAssistance/disclaimer"
 import Privacy from "../pages/getAssistance/privacy"
@@ -29,7 +33,7 @@ import ListingApplyForm from "../pages/form/listing-apply-form"
 const currentLanguage = getCurrentLanguage(window.location.pathname)
 
 /* eslint-disable-next-line unicorn/prefer-top-level-await */
-void loadTranslations(currentLanguage).then(() =>
+void loadTranslations(currentLanguage).then(() => {
   ReactOnRails.register({
     // Add additional components here for each react component entrypoint
     BuyDirectory,
@@ -47,10 +51,12 @@ void loadTranslations(currentLanguage).then(() =>
     AdditionalResources,
     Disclaimer,
     Privacy,
-    InviteToApplyPage,
+    InviteToPage,
     MyApplications,
     AccountSettings,
     MyAccount,
     ListingApplyForm,
   })
-)
+
+  ReactOnRails.reactOnRailsPageLoaded()
+})

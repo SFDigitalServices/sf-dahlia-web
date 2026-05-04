@@ -1,3 +1,4 @@
+import { INVITE_TO_X } from "../modules/constants"
 import {
   getCurrentLanguage,
   getPathWithoutLanguagePrefix,
@@ -156,6 +157,19 @@ export const getSignInRedirectUrl = (redirect: RedirectType) => {
   return getRedirectUrl(redirect || RedirectType.Account)
 }
 
+export const generateSubmitLink = (
+  appId: string,
+  deadline: string,
+  listingId: string,
+  type: INVITE_TO_X,
+  submitPreviewLinkTokenParam?: string
+) => {
+  const submitLinkQueryStr = submitPreviewLinkTokenParam
+    ? `t=${submitPreviewLinkTokenParam}`
+    : new URLSearchParams({ appId, deadline, type }).toString()
+  return `/${getCurrentLanguage()}/listings/${listingId}/next-steps?${submitLinkQueryStr}`
+}
+
 export enum AppPages {
   Home = "home",
   RentalDirectory = "for rent Listings",
@@ -180,6 +194,6 @@ export enum AppPages {
   Disclaimer = "disclaimer",
   PrivacyPolicy = "privacy policy",
   HowToApply = "how to apply",
-  InviteToApply = "invite to apply",
+  InviteTo = "invite to",
   ListingApplyForm = "listing apply form",
 }
