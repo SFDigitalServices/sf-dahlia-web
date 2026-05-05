@@ -1,9 +1,9 @@
 import { AxiosResponse } from "axios"
 import { post, apiDelete } from "./apiService"
-import { getCurrentLanguage } from "../util/languageUtil"
+import { getCurrentLanguage, renderMarkup } from "../util/languageUtil"
 import { Application } from "./types/rails/application/RailsApplication"
 import { getPrimaryApplicantData } from "../util/listingApplyUtil"
-
+import { t } from "@bloom-housing/ui-components"
 type UploadProofFileResponse = {
   success: boolean
   name?: string
@@ -99,6 +99,30 @@ export const locateVerifiedAddress = async (address: Address): Promise<VerifiedA
     }
   }
   return response
+}
+
+export const handleAddressVerification = async (
+  data: Record<string, unknown>,
+  mailParams: string,
+  setAddressError: (error: string | null) => void
+) => {
+  try {
+    setAddressError(null)
+    return await locateVerifiedAddress({
+      street1: data.addressStreet as string,
+      street2: data.addressAptOrUnit as string,
+      city: data.addressCity as string,
+      state: data.addressState as string,
+      zip: data.addressZipcode as string,
+    })
+  } catch (error) {
+    if (error.response?.status === 422) {
+      setAddressError(t("error.addressValidation.notFound"))
+    } else {
+      setAddressError(t(error.message as string))
+    }
+    return null
+  }
 }
 
 export enum LanguagePrefix {

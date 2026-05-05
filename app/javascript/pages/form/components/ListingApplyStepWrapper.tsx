@@ -1,15 +1,15 @@
 // https://github.com/react-hook-form/react-hook-form/issues/2887#issuecomment-802577357
-
-import React, { Children } from "react"
+import React, { useState, Children } from "react"
 import { useForm, FormProvider } from "react-hook-form"
 import { Form, t } from "@bloom-housing/ui-components"
 import { Button, Card } from "@bloom-housing/ui-seeds"
 import { useFormEngineContext } from "../../../formEngine/formEngineContext"
 import type { DataSchema } from "../../../formEngine/formSchemas"
-import { translationFromDataSchema } from "../../../util/formEngineUtil"
+import { getAddressErrorEmailLink, translationFromDataSchema } from "../../../util/formEngineUtil"
 import styles from "./ListingApplyStepWrapper.module.scss"
 import getFormComponentRegistry from "../../../formEngine/formComponentRegistry"
 import ListingApplyStepErrorMessage from "./ListingApplyStepErrorMessage"
+import { handleAddressVerification } from "../../../api/formApiService"
 
 interface ListingApplyStepWrapperProps {
   title: string
@@ -49,6 +49,8 @@ const ListingApplyStepWrapper = ({
     return acc
   }, {})
 
+  const [addressError, setAddressError] = useState<string | null>(null)
+
   let headerComponent
   if (headerComponentName) {
     const componentRegistry = getFormComponentRegistry()
@@ -64,9 +66,34 @@ const ListingApplyStepWrapper = ({
 
   const hasErrors = () => Object.keys(formMethods.formState.errors).length > 0
 
+  const shouldVerifyAddress = Children.toArray(children).find((child) => {
+    return (child as React.ReactElement).props.verifyAddress === true
+  })
+
   const onSubmit = (data: Record<string, unknown>) => {
     saveFormData({ ...blankValues, ...data })
     handleNextStep({ ...formData, ...blankValues, ...data })
+    if (shouldVerifyAddress) {
+      handleAddressVerification(
+        data,
+        getAddressErrorEmailLink(data, staticData, formData),
+        setAddressError
+      )
+        .then((response) => {
+          if (response) {
+            saveFormData({
+              addressStreet: response.address?.street1,
+              addressAptOrUnit: response.address?.street2,
+              addressCity: response.address?.city,
+              addressState: response.address?.state,
+              addressZipcode: response.address?.zip,
+            })
+          }
+        })
+        .catch((error) => {
+          console.error(error)
+        })
+    }
   }
 
   const titleString = translationFromDataSchema(title, titleVars, staticData, formData)
@@ -96,7 +123,12 @@ const ListingApplyStepWrapper = ({
         <Form onSubmit={formMethods.handleSubmit(onSubmit)}>
           {Children.map(children, (child) => {
             const { schema } = (child as React.ReactElement).props
-            return (
+            // Pass validation error to address
+            return shouldVerifyAddress ? (
+              <Card.Section divider={schema?.props?.divider === false ? undefined : "inset"}>
+                {React.cloneElement(child as React.ReactElement, { addressError, setAddressError })}
+              </Card.Section>
+            ) : (
               <Card.Section divider={schema?.props?.divider === false ? undefined : "inset"}>
                 {child}
               </Card.Section>

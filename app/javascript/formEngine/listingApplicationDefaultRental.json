@@ -76,7 +76,7 @@
         "sectionName": "you"
       },
       "componentType": "step",
-      "componentName": "ListingAddressMultiStepWrapper",
+      "componentName": "ListingApplyStepWrapper",
       "props": {
         "title": "b2Contact.title",
         "titleVars": {
@@ -84,39 +84,72 @@
             "dataSource": "form",
             "dataKey": "primaryApplicantFirstName"
           }
-        },
-        "phoneLabel": "label.applicantPhone",
-        "showTypeOfNumber": true,
-        "showDontHavePhoneNumber": true,
-        "showAdditionalPhoneNumber": true,
-        "labelForAdditionalPhoneNumber": "label.applicantSecondPhone",
-        "showAptOrUnit": true,
-        "requireAddress": true,
-        "addressLabel": "label.address",
-        "addressNote": "b2Contact.applicantAddressDesc",
-        "showMailingAddress": true,
-        "workInSfLabel": "label.workInSf",
-        "workInSfNote": "b2Contact.workInSfDesc",
-        "workInSfYesText": "b2Contact.claimWorkInSf",
-        "fieldNames": {
-          "phone": "primaryApplicantPhone",
-          "phoneType": "primaryApplicantPhoneType",
-          "additionalPhone": "primaryApplicantAdditionalPhone",
-          "additionalPhoneType": "primaryApplicantAdditionalPhoneType",
-          "noPhoneCheckbox": "_primaryApplicantNoPhoneCheckbox",
-          "additionalPhoneCheckbox": "_primaryApplicantAdditionalPhoneCheckbox",
-          "addressStreet": "primaryApplicantAddressStreet",
-          "addressAptOrUnit": "primaryApplicantAddressAptOrUnit",
-          "addressCity": "primaryApplicantAddressCity",
-          "addressState": "primaryApplicantAddressState",
-          "addressZipcode": "primaryApplicantAddressZipcode",
-          "mailingAddressCheckbox": "_primaryApplicantMailingAddressCheckbox",
-          "mailingAddressStreet": "primaryApplicantMailingAddressStreet",
-          "mailingAddressCity": "primaryApplicantMailingAddressCity",
-          "mailingAddressState": "primaryApplicantMailingAddressState",
-          "mailingAddressZipcode": "primaryApplicantMailingAddressZipcode",
-          "question": "primaryApplicantWorkInSf"
         }
+      },
+      "children": [
+        {
+          "componentName": "Phone",
+          "props": {
+            "label": "label.applicantPhone",
+            "showTypeOfNumber": true,
+            "showDontHavePhoneNumber": true,
+            "showAdditionalPhoneNumber": true,
+            "labelForAdditionalPhoneNumber": "label.applicantSecondPhone",
+            "fieldNames": {
+              "phone": "primaryApplicantPhone",
+              "phoneType": "primaryApplicantPhoneType",
+              "additionalPhone": "primaryApplicantAdditionalPhone",
+              "additionalPhoneType": "primaryApplicantAdditionalPhoneType",
+              "noPhoneCheckbox": "_primaryApplicantNoPhoneCheckbox",
+              "additionalPhoneCheckbox": "_primaryApplicantAdditionalPhoneCheckbox"
+            }
+          }
+        },
+        {
+          "componentName": "Address",
+          "props": {
+            "showAptOrUnit": true,
+            "requireAddress": true,
+            "verifyAddress": true,
+            "label": "label.address",
+            "note": "b2Contact.applicantAddressDesc",
+            "showMailingAddress": true,
+            "fieldNames": {
+              "addressStreet": "primaryApplicantAddressStreet",
+              "addressAptOrUnit": "primaryApplicantAddressAptOrUnit",
+              "addressCity": "primaryApplicantAddressCity",
+              "addressState": "primaryApplicantAddressState",
+              "addressZipcode": "primaryApplicantAddressZipcode",
+              "mailingAddressCheckbox": "_primaryApplicantMailingAddressCheckbox",
+              "mailingAddressStreet": "primaryApplicantMailingAddressStreet",
+              "mailingAddressCity": "primaryApplicantMailingAddressCity",
+              "mailingAddressState": "primaryApplicantMailingAddressState",
+              "mailingAddressZipcode": "primaryApplicantMailingAddressZipcode"
+            }
+          }
+        },
+        {
+          "componentName": "YesNoRadio",
+          "props": {
+            "label": "label.workInSf",
+            "note": "b2Contact.workInSfDesc",
+            "yesText": "b2Contact.claimWorkInSf",
+            "fieldNames": {
+              "question": "primaryApplicantWorkInSf"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "stepInfo": {
+        "slug": "verify-address",
+        "sectionName": "you"
+      },
+      "componentType": "step",
+      "componentName": "VerifyAddress",
+      "props": {
+        "address": "primaryApplicantAddress"
       }
     },
     {

@@ -149,3 +149,81 @@ export const getFormattedAddress = (address: {
   const cityStateZip = [address.city, address.state, address.zip].filter(Boolean).join(", ")
   return { streets, cityStateZip }
 }
+
+export const getAddressErrorEmailLink = (
+  data: Record<string, unknown>,
+  staticData: Record<string, unknown>,
+  formData: Record<string, unknown>
+) => {
+  const mailParams = {
+    subject: `[Invalid Address Error] ${t("error.addressValidation.notFoundSubject")}`,
+    body: t("error.addressValidation.notFoundBody", {
+      listing_name: (staticData["listing"] as { Name?: string })?.Name,
+      home_address: getFormattedAddress({
+        street1: data["addressStreet"] as string,
+        street2: data["addressAptOrUnit"] as string,
+        city: data["addressCity"] as string,
+        state: data["addressState"] as string,
+        zip: data["addressZipcode"] as string,
+      }),
+      first_name: (formData["primaryApplicantFirstName"] as string) || "",
+      last_name: (formData["primaryApplicantLastName"] as string) || "",
+      email: (formData["primaryApplicantEmail"] as string) || "",
+      phone_number: (formData["primaryApplicantPhone"] as string) || "",
+    }),
+  }
+  return `${new URLSearchParams(mailParams).toString()}`
+}
+
+export const stateOptions = [
+  { value: "AL", label: "Alabama" },
+  { value: "AK", label: "Alaska" },
+  { value: "AZ", label: "Arizona" },
+  { value: "AR", label: "Arkansas" },
+  { value: "CA", label: "California" },
+  { value: "CO", label: "Colorado" },
+  { value: "CT", label: "Connecticut" },
+  { value: "DE", label: "Delaware" },
+  { value: "DC", label: "District Of Columbia" },
+  { value: "FL", label: "Florida" },
+  { value: "GA", label: "Georgia" },
+  { value: "HI", label: "Hawaii" },
+  { value: "IL", label: "Illinois" },
+  { value: "IN", label: "Indiana" },
+  { value: "IA", label: "Iowa" },
+  { value: "KS", label: "Kansas" },
+  { value: "KY", label: "Kentucky" },
+  { value: "LA", label: "Louisiana" },
+  { value: "ME", label: "Maine" },
+  { value: "MD", label: "Maryland" },
+  { value: "MA", label: "Massachusetts" },
+  { value: "MI", label: "Michigan" },
+  { value: "MN", label: "Minnesota" },
+  { value: "MS", label: "Mississippi" },
+  { value: "MO", label: "Missouri" },
+  { value: "MT", label: "Montana" },
+  { value: "NE", label: "Nebraska" },
+  { value: "NV", label: "Nevada" },
+  { value: "NH", label: "New Hampshire" },
+  { value: "NJ", label: "New Jersey" },
+  { value: "NM", label: "New Mexico" },
+  { value: "NY", label: "New York" },
+  { value: "NC", label: "North Carolina" },
+  { value: "ND", label: "North Dakota" },
+  { value: "OH", label: "Ohio" },
+  { value: "OK", label: "Oklahoma" },
+  { value: "OR", label: "Oregon" },
+  { value: "PA", label: "Pennsylvania" },
+  { value: "RI", label: "Rhode Island" },
+  { value: "SC", label: "South Carolina" },
+  { value: "SD", label: "South Dakota" },
+  { value: "TN", label: "Tennessee" },
+  { value: "TX", label: "Texas" },
+  { value: "UT", label: "Utah" },
+  { value: "VT", label: "Vermont" },
+  { value: "VA", label: "Virginia" },
+  { value: "WA", label: "Washington" },
+  { value: "WV", label: "West Virginia" },
+  { value: "WI", label: "Wisconsin" },
+  { value: "WY", label: "Wyoming" },
+]

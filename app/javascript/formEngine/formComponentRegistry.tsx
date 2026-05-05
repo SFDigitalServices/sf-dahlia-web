@@ -9,6 +9,7 @@ import Address from "../pages/form/components/Address"
 import YesNoRadio from "../pages/form/components/YesNoRadio"
 import ListingApplyTerms from "../pages/form/components/ListingApplyTerms"
 import ListingApplyFormWrapper from "../pages/form/components/ListingApplyFormWrapper"
+import VerifyAddress from "../pages/form/components/VerifyAddress"
 import ListingApplyDemographics from "../pages/form/components/ListingApplyDemographics"
 import ListingApplyPreferencesIntro from "../pages/form/components/ListingApplyPreferencesIntro"
 import ListingApplyRentBurdenPreference from "../pages/form/components/ListingApplyRentBurdenPreference"
@@ -18,7 +19,6 @@ import ListingApplyHouseholdIntro from "../pages/form/components/household/Listi
 import ListingApplyHouseholdOverview from "../pages/form/components/household/ListingApplyHouseholdOverview"
 import ListingApplyPublicHousingHeader from "../pages/form/components/ListingApplyPublicHousingHeader"
 import HouseholdMemberMultiStepWrapper from "../pages/form/components/household/HouseholdMemberMultiStepWrapper"
-import ListingAddressMultiStepWrapper from "../pages/form/components/ListingAddressMultiStepWrapper"
 import Select from "../pages/form/components/Select"
 import Radio from "../pages/form/components/Radio"
 import VeteransPreferenceRadio from "../pages/form/components/VeteransPreferenceRadio"
@@ -41,10 +41,10 @@ export default function getFormComponentRegistry() {
     ListingApplyIntro,
     ListingApplyOverview,
     ListingApplyStepWrapper,
+    VerifyAddress,
     ListingApplyHouseholdIntro,
     ListingApplyHouseholdOverview,
     HouseholdMemberMultiStepWrapper,
-    ListingAddressMultiStepWrapper,
     ListingApplyPreferencesIntro,
     ListingApplyLiveWorkPreference,
     ListingApplyRentBurdenPreference,
