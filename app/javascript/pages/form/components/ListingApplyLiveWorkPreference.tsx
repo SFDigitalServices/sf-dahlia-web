@@ -268,7 +268,7 @@ const ListingApplyLiveWorkPreference = ({
                   proofTypeNote={t("e2cLiveWorkPreference.documentMustShowCorrectName")}
                   proofFileName={liveInSfFileName}
                   proofFileUploadedAt={liveInSfFileUploadedAt}
-                  proofTypeOptions={PROOF_OPTIONS.liveInSf}
+                  proofTypeOptions={PROOF_OPTIONS.liveInSfAndNeighborhoodResidence}
                 />
               )}
             </div>

@@ -1,5 +1,14 @@
 import dayjs, { type Dayjs } from "dayjs"
 import { type SeniorBuildingAgeRequirement } from "./listingUtil"
+import { PROOF_OPTIONS } from "../modules/constants"
+
+export const getFullName = (person: {
+  firstName: string
+  middleName: string
+  lastName: string
+}) => {
+  return `${person.firstName || ""} ${person.middleName || ""} ${person.lastName || ""}`
+}
 
 export type HouseholdMember = {
   id: string
@@ -42,18 +51,47 @@ export const getPrimaryApplicantData = (formData: Record<string, unknown>) => {
   }
 }
 
-export const allHouseholdMembers = (formData): HouseholdMember[] => {
-  const householdMembers = formData.householdMembers || []
+// TODO: look up eligibility of household members for particular preferences, like in `Service.eligibleMembers`
+export const allHouseholdMembers = (formData: Record<string, unknown>): HouseholdMember[] => {
+  const householdMembers = (formData.householdMembers || []) as HouseholdMember[]
   return [
-    ...(householdMembers as HouseholdMember[]),
+    ...householdMembers,
     {
       id: "primaryApplicant",
-      firstName: formData.primaryApplicantFirstName,
-      middleName: formData.primaryApplicantMiddleName,
-      lastName: formData.primaryApplicantLastName,
-      birthYear: formData.primaryApplicantBirthYear,
-      birthMonth: formData.primaryApplicantBirthMonth,
-      birthDay: formData.primaryApplicantBirthDate,
+      firstName: formData.primaryApplicantFirstName as string,
+      middleName: formData.primaryApplicantMiddleName as string,
+      lastName: formData.primaryApplicantLastName as string,
+      birthYear: formData.primaryApplicantBirthYear as string,
+      birthMonth: formData.primaryApplicantBirthMonth as string,
+      birthDay: formData.primaryApplicantBirthDate as string,
     },
   ]
+}
+
+export const generateHouseholdMemberOptions = (householdMembers: HouseholdMember[]) =>
+  householdMembers.map((hhMember) => ({
+    label: getFullName({
+      firstName: hhMember.firstName,
+      middleName: hhMember.middleName,
+      lastName: hhMember.lastName,
+    }),
+    value: hhMember.id,
+  }))
+
+export const getProofOptions = (preferenceName: string): { value: string; label: string }[] => {
+  let lookupName
+  if (["liveInSf", "neighborhoodResidence"].includes(preferenceName)) {
+    lookupName = "liveInSfAndNeighborhoodResidence"
+  } else if (
+    ["rightToReturnSunnydale", "rightToReturnHuntersView", "rightToReturnPotrero"].includes(
+      preferenceName
+    )
+  ) {
+    lookupName = "rightToReturn"
+  } else if (Object.keys(PROOF_OPTIONS).includes(preferenceName)) {
+    lookupName = preferenceName
+  } else {
+    lookupName = "default"
+  }
+  return PROOF_OPTIONS[lookupName as keyof typeof PROOF_OPTIONS]
 }

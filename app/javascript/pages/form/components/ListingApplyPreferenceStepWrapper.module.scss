@@ -1,0 +1,53 @@
+.back-section {
+  margin-bottom: var(--seeds-s6);
+}
+
+.preference-section {
+  margin-top: var(--seeds-s8);
+  margin-bottom: var(--seeds-s8);
+}
+
+.preference-header {
+  padding-bottom: var(--seeds-s8);
+  h1 {
+    margin-top: var(--seeds-s6);
+    margin-bottom: var(--seeds-s4);
+    font-size: var(--seeds-font-size-2xl);
+    text-align: center;
+  }
+  p {
+    font-size: var(--seeds-font-size-md);
+    color: var(--seeds-color-gray-800);
+  }
+}
+
+.green-background {
+  background-color: var(--seeds-color-green-100);
+}
+
+.preference-instructions {
+  font-size: var(--seeds-font-size-sm);
+  color: var(--seeds-color-gray-700);
+}
+
+.preference-checkbox {
+  margin-bottom: 0 !important;
+  margin-top: var(--seeds-s8);
+}
+
+.preference-checkbox-label {
+  font-size: var(--seeds-font-size-md) !important;
+}
+
+.preference-note {
+  font-size: var(--seeds-font-size-sm);
+  color: var(--seeds-color-gray-700);
+  margin-left: var(--seeds-s9);
+}
+
+.step-footer {
+  background-color: var(--seeds-color-primary-lighter);
+  padding: var(--seeds-s8);
+  display: flex;
+  justify-content: center;
+}

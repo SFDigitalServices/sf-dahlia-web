@@ -1,5 +1,3 @@
-// https://github.com/react-hook-form/react-hook-form/issues/2887#issuecomment-802577357
-
 import React, { Children, useEffect } from "react"
 import { useForm, FormProvider } from "react-hook-form"
 import { Form, t } from "@bloom-housing/ui-components"
