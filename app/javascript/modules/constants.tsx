@@ -1,4 +1,4 @@
-export const PREFERENCES = {
+export const PREFERENCES: Record<string, string> = {
   aliceGriffith: "Alice Griffith Housing Development Resident",
   antiDisplacement: "Anti-Displacement Housing Preference (ADHP)",
   assistedHousing: "Rent Burdened / Assisted Housing Preference",
@@ -219,7 +219,7 @@ export const PROOF_OPTIONS = {
     { value: "Letter from employer", label: "label.proof.letterFromEmployer" },
   ],
   // liveInSf, neighborhoodResidence
-  liveInSf: [
+  liveInSfAndNeighborhoodResidence: [
     { value: "Telephone bill", label: "label.proof.telephoneBill" },
     { value: "Cable and internet bill", label: "label.proof.cableBill" },
     { value: "Gas bill", label: "label.proof.gasBill" },

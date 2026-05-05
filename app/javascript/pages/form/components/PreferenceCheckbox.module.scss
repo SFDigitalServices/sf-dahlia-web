@@ -1,0 +1,27 @@
+.preference-section {
+  margin-top: var(--seeds-s8);
+  margin-bottom: var(--seeds-s8);
+}
+
+.preference-checkbox {
+  margin-bottom: 0 !important;
+  margin-top: var(--seeds-s8);
+}
+
+.preference-checkbox-label {
+  font-size: var(--seeds-font-size-md) !important;
+}
+
+.preference-content-wrapper {
+  margin-left: var(--seeds-s9);
+}
+
+.preference-note {
+  font-size: var(--bloom-font-size-sm);
+  color: var(--bloom-color-gray-700);
+}
+
+.read-more-url {
+  font-size: var(--seeds-font-size-sm);
+  margin-top: var(--seeds-s2);
+}

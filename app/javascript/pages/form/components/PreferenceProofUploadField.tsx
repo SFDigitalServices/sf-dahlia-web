@@ -1,23 +1,26 @@
 import React, { useContext, useState } from "react"
-import { useDropzone, type FileWithPath } from "react-dropzone"
+import { useDropzone, type FileWithPath, type FileRejection } from "react-dropzone"
 import { localizedFormat, renderInlineMarkup } from "../../../util/languageUtil"
 import { t, Field, Select, Icon } from "@bloom-housing/ui-components"
 import { Card, Button, FormErrorMessage } from "@bloom-housing/ui-seeds"
 import { ConfigContext } from "../../../lib/ConfigContext"
 import { useFormContext } from "react-hook-form"
 import { uploadProofFile, deleteUploadedProofFile } from "../../../api/formApiService"
-import styles from "./PreferenceUploadField.module.scss"
+import { getNestedError } from "../../../util/formEngineUtil"
+import styles from "./PreferenceProofUploadField.module.scss"
 
 interface PreferenceProofUploadFieldProps {
   sessionId: string
   listingId: string
   listingPreferenceId: string
   proofTypeFieldName: string
+  proofTypeSingleValue?: string
   proofTypeLabel: string
-  proofTypeNote: string
-  proofTypeOptions: { label: string; value: string }[]
+  proofTypeNote?: string
+  proofTypeOptions?: { label: string; value: string }[]
   proofFileName: string
   proofFileUploadedAt: string
+  proofUploadButtonLabel?: string
 }
 
 const PreferenceProofUploadField = ({
@@ -25,11 +28,13 @@ const PreferenceProofUploadField = ({
   listingId,
   listingPreferenceId,
   proofTypeFieldName,
+  proofTypeSingleValue,
   proofTypeLabel,
   proofTypeNote,
   proofTypeOptions,
   proofFileName,
   proofFileUploadedAt,
+  proofUploadButtonLabel,
 }: PreferenceProofUploadFieldProps) => {
   // https://github.com/react-hook-form/react-hook-form/issues/2887#issuecomment-802577357
   // eslint-disable-next-line @typescript-eslint/unbound-method
@@ -43,7 +48,7 @@ const PreferenceProofUploadField = ({
   const fileName: string = watch(proofFileName)
   const fileUploadedAt: string = watch(proofFileUploadedAt)
 
-  const onDrop = (acceptedFiles, rejectedFiles) => {
+  const onDrop = (acceptedFiles: File[], rejectedFiles: FileRejection[]) => {
     const rejectedFile = rejectedFiles[0]
     const acceptedFile: FileWithPath = acceptedFiles[0]
 
@@ -97,7 +102,7 @@ const PreferenceProofUploadField = ({
       })
   }
 
-  const translatedProofOptions = proofTypeOptions.map((option) => ({
+  const translatedProofOptions = proofTypeOptions?.map((option) => ({
     ...option,
     label: t(option.label),
   }))
@@ -115,32 +120,48 @@ const PreferenceProofUploadField = ({
   return (
     <>
       <div className={fileName ? "hidden" : ""}>
-        <Select
-          id={proofTypeFieldName}
-          name={proofTypeFieldName}
-          label={proofTypeLabel}
-          subNote={proofTypeNote}
-          options={translatedProofOptions}
-          placeholder={t("label.selectOne")}
-          controlClassName="control"
-          register={register}
-          error={!!errors?.[proofTypeFieldName]}
-          errorMessage={t("error.pleaseSelectAnOption")}
-          validation={{
-            required: true,
-          }}
-        />
+        <div className={styles["upload-label"]}>{proofTypeLabel}</div>
+        {proofTypeNote && <div className="field-note">{renderInlineMarkup(proofTypeNote)}</div>}
+        {proofTypeFieldName &&
+          proofTypeLabel &&
+          translatedProofOptions &&
+          !proofTypeSingleValue && (
+            <Select
+              id={proofTypeFieldName}
+              name={proofTypeFieldName}
+              options={translatedProofOptions}
+              placeholder={t("label.selectOne")}
+              controlClassName="control"
+              register={register}
+              error={!!getNestedError(errors, proofTypeFieldName)}
+              errorMessage={t("error.pleaseSelectAnOption")}
+              validation={{
+                required: true,
+              }}
+            />
+          )}
+        {/* if proofTypeSingleValue prop is present, then the user cannot choose the proof type */}
+        {proofTypeSingleValue && (
+          <Field
+            name={proofTypeFieldName}
+            defaultValue={proofTypeSingleValue}
+            register={register}
+            hidden
+          />
+        )}
         <Button
           onClick={open}
-          disabled={!documentType}
-          variant={errors?.[proofFileName] ? "alert-outlined" : "primary"}
+          disabled={!documentType && !proofTypeSingleValue}
+          variant={getNestedError(errors, proofFileName) ? "alert-outlined" : "primary"}
           className={styles["upload-button"]}
         >
-          {t("label.uploadProofOfPreference")}
+          {proofUploadButtonLabel || t("label.uploadProofOfPreference")}
         </Button>
-        {errors?.[proofFileName] && (
+        {getNestedError(errors, proofFileName) && (
           <p className={styles["upload-error"]}>
-            <FormErrorMessage>{errors?.[proofFileName].message}</FormErrorMessage>
+            <FormErrorMessage>
+              {getNestedError(errors, proofFileName)?.message as string}
+            </FormErrorMessage>
           </p>
         )}
         {uploadStatus === "error" && (
