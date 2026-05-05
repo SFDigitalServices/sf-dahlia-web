@@ -5,11 +5,11 @@ import { Form, t } from "@bloom-housing/ui-components"
 import { Button, Card } from "@bloom-housing/ui-seeds"
 import { useFormEngineContext } from "../../../formEngine/formEngineContext"
 import type { DataSchema } from "../../../formEngine/formSchemas"
-import { getAddressErrorEmailLink, translationFromDataSchema } from "../../../util/formEngineUtil"
+import { translationFromDataSchema } from "../../../util/formEngineUtil"
 import styles from "./ListingApplyStepWrapper.module.scss"
 import getFormComponentRegistry from "../../../formEngine/formComponentRegistry"
 import ListingApplyStepErrorMessage from "./ListingApplyStepErrorMessage"
-import { handleAddressVerification } from "../../../api/formApiService"
+import { locateVerifiedAddress } from "../../../api/formApiService"
 
 interface ListingApplyStepWrapperProps {
   title: string
@@ -74,24 +74,30 @@ const ListingApplyStepWrapper = ({
     saveFormData({ ...blankValues, ...data })
     handleNextStep({ ...formData, ...blankValues, ...data })
     if (shouldVerifyAddress) {
-      handleAddressVerification(
-        data,
-        getAddressErrorEmailLink(data, staticData, formData),
-        setAddressError
-      )
+      setAddressError(null)
+      locateVerifiedAddress({
+        street1: data.addressStreet as string,
+        street2: data.addressAptOrUnit as string,
+        city: data.addressCity as string,
+        state: data.addressState as string,
+        zip: data.addressZipcode as string,
+      })
         .then((response) => {
-          if (response) {
-            saveFormData({
-              addressStreet: response.address?.street1,
-              addressAptOrUnit: response.address?.street2,
-              addressCity: response.address?.city,
-              addressState: response.address?.state,
-              addressZipcode: response.address?.zip,
-            })
-          }
+          saveFormData({
+            addressStreet: response.address?.street1,
+            addressAptOrUnit: response.address?.street2,
+            addressCity: response.address?.city,
+            addressState: response.address?.state,
+            addressZipcode: response.address?.zip,
+          })
         })
         .catch((error) => {
           console.error(error)
+          if (error.response?.status === 422) {
+            setAddressError(t("error.addressValidation.notFound"))
+          } else {
+            setAddressError(t(error.message as string))
+          }
         })
     }
   }

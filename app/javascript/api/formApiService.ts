@@ -101,30 +101,6 @@ export const locateVerifiedAddress = async (address: Address): Promise<VerifiedA
   return response
 }
 
-export const handleAddressVerification = async (
-  data: Record<string, unknown>,
-  mailParams: string,
-  setAddressError: (error: string | null) => void
-) => {
-  try {
-    setAddressError(null)
-    return await locateVerifiedAddress({
-      street1: data.addressStreet as string,
-      street2: data.addressAptOrUnit as string,
-      city: data.addressCity as string,
-      state: data.addressState as string,
-      zip: data.addressZipcode as string,
-    })
-  } catch (error) {
-    if (error.response?.status === 422) {
-      setAddressError(t("error.addressValidation.notFound"))
-    } else {
-      setAddressError(t(error.message as string))
-    }
-    return null
-  }
-}
-
 export enum LanguagePrefix {
   English = "English",
   Spanish = "Spanish",

@@ -14,7 +14,7 @@ interface AddressProps {
   showAptOrUnit?: boolean
   requireAddress?: boolean
   verifyAddress?: boolean
-  addressValidationError?: string
+  addressError?: string
   fieldNames: {
     addressStreet: string
     addressAptOrUnit?: string
@@ -35,7 +35,7 @@ const Address = ({
   showMailingAddress,
   showAptOrUnit,
   requireAddress,
-  addressValidationError,
+  addressError,
   fieldNames: {
     addressStreet,
     addressAptOrUnit,
@@ -135,7 +135,7 @@ const Address = ({
         error={!!errors?.[addressZipcode]}
         register={register}
       />
-      {addressValidationError && <FormErrorMessage>{addressValidationError}</FormErrorMessage>}
+      {addressError && <FormErrorMessage>{addressError}</FormErrorMessage>}
       {showMailingAddress && (
         <Field
           type="checkbox"
