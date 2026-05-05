@@ -82,22 +82,6 @@ export const locateVerifiedAddress = async (address: Address): Promise<VerifiedA
   const response = await post<VerifiedAddressResponse>("/api/v1/addresses/validate.json", {
     address,
   }).then((response) => response.data)
-  if (address.street1 && address.street2 && address.street1.endsWith(address.street2)) {
-    return {
-      ...response,
-      error: "error.addressValidationDuplicateUnit",
-    }
-  }
-  if (
-    address.street1?.match(/P\.?\s*O\.?\s*BOX/i) ||
-    (!response.address?.verifications?.delivery?.success &&
-      response.address?.verifications?.delivery?.errors?.[0]?.code === "E.BOX_NUMBER.INVALID")
-  ) {
-    return {
-      ...response,
-      error: "error.addressValidationPoBox",
-    }
-  }
   return response
 }
 

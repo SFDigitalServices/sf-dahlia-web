@@ -49,7 +49,9 @@ const ListingApplyStepWrapper = ({
     return acc
   }, {})
 
-  const [addressError, setAddressError] = useState<string | null>(null)
+  const shouldVerifyAddress = Children.toArray(children).find((child) => {
+    return (child as React.ReactElement).props.schema.props.verifyAddress === true
+  })
 
   let headerComponent
   if (headerComponentName) {
@@ -65,40 +67,36 @@ const ListingApplyStepWrapper = ({
   })
 
   const hasErrors = () => Object.keys(formMethods.formState.errors).length > 0
-
-  const shouldVerifyAddress = Children.toArray(children).find((child) => {
-    return (child as React.ReactElement).props.verifyAddress === true
-  })
+  const [apiErrorMessage, setApiErrorMessage] = useState<string | null>(null)
 
   const onSubmit = (data: Record<string, unknown>) => {
     saveFormData({ ...blankValues, ...data })
-    handleNextStep({ ...formData, ...blankValues, ...data })
     if (shouldVerifyAddress) {
-      setAddressError(null)
+      formMethods.clearErrors()
       locateVerifiedAddress({
-        street1: data.addressStreet as string,
-        street2: data.addressAptOrUnit as string,
-        city: data.addressCity as string,
-        state: data.addressState as string,
-        zip: data.addressZipcode as string,
+        street1: data.primaryApplicantAddressStreet as string,
+        street2: data.primaryApplicantAddressAptOrUnit as string,
+        city: data.primaryApplicantAddressCity as string,
+        state: data.primaryApplicantAddressState as string,
+        zip: data.primaryApplicantAddressZipcode as string,
       })
         .then((response) => {
           saveFormData({
-            addressStreet: response.address?.street1,
-            addressAptOrUnit: response.address?.street2,
-            addressCity: response.address?.city,
-            addressState: response.address?.state,
-            addressZipcode: response.address?.zip,
+            primaryApplicantStreet: response.address?.street1,
+            primaryApplicantAptOrUnit: response.address?.street2,
+            primaryApplicantCity: response.address?.city,
+            primaryApplicantState: response.address?.state,
+            primaryApplicantZipcode: response.address?.zip,
           })
+          handleNextStep({ ...formData, ...blankValues, ...data })
         })
         .catch((error) => {
-          console.error(error)
           if (error.response?.status === 422) {
-            setAddressError(t("error.addressValidation.notFound"))
-          } else {
-            setAddressError(t(error.message as string))
+            setApiErrorMessage(t("error.addressValidation.notFound"))
           }
         })
+    } else {
+      handleNextStep({ ...formData, ...blankValues, ...data })
     }
   }
 
@@ -122,19 +120,17 @@ const ListingApplyStepWrapper = ({
         )}
         {hasErrors() && (
           <ListingApplyStepErrorMessage
-            errorMessage={t("error.formSubmission")}
-            onClose={() => formMethods.clearErrors()}
+            errorMessage={apiErrorMessage || t("error.formSubmission")}
+            onClose={() => {
+              formMethods.clearErrors()
+              setApiErrorMessage(null)
+            }}
           />
         )}
         <Form onSubmit={formMethods.handleSubmit(onSubmit)}>
           {Children.map(children, (child) => {
             const { schema } = (child as React.ReactElement).props
-            // Pass validation error to address
-            return shouldVerifyAddress ? (
-              <Card.Section divider={schema?.props?.divider === false ? undefined : "inset"}>
-                {React.cloneElement(child as React.ReactElement, { addressError, setAddressError })}
-              </Card.Section>
-            ) : (
+            return (
               <Card.Section divider={schema?.props?.divider === false ? undefined : "inset"}>
                 {child}
               </Card.Section>

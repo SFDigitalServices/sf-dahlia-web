@@ -69,6 +69,16 @@ const Address = ({
             message: t("error.pleaseProvideAnswersInEnglish"),
           },
           maxLength: LISTING_APPLY_FORMS_INPUT_MAX_LENGTH.address,
+          validate: (value) => {
+            if (value?.match(/P\.?\s*O\.?\s*BOX/i)) {
+              return t("error.addressValidationPoBox")
+            }
+            const unitValue = watch(addressAptOrUnit || "")
+            if (value && unitValue && value.endsWith(unitValue)) {
+              return t("error.addressValidationDuplicateUnit")
+            }
+            return true
+          },
         }}
         errorMessage={
           errors?.[addressStreet]?.type === "required"
