@@ -86,7 +86,7 @@ RSpec.describe InviteToController do
                                                       })
       end
 
-      # TODO: update deprecated I2A pilot 
+      # TODO: update deprecated I2A pilot
       # it 'calls record_response with correct parameters' do
       #   expect(DahliaBackend::MessageService).to have_received(:send_invite_to_response).with(
       #     deadline,
