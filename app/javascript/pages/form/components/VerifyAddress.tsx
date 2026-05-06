@@ -22,7 +22,9 @@ const VerifyAddress = () => {
         divider="inset"
         className={`${stepStyles["step-title"]} ${stepStyles["no-back"]}`}
       >
-        <Heading>{t("b2aVerifyAddress.title")}</Heading>
+        <Heading priority={1} size="2xl">
+          {t("b2aVerifyAddress.title")}
+        </Heading>
       </CardSection>
       <CardSection className={styles.addressSection}>
         <Heading priority={2} size="lg">
