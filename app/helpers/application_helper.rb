@@ -11,22 +11,24 @@ module ApplicationHelper
   private
 
   def dev_asset_paths
-    asset_paths = {}
-    Rails.application.assets.each_file do |f|
-      next if f !~ %r{images/|json/}
-      # TODO: this doesn't work for nested folder
-      filename = Pathname(f).basename.to_s
-      f = if defined?(asset_path)
-            # this method is more "correct" in dev than the below one,
-            # which can require server restart to pickup locale-en.json changes
-            asset_path(filename)
-          else
-            # only needed for asset_redirect in ApplicationController
-            ActionController::Base.helpers.asset_path(filename)
-          end
-      asset_paths[filename] = f
+    @@dev_asset_paths_cache ||= begin
+      asset_paths = {}
+      Rails.application.assets.each_file do |f|
+        next if f !~ %r{images/|json/}
+        # TODO: this doesn't work for nested folder
+        filename = Pathname(f).basename.to_s
+        f = if defined?(asset_path)
+              # this method is more "correct" in dev than the below one,
+              # which can require server restart to pickup locale-en.json changes
+              asset_path(filename)
+            else
+              # only needed for asset_redirect in ApplicationController
+              ActionController::Base.helpers.asset_path(filename)
+            end
+        asset_paths[filename] = f
+      end
+      asset_paths
     end
-    asset_paths
   end
 
   def prod_asset_paths

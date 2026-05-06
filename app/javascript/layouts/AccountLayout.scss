@@ -1,0 +1,206 @@
+.account-layout {
+  &__content {
+    box-sizing: border-box;
+  }
+}
+
+// ── Sidebar ──
+
+.account-sidebar {
+  padding: 0;
+
+  &__heading {
+    font-family: "Open Sans";
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #4a5568;
+    margin-bottom: 0.75rem;
+    padding-left: 0.75rem;
+  }
+
+  &__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    background: #fff;
+    border-radius: 0.5rem;
+    border: 1px solid #e2e8f0;
+    overflow: hidden;
+  }
+
+  &__list > li + li {
+    border-top: 1px solid #e2e8f0;
+  }
+
+  &__link {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 1rem;
+    font-size: 0.95rem;
+    color: #4a5568;
+    text-decoration: none;
+    border-left: 4px solid transparent;
+    transition: color 0.15s, background-color 0.15s;
+    background: none;
+    border-top: none;
+    border-right: none;
+    border-bottom: none;
+    cursor: pointer;
+    width: 100%;
+    text-align: left;
+    font-family: inherit;
+
+    &:hover,
+    &:hover:visited {
+      color: #2d3748;
+      background-color: #F5F8F9 !important;
+    }
+
+    &--active {
+      border-left-color: #0077da;
+      color: #1a202c;
+      font-weight: 600;
+    }
+  }
+
+  &__signout {
+    // Divider comes from li + li border-top
+    font-size: inherit;
+  }
+}
+
+// ── Overview content area ──
+
+.overview-content {
+  overflow: hidden;
+
+  @media (min-width: 768px) {
+    // Align top of card with the sidebar nav card (below the "ACCOUNT" heading)
+    margin-top: 2rem;
+  }
+
+  &__greeting {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #1a202c;
+    padding: 1.5rem 2rem 1rem;
+    margin: 0;
+    border-bottom: 1px solid #e2e8f0;
+  }
+
+  &__cards {
+    display: grid;
+    grid-template-columns: auto auto 1fr auto;
+  }
+
+  &__signout {
+    text-align: center;
+    padding: 1.25rem 2rem;
+    background-color: #f7fafc;
+    border-bottom-left-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
+  }
+
+  &__signout-link {
+    background: none;
+    border: none;
+    color: #e53e3e;
+    font-size: 0.875rem;
+    cursor: pointer;
+    padding: 0;
+    font-family: inherit;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+// ── Dashboard card ──
+
+.overview-card {
+  display: grid;
+  grid-column: 1 / -1;
+  grid-template-columns: subgrid;
+  align-items: center;
+  padding: 1.25rem 2rem;
+  border-bottom: 1px solid #e2e8f0;
+  gap: 1rem;
+  font-family: "Open Sans", sans-serif;
+
+  &__icon {
+    flex-shrink: 0;
+    color: #a0aec0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+  }
+
+  &__divider {
+    width: 3px;
+    align-self: stretch;
+    background-color: #0077da;
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  &__body {
+    flex: 1;
+    min-width: 0;
+  }
+
+  &__title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #1a202c;
+    margin: 0 0 0.25rem;
+    font-family: "Open Sans", sans-serif;
+  }
+
+  &__description {
+    font-size: 0.8rem;
+    color: #a0aec0;
+    margin: 0;
+    line-height: 1.4;
+    font-family: "Open Sans", sans-serif;
+  }
+
+  &__action {
+    flex-shrink: 0;
+
+    .seeds-button {
+      width: 100%;
+    }
+  }
+}
+
+// ── Responsive: stack card layout on mobile ──
+
+@media (max-width: 640px) {
+  .overview-content__cards {
+    grid-template-columns: 1fr;
+  }
+
+  .overview-card {
+    grid-template-columns: auto auto 1fr;
+
+    &__action {
+      grid-column: 1 / -1;
+      margin-top: 0.5rem;
+      padding-left: calc(3rem + 3px + 1rem);
+    }
+  }
+
+  .account-sidebar {
+    padding: 1rem;
+    border-bottom: 1px solid #e2e8f0;
+  }
+
+  .overview-content {
+    border-radius: 0;
+  }
+}

@@ -43,6 +43,7 @@ TAGS
 !.vscode-default/*
 .idea/*
 .tool-versions
+.kiro
 
 # Byebug command history
 .byebug_history
