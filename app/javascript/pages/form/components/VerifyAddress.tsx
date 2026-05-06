@@ -5,6 +5,7 @@ import { CardSection } from "@bloom-housing/ui-seeds/src/blocks/Card"
 import { useFormEngineContext } from "../../../formEngine/formEngineContext"
 import { getFormattedAddress } from "../../../util/formEngineUtil"
 import styles from "./VerifyAddress.module.scss"
+import stepStyles from "./ListingApplyStepWrapper.module.scss"
 
 const VerifyAddress = () => {
   const { handleNextStep, formData, handlePrevStep } = useFormEngineContext()
@@ -17,7 +18,10 @@ const VerifyAddress = () => {
   })
   return (
     <>
-      <CardSection>
+      <CardSection
+        divider="inset"
+        className={`${stepStyles["step-title"]} ${stepStyles["no-back"]}`}
+      >
         <Heading>{t("b2aVerifyAddress.title")}</Heading>
       </CardSection>
       <CardSection className={styles.addressSection}>
@@ -30,7 +34,7 @@ const VerifyAddress = () => {
           {t("t.edit")}
         </Button>
       </CardSection>
-      <CardSection>
+      <CardSection className={stepStyles["step-footer"]}>
         <Button variant="primary" onClick={() => handleNextStep()}>
           {t("t.next")}
         </Button>

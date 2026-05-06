@@ -23,6 +23,7 @@ const RecursiveRenderer = ({ schema }: FormEngineProps) => {
       />
     ))
   }
+  // set static key property to avoid weird behavior when navigating between form steps and on rerenders
   const props = { ...schema.props, key: `${schema.componentName}-${JSON.stringify(schema.props)}` }
 
   return React.createElement(ComponentToRender, props, ...children)

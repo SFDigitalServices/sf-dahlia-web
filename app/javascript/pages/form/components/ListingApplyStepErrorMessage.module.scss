@@ -18,4 +18,8 @@
   button {
     color: var(--seeds-color-white) !important;
   }
+  a {
+    color: var(--seeds-color-white);
+    text-decoration: underline;
+  }
 }

@@ -1,5 +1,8 @@
 .addressSection {
+  align-self: center;
   display: flex;
   flex-direction: row;
+  gap: var(--seeds-spacer-content);
   margin: var(--seeds-spacer-text) var(--seeds-spacer-content);
+  padding: var(--seeds-spacer-section);
 }

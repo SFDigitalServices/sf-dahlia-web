@@ -155,24 +155,27 @@ export const getAddressErrorEmailLink = (
   staticData: Record<string, unknown>,
   formData: Record<string, unknown>
 ) => {
+  const formattedAddress = getFormattedAddress({
+    street1: formData["primaryApplicantAddressStreet"] as string,
+    street2: formData["primaryApplicantAddressAptOrUnit"] as string,
+    city: formData["primaryApplicantAddressCity"] as string,
+    state: formData["primaryApplicantAddressState"] as string,
+    zip: formData["primaryApplicantAddressZipcode"] as string,
+  })
   const mailParams = {
     subject: `[Invalid Address Error] ${t("error.addressValidation.notFoundSubject")}`,
     body: t("error.addressValidation.notFoundBody", {
       listing_name: (staticData["listing"] as { Name?: string })?.Name,
-      home_address: getFormattedAddress({
-        street1: data["addressStreet"] as string,
-        street2: data["addressAptOrUnit"] as string,
-        city: data["addressCity"] as string,
-        state: data["addressState"] as string,
-        zip: data["addressZipcode"] as string,
-      }),
+      home_address: formattedAddress.streets + ", " + formattedAddress.cityStateZip,
       first_name: (formData["primaryApplicantFirstName"] as string) || "",
       last_name: (formData["primaryApplicantLastName"] as string) || "",
       email: (formData["primaryApplicantEmail"] as string) || "",
       phone_number: (formData["primaryApplicantPhone"] as string) || "",
     }),
   }
-  return `${new URLSearchParams(mailParams).toString()}`
+  return Object.entries(mailParams)
+    .map(([key, value]) => `${key}=${encodeURIComponent(value)}`)
+    .join("&")
 }
 
 export const stateOptions = [

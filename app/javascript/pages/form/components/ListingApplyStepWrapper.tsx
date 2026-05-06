@@ -5,11 +5,12 @@ import { Form, t } from "@bloom-housing/ui-components"
 import { Button, Card } from "@bloom-housing/ui-seeds"
 import { useFormEngineContext } from "../../../formEngine/formEngineContext"
 import type { DataSchema } from "../../../formEngine/formSchemas"
-import { translationFromDataSchema } from "../../../util/formEngineUtil"
+import { getAddressErrorEmailLink, translationFromDataSchema } from "../../../util/formEngineUtil"
 import styles from "./ListingApplyStepWrapper.module.scss"
 import getFormComponentRegistry from "../../../formEngine/formComponentRegistry"
 import ListingApplyStepErrorMessage from "./ListingApplyStepErrorMessage"
 import { locateVerifiedAddress } from "../../../api/formApiService"
+import { renderInlineMarkup } from "../../../util/languageUtil"
 
 interface ListingApplyStepWrapperProps {
   title: string
@@ -67,7 +68,7 @@ const ListingApplyStepWrapper = ({
   })
 
   const hasErrors = () => Object.keys(formMethods.formState.errors).length > 0
-  const [apiErrorMessage, setApiErrorMessage] = useState<string | null>(null)
+  const [apiErrorMessage, setApiErrorMessage] = useState(null)
 
   const onSubmit = (data: Record<string, unknown>) => {
     saveFormData({ ...blankValues, ...data })
@@ -82,17 +83,26 @@ const ListingApplyStepWrapper = ({
       })
         .then((response) => {
           saveFormData({
-            primaryApplicantStreet: response.address?.street1,
-            primaryApplicantAptOrUnit: response.address?.street2,
-            primaryApplicantCity: response.address?.city,
-            primaryApplicantState: response.address?.state,
-            primaryApplicantZipcode: response.address?.zip,
+            ...data,
+            primaryApplicantAddressStreet: response.address?.street1,
+            primaryApplicantAddressAptOrUnit: response.address?.street2,
+            primaryApplicantAddressCity: response.address?.city,
+            primaryApplicantAddressState: response.address?.state,
+            primaryApplicantAddressZipcode: response.address?.zip,
           })
           handleNextStep({ ...formData, ...blankValues, ...data })
         })
         .catch((error) => {
           if (error.response?.status === 422) {
-            setApiErrorMessage(t("error.addressValidation.notFound"))
+            setApiErrorMessage(
+              renderInlineMarkup(
+                t("error.addressValidation.notFound", {
+                  mailParams: getAddressErrorEmailLink(data, staticData, formData),
+                })
+              )
+            )
+          } else {
+            setApiErrorMessage(t("error.alert.badRequest"))
           }
         })
     } else {
@@ -120,10 +130,9 @@ const ListingApplyStepWrapper = ({
         )}
         {hasErrors() && (
           <ListingApplyStepErrorMessage
-            errorMessage={apiErrorMessage || t("error.formSubmission")}
+            errorMessage={t("error.formSubmission")}
             onClose={() => {
               formMethods.clearErrors()
-              setApiErrorMessage(null)
             }}
           />
         )}
@@ -131,9 +140,19 @@ const ListingApplyStepWrapper = ({
           {Children.map(children, (child) => {
             const { schema } = (child as React.ReactElement).props
             return (
-              <Card.Section divider={schema?.props?.divider === false ? undefined : "inset"}>
-                {child}
-              </Card.Section>
+              <>
+                {schema.componentName === "Address" && apiErrorMessage && (
+                  <ListingApplyStepErrorMessage
+                    errorMessage={apiErrorMessage}
+                    onClose={() => {
+                      setApiErrorMessage(null)
+                    }}
+                  />
+                )}
+                <Card.Section divider={schema?.props?.divider === false ? undefined : "inset"}>
+                  {child}
+                </Card.Section>
+              </>
             )
           })}
           <Card.Footer className={styles["step-footer"]}>
