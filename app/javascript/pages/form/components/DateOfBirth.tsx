@@ -8,9 +8,9 @@ import {
   validMonthRange,
   validYearRange,
   validDate,
-  validAge,
   parseDate,
 } from "../../../util/formEngineUtil"
+import { validAge } from "../../../util/listingApplyUtil"
 import styles from "./DateOfBirth.module.scss"
 
 interface DateOfBirthProps {

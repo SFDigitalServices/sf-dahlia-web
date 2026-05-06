@@ -11,7 +11,7 @@ describe("HouseholdMemberMultiStepWrapper", () => {
   })
 
   const renderHouseholdMemberMultiStepWrapper = (formData = {}) => {
-    renderWithFormContextWrapper(
+    return renderWithFormContextWrapper(
       <HouseholdMemberMultiStepWrapper fieldNames={{ householdMembers: "householdMembers" }} />,
       {
         stepInfoMap: [{ slug: "household-member-form", fieldNames: [] }],
@@ -107,6 +107,37 @@ describe("HouseholdMemberMultiStepWrapper", () => {
     await user.click(screen.getByRole("button", { name: t("label.householdMemberUpdate") }))
     await user.click(screen.getByText("+ " + t("label.addHouseholdMember")))
     expect(screen.queryByText(t("label.householdMemberDelete"))).not.toBeInTheDocument()
+  })
+
+  it("saves household members and advances to next step when done adding people is clicked", async () => {
+    const members = [
+      { firstName: "John", lastName: "Doe" },
+      { firstName: "Jane", lastName: "Doe" },
+    ]
+    const formData = { householdMembers: members, otherField: "value" }
+    const { mockSaveFormData, mockHandleNextStep } = renderHouseholdMemberMultiStepWrapper(formData)
+    const user = userEvent.setup()
+
+    await user.click(screen.getByText(t("label.doneAddingPeople")))
+
+    expect(mockSaveFormData).toHaveBeenCalledWith({
+      ...formData,
+      householdMembers: members,
+    })
+    expect(mockHandleNextStep).toHaveBeenCalledWith({
+      ...formData,
+      householdMembers: members,
+    })
+  })
+
+  it("saves empty household members array when done adding people is clicked with no members", async () => {
+    const { mockSaveFormData, mockHandleNextStep } = renderHouseholdMemberMultiStepWrapper()
+    const user = userEvent.setup()
+
+    await user.click(screen.getByText(t("label.doneAddingPeople")))
+
+    expect(mockSaveFormData).toHaveBeenCalledWith({ householdMembers: [] })
+    expect(mockHandleNextStep).toHaveBeenCalledWith({ householdMembers: [] })
   })
 
   it("returns to the add household members page when cancel is clicked while adding a new member", async () => {

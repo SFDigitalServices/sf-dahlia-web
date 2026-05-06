@@ -40,6 +40,7 @@ export type Application = {
   listing: RailsListing
   lotteryNumber: number
   uploadURL?: string
+  leaseupAppointmentSchedulingURL?: string
   // isSFUSDEmployee: ; // calculated by Salesforce
   // jobClassification: ; // calculated by Salesforce
   // hasDisability: ; // calculated by Salesforce

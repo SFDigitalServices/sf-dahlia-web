@@ -2,7 +2,6 @@ import type { DataSchema, StepInfoSchema } from "../formEngine/formSchemas"
 import dayjs, { type Dayjs } from "dayjs"
 import customParseFormat from "dayjs/plugin/customParseFormat"
 import { t } from "@bloom-housing/ui-components"
-import { type SeniorBuildingAgeRequirement } from "./listingUtil"
 
 export const translationFromDataSchema = (
   translationKey: string,
@@ -120,33 +119,6 @@ export const validDate = (
 ): boolean => {
   if (!birthDayValue || !birthMonthValue || !birthYearValue) return true
   return parseDate(birthYearValue, birthMonthValue, birthDayValue).isValid()
-}
-
-export const validAge = (
-  birthDate: Dayjs,
-  minimumAge: number | null,
-  seniorBuildingAgeRequirement?: SeniorBuildingAgeRequirement
-): boolean => {
-  if (seniorBuildingAgeRequirement?.entireHousehold) {
-    return dayjs().diff(birthDate, "year") >= seniorBuildingAgeRequirement.minimumAge
-  }
-  if (minimumAge) {
-    return dayjs().diff(birthDate, "year") >= minimumAge
-  }
-  // "unborn baby" rule
-  return dayjs().diff(birthDate, "month") > -10
-}
-
-export const getPrimaryApplicantData = (formData: Record<string, unknown>) => {
-  const firstName = formData.primaryApplicantFirstName as string
-  const middleName = formData.primaryApplicantMiddleName as string
-  const lastName = formData.primaryApplicantLastName as string
-  return {
-    firstName,
-    middleName,
-    lastName,
-    dob: (formData.primaryApplicantDob as string) || "1990-01-01", // TODO: update after DAH-3543
-  }
 }
 
 export const getFullName = (person: {

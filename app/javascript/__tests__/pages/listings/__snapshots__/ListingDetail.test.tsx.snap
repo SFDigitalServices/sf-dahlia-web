@@ -454,7 +454,7 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                 Income Range
               </h4>
               <p>
-                To be eligible for a Habitat for Humanity Greater San Francisco home in this listing, your household income needs to be between 65.4% and 104.5% Area Median Income (AMI) as listed below.
+                To be eligible for a Habitat for Humanity Greater San Francisco home in this listing, your household income needs to be between 76% and 100% Area Median Income (AMI) as listed below.
               </p>
               <p
                 class="mt-4"
@@ -789,10 +789,10 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                         >
                           <a
                             class="text-base"
-                            href="https://www.sf.gov/reports--december-2024--city-second-program-current-listings"
+                            href="https://www.sf.gov/resource--2022--apply-homebuyer-programs"
                             target="_blank"
                           >
-                            City Second Loan Program
+                            Below Market Rate
                           </a>
                         </div>
                       </section>
@@ -1025,10 +1025,10 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                         >
                           <a
                             class="text-base"
-                            href="https://www.sf.gov/reports--december-2024--city-second-program-current-listings"
+                            href="https://www.sf.gov/resource--2022--apply-homebuyer-programs"
                             target="_blank"
                           >
-                            City Second Loan Program
+                            Below Market Rate
                           </a>
                         </div>
                       </section>
@@ -1161,10 +1161,10 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                       >
                         <a
                           class="text-base"
-                          href="https://www.sf.gov/reports--december-2024--city-second-program-current-listings"
+                          href="https://www.sf.gov/resource--2022--apply-homebuyer-programs"
                           target="_blank"
                         >
-                          City Second Loan Program
+                          Below Market Rate
                         </a>
                       </div>
                     </section>
@@ -1338,10 +1338,10 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                       >
                         <a
                           class="text-base"
-                          href="https://www.sf.gov/reports--december-2024--city-second-program-current-listings"
+                          href="https://www.sf.gov/resource--2022--apply-homebuyer-programs"
                           target="_blank"
                         >
-                          City Second Loan Program
+                          Below Market Rate
                         </a>
                       </div>
                     </section>
@@ -3646,10 +3646,10 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                         </h3>
                         <a
                           class="text-xs"
-                          href="https://www.sf.gov/reports--december-2024--city-second-program-current-listings"
+                          href="https://www.sf.gov/resource--2022--apply-homebuyer-programs"
                           target="_blank"
                         >
-                          City Second Loan Program
+                          Below Market Rate
                         </a>
                       </div>
                     </div>
@@ -3687,10 +3687,10 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                       </h3>
                       <a
                         class="text-xs"
-                        href="https://www.sf.gov/reports--december-2024--city-second-program-current-listings"
+                        href="https://www.sf.gov/resource--2022--apply-homebuyer-programs"
                         target="_blank"
                       >
-                        City Second Loan Program
+                        Below Market Rate
                       </a>
                     </div>
                   </div>
@@ -3769,10 +3769,10 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                       </h3>
                       <a
                         class="text-xs"
-                        href="https://www.sf.gov/reports--december-2024--city-second-program-current-listings"
+                        href="https://www.sf.gov/resource--2022--apply-homebuyer-programs"
                         target="_blank"
                       >
-                        City Second Loan Program
+                        Below Market Rate
                       </a>
                     </div>
                   </div>
@@ -3966,10 +3966,10 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                       >
                         <a
                           class="text-base"
-                          href="https://www.sf.gov/reports--december-2024--city-second-program-current-listings"
+                          href="https://www.sf.gov/resource--2022--apply-homebuyer-programs"
                           target="_blank"
                         >
-                          City Second Loan Program
+                          Below Market Rate
                         </a>
                       </div>
                     </section>
@@ -4741,10 +4741,10 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                       </h3>
                       <a
                         class="text-xs"
-                        href="https://www.sf.gov/reports--december-2024--city-second-program-current-listings"
+                        href="https://www.sf.gov/resource--2022--apply-homebuyer-programs"
                         target="_blank"
                       >
-                        City Second Loan Program
+                        Below Market Rate
                       </a>
                     </div>
                   </div>
