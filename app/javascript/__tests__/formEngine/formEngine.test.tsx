@@ -13,6 +13,11 @@ jest.mock("../../hooks/useFeatureFlag", () => ({
   }),
 }))
 
+Object.defineProperty(window, "scrollTo", {
+  value: jest.fn(),
+  writable: true,
+})
+Element.prototype.scrollTo = jest.fn()
 const mockCalculateNextStep = jest.fn().mockReturnValue(1)
 const mockCalculatePrevStep = jest.fn().mockReturnValue(0)
 const mockUpdateFormPath = jest.fn()

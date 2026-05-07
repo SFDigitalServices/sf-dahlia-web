@@ -95,20 +95,20 @@ const ListingContactStepWrapper = ({
     saveFormData(data)
     formMethods.clearErrors()
     locateVerifiedAddress({
-      street1: data.primaryApplicantAddressStreet as string,
-      street2: data.primaryApplicantAddressAptOrUnit as string,
-      city: data.primaryApplicantAddressCity as string,
-      state: data.primaryApplicantAddressState as string,
-      zip: data.primaryApplicantAddressZipcode as string,
+      street1: data[addressStreet] as string,
+      street2: data[addressAptOrUnit] as string,
+      city: data[addressCity] as string,
+      state: data[addressState] as string,
+      zip: data[addressZipcode] as string,
     })
       .then((response) => {
         saveFormData({
           ...data,
-          primaryApplicantAddressStreet: response.address?.street1,
-          primaryApplicantAddressAptOrUnit: response.address?.street2,
-          primaryApplicantAddressCity: response.address?.city,
-          primaryApplicantAddressState: response.address?.state,
-          primaryApplicantAddressZipcode: response.address?.zip,
+          [addressStreet]: response.address?.street1,
+          [addressAptOrUnit]: response.address?.street2,
+          [addressCity]: response.address?.city,
+          [addressState]: response.address?.state,
+          [addressZipcode]: response.address?.zip,
         })
         handleNextStep({ ...formData, ...data })
       })
