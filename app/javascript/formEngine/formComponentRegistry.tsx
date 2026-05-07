@@ -18,6 +18,7 @@ import ListingApplyReviewApplication from "../pages/form/components/ListingApply
 import ListingApplyHouseholdIntro from "../pages/form/components/household/ListingApplyHouseholdIntro"
 import ListingApplyHouseholdOverview from "../pages/form/components/household/ListingApplyHouseholdOverview"
 import ListingApplyPublicHousingHeader from "../pages/form/components/ListingApplyPublicHousingHeader"
+import ListingContactStepWrapper from "../pages/form/components/ListingContactStepWrapper"
 import HouseholdMemberMultiStepWrapper from "../pages/form/components/household/HouseholdMemberMultiStepWrapper"
 import Select from "../pages/form/components/Select"
 import Radio from "../pages/form/components/Radio"
@@ -52,6 +53,7 @@ export default function getFormComponentRegistry() {
     ListingApplyReviewSummary,
     ListingApplyTerms,
     ListingApplyReviewApplication,
+    ListingContactStepWrapper,
     // Field-level components
     Select,
     Radio,

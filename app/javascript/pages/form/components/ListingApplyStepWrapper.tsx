@@ -1,16 +1,15 @@
 // https://github.com/react-hook-form/react-hook-form/issues/2887#issuecomment-802577357
-import React, { useState, Children } from "react"
+
+import React, { Children } from "react"
 import { useForm, FormProvider } from "react-hook-form"
 import { Form, t } from "@bloom-housing/ui-components"
 import { Button, Card } from "@bloom-housing/ui-seeds"
 import { useFormEngineContext } from "../../../formEngine/formEngineContext"
 import type { DataSchema } from "../../../formEngine/formSchemas"
-import { getAddressErrorEmailLink, translationFromDataSchema } from "../../../util/formEngineUtil"
+import { translationFromDataSchema } from "../../../util/formEngineUtil"
 import styles from "./ListingApplyStepWrapper.module.scss"
 import getFormComponentRegistry from "../../../formEngine/formComponentRegistry"
 import ListingApplyStepErrorMessage from "./ListingApplyStepErrorMessage"
-import { locateVerifiedAddress } from "../../../api/formApiService"
-import { renderInlineMarkup } from "../../../util/languageUtil"
 
 interface ListingApplyStepWrapperProps {
   title: string
@@ -50,10 +49,6 @@ const ListingApplyStepWrapper = ({
     return acc
   }, {})
 
-  const shouldVerifyAddress = Children.toArray(children).find((child) => {
-    return (child as React.ReactElement).props.schema.props.verifyAddress === true
-  })
-
   let headerComponent
   if (headerComponentName) {
     const componentRegistry = getFormComponentRegistry()
@@ -68,46 +63,10 @@ const ListingApplyStepWrapper = ({
   })
 
   const hasErrors = () => Object.keys(formMethods.formState.errors).length > 0
-  const [apiErrorMessage, setApiErrorMessage] = useState(null)
 
   const onSubmit = (data: Record<string, unknown>) => {
     saveFormData({ ...blankValues, ...data })
-    if (shouldVerifyAddress) {
-      formMethods.clearErrors()
-      locateVerifiedAddress({
-        street1: data.primaryApplicantAddressStreet as string,
-        street2: data.primaryApplicantAddressAptOrUnit as string,
-        city: data.primaryApplicantAddressCity as string,
-        state: data.primaryApplicantAddressState as string,
-        zip: data.primaryApplicantAddressZipcode as string,
-      })
-        .then((response) => {
-          saveFormData({
-            ...data,
-            primaryApplicantAddressStreet: response.address?.street1,
-            primaryApplicantAddressAptOrUnit: response.address?.street2,
-            primaryApplicantAddressCity: response.address?.city,
-            primaryApplicantAddressState: response.address?.state,
-            primaryApplicantAddressZipcode: response.address?.zip,
-          })
-          handleNextStep({ ...formData, ...blankValues, ...data })
-        })
-        .catch((error) => {
-          if (error.response?.status === 422) {
-            setApiErrorMessage(
-              renderInlineMarkup(
-                t("error.addressValidation.notFound", {
-                  mailParams: getAddressErrorEmailLink(data, staticData, formData),
-                })
-              )
-            )
-          } else {
-            setApiErrorMessage(t("error.alert.badRequest"))
-          }
-        })
-    } else {
-      handleNextStep({ ...formData, ...blankValues, ...data })
-    }
+    handleNextStep({ ...formData, ...blankValues, ...data })
   }
 
   const titleString = translationFromDataSchema(title, titleVars, staticData, formData)
@@ -131,28 +90,16 @@ const ListingApplyStepWrapper = ({
         {hasErrors() && (
           <ListingApplyStepErrorMessage
             errorMessage={t("error.formSubmission")}
-            onClose={() => {
-              formMethods.clearErrors()
-            }}
+            onClose={() => formMethods.clearErrors()}
           />
         )}
         <Form onSubmit={formMethods.handleSubmit(onSubmit)}>
           {Children.map(children, (child) => {
             const { schema } = (child as React.ReactElement).props
             return (
-              <>
-                {schema.componentName === "Address" && apiErrorMessage && (
-                  <ListingApplyStepErrorMessage
-                    errorMessage={apiErrorMessage}
-                    onClose={() => {
-                      setApiErrorMessage(null)
-                    }}
-                  />
-                )}
-                <Card.Section divider={schema?.props?.divider === false ? undefined : "inset"}>
-                  {child}
-                </Card.Section>
-              </>
+              <Card.Section divider={schema?.props?.divider === false ? undefined : "inset"}>
+                {child}
+              </Card.Section>
             )
           })}
           <Card.Footer className={styles["step-footer"]}>
