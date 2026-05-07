@@ -49,6 +49,25 @@ export const deleteUploadedProofFile = async (
   }).then((response) => response.data)
 }
 
+export const checkHouseholdEligibility = async (
+  listingId: string,
+  householdSize: number,
+  income: number,
+  hasChildUnder6: boolean
+): Promise<Record<string, unknown>> => {
+  const params = {
+    listing_id: listingId,
+    eligibility: {
+      householdsize: householdSize,
+      incomelevel: income,
+      childrenUnder6: hasChildUnder6,
+    },
+  }
+  return post<Record<string, unknown>>("/api/v1/short-form/validate-household", params).then(
+    (response) => response.data
+  )
+}
+
 export enum LanguagePrefix {
   English = "English",
   Spanish = "Spanish",

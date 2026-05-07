@@ -33,6 +33,7 @@ import ListingApplyIncomeVouchersHeader from "../pages/form/components/ListingAp
 import ListingApplyHouseholdIncomeHeader from "../pages/form/components/ListingApplyHouseholdIncomeHeader"
 import ListingApplyVeteransPreferenceHeader from "../pages/form/components/ListingApplyVeteransPreferenceHeader"
 import ListingApplyHouseholdPrioritiesHeader from "../pages/form/components/ListingApplyHouseholdPrioritiesHeader"
+import HouseholdIncome from "../pages/form/components/HouseholdIncome"
 
 export default function getFormComponentRegistry() {
   return {
@@ -45,6 +46,7 @@ export default function getFormComponentRegistry() {
     ListingApplyHouseholdIntro,
     ListingApplyHouseholdOverview,
     HouseholdMemberMultiStepWrapper,
+    HouseholdIncome,
     ListingApplyPreferencesIntro,
     ListingApplyLiveWorkPreference,
     ListingApplyRentBurdenPreference,
