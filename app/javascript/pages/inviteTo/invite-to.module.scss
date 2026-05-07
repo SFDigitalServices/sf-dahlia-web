@@ -10,8 +10,9 @@
   }
   .submitYourInfoPage {
     display: flex;
+    overflow-x: clip;
     flex-direction: row;
-    max-width: var(--seeds-screen-xl);
+    max-width: var(--bloom-width-5xl);
     margin: 0 auto;
     @media (max-width: theme("screens.sm")) {
       flex-direction: column;
@@ -19,7 +20,11 @@
   }
   .submitYourInfoMain {
     flex: 1;
-    padding: 0 var(--seeds-spacer-container) var(--seeds-s10) var(--seeds-spacer-container);
+    padding: 0 var(--seeds-spacer-container) var(--seeds-s10) 0;
+
+    @media (max-width: 1024px) {
+      padding: var(--seeds-spacer-container);
+    }
     @media (max-width: theme("screens.sm")) {
       padding: var(--seeds-spacer-content) var(--seeds-spacer-content) 0 var(--seeds-spacer-content);
       &.I2A {
@@ -46,8 +51,15 @@
       margin: var(--seeds-spacer-text) 0;
     }
     img {
+      max-width: 100%;
+      height: auto;
+      display: block;
       padding-top: var(--seeds-spacer-content);
+
       padding-bottom: var(--seeds-spacer-text);
+      @media (max-width: theme("screens.sm")) {
+        padding-top: 0;
+      }
     }
   }
   .submitYourInfoSidebar {
@@ -56,7 +68,11 @@
     flex: 0 0 33.333%;
     gap: var(--seeds-spacer-text);
     @media (max-width: theme("screens.sm")) {
-      padding-bottom: var(--seeds-s10);
+      padding: var(--seeds-spacer-section) var(--seeds-spacer-content) var(--seeds-s10)
+        var(--seeds-spacer-content);
+      border-left: none;
+      width: 100%;
+      box-sizing: border-box;
     }
     section {
       border: none;
@@ -162,7 +178,10 @@
 
 .responseIcon {
   display: flex;
+  min-width: 0;
   gap: var(--seeds-spacer-text);
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .responseCard {
