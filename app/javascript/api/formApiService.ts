@@ -1,9 +1,9 @@
 import { AxiosResponse } from "axios"
 import { post, apiDelete } from "./apiService"
-import { getCurrentLanguage, renderMarkup } from "../util/languageUtil"
+import { getCurrentLanguage } from "../util/languageUtil"
 import { Application } from "./types/rails/application/RailsApplication"
 import { getPrimaryApplicantData } from "../util/listingApplyUtil"
-import { t } from "@bloom-housing/ui-components"
+
 type UploadProofFileResponse = {
   success: boolean
   name?: string
