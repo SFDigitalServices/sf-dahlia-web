@@ -6,6 +6,7 @@ import { LISTING_APPLY_FORMS_INPUT_MAX_LENGTH, LATIN_REGEX } from "../../../modu
 import { useFormContext } from "react-hook-form"
 import { stateOptions } from "../../../util/formEngineUtil"
 import styles from "./Address.module.scss"
+import { renderInlineMarkup } from "../../../util/languageUtil"
 
 interface AddressProps {
   label?: string
@@ -141,11 +142,19 @@ const Address = ({
             message: t("error.zip"),
           },
         }}
-        errorMessage={t("error.zip")}
+        errorMessage={
+          errors?.[addressZipcode]?.type === "required"
+            ? t("error.zip")
+            : errors?.[addressZipcode]?.message
+        }
         error={!!errors?.[addressZipcode]}
         register={register}
       />
-      {addressError && <FormErrorMessage>{addressError}</FormErrorMessage>}
+      {addressError && (
+        <FormErrorMessage className={styles["address-error"]}>
+          {renderInlineMarkup(addressError)}
+        </FormErrorMessage>
+      )}
       {showMailingAddress && (
         <Field
           type="checkbox"
@@ -177,7 +186,7 @@ const Address = ({
                 ? t("error.address")
                 : errors?.[mailingAddressStreet]?.message
             }
-            error={!!errors?.[mailingAddressStreet]}
+            error={!!errors?.[mailingAddressStreet] || !!addressError}
             register={register}
           />
           <div className={styles["address-field-group"]}>
@@ -197,7 +206,7 @@ const Address = ({
                   ? t("error.city")
                   : errors?.[mailingAddressCity]?.message
               }
-              error={!!errors?.[mailingAddressCity]}
+              error={!!errors?.[mailingAddressCity] || !!addressError}
               register={register}
             />
             <Select
@@ -207,7 +216,7 @@ const Address = ({
                 required: requireAddress,
                 maxLength: LISTING_APPLY_FORMS_INPUT_MAX_LENGTH.address,
               }}
-              error={!!errors?.[mailingAddressState]}
+              error={!!errors?.[mailingAddressState] || !!addressError}
               errorMessage={t("error.state")}
               register={register}
               controlClassName="control"
@@ -226,7 +235,7 @@ const Address = ({
               },
             }}
             errorMessage={t("error.zip")}
-            error={!!errors?.[mailingAddressZipcode]}
+            error={!!errors?.[mailingAddressZipcode] || !!addressError}
             register={register}
           />
         </>

@@ -1,5 +1,5 @@
 // https://github.com/react-hook-form/react-hook-form/issues/2887#issuecomment-802577357
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { useForm, FormProvider } from "react-hook-form"
 import { Form, t } from "@bloom-housing/ui-components"
 import { Button, Card } from "@bloom-housing/ui-seeds"
@@ -9,7 +9,6 @@ import { getAddressErrorEmailLink, translationFromDataSchema } from "../../../ut
 import styles from "./ListingApplyStepWrapper.module.scss"
 import ListingApplyStepErrorMessage from "./ListingApplyStepErrorMessage"
 import { locateVerifiedAddress } from "../../../api/formApiService"
-import { renderInlineMarkup } from "../../../util/languageUtil"
 import YesNoRadio from "./YesNoRadio"
 import Phone from "./Phone"
 import Address from "./Address"
@@ -85,8 +84,12 @@ const ListingContactStepWrapper = ({
     defaultValues,
   })
 
-  const hasErrors = () => Object.keys(formMethods.formState.errors).length > 0
-  const [apiErrorMessage, setApiErrorMessage] = useState(null)
+  const [apiErrorMessage, setApiErrorMessage] = useState<string | null>(null)
+  useEffect(() => {
+    if (Object.keys(formMethods.formState.errors).length > 0 || apiErrorMessage) {
+      window.scrollTo(0, 0)
+    }
+  }, [formMethods.formState.errors, apiErrorMessage])
 
   const onSubmit = (data: Record<string, unknown>) => {
     saveFormData(data)
@@ -112,11 +115,9 @@ const ListingContactStepWrapper = ({
       .catch((error) => {
         if (error.response?.status === 422) {
           setApiErrorMessage(
-            renderInlineMarkup(
-              t("error.addressValidation.notFound", {
-                mailParams: getAddressErrorEmailLink(data, staticData, formData),
-              })
-            )
+            t("error.addressValidation.notFound", {
+              mailParams: getAddressErrorEmailLink(data, staticData, formData),
+            })
           )
         } else {
           setApiErrorMessage(t("error.alert.badRequest"))
@@ -136,11 +137,12 @@ const ListingContactStepWrapper = ({
             {translationFromDataSchema(title, titleVars, staticData, formData)}
           </h1>
         </Card.Header>
-        {hasErrors() && (
+        {(Object.keys(formMethods.formState.errors).length > 0 || apiErrorMessage) && (
           <ListingApplyStepErrorMessage
             errorMessage={t("error.formSubmission")}
             onClose={() => {
               formMethods.clearErrors()
+              setApiErrorMessage(null)
             }}
           />
         )}
