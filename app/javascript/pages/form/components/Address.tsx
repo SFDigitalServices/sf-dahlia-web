@@ -14,7 +14,6 @@ interface AddressProps {
   showMailingAddress?: boolean
   showAptOrUnit?: boolean
   requireAddress?: boolean
-  verifyAddress?: boolean
   addressError?: string
   fieldNames: {
     addressStreet: string

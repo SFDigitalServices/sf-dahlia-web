@@ -168,7 +168,6 @@ const ListingContactStepWrapper = ({
             <Address
               showAptOrUnit={true}
               requireAddress={true}
-              verifyAddress={true}
               label="label.address"
               note="b2Contact.applicantAddressDesc"
               showMailingAddress={true}

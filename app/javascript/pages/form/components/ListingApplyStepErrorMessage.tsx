@@ -10,18 +10,16 @@ interface ListingApplyStepErrorMessageProps {
   errorMessage: string
   errorNote?: string
   onClose: () => void
-  ref?: React.RefObject<HTMLDivElement>
 }
 
 const ListingApplyStepErrorMessage = ({
   errorMessage,
   errorNote,
   onClose,
-  ref,
 }: ListingApplyStepErrorMessageProps) => {
   return (
     <CardSection className={styles["error-section"]}>
-      <div ref={ref} tabIndex={-1} className={styles["error-message"]}>
+      <div className={styles["error-message"]}>
         <div>
           <FontAwesomeIcon icon={faTriangleExclamation} />
         </div>
