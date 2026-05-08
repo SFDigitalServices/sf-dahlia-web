@@ -55,19 +55,8 @@ const InviteToPage = ({
   }, [router, router.pathname])
 
   const { unleashFlag: isI2AEnabled } = useFeatureFlag("partners.inviteToApply", false)
-  const { unleashFlag: isI2IEnabledFlag, variant } = useVariantFlag("all.i2i", false)
-  const enabledListingIds =
-    typeof variant === "object" && variant?.payload?.value
-      ? (() => {
-          try {
-            const parsed = JSON.parse(variant.payload.value)
-            return parsed?.enabled_listings || []
-          } catch {
-            return []
-          }
-        })()
-      : []
-  const isI2IEnabled = isI2IEnabledFlag && listing?.Id && enabledListingIds.includes(listing.Id)
+  const { unleashFlag: isI2IEnabledFlag } = useVariantFlag("all.i2i", false)
+  const isI2IEnabled = isI2IEnabledFlag && !!listing?.Id
   const previewLink = generateSubmitLink(
     appId,
     deadline,
