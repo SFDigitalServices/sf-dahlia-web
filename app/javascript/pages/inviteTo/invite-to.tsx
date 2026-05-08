@@ -56,7 +56,7 @@ const InviteToPage = ({
 
   const { unleashFlag: isI2AEnabled } = useFeatureFlag("partners.inviteToApply", false)
   const { unleashFlag: isI2IEnabledFlag } = useVariantFlag("all.i2i", false)
-  const isI2IEnabled = isI2IEnabledFlag && listing?.Id
+  const isI2IEnabled = isI2IEnabledFlag && !!listing?.Id
   const previewLink = generateSubmitLink(
     appId,
     deadline,
