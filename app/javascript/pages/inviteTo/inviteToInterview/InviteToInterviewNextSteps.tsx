@@ -1,7 +1,7 @@
-import React, { useState, useCallback } from "react"
+import React, { useCallback } from "react"
 import { faPrint } from "@fortawesome/free-solid-svg-icons"
 import { Icon, IconFillColors, LoadingOverlay, Mobile, t } from "@bloom-housing/ui-components"
-import { Heading, Button, LoadingState } from "@bloom-housing/ui-seeds"
+import { Heading, Button } from "@bloom-housing/ui-seeds"
 import RailsSaleListing from "../../../api/types/rails/listings/RailsSaleListing"
 import { isDeadlinePassed } from "../../../util/listingUtil"
 import { getCurrentLanguage, getTranslatedString, renderMarkup } from "../../../util/languageUtil"
@@ -10,51 +10,17 @@ import { ConfigContext } from "../../../lib/ConfigContext"
 import InviteToLayout from "../InviteToLayout"
 import InviteToGetHelp from "../InviteToGetHelp"
 import InviteToLeasingAgentInfo from "../InviteToLeasingAgentInfo"
-import { recordResponse } from "../../../api/inviteToApiService"
 import { INVITE_TO_X } from "../../../modules/constants"
 
 interface InviteToInterviewNextStepsProps {
   listing: RailsSaleListing
   deadline: string
-  appId: string
 }
 
-const WhatToDo = ({
-  listing,
-  deadline,
-  appId,
-}: {
-  listing: RailsSaleListing
-  deadline: string
-  appId: string
-}) => {
-  const [isSubmitting, setIsSubmitting] = useState(false)
+const WhatToDo = ({ listing, deadline }: { listing: RailsSaleListing; deadline: string }) => {
   const handleSubmitClick = useCallback(() => {
-    const url = listing.Leaseup_Appointment_Scheduling_URL
-    void (async () => {
-      setIsSubmitting(true)
-      try {
-        if (appId) {
-          await recordResponse({
-            appId: appId,
-            applicationNumber: appId,
-            listingId: listing.Id,
-            deadline,
-            action: "submit",
-            response: "submit",
-            type: INVITE_TO_X.INTERVIEW,
-          })
-        }
-        window.open(url, "_blank")
-        setIsSubmitting(false)
-      } catch (error) {
-        console.error("Error submitting invite to interview response:", error)
-        // Still open the file upload URL even if API call fails
-        window.open(url, "_blank")
-        setIsSubmitting(false)
-      }
-    })()
-  }, [appId, listing, deadline])
+    window.open(listing.Leaseup_Appointment_Scheduling_URL, "_blank")
+  }, [listing])
   return (
     <div className={`${styles.whatToDoList} markdown`}>
       <Heading priority={2} size="2xl">
@@ -67,11 +33,9 @@ const WhatToDo = ({
           </Heading>
           <p>{t("inviteToInterviewPage.submitYourInfo.whatToDo.step1.p1")}</p>
           {!isDeadlinePassed(deadline) && (
-            <LoadingState loading={isSubmitting} className={styles.loadingOverlay}>
-              <Button className={styles.actionButton} onClick={handleSubmitClick}>
-                {t("inviteToInterviewPage.submitYourInfo.whatToDo.step1.p2")}
-              </Button>
-            </LoadingState>
+            <Button className={styles.actionButton} onClick={handleSubmitClick}>
+              {t("inviteToInterviewPage.submitYourInfo.whatToDo.step1.p2")}
+            </Button>
           )}
         </li>
         <li>
@@ -141,11 +105,7 @@ const WhatToExpectAfter = () => {
   )
 }
 
-const InviteToInterviewNextSteps = ({
-  listing,
-  deadline,
-  appId,
-}: InviteToInterviewNextStepsProps) => {
+const InviteToInterviewNextSteps = ({ listing, deadline }: InviteToInterviewNextStepsProps) => {
   const { getAssetPath } = React.useContext(ConfigContext)
   return (
     <LoadingOverlay isLoading={!listing}>
@@ -158,7 +118,7 @@ const InviteToInterviewNextSteps = ({
         sidebarText="inviteToInterviewPage.submitYourInfo.sidebar"
         deadline={deadline}
       >
-        <WhatToDo listing={listing} deadline={deadline} appId={appId} />
+        <WhatToDo listing={listing} deadline={deadline} />
         <div className={styles.infoSubSection}>
           <InviteToGetHelp />
           <WhatToExpectAfter />
