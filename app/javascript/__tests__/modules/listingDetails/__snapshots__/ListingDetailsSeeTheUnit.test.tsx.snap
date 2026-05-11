@@ -161,7 +161,9 @@ exports[`ListingDetailsSeeTheUnit renders SeeDetailsOnline when both MLS and Lis
                   <span
                     class="links-space translate"
                   >
-                    <span>
+                    <span
+                      class="primary-lighter-markup-link"
+                    >
                       SFPL
                     </span>
                   </span>
@@ -302,7 +304,9 @@ exports[`ListingDetailsSeeTheUnit renders SeeDetailsOnline when both MLS and Lis
         <p
           class="text-sm"
         >
-          <span>
+          <span
+            class="primary-lighter-markup-link"
+          >
             8-4 Mon-Thurs
 
             <br />
@@ -391,7 +395,9 @@ exports[`ListingDetailsSeeTheUnit renders SeeDetailsOnline when only Listing_Onl
                   <span
                     class="links-space translate"
                   >
-                    <span>
+                    <span
+                      class="primary-lighter-markup-link"
+                    >
                       SFPL
                     </span>
                   </span>
@@ -524,7 +530,9 @@ exports[`ListingDetailsSeeTheUnit renders SeeDetailsOnline when only Listing_Onl
         <p
           class="text-sm"
         >
-          <span>
+          <span
+            class="primary-lighter-markup-link"
+          >
             8-4 Mon-Thurs
 
             <br />
@@ -613,7 +621,9 @@ exports[`ListingDetailsSeeTheUnit renders SeeDetailsOnline when only MLS is set 
                   <span
                     class="links-space translate"
                   >
-                    <span>
+                    <span
+                      class="primary-lighter-markup-link"
+                    >
                       SFPL
                     </span>
                   </span>
@@ -746,7 +756,9 @@ exports[`ListingDetailsSeeTheUnit renders SeeDetailsOnline when only MLS is set 
         <p
           class="text-sm"
         >
-          <span>
+          <span
+            class="primary-lighter-markup-link"
+          >
             8-4 Mon-Thurs
 
             <br />

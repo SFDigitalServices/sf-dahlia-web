@@ -83,7 +83,9 @@ exports[`MobileListingDetailsProcess renders with listing with open application 
               <span
                 class="links-space translate"
               >
-                <span>
+                <span
+                  class="primary-lighter-markup-link"
+                >
                   MOHCD
                 </span>
               </span>
@@ -150,7 +152,9 @@ exports[`MobileListingDetailsProcess renders with listing with open application 
               <span
                 class="links-space translate"
               >
-                <span>
+                <span
+                  class="primary-lighter-markup-link"
+                >
                   SFPL
                 </span>
               </span>
