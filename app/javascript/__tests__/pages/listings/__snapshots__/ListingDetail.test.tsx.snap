@@ -127,7 +127,9 @@ exports[`Listing Detail renders a habitat listing 1`] = `
             <div
               class="feedback-link"
             >
-              <span>
+              <span
+                class="primary-lighter-markup-link"
+              >
                 We'd love to get 
                 <a
                   href="https://airtable.com/appUW1tM8te0Lmf6q/pagyZulZJCm1V4G8D/form?prefill_Last%20visited=%2F&hide_Last%20visited=true"
@@ -394,7 +396,9 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                 Application Process
               </h4>
               <span>
-                <p>
+                <p
+                  class="primary-lighter-markup-link"
+                >
                   These units are offered by 
                   <a
                     href="http://www.habitatgsf.org/innes-ave"
@@ -409,7 +413,9 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                 class="list-decimal ml-8 mt-4"
               >
                 <li>
-                  <p>
+                  <p
+                    class="primary-lighter-markup-link"
+                  >
                     You must go to a 
                     <a
                       href="http://www.habitatgsf.org/innes-ave"
@@ -464,7 +470,9 @@ exports[`Listing Detail renders a habitat listing 1`] = `
               <div
                 class="mt-4"
               >
-                <p>
+                <p
+                  class="primary-lighter-markup-link"
+                >
                   People in your household may need 
                   <a
                     href="https://sf.gov/information/special-calculations-household-income"
@@ -1489,7 +1497,9 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                           <li
                             class="text-gray-750 primary-lighter-markup-link"
                           >
-                            <p>
+                            <p
+                              class="primary-lighter-markup-link"
+                            >
                               Go to a 
                               <a
                                 href="http://www.habitatgsf.org/innes-ave"
@@ -1507,7 +1517,9 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                           <li
                             class="text-gray-750 primary-lighter-markup-link"
                           >
-                            <p>
+                            <p
+                              class="primary-lighter-markup-link"
+                            >
                               Meet the 
                               <a
                                 href="https://media.api.sf.gov/documents/DALP_Manual_-_2025.pdf"
@@ -1526,7 +1538,9 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                         <div
                           class="text-gray-750 primary-lighter-markup-link-desktop"
                         >
-                          <p>
+                          <p
+                            class="primary-lighter-markup-link"
+                          >
                             Read 
                             <a
                               href="http://www.habitatgsf.org/innes-ave"
@@ -1711,7 +1725,9 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                         <li
                           class="text-gray-750 primary-lighter-markup-link"
                         >
-                          <p>
+                          <p
+                            class="primary-lighter-markup-link"
+                          >
                             Go to a 
                             <a
                               href="http://www.habitatgsf.org/innes-ave"
@@ -1729,7 +1745,9 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                         <li
                           class="text-gray-750 primary-lighter-markup-link"
                         >
-                          <p>
+                          <p
+                            class="primary-lighter-markup-link"
+                          >
                             Meet the 
                             <a
                               href="https://media.api.sf.gov/documents/DALP_Manual_-_2025.pdf"
@@ -1748,7 +1766,9 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                       <div
                         class="text-gray-750 primary-lighter-markup-link-desktop"
                       >
-                        <p>
+                        <p
+                          class="primary-lighter-markup-link"
+                        >
                           Read 
                           <a
                             href="http://www.habitatgsf.org/innes-ave"
@@ -1972,7 +1992,9 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                         <li
                           class="text-gray-750 primary-lighter-markup-link"
                         >
-                          <p>
+                          <p
+                            class="primary-lighter-markup-link"
+                          >
                             Go to a 
                             <a
                               href="http://www.habitatgsf.org/innes-ave"
@@ -1990,7 +2012,9 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                         <li
                           class="text-gray-750 primary-lighter-markup-link"
                         >
-                          <p>
+                          <p
+                            class="primary-lighter-markup-link"
+                          >
                             Meet the 
                             <a
                               href="https://media.api.sf.gov/documents/DALP_Manual_-_2025.pdf"
@@ -2009,7 +2033,9 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                       <div
                         class="text-gray-750 primary-lighter-markup-link-desktop"
                       >
-                        <p>
+                        <p
+                          class="primary-lighter-markup-link"
+                        >
                           Read 
                           <a
                             href="http://www.habitatgsf.org/innes-ave"
@@ -3628,9 +3654,11 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                           class="text-xs"
                         >
                           <div
-                            class="text-xs inline primary-lighter-markup-link translate"
+                            class="text-xs inline translate"
                           >
-                            <span>
+                            <span
+                              class="primary-lighter-markup-link"
+                            >
                               Cissy can write in here whatever she needs to say.
                             </span>
                           </div>
@@ -3669,9 +3697,11 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                         class="text-xs"
                       >
                         <div
-                          class="text-xs inline primary-lighter-markup-link translate"
+                          class="text-xs inline translate"
                         >
-                          <span>
+                          <span
+                            class="primary-lighter-markup-link"
+                          >
                             Cissy can write in here whatever she needs to say.
                           </span>
                         </div>
@@ -3751,9 +3781,11 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                         class="text-xs"
                       >
                         <div
-                          class="text-xs inline primary-lighter-markup-link translate"
+                          class="text-xs inline translate"
                         >
-                          <span>
+                          <span
+                            class="primary-lighter-markup-link"
+                          >
                             Cissy can write in here whatever she needs to say.
                           </span>
                         </div>
@@ -4055,7 +4087,9 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                         <li
                           class="text-gray-750 primary-lighter-markup-link"
                         >
-                          <p>
+                          <p
+                            class="primary-lighter-markup-link"
+                          >
                             Go to a 
                             <a
                               href="http://www.habitatgsf.org/innes-ave"
@@ -4073,7 +4107,9 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                         <li
                           class="text-gray-750 primary-lighter-markup-link"
                         >
-                          <p>
+                          <p
+                            class="primary-lighter-markup-link"
+                          >
                             Meet the 
                             <a
                               href="https://media.api.sf.gov/documents/DALP_Manual_-_2025.pdf"
@@ -4092,7 +4128,9 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                       <div
                         class="text-gray-750 primary-lighter-markup-link-desktop"
                       >
-                        <p>
+                        <p
+                          class="primary-lighter-markup-link"
+                        >
                           Read 
                           <a
                             href="http://www.habitatgsf.org/innes-ave"
@@ -4723,9 +4761,11 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                         class="text-xs"
                       >
                         <div
-                          class="text-xs inline primary-lighter-markup-link translate"
+                          class="text-xs inline translate"
                         >
-                          <span>
+                          <span
+                            class="primary-lighter-markup-link"
+                          >
                             Cissy can write in here whatever she needs to say.
                           </span>
                         </div>
@@ -5144,7 +5184,9 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
             <div
               class="feedback-link"
             >
-              <span>
+              <span
+                class="primary-lighter-markup-link"
+              >
                 We'd love to get 
                 <a
                   href="https://airtable.com/appUW1tM8te0Lmf6q/pagyZulZJCm1V4G8D/form?prefill_Last%20visited=%2F&hide_Last%20visited=true"
@@ -5522,7 +5564,9 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                           <div
                             class="text-gray-700"
                           >
-                            <div>
+                            <div
+                              class="primary-lighter-markup-link"
+                            >
                               <p>
                                 The lottery will not be in person, but instead will be a virtual lottery.
                               </p>
@@ -5612,7 +5656,9 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                               <span
                                 class="links-space translate"
                               >
-                                <span>
+                                <span
+                                  class="primary-lighter-markup-link"
+                                >
                                   Library
                                 </span>
                               </span>
@@ -5801,7 +5847,9 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                           <div
                             class="text-gray-700"
                           >
-                            <div>
+                            <div
+                              class="primary-lighter-markup-link"
+                            >
                               <p>
                                 The lottery will not be in person, but instead will be a virtual lottery.
                               </p>
@@ -5891,7 +5939,9 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                               <span
                                 class="links-space translate"
                               >
-                                <span>
+                                <span
+                                  class="primary-lighter-markup-link"
+                                >
                                   Library
                                 </span>
                               </span>
@@ -5980,7 +6030,9 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                         <div
                           class="text-gray-700"
                         >
-                          <div>
+                          <div
+                            class="primary-lighter-markup-link"
+                          >
                             <p>
                               The lottery will not be in person, but instead will be a virtual lottery.
                             </p>
@@ -6070,7 +6122,9 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                             <span
                               class="links-space translate"
                             >
-                              <span>
+                              <span
+                                class="primary-lighter-markup-link"
+                              >
                                 Library
                               </span>
                             </span>
@@ -6200,7 +6254,9 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                         <div
                           class="text-gray-700"
                         >
-                          <div>
+                          <div
+                            class="primary-lighter-markup-link"
+                          >
                             <p>
                               The lottery will not be in person, but instead will be a virtual lottery.
                             </p>
@@ -6290,7 +6346,9 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                             <span
                               class="links-space translate"
                             >
-                              <span>
+                              <span
+                                class="primary-lighter-markup-link"
+                              >
                                 Library
                               </span>
                             </span>
@@ -6475,14 +6533,18 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                                 <div
                                   class="mb-4"
                                 >
-                                  <p>
+                                  <p
+                                    class="primary-lighter-markup-link"
+                                  >
                                     For income calculations, household size includes everyone (all ages) living in the unit.
                                   </p>
                                 </div>
                                 <div
                                   class="mb-4 primary-lighter-markup-link-desktop"
                                 >
-                                  <p>
+                                  <p
+                                    class="primary-lighter-markup-link"
+                                  >
                                     People in your household may need 
                                     <a
                                       href="https://sf.gov/information/special-calculations-household-income"
@@ -6808,14 +6870,18 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                               <div
                                 class="mb-4"
                               >
-                                <p>
+                                <p
+                                  class="primary-lighter-markup-link"
+                                >
                                   For income calculations, household size includes everyone (all ages) living in the unit.
                                 </p>
                               </div>
                               <div
                                 class="mb-4 primary-lighter-markup-link-desktop"
                               >
-                                <p>
+                                <p
+                                  class="primary-lighter-markup-link"
+                                >
                                   People in your household may need 
                                   <a
                                     href="https://sf.gov/information/special-calculations-household-income"
@@ -7182,14 +7248,18 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                               <div
                                 class="mb-4"
                               >
-                                <p>
+                                <p
+                                  class="primary-lighter-markup-link"
+                                >
                                   For income calculations, household size includes everyone (all ages) living in the unit.
                                 </p>
                               </div>
                               <div
                                 class="mb-4 primary-lighter-markup-link-desktop"
                               >
-                                <p>
+                                <p
+                                  class="primary-lighter-markup-link"
+                                >
                                   People in your household may need 
                                   <a
                                     href="https://sf.gov/information/special-calculations-household-income"
@@ -7779,7 +7849,9 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                             <span
                               class="translate"
                             >
-                              <p>
+                              <p
+                                class="primary-lighter-markup-link"
+                              >
                                 Tenants pay for gas, electricity.
 
                                 <br />
@@ -7979,7 +8051,9 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                           <span
                             class="translate"
                           >
-                            <p>
+                            <p
+                              class="primary-lighter-markup-link"
+                            >
                               Tenants pay for gas, electricity.
 
                               <br />
@@ -8220,7 +8294,9 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                           <span
                             class="translate"
                           >
-                            <p>
+                            <p
+                              class="primary-lighter-markup-link"
+                            >
                               Tenants pay for gas, electricity.
 
                               <br />
@@ -8361,9 +8437,11 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                           class="text-xs"
                         >
                           <div
-                            class="text-xs inline primary-lighter-markup-link translate"
+                            class="text-xs inline translate"
                           >
-                            <span>
+                            <span
+                              class="primary-lighter-markup-link"
+                            >
                               Lottery winners will be required to fill out a building application and provide a copy of your current credit report, 3 most recent paystubs, current tax returns and W-2, and 3 most recent bank statements.
                             </span>
                           </div>
@@ -8381,9 +8459,11 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                           class="text-xs"
                         >
                           <div
-                            class="text-xs inline primary-lighter-markup-link translate"
+                            class="text-xs inline translate"
                           >
-                            <span>
+                            <span
+                              class="primary-lighter-markup-link"
+                            >
                               All BMR renters must review and acknowledge the 
                               <a
                                 href="http://sf-moh.org/index.aspx?page=295"
@@ -8435,9 +8515,11 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                         class="text-xs"
                       >
                         <div
-                          class="text-xs inline primary-lighter-markup-link translate"
+                          class="text-xs inline translate"
                         >
-                          <span>
+                          <span
+                            class="primary-lighter-markup-link"
+                          >
                             Lottery winners will be required to fill out a building application and provide a copy of your current credit report, 3 most recent paystubs, current tax returns and W-2, and 3 most recent bank statements.
                           </span>
                         </div>
@@ -8455,9 +8537,11 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                         class="text-xs"
                       >
                         <div
-                          class="text-xs inline primary-lighter-markup-link translate"
+                          class="text-xs inline translate"
                         >
-                          <span>
+                          <span
+                            class="primary-lighter-markup-link"
+                          >
                             All BMR renters must review and acknowledge the 
                             <a
                               href="http://sf-moh.org/index.aspx?page=295"
@@ -8550,9 +8634,11 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                         class="text-xs"
                       >
                         <div
-                          class="text-xs inline primary-lighter-markup-link translate"
+                          class="text-xs inline translate"
                         >
-                          <span>
+                          <span
+                            class="primary-lighter-markup-link"
+                          >
                             Lottery winners will be required to fill out a building application and provide a copy of your current credit report, 3 most recent paystubs, current tax returns and W-2, and 3 most recent bank statements.
                           </span>
                         </div>
@@ -8570,9 +8656,11 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                         class="text-xs"
                       >
                         <div
-                          class="text-xs inline primary-lighter-markup-link translate"
+                          class="text-xs inline translate"
                         >
-                          <span>
+                          <span
+                            class="primary-lighter-markup-link"
+                          >
                             All BMR renters must review and acknowledge the 
                             <a
                               href="http://sf-moh.org/index.aspx?page=295"
@@ -8715,7 +8803,9 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                         <div
                           class="text-gray-700"
                         >
-                          <div>
+                          <div
+                            class="primary-lighter-markup-link"
+                          >
                             <p>
                               The lottery will not be in person, but instead will be a virtual lottery.
                             </p>
@@ -8805,7 +8895,9 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                             <span
                               class="links-space translate"
                             >
-                              <span>
+                              <span
+                                class="primary-lighter-markup-link"
+                              >
                                 Library
                               </span>
                             </span>
@@ -8926,14 +9018,18 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                               <div
                                 class="mb-4"
                               >
-                                <p>
+                                <p
+                                  class="primary-lighter-markup-link"
+                                >
                                   For income calculations, household size includes everyone (all ages) living in the unit.
                                 </p>
                               </div>
                               <div
                                 class="mb-4 primary-lighter-markup-link-desktop"
                               >
-                                <p>
+                                <p
+                                  class="primary-lighter-markup-link"
+                                >
                                   People in your household may need 
                                   <a
                                     href="https://sf.gov/information/special-calculations-household-income"
@@ -9459,7 +9555,9 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                           <span
                             class="translate"
                           >
-                            <p>
+                            <p
+                              class="primary-lighter-markup-link"
+                            >
                               Tenants pay for gas, electricity.
 
                               <br />
@@ -9536,9 +9634,11 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                         class="text-xs"
                       >
                         <div
-                          class="text-xs inline primary-lighter-markup-link translate"
+                          class="text-xs inline translate"
                         >
-                          <span>
+                          <span
+                            class="primary-lighter-markup-link"
+                          >
                             Lottery winners will be required to fill out a building application and provide a copy of your current credit report, 3 most recent paystubs, current tax returns and W-2, and 3 most recent bank statements.
                           </span>
                         </div>
@@ -9556,9 +9656,11 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                         class="text-xs"
                       >
                         <div
-                          class="text-xs inline primary-lighter-markup-link translate"
+                          class="text-xs inline translate"
                         >
-                          <span>
+                          <span
+                            class="primary-lighter-markup-link"
+                          >
                             All BMR renters must review and acknowledge the 
                             <a
                               href="http://sf-moh.org/index.aspx?page=295"
@@ -9990,7 +10092,9 @@ exports[`Listing Detail renders an open rental listing 1`] = `
             <div
               class="feedback-link"
             >
-              <span>
+              <span
+                class="primary-lighter-markup-link"
+              >
                 We'd love to get 
                 <a
                   href="https://airtable.com/appUW1tM8te0Lmf6q/pagyZulZJCm1V4G8D/form?prefill_Last%20visited=%2F&hide_Last%20visited=true"
@@ -10355,7 +10459,9 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                           <div
                             class="text-gray-700"
                           >
-                            <p>
+                            <p
+                              class="primary-lighter-markup-link"
+                            >
                               Virtual lottery today. 
                               <a
                                 href="https://teams.microsoft.com/l/meetup-join/19%3ameeting_ZDg4YmYzYTQtMjY3MS00NTliLWJkYzEtMWM3MDU3NTQ0M2Nl%40thread.v2/0?context=%7b%22Tid%22%3a%2222d5c2cf-ce3e-443d-9a7f-dfcc0231f73f%22%2c%22Oid%22%3a%22a1924752-de5c-4553-b0c3-e21c56e7651f%22%2c%22IsBroadcastMeeting%22%3atrue%7d&amp;btype=a&amp;role=a"
@@ -10544,7 +10650,9 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                             <span
                               class="translate"
                             >
-                              <span>
+                              <span
+                                class="primary-lighter-markup-link"
+                              >
                                 Monday - Friday 
 
                                 <br />
@@ -10700,7 +10808,9 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                           <div
                             class="text-gray-700"
                           >
-                            <p>
+                            <p
+                              class="primary-lighter-markup-link"
+                            >
                               Virtual lottery today. 
                               <a
                                 href="https://teams.microsoft.com/l/meetup-join/19%3ameeting_ZDg4YmYzYTQtMjY3MS00NTliLWJkYzEtMWM3MDU3NTQ0M2Nl%40thread.v2/0?context=%7b%22Tid%22%3a%2222d5c2cf-ce3e-443d-9a7f-dfcc0231f73f%22%2c%22Oid%22%3a%22a1924752-de5c-4553-b0c3-e21c56e7651f%22%2c%22IsBroadcastMeeting%22%3atrue%7d&amp;btype=a&amp;role=a"
@@ -10860,7 +10970,9 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                             <span
                               class="translate"
                             >
-                              <span>
+                              <span
+                                class="primary-lighter-markup-link"
+                              >
                                 Monday - Friday 
 
                                 <br />
@@ -10916,7 +11028,9 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                         <div
                           class="text-gray-700"
                         >
-                          <p>
+                          <p
+                            class="primary-lighter-markup-link"
+                          >
                             Virtual lottery today. 
                             <a
                               href="https://teams.microsoft.com/l/meetup-join/19%3ameeting_ZDg4YmYzYTQtMjY3MS00NTliLWJkYzEtMWM3MDU3NTQ0M2Nl%40thread.v2/0?context=%7b%22Tid%22%3a%2222d5c2cf-ce3e-443d-9a7f-dfcc0231f73f%22%2c%22Oid%22%3a%22a1924752-de5c-4553-b0c3-e21c56e7651f%22%2c%22IsBroadcastMeeting%22%3atrue%7d&amp;btype=a&amp;role=a"
@@ -11076,7 +11190,9 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                           <span
                             class="translate"
                           >
-                            <span>
+                            <span
+                              class="primary-lighter-markup-link"
+                            >
                               Monday - Friday 
 
                               <br />
@@ -11173,7 +11289,9 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                         <div
                           class="text-gray-700"
                         >
-                          <p>
+                          <p
+                            class="primary-lighter-markup-link"
+                          >
                             Virtual lottery today. 
                             <a
                               href="https://teams.microsoft.com/l/meetup-join/19%3ameeting_ZDg4YmYzYTQtMjY3MS00NTliLWJkYzEtMWM3MDU3NTQ0M2Nl%40thread.v2/0?context=%7b%22Tid%22%3a%2222d5c2cf-ce3e-443d-9a7f-dfcc0231f73f%22%2c%22Oid%22%3a%22a1924752-de5c-4553-b0c3-e21c56e7651f%22%2c%22IsBroadcastMeeting%22%3atrue%7d&amp;btype=a&amp;role=a"
@@ -11333,7 +11451,9 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                           <span
                             class="translate"
                           >
-                            <span>
+                            <span
+                              class="primary-lighter-markup-link"
+                            >
                               Monday - Friday 
 
                               <br />
@@ -11507,7 +11627,9 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                                 class="ml-0 my-1"
                               >
                                 <li>
-                                  <span>
+                                  <span
+                                    class="primary-lighter-markup-link"
+                                  >
                                     Be an employee of 
                                     <b>
                                       <a
@@ -11525,6 +11647,7 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                               </ul>
                               <p>
                                 <a
+                                  class="primary-lighter-markup-link"
                                   href="https://sf.gov/apply-shirley-chisholm-village-housing"
                                   target="_blank"
                                 >
@@ -11536,6 +11659,7 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                               </p>
                               <p>
                                 <a
+                                  class="primary-lighter-markup-link"
                                   href="#chisholm-preferences"
                                   target="_self"
                                 >
@@ -11565,14 +11689,18 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                                 <div
                                   class="mb-4"
                                 >
-                                  <p>
+                                  <p
+                                    class="primary-lighter-markup-link"
+                                  >
                                     For income calculations, household size includes everyone (all ages) living in the unit.
                                   </p>
                                 </div>
                                 <div
                                   class="mb-4 primary-lighter-markup-link-desktop"
                                 >
-                                  <p>
+                                  <p
+                                    class="primary-lighter-markup-link"
+                                  >
                                     People in your household may need 
                                     <a
                                       href="https://sf.gov/information/special-calculations-household-income"
@@ -11771,7 +11899,9 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                                     If you qualify for a preference, you have a better chance in the lottery. After the lottery, all applicants are ranked and ordered by preference category. If you do not qualify for a preference, you will be ranked below those who do. 
                                   </p>
                                   <p>
-                                    <b>
+                                    <b
+                                      class="primary-lighter-markup-link"
+                                    >
                                       Priority for certain groups - San Francisco Unified School District employees
                                     </b>
                                     <br />
@@ -11782,6 +11912,7 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                                   >
                                     <li>
                                       <a
+                                        class="primary-lighter-markup-link"
                                         href="https://www.sf.gov/learn-how-lottery-works-shirley-chisholm-village"
                                         target="_blank"
                                       >
@@ -11790,6 +11921,7 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                                     </li>
                                     <li>
                                       <a
+                                        class="primary-lighter-markup-link"
                                         href="https://sf.gov/information/learn-about-housing-lottery-preference-programs"
                                         target="_blank"
                                       >
@@ -12046,7 +12178,9 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                               class="ml-0 my-1"
                             >
                               <li>
-                                <span>
+                                <span
+                                  class="primary-lighter-markup-link"
+                                >
                                   Be an employee of 
                                   <b>
                                     <a
@@ -12064,6 +12198,7 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                             </ul>
                             <p>
                               <a
+                                class="primary-lighter-markup-link"
                                 href="https://sf.gov/apply-shirley-chisholm-village-housing"
                                 target="_blank"
                               >
@@ -12075,6 +12210,7 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                             </p>
                             <p>
                               <a
+                                class="primary-lighter-markup-link"
                                 href="#chisholm-preferences"
                                 target="_self"
                               >
@@ -12104,14 +12240,18 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                               <div
                                 class="mb-4"
                               >
-                                <p>
+                                <p
+                                  class="primary-lighter-markup-link"
+                                >
                                   For income calculations, household size includes everyone (all ages) living in the unit.
                                 </p>
                               </div>
                               <div
                                 class="mb-4 primary-lighter-markup-link-desktop"
                               >
-                                <p>
+                                <p
+                                  class="primary-lighter-markup-link"
+                                >
                                   People in your household may need 
                                   <a
                                     href="https://sf.gov/information/special-calculations-household-income"
@@ -12310,7 +12450,9 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                                   If you qualify for a preference, you have a better chance in the lottery. After the lottery, all applicants are ranked and ordered by preference category. If you do not qualify for a preference, you will be ranked below those who do. 
                                 </p>
                                 <p>
-                                  <b>
+                                  <b
+                                    class="primary-lighter-markup-link"
+                                  >
                                     Priority for certain groups - San Francisco Unified School District employees
                                   </b>
                                   <br />
@@ -12321,6 +12463,7 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                                 >
                                   <li>
                                     <a
+                                      class="primary-lighter-markup-link"
                                       href="https://www.sf.gov/learn-how-lottery-works-shirley-chisholm-village"
                                       target="_blank"
                                     >
@@ -12329,6 +12472,7 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                                   </li>
                                   <li>
                                     <a
+                                      class="primary-lighter-markup-link"
                                       href="https://sf.gov/information/learn-about-housing-lottery-preference-programs"
                                       target="_blank"
                                     >
@@ -12626,7 +12770,9 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                               class="ml-0 my-1"
                             >
                               <li>
-                                <span>
+                                <span
+                                  class="primary-lighter-markup-link"
+                                >
                                   Be an employee of 
                                   <b>
                                     <a
@@ -12644,6 +12790,7 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                             </ul>
                             <p>
                               <a
+                                class="primary-lighter-markup-link"
                                 href="https://sf.gov/apply-shirley-chisholm-village-housing"
                                 target="_blank"
                               >
@@ -12655,6 +12802,7 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                             </p>
                             <p>
                               <a
+                                class="primary-lighter-markup-link"
                                 href="#chisholm-preferences"
                                 target="_self"
                               >
@@ -12684,14 +12832,18 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                               <div
                                 class="mb-4"
                               >
-                                <p>
+                                <p
+                                  class="primary-lighter-markup-link"
+                                >
                                   For income calculations, household size includes everyone (all ages) living in the unit.
                                 </p>
                               </div>
                               <div
                                 class="mb-4 primary-lighter-markup-link-desktop"
                               >
-                                <p>
+                                <p
+                                  class="primary-lighter-markup-link"
+                                >
                                   People in your household may need 
                                   <a
                                     href="https://sf.gov/information/special-calculations-household-income"
@@ -12890,7 +13042,9 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                                   If you qualify for a preference, you have a better chance in the lottery. After the lottery, all applicants are ranked and ordered by preference category. If you do not qualify for a preference, you will be ranked below those who do. 
                                 </p>
                                 <p>
-                                  <b>
+                                  <b
+                                    class="primary-lighter-markup-link"
+                                  >
                                     Priority for certain groups - San Francisco Unified School District employees
                                   </b>
                                   <br />
@@ -12901,6 +13055,7 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                                 >
                                   <li>
                                     <a
+                                      class="primary-lighter-markup-link"
                                       href="https://www.sf.gov/learn-how-lottery-works-shirley-chisholm-village"
                                       target="_blank"
                                     >
@@ -12909,6 +13064,7 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                                   </li>
                                   <li>
                                     <a
+                                      class="primary-lighter-markup-link"
                                       href="https://sf.gov/information/learn-about-housing-lottery-preference-programs"
                                       target="_blank"
                                     >
@@ -13522,7 +13678,9 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                             <span
                               class="translate"
                             >
-                              <p>
+                              <p
+                                class="primary-lighter-markup-link"
+                              >
                                 Late payments Fees $20.00, NSF checks $35.00, FOB Replacement $50.00, Front Door Key Replacement $25.00, Residents pay for PG&E.
                               </p>
                             </span>
@@ -13825,7 +13983,9 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                           <span
                             class="translate"
                           >
-                            <p>
+                            <p
+                              class="primary-lighter-markup-link"
+                            >
                               Late payments Fees $20.00, NSF checks $35.00, FOB Replacement $50.00, Front Door Key Replacement $25.00, Residents pay for PG&E.
                             </p>
                           </span>
@@ -14169,7 +14329,9 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                           <span
                             class="translate"
                           >
-                            <p>
+                            <p
+                              class="primary-lighter-markup-link"
+                            >
                               Late payments Fees $20.00, NSF checks $35.00, FOB Replacement $50.00, Front Door Key Replacement $25.00, Residents pay for PG&E.
                             </p>
                           </span>
@@ -14638,9 +14800,11 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                           class="text-xs"
                         >
                           <div
-                            class="text-xs inline primary-lighter-markup-link translate"
+                            class="text-xs inline translate"
                           >
-                            <span>
+                            <span
+                              class="primary-lighter-markup-link"
+                            >
                               Post-Lottery Application
                             </span>
                           </div>
@@ -14658,9 +14822,11 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                           class="text-xs"
                         >
                           <div
-                            class="text-xs inline primary-lighter-markup-link translate"
+                            class="text-xs inline translate"
                           >
-                            <span>
+                            <span
+                              class="primary-lighter-markup-link"
+                            >
                               <p>
                                 The 
                                 <a
@@ -14698,9 +14864,11 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                         class="text-xs"
                       >
                         <div
-                          class="text-xs inline primary-lighter-markup-link translate"
+                          class="text-xs inline translate"
                         >
-                          <span>
+                          <span
+                            class="primary-lighter-markup-link"
+                          >
                             Post-Lottery Application
                           </span>
                         </div>
@@ -14718,9 +14886,11 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                         class="text-xs"
                       >
                         <div
-                          class="text-xs inline primary-lighter-markup-link translate"
+                          class="text-xs inline translate"
                         >
-                          <span>
+                          <span
+                            class="primary-lighter-markup-link"
+                          >
                             <p>
                               The 
                               <a
@@ -14799,9 +14969,11 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                         class="text-xs"
                       >
                         <div
-                          class="text-xs inline primary-lighter-markup-link translate"
+                          class="text-xs inline translate"
                         >
-                          <span>
+                          <span
+                            class="primary-lighter-markup-link"
+                          >
                             Post-Lottery Application
                           </span>
                         </div>
@@ -14819,9 +14991,11 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                         class="text-xs"
                       >
                         <div
-                          class="text-xs inline primary-lighter-markup-link translate"
+                          class="text-xs inline translate"
                         >
-                          <span>
+                          <span
+                            class="primary-lighter-markup-link"
+                          >
                             <p>
                               The 
                               <a
@@ -14950,7 +15124,9 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                         <div
                           class="text-gray-700"
                         >
-                          <p>
+                          <p
+                            class="primary-lighter-markup-link"
+                          >
                             Virtual lottery today. 
                             <a
                               href="https://teams.microsoft.com/l/meetup-join/19%3ameeting_ZDg4YmYzYTQtMjY3MS00NTliLWJkYzEtMWM3MDU3NTQ0M2Nl%40thread.v2/0?context=%7b%22Tid%22%3a%2222d5c2cf-ce3e-443d-9a7f-dfcc0231f73f%22%2c%22Oid%22%3a%22a1924752-de5c-4553-b0c3-e21c56e7651f%22%2c%22IsBroadcastMeeting%22%3atrue%7d&amp;btype=a&amp;role=a"
@@ -15110,7 +15286,9 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                           <span
                             class="translate"
                           >
-                            <span>
+                            <span
+                              class="primary-lighter-markup-link"
+                            >
                               Monday - Friday 
 
                               <br />
@@ -15220,7 +15398,9 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                               class="ml-0 my-1"
                             >
                               <li>
-                                <span>
+                                <span
+                                  class="primary-lighter-markup-link"
+                                >
                                   Be an employee of 
                                   <b>
                                     <a
@@ -15238,6 +15418,7 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                             </ul>
                             <p>
                               <a
+                                class="primary-lighter-markup-link"
                                 href="https://sf.gov/apply-shirley-chisholm-village-housing"
                                 target="_blank"
                               >
@@ -15249,6 +15430,7 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                             </p>
                             <p>
                               <a
+                                class="primary-lighter-markup-link"
                                 href="#chisholm-preferences"
                                 target="_self"
                               >
@@ -15278,14 +15460,18 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                               <div
                                 class="mb-4"
                               >
-                                <p>
+                                <p
+                                  class="primary-lighter-markup-link"
+                                >
                                   For income calculations, household size includes everyone (all ages) living in the unit.
                                 </p>
                               </div>
                               <div
                                 class="mb-4 primary-lighter-markup-link-desktop"
                               >
-                                <p>
+                                <p
+                                  class="primary-lighter-markup-link"
+                                >
                                   People in your household may need 
                                   <a
                                     href="https://sf.gov/information/special-calculations-household-income"
@@ -15484,7 +15670,9 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                                   If you qualify for a preference, you have a better chance in the lottery. After the lottery, all applicants are ranked and ordered by preference category. If you do not qualify for a preference, you will be ranked below those who do. 
                                 </p>
                                 <p>
-                                  <b>
+                                  <b
+                                    class="primary-lighter-markup-link"
+                                  >
                                     Priority for certain groups - San Francisco Unified School District employees
                                   </b>
                                   <br />
@@ -15495,6 +15683,7 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                                 >
                                   <li>
                                     <a
+                                      class="primary-lighter-markup-link"
                                       href="https://www.sf.gov/learn-how-lottery-works-shirley-chisholm-village"
                                       target="_blank"
                                     >
@@ -15503,6 +15692,7 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                                   </li>
                                   <li>
                                     <a
+                                      class="primary-lighter-markup-link"
                                       href="https://sf.gov/information/learn-about-housing-lottery-preference-programs"
                                       target="_blank"
                                     >
@@ -16052,7 +16242,9 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                           <span
                             class="translate"
                           >
-                            <p>
+                            <p
+                              class="primary-lighter-markup-link"
+                            >
                               Late payments Fees $20.00, NSF checks $35.00, FOB Replacement $50.00, Front Door Key Replacement $25.00, Residents pay for PG&E.
                             </p>
                           </span>
@@ -16215,9 +16407,11 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                         class="text-xs"
                       >
                         <div
-                          class="text-xs inline primary-lighter-markup-link translate"
+                          class="text-xs inline translate"
                         >
-                          <span>
+                          <span
+                            class="primary-lighter-markup-link"
+                          >
                             Post-Lottery Application
                           </span>
                         </div>
@@ -16235,9 +16429,11 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                         class="text-xs"
                       >
                         <div
-                          class="text-xs inline primary-lighter-markup-link translate"
+                          class="text-xs inline translate"
                         >
-                          <span>
+                          <span
+                            class="primary-lighter-markup-link"
+                          >
                             <p>
                               The 
                               <a

@@ -32,7 +32,9 @@ exports[`ListingDetailsHabitat displays habitat info when habitat listing 1`] = 
       Application Process
     </h4>
     <span>
-      <p>
+      <p
+        class="primary-lighter-markup-link"
+      >
         These units are offered by 
         <a
           href="http://www.habitatgsf.org/innes-ave"
@@ -47,7 +49,9 @@ exports[`ListingDetailsHabitat displays habitat info when habitat listing 1`] = 
       class="list-decimal ml-8 mt-4"
     >
       <li>
-        <p>
+        <p
+          class="primary-lighter-markup-link"
+        >
           You must go to a 
           <a
             href="http://www.habitatgsf.org/innes-ave"
@@ -102,7 +106,9 @@ exports[`ListingDetailsHabitat displays habitat info when habitat listing 1`] = 
     <div
       class="mt-4"
     >
-      <p>
+      <p
+        class="primary-lighter-markup-link"
+      >
         People in your household may need 
         <a
           href="https://sf.gov/information/special-calculations-household-income"
