@@ -6,7 +6,7 @@
     text-decoration: underline;
   }
   ul {
-    margin-left: var(--seeds-spacer-label);
+    margin-left: var(--seeds-spacer-section);
   }
   .submitYourInfoPage {
     display: flex;
@@ -33,11 +33,11 @@
     }
     h2 {
       font-size: var(--seeds-font-size-2xl);
-      padding-top: var(--seeds-s10);
+      padding-top: var(--seeds-s4);
     }
     h3 {
       font-size: var(--seeds-font-size-xl);
-      padding-top: var(--seeds-spacer-header);
+      padding-top: var(--seeds-spacer-content);
     }
     .listHeading {
       padding: 0;
@@ -48,7 +48,7 @@
   }
   .inviteToHeader {
     * {
-      margin: var(--seeds-spacer-text) 0;
+      margin: var(--seeds-s1) 0;
     }
     img {
       max-width: 100%;
@@ -86,6 +86,7 @@
   .infoSubSection {
     display: flex;
     flex-direction: column;
+    margin-top: var(--seeds-s4);
     @media (max-width: theme("screens.sm")) {
       padding-bottom: 0;
     }
@@ -117,7 +118,7 @@
     }
     ul {
       list-style-type: disc;
-      margin-left: var(--seeds-spacer-content);
+      margin-left: var(--seeds-spacer-section);
       margin-top: var(--seeds-spacer-text);
     }
     ol {
