@@ -31,7 +31,9 @@ exports[`ListingDetailsLotteryInfo displays when listing has upcoming lottery 1`
         <div
           class="text-gray-700"
         >
-          <div>
+          <div
+            class="primary-lighter-markup-link"
+          >
             <p>
               The lottery will not be in person, but instead will be a virtual lottery.
             </p>

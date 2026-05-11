@@ -126,7 +126,9 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
             <div
               class="feedback-link"
             >
-              <span>
+              <span
+                class="primary-lighter-markup-link"
+              >
                 We'd love to get 
                 <a
                   href="https://airtable.com/appUW1tM8te0Lmf6q/pagyZulZJCm1V4G8D/form?prefill_Last%20visited=%2F&hide_Last%20visited=true"
@@ -338,12 +340,16 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
                         class="mb-0 pt-2"
                       >
                         <li>
-                          <span>
+                          <span
+                            class="primary-lighter-markup-link"
+                          >
                             Not have owned residential property in the past 3 years
                           </span>
                         </li>
                         <li>
-                          <span>
+                          <span
+                            class="primary-lighter-markup-link"
+                          >
                             Meet our 
                             <a
                               class="underline"
@@ -355,7 +361,9 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
                           </span>
                         </li>
                         <li>
-                          <span>
+                          <span
+                            class="primary-lighter-markup-link"
+                          >
                             Have completed 
                             <a
                               class="underline"
@@ -367,7 +375,9 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
                           </span>
                         </li>
                         <li>
-                          <span>
+                          <span
+                            class="primary-lighter-markup-link"
+                          >
                             Be pre-approved for a mortgage by a 
                             <a
                               class="underline"
@@ -379,7 +389,9 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
                           </span>
                         </li>
                         <li>
-                          <span>
+                          <span
+                            class="primary-lighter-markup-link"
+                          >
                             Have enough in savings for closing costs and downpayment
                           </span>
                         </li>
@@ -535,7 +547,9 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
                             <div
                               class="text-base"
                             >
-                              <span>
+                              <span
+                                class="primary-lighter-markup-link"
+                              >
                                 If you cannot combine everything into 1 file, you can upload multiple files. Name each file as shown above and include the type of document. 
                                 <i>
                                   Example: 1288 Howard - Chow, Tania - Proof of Income
@@ -556,7 +570,9 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
                             <div
                               class="text-base pb-2"
                             >
-                              <span>
+                              <span
+                                class="primary-lighter-markup-link"
+                              >
                                 <a
                                   class="underline"
                                   href="https://account.box.com/signup/personal?tc=annual"
@@ -606,7 +622,9 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
                               <li
                                 class="text-base"
                               >
-                                <span>
+                                <span
+                                  class="primary-lighter-markup-link"
+                                >
                                   Fill out your information and get a link to upload your 
                                   <a
                                     class="underline"
@@ -671,7 +689,9 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
                     <div
                       class="pt-4"
                     >
-                      <span>
+                      <span
+                        class="primary-lighter-markup-link"
+                      >
                         We will email you your place in line within 
                         <b>
                           2 business days
@@ -682,7 +702,9 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
                     <div
                       class="py-2"
                     >
-                      <span>
+                      <span
+                        class="primary-lighter-markup-link"
+                      >
                         If your application is approved, you will need to enter a purchase agreement within 
                         <b>
                           7 days
@@ -717,7 +739,9 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
               <p
                 class="mb-4"
               >
-                <span>
+                <span
+                  class="primary-lighter-markup-link"
+                >
                   Housing counselors can help with your application. Support is available in many languages.
                 </span>
               </p>

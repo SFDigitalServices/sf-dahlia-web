@@ -163,7 +163,10 @@ export const getSfGovUrl = (enLink: string, path?: string) => {
  */
 export function renderMarkup(translatedString: string, allowedTags?: string) {
   return (
-    <Markdown options={{ forceBlock: true, namedCodesToUnicode: { "#39": "\u0027" } }}>
+    <Markdown
+      options={{ forceBlock: true, namedCodesToUnicode: { "#39": "\u0027" } }}
+      className="primary-lighter-markup-link"
+    >
       {stripMostTags(translatedString, allowedTags)}
     </Markdown>
   )
@@ -171,7 +174,10 @@ export function renderMarkup(translatedString: string, allowedTags?: string) {
 
 export function renderInlineMarkup(translatedString: string, allowedTags?: string) {
   return (
-    <Markdown options={{ namedCodesToUnicode: { "#39": "\u0027" } }}>
+    <Markdown
+      options={{ namedCodesToUnicode: { "#39": "\u0027" } }}
+      className="primary-lighter-markup-link"
+    >
       {stripMostTags(translatedString, allowedTags)}
     </Markdown>
   )
