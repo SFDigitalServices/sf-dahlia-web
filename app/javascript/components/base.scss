@@ -252,13 +252,13 @@ nav {
 }
 
 .primary-lighter-markup-link a {
-  color: var(--bloom-color-blue-700);
+  color: var(--bloom-color-blue-500);
   text-decoration: underline;
 }
 
 .primary-lighter-markup-link-desktop a {
   @media (min-width: $screen-md) {
-    color: var(--bloom-color-blue-700);
+    color: var(--bloom-color-blue-500);
     text-decoration: underline;
   }
 }
