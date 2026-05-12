@@ -40,6 +40,10 @@ const withAppSetup =
 
     useGTMInitializer(process.env.GOOGLE_TAG_MANAGER_KEY)
 
+    const localization = {
+      formButtonPrimary: "Hi Yindi!",
+    }
+
     function ProvidersWithConditionalClerk() {
       const Providers = (
         <ErrorBoundary boundaryScope={BoundaryScope.page}>
@@ -62,7 +66,15 @@ const withAppSetup =
       )
 
       return (
-        <ClerkProvider publishableKey={process.env.CLERK_PUBLISHABLE_KEY}>
+        <ClerkProvider
+          publishableKey={process.env.CLERK_PUBLISHABLE_KEY}
+          appearance={{
+            variables: {
+              colorPrimary: "#137AD7",
+            },
+          }}
+          localization={localization}
+        >
           {Providers}
         </ClerkProvider>
       )
