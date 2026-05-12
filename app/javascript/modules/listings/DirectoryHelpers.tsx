@@ -235,6 +235,9 @@ export const getListingCards = (
                 headers: {
                   unitType: { name: "t.units", className: headerClassNames },
                   availability: { name: "t.available", className: headerClassNames },
+                  ...(directoryType === "forSale" && {
+                    income: { name: "t.income", className: headerClassNames },
+                  }),
                   colThree: {
                     name: directoryType === "forRent" ? "t.incomeRange" : "saleDirectory.hoaDues",
                     className: headerClassNames,
