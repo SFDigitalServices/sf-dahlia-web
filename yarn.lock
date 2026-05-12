@@ -1059,25 +1059,24 @@
     react-tabs "^6.0.0"
     typescript "^4.4.2"
 
-"@clerk/clerk-react@^5.61.6":
-  version "5.61.6"
-  resolved "https://registry.yarnpkg.com/@clerk/clerk-react/-/clerk-react-5.61.6.tgz#434358890796785211676490a6f052e192c25d0b"
-  integrity sha512-OiyBlrnkRr9IhZtPd7EwlzhYScBpvNKJ8lgg7Uw6JElzJYz854IeQaez5mAfpiib3LcW/Dn53E2PQhagcuLJ3Q==
+"@clerk/react@^6.0.0":
+  version "6.6.2"
+  resolved "https://registry.yarnpkg.com/@clerk/react/-/react-6.6.2.tgz#235c8be54f7462a7457b928fe306d60eb75c0a0a"
+  integrity sha512-eLev3C21yh2vqyvEBfXpc1QHa4q+wxbtRdTtBG0fCI+tMQUim8TIS300AJAciM6ox8tgInTWwIeIxr5jiYsvtw==
   dependencies:
-    "@clerk/shared" "^3.47.5"
+    "@clerk/shared" "^4.10.2"
     tslib "2.8.1"
 
-"@clerk/shared@^3.47.5":
-  version "3.47.5"
-  resolved "https://registry.yarnpkg.com/@clerk/shared/-/shared-3.47.5.tgz#77b8d4d3ad6ef308ac84d407dfb45567f29b3f09"
-  integrity sha512-rDVe73/VN2NZXhtrLRHshkUpQDrevAqDRxeXUl2M0IBEBkcl+VMHlV7fep53cVWo0b3gIqLk82pmmi+WoyF/xg==
+"@clerk/shared@^4.10.2":
+  version "4.10.2"
+  resolved "https://registry.yarnpkg.com/@clerk/shared/-/shared-4.10.2.tgz#9e8aaafdc1fcb46e0cbf30f6cb4e51abaed86d67"
+  integrity sha512-2RXGaCV94U2wYWaMQZA/AhVkqjcSx8f+oVjh6wgr4yXDmZ24BQRjPJ+K4L6IHiB/agoaXtKWJ0GI8InRZjo9/g==
   dependencies:
-    csstype "3.1.3"
+    "@tanstack/query-core" "^5.100.6"
     dequal "2.0.3"
     glob-to-regexp "0.4.1"
     js-cookie "3.0.5"
     std-env "^3.9.0"
-    swr "2.3.4"
 
 "@colors/colors@1.5.0":
   version "1.5.0"
@@ -2610,6 +2609,11 @@
   integrity sha512-4BAffykYOgO+5nzBWYwE3W90sBgLJoUPRWWcL8wlyiM8IB8ipJz3UMJ9KXQd1RKQXpKp8Tutn80HZtWsu2u76w==
   dependencies:
     defer-to-connect "^2.0.0"
+
+"@tanstack/query-core@^5.100.6":
+  version "5.100.10"
+  resolved "https://registry.yarnpkg.com/@tanstack/query-core/-/query-core-5.100.10.tgz#aeb34d301fd4ff9762e67dfa018adc33b7a18be4"
+  integrity sha512-8UR0yJR+GiQ40m3lPhUr0xbfAupe6GSQiksSBSa9SM2NjezFyxXCIA69/lz8cSoNKZLrw1/PktIyQBJcVeMi3w==
 
 "@testim/chrome-version@^1.1.4":
   version "1.1.4"
@@ -5481,11 +5485,6 @@ cssstyle@^2.3.0:
   integrity sha512-AZL67abkUzIuvcHqk7c09cezpGNcxUxU4Ioi/05xHk4DQeTkWmGYftIE6ctU6AEt+Gn4n1lDStOtj7FKycP71A==
   dependencies:
     cssom "~0.3.6"
-
-csstype@3.1.3:
-  version "3.1.3"
-  resolved "https://registry.yarnpkg.com/csstype/-/csstype-3.1.3.tgz#d80ff294d114fb0e6ac500fbf85b60137d7eff81"
-  integrity sha512-M1uQkMl8rQK/szD0LNhtqxIPLpimGm8sOBwU7lLnCpSbTyY3yeU1Vc7l4KT5zT4s/yOxHH5O7tIuuLOCnLADRw==
 
 csstype@^3.0.2, csstype@^3.2.2:
   version "3.2.3"
@@ -13640,14 +13639,6 @@ swc-loader@^0.2.6:
   dependencies:
     "@swc/counter" "^0.1.3"
 
-swr@2.3.4:
-  version "2.3.4"
-  resolved "https://registry.yarnpkg.com/swr/-/swr-2.3.4.tgz#60bcb5b97cae157a6ef69eff0ed2beb9010eba69"
-  integrity sha512-bYd2lrhc+VarcpkgWclcUi92wYCpOgMws9Sd1hG1ntAu0NEy+14CbotuFjshBU2kt9rYj9TSmDcybpxpeTU1fg==
-  dependencies:
-    dequal "^2.0.3"
-    use-sync-external-store "^1.4.0"
-
 symbol-tree@^3.2.4:
   version "3.2.4"
   resolved "https://registry.yarnpkg.com/symbol-tree/-/symbol-tree-3.2.4.tgz#430637d248ba77e078883951fb9aa0eed7c63fa2"
@@ -14427,11 +14418,6 @@ use-sidecar@^1.1.2, use-sidecar@^1.1.3:
   dependencies:
     detect-node-es "^1.1.0"
     tslib "^2.0.0"
-
-use-sync-external-store@^1.4.0:
-  version "1.6.0"
-  resolved "https://registry.yarnpkg.com/use-sync-external-store/-/use-sync-external-store-1.6.0.tgz#b174bfa65cb2b526732d9f2ac0a408027876f32d"
-  integrity sha512-Pp6GSwGP/NrPIrxVFAIkOQeyw8lFenOHijQWkUTrDvrF4ALqylP2C/KCkeS9dpUM3KvYRQhna5vt7IL95+ZQ9w==
 
 util-arity@^1.0.2:
   version "1.1.0"

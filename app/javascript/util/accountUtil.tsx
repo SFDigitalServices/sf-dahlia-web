@@ -75,11 +75,10 @@ export const getDobStringFromDobObject = (dobObject: DOBFieldValues) => {
 
 export const customAuthLocalization = () => {
   return {
-    formButtonPrimary: "Hi Yindi!",
     signIn: {
       start: {
         title: "Sign in with email or phone",
-        subtitle: "(TBD on how to do that in one field)",
+        subtitle: "",
       },
     },
   }

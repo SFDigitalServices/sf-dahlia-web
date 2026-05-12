@@ -1,6 +1,6 @@
 import React from "react"
 import { SignInForm } from "../authentication/SignInForm"
-import { SignIn as ClerkSignIn } from "@clerk/clerk-react"
+import { SignIn as ClerkSignIn } from "@clerk/react"
 
 import { t } from "@bloom-housing/ui-components"
 
@@ -19,7 +19,7 @@ const SignIn = (_props: SignInProps) => {
   }
   return (
     <FormsLayout title={t("pageTitle.signIn")}>
-      {clerkEnabled ? <ClerkSignIn /> : <SignInForm />}
+      {clerkEnabled ? <ClerkSignIn withSignUp /> : <SignInForm />}
     </FormsLayout>
   )
 }
