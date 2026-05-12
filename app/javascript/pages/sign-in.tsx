@@ -1,4 +1,5 @@
 import React from "react"
+import { SignInForm } from "../authentication/SignInForm"
 import { SignIn as ClerkSignIn } from "@clerk/clerk-react"
 
 import { t } from "@bloom-housing/ui-components"
@@ -11,9 +12,14 @@ interface SignInProps {
 }
 
 const SignIn = (_props: SignInProps) => {
+  //const { unleashFlag: clerkEnabled } = useFeatureFlag(UNLEASH_FLAG.CLERK_AUTH, false)
+  const clerkEnabled = true
+  if (clerkEnabled) {
+    console.log("Clerk authentication is enabled.")
+  }
   return (
     <FormsLayout title={t("pageTitle.signIn")}>
-      <ClerkSignIn />
+      {clerkEnabled ? <ClerkSignIn /> : <SignInForm />}
     </FormsLayout>
   )
 }

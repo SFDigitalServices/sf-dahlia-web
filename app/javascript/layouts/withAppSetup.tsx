@@ -13,6 +13,7 @@ import ErrorBoundary, { BoundaryScope } from "../components/ErrorBoundary"
 import "@bloom-housing/ui-seeds/src/global/app-css.scss"
 import { useGTMInitializer } from "../hooks/analytics/useInitializeGTM"
 import { AppPages } from "../util/routeUtil"
+import { customAuthLocalization, customAuthAppearance } from "../util/accountUtil"
 
 interface ObjectWithAssets {
   assetPaths: unknown
@@ -40,16 +41,6 @@ const withAppSetup =
 
     useGTMInitializer(process.env.GOOGLE_TAG_MANAGER_KEY)
 
-    const localization = {
-      formButtonPrimary: "Hi Yindi!",
-      signIn: {
-        start: {
-          title: "Sign in with email or phone",
-          subtitle: "(TBD on how to do that in one field)",
-        },
-      },
-    }
-
     function ProvidersWithConditionalClerk() {
       const Providers = (
         <ErrorBoundary boundaryScope={BoundaryScope.page}>
@@ -74,12 +65,8 @@ const withAppSetup =
       return (
         <ClerkProvider
           publishableKey={process.env.CLERK_PUBLISHABLE_KEY}
-          appearance={{
-            variables: {
-              colorPrimary: "#137AD7",
-            },
-          }}
-          localization={localization}
+          appearance={customAuthAppearance()}
+          localization={customAuthLocalization()}
         >
           {Providers}
         </ClerkProvider>
