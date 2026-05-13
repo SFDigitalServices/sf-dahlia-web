@@ -1,9 +1,10 @@
 import React from "react"
 import { SignInForm } from "../authentication/SignInForm"
-import { SignIn as ClerkSignIn } from "@clerk/react"
+import { ClerkSignInForm } from "../authentication/ClerkSignInForm"
 
 import { t } from "@bloom-housing/ui-components"
 
+import Layout from "../layouts/Layout"
 import FormsLayout from "../layouts/FormLayout"
 import withAppSetup from "../layouts/withAppSetup"
 import { AppPages } from "../util/routeUtil"
@@ -17,9 +18,13 @@ const SignIn = (_props: SignInProps) => {
   if (clerkEnabled) {
     console.log("Clerk authentication is enabled.")
   }
-  return (
+  return clerkEnabled ? (
+    <Layout title={t("pageTitle.signIn")}>
+      <ClerkSignInForm />
+    </Layout>
+  ) : (
     <FormsLayout title={t("pageTitle.signIn")}>
-      {clerkEnabled ? <ClerkSignIn withSignUp /> : <SignInForm />}
+      <SignInForm />
     </FormsLayout>
   )
 }

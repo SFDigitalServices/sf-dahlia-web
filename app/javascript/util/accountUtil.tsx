@@ -72,22 +72,3 @@ export const getDobStringFromDobObject = (dobObject: DOBFieldValues) => {
   )
   return date.toISOString().split("T")[0]
 }
-
-export const customAuthLocalization = () => {
-  return {
-    signIn: {
-      start: {
-        title: "Sign in with email or phone",
-        subtitle: "",
-      },
-    },
-  }
-}
-
-export const customAuthAppearance = () => {
-  return {
-    variables: {
-      colorPrimary: "#137AD7",
-    },
-  }
-}

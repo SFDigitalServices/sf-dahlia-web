@@ -1059,6 +1059,13 @@
     react-tabs "^6.0.0"
     typescript "^4.4.2"
 
+"@clerk/localizations@^4.6.2":
+  version "4.6.2"
+  resolved "https://registry.yarnpkg.com/@clerk/localizations/-/localizations-4.6.2.tgz#61bfb0b6c8adc726788839198646398c9782ecde"
+  integrity sha512-wcA+BcXHJyoZWh7aRfSp56u3uSLHHDlBHLfJ86DoC8fCxwMkl4/njwjN8sahFm5fRN5gOkUd2qnxYwBHCLeDoQ==
+  dependencies:
+    "@clerk/shared" "^4.10.2"
+
 "@clerk/react@^6.0.0":
   version "6.6.2"
   resolved "https://registry.yarnpkg.com/@clerk/react/-/react-6.6.2.tgz#235c8be54f7462a7457b928fe306d60eb75c0a0a"

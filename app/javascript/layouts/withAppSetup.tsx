@@ -13,7 +13,7 @@ import ErrorBoundary, { BoundaryScope } from "../components/ErrorBoundary"
 import "@bloom-housing/ui-seeds/src/global/app-css.scss"
 import { useGTMInitializer } from "../hooks/analytics/useInitializeGTM"
 import { AppPages } from "../util/routeUtil"
-import { customAuthLocalization, customAuthAppearance } from "../util/accountUtil"
+import { localization, appearance } from "../util/authUtil"
 
 interface ObjectWithAssets {
   assetPaths: unknown
@@ -65,8 +65,8 @@ const withAppSetup =
       return (
         <ClerkProvider
           publishableKey={process.env.CLERK_PUBLISHABLE_KEY}
-          appearance={customAuthAppearance()}
-          localization={customAuthLocalization()}
+          appearance={appearance}
+          localization={localization}
         >
           {Providers}
         </ClerkProvider>
