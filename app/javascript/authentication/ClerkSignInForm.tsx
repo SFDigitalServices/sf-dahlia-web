@@ -2,36 +2,54 @@ import * as React from "react"
 import { useSignUp, useSignIn } from "@clerk/react"
 import { Field, Form } from "@bloom-housing/ui-components"
 import { useForm } from "react-hook-form"
-import { Card, Heading, Link, Button, FormErrorMessage } from "@bloom-housing/ui-seeds"
+import { Card, Heading, Link, Button } from "@bloom-housing/ui-seeds"
 import { getAssistancePath } from "../util/routeUtil"
 import styles from "./ClerkSignInForm.module.scss"
-import ClerkVerifyCode from "./ClerkVerifyCode"
+import VerifyCode from "./components/VerifyCode"
+import { isValidEmail, isValidPhone } from "../util/authUtil"
 
 export const ClerkSignInForm = () => {
   // eslint-disable-next-line @typescript-eslint/unbound-method
   const { handleSubmit, errors, register } = useForm({ reValidateMode: "onSubmit" })
   const { signUp } = useSignUp()
   const { signIn } = useSignIn()
-  const [showVerifyForm, setShowVerifyForm] = React.useState<"email" | "phone" | null>(null)
+  const [showVerifyCode, setShowVerifyCode] = React.useState(false)
+  const [loginMethod, setLoginMethod] = React.useState<"email" | "phone" | null>(null)
+  const [loginType, setLoginType] = React.useState<"signIn" | "signUp" | null>(null)
 
   // eslint-disable-next-line @typescript-eslint/no-this-alias
   const onSubmit = async (data: { signInField: string }) => {
     const signInField = data.signInField
-    //First try to sign in
+    if (isValidEmail(signInField)) {
+      setLoginMethod("email")
+    } else if (isValidPhone(signInField)) {
+      setLoginMethod("phone")
+    }
+    //First try to login
     const { error } = await signIn.create({ identifier: signInField })
     if (error) {
-      console.error("Error signing in", data, error)
-      //No account found - sign up instead
-      await signUp.create({ emailAddress: signInField })
+      console.error("Could not sign in", data, error)
+      // If login fails, create an account
+      setLoginType("signUp")
+      if (loginMethod === "email") {
+        await signUp.verifications.sendEmailCode()
+      } else if (loginMethod === "phone") {
+        await signUp.verifications.sendPhoneCode()
+      }
     } else {
-      //Account found - move to verification page
-      await signIn.emailCode.sendCode()
-      setShowVerifyForm("email")
-      return
+      setLoginType("signIn")
+      // If login succeeds, send verification code
+      if (loginMethod === "email") {
+        await signIn.emailCode.sendCode()
+      } else if (loginMethod === "phone") {
+        await signIn.phoneCode.sendCode()
+      }
     }
+    setShowVerifyCode(true)
   }
-  if (showVerifyForm) {
-    return <ClerkVerifyCode fieldType={showVerifyForm} />
+
+  if (showVerifyCode) {
+    return <VerifyCode loginMethod={loginMethod} loginType={loginType} />
   }
   return (
     <span className={styles.signIn}>
@@ -48,10 +66,17 @@ export const ClerkSignInForm = () => {
               name="signInField"
               label="Email or phone number"
               type="text"
+              error={!!errors?.signInField}
+              errorMessage={errors?.signInField?.message}
+              validation={{
+                required: true,
+                validate: (data: string) => {
+                  if (!isValidEmail(data) && !isValidPhone(data)) {
+                    return "Please enter a valid email or phone number"
+                  }
+                },
+              }}
             />
-            {errors.signInField?.message && (
-              <FormErrorMessage>{errors.signInField.message}</FormErrorMessage>
-            )}
           </Card.Section>
           <Card.Footer className={styles.actionFooter}>
             <Button type="submit">Continue</Button>

@@ -1,0 +1,25 @@
+.actionFooter {
+  background-color: var(--seeds-color-primary-lighter);
+  display: flex;
+  justify-content: center;
+}
+
+.enterCode {
+  padding: var(--seeds-spacer-content);
+}
+
+.actionMessage {
+  margin: var(--seeds-spacer-content) 0;
+}
+
+.differentWaysButton {
+  display: flex;
+  justify-content: center;
+  padding-bottom: var(--seeds-spacer-content);
+}
+
+.differentWays {
+  display: flex;
+  justify-content: center;
+  gap: var(--seeds-spacer-content);
+}
