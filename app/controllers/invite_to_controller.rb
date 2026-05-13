@@ -49,7 +49,7 @@ class InviteToController < ApplicationController
     application_number = decoded_params['applicationNumber']
     invite_action = decoded_params['act']
     app_id = decoded_params['appId']
-    is_test = decoded_params['isTest']
+    is_test = ActiveModel::Type::Boolean.new.cast(decoded_params['isTest']) == true
 
     if (invite_action.blank? && response.blank?) || (deadline && deadline_has_passed?(deadline)) || language_change? || is_test
       Rails.logger.info(
