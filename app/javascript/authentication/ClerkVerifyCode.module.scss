@@ -1,0 +1,13 @@
+.verifyCard {
+  margin: var(--seeds-s20) var(--seeds-s32);
+  @media (max-width: theme("screens.sm")) {
+    margin: 0;
+  }
+}
+
+.actionFooter {
+  background-color: var(--seeds-color-primary-lighter);
+  display: flex;
+  justify-content: center;
+  padding: var(--seeds-s8);
+}

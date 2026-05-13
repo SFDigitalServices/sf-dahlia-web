@@ -1,18 +1,34 @@
 .signIn {
-  padding: var(--seeds-s20);
-  display: flex;
-  flex-direction: row;
+  padding: var(--seeds-s20) var(--seeds-s32);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 1rem;
   justify-content: center;
+
   @media (max-width: theme("screens.sm")) {
+    padding: 0;
+    grid-template-columns: 1fr;
+  }
+
+  .signInCard {
+    display: flex;
     flex-direction: column;
+    height: 100%;
+    justify-content: space-between;
   }
 
-  .infoCard {
+  .infoFooter {
     padding: var(--seeds-spacer-content);
   }
 
-  .footer {
+  .actionCardHeader {
     padding: var(--seeds-spacer-content);
+  }
+
+  .actionFooter {
+    background-color: var(--seeds-color-primary-lighter);
+    display: flex;
+    justify-content: center;
+    padding: var(--seeds-s8);
   }
 }

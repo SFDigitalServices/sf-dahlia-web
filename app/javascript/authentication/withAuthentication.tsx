@@ -25,10 +25,15 @@ export const withAuthentication = <P extends object>(
   { redirectType }: WithAuthenticationProps = {}
 ) => {
   const WithAuthenticationComponent = (props: P) => {
+    //const { unleashFlag: clerkEnabled } = useFeatureFlag(UNLEASH_FLAG.CLERK_AUTH, false)
+    const clerkEnabled = true
+
     const { profile, loading, initialStateLoaded } = React.useContext(UserContext)
     const { pushToDataLayer } = useGTMDataLayer()
 
     React.useEffect(() => {
+      if (clerkEnabled) return
+
       const params = parseUrlParams(window.location.href)
 
       if (!isTokenValid() && !loading && initialStateLoaded) {
@@ -47,7 +52,11 @@ export const withAuthentication = <P extends object>(
         const url = window.location.origin + window.location.pathname
         window.history.replaceState({}, document.title, url)
       }
-    }, [profile, pushToDataLayer, loading, initialStateLoaded])
+    }, [clerkEnabled, profile, pushToDataLayer, loading, initialStateLoaded])
+
+    if (clerkEnabled) {
+      return <WrappedComponent {...props} />
+    }
 
     if (loading || !profile) {
       return null

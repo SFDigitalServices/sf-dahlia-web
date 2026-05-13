@@ -67,6 +67,8 @@ const withAppSetup =
           publishableKey={process.env.CLERK_PUBLISHABLE_KEY}
           appearance={appearance}
           localization={localization}
+          signInUrl="/sign-in"
+          signUpUrl="/sign-in"
         >
           {Providers}
         </ClerkProvider>
