@@ -85,7 +85,7 @@ const Address = ({
             ? t("error.address")
             : errors?.[addressStreet]?.message
         }
-        error={!!errors?.[addressStreet]}
+        error={!!errors?.[addressStreet] || !!addressError}
         register={register}
       />
       {showAptOrUnit && (
@@ -94,6 +94,7 @@ const Address = ({
           label={t("label.address2")}
           register={register}
           validation={{ maxLength: LISTING_APPLY_FORMS_INPUT_MAX_LENGTH.address }}
+          error={!!addressError}
         />
       )}
       <div className={styles["address-field-group"]}>
@@ -113,7 +114,7 @@ const Address = ({
               ? t("error.city")
               : errors?.[addressCity]?.message
           }
-          error={!!errors?.[addressCity]}
+          error={!!errors?.[addressCity] || !!addressError}
           register={register}
         />
         <Select
@@ -123,8 +124,8 @@ const Address = ({
             required: requireAddress,
             maxLength: LISTING_APPLY_FORMS_INPUT_MAX_LENGTH.address,
           }}
-          error={!!errors?.[addressState]}
-          errorMessage={t("error.state")}
+          error={!!errors?.[addressState] || !!addressError}
+          errorMessage={errors?.[addressCity] && t("error.state")}
           register={register}
           controlClassName="control"
           options={stateOptions}
@@ -146,7 +147,7 @@ const Address = ({
             ? t("error.zip")
             : errors?.[addressZipcode]?.message
         }
-        error={!!errors?.[addressZipcode]}
+        error={!!errors?.[addressZipcode] || !!addressError}
         register={register}
       />
       {addressError && (
@@ -185,7 +186,7 @@ const Address = ({
                 ? t("error.address")
                 : errors?.[mailingAddressStreet]?.message
             }
-            error={!!errors?.[mailingAddressStreet] || !!addressError}
+            error={!!errors?.[mailingAddressStreet]}
             register={register}
           />
           <div className={styles["address-field-group"]}>
@@ -205,7 +206,7 @@ const Address = ({
                   ? t("error.city")
                   : errors?.[mailingAddressCity]?.message
               }
-              error={!!errors?.[mailingAddressCity] || !!addressError}
+              error={!!errors?.[mailingAddressCity]}
               register={register}
             />
             <Select
@@ -215,7 +216,7 @@ const Address = ({
                 required: requireAddress,
                 maxLength: LISTING_APPLY_FORMS_INPUT_MAX_LENGTH.address,
               }}
-              error={!!errors?.[mailingAddressState] || !!addressError}
+              error={!!errors?.[mailingAddressState]}
               errorMessage={t("error.state")}
               register={register}
               controlClassName="control"
@@ -234,7 +235,7 @@ const Address = ({
               },
             }}
             errorMessage={t("error.zip")}
-            error={!!errors?.[mailingAddressZipcode] || !!addressError}
+            error={!!errors?.[mailingAddressZipcode]}
             register={register}
           />
         </>
