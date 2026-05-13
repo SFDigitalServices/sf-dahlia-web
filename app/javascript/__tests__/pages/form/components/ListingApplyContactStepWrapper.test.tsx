@@ -2,7 +2,7 @@ import React from "react"
 import { screen, waitFor } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
 import { t } from "@bloom-housing/ui-components"
-import ListingContactStepWrapper from "../../../../pages/form/components/ListingContactStepWrapper"
+import ListingApplyContactStepWrapper from "../../../../pages/form/components/ListingApplyContactStepWrapper"
 import { renderWithFormContextWrapper } from "../../../__util__/renderUtils"
 import { locateVerifiedAddress } from "../../../../api/formApiService"
 
@@ -18,9 +18,9 @@ Object.defineProperty(window, "scrollTo", {
 })
 Element.prototype.scrollTo = jest.fn()
 
-const renderListingContactStepWrapper = (formData: Record<string, unknown> = {}) => {
+const renderListingApplyContactStepWrapper = (formData: Record<string, unknown> = {}) => {
   const { mockHandleNextStep, mockHandlePrevStep, mockSaveFormData } = renderWithFormContextWrapper(
-    <ListingContactStepWrapper
+    <ListingApplyContactStepWrapper
       title="b2Contact.title"
       titleVars={{ name: { dataSource: "form", dataKey: "name" } }}
       fieldNames={{
@@ -75,7 +75,7 @@ const renderListingContactStepWrapper = (formData: Record<string, unknown> = {})
   return { mockHandleNextStep, mockHandlePrevStep, mockSaveFormData }
 }
 
-describe("ListingContactStepWrapper", () => {
+describe("ListingApplyContactStepWrapper", () => {
   beforeEach(() => {
     jest.clearAllMocks()
     mockLocateVerifiedAddress.mockResolvedValue({
@@ -90,7 +90,7 @@ describe("ListingContactStepWrapper", () => {
     })
   })
   it("displays the error banner for any validation errors", async () => {
-    renderListingContactStepWrapper({})
+    renderListingApplyContactStepWrapper({})
     const user = userEvent.setup()
     await user.click(screen.getByRole("button", { name: /next/i }))
     await waitFor(() => {
@@ -99,7 +99,7 @@ describe("ListingContactStepWrapper", () => {
   })
 
   it("updates form data with the verified address", async () => {
-    const { mockHandleNextStep, mockSaveFormData } = renderListingContactStepWrapper({
+    const { mockHandleNextStep, mockSaveFormData } = renderListingApplyContactStepWrapper({
       addressStreet: "123 main street",
       addressAptOrUnit: "apartment four bee",
       addressCity: "the city",
@@ -136,7 +136,7 @@ describe("ListingContactStepWrapper", () => {
     mockLocateVerifiedAddress.mockRejectedValue({
       response: { status: 422 },
     })
-    renderListingContactStepWrapper({
+    renderListingApplyContactStepWrapper({
       addressStreet: "123 Main St",
       addressAptOrUnit: "Apt 4B",
       addressCity: "San Francisco",
@@ -157,7 +157,7 @@ describe("ListingContactStepWrapper", () => {
   })
 
   it("displays an error for pre-api validation", async () => {
-    renderListingContactStepWrapper({
+    renderListingApplyContactStepWrapper({
       addressStreet: "Not allowed PO Box",
       addressAptOrUnit: "Apt 4B",
       addressCity: "San Francisco",

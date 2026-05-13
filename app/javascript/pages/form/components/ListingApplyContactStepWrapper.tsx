@@ -13,7 +13,7 @@ import YesNoRadio from "./YesNoRadio"
 import Phone from "./Phone"
 import Address from "./Address"
 
-interface ListingContactStepWrapperProps {
+interface ListingApplyContactStepWrapperProps {
   title: string
   titleVars?: Record<string, DataSchema>
   fieldNames: {
@@ -37,7 +37,7 @@ interface ListingContactStepWrapperProps {
   }
 }
 
-const ListingContactStepWrapper = ({
+const ListingApplyContactStepWrapper = ({
   title,
   titleVars,
   fieldNames: {
@@ -59,7 +59,7 @@ const ListingContactStepWrapper = ({
     mailingAddressZipcode,
     question,
   },
-}: ListingContactStepWrapperProps) => {
+}: ListingApplyContactStepWrapperProps) => {
   const formEngineContext = useFormEngineContext()
   const {
     staticData,
@@ -205,4 +205,4 @@ const ListingContactStepWrapper = ({
   )
 }
 
-export default ListingContactStepWrapper
+export default ListingApplyContactStepWrapper

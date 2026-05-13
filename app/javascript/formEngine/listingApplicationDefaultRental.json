@@ -76,7 +76,7 @@
         "sectionName": "you"
       },
       "componentType": "step",
-      "componentName": "ListingContactStepWrapper",
+      "componentName": "ListingApplyContactStepWrapper",
       "props": {
         "title": "b2Contact.title",
         "titleVars": {
