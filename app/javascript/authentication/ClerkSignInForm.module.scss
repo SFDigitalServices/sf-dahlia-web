@@ -1,11 +1,15 @@
 .signIn {
-  padding: var(--seeds-spacer-section);
+  padding: var(--seeds-s20);
   display: flex;
   flex-direction: row;
   gap: 1rem;
   justify-content: center;
   @media (max-width: theme("screens.sm")) {
     flex-direction: column;
+  }
+
+  .infoCard {
+    padding: var(--seeds-spacer-content);
   }
 
   .footer {

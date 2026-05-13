@@ -12,6 +12,7 @@ import {
   SiteHeader,
   t,
 } from "@bloom-housing/ui-components"
+import { useClerk } from "@clerk/react"
 import Markdown from "markdown-to-jsx"
 import UserContext from "../authentication/context/UserContext"
 import { ConfigContext } from "../lib/ConfigContext"
@@ -72,7 +73,11 @@ const getLanguageItems = () => {
   return languageItems
 }
 
-const getMenuLinks = (signedIn: boolean, signOut: () => void) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const getMenuLinks = (signedIn: boolean, signOut: () => void, clerk: any) => {
+  const clerkFlag = true
+  //const { clerkFlag: clerkEnabled } = useFeatureFlag(UNLEASH_FLAG.CLERK_AUTH, false)
+
   const menuLinks: MenuLink[] = [
     {
       title: t("nav.rent"),
@@ -115,6 +120,10 @@ const getMenuLinks = (signedIn: boolean, signOut: () => void) => {
           title: t("nav.signOut"),
           iconElement: <div className="w-6" />, // Empty div to keep the icon space
           onClick: () => {
+            if (clerkFlag) {
+              clerk.signOut()
+              return
+            }
             // FIXME: Setup Site alert message for logging out DAH-974
             // setSiteAlertMessage(t("signIn.signedOutSuccessfully"), "notice")
             signOut()
@@ -136,6 +145,7 @@ const getMenuLinks = (signedIn: boolean, signOut: () => void) => {
 const Layout = (props: LayoutProps) => {
   const { getAssetPath } = useContext(ConfigContext)
   const { signOut } = useContext(UserContext)
+  const clerk = useClerk()
 
   if (window.document["documentMode"]) {
     /* eslint-disable-next-line react-hooks/immutability */
@@ -187,7 +197,7 @@ const Layout = (props: LayoutProps) => {
             mobileText={true}
             logoWidth={"medium"}
             logoClass="translate"
-            menuLinks={getMenuLinks(isTokenValid(), signOut)}
+            menuLinks={getMenuLinks(isTokenValid(), signOut, clerk)}
             strings={{
               skipToMainContent: t("t.skipToMainContent"),
               logoAriaLable: t("t.dahliaSanFranciscoHousingPortal"),

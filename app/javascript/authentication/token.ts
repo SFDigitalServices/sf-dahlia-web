@@ -111,9 +111,9 @@ export const clearHeadersConnectionIssue = () => {
 const getTokenTtl = (): number =>
   Number.parseInt(getAuthHeaders()?.expiry as string) * 1000 - Date.now()
 export const isTokenValid = (): boolean => {
-  const unleashFlag = true
-  //const { unleashFlag: clerkEnabled } = useFeatureFlag(UNLEASH_FLAG.CLERK_AUTH, false)
-  return unleashFlag
+  const clerkFlag = true
+  //const { clerkFlag: clerkEnabled } = useFeatureFlag(UNLEASH_FLAG.CLERK_AUTH, false)
+  return clerkFlag
     ? (() => {
         const { isSignedIn } = useUser()
         return isSignedIn

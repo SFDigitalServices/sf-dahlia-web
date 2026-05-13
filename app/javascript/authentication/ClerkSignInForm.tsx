@@ -10,7 +10,7 @@ export const ClerkSignInForm = () => {
       <Card>
         <SignIn withSignUp forceRedirectUrl={getMyAccountPath()} />
       </Card>
-      <Card>
+      <Card className={styles.infoCard}>
         <Card.Header>
           <Heading priority={1} size="lg">
             Accounts are awesome because you can:
