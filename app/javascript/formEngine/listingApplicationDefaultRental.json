@@ -97,6 +97,7 @@
           "addressCity": "primaryApplicantAddressCity",
           "addressState": "primaryApplicantAddressState",
           "addressZipcode": "primaryApplicantAddressZipcode",
+          "addressVerified": "addressVerified",
           "mailingAddressCheckbox": "_primaryApplicantMailingAddressCheckbox",
           "mailingAddressStreet": "primaryApplicantMailingAddressStreet",
           "mailingAddressCity": "primaryApplicantMailingAddressCity",
@@ -109,7 +110,16 @@
     {
       "stepInfo": {
         "slug": "verify-address",
-        "sectionName": "you"
+        "sectionName": "you",
+        "navigationArrival": {
+          "hideStepIfAnyPresent": [
+            {
+              "dataSource": "form",
+              "dataKey": "addressVerified",
+              "dataValueToMatch": "true"
+            }
+          ]
+        }
       },
       "componentType": "step",
       "componentName": "VerifyAddress",

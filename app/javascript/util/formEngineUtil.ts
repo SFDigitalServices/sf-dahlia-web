@@ -178,6 +178,19 @@ export const getAddressErrorEmailLink = (
     .join("&")
 }
 
+export const addressesMatch = (
+  address1: Record<string, string>,
+  address2: Record<string, string>
+) => {
+  return (
+    address1.street1 === address2.street1 &&
+    address1.street2 === address2.street2 &&
+    address1.city === address2.city &&
+    address1.state === address2.state &&
+    address1.zip === address2.zip
+  )
+}
+
 export const stateOptions = [
   { value: "AL", label: "Alabama" },
   { value: "AK", label: "Alaska" },

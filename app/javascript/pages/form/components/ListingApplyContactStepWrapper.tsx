@@ -5,7 +5,11 @@ import { Form, t } from "@bloom-housing/ui-components"
 import { Button, Card, LoadingState } from "@bloom-housing/ui-seeds"
 import { useFormEngineContext } from "../../../formEngine/formEngineContext"
 import type { DataSchema } from "../../../formEngine/formSchemas"
-import { getAddressErrorEmailLink, translationFromDataSchema } from "../../../util/formEngineUtil"
+import {
+  addressesMatch,
+  getAddressErrorEmailLink,
+  translationFromDataSchema,
+} from "../../../util/formEngineUtil"
 import styles from "./ListingApplyStepWrapper.module.scss"
 import ListingApplyStepErrorMessage from "./ListingApplyStepErrorMessage"
 import { locateVerifiedAddress } from "../../../api/formApiService"
@@ -28,6 +32,7 @@ interface ListingApplyContactStepWrapperProps {
     addressCity: string
     addressState: string
     addressZipcode: string
+    addressVerified: string
     mailingAddressCheckbox: string
     mailingAddressStreet: string
     mailingAddressCity: string
@@ -52,6 +57,7 @@ const ListingApplyContactStepWrapper = ({
     addressCity,
     addressState,
     addressZipcode,
+    addressVerified,
     mailingAddressCheckbox,
     mailingAddressStreet,
     mailingAddressCity,
@@ -95,14 +101,32 @@ const ListingApplyContactStepWrapper = ({
   const onSubmit = (data: Record<string, unknown>) => {
     setLoading(true)
     saveFormData(data)
-    formMethods.clearErrors()
-    locateVerifiedAddress({
+    const address = {
       street1: data[addressStreet] as string,
       street2: data[addressAptOrUnit] as string,
       city: data[addressCity] as string,
       state: data[addressState] as string,
       zip: data[addressZipcode] as string,
+    }
+    const alreadyVerified = addressesMatch(address, {
+      street1: formData[addressStreet] as string,
+      street2: formData[addressAptOrUnit] as string,
+      city: formData[addressCity] as string,
+      state: formData[addressState] as string,
+      zip: formData[addressZipcode] as string,
     })
+    if (formData[addressVerified] === "true") {
+      // Skip if the user has already verified this address
+      if (alreadyVerified) {
+        handleNextStep({ ...formData, ...data })
+        return
+      } else {
+        // The user wants to enter a different address
+        saveFormData({ ...data, [addressVerified]: "false" })
+      }
+    }
+    formMethods.clearErrors()
+    locateVerifiedAddress(address)
       .then((response) => {
         saveFormData({
           ...data,
@@ -111,6 +135,7 @@ const ListingApplyContactStepWrapper = ({
           [addressCity]: response.address?.city,
           [addressState]: response.address?.state,
           [addressZipcode]: response.address?.zip,
+          [addressVerified]: "true",
         })
         handleNextStep({ ...formData, ...data })
       })
