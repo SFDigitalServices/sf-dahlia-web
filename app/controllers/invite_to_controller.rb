@@ -34,6 +34,7 @@ class InviteToController < ApplicationController
       deadline: decoded_params['deadline'],
       act: decoded_params['act'] || decoded_params['response'],
       appId: decoded_params['appId'] || decoded_params['applicationNumber'],
+      isTest: ActiveModel::Type::Boolean.new.cast(decoded_params['isTest']) == true,
     }
 
     {
