@@ -126,7 +126,9 @@ exports[`<HeaderSidebarLayout /> Contact Bar renders Contact Information 1`] = `
             <div
               class="feedback-link"
             >
-              <span>
+              <span
+                class="primary-lighter-markup-link"
+              >
                 We'd love to get 
                 <a
                   href="https://airtable.com/appUW1tM8te0Lmf6q/pagyZulZJCm1V4G8D/form?prefill_Last%20visited=%2F&hide_Last%20visited=true"
@@ -276,7 +278,9 @@ exports[`<HeaderSidebarLayout /> Contact Bar renders Contact Information 1`] = `
                   </span>
                   <br />
                    
-                  <span>
+                  <span
+                    class="primary-lighter-markup-link"
+                  >
                     Contact the agent shown on the listing page.
                   </span>
                 </p>
@@ -289,7 +293,9 @@ exports[`<HeaderSidebarLayout /> Contact Bar renders Contact Information 1`] = `
                     For help with San Francisco services 24 hours a day, 7 days a week:
                   </span>
                   <br />
-                  <span>
+                  <span
+                    class="primary-lighter-markup-link"
+                  >
                     Call 
                     <a
                       href="tel:311"
@@ -313,7 +319,9 @@ exports[`<HeaderSidebarLayout /> Contact Bar renders Contact Information 1`] = `
                   </span>
                   <br />
                   <div>
-                    <span>
+                    <span
+                      class="primary-lighter-markup-link"
+                    >
                       <a
                         href="https://sf.gov/departments/mayors-office-housing-and-community-development"
                         target="_blank"
@@ -326,7 +334,9 @@ exports[`<HeaderSidebarLayout /> Contact Bar renders Contact Information 1`] = `
                   <div
                     class="mt-1"
                   >
-                    <span>
+                    <span
+                      class="primary-lighter-markup-link"
+                    >
                       Email 
                       <a
                         href="mailto:sfhousinginfo@sfgov.org"

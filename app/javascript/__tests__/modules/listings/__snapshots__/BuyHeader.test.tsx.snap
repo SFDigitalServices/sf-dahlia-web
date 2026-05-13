@@ -53,7 +53,9 @@ exports[`BuyHeader renders BuyHeader component with See homes for sale button 1`
               <li
                 class="text-gray-750 primary-lighter-markup-link"
               >
-                <span>
+                <span
+                  class="primary-lighter-markup-link"
+                >
                   Meet our 
                   <a
                     href="https://sf.gov/determine-if-you-can-buy-affordable-housing-program"
@@ -66,7 +68,9 @@ exports[`BuyHeader renders BuyHeader component with See homes for sale button 1`
               <li
                 class="text-gray-750 primary-lighter-markup-link"
               >
-                <span>
+                <span
+                  class="primary-lighter-markup-link"
+                >
                   Complete 
                   <a
                     href="https://sf.gov/sign-complete-homebuyer-education"
@@ -79,7 +83,9 @@ exports[`BuyHeader renders BuyHeader component with See homes for sale button 1`
               <li
                 class="text-gray-750 primary-lighter-markup-link"
               >
-                <span>
+                <span
+                  class="primary-lighter-markup-link"
+                >
                   Get pre-approved for a mortgage loan by a 
                   <a
                     href="https://sf.gov/reports/october-2023/find-lender-below-market-rate-program"
@@ -98,7 +104,9 @@ exports[`BuyHeader renders BuyHeader component with See homes for sale button 1`
             <div
               class="text-gray-750 primary-lighter-markup-link-desktop"
             >
-              <span>
+              <span
+                class="primary-lighter-markup-link"
+              >
                 Read 
                 <a
                   href="https://sf.gov/determine-if-you-can-buy-affordable-housing-program"
@@ -141,6 +149,7 @@ exports[`BuyHeader renders BuyHeader component with See homes for sale button 1`
               class="mb-4"
             >
               <a
+                class="primary-lighter-markup-link"
                 href="https://www.sf.gov/apply-downpayment-loan-buy-market-rate-home"
                 target="_blank"
               >

@@ -114,15 +114,17 @@ commands:
       - prepare_workspace
       - upgrade-bundler
       - run: bundle config set path vendor/bundle
-      - run: bundle install
+      - run:
+          name: Bundle install
+          command: bundle install
+          no_output_timeout: 10m
       - run: bundle exec rails db:migrate
   start-server:
     description: "Start Rails server in background"
     steps:
-      - setup-webdriver
       - run:
           name: Run rails server in background
-          command: bundle exec rails server -p 3000
+          command: bundle exec rails server -p 3000 2>&1 | tee /tmp/rails-server.log
           background: true
       - run:
           name: Wait for server
@@ -139,6 +141,7 @@ commands:
         default: "./spec/e2e/test-feature-path.feature"
     steps:
       - setup
+      - setup-webdriver
       - start-server
       - run: yarn run protractor spec/e2e/conf.js --specs '<< parameters.path >>'
 
@@ -155,6 +158,7 @@ jobs:
           paths:
             - node_modules/
             - /home/circleci/.cache/Cypress
+            - lib/assets/bower_components
       - upgrade-bundler
       - run:
           name: Bundle install
@@ -164,6 +168,7 @@ jobs:
             bundle config set deployment true
             bundle config set path vendor/bundle
             bundle install
+          no_output_timeout: 10m
       - save_cache:
           name: Save Bundle cache
           key: webapp-{{ .Environment.CACHE_VERSION }}-bundle-dependencies-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
@@ -175,7 +180,8 @@ jobs:
       - persist_to_workspace:
           root: .
           paths:
-            - .
+            - db/schema.rb
+            - lib/assets/bower_components
   lint:
     <<: *defaults
     steps:
@@ -186,11 +192,13 @@ jobs:
     <<: *defaults
     steps:
       - setup
-      - run: yarn cache clean
-      - run: yarn install
-      - run: yarn test
+      - run:
+          name: Run React unit tests
+          command: yarn test
+          no_output_timeout: 10m
       - store_artifacts:
           path: jest-test-coverage
+          destination: jest-test-coverage
       - persist_to_workspace:
           root: .
           paths:
@@ -204,9 +212,13 @@ jobs:
       - run: sudo apt-get install graphicsmagick
       - run: RAILS_ENV=test bundle exec rails db:create
       - run: RAILS_ENV=test bundle exec rails db:test:prepare
-      - run: bundle exec rake spec
+      - run:
+          name: Run RSpec tests
+          command: bundle exec rake spec
+          no_output_timeout: 15m
       - store_artifacts:
           path: coverage
+          destination: coverage
       - persist_to_workspace:
           root: .
           paths:
@@ -220,16 +232,26 @@ jobs:
           command: echo "export OPENSSL_CONF=/etc/ssl/" >> $BASH_ENV
       - run: RAILS_ENV=test bundle exec rails db:create
       - run: RAILS_ENV=test bundle exec rails db:test:prepare
-      - run: yarn install
       - run: bundle exec rake jasmine:ci
   e2e:
     <<: *defaults
+    parallelism: 3
     environment:
       SIGN_IN_PAGE_REACT: "true"
     steps:
       - setup
       - start-server
-      - run: yarn test:e2e
+      - run:
+          name: Run Cypress e2e tests using test splitting
+          command: |
+            TESTFILES=$(circleci tests glob "cypress/e2e/**/*.e2e.ts" | circleci tests split --split-by=timings | tr '\n' ',' | sed 's/,$//')
+            yarn cypress run --browser chrome --spec "$TESTFILES"
+          no_output_timeout: 20m
+      - store_test_results:
+          path: cypress/results
+      - store_artifacts:
+          path: /tmp/rails-server.log
+          destination: rails-server.log
   coverage:
     <<: *defaults
     steps:
@@ -242,6 +264,7 @@ jobs:
     parallelism: 4
     steps:
       - setup
+      - setup-webdriver
       - start-server
       - run:
           name: Run e2e tests using test splitting
@@ -250,6 +273,10 @@ jobs:
             LIST=$(echo $TESTFILES | awk '{ gsub(" ", ",") ; system( "echo "  $0) }')
             echo $LIST
             npm run protractor -- --specs $LIST
+          no_output_timeout: 20m
+      - store_artifacts:
+          path: /tmp/rails-server.log
+          destination: rails-server.log
   cleanup-test-data:
     <<: *defaults
     steps:

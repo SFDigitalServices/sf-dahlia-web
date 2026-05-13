@@ -110,7 +110,9 @@ exports[`GenericDirectory displays the directory no matches page with no listing
             <p
               class="page-header-text-block"
             >
-              <span>
+              <span
+                class="primary-lighter-markup-link"
+              >
                 For more help, we suggest talking with a housing counselor to explore your options. 
                 <a
                   href="/housing-counselors"
