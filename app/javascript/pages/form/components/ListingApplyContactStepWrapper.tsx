@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react"
 import { useForm, FormProvider } from "react-hook-form"
 import { Form, t } from "@bloom-housing/ui-components"
-import { Button, Card } from "@bloom-housing/ui-seeds"
+import { Button, Card, LoadingState } from "@bloom-housing/ui-seeds"
 import { useFormEngineContext } from "../../../formEngine/formEngineContext"
 import type { DataSchema } from "../../../formEngine/formSchemas"
 import { getAddressErrorEmailLink, translationFromDataSchema } from "../../../util/formEngineUtil"
@@ -85,6 +85,7 @@ const ListingApplyContactStepWrapper = ({
   })
 
   const [apiErrorMessage, setApiErrorMessage] = useState<string | null>(null)
+  const [loading, setLoading] = useState(false)
   useEffect(() => {
     if (Object.keys(formMethods.formState.errors).length > 0 || apiErrorMessage) {
       window.scrollTo(0, 0)
@@ -92,6 +93,7 @@ const ListingApplyContactStepWrapper = ({
   }, [formMethods.formState.errors, apiErrorMessage])
 
   const onSubmit = (data: Record<string, unknown>) => {
+    setLoading(true)
     saveFormData(data)
     formMethods.clearErrors()
     locateVerifiedAddress({
@@ -122,6 +124,9 @@ const ListingApplyContactStepWrapper = ({
         } else {
           setApiErrorMessage(t("error.alert.badRequest"))
         }
+      })
+      .finally(() => {
+        setLoading(false)
       })
   }
   return (
@@ -165,26 +170,28 @@ const ListingApplyContactStepWrapper = ({
             />
           </Card.Section>
           <Card.Section>
-            <Address
-              showAptOrUnit={true}
-              requireAddress={true}
-              label="label.address"
-              note="b2Contact.applicantAddressDesc"
-              showMailingAddress={true}
-              addressError={apiErrorMessage}
-              fieldNames={{
-                addressStreet,
-                addressAptOrUnit,
-                addressCity,
-                addressState,
-                addressZipcode,
-                mailingAddressCheckbox,
-                mailingAddressStreet,
-                mailingAddressCity,
-                mailingAddressState,
-                mailingAddressZipcode,
-              }}
-            />
+            <LoadingState loading={loading}>
+              <Address
+                showAptOrUnit={true}
+                requireAddress={true}
+                label="label.address"
+                note="b2Contact.applicantAddressDesc"
+                showMailingAddress={true}
+                addressError={apiErrorMessage}
+                fieldNames={{
+                  addressStreet,
+                  addressAptOrUnit,
+                  addressCity,
+                  addressState,
+                  addressZipcode,
+                  mailingAddressCheckbox,
+                  mailingAddressStreet,
+                  mailingAddressCity,
+                  mailingAddressState,
+                  mailingAddressZipcode,
+                }}
+              />
+            </LoadingState>
           </Card.Section>
           <Card.Section>
             <YesNoRadio
