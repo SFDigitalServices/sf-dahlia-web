@@ -243,3 +243,15 @@ export const stateOptions = [
   { value: "WI", label: "Wisconsin" },
   { value: "WY", label: "Wyoming" },
 ]
+
+export const numChildrenUnderSix = (householdMembers: Record<string, unknown>[]) => {
+  return householdMembers.filter((member) => {
+    if (!member.birthYear || !member.birthMonth || !member.birthDay) return false
+    const memberBirthdate = new Date(
+      member.birthYear as number,
+      (member.birthMonth as number) - 1,
+      member.birthDay as number
+    )
+    return memberBirthdate > new Date()
+  })
+}
