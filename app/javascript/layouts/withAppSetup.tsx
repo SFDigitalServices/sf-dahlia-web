@@ -3,8 +3,7 @@ import React from "react"
 import axe from "@axe-core/react"
 import ReactDOM from "react-dom"
 import { FlagProvider } from "@unleash/proxy-client-react"
-import { ClerkProvider } from "@clerk/clerk-react"
-import { useFeatureFlag } from "../hooks/useFeatureFlag"
+import { ClerkProvider } from "@clerk/react"
 import IdleTimeout from "../authentication/components/IdleTimeout"
 import UserProvider from "../authentication/context/UserProvider"
 import ListingDetailsProvider from "../contexts/listingDetails/listingDetailsProvider"
@@ -14,7 +13,6 @@ import ErrorBoundary, { BoundaryScope } from "../components/ErrorBoundary"
 import "@bloom-housing/ui-seeds/src/global/app-css.scss"
 import { useGTMInitializer } from "../hooks/analytics/useInitializeGTM"
 import { AppPages } from "../util/routeUtil"
-import { UNLEASH_FLAG } from "../modules/constants"
 
 interface ObjectWithAssets {
   assetPaths: unknown
@@ -43,7 +41,6 @@ const withAppSetup =
     useGTMInitializer(process.env.GOOGLE_TAG_MANAGER_KEY)
 
     function ProvidersWithConditionalClerk() {
-      const { unleashFlag: clerkEnabled } = useFeatureFlag(UNLEASH_FLAG.CLERK_AUTH, false)
       const Providers = (
         <ErrorBoundary boundaryScope={BoundaryScope.page}>
           <NavigationProvider>
@@ -64,12 +61,14 @@ const withAppSetup =
         </ErrorBoundary>
       )
 
-      return clerkEnabled ? (
-        <ClerkProvider publishableKey={process.env.CLERK_PUBLISHABLE_KEY}>
+      return (
+        <ClerkProvider
+          publishableKey={process.env.CLERK_PUBLISHABLE_KEY}
+          signInUrl="/sign-in"
+          signUpUrl="/sign-in"
+        >
           {Providers}
         </ClerkProvider>
-      ) : (
-        Providers
       )
     }
 
