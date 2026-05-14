@@ -236,6 +236,29 @@ describe("Invite to Apply", () => {
       expect(recordResponse).toHaveBeenCalledTimes(1)
     })
 
+    it("does not call recordResponse when submit is clicked and isTest is true", async () => {
+      await renderWithContext(
+        <InviteToPage
+          assetPaths={"/"}
+          urlParams={{
+            type: INVITE_TO_X.APPLY,
+            deadline: mockFutureDeadline,
+            act: "yes",
+            appId: "a0o123",
+            isTest: true,
+          }}
+        />
+      )
+
+      await userEvent.click(
+        screen.getByRole("button", {
+          name: t("inviteToApplyPage.submitYourInfo.whatToDo.step3.p4"),
+        })
+      )
+
+      expect(recordResponse).not.toHaveBeenCalled()
+    })
+
     it("catches submission error and resets loading overlay state", async () => {
       ;(recordResponse as jest.Mock).mockRejectedValue(new Error("API error"))
 
