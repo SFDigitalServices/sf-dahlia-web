@@ -5,12 +5,10 @@ import { t, PageHeader } from "@bloom-housing/ui-components"
 import { renderMarkup } from "../../util/languageUtil"
 import { MailingListSignup } from "../../components/MailingListSignup"
 import { ConfigContext } from "../../lib/ConfigContext"
-import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import { AppPages } from "../../util/routeUtil"
 
 const Privacy = () => {
   const { getAssetPath } = React.useContext(ConfigContext)
-  const { unleashFlag: testFlag } = useFeatureFlag("test", false)
 
   return (
     <Layout title={t("pageTitle.privacy")}>
@@ -129,11 +127,6 @@ const Privacy = () => {
               </div>
             </div>
           </div>
-          {testFlag && (
-            <div aria-hidden className="hidden">
-              Test Unleash flag is enabled
-            </div>
-          )}
         </article>
       }
       <span className="max-w-5xl m-auto w-full pb-8">
