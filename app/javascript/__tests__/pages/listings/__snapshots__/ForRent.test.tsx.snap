@@ -126,7 +126,9 @@ exports[`For Rent renders ForRent component 1`] = `
             <div
               class="feedback-link"
             >
-              <span>
+              <span
+                class="primary-lighter-markup-link"
+              >
                 We'd love to get 
                 <a
                   href="https://airtable.com/appUW1tM8te0Lmf6q/pagyZulZJCm1V4G8D/form?prefill_Last%20visited=%2F&hide_Last%20visited=true"
@@ -425,7 +427,9 @@ exports[`For Rent renders ForRent component 1`] = `
                         />
                       </svg>
                     </span>
-                    <span>
+                    <span
+                      class="primary-lighter-markup-link"
+                    >
                       <a
                         href="https://confirmsubscription.com/h/y/C3BAFCD742D47910"
                         target="_blank"

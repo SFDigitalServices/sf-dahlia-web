@@ -75,7 +75,9 @@ exports[`MobileListingDetailsLottery does display when lottery listing is closed
           <div
             class="text-gray-700"
           >
-            <div>
+            <div
+              class="primary-lighter-markup-link"
+            >
               <p>
                 The lottery will not be in person, but instead will be a virtual lottery.
               </p>
@@ -165,7 +167,9 @@ exports[`MobileListingDetailsLottery does display when lottery listing is closed
               <span
                 class="links-space translate"
               >
-                <span>
+                <span
+                  class="primary-lighter-markup-link"
+                >
                   Library
                 </span>
               </span>

@@ -37,7 +37,9 @@ exports[`ListingDetailsPricingTable 415 rental listing renders ListingDetailsPri
               class="flex items-center mr-2 text-sm md:text-base text-left md:text-center"
             >
               <div>
-                <span>
+                <span
+                  class="primary-lighter-markup-link"
+                >
                   Income 
                   <span
                     class="font-semibold"
@@ -346,7 +348,9 @@ exports[`ListingDetailsPricingTable 415 rental listing renders ListingDetailsPri
               class="flex items-center mr-2 text-sm md:text-base text-left md:text-center"
             >
               <div>
-                <span>
+                <span
+                  class="primary-lighter-markup-link"
+                >
                   Income 
                   <span
                     class="font-semibold"
@@ -838,7 +842,9 @@ exports[`ListingDetailsPricingTable 415 rental listing renders ListingDetailsPri
               class="flex items-center mr-2 text-sm md:text-base text-left md:text-center"
             >
               <div>
-                <span>
+                <span
+                  class="primary-lighter-markup-link"
+                >
                   Income 
                   <span
                     class="font-semibold"
@@ -1265,7 +1271,9 @@ exports[`ListingDetailsPricingTable 415 rental listing renders ListingDetailsPri
               class="flex items-center mr-2 text-sm md:text-base text-left md:text-center"
             >
               <div>
-                <span>
+                <span
+                  class="primary-lighter-markup-link"
+                >
                   Income 
                   <span
                     class="font-semibold"
@@ -1574,7 +1582,9 @@ exports[`ListingDetailsPricingTable 415 rental listing renders ListingDetailsPri
               class="flex items-center mr-2 text-sm md:text-base text-left md:text-center"
             >
               <div>
-                <span>
+                <span
+                  class="primary-lighter-markup-link"
+                >
                   Income 
                   <span
                     class="font-semibold"
@@ -1892,7 +1902,9 @@ exports[`ListingDetailsPricingTable open rental listing renders ListingDetailsPr
               class="flex items-center mr-2 text-sm md:text-base text-left md:text-center"
             >
               <div>
-                <span>
+                <span
+                  class="primary-lighter-markup-link"
+                >
                   Income 
                   <span
                     class="font-semibold"
@@ -2945,7 +2957,9 @@ exports[`ListingDetailsPricingTable open rental listing renders ListingDetailsPr
               class="flex items-center mr-2 text-sm md:text-base text-left md:text-center"
             >
               <div>
-                <span>
+                <span
+                  class="primary-lighter-markup-link"
+                >
                   Income 
                   <span
                     class="font-semibold"
@@ -4388,7 +4402,9 @@ exports[`ListingDetailsPricingTable open rental listing renders ListingDetailsPr
               class="flex items-center mr-2 text-sm md:text-base text-left md:text-center"
             >
               <div>
-                <span>
+                <span
+                  class="primary-lighter-markup-link"
+                >
                   Income 
                   <span
                     class="font-semibold"
@@ -5441,7 +5457,9 @@ exports[`ListingDetailsPricingTable open rental listing renders ListingDetailsPr
               class="flex items-center mr-2 text-sm md:text-base text-left md:text-center"
             >
               <div>
-                <span>
+                <span
+                  class="primary-lighter-markup-link"
+                >
                   Income 
                   <span
                     class="font-semibold"
@@ -6494,7 +6512,9 @@ exports[`ListingDetailsPricingTable open rental listing renders ListingDetailsPr
               class="flex items-center mr-2 text-sm md:text-base text-left md:text-center"
             >
               <div>
-                <span>
+                <span
+                  class="primary-lighter-markup-link"
+                >
                   Income 
                   <span
                     class="font-semibold"
@@ -7547,7 +7567,9 @@ exports[`ListingDetailsPricingTable open rental listing renders ListingDetailsPr
               class="flex items-center mr-2 text-sm md:text-base text-left md:text-center"
             >
               <div>
-                <span>
+                <span
+                  class="primary-lighter-markup-link"
+                >
                   Income 
                   <span
                     class="font-semibold"
@@ -8210,7 +8232,9 @@ exports[`ListingDetailsPricingTable open rental listing renders ListingDetailsPr
               class="flex items-center mr-2 text-sm md:text-base text-left md:text-center"
             >
               <div>
-                <span>
+                <span
+                  class="primary-lighter-markup-link"
+                >
                   Income 
                   <span
                     class="font-semibold"
@@ -8882,7 +8906,9 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
               class="flex items-center mr-2 text-sm md:text-base text-left md:text-center"
             >
               <div>
-                <span>
+                <span
+                  class="primary-lighter-markup-link"
+                >
                   Income 
                   <span
                     class="font-semibold"
@@ -9073,7 +9099,9 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
               class="flex items-center mr-2 text-sm md:text-base text-left md:text-center"
             >
               <div>
-                <span>
+                <span
+                  class="primary-lighter-markup-link"
+                >
                   Income 
                   <span
                     class="font-semibold"
@@ -9382,7 +9410,9 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
               class="flex items-center mr-2 text-sm md:text-base text-left md:text-center"
             >
               <div>
-                <span>
+                <span
+                  class="primary-lighter-markup-link"
+                >
                   Income 
                   <span
                     class="font-semibold"
@@ -9821,7 +9851,9 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
               class="flex items-center mr-2 text-sm md:text-base text-left md:text-center"
             >
               <div>
-                <span>
+                <span
+                  class="primary-lighter-markup-link"
+                >
                   Income 
                   <span
                     class="font-semibold"
@@ -10260,7 +10292,9 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
               class="flex items-center mr-2 text-sm md:text-base text-left md:text-center"
             >
               <div>
-                <span>
+                <span
+                  class="primary-lighter-markup-link"
+                >
                   Income 
                   <span
                     class="font-semibold"
@@ -10699,7 +10733,9 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
               class="flex items-center mr-2 text-sm md:text-base text-left md:text-center"
             >
               <div>
-                <span>
+                <span
+                  class="primary-lighter-markup-link"
+                >
                   Income 
                   <span
                     class="font-semibold"
@@ -10899,7 +10935,9 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
               class="flex items-center mr-2 text-sm md:text-base text-left md:text-center"
             >
               <div>
-                <span>
+                <span
+                  class="primary-lighter-markup-link"
+                >
                   Income 
                   <span
                     class="font-semibold"
@@ -10968,7 +11006,9 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
               class="flex items-center mr-2 text-sm md:text-base text-left md:text-center"
             >
               <div>
-                <span>
+                <span
+                  class="primary-lighter-markup-link"
+                >
                   Income 
                   <span
                     class="font-semibold"
@@ -11028,7 +11068,9 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
               class="flex items-center mr-2 text-sm md:text-base text-left md:text-center"
             >
               <div>
-                <span>
+                <span
+                  class="primary-lighter-markup-link"
+                >
                   Income 
                   <span
                     class="font-semibold"
@@ -11088,7 +11130,9 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
               class="flex items-center mr-2 text-sm md:text-base text-left md:text-center"
             >
               <div>
-                <span>
+                <span
+                  class="primary-lighter-markup-link"
+                >
                   Income 
                   <span
                     class="font-semibold"
@@ -11148,7 +11192,9 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
               class="flex items-center mr-2 text-sm md:text-base text-left md:text-center"
             >
               <div>
-                <span>
+                <span
+                  class="primary-lighter-markup-link"
+                >
                   Income 
                   <span
                     class="font-semibold"
@@ -11208,7 +11254,9 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
               class="flex items-center mr-2 text-sm md:text-base text-left md:text-center"
             >
               <div>
-                <span>
+                <span
+                  class="primary-lighter-markup-link"
+                >
                   Income 
                   <span
                     class="font-semibold"
@@ -11268,7 +11316,9 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
               class="flex items-center mr-2 text-sm md:text-base text-left md:text-center"
             >
               <div>
-                <span>
+                <span
+                  class="primary-lighter-markup-link"
+                >
                   Income 
                   <span
                     class="font-semibold"
@@ -11420,7 +11470,9 @@ exports[`ListingDetailsPricingTable rent as a percent of income listings renders
               class="flex items-center mr-2 text-sm md:text-base text-left md:text-center"
             >
               <div>
-                <span>
+                <span
+                  class="primary-lighter-markup-link"
+                >
                   Income 
                   <span
                     class="font-semibold"
@@ -11611,7 +11663,9 @@ exports[`ListingDetailsPricingTable rent as a percent of income listings renders
               class="flex items-center mr-2 text-sm md:text-base text-left md:text-center"
             >
               <div>
-                <span>
+                <span
+                  class="primary-lighter-markup-link"
+                >
                   Income 
                   <span
                     class="font-semibold"
@@ -11802,7 +11856,9 @@ exports[`ListingDetailsPricingTable rent as a percent of income listings renders
               class="flex items-center mr-2 text-sm md:text-base text-left md:text-center"
             >
               <div>
-                <span>
+                <span
+                  class="primary-lighter-markup-link"
+                >
                   Income 
                   <span
                     class="font-semibold"

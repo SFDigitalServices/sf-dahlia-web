@@ -74,7 +74,9 @@ exports[`ListingDetailsEligibility displays ListingDetailsChisholmPreferences fo
                 class="ml-0 mt-1"
               >
                 <li>
-                  <span>
+                  <span
+                    class="primary-lighter-markup-link"
+                  >
                     Be an employee of 
                     <b>
                       <a
@@ -92,6 +94,7 @@ exports[`ListingDetailsEligibility displays ListingDetailsChisholmPreferences fo
               </ul>
               <p>
                 <a
+                  class="primary-lighter-markup-link"
                   href="https://sf.gov/apply-shirley-chisholm-village-housing"
                   target="_blank"
                 >
@@ -101,6 +104,7 @@ exports[`ListingDetailsEligibility displays ListingDetailsChisholmPreferences fo
               <p>
                 If you do not work at SF Unified School District, check back in Summer 2024 to apply. 
                 <a
+                  class="primary-lighter-markup-link"
                   href="https://confirmsubscription.com/h/y/C3BAFCD742D47910"
                   target="_blank"
                 >
@@ -130,14 +134,18 @@ exports[`ListingDetailsEligibility displays ListingDetailsChisholmPreferences fo
                 <div
                   class="mb-4"
                 >
-                  <p>
+                  <p
+                    class="primary-lighter-markup-link"
+                  >
                     For income calculations, household size includes everyone (all ages) living in the unit.
                   </p>
                 </div>
                 <div
                   class="mb-4 primary-lighter-markup-link-desktop"
                 >
-                  <p>
+                  <p
+                    class="primary-lighter-markup-link"
+                  >
                     People in your household may need 
                     <a
                       href="https://sf.gov/information/special-calculations-household-income"
@@ -441,7 +449,9 @@ exports[`ListingDetailsEligibility displays ListingDetailsChisholmPreferences fo
                     If you qualify for a preference, you have a better chance in the lottery. After the lottery, all applicants are ranked and ordered by preference category. If you do not qualify for a preference, you will be ranked below those who do. 
                   </p>
                   <p>
-                    <b>
+                    <b
+                      class="primary-lighter-markup-link"
+                    >
                       Priority for certain groups - San Francisco Unified School District employees
                     </b>
                     <br />
@@ -452,6 +462,7 @@ exports[`ListingDetailsEligibility displays ListingDetailsChisholmPreferences fo
                   >
                     <li>
                       <a
+                        class="primary-lighter-markup-link"
                         href="https://www.sf.gov/learn-how-lottery-works-shirley-chisholm-village"
                         target="_blank"
                       >
@@ -460,6 +471,7 @@ exports[`ListingDetailsEligibility displays ListingDetailsChisholmPreferences fo
                     </li>
                     <li>
                       <a
+                        class="primary-lighter-markup-link"
                         href="https://sf.gov/information/learn-about-housing-lottery-preference-programs"
                         target="_blank"
                       >
@@ -716,7 +728,9 @@ exports[`ListingDetailsEligibility displays custom listing details 'check if you
                 </b>
               </p>
               <p>
-                <span>
+                <span
+                  class="primary-lighter-markup-link"
+                >
                   If you work at 
                   <a
                     href="https://www.sfusd.edu/"
@@ -771,14 +785,18 @@ exports[`ListingDetailsEligibility displays custom listing details 'check if you
                 <div
                   class="mb-4"
                 >
-                  <p>
+                  <p
+                    class="primary-lighter-markup-link"
+                  >
                     For income calculations, household size includes everyone (all ages) living in the unit.
                   </p>
                 </div>
                 <div
                   class="mb-4 primary-lighter-markup-link-desktop"
                 >
-                  <p>
+                  <p
+                    class="primary-lighter-markup-link"
+                  >
                     People in your household may need 
                     <a
                       href="https://sf.gov/information/special-calculations-household-income"
@@ -1341,7 +1359,9 @@ exports[`ListingDetailsEligibility displays custom listing details check if you'
                 class="ml-0 mt-1"
               >
                 <li>
-                  <span>
+                  <span
+                    class="primary-lighter-markup-link"
+                  >
                     Be an employee of 
                     <b>
                       <a
@@ -1359,6 +1379,7 @@ exports[`ListingDetailsEligibility displays custom listing details check if you'
               </ul>
               <p>
                 <a
+                  class="primary-lighter-markup-link"
                   href="https://sf.gov/apply-shirley-chisholm-village-housing"
                   target="_blank"
                 >
@@ -1368,6 +1389,7 @@ exports[`ListingDetailsEligibility displays custom listing details check if you'
               <p>
                 If you do not work at SF Unified School District, check back in Summer 2024 to apply. 
                 <a
+                  class="primary-lighter-markup-link"
                   href="https://confirmsubscription.com/h/y/C3BAFCD742D47910"
                   target="_blank"
                 >
@@ -1397,14 +1419,18 @@ exports[`ListingDetailsEligibility displays custom listing details check if you'
                 <div
                   class="mb-4"
                 >
-                  <p>
+                  <p
+                    class="primary-lighter-markup-link"
+                  >
                     For income calculations, household size includes everyone (all ages) living in the unit.
                   </p>
                 </div>
                 <div
                   class="mb-4 primary-lighter-markup-link-desktop"
                 >
-                  <p>
+                  <p
+                    class="primary-lighter-markup-link"
+                  >
                     People in your household may need 
                     <a
                       href="https://sf.gov/information/special-calculations-household-income"
@@ -1708,7 +1734,9 @@ exports[`ListingDetailsEligibility displays custom listing details check if you'
                     If you qualify for a preference, you have a better chance in the lottery. After the lottery, all applicants are ranked and ordered by preference category. If you do not qualify for a preference, you will be ranked below those who do. 
                   </p>
                   <p>
-                    <b>
+                    <b
+                      class="primary-lighter-markup-link"
+                    >
                       Priority for certain groups - San Francisco Unified School District employees
                     </b>
                     <br />
@@ -1719,6 +1747,7 @@ exports[`ListingDetailsEligibility displays custom listing details check if you'
                   >
                     <li>
                       <a
+                        class="primary-lighter-markup-link"
                         href="https://www.sf.gov/learn-how-lottery-works-shirley-chisholm-village"
                         target="_blank"
                       >
@@ -1727,6 +1756,7 @@ exports[`ListingDetailsEligibility displays custom listing details check if you'
                     </li>
                     <li>
                       <a
+                        class="primary-lighter-markup-link"
                         href="https://sf.gov/information/learn-about-housing-lottery-preference-programs"
                         target="_blank"
                       >
@@ -1994,7 +2024,9 @@ exports[`ListingDetailsEligibility displays custom listing details check if you'
                 class="ml-0 my-1"
               >
                 <li>
-                  <span>
+                  <span
+                    class="primary-lighter-markup-link"
+                  >
                     Be an employee of 
                     <b>
                       <a
@@ -2012,6 +2044,7 @@ exports[`ListingDetailsEligibility displays custom listing details check if you'
               </ul>
               <p>
                 <a
+                  class="primary-lighter-markup-link"
                   href="https://sf.gov/apply-shirley-chisholm-village-housing"
                   target="_blank"
                 >
@@ -2023,6 +2056,7 @@ exports[`ListingDetailsEligibility displays custom listing details check if you'
               </p>
               <p>
                 <a
+                  class="primary-lighter-markup-link"
                   href="#chisholm-preferences"
                   target="_self"
                 >
@@ -2052,14 +2086,18 @@ exports[`ListingDetailsEligibility displays custom listing details check if you'
                 <div
                   class="mb-4"
                 >
-                  <p>
+                  <p
+                    class="primary-lighter-markup-link"
+                  >
                     For income calculations, household size includes everyone (all ages) living in the unit.
                   </p>
                 </div>
                 <div
                   class="mb-4 primary-lighter-markup-link-desktop"
                 >
-                  <p>
+                  <p
+                    class="primary-lighter-markup-link"
+                  >
                     People in your household may need 
                     <a
                       href="https://sf.gov/information/special-calculations-household-income"
@@ -2363,7 +2401,9 @@ exports[`ListingDetailsEligibility displays custom listing details check if you'
                     If you qualify for a preference, you have a better chance in the lottery. After the lottery, all applicants are ranked and ordered by preference category. If you do not qualify for a preference, you will be ranked below those who do. 
                   </p>
                   <p>
-                    <b>
+                    <b
+                      class="primary-lighter-markup-link"
+                    >
                       Priority for certain groups - San Francisco Unified School District employees
                     </b>
                     <br />
@@ -2374,6 +2414,7 @@ exports[`ListingDetailsEligibility displays custom listing details check if you'
                   >
                     <li>
                       <a
+                        class="primary-lighter-markup-link"
                         href="https://www.sf.gov/learn-how-lottery-works-shirley-chisholm-village"
                         target="_blank"
                       >
@@ -2382,6 +2423,7 @@ exports[`ListingDetailsEligibility displays custom listing details check if you'
                     </li>
                     <li>
                       <a
+                        class="primary-lighter-markup-link"
                         href="https://sf.gov/information/learn-about-housing-lottery-preference-programs"
                         target="_blank"
                       >
@@ -2627,14 +2669,18 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
                 <div
                   class="mb-4"
                 >
-                  <p>
+                  <p
+                    class="primary-lighter-markup-link"
+                  >
                     For income calculations, household size includes everyone (all ages) living in the unit.
                   </p>
                 </div>
                 <div
                   class="mb-4 primary-lighter-markup-link-desktop"
                 >
-                  <p>
+                  <p
+                    class="primary-lighter-markup-link"
+                  >
                     People in your household may need 
                     <a
                       href="https://sf.gov/information/special-calculations-household-income"
@@ -3296,14 +3342,18 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
                 <div
                   class="mb-4"
                 >
-                  <p>
+                  <p
+                    class="primary-lighter-markup-link"
+                  >
                     For income calculations, household size includes everyone (all ages) living in the unit.
                   </p>
                 </div>
                 <div
                   class="mb-4 primary-lighter-markup-link-desktop"
                 >
-                  <p>
+                  <p
+                    class="primary-lighter-markup-link"
+                  >
                     People in your household may need 
                     <a
                       href="https://sf.gov/information/special-calculations-household-income"
@@ -3974,14 +4024,18 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
                 <div
                   class="mb-4"
                 >
-                  <p>
+                  <p
+                    class="primary-lighter-markup-link"
+                  >
                     For income calculations, household size includes everyone (all ages) living in the unit.
                   </p>
                 </div>
                 <div
                   class="mb-4 primary-lighter-markup-link-desktop"
                 >
-                  <p>
+                  <p
+                    class="primary-lighter-markup-link"
+                  >
                     People in your household may need 
                     <a
                       href="https://sf.gov/information/special-calculations-household-income"
@@ -4661,7 +4715,9 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
           <li
             class="text-gray-750 primary-lighter-markup-link"
           >
-            <span>
+            <span
+              class="primary-lighter-markup-link"
+            >
               Meet our 
               <a
                 href="https://sf.gov/determine-if-you-can-buy-affordable-housing-program"
@@ -4674,7 +4730,9 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
           <li
             class="text-gray-750 primary-lighter-markup-link"
           >
-            <span>
+            <span
+              class="primary-lighter-markup-link"
+            >
               Complete 
               <a
                 href="https://sf.gov/sign-complete-homebuyer-education"
@@ -4687,7 +4745,9 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
           <li
             class="text-gray-750 primary-lighter-markup-link"
           >
-            <span>
+            <span
+              class="primary-lighter-markup-link"
+            >
               Get pre-approved for a mortgage loan by a 
               <a
                 href="https://sf.gov/reports/october-2023/find-lender-below-market-rate-program"
@@ -4706,7 +4766,9 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
         <div
           class="text-gray-750 primary-lighter-markup-link-desktop"
         >
-          <span>
+          <span
+            class="primary-lighter-markup-link"
+          >
             Read 
             <a
               href="https://sf.gov/determine-if-you-can-buy-affordable-housing-program"
@@ -4737,14 +4799,18 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
                 <div
                   class="mb-4"
                 >
-                  <p>
+                  <p
+                    class="primary-lighter-markup-link"
+                  >
                     For income calculations, household size includes everyone (all ages) living in the unit.
                   </p>
                 </div>
                 <div
                   class="mb-4 primary-lighter-markup-link-desktop"
                 >
-                  <p>
+                  <p
+                    class="primary-lighter-markup-link"
+                  >
                     People in your household may need 
                     <a
                       href="https://sf.gov/information/special-calculations-household-income"
@@ -5294,14 +5360,18 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
                 <div
                   class="mb-4"
                 >
-                  <p>
+                  <p
+                    class="primary-lighter-markup-link"
+                  >
                     For income calculations, household size includes everyone (all ages) living in the unit.
                   </p>
                 </div>
                 <div
                   class="mb-4 primary-lighter-markup-link-desktop"
                 >
-                  <p>
+                  <p
+                    class="primary-lighter-markup-link"
+                  >
                     People in your household may need 
                     <a
                       href="https://sf.gov/information/special-calculations-household-income"
@@ -5993,14 +6063,18 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
                 <div
                   class="mb-4"
                 >
-                  <p>
+                  <p
+                    class="primary-lighter-markup-link"
+                  >
                     For income calculations, household size includes everyone (all ages) living in the unit.
                   </p>
                 </div>
                 <div
                   class="mb-4 primary-lighter-markup-link-desktop"
                 >
-                  <p>
+                  <p
+                    class="primary-lighter-markup-link"
+                  >
                     People in your household may need 
                     <a
                       href="https://sf.gov/information/special-calculations-household-income"
@@ -6675,7 +6749,9 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
           <li
             class="text-gray-750 primary-lighter-markup-link"
           >
-            <p>
+            <p
+              class="primary-lighter-markup-link"
+            >
               Go to a 
               <a
                 href="http://www.habitatgsf.org/innes-ave"
@@ -6693,7 +6769,9 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
           <li
             class="text-gray-750 primary-lighter-markup-link"
           >
-            <p>
+            <p
+              class="primary-lighter-markup-link"
+            >
               Meet the 
               <a
                 href="https://media.api.sf.gov/documents/DALP_Manual_-_2025.pdf"
@@ -6712,7 +6790,9 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
         <div
           class="text-gray-750 primary-lighter-markup-link-desktop"
         >
-          <p>
+          <p
+            class="primary-lighter-markup-link"
+          >
             Read 
             <a
               href="http://www.habitatgsf.org/innes-ave"
@@ -7068,14 +7148,18 @@ exports[`ListingDetailsEligibility does not display ListingDetailsChisholmPrefer
                 <div
                   class="mb-4"
                 >
-                  <p>
+                  <p
+                    class="primary-lighter-markup-link"
+                  >
                     For income calculations, household size includes everyone (all ages) living in the unit.
                   </p>
                 </div>
                 <div
                   class="mb-4 primary-lighter-markup-link-desktop"
                 >
-                  <p>
+                  <p
+                    class="primary-lighter-markup-link"
+                  >
                     People in your household may need 
                     <a
                       href="https://sf.gov/information/special-calculations-household-income"
@@ -7625,7 +7709,9 @@ exports[`ListingDetailsEligibility does not display lottery preferences for fcfs
           <li
             class="text-gray-750 primary-lighter-markup-link"
           >
-            <span>
+            <span
+              class="primary-lighter-markup-link"
+            >
               Meet our 
               <a
                 href="https://sf.gov/determine-if-you-can-buy-affordable-housing-program"
@@ -7638,7 +7724,9 @@ exports[`ListingDetailsEligibility does not display lottery preferences for fcfs
           <li
             class="text-gray-750 primary-lighter-markup-link"
           >
-            <span>
+            <span
+              class="primary-lighter-markup-link"
+            >
               Complete 
               <a
                 href="https://sf.gov/sign-complete-homebuyer-education"
@@ -7651,7 +7739,9 @@ exports[`ListingDetailsEligibility does not display lottery preferences for fcfs
           <li
             class="text-gray-750 primary-lighter-markup-link"
           >
-            <span>
+            <span
+              class="primary-lighter-markup-link"
+            >
               Get pre-approved for a mortgage loan by a 
               <a
                 href="https://sf.gov/reports/october-2023/find-lender-below-market-rate-program"
@@ -7670,7 +7760,9 @@ exports[`ListingDetailsEligibility does not display lottery preferences for fcfs
         <div
           class="text-gray-750 primary-lighter-markup-link-desktop"
         >
-          <span>
+          <span
+            class="primary-lighter-markup-link"
+          >
             Read 
             <a
               href="https://sf.gov/determine-if-you-can-buy-affordable-housing-program"
@@ -7701,14 +7793,18 @@ exports[`ListingDetailsEligibility does not display lottery preferences for fcfs
                 <div
                   class="mb-4"
                 >
-                  <p>
+                  <p
+                    class="primary-lighter-markup-link"
+                  >
                     For income calculations, household size includes everyone (all ages) living in the unit.
                   </p>
                 </div>
                 <div
                   class="mb-4 primary-lighter-markup-link-desktop"
                 >
-                  <p>
+                  <p
+                    class="primary-lighter-markup-link"
+                  >
                     People in your household may need 
                     <a
                       href="https://sf.gov/information/special-calculations-household-income"
