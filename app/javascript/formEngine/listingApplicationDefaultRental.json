@@ -97,7 +97,7 @@
           "addressCity": "primaryApplicantAddressCity",
           "addressState": "primaryApplicantAddressState",
           "addressZipcode": "primaryApplicantAddressZipcode",
-          "addressVerified": "addressVerified",
+          "addressVerified": "_addressVerified",
           "mailingAddressCheckbox": "_primaryApplicantMailingAddressCheckbox",
           "mailingAddressStreet": "primaryApplicantMailingAddressStreet",
           "mailingAddressCity": "primaryApplicantMailingAddressCity",
