@@ -52,17 +52,18 @@ export const deleteUploadedProofFile = async (
 export const checkHouseholdEligibility = async (
   listingId: string,
   householdSize: number,
-  income: number,
-  hasChildUnder6: boolean
+  income: string,
+  childrenUnder6: number
 ): Promise<Record<string, unknown>> => {
   const params = {
     listing_id: listingId,
     eligibility: {
       householdsize: householdSize,
       incomelevel: income,
-      childrenUnder6: hasChildUnder6,
+      childrenUnder6: childrenUnder6,
     },
   }
+  console.log("Sending", params)
   return post<Record<string, unknown>>("/api/v1/short-form/validate-household", params).then(
     (response) => response.data
   )

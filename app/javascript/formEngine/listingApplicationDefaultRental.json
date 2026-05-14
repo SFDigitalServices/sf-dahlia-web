@@ -441,18 +441,20 @@
       "stepInfo": {
         "slug": "income-household",
         "sectionName": "income",
-        "showStepIfAnyPresent": [
-          {
-            "dataSource": "listing",
-            "dataKey": "Tenure",
-            "dataValueToMatch": "Rental"
-          },
-          {
-            "dataSource": "listing",
-            "dataKey": "Tenure",
-            "dataValueToMatch": "Re-rental"
-          }
-        ]
+        "navigationArrival": {
+          "showStepIfAnyPresent": [
+            {
+              "dataSource": "listing",
+              "dataKey": "listing.Tenure",
+              "dataValueToMatch": "New rental"
+            },
+            {
+              "dataSource": "listing",
+              "dataKey": "listing.Tenure",
+              "dataValueToMatch": "Re-rental"
+            }
+          ]
+        }
       },
       "componentType": "step",
       "componentName": "HouseholdIncome",
@@ -460,8 +462,8 @@
         "title": "d2Income.title",
         "headerComponentName": "ListingApplyHouseholdIncomeHeader",
         "currencyLabel": "label.applicantIncomeTotal",
-        "radioLabel": "label.income",
         "currencyErrorMessage": "error.income",
+        "radioLabel": "label.income",
         "radioErrorMessage": "error.pleaseSelectAnOption",
         "hideLabel": true,
         "options": [
