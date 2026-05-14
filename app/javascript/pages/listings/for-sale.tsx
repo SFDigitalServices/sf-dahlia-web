@@ -41,6 +41,12 @@ const getForSaleSummaryTable = (listing: RailsSaleListing) => {
         cellText: getAvailabilityString(listing, summary, true),
         cellSubText: showWaitlist(listing, summary) ? null : t("t.available"),
       },
+      income: {
+        cellText: t("listings.stats.upToPercent", {
+          amiPercent: summary.maxQualifyingAMI.toString(),
+        }),
+        cellSubText: t("listings.stats.upToPercentAmi.fullText"),
+      },
       colThree: {
         cellText: getRangeString(
           Math.round(
