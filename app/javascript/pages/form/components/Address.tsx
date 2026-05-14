@@ -1,10 +1,12 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import React from "react"
 import { t, Field, Select } from "@bloom-housing/ui-components"
-import { Heading } from "@bloom-housing/ui-seeds"
+import { FormErrorMessage, Heading } from "@bloom-housing/ui-seeds"
 import { LISTING_APPLY_FORMS_INPUT_MAX_LENGTH, LATIN_REGEX } from "../../../modules/constants"
 import { useFormContext } from "react-hook-form"
+import { stateOptions } from "../../../util/formEngineUtil"
 import styles from "./Address.module.scss"
+import { renderInlineMarkup } from "../../../util/languageUtil"
 
 interface AddressProps {
   label?: string
@@ -12,6 +14,7 @@ interface AddressProps {
   showMailingAddress?: boolean
   showAptOrUnit?: boolean
   requireAddress?: boolean
+  addressError?: string
   fieldNames: {
     addressStreet: string
     addressAptOrUnit?: string
@@ -26,65 +29,13 @@ interface AddressProps {
   }
 }
 
-const stateOptions = [
-  { value: "AL", label: "Alabama" },
-  { value: "AK", label: "Alaska" },
-  { value: "AZ", label: "Arizona" },
-  { value: "AR", label: "Arkansas" },
-  { value: "CA", label: "California" },
-  { value: "CO", label: "Colorado" },
-  { value: "CT", label: "Connecticut" },
-  { value: "DE", label: "Delaware" },
-  { value: "DC", label: "District Of Columbia" },
-  { value: "FL", label: "Florida" },
-  { value: "GA", label: "Georgia" },
-  { value: "HI", label: "Hawaii" },
-  { value: "IL", label: "Illinois" },
-  { value: "IN", label: "Indiana" },
-  { value: "IA", label: "Iowa" },
-  { value: "KS", label: "Kansas" },
-  { value: "KY", label: "Kentucky" },
-  { value: "LA", label: "Louisiana" },
-  { value: "ME", label: "Maine" },
-  { value: "MD", label: "Maryland" },
-  { value: "MA", label: "Massachusetts" },
-  { value: "MI", label: "Michigan" },
-  { value: "MN", label: "Minnesota" },
-  { value: "MS", label: "Mississippi" },
-  { value: "MO", label: "Missouri" },
-  { value: "MT", label: "Montana" },
-  { value: "NE", label: "Nebraska" },
-  { value: "NV", label: "Nevada" },
-  { value: "NH", label: "New Hampshire" },
-  { value: "NJ", label: "New Jersey" },
-  { value: "NM", label: "New Mexico" },
-  { value: "NY", label: "New York" },
-  { value: "NC", label: "North Carolina" },
-  { value: "ND", label: "North Dakota" },
-  { value: "OH", label: "Ohio" },
-  { value: "OK", label: "Oklahoma" },
-  { value: "OR", label: "Oregon" },
-  { value: "PA", label: "Pennsylvania" },
-  { value: "RI", label: "Rhode Island" },
-  { value: "SC", label: "South Carolina" },
-  { value: "SD", label: "South Dakota" },
-  { value: "TN", label: "Tennessee" },
-  { value: "TX", label: "Texas" },
-  { value: "UT", label: "Utah" },
-  { value: "VT", label: "Vermont" },
-  { value: "VA", label: "Virginia" },
-  { value: "WA", label: "Washington" },
-  { value: "WV", label: "West Virginia" },
-  { value: "WI", label: "Wisconsin" },
-  { value: "WY", label: "Wyoming" },
-]
-
 const Address = ({
   label,
   note,
   showMailingAddress,
   showAptOrUnit,
   requireAddress,
+  addressError,
   fieldNames: {
     addressStreet,
     addressAptOrUnit,
@@ -118,13 +69,23 @@ const Address = ({
             message: t("error.pleaseProvideAnswersInEnglish"),
           },
           maxLength: LISTING_APPLY_FORMS_INPUT_MAX_LENGTH.address,
+          validate: (value) => {
+            if (value?.match(/P\.?\s*O\.?\s*BOX/i)) {
+              return t("error.addressValidationPoBox")
+            }
+            const unitValue = watch(addressAptOrUnit || "")
+            if (value && unitValue && value.endsWith(unitValue)) {
+              return t("error.addressValidationDuplicateUnit")
+            }
+            return true
+          },
         }}
         errorMessage={
           errors?.[addressStreet]?.type === "required"
             ? t("error.address")
             : errors?.[addressStreet]?.message
         }
-        error={!!errors?.[addressStreet]}
+        error={!!errors?.[addressStreet] || !!addressError}
         register={register}
       />
       {showAptOrUnit && (
@@ -152,7 +113,7 @@ const Address = ({
               ? t("error.city")
               : errors?.[addressCity]?.message
           }
-          error={!!errors?.[addressCity]}
+          error={!!errors?.[addressCity] || !!addressError}
           register={register}
         />
         <Select
@@ -162,8 +123,8 @@ const Address = ({
             required: requireAddress,
             maxLength: LISTING_APPLY_FORMS_INPUT_MAX_LENGTH.address,
           }}
-          error={!!errors?.[addressState]}
-          errorMessage={t("error.state")}
+          error={!!errors?.[addressState] || !!addressError}
+          errorMessage={errors?.[addressCity] && t("error.state")}
           register={register}
           controlClassName="control"
           options={stateOptions}
@@ -180,10 +141,19 @@ const Address = ({
             message: t("error.zip"),
           },
         }}
-        errorMessage={t("error.zip")}
-        error={!!errors?.[addressZipcode]}
+        errorMessage={
+          errors?.[addressZipcode]?.type === "required"
+            ? t("error.zip")
+            : errors?.[addressZipcode]?.message
+        }
+        error={!!errors?.[addressZipcode] || !!addressError}
         register={register}
       />
+      {addressError && (
+        <FormErrorMessage className={styles["address-error"]}>
+          {renderInlineMarkup(addressError)}
+        </FormErrorMessage>
+      )}
       {showMailingAddress && (
         <Field
           type="checkbox"

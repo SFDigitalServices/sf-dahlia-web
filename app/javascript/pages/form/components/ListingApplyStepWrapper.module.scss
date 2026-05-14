@@ -12,6 +12,10 @@
     font-size: var(--seeds-type-heading-size-2xl);
   }
   text-align: center;
+
+  &.no-back {
+    margin-top: var(--seeds-s4);
+  }
 }
 
 .step-delete-member-subfooter {

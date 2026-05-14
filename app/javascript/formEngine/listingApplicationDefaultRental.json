@@ -76,7 +76,7 @@
         "sectionName": "you"
       },
       "componentType": "step",
-      "componentName": "ListingApplyStepWrapper",
+      "componentName": "ListingApplyContactStepWrapper",
       "props": {
         "title": "b2Contact.title",
         "titleVars": {
@@ -84,66 +84,42 @@
             "dataSource": "form",
             "dataKey": "primaryApplicantFirstName"
           }
-        }
-      },
-      "children": [
-        {
-          "componentName": "Phone",
-          "props": {
-            "label": "label.applicantPhone",
-            "showTypeOfNumber": true,
-            "showDontHavePhoneNumber": true,
-            "showAdditionalPhoneNumber": true,
-            "labelForAdditionalPhoneNumber": "label.applicantSecondPhone",
-            "fieldNames": {
-              "phone": "primaryApplicantPhone",
-              "phoneType": "primaryApplicantPhoneType",
-              "additionalPhone": "primaryApplicantAdditionalPhone",
-              "additionalPhoneType": "primaryApplicantAdditionalPhoneType",
-              "noPhoneCheckbox": "_primaryApplicantNoPhoneCheckbox",
-              "additionalPhoneCheckbox": "_primaryApplicantAdditionalPhoneCheckbox"
-            }
-          }
         },
-        {
-          "componentName": "Address",
-          "props": {
-            "showAptOrUnit": true,
-            "requireAddress": true,
-            "label": "label.address",
-            "note": "b2Contact.applicantAddressDesc",
-            "showMailingAddress": true,
-            "fieldNames": {
-              "addressStreet": "primaryApplicantAddressStreet",
-              "addressAptOrUnit": "primaryApplicantAddressAptOrUnit",
-              "addressCity": "primaryApplicantAddressCity",
-              "addressState": "primaryApplicantAddressState",
-              "addressZipcode": "primaryApplicantAddressZipcode",
-              "mailingAddressCheckbox": "_primaryApplicantMailingAddressCheckbox",
-              "mailingAddressStreet": "primaryApplicantMailingAddressStreet",
-              "mailingAddressCity": "primaryApplicantMailingAddressCity",
-              "mailingAddressState": "primaryApplicantMailingAddressState",
-              "mailingAddressZipcode": "primaryApplicantMailingAddressZipcode"
-            }
-          }
-        },
-        {
-          "componentName": "YesNoRadio",
-          "props": {
-            "label": "label.workInSf",
-            "note": "b2Contact.workInSfDesc",
-            "yesText": "b2Contact.claimWorkInSf",
-            "fieldNames": {
-              "question": "primaryApplicantWorkInSf"
-            }
-          }
+        "fieldNames": {
+          "phone": "primaryApplicantPhone",
+          "phoneType": "primaryApplicantPhoneType",
+          "additionalPhone": "primaryApplicantAdditionalPhone",
+          "additionalPhoneType": "primaryApplicantAdditionalPhoneType",
+          "noPhoneCheckbox": "_primaryApplicantNoPhoneCheckbox",
+          "additionalPhoneCheckbox": "_primaryApplicantAdditionalPhoneCheckbox",
+          "addressStreet": "primaryApplicantAddressStreet",
+          "addressAptOrUnit": "primaryApplicantAddressAptOrUnit",
+          "addressCity": "primaryApplicantAddressCity",
+          "addressState": "primaryApplicantAddressState",
+          "addressZipcode": "primaryApplicantAddressZipcode",
+          "addressVerified": "_addressVerified",
+          "mailingAddressCheckbox": "_primaryApplicantMailingAddressCheckbox",
+          "mailingAddressStreet": "primaryApplicantMailingAddressStreet",
+          "mailingAddressCity": "primaryApplicantMailingAddressCity",
+          "mailingAddressState": "primaryApplicantMailingAddressState",
+          "mailingAddressZipcode": "primaryApplicantMailingAddressZipcode",
+          "question": "primaryApplicantWorkInSf"
         }
-      ]
+      }
     },
     {
       "stepInfo": {
         "slug": "verify-address",
-        "sectionName": "you"
+        "sectionName": "you",
+        "navigationArrival": {
+          "hideStepIfAnyPresent": [
+            {
+              "dataSource": "form",
+              "dataKey": "_addressVerified",
+              "dataValueToMatch": "true"
+            }
+          ]
+        }
       },
       "componentType": "step",
       "componentName": "VerifyAddress",
