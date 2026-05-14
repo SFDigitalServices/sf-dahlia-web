@@ -94,7 +94,6 @@ const Address = ({
           label={t("label.address2")}
           register={register}
           validation={{ maxLength: LISTING_APPLY_FORMS_INPUT_MAX_LENGTH.address }}
-          error={!!addressError}
         />
       )}
       <div className={styles["address-field-group"]}>

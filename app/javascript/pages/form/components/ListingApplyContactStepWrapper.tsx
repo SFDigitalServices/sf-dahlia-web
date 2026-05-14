@@ -100,7 +100,6 @@ const ListingApplyContactStepWrapper = ({
 
   const onSubmit = (data: Record<string, unknown>) => {
     setLoading(true)
-    saveFormData(data)
     const address = {
       street1: data[addressStreet] as string,
       street2: data[addressAptOrUnit] as string,
@@ -108,6 +107,14 @@ const ListingApplyContactStepWrapper = ({
       state: data[addressState] as string,
       zip: data[addressZipcode] as string,
     }
+    saveFormData({
+      ...data,
+      [addressStreet]: address.street1,
+      [addressAptOrUnit]: address.street2,
+      [addressCity]: address.city,
+      [addressState]: address.state,
+      [addressZipcode]: address.zip,
+    })
     const alreadyVerified = addressesMatch(address, {
       street1: formData[addressStreet] as string,
       street2: formData[addressAptOrUnit] as string,

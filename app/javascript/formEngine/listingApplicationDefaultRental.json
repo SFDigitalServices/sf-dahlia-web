@@ -115,7 +115,7 @@
           "hideStepIfAnyPresent": [
             {
               "dataSource": "form",
-              "dataKey": "addressVerified",
+              "dataKey": "_addressVerified",
               "dataValueToMatch": "true"
             }
           ]
