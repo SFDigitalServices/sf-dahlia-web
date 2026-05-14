@@ -7,13 +7,9 @@ import InviteToPage from "../../pages/inviteTo/invite-to"
 import { renderAndLoadAsync } from "../__util__/renderUtils"
 import { ConfigContext } from "../../lib/ConfigContext"
 import { getListing } from "../../api/listingApiService"
-import { recordResponse } from "../../api/inviteToApiService"
 import { INVITE_TO_X } from "../../modules/constants"
 
 jest.mock("../../api/listingApiService")
-jest.mock("../../api/inviteToApiService", () => ({
-  recordResponse: jest.fn(),
-}))
 jest.mock("../../hooks/useFeatureFlag", () => ({
   useFeatureFlag: () => ({
     isEnabled: true,
@@ -146,7 +142,8 @@ describe("Invite to Interview", () => {
     expect(screen.getByTestId("deadline-not-passed-banner")).toBeInTheDocument()
   })
 
-  it("records the response when the scheduling button is clicked", async () => {
+  it("opens the scheduling URL when the scheduling button is clicked", async () => {
+    const windowOpenSpy = jest.spyOn(window, "open").mockImplementation(() => null)
     await renderWithContext(
       <InviteToPage
         assetPaths={"/"}
@@ -156,13 +153,15 @@ describe("Invite to Interview", () => {
           act: "yes",
           appId: "test-id",
         }}
+        schedulingUrl="test-link"
       />
     )
     const button = screen.getByRole("button", {
       name: t("inviteToInterviewPage.submitYourInfo.whatToDo.step1.p2"),
     })
     await userEvent.click(button)
-    expect(recordResponse).toHaveBeenCalled()
+    expect(windowOpenSpy).toHaveBeenCalledWith("test-link", "_blank")
+    windowOpenSpy.mockRestore()
   })
 
   it("shows the withdrawn page when the action is no", async () => {

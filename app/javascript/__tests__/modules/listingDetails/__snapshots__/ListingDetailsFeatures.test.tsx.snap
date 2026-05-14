@@ -573,7 +573,9 @@ exports[`ListingDetailsFeatures displays listing details features section when r
             <span
               class="translate"
             >
-              <p>
+              <p
+                class="primary-lighter-markup-link"
+              >
                 Tenants pay for gas, electricity.
 
                 <br />

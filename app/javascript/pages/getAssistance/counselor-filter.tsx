@@ -40,9 +40,10 @@ const CounselorFilter = ({ handleFilterData, clearClick }: CounselorFilterProps)
     { label: t("assistance.housingCounselors.services.languages.cantonese"), value: "cantonese" },
     { label: t("assistance.housingCounselors.services.languages.english"), value: "english" },
     { label: t("assistance.housingCounselors.services.languages.french"), value: "french" },
-    { label: t("assistance.housingCounselors.services.languages.spanish"), value: "spanish" },
     { label: t("assistance.housingCounselors.services.languages.mandarin"), value: "mandarin" },
     { label: t("assistance.housingCounselors.services.languages.russian"), value: "russian" },
+    { label: t("assistance.housingCounselors.services.languages.spanish"), value: "spanish" },
+    { label: t("assistance.housingCounselors.services.languages.taiwanese"), value: "taiwanese" },
     { label: t("assistance.housingCounselors.services.languages.vietnamese"), value: "vietnamese" },
   ]
   // TODO(DAH-1575)

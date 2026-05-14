@@ -27,7 +27,9 @@ exports[`BeforeApplyingForSale display Before Applying when type is Habitat list
       <li
         class="text-gray-750 primary-lighter-markup-link"
       >
-        <p>
+        <p
+          class="primary-lighter-markup-link"
+        >
           Go to a 
           <a
             href="http://www.habitatgsf.org/innes-ave"
@@ -45,7 +47,9 @@ exports[`BeforeApplyingForSale display Before Applying when type is Habitat list
       <li
         class="text-gray-750 primary-lighter-markup-link"
       >
-        <p>
+        <p
+          class="primary-lighter-markup-link"
+        >
           Meet the 
           <a
             href="https://media.api.sf.gov/documents/DALP_Manual_-_2025.pdf"
@@ -64,7 +68,9 @@ exports[`BeforeApplyingForSale display Before Applying when type is Habitat list
     <div
       class="text-gray-750 primary-lighter-markup-link-desktop"
     >
-      <p>
+      <p
+        class="primary-lighter-markup-link"
+      >
         Read 
         <a
           href="http://www.habitatgsf.org/innes-ave"
@@ -105,7 +111,9 @@ exports[`BeforeApplyingForSale display Before Applying when type is directory 1`
       <li
         class="text-gray-750 primary-lighter-markup-link"
       >
-        <span>
+        <span
+          class="primary-lighter-markup-link"
+        >
           Meet our 
           <a
             href="https://sf.gov/determine-if-you-can-buy-affordable-housing-program"
@@ -118,7 +126,9 @@ exports[`BeforeApplyingForSale display Before Applying when type is directory 1`
       <li
         class="text-gray-750 primary-lighter-markup-link"
       >
-        <span>
+        <span
+          class="primary-lighter-markup-link"
+        >
           Complete 
           <a
             href="https://sf.gov/sign-complete-homebuyer-education"
@@ -131,7 +141,9 @@ exports[`BeforeApplyingForSale display Before Applying when type is directory 1`
       <li
         class="text-gray-750 primary-lighter-markup-link"
       >
-        <span>
+        <span
+          class="primary-lighter-markup-link"
+        >
           Get pre-approved for a mortgage loan by a 
           <a
             href="https://sf.gov/reports/october-2023/find-lender-below-market-rate-program"
@@ -150,7 +162,9 @@ exports[`BeforeApplyingForSale display Before Applying when type is directory 1`
     <div
       class="text-gray-750 primary-lighter-markup-link-desktop"
     >
-      <span>
+      <span
+        class="primary-lighter-markup-link"
+      >
         Read 
         <a
           href="https://sf.gov/determine-if-you-can-buy-affordable-housing-program"
@@ -197,7 +211,9 @@ exports[`BeforeApplyingForSale display Before Applying when type is listing deta
       <li
         class="text-gray-750 primary-lighter-markup-link"
       >
-        <span>
+        <span
+          class="primary-lighter-markup-link"
+        >
           Meet our 
           <a
             href="https://sf.gov/determine-if-you-can-buy-affordable-housing-program"
@@ -210,7 +226,9 @@ exports[`BeforeApplyingForSale display Before Applying when type is listing deta
       <li
         class="text-gray-750 primary-lighter-markup-link"
       >
-        <span>
+        <span
+          class="primary-lighter-markup-link"
+        >
           Complete 
           <a
             href="https://sf.gov/sign-complete-homebuyer-education"
@@ -223,7 +241,9 @@ exports[`BeforeApplyingForSale display Before Applying when type is listing deta
       <li
         class="text-gray-750 primary-lighter-markup-link"
       >
-        <span>
+        <span
+          class="primary-lighter-markup-link"
+        >
           Get pre-approved for a mortgage loan by a 
           <a
             href="https://sf.gov/reports/october-2023/find-lender-below-market-rate-program"
@@ -242,7 +262,9 @@ exports[`BeforeApplyingForSale display Before Applying when type is listing deta
     <div
       class="text-gray-750 primary-lighter-markup-link-desktop"
     >
-      <span>
+      <span
+        class="primary-lighter-markup-link"
+      >
         Read 
         <a
           href="https://sf.gov/determine-if-you-can-buy-affordable-housing-program"

@@ -16,7 +16,9 @@ exports[`ListingDetailsLotteryRanking displays lottery ranking for educator 1`] 
       <div
         class="pb-4 text-gray-700 translate"
       >
-        <p>
+        <p
+          class="primary-lighter-markup-link"
+        >
           Ranking in these lists is considered in the order shown here. 
           <a
             href="https://www.youtube.com/watch?v=oW56bUsrSW4"
@@ -602,7 +604,9 @@ exports[`ListingDetailsLotteryRanking displays lottery ranking for educator one 
       <div
         class="pb-4 text-gray-700 translate"
       >
-        <p>
+        <p
+          class="primary-lighter-markup-link"
+        >
           Ranking in these lists is considered in the order shown here. 
           <a
             href="https://www.youtube.com/watch?v=oW56bUsrSW4"
@@ -1044,7 +1048,9 @@ exports[`ListingDetailsLotteryRanking displays lottery ranking for rental with o
       <div
         class="pb-4 text-gray-700 translate"
       >
-        <p>
+        <p
+          class="primary-lighter-markup-link"
+        >
           Ranking in these lists is considered in the order shown here. 
           <a
             href="https://www.youtube.com/watch?v=oW56bUsrSW4"
@@ -1144,7 +1150,9 @@ exports[`ListingDetailsLotteryRanking displays lottery ranking for rental with t
       <div
         class="pb-4 text-gray-700 translate"
       >
-        <p>
+        <p
+          class="primary-lighter-markup-link"
+        >
           Ranking in these lists is considered in the order shown here. 
           <a
             href="https://www.youtube.com/watch?v=oW56bUsrSW4"
@@ -1260,7 +1268,9 @@ exports[`ListingDetailsLotteryRanking displays lottery ranking for sale with gen
       <div
         class="pb-4 text-gray-700 translate"
       >
-        <p>
+        <p
+          class="primary-lighter-markup-link"
+        >
           Ranking in these lists is considered in the order shown here. 
           <a
             href="https://www.youtube.com/watch?v=oW56bUsrSW4"

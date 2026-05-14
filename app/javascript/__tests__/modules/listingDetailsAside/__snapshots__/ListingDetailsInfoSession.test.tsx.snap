@@ -41,7 +41,9 @@ exports[`ListingDetailsInfoSession renders ListingDetailsInfoSession component 1
             <span
               class="links-space translate"
             >
-              <span>
+              <span
+                class="primary-lighter-markup-link"
+              >
                 MOHCD
               </span>
             </span>

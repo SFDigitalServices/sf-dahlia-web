@@ -19,7 +19,9 @@ exports[`ListingDetailsApply displays habitat link for eligibility requirements 
         <p
           class="mb-4"
         >
-          <span>
+          <span
+            class="primary-lighter-markup-link"
+          >
             Make sure you fulfill the 
             <a
               href="http://www.habitatgsf.org/innes-ave/"
@@ -69,7 +71,9 @@ exports[`ListingDetailsApply renders if listing is open 1`] = `
         <p
           class="mb-4"
         >
-          <span>
+          <span
+            class="primary-lighter-markup-link"
+          >
             Make sure you fulfill the 
             <a
               href="https://sf.gov/determine-if-you-can-buy-affordable-housing-program"
