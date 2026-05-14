@@ -96,6 +96,7 @@ RSpec.describe InviteToController do
                                                           deadline: deadline,
                                                           act: response_value,
                                                           appId: application_number,
+                                                          isTest: false,
                                                         },
                                                         uploadUrl: 'test-upload-url',
                                                         schedulingUrl: 'test-scheduling-url',
