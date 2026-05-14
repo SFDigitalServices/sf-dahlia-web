@@ -67,7 +67,8 @@ export const checkHouseholdEligibility = async (
   return post<Record<string, unknown>>("/api/v1/short-form/validate-household", params).then(
     (response) => response.data
   )
-  
+}
+
 export type VerifiedAddressResponse = {
   address: {
     street1?: string
