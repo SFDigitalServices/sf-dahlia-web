@@ -16,12 +16,15 @@ const RecursiveRenderer = ({ schema }: FormEngineProps) => {
 
   let children: React.ReactNode[] = []
   if (schema.children && schema.children.length > 0) {
-    children = schema.children.map((childSchema) => (
-      <RecursiveRenderer schema={childSchema} key={crypto.randomUUID()} />
+    children = schema.children.map((childSchema, index) => (
+      <RecursiveRenderer
+        schema={childSchema}
+        key={`${schema.componentName}-${childSchema.componentName}-${index}`}
+      />
     ))
   }
-  // set key property to avoid weird behavior when navigating between form steps
-  const props = { ...schema.props, key: crypto.randomUUID() }
+  // set static key property to avoid weird behavior when navigating between form steps and on rerenders
+  const props = { ...schema.props, key: `${schema.componentName}-${JSON.stringify(schema.props)}` }
 
   return React.createElement(ComponentToRender, props, ...children)
 }

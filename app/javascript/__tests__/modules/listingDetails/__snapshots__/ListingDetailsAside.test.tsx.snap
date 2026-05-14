@@ -158,7 +158,9 @@ exports[`ListingDetailsAside renders ListingDetailsAside component fcfs 1`] = `
                     <span
                       class="links-space translate"
                     >
-                      <span>
+                      <span
+                        class="primary-lighter-markup-link"
+                      >
                         MOHCD
                       </span>
                     </span>
@@ -282,7 +284,9 @@ exports[`ListingDetailsAside renders ListingDetailsAside component fcfs 1`] = `
                           <span
                             class="links-space translate"
                           >
-                            <span>
+                            <span
+                              class="primary-lighter-markup-link"
+                            >
                               SFPL
                             </span>
                           </span>
@@ -415,7 +419,9 @@ exports[`ListingDetailsAside renders ListingDetailsAside component fcfs 1`] = `
                 <p
                   class="text-sm"
                 >
-                  <span>
+                  <span
+                    class="primary-lighter-markup-link"
+                  >
                     8-4 Mon-Thurs
 
                     <br />
@@ -630,7 +636,9 @@ exports[`ListingDetailsAside renders ListingDetailsAside component rental 1`] = 
                 <div
                   class="text-gray-700"
                 >
-                  <div>
+                  <div
+                    class="primary-lighter-markup-link"
+                  >
                     <p>
                       The lottery will not be in person, but instead will be a virtual lottery.
                     </p>
@@ -720,7 +728,9 @@ exports[`ListingDetailsAside renders ListingDetailsAside component rental 1`] = 
                     <span
                       class="links-space translate"
                     >
-                      <span>
+                      <span
+                        class="primary-lighter-markup-link"
+                      >
                         Library
                       </span>
                     </span>
@@ -892,7 +902,9 @@ exports[`ListingDetailsAside renders ListingDetailsAside component sales 1`] = `
                     <span
                       class="links-space translate"
                     >
-                      <span>
+                      <span
+                        class="primary-lighter-markup-link"
+                      >
                         MOHCD
                       </span>
                     </span>
@@ -921,7 +933,9 @@ exports[`ListingDetailsAside renders ListingDetailsAside component sales 1`] = `
                 <p
                   class="mb-4"
                 >
-                  <span>
+                  <span
+                    class="primary-lighter-markup-link"
+                  >
                     Make sure you fulfill the 
                     <a
                       href="https://sf.gov/determine-if-you-can-buy-affordable-housing-program"
@@ -1018,7 +1032,9 @@ exports[`ListingDetailsAside renders ListingDetailsAside component sales 1`] = `
                           <span
                             class="links-space translate"
                           >
-                            <span>
+                            <span
+                              class="primary-lighter-markup-link"
+                            >
                               SFPL
                             </span>
                           </span>
@@ -1151,7 +1167,9 @@ exports[`ListingDetailsAside renders ListingDetailsAside component sales 1`] = `
                 <p
                   class="text-sm"
                 >
-                  <span>
+                  <span
+                    class="primary-lighter-markup-link"
+                  >
                     8-4 Mon-Thurs
 
                     <br />

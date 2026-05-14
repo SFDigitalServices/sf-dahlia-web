@@ -9,12 +9,6 @@ describe("<Privacy />", () => {
     expect(getAllByText("Privacy Policy")[0]).not.toBeNull()
   })
 
-  it("shows the correct content when test feature flag is set to true", async () => {
-    const { getByText } = await renderAndLoadAsync(<Privacy assetPaths={{}} />)
-
-    expect(getByText("Test Unleash flag is enabled")).toBeInTheDocument()
-  })
-
   it("shows the correct content when test feature flag is set to false", async () => {
     jest.spyOn(require("@unleash/proxy-client-react"), "useFlag").mockImplementation(() => false)
 

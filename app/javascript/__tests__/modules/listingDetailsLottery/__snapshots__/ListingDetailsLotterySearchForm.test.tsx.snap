@@ -98,7 +98,9 @@ exports[`ListingDetailsLotteryModal displays initial view with form and listing 
           <div
             class="pb-4 text-gray-700 text-xs mx-8 translate"
           >
-            <p>
+            <p
+              class="primary-lighter-markup-link"
+            >
               Ranking in these lists is considered in the order shown here. 
               <a
                 href="https://www.youtube.com/watch?v=oW56bUsrSW4"

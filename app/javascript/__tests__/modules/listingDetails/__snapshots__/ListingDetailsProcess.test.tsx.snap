@@ -116,7 +116,9 @@ exports[`ListingDetailsProcess renders leasing agent section if exists 1`] = `
           <span
             class="translate"
           >
-            <span>
+            <span
+              class="primary-lighter-markup-link"
+            >
               Monday - Friday 10:00 AM - 6:00 PM
             </span>
           </span>

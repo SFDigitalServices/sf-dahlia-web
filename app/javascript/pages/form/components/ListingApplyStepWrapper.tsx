@@ -1,6 +1,6 @@
 // https://github.com/react-hook-form/react-hook-form/issues/2887#issuecomment-802577357
 
-import React, { Children } from "react"
+import React, { Children, useEffect } from "react"
 import { useForm, FormProvider } from "react-hook-form"
 import { Form, t } from "@bloom-housing/ui-components"
 import { Button, Card } from "@bloom-housing/ui-seeds"
@@ -36,7 +36,6 @@ const ListingApplyStepWrapper = ({
     handleNextStep,
     handlePrevStep,
   } = formEngineContext
-
   const currentStepInfo = stepInfoMap[currentStepIndex]
   const defaultValues = currentStepInfo.fieldNames.reduce((acc, fieldName) => {
     acc[fieldName] = formData[fieldName]
@@ -62,7 +61,11 @@ const ListingApplyStepWrapper = ({
     defaultValues,
   })
 
-  const hasErrors = () => Object.keys(formMethods.formState.errors).length > 0
+  useEffect(() => {
+    if (Object.keys(formMethods.formState.errors).length > 0) {
+      window.scrollTo(0, 0)
+    }
+  }, [formMethods.formState.errors])
 
   const onSubmit = (data: Record<string, unknown>) => {
     saveFormData({ ...blankValues, ...data })
@@ -87,7 +90,7 @@ const ListingApplyStepWrapper = ({
             {description && <p className={styles["step-description"]}>{t(description)}</p>}
           </Card.Header>
         )}
-        {hasErrors() && (
+        {Object.keys(formMethods.formState.errors).length > 0 && (
           <ListingApplyStepErrorMessage
             errorMessage={t("error.formSubmission")}
             onClose={() => formMethods.clearErrors()}
