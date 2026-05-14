@@ -9,6 +9,7 @@ import { useFormEngineContext } from "../../../formEngine/formEngineContext"
 import styles from "./ListingApplyStepWrapper.module.scss"
 import { checkHouseholdEligibility } from "../../../api/formApiService"
 import ListingApplyStepErrorMessage from "./ListingApplyStepErrorMessage"
+import { numChildrenUnderSix } from "../../../util/formEngineUtil"
 
 interface HouseholdIncomeProps {
   title: string
@@ -73,15 +74,7 @@ const HouseholdIncome = ({
     }
     const householdMembers = (formData.householdMembers as Record<string, unknown>[]) || []
     const householdSize = householdMembers.length + 1
-    const childrenUnderSix = householdMembers.filter((member) => {
-      if (!member.birthYear || !member.birthMonth || !member.birthDay) return false
-      const memberBirthdate = new Date(
-        member.birthYear as number,
-        (member.birthMonth as number) - 1,
-        member.birthDay as number
-      )
-      return memberBirthdate > new Date()
-    })
+    const childrenUnderSix = numChildrenUnderSix(householdMembers)
     const income =
       Number.parseFloat((data[amount] as string).replace(/,/g, "")) *
       Number.parseFloat(data[answer] as string)
