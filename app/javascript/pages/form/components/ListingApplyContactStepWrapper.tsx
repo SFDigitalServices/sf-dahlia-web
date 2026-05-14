@@ -107,14 +107,6 @@ const ListingApplyContactStepWrapper = ({
       state: data[addressState] as string,
       zip: data[addressZipcode] as string,
     }
-    saveFormData({
-      ...data,
-      [addressStreet]: address.street1,
-      [addressAptOrUnit]: address.street2,
-      [addressCity]: address.city,
-      [addressState]: address.state,
-      [addressZipcode]: address.zip,
-    })
     const alreadyVerified = addressesMatch(address, {
       street1: formData[addressStreet] as string,
       street2: formData[addressAptOrUnit] as string,
@@ -129,10 +121,17 @@ const ListingApplyContactStepWrapper = ({
         return
       } else {
         // The user wants to enter a different address
-        saveFormData({ ...data, [addressVerified]: "false" })
+        saveFormData({
+          ...data,
+          [addressStreet]: address.street1,
+          [addressAptOrUnit]: address.street2,
+          [addressCity]: address.city,
+          [addressState]: address.state,
+          [addressZipcode]: address.zip,
+          [addressVerified]: "false",
+        })
       }
     }
-    formMethods.clearErrors()
     locateVerifiedAddress(address)
       .then((response) => {
         saveFormData({
@@ -156,6 +155,7 @@ const ListingApplyContactStepWrapper = ({
         } else {
           setApiErrorMessage(t("error.alert.badRequest"))
         }
+        formMethods.reset(data)
       })
       .finally(() => {
         setLoading(false)
