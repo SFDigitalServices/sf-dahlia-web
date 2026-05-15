@@ -44,7 +44,7 @@ const PreferenceProofUploadField = ({
   const [uploadStatus, setUploadStatus] = useState<null | "loading" | "done" | "error">(null)
   const [uploadErrorMessage, setUploadErrorMessage] = useState("")
 
-  const documentType: string = watch(proofTypeFieldName)
+  const documentType: string | undefined = watch(proofTypeFieldName) || proofTypeSingleValue
   const fileName: string = watch(proofFileName)
   const fileUploadedAt: string = watch(proofFileUploadedAt)
 
@@ -88,7 +88,9 @@ const PreferenceProofUploadField = ({
   }
 
   const handleDeleteFile = () => {
+    if (!documentType) throw new Error(`Missing document type value for ${proofTypeFieldName}`)
     setUploadStatus("loading")
+
     deleteUploadedProofFile(sessionId, listingId, listingPreferenceId, documentType)
       .then(() => {
         setUploadStatus(null)
@@ -120,7 +122,13 @@ const PreferenceProofUploadField = ({
   return (
     <>
       <div className={fileName ? "hidden" : ""}>
-        <div className={styles["upload-label"]}>{proofTypeLabel}</div>
+        {proofTypeSingleValue ? (
+          <div className={styles["upload-label"]}>{proofTypeLabel}</div>
+        ) : (
+          <label htmlFor={proofTypeFieldName} className={styles["upload-label"]}>
+            {proofTypeLabel}
+          </label>
+        )}
         {proofTypeNote && <div className="field-note">{renderInlineMarkup(proofTypeNote)}</div>}
         {proofTypeFieldName &&
           proofTypeLabel &&

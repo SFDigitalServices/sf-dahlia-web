@@ -474,8 +474,8 @@
         "navigationArrival": {
           "showStepIfAllPresent": [
             {
-              "dataSource": "listing",
-              "dataKey": "preferences.assistedHousing"
+              "dataSource": "preferenceNames",
+              "dataKey": "assistedHousing"
             },
             {
               "dataSource": "form",
@@ -491,7 +491,8 @@
         "pageInstructions": "e3aAssistedHousingPreference.instructions",
         "greenHeader": true,
         "fieldNames": {
-          "claimedPreferences": "claimedPreferences"
+          "claimedPreferences": "claimedPreferences",
+          "optOut": "_assistedHousingOptOut"
         },
         "preferenceContents": [
           {
@@ -504,8 +505,7 @@
             "proofTypeSingleValue": "Copy of Lease",
             "proofUploadButtonLabel": "label.uploadCopyOfLease"
           }
-        ],
-        "optOutFieldName": "_assistedHousingOptOut"
+        ]
       }
     },
     {

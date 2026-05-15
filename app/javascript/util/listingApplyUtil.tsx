@@ -51,7 +51,6 @@ export const getPrimaryApplicantData = (formData: Record<string, unknown>) => {
   }
 }
 
-// TODO: look up eligibility of household members for particular preferences, like in `Service.eligibleMembers`
 export const allHouseholdMembers = (formData: Record<string, unknown>): HouseholdMember[] => {
   const householdMembers = (formData.householdMembers || []) as HouseholdMember[]
   return [

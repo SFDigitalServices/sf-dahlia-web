@@ -30,6 +30,10 @@
   color: var(--seeds-color-gray-700);
 }
 
+.preference-content-wrapper {
+  margin-left: var(--seeds-s9);
+}
+
 .preference-checkbox {
   margin-bottom: 0 !important;
   margin-top: var(--seeds-s8);
@@ -42,7 +46,6 @@
 .preference-note {
   font-size: var(--seeds-font-size-sm);
   color: var(--seeds-color-gray-700);
-  margin-left: var(--seeds-s9);
 }
 
 .step-footer {
@@ -50,4 +53,9 @@
   padding: var(--seeds-s8);
   display: flex;
   justify-content: center;
+}
+
+.read-more-url {
+  font-size: var(--seeds-font-size-sm);
+  margin-top: var(--seeds-s2);
 }

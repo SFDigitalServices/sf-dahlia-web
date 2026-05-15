@@ -14,7 +14,7 @@ import {
   generateHouseholdMemberOptions,
 } from "../../../util/listingApplyUtil"
 import { getNestedError } from "../../../util/formEngineUtil"
-import styles from "./PreferenceCheckbox.module.scss"
+import styles from "./ListingApplyPreferenceStepWrapper.module.scss"
 
 interface PreferenceCheckboxProps {
   showRequiredCheckboxError: boolean
@@ -57,6 +57,7 @@ const PreferenceCheckbox = ({
   /* eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion */
   const listing = staticData.listing!
 
+  // TODO: look up eligibility of household members for particular preferences, like in `Service.eligibleMembers`
   const eligibleHouseholdMembers = allHouseholdMembers(formData)
 
   const checkBoxValue = useWatch({
@@ -126,7 +127,7 @@ const PreferenceCheckbox = ({
         {!!checkBoxValue && certificateNumberLabel && certificateNumber && (
           <Field
             name={certificateNumber}
-            label={certificateNumberLabel && t(certificateNumberLabel)}
+            label={t(certificateNumberLabel)}
             note={certificateNumberNote && t(certificateNumberNote)}
             placeholder={t("label.certificateNumber")}
             register={register}

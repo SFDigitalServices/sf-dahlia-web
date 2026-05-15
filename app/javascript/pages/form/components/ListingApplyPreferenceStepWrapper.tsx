@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { useForm, FormProvider } from "react-hook-form"
 import { Form, Field, t } from "@bloom-housing/ui-components"
 import { Button, Card, FormErrorMessage } from "@bloom-housing/ui-seeds"
@@ -6,7 +6,7 @@ import type { RailsListingPreference } from "../../../api/types/rails/listings/R
 import { useFormEngineContext } from "../../../formEngine/formEngineContext"
 import ListingApplyStepErrorMessage from "./ListingApplyStepErrorMessage"
 import { PREFERENCES } from "../../../modules/constants"
-import PreferenceCheckbox from "./PreferencesCheckbox"
+import PreferenceCheckbox from "./PreferenceCheckbox"
 import { deleteUploadedProofFile } from "../../../api/formApiService"
 import { generateStepDefaultValues, getNestedError } from "../../../util/formEngineUtil"
 import { renderInlineMarkup } from "../../../util/languageUtil"
@@ -23,8 +23,6 @@ export type PreferenceContent = {
   certificateNumberLabel?: string
   certificateNumberNote?: string
   proofUploadButtonLabel?: string
-  proofUploadButtonNote?: string
-  proofUploadButtonName?: string
 }
 
 // Preference pages have more complex fields, so we generate
@@ -50,12 +48,12 @@ export type ClaimedPreference = {
 // dot notation for nested values
 // https://react-hook-form-website-git-leagcy-hook-form.vercel.app/v6/api/#register
 const generatePreferenceFieldNames = (preferenceName: string): PreferenceFieldNames => ({
-  preferenceClaimed: `${preferenceName}.preferenceClaimed`,
-  householdMemberId: `${preferenceName}.householdMemberId`,
-  certificateNumber: `${preferenceName}.certificateNumber`,
-  proofType: `${preferenceName}.proofType`,
-  proofFileName: `${preferenceName}.proofFileName`,
-  proofFileUploadedAt: `${preferenceName}.proofFileUploadedAt`,
+  preferenceClaimed: `claimedPreferences.${preferenceName}.preferenceClaimed`,
+  householdMemberId: `claimedPreferences.${preferenceName}.householdMemberId`,
+  certificateNumber: `claimedPreferences.${preferenceName}.certificateNumber`,
+  proofType: `claimedPreferences.${preferenceName}.proofType`,
+  proofFileName: `claimedPreferences.${preferenceName}.proofFileName`,
+  proofFileUploadedAt: `claimedPreferences.${preferenceName}.proofFileUploadedAt`,
 })
 
 interface ListingApplyPreferenceStepWrapperProps {
@@ -63,19 +61,18 @@ interface ListingApplyPreferenceStepWrapperProps {
   pageTitle: string
   pageInstructions: string
   fieldNames: {
-    claimedPreferences: string
+    claimedPreferences: string // claimedPreferences object is used by all preference pages, it should be the same string for all preference pages in the schema
+    optOut?: string
   }
   preferenceContents: PreferenceContent[]
-  optOutFieldName?: string
 }
 
 const ListingApplyPreferenceStepWrapper = ({
   greenHeader,
   pageTitle,
   pageInstructions,
-  fieldNames: { claimedPreferences }, // claimedPreferences object is used by all preference pages
+  fieldNames: { claimedPreferences, optOut },
   preferenceContents,
-  optOutFieldName,
 }: ListingApplyPreferenceStepWrapperProps) => {
   const {
     sessionId,
@@ -94,45 +91,55 @@ const ListingApplyPreferenceStepWrapper = ({
   const preferences = staticData.preferences!
   const currentStepInfo = stepInfoMap[currentStepIndex]
 
-  /**
-   * using dot notation for fields results in nested data:
-   * formData: {
-   *   claimedPreferences: {
-   *     liveInSf: {
-   *       preferenceClaimed: true,
-   *       ...
-   *       proofFileName: 'gas-bill.pdf',
-   *     },
-   *     certificateOfPreference: {
-   *       preferenceClaimed: false,
-   *     }
-   *   }
-   * }
-   */
-  const claimedPreferenceValues = (generateStepDefaultValues(currentStepInfo, formData)[
-    claimedPreferences
-  ] || {}) as Record<string, ClaimedPreference>
-  const defaultValues = preferenceContents.reduce(
-    (acc, preferenceContent) => {
-      return {
-        ...acc,
-        [preferenceContent.preferenceName]:
-          claimedPreferenceValues[preferenceContent.preferenceName],
-      } as Record<string, ClaimedPreference>
-    },
-    {} as Record<string, ClaimedPreference>
-  )
-
   const formMethods = useForm({
     mode: "onSubmit",
     reValidateMode: "onChange",
     shouldFocusError: false,
-    defaultValues,
   })
 
   // https://github.com/react-hook-form/react-hook-form/issues/2887#issuecomment-802577357
-  /* eslint-disable-next-line @typescript-eslint/unbound-method */
-  const { register, handleSubmit, errors, clearErrors, setValue, setError } = formMethods
+  /* eslint-disable @typescript-eslint/unbound-method */
+  const {
+    reset,
+    register,
+    handleSubmit,
+    formState: { errors, isValid },
+    clearErrors,
+    setValue,
+    setError,
+  } = formMethods
+  /* eslint-enable @typescript-eslint/unbound-method */
+
+  // populate the page's form values from formData
+  useEffect(() => {
+    const stepDefaultValues = generateStepDefaultValues(currentStepInfo, formData)
+    const optOutValue = optOut && !!stepDefaultValues[optOut]
+    const claimedPreferencesValue = (stepDefaultValues[claimedPreferences] || {}) as Record<
+      string,
+      ClaimedPreference
+    >
+    const defaultClaimedPreferencesValues = preferenceContents.reduce(
+      (acc, preferenceContent) => {
+        return {
+          ...acc,
+          [preferenceContent.preferenceName]:
+            claimedPreferencesValue[preferenceContent.preferenceName] || {},
+        } as Record<string, ClaimedPreference>
+      },
+      {} as Record<string, ClaimedPreference>
+    )
+    reset({
+      ...(optOut && { [optOut]: optOutValue }),
+      claimedPreferences: defaultClaimedPreferencesValues,
+    })
+    /* eslint-disable-next-line react-hooks/exhaustive-deps */
+  }, [reset])
+
+  useEffect(() => {
+    if (isValid) {
+      window.scrollTo(0, 0)
+    }
+  }, [isValid])
 
   const [showRequiredCheckboxError, setShowRequiredCheckboxError] = useState(false)
 
@@ -163,6 +170,7 @@ const ListingApplyPreferenceStepWrapper = ({
       )
         return true
     }
+    return false
   }
 
   const clearAllErrors = () => {
@@ -175,8 +183,8 @@ const ListingApplyPreferenceStepWrapper = ({
     if (isChecked) {
       setShowRequiredCheckboxError(false)
     }
-    if (isChecked && optOutFieldName) {
-      setValue(optOutFieldName, false)
+    if (isChecked && optOut) {
+      setValue(optOut, false)
     }
   }
 
@@ -185,61 +193,79 @@ const ListingApplyPreferenceStepWrapper = ({
     if (isChecked) {
       clearAllErrors()
       preferenceContents.forEach((content) => {
-        setValue(`${content.preferenceName}.preferenceClaimed`, false)
+        setValue(`claimedPreferences.${content.preferenceName}.preferenceClaimed`, false)
       })
     }
   }
 
-  const onSubmit = (data: Record<string, ClaimedPreference>) => {
+  /**
+   * using dot notation for fields results in nested data:
+   * formData: {
+   *   _liveOrWorkInSfOptOut: false
+   *   claimedPreferences: {
+   *     liveInSf: {
+   *       preferenceClaimed: true,
+   *       ...
+   *       proofFileName: 'gas-bill.pdf',
+   *     },
+   *     workInSf: {
+   *       preferenceClaimed: false,
+   *     }
+   *   }
+   * }
+   */
+  const onSubmit = (data: { [key: string]: boolean | Record<string, ClaimedPreference> }) => {
+    const optOutValue = !!optOut && (data[optOut] as boolean)
+    const claimedPreferencesData = data.claimedPreferences as Record<string, ClaimedPreference>
+
     const checkboxValues = [
-      ...Object.values(data).map((val) => val.preferenceClaimed),
-      optOutFieldName && data[optOutFieldName],
+      ...Object.values(claimedPreferencesData).map((val) => val.preferenceClaimed),
+      optOutValue,
     ]
 
     // make sure at least one checkbox option is selected
-    // this doesn't apply if there is no opt-out checkbox
+    // users can submit without checking any checkbox if there is no opt-out checkbox
     const somePrefsChecked = Object.values(checkboxValues).some((val) => !!val)
-    if (!somePrefsChecked && optOutFieldName) {
+    if (!somePrefsChecked && optOut) {
       setShowRequiredCheckboxError(true)
       return
     }
 
     const unclaimedPreferences: Record<string, ClaimedPreference> = {}
     for (const content of preferenceContents) {
+      const preference = claimedPreferencesData[content.preferenceName]
       // for every selected household member option, make sure there is an uploaded proof
       if (
-        data[content.preferenceName].preferenceClaimed &&
-        data[content.preferenceName].householdMemberId &&
-        !data[content.preferenceName].proofFileName
+        preference.preferenceClaimed &&
+        preference.householdMemberId &&
+        !preference.proofFileName
       ) {
-        setError(`${content.preferenceName}.proofFileName`, {
+        setError(`claimedPreferences.${content.preferenceName}.proofFileName`, {
           message: t("error.fileMissing"),
         })
-        return
       }
 
       // for every unclaimed preference, remove proof data
-      if (
-        !data[content.preferenceName].preferenceClaimed &&
-        data[content.preferenceName].proofFileName
-      ) {
+      if (!preference.preferenceClaimed && preference.proofFileName) {
         unclaimedPreferences[content.preferenceName] = { preferenceClaimed: false }
         const listingPreferenceId = getPreferenceData(content.preferenceName).listingPreferenceID
-        const proofTypeValue = data[content.preferenceName].proofType || ""
+        const proofTypeValue = preference.proofType || ""
         void deleteUploadedProofFile(sessionId, listing.Id, listingPreferenceId, proofTypeValue)
       }
     }
+    if (isValid) return
 
-    const newClaimedPreference = { ...data, ...unclaimedPreferences }
+    const newClaimedPreference = { ...claimedPreferencesData, ...unclaimedPreferences }
     const existingClaimedPreferences = formData[claimedPreferences] as Record<
       string,
       ClaimedPreference
     >
     saveFormData({
-      claimedPreferences: {
+      [claimedPreferences]: {
         ...existingClaimedPreferences,
         ...newClaimedPreference,
       },
+      ...(optOut && { [optOut]: optOutValue }),
     })
     handleNextStep()
   }
@@ -288,11 +314,11 @@ const ListingApplyPreferenceStepWrapper = ({
               preferenceFieldNames={generatePreferenceFieldNames(content.preferenceName)}
             />
           ))}
-          {optOutFieldName && (
+          {optOut && (
             <div className={styles["preference-section"]}>
               <Field
                 type="checkbox"
-                name={optOutFieldName}
+                name={optOut}
                 label={t("label.dontWantPreference")}
                 register={register}
                 error={showRequiredCheckboxError}
@@ -300,8 +326,10 @@ const ListingApplyPreferenceStepWrapper = ({
                 className={styles["preference-checkbox"]}
                 labelClassName={styles["preference-checkbox-label"]}
               />
-              <div className={styles["preference-note"]}>
-                {t("label.stillHaveOpportunityToClaim")}
+              <div className={styles["preference-content-wrapper"]}>
+                <div className={styles["preference-note"]}>
+                  {t("label.stillHaveOpportunityToClaim")}
+                </div>
               </div>
             </div>
           )}
