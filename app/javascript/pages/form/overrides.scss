@@ -1,4 +1,7 @@
-.field,
+.field {
+  margin-bottom: var(--seeds-spacer-content);
+}
+
 .field-note {
   margin-bottom: var(--seeds-spacer-label);
 }

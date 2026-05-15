@@ -476,7 +476,7 @@
           "showStepIfAllPresent": [
             {
               "dataSource": "listing",
-              "dataKey": "preferences.publicHousing"
+              "dataKey": "preferences.assistedHousing"
             },
             {
               "dataSource": "form",
@@ -486,29 +486,28 @@
         }
       },
       "componentType": "step",
-      "componentName": "ListingApplyStepWrapper",
+      "componentName": "ListingApplyPreferenceStepWrapper",
       "props": {
-        "title": "label.goodNewsForHigherRanking",
-        "description": "e3aAssistedHousingPreference.instructions"
-      },
-      "children": [
-        {
-          "componentName": "PreferenceCheckboxGroup",
-          "props": {
-            "name": "e3aAssistedHousingPreference.preference.title",
-            "description": "e3aAssistedHousingPreference.preference.description",
-            "showProofType": false,
-            "members": {
-              "dataSource": "form",
-              "dataKey": "members"
-            },
-            "fieldNames": {
-              "member": "assistedHousingMember",
-              "proofDoc": "assistedHousingProofDoc"
-            }
+        "pageTitle": "label.goodNewsForHigherRanking",
+        "pageInstructions": "e3aAssistedHousingPreference.instructions",
+        "greenHeader": true,
+        "fieldNames": {
+          "claimedPreferences": "claimedPreferences"
+        },
+        "preferenceContents": [
+          {
+            "preferenceName": "assistedHousing",
+            "checkboxLabel": "e3aAssistedHousingPreference.preference.title",
+            "checkboxDescription": "e3aAssistedHousingPreference.preference.description",
+            "proofHouseholdMemberLabel": "label.applicantPreferencesDocumentName",
+            "proofTypeLabel": "label.uploadCopyOfLease",
+            "proofTypeNote": "label.uploadLeaseDescription",
+            "proofTypeSingleValue": "Copy of Lease",
+            "proofUploadButtonLabel": "label.uploadCopyOfLease"
           }
-        }
-      ]
+        ],
+        "optOut": true
+      }
     },
     {
       "stepInfo": {

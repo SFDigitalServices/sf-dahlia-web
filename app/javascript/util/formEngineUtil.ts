@@ -97,6 +97,18 @@ export const calculatePrevStep = (
   return 0
 }
 
+export const generateStepDefaultValues = (
+  currentStepInfo: StepInfoSchema,
+  formData: Record<string, unknown>
+) => {
+  if (!currentStepInfo.fieldNames) return {}
+
+  return currentStepInfo.fieldNames.reduce((acc: Record<string, unknown>, fieldName) => {
+    acc[fieldName] = formData[fieldName]
+    return acc
+  }, {})
+}
+
 export const validDayRange = (value: string): boolean =>
   Number.parseInt(value, 10) > 0 && Number.parseInt(value, 10) <= 31
 
@@ -119,14 +131,6 @@ export const validDate = (
 ): boolean => {
   if (!birthDayValue || !birthMonthValue || !birthYearValue) return true
   return parseDate(birthYearValue, birthMonthValue, birthDayValue).isValid()
-}
-
-export const getFullName = (person: {
-  firstName: string
-  middleName: string
-  lastName: string
-}) => {
-  return `${person.firstName || ""} ${person.middleName || ""} ${person.lastName || ""}`
 }
 
 export const updateFormPath = (newStepIndex: number, stepInfoMap: StepInfoSchema[]) => {
@@ -243,3 +247,17 @@ export const stateOptions = [
   { value: "WI", label: "Wisconsin" },
   { value: "WY", label: "Wyoming" },
 ]
+
+// react-hook-form v6 stores errors for dot-notation field names as nested
+// objects (e.g. 'liveInSf.householdMemberId' -> errors.liveInSf.householdMemberId),
+// not under a flat string key. Walk the path to retrieve the error.
+export const getNestedError = (
+  errors: Record<string, unknown>,
+  fieldName: string
+): Record<string, unknown> | undefined => {
+  if (!errors) return undefined
+  return fieldName.split(".").reduce<Record<string, unknown> | undefined>((acc, key) => {
+    if (acc && typeof acc === "object") return acc[key] as Record<string, unknown> | undefined
+    return undefined
+  }, errors)
+}
