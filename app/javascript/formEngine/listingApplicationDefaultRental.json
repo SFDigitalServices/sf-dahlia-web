@@ -506,7 +506,7 @@
             "proofUploadButtonLabel": "label.uploadCopyOfLease"
           }
         ],
-        "optOutFieldName": "_assistedHousingOptOut"
+        "optOut": true
       }
     },
     {
