@@ -233,7 +233,7 @@ export const getListingCards = (
             ? null
             : {
                 headers: {
-                  unitType: { name: "t.unitSize", className: headerClassNames },
+                  unitType: { name: "t.units", className: headerClassNames },
                   ...(directoryType === "forSale" && {
                     income: { name: "t.income", className: headerClassNames },
                   }),
