@@ -156,16 +156,9 @@ export const getRentSubText = (summary: RailsRentalUnitSummary) => {
 export const showWaitlist = (listing: RailsListing, summary: RailsUnitSummary) =>
   listing.hasWaitlist && summary.availability <= 0
 
-// Gets the additional table availability row seen on mobile
 // TODO: Remove string concatenation for translations
-export const getAvailabilityString = (
-  listing: RailsListing,
-  summary: RailsUnitSummary,
-  mobile?: boolean
-) =>
-  showWaitlist(listing, summary)
-    ? t("t.waitlist")
-    : `${summary.availability}${!mobile ? " " + t("t.available") : ""}`
+export const getAvailabilityString = (listing: RailsListing, summary: RailsUnitSummary) =>
+  showWaitlist(listing, summary) ? t("t.waitlist") : `${summary.availability} ${t("t.available")}`
 
 // Get the min or max of two numbers that may be null
 export const getMinMax = (num1: number | null, num2: number | null, rangeType: minMax) => {

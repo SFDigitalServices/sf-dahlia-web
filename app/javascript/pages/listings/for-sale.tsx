@@ -33,14 +33,14 @@ const getForSaleSummaryTable = (listing: RailsSaleListing) => {
           `listings.unitTypes.${summary.unitType}`,
           summary.unitType
         ),
-        cellSubText: getAvailabilityString(listing, summary, false),
+        cellSubText: getAvailabilityString(listing, summary),
         hideMobile: true,
       },
       income: {
         cellText: t("listings.stats.upToPercent", {
           amiPercent: summary.maxQualifyingAMI.toString(),
         }),
-        cellSubText: t("listings.stats.upToPercentAmi.fullText"),
+        cellSubText: t("listings.stats.upToPercent.p2"),
       },
       colThree: {
         cellText: getRangeString(
