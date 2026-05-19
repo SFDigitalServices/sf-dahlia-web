@@ -421,12 +421,12 @@
           "showStepIfAnyPresent": [
             {
               "dataSource": "listing",
-              "dataKey": "listing.Tenure",
+              "dataKey": "Tenure",
               "dataValueToMatch": "New rental"
             },
             {
               "dataSource": "listing",
-              "dataKey": "listing.Tenure",
+              "dataKey": "Tenure",
               "dataValueToMatch": "Re-rental"
             }
           ]
