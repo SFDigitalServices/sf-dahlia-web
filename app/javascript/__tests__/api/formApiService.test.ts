@@ -4,6 +4,7 @@ import {
   uploadProofFile,
   deleteUploadedProofFile,
   locateVerifiedAddress,
+  checkHouseholdEligibility,
 } from "../../api/formApiService"
 
 jest.mock("axios")
@@ -112,6 +113,22 @@ describe("formApiService", () => {
           state: "CA",
           zip: "94105",
         },
+      })
+      expect(result).toEqual({ id: "test-id" })
+    })
+  })
+
+  describe("checkHouseholdEligibility", () => {
+    it("sends the household eligibility check with the correct payload", async () => {
+      const result = await checkHouseholdEligibility("testListingId", 3, "50000", 1)
+
+      expect(post).toHaveBeenCalledWith("/api/v1/short-form/validate-household", {
+        eligibility: {
+          householdsize: 3,
+          incomelevel: "50000",
+          childrenUnder6: 1,
+        },
+        listing_id: "testListingId",
       })
       expect(result).toEqual({ id: "test-id" })
     })
