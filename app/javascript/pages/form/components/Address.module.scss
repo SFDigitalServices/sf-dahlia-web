@@ -2,3 +2,7 @@
   display: flex;
   gap: var(--seeds-spacer-content);
 }
+
+.address-error {
+  margin: var(--seeds-spacer-text) 0 var(--seeds-spacer-content) 0;
+}
