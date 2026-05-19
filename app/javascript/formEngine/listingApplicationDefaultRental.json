@@ -433,7 +433,7 @@
         }
       },
       "componentType": "step",
-      "componentName": "HouseholdIncome",
+      "componentName": "ListingApplyHouseholdIncomeStep",
       "props": {
         "title": "d2Income.title",
         "headerComponentName": "ListingApplyHouseholdIncomeHeader",

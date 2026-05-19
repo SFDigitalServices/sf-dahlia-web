@@ -11,7 +11,7 @@ import { checkHouseholdEligibility } from "../../../api/formApiService"
 import ListingApplyStepErrorMessage from "./ListingApplyStepErrorMessage"
 import { numChildrenUnderSix } from "../../../util/formEngineUtil"
 
-interface HouseholdIncomeProps {
+interface ListingApplyHouseholdIncomeStepProps {
   title: string
   headerComponentName: string
   currencyLabel: string
@@ -30,7 +30,7 @@ interface HouseholdIncomeProps {
   }
 }
 
-const HouseholdIncome = ({
+const ListingApplyHouseholdIncomeStep = ({
   currencyLabel,
   currencyErrorMessage,
   radioLabel,
@@ -38,7 +38,7 @@ const HouseholdIncome = ({
   hideLabel,
   options,
   fieldNames: { amount, answer },
-}: HouseholdIncomeProps) => {
+}: ListingApplyHouseholdIncomeStepProps) => {
   const formEngineContext = useFormEngineContext()
   const {
     staticData,
@@ -151,4 +151,4 @@ const HouseholdIncome = ({
   )
 }
 
-export default HouseholdIncome
+export default ListingApplyHouseholdIncomeStep
