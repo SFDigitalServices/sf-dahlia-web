@@ -201,8 +201,12 @@ const ListingApplyPreferenceStepWrapper = ({
   /**
    * using dot notation for fields results in nested data:
    * formData: {
-   *   _liveOrWorkInSfOptOut: false
+   *   _liveOrWorkInSfOptOut: false,
+   *   _assistedHousingOptOut: true,
    *   claimedPreferences: {
+   *     assistedHousing: {
+   *       preferenceClaimed: false,
+   *     },
    *     liveInSf: {
    *       preferenceClaimed: true,
    *       ...
