@@ -257,7 +257,7 @@ const ListingApplyPreferenceStepWrapper = ({
         void deleteUploadedProofFile(sessionId, listing.Id, listingPreferenceId, proofTypeValue)
       }
     }
-    if (isValid) return
+    if (!isValid) return
 
     const newClaimedPreference = { ...claimedPreferencesData, ...unclaimedPreferences }
     const existingClaimedPreferences = formData[claimedPreferences] as Record<
