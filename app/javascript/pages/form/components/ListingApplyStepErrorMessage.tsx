@@ -5,16 +5,19 @@ import { t } from "@bloom-housing/ui-components"
 import { CardSection } from "@bloom-housing/ui-seeds/src/blocks/Card"
 import { Button } from "@bloom-housing/ui-seeds"
 import styles from "./ListingApplyStepErrorMessage.module.scss"
+import { renderInlineMarkup } from "../../../util/languageUtil"
 
 interface ListingApplyStepErrorMessageProps {
   errorMessage: string
   errorNote?: string
+  errorNoteHeading?: string
   onClose: () => void
 }
 
 const ListingApplyStepErrorMessage = ({
   errorMessage,
   errorNote,
+  errorNoteHeading,
   onClose,
 }: ListingApplyStepErrorMessageProps) => {
   return (
@@ -30,7 +33,13 @@ const ListingApplyStepErrorMessage = ({
           </Button>
         </div>
       </div>
-      {errorNote && <div className={styles["error-note"]}>{errorNote}</div>}
+      {errorNote && (
+        <div className={styles["error-note"]}>
+          {errorNoteHeading && <p>{errorNoteHeading}</p>}
+          <br />
+          {renderInlineMarkup(errorNote)}
+        </div>
+      )}
     </CardSection>
   )
 }

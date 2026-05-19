@@ -4,7 +4,7 @@ import { useForm, FormProvider } from "react-hook-form"
 import { useFormEngineContext } from "../../../../formEngine/formEngineContext"
 import HouseholdMemberForm from "./HouseholdMemberForm"
 import AddHouseholdMembers from "./AddHouseholdMembers"
-import VerifyAddress from "../VerifyAddress"
+
 interface HouseholdMemberMultiStepWrapperProps {
   fieldNames: {
     householdMembers: string
@@ -104,9 +104,9 @@ const HouseholdMemberMultiStepWrapper = ({
         />
       )
     }
-    case "HouseholdMemberVerifyAddress": {
-      return <VerifyAddress />
-    }
+    // case "HouseholdMemberVerifyAddress": {
+    //   return <VerifyAddress address="householdMemberAddress" />
+    // }
   }
 }
 

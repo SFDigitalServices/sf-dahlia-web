@@ -8,6 +8,12 @@ import { openRentalListing } from "../../../data/RailsRentalListing/listing-rent
 import Phone from "../../../../pages/form/components/Phone"
 import YesNoRadio from "../../../../pages/form/components/YesNoRadio"
 
+Object.defineProperty(window, "scrollTo", {
+  value: jest.fn(),
+  writable: true,
+})
+Element.prototype.scrollTo = jest.fn()
+
 const buildFormEngineContextValue = (
   fieldNames: string[],
   formData: Record<string, unknown> = {}
