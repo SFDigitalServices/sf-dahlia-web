@@ -5,7 +5,9 @@ import {
   validVeteranAge,
   getPrimaryApplicantData,
   allHouseholdMembers,
+  getProofOptions,
 } from "../../util/listingApplyUtil"
+import { PROOF_OPTIONS } from "../../modules/constants"
 
 describe("listingApplyUtil", () => {
   describe("validAge", () => {
@@ -146,6 +148,36 @@ describe("listingApplyUtil", () => {
       expect(result).toHaveLength(1)
       expect(result[0].id).toBe("primaryApplicant")
       expect(result[0].firstName).toBe("Alice")
+    })
+  })
+
+  describe("getProofOptions", () => {
+    it.each(["liveInSf", "neighborhoodResidence"])(
+      "returns liveInSfAndNeighborhoodResidence options for %s",
+      (preferenceName) => {
+        expect(getProofOptions(preferenceName)).toBe(PROOF_OPTIONS.liveInSfAndNeighborhoodResidence)
+      }
+    )
+
+    it.each(["rightToReturnSunnydale", "rightToReturnHuntersView", "rightToReturnPotrero"])(
+      "returns rightToReturn options for %s",
+      (preferenceName) => {
+        expect(getProofOptions(preferenceName)).toBe(PROOF_OPTIONS.rightToReturn)
+      }
+    )
+
+    it("returns the matching options when the preference name is a direct key in PROOF_OPTIONS", () => {
+      expect(getProofOptions("workInSf")).toBe(PROOF_OPTIONS.workInSf)
+      expect(getProofOptions("rentBurden")).toBe(PROOF_OPTIONS.rentBurden)
+      expect(getProofOptions("aliceGriffith")).toBe(PROOF_OPTIONS.aliceGriffith)
+    })
+
+    it("returns default options for an unknown preference name", () => {
+      expect(getProofOptions("someUnknownPreference")).toBe(PROOF_OPTIONS.default)
+    })
+
+    it("returns default options for an empty preference name", () => {
+      expect(getProofOptions("")).toBe(PROOF_OPTIONS.default)
     })
   })
 })

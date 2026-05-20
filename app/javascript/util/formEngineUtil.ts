@@ -97,6 +97,18 @@ export const calculatePrevStep = (
   return 0
 }
 
+export const generateStepDefaultValues = (
+  currentStepInfo: StepInfoSchema,
+  formData: Record<string, unknown>
+) => {
+  if (!currentStepInfo.fieldNames) return {}
+
+  return currentStepInfo.fieldNames.reduce((acc: Record<string, unknown>, fieldName) => {
+    acc[fieldName] = formData[fieldName]
+    return acc
+  }, {})
+}
+
 export const validDayRange = (value: string): boolean =>
   Number.parseInt(value, 10) > 0 && Number.parseInt(value, 10) <= 31
 
@@ -121,14 +133,6 @@ export const validDate = (
   return parseDate(birthYearValue, birthMonthValue, birthDayValue).isValid()
 }
 
-export const getFullName = (person: {
-  firstName: string
-  middleName: string
-  lastName: string
-}) => {
-  return `${person.firstName || ""} ${person.middleName || ""} ${person.lastName || ""}`
-}
-
 export const updateFormPath = (newStepIndex: number, stepInfoMap: StepInfoSchema[]) => {
   const currentPath = window.location.pathname
   const paths = currentPath.split("/")
@@ -136,4 +140,136 @@ export const updateFormPath = (newStepIndex: number, stepInfoMap: StepInfoSchema
   paths[paths.length - 1] = slug
   const newPath = paths.join("/")
   window.history.pushState({}, "", newPath)
+}
+
+export const getFormattedAddress = (address: {
+  street1?: string
+  street2?: string
+  city?: string
+  state?: string
+  zip?: string
+}) => {
+  const streets = [address.street1, address.street2].filter(Boolean).join(" ")
+  const cityStateZip = [address.city, address.state, address.zip].filter(Boolean).join(", ")
+  return { streets, cityStateZip }
+}
+
+export const getAddressErrorEmailLink = (
+  data: Record<string, unknown>,
+  staticData: Record<string, unknown>,
+  formData: Record<string, unknown>
+) => {
+  const formattedAddress = getFormattedAddress({
+    street1: formData["primaryApplicantAddressStreet"] as string,
+    street2: formData["primaryApplicantAddressAptOrUnit"] as string,
+    city: formData["primaryApplicantAddressCity"] as string,
+    state: formData["primaryApplicantAddressState"] as string,
+    zip: formData["primaryApplicantAddressZipcode"] as string,
+  })
+  const mailParams = {
+    subject: `[Invalid Address Error] ${t("error.addressValidation.notFoundSubject")}`,
+    body: t("error.addressValidation.notFoundBody", {
+      listing_name: (staticData["listing"] as { Name?: string })?.Name,
+      home_address: formattedAddress.streets + ", " + formattedAddress.cityStateZip,
+      first_name: (formData["primaryApplicantFirstName"] as string) || "",
+      last_name: (formData["primaryApplicantLastName"] as string) || "",
+      email: (formData["primaryApplicantEmail"] as string) || "",
+      phone_number: (formData["primaryApplicantPhone"] as string) || "",
+    }),
+  }
+  return Object.entries(mailParams)
+    .map(([key, value]) => `${key}=${encodeURIComponent(value)}`)
+    .join("&")
+}
+
+export const addressesMatch = (
+  address1: Record<string, string>,
+  address2: Record<string, string>
+) => {
+  return (
+    address1.street1 === address2.street1 &&
+    address1.street2 === address2.street2 &&
+    address1.city === address2.city &&
+    address1.state === address2.state &&
+    address1.zip === address2.zip
+  )
+}
+
+export const stateOptions = [
+  { value: "AL", label: "Alabama" },
+  { value: "AK", label: "Alaska" },
+  { value: "AZ", label: "Arizona" },
+  { value: "AR", label: "Arkansas" },
+  { value: "CA", label: "California" },
+  { value: "CO", label: "Colorado" },
+  { value: "CT", label: "Connecticut" },
+  { value: "DE", label: "Delaware" },
+  { value: "DC", label: "District Of Columbia" },
+  { value: "FL", label: "Florida" },
+  { value: "GA", label: "Georgia" },
+  { value: "HI", label: "Hawaii" },
+  { value: "IL", label: "Illinois" },
+  { value: "IN", label: "Indiana" },
+  { value: "IA", label: "Iowa" },
+  { value: "KS", label: "Kansas" },
+  { value: "KY", label: "Kentucky" },
+  { value: "LA", label: "Louisiana" },
+  { value: "ME", label: "Maine" },
+  { value: "MD", label: "Maryland" },
+  { value: "MA", label: "Massachusetts" },
+  { value: "MI", label: "Michigan" },
+  { value: "MN", label: "Minnesota" },
+  { value: "MS", label: "Mississippi" },
+  { value: "MO", label: "Missouri" },
+  { value: "MT", label: "Montana" },
+  { value: "NE", label: "Nebraska" },
+  { value: "NV", label: "Nevada" },
+  { value: "NH", label: "New Hampshire" },
+  { value: "NJ", label: "New Jersey" },
+  { value: "NM", label: "New Mexico" },
+  { value: "NY", label: "New York" },
+  { value: "NC", label: "North Carolina" },
+  { value: "ND", label: "North Dakota" },
+  { value: "OH", label: "Ohio" },
+  { value: "OK", label: "Oklahoma" },
+  { value: "OR", label: "Oregon" },
+  { value: "PA", label: "Pennsylvania" },
+  { value: "RI", label: "Rhode Island" },
+  { value: "SC", label: "South Carolina" },
+  { value: "SD", label: "South Dakota" },
+  { value: "TN", label: "Tennessee" },
+  { value: "TX", label: "Texas" },
+  { value: "UT", label: "Utah" },
+  { value: "VT", label: "Vermont" },
+  { value: "VA", label: "Virginia" },
+  { value: "WA", label: "Washington" },
+  { value: "WV", label: "West Virginia" },
+  { value: "WI", label: "Wisconsin" },
+  { value: "WY", label: "Wyoming" },
+]
+
+export const numChildrenUnderSix = (householdMembers: Record<string, unknown>[]) => {
+  return householdMembers.filter((member) => {
+    if (!member.birthYear || !member.birthMonth || !member.birthDay) return false
+    const memberBirthdate = new Date(
+      member.birthYear as number,
+      (member.birthMonth as number) - 1,
+      member.birthDay as number
+    )
+    return memberBirthdate > new Date()
+  })
+}
+
+// react-hook-form v6 stores errors for dot-notation field names as nested
+// objects (e.g. 'liveInSf.householdMemberId' -> errors.liveInSf.householdMemberId),
+// not under a flat string key. Walk the path to retrieve the error.
+export const getNestedError = (
+  errors: Record<string, unknown>,
+  fieldName: string
+): Record<string, unknown> | undefined => {
+  if (!errors) return undefined
+  return fieldName.split(".").reduce<Record<string, unknown> | undefined>((acc, key) => {
+    if (acc && typeof acc === "object") return acc[key] as Record<string, unknown> | undefined
+    return undefined
+  }, errors)
 }

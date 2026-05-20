@@ -76,7 +76,7 @@
         "sectionName": "you"
       },
       "componentType": "step",
-      "componentName": "ListingApplyStepWrapper",
+      "componentName": "ListingApplyContactStepWrapper",
       "props": {
         "title": "b2Contact.title",
         "titleVars": {
@@ -84,66 +84,42 @@
             "dataSource": "form",
             "dataKey": "primaryApplicantFirstName"
           }
-        }
-      },
-      "children": [
-        {
-          "componentName": "Phone",
-          "props": {
-            "label": "label.applicantPhone",
-            "showTypeOfNumber": true,
-            "showDontHavePhoneNumber": true,
-            "showAdditionalPhoneNumber": true,
-            "labelForAdditionalPhoneNumber": "label.applicantSecondPhone",
-            "fieldNames": {
-              "phone": "primaryApplicantPhone",
-              "phoneType": "primaryApplicantPhoneType",
-              "additionalPhone": "primaryApplicantAdditionalPhone",
-              "additionalPhoneType": "primaryApplicantAdditionalPhoneType",
-              "noPhoneCheckbox": "_primaryApplicantNoPhoneCheckbox",
-              "additionalPhoneCheckbox": "_primaryApplicantAdditionalPhoneCheckbox"
-            }
-          }
         },
-        {
-          "componentName": "Address",
-          "props": {
-            "showAptOrUnit": true,
-            "requireAddress": true,
-            "label": "label.address",
-            "note": "b2Contact.applicantAddressDesc",
-            "showMailingAddress": true,
-            "fieldNames": {
-              "addressStreet": "primaryApplicantAddressStreet",
-              "addressAptOrUnit": "primaryApplicantAddressAptOrUnit",
-              "addressCity": "primaryApplicantAddressCity",
-              "addressState": "primaryApplicantAddressState",
-              "addressZipcode": "primaryApplicantAddressZipcode",
-              "mailingAddressCheckbox": "_primaryApplicantMailingAddressCheckbox",
-              "mailingAddressStreet": "primaryApplicantMailingAddressStreet",
-              "mailingAddressCity": "primaryApplicantMailingAddressCity",
-              "mailingAddressState": "primaryApplicantMailingAddressState",
-              "mailingAddressZipcode": "primaryApplicantMailingAddressZipcode"
-            }
-          }
-        },
-        {
-          "componentName": "YesNoRadio",
-          "props": {
-            "label": "label.workInSf",
-            "note": "b2Contact.workInSfDesc",
-            "yesText": "b2Contact.claimWorkInSf",
-            "fieldNames": {
-              "question": "primaryApplicantWorkInSf"
-            }
-          }
+        "fieldNames": {
+          "phone": "primaryApplicantPhone",
+          "phoneType": "primaryApplicantPhoneType",
+          "additionalPhone": "primaryApplicantAdditionalPhone",
+          "additionalPhoneType": "primaryApplicantAdditionalPhoneType",
+          "noPhoneCheckbox": "_primaryApplicantNoPhoneCheckbox",
+          "additionalPhoneCheckbox": "_primaryApplicantAdditionalPhoneCheckbox",
+          "addressStreet": "primaryApplicantAddressStreet",
+          "addressAptOrUnit": "primaryApplicantAddressAptOrUnit",
+          "addressCity": "primaryApplicantAddressCity",
+          "addressState": "primaryApplicantAddressState",
+          "addressZipcode": "primaryApplicantAddressZipcode",
+          "addressVerified": "_addressVerified",
+          "mailingAddressCheckbox": "_primaryApplicantMailingAddressCheckbox",
+          "mailingAddressStreet": "primaryApplicantMailingAddressStreet",
+          "mailingAddressCity": "primaryApplicantMailingAddressCity",
+          "mailingAddressState": "primaryApplicantMailingAddressState",
+          "mailingAddressZipcode": "primaryApplicantMailingAddressZipcode",
+          "question": "primaryApplicantWorkInSf"
         }
-      ]
+      }
     },
     {
       "stepInfo": {
         "slug": "verify-address",
-        "sectionName": "you"
+        "sectionName": "you",
+        "navigationArrival": {
+          "hideStepIfAnyPresent": [
+            {
+              "dataSource": "form",
+              "dataKey": "_addressVerified",
+              "dataValueToMatch": "true"
+            }
+          ]
+        }
       },
       "componentType": "step",
       "componentName": "VerifyAddress",
@@ -440,50 +416,49 @@
     {
       "stepInfo": {
         "slug": "income-household",
-        "sectionName": "income"
+        "sectionName": "income",
+        "navigationArrival": {
+          "showStepIfAnyPresent": [
+            {
+              "dataSource": "listing",
+              "dataKey": "Tenure",
+              "dataValueToMatch": "New rental"
+            },
+            {
+              "dataSource": "listing",
+              "dataKey": "Tenure",
+              "dataValueToMatch": "Re-rental"
+            }
+          ]
+        }
       },
       "componentType": "step",
-      "componentName": "ListingApplyStepWrapper",
+      "componentName": "ListingApplyHouseholdIncomeStep",
       "props": {
         "title": "d2Income.title",
-        "headerComponentName": "ListingApplyHouseholdIncomeHeader"
-      },
-      "children": [
-        {
-          "componentName": "Currency",
-          "props": {
-            "label": "label.applicantIncomeTotal",
-            "note": "label.incomePlaceholder",
-            "errorMessage": "error.income",
-            "fieldNames": {
-              "amount": "householdIncome"
-            }
+        "headerComponentName": "ListingApplyHouseholdIncomeHeader",
+        "currencyLabel": "label.applicantIncomeTotal",
+        "currencyErrorMessage": "error.income",
+        "radioLabel": "label.income",
+        "radioErrorMessage": "error.pleaseSelectAnOption",
+        "hideLabel": true,
+        "options": [
+          {
+            "id": "incomePerMonth",
+            "label": "label.perMonth",
+            "value": "12"
+          },
+          {
+            "id": "incomePerYear",
+            "label": "label.perYear",
+            "value": "1"
           }
-        },
-        {
-          "componentName": "Radio",
-          "props": {
-            "label": "label.income",
-            "errorMessage": "error.pleaseSelectAnOption",
-            "hideLabel": true,
-            "options": [
-              {
-                "id": "incomePerMonth",
-                "label": "label.perMonth",
-                "value": "12"
-              },
-              {
-                "id": "incomePerYear",
-                "label": "label.perYear",
-                "value": "1"
-              }
-            ],
-            "fieldNames": {
-              "answer": "householdIncomeMultiplier"
-            }
-          }
+        ],
+        "fieldNames": {
+          "amount": "householdIncome",
+          "answer": "householdIncomeMultiplier"
         }
-      ]
+      }
     },
     {
       "stepInfo": {
@@ -499,8 +474,8 @@
         "navigationArrival": {
           "showStepIfAllPresent": [
             {
-              "dataSource": "listing",
-              "dataKey": "preferences.publicHousing"
+              "dataSource": "preferenceNames",
+              "dataKey": "assistedHousing"
             },
             {
               "dataSource": "form",
@@ -510,29 +485,28 @@
         }
       },
       "componentType": "step",
-      "componentName": "ListingApplyStepWrapper",
+      "componentName": "ListingApplyPreferenceStepWrapper",
       "props": {
-        "title": "label.goodNewsForHigherRanking",
-        "description": "e3aAssistedHousingPreference.instructions"
-      },
-      "children": [
-        {
-          "componentName": "PreferenceCheckboxGroup",
-          "props": {
-            "name": "e3aAssistedHousingPreference.preference.title",
-            "description": "e3aAssistedHousingPreference.preference.description",
-            "showProofType": false,
-            "members": {
-              "dataSource": "form",
-              "dataKey": "members"
-            },
-            "fieldNames": {
-              "member": "assistedHousingMember",
-              "proofDoc": "assistedHousingProofDoc"
-            }
+        "pageTitle": "label.goodNewsForHigherRanking",
+        "pageInstructions": "e3aAssistedHousingPreference.instructions",
+        "greenHeader": true,
+        "fieldNames": {
+          "claimedPreferences": "claimedPreferences",
+          "optOut": "_assistedHousingOptOut"
+        },
+        "preferenceContents": [
+          {
+            "preferenceName": "assistedHousing",
+            "checkboxLabel": "e3aAssistedHousingPreference.preference.title",
+            "checkboxDescription": "e3aAssistedHousingPreference.preference.description",
+            "proofHouseholdMemberLabel": "label.applicantPreferencesDocumentName",
+            "proofTypeLabel": "label.uploadCopyOfLease",
+            "proofTypeNote": "label.uploadLeaseDescription",
+            "proofTypeSingleValue": "Copy of Lease",
+            "proofUploadButtonLabel": "label.uploadCopyOfLease"
           }
-        }
-      ]
+        ]
+      }
     },
     {
       "stepInfo": {
