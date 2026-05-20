@@ -236,6 +236,7 @@ const ListingApplyPreferenceStepWrapper = ({
     }
 
     const unclaimedPreferences: Record<string, ClaimedPreference> = {}
+    let missingProof = false
     for (const content of preferenceContents) {
       const preference = claimedPreferencesData[content.preferenceName]
       // for every selected household member option, make sure there is an uploaded proof
@@ -247,6 +248,7 @@ const ListingApplyPreferenceStepWrapper = ({
         setError(`claimedPreferences.${content.preferenceName}.proofFileName`, {
           message: t("error.fileMissing"),
         })
+        missingProof = true
       }
 
       // for every unclaimed preference, remove proof data
@@ -257,7 +259,7 @@ const ListingApplyPreferenceStepWrapper = ({
         void deleteUploadedProofFile(sessionId, listing.Id, listingPreferenceId, proofTypeValue)
       }
     }
-    if (!isValid) return
+    if (missingProof) return
 
     const newClaimedPreference = { ...claimedPreferencesData, ...unclaimedPreferences }
     const existingClaimedPreferences = formData[claimedPreferences] as Record<
