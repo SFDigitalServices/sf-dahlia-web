@@ -57,6 +57,7 @@ export default function getFormComponentRegistry() {
     ListingApplyTerms,
     ListingApplyReviewApplication,
     ListingApplyContactStepWrapper,
+    ListingApplyPreferenceStepWrapper,
     // Field-level components
     Select,
     Radio,
@@ -75,7 +76,6 @@ export default function getFormComponentRegistry() {
     CertificateNumberPreference,
     // Other components
     ListingApplyPublicHousingHeader,
-    ListingApplyPreferenceStepWrapper,
     ListingApplyIncomeVouchersHeader,
     ListingApplyHouseholdIncomeHeader,
     ListingApplyVeteransPreferenceHeader,
