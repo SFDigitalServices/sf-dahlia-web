@@ -120,9 +120,9 @@ Rails.application.routes.draw do
   get '(:lang)/account-settings' => 'account#account_settings', lang: /(en|es|zh|tl)/
   get '(:lang)/my-applications' => 'account#my_applications', lang: /(en|es|zh|tl)/
   # New accounts layout
-  get '(:lang)/account' => 'account#account', lang: /(en|es|zh|tl)/ , constraints: AccountLayoutConstraint.new
-  get '(:lang)/account/applications' => 'account#applications', lang: /(en|es|zh|tl)/ , constraints: AccountLayoutConstraint.new
-  get '(:lang)/account/settings' => 'account#settings', lang: /(en|es|zh|tl)/ , constraints: AccountLayoutConstraint.new
+  get '(:lang)/account' => 'account#account', lang: /(en|es|zh|tl)/, constraints: AccountLayoutConstraint.new
+  get '(:lang)/account/applications' => 'account#applications', lang: /(en|es|zh|tl)/, constraints: AccountLayoutConstraint.new
+  get '(:lang)/account/settings' => 'account#settings', lang: /(en|es|zh|tl)/, constraints: AccountLayoutConstraint.new
   # Fallbacks when account layout flag is off
   get '/account', to: redirect('/my-account')
   get '(:lang)/account', to: redirect('%{lang}/my-account')
