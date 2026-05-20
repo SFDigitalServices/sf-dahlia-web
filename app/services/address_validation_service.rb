@@ -17,7 +17,8 @@ class AddressValidationService
 
     @timeout = false
     @validation = @easypost.address.create(@address)
-  rescue @easypost.error
+  rescue EasyPost::Errors::EasyPostError => e
+    Rails.logger.warn("Address validation: EasyPost error - #{e.message}")
     @timeout = true
     # just return the original address, unable to return a validated one
     @address
