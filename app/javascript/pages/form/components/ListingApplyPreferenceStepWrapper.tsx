@@ -7,7 +7,6 @@ import { useFormEngineContext } from "../../../formEngine/formEngineContext"
 import ListingApplyStepErrorMessage from "./ListingApplyStepErrorMessage"
 import { PREFERENCES } from "../../../modules/constants"
 import PreferenceCheckbox from "./PreferenceCheckbox"
-import { deleteUploadedProofFile } from "../../../api/formApiService"
 import { generateStepDefaultValues, getNestedError } from "../../../util/formEngineUtil"
 import { renderInlineMarkup } from "../../../util/languageUtil"
 import styles from "./ListingApplyPreferenceStepWrapper.module.scss"
@@ -75,7 +74,6 @@ const ListingApplyPreferenceStepWrapper = ({
   preferenceContents,
 }: ListingApplyPreferenceStepWrapperProps) => {
   const {
-    sessionId,
     staticData,
     formData,
     saveFormData,
@@ -85,8 +83,6 @@ const ListingApplyPreferenceStepWrapper = ({
     handlePrevStep,
   } = useFormEngineContext()
 
-  /* eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion */
-  const listing = staticData.listing!
   /* eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion */
   const preferences = staticData.preferences!
   const currentStepInfo = stepInfoMap[currentStepIndex]
@@ -251,13 +247,14 @@ const ListingApplyPreferenceStepWrapper = ({
         missingProof = true
       }
 
+      // TODO: DAH-4122 implement proof file deletion elsewhere, similar to Angular's cancelPreference function
       // for every unclaimed preference, remove proof data
-      if (!preference.preferenceClaimed && preference.proofFileName) {
-        unclaimedPreferences[content.preferenceName] = { preferenceClaimed: false }
-        const listingPreferenceId = getPreferenceData(content.preferenceName).listingPreferenceID
-        const proofTypeValue = preference.proofType || ""
-        void deleteUploadedProofFile(sessionId, listing.Id, listingPreferenceId, proofTypeValue)
-      }
+      // if (!preference.preferenceClaimed && preference.proofFileName) {
+      //   unclaimedPreferences[content.preferenceName] = { preferenceClaimed: false }
+      //   const listingPreferenceId = getPreferenceData(content.preferenceName).listingPreferenceID
+      //   const proofTypeValue = preference.proofType || ""
+      //   void deleteUploadedProofFile(sessionId, listing.Id, listingPreferenceId, proofTypeValue)
+      // }
     }
     if (missingProof) return
 
