@@ -35,6 +35,8 @@ const certOfPreferenceContent: PreferenceContent = {
   checkboxLabel: "e7PreferencesPrograms.certOfPreference",
   checkboxDescription: "e7PreferencesPrograms.certOfPreferenceDesc",
   certificateNumberLabel: "label.certificateNumber",
+  proofHouseholdMemberLabel: "label.applicantPreferencesDocumentName",
+  proofUploadButtonLabel: "label.uploadProofOfPreference",
 }
 
 const displacedTenantPreferenceContent: PreferenceContent = {
@@ -42,6 +44,8 @@ const displacedTenantPreferenceContent: PreferenceContent = {
   checkboxLabel: "e7PreferencesPrograms.displaced",
   checkboxDescription: "e7PreferencesPrograms.displacedCertificate",
   certificateNumberLabel: "label.certificateNumber",
+  proofHouseholdMemberLabel: "label.applicantPreferencesDocumentName",
+  proofUploadButtonLabel: "label.uploadProofOfPreference",
 }
 
 const assistedHousingPreferenceContent: PreferenceContent = {
@@ -49,12 +53,16 @@ const assistedHousingPreferenceContent: PreferenceContent = {
   checkboxLabel: "e3aAssistedHousingPreference.preference.title",
   checkboxDescription: "e3aAssistedHousingPreference.preference.description",
   proofTypeLabel: "label.uploadCopyOfLease",
+  proofHouseholdMemberLabel: "label.applicantPreferencesDocumentName",
+  proofUploadButtonLabel: "label.uploadProofOfPreference",
 }
 
 const veteranPreferenceContent: PreferenceContent = {
   preferenceName: "veteran",
   checkboxLabel: "label.veteransInHousehold",
   checkboxDescription: "label.applicantPreferencesDocumentName",
+  proofHouseholdMemberLabel: "label.applicantPreferencesDocumentName",
+  proofUploadButtonLabel: "label.uploadProofOfPreference",
 }
 
 const renderWrapper = ({
@@ -272,6 +280,8 @@ describe("ListingApplyPreferenceStepWrapper", () => {
             preferenceName: "notARealPreference",
             checkboxLabel: "e7PreferencesPrograms.certOfPreference",
             checkboxDescription: "e7PreferencesPrograms.certOfPreferenceDesc",
+            proofHouseholdMemberLabel: "label.applicantPreferencesDocumentName",
+            proofUploadButtonLabel: "label.uploadProofOfPreference",
           },
         ],
       })

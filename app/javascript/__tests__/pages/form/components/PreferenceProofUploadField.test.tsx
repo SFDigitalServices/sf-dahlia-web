@@ -14,6 +14,8 @@ jest.mock("../../../../api/formApiService", () => ({
 const mockUploadProofFile = uploadProofFile as jest.Mock
 const mockDeleteUploadedProofFile = deleteUploadedProofFile as jest.Mock
 
+const proofUploadButtonLabel = "Upload proof of preference"
+
 const props = {
   sessionId: "test-session-id",
   listingId: "test-listing-id",
@@ -27,6 +29,7 @@ const props = {
   ],
   proofFileName: "proofFile",
   proofFileUploadedAt: "proofFileDate",
+  proofUploadButtonLabel,
 }
 
 const renderComponent = (formData: Record<string, unknown> = {}) => {
@@ -42,14 +45,14 @@ describe("PreferenceProofUploadField", () => {
     renderComponent()
     expect(screen.getByText("Document Type")).toBeInTheDocument()
     expect(screen.getByText(t("label.selectOne"))).toBeInTheDocument()
-    expect(screen.getByText(t("label.uploadProofOfPreference"))).toBeInTheDocument()
+    expect(screen.getByText(proofUploadButtonLabel)).toBeInTheDocument()
     expect(screen.getByText(t("label.uploadProofInstructions1"))).toBeInTheDocument()
     expect(screen.getByText(t("label.uploadProofInstructions3"))).toBeInTheDocument()
   })
 
   it("disables the upload button when no document type is selected", () => {
     renderComponent()
-    const uploadButton = screen.getByText(t("label.uploadProofOfPreference"))
+    const uploadButton = screen.getByText(proofUploadButtonLabel)
     expect(uploadButton).toBeDisabled()
   })
 
@@ -59,7 +62,7 @@ describe("PreferenceProofUploadField", () => {
 
     const select = screen.getByLabelText("Document Type")
     await user.selectOptions(select, "Telephone bill")
-    const uploadButton = screen.getByText(t("label.uploadProofOfPreference"))
+    const uploadButton = screen.getByText(proofUploadButtonLabel)
     expect(uploadButton).not.toBeDisabled()
   })
 
@@ -273,12 +276,7 @@ describe("PreferenceProofUploadField", () => {
       { formData: {} }
     )
     expect(screen.getByText("Upload my doc")).toBeInTheDocument()
-    expect(screen.queryByText(t("label.uploadProofOfPreference"))).not.toBeInTheDocument()
-  })
-
-  it("falls back to the default upload button label when proofUploadButtonLabel is not provided", () => {
-    renderComponent()
-    expect(screen.getByText(t("label.uploadProofOfPreference"))).toBeInTheDocument()
+    expect(screen.queryByText(proofUploadButtonLabel)).not.toBeInTheDocument()
   })
 
   it("shows an error when file deletion fails", async () => {

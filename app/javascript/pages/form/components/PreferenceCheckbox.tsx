@@ -92,7 +92,7 @@ const PreferenceCheckbox = ({
           <Select
             id={householdMemberId}
             name={householdMemberId}
-            label={t(proofHouseholdMemberLabel || "label.applicantPreferencesDocumentName")}
+            label={t(proofHouseholdMemberLabel)}
             options={generateHouseholdMemberOptions(eligibleHouseholdMembers)}
             placeholder={t("label.selectOne")}
             controlClassName="control"
@@ -109,7 +109,8 @@ const PreferenceCheckbox = ({
           proofType &&
           proofFileName &&
           proofFileUploadedAt &&
-          listingPreferenceId && (
+          listingPreferenceId &&
+          proofUploadButtonLabel && (
             <PreferenceProofUploadField
               sessionId={sessionId}
               listingId={listing.Id}
@@ -121,7 +122,7 @@ const PreferenceCheckbox = ({
               proofTypeSingleValue={proofTypeSingleValue}
               proofFileName={proofFileName}
               proofFileUploadedAt={proofFileUploadedAt}
-              proofUploadButtonLabel={proofUploadButtonLabel && t(proofUploadButtonLabel)}
+              proofUploadButtonLabel={t(proofUploadButtonLabel)}
             />
           )}
         {!!checkBoxValue && certificateNumberLabel && certificateNumber && (

@@ -20,7 +20,7 @@ interface PreferenceProofUploadFieldProps {
   proofTypeOptions?: { label: string; value: string }[]
   proofFileName: string
   proofFileUploadedAt: string
-  proofUploadButtonLabel?: string
+  proofUploadButtonLabel: string
 }
 
 const PreferenceProofUploadField = ({
@@ -163,7 +163,7 @@ const PreferenceProofUploadField = ({
           variant={getNestedError(errors, proofFileName) ? "alert-outlined" : "primary"}
           className={styles["upload-button"]}
         >
-          {proofUploadButtonLabel || t("label.uploadProofOfPreference")}
+          {proofUploadButtonLabel}
         </Button>
         {getNestedError(errors, proofFileName) && (
           <p className={styles["upload-error"]}>

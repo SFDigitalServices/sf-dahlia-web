@@ -15,13 +15,13 @@ export type PreferenceContent = {
   preferenceName: string
   checkboxLabel: string
   checkboxDescription: string
-  proofHouseholdMemberLabel?: string
+  proofHouseholdMemberLabel: string
   proofTypeLabel?: string
   proofTypeNote?: string
   proofTypeSingleValue?: string
   certificateNumberLabel?: string
   certificateNumberNote?: string
-  proofUploadButtonLabel?: string
+  proofUploadButtonLabel: string
 }
 
 // Preference pages have more complex fields, so we generate

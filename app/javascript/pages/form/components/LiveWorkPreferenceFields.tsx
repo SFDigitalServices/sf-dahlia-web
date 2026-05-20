@@ -63,6 +63,7 @@ const LiveWorkPreferenceFields = ({
         listingPreferenceId={listingPreferenceId}
         proofFileName={proofFileName}
         proofFileUploadedAt={proofFileUploadedAt}
+        proofUploadButtonLabel={t("label.uploadProofOfPreference")}
       />
     </>
   )

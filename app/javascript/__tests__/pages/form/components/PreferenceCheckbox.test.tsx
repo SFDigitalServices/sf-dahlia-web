@@ -32,6 +32,8 @@ const baseContent: PreferenceContent = {
   preferenceName: "testPref",
   checkboxLabel: "e7PreferencesPrograms.certOfPreference",
   checkboxDescription: "e7PreferencesPrograms.certOfPreferenceDesc",
+  proofHouseholdMemberLabel: "label.applicantPreferencesDocumentName",
+  proofUploadButtonLabel: "label.uploadProofOfPreference",
 }
 
 const defaultFormData = {
