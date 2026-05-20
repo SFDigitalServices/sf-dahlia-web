@@ -162,6 +162,7 @@ export const UNLEASH_FLAG = {
   CLERK_AUTH: "temp.webapp.auth.clerk",
   FORM_ENGINE: "perm.webapp.formEngine",
   FORM_ENGINE_DEBUG: "perm.webapp.formEngine.debug",
+  ACCOUNTS_LAYOUT: "temp.webapp.newAccountLayout",
 }
 
 export const LISTING_APPLY_FORMS_INPUT_MAX_LENGTH = {
