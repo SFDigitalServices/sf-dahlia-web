@@ -37,7 +37,7 @@ const baseContent: PreferenceContent = {
 const defaultFormData = {
   primaryApplicantFirstName: "Alice",
   primaryApplicantMiddleName: "M",
-  primaryApplicantLastName: "Smith",
+  primaryApplicantLastName: "Walker",
   primaryApplicantBirthYear: "1990",
   primaryApplicantBirthMonth: "1",
   primaryApplicantBirthDate: "15",
@@ -94,7 +94,7 @@ describe("PreferenceCheckbox", () => {
 
     const memberSelect = screen.getByLabelText(t("label.applicantPreferencesDocumentName"))
     expect(memberSelect).toBeInTheDocument()
-    expect(screen.getByRole("option", { name: "Alice M Smith" })).toBeInTheDocument()
+    expect(screen.getByRole("option", { name: "Alice M Walker" })).toBeInTheDocument()
   })
 
   it("uses proofHouseholdMemberLabel for the household member select when provided", async () => {

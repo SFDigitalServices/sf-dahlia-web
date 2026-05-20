@@ -61,7 +61,11 @@ const renderWrapper = ({
   preferenceContents = [certOfPreferenceContent],
   optOut,
   includeOptOut = true,
-  formData = {},
+  formData = {
+    primaryApplicantFirstName: "Alice",
+    primaryApplicantMiddleName: "M",
+    primaryApplicantLastName: "Walker",
+  },
   preferences,
   pageTitle = "e2cLiveWorkPreference.title",
   pageInstructions = "e2cLiveWorkPreference.instructions",
@@ -191,6 +195,24 @@ describe("ListingApplyPreferenceStepWrapper", () => {
     expect(screen.queryByText(t("error.pleaseSelectPreferenceOption"))).not.toBeInTheDocument()
   })
 
+  it("dismisses the incomplete-document error when the close button is clicked", async () => {
+    renderWrapper({
+      preferenceContents: [assistedHousingPreferenceContent],
+    })
+    const user = userEvent.setup()
+
+    await user.click(screen.getByLabelText(t("e3aAssistedHousingPreference.preference.title")))
+    await user.selectOptions(
+      screen.getByLabelText(t("label.applicantPreferencesDocumentName")),
+      "primaryApplicant"
+    )
+    await user.click(screen.getByText(t("t.next")))
+    expect(screen.getByText(t("error.pleaseCompletePreference"))).toBeInTheDocument()
+
+    await user.click(screen.getByLabelText(t("t.close")))
+    expect(screen.queryByText(t("error.pleaseCompletePreference"))).not.toBeInTheDocument()
+  })
+
   it("unchecks any claimed preference when opt-out is selected", async () => {
     renderWrapper()
     const user = userEvent.setup()
@@ -274,14 +296,8 @@ describe("ListingApplyPreferenceStepWrapper", () => {
   })
 
   it("shows the incomplete document error message when a claimed preference has a household member but no uploaded proof file", async () => {
-    const formDataWithApplicant = {
-      primaryApplicantFirstName: "Alice",
-      primaryApplicantMiddleName: "M",
-      primaryApplicantLastName: "Smith",
-    }
     renderWrapper({
       preferenceContents: [assistedHousingPreferenceContent],
-      formData: formDataWithApplicant,
     })
     const user = userEvent.setup()
 
