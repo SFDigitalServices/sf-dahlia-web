@@ -119,6 +119,10 @@ Rails.application.routes.draw do
   get '(:lang)/my-account' => 'account#my_account', lang: /(en|es|zh|tl)/
   get '(:lang)/account-settings' => 'account#account_settings', lang: /(en|es|zh|tl)/
   get '(:lang)/my-applications' => 'account#my_applications', lang: /(en|es|zh|tl)/
+  # New accounts layout
+  get '(:lang)/account' => 'account#account', lang: /(en|es|zh|tl)/
+  get '(:lang)/account/applications' => 'account#applications', lang: /(en|es|zh|tl)/
+  get '(:lang)/account/settings' => 'account#settings', lang: /(en|es|zh|tl)/
 
   # fallback to Angular-only controller for all un-migrated pages.
   get '*path', to: 'angular#index', constraints: ->(req) { req.format == :html || req.format == '*/*' }

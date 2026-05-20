@@ -15,6 +15,22 @@ class AccountController < ApplicationController
       render 'my_applications'
     end
 
+    #New account layouts
+    def account
+      @account_information_props = { assetPaths: static_asset_paths }
+      render 'account'
+    end
+
+    def settings
+      @account_information_props = { assetPaths: static_asset_paths }
+      render 'settings'
+    end
+
+    def applications
+      @account_information_props = { assetPaths: static_asset_paths }
+      render 'applications'
+    end
+
     protected
 
     def use_react_app
