@@ -75,26 +75,33 @@ export const getHomepagePath = localizedPathGetter("/")
 export const getRentalDirectoryPath = localizedPathGetter("/listings/for-rent")
 export const getSaleDirectoryPath = localizedPathGetter("/listings/for-sale")
 export const getAssistancePath = localizedPathGetter("/get-assistance")
-export const getSignInPath = localizedPathGetter("/sign-in")
-export const getForgotPasswordPath = localizedPathGetter("/forgot-password")
-export const getResetPasswordPath = localizedPathGetter("/reset-password")
-export const getFavoritesPath = localizedPathGetter("/favorites")
-export const getMyAccountPath = localizedPathGetter("/my-account")
-export const getMyApplicationsPath = localizedPathGetter("/my-applications")
-export const getMyAccountSettingsPath = localizedPathGetter("/account-settings")
 export const getAdditionalResourcesPath = localizedPathGetter("/additional-resources")
 export const getHousingCounselorsPath = localizedPathGetter("/housing-counselors")
 export const getDocumentChecklistPath = localizedPathGetter("/document-checklist")
 export const getShareListingPath = localizedPathGetter("/share")
-export const getApplicationPath = localizedPathGetter("/applications")
 export const getListingDetailPath = localizedPathGetter("/listings")
-export const getCreateAccountPath = localizedPathGetter("/create-account")
 
-// Rental Listing Directory
+// Signing in and up pages
+export const getCreateAccountPath = localizedPathGetter("/create-account")
+export const getSignInPath = localizedPathGetter("/sign-in")
+export const getForgotPasswordPath = localizedPathGetter("/forgot-password")
+export const getResetPasswordPath = localizedPathGetter("/reset-password")
+
+// Accounts after signing in pages
+export const getMyAccountPath = localizedPathGetter("/my-account")
+export const getMyApplicationsPath = localizedPathGetter("/my-applications")
+export const getMyAccountSettingsPath = localizedPathGetter("/account-settings")
+export const getFavoritesPath = localizedPathGetter("/favorites")
+export const getApplicationPath = localizedPathGetter("/applications")
+export const getAccountPath = localizedPathGetter("/account")
+export const getApplicationsPath = localizedPathGetter("/account/applications")
+export const getSettingsPath = localizedPathGetter("/account/settings")
+
+// Rental Listing Directory pages
 export const getHelpCalculatingIncomeLink = localizedPathGetter("/income-calculator/rental/intro")
 export const getEligibilityEstimatorLink = localizedPathGetter("/eligibility-estimator/rental")
 
-// Footer
+// Footer pages
 export const getDisclaimerPath = localizedPathGetter("/disclaimer")
 export const getPrivacyPolicyPath = localizedPathGetter("/privacy")
 
