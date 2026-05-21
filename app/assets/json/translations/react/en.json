@@ -29,6 +29,7 @@
   "accountDashboard.accountSettings.description": "Update your details",
   "accountDashboard.myApplications.description": "Continue an application<br/>Check your lottery results",
   "accountDashboard.myApplications.title": "My applications",
+  "accountLayout.account.signOut": "Sign out of account",
   "accountLayout.nav.applications": "Application and lottery results",
   "accountLayout.nav.overview": "Overview",
   "accountLayout.nav.signOut": "Sign out",
