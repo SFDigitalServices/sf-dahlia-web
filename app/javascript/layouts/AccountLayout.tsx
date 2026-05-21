@@ -26,7 +26,7 @@ const AccountLayout = ({ children }: AccountLayoutProps) => {
   return (
     <span className={styles.accountLayout}>
       <Desktop>
-        <nav className={styles.accountNav}>
+        <nav>
           <Heading size="sm" className={styles.accountNavTitle}>
             {t("accountLayout.nav.title")}
           </Heading>
