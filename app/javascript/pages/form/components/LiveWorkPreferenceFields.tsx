@@ -56,13 +56,14 @@ const LiveWorkPreferenceFields = ({
       <PreferenceProofUploadField
         sessionId={sessionId}
         proofTypeFieldName={proofTypeFieldName}
-        proofTypeLabel={proofTypeLabel}
-        proofTypeNote={proofTypeNote}
+        proofTypeLabel={t(proofTypeLabel)}
+        proofTypeNote={proofTypeNote && t(proofTypeNote)}
         proofTypeOptions={proofTypeOptions}
         listingId={listing.Id}
         listingPreferenceId={listingPreferenceId}
         proofFileName={proofFileName}
         proofFileUploadedAt={proofFileUploadedAt}
+        proofUploadButtonLabel={t("label.uploadProofOfPreference")}
       />
     </>
   )

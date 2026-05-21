@@ -8,7 +8,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { useFormEngineContext } from "../../../formEngine/formEngineContext"
 import styles from "./VeteransPreferenceRadio.module.scss"
 import Select from "../components/Select"
-import { getFullName, parseDate } from "../../../util/formEngineUtil"
+import { parseDate } from "../../../util/formEngineUtil"
+import { generateHouseholdMemberOptions } from "../../../util/listingApplyUtil"
 import {
   type HouseholdMember,
   validVeteranAge,
@@ -33,20 +34,12 @@ const VeteransPreferenceRadio = ({
 
   const isAnyoneAVeteranValue = watch(isAnyoneAVeteran)
 
-  const validVeterans: HouseholdMember[] = allHouseholdMembers(formData).filter((hhMember) => {
-    const birthDate = parseDate(hhMember.birthYear, hhMember.birthMonth, hhMember.birthDay)
-    return validVeteranAge(birthDate)
-  })
-
-  const veteranOptions = () =>
-    validVeterans.map((hhMember) => ({
-      label: getFullName({
-        firstName: hhMember.firstName,
-        middleName: hhMember.middleName,
-        lastName: hhMember.lastName,
-      }),
-      value: hhMember.id,
-    }))
+  const eligibleHouseholdMembers: HouseholdMember[] = allHouseholdMembers(formData).filter(
+    (hhMember) => {
+      const birthDate = parseDate(hhMember.birthYear, hhMember.birthMonth, hhMember.birthDay)
+      return validVeteranAge(birthDate)
+    }
+  )
 
   const handleNoOrPreferNotToAnswer = (e: React.ChangeEvent<HTMLInputElement>) => {
     const isChecked = e.target.checked
@@ -74,7 +67,7 @@ const VeteransPreferenceRadio = ({
             label={"e7aVeteransPreference.whoIsAVeteran"}
             subNote={"e7aVeteransPreference.ifMoreThan1Veteran"}
             defaultOptionName={"label.selectOne"}
-            options={veteranOptions()}
+            options={generateHouseholdMemberOptions(eligibleHouseholdMembers)}
             validation={{
               required: true,
             }}

@@ -1643,6 +1643,8 @@
   "listings.stats.rent": "Rent",
   "listings.stats.salesPrice": "Sales price",
   "listings.stats.tableLabel": "Pricing table for %{numInHouseholdString}, %{amiPercentString}",
+  "listings.stats.upToPercent": "Up to %{amiPercent}%",
+  "listings.stats.upToPercent.p2": "AMI (Area Median Income)",
   "listings.stats.upToPercentAmi": "Up to %{amiPercent}% AMI",
   "listings.stats.upToPercentAmi.fullText": "Up to %{amiPercent}% AMI (Area Median Income)",
   "listings.stats.waitlist": "Waitlist",

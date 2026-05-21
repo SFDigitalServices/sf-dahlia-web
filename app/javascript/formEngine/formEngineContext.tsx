@@ -29,5 +29,11 @@ export const FormEngineProvider = ({ value, children }: FormEngineProviderProps)
 }
 
 export const useFormEngineContext = () => {
-  return useContext(FormEngineContext)
+  const context = useContext(FormEngineContext)
+
+  if (context === undefined) {
+    throw new Error("useFormEngineContext must be used within a FormEngineProvider")
+  }
+
+  return context
 }
