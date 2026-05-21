@@ -3,7 +3,8 @@ import React from "react"
 import Layout from "../../layouts/Layout"
 import AccountLayout from "../../layouts/AccountLayout"
 import withAppSetup from "../../layouts/withAppSetup"
-import { AppPages } from "../../util/routeUtil"
+import { AppPages, RedirectType } from "../../util/routeUtil"
+import { withAuthentication } from "../../authentication/withAuthentication"
 
 const Applications = () => {
   return (
@@ -15,4 +16,9 @@ const Applications = () => {
   )
 }
 
-export default withAppSetup(Applications, { pageName: AppPages.MyApplications })
+export default withAppSetup(
+  withAuthentication(Applications, { redirectType: RedirectType.Applications }),
+  {
+    pageName: AppPages.MyApplications,
+  }
+)
