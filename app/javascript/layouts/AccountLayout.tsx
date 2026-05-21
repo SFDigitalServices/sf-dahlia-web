@@ -1,15 +1,11 @@
-import React from "react"
+import React, { useContext } from "react"
 import { t, Icon, Desktop } from "@bloom-housing/ui-components"
 import { Heading, Button } from "@bloom-housing/ui-seeds"
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import UserContext from "../authentication/context/UserContext"
 import { getPathWithoutLanguagePrefix } from "../util/languageUtil"
-import {
-  getAccountPath,
-  getApplicationsPath,
-  getSettingsPath,
-  getSignInPath,
-} from "../util/routeUtil"
+import { getMyAccountPath, getApplicationPath, getMyAccountSettingsPath } from "../util/routeUtil"
 import styles from "./AccountLayout.module.scss"
 
 export const getNavStyle = (navPath?: string): string => {
@@ -23,6 +19,7 @@ export interface AccountLayoutProps {
 }
 
 const AccountLayout = ({ children }: AccountLayoutProps) => {
+  const { signOut } = useContext(UserContext)
   return (
     <div className={styles.accountLayout}>
       <Desktop>
@@ -33,7 +30,7 @@ const AccountLayout = ({ children }: AccountLayoutProps) => {
           <div className={styles.accountNavTabList}>
             <Button
               className={getNavStyle("/account")}
-              href={getAccountPath()}
+              href={getMyAccountPath()}
               variant="text"
               leadIcon={
                 <Icon size="md-large" symbol="profile" className={styles.accountNavLinkIcon} />
@@ -43,7 +40,7 @@ const AccountLayout = ({ children }: AccountLayoutProps) => {
             </Button>
             <Button
               className={getNavStyle("/account/applications")}
-              href={getApplicationsPath()}
+              href={getApplicationPath()}
               variant="text"
               leadIcon={
                 <Icon size="md-large" symbol="application" className={styles.accountNavLinkIcon} />
@@ -53,7 +50,7 @@ const AccountLayout = ({ children }: AccountLayoutProps) => {
             </Button>
             <Button
               className={getNavStyle("/account/settings")}
-              href={getSettingsPath()}
+              href={getMyAccountSettingsPath()}
               variant="text"
               leadIcon={
                 <Icon size="md-large" symbol="settings" className={styles.accountNavLinkIcon} />
@@ -63,7 +60,7 @@ const AccountLayout = ({ children }: AccountLayoutProps) => {
             </Button>
             <Button
               className={getNavStyle()}
-              href={getSignInPath()}
+              onClick={signOut}
               variant="text"
               leadIcon={
                 <FontAwesomeIcon
