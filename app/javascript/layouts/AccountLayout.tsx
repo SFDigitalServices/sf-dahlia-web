@@ -24,7 +24,7 @@ export interface AccountLayoutProps {
 
 const AccountLayout = ({ children }: AccountLayoutProps) => {
   return (
-    <span className={styles.accountLayout}>
+    <div className={styles.accountLayout}>
       <Desktop>
         <nav className={styles.accountNav}>
           <Heading size="sm" className={styles.accountNavTitle}>
@@ -80,7 +80,7 @@ const AccountLayout = ({ children }: AccountLayoutProps) => {
         </nav>
       </Desktop>
       {children}
-    </span>
+    </div>
   )
 }
 
