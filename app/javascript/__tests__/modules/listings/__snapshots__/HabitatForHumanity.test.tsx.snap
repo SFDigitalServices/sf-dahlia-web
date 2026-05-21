@@ -47,7 +47,7 @@ exports[`HabitatForHumanity renders HabitatForHumanity component 1`] = `
       >
         :
       </span>
-        available
+       1 available
     </div>
     <div
       class="font-sans font-semibold text-base uppercase text-gray-750 tracking-wider border-0 border-b pb-2 mb-2 mt-4"

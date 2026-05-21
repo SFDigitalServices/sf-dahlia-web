@@ -264,11 +264,11 @@ const ListingApplyLiveWorkPreference = ({
                 <LiveWorkPreferenceFields
                   householdMemberFieldName={liveInSfMember}
                   proofTypeFieldName={liveInSfProofType}
-                  proofTypeLabel={t("label.preferenceProofAddressDocuments")}
-                  proofTypeNote={t("e2cLiveWorkPreference.documentMustShowCorrectName")}
+                  proofTypeLabel="label.preferenceProofAddressDocuments"
+                  proofTypeNote="e2cLiveWorkPreference.documentMustShowCorrectName"
                   proofFileName={liveInSfFileName}
                   proofFileUploadedAt={liveInSfFileUploadedAt}
-                  proofTypeOptions={PROOF_OPTIONS.liveInSf}
+                  proofTypeOptions={PROOF_OPTIONS.liveInSfAndNeighborhoodResidence}
                 />
               )}
             </div>
@@ -289,8 +289,8 @@ const ListingApplyLiveWorkPreference = ({
                 <LiveWorkPreferenceFields
                   householdMemberFieldName={workInSfMember}
                   proofTypeFieldName={workInSfProofType}
-                  proofTypeLabel={t("label.preferenceProofDocuments")}
-                  proofTypeNote={t("e2cLiveWorkPreference.documentMustShowCorrectNameForWork")}
+                  proofTypeLabel="label.preferenceProofDocuments"
+                  proofTypeNote="e2cLiveWorkPreference.documentMustShowCorrectNameForWork"
                   proofFileName={workInSfFileName}
                   proofFileUploadedAt={workInSfFileUploadedAt}
                   proofTypeOptions={PROOF_OPTIONS.workInSf}
