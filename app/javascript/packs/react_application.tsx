@@ -29,6 +29,9 @@ import CreateAccount from "../pages/account/create-account"
 import ForgotPassword from "../pages/forgot-password"
 import ResetPassword from "../pages/reset-password"
 import ListingApplyForm from "../pages/form/listing-apply-form"
+import Account from "../pages/account/account"
+import Settings from "../pages/account/settings"
+import Applications from "../pages/account/applications"
 
 const currentLanguage = getCurrentLanguage(window.location.pathname)
 
@@ -55,6 +58,9 @@ void loadTranslations(currentLanguage).then(() => {
     MyApplications,
     AccountSettings,
     MyAccount,
+    Account,
+    Settings,
+    Applications,
     ListingApplyForm,
   })
 
