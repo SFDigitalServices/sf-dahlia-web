@@ -40,11 +40,7 @@ export const getHabitatContent = (listing, stackedDataFxn) => {
         </Heading>
         {getHeader(t("t.units"))}
         {stackedData.map((row, index: number) =>
-          getHabitatContentRow(
-            `${row.unitType.cellText}:`,
-            `${row.availability.cellText} ${t("t.available")}`,
-            index
-          )
+          getHabitatContentRow(`${row.unitType.cellText}:`, `${row.unitType.cellSubText}`, index)
         )}
 
         {getHeader(t("listings.habitat.payments"))}
