@@ -1642,6 +1642,8 @@
   "listings.stats.rent": "租金",
   "listings.stats.salesPrice": "出售價格",
   "listings.stats.tableLabel": "%{numInHouseholdString}，%{amiPercentString} 的定價表",
+  "listings.stats.upToPercent": "最高可達 %{amiPercent}%",
+  "listings.stats.upToPercent.p2": "區域中位收入 (AMI)",
   "listings.stats.upToPercentAmi": "最高可達 %{amiPercent}% AMI",
   "listings.stats.upToPercentAmi.fullText": "最高可達 %{amiPercent}% AMI (區域收入中位數)",
   "listings.stats.waitlist": "輪候名單",
