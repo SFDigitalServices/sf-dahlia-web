@@ -1,5 +1,5 @@
 .upload-button {
-  margin-top: var(--seeds-spacer-content);
+  margin-top: 0;
   margin-bottom: var(--seeds-spacer-content);
   width: 100%;
 }
@@ -7,6 +7,11 @@
 .upload-error {
   text-align: center;
   margin-bottom: var(--seeds-spacer-content);
+}
+
+.upload-label {
+  font-size: var(--seeds-font-size-md);
+  margin-bottom: var(--seeds-spacer-label);
 }
 
 .upload-notes {

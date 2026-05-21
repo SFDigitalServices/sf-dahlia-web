@@ -7,6 +7,7 @@ type RailsSaleUnitSummary = BaseRailsUnitSummary & {
   minHoaDuesWithoutParking?: number
   maxPriceWithParking?: number
   maxPriceWithoutParking?: number
+  maxQualifyingAMI?: number
   maxHoaDuesWithParking?: number
   maxHoaDuesWithoutParking?: number
 }

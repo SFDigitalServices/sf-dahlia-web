@@ -727,12 +727,11 @@ export const listingHasVeteransPreference = (listing: RailsListing): boolean => 
 
 // replicates logic in ListingDataService.loadListing()
 export const listingPreferenceNames = (listing: RailsListing): Record<string, string> => {
-  const listingPrefNames = listing.Listing_Lottery_Preferences.map(
-    (pref) => pref.Lottery_Preference.Name
-  )
+  const listingPrefNames =
+    listing.Listing_Lottery_Preferences?.map((pref) => pref.Lottery_Preference.Name) || []
   const listingPrefs: Record<string, string> = {}
   for (const prefKey in PREFERENCES) {
-    if (listingPrefNames.includes(PREFERENCES[prefKey] as string)) {
+    if (listingPrefNames.includes(PREFERENCES[prefKey])) {
       listingPrefs[prefKey] = PREFERENCES[prefKey]
     }
   }

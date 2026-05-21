@@ -14,6 +14,8 @@ jest.mock("../../../../api/formApiService", () => ({
 const mockUploadProofFile = uploadProofFile as jest.Mock
 const mockDeleteUploadedProofFile = deleteUploadedProofFile as jest.Mock
 
+const proofUploadButtonLabel = "Upload proof of preference"
+
 const props = {
   sessionId: "test-session-id",
   listingId: "test-listing-id",
@@ -27,6 +29,7 @@ const props = {
   ],
   proofFileName: "proofFile",
   proofFileUploadedAt: "proofFileDate",
+  proofUploadButtonLabel,
 }
 
 const renderComponent = (formData: Record<string, unknown> = {}) => {
@@ -40,16 +43,16 @@ describe("PreferenceProofUploadField", () => {
 
   it("renders select dropdown, button, and instructions", () => {
     renderComponent()
-    expect(screen.getByText("Document Type")).not.toBeNull()
-    expect(screen.getByText(t("label.selectOne"))).not.toBeNull()
-    expect(screen.getByText(t("label.uploadProofOfPreference"))).not.toBeNull()
-    expect(screen.getByText(t("label.uploadProofInstructions1"))).not.toBeNull()
-    expect(screen.getByText(t("label.uploadProofInstructions3"))).not.toBeNull()
+    expect(screen.getByText("Document Type")).toBeInTheDocument()
+    expect(screen.getByText(t("label.selectOne"))).toBeInTheDocument()
+    expect(screen.getByText(proofUploadButtonLabel)).toBeInTheDocument()
+    expect(screen.getByText(t("label.uploadProofInstructions1"))).toBeInTheDocument()
+    expect(screen.getByText(t("label.uploadProofInstructions3"))).toBeInTheDocument()
   })
 
   it("disables the upload button when no document type is selected", () => {
     renderComponent()
-    const uploadButton = screen.getByText(t("label.uploadProofOfPreference"))
+    const uploadButton = screen.getByText(proofUploadButtonLabel)
     expect(uploadButton).toBeDisabled()
   })
 
@@ -59,7 +62,7 @@ describe("PreferenceProofUploadField", () => {
 
     const select = screen.getByLabelText("Document Type")
     await user.selectOptions(select, "Telephone bill")
-    const uploadButton = screen.getByText(t("label.uploadProofOfPreference"))
+    const uploadButton = screen.getByText(proofUploadButtonLabel)
     expect(uploadButton).not.toBeDisabled()
   })
 
@@ -69,7 +72,7 @@ describe("PreferenceProofUploadField", () => {
 
     const submitButton = screen.getByText("next")
     await user.click(submitButton)
-    expect(screen.getByText(t("error.pleaseSelectAnOption"))).not.toBeNull()
+    expect(screen.getByText(t("error.pleaseSelectAnOption"))).toBeInTheDocument()
   })
 
   it("uploads a file successfully", async () => {
@@ -97,7 +100,7 @@ describe("PreferenceProofUploadField", () => {
     })
 
     await waitFor(() => {
-      expect(screen.getByText("test-file.pdf")).not.toBeNull()
+      expect(screen.getByText("test-file.pdf")).toBeInTheDocument()
     })
   })
 
@@ -114,7 +117,7 @@ describe("PreferenceProofUploadField", () => {
     await user.upload(fileInput as HTMLInputElement, file)
     await waitFor(() => {
       expect(console.error).toHaveBeenCalled()
-      expect(screen.getByText(t("error.fileUploadFailed"))).not.toBeNull()
+      expect(screen.getByText(t("error.fileUploadFailed"))).toBeInTheDocument()
     })
   })
 
@@ -131,7 +134,7 @@ describe("PreferenceProofUploadField", () => {
     await user.upload(fileInput as HTMLInputElement, file)
     await waitFor(() => {
       expect(console.error).toHaveBeenCalled()
-      expect(screen.getByText(t("error.fileUploadFailed"))).not.toBeNull()
+      expect(screen.getByText(t("error.fileUploadFailed"))).toBeInTheDocument()
     })
   })
 
@@ -151,7 +154,7 @@ describe("PreferenceProofUploadField", () => {
     const fileInput = document.querySelector('input[type="file"]')
     await user.upload(fileInput as HTMLInputElement, file)
     await waitFor(() => {
-      expect(screen.getByText("test-file.pdf")).not.toBeNull()
+      expect(screen.getByText("test-file.pdf")).toBeInTheDocument()
     })
 
     const deleteButton = screen.getByText(t("t.delete"))
@@ -177,7 +180,7 @@ describe("PreferenceProofUploadField", () => {
     const fileInput = document.querySelector('input[type="file"]')
     await user.upload(fileInput as HTMLInputElement, file)
     await waitFor(() => {
-      expect(screen.getByText(t("error.fileUpload"))).not.toBeNull()
+      expect(screen.getByText(t("error.fileUpload"))).toBeInTheDocument()
     })
     expect(console.error).toHaveBeenCalled()
     expect(mockUploadProofFile).not.toHaveBeenCalled()
@@ -195,7 +198,7 @@ describe("PreferenceProofUploadField", () => {
     const fileInput = document.querySelector('input[type="file"]')
     await user.upload(fileInput as HTMLInputElement, file)
     await waitFor(() => {
-      expect(screen.getByText(t("error.fileUpload"))).not.toBeNull()
+      expect(screen.getByText(t("error.fileUpload"))).toBeInTheDocument()
     })
     expect(console.error).toHaveBeenCalled()
     expect(mockUploadProofFile).not.toHaveBeenCalled()
@@ -212,9 +215,68 @@ describe("PreferenceProofUploadField", () => {
     const fileInput = document.querySelector('input[type="file"]')
     await user.upload(fileInput as HTMLInputElement, file)
     await waitFor(() => {
-      expect(screen.getByText(t("error.fileNameTooLong"))).not.toBeNull()
+      expect(screen.getByText(t("error.fileNameTooLong"))).toBeInTheDocument()
     })
     expect(mockUploadProofFile).not.toHaveBeenCalled()
+  })
+
+  it("shows an error when file type is missing", async () => {
+    jest.spyOn(console, "error").mockImplementation()
+    renderComponent()
+    const user = userEvent.setup({ applyAccept: false })
+    const file = new File(["test content"], "test-file.pdf", { type: "application/pdf" })
+    const fileInput = document.querySelector('input[type="file"]')
+    await user.upload(fileInput as HTMLInputElement, file)
+    await waitFor(() => {
+      expect(screen.getByText(t("error.fileMissing"))).toBeInTheDocument()
+    })
+    expect(mockUploadProofFile).not.toHaveBeenCalled()
+  })
+
+  it("does not render the select dropdown when proofTypeSingleValue is provided", () => {
+    renderWithFormContextWrapper(
+      <PreferenceProofUploadField {...{ ...props, proofTypeSingleValue: "Telephone bill" }} />,
+      { formData: {} }
+    )
+    expect(screen.getByText("Document Type")).toBeInTheDocument()
+    expect(screen.queryByLabelText("Document Type")).not.toBeInTheDocument()
+    expect(screen.queryByText(t("label.selectOne"))).not.toBeInTheDocument()
+  })
+
+  it("uploads using the single value as the document type when proofTypeSingleValue is provided", async () => {
+    mockUploadProofFile.mockResolvedValue({
+      success: true,
+      name: "test-file.pdf",
+      created_at: "2026-01-15T12:00:00Z",
+    })
+    renderWithFormContextWrapper(
+      <PreferenceProofUploadField {...{ ...props, proofTypeSingleValue: "Telephone bill" }} />,
+      { formData: {} }
+    )
+    const user = userEvent.setup()
+
+    const file = new File(["test content"], "test-file.pdf", { type: "application/pdf" })
+    const fileInput = document.querySelector('input[type="file"]')
+    await user.upload(fileInput as HTMLInputElement, file)
+
+    await waitFor(() => {
+      expect(mockUploadProofFile).toHaveBeenCalledWith(
+        "test-session-id",
+        "test-listing-id",
+        "test-listing-preference-id",
+        "Telephone bill",
+        expect.any(File)
+      )
+    })
+  })
+
+  it("renders the custom upload button label when proofUploadButtonLabel is provided", () => {
+    renderWithFormContextWrapper(
+      <PreferenceProofUploadField {...{ ...props, proofUploadButtonLabel: "Upload my doc" }} />,
+      { formData: {} }
+    )
+    expect(screen.getByText("Upload my doc")).toBeInTheDocument()
+    expect(screen.queryByText(proofUploadButtonLabel)).not.toBeInTheDocument()
   })
 
   it("shows an error when file deletion fails", async () => {
@@ -234,14 +296,14 @@ describe("PreferenceProofUploadField", () => {
     const fileInput = document.querySelector('input[type="file"]')
     await user.upload(fileInput as HTMLInputElement, file)
     await waitFor(() => {
-      expect(screen.getByText("test-file.pdf")).not.toBeNull()
+      expect(screen.getByText("test-file.pdf")).toBeInTheDocument()
     })
 
     const deleteButton = screen.getByText(t("t.delete"))
     await user.click(deleteButton)
     await waitFor(() => {
       expect(console.error).toHaveBeenCalled()
-      expect(screen.getByText(t("error.fileUploadFailed"))).not.toBeNull()
+      expect(screen.getByText(t("error.fileUploadFailed"))).toBeInTheDocument()
     })
   })
 })

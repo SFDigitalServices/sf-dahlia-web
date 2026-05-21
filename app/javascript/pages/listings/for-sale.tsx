@@ -12,7 +12,6 @@ import "./for-sale.scss"
 import { GenericDirectory } from "../../modules/listings/GenericDirectory"
 import {
   getRangeString,
-  showWaitlist,
   getAvailabilityString,
   eligibilityHeader,
   getMinMax,
@@ -34,12 +33,14 @@ const getForSaleSummaryTable = (listing: RailsSaleListing) => {
           `listings.unitTypes.${summary.unitType}`,
           summary.unitType
         ),
-        cellSubText: getAvailabilityString(listing, summary, false),
+        cellSubText: getAvailabilityString(listing, summary),
         hideMobile: true,
       },
-      availability: {
-        cellText: getAvailabilityString(listing, summary, true),
-        cellSubText: showWaitlist(listing, summary) ? null : t("t.available"),
+      income: {
+        cellText: t("listings.stats.upToPercent", {
+          amiPercent: summary.maxQualifyingAMI.toString(),
+        }),
+        cellSubText: t("listings.stats.upToPercent.p2"),
       },
       colThree: {
         cellText: getRangeString(
