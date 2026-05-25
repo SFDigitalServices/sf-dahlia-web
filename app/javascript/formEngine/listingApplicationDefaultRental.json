@@ -342,7 +342,16 @@
     {
       "stepInfo": {
         "slug": "household-monthly-rent",
-        "sectionName": "household"
+        "sectionName": "household",
+        "navigationArrival": {
+          "showStepIfAnyPresent": [
+            {
+              "dataSource": "form",
+              "dataKey": "hasPublicHousing",
+              "dataValueToMatch": "false"
+            }
+          ]
+        }
       },
       "componentType": "step",
       "componentName": "ListingApplyStepWrapper",
@@ -352,7 +361,7 @@
       },
       "children": [
         {
-          "componentName": "MonthlyRent",
+          "componentName": "ListingApplyHouseholdMonthlyRent",
           "props": {
             "fieldNames": {
               "monthlyRent": "householdMonthlyRent",

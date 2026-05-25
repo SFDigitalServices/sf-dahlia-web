@@ -273,3 +273,13 @@ export const getNestedError = (
     return undefined
   }, errors)
 }
+
+export const getAddress = (
+  addressStreet: string,
+  addressCity: string,
+  addressState: string,
+  addressZipcode: string,
+  addressAptOrUnit?: string
+) => {
+  return [addressStreet, addressAptOrUnit, addressCity, addressState, addressZipcode].join(", ")
+}
