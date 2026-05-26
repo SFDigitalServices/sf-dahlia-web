@@ -8,6 +8,9 @@
   @media (max-width: theme("screens.lg")) {
     padding: var(--seeds-s14) var(--seeds-spacer-content);
   }
+  @media (max-width: theme("screens.md")) {
+    padding: var(--seeds-spacer-content) 0 0 0;
+  }
 }
 
 .accountNavTitle {
@@ -21,7 +24,7 @@
   border: var(--seeds-border-1) solid var(--seeds-border-color);
   border-left: none;
   border-radius: var(--seeds-rounded-md);
-  max-width: var(--seeds-s52);
+  width: var(--seeds-s52);
 }
 
 .accountNavLink {
