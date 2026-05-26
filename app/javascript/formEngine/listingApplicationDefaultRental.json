@@ -354,7 +354,7 @@
         }
       },
       "componentType": "step",
-      "componentName": "ListingApplyStepWrapper",
+      "componentName": "ListingApplyHouseholdMonthlyRentStep",
       "props": {
         "title": "c5HouseholdMonthlyRent.titleHousehold",
         "description": "c5HouseholdMonthlyRent.description"
@@ -363,7 +363,9 @@
         {
           "componentName": "ListingApplyHouseholdMonthlyRent",
           "props": {
-            "fieldNames": ["groupedHouseholdAddresses"]
+            "fieldNames": {
+              "groupedHouseholdAddresses": "groupedHouseholdAddresses"
+            }
           }
         }
       ]

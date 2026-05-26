@@ -35,6 +35,7 @@ import ListingApplyHouseholdIncomeHeader from "../pages/form/components/ListingA
 import ListingApplyVeteransPreferenceHeader from "../pages/form/components/ListingApplyVeteransPreferenceHeader"
 import ListingApplyHouseholdPrioritiesHeader from "../pages/form/components/ListingApplyHouseholdPrioritiesHeader"
 import ListingApplyHouseholdIncomeStep from "../pages/form/components/ListingApplyHouseholdIncomeStep"
+import ListingApplyHouseholdMonthlyRentStep from "../pages/form/components/household/ListingApplyHouseholdMonthlyRentStep"
 import ListingApplyHouseholdMonthlyRent from "../pages/form/components/household/ListingApplyHouseholdMonthlyRent"
 
 export default function getFormComponentRegistry() {
@@ -58,7 +59,7 @@ export default function getFormComponentRegistry() {
     ListingApplyReviewApplication,
     ListingApplyContactStepWrapper,
     ListingApplyPreferenceStepWrapper,
-    ListingApplyHouseholdMonthlyRent,
+    ListingApplyHouseholdMonthlyRentStep,
     // Field-level components
     Select,
     Radio,
@@ -74,6 +75,7 @@ export default function getFormComponentRegistry() {
     PrioritiesCheckbox,
     PreferenceCheckboxGroup,
     CertificateNumberPreference,
+    ListingApplyHouseholdMonthlyRent,
     // Other components
     ListingApplyPublicHousingHeader,
     ListingApplyIncomeVouchersHeader,
