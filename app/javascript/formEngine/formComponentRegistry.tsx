@@ -35,7 +35,7 @@ import ListingApplyHouseholdIncomeHeader from "../pages/form/components/ListingA
 import ListingApplyVeteransPreferenceHeader from "../pages/form/components/ListingApplyVeteransPreferenceHeader"
 import ListingApplyHouseholdPrioritiesHeader from "../pages/form/components/ListingApplyHouseholdPrioritiesHeader"
 import ListingApplyHouseholdIncomeStep from "../pages/form/components/ListingApplyHouseholdIncomeStep"
-import ListingApplyHouseholdMonthlyRent from "../pages/form/components/ListingApplyHouseholdMonthlyRent"
+import ListingApplyHouseholdMonthlyRent from "../pages/form/components/household/ListingApplyHouseholdMonthlyRent"
 
 export default function getFormComponentRegistry() {
   return {
