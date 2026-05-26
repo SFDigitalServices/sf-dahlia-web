@@ -1,5 +1,8 @@
+import { interceptUnleashFlags } from "../../support/util"
+
 describe("My Applications", () => {
   beforeEach(() => {
+    interceptUnleashFlags()
     cy.intercept("/api/v1/short-form/listing-application/a0W0P00000Hc7RcUAJ?autofill=true", {
       fixture: "draftApplication.json",
     })

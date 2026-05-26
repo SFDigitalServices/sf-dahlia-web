@@ -1,7 +1,9 @@
+import { interceptUnleashFlags } from "../support/util"
 import { userObjectGenerator, generateHeaders } from "../support/util"
 
 describe("Sign In integration tests", () => {
   beforeEach(() => {
+    interceptUnleashFlags()
     cy.visit("/sign-in")
   })
 
