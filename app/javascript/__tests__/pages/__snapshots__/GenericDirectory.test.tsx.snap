@@ -655,15 +655,6 @@ exports[`GenericDirectory displays the rental directory page with listings 1`] =
                         </span>
                       </th>
                       <th
-                        class="stacked-table-header text-base text-gray-700 border-b md:hidden"
-                      >
-                        <span
-                          class=""
-                        >
-                          available
-                        </span>
-                      </th>
-                      <th
                         class="text-base text-gray-700 border-b stacked-table-header"
                       >
                         <span
@@ -705,26 +696,6 @@ exports[`GenericDirectory displays the rental directory page with listings 1`] =
                             class="stacked-table-subtext   "
                           >
                             44 available
-                          </p>
-                        </div>
-                      </td>
-                      <td
-                        class="stacked-table-header text-base text-gray-700 border-b md:hidden b-0"
-                        data-cell="44"
-                        data-label="available"
-                      >
-                        <div
-                          class="stacked-table-cell-container md:hidden"
-                        >
-                          <p
-                            class="stacked-table-cell"
-                          >
-                            44
-                          </p>
-                          <p
-                            class="stacked-table-subtext   "
-                          >
-                            available
                           </p>
                         </div>
                       </td>
@@ -794,26 +765,6 @@ exports[`GenericDirectory displays the rental directory page with listings 1`] =
                         </div>
                       </td>
                       <td
-                        class="stacked-table-header text-base text-gray-700 border-b md:hidden b-0"
-                        data-cell="12"
-                        data-label="available"
-                      >
-                        <div
-                          class="stacked-table-cell-container md:hidden"
-                        >
-                          <p
-                            class="stacked-table-cell"
-                          >
-                            12
-                          </p>
-                          <p
-                            class="stacked-table-subtext   "
-                          >
-                            available
-                          </p>
-                        </div>
-                      </td>
-                      <td
                         class="text-base text-gray-700 border-b stacked-table-header b-0"
                         data-cell="$1,634 to $8,491"
                         data-label="Income Range"
@@ -879,26 +830,6 @@ exports[`GenericDirectory displays the rental directory page with listings 1`] =
                         </div>
                       </td>
                       <td
-                        class="stacked-table-header text-base text-gray-700 border-b md:hidden b-0"
-                        data-cell="24"
-                        data-label="available"
-                      >
-                        <div
-                          class="stacked-table-cell-container md:hidden"
-                        >
-                          <p
-                            class="stacked-table-cell"
-                          >
-                            24
-                          </p>
-                          <p
-                            class="stacked-table-subtext   "
-                          >
-                            available
-                          </p>
-                        </div>
-                      </td>
-                      <td
                         class="text-base text-gray-700 border-b stacked-table-header b-0"
                         data-cell="$1,776 to $10,187"
                         data-label="Income Range"
@@ -960,26 +891,6 @@ exports[`GenericDirectory displays the rental directory page with listings 1`] =
                             class="stacked-table-subtext   "
                           >
                             10 available
-                          </p>
-                        </div>
-                      </td>
-                      <td
-                        class="stacked-table-header text-base text-gray-700 border-b md:hidden b-0"
-                        data-cell="10"
-                        data-label="available"
-                      >
-                        <div
-                          class="stacked-table-cell-container md:hidden"
-                        >
-                          <p
-                            class="stacked-table-cell"
-                          >
-                            10
-                          </p>
-                          <p
-                            class="stacked-table-subtext   "
-                          >
-                            available
                           </p>
                         </div>
                       </td>

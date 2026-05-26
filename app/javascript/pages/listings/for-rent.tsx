@@ -27,7 +27,6 @@ import {
   getRangeString,
   getRentRangeString,
   getRentSubText,
-  showWaitlist,
   getAvailabilityString,
   eligibilityHeader,
 } from "../../modules/listings/DirectoryHelpers"
@@ -45,12 +44,8 @@ export const getForRentSummaryTable = (listing: RailsRentalListing) => {
           `listings.unitTypes.${summary.unitType}`,
           summary.unitType
         ),
-        cellSubText: getAvailabilityString(listing, summary, false),
+        cellSubText: getAvailabilityString(listing, summary),
         hideMobile: true,
-      },
-      availability: {
-        cellText: getAvailabilityString(listing, summary, true),
-        cellSubText: showWaitlist(listing, summary) ? null : t("t.available"),
       },
       colThree: {
         cellText: getRangeString(summary.absoluteMinIncome || 0, summary.absoluteMaxIncome, true),

@@ -1642,6 +1642,8 @@
   "listings.stats.rent": "Upa",
   "listings.stats.salesPrice": "Presyo sa pagbebenta",
   "listings.stats.tableLabel": "Talahanayan ng pagpepresyo para sa %{numInHouseholdString}, %{amiPercentString}",
+  "listings.stats.upToPercent": "Hanggang %{amiPercent}% ",
+  "listings.stats.upToPercent.p2": "AMI (Area Median Income)",
   "listings.stats.upToPercentAmi": "Hanggang %{amiPercent}% AMI",
   "listings.stats.upToPercentAmi.fullText": "Hanggang %{amiPercent}% AMI (Area Median Income)",
   "listings.stats.waitlist": "Waitlist (Listahan ng mga Naghihintay)",

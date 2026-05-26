@@ -6,7 +6,7 @@ describe("HabitatForHumanity", () => {
   it("renders HabitatForHumanity component", () => {
     const { asFragment } = render(
       getHabitatContent(habitatListing, () => {
-        return [{ unitType: { cellText: "" }, availability: { cellText: "" } }]
+        return [{ unitType: { cellText: "", cellSubText: "1 available" } }]
       })
     )
 

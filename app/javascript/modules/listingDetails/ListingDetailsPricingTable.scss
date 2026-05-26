@@ -1,3 +1,9 @@
+@media (max-width: $screen-md) {
+  table.responsive-collapse tr {
+    margin-bottom: var(--seeds-s10);
+  }
+}
+
 .category-table {
   tr {
     td:before {
