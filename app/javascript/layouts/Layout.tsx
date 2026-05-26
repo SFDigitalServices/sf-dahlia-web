@@ -83,10 +83,6 @@ const getMenuLinks = (signedIn: boolean, signOut: () => void) => {
       href: "/listings/for-sale",
     },
     {
-      title: t("nav.myFavorites"),
-      href: "/favorites",
-    },
-    {
       title: t("nav.getAssistance"),
       href: "/get-assistance",
     },
