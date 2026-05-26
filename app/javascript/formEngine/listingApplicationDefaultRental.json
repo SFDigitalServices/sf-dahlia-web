@@ -363,10 +363,7 @@
         {
           "componentName": "ListingApplyHouseholdMonthlyRent",
           "props": {
-            "fieldNames": {
-              "monthlyRent": "householdMonthlyRent",
-              "doesNotPayRent": "householdDoesNotPayRent"
-            }
+            "fieldNames": ["groupedHouseholdAddresses"]
           }
         }
       ]

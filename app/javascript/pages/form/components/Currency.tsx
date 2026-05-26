@@ -7,12 +7,21 @@ interface CurrencyProps {
   label: string
   note?: string
   errorMessage: string
+  required?: boolean
+  disabled?: boolean
   fieldNames: {
     amount: string
   }
 }
 
-const Currency = ({ label, note, errorMessage, fieldNames: { amount } }: CurrencyProps) => {
+const Currency = ({
+  label,
+  note,
+  errorMessage,
+  required = true,
+  disabled = false,
+  fieldNames: { amount },
+}: CurrencyProps) => {
   const {
     register,
     setValue,
@@ -29,11 +38,12 @@ const Currency = ({ label, note, errorMessage, fieldNames: { amount } }: Currenc
       error={!!errors?.[amount]}
       register={register}
       errorMessage={t(errorMessage)}
+      disabled={disabled}
       prepend={"$"}
       subNote={note && t(note)}
       setValue={setValue} // Field component uses setValue and getValues for currency input types
       getValues={getValues}
-      validation={{ required: true, min: 0.01 }}
+      validation={{ required, min: required ? 0.01 : undefined }}
     />
   )
 }
