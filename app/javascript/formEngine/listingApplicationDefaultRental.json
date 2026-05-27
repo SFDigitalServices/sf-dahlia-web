@@ -356,7 +356,8 @@
       "componentType": "step",
       "componentName": "ListingApplyHouseholdMonthlyRentStep",
       "props": {
-        "title": "c5HouseholdMonthlyRent.titleHousehold",
+        "title": "c5HouseholdMonthlyRent.titleYou",
+        "householdTitle": "c5HouseholdMonthlyRent.titleHousehold",
         "description": "c5HouseholdMonthlyRent.description"
       },
       "children": [

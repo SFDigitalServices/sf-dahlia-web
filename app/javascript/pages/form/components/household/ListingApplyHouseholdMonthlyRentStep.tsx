@@ -30,11 +30,13 @@ export type GroupedAddress = {
 
 type ListingApplyHouseholdMonthlyRent = {
   title: string
+  householdTitle: string
   description: string
 }
 
 const ListingApplyHouseholdMonthlyRentStep = ({
   title,
+  householdTitle,
   description,
 }: ListingApplyHouseholdMonthlyRent) => {
   const { staticData, formData, saveFormData, handleNextStep, handlePrevStep } =
@@ -56,7 +58,7 @@ const ListingApplyHouseholdMonthlyRentStep = ({
       doesNotPayRent: "householdDoesNotPayRent",
       members: [
         {
-          firstName: "You",
+          firstName: t("You"),
           fullName: `${primaryFirstName} ${primaryLastName}`,
         },
       ],
@@ -104,9 +106,10 @@ const ListingApplyHouseholdMonthlyRentStep = ({
     return householdAddresses
   }, [formData])
 
+  const monthlyRentStepTitle =
+    (formData.householdMembers as HouseholdMember[])?.length > 0 ? householdTitle : title
   const defaultValues = useMemo(() => {
     const defaultAddress: Record<string, unknown> = {}
-
     groupedAddresses.forEach((group) => {
       defaultAddress[group.householdMonthlyRent] = formData[group.householdMonthlyRent]
       defaultAddress[group.doesNotPayRent] = formData[group.doesNotPayRent]
@@ -152,7 +155,7 @@ const ListingApplyHouseholdMonthlyRentStep = ({
         </Card.Section>
         <Card.Header divider="inset">
           <Heading className={stepStyles["step-title"]} priority={1} size="2xl">
-            {translationFromDataSchema(title, {}, staticData, formData)}
+            {translationFromDataSchema(monthlyRentStepTitle, {}, staticData, formData)}
           </Heading>
           {description && <p className="field-note text-base">{t(description)}</p>}
         </Card.Header>
