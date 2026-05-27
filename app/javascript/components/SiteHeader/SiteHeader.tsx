@@ -72,6 +72,50 @@ const changeMenuShow = (
   setMenus(indexOfTitle !== -1 ? menus.filter((menu) => menu !== title) : [...menus, title])
 }
 
+interface MobileDrawerProps {
+  in: boolean
+  onClose: () => void
+  closeLabel?: string
+  children: React.ReactNode
+}
+
+const MobileDrawer = ({ in: isOpen, onClose, closeLabel, children }: MobileDrawerProps) => {
+  const nodeRef = useRef<HTMLSpanElement>(null)
+
+  return (
+    <CSSTransition
+      nodeRef={nodeRef}
+      in={isOpen}
+      timeout={400}
+      classNames={"site-header__drawer-transition"}
+      unmountOnExit
+    >
+      <span ref={nodeRef} className={"site-header__mobile-drawer-dropdown-container"}>
+        <div className={"site-header__mobile-drawer-dropdown"}>
+          <button
+            className={"site-header__mobile-drawer-close-row"}
+            onClick={onClose}
+            onKeyPress={(event) => {
+              if (event.key === "Enter") {
+                onClose()
+              }
+            }}
+            aria-label={closeLabel ?? t("t.close")}
+          >
+            <Icon
+              size="small"
+              symbol="arrowForward"
+              fill={"#ffffff"}
+              className={"site-header__icon-spacing"}
+            />
+          </button>
+          {children}
+        </div>
+      </span>
+    </CSSTransition>
+  )
+}
+
 const SiteHeader = (props: SiteHeaderProps) => {
   const { profile } = useContext(UserContext)
   const [activeMenu, setActiveMenu] = useState<string | null>()
@@ -258,6 +302,7 @@ const SiteHeader = (props: SiteHeaderProps) => {
     setActiveMenu((current) => (current === menuTitle ? null : menuTitle))
     if (!isDesktop) {
       setMobileMenu(false)
+      setMobileDrawer(false)
     }
   }
 
@@ -371,7 +416,25 @@ const SiteHeader = (props: SiteHeaderProps) => {
 
   const getMobileAccountDropdownMenu = () => {
     const accountLink = getAccountMenuLink()
-    if (!accountLink || activeMenu !== accountLink.title || props.mobileDrawer) return null
+    if (!accountLink) return null
+
+    const isOpen = activeMenu === accountLink.title
+    if (!isOpen) return null
+
+    if (props.mobileDrawer) {
+      return (
+        <MobileDrawer
+          in={isOpen}
+          onClose={() => setActiveMenu(null)}
+          closeLabel={props.strings?.close}
+        >
+          {getDropdownOptions(
+            accountLink.subMenuLinks ?? [],
+            "site-header__mobile-drawer-dropdown-item"
+          )}
+        </MobileDrawer>
+      )
+    }
 
     return (
       <span className={"site-header__mobile-dropdown-container"}>
@@ -384,39 +447,17 @@ const SiteHeader = (props: SiteHeaderProps) => {
 
   const getMobileDrawer = () => {
     return (
-      <CSSTransition
+      <MobileDrawer
         in={mobileDrawer}
-        timeout={400}
-        classNames={"site-header__drawer-transition"}
-        unmountOnExit
+        onClose={() => setMobileDrawer(false)}
+        closeLabel={props.strings?.close}
       >
-        <span className={"site-header__mobile-drawer-dropdown-container"}>
-          <div className={"site-header__mobile-drawer-dropdown"}>
-            <button
-              className={"site-header__mobile-drawer-close-row"}
-              onClick={() => setMobileDrawer(false)}
-              onKeyPress={(event) => {
-                if (event.key === "Enter") {
-                  setMobileDrawer(false)
-                }
-              }}
-              aria-label={props.strings?.close ?? t("t.close")}
-            >
-              <Icon
-                size="small"
-                symbol="arrowForward"
-                fill={"#ffffff"}
-                className={"site-header__icon-spacing"}
-              />
-            </button>
-            {buildMobileMenuOptions(
-              props.menuLinks,
-              "site-header__mobile-drawer-dropdown-item site-header__mobile-drawer-dropdown-item-sublink",
-              "site-header__mobile-drawer-dropdown-item"
-            )}
-          </div>
-        </span>
-      </CSSTransition>
+        {buildMobileMenuOptions(
+          props.menuLinks,
+          "site-header__mobile-drawer-dropdown-item site-header__mobile-drawer-dropdown-item-sublink",
+          "site-header__mobile-drawer-dropdown-item"
+        )}
+      </MobileDrawer>
     )
   }
 
