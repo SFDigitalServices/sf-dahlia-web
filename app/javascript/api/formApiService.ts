@@ -49,6 +49,62 @@ export const deleteUploadedProofFile = async (
   }).then((response) => response.data)
 }
 
+export const checkHouseholdEligibility = async (
+  listingId: string,
+  householdSize: number,
+  income: string,
+  childrenUnder6: number
+): Promise<Record<string, unknown>> => {
+  const params = {
+    listing_id: listingId,
+    eligibility: {
+      householdsize: householdSize,
+      incomelevel: income,
+      childrenUnder6: childrenUnder6,
+    },
+  }
+  console.log("Sending", params)
+  return post<Record<string, unknown>>("/api/v1/short-form/validate-household", params).then(
+    (response) => response.data
+  )
+}
+
+export type VerifiedAddressResponse = {
+  address: {
+    street1?: string
+    street2?: string
+    city?: string
+    state?: string
+    zip?: string
+    error?: string
+    verifications?: {
+      delivery: {
+        success: boolean
+        errors?: Array<{
+          code: string
+          message?: string
+        }>
+      }
+    }
+  }
+  error?: string
+}
+
+export type Address = {
+  street1?: string
+  street2?: string
+  city?: string
+  state?: string
+  zip?: string
+}
+
+export const locateVerifiedAddress = async (address: Address): Promise<VerifiedAddressResponse> => {
+  const response = await post<VerifiedAddressResponse>("/api/v1/addresses/validate.json", {
+    address,
+  }).then((response) => response.data)
+  return response
+}
+
 export enum LanguagePrefix {
   English = "English",
   Spanish = "Spanish",

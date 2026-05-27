@@ -60,6 +60,7 @@ const FormEngine = ({ sessionId, schema, staticData }: FormEngineProps) => {
       if (newStepIndex < totalSteps) {
         setCurrentStepIndex(newStepIndex)
         updateFormPath(newStepIndex, stepInfoMap)
+        window.scrollTo(0, 0)
       }
     }
 
@@ -73,6 +74,7 @@ const FormEngine = ({ sessionId, schema, staticData }: FormEngineProps) => {
       if (newStepIndex >= 0) {
         setCurrentStepIndex(newStepIndex)
         updateFormPath(newStepIndex, stepInfoMap)
+        window.scrollTo(0, 0)
       }
     }
 
@@ -80,6 +82,7 @@ const FormEngine = ({ sessionId, schema, staticData }: FormEngineProps) => {
       const stepIndex = stepInfoMap.findIndex((step) => step.slug === stepSlug)
       setCurrentStepIndex(stepIndex)
       updateFormPath(stepIndex, stepInfoMap)
+      window.scrollTo(0, 0)
     }
   }
 

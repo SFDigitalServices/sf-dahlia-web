@@ -1,4 +1,4 @@
-export const PREFERENCES = {
+export const PREFERENCES: Record<string, string> = {
   aliceGriffith: "Alice Griffith Housing Development Resident",
   antiDisplacement: "Anti-Displacement Housing Preference (ADHP)",
   assistedHousing: "Rent Burdened / Assisted Housing Preference",
@@ -162,6 +162,7 @@ export const UNLEASH_FLAG = {
   CLERK_AUTH: "temp.webapp.auth.clerk",
   FORM_ENGINE: "perm.webapp.formEngine",
   FORM_ENGINE_DEBUG: "perm.webapp.formEngine.debug",
+  ACCOUNTS_LAYOUT: "temp.webapp.newAccountLayout",
 }
 
 export const LISTING_APPLY_FORMS_INPUT_MAX_LENGTH = {
@@ -219,7 +220,7 @@ export const PROOF_OPTIONS = {
     { value: "Letter from employer", label: "label.proof.letterFromEmployer" },
   ],
   // liveInSf, neighborhoodResidence
-  liveInSf: [
+  liveInSfAndNeighborhoodResidence: [
     { value: "Telephone bill", label: "label.proof.telephoneBill" },
     { value: "Cable and internet bill", label: "label.proof.cableBill" },
     { value: "Gas bill", label: "label.proof.gasBill" },

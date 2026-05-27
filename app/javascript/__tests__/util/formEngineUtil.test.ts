@@ -10,6 +10,7 @@ import {
   validDate,
   parseDate,
   updateFormPath,
+  getNestedError,
 } from "../../util/formEngineUtil"
 import { openRentalListing } from "../data/RailsRentalListing/listing-rental-open"
 import { StepInfoSchema } from "../../formEngine/formSchemas"
@@ -292,6 +293,30 @@ describe("formEngineUtil", () => {
       const nextStepIndex = calculateNextStep(3, stepInfoMap, staticData, formData)
       updateFormPath(nextStepIndex, stepInfoMap)
       expect(pushStateSpy).toHaveBeenCalledWith({}, "", "/listing/123/apply/skip-to-this")
+    })
+  })
+
+  describe("getNestedError", () => {
+    it("walks dot-notation paths to retrieve a nested error", () => {
+      const errorObj = { type: "required", message: "is required" }
+      const errors = { claimedPreferences: { liveInSf: { householdMemberId: errorObj } } }
+      expect(getNestedError(errors, "claimedPreferences.liveInSf.householdMemberId")).toBe(errorObj)
+    })
+
+    it("returns undefined when errors is undefined", () => {
+      expect(
+        getNestedError(undefined as unknown as Record<string, unknown>, "error")
+      ).toBeUndefined()
+    })
+
+    it("returns undefined when an intermediate key is missing", () => {
+      const errors = { liveInSf: {} }
+      expect(getNestedError(errors, "liveInSf.householdMemberId")).toBeUndefined()
+    })
+
+    it("returns undefined when traversal hits a non-object value", () => {
+      const errors = { liveInSf: "not-an-object" as unknown as Record<string, unknown> }
+      expect(getNestedError(errors, "liveInSf.householdMemberId")).toBeUndefined()
     })
   })
 })

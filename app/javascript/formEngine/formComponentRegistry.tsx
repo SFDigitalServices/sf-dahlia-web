@@ -18,6 +18,7 @@ import ListingApplyReviewApplication from "../pages/form/components/ListingApply
 import ListingApplyHouseholdIntro from "../pages/form/components/household/ListingApplyHouseholdIntro"
 import ListingApplyHouseholdOverview from "../pages/form/components/household/ListingApplyHouseholdOverview"
 import ListingApplyPublicHousingHeader from "../pages/form/components/ListingApplyPublicHousingHeader"
+import ListingApplyContactStepWrapper from "../pages/form/components/ListingApplyContactStepWrapper"
 import HouseholdMemberMultiStepWrapper from "../pages/form/components/household/HouseholdMemberMultiStepWrapper"
 import Select from "../pages/form/components/Select"
 import Radio from "../pages/form/components/Radio"
@@ -27,12 +28,14 @@ import AlternateContactType from "../pages/form/components/AlternateContactType"
 import MonthlyRent from "../pages/form/components/MonthlyRent"
 import PrioritiesCheckbox from "../pages/form/components/PrioritiesCheckbox"
 import PreferenceCheckboxGroup from "../pages/form/components/PreferenceCheckboxGroup"
+import ListingApplyPreferenceStepWrapper from "../pages/form/components/ListingApplyPreferenceStepWrapper"
 import ListingApplyLiveWorkPreference from "../pages/form/components/ListingApplyLiveWorkPreference"
 import CertificateNumberPreference from "../pages/form/components/CertificateNumberPreference"
 import ListingApplyIncomeVouchersHeader from "../pages/form/components/ListingApplyIncomeVouchersHeader"
 import ListingApplyHouseholdIncomeHeader from "../pages/form/components/ListingApplyHouseholdIncomeHeader"
 import ListingApplyVeteransPreferenceHeader from "../pages/form/components/ListingApplyVeteransPreferenceHeader"
 import ListingApplyHouseholdPrioritiesHeader from "../pages/form/components/ListingApplyHouseholdPrioritiesHeader"
+import ListingApplyHouseholdIncomeStep from "../pages/form/components/ListingApplyHouseholdIncomeStep"
 
 export default function getFormComponentRegistry() {
   return {
@@ -45,6 +48,7 @@ export default function getFormComponentRegistry() {
     ListingApplyHouseholdIntro,
     ListingApplyHouseholdOverview,
     HouseholdMemberMultiStepWrapper,
+    ListingApplyHouseholdIncomeStep,
     ListingApplyPreferencesIntro,
     ListingApplyLiveWorkPreference,
     ListingApplyRentBurdenPreference,
@@ -52,6 +56,8 @@ export default function getFormComponentRegistry() {
     ListingApplyReviewSummary,
     ListingApplyTerms,
     ListingApplyReviewApplication,
+    ListingApplyContactStepWrapper,
+    ListingApplyPreferenceStepWrapper,
     // Field-level components
     Select,
     Radio,

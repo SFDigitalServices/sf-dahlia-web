@@ -23,6 +23,7 @@ interface InviteToApplyNextStepsProps {
   deadline: string
   appId?: string
   fileUploadUrl?: string
+  isTest?: boolean | string
 }
 
 const PreparingYourApplication = () => {
@@ -50,11 +51,13 @@ const WhatToDo = ({
   deadline,
   appId,
   fileUploadUrl,
+  isTest,
 }: {
   listing: RailsSaleListing
   deadline: string
   appId?: string
   fileUploadUrl?: string
+  isTest?: boolean
 }) => {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const handleSubmitClick = useCallback(() => {
@@ -64,7 +67,7 @@ const WhatToDo = ({
       setIsSubmitting(true)
       window.open(url, "_blank")
       try {
-        if (appId) {
+        if (appId && !isTest) {
           await recordResponse({
             appId: appId,
             applicationNumber: appId,
@@ -83,7 +86,7 @@ const WhatToDo = ({
         setIsSubmitting(false)
       }
     })()
-  }, [appId, listing, deadline, fileUploadUrl])
+  }, [appId, listing, deadline, fileUploadUrl, isTest])
 
   return (
     <div className={`${styles.whatToDoList} markdown`}>
@@ -197,9 +200,11 @@ const InviteToApplyNextSteps = ({
   deadline,
   appId,
   fileUploadUrl,
+  isTest,
 }: InviteToApplyNextStepsProps) => {
   const { getAssetPath } = React.useContext(ConfigContext)
   const titleName = listing?.Building_Name_for_Process || listing?.Name
+  const isTestMode = isTest === true || isTest === "true"
   return (
     <InviteToLayout
       listing={listing}
@@ -211,7 +216,13 @@ const InviteToApplyNextSteps = ({
       deadline={deadline}
     >
       <PreparingYourApplication />
-      <WhatToDo listing={listing} deadline={deadline} appId={appId} fileUploadUrl={fileUploadUrl} />
+      <WhatToDo
+        listing={listing}
+        deadline={deadline}
+        appId={appId}
+        fileUploadUrl={fileUploadUrl}
+        isTest={isTestMode}
+      />
       <Mobile>
         <Heading size="lg" priority={3}>
           {t("inviteToApplyPage.submitYourInfo.sidebar")}

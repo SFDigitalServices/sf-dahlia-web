@@ -32,6 +32,23 @@ RSpec.describe InviteToController do
       'HS256',
     )
   end
+  let(:is_test_token) do
+    JWT.encode(
+      {
+        data: {
+          deadline: deadline,
+          appId: application_number,
+          act: response_value,
+          type: 'I2A',
+          isTest: 'true',
+        },
+        iat: fixed_iat,
+        exp: fixed_exp,
+      },
+      'TEST_TOKEN_SECRET',
+      'HS256',
+    )
+  end
 
   before do
     allow(ENV).to receive(:fetch).with('JWT_TOKEN_SECRET', nil)
@@ -79,6 +96,7 @@ RSpec.describe InviteToController do
                                                           deadline: deadline,
                                                           act: response_value,
                                                           appId: application_number,
+                                                          isTest: false,
                                                         },
                                                         uploadUrl: 'test-upload-url',
                                                         schedulingUrl: 'test-scheduling-url',
@@ -141,6 +159,30 @@ RSpec.describe InviteToController do
         allow(JWT).to receive(:decode).and_raise(JWT::DecodeError)
         get :index, params: { id: listing_id, t: 'invalid_test_token' }
         expect(response).to redirect_to('/')
+      end
+    end
+
+    context 'when isTest is present' do
+      before do
+        allow(Force::ShortFormService).to receive(:get).with(application_number).and_return(
+          {
+            'uploadURL' => 'test-upload-url',
+            'leaseupAppointmentSchedulingURL' => 'test-scheduling-url',
+          },
+        )
+
+        get :index, params: {
+          id: listing_id,
+          t: is_test_token,
+        }
+      end
+
+      it 'does not record invite response' do
+        expect(DahliaBackend::MessageService).not_to have_received(:send_invite_to_response)
+      end
+
+      it 'returns a successful response' do
+        expect(response).to be_ok
       end
     end
   end
