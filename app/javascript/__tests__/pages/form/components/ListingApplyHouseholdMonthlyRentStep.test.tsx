@@ -78,9 +78,32 @@ describe("ListingApplyHouseholdMonthlyRentStep", () => {
     })
     expect(screen.getAllByLabelText(t("label.noRentPaid"))).toHaveLength(2)
   })
+  it("submits grouped address rent data and advances to the next step", async () => {
+    renderListingApplyHousingMonthlyRent({
+      householdMembers: [
+        { id: "1", firstName: "Bob", lastName: "Smith", ...memberAtSecondaryAddress },
+      ],
+    })
+    const inputs = screen.getAllByRole("textbox")
+    await userEvent.type(inputs[0], "1200")
+    await userEvent.type(inputs[1], "800")
+
+    await userEvent.click(screen.getByRole("button", { name: /next/i }))
+  })
 })
 
 describe("ListingApplyHouseholdMonthlyRent", () => {
+  it("displays the you label for a single-person household", () => {
+    renderListingApplyHousingMonthlyRent()
+    expect(
+      screen.getByText(
+        t("c5HouseholdMonthlyRent.howMuchDoYouPay", {
+          address: "123 Main St, San Francisco, CA, 94102",
+        })
+      )
+    ).toBeInTheDocument()
+  })
+
   it("displays one name when the member does not share primary housing", () => {
     renderListingApplyHousingMonthlyRent({
       householdMembers: [
@@ -109,6 +132,24 @@ describe("ListingApplyHouseholdMonthlyRent", () => {
         t("c5HouseholdMonthlyRent.howMuchDoMembersPay", {
           address: secondaryAddress,
           members: "Joe and Chris",
+        })
+      )
+    ).toBeInTheDocument()
+  })
+
+  it("groups potentially three members sharing a non-primary address", () => {
+    renderListingApplyHousingMonthlyRent({
+      householdMembers: [
+        { id: "1", firstName: "Joe", lastName: "Smith", ...memberAtSecondaryAddress },
+        { id: "2", firstName: "Chris", lastName: "Smith", ...memberAtSecondaryAddress },
+        { id: "3", firstName: "Dana", lastName: "Smith", ...memberAtSecondaryAddress },
+      ],
+    })
+    expect(
+      screen.getByText(
+        t("c5HouseholdMonthlyRent.howMuchDoMembersPay", {
+          address: secondaryAddress,
+          members: "Joe, Chris, and Dana",
         })
       )
     ).toBeInTheDocument()
