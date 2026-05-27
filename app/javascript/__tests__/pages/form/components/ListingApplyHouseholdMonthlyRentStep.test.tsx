@@ -18,7 +18,8 @@ const primaryApplicantData = {
 const renderListingApplyHousingMonthlyRent = (formData: Record<string, unknown> = {}) =>
   renderWithFormContextWrapper(
     <ListingApplyHouseholdMonthlyRentStep
-      title="c5HouseholdMonthlyRent.titleHousehold"
+      title="c5HouseholdMonthlyRent.titleYou"
+      householdTitle="c5HouseholdMonthlyRent.titleHousehold"
       description="c5HouseholdMonthlyRent.description"
     />,
     {

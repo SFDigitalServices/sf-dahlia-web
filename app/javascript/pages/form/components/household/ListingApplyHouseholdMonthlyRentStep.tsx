@@ -58,7 +58,7 @@ const ListingApplyHouseholdMonthlyRentStep = ({
       doesNotPayRent: "householdDoesNotPayRent",
       members: [
         {
-          firstName: t("You"),
+          firstName: t("t.you"),
           fullName: `${primaryFirstName} ${primaryLastName}`,
         },
       ],
