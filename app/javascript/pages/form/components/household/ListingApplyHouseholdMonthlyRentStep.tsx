@@ -7,6 +7,7 @@ import { useFormEngineContext } from "../../../../formEngine/formEngineContext"
 import { getPrimaryApplicantData } from "../../../../util/listingApplyUtil"
 import { getAddress, translationFromDataSchema } from "../../../../util/formEngineUtil"
 import ListingApplyHouseholdMonthlyRent from "./ListingApplyHouseholdMonthlyRent"
+import styles from "./ListingApplyhouseholdMonthlyRentStep.module.scss"
 
 type HouseholdMember = {
   firstName: string
@@ -156,7 +157,7 @@ const ListingApplyHouseholdMonthlyRentStep = ({
           {description && <p className="field-note text-base">{t(description)}</p>}
         </Card.Header>
         <Form onSubmit={formMethods.handleSubmit(onSubmit)}>
-          <Card.Section>
+          <Card.Section className={styles["rent-container"]}>
             {groupedAddresses.map((group, index) => (
               <ListingApplyHouseholdMonthlyRent
                 key={group.address}
@@ -165,7 +166,6 @@ const ListingApplyHouseholdMonthlyRentStep = ({
               />
             ))}
           </Card.Section>
-
           <Card.Footer className={stepStyles["step-footer"]}>
             <Button variant="primary" type="submit">
               {t("t.next")}
