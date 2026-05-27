@@ -4,7 +4,6 @@ import { Button, Card, Heading } from "@bloom-housing/ui-seeds"
 import { FormProvider, useForm } from "react-hook-form"
 import stepStyles from "../ListingApplyStepWrapper.module.scss"
 import { useFormEngineContext } from "../../../../formEngine/formEngineContext"
-import { getPrimaryApplicantData } from "../../../../util/listingApplyUtil"
 import { getAddress, translationFromDataSchema } from "../../../../util/formEngineUtil"
 import ListingApplyHouseholdMonthlyRent from "./ListingApplyHouseholdMonthlyRent"
 import styles from "./ListingApplyhouseholdMonthlyRentStep.module.scss"
@@ -41,9 +40,8 @@ const ListingApplyHouseholdMonthlyRentStep = ({
 }: ListingApplyHouseholdMonthlyRent) => {
   const { staticData, formData, saveFormData, handleNextStep, handlePrevStep } =
     useFormEngineContext()
+
   const groupedAddresses = useMemo<GroupedAddress[]>(() => {
-    const { firstName: primaryFirstName, lastName: primaryLastName } =
-      getPrimaryApplicantData(formData)
     const householdMembers = (formData.householdMembers as HouseholdMember[]) ?? []
     const primaryAddress = getAddress(
       formData.primaryApplicantAddressStreet as string,
@@ -56,15 +54,10 @@ const ListingApplyHouseholdMonthlyRentStep = ({
       address: primaryAddress,
       householdMonthlyRent: "householdMonthlyRent",
       doesNotPayRent: "householdDoesNotPayRent",
-      members: [
-        {
-          firstName: t("t.you"),
-          fullName: `${primaryFirstName} ${primaryLastName}`,
-        },
-      ],
+      members: [],
     }
-
     const householdAddresses: GroupedAddress[] = [primaryApplicantAddress]
+
     householdMembers.forEach((member) => {
       if (member.hasSameAddressAsApplicant === "true") {
         householdAddresses[0].members.push({
@@ -79,9 +72,7 @@ const ListingApplyHouseholdMonthlyRentStep = ({
           member.householdMemberAddressZipcode ?? "",
           member.householdMemberAddressAptOrUnit ?? ""
         )
-
         const hasExistingAddress = householdAddresses.find((a) => a.address === memberAddress)
-
         if (hasExistingAddress) {
           hasExistingAddress.members.push({
             firstName: member.firstName,
