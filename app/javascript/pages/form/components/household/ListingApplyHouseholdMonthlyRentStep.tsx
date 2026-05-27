@@ -36,27 +36,8 @@ const ListingApplyHouseholdMonthlyRentStep = ({
   title,
   description,
 }: ListingApplyHouseholdMonthlyRent) => {
-  const {
-    staticData,
-    formData,
-    saveFormData,
-    stepInfoMap,
-    currentStepIndex,
-    handleNextStep,
-    handlePrevStep,
-  } = useFormEngineContext()
-  const currentStepInfo = stepInfoMap[currentStepIndex]
-  const defaultValues = currentStepInfo.fieldNames?.reduce((acc, fieldName) => {
-    acc[fieldName] = formData[fieldName]
-    return acc
-  }, {})
-
-  const formMethods = useForm({
-    mode: "onSubmit",
-    shouldFocusError: false,
-    defaultValues,
-  })
-
+  const { staticData, formData, saveFormData, handleNextStep, handlePrevStep } =
+    useFormEngineContext()
   const groupedAddresses = useMemo<GroupedAddress[]>(() => {
     const { firstName: primaryFirstName, lastName: primaryLastName } =
       getPrimaryApplicantData(formData)
@@ -75,7 +56,7 @@ const ListingApplyHouseholdMonthlyRentStep = ({
       members: [
         {
           firstName: "You",
-          fullName: `${primaryFirstName + primaryLastName}`,
+          fullName: `${primaryFirstName} ${primaryLastName}`,
         },
       ],
     }
@@ -85,7 +66,7 @@ const ListingApplyHouseholdMonthlyRentStep = ({
       if (member.hasSameAddressAsApplicant === "true") {
         householdAddresses[0].members.push({
           firstName: member.firstName,
-          fullName: `${member.firstName + member.lastName}`,
+          fullName: `${member.firstName} ${member.lastName}`,
         })
       } else {
         const memberAddress = getAddress(
@@ -101,7 +82,7 @@ const ListingApplyHouseholdMonthlyRentStep = ({
         if (hasExistingAddress) {
           hasExistingAddress.members.push({
             firstName: member.firstName,
-            fullName: `${member.firstName + member.lastName}`,
+            fullName: `${member.firstName} ${member.lastName}`,
           })
         } else {
           householdAddresses.push({
@@ -111,7 +92,7 @@ const ListingApplyHouseholdMonthlyRentStep = ({
             members: [
               {
                 firstName: member.firstName,
-                fullName: `${member.firstName + member.lastName}`,
+                fullName: `${member.firstName} ${member.lastName}`,
               },
             ],
           })
@@ -121,6 +102,24 @@ const ListingApplyHouseholdMonthlyRentStep = ({
 
     return householdAddresses
   }, [formData])
+
+  const defaultValues = useMemo(() => {
+    const defaultAddress: Record<string, unknown> = {}
+
+    groupedAddresses.forEach((group) => {
+      defaultAddress[group.householdMonthlyRent] = formData[group.householdMonthlyRent]
+      defaultAddress[group.doesNotPayRent] = formData[group.doesNotPayRent]
+    })
+
+    return defaultAddress
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  const formMethods = useForm({
+    mode: "onSubmit",
+    shouldFocusError: false,
+    defaultValues,
+  })
 
   const onSubmit = (data: Record<string, unknown>) => {
     const groupedHouseholdAddresses = groupedAddresses.map((group) => ({
