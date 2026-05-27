@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import { Field, t } from "@bloom-housing/ui-components"
 import React, { useEffect } from "react"
-import { useFormContext, useWatch } from "react-hook-form/dist/index.ie11"
-import Currency from "../Currency"
+import { useFormContext, useWatch } from "react-hook-form"
 import { GroupedAddress } from "./ListingApplyHouseholdMonthlyRentStep"
 
 const formatMembers = (members: { firstName: string; fullName: string }[]) => {
@@ -21,7 +20,12 @@ const ListingApplyHouseholdMonthlyRent = ({
   groupedAddress: GroupedAddress
   isPrimaryApplicant: boolean
 }) => {
-  const { setValue, register } = useFormContext()
+  const {
+    setValue,
+    register,
+    getValues,
+    formState: { errors },
+  } = useFormContext()
   const doesNotPayRent = useWatch({ name: groupedAddress.doesNotPayRent })
 
   useEffect(() => {
@@ -54,12 +58,19 @@ const ListingApplyHouseholdMonthlyRent = ({
 
   return (
     <>
-      <Currency
+      <Field
+        id={groupedAddress.householdMonthlyRent}
+        name={groupedAddress.householdMonthlyRent}
+        type="currency"
         label={getLabel()}
-        errorMessage={"error.pleasePutInARent"}
-        fieldNames={{ amount: groupedAddress.householdMonthlyRent }}
-        required={!doesNotPayRent}
+        error={!!errors?.[groupedAddress.householdMonthlyRent]}
+        register={register}
+        errorMessage={t("error.pleasePutInARent")}
         disabled={!!doesNotPayRent}
+        prepend="$"
+        setValue={setValue}
+        getValues={getValues}
+        validation={{ required: !doesNotPayRent, min: !doesNotPayRent ? 0.01 : undefined }}
       />
       <Field
         type="checkbox"

@@ -53,7 +53,6 @@ const ListingApplyHouseholdMonthlyRentStep = ({
 
   const formMethods = useForm({
     mode: "onSubmit",
-    reValidateMode: "onChange",
     shouldFocusError: false,
     defaultValues,
   })
