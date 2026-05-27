@@ -90,7 +90,7 @@ const getMenuLinks = (signedIn: boolean, signOut: () => void) => {
 
   if (signedIn) {
     menuLinks.push({
-      title: t("nav.myAccount"),
+      title: t("accountLayout.nav.account"),
       subMenuLinks: [
         {
           title: t("nav.myDashboard"),
