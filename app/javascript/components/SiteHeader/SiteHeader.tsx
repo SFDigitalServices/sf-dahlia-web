@@ -193,11 +193,9 @@ const SiteHeader = (props: SiteHeaderProps) => {
 
     return (
       <span
-        className={
-          showTitle
-            ? styles["dropdown-title-content-spaced"]
-            : "site-header__dropdown-title-content"
-        }
+        className={`site-header__dropdown-title-content${
+          showTitle ? ` ${styles["dropdown-title-content-spaced"]}` : ""
+        }`}
       >
         <span
           className={`${styles["account-avatar"]} ${
