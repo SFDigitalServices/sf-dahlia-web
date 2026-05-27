@@ -1088,23 +1088,23 @@
     tailwindcss-rtl "^0.9.0"
     typesafe-actions "^5.1.0"
 
-"@bloom-housing/ui-seeds@^1.22.3":
-  version "1.22.4"
-  resolved "https://registry.yarnpkg.com/@bloom-housing/ui-seeds/-/ui-seeds-1.22.4.tgz#bc54c14154574c1a7a38a4da1af6d0c1d9e0909f"
-  integrity sha512-Z7IQk/qkuSAkl9cVP/qHXWEm96izz77QpmSpiv1LzGGLL7zj7gsg3KO+qqmt33ZRxESVEDKB1m09pucpeS81Jw==
+"@bloom-housing/ui-seeds@^3.4.3":
+  version "3.4.3"
+  resolved "https://registry.yarnpkg.com/@bloom-housing/ui-seeds/-/ui-seeds-3.4.3.tgz#6c2320aa853bad3a571846540db78225c5b3155d"
+  integrity sha512-3LSkwh1h79L2u+i0F+F+staQsfeG3eVdF8/dXmWteS2AsgN41708E7MWX8idtOpU8VTfpN4wQoQlXBxqlhTihA==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^6.3.0"
-    "@fortawesome/react-fontawesome" "^0.2.0"
+    "@fortawesome/react-fontawesome" "^3.1.0"
     "@heroicons/react" "^2.0.18"
     "@types/mdx" "^2.0.3"
     "@types/node" "^16.7.13"
-    "@types/react" "^18.0.0"
-    "@types/react-dom" "^18.0.0"
+    "@types/react" "^19.1.1"
+    "@types/react-dom" "^19.1.1"
     focus-trap-react "^11.0.3"
     markdown-to-jsx "^7.7.12"
-    react "^18.2.0"
-    react-dom "^18.2.0"
-    react-tabs "^6.0.0"
+    react "^19.1.1"
+    react-dom "^19.1.1"
+    react-tabs "^6.1.0"
     typescript "^4.4.2"
 
 "@clerk/clerk-react@^5.61.6":
@@ -1684,7 +1684,7 @@
   dependencies:
     "@fortawesome/fontawesome-common-types" "6.7.2"
 
-"@fortawesome/react-fontawesome@^0.1.18", "@fortawesome/react-fontawesome@^0.2.0", "@fortawesome/react-fontawesome@^0.2.2":
+"@fortawesome/react-fontawesome@^0.1.18", "@fortawesome/react-fontawesome@^0.2.2", "@fortawesome/react-fontawesome@^3.1.0":
   version "0.2.6"
   resolved "https://registry.yarnpkg.com/@fortawesome/react-fontawesome/-/react-fontawesome-0.2.6.tgz#b75d0c7710c646c9bb6b9bb61cb5b8548a9ef2f5"
   integrity sha512-mtBFIi1UsYQo7rYonYFkjgYKGoL8T+fEH6NGUpvuqtY3ytMsAoDaPo5rk25KuMtKDipY4bGYM/CkmCHA1N3FUg==
@@ -3081,6 +3081,11 @@
   resolved "https://registry.yarnpkg.com/@types/react-dom/-/react-dom-18.3.7.tgz#b89ddf2cd83b4feafcc4e2ea41afdfb95a0d194f"
   integrity sha512-MEe3UeoENYVFXzoXEWsvcpg6ZvlrFNlOQ7EOsvhI3CfAXwzPfO8Qwuxd40nepsYKqyyVQnTdEfv68q91yLcKrQ==
 
+"@types/react-dom@^19.1.1":
+  version "19.2.3"
+  resolved "https://registry.yarnpkg.com/@types/react-dom/-/react-dom-19.2.3.tgz#c1e305d15a52a3e508d54dca770d202cb63abf2c"
+  integrity sha512-jp2L/eY6fn+KgVVQAOqYItbF0VY/YApe5Mz2F0aykSO8gx31bYCZyvSeYxCHKvzHG5eZjc+zyaS5BrBWya2+kQ==
+
 "@types/react-redux@^7.1.20":
   version "7.1.34"
   resolved "https://registry.yarnpkg.com/@types/react-redux/-/react-redux-7.1.34.tgz#83613e1957c481521e6776beeac4fd506d11bd0e"
@@ -3098,12 +3103,19 @@
   dependencies:
     csstype "^3.2.2"
 
-"@types/react@^18.0.0", "@types/react@^18.2.48":
+"@types/react@^18.2.48":
   version "18.3.27"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-18.3.27.tgz#74a3b590ea183983dc65a474dc17553ae1415c34"
   integrity sha512-cisd7gxkzjBKU2GgdYrTdtQx1SORymWyaAFhaxQPK9bYO9ot3Y5OikQRvY0VYQtvwjeQnizCINJAenh/V7MK2w==
   dependencies:
     "@types/prop-types" "*"
+    csstype "^3.2.2"
+
+"@types/react@^19.1.1":
+  version "19.2.15"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-19.2.15.tgz#9e2c6a4251a290f5c525c3143caa872fa6e01e0d"
+  integrity sha512-eRwcGNHve+E8qtEQSSRl6urh+rFop4v8gm6O8rGv25CodbvFdLjA1vVQ1KkiFE0w0UPOnb8tDiFKL5lp0rtY5Q==
+  dependencies:
     csstype "^3.2.2"
 
 "@types/resolve@^1.20.2":
@@ -12072,7 +12084,7 @@ react-docgen@^7.1.1:
     resolve "^1.22.1"
     strip-indent "^4.0.0"
 
-react-dom@18.2.0, "react-dom@^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0", react-dom@^18.2.0:
+react-dom@18.2.0, "react-dom@^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0", react-dom@^18.2.0, react-dom@^19.1.1:
   version "18.3.1"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-18.3.1.tgz#c2265d79511b57d479b3dd3fdfa51536494c5cb4"
   integrity sha512-5m4nQKp+rZRb09LNH59GM4BxTh9251/ylbKIbpe7TpGxfJ+9kv6BLkLBXIjjspbgbnIBNqlI23tRnTWT0snUIw==
@@ -12235,10 +12247,10 @@ react-tabs@^3.2.2:
     clsx "^1.1.0"
     prop-types "^15.5.0"
 
-react-tabs@^6.0.0:
-  version "6.1.0"
-  resolved "https://registry.yarnpkg.com/react-tabs/-/react-tabs-6.1.0.tgz#a1fc9d9b8db4c6e7bb327a1b6783bc51a1c457a1"
-  integrity sha512-6QtbTRDKM+jA/MZTTefvigNxo0zz+gnBTVFw2CFVvq+f2BuH0nF0vDLNClL045nuTAdOoK/IL1vTP0ZLX0DAyQ==
+react-tabs@^6.1.0:
+  version "6.1.1"
+  resolved "https://registry.yarnpkg.com/react-tabs/-/react-tabs-6.1.1.tgz#c56ff0f4e3efb09caa98e0ff456aee6cf87bf2b0"
+  integrity sha512-CPiuKoMFf89B7QlbFfdBD9XmUWiE3qudQputMVZB8GQvPJZRX/gqjDaDWOPDwGinEfpJKEuBCkGt83Tt4efeyA==
   dependencies:
     clsx "^2.0.0"
     prop-types "^15.5.0"
@@ -12260,7 +12272,7 @@ react-transition-group@^4.4.1:
     loose-envify "^1.4.0"
     prop-types "^15.6.2"
 
-react@18.2.0, "react@^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0", react@^18.2.0:
+react@18.2.0, "react@^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0", react@^18.2.0, react@^19.1.1:
   version "18.3.1"
   resolved "https://registry.yarnpkg.com/react/-/react-18.3.1.tgz#49ab892009c53933625bd16b2533fc754cab2891"
   integrity sha512-wS+hAgJShR0KhEvPJArfuPVN1+Hz1t0Y6n5jLrGQbkb4urgPE/0Rve+1kMB1v/oWgHgm4WIcV+i7F2pTVj+2iQ==
