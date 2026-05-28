@@ -1,0 +1,12 @@
+.accountLayout {
+  display: flex;
+  flex-direction: row;
+  max-width: var(--seeds-width-5xl);
+  margin: 0 auto;
+  padding: var(--seeds-s14) var(--seeds-spacer-text);
+  gap: var(--seeds-spacer-content);
+  width: 100%;
+  @media (max-width: theme("screens.lg")) {
+    padding: var(--seeds-s14) var(--seeds-spacer-content);
+  }
+}
