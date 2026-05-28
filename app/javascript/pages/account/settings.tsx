@@ -3,8 +3,7 @@ import React from "react"
 import Layout from "../../layouts/Layout"
 import AccountLayout from "../../layouts/AccountLayout"
 import withAppSetup from "../../layouts/withAppSetup"
-import { AppPages, RedirectType } from "../../util/routeUtil"
-import { withAuthentication } from "../../authentication/withAuthentication"
+import { AppPages } from "../../util/routeUtil"
 
 const Settings = () => {
   return (
@@ -16,6 +15,4 @@ const Settings = () => {
   )
 }
 
-export default withAppSetup(withAuthentication(Settings, { redirectType: RedirectType.Settings }), {
-  pageName: AppPages.AccountSettings,
-})
+export default withAppSetup(Settings, { pageName: AppPages.AccountSettings })
