@@ -5,17 +5,24 @@ import { Button } from "@bloom-housing/ui-seeds"
 import Layout from "../../layouts/Layout"
 import AccountLayout from "../../layouts/AccountLayout"
 import withAppSetup from "../../layouts/withAppSetup"
-import { AppPages } from "../../util/routeUtil"
+import { AppPages, RedirectType } from "../../util/routeUtil"
+import UserContext from "../../authentication/context/UserContext"
+import styles from "./account.module.scss"
+import { withAuthentication } from "../../authentication/withAuthentication"
 
 const Account = () => {
   const { signOut } = React.useContext(UserContext)
   return (
     <Layout>
       <AccountLayout>
-        <p>Account</p>
+        <Button variant="text" onClick={signOut} className={styles.signOut}>
+          {t("accountLayout.account.signOut")}
+        </Button>
       </AccountLayout>
     </Layout>
   )
 }
 
-export default withAppSetup(Account, { pageName: AppPages.MyAccount })
+export default withAppSetup(withAuthentication(Account, { redirectType: RedirectType.Account }), {
+  pageName: AppPages.Account,
+})
