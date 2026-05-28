@@ -1,8 +1,8 @@
 .overview {
   width: 100%;
-  margin: var(--seeds-s9) 0;
+  margin: var(--seeds-s7) 0;
   :global(.seeds-tabs.vertical-sidebar-layout) {
-    @media (max-width: theme("screens.md")) {
+    @media (max-width: theme("screens.sm")) {
       :global(.tabs-tab) {
         border-radius: 0;
       }
