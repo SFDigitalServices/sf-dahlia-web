@@ -33,7 +33,6 @@
     }
     h2 {
       font-size: var(--seeds-font-size-2xl);
-      padding-top: var(--seeds-s4);
     }
     h3 {
       font-size: var(--seeds-font-size-xl);
@@ -86,7 +85,7 @@
   .infoSubSection {
     display: flex;
     flex-direction: column;
-    margin-top: var(--seeds-s4);
+    margin-top: var(--seeds-s10);
     @media (max-width: theme("screens.sm")) {
       padding-bottom: 0;
     }
@@ -129,9 +128,9 @@
     p:not(.messageBanner p):not(.accordionContent p) {
       margin-top: var(--seeds-spacer-header);
     }
-    .actionButton {
-      align-self: flex-start;
-      margin: var(--seeds-s10) 0 var(--seeds-spacer-header);
+
+    & > .actionButton {
+      margin: var(--seeds-s10) 0 0;
     }
   }
   .expandableContent {
@@ -142,6 +141,7 @@
     }
   }
   .whatToDoList {
+    margin-top: var(--seeds-s10);
     .loadingOverlay {
       --loading-state-height: none;
       padding: var(--seeds-s1) 0;
@@ -171,6 +171,11 @@
       margin-bottom: var(--seeds-s10);
     }
   }
+}
+
+.actionButton {
+  align-self: flex-start;
+  margin: var(--seeds-s10) 0 var(--seeds-spacer-header);
 }
 
 .messageBanner {
