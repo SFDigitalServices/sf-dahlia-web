@@ -1,7 +1,9 @@
 // New accounts layout for my-account.tsx
 import React from "react"
-import { Card, Button, Heading, Link } from "@bloom-housing/ui-seeds"
-import { Icon, t } from "@bloom-housing/ui-components"
+import { Button, Heading, Tabs } from "@bloom-housing/ui-seeds"
+import { Icon, t, UniversalIconType } from "@bloom-housing/ui-components"
+import { faAngleRight } from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import Layout from "../../layouts/Layout"
 import AccountLayout from "../../layouts/AccountLayout"
 import withAppSetup from "../../layouts/withAppSetup"
@@ -10,62 +12,92 @@ import UserContext from "../../authentication/context/UserContext"
 import { withAuthentication } from "../../authentication/withAuthentication"
 import styles from "./account.module.scss"
 
+const overviewSections = [
+  {
+    icon: "application",
+    heading: "accountLayout.nav.applications",
+    text: "accountLayout.account.p1",
+    buttonLabel: "accountLayout.account.seeApps",
+    href: getApplicationsPath(),
+  },
+  {
+    icon: "settings",
+    heading: "accountSettings.title.sentenceCase",
+    text: "accountLayout.account.p2",
+    buttonLabel: "accountLayout.account.edit",
+    href: getSettingsPath(),
+  },
+]
+
+const OverviewSection = ({
+  icon,
+  heading,
+  text,
+  buttonLabel,
+  href,
+}: {
+  icon: string
+  heading: string
+  text: string
+  buttonLabel: string
+  href: string
+}) => (
+  <>
+    <Icon className={styles.infoIcon} size="xlarge" symbol={icon as UniversalIconType} />
+    <div className={styles.overviewContent}>
+      <Heading priority={2} size="md" className={styles.overviewHeading}>
+        {t(heading)}
+      </Heading>
+      <p className={styles.overviewText}>{t(text)}</p>
+    </div>
+    <Button className={styles.overviewButton} variant="primary-outlined" size="sm" href={href}>
+      {t(buttonLabel)}
+    </Button>
+    <span className={styles.overviewIcon} aria-hidden>
+      <FontAwesomeIcon icon={faAngleRight} />
+    </span>
+  </>
+)
+
+const AccountOverview = ({ signOut, hasButton }: { signOut: () => void; hasButton: boolean }) => (
+  <Tabs
+    className="vertical-sidebar-layout"
+    navigation={hasButton}
+    navigationLabel={hasButton && t("accountLayout.nav.title")}
+    onSelect={!hasButton && (() => false)}
+  >
+    <Tabs.TabList>
+      {overviewSections.map((section) => (
+        <Tabs.Tab
+          key={section.href}
+          className={styles.overviewSection}
+          href={hasButton && section.href}
+        >
+          <OverviewSection {...section} />
+        </Tabs.Tab>
+      ))}
+      <Tabs.Tab className={styles.overviewFooter}>
+        <Button variant="text" onClick={signOut} className={styles.signOut}>
+          {t("accountLayout.account.signOut")}
+        </Button>
+      </Tabs.Tab>
+    </Tabs.TabList>
+  </Tabs>
+)
+
 const Account = () => {
   const { signOut } = React.useContext(UserContext)
   return (
     <Layout>
       <AccountLayout>
-        <Card className={styles.overview}>
-          <Card.Section className={styles.overviewSection} divider="flush">
-            <Icon className={styles.infoIcon} size="xlarge" symbol="application" />
-            <Heading priority={2} size="md" className={styles.overviewHeading}>
-              {t("accountLayout.nav.applications")}
-            </Heading>
-            <p className={styles.overviewText}>{t("accountLayout.account.p1")}</p>
-            <Button
-              className={styles.overviewButton}
-              variant="primary-outlined"
-              size="sm"
-              href={getApplicationsPath()}
-            >
-              {t("accountLayout.account.seeApps")}
-            </Button>
-            <Link
-              href={getApplicationsPath()}
-              className={styles.overviewIcon}
-              aria-label={t("accountLayout.account.seeApps")}
-            >
-              <Icon symbol="right" size="small" />
-            </Link>
-          </Card.Section>
-          <Card.Section className={styles.overviewSection} divider="flush">
-            <Icon className={styles.infoIcon} size="xlarge" symbol="settings" />
-            <Heading priority={2} size="md" className={styles.overviewHeading}>
-              {t("accountSettings.title.sentenceCase")}
-            </Heading>
-            <p className={styles.overviewText}>{t("accountLayout.account.p2")}</p>
-            <Button
-              className={styles.overviewButton}
-              variant="primary-outlined"
-              size="sm"
-              href={getSettingsPath()}
-            >
-              {t("accountLayout.account.edit")}
-            </Button>
-            <Link
-              href={getSettingsPath()}
-              className={styles.overviewIcon}
-              aria-label={t("accountLayout.account.edit")}
-            >
-              <Icon symbol="right" size="small" />
-            </Link>
-          </Card.Section>
-          <Card.Section className={styles.overviewFooter} divider="flush">
-            <Button variant="text" onClick={signOut} className={styles.signOut}>
-              {t("accountLayout.account.signOut")}
-            </Button>
-          </Card.Section>
-        </Card>
+        <div className={styles.overview}>
+          <div className={styles.overviewOverLg}>
+            <AccountOverview signOut={signOut} hasButton={true} />
+          </div>
+          <div className={styles.overviewUnderLg}>
+            <AccountOverview signOut={signOut} hasButton={false} />
+          </div>
+        </div>
       </AccountLayout>
     </Layout>
   )
