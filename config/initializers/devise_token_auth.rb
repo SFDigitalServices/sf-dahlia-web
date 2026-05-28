@@ -36,7 +36,7 @@ DeviseTokenAuth.setup do |config|
   config.send_confirmation_email = true
 
   # Only permit redirects to a set of allowlisted URLs. Any redirect_urls that are not part of this list
-  # will be rejected. In this list we are effectively only scoping to the my account and reset password pages,
+  # will be rejected. In this list we are effectively only scoping to the account and reset password pages,
   # but since we have multiple different environments, we need to allow for multiple different URLs.
   # By default, this is set to an empty array, and all redirect URLs are allowed.
   allowed_domains = [
@@ -48,7 +48,7 @@ DeviseTokenAuth.setup do |config|
   ]
 
   allowed_locales = ['', '/en', '/es', '/zh', '/tl']
-  allowed_paths   = ["/my-account", "/reset-password"]
+  allowed_paths   = ["/account", "/account/applications", "/account/settings", "/reset-password"]
 
   config.redirect_whitelist = allowed_domains.flat_map do |domain|
     allowed_paths.flat_map do |path|

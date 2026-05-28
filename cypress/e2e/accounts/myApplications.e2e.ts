@@ -25,7 +25,7 @@ describe("My Applications", () => {
     cy.addReactQueryParam()
 
     cy.intercept("/api/v1/account/my-applications", { applications: [] })
-    cy.get('a[href="/my-applications?react=true"]').click()
+    cy.get('a[href="/account/applications"]').click()
     cy.addReactQueryParam()
 
     // There should be no applications right now
@@ -35,7 +35,7 @@ describe("My Applications", () => {
     cy.get('a[href="/listings/for-rent"]').eq(1).click()
     cy.url().should("include", "/listings/for-rent")
     cy.contains("Rent affordable housing")
-    cy.visit("/my-applications?react=true")
+    cy.visit("/account/applications")
 
     // GO to the sales listings page
     cy.get('a[href="/listings/for-sale"]').eq(1).click()
@@ -44,11 +44,11 @@ describe("My Applications", () => {
 
     // Try to continue an application
     cy.intercept("/api/v1/account/my-applications", { fixture: "applications.json" })
-    cy.visit("/my-applications?react=true")
+    cy.visit("/account/applications")
     // TODO: Once Applications have been moved to React, uncomment the following lines
     // cy.get('a[href="/listings/a0W0P00000Hc7RcUAJ/apply/name"]').click()
     // cy.contains("TEST Dahlia Commons Application")
-    // cy.visit("/my-applications?react=true")
+    // cy.visit("/account/applications")
 
     // Ensure correct formatting
     cy.get('[data-testid="application-item"]').its("length").should("equal", 6)
