@@ -1,58 +1,12 @@
 .accountLayout {
   display: flex;
-  gap: var(--seeds-spacer-section);
+  flex-direction: row;
   max-width: var(--seeds-width-5xl);
   margin: 0 auto;
-  width: 100%;
   padding: var(--seeds-s14) var(--seeds-spacer-text);
+  gap: var(--seeds-spacer-content);
+  width: 100%;
   @media (max-width: theme("screens.lg")) {
     padding: var(--seeds-s14) var(--seeds-spacer-content);
   }
-  @media (max-width: theme("screens.md")) {
-    padding: var(--seeds-spacer-content) 0 0 0;
-  }
-}
-
-.accountNavTitle {
-  color: var(--seeds-color-gray-750);
-  margin-bottom: var(--seeds-spacer-header);
-}
-
-.accountNavTabList {
-  display: flex;
-  flex-direction: column;
-  border: var(--seeds-border-1) solid var(--seeds-border-color);
-  border-left: none;
-  border-radius: var(--seeds-rounded-md);
-  width: var(--seeds-s52);
-}
-
-.accountNavLink {
-  border: none;
-  justify-content: left;
-  width: 100%;
-  color: var(--seeds-color-gray-950) !important;
-  text-decoration: none !important;
-  font-size: var(--seeds-type-heading-size-sm) !important;
-  padding: var(--seeds-spacer-header) !important;
-  border-left: var(--seeds-border-1) solid var(--seeds-border-color) !important;
-  &:not(:last-child) {
-    border-bottom: var(--seeds-border-1) solid var(--seeds-border-color);
-  }
-  &:hover {
-    border-left: var(--seeds-border-4) solid var(--seeds-color-blue-500) !important;
-  }
-  &.accountNavActive {
-    border-left: var(--seeds-border-4) solid var(--seeds-color-blue-500) !important;
-  }
-  &:first-of-type {
-    border-top-left-radius: var(--seeds-rounded-md) !important;
-  }
-  &:last-of-type {
-    border-bottom-left-radius: var(--seeds-rounded-md) !important;
-  }
-}
-
-.accountNavLinkIcon {
-  margin-right: var(--seeds-spacer-text);
 }
