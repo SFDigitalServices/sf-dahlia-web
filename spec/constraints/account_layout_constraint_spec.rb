@@ -13,13 +13,10 @@ describe AccountLayoutConstraint do
       expect(response).to render_template :account
     end
 
-    it 'redirects to the old account layout page when the flag is off' do
-      allow(Rails.configuration.unleash).to receive(:is_enabled?)
-        .with('temp.webapp.newAccountLayout')
-        .and_return(false)
-      get '/account'
+    it 'redirects my-account to /account' do
+      get '/my-account'
 
-      expect(response).to redirect_to '/my-account'
+      expect(response).to redirect_to '/account'
     end
   end
 end
