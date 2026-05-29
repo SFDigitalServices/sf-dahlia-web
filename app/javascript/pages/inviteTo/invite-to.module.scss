@@ -33,6 +33,7 @@
     }
     h2 {
       font-size: var(--seeds-font-size-2xl);
+      padding-top: var(--seeds-s10);
     }
     h3 {
       font-size: var(--seeds-font-size-xl);
@@ -85,7 +86,6 @@
   .infoSubSection {
     display: flex;
     flex-direction: column;
-    margin-top: var(--seeds-s10);
     @media (max-width: theme("screens.sm")) {
       padding-bottom: 0;
     }
@@ -101,6 +101,12 @@
     ol {
       list-style-type: decimal;
       margin-left: var(--seeds-spacer-header);
+    }
+    &.accordionContainer {
+      margin-top: var(--seeds-s4);
+      > div:last-child {
+        margin-bottom: 0 !important;
+      }
     }
     .accordionContent {
       padding: var(--seeds-spacer-content);
