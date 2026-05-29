@@ -9,6 +9,7 @@ import InviteToApplyHeader from "./InviteToHeader"
 import InviteToLeasingAgentInfo from "./InviteToLeasingAgentInfo"
 import { isDeadlinePassed } from "../../util/listingUtil"
 import { INVITE_TO_X } from "../../modules/constants"
+import { InformationalStack } from "../../components/informational/InformationalPageElements"
 
 interface InviteToWithdrawnProps {
   type: INVITE_TO_X
@@ -35,30 +36,38 @@ const InviteToWithdrawn = ({
           </Card.Header>
           {!isDeadlinePassed(deadline) && (
             <Card.Section className={styles.responseSection}>
-              <Heading priority={3} size="xl" className={styles.responseHeading}>
-                {t("inviteToApplyPage.leasingAgent.p1")}
-              </Heading>
-              <p>{t("inviteToApplyPage.leasingAgent.p2")}</p>
-              <p>{t("inviteToApplyPage.leasingAgent.p3")}</p>
-              <InviteToLeasingAgentInfo listing={listing} />
-              {type === INVITE_TO_X.APPLY &&
-                renderMarkup(
-                  `${t("inviteToApplyPage.submitYourInfo", {
-                    listingName: listing?.Building_Name_for_Process,
-                    link: submitPreviewLink,
-                    deadline: localizedFormat(deadline, "ll"),
-                  })}`,
-                  "<strong></strong><a></a>"
+              <InformationalStack>
+                <Heading priority={3} size="xl" className={styles.responseHeading}>
+                  {t("inviteToApplyPage.leasingAgent.p1")}
+                </Heading>
+                <p>{t("inviteToApplyPage.leasingAgent.p2")}</p>
+                <p>{t("inviteToApplyPage.leasingAgent.p3")}</p>
+                <InviteToLeasingAgentInfo listing={listing} />
+                {type === INVITE_TO_X.APPLY && (
+                  <div className="info-template-link">
+                    {renderMarkup(
+                      `${t("inviteToApplyPage.submitYourInfo", {
+                        listingName: listing?.Building_Name_for_Process,
+                        link: submitPreviewLink,
+                        deadline: localizedFormat(deadline, "ll"),
+                      })}`,
+                      "<strong></strong><a></a>"
+                    )}
+                  </div>
                 )}
-              {type === INVITE_TO_X.INTERVIEW &&
-                renderMarkup(
-                  `${t("inviteToInterviewPage.withdrawn.body", {
-                    listingName: listing?.Building_Name_for_Process,
-                    link: submitPreviewLink,
-                    deadline: localizedFormat(deadline, "ll"),
-                  })}`,
-                  "<strong></strong><a></a>"
+                {type === INVITE_TO_X.INTERVIEW && (
+                  <div className="info-template-link">
+                    {renderMarkup(
+                      `${t("inviteToInterviewPage.withdrawn.body", {
+                        listingName: listing?.Building_Name_for_Process,
+                        link: submitPreviewLink,
+                        deadline: localizedFormat(deadline, "ll"),
+                      })}`,
+                      "<strong></strong><a></a>"
+                    )}
+                  </div>
                 )}
+              </InformationalStack>
             </Card.Section>
           )}
         </Card>
