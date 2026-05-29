@@ -40,7 +40,11 @@ const GetAssistance = () => {
               subheader={t("assistance.subtitle.housingCouneslors")}
               background="none"
               icon={
-                <Icon size="2xl" symbol={faPeopleGroup} fill={bloomTheme.theme.colors.gray["750"]} />
+                <Icon
+                  size="2xl"
+                  symbol={faPeopleGroup}
+                  fill={bloomTheme.theme.colors.gray["750"]}
+                />
               }
               actions={[
                 <Link
@@ -56,7 +60,9 @@ const GetAssistance = () => {
             />
             <ActionBlock
               header={
-                <Heading priority={2}>{t("assistance.title.additionalHousingOpportunities")}</Heading>
+                <Heading priority={2}>
+                  {t("assistance.title.additionalHousingOpportunities")}
+                </Heading>
               }
               subheader={t("assistance.subtitle.additionalHousingOpportunities")}
               background="primary-lighter"
