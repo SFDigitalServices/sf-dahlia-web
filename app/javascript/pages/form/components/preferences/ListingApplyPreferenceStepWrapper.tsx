@@ -2,76 +2,47 @@ import React, { useState, useEffect } from "react"
 import { useForm, FormProvider } from "react-hook-form"
 import { Form, Field, t } from "@bloom-housing/ui-components"
 import { Button, Card, FormErrorMessage } from "@bloom-housing/ui-seeds"
-import type { RailsListingPreference } from "../../../api/types/rails/listings/RailsListingPreferences"
-import { useFormEngineContext } from "../../../formEngine/formEngineContext"
-import ListingApplyStepErrorMessage from "./ListingApplyStepErrorMessage"
-import { PREFERENCES } from "../../../modules/constants"
-import PreferenceCheckbox from "./PreferenceCheckbox"
-import { generateStepDefaultValues, getNestedError } from "../../../util/formEngineUtil"
-import { renderInlineMarkup } from "../../../util/languageUtil"
+import { useFormEngineContext } from "../../../../formEngine/formEngineContext"
+import ListingApplyStepErrorMessage from "../ListingApplyStepErrorMessage"
+import PreferenceToClaim from "./PreferenceToClaim"
+import PreferenceToClaimCombo from "./PreferenceToClaimCombo"
+import { generateStepDefaultValues, getNestedError } from "../../../../util/formEngineUtil"
+import { renderInlineMarkup } from "../../../../util/languageUtil"
+import {
+  type ClaimedPreference,
+  type PreferenceContent,
+  generatePreferenceFieldNames,
+  getPreferenceData,
+} from "./PreferenceUtils"
 import styles from "./ListingApplyPreferenceStepWrapper.module.scss"
-
-export type PreferenceContent = {
-  preferenceName: string
-  checkboxLabel: string
-  checkboxDescription: string
-  proofHouseholdMemberLabel: string
-  proofTypeLabel?: string
-  proofTypeNote?: string
-  proofTypeSingleValue?: string
-  certificateNumberLabel?: string
-  certificateNumberNote?: string
-  proofUploadButtonLabel: string
-}
-
-// Preference pages have more complex fields, so we generate
-// the fieldNames within the component, instead of in the schema
-export type PreferenceFieldNames = {
-  preferenceClaimed: string
-  householdMemberId: string
-  certificateNumber: string
-  proofType: string
-  proofFileName: string
-  proofFileUploadedAt: string
-}
-
-export type ClaimedPreference = {
-  preferenceClaimed: boolean
-  householdMemberId?: string
-  proofType?: string
-  proofFileName?: string
-  proofFileUploadedAt?: string
-  certificateNumber?: string
-}
-
-// dot notation for nested values
-// https://react-hook-form-website-git-leagcy-hook-form.vercel.app/v6/api/#register
-const generatePreferenceFieldNames = (preferenceName: string): PreferenceFieldNames => ({
-  preferenceClaimed: `claimedPreferences.${preferenceName}.preferenceClaimed`,
-  householdMemberId: `claimedPreferences.${preferenceName}.householdMemberId`,
-  certificateNumber: `claimedPreferences.${preferenceName}.certificateNumber`,
-  proofType: `claimedPreferences.${preferenceName}.proofType`,
-  proofFileName: `claimedPreferences.${preferenceName}.proofFileName`,
-  proofFileUploadedAt: `claimedPreferences.${preferenceName}.proofFileUploadedAt`,
-})
+import stepStyles from "../ListingApplyStepWrapper.module.scss"
 
 interface ListingApplyPreferenceStepWrapperProps {
   greenHeader?: boolean
-  pageTitle: string
-  pageInstructions: string
+  title: string
+  description: string
   fieldNames: {
     claimedPreferences: string // claimedPreferences object is used by all preference pages, it should be the same string for all preference pages in the schema
     optOut?: string
+    subPreferenceClaimed?: string
   }
   preferenceContents: PreferenceContent[]
+  comboPreference?: {
+    checkboxLabel: string
+    checkboxDescription: string
+    preferenceName: string
+    subPreferenceSelectLabel: string
+    subPreferenceClaimedFieldName: string
+  }
 }
 
 const ListingApplyPreferenceStepWrapper = ({
   greenHeader,
-  pageTitle,
-  pageInstructions,
-  fieldNames: { claimedPreferences, optOut },
+  title,
+  description,
+  fieldNames: { claimedPreferences, optOut, subPreferenceClaimed },
   preferenceContents,
+  comboPreference,
 }: ListingApplyPreferenceStepWrapperProps) => {
   const {
     staticData,
@@ -102,7 +73,6 @@ const ListingApplyPreferenceStepWrapper = ({
     formState: { errors, isValid },
     clearErrors,
     setValue,
-    setError,
   } = formMethods
   /* eslint-enable @typescript-eslint/unbound-method */
 
@@ -110,22 +80,30 @@ const ListingApplyPreferenceStepWrapper = ({
   useEffect(() => {
     const stepDefaultValues = generateStepDefaultValues(currentStepInfo, formData)
     const optOutValue = optOut && !!stepDefaultValues[optOut]
+    const subPreferenceClaimedValue =
+      subPreferenceClaimed && stepDefaultValues[subPreferenceClaimed]
     const claimedPreferencesValue = (stepDefaultValues[claimedPreferences] || {}) as Record<
       string,
       ClaimedPreference
     >
-    const defaultClaimedPreferencesValues = preferenceContents.reduce(
-      (acc, preferenceContent) => {
-        return {
+    const defaultClaimedPreferencesValues = {
+      ...preferenceContents.reduce(
+        (acc, preferenceContent) => ({
           ...acc,
           [preferenceContent.preferenceName]:
             claimedPreferencesValue[preferenceContent.preferenceName] || {},
-        } as Record<string, ClaimedPreference>
-      },
-      {} as Record<string, ClaimedPreference>
-    )
+        }),
+        {} as Record<string, ClaimedPreference>
+      ),
+      ...(comboPreference && {
+        [comboPreference.preferenceName]:
+          claimedPreferencesValue[comboPreference.preferenceName] || {},
+      }),
+    }
+
     reset({
       ...(optOut && { [optOut]: optOutValue }),
+      ...(subPreferenceClaimed && { [subPreferenceClaimed]: subPreferenceClaimedValue }),
       claimedPreferences: defaultClaimedPreferencesValues,
     })
     /* eslint-disable-next-line react-hooks/exhaustive-deps */
@@ -144,22 +122,25 @@ const ListingApplyPreferenceStepWrapper = ({
   // const showLiveOrWorkCheckbox = Service.workInSfMembers().length > 0 && Service.liveInSfMembers().length > 0
   // const showLiveCheckbox = Service.liveInSfMembers().length > 0 && Service.workInSfMembers().length == 0
   // const showWorkCheckbox = Service.workInSfMembers().length > 0 && Service.liveInSfMembers().length == 0
-
-  const getPreferenceData = (preferenceName: string): RailsListingPreference => {
-    const preferenceLongName = PREFERENCES[preferenceName]
-    if (!preferenceLongName) throw new Error(`${preferenceName} is not a valid preference name.`)
-
-    const preference = preferences.find((pref) => pref.preferenceName === preferenceLongName)
-    if (!preference) throw new Error(`${preferenceLongName} is missing for this listing.`)
-
-    return preference
-  }
+  // comboPreference prop indicates that this may have a combo preference like liveOrWorkInSf
+  useEffect(() => {
+    if (comboPreference) {
+      // TODO WIP
+      // if the conditions of the comboPreference changes, e.g. address changes to not be in SF
+      // then all saved form data from an earlier comboPreference condition needs to be cleared out
+      // the new comboPreference UI should automatically get rendered...?
+    }
+  }, [comboPreference])
 
   // checks for any errors *except* checkbox field errors
   const showIncompleteDocumentError = () => {
-    for (const content of preferenceContents) {
+    const preferenceNames = preferenceContents.map((content) => content.preferenceName)
+    if (comboPreference) preferenceNames.push(comboPreference.preferenceName)
+
+    for (const preferenceName of preferenceNames) {
+      const preferenceFieldNames = Object.values(generatePreferenceFieldNames(preferenceName))
       if (
-        Object.values(generatePreferenceFieldNames(content.preferenceName)).some(
+        preferenceFieldNames.some(
           (fieldName) =>
             !fieldName.includes(".preferenceClaimed") && getNestedError(errors, fieldName)
         )
@@ -191,6 +172,7 @@ const ListingApplyPreferenceStepWrapper = ({
       preferenceContents.forEach((content) => {
         setValue(`claimedPreferences.${content.preferenceName}.preferenceClaimed`, false)
       })
+      setValue(`claimedPreferences.${comboPreference?.preferenceName}.preferenceClaimed`, false)
     }
   }
 
@@ -199,23 +181,22 @@ const ListingApplyPreferenceStepWrapper = ({
    * formData: {
    *   _liveOrWorkInSfOptOut: false,
    *   _assistedHousingOptOut: true,
+   *   _liveOrWorkInSfClaimedPreference: 'liveInSf',
    *   claimedPreferences: {
    *     assistedHousing: {
    *       preferenceClaimed: false,
    *     },
-   *     liveInSf: {
+   *     liveWorkInSf: {
    *       preferenceClaimed: true,
    *       ...
    *       proofFileName: 'gas-bill.pdf',
    *     },
-   *     workInSf: {
-   *       preferenceClaimed: false,
-   *     }
    *   }
    * }
    */
   const onSubmit = (data: { [key: string]: boolean | Record<string, ClaimedPreference> }) => {
     const optOutValue = !!optOut && (data[optOut] as boolean)
+    const subPreferenceClaimedValue = subPreferenceClaimed && data[subPreferenceClaimed]
     const claimedPreferencesData = data.claimedPreferences as Record<string, ClaimedPreference>
 
     const checkboxValues = [
@@ -232,32 +213,6 @@ const ListingApplyPreferenceStepWrapper = ({
     }
 
     const unclaimedPreferences: Record<string, ClaimedPreference> = {}
-    let missingProof = false
-    for (const content of preferenceContents) {
-      const preference = claimedPreferencesData[content.preferenceName]
-      // for every selected household member option, make sure there is an uploaded proof
-      if (
-        preference.preferenceClaimed &&
-        preference.householdMemberId &&
-        !preference.proofFileName
-      ) {
-        setError(`claimedPreferences.${content.preferenceName}.proofFileName`, {
-          message: t("error.fileMissing"),
-        })
-        missingProof = true
-      }
-
-      // TODO: DAH-4122 implement proof file deletion elsewhere, similar to Angular's cancelPreference function
-      // for every unclaimed preference, remove proof data
-      // if (!preference.preferenceClaimed && preference.proofFileName) {
-      //   unclaimedPreferences[content.preferenceName] = { preferenceClaimed: false }
-      //   const listingPreferenceId = getPreferenceData(content.preferenceName).listingPreferenceID
-      //   const proofTypeValue = preference.proofType || ""
-      //   void deleteUploadedProofFile(sessionId, listing.Id, listingPreferenceId, proofTypeValue)
-      // }
-    }
-    if (missingProof) return
-
     const newClaimedPreference = { ...claimedPreferencesData, ...unclaimedPreferences }
     const existingClaimedPreferences = formData[claimedPreferences] as Record<
       string,
@@ -269,6 +224,7 @@ const ListingApplyPreferenceStepWrapper = ({
         ...newClaimedPreference,
       },
       ...(optOut && { [optOut]: optOutValue }),
+      ...(subPreferenceClaimed && { [subPreferenceClaimed]: subPreferenceClaimedValue }),
     })
     handleNextStep()
   }
@@ -281,14 +237,14 @@ const ListingApplyPreferenceStepWrapper = ({
   return (
     <FormProvider {...formMethods}>
       <Card.Section className={greenHeader ? styles["back-section"] : ""}>
-        <Button variant="text" onClick={handlePrevStep}>
+        <Button variant="text" className={styles["back-button"]} onClick={handlePrevStep}>
           {t("t.back")}
         </Button>
       </Card.Section>
-      <Card.Section className={headerClassNames}>
-        <h1>{t(pageTitle)}</h1>
-        <p>{renderInlineMarkup(t(pageInstructions))}</p>
-      </Card.Section>
+      <Card.Header className={headerClassNames} divider="inset">
+        <h1 className={stepStyles["step-title"]}>{t(title)}</h1>
+        <p className={stepStyles["step-description"]}>{renderInlineMarkup(t(description))}</p>
+      </Card.Header>
       {showRequiredCheckboxError && (
         <ListingApplyStepErrorMessage
           errorMessage={t("error.pleaseSelectPreferenceOption")}
@@ -306,17 +262,35 @@ const ListingApplyPreferenceStepWrapper = ({
       <Form onSubmit={handleSubmit(onSubmit)}>
         <Card.Section>
           <p className={styles["preference-instructions"]}>{t("label.pleaseSelectPreference")}</p>
-          {preferenceContents.map((content) => (
-            <PreferenceCheckbox
-              key={content.preferenceName}
+          {comboPreference && subPreferenceClaimed && (
+            <PreferenceToClaimCombo
+              checkboxLabel={comboPreference.checkboxLabel}
+              checkboxDescription={comboPreference.checkboxDescription}
+              subPreferenceSelectLabel={comboPreference.subPreferenceSelectLabel}
+              subPreferenceClaimed={subPreferenceClaimed}
               showRequiredCheckboxError={showRequiredCheckboxError}
               onPreferenceCheckboxChange={handlePreferenceCheckboxChange}
-              listingPreferenceId={getPreferenceData(content.preferenceName).listingPreferenceID}
-              readMoreUrl={getPreferenceData(content.preferenceName).readMoreUrl}
-              preferenceContent={content}
-              preferenceFieldNames={generatePreferenceFieldNames(content.preferenceName)}
+              preferenceFieldNames={generatePreferenceFieldNames(comboPreference.preferenceName)}
+              subPreferenceContents={preferenceContents}
+              listingPreferenceId={
+                getPreferenceData(preferences, comboPreference.preferenceName).listingPreferenceID
+              }
             />
-          ))}
+          )}
+          {!comboPreference &&
+            preferenceContents.map((content) => (
+              <PreferenceToClaim
+                key={content.preferenceName}
+                showRequiredCheckboxError={showRequiredCheckboxError}
+                onPreferenceCheckboxChange={handlePreferenceCheckboxChange}
+                listingPreferenceId={
+                  getPreferenceData(preferences, content.preferenceName).listingPreferenceID
+                }
+                readMoreUrl={getPreferenceData(preferences, content.preferenceName).readMoreUrl}
+                preferenceContent={content}
+                preferenceFieldNames={generatePreferenceFieldNames(content.preferenceName)}
+              />
+            ))}
           {optOut && (
             <div className={styles["preference-section"]}>
               <Field
@@ -340,7 +314,7 @@ const ListingApplyPreferenceStepWrapper = ({
             <FormErrorMessage>{t("error.pleaseSelectAnOption")}</FormErrorMessage>
           )}
         </Card.Section>
-        <Card.Footer className={styles["step-footer"]}>
+        <Card.Footer className={stepStyles["step-footer"]}>
           <Button variant="primary" type="submit">
             {t("t.next")}
           </Button>

@@ -1,12 +1,12 @@
 import React, { useContext, useState } from "react"
 import { useDropzone, type FileWithPath, type FileRejection } from "react-dropzone"
-import { localizedFormat, renderInlineMarkup } from "../../../util/languageUtil"
+import { localizedFormat, renderInlineMarkup } from "../../../../util/languageUtil"
 import { t, Field, Select, Icon } from "@bloom-housing/ui-components"
 import { Card, Button, FormErrorMessage } from "@bloom-housing/ui-seeds"
-import { ConfigContext } from "../../../lib/ConfigContext"
+import { ConfigContext } from "../../../../lib/ConfigContext"
 import { useFormContext } from "react-hook-form"
-import { uploadProofFile, deleteUploadedProofFile } from "../../../api/formApiService"
-import { getNestedError } from "../../../util/formEngineUtil"
+import { uploadProofFile, deleteUploadedProofFile } from "../../../../api/formApiService"
+import { getNestedError } from "../../../../util/formEngineUtil"
 import styles from "./PreferenceProofUploadField.module.scss"
 
 interface PreferenceProofUploadFieldProps {
@@ -87,6 +87,8 @@ const PreferenceProofUploadField = ({
       })
   }
 
+  // TODO: DAH-4122 We also need to delete poof files in other places, similar
+  // to Angular's `cancelPreference` function
   const handleDeleteFile = () => {
     if (!documentType) throw new Error(`Missing document type value for ${proofTypeFieldName}`)
     setUploadStatus("loading")
@@ -184,9 +186,9 @@ const PreferenceProofUploadField = ({
         </div>
       </div>
       <input className="hidden" {...getInputProps()} />
-      {/* use hidden fields to register form data, but manually update them with setValue()  */}
-      <Field name={proofFileName} register={register} hidden />
-      <Field name={proofFileUploadedAt} register={register} hidden />
+      {/* use hidden fields to register form data, manually update them with setValue()  */}
+      <input name={proofFileName} hidden ref={register({ required: t("error.fileMissing") })} />
+      <input name={proofFileUploadedAt} hidden ref={register()} />
       {uploadStatus === "loading" && <Icon symbol="spinner" size="large" />}
       {fileName && (
         <Card className={styles["uploaded-file"]}>

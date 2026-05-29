@@ -2,9 +2,9 @@ import React from "react"
 import { screen, waitFor } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
 import { t } from "@bloom-housing/ui-components"
-import PreferenceProofUploadField from "../../../../pages/form/components/PreferenceProofUploadField"
-import { renderWithFormContextWrapper } from "../../../__util__/renderUtils"
-import { uploadProofFile, deleteUploadedProofFile } from "../../../../api/formApiService"
+import PreferenceProofUploadField from "../../../../../pages/form/components/preferences/PreferenceProofUploadField"
+import { renderWithFormContextWrapper } from "../../../../__util__/renderUtils"
+import { uploadProofFile, deleteUploadedProofFile } from "../../../../../api/formApiService"
 
 jest.mock("../../../../api/formApiService", () => ({
   uploadProofFile: jest.fn(),

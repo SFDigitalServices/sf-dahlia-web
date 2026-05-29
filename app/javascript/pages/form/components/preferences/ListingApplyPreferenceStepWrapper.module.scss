@@ -1,7 +1,3 @@
-.back-section {
-  margin-bottom: var(--seeds-s6);
-}
-
 .preference-section {
   margin-top: var(--seeds-s8);
   margin-bottom: var(--seeds-s8);
@@ -25,13 +21,8 @@
   background-color: var(--seeds-color-green-100);
 }
 
-.preference-instructions {
-  font-size: var(--seeds-font-size-sm);
-  color: var(--seeds-color-gray-700);
-}
-
 .preference-content-wrapper {
-  margin-left: var(--seeds-s9);
+  margin: 0 var(--seeds-s9) 0;
 }
 
 .preference-checkbox {
@@ -46,13 +37,6 @@
 .preference-note {
   font-size: var(--seeds-font-size-sm);
   color: var(--seeds-color-gray-700);
-}
-
-.step-footer {
-  background-color: var(--seeds-color-primary-lighter);
-  padding: var(--seeds-s8);
-  display: flex;
-  justify-content: center;
 }
 
 .read-more-url {

@@ -2,13 +2,12 @@ import React from "react"
 import { screen } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
 import { t } from "@bloom-housing/ui-components"
-import ListingApplyPreferenceStepWrapper, {
-  type PreferenceContent,
-} from "../../../../pages/form/components/ListingApplyPreferenceStepWrapper"
-import { PREFERENCES } from "../../../../modules/constants"
-import type { RailsListingPreference } from "../../../../api/types/rails/listings/RailsListingPreferences"
-import { deleteUploadedProofFile } from "../../../../api/formApiService"
-import { renderWithFormContextWrapper } from "../../../__util__/renderUtils"
+import ListingApplyPreferenceStepWrapper from "../../../../../pages/form/components/preferences/ListingApplyPreferenceStepWrapper"
+import { type PreferenceContent } from "../../../../../pages/form/components/preferences/PreferenceUtils"
+import { PREFERENCES } from "../../../../../modules/constants"
+import type { RailsListingPreference } from "../../../../../api/types/rails/listings/RailsListingPreferences"
+import { deleteUploadedProofFile } from "../../../../../api/formApiService"
+import { renderWithFormContextWrapper } from "../../../../__util__/renderUtils"
 
 jest.mock("../../../../api/formApiService", () => ({
   uploadProofFile: jest.fn(),
@@ -17,7 +16,7 @@ jest.mock("../../../../api/formApiService", () => ({
 
 const mockDeleteUploadedProofFile = deleteUploadedProofFile as jest.Mock
 
-jest.mock("../../../../pages/form/components/PreferenceProofUploadField", () => {
+jest.mock("../../../../pages/form/components/preferences/PreferenceProofUploadField", () => {
   const MockProofUploadField = (props: { proofTypeLabel: string }) => (
     <div data-testid="proof-upload-field">{props.proofTypeLabel}</div>
   )
@@ -65,9 +64,31 @@ const veteranPreferenceContent: PreferenceContent = {
   proofUploadButtonLabel: "label.uploadProofOfPreference",
 }
 
+const liveInSfPreferenceContent: PreferenceContent = {
+  preferenceName: "liveInSf",
+  checkboxLabel: "e2cLiveWorkPreference.liveWorkSfPreference.liveSfPreference",
+  checkboxDescription: "e2cLiveWorkPreference.liveSfPreference.description",
+  proofTypeLabel: "label.preferenceProofAddressDocuments",
+  proofTypeNote: "e2cLiveWorkPreference.documentMustShowCorrectName",
+  proofHouseholdMemberLabel: "label.applicantPreferencesDocumentName",
+  proofUploadButtonLabel: "label.uploadProofOfPreference",
+}
+
+const workInSfPreferenceContent: PreferenceContent = {
+  preferenceName: "workInSf",
+  checkboxLabel: "e2cLiveWorkPreference.liveWorkSfPreference.workSfPreference",
+  checkboxDescription: "e2cLiveWorkPreference.workSfPreference.description",
+  proofTypeLabel: "label.preferenceProofDocuments",
+  proofTypeNote: "e2cLiveWorkPreference.documentMustShowCorrectNameForWork",
+  proofHouseholdMemberLabel: "label.applicantPreferencesDocumentName",
+  proofUploadButtonLabel: "label.uploadProofOfPreference",
+}
+
 const renderWrapper = ({
   preferenceContents = [certOfPreferenceContent],
   optOut,
+  subPreferenceClaimed,
+  comboPreference,
   includeOptOut = true,
   formData = {
     primaryApplicantFirstName: "Alice",
@@ -81,6 +102,14 @@ const renderWrapper = ({
 }: {
   preferenceContents?: PreferenceContent[]
   optOut?: string
+  subPreferenceClaimed?: string
+  comboPreference?: {
+    checkboxLabel: string
+    checkboxDescription: string
+    preferenceName: string
+    subPreferenceSelectLabel: string
+    subPreferenceClaimedFieldName: string
+  }
   includeOptOut?: boolean
   formData?: Record<string, unknown>
   preferences?: RailsListingPreference[]
@@ -89,19 +118,32 @@ const renderWrapper = ({
   greenHeader?: boolean
 } = {}) => {
   const optOutFieldName = includeOptOut ? (optOut ?? "_certOptOut") : undefined
-  const defaultPreferences: RailsListingPreference[] = preferenceContents.map((content, idx) => ({
-    preferenceName: PREFERENCES[content.preferenceName],
-    listingPreferenceID: `pref-${idx}`,
-    readMoreUrl: "https://example.test/read-more",
-  })) as unknown as RailsListingPreference[]
+  const defaultPreferences: RailsListingPreference[] = comboPreference
+    ? ([
+        {
+          preferenceName: PREFERENCES[comboPreference.preferenceName],
+          listingPreferenceID: "pref-combo",
+          readMoreUrl: "https://example.test/read-more",
+        },
+      ] as unknown as RailsListingPreference[])
+    : (preferenceContents.map((content, idx) => ({
+        preferenceName: PREFERENCES[content.preferenceName],
+        listingPreferenceID: `pref-${idx}`,
+        readMoreUrl: "https://example.test/read-more",
+      })) as unknown as RailsListingPreference[])
 
   return renderWithFormContextWrapper(
     <ListingApplyPreferenceStepWrapper
       pageTitle={pageTitle}
       pageInstructions={pageInstructions}
       greenHeader={greenHeader}
-      fieldNames={{ claimedPreferences: "claimedPreferences", optOut: optOutFieldName }}
+      fieldNames={{
+        claimedPreferences: "claimedPreferences",
+        optOut: optOutFieldName,
+        subPreferenceClaimed,
+      }}
       preferenceContents={preferenceContents}
+      comboPreference={comboPreference}
     />,
     {
       formData,
@@ -109,7 +151,11 @@ const renderWrapper = ({
       stepInfoMap: [
         {
           slug: "preferences",
-          fieldNames: ["claimedPreferences", ...(optOutFieldName ? [optOutFieldName] : [])],
+          fieldNames: [
+            "claimedPreferences",
+            ...(optOutFieldName ? [optOutFieldName] : []),
+            ...(subPreferenceClaimed ? [subPreferenceClaimed] : []),
+          ],
         },
       ],
       staticData: {
@@ -328,5 +374,28 @@ describe("ListingApplyPreferenceStepWrapper", () => {
     })
     expect(screen.getByLabelText(t("e7PreferencesPrograms.certOfPreference"))).toBeInTheDocument()
     expect(screen.getByLabelText(t("e7PreferencesPrograms.displaced"))).toBeInTheDocument()
+  })
+
+  it("keeps the combo select value visible after choosing a sub-preference", async () => {
+    renderWrapper({
+      preferenceContents: [liveInSfPreferenceContent, workInSfPreferenceContent],
+      subPreferenceClaimed: "_liveOrWorkInSfClaimedPreference",
+      comboPreference: {
+        checkboxLabel: "e2cLiveWorkPreference.liveWorkSfPreference.title",
+        checkboxDescription: "e2cLiveWorkPreference.liveWorkSfPreference.description",
+        preferenceName: "liveWorkInSf",
+        subPreferenceSelectLabel: "label.preferenceOptionToClaim",
+        subPreferenceClaimedFieldName: "_liveOrWorkInSfClaimedPreference",
+      },
+    })
+    const user = userEvent.setup()
+
+    await user.click(screen.getByLabelText(t("e2cLiveWorkPreference.liveWorkSfPreference.title")))
+    await user.selectOptions(screen.getByLabelText(t("label.preferenceOptionToClaim")), "workInSf")
+
+    expect(
+      screen.getByDisplayValue(t("e2cLiveWorkPreference.liveWorkSfPreference.workSfPreference"))
+    ).toBeInTheDocument()
+    expect(screen.getByLabelText(t("label.applicantPreferencesDocumentName"))).toBeInTheDocument()
   })
 })
