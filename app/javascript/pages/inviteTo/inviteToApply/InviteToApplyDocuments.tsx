@@ -265,11 +265,17 @@ const InviteToApplyDocumentsSidebar = ({ listing }: { listing: RailsSaleListing 
         <p>{t("inviteToApplyPage.submitYourInfo.prepare.p3")}</p>
         {renderInlineMarkup(t("inviteToApplyPage.submitYourInfo.prepare.p4"))}
         <span className={styles.submitYourInfoIcons}>
-          <a className={styles.responseIcon} href={`tel:+1${HOME_SF_PHONE}`}>
+          <a
+            className={`${styles.responseIcon} info-template-contact-link`}
+            href={`tel:+1${HOME_SF_PHONE}`}
+          >
             <Icon symbol="phone" size="medium" fill={IconFillColors.primary} />
             {HOME_SF_PHONE}
           </a>
-          <a className={styles.responseIcon} href={`mailto:${"info@homesanfrancisco.org"}`}>
+          <a
+            className={`${styles.responseIcon} info-template-contact-link`}
+            href={`mailto:${"info@homesanfrancisco.org"}`}
+          >
             <Icon symbol={faEnvelope} size="medium" fill={IconFillColors.primary} />
             {"info@homesanfrancisco.org"}
           </a>

@@ -5,6 +5,12 @@ import { ConfigContext } from "../../lib/ConfigContext"
 import { MailingListSignup } from "../../components/MailingListSignup"
 import { t, PageHeader } from "@bloom-housing/ui-components"
 import { AppPages } from "../../util/routeUtil"
+import {
+  InformationalContent,
+  InformationalDivider,
+  InformationalSection,
+  InformationalStack,
+} from "../../components/informational/InformationalPageElements"
 
 const Disclaimer = () => {
   const { getAssetPath } = React.useContext(ConfigContext)
@@ -16,30 +22,32 @@ const Disclaimer = () => {
         inverse
         backgroundImage={getAssetPath("bg@1200.jpg")}
       />
-      {
-        <article className="flex flex-wrap relative max-w-5xl m-auto w-full">
-          <div className="w-full md:w-2/3">
-            <div className="space-y-4 p-6 md:py-11 md:pr-6 lg:pl-0">
-              <h2>{t("disclaimer.liabilityTitle")}</h2>
-              <p>{t("disclaimer.liabilityP1")}</p>
-            </div>
-            <div className="md:pr-11 md:pl-0">
-              <hr />
-            </div>
-            <div className="space-y-4 p-6 md:py-11 md:pr-6 lg:pl-0">
-              <h2>{t("disclaimer.copyrightTitle")}</h2>
-              <p>{t("disclaimer.copyrightP1")}</p>
-            </div>
-            <div className="md:pr-11 md:pl-0">
-              <hr />
-            </div>
-            <div className="space-y-4 p-6 md:py-11 md:pr-11 lg:pl-0">
-              <h2>{t("disclaimer.browserCompatibilityTitle")}</h2>
-              <p>{t("disclaimer.browserCompatibilityP1")}</p>
-            </div>
-          </div>
-        </article>
-      }
+      <article className="info-template-container">
+        <div className="info-template-main-content">
+          <InformationalContent>
+            <InformationalSection>
+              <InformationalStack>
+                <h2>{t("disclaimer.liabilityTitle")}</h2>
+                <p>{t("disclaimer.liabilityP1")}</p>
+              </InformationalStack>
+            </InformationalSection>
+            <InformationalDivider />
+            <InformationalSection>
+              <InformationalStack>
+                <h2>{t("disclaimer.copyrightTitle")}</h2>
+                <p>{t("disclaimer.copyrightP1")}</p>
+              </InformationalStack>
+            </InformationalSection>
+            <InformationalDivider />
+            <InformationalSection>
+              <InformationalStack>
+                <h2>{t("disclaimer.browserCompatibilityTitle")}</h2>
+                <p>{t("disclaimer.browserCompatibilityP1")}</p>
+              </InformationalStack>
+            </InformationalSection>
+          </InformationalContent>
+        </div>
+      </article>
       <span className="max-w-5xl m-auto w-full pb-8">
         <MailingListSignup />
       </span>

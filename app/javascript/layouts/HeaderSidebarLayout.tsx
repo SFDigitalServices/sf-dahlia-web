@@ -17,8 +17,8 @@ export interface Props {
 const HeaderSidebarLayout = ({ children, title, subtitle, mainPage, sidebarContent }: Props) => {
   const { getAssetPath } = React.useContext(ConfigContext)
   const classNames = mainPage
-    ? "flex flex-wrap flex-col md:flex-row relative m-auto w-full"
-    : "flex flex-wrap flex-col md:flex-row relative max-w-5xl lg:m-auto w-full"
+    ? "info-template-container info-template-container--fluid"
+    : "info-template-container"
   return (
     <Layout title={title}>
       <PageHeader
@@ -28,7 +28,7 @@ const HeaderSidebarLayout = ({ children, title, subtitle, mainPage, sidebarConte
         backgroundImage={getAssetPath("bg@1200.jpg")}
       />
       <article className={classNames}>
-        <div className="w-full md:w-2/3" data-testid="info-main-content">
+        <div className="info-template-main-content" data-testid="info-main-content">
           {children}
         </div>
         {sidebarContent || <ContactSideBarBlock />}

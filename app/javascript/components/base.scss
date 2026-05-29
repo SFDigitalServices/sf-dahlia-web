@@ -263,6 +263,135 @@ nav {
   }
 }
 
+.info-template-container {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  position: relative;
+  width: 100%;
+  max-width: var(--bloom-width-5xl);
+  margin: 0 auto;
+
+  @media (min-width: $screen-md) {
+    flex-direction: row;
+  }
+}
+
+.info-template-container--fluid {
+  max-width: none;
+}
+
+.info-template-main-content {
+  width: 100%;
+
+  @media (min-width: $screen-md) {
+    width: 66.666667%;
+  }
+}
+
+.info-template-content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.info-template-header-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--bloom-s4);
+  margin-bottom: 1rem;
+}
+
+.info-template-section {
+  display: flex;
+  flex-direction: column;
+  padding: var(--bloom-s6);
+
+  @media (min-width: $screen-md) {
+    padding-top: var(--bloom-s11);
+    padding-right: var(--bloom-s11);
+    padding-bottom: var(--bloom-s11);
+  }
+
+  @media (min-width: $screen-lg) {
+    padding-left: 0;
+  }
+}
+
+.info-template-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--bloom-s4);
+}
+
+.info-template-divider {
+  @media (min-width: $screen-md) {
+    padding-right: var(--bloom-s11);
+  }
+}
+
+.info-template-list {
+  margin-left: var(--bloom-s7);
+  list-style-position: outside;
+}
+
+.info-template-list--unordered {
+  list-style-type: disc;
+}
+
+.info-template-list--ordered {
+  list-style-type: decimal;
+}
+
+.info-template-list--compact {
+  li + li {
+    margin-top: var(--bloom-s2_5);
+  }
+}
+
+.info-template-list--nested {
+  margin-left: var(--bloom-s2);
+}
+
+.info-template-list--lower-alpha {
+  list-style-type: lower-alpha;
+}
+
+.info-template-callout {
+  padding: var(--bloom-s5);
+  border: 2px solid var(--bloom-color-gray-400);
+  border-radius: 0 0 var(--bloom-rounded-lg) var(--bloom-rounded-lg);
+}
+
+.info-template-link a,
+a.info-template-link,
+.info-template-link-direct {
+  color: var(--bloom-color-blue-500);
+  text-decoration: underline;
+}
+
+.info-template-contact-link {
+  color: var(--bloom-color-blue-500);
+  text-decoration: none;
+}
+
+.info-template-sidebar {
+  width: 100%;
+  max-width: none;
+  color: var(--bloom-color-gray-950);
+  border-top: 1px solid var(--bloom-color-gray-450);
+  border-bottom: 0;
+  margin: 0;
+  padding: var(--bloom-s6);
+
+  @media (min-width: $screen-md) {
+    width: 33.333333%;
+    max-width: var(--bloom-width-xs);
+    border-top: 0;
+    border-left: 1px solid var(--bloom-color-gray-450);
+  }
+}
+
 // Hide another container for Google Translate widget
 #\:1\.container {
   display: none !important;
