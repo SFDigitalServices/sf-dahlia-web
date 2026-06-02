@@ -7,6 +7,7 @@ import { useFormEngineContext } from "../../../../formEngine/formEngineContext"
 import { getAddress, translationFromDataSchema } from "../../../../util/formEngineUtil"
 import ListingApplyHouseholdMonthlyRent from "./ListingApplyHouseholdMonthlyRent"
 import styles from "./ListingApplyhouseholdMonthlyRentStep.module.scss"
+import { getPrimaryApplicantData } from "../../../../util/listingApplyUtil"
 
 type HouseholdMember = {
   firstName: string
@@ -42,6 +43,8 @@ const ListingApplyHouseholdMonthlyRentStep = ({
     useFormEngineContext()
 
   const groupedAddresses = useMemo<GroupedAddress[]>(() => {
+    const { firstName: primaryFirstName, lastName: primaryLastName } =
+      getPrimaryApplicantData(formData)
     const householdMembers = (formData.householdMembers as HouseholdMember[]) ?? []
     const primaryAddress = getAddress(
       formData.primaryApplicantAddressStreet as string,
@@ -54,7 +57,12 @@ const ListingApplyHouseholdMonthlyRentStep = ({
       address: primaryAddress,
       householdMonthlyRent: "householdMonthlyRent",
       doesNotPayRent: "householdDoesNotPayRent",
-      members: [],
+      members: [
+        {
+          firstName: "You",
+          fullName: `${primaryFirstName} ${primaryLastName}`,
+        },
+      ],
     }
     const householdAddresses: GroupedAddress[] = [primaryApplicantAddress]
 
