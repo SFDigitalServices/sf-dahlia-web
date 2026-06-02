@@ -30,8 +30,8 @@ import ForgotPassword from "../pages/forgot-password"
 import ResetPassword from "../pages/reset-password"
 import ListingApplyForm from "../pages/form/listing-apply-form"
 import Account from "../pages/account/account"
-import Settings from "../pages/account/settings"
 import Applications from "../pages/account/applications"
+import Settings from "../pages/account/settings"
 
 const currentLanguage = getCurrentLanguage(window.location.pathname)
 
