@@ -148,7 +148,7 @@ describe 'Address Validation API' do
       )
     end
 
-    it 'returns 200 with the original address when EasyPost raises an error' do
+    it 'returns 422 with the original address when EasyPost raises an error' do
       params = {
         address: {
           street1: '123 Main St',
@@ -160,7 +160,7 @@ describe 'Address Validation API' do
       post '/api/v1/addresses/validate.json', params: params
 
       json = JSON.parse(response.body)
-      expect(response).to be_successful
+      expect(response.status).to eq(422)
       expect(json['address']['street1']).to eq('123 Main St')
       expect(json['address']['city']).to eq('San Francisco')
       expect(json['error']).to be_nil
@@ -178,7 +178,7 @@ describe 'Address Validation API' do
       post '/api/v1/addresses/validate.json', params: params
 
       json = JSON.parse(response.body)
-      expect(response).to be_successful
+      expect(response.status).to eq(422)
       expect(json['address']).not_to have_key('verify')
     end
   end

@@ -58,6 +58,7 @@ class AddressValidationService
     # we don't treat EasyPost errors as "invalid" since we want to allow them to proceed
     if easypost_error?
       Rails.logger.warn('Address validation: EasyPost request failed, allowing address through')
+      return true
     end
 
     # we do not accept PO Boxes
