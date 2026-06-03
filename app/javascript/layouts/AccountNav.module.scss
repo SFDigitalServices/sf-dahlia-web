@@ -2,7 +2,7 @@
   @media (max-width: theme("screens.sm")) {
     display: none;
   }
-  width: var(--seeds-s52);
+  min-width: var(--seeds-s52);
 }
 
 .accountNavTabs {
