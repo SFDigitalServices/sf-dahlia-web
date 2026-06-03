@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { Card } from "@bloom-housing/ui-seeds"
-import { Icon } from "@bloom-housing/ui-components"
+import { Icon, UniversalIconType } from "@bloom-housing/ui-components"
 import { DOBFieldValues } from "../pages/account/components/DOBFieldset"
 
 // We will strictly validate the email address using the following regex.
@@ -17,9 +17,15 @@ interface FormHeaderProps {
   title: string
   description: string
   className?: string
+  iconSymbol?: UniversalIconType
 }
 
-export const FormHeader = ({ title, description, className }: FormHeaderProps) => {
+export const FormHeader = ({
+  title,
+  description,
+  className,
+  iconSymbol = "profile",
+}: FormHeaderProps) => {
   const classNames = ["flex justify-center py-8 text-center w-full flex-col items-center"]
   if (className) {
     classNames.push(className)
@@ -28,8 +34,8 @@ export const FormHeader = ({ title, description, className }: FormHeaderProps) =
   return (
     <Card.Header divider="flush" className={classNames.join(" ")}>
       <div className="pb-4 px-4 border-blue-500 w-min" style={{ borderBottom: "3px solid" }}>
-        <Icon size="xlarge" className="md:hidden block" symbol="profile" />
-        <Icon size="2xl" className="md:block hidden" symbol="profile" />
+        <Icon size="xlarge" className="md:hidden block" symbol={iconSymbol} />
+        <Icon size="2xl" className="md:block hidden" symbol={iconSymbol} />
       </div>
       <h1 className="mt-6 mb-4 text-xl md:text-2xl">{title}</h1>
       <p className="field-note text-base">{description}</p>
