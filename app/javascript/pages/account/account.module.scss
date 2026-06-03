@@ -1,6 +1,5 @@
 .overview {
   width: 100%;
-  margin: var(--seeds-s7) 0;
   :global(.seeds-tabs.vertical-sidebar-layout) {
     @media (max-width: theme("screens.sm")) {
       :global(.tabs-tab) {

@@ -7,7 +7,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import Layout from "../../layouts/Layout"
 import AccountLayout from "../../layouts/AccountLayout"
 import withAppSetup from "../../layouts/withAppSetup"
-import { AppPages, RedirectType, getApplicationsPath, getSettingsPath } from "../../util/routeUtil"
+import {
+  AppPages,
+  RedirectType,
+  getApplicationPath,
+  getMyAccountSettingsPath,
+} from "../../util/routeUtil"
 import UserContext from "../../authentication/context/UserContext"
 import { withAuthentication } from "../../authentication/withAuthentication"
 import styles from "./account.module.scss"
@@ -18,14 +23,14 @@ const overviewSections = [
     heading: "accountLayout.nav.applications",
     text: "accountLayout.account.p1",
     buttonLabel: "accountLayout.account.seeApps",
-    href: getApplicationsPath(),
+    href: getApplicationPath(),
   },
   {
     icon: "settings",
     heading: "accountSettings.title.sentenceCase",
     text: "accountLayout.account.p2",
     buttonLabel: "accountLayout.account.edit",
-    href: getSettingsPath(),
+    href: getMyAccountSettingsPath(),
   },
 ]
 

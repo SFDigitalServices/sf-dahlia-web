@@ -10,7 +10,7 @@ const AccountLayout = ({ children }: AccountLayoutProps) => {
   return (
     <div className={styles.accountLayout}>
       <AccountNav />
-      {children}
+      <div className={styles.accountLayoutContent}>{children}</div>
     </div>
   )
 }
