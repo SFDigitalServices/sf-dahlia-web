@@ -1,0 +1,23 @@
+.accountNav {
+  @media (max-width: theme("screens.sm")) {
+    display: none;
+  }
+  width: var(--seeds-s52);
+}
+
+.accountNavTabs {
+  :global(.tabs-tab-link) {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+.accountNavTitle {
+  color: var(--seeds-color-gray-750);
+  padding-bottom: var(--seeds-spacer-text);
+}
+
+.accountNavLinkIcon {
+  margin-right: var(--seeds-spacer-text);
+}
