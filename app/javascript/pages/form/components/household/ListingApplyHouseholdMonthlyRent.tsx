@@ -35,7 +35,7 @@ const ListingApplyHouseholdMonthlyRent = ({
   }, [doesNotPayRent, groupedAddress.householdMonthlyRent, setValue])
 
   const getLabel = () => {
-    if (groupedAddress.members.length === 0) {
+    if (isPrimaryApplicant && groupedAddress.members.length === 1) {
       return t("c5HouseholdMonthlyRent.howMuchDoYouPay", { address: groupedAddress.address })
     }
     if (isPrimaryApplicant && groupedAddress.members.length > 0) {
