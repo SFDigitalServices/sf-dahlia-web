@@ -72,16 +72,18 @@ const UpdateForm = ({
   children,
   loading,
   onSubmit,
+  submitLabel,
 }: {
   children: React.ReactNode
   loading: boolean
   onSubmit?: () => unknown
+  submitLabel: string
 }) => {
   return (
     <FormSection>
       <Form className="p-2 md:py-2 md:px-10" data-testid="update-form" onSubmit={onSubmit}>
         {children}
-        <FormSubmitButton loading={loading} label={t("label.update")} />
+        <FormSubmitButton loading={loading} label={submitLabel} />
       </Form>
     </FormSection>
   )
@@ -153,7 +155,11 @@ const EmailSection = ({ user, setUser }: SectionProps) => {
         sortOrder={emailSortOrder}
         messageMap={(messageKey) => getErrorMessage(messageKey, emailFieldsetErrors, true)}
       />
-      <UpdateForm onSubmit={handleSubmit(onSubmit)} loading={loading}>
+      <UpdateForm
+        onSubmit={handleSubmit(onSubmit)}
+        loading={loading}
+        submitLabel={t("accountSettings.saveEmailAddress")}
+      >
         <EmailFieldset
           register={register}
           errors={errors}
@@ -212,7 +218,11 @@ const PasswordSection = ({ user, setUser }: SectionProps) => {
         sortOrder={passwordSortOrder}
         messageMap={(messageKey) => getErrorMessage(messageKey, passwordFieldsetErrors, true)}
       />
-      <UpdateForm onSubmit={handleSubmit(onSubmit)} loading={loading}>
+      <UpdateForm
+        onSubmit={handleSubmit(onSubmit)}
+        loading={loading}
+        submitLabel={t("accountSettings.savePassword")}
+      >
         <PasswordFieldset
           register={register}
           errors={errors}
@@ -291,7 +301,11 @@ const NameSection = ({ user, setUser, handleBanners }: SectionProps) => {
           messageMap={(messageKey) => getErrorMessage(messageKey, nameFieldsetErrors, true)}
         />
       )}
-      <UpdateForm onSubmit={handleSubmit(onSubmit)} loading={loading}>
+      <UpdateForm
+        onSubmit={handleSubmit(onSubmit)}
+        loading={loading}
+        submitLabel={t("accountSettings.saveName")}
+      >
         <NameFieldset
           register={register}
           errors={errors}
@@ -372,7 +386,11 @@ const DateOfBirthSection = ({ user, setUser }: SectionProps) => {
           messageMap={(messageKey) => getErrorMessage(messageKey, dobFieldsetErrors, true)}
         />
       )}
-      <UpdateForm onSubmit={handleSubmit(onSubmit)} loading={loading}>
+      <UpdateForm
+        onSubmit={handleSubmit(onSubmit)}
+        loading={loading}
+        submitLabel={t("accountSettings.saveDateOfBirth")}
+      >
         <DOBFieldset
           required
           defaultDOB={user ? user.dobObject : null}
@@ -422,11 +440,13 @@ const AccountSettings = ({ profile }: { profile: User }) => {
       {nameUpdateBanner || nameSavedBanner ? (
         <FormHeader
           className={"border-none"}
+          iconSymbol="settings"
           title={t("accountSettings.title.sentenceCase")}
           description={t("accountSettings.description")}
         />
       ) : (
         <FormHeader
+          iconSymbol="settings"
           title={t("accountSettings.title.sentenceCase")}
           description={t("accountSettings.description")}
         />

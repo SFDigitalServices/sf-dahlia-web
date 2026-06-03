@@ -46,7 +46,7 @@ describe("<SettingsPage />", () => {
           },
         })
 
-        const button = screen.getAllByText("Update")
+        const button = screen.getByRole("button", { name: "Save name" })
         const firstNameField: Element = screen.getByRole("textbox", {
           name: /first name/i,
         })
@@ -63,7 +63,7 @@ describe("<SettingsPage />", () => {
           const closeButton = screen.getByLabelText("Close")
 
           fireEvent.click(closeButton)
-          button[0].dispatchEvent(new MouseEvent("click"))
+          fireEvent.click(button)
           await promise
         })
 
@@ -110,7 +110,7 @@ describe("<SettingsPage />", () => {
           },
         })
 
-        const button = screen.getAllByText("Update")
+        const dobButton = screen.getByRole("button", { name: "Save date of birth" })
         const monthField: Element = screen.getByRole("spinbutton", {
           name: /month/i,
         })
@@ -132,7 +132,7 @@ describe("<SettingsPage />", () => {
 
           fireEvent.click(closeButton)
 
-          button[1].dispatchEvent(new MouseEvent("click"))
+          fireEvent.click(dobButton)
           await promise
         })
 
@@ -160,7 +160,7 @@ describe("<SettingsPage />", () => {
       })
 
       it("blocks a DOB update if invalid", async () => {
-        const button = screen.getAllByText("Update")
+        const dobButton = screen.getByRole("button", { name: "Save date of birth" })
         const monthField: Element = screen.getByRole("spinbutton", {
           name: /month/i,
         })
@@ -175,7 +175,7 @@ describe("<SettingsPage />", () => {
           fireEvent.change(monthField, { target: { value: 15 } }) // invalid
           fireEvent.change(dayField, { target: { value: 6 } })
           fireEvent.change(yearField, { target: { value: 2000 } })
-          button[1].dispatchEvent(new MouseEvent("click"))
+          fireEvent.click(dobButton)
           await promise
         })
 
@@ -185,7 +185,7 @@ describe("<SettingsPage />", () => {
           fireEvent.change(monthField, { target: { value: 2 } })
           fireEvent.change(dayField, { target: { value: 74 } }) // invalid
           fireEvent.change(yearField, { target: { value: 2000 } })
-          button[1].dispatchEvent(new MouseEvent("click"))
+          fireEvent.click(dobButton)
           await promise
         })
 
@@ -195,7 +195,7 @@ describe("<SettingsPage />", () => {
           fireEvent.change(monthField, { target: { value: 2 } })
           fireEvent.change(dayField, { target: { value: 6 } })
           fireEvent.change(yearField, { target: { value: 1823 } }) // invalid
-          button[1].dispatchEvent(new MouseEvent("click"))
+          fireEvent.click(dobButton)
           await promise
         })
 
@@ -211,7 +211,7 @@ describe("<SettingsPage />", () => {
           },
         })
 
-        const emailUpdateButton = screen.getAllByText("Update")[2]
+        const emailUpdateButton = screen.getByRole("button", { name: "Save email address" })
         const group = screen.getByRole("group", {
           name: /email/i,
         })
@@ -279,7 +279,7 @@ describe("<SettingsPage />", () => {
           },
         })
 
-        const emailUpdateButton = screen.getAllByText("Update")[2]
+        const emailUpdateButton = screen.getByRole("button", { name: "Save email address" })
         const group = screen.getByRole("group", {
           name: /email/i,
         })
@@ -304,7 +304,7 @@ describe("<SettingsPage />", () => {
           },
         })
 
-        const passwordUpdateButton = screen.getAllByText("Update")[3]
+        const passwordUpdateButton = screen.getByRole("button", { name: "Save password" })
         const currentPasswordField = screen.getByLabelText(/current password/i)
 
         await act(async () => {
@@ -323,7 +323,7 @@ describe("<SettingsPage />", () => {
           },
         })
 
-        const passwordUpdateButton = screen.getAllByText("Update")[3]
+        const passwordUpdateButton = screen.getByRole("button", { name: "Save password" })
 
         const currentPasswordField = screen.getByLabelText(/current password/i)
         const newPasswordField = screen.getByLabelText(/choose a new password/i)
@@ -345,7 +345,7 @@ describe("<SettingsPage />", () => {
           },
         })
 
-        const passwordUpdateButton = screen.getAllByText("Update")[3]
+        const passwordUpdateButton = screen.getByRole("button", { name: "Save password" })
 
         const currentPasswordField = screen.getByLabelText(/current password/i)
         const newPasswordField = screen.getByLabelText(/choose a new password/i)
@@ -395,7 +395,7 @@ describe("<SettingsPage />", () => {
           },
         })
 
-        const button = screen.getAllByText("Update")
+        const button = screen.getByRole("button", { name: "Save name" })
         const firstNameField: Element = screen.getByRole("textbox", {
           name: /first name/i,
         })
@@ -407,7 +407,7 @@ describe("<SettingsPage />", () => {
         await act(async () => {
           fireEvent.change(firstNameField, { target: { value: "" } })
           fireEvent.change(lastNameField, { target: { value: "" } })
-          button[0].dispatchEvent(new MouseEvent("click"))
+          fireEvent.click(button)
           await promise
         })
 
@@ -428,7 +428,7 @@ describe("<SettingsPage />", () => {
         await act(async () => {
           fireEvent.change(firstNameField, { target: { value: "First Name" } })
           fireEvent.change(lastNameField, { target: { value: "Last Name" } })
-          button[0].dispatchEvent(new MouseEvent("click"))
+          fireEvent.click(button)
           await promise
         })
 
@@ -443,7 +443,7 @@ describe("<SettingsPage />", () => {
       })
 
       it("date of birth errors", async () => {
-        const button = screen.getAllByText("Update")
+        const dobButton = screen.getByRole("button", { name: "Save date of birth" })
         const monthField: Element = screen.getByRole("spinbutton", {
           name: /month/i,
         })
@@ -458,7 +458,7 @@ describe("<SettingsPage />", () => {
           fireEvent.change(monthField, { target: { value: 45 } }) // invalid
           fireEvent.change(dayField, { target: { value: 56 } }) // invalid
           fireEvent.change(yearField, { target: { value: 1800 } }) // invalid
-          button[1].dispatchEvent(new MouseEvent("click"))
+          fireEvent.click(dobButton)
 
           await promise
         })
@@ -472,7 +472,7 @@ describe("<SettingsPage />", () => {
           fireEvent.change(monthField, { target: { value: 1 } })
           fireEvent.change(dayField, { target: { value: 56 } }) // invalid
           fireEvent.change(yearField, { target: { value: 1800 } }) // invalid
-          button[1].dispatchEvent(new MouseEvent("click"))
+          fireEvent.click(dobButton)
 
           await promise
         })
@@ -486,7 +486,7 @@ describe("<SettingsPage />", () => {
           fireEvent.change(monthField, { target: { value: 1 } })
           fireEvent.change(dayField, { target: { value: 1 } }) // invalid
           fireEvent.change(yearField, { target: { value: 202 } }) // invalid
-          button[1].dispatchEvent(new MouseEvent("click"))
+          fireEvent.click(dobButton)
 
           await promise
         })
@@ -500,7 +500,7 @@ describe("<SettingsPage />", () => {
           fireEvent.change(monthField, { target: { value: 1 } })
           fireEvent.change(dayField, { target: { value: 56 } }) // invalid
           fireEvent.change(yearField, { target: { value: 1999 } })
-          button[1].dispatchEvent(new MouseEvent("click"))
+          fireEvent.click(dobButton)
 
           await promise
         })
@@ -529,7 +529,7 @@ describe("<SettingsPage />", () => {
           fireEvent.change(monthField, { target: { value: 1 } })
           fireEvent.change(dayField, { target: { value: 12 } })
           fireEvent.change(yearField, { target: { value: 1998 } })
-          button[1].dispatchEvent(new MouseEvent("click"))
+          fireEvent.click(dobButton)
 
           await promise
         })
@@ -545,7 +545,7 @@ describe("<SettingsPage />", () => {
           fireEvent.change(monthField, { target: { value: 1 } })
           fireEvent.change(dayField, { target: { value: 12 } })
           fireEvent.change(yearField, { target: { value: 1998 } })
-          button[1].dispatchEvent(new MouseEvent("click"))
+          fireEvent.click(dobButton)
 
           await promise
         })
@@ -555,7 +555,7 @@ describe("<SettingsPage />", () => {
       })
 
       it("email Errors", async () => {
-        const button = screen.getAllByText("Update")
+        const emailButton = screen.getByRole("button", { name: "Save email address" })
         const group = screen.getByRole("group", {
           name: /email/i,
         })
@@ -564,7 +564,7 @@ describe("<SettingsPage />", () => {
 
         await act(async () => {
           fireEvent.change(emailField, { target: { value: "testtest.com" } })
-          button[2].dispatchEvent(new MouseEvent("click"))
+          fireEvent.click(emailButton)
           await promise
         })
 
@@ -587,7 +587,7 @@ describe("<SettingsPage />", () => {
         })
         await act(async () => {
           fireEvent.change(emailField, { target: { value: "test@test.com" } })
-          button[2].dispatchEvent(new MouseEvent("click"))
+          fireEvent.click(emailButton)
           await promise
         })
         expect(
@@ -605,7 +605,7 @@ describe("<SettingsPage />", () => {
         })
         await act(async () => {
           fireEvent.change(emailField, { target: { value: "test@test.com" } })
-          button[2].dispatchEvent(new MouseEvent("click"))
+          fireEvent.click(emailButton)
           await promise
         })
         expect(
@@ -613,14 +613,14 @@ describe("<SettingsPage />", () => {
         ).not.toBeNull()
       })
       it("password Errors", async () => {
-        const button = screen.getAllByText("Update")
+        const passwordButton = screen.getByRole("button", { name: "Save password" })
         const currentPasswordField = screen.getByLabelText(/current password/i)
         const newPasswordField = screen.getByLabelText(/choose a new password/i)
 
         await act(async () => {
           fireEvent.change(currentPasswordField, { target: { value: "abcd1234" } })
           fireEvent.change(newPasswordField, { target: { value: "password" } })
-          button[3].dispatchEvent(new MouseEvent("click"))
+          fireEvent.click(passwordButton)
           await promise
         })
         expect(
@@ -637,7 +637,7 @@ describe("<SettingsPage />", () => {
         await act(async () => {
           fireEvent.change(currentPasswordField, { target: { value: "" } })
           fireEvent.change(newPasswordField, { target: { value: "" } })
-          button[3].dispatchEvent(new MouseEvent("click"))
+          fireEvent.click(passwordButton)
           await promise
         })
         expect(
@@ -659,7 +659,7 @@ describe("<SettingsPage />", () => {
         await act(async () => {
           fireEvent.change(currentPasswordField, { target: { value: "abcd1234" } })
           fireEvent.change(newPasswordField, { target: { value: "password1" } })
-          button[3].dispatchEvent(new MouseEvent("click"))
+          fireEvent.click(passwordButton)
           await promise
         })
         expect(
@@ -678,7 +678,7 @@ describe("<SettingsPage />", () => {
         await act(async () => {
           fireEvent.change(currentPasswordField, { target: { value: "abcd1234" } })
           fireEvent.change(newPasswordField, { target: { value: "password1" } })
-          button[3].dispatchEvent(new MouseEvent("click"))
+          fireEvent.click(passwordButton)
           await promise
         })
         expect(
