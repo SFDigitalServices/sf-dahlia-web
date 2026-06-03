@@ -37,10 +37,12 @@ const getForSaleSummaryTable = (listing: RailsSaleListing) => {
         hideMobile: true,
       },
       income: {
-        cellText: t("listings.stats.upToPercent", {
-          amiPercent: summary.maxQualifyingAMI.toString(),
-        }),
-        cellSubText: t("listings.stats.upToPercent.p2"),
+        cellText: summary.maxQualifyingAMI
+          ? t("listings.stats.upToPercent", {
+              amiPercent: summary.maxQualifyingAMI.toString(),
+            })
+          : null,
+        cellSubText: summary.maxQualifyingAMI ? t("listings.stats.upToPercent.p2") : null,
       },
       colThree: {
         cellText: getRangeString(
