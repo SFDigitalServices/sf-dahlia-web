@@ -12,10 +12,12 @@ import {
   RedirectType,
   getApplicationPath,
   getMyAccountSettingsPath,
-  getMyAccountContactPath,
 } from "../../util/routeUtil"
 import UserContext from "../../authentication/context/UserContext"
+import { User } from "../../authentication/user"
 import { withAuthentication } from "../../authentication/withAuthentication"
+
+import ContactCard from "./components/ContactCard"
 import styles from "./account.module.scss"
 
 const overviewSections = [
@@ -65,9 +67,17 @@ const OverviewSection = ({
   </>
 )
 
-const AccountOverview = ({ signOut, hasButton }: { signOut: () => void; hasButton: boolean }) => (
+const AccountOverview = ({
+  signOut,
+  hasButton,
+  user,
+}: {
+  signOut: () => void
+  hasButton: boolean
+  user?: User
+}) => (
   <>
-    <Button href={getMyAccountContactPath()}> Change contact info</Button>
+    <ContactCard user={user} />
     <Tabs
       className="vertical-sidebar-layout"
       navigation={hasButton}
@@ -95,16 +105,16 @@ const AccountOverview = ({ signOut, hasButton }: { signOut: () => void; hasButto
 )
 
 const Account = () => {
-  const { signOut } = React.useContext(UserContext)
+  const { signOut, profile } = React.useContext(UserContext)
   return (
     <Layout>
       <AccountLayout>
         <div className={styles.overview}>
           <div className={styles.overviewOverLg}>
-            <AccountOverview signOut={signOut} hasButton={true} />
+            <AccountOverview signOut={signOut} hasButton={true} user={profile} />
           </div>
           <div className={styles.overviewUnderLg}>
-            <AccountOverview signOut={signOut} hasButton={false} />
+            <AccountOverview signOut={signOut} hasButton={false} user={profile} />
           </div>
         </div>
       </AccountLayout>
