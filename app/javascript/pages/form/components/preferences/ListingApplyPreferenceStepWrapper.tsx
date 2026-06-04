@@ -117,20 +117,17 @@ const ListingApplyPreferenceStepWrapper = ({
 
   const [showRequiredCheckboxError, setShowRequiredCheckboxError] = useState(false)
 
-  // TODO: for live/work preferences, conditionally render them based on household status
-  // Angular code looks like:
-  // const showLiveOrWorkCheckbox = Service.workInSfMembers().length > 0 && Service.liveInSfMembers().length > 0
-  // const showLiveCheckbox = Service.liveInSfMembers().length > 0 && Service.workInSfMembers().length == 0
-  // const showWorkCheckbox = Service.workInSfMembers().length > 0 && Service.liveInSfMembers().length == 0
-  // comboPreference prop indicates that this may have a combo preference like liveOrWorkInSf
-  useEffect(() => {
-    if (comboPreference) {
-      // TODO WIP
-      // if the conditions of the comboPreference changes, e.g. address changes to not be in SF
-      // then all saved form data from an earlier comboPreference condition needs to be cleared out
-      // the new comboPreference UI should automatically get rendered...?
-    }
-  }, [comboPreference])
+  /*************
+   * TODO: DAH-4160
+   * Conditionally render the comboPreference based on the live/work status of household members
+   * for reference, the Angular function that checks these conditions is named `Service.showPreference`
+   * If live/work statuses get modified on other form pages, we may need to reset this page
+   */
+  // useEffect(() => {
+  //   if (comboPreference) {
+  //     console.log(formData.householdMembers)
+  //   }
+  // }, [comboPreference])
 
   // checks for any errors *except* checkbox field errors
   const showIncompleteDocumentError = () => {
@@ -183,9 +180,7 @@ const ListingApplyPreferenceStepWrapper = ({
    *   _assistedHousingOptOut: true,
    *   _liveOrWorkInSfClaimedPreference: 'liveInSf',
    *   claimedPreferences: {
-   *     assistedHousing: {
-   *       preferenceClaimed: false,
-   *     },
+   *     assistedHousing: { preferenceClaimed: false },
    *     liveWorkInSf: {
    *       preferenceClaimed: true,
    *       ...
