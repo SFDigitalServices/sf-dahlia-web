@@ -1,9 +1,14 @@
+import { interceptUnleashFlags } from "../support/util"
+
 const ENGLISH_HOMEPAGE_TEXT = "Apply for affordable housing"
 const SPANISH_HOMEPAGE_TEXT = "Presente una solicitud para una vivienda asequible"
 const TAGALOG_HOMEPAGE_TEXT = "Mag-aplay para sa abot-kayang pabahay"
 const CHINESE_HOMEPAGE_TEXT = "申請可負擔房屋"
 
 describe("Homepage integration tests", () => {
+  beforeEach(() => {
+    interceptUnleashFlags()
+  })
   describe("default", () => {
     beforeEach(() => {
       cy.visit("/")
@@ -91,7 +96,12 @@ describe("Homepage integration tests", () => {
 
   describe("using the nav bar", () => {
     beforeEach(() => {
-      cy.intercept("api/v1/listings.json**", { fixture: "listings.json" }).as("listings")
+      cy.intercept("GET", "**/api/v1/listings.json?type=rental*", { fixture: "listings.json" }).as(
+        "listings"
+      )
+      cy.intercept("GET", "**/api/v1/listings.json?type=ownership*", {
+        fixture: "saleListings.json",
+      }).as("listings")
     })
     describe("navigating to the for-rent page", () => {
       it("navigates to the for-rent page in english by default", () => {
@@ -131,9 +141,6 @@ describe("Homepage integration tests", () => {
     })
 
     describe("navigating to the for-sale page", () => {
-      beforeEach(() => {
-        cy.intercept("api/v1/listings.json**", { fixture: "listings.json" }).as("listings")
-      })
       it("navigates to the for-sale page in english by default", () => {
         cy.visit("/")
         cy.findAndClickMenuItem("/listings/for-sale")

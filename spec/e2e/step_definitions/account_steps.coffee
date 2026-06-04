@@ -81,7 +81,7 @@ When 'I view the application from My Applications', ->
     element(By.cssContainingText('.button', 'View Application')).click()
 
 When 'I go to My Applications', ->
-  Utils.Page.goTo('/my-applications')
+  Utils.Page.goTo('/account/applications')
 
 When 'I click the Continue Application button', ->
   element(By.cssContainingText('.feed-item-action a', 'Continue Application')).click()
@@ -105,7 +105,7 @@ When 'I try to navigate to the Favorites page', ->
   ).first().click()
 
 Then 'I should be signed in', ->
-  Utils.Expect.byCss(@, 'nav a[href="/my-account"]', 'My Account')
+  Utils.Expect.byCss(@, 'nav a[href="/account"]', 'My Account')
 
 Then 'I should be signed out', ->
   Utils.Expect.byCss(@, '.nav-menu a[href="/sign-in"]', 'Sign In')

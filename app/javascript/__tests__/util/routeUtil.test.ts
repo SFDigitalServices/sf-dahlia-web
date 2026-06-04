@@ -2,7 +2,7 @@ import {
   getAssistancePath,
   getFavoritesPath,
   getMyAccountSettingsPath,
-  getMyApplicationsPath,
+  getApplicationPath,
   getMyAccountPath,
   getNewLanguagePath,
   getRentalDirectoryPath,
@@ -42,18 +42,18 @@ describe("routeUtil", () => {
     })
 
     it("returns the correct path for getMyAccountPath", () => {
-      expect(getMyAccountPath("/es/sign-in")).toBe("/es/my-account")
-      expect(getMyAccountPath("")).toBe("/my-account")
+      expect(getMyAccountPath("/es/sign-in")).toBe("/es/account")
+      expect(getMyAccountPath("")).toBe("/account")
     })
 
-    it("returns the correct path for getmyApplicationsPath", () => {
-      expect(getMyApplicationsPath("/es/sign-in")).toBe("/es/my-applications")
-      expect(getMyApplicationsPath("")).toBe("/my-applications")
+    it("returns the correct path for getApplicationPath", () => {
+      expect(getApplicationPath("/es/sign-in")).toBe("/es/account/applications")
+      expect(getApplicationPath("")).toBe("/account/applications")
     })
 
     it("returns the correct path for getMyaccountSettingsPath", () => {
-      expect(getMyAccountSettingsPath("/es/sign-in")).toBe("/es/account-settings")
-      expect(getMyAccountSettingsPath("")).toBe("/account-settings")
+      expect(getMyAccountSettingsPath("/es/sign-in")).toBe("/es/account/settings")
+      expect(getMyAccountSettingsPath("")).toBe("/account/settings")
     })
     it("returns the correct path for getForgotPasswordPath", () => {
       expect(getForgotPasswordPath()).toBe("/forgot-password")
@@ -129,15 +129,15 @@ describe("routeUtil", () => {
   })
   describe("getSignInRedirectUrl", () => {
     it("returns the correct redirect URL for 'account'", () => {
-      expect(getSignInRedirectUrl(RedirectType.Account)).toBe("/my-account")
+      expect(getSignInRedirectUrl(RedirectType.Account)).toBe("/account")
     })
 
     it("returns the correct redirect URL for 'applications'", () => {
-      expect(getSignInRedirectUrl(RedirectType.Applications)).toBe("/my-applications")
+      expect(getSignInRedirectUrl(RedirectType.Applications)).toBe("/account/applications")
     })
 
     it("returns the correct redirect URL for 'settings'", () => {
-      expect(getSignInRedirectUrl(RedirectType.Settings)).toBe("/account-settings")
+      expect(getSignInRedirectUrl(RedirectType.Settings)).toBe("/account/settings")
     })
 
     it("returns the correct redirect URL for 'home'", () => {
@@ -149,7 +149,7 @@ describe("routeUtil", () => {
     })
 
     it("returns the default redirect URL when no key is provided", () => {
-      expect(getSignInRedirectUrl("" as RedirectType)).toBe("/my-account")
+      expect(getSignInRedirectUrl("" as RedirectType)).toBe("/account")
     })
   })
 })
