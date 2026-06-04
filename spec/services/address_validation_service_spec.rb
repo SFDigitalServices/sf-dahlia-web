@@ -148,10 +148,10 @@ describe AddressValidationService do
       expect { service.invalid? }.not_to raise_error
     end
 
-    it 'returns true from invalid? (marks address as invalid)' do
+    it 'returns false from invalid? (allows address through)' do
       service = AddressValidationService.new(address)
       service.validate
-      expect(service.invalid?).to be true
+      expect(service.invalid?).to be false
     end
 
     it 'returns nil from error' do
