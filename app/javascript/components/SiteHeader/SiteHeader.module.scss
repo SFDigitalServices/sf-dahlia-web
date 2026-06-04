@@ -14,11 +14,18 @@
   font-size: var(--seeds-font-size-lg);
 }
 
+.mobile-menu-button {
+  @media (max-width: theme("screens.md")) {
+    margin-left: var(--seeds-spacer-header);
+  }
+}
+
 .mobile-account-link {
   @media (max-width: theme("screens.md")) {
     align-items: center;
     height: auto;
     align-self: center;
+    margin-right: var(--seeds-spacer-header);
   }
 }
 

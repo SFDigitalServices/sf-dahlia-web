@@ -92,22 +92,22 @@ const getMenuLinks = (signedIn: boolean, signOut: () => void) => {
       title: t("accountLayout.nav.account"),
       subMenuLinks: [
         {
-          title: t("nav.myDashboard"),
+          title: t("accountLayout.nav.overview"),
           href: "/my-account",
           iconElement: <Icon symbol="profile" size="medium" className="pr-2" />,
         },
         {
-          title: t("nav.myApplications"),
+          title: t("accountLayout.nav.applications"),
           href: "/my-applications",
           iconElement: <Icon symbol="application" size="medium" className="pr-2" />,
         },
         {
-          title: t("nav.accountSettings"),
+          title: t("accountSettings.title.sentenceCase"),
           href: "/account-settings",
           iconElement: <Icon symbol="settings" size="medium" className="pr-2" />,
         },
         {
-          title: t("nav.signOut"),
+          title: t("accountLayout.nav.signOut"),
           iconElement: <div className="w-6" />, // Empty div to keep the icon space
           onClick: () => {
             // FIXME: Setup Site alert message for logging out DAH-974

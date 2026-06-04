@@ -329,6 +329,8 @@ const SiteHeader = (props: SiteHeaderProps) => {
 
   const getAccountMenuLink = () => props.menuLinks.find((menuLink) => menuLink.subMenuLinks)
 
+  const getMobileNavMenuLinks = () => props.menuLinks.filter((menuLink) => !menuLink.subMenuLinks)
+
   const getMobileHeader = () => {
     const accountLink = getAccountMenuLink()
     if (!accountLink) return null
@@ -451,7 +453,7 @@ const SiteHeader = (props: SiteHeaderProps) => {
         closeLabel={props.strings?.close}
       >
         {buildMobileMenuOptions(
-          props.menuLinks,
+          getMobileNavMenuLinks(),
           "site-header__mobile-drawer-dropdown-item site-header__mobile-drawer-dropdown-item-sublink",
           "site-header__mobile-drawer-dropdown-item"
         )}
@@ -466,7 +468,7 @@ const SiteHeader = (props: SiteHeaderProps) => {
           <span className={"site-header__mobile-dropdown-container"}>
             <div className={"site-header__mobile-dropdown"}>
               {buildMobileMenuOptions(
-                props.menuLinks,
+                getMobileNavMenuLinks(),
                 "site-header__mobile-dropdown-item site-header__mobile-dropdown-item-sublink",
                 "site-header__mobile-dropdown-item"
               )}
@@ -563,7 +565,7 @@ const SiteHeader = (props: SiteHeaderProps) => {
   const getMobileMenu = () => {
     return props.mobileText ? (
       <button
-        className={"site-header__mobile-menu-text-button"}
+        className={`site-header__mobile-menu-text-button ${styles["mobile-menu-button"]}`}
         onClick={() => {
           mobileHeaderAction()
         }}
@@ -591,7 +593,7 @@ const SiteHeader = (props: SiteHeaderProps) => {
         }}
         icon={mobileMenu ? "closeSmall" : "hamburger"}
         iconSize="base"
-        className={"site-header__mobile-menu-button"}
+        className={`site-header__mobile-menu-button ${styles["mobile-menu-button"]}`}
         unstyled
       >
         <span className={"site-header__mobile-menu-button-text"}>
