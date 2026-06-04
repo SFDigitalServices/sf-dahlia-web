@@ -1053,7 +1053,7 @@ ShortFormApplicationController = (
         doubleSubmit = !! $scope.appIsSubmitted($scope.application)
         if $window.ACCOUNT_INFORMATION_PAGES_REACT is "true"
           currentUrl = window.location.origin
-          newUrl = "#{currentUrl}/my-applications?"
+          newUrl = "#{currentUrl}/account/applications?"
           if previousApp.id
             # user id should always be present, but we are being cautious
             AnalyticsService.trackApplicationAbandon($scope.listing.Id, AccountService.loggedInUser?.id, 'Already Submitted')

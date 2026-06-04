@@ -67,7 +67,7 @@ module Overrides
       if params[:redirect_url].present?
         params[:redirect_url]
       else
-        root_url + 'my-account'
+        root_url + 'account'
       end
     end
 
