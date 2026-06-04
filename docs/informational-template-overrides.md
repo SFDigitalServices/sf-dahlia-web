@@ -2,8 +2,6 @@
 
 This document tracks intentional page-specific overrides after the global informational layout cleanup.
 
-For role-based regression validation steps, see `docs/informational-style-regression-test-plan.md`.
-
 ## Shared Baseline Applied
 
 The following shared primitives are now used as the baseline for informational pages/components:
