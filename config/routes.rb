@@ -116,28 +116,17 @@ Rails.application.routes.draw do
   get '(:lang)/listings/:id/invite-to-apply' => 'invite_to#index', as: :invite_to_apply, lang: /(en|es|zh|tl)/
   get '(:lang)/listings/:id/invite-to-apply/documents' => 'invite_to#documents', lang: /(en|es|zh|tl)/
 
-  # New accounts layout
-  get '(:lang)/account' => 'account#account', lang: /(en|es|zh|tl)/, constraints: AccountLayoutConstraint.new
-  get '(:lang)/account/applications' => 'account#applications', lang: /(en|es|zh|tl)/, constraints: AccountLayoutConstraint.new
-  get '(:lang)/account/settings' => 'account#settings', lang: /(en|es|zh|tl)/, constraints: AccountLayoutConstraint.new
-  # Old account pages
-  get '(:lang)/my-account' => 'account#my_account', lang: /(en|es|zh|tl)/, constraints: AccountLayoutConstraint::FLAG_OFF
-  get '(:lang)/my-applications' => 'account#my_applications', lang: /(en|es|zh|tl)/, constraints: AccountLayoutConstraint::FLAG_OFF
-  get '(:lang)/account-settings' => 'account#account_settings', lang: /(en|es|zh|tl)/, constraints: AccountLayoutConstraint::FLAG_OFF
-  # Redirects from old URLs to new
-  get '/my-account', to: redirect('/account'), constraints: AccountLayoutConstraint.new
-  get '(:lang)/my-account', to: redirect('%{lang}/account'), lang: /(en|es|zh|tl)/, constraints: AccountLayoutConstraint.new
-  get '/my-applications', to: redirect('/account/applications'), constraints: AccountLayoutConstraint.new
-  get '(:lang)/my-applications', to: redirect('%{lang}/account/applications'), lang: /(en|es|zh|tl)/, constraints: AccountLayoutConstraint.new
-  get '/account-settings', to: redirect('/account/settings'), constraints: AccountLayoutConstraint.new
-  get '(:lang)/account-settings', to: redirect('%{lang}/account/settings'), lang: /(en|es|zh|tl)/, constraints: AccountLayoutConstraint.new
-  # Redirects from new URLs to old
-  get '/account', to: redirect('/my-account'), constraints: AccountLayoutConstraint::FLAG_OFF
-  get '(:lang)/account', to: redirect('%{lang}/my-account'), lang: /(en|es|zh|tl)/, constraints: AccountLayoutConstraint::FLAG_OFF
-  get '/account/applications', to: redirect('/my-applications'), constraints: AccountLayoutConstraint::FLAG_OFF
-  get '(:lang)/account/applications', to: redirect('%{lang}/my-applications'), lang: /(en|es|zh|tl)/, constraints: AccountLayoutConstraint::FLAG_OFF
-  get '/account/settings', to: redirect('/account-settings'), constraints: AccountLayoutConstraint::FLAG_OFF
-  get '(:lang)/account/settings', to: redirect('%{lang}/account-settings'), lang: /(en|es|zh|tl)/, constraints: AccountLayoutConstraint::FLAG_OFF
+  # Account pages
+  get '(:lang)/account' => 'account#account', lang: /(en|es|zh|tl)/
+  get '(:lang)/account/applications' => 'account#applications', lang: /(en|es|zh|tl)/
+  get '(:lang)/account/settings' => 'account#settings', lang: /(en|es|zh|tl)/
+  # Backwards compatibility to redirect old links
+  get '/my-account', to: redirect('/account')
+  get '(:lang)/my-account', to: redirect('%{lang}/account'), lang: /(en|es|zh|tl)/
+  get '/my-applications', to: redirect('/account/applications')
+  get '(:lang)/my-applications', to: redirect('%{lang}/account/applications'), lang: /(en|es|zh|tl)/
+  get '/account-settings', to: redirect('/account/settings')
+  get '(:lang)/account-settings', to: redirect('%{lang}/account/settings'), lang: /(en|es|zh|tl)/
 
   # fallback to Angular-only controller for all un-migrated pages.
   get '*path', to: 'angular#index', constraints: ->(req) { req.format == :html || req.format == '*/*' }
