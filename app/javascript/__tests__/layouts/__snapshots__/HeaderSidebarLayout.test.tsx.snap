@@ -143,7 +143,6 @@ exports[`<HeaderSidebarLayout /> Contact Bar renders Contact Information 1`] = `
         <nav
           aria-label="main navigation"
           class="site-header__container"
-          role="navigation"
         >
           <div
             class="site-header__base  site-header__base-wrapped"
