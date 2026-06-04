@@ -82,10 +82,6 @@ const getMenuLinks = (signedIn: boolean, signOut: () => void) => {
       href: "/listings/for-sale",
     },
     {
-      title: t("nav.myFavorites"),
-      href: "/favorites",
-    },
-    {
       title: t("nav.getAssistance"),
       href: "/get-assistance",
     },
@@ -93,7 +89,7 @@ const getMenuLinks = (signedIn: boolean, signOut: () => void) => {
 
   if (signedIn) {
     menuLinks.push({
-      title: t("nav.myAccount"),
+      title: t("accountLayout.nav.account"),
       subMenuLinks: [
         {
           title: t("nav.myDashboard"),

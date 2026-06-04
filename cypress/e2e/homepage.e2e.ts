@@ -149,25 +149,6 @@ describe("Homepage integration tests", () => {
       })
     })
 
-    describe("navigating to the favorites page", () => {
-      beforeEach(() => {
-        cy.intercept("api/v1/listings.json**", { fixture: "listings.json" }).as("listings")
-      })
-      it("navigates to the favorites page in english by default", () => {
-        cy.visit("/")
-        cy.findAndClickMenuItem("/favorites")
-        cy.wait("@listings")
-        cy.location("pathname").should("eq", "/favorites")
-      })
-
-      it("navigates to the favorites page in spanish", () => {
-        cy.visit("/es")
-        cy.findAndClickMenuItem("/favorites")
-        cy.wait("@listings")
-        cy.location("pathname").should("eq", "/es/favorites")
-      })
-    })
-
     describe("navigating to the get-assistance page", () => {
       it("navigates to the get-assistance page in english by default", () => {
         cy.visit("/")
