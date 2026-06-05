@@ -6,7 +6,7 @@ import PreferenceProofUploadField from "../../../../../pages/form/components/pre
 import { renderWithFormContextWrapper } from "../../../../__util__/renderUtils"
 import { uploadProofFile, deleteUploadedProofFile } from "../../../../../api/formApiService"
 
-jest.mock("../../../../api/formApiService", () => ({
+jest.mock("../../../../../api/formApiService", () => ({
   uploadProofFile: jest.fn(),
   deleteUploadedProofFile: jest.fn(),
 }))

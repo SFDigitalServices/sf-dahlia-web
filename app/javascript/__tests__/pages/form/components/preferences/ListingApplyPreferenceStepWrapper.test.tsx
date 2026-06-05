@@ -1,5 +1,5 @@
 import React from "react"
-import { screen } from "@testing-library/react"
+import { screen, waitFor } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
 import { t } from "@bloom-housing/ui-components"
 import ListingApplyPreferenceStepWrapper from "../../../../../pages/form/components/preferences/ListingApplyPreferenceStepWrapper"
@@ -9,19 +9,12 @@ import type { RailsListingPreference } from "../../../../../api/types/rails/list
 import { deleteUploadedProofFile } from "../../../../../api/formApiService"
 import { renderWithFormContextWrapper } from "../../../../__util__/renderUtils"
 
-jest.mock("../../../../api/formApiService", () => ({
+jest.mock("../../../../../api/formApiService", () => ({
   uploadProofFile: jest.fn(),
   deleteUploadedProofFile: jest.fn(),
 }))
 
 const mockDeleteUploadedProofFile = deleteUploadedProofFile as jest.Mock
-
-jest.mock("../../../../pages/form/components/preferences/PreferenceProofUploadField", () => {
-  const MockProofUploadField = (props: { proofTypeLabel: string }) => (
-    <div data-testid="proof-upload-field">{props.proofTypeLabel}</div>
-  )
-  return { __esModule: true, default: MockProofUploadField }
-})
 
 Object.defineProperty(window, "scrollTo", {
   value: jest.fn(),
@@ -96,8 +89,8 @@ const renderWrapper = ({
     primaryApplicantLastName: "Walker",
   },
   preferences,
-  pageTitle = "e2cLiveWorkPreference.title",
-  pageInstructions = "e2cLiveWorkPreference.instructions",
+  title = "e2cLiveWorkPreference.title",
+  description = "e2cLiveWorkPreference.instructions",
   greenHeader,
 }: {
   preferenceContents?: PreferenceContent[]
@@ -113,8 +106,8 @@ const renderWrapper = ({
   includeOptOut?: boolean
   formData?: Record<string, unknown>
   preferences?: RailsListingPreference[]
-  pageTitle?: string
-  pageInstructions?: string
+  title?: string
+  description?: string
   greenHeader?: boolean
 } = {}) => {
   const optOutFieldName = includeOptOut ? (optOut ?? "_certOptOut") : undefined
@@ -134,8 +127,8 @@ const renderWrapper = ({
 
   return renderWithFormContextWrapper(
     <ListingApplyPreferenceStepWrapper
-      pageTitle={pageTitle}
-      pageInstructions={pageInstructions}
+      title={title}
+      description={description}
       greenHeader={greenHeader}
       fieldNames={{
         claimedPreferences: "claimedPreferences",
@@ -261,10 +254,12 @@ describe("ListingApplyPreferenceStepWrapper", () => {
       "primaryApplicant"
     )
     await user.click(screen.getByText(t("t.next")))
-    expect(screen.getByText(t("error.pleaseCompletePreference"))).toBeInTheDocument()
+    expect(await screen.findByText(t("error.pleaseCompletePreference"))).toBeInTheDocument()
 
     await user.click(screen.getByLabelText(t("t.close")))
-    expect(screen.queryByText(t("error.pleaseCompletePreference"))).not.toBeInTheDocument()
+    await waitFor(() => {
+      expect(screen.queryByText(t("error.pleaseCompletePreference"))).not.toBeInTheDocument()
+    })
   })
 
   it("unchecks any claimed preference when opt-out is selected", async () => {
@@ -364,8 +359,8 @@ describe("ListingApplyPreferenceStepWrapper", () => {
     )
     await user.click(screen.getByText(t("t.next")))
 
-    expect(screen.getByText(t("error.pleaseCompletePreference"))).toBeInTheDocument()
-    expect(screen.getByText(t("error.pleaseCompletePreferenceContent"))).toBeInTheDocument()
+    expect(await screen.findByText(t("error.pleaseCompletePreference"))).toBeInTheDocument()
+    expect(await screen.findByText(t("error.pleaseCompletePreferenceContent"))).toBeInTheDocument()
   })
 
   it("renders multiple preference checkboxes", () => {
