@@ -31,11 +31,12 @@ const PreferenceToClaimCombo = ({
   onPreferenceCheckboxChange,
   listingPreferenceId,
   preferenceFieldNames,
-  preferenceFieldNames: { preferenceClaimed },
   subPreferenceContents,
 }: PreferenceToClaimComboProps) => {
   /* eslint-disable-next-line @typescript-eslint/unbound-method */
   const { register, watch, errors } = useFormContext()
+  const { preferenceClaimed } = preferenceFieldNames
+
   const preferenceComboClaimedValue = !!watch(preferenceClaimed)
   const subPreferenceClaimedValue: string = watch(subPreferenceClaimed)
 

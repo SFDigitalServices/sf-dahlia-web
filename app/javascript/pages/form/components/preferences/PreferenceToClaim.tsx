@@ -22,12 +22,12 @@ const PreferenceToClaim = ({
   listingPreferenceId,
   readMoreUrl,
   preferenceContent,
-  preferenceContent: { checkboxLabel, checkboxDescription },
   preferenceFieldNames,
-  preferenceFieldNames: { preferenceClaimed },
 }: PreferenceCheckboxProps) => {
   /* eslint-disable-next-line @typescript-eslint/unbound-method */
   const { register } = useFormContext()
+  const { preferenceClaimed } = preferenceFieldNames
+  const { checkboxLabel, checkboxDescription } = preferenceContent
 
   const checkBoxValue = useWatch({
     name: preferenceClaimed,

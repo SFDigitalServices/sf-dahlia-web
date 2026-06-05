@@ -56,11 +56,7 @@ export const showStep = (
 //   if (condition.customFunctionName) {
 //     return customFunctionRegistry[condition.customFunctionName](dataSources)
 //   }
-//   const value = dataSources[condition.dataSource][condition.dataKey]
-//   const processedCondition = condition.dataValueToMatch
-//     ? condition.dataValueToMatch === value
-//     : value
-//   return condition.negate ? !processedCondition : !!processedCondition
+//  ...
 // }
 
 export const calculateNextStep = (
