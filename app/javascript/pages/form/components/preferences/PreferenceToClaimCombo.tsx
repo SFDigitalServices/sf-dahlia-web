@@ -33,8 +33,13 @@ const PreferenceToClaimCombo = ({
   preferenceFieldNames,
   subPreferenceContents,
 }: PreferenceToClaimComboProps) => {
-  /* eslint-disable-next-line @typescript-eslint/unbound-method */
-  const { register, watch, errors } = useFormContext()
+  /* eslint-disable @typescript-eslint/unbound-method */
+  const {
+    register,
+    watch,
+    formState: { errors },
+  } = useFormContext()
+  /* eslint-enable @typescript-eslint/unbound-method */
   const { preferenceClaimed } = preferenceFieldNames
 
   const preferenceComboClaimedValue = !!watch(preferenceClaimed)

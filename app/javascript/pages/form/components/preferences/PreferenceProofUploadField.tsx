@@ -87,7 +87,7 @@ const PreferenceProofUploadField = ({
       })
   }
 
-  // TODO: DAH-4122 We also need to delete poof files in other places, similar
+  // TODO: DAH-4122 We also need to delete proof files in other places, similar
   // to Angular's `cancelPreference` function
   const handleDeleteFile = () => {
     if (!documentType) throw new Error(`Missing document type value for ${proofTypeFieldName}`)
@@ -187,8 +187,12 @@ const PreferenceProofUploadField = ({
       </div>
       <input className="hidden" {...getInputProps()} />
       {/* use hidden fields to register form data, manually update them with setValue()  */}
-      <input name={proofFileName} hidden ref={register({ required: t("error.fileMissing") })} />
-      <input name={proofFileUploadedAt} hidden ref={register()} />
+      <input
+        name={proofFileName}
+        type="hidden"
+        ref={register({ required: t("error.fileMissing") })}
+      />
+      <input name={proofFileUploadedAt} type="hidden" ref={register()} />
       {uploadStatus === "loading" && <Icon symbol="spinner" size="large" />}
       {fileName && (
         <Card className={styles["uploaded-file"]}>

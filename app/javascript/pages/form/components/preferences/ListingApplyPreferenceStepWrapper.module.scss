@@ -1,3 +1,7 @@
+.back-section {
+  margin-bottom: var(--seeds-s6);
+}
+
 .preference-section {
   margin-top: var(--seeds-s8);
   margin-bottom: var(--seeds-s8);
@@ -19,10 +23,17 @@
 
 .green-background {
   background-color: var(--seeds-color-green-100);
+  padding: var(--seeds-s2) var(--seeds-s8) var(--seeds-s8) !important;
+  margin: 0 !important;
 }
 
 .preference-content-wrapper {
   margin: 0 var(--seeds-s9) 0;
+}
+
+.preference-instructions {
+  font-size: var(--seeds-font-size-sm);
+  color: var(--seeds-color-gray-700);
 }
 
 .preference-checkbox {

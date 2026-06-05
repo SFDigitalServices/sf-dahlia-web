@@ -675,7 +675,7 @@
             "checkboxLabel": "e2cLiveWorkPreference.workSfPreference.title",
             "checkboxDescription": "e2cLiveWorkPreference.workSfPreference.description",
             "proofHouseholdMemberLabel": "label.applicantPreferencesDocumentName",
-            "proofTypeLabel": "label.preferenceProofAddressDocuments",
+            "proofTypeLabel": "label.preferenceProofDocuments",
             "proofTypeNote": "e2cLiveWorkPreference.documentMustShowCorrectNameForWork",
             "proofUploadButtonLabel": "label.uploadProofOfPreference"
           }

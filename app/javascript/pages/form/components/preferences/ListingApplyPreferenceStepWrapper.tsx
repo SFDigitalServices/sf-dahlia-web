@@ -32,7 +32,6 @@ interface ListingApplyPreferenceStepWrapperProps {
     checkboxDescription: string
     preferenceName: string
     subPreferenceSelectLabel: string
-    subPreferenceClaimedFieldName: string
   }
 }
 
@@ -104,7 +103,7 @@ const ListingApplyPreferenceStepWrapper = ({
     reset({
       ...(optOut && { [optOut]: optOutValue }),
       ...(subPreferenceClaimed && { [subPreferenceClaimed]: subPreferenceClaimedValue }),
-      claimedPreferences: defaultClaimedPreferencesValues,
+      [claimedPreferences]: defaultClaimedPreferencesValues,
     })
     /* eslint-disable-next-line react-hooks/exhaustive-deps */
   }, [reset])
@@ -135,7 +134,9 @@ const ListingApplyPreferenceStepWrapper = ({
     if (comboPreference) preferenceNames.push(comboPreference.preferenceName)
 
     for (const preferenceName of preferenceNames) {
-      const preferenceFieldNames = Object.values(generatePreferenceFieldNames(preferenceName))
+      const preferenceFieldNames = Object.values(
+        generatePreferenceFieldNames(claimedPreferences, preferenceName)
+      )
       if (
         preferenceFieldNames.some(
           (fieldName) =>
@@ -143,6 +144,9 @@ const ListingApplyPreferenceStepWrapper = ({
         )
       )
         return true
+    }
+    if (comboPreference && subPreferenceClaimed && errors[subPreferenceClaimed]) {
+      return true
     }
     return false
   }
@@ -167,9 +171,11 @@ const ListingApplyPreferenceStepWrapper = ({
     if (isChecked) {
       clearAllErrors()
       preferenceContents.forEach((content) => {
-        setValue(`claimedPreferences.${content.preferenceName}.preferenceClaimed`, false)
+        setValue(`${claimedPreferences}.${content.preferenceName}.preferenceClaimed`, false)
       })
-      setValue(`claimedPreferences.${comboPreference?.preferenceName}.preferenceClaimed`, false)
+    }
+    if (isChecked && comboPreference) {
+      setValue(`${claimedPreferences}.${comboPreference.preferenceName}.preferenceClaimed`, false)
     }
   }
 
@@ -192,7 +198,7 @@ const ListingApplyPreferenceStepWrapper = ({
   const onSubmit = (data: { [key: string]: boolean | Record<string, ClaimedPreference> }) => {
     const optOutValue = !!optOut && (data[optOut] as boolean)
     const subPreferenceClaimedValue = subPreferenceClaimed && data[subPreferenceClaimed]
-    const claimedPreferencesData = data.claimedPreferences as Record<string, ClaimedPreference>
+    const claimedPreferencesData = data[claimedPreferences] as Record<string, ClaimedPreference>
 
     const checkboxValues = [
       ...Object.values(claimedPreferencesData).map((val) => val.preferenceClaimed),
@@ -232,7 +238,7 @@ const ListingApplyPreferenceStepWrapper = ({
   return (
     <FormProvider {...formMethods}>
       <Card.Section className={greenHeader ? styles["back-section"] : ""}>
-        <Button variant="text" className={styles["back-button"]} onClick={handlePrevStep}>
+        <Button variant="text" className={stepStyles["back-button"]} onClick={handlePrevStep}>
           {t("t.back")}
         </Button>
       </Card.Section>
@@ -265,10 +271,16 @@ const ListingApplyPreferenceStepWrapper = ({
               subPreferenceClaimed={subPreferenceClaimed}
               showRequiredCheckboxError={showRequiredCheckboxError}
               onPreferenceCheckboxChange={handlePreferenceCheckboxChange}
-              preferenceFieldNames={generatePreferenceFieldNames(comboPreference.preferenceName)}
+              preferenceFieldNames={generatePreferenceFieldNames(
+                claimedPreferences,
+                comboPreference.preferenceName
+              )}
               subPreferenceContents={preferenceContents}
               listingPreferenceId={
                 getPreferenceData(preferences, comboPreference.preferenceName).listingPreferenceID
+              }
+              readMoreUrl={
+                getPreferenceData(preferences, comboPreference.preferenceName).readMoreUrl
               }
             />
           )}
@@ -283,7 +295,10 @@ const ListingApplyPreferenceStepWrapper = ({
                 }
                 readMoreUrl={getPreferenceData(preferences, content.preferenceName).readMoreUrl}
                 preferenceContent={content}
-                preferenceFieldNames={generatePreferenceFieldNames(content.preferenceName)}
+                preferenceFieldNames={generatePreferenceFieldNames(
+                  claimedPreferences,
+                  content.preferenceName
+                )}
               />
             ))}
           {optOut && (

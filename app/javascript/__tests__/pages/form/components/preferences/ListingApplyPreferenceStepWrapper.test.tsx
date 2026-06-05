@@ -101,7 +101,6 @@ const renderWrapper = ({
     checkboxDescription: string
     preferenceName: string
     subPreferenceSelectLabel: string
-    subPreferenceClaimedFieldName: string
   }
   includeOptOut?: boolean
   formData?: Record<string, unknown>
@@ -380,7 +379,6 @@ describe("ListingApplyPreferenceStepWrapper", () => {
         checkboxDescription: "e2cLiveWorkPreference.liveWorkSfPreference.description",
         preferenceName: "liveWorkInSf",
         subPreferenceSelectLabel: "label.preferenceOptionToClaim",
-        subPreferenceClaimedFieldName: "_liveOrWorkInSfClaimedPreference",
       },
     })
     const user = userEvent.setup()

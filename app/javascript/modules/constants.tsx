@@ -12,6 +12,7 @@ export const PREFERENCES: Record<string, string> = {
   generalLottery: "generalLottery",
   hud221d3: "HUD 221(d)(3) Statutory Preference; Federal or Presidential Disasters (HUD 221)",
   liveWorkInSf: "Live or Work in San Francisco Preference",
+  // live/work is a single pref in Salesforce, but we make a distinction in the UI
   liveInSf: "Live or Work in San Francisco Preference",
   workInSf: "Live or Work in San Francisco Preference",
   neighborhoodResidence: "Neighborhood Resident Housing Preference (NRHP)",

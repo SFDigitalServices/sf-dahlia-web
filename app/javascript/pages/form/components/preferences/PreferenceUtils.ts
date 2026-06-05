@@ -37,14 +37,16 @@ export type ClaimedPreference = {
 
 // dot notation for nested values
 // https://react-hook-form-website-git-leagcy-hook-form.vercel.app/v6/api/#register
-export const generatePreferenceFieldNames = (preferenceName: string): PreferenceFieldNames => ({
-  preferenceClaimed: `claimedPreferences.${preferenceName}.preferenceClaimed`,
-  subPreferenceClaimed: `claimedPreferences.${preferenceName}.preferenceSelection`,
-  householdMemberId: `claimedPreferences.${preferenceName}.householdMemberId`,
-  certificateNumber: `claimedPreferences.${preferenceName}.certificateNumber`,
-  proofType: `claimedPreferences.${preferenceName}.proofType`,
-  proofFileName: `claimedPreferences.${preferenceName}.proofFileName`,
-  proofFileUploadedAt: `claimedPreferences.${preferenceName}.proofFileUploadedAt`,
+export const generatePreferenceFieldNames = (
+  claimedPreferencesFieldName: string,
+  preferenceName: string
+): PreferenceFieldNames => ({
+  preferenceClaimed: `${claimedPreferencesFieldName}.${preferenceName}.preferenceClaimed`,
+  householdMemberId: `${claimedPreferencesFieldName}.${preferenceName}.householdMemberId`,
+  certificateNumber: `${claimedPreferencesFieldName}.${preferenceName}.certificateNumber`,
+  proofType: `${claimedPreferencesFieldName}.${preferenceName}.proofType`,
+  proofFileName: `${claimedPreferencesFieldName}.${preferenceName}.proofFileName`,
+  proofFileUploadedAt: `${claimedPreferencesFieldName}.${preferenceName}.proofFileUploadedAt`,
 })
 
 export const getPreferenceData = (

@@ -37,8 +37,12 @@ const PreferenceFields = ({
     proofFileUploadedAt,
   },
 }: PreferenceFieldsProps) => {
-  /* eslint-disable-next-line @typescript-eslint/unbound-method */
-  const { register, errors } = useFormContext()
+  /* eslint-disable @typescript-eslint/unbound-method */
+  const {
+    register,
+    formState: { errors },
+  } = useFormContext()
+  /* eslint-enable @typescript-eslint/unbound-method */
   const { sessionId, staticData, formData } = useFormEngineContext()
   /* eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion */
   const listing = staticData.listing!
