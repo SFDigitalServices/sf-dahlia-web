@@ -43,7 +43,8 @@ const PreferenceFields = ({
   /* eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion */
   const listing = staticData.listing!
 
-  // TODO: look up eligibility of household members for particular preferences, like in `Service.eligibleMembers`
+  // TODO: DAH-4161
+  // look up eligibility of household members for particular preferences, like in `Service.eligibleMembers`
   const eligibleHouseholdMembers = allHouseholdMembers(formData)
 
   return (
