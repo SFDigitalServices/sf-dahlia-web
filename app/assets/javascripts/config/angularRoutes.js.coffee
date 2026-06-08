@@ -309,7 +309,7 @@
       ]
     })
     .state('dahlia.account-settings', {
-      url: '/account-settings?reconfirmed'
+      url: '/account/settings?reconfirmed'
       params:
         reconfirmed: null
       views:
@@ -339,7 +339,7 @@
         ]
     })
     .state('dahlia.my-account', {
-      url: '/my-account?accountConfirmed'
+      url: '/account?accountConfirmed'
       params:
         skipConfirm:
           squash: true
@@ -356,7 +356,7 @@
         ]
     })
     .state('dahlia.my-applications', {
-      url: '/my-applications'
+      url: '/account/applications'
       params:
         skipConfirm:
           squash: true
