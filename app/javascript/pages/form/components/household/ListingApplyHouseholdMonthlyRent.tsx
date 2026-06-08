@@ -23,6 +23,7 @@ const ListingApplyHouseholdMonthlyRent = ({
     setValue,
     register,
     getValues,
+    clearErrors,
     formState: { errors },
   } = useFormContext()
   const doesNotPayRent = useWatch({ name: groupedAddress.doesNotPayRent })
@@ -30,8 +31,9 @@ const ListingApplyHouseholdMonthlyRent = ({
   useEffect(() => {
     if (doesNotPayRent) {
       setValue(groupedAddress.householdMonthlyRent, "")
+      clearErrors(groupedAddress.householdMonthlyRent)
     }
-  }, [doesNotPayRent, groupedAddress.householdMonthlyRent, setValue])
+  }, [doesNotPayRent, clearErrors, groupedAddress.householdMonthlyRent, setValue])
 
   const getLabel = () => {
     if (isPrimaryApplicant && groupedAddress.members.length === 1) {

@@ -359,17 +359,7 @@
         "title": "c5HouseholdMonthlyRent.titleYou",
         "householdTitle": "c5HouseholdMonthlyRent.titleHousehold",
         "description": "c5HouseholdMonthlyRent.description"
-      },
-      "children": [
-        {
-          "componentName": "ListingApplyHouseholdMonthlyRent",
-          "props": {
-            "fieldNames": {
-              "groupedHouseholdAddresses": "groupedHouseholdAddresses"
-            }
-          }
-        }
-      ]
+      }
     },
     {
       "stepInfo": {

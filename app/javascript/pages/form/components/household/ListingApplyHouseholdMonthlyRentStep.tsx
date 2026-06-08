@@ -89,8 +89,8 @@ const ListingApplyHouseholdMonthlyRentStep = ({
         } else {
           householdAddresses.push({
             address: memberAddress,
-            householdMonthlyRent: `householdMonthlyRent_${member.id}`,
-            doesNotPayRent: `householdDoesNotPayRent_${member.id}`,
+            householdMonthlyRent: `householdMonthlyRent_${member.firstName}`,
+            doesNotPayRent: `householdDoesNotPayRent_${member.firstName}`,
             members: [
               {
                 firstName: member.firstName,
