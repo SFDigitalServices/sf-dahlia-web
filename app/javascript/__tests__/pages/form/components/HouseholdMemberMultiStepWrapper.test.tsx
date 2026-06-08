@@ -1,13 +1,29 @@
 import React from "react"
-import { screen } from "@testing-library/react"
+import { screen, waitFor } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { t } from "@bloom-housing/ui-components"
 import HouseholdMemberMultiStepWrapper from "../../../../pages/form/components/household/HouseholdMemberMultiStepWrapper"
 import { renderWithFormContextWrapper } from "../../../__util__/renderUtils"
+import { locateVerifiedAddress } from "../../../../api/formApiService"
+
+jest.mock("../../../../api/formApiService", () => ({
+  locateVerifiedAddress: jest.fn(),
+}))
+
+const mockLocateVerifiedAddress = locateVerifiedAddress as jest.Mock
 
 describe("HouseholdMemberMultiStepWrapper", () => {
   beforeEach(() => {
     jest.clearAllMocks()
+    mockLocateVerifiedAddress.mockResolvedValue({
+      address: {
+        street1: "123 Main St",
+        street2: "Apt 4B",
+        city: "San Francisco",
+        state: "CA",
+        zip: "94105",
+      },
+    })
   })
 
   const renderHouseholdMemberMultiStepWrapper = (formData = {}) => {
@@ -149,5 +165,116 @@ describe("HouseholdMemberMultiStepWrapper", () => {
 
     await user.click(screen.getByText(t("label.householdMemberCancel")))
     expect(screen.getByText(t("c2HouseholdMembers.title"))).toBeInTheDocument()
+  })
+
+  it("does not check address verification when household member shares applicant address", async () => {
+    const user = userEvent.setup()
+
+    renderHouseholdMemberMultiStepWrapper()
+
+    await user.click(screen.getByText("+ " + t("label.addHouseholdMember")))
+
+    // fill required fields
+    await user.type(screen.getByLabelText(/first name/i), "John")
+    await user.type(screen.getByLabelText(/last name/i), "Doe")
+
+    // select same address = yes
+    const yesButtons = screen.getAllByLabelText(t("t.yes"))
+    await user.click(yesButtons[0])
+
+    await user.click(
+      screen.getByRole("button", {
+        name: t("label.householdMemberSave"),
+      })
+    )
+
+    expect(locateVerifiedAddress).not.toHaveBeenCalled()
+  })
+
+  it("shows address verification screen when address validation succeeds", async () => {
+    renderHouseholdMemberMultiStepWrapper()
+
+    const user = userEvent.setup()
+
+    // open form
+    await user.click(screen.getByText("+ " + t("label.addHouseholdMember")))
+
+    // fill required fields
+    await user.type(screen.getByLabelText(/first name/i), "John")
+    await user.type(screen.getByLabelText(/last name/i), "Smith")
+    await user.type(screen.getByLabelText("Month"), "12")
+    await user.type(screen.getByLabelText("Day"), "12")
+    await user.type(screen.getByLabelText("Year"), "1990")
+
+    const noButtons = screen.getAllByLabelText(t("t.no"))
+    await user.click(noButtons[0]) // different address
+
+    const yesButtons = screen.getAllByLabelText(t("t.yes"))
+    await user.click(yesButtons[1]) // works in sf
+
+    await user.type(screen.getByLabelText(/street/i), "123 Main St")
+    await user.type(screen.getByLabelText(/city/i), "San Francisco")
+    await user.type(screen.getByLabelText(/zip/i), "94105")
+
+    await user.selectOptions(
+      screen.getByLabelText(t("label.householdMemberRelationship")),
+      "Spouse"
+    )
+
+    await user.click(
+      screen.getByRole("button", {
+        name: t("label.householdMemberSave"),
+      })
+    )
+
+    await waitFor(() => {
+      expect(mockLocateVerifiedAddress).toHaveBeenCalled()
+    })
+  })
+  it("saves household member after address confirmation", async () => {
+    const { mockSaveFormData } = renderHouseholdMemberMultiStepWrapper()
+    const user = userEvent.setup()
+
+    await user.click(screen.getByText("+ " + t("label.addHouseholdMember")))
+
+    await user.type(screen.getByLabelText(/first name/i), "John")
+    await user.type(screen.getByLabelText(/last name/i), "Smith")
+    await user.type(screen.getByLabelText("Month"), "12")
+    await user.type(screen.getByLabelText("Day"), "12")
+    await user.type(screen.getByLabelText("Year"), "1990")
+
+    const noButtons = screen.getAllByLabelText(t("t.no"))
+    await user.click(noButtons[0])
+    await user.click(noButtons[1])
+
+    await user.type(screen.getByLabelText(/street/i), "123 Main St")
+    await user.type(screen.getByLabelText(/city/i), "San Francisco")
+    await user.type(screen.getByLabelText(/zip/i), "94105")
+
+    await user.selectOptions(
+      screen.getByLabelText(t("label.householdMemberRelationship")),
+      "Parent"
+    )
+
+    await user.click(
+      screen.getByRole("button", {
+        name: t("label.householdMemberSave"),
+      })
+    )
+
+    await waitFor(() => {
+      expect(mockLocateVerifiedAddress).toHaveBeenCalled()
+    })
+
+    expect(screen.getByText(t("b2aVerifyAddress.title"))).toBeInTheDocument()
+
+    await user.click(
+      screen.getByRole("button", {
+        name: t("t.next"),
+      })
+    )
+
+    expect(mockSaveFormData).toHaveBeenCalled()
+    expect(screen.getByText("John Smith")).toBeInTheDocument()
   })
 })
