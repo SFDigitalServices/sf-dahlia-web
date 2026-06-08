@@ -16,7 +16,6 @@ const ListingApplyHouseholdMonthlyRent = ({
   groupedAddress,
   isPrimaryApplicant,
 }: {
-  key: string
   groupedAddress: GroupedAddress
   isPrimaryApplicant: boolean
 }) => {
