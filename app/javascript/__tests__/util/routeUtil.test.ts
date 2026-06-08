@@ -1,13 +1,11 @@
 import {
   getAssistancePath,
-  getFavoritesPath,
   getMyAccountSettingsPath,
   getApplicationPath,
   getMyAccountPath,
   getNewLanguagePath,
   getRentalDirectoryPath,
   getSaleDirectoryPath,
-  getSignInPath,
   getForgotPasswordPath,
   createPath,
   getSignInRedirectUrl,
@@ -29,16 +27,6 @@ describe("routeUtil", () => {
     it("returns the correct path for getAssistancePath", () => {
       expect(getAssistancePath("/es/sign-in")).toBe("/es/get-assistance")
       expect(getAssistancePath("")).toBe("/get-assistance")
-    })
-
-    it("returns the correct path for getSignInPath", () => {
-      expect(getSignInPath("/es/favorites")).toBe("/es/sign-in")
-      expect(getSignInPath("")).toBe("/sign-in")
-    })
-
-    it("returns the correct path for getFavoritesPath", () => {
-      expect(getFavoritesPath("/es/sign-in")).toBe("/es/favorites")
-      expect(getFavoritesPath("")).toBe("/favorites")
     })
 
     it("returns the correct path for getMyAccountPath", () => {
