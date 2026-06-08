@@ -66,7 +66,7 @@ describe("authApiService", () => {
           DOB: "1980-01-01",
         },
         locale: "en",
-        confirm_success_url: "https://dahlia-full.herokuapp.com/my-account",
+        confirm_success_url: "https://dahlia-full.herokuapp.com/account",
         config_name: "default",
       }
       const storageSpy = jest.spyOn(Storage.prototype, "setItem")
