@@ -22,7 +22,7 @@
             "phone": "(415) 928–5910"
         },
         {
-            "fullName": "BALANCE",
+            "fullName": "balance",
             "services": [
                 "rental",
                 "ownership"
@@ -40,8 +40,8 @@
                 },
                 {
                     "label_key": "assistance.housingCounselors.counselor.addressLabel.hubByApptOnly",
-                    "street": "5172 3rd Street",
-                    "cityState": "San Francisco, CA 94124"
+                    "street": "150 Executive Park Blvd, Suite #4650",
+                    "cityState": "San Francisco, CA 94134"
                 }
             ],
             "website": "https://www.balancepro.org/workshops/",

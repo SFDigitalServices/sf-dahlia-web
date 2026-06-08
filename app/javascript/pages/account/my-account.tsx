@@ -6,7 +6,7 @@ import { Icon, t, type UniversalIconType } from "@bloom-housing/ui-components"
 import {
   AppPages,
   getMyAccountSettingsPath,
-  getMyApplicationsPath,
+  getApplicationPath,
   RedirectType,
 } from "../../util/routeUtil"
 import { renderInlineMarkup } from "../../util/languageUtil"
@@ -69,7 +69,7 @@ const MyAccount = (_props: MyAccountProps) => {
             <AccountDashCard
               title={t("accountDashboard.myApplications.title")}
               description={t("accountDashboard.myApplications.description")}
-              link={`${getMyApplicationsPath()}?react=true`} // TODO: Remove react=true when we have the Accounts flag set to true in CircleCI
+              link={getApplicationPath()}
               icon="application"
               removeBottomBorder
             />
@@ -77,7 +77,7 @@ const MyAccount = (_props: MyAccountProps) => {
             <AccountDashCard
               title={t("accountSettings.title.sentenceCase")}
               description={t("accountDashboard.accountSettings.description")}
-              link={`${getMyAccountSettingsPath()}?react=true`}
+              link={getMyAccountSettingsPath()}
               icon="settings"
             />
           </div>

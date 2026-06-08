@@ -95,7 +95,7 @@ const TaxDocuments = ({ submitYourInfoLink }: { submitYourInfoLink: string }) =>
         <li>{renderInlineMarkup(t("inviteToApplyPage.documents.taxDocuments.p6"))}</li>
         <li>{renderInlineMarkup(t("inviteToApplyPage.documents.taxDocuments.p7"))}</li>
       </ul>
-      <div className={styles.infoSubSection}>
+      <div className={`${styles.infoSubSection} ${styles.accordionContainer}`}>
         <ContentAccordion
           customBarContent={t("inviteToApplyPage.documents.taxDocuments.p8")}
           customExpandedContent={
@@ -154,7 +154,7 @@ const ProofOfIncome = ({ submitYourInfoLink }: { submitYourInfoLink: string }) =
         <li>{renderInlineMarkup(t("inviteToApplyPage.documents.proofOfIncome.p8"))}</li>
         <li>{renderInlineMarkup(t("inviteToApplyPage.documents.proofOfIncome.p9"))}</li>
       </ul>
-      <div className={styles.infoSubSection}>
+      <div className={`${styles.infoSubSection} ${styles.accordionContainer}`}>
         <ContentAccordion
           customBarContent={t("inviteToApplyPage.documents.proofOfIncome.p10")}
           customExpandedContent={
