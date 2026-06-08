@@ -38,8 +38,8 @@ export const createAccount = async (
     locale: getCurrentLanguage(),
     confirm_success_url:
       process.env.NODE_ENV !== "production"
-        ? "https://dahlia-full.herokuapp.com/my-account"
-        : "https://housing.sfgov.org/my-account",
+        ? "https://dahlia-full.herokuapp.com/account"
+        : "https://housing.sfgov.org/account",
     config_name: "default",
   }).then(({ data }: AxiosResponse<UserData>) => {
     return data.data

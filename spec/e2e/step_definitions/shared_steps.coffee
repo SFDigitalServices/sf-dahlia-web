@@ -5,7 +5,7 @@ pageUrls = {
   Contact: 'contact'
   Income: 'income'
   'Income Vouchers': 'income-vouchers'
-  'My Applications': 'my-applications'
+  'My Applications': 'account/applications'
   Name: 'name'
   Prerequisites: 'prerequisites'
   Priorities: 'household-priorities'
