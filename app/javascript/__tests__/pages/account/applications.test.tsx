@@ -5,12 +5,10 @@ import {
   mockWindowLocation,
   restoreWindowLocation,
 } from "../../__util__/renderUtils"
-import MyApplications, {
-  determineApplicationItemList,
-} from "../../../pages/account/my-applications"
+import ApplicationsPage from "../../../pages/account/applications"
 import React from "react"
 import { authenticatedGet, authenticatedDelete } from "../../../api/apiService"
-import { fireEvent, render, screen, waitFor, within } from "@testing-library/react"
+import { fireEvent, screen, waitFor, within } from "@testing-library/react"
 import { applicationWithOpenListing } from "../../data/RailsApplication/application-with-open-listing"
 import { Application } from "../../../api/types/rails/application/RailsApplication"
 import { openSaleListing } from "../../data/RailsSaleListing/listing-sale-open"
@@ -39,12 +37,10 @@ jest.mock("@bloom-housing/ui-seeds", () => {
   }
 })
 
-describe("<MyApplications />", () => {
+describe("<ApplicationsPage />", () => {
   let originalLocation: Location
 
   beforeEach(() => {
-    // The below line prevents @axe-core from throwing an error
-    // when the html tag does not have a lang attribute
     document.documentElement.lang = "en"
     originalLocation = mockWindowLocation()
   })
@@ -59,10 +55,10 @@ describe("<MyApplications />", () => {
     })
 
     it("redirects to the sign in page", async () => {
-      const { queryByText } = await renderAndLoadAsync(<MyApplications assetPaths={{}} />)
+      const { queryByRole } = await renderAndLoadAsync(<ApplicationsPage assetPaths={{}} />)
 
       expect(window.location.assign).toHaveBeenCalledWith("/sign-in?redirect=applications")
-      expect(queryByText("My applications")).toBeNull()
+      expect(queryByRole("heading", { name: "My applications", level: 1 })).toBeNull()
     })
   })
 
@@ -77,31 +73,34 @@ describe("<MyApplications />", () => {
     })
 
     it("shows the correct header text", async () => {
-      const { getByText } = await renderAndLoadAsync(<MyApplications assetPaths={{}} />)
-      expect(getByText("My applications")).not.toBeNull()
+      await renderAndLoadAsync(<ApplicationsPage assetPaths={{}} />)
+      expect(screen.getByRole("heading", { name: "My applications", level: 1 })).not.toBeNull()
     })
 
     it("calls getApplications", async () => {
-      await renderAndLoadAsync(<MyApplications assetPaths={{}} />)
+      await renderAndLoadAsync(<ApplicationsPage assetPaths={{}} />)
       expect(authenticatedGet).toHaveBeenCalledWith("/api/v1/account/my-applications")
     })
 
-    describe("determineApplicationItemList", () => {
-      it("should render loading state", () => {
-        const { getByTestId } = render(determineApplicationItemList(true, "", [], () => {}))
+    describe("application list rendering", () => {
+      it("should render loading state", async () => {
+        ;(authenticatedGet as jest.Mock).mockReturnValue(new Promise(() => {}))
+        const { getByTestId } = await renderAndLoadAsync(<ApplicationsPage assetPaths={{}} />)
         expect(getByTestId("loading-spinner")).toBeInTheDocument()
       })
 
-      it("should render error state", () => {
-        const { container } = render(determineApplicationItemList(false, "Error", [], () => {}))
-        expect(container.textContent).toBe(
-          "There was a problem loading your applications. Try refreshing the page. If the problem continues, send an email to sfhousinginfo@sfgov.org."
-        )
+      it("should render error state", async () => {
+        ;(authenticatedGet as jest.Mock).mockRejectedValue(new Error("Error"))
+        const { getByText } = await renderAndLoadAsync(<ApplicationsPage assetPaths={{}} />)
+        expect(
+          getByText(/There was a problem loading your applications\. Try refreshing the page\./i)
+        ).toBeInTheDocument()
       })
 
-      it("should render no applications state", () => {
-        const { getByText, getByRole } = render(
-          determineApplicationItemList(false, "", [], () => {})
+      it("should render no applications state", async () => {
+        ;(authenticatedGet as jest.Mock).mockResolvedValue({ data: { applications: [] } })
+        const { getByText, getByRole } = await renderAndLoadAsync(
+          <ApplicationsPage assetPaths={{}} />
         )
         expect(
           getByText("It looks like you haven't applied to any listings yet.")
@@ -110,7 +109,7 @@ describe("<MyApplications />", () => {
         expect(getByRole("link", { name: /browse sales/i })).toBeInTheDocument()
       })
 
-      it("should render applications", () => {
+      it("should render applications", async () => {
         const applications: Application[] = [
           applicationWithOpenListing,
           {
@@ -118,9 +117,10 @@ describe("<MyApplications />", () => {
             listing: openSaleListing,
           },
         ]
+        ;(authenticatedGet as jest.Mock).mockResolvedValue({ data: { applications } })
 
-        const { getByRole, queryAllByRole } = render(
-          determineApplicationItemList(false, "", applications, () => {})
+        const { getByRole, queryAllByRole } = await renderAndLoadAsync(
+          <ApplicationsPage assetPaths={{}} />
         )
 
         expect(getByRole("heading", { name: /Rental Units/i, level: 2 })).toBeInTheDocument()
@@ -145,21 +145,19 @@ describe("<MyApplications />", () => {
         ;(authenticatedDelete as jest.Mock).mockResolvedValue({ data: {} })
       })
 
-      it("should display the delete button for an unsubmitted application", () => {
-        const { getByRole } = render(
-          determineApplicationItemList(false, "", applications, () => {})
-        )
+      it("should display the delete button for an unsubmitted application", async () => {
+        const { getByRole } = await renderAndLoadAsync(<ApplicationsPage assetPaths={{}} />)
         expect(getByRole("button", { name: /Delete/i })).toBeInTheDocument()
       })
 
       it("should successfully call deleteApplication when the delete button is clicked", async () => {
         await renderAndLoadAsync(
           <>
-            <MyApplications assetPaths={{}} />
+            <ApplicationsPage assetPaths={{}} />
             <div id="seeds-overlay-portal" />
           </>
         )
-        expect(screen.getByText("My applications")).not.toBeNull()
+        expect(screen.getByRole("heading", { name: "My applications", level: 1 })).not.toBeNull()
 
         fireEvent.click(screen.getByRole("button", { name: /Delete/i }))
 
@@ -197,7 +195,7 @@ describe("<MyApplications />", () => {
 
     it("renders the correct double submit modal", async () => {
       window.location.href = "http://dahlia.com?doubleSubmit=true"
-      await renderAndLoadAsync(<MyApplications assetPaths={{}} />)
+      await renderAndLoadAsync(<ApplicationsPage assetPaths={{}} />)
       const modal = screen.getByTestId("modalMock")
       within(modal).getByRole("link", {
         name: /dahliahousingportal@sfgov\.org/i,
@@ -213,7 +211,7 @@ describe("<MyApplications />", () => {
       })
 
       window.location.href = "http://dahlia.com?alreadySubmittedId=a0o6s000001cn02AAA"
-      await renderAndLoadAsync(<MyApplications assetPaths={{}} />)
+      await renderAndLoadAsync(<ApplicationsPage assetPaths={{}} />)
       const modal = screen.getByTestId("modalMock")
       within(modal).getByText(/submitted: june 5, 2024/i)
       const button = within(modal).getByRole("link", {

@@ -7,7 +7,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import Layout from "../../layouts/Layout"
 import AccountLayout from "../../layouts/AccountLayout"
 import withAppSetup from "../../layouts/withAppSetup"
-import { AppPages, RedirectType, getApplicationsPath, getSettingsPath } from "../../util/routeUtil"
+import {
+  AppPages,
+  RedirectType,
+  getApplicationPath,
+  getMyAccountSettingsPath,
+  getMyAccountContactPath,
+} from "../../util/routeUtil"
 import UserContext from "../../authentication/context/UserContext"
 import { withAuthentication } from "../../authentication/withAuthentication"
 import styles from "./account.module.scss"
@@ -18,14 +24,14 @@ const overviewSections = [
     heading: "accountLayout.nav.applications",
     text: "accountLayout.account.p1",
     buttonLabel: "accountLayout.account.seeApps",
-    href: getApplicationsPath(),
+    href: getApplicationPath(),
   },
   {
     icon: "settings",
     heading: "accountSettings.title.sentenceCase",
     text: "accountLayout.account.p2",
     buttonLabel: "accountLayout.account.edit",
-    href: getSettingsPath(),
+    href: getMyAccountSettingsPath(),
   },
 ]
 
@@ -60,29 +66,32 @@ const OverviewSection = ({
 )
 
 const AccountOverview = ({ signOut, hasButton }: { signOut: () => void; hasButton: boolean }) => (
-  <Tabs
-    className="vertical-sidebar-layout"
-    navigation={hasButton}
-    navigationLabel={hasButton && t("accountLayout.nav.title")}
-    onSelect={!hasButton && (() => false)}
-  >
-    <Tabs.TabList>
-      {overviewSections.map((section) => (
-        <Tabs.Tab
-          key={section.href}
-          className={styles.overviewSection}
-          href={hasButton && section.href}
-        >
-          <OverviewSection {...section} />
+  <>
+    <Button href={getMyAccountContactPath()}> Change contact info</Button>
+    <Tabs
+      className="vertical-sidebar-layout"
+      navigation={hasButton}
+      navigationLabel={hasButton && t("accountLayout.nav.title")}
+      onSelect={!hasButton && (() => false)}
+    >
+      <Tabs.TabList>
+        {overviewSections.map((section) => (
+          <Tabs.Tab
+            key={section.href}
+            className={styles.overviewSection}
+            href={hasButton && section.href}
+          >
+            <OverviewSection {...section} />
+          </Tabs.Tab>
+        ))}
+        <Tabs.Tab className={styles.overviewFooter}>
+          <Button variant="text" onClick={signOut} className={styles.signOut}>
+            {t("accountLayout.account.signOut")}
+          </Button>
         </Tabs.Tab>
-      ))}
-      <Tabs.Tab className={styles.overviewFooter}>
-        <Button variant="text" onClick={signOut} className={styles.signOut}>
-          {t("accountLayout.account.signOut")}
-        </Button>
-      </Tabs.Tab>
-    </Tabs.TabList>
-  </Tabs>
+      </Tabs.TabList>
+    </Tabs>
+  </>
 )
 
 const Account = () => {
@@ -104,5 +113,5 @@ const Account = () => {
 }
 
 export default withAppSetup(withAuthentication(Account, { redirectType: RedirectType.Account }), {
-  pageName: AppPages.MyAccount,
+  pageName: AppPages.Account,
 })

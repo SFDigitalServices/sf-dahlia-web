@@ -96,7 +96,7 @@ describe("<ResetPassword />", () => {
           password_confirmation: "password1",
         })
       )
-      expect(window.location.assign).toHaveBeenCalledWith("/my-applications")
+      expect(window.location.assign).toHaveBeenCalledWith("/account/applications")
     })
 
     it("shows an error message when the server responds with an error", async () => {

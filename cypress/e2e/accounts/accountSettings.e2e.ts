@@ -1,4 +1,5 @@
 import { userObjectGenerator } from "../../support/util"
+import { interceptUnleashFlags } from "../../support/util"
 
 const AUTH = {
   status: "success",
@@ -17,10 +18,10 @@ const AUTH = {
 
 describe("Account Settings", () => {
   it("runs through the account settings page", () => {
+    interceptUnleashFlags()
     cy.signIn()
-    cy.addReactQueryParam()
 
-    cy.get('a[href="/account-settings?react=true"]').click()
+    cy.visit("/account/settings")
     cy.contains("We use this information to help you fill in your application.")
 
     // Submit a name change

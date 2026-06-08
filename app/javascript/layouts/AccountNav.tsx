@@ -5,15 +5,18 @@ import { faArrowLeft } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { getPathWithoutLanguagePrefix } from "../util/languageUtil"
 import {
-  getAccountPath,
-  getApplicationsPath,
-  getSettingsPath,
+  getMyAccountPath,
+  getApplicationPath,
+  getMyAccountSettingsPath,
   getSignInPath,
 } from "../util/routeUtil"
 import styles from "./AccountNav.module.scss"
 
-const isNavActive = (navPath: string): boolean => {
-  return getPathWithoutLanguagePrefix(window.location.pathname) === navPath
+const isNavActive = (localizedPath: string): boolean => {
+  return (
+    getPathWithoutLanguagePrefix(window.location.pathname) ===
+    getPathWithoutLanguagePrefix(localizedPath)
+  )
 }
 
 const AccountNav = () => {
@@ -28,15 +31,18 @@ const AccountNav = () => {
         className={`vertical-sidebar-layout ${styles.accountNavTabs}`}
       >
         <Tabs.TabList>
-          <Tabs.Tab href={getAccountPath()} active={isNavActive(getAccountPath())}>
+          <Tabs.Tab href={getMyAccountPath()} active={isNavActive(getMyAccountPath())}>
             <Icon size="md-large" symbol="profile" className={styles.accountNavLinkIcon} />
             {t("accountLayout.nav.overview")}
           </Tabs.Tab>
-          <Tabs.Tab href={getApplicationsPath()} active={isNavActive(getApplicationsPath())}>
+          <Tabs.Tab href={getApplicationPath()} active={isNavActive(getApplicationPath())}>
             <Icon size="md-large" symbol="application" className={styles.accountNavLinkIcon} />
             {t("accountLayout.nav.applications")}
           </Tabs.Tab>
-          <Tabs.Tab href={getSettingsPath()} active={isNavActive(getSettingsPath())}>
+          <Tabs.Tab
+            href={getMyAccountSettingsPath()}
+            active={isNavActive(getMyAccountSettingsPath())}
+          >
             <Icon size="md-large" symbol="settings" className={styles.accountNavLinkIcon} />
             {t("accountSettings.title.sentenceCase")}
           </Tabs.Tab>
