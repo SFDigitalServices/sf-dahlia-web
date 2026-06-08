@@ -91,7 +91,6 @@ export const getResetPasswordPath = localizedPathGetter("/reset-password")
 export const getMyAccountPath = localizedPathGetter("/account")
 export const getApplicationPath = localizedPathGetter("/account/applications")
 export const getMyAccountSettingsPath = localizedPathGetter("/account/settings")
-export const getFavoritesPath = localizedPathGetter("/favorites")
 // Rental Listing Directory pages
 export const getHelpCalculatingIncomeLink = localizedPathGetter("/income-calculator/rental/intro")
 export const getEligibilityEstimatorLink = localizedPathGetter("/eligibility-estimator/rental")
@@ -181,7 +180,6 @@ export enum AppPages {
   CreateAccount = "create account",
   ForgotPassword = "forgot password",
   ResetPassword = "reset password",
-  Favorites = "favorites",
   MyAccount = "my account",
   MyApplications = "my applications",
   AccountSettings = "account settings",

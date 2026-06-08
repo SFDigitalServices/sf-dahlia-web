@@ -1,16 +1,257 @@
-// New accounts layout for my-applications.tsx
-import React from "react"
+import React, { useState } from "react"
 import Layout from "../../layouts/Layout"
 import AccountLayout from "../../layouts/AccountLayout"
 import withAppSetup from "../../layouts/withAppSetup"
-import { AppPages, RedirectType } from "../../util/routeUtil"
+import {
+  t,
+  Icon,
+  LinkButton,
+  Button,
+  AppearanceStyleType,
+  AppearanceBorderType,
+} from "@bloom-housing/ui-components"
+import { Card, Dialog, Heading } from "@bloom-housing/ui-seeds"
+import { ApplicationItem } from "../../components/ApplicationItem"
+import { AppPages, getApplicationPath, getLocalizedPath, RedirectType } from "../../util/routeUtil"
+import { getCurrentLanguage, renderInlineMarkup } from "../../util/languageUtil"
+import { deleteApplication, getApplications } from "../../api/authApiService"
+import { Application } from "../../api/types/rails/application/RailsApplication"
+import { isRental, isSale } from "../../util/listingUtil"
+import "./styles/my-applications.scss"
+import { DoubleSubmittedModal } from "./components/DoubleSubmittedModal"
+import { AlreadySubmittedModal } from "./components/AlreadySubmittedModal"
+import { extractModalParamsFromUrl } from "./components/util"
 import { withAuthentication } from "../../authentication/withAuthentication"
+import styles from "./styles/applications.module.scss"
+
+const noApplications = () => {
+  return (
+    <Card.Section className="flex flex-col bg-primary-lighter items-center pb-12 border-t">
+      <p className="font-serif text-xl">{t("myApplications.noApplications")}</p>
+      <div className="flex flex-col gap-y-4 w-3/5 pt-4">
+        <LinkButton href={getLocalizedPath("/listings/for-rent", getCurrentLanguage())}>
+          {t("listings.browseRentals")}
+        </LinkButton>
+        <LinkButton href={getLocalizedPath("/listings/for-sale", getCurrentLanguage())}>
+          {t("listings.browseSales")}
+        </LinkButton>
+      </div>
+    </Card.Section>
+  )
+}
+
+const loadingSpinner = () => {
+  return (
+    <div data-testid="loading-spinner" className="flex justify-center pb-9">
+      <Icon symbol="spinner" size="large" />
+    </div>
+  )
+}
+
+const errorMessage = () => {
+  return (
+    <p className="w-full text-center p-4">
+      {renderInlineMarkup(`${t("listings.myApplications.error")}`)}
+    </p>
+  )
+}
+
+const applicationHeader = (text: string) => {
+  return (
+    <Heading className="text-xl border-t border-gray-450 px-4 py-4" priority={2}>
+      {text}
+    </Heading>
+  )
+}
+
+const generateApplicationList = (
+  applications: Application[],
+  handleDeleteApp: (id: string) => void
+) => {
+  return applications
+    .sort(
+      (a, b) =>
+        new Date(b.applicationSubmittedDate).getTime() -
+        new Date(a.applicationSubmittedDate).getTime()
+    )
+    .map((app) => (
+      <ApplicationItem
+        applicationURL={`${getApplicationPath()}/${app.id}`}
+        applicationUpdatedAt={app.applicationSubmittedDate}
+        confirmationNumber={app.lotteryNumber.toString()}
+        editedDate={app.applicationSubmittedDate}
+        submitted={app.status !== "Draft"}
+        listing={app.listing}
+        key={app.id}
+        handleDeleteApp={handleDeleteApp}
+      />
+    ))
+}
+
+const separateApplications = (applications: Application[]) =>
+  applications.reduce<{
+    rentalApplications: Application[]
+    saleApplications: Application[]
+  }>(
+    (acc, app) => {
+      if (isRental(app.listing)) {
+        acc.rentalApplications.push(app)
+      } else if (isSale(app.listing)) {
+        acc.saleApplications.push(app)
+      }
+
+      return acc
+    },
+    { rentalApplications: [], saleApplications: [] }
+  )
+
+const determineApplicationItemList = (
+  loading: boolean,
+  error: string,
+  applications: Application[],
+  handleDeleteApp: (id: string) => void
+) => {
+  if (loading) {
+    return loadingSpinner()
+  }
+
+  if (error) {
+    return errorMessage()
+  }
+
+  if (applications === undefined || applications.length === 0) {
+    return noApplications()
+  }
+
+  const { rentalApplications, saleApplications } = separateApplications(applications)
+
+  const hasBothRentalAndSaleApplications =
+    rentalApplications.length > 0 && saleApplications.length > 0
+
+  return (
+    <>
+      {hasBothRentalAndSaleApplications && applicationHeader(t("listings.rentalUnits"))}
+      {generateApplicationList(rentalApplications, handleDeleteApp)}
+      {hasBothRentalAndSaleApplications && applicationHeader(t("listings.saleUnits"))}
+      {generateApplicationList(saleApplications, handleDeleteApp)}
+    </>
+  )
+}
 
 const Applications = () => {
+  const [error, setError] = React.useState<string | null>(null)
+  const [loading, setLoading] = React.useState<boolean>(true)
+  const [applications, setApplications] = React.useState<Application[]>([])
+  const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false)
+  const [alreadySubmittedId, setAlreadySubmittedId] = useState<string | null>(null)
+  const [openDoubleSubmittedModal, setOpenDoubleSubmittedModal] = useState<boolean>(false)
+  const [deleteApp, setDeleteApp] = useState("")
+
+  const handleDeleteApp = (id: string) => {
+    setDeleteApp(id)
+    setOpenDeleteModal(true)
+  }
+
+  const onDelete = () => {
+    setLoading(true)
+    deleteApplication(deleteApp)
+      .then(() => {
+        const newApplications = applications.filter((application) => application.id !== deleteApp)
+        setApplications(newApplications)
+      })
+      .catch((error: string) => {
+        setError(error)
+      })
+      .finally(() => {
+        setLoading(false)
+      })
+    setOpenDeleteModal(false)
+  }
+
+  React.useEffect(() => {
+    const { alreadySubmittedIdFromURL, doubleSubmitFromURL } = extractModalParamsFromUrl(
+      window.location.href
+    )
+
+    if (alreadySubmittedIdFromURL) {
+      setAlreadySubmittedId(alreadySubmittedIdFromURL)
+    }
+
+    if (doubleSubmitFromURL) {
+      setOpenDoubleSubmittedModal(true)
+    }
+  }, [])
+
+  React.useEffect(() => {
+    setLoading(true)
+    getApplications()
+      .then((applications) => {
+        setApplications(applications.applications)
+      })
+      .catch((error: string) => {
+        setError(error)
+      })
+      .finally(() => {
+        setLoading(false)
+      })
+  }, [])
+
   return (
     <Layout>
       <AccountLayout>
-        <p>Applications</p>
+        <Card className={`w-full mobile-card ${styles.applications}`}>
+          <Card.Header className="flex justify-center w-full flex-col items-center pb-8">
+            <div
+              className="py-4 border-blue-500 w-min px-4 md:px-8 mb-6"
+              style={{ borderBottom: "3px solid" }}
+            >
+              <Icon size="xlarge" className="md:hidden block" symbol={"application"} />
+              <Icon size="2xl" className="md:block hidden" symbol={"application"} />
+            </div>
+            <Heading priority={1} size="2xl">
+              {t("myApplications.title")}
+            </Heading>
+          </Card.Header>
+          <AlreadySubmittedModal
+            alreadySubmittedId={alreadySubmittedId}
+            alreadySubmittedApplication={
+              applications && applications.find((item) => item.id === alreadySubmittedId)
+            }
+            onClose={() => {
+              setAlreadySubmittedId(null)
+            }}
+          />
+          <DoubleSubmittedModal
+            openModal={openDoubleSubmittedModal}
+            onClose={() => {
+              setOpenDoubleSubmittedModal(false)
+            }}
+          />
+          <Dialog
+            isOpen={openDeleteModal}
+            onClose={() => {
+              setOpenDeleteModal(false)
+            }}
+            className="w-3/5"
+          >
+            <Dialog.Header>
+              <div className="delete-title">{t("t.deleteApplication")}</div>
+            </Dialog.Header>
+            <Dialog.Content>{t("myApplications.areYouSureYouWantToDelete")}</Dialog.Content>
+            <Dialog.Footer className="delete-buttons">
+              <Button styleType={AppearanceStyleType.alert} onClick={onDelete}>
+                {t("t.delete")}
+              </Button>
+              <Button
+                className={AppearanceBorderType.borderless}
+                onClick={() => setOpenDeleteModal(false)}
+              >
+                {t("label.cancel")}
+              </Button>
+            </Dialog.Footer>
+          </Dialog>
+          {determineApplicationItemList(loading, error, applications, handleDeleteApp)}
+        </Card>
       </AccountLayout>
     </Layout>
   )

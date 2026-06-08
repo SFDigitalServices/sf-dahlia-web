@@ -20,9 +20,8 @@ describe("Account Settings", () => {
   it("runs through the account settings page", () => {
     interceptUnleashFlags()
     cy.signIn()
-    cy.addReactQueryParam()
 
-    cy.get('a[href="/account/settings"]').click()
+    cy.visit("/account/settings")
     cy.contains("We use this information to help you fill in your application.")
 
     // Submit a name change
