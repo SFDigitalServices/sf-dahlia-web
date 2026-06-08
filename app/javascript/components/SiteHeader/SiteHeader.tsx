@@ -419,7 +419,6 @@ const SiteHeader = (props: SiteHeaderProps) => {
     if (!accountLink) return null
 
     const isOpen = activeMenu === accountLink.title
-    if (!isOpen) return null
 
     if (props.mobileDrawer) {
       return (
@@ -435,6 +434,8 @@ const SiteHeader = (props: SiteHeaderProps) => {
         </MobileDrawer>
       )
     }
+
+    if (!isOpen) return null
 
     return (
       <span className={"site-header__mobile-dropdown-container"}>
