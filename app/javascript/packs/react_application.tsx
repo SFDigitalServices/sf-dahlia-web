@@ -32,6 +32,7 @@ import ListingApplyForm from "../pages/form/listing-apply-form"
 import Account from "../pages/account/account"
 import Applications from "../pages/account/applications"
 import Settings from "../pages/account/settings"
+import Contact from "../pages/account/contact"
 
 const currentLanguage = getCurrentLanguage(window.location.pathname)
 
@@ -61,6 +62,7 @@ void loadTranslations(currentLanguage).then(() => {
     Account,
     Settings,
     Applications,
+    Contact,
     ListingApplyForm,
   })
 
