@@ -88,15 +88,9 @@ export const getForgotPasswordPath = localizedPathGetter("/forgot-password")
 export const getResetPasswordPath = localizedPathGetter("/reset-password")
 
 // Accounts after signing in pages
-export const getMyAccountPath = localizedPathGetter("/my-account")
-export const getMyApplicationsPath = localizedPathGetter("/my-applications")
-export const getMyAccountSettingsPath = localizedPathGetter("/account-settings")
-export const getFavoritesPath = localizedPathGetter("/favorites")
-export const getApplicationPath = localizedPathGetter("/applications")
-export const getAccountPath = localizedPathGetter("/account")
-export const getApplicationsPath = localizedPathGetter("/account/applications")
-export const getSettingsPath = localizedPathGetter("/account/settings")
-
+export const getMyAccountPath = localizedPathGetter("/account")
+export const getApplicationPath = localizedPathGetter("/account/applications")
+export const getMyAccountSettingsPath = localizedPathGetter("/account/settings")
 // Rental Listing Directory pages
 export const getHelpCalculatingIncomeLink = localizedPathGetter("/income-calculator/rental/intro")
 export const getEligibilityEstimatorLink = localizedPathGetter("/eligibility-estimator/rental")
@@ -151,7 +145,7 @@ export const mapAlertParamToEnum = (param: string | null): AlertReason => {
 
 export const SignInRedirectUrls = {
   [RedirectType.Account]: getMyAccountPath(),
-  [RedirectType.Applications]: getMyApplicationsPath(),
+  [RedirectType.Applications]: getApplicationPath(),
   [RedirectType.Settings]: getMyAccountSettingsPath(),
   [RedirectType.Home]: getHomepagePath(),
 }
@@ -186,10 +180,12 @@ export enum AppPages {
   CreateAccount = "create account",
   ForgotPassword = "forgot password",
   ResetPassword = "reset password",
-  Favorites = "favorites",
   MyAccount = "my account",
   MyApplications = "my applications",
   AccountSettings = "account settings",
+  Account = "account",
+  Applications = "applications",
+  Settings = "settings",
   AdditionalResources = "additional resources",
   HousingCounselors = "housing counselors",
   DocumentChecklist = "document checklist",

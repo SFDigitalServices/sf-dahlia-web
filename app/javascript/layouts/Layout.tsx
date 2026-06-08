@@ -82,10 +82,6 @@ const getMenuLinks = (signedIn: boolean, signOut: () => void) => {
       href: "/listings/for-sale",
     },
     {
-      title: t("nav.myFavorites"),
-      href: "/favorites",
-    },
-    {
       title: t("nav.getAssistance"),
       href: "/get-assistance",
     },
@@ -93,21 +89,21 @@ const getMenuLinks = (signedIn: boolean, signOut: () => void) => {
 
   if (signedIn) {
     menuLinks.push({
-      title: t("nav.myAccount"),
+      title: t("accountLayout.nav.account"),
       subMenuLinks: [
         {
           title: t("nav.myDashboard"),
-          href: "/my-account",
+          href: "/account",
           iconElement: <Icon symbol="profile" size="medium" className="pr-2" />,
         },
         {
           title: t("nav.myApplications"),
-          href: "/my-applications",
+          href: "/account/applications",
           iconElement: <Icon symbol="application" size="medium" className="pr-2" />,
         },
         {
           title: t("nav.accountSettings"),
-          href: "/account-settings",
+          href: "/account/settings",
           iconElement: <Icon symbol="settings" size="medium" className="pr-2" />,
         },
         {

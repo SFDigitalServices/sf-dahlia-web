@@ -28,7 +28,7 @@ describe("Reset Password Page", () => {
     cy.get('input[name="password"]').clear().type("test1ng!")
     cy.get('button[type="submit"]').click()
     cy.wait("@password")
-    cy.url().should("include", "/my-applications")
+    cy.url().should("include", "/account/applications")
   })
 
   it("should redirect to sign-in for invalid token", () => {

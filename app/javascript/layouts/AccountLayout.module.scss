@@ -9,4 +9,11 @@
   @media (max-width: theme("screens.lg")) {
     padding: var(--seeds-s14) var(--seeds-spacer-content);
   }
+  @media (max-width: theme("screens.sm")) {
+    padding: 0;
+  }
+}
+
+.accountLayoutContent {
+  padding-top: var(--seeds-s7);
 }
