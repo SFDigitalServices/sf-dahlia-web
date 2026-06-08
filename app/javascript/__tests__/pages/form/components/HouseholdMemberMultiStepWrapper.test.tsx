@@ -168,17 +168,12 @@ describe("HouseholdMemberMultiStepWrapper", () => {
   })
 
   it("does not check address verification when household member shares applicant address", async () => {
+    renderHouseholdMemberMultiStepWrapper()
     const user = userEvent.setup()
 
-    renderHouseholdMemberMultiStepWrapper()
-
     await user.click(screen.getByText("+ " + t("label.addHouseholdMember")))
-
-    // fill required fields
     await user.type(screen.getByLabelText(/first name/i), "John")
     await user.type(screen.getByLabelText(/last name/i), "Doe")
-
-    // select same address = yes
     const yesButtons = screen.getAllByLabelText(t("t.yes"))
     await user.click(yesButtons[0])
 
@@ -187,7 +182,6 @@ describe("HouseholdMemberMultiStepWrapper", () => {
         name: t("label.householdMemberSave"),
       })
     )
-
     expect(locateVerifiedAddress).not.toHaveBeenCalled()
   })
 
@@ -195,11 +189,7 @@ describe("HouseholdMemberMultiStepWrapper", () => {
     renderHouseholdMemberMultiStepWrapper()
 
     const user = userEvent.setup()
-
-    // open form
     await user.click(screen.getByText("+ " + t("label.addHouseholdMember")))
-
-    // fill required fields
     await user.type(screen.getByLabelText(/first name/i), "John")
     await user.type(screen.getByLabelText(/last name/i), "Smith")
     await user.type(screen.getByLabelText("Month"), "12")
@@ -207,10 +197,10 @@ describe("HouseholdMemberMultiStepWrapper", () => {
     await user.type(screen.getByLabelText("Year"), "1990")
 
     const noButtons = screen.getAllByLabelText(t("t.no"))
-    await user.click(noButtons[0]) // different address
+    await user.click(noButtons[0])
 
     const yesButtons = screen.getAllByLabelText(t("t.yes"))
-    await user.click(yesButtons[1]) // works in sf
+    await user.click(yesButtons[1])
 
     await user.type(screen.getByLabelText(/street/i), "123 Main St")
     await user.type(screen.getByLabelText(/city/i), "San Francisco")
@@ -220,13 +210,11 @@ describe("HouseholdMemberMultiStepWrapper", () => {
       screen.getByLabelText(t("label.householdMemberRelationship")),
       "Spouse"
     )
-
     await user.click(
       screen.getByRole("button", {
         name: t("label.householdMemberSave"),
       })
     )
-
     await waitFor(() => {
       expect(mockLocateVerifiedAddress).toHaveBeenCalled()
     })
@@ -273,7 +261,6 @@ describe("HouseholdMemberMultiStepWrapper", () => {
         name: t("t.next"),
       })
     )
-
     expect(mockSaveFormData).toHaveBeenCalled()
     expect(screen.getByText("John Smith")).toBeInTheDocument()
   })
