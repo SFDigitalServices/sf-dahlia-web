@@ -104,7 +104,7 @@ const MobileDrawer = ({ in: isOpen, onClose, closeLabel, children }: MobileDrawe
           >
             <Icon
               size="small"
-              symbol="arrowForward"
+              symbol="closeSmall"
               fill={"#ffffff"}
               className={"site-header__icon-spacing"}
             />
