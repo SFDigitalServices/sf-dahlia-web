@@ -10,15 +10,11 @@
   @media (max-width: theme("screens.lg")) {
     padding: var(--seeds-s14) var(--seeds-spacer-content);
   }
-
   @media (max-width: theme("screens.sm")) {
     padding: 0;
-    gap: 0;
   }
 }
 
 .accountLayoutContent {
-  flex: 1;
-  min-width: 0;
-  width: 100%;
+  padding-top: var(--seeds-s7);
 }

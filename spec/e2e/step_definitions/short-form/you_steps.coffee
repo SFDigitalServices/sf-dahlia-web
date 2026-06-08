@@ -102,7 +102,7 @@ Then 'I should only by able to edit my info from account settings', ->
     Utils.Expect.inputDisabled(@, field)
   , @
 
-  accountSettingsLink = element(By.css('a[href="/account-settings"]'))
+  accountSettingsLink = element(By.css('a[href="/account/settings"]'))
   @expect(accountSettingsLink.isPresent()).to.eventually.equal(true)
 
 Then 'I should see name field errors on the Name page', ->

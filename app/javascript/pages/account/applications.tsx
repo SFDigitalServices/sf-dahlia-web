@@ -260,6 +260,6 @@ const Applications = () => {
 export default withAppSetup(
   withAuthentication(Applications, { redirectType: RedirectType.Applications }),
   {
-    pageName: AppPages.MyApplications,
+    pageName: AppPages.Applications,
   }
 )
