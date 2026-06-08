@@ -33,7 +33,7 @@ describe("Account Settings", () => {
       "/api/v1/account/update",
       userObjectGenerator({ firstName: "Jane", lastName: "Smith" })
     ).as("updateName")
-    cy.get('button[type="submit"]').contains("Update").first().click()
+    cy.get('input[name="firstName"]').closest("form").find('button[type="submit"]').click()
     cy.wait("@updateName").its("response.statusCode").should("eq", 200)
     // Commenting out the below line because the page is not updating with the success message consistently in the e2e test
     // cy.contains("Your changes have been saved.")
@@ -56,7 +56,7 @@ describe("Account Settings", () => {
       "/api/v1/account/update",
       userObjectGenerator({ firstName: "Jane", lastName: "Smith", DOB: "2000-12-10" })
     ).as("updateDOB")
-    cy.get('button[type="submit"]').eq(1).contains("Update").click()
+    cy.get("input#dobObject\\.birthMonth").closest("form").find('button[type="submit"]').click()
     cy.wait("@updateDOB").its("response.statusCode").should("eq", 200)
 
     // Create DOB error
@@ -82,7 +82,7 @@ describe("Account Settings", () => {
     cy.get("button").contains("Email missing a dot ‘.’ in the domain").click().type(".com")
 
     cy.intercept("/api/v1/auth", AUTH).as("emailChange")
-    cy.get('button[type="submit"]').eq(2).contains("Update").click()
+    cy.get('input[name="email"]').closest("form").find('button[type="submit"]').click()
     cy.contains(
       "We sent you an email. Check your email and follow the link to finish changing your information."
     )
@@ -101,7 +101,7 @@ describe("Account Settings", () => {
       message: "Your password has been successfully updated.",
       ...AUTH,
     }).as("passwordChange")
-    cy.get('button[type="submit"]').eq(3).contains("Update").click()
+    cy.get('input[name="currentPassword"]').closest("form").find('button[type="submit"]').click()
     cy.wait("@passwordChange").its("response.statusCode").should("eq", 200)
     // cy.contains("Your changes have been saved.")
   })
