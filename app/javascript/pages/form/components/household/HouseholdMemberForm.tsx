@@ -1,6 +1,6 @@
 import React from "react"
 import stepStyles from "../ListingApplyStepWrapper.module.scss"
-import { Button, Card, Heading } from "@bloom-housing/ui-seeds"
+import { Button, Card, Heading, LoadingState } from "@bloom-housing/ui-seeds"
 import { t } from "@bloom-housing/ui-components"
 import Name from "../Name"
 import { UseFormMethods } from "react-hook-form"
@@ -12,12 +12,16 @@ import styles from "./HouseholdMemberForm.module.scss"
 import { RELATIONSHIP_OPTIONS } from "../../../../modules/constants"
 
 const HouseholdMemberForm = ({
+  loading = false,
+  addressError,
   handleUpdateHouseholdMember,
   handleDeleteHouseholdMember,
   handleCancelAddHouseholdMember,
   methods,
   isEditing,
 }: {
+  loading: boolean
+  addressError: string | null
   handleUpdateHouseholdMember: (member: Record<string, string>) => void
   handleDeleteHouseholdMember: () => void
   handleCancelAddHouseholdMember: () => void
@@ -61,7 +65,9 @@ const HouseholdMemberForm = ({
         />
       </Card.Section>
       <Card.Section divider="inset">
-        <HouseholdMemberSameAddress />
+        <LoadingState loading={loading}>
+          <HouseholdMemberSameAddress addressError={addressError} />
+        </LoadingState>
       </Card.Section>
       <Card.Section divider="inset" className={styles["household-member-radio"]}>
         <YesNoRadio

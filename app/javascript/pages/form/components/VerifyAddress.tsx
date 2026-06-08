@@ -6,16 +6,26 @@ import { useFormEngineContext } from "../../../formEngine/formEngineContext"
 import { getFormattedAddress } from "../../../util/formEngineUtil"
 import styles from "./VerifyAddress.module.scss"
 import stepStyles from "./ListingApplyStepWrapper.module.scss"
+import { Address } from "../../../api/formApiService"
 
-const VerifyAddress = () => {
+interface VerifyAddressProps {
+  addressData?: Address
+  onConfirm?: () => void
+  onEdit?: () => void
+}
+
+const VerifyAddress = ({ addressData, onConfirm, onEdit }: VerifyAddressProps) => {
   const { handleNextStep, formData, handlePrevStep } = useFormEngineContext()
-  const formattedAddress = getFormattedAddress({
+  const isPrimaryAddress = !addressData
+  const address: Address = addressData ?? {
     street1: formData.primaryApplicantAddressStreet as string,
     street2: formData.primaryApplicantAddressAptOrUnit as string,
     city: formData.primaryApplicantAddressCity as string,
     state: formData.primaryApplicantAddressState as string,
     zip: formData.primaryApplicantAddressZipcode as string,
-  })
+  }
+
+  const formattedAddress = getFormattedAddress(address)
   return (
     <>
       <CardSection
@@ -32,12 +42,15 @@ const VerifyAddress = () => {
           <br />
           {formattedAddress.cityStateZip}
         </Heading>
-        <Button variant="text" onClick={() => handlePrevStep()}>
+        <Button variant="text" onClick={() => (isPrimaryAddress ? handlePrevStep() : onEdit?.())}>
           {t("t.edit")}
         </Button>
       </CardSection>
       <CardSection className={stepStyles["step-footer"]}>
-        <Button variant="primary" onClick={() => handleNextStep()}>
+        <Button
+          variant="primary"
+          onClick={() => (isPrimaryAddress ? handleNextStep?.() : onConfirm?.())}
+        >
           {t("t.next")}
         </Button>
       </CardSection>
