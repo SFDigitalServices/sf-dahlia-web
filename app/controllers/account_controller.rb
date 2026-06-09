@@ -12,6 +12,16 @@ class AccountController < ApplicationController
     render_account_page(new_layout: 'settings', old_layout: 'account_settings')
   end
 
+  def contact
+    unless new_account_layout?
+      redirect_to account_redirect_path
+      return
+    end
+
+    @account_information_props = { assetPaths: static_asset_paths }
+    render 'contact'
+  end
+
   protected
 
   def use_react_app
@@ -27,5 +37,9 @@ class AccountController < ApplicationController
 
   def new_account_layout?
     Rails.configuration.unleash.is_enabled?('temp.webapp.newAccountLayout')
+  end
+
+  def account_redirect_path
+    params[:lang].present? ? "/#{params[:lang]}/account" : '/account'
   end
 end
