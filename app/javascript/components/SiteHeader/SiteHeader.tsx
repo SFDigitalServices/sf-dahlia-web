@@ -8,9 +8,12 @@ import {
   Button,
   AppearanceSizeType,
   NavigationContext,
+  SiteHeader as BloomSiteHeader,
   t,
 } from "@bloom-housing/ui-components"
 import UserContext from "../../authentication/context/UserContext"
+import { useFeatureFlag } from "../../hooks/useFeatureFlag"
+import { UNLEASH_FLAG } from "../../modules/constants"
 import "@bloom-housing/ui-components/src/headers/SiteHeader.scss"
 import styles from "./SiteHeader.module.scss"
 
@@ -116,7 +119,7 @@ const MobileDrawer = ({ in: isOpen, onClose, closeLabel, children }: MobileDrawe
   )
 }
 
-const SiteHeader = (props: SiteHeaderProps) => {
+const DahliaSiteHeader = (props: SiteHeaderProps) => {
   const { profile } = useContext(UserContext)
   const [activeMenu, setActiveMenu] = useState<string | null>()
   const [activeMobileMenus, setActiveMobileMenus] = useState<string[]>([])
@@ -684,6 +687,15 @@ const SiteHeader = (props: SiteHeaderProps) => {
       {getMobileDrawer()}
     </header>
   )
+}
+
+const SiteHeader = (props: SiteHeaderProps) => {
+  const { unleashFlag: accountLayoutEnabled } = useFeatureFlag(UNLEASH_FLAG.ACCOUNTS_LAYOUT, false)
+  if (accountLayoutEnabled) {
+    return <DahliaSiteHeader {...props} />
+  }
+
+  return <BloomSiteHeader {...props} />
 }
 
 export { SiteHeader as default, SiteHeader }
