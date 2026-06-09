@@ -25,6 +25,8 @@ const HouseholdMemberFormWrapper = ({
         handleDeleteHouseholdMember={handleDeleteHouseholdMember}
         handleCancelAddHouseholdMember={handleCancelAddHouseholdMember}
         isEditing={isEditing}
+        addressError={null}
+        loading={false}
         methods={methods}
       />
     </FormProvider>
