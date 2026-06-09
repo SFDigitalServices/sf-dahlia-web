@@ -8,9 +8,12 @@ import {
   Button,
   AppearanceSizeType,
   NavigationContext,
+  SiteHeader as BloomSiteHeader,
   t,
 } from "@bloom-housing/ui-components"
 import UserContext from "../../authentication/context/UserContext"
+import { useFeatureFlag } from "../../hooks/useFeatureFlag"
+import { UNLEASH_FLAG } from "../../modules/constants"
 import "@bloom-housing/ui-components/src/headers/SiteHeader.scss"
 import styles from "./SiteHeader.module.scss"
 
@@ -104,7 +107,7 @@ const MobileDrawer = ({ in: isOpen, onClose, closeLabel, children }: MobileDrawe
           >
             <Icon
               size="small"
-              symbol="arrowForward"
+              symbol="closeSmall"
               fill={"#ffffff"}
               className={"site-header__icon-spacing"}
             />
@@ -116,7 +119,7 @@ const MobileDrawer = ({ in: isOpen, onClose, closeLabel, children }: MobileDrawe
   )
 }
 
-const SiteHeader = (props: SiteHeaderProps) => {
+const DahliaSiteHeader = (props: SiteHeaderProps) => {
   const { profile } = useContext(UserContext)
   const [activeMenu, setActiveMenu] = useState<string | null>()
   const [activeMobileMenus, setActiveMobileMenus] = useState<string[]>([])
@@ -329,6 +332,8 @@ const SiteHeader = (props: SiteHeaderProps) => {
 
   const getAccountMenuLink = () => props.menuLinks.find((menuLink) => menuLink.subMenuLinks)
 
+  const getMobileNavMenuLinks = () => props.menuLinks.filter((menuLink) => !menuLink.subMenuLinks)
+
   const getMobileHeader = () => {
     const accountLink = getAccountMenuLink()
     if (!accountLink) return null
@@ -417,7 +422,6 @@ const SiteHeader = (props: SiteHeaderProps) => {
     if (!accountLink) return null
 
     const isOpen = activeMenu === accountLink.title
-    if (!isOpen) return null
 
     if (props.mobileDrawer) {
       return (
@@ -433,6 +437,8 @@ const SiteHeader = (props: SiteHeaderProps) => {
         </MobileDrawer>
       )
     }
+
+    if (!isOpen) return null
 
     return (
       <span className={"site-header__mobile-dropdown-container"}>
@@ -451,7 +457,7 @@ const SiteHeader = (props: SiteHeaderProps) => {
         closeLabel={props.strings?.close}
       >
         {buildMobileMenuOptions(
-          props.menuLinks,
+          getMobileNavMenuLinks(),
           "site-header__mobile-drawer-dropdown-item site-header__mobile-drawer-dropdown-item-sublink",
           "site-header__mobile-drawer-dropdown-item"
         )}
@@ -466,7 +472,7 @@ const SiteHeader = (props: SiteHeaderProps) => {
           <span className={"site-header__mobile-dropdown-container"}>
             <div className={"site-header__mobile-dropdown"}>
               {buildMobileMenuOptions(
-                props.menuLinks,
+                getMobileNavMenuLinks(),
                 "site-header__mobile-dropdown-item site-header__mobile-dropdown-item-sublink",
                 "site-header__mobile-dropdown-item"
               )}
@@ -563,7 +569,7 @@ const SiteHeader = (props: SiteHeaderProps) => {
   const getMobileMenu = () => {
     return props.mobileText ? (
       <button
-        className={"site-header__mobile-menu-text-button"}
+        className={`site-header__mobile-menu-text-button ${styles["mobile-menu-button"]}`}
         onClick={() => {
           mobileHeaderAction()
         }}
@@ -591,7 +597,7 @@ const SiteHeader = (props: SiteHeaderProps) => {
         }}
         icon={mobileMenu ? "closeSmall" : "hamburger"}
         iconSize="base"
-        className={"site-header__mobile-menu-button"}
+        className={`site-header__mobile-menu-button ${styles["mobile-menu-button"]}`}
         unstyled
       >
         <span className={"site-header__mobile-menu-button-text"}>
@@ -681,6 +687,15 @@ const SiteHeader = (props: SiteHeaderProps) => {
       {getMobileDrawer()}
     </header>
   )
+}
+
+const SiteHeader = (props: SiteHeaderProps) => {
+  const { unleashFlag: accountLayoutEnabled } = useFeatureFlag(UNLEASH_FLAG.ACCOUNTS_LAYOUT, false)
+  if (accountLayoutEnabled) {
+    return <DahliaSiteHeader {...props} />
+  }
+
+  return <BloomSiteHeader {...props} />
 }
 
 export { SiteHeader as default, SiteHeader }
