@@ -69,7 +69,10 @@ const HouseholdMemberMultiStepWrapper = ({
     const isAlreadyVerified =
       isEditingHouseholdMember &&
       existingMember?.[householdMemberFields.addressVerified] === "true" &&
-      addressesMatch(getHouseholdMemberAddress(data), getHouseholdMemberAddress(existingMember))
+      addressesMatch(
+        getHouseholdMemberAddress(data) as Record<string, string>,
+        getHouseholdMemberAddress(existingMember) as Record<string, string>
+      )
     return !isAlreadyVerified
   }
 

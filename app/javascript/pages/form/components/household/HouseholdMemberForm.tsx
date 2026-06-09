@@ -12,7 +12,7 @@ import styles from "./HouseholdMemberForm.module.scss"
 import { RELATIONSHIP_OPTIONS } from "../../../../modules/constants"
 
 const HouseholdMemberForm = ({
-  loading = false,
+  loading,
   addressError,
   handleUpdateHouseholdMember,
   handleDeleteHouseholdMember,

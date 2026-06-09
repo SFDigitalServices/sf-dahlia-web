@@ -49,7 +49,7 @@ const VerifyAddress = ({ addressData, onConfirm, onEdit }: VerifyAddressProps) =
       <CardSection className={stepStyles["step-footer"]}>
         <Button
           variant="primary"
-          onClick={() => (isPrimaryAddress ? handleNextStep?.() : onConfirm?.())}
+          onClick={() => (isPrimaryAddress ? handleNextStep() : onConfirm?.())}
         >
           {t("t.next")}
         </Button>

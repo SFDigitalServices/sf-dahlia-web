@@ -30,7 +30,7 @@ const HouseholdMemberSameAddress = ({ addressError }: { addressError?: string | 
           <Address
             showAptOrUnit={true}
             requireAddress={showAddressField}
-            addressError={addressError}
+            addressError={addressError ?? undefined}
             note="c3HouseholdMemberForm.memberAddressDesc"
             fieldNames={fieldNames}
           />

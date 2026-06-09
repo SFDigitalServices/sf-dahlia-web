@@ -218,6 +218,7 @@ describe("HouseholdMemberMultiStepWrapper", () => {
     await waitFor(() => {
       expect(mockLocateVerifiedAddress).toHaveBeenCalled()
     })
+    expect(screen.getByText(t("b2aVerifyAddress.title"))).toBeInTheDocument()
   })
   it("saves household member after address confirmation", async () => {
     const { mockSaveFormData } = renderHouseholdMemberMultiStepWrapper()
