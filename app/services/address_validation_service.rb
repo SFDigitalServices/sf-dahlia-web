@@ -5,8 +5,9 @@ class AddressValidationService
   def initialize(address, verify = {})
     # default EasyPost verifications
     verify = %w[delivery] if verify.empty?
+    @original_address = address.dup.freeze
     @address = address.merge(verify: verify)
-    @timeout = false
+    @easypost_error = false
     @easypost = EasyPost::Client.new(
       api_key: ENV.fetch('EASYPOST_API_KEY', nil), read_timeout: 10, open_timeout: 10,
     )
@@ -15,17 +16,22 @@ class AddressValidationService
   def validate
     return false unless @address.present?
 
-    @timeout = false
+    @easypost_error = false
     @validation = @easypost.address.create(@address)
-  rescue @easypost.error
-    @timeout = true
-    # just return the original address, unable to return a validated one
-    @address
+  rescue EasyPost::Errors::EasyPostError => e
+    Rails.logger.warn("Address validation: EasyPost error - #{e.message}")
+    @easypost_error = true
+    @validation = nil
+    # return the original address without internal verify params
+    @original_address
   end
 
-  def timeout?
-    @timeout
+  def easypost_error?
+    @easypost_error
   end
+
+  # Keep timeout? as an alias for backward compatibility
+  alias timeout? easypost_error?
 
   def po_box?(validation)
     # If it's a valid PO Box, we'll see 'PO BOX' in the validation response
@@ -34,7 +40,7 @@ class AddressValidationService
     #   does not normalize street1 so check case insensitive with optional periods and
     #   space, e.g. look for 'po box', 'P. O. Box'
     # https://www.easypost.com/errors-guide
-    false unless validation.present?
+    return false unless validation.present?
 
     validation.street1.match(/P\.?\s*O\.?\s*BOX/i) || (
       !validation.verifications.delivery.success &&
@@ -49,8 +55,11 @@ class AddressValidationService
   end
 
   def invalid?
-    # we don't treat timeouts as "invalid" since we want to allow them to proceed
-    Rails.logger.warn('Address validation: Easypost request timed out') if timeout?
+    # we don't treat EasyPost errors as "invalid" since we want to allow them to proceed
+    if easypost_error?
+      Rails.logger.warn('Address validation: EasyPost request failed, allowing address through')
+      return false
+    end
 
     # we do not accept PO Boxes
     if po_box?(@validation)
