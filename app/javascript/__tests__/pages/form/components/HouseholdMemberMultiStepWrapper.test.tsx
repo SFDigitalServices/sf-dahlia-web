@@ -265,4 +265,50 @@ describe("HouseholdMemberMultiStepWrapper", () => {
     expect(mockSaveFormData).toHaveBeenCalled()
     expect(screen.getByText("John Smith")).toBeInTheDocument()
   })
+
+  it("shows address not found error when address validation returns 422", async () => {
+    mockLocateVerifiedAddress.mockRejectedValue({
+      response: { status: 422 },
+    })
+
+    renderHouseholdMemberMultiStepWrapper()
+    const user = userEvent.setup()
+
+    await user.click(screen.getByText("+ " + t("label.addHouseholdMember")))
+
+    await user.type(screen.getByLabelText(/first name/i), "John")
+    await user.type(screen.getByLabelText(/last name/i), "Smith")
+    await user.type(screen.getByLabelText("Month"), "12")
+    await user.type(screen.getByLabelText("Day"), "12")
+    await user.type(screen.getByLabelText("Year"), "1990")
+
+    const noButtons = screen.getAllByLabelText(t("t.no"))
+    await user.click(noButtons[0])
+
+    const yesButtons = screen.getAllByLabelText(t("t.yes"))
+    await user.click(yesButtons[1])
+
+    await user.selectOptions(
+      screen.getByLabelText(t("label.householdMemberRelationship")),
+      "Parent"
+    )
+    await user.type(screen.getByLabelText(/street address/i), "123 Main St")
+    await user.type(screen.getByLabelText(/city/i), "San Francisco")
+    await user.type(screen.getByLabelText(/zip/i), "94105")
+
+    await user.selectOptions(
+      screen.getByLabelText(t("label.householdMemberRelationship")),
+      "Parent"
+    )
+
+    await user.click(
+      screen.getByRole("button", {
+        name: t("label.householdMemberSave"),
+      })
+    )
+    await waitFor(() => {
+      expect(mockLocateVerifiedAddress).toHaveBeenCalled()
+    })
+    expect(await screen.findByText(/this address was not found/i)).toBeInTheDocument()
+  })
 })
