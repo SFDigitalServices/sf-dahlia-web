@@ -6,7 +6,7 @@ import { useFormEngineContext } from "../../../formEngine/formEngineContext"
 import { getFormattedAddress } from "../../../util/formEngineUtil"
 import styles from "./VerifyAddress.module.scss"
 import stepStyles from "./ListingApplyStepWrapper.module.scss"
-import { Address } from "../../../api/formApiService"
+import type { Address } from "../../../api/formApiService"
 
 interface VerifyAddressProps {
   addressData?: Address

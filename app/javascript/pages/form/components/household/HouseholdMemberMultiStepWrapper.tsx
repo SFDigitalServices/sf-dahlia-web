@@ -5,7 +5,7 @@ import { useFormEngineContext } from "../../../../formEngine/formEngineContext"
 import HouseholdMemberForm from "./HouseholdMemberForm"
 import AddHouseholdMembers from "./AddHouseholdMembers"
 import VerifyAddress from "../VerifyAddress"
-import { Address, locateVerifiedAddress } from "../../../../api/formApiService"
+import { locateVerifiedAddress, type Address } from "../../../../api/formApiService"
 import { addressesMatch, getAddressErrorEmailLink } from "../../../../util/formEngineUtil"
 import { t } from "@bloom-housing/ui-components"
 

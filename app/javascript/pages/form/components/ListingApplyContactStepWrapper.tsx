@@ -151,7 +151,7 @@ const ListingApplyContactStepWrapper = ({
         if (error.response?.status === 422) {
           setApiErrorMessage(
             t("error.addressValidation.notFound", {
-              mailParams: getAddressErrorEmailLink(data, staticData, formData),
+              mailParams: getAddressErrorEmailLink(address, staticData, formData),
             })
           )
         } else {
