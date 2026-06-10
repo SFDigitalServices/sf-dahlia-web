@@ -228,9 +228,9 @@ const SignInForm = () => {
     const { email, password } = data
     setRequestError(undefined)
     signIn(email, password, "Sign In Page")
-      .then(() => {
+      .then(async () => {
         const redirectType = getRedirectTypeFromURL()
-        void navigate(getSignInRedirectUrl(redirectType))
+        await navigate(getSignInRedirectUrl(redirectType))
         window.scrollTo(0, 0)
       })
       .catch((error: AxiosError<{ error: string; email: string }>) => {

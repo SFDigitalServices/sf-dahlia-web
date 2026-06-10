@@ -109,13 +109,15 @@ const ListingDetail = () => {
   }, [listing?.listingID, fetchAmiCharts, fetchedAmiCharts, fetchingAmiCharts, fetchedUnits, units])
 
   useEffect(() => {
-    const path = getPathWithoutLanguagePrefix(pathname)
-    void getListing(path.split("/")[2]).then((listing: RailsListing) => {
+    void (async () => {
+      const path = getPathWithoutLanguagePrefix(pathname)
+      const listing = await getListing(path.split("/")[2])
       if (!listing) {
-        void navigate("/")
+        await navigate("/")
+        return
       }
       setListing(listing)
-    })
+    })()
   }, [navigate, pathname])
 
   const getDescription = (listing: RailsListing) =>

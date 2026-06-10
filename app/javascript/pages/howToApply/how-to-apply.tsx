@@ -366,13 +366,15 @@ const HowToApply = (_props: HowToApplyProps) => {
 
   // identical data loading strategy to the Listing Details page
   useEffect(() => {
-    const path = getPathWithoutLanguagePrefix(pathname)
-    void getListing(path.split("/")[2]).then((listing: RailsSaleListing) => {
+    void (async () => {
+      const path = getPathWithoutLanguagePrefix(pathname)
+      const listing = await getListing(path.split("/")[2])
       if (!listing) {
-        void navigate("/")
+        await navigate("/")
+        return
       }
       setListing(listing)
-    })
+    })()
   }, [navigate, pathname])
 
   return (
