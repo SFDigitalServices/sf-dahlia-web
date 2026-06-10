@@ -115,6 +115,8 @@ const ListingApplyPreferenceStepWrapper = ({
   }, [isValid])
 
   const [showRequiredCheckboxError, setShowRequiredCheckboxError] = useState(false)
+  const [showGenericError, setShowGenericError] = useState(false)
+  const [showMissingDocumentError, setShowMissingDocumentError] = useState(false)
 
   /*************
    * TODO: DAH-4160
@@ -128,8 +130,8 @@ const ListingApplyPreferenceStepWrapper = ({
   //   }
   // }, [comboPreference])
 
-  // checks for any errors *except* checkbox field errors
-  const showIncompleteDocumentError = () => {
+  // checks for any errors *except* preference-to-claim checkbox field errors
+  const showErrorHeaders = () => {
     const preferenceNames = preferenceContents.map((content) => content.preferenceName)
     if (comboPreference) preferenceNames.push(comboPreference.preferenceName)
 
@@ -139,21 +141,35 @@ const ListingApplyPreferenceStepWrapper = ({
       )
       if (
         preferenceFieldNames.some(
+          (fieldName) => fieldName.includes(".proofFileName") && getNestedError(errors, fieldName)
+        )
+      )
+        return setShowMissingDocumentError(true)
+      if (
+        preferenceFieldNames.some(
           (fieldName) =>
             !fieldName.includes(".preferenceClaimed") && getNestedError(errors, fieldName)
         )
       )
-        return true
+        return setShowGenericError(true)
     }
     if (comboPreference && subPreferenceClaimed && errors[subPreferenceClaimed]) {
-      return true
+      return setShowGenericError(true)
     }
-    return false
   }
+  useEffect(showErrorHeaders, [
+    errors,
+    claimedPreferences,
+    comboPreference,
+    preferenceContents,
+    subPreferenceClaimed,
+  ])
 
   const clearAllErrors = () => {
     clearErrors()
     setShowRequiredCheckboxError(false)
+    setShowGenericError(false)
+    setShowMissingDocumentError(false)
   }
 
   const handlePreferenceCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -253,10 +269,16 @@ const ListingApplyPreferenceStepWrapper = ({
           onClose={() => clearAllErrors()}
         />
       )}
-      {!showRequiredCheckboxError && showIncompleteDocumentError() && (
+      {!showRequiredCheckboxError && showMissingDocumentError && (
         <ListingApplyStepErrorMessage
           errorMessage={t("error.pleaseCompletePreference")}
           errorNote={t("error.pleaseCompletePreferenceContent")}
+          onClose={() => clearAllErrors()}
+        />
+      )}
+      {!showRequiredCheckboxError && !showMissingDocumentError && showGenericError && (
+        <ListingApplyStepErrorMessage
+          errorMessage={t("error.formSubmission")}
           onClose={() => clearAllErrors()}
         />
       )}
