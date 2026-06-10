@@ -494,26 +494,9 @@ exports[`Listing Detail renders a habitat listing 1`] = `
               </p>
             </div>
             <div
-              class="flex justify-center md:my-6 md:pr-8 md:px-0 md:w-2/3 px-3 w-full"
+              class="md:pr-8 md:w-2/3 mx-2 w-full"
             >
-              <span
-                class="ui-icon ui-large spinner-animation"
-              >
-                <svg
-                  fill="currentColor"
-                  viewBox="0 0 100 100"
-                >
-                  <circle
-                    cx="50"
-                    cy="50"
-                    fill="none"
-                    r="32"
-                    stroke="currentColor"
-                    stroke-dasharray="150.79644737231007 52.26548245743669"
-                    stroke-width="9"
-                  />
-                </svg>
-              </span>
+              <ul />
             </div>
             <ul>
               <li
@@ -5408,27 +5391,8 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
               </div>
             </div>
             <div
-              class="flex justify-center md:my-6 md:pr-8 md:px-0 md:w-2/3 px-3 w-full"
-            >
-              <span
-                class="ui-icon ui-large spinner-animation"
-              >
-                <svg
-                  fill="currentColor"
-                  viewBox="0 0 100 100"
-                >
-                  <circle
-                    cx="50"
-                    cy="50"
-                    fill="none"
-                    r="32"
-                    stroke="currentColor"
-                    stroke-dasharray="150.79644737231007 52.26548245743669"
-                    stroke-width="9"
-                  />
-                </svg>
-              </span>
-            </div>
+              class="md:my-6 md:pr-8 sm:px-4 lg:pl-0 lg:pr-8 md:w-2/3 px-2 w-full"
+            />
             <div
               class="md:w-2/3 md:pr-8"
             >
@@ -6575,7 +6539,35 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                             class="w-full text-xs"
                           >
                             <thead>
-                              <tr />
+                              <tr>
+                                <th
+                                  class=""
+                                >
+                                  <span
+                                    class=""
+                                  >
+                                    household size
+                                  </span>
+                                </th>
+                                <th
+                                  class=""
+                                >
+                                  <span
+                                    class=""
+                                  >
+                                    maximum income per month
+                                  </span>
+                                </th>
+                                <th
+                                  class=""
+                                >
+                                  <span
+                                    class=""
+                                  >
+                                    maximum income per year
+                                  </span>
+                                </th>
+                              </tr>
                             </thead>
                             <tbody />
                           </table>
@@ -6912,7 +6904,35 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                           class="w-full text-xs"
                         >
                           <thead>
-                            <tr />
+                            <tr>
+                              <th
+                                class=""
+                              >
+                                <span
+                                  class=""
+                                >
+                                  household size
+                                </span>
+                              </th>
+                              <th
+                                class=""
+                              >
+                                <span
+                                  class=""
+                                >
+                                  maximum income per month
+                                </span>
+                              </th>
+                              <th
+                                class=""
+                              >
+                                <span
+                                  class=""
+                                >
+                                  maximum income per year
+                                </span>
+                              </th>
+                            </tr>
                           </thead>
                           <tbody />
                         </table>
@@ -7290,7 +7310,35 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                           class="w-full text-xs"
                         >
                           <thead>
-                            <tr />
+                            <tr>
+                              <th
+                                class=""
+                              >
+                                <span
+                                  class=""
+                                >
+                                  household size
+                                </span>
+                              </th>
+                              <th
+                                class=""
+                              >
+                                <span
+                                  class=""
+                                >
+                                  maximum income per month
+                                </span>
+                              </th>
+                              <th
+                                class=""
+                              >
+                                <span
+                                  class=""
+                                >
+                                  maximum income per year
+                                </span>
+                              </th>
+                            </tr>
                           </thead>
                           <tbody />
                         </table>
@@ -9060,7 +9108,35 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                           class="w-full text-xs"
                         >
                           <thead>
-                            <tr />
+                            <tr>
+                              <th
+                                class=""
+                              >
+                                <span
+                                  class=""
+                                >
+                                  household size
+                                </span>
+                              </th>
+                              <th
+                                class=""
+                              >
+                                <span
+                                  class=""
+                                >
+                                  maximum income per month
+                                </span>
+                              </th>
+                              <th
+                                class=""
+                              >
+                                <span
+                                  class=""
+                                >
+                                  maximum income per year
+                                </span>
+                              </th>
+                            </tr>
                           </thead>
                           <tbody />
                         </table>
@@ -10332,27 +10408,8 @@ exports[`Listing Detail renders an open rental listing 1`] = `
               </div>
             </div>
             <div
-              class="flex justify-center md:my-6 md:pr-8 md:px-0 md:w-2/3 px-3 w-full"
-            >
-              <span
-                class="ui-icon ui-large spinner-animation"
-              >
-                <svg
-                  fill="currentColor"
-                  viewBox="0 0 100 100"
-                >
-                  <circle
-                    cx="50"
-                    cy="50"
-                    fill="none"
-                    r="32"
-                    stroke="currentColor"
-                    stroke-dasharray="150.79644737231007 52.26548245743669"
-                    stroke-width="9"
-                  />
-                </svg>
-              </span>
-            </div>
+              class="md:my-6 md:pr-8 sm:px-4 lg:pl-0 lg:pr-8 md:w-2/3 px-2 w-full"
+            />
             <ul>
               <li
                 class="responsive-content-item header-hidden"
@@ -11736,7 +11793,35 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                             class="w-full text-xs"
                           >
                             <thead>
-                              <tr />
+                              <tr>
+                                <th
+                                  class=""
+                                >
+                                  <span
+                                    class=""
+                                  >
+                                    household size
+                                  </span>
+                                </th>
+                                <th
+                                  class=""
+                                >
+                                  <span
+                                    class=""
+                                  >
+                                    maximum income per month
+                                  </span>
+                                </th>
+                                <th
+                                  class=""
+                                >
+                                  <span
+                                    class=""
+                                  >
+                                    maximum income per year
+                                  </span>
+                                </th>
+                              </tr>
                             </thead>
                             <tbody />
                           </table>
@@ -12287,7 +12372,35 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                           class="w-full text-xs"
                         >
                           <thead>
-                            <tr />
+                            <tr>
+                              <th
+                                class=""
+                              >
+                                <span
+                                  class=""
+                                >
+                                  household size
+                                </span>
+                              </th>
+                              <th
+                                class=""
+                              >
+                                <span
+                                  class=""
+                                >
+                                  maximum income per month
+                                </span>
+                              </th>
+                              <th
+                                class=""
+                              >
+                                <span
+                                  class=""
+                                >
+                                  maximum income per year
+                                </span>
+                              </th>
+                            </tr>
                           </thead>
                           <tbody />
                         </table>
@@ -12879,7 +12992,35 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                           class="w-full text-xs"
                         >
                           <thead>
-                            <tr />
+                            <tr>
+                              <th
+                                class=""
+                              >
+                                <span
+                                  class=""
+                                >
+                                  household size
+                                </span>
+                              </th>
+                              <th
+                                class=""
+                              >
+                                <span
+                                  class=""
+                                >
+                                  maximum income per month
+                                </span>
+                              </th>
+                              <th
+                                class=""
+                              >
+                                <span
+                                  class=""
+                                >
+                                  maximum income per year
+                                </span>
+                              </th>
+                            </tr>
                           </thead>
                           <tbody />
                         </table>
@@ -15507,7 +15648,35 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                           class="w-full text-xs"
                         >
                           <thead>
-                            <tr />
+                            <tr>
+                              <th
+                                class=""
+                              >
+                                <span
+                                  class=""
+                                >
+                                  household size
+                                </span>
+                              </th>
+                              <th
+                                class=""
+                              >
+                                <span
+                                  class=""
+                                >
+                                  maximum income per month
+                                </span>
+                              </th>
+                              <th
+                                class=""
+                              >
+                                <span
+                                  class=""
+                                >
+                                  maximum income per year
+                                </span>
+                              </th>
+                            </tr>
                           </thead>
                           <tbody />
                         </table>
