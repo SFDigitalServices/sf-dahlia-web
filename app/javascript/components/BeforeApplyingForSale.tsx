@@ -45,7 +45,9 @@ export const BeforeApplyingForSale = ({ beforeApplyingType }: BeforeApplyingForS
       {
         content: renderMarkup(
           `${t("listingsForSale.beforeApplyingHabitat.step3", {
-            url: "https://www.sf.gov/sites/default/files/2024-08/Inclusionary Affordable Housing Monitoring and Procedures Manual Final 7.25.24.pdf",
+            url: encodeURI(
+              "https://www.sf.gov/sites/default/files/2024-08/Inclusionary Affordable Housing Monitoring and Procedures Manual Final 7.25.24.pdf"
+            ),
           })}`
         ),
       },

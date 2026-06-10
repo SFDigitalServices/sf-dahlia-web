@@ -1511,7 +1511,7 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                             >
                               Meet the 
                               <a
-                                href="https://www.sf.gov/sites/default/files/2024-08/Inclusionary Affordable Housing Monitoring and Procedures Manual Final 7.25.24.pdf"
+                                href="https://www.sf.gov/sites/default/files/2024-08/Inclusionary%20Affordable%20Housing%20Monitoring%20and%20Procedures%20Manual%20Final%207.25.24.pdf"
                                 target="_blank"
                               >
                                 income requirements
@@ -1739,7 +1739,7 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                           >
                             Meet the 
                             <a
-                              href="https://www.sf.gov/sites/default/files/2024-08/Inclusionary Affordable Housing Monitoring and Procedures Manual Final 7.25.24.pdf"
+                              href="https://www.sf.gov/sites/default/files/2024-08/Inclusionary%20Affordable%20Housing%20Monitoring%20and%20Procedures%20Manual%20Final%207.25.24.pdf"
                               target="_blank"
                             >
                               income requirements
@@ -2006,7 +2006,7 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                           >
                             Meet the 
                             <a
-                              href="https://www.sf.gov/sites/default/files/2024-08/Inclusionary Affordable Housing Monitoring and Procedures Manual Final 7.25.24.pdf"
+                              href="https://www.sf.gov/sites/default/files/2024-08/Inclusionary%20Affordable%20Housing%20Monitoring%20and%20Procedures%20Manual%20Final%207.25.24.pdf"
                               target="_blank"
                             >
                               income requirements
@@ -4101,7 +4101,7 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                           >
                             Meet the 
                             <a
-                              href="https://www.sf.gov/sites/default/files/2024-08/Inclusionary Affordable Housing Monitoring and Procedures Manual Final 7.25.24.pdf"
+                              href="https://www.sf.gov/sites/default/files/2024-08/Inclusionary%20Affordable%20Housing%20Monitoring%20and%20Procedures%20Manual%20Final%207.25.24.pdf"
                               target="_blank"
                             >
                               income requirements
