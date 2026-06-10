@@ -48,7 +48,7 @@ DeviseTokenAuth.setup do |config|
   ]
 
   allowed_locales = ['', '/en', '/es', '/zh', '/tl']
-  allowed_paths   = ["/account", "/account/applications", "/account/settings", "/reset-password"]
+  allowed_paths   = ["/account", "/account/applications", "/account/settings", "/account/contact", "/reset-password"]
 
   config.redirect_whitelist = allowed_domains.flat_map do |domain|
     allowed_paths.flat_map do |path|

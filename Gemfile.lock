@@ -384,7 +384,7 @@ GEM
     multipart-post (2.4.1)
     net-http (0.9.1)
       uri (>= 0.11.1)
-    net-imap (0.6.4)
+    net-imap (0.6.4.1)
       date
       net-protocol
     net-pop (0.1.2)
@@ -449,7 +449,7 @@ GEM
       pry (>= 0.13.0)
     psych (3.3.4)
     public_suffix (7.0.2)
-    puma (6.4.3)
+    puma (7.2.1)
       nio4r (~> 2.0)
     racc (1.8.1)
     rack (2.2.23)
@@ -740,7 +740,7 @@ DEPENDENCIES
   pry-rails
   psych (< 4)
   public_suffix
-  puma (~> 6.4.3)
+  puma (~> 7.2.1)
   rack (>= 2.2.3)
   rack-cors (~> 1.0.5)
   rack-rewrite (~> 1.5.0)
