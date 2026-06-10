@@ -144,7 +144,6 @@ exports[`Listing Detail renders a habitat listing 1`] = `
         <nav
           aria-label="main navigation"
           class="site-header__container"
-          role="navigation"
         >
           <div
             class="site-header__base  site-header__base-wrapped"
@@ -195,32 +194,22 @@ exports[`Listing Detail renders a habitat listing 1`] = `
               </a>
               <a
                 class="site-header__link  "
-                data-testid="My Favorites-2"
-                href="/favorites"
-                target="_self"
-              >
-                <div>
-                  My Favorites
-                </div>
-              </a>
-              <a
-                class="site-header__link  "
-                data-testid="Get Assistance-3"
+                data-testid="Get assistance-2"
                 href="/get-assistance"
                 target="_self"
               >
                 <div>
-                  Get Assistance
+                  Get assistance
                 </div>
               </a>
               <a
                 class="site-header__link  "
-                data-testid="Sign In-4"
+                data-testid="Sign in-3"
                 href="/sign-in"
                 target="_self"
               >
                 <div>
-                  Sign In
+                  Sign in
                 </div>
               </a>
             </div>
@@ -5201,7 +5190,6 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
         <nav
           aria-label="main navigation"
           class="site-header__container"
-          role="navigation"
         >
           <div
             class="site-header__base  site-header__base-wrapped"
@@ -5252,32 +5240,22 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
               </a>
               <a
                 class="site-header__link  "
-                data-testid="My Favorites-2"
-                href="/favorites"
-                target="_self"
-              >
-                <div>
-                  My Favorites
-                </div>
-              </a>
-              <a
-                class="site-header__link  "
-                data-testid="Get Assistance-3"
+                data-testid="Get assistance-2"
                 href="/get-assistance"
                 target="_self"
               >
                 <div>
-                  Get Assistance
+                  Get assistance
                 </div>
               </a>
               <a
                 class="site-header__link  "
-                data-testid="Sign In-4"
+                data-testid="Sign in-3"
                 href="/sign-in"
                 target="_self"
               >
                 <div>
-                  Sign In
+                  Sign in
                 </div>
               </a>
             </div>
@@ -10109,7 +10087,6 @@ exports[`Listing Detail renders an open rental listing 1`] = `
         <nav
           aria-label="main navigation"
           class="site-header__container"
-          role="navigation"
         >
           <div
             class="site-header__base  site-header__base-wrapped"
@@ -10160,32 +10137,22 @@ exports[`Listing Detail renders an open rental listing 1`] = `
               </a>
               <a
                 class="site-header__link  "
-                data-testid="My Favorites-2"
-                href="/favorites"
-                target="_self"
-              >
-                <div>
-                  My Favorites
-                </div>
-              </a>
-              <a
-                class="site-header__link  "
-                data-testid="Get Assistance-3"
+                data-testid="Get assistance-2"
                 href="/get-assistance"
                 target="_self"
               >
                 <div>
-                  Get Assistance
+                  Get assistance
                 </div>
               </a>
               <a
                 class="site-header__link  "
-                data-testid="Sign In-4"
+                data-testid="Sign in-3"
                 href="/sign-in"
                 target="_self"
               >
                 <div>
-                  Sign In
+                  Sign in
                 </div>
               </a>
             </div>

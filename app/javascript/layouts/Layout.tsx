@@ -82,10 +82,6 @@ const getMenuLinks = (signedIn: boolean, signOut: () => void) => {
       href: "/listings/for-sale",
     },
     {
-      title: t("nav.myFavorites"),
-      href: "/favorites",
-    },
-    {
       title: t("nav.getAssistance"),
       href: "/get-assistance",
     },
@@ -93,7 +89,7 @@ const getMenuLinks = (signedIn: boolean, signOut: () => void) => {
 
   if (signedIn) {
     menuLinks.push({
-      title: t("nav.myAccount"),
+      title: t("accountLayout.nav.account"),
       subMenuLinks: [
         {
           title: t("nav.myDashboard"),
@@ -111,7 +107,7 @@ const getMenuLinks = (signedIn: boolean, signOut: () => void) => {
           iconElement: <Icon symbol="settings" size="medium" className="pr-2" />,
         },
         {
-          title: t("nav.signOut"),
+          title: t("accountLayout.nav.signOut"),
           iconElement: <div className="w-6" />, // Empty div to keep the icon space
           onClick: () => {
             // FIXME: Setup Site alert message for logging out DAH-974

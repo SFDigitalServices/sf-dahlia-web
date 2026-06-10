@@ -1,0 +1,9 @@
+.applications {
+  @media (max-width: theme("screens.sm")) {
+    margin: 0;
+    width: 100%;
+    max-width: none;
+    border: none;
+    border-radius: 0;
+  }
+}

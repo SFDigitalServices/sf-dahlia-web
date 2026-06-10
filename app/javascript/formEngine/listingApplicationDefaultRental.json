@@ -486,8 +486,8 @@
       "componentType": "step",
       "componentName": "ListingApplyPreferenceStepWrapper",
       "props": {
-        "pageTitle": "label.goodNewsForHigherRanking",
-        "pageInstructions": "e3aAssistedHousingPreference.instructions",
+        "title": "label.goodNewsForHigherRanking",
+        "description": "e3aAssistedHousingPreference.instructions",
         "greenHeader": true,
         "fieldNames": {
           "claimedPreferences": "claimedPreferences",
@@ -631,37 +631,54 @@
         "slug": "live-work-preference",
         "sectionName": "preferences",
         "navigationArrival": {
-          "showStepIfAnyPresent": [
-            {
-              "dataSource": "form",
-              "dataKey": "_addressNeighborhoodMatch"
-            },
+          "showStepIfAllPresent": [
             {
               "dataSource": "preferenceNames",
               "dataKey": "liveWorkInSf"
+            },
+            {
+              "dataSource": "form",
+              "dataKey": "_addressNeighborhoodMatch"
             }
           ]
         }
       },
       "componentType": "step",
-      "componentName": "ListingApplyLiveWorkPreference",
+      "componentName": "ListingApplyPreferenceStepWrapper",
       "props": {
+        "title": "e2cLiveWorkPreference.title",
+        "description": "e2cLiveWorkPreference.instructions",
         "fieldNames": {
-          "liveOrWorkInSf": "_liveOrWorkInSf",
-          "liveOrWorkInSfClaimedOption": "_liveOrWorkInSfClaimedOption",
-          "liveInSf": "_liveInSf",
-          "workInSf": "_workInSf",
-          "liveInSfMember": "liveInSfMember",
-          "liveInSfProofType": "liveInSfProofType",
-          "liveInSfFileName": "liveInSfFileName",
-          "liveInSfFileUploadedAt": "liveInSfFileUploadedAt",
-          "workInSfMember": "workInSfMember",
-          "workInSfProofType": "workInSfProofType",
-          "workInSfProofDoc": "workInSfProofDoc",
-          "workInSfFileName": "workInSfFileName",
-          "workInSfFileUploadedAt": "workInSfFileUploadedAt",
-          "optOutLiveWork": "optOutLiveWork"
-        }
+          "claimedPreferences": "claimedPreferences",
+          "optOut": "_liveOrWorkInSfOptOut",
+          "subPreferenceClaimed": "_liveOrWorkInSfClaimedPreference"
+        },
+        "comboPreference": {
+          "checkboxLabel": "e2cLiveWorkPreference.liveWorkSfPreference.title",
+          "checkboxDescription": "e2cLiveWorkPreference.liveWorkSfPreference.description",
+          "preferenceName": "liveWorkInSf",
+          "subPreferenceSelectLabel": "label.preferenceOptionToClaim"
+        },
+        "preferenceContents": [
+          {
+            "preferenceName": "liveInSf",
+            "checkboxLabel": "e2cLiveWorkPreference.liveSfPreference.title",
+            "checkboxDescription": "e2cLiveWorkPreference.liveSfPreference.description",
+            "proofHouseholdMemberLabel": "label.applicantPreferencesDocumentName",
+            "proofTypeLabel": "label.preferenceProofAddressDocuments",
+            "proofTypeNote": "e2cLiveWorkPreference.documentMustShowCorrectName",
+            "proofUploadButtonLabel": "label.uploadProofOfPreference"
+          },
+          {
+            "preferenceName": "workInSf",
+            "checkboxLabel": "e2cLiveWorkPreference.workSfPreference.title",
+            "checkboxDescription": "e2cLiveWorkPreference.workSfPreference.description",
+            "proofHouseholdMemberLabel": "label.applicantPreferencesDocumentName",
+            "proofTypeLabel": "label.preferenceProofDocuments",
+            "proofTypeNote": "e2cLiveWorkPreference.documentMustShowCorrectNameForWork",
+            "proofUploadButtonLabel": "label.uploadProofOfPreference"
+          }
+        ]
       }
     },
     {

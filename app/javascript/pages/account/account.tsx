@@ -12,6 +12,7 @@ import {
   RedirectType,
   getApplicationPath,
   getMyAccountSettingsPath,
+  getMyAccountContactPath,
 } from "../../util/routeUtil"
 import UserContext from "../../authentication/context/UserContext"
 import { withAuthentication } from "../../authentication/withAuthentication"
@@ -65,29 +66,32 @@ const OverviewSection = ({
 )
 
 const AccountOverview = ({ signOut, hasButton }: { signOut: () => void; hasButton: boolean }) => (
-  <Tabs
-    className="vertical-sidebar-layout"
-    navigation={hasButton}
-    navigationLabel={hasButton && t("accountLayout.nav.title")}
-    onSelect={!hasButton && (() => false)}
-  >
-    <Tabs.TabList>
-      {overviewSections.map((section) => (
-        <Tabs.Tab
-          key={section.href}
-          className={styles.overviewSection}
-          href={hasButton && section.href}
-        >
-          <OverviewSection {...section} />
+  <>
+    <Button href={getMyAccountContactPath()}> Change contact info</Button>
+    <Tabs
+      className="vertical-sidebar-layout"
+      navigation={hasButton}
+      navigationLabel={hasButton && t("accountLayout.nav.title")}
+      onSelect={!hasButton && (() => false)}
+    >
+      <Tabs.TabList>
+        {overviewSections.map((section) => (
+          <Tabs.Tab
+            key={section.href}
+            className={styles.overviewSection}
+            href={hasButton && section.href}
+          >
+            <OverviewSection {...section} />
+          </Tabs.Tab>
+        ))}
+        <Tabs.Tab className={styles.overviewFooter}>
+          <Button variant="text" onClick={signOut} className={styles.signOut}>
+            {t("accountLayout.account.signOut")}
+          </Button>
         </Tabs.Tab>
-      ))}
-      <Tabs.Tab className={styles.overviewFooter}>
-        <Button variant="text" onClick={signOut} className={styles.signOut}>
-          {t("accountLayout.account.signOut")}
-        </Button>
-      </Tabs.Tab>
-    </Tabs.TabList>
-  </Tabs>
+      </Tabs.TabList>
+    </Tabs>
+  </>
 )
 
 const Account = () => {
