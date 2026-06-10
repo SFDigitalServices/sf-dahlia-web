@@ -998,7 +998,7 @@ exports[`For Sale renders ForSale component 1`] = `
             class="footer-nav"
           >
             <a
-              class="seeds-link text-gray-500"
+              class="seeds-link text-gray-500 no-underline"
               href="https://airtable.com/appUW1tM8te0Lmf6q/pagyZulZJCm1V4G8D/form?prefill_Last+visited=%2F&hide_Last+visited=true"
               rel="noreferrer"
               target="_blank"
@@ -1011,21 +1011,19 @@ exports[`For Sale renders ForSale component 1`] = `
               </span>
             </a>
             <a
-              class="seeds-link text-gray-500"
+              class="seeds-link text-gray-500 no-underline"
               href="mailto:sfhousinginfo@sfgov.org"
             >
               Contact
             </a>
             <a
-              class="text-gray-500"
-              data-discover="true"
+              class="seeds-link text-gray-500 no-underline"
               href="/disclaimer"
             >
               Disclaimer
             </a>
             <a
-              class="text-gray-500"
-              data-discover="true"
+              class="seeds-link text-gray-500 no-underline"
               href="/privacy"
             >
               Privacy Policy
