@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useRef } from "react"
 import { useForm, FormProvider } from "react-hook-form"
 import { Form, Field, t } from "@bloom-housing/ui-components"
 import { Button, Card, FormErrorMessage } from "@bloom-housing/ui-seeds"
@@ -65,14 +65,8 @@ const ListingApplyPreferenceStepWrapper = ({
 
   // https://github.com/react-hook-form/react-hook-form/issues/2887#issuecomment-802577357
   /* eslint-disable @typescript-eslint/unbound-method */
-  const {
-    reset,
-    register,
-    handleSubmit,
-    formState: { errors, isValid },
-    clearErrors,
-    setValue,
-  } = formMethods
+  const { reset, register, handleSubmit, formState, clearErrors, setValue } = formMethods
+  const { errors, isValid } = formState
   /* eslint-enable @typescript-eslint/unbound-method */
 
   // populate the page's form values from formData
@@ -108,12 +102,7 @@ const ListingApplyPreferenceStepWrapper = ({
     /* eslint-disable-next-line react-hooks/exhaustive-deps */
   }, [reset])
 
-  useEffect(() => {
-    if (isValid) {
-      window.scrollTo(0, 0)
-    }
-  }, [isValid])
-
+  const errorSectionRef = useRef<HTMLDivElement>(null)
   const [showRequiredCheckboxError, setShowRequiredCheckboxError] = useState(false)
   const [showGenericError, setShowGenericError] = useState(false)
   const [showMissingDocumentError, setShowMissingDocumentError] = useState(false)
@@ -135,30 +124,27 @@ const ListingApplyPreferenceStepWrapper = ({
     const preferenceNames = preferenceContents.map((content) => content.preferenceName)
     if (comboPreference) preferenceNames.push(comboPreference.preferenceName)
 
-    for (const preferenceName of preferenceNames) {
-      const preferenceFieldNames = Object.values(
-        generatePreferenceFieldNames(claimedPreferences, preferenceName)
+    const fieldNamesWithErrors = preferenceNames
+      .flatMap((preferenceName) =>
+        Object.values(generatePreferenceFieldNames(claimedPreferences, preferenceName))
       )
-      if (
-        preferenceFieldNames.some(
-          (fieldName) => fieldName.includes(".proofFileName") && getNestedError(errors, fieldName)
-        )
-      )
-        return setShowMissingDocumentError(true)
-      if (
-        preferenceFieldNames.some(
-          (fieldName) =>
-            !fieldName.includes(".preferenceClaimed") && getNestedError(errors, fieldName)
-        )
-      )
-        return setShowGenericError(true)
-    }
-    if (comboPreference && subPreferenceClaimed && errors[subPreferenceClaimed]) {
-      return setShowGenericError(true)
-    }
+      .filter((fieldName) => getNestedError(errors, fieldName))
+
+    const hasMissingDocumentError = fieldNamesWithErrors.some((fieldName) =>
+      fieldName.includes(".proofFileName")
+    )
+    const hasGenericError =
+      fieldNamesWithErrors.some(
+        (fieldName) =>
+          !fieldName.includes(".preferenceClaimed") && !fieldName.includes(".proofFileName")
+      ) || !!(comboPreference && subPreferenceClaimed && errors[subPreferenceClaimed])
+
+    setShowMissingDocumentError(hasMissingDocumentError)
+    setShowGenericError(hasGenericError)
   }
   useEffect(showErrorHeaders, [
-    errors,
+    formState,
+    errors, // we need to use `formState` instead of `errors`, but linter will complain if `errors` is missing
     claimedPreferences,
     comboPreference,
     preferenceContents,
@@ -262,26 +248,28 @@ const ListingApplyPreferenceStepWrapper = ({
         <h1 className={stepStyles["step-title"]}>{t(title)}</h1>
         <p className={stepStyles["step-description"]}>{renderInlineMarkup(t(description))}</p>
       </Card.Header>
-      {showRequiredCheckboxError && (
-        <ListingApplyStepErrorMessage
-          errorMessage={t("error.pleaseSelectPreferenceOption")}
-          errorNote={t("error.pleaseSelectPreferenceContent")}
-          onClose={() => clearAllErrors()}
-        />
-      )}
-      {!showRequiredCheckboxError && showMissingDocumentError && (
-        <ListingApplyStepErrorMessage
-          errorMessage={t("error.pleaseCompletePreference")}
-          errorNote={t("error.pleaseCompletePreferenceContent")}
-          onClose={() => clearAllErrors()}
-        />
-      )}
-      {!showRequiredCheckboxError && !showMissingDocumentError && showGenericError && (
-        <ListingApplyStepErrorMessage
-          errorMessage={t("error.formSubmission")}
-          onClose={() => clearAllErrors()}
-        />
-      )}
+      <div ref={errorSectionRef}>
+        {showRequiredCheckboxError && (
+          <ListingApplyStepErrorMessage
+            errorMessage={t("error.pleaseSelectPreferenceOption")}
+            errorNote={t("error.pleaseSelectPreferenceContent")}
+            onClose={() => clearAllErrors()}
+          />
+        )}
+        {!showRequiredCheckboxError && showMissingDocumentError && (
+          <ListingApplyStepErrorMessage
+            errorMessage={t("error.pleaseCompletePreference")}
+            errorNote={t("error.pleaseCompletePreferenceContent")}
+            onClose={() => clearAllErrors()}
+          />
+        )}
+        {!showRequiredCheckboxError && !showMissingDocumentError && showGenericError && (
+          <ListingApplyStepErrorMessage
+            errorMessage={t("error.formSubmission")}
+            onClose={() => clearAllErrors()}
+          />
+        )}
+      </div>
       <Form onSubmit={handleSubmit(onSubmit)}>
         <Card.Section>
           <p className={styles["preference-instructions"]}>{t("label.pleaseSelectPreference")}</p>
@@ -347,7 +335,14 @@ const ListingApplyPreferenceStepWrapper = ({
           )}
         </Card.Section>
         <Card.Footer className={stepStyles["step-footer"]}>
-          <Button variant="primary" type="submit">
+          <Button
+            variant="primary"
+            type="submit"
+            onClick={() => {
+              if (!isValid || showRequiredCheckboxError)
+                errorSectionRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })
+            }}
+          >
             {t("t.next")}
           </Button>
         </Card.Footer>

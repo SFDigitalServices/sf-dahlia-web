@@ -1,6 +1,6 @@
 .error-section {
   border: var(--seeds-border-2) solid var(--seeds-color-alert);
-  padding: 0;
+  padding: 0 !important;
   font-size: var(--seeds-font-size-sm);
   .error-message {
     color: var(--seeds-color-white);
