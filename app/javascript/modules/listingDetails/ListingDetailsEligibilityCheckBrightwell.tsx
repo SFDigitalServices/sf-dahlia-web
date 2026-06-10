@@ -1,7 +1,7 @@
 import React from "react"
 import { Card, ListSection, t } from "@bloom-housing/ui-components"
+import { Link } from "@bloom-housing/ui-seeds"
 import { renderInlineMarkup, getSfGovUrl } from "../../util/languageUtil"
-import Link from "../../navigation/Link"
 
 const ListingDetailsEligibilityCheckBrightwell = () => (
   <ListSection title={t("listings.customListingType.educator.eligibility.title")} subtitle="">
@@ -25,9 +25,8 @@ const ListingDetailsEligibilityCheckBrightwell = () => (
             {t("listings.customListingType.educator.brightwell.eligibility.part4")}{" "}
             <Link
               className="text-blue-700"
-              external={true}
               href={getSfGovUrl("https://www.sf.gov/learn-how-lottery-works-brightwell-west")}
-              target="_blank"
+              newWindowTarget
             >
               {t("listings.customListingType.educator.brightwell.eligibility.part5")}
             </Link>

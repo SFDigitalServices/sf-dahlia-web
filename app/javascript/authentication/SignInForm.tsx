@@ -1,4 +1,5 @@
 import React, { Dispatch, SetStateAction, useContext, useEffect, useRef, useState } from "react"
+import { useNavigate } from "react-router"
 
 import {
   AppearanceStyleType,
@@ -8,7 +9,6 @@ import {
   FormCard,
   Icon,
   LinkButton,
-  NavigationContext,
 } from "@bloom-housing/ui-components"
 import { Link, Heading, Alert } from "@bloom-housing/ui-seeds"
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form"
@@ -207,7 +207,7 @@ const SignInForm = () => {
 
   const { signIn } = useContext(UserContext)
 
-  const { router } = useContext(NavigationContext)
+  const navigate = useNavigate()
 
   const handleRequestError = (error: AxiosError<{ error: string; email: string }>) => {
     if (error?.response?.data?.error === "not_confirmed") {
@@ -230,7 +230,7 @@ const SignInForm = () => {
     signIn(email, password, "Sign In Page")
       .then(() => {
         const redirectType = getRedirectTypeFromURL()
-        router.push(getSignInRedirectUrl(redirectType))
+        void navigate(getSignInRedirectUrl(redirectType))
         window.scrollTo(0, 0)
       })
       .catch((error: AxiosError<{ error: string; email: string }>) => {

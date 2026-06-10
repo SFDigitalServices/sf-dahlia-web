@@ -8,6 +8,7 @@ import {
   StandardTable,
   t,
 } from "@bloom-housing/ui-components"
+import { Link } from "@bloom-housing/ui-seeds"
 import { RailsListing } from "../listings/SharedHelpers"
 import {
   isEducator,
@@ -38,7 +39,6 @@ import { ListingDetailsHMITable } from "./ListingDetailsHMITable"
 import "./ListingDetailsEligibility.scss"
 import { ListingDetailsChisholmPreferences } from "./ListingDetailsChisholmPreferences"
 import { stripMostTags } from "../../util/filterUtil"
-import Link from "../../navigation/Link"
 import ListingDetailsEligibilityCheckBrightwell from "./ListingDetailsEligibilityCheckBrightwell"
 import ListingDetailsEligibilityPrefBrightwell from "./ListingDetailsEligibilityPrefBrightwell"
 export interface ListingDetailsEligibilityProps {
@@ -316,9 +316,8 @@ export const ListingDetailsEligibility = ({
                     <div>
                       <Link
                         className="text-blue-700"
-                        external={true}
                         href="https://www.sf.gov/get-priority-housing-lottery-if-you-are-veteran"
-                        target="_blank"
+                        newWindowTarget
                       >
                         {t("listingsForSale.lotteryPreferences.moreAboutPriority")}
                       </Link>
