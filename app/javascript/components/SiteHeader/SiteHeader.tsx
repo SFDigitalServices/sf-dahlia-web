@@ -8,9 +8,14 @@ import {
   Button,
   AppearanceSizeType,
   NavigationContext,
+  SiteHeader as BloomSiteHeader,
   t,
 } from "@bloom-housing/ui-components"
+import UserContext from "../../authentication/context/UserContext"
+import { useFeatureFlag } from "../../hooks/useFeatureFlag"
+import { UNLEASH_FLAG } from "../../modules/constants"
 import "@bloom-housing/ui-components/src/headers/SiteHeader.scss"
+import styles from "./SiteHeader.module.scss"
 
 type LogoWidth = "slim" | "base" | "medium" | "wide"
 type SiteHeaderWidth = "base" | "wide"
@@ -70,7 +75,52 @@ const changeMenuShow = (
   setMenus(indexOfTitle !== -1 ? menus.filter((menu) => menu !== title) : [...menus, title])
 }
 
-const SiteHeader = (props: SiteHeaderProps) => {
+interface MobileDrawerProps {
+  in: boolean
+  onClose: () => void
+  closeLabel?: string
+  children: React.ReactNode
+}
+
+const MobileDrawer = ({ in: isOpen, onClose, closeLabel, children }: MobileDrawerProps) => {
+  const nodeRef = useRef<HTMLSpanElement>(null)
+
+  return (
+    <CSSTransition
+      nodeRef={nodeRef}
+      in={isOpen}
+      timeout={400}
+      classNames={"site-header__drawer-transition"}
+      unmountOnExit
+    >
+      <span ref={nodeRef} className={"site-header__mobile-drawer-dropdown-container"}>
+        <div className={"site-header__mobile-drawer-dropdown"}>
+          <button
+            className={"site-header__mobile-drawer-close-row"}
+            onClick={onClose}
+            onKeyPress={(event) => {
+              if (event.key === "Enter") {
+                onClose()
+              }
+            }}
+            aria-label={closeLabel ?? t("t.close")}
+          >
+            <Icon
+              size="small"
+              symbol="closeSmall"
+              fill={"#ffffff"}
+              className={"site-header__icon-spacing"}
+            />
+          </button>
+          {children}
+        </div>
+      </span>
+    </CSSTransition>
+  )
+}
+
+const DahliaSiteHeader = (props: SiteHeaderProps) => {
+  const { profile } = useContext(UserContext)
   const [activeMenu, setActiveMenu] = useState<string | null>()
   const [activeMobileMenus, setActiveMobileMenus] = useState<string[]>([])
   const [isDesktop, setIsDesktop] = useState(true)
@@ -88,10 +138,9 @@ const SiteHeader = (props: SiteHeaderProps) => {
       ? setNavbarClass("site-header__navbar-wrapped")
       : setNavbarClass("site-header__navbar-inline")
   }
+  const DESKTOP_MIN_WIDTH = props.desktopMinWidth || 767
 
   const { LinkComponent } = useContext(NavigationContext)
-
-  const DESKTOP_MIN_WIDTH = props.desktopMinWidth || 767
 
   const toggleDesktopMenu = (menuTitle: string) => {
     setActiveMenu((current) => (current === menuTitle ? null : menuTitle))
@@ -115,7 +164,7 @@ const SiteHeader = (props: SiteHeaderProps) => {
   }, [DESKTOP_MIN_WIDTH, props.languages])
 
   useEffect(() => {
-    if (!activeMenu || !isDesktop) return
+    if (!activeMenu) return
 
     const handlePointerDown = (event: MouseEvent) => {
       if (headerRef.current?.contains(event.target as Node)) return
@@ -132,7 +181,7 @@ const SiteHeader = (props: SiteHeaderProps) => {
       document.removeEventListener("mousedown", handlePointerDown)
       document.removeEventListener("keydown", handleEscape)
     }
-  }, [activeMenu, isDesktop])
+  }, [activeMenu])
 
   const getLogoWidthClass = () => {
     if (props.logoWidth === "slim") return "site-header__logo-width-slim"
@@ -140,6 +189,40 @@ const SiteHeader = (props: SiteHeaderProps) => {
     if (props.logoWidth === "medium") return "site-header__logo-width-med"
     if (props.logoWidth === "wide") return "site-header__logo-width-wide"
     return ""
+  }
+
+  const renderAccountDropdownTitle = (menuTitle: string, showTitle: boolean) => {
+    const lastSpace = menuTitle.lastIndexOf(" ")
+
+    return (
+      <span
+        className={`site-header__dropdown-title-content${
+          showTitle ? ` ${styles["dropdown-title-content-spaced"]}` : ""
+        }`}
+      >
+        <span
+          className={`${styles["account-avatar"]} ${
+            showTitle ? styles["account-avatar-with-title"] : styles["account-avatar-mobile"]
+          }`}
+        >
+          {profile?.firstName?.[0] ?? ""}
+          {profile?.lastName?.[0] ?? ""}
+        </span>
+        <span className="site-header__dropdown-title-with-icon">
+          {showTitle && (
+            <>
+              {lastSpace !== -1 && (
+                <span className="site-header__dropdown-title-split">
+                  {menuTitle.slice(0, lastSpace)}
+                </span>
+              )}
+              {lastSpace !== -1 ? menuTitle.slice(lastSpace + 1) : menuTitle}
+            </>
+          )}
+          <Icon size="small" symbol="arrowDown" fill="#555555" className="pl-2" />
+        </span>
+      </span>
+    )
   }
 
   const getDropdownOptions = (
@@ -216,35 +299,65 @@ const SiteHeader = (props: SiteHeaderProps) => {
     })
   }
 
-  const getDesktopDropdown = (menuTitle: string, subMenus: MenuLink[]) => {
-    const getMenuTitle = () => {
-      const splitTitle = menuTitle.split(" ")
-      return (
-        <span>
-          {splitTitle.length > 1 && (
-            <span className={"site-header__dropdown-title-split"}>
-              {[...splitTitle].splice(0, splitTitle.length - 1).join(" ")}
-            </span>
-          )}
-          <span className={"site-header__dropdown-title-with-icon"}>
-            {splitTitle.length > 1 ? splitTitle[splitTitle.length - 1] : menuTitle}
-            <Icon size="small" symbol="arrowDown" fill={"#555555"} className={"pl-2"} />
-          </span>
-        </span>
-      )
+  const toggleAccountMenu = (menuTitle: string) => {
+    setActiveMenu((current) => (current === menuTitle ? null : menuTitle))
+    if (!isDesktop) {
+      setMobileMenu(false)
+      setMobileDrawer(false)
     }
+  }
 
+  const getAccountDropdown = (menuLink: MenuLink, showTitle: boolean) => {
     return (
-      <span key={menuTitle}>
-        {getMenuTitle()}
-        {activeMenu === menuTitle && (
+      <span key={menuLink.title}>
+        {renderAccountDropdownTitle(menuLink.title, showTitle)}
+        {isDesktop && activeMenu === menuLink.title && (
           <span className={"site-header__dropdown-container"}>
             <div className={"site-header__dropdown"}>
-              {getDropdownOptions(subMenus, "site-header__dropdown-item", menuTitle)}
+              {getDropdownOptions(
+                menuLink.subMenuLinks ?? [],
+                "site-header__dropdown-item",
+                menuLink.title
+              )}
             </div>
           </span>
         )}
       </span>
+    )
+  }
+
+  const getDesktopDropdown = (menuLink: MenuLink) => {
+    return getAccountDropdown(menuLink, isDesktop && navbarClass === "site-header__navbar-inline")
+  }
+
+  const getAccountMenuLink = () => props.menuLinks.find((menuLink) => menuLink.subMenuLinks)
+
+  const getMobileNavMenuLinks = () => props.menuLinks.filter((menuLink) => !menuLink.subMenuLinks)
+
+  const getMobileHeader = () => {
+    const accountLink = getAccountMenuLink()
+    if (!accountLink) return null
+
+    const isOpen = activeMenu === accountLink.title
+
+    return (
+      <button
+        type="button"
+        className={`site-header__link site-header__dropdown-title ${styles["mobile-account-link"]}`}
+        onClick={() => toggleAccountMenu(accountLink.title)}
+        onKeyDown={(event) => {
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault()
+            toggleAccountMenu(accountLink.title)
+          }
+        }}
+        aria-expanded={isOpen}
+        aria-haspopup="true"
+        aria-label={accountLink.title}
+        data-testid={`${accountLink.title}-mobile`}
+      >
+        {getAccountDropdown(accountLink, false)}
+      </button>
     )
   }
 
@@ -304,41 +417,51 @@ const SiteHeader = (props: SiteHeaderProps) => {
     )
   }
 
+  const getMobileAccountDropdownMenu = () => {
+    const accountLink = getAccountMenuLink()
+    if (!accountLink) return null
+
+    const isOpen = activeMenu === accountLink.title
+
+    if (props.mobileDrawer) {
+      return (
+        <MobileDrawer
+          in={isOpen}
+          onClose={() => setActiveMenu(null)}
+          closeLabel={props.strings?.close}
+        >
+          {getDropdownOptions(
+            accountLink.subMenuLinks ?? [],
+            "site-header__mobile-drawer-dropdown-item"
+          )}
+        </MobileDrawer>
+      )
+    }
+
+    if (!isOpen) return null
+
+    return (
+      <span className={"site-header__mobile-dropdown-container"}>
+        <div className={"site-header__mobile-dropdown"}>
+          {getDropdownOptions(accountLink.subMenuLinks ?? [], "site-header__mobile-dropdown-item")}
+        </div>
+      </span>
+    )
+  }
+
   const getMobileDrawer = () => {
     return (
-      <CSSTransition
+      <MobileDrawer
         in={mobileDrawer}
-        timeout={400}
-        classNames={"site-header__drawer-transition"}
-        unmountOnExit
+        onClose={() => setMobileDrawer(false)}
+        closeLabel={props.strings?.close}
       >
-        <span className={"site-header__mobile-drawer-dropdown-container"}>
-          <div className={"site-header__mobile-drawer-dropdown"}>
-            <button
-              className={"site-header__mobile-drawer-close-row"}
-              onClick={() => setMobileDrawer(false)}
-              onKeyPress={(event) => {
-                if (event.key === "Enter") {
-                  setMobileDrawer(false)
-                }
-              }}
-              aria-label={props.strings?.close ?? t("t.close")}
-            >
-              <Icon
-                size="small"
-                symbol="arrowForward"
-                fill={"#ffffff"}
-                className={"site-header__icon-spacing"}
-              />
-            </button>
-            {buildMobileMenuOptions(
-              props.menuLinks,
-              "site-header__mobile-drawer-dropdown-item site-header__mobile-drawer-dropdown-item-sublink",
-              "site-header__mobile-drawer-dropdown-item"
-            )}
-          </div>
-        </span>
-      </CSSTransition>
+        {buildMobileMenuOptions(
+          getMobileNavMenuLinks(),
+          "site-header__mobile-drawer-dropdown-item site-header__mobile-drawer-dropdown-item-sublink",
+          "site-header__mobile-drawer-dropdown-item"
+        )}
+      </MobileDrawer>
     )
   }
 
@@ -349,7 +472,7 @@ const SiteHeader = (props: SiteHeaderProps) => {
           <span className={"site-header__mobile-dropdown-container"}>
             <div className={"site-header__mobile-dropdown"}>
               {buildMobileMenuOptions(
-                props.menuLinks,
+                getMobileNavMenuLinks(),
                 "site-header__mobile-dropdown-item site-header__mobile-dropdown-item-sublink",
                 "site-header__mobile-dropdown-item"
               )}
@@ -366,7 +489,7 @@ const SiteHeader = (props: SiteHeaderProps) => {
         {props.menuLinks.map((menuLink, index) => {
           let menuContent: JSX.Element
           if (menuLink.subMenuLinks) {
-            menuContent = getDesktopDropdown(menuLink.title, menuLink.subMenuLinks)
+            menuContent = getDesktopDropdown(menuLink)
           } else {
             menuContent = <div key={menuLink.title}>{menuLink.title}</div>
           }
@@ -433,64 +556,56 @@ const SiteHeader = (props: SiteHeaderProps) => {
     )
   }
 
-  const getMobileHeader = () => {
-    const mobileHeaderAction = () => {
-      if (!props.mobileDrawer) {
-        setMobileMenu(!mobileMenu)
-      } else {
-        setMobileDrawer(!mobileDrawer)
-      }
-      setActiveMobileMenus([])
+  const mobileHeaderAction = () => {
+    if (!props.mobileDrawer) {
+      setMobileMenu(!mobileMenu)
+    } else {
+      setMobileDrawer(!mobileDrawer)
     }
+    setActiveMenu(null)
+    setActiveMobileMenus([])
+  }
 
-    return (
-      <>
-        {props.mobileText ? (
-          <button
-            className={"site-header__mobile-menu-text-button"}
-            onClick={() => {
-              mobileHeaderAction()
-            }}
-            onKeyPress={(event) => {
-              if (event.key === "Enter") {
-                event.preventDefault()
-                mobileHeaderAction()
-              }
-            }}
-          >
-            <div className={"site-header__mobile-menu-text-button-content"}>
-              {props.strings?.menu ?? t("t.menu")}
-            </div>
-            <Icon
-              symbol={mobileMenu ? "closeSmall" : "hamburger"}
-              size={"base"}
-              className={"site-header__mobile-menu-icon"}
-            />
-          </button>
-        ) : (
-          <Button
-            size={AppearanceSizeType.small}
-            onClick={() => {
-              if (!props.mobileDrawer) {
-                setMobileMenu(!mobileMenu)
-              } else {
-                setMobileDrawer(!mobileDrawer)
-              }
-              setActiveMobileMenus([])
-            }}
-            icon={mobileMenu ? "closeSmall" : "hamburger"}
-            iconSize="base"
-            className={"site-header__mobile-menu-button"}
-            unstyled
-          >
-            <span className={"site-header__mobile-menu-button-text"}>
-              {mobileMenu
-                ? (props.strings?.close ?? t("t.close"))
-                : (props.strings?.menu ?? t("t.menu"))}
-            </span>
-          </Button>
-        )}
-      </>
+  const getMobileMenu = () => {
+    return props.mobileText ? (
+      <button
+        className={`site-header__mobile-menu-text-button ${styles["mobile-menu-button"]}`}
+        onClick={() => {
+          mobileHeaderAction()
+        }}
+        onKeyPress={(event) => {
+          if (event.key === "Enter") {
+            event.preventDefault()
+            mobileHeaderAction()
+          }
+        }}
+      >
+        <div className={"site-header__mobile-menu-text-button-content"}>
+          {props.strings?.menu ?? t("t.menu")}
+        </div>
+        <Icon
+          symbol={mobileMenu ? "closeSmall" : "hamburger"}
+          size={"base"}
+          className={"site-header__mobile-menu-icon"}
+        />
+      </button>
+    ) : (
+      <Button
+        size={AppearanceSizeType.small}
+        onClick={() => {
+          mobileHeaderAction()
+        }}
+        icon={mobileMenu ? "closeSmall" : "hamburger"}
+        iconSize="base"
+        className={`site-header__mobile-menu-button ${styles["mobile-menu-button"]}`}
+        unstyled
+      >
+        <span className={"site-header__mobile-menu-button-text"}>
+          {mobileMenu
+            ? (props.strings?.close ?? t("t.close"))
+            : (props.strings?.menu ?? t("t.menu"))}
+        </span>
+      </Button>
     )
   }
 
@@ -547,7 +662,7 @@ const SiteHeader = (props: SiteHeaderProps) => {
         <div className="site-header__notice-text">{props.notice ?? ""}</div>
       </div>
 
-      <nav className="site-header__container" role="navigation" aria-label="main navigation">
+      <nav className="site-header__container" aria-label="main navigation">
         <div
           className={`site-header__base ${
             props.siteHeaderWidth === "wide" ? "site-header__width-wide" : ""
@@ -557,6 +672,7 @@ const SiteHeader = (props: SiteHeaderProps) => {
               : "site-header__base-inline"
           }`}
         >
+          {!isDesktop && getMobileMenu()}
           {getLogo()}
           <div
             id={"site-header-links"}
@@ -567,9 +683,19 @@ const SiteHeader = (props: SiteHeaderProps) => {
         </div>
       </nav>
       {!isDesktop && mobileMenu && getMobileDropdown()}
+      {!isDesktop && getMobileAccountDropdownMenu()}
       {getMobileDrawer()}
     </header>
   )
+}
+
+const SiteHeader = (props: SiteHeaderProps) => {
+  const { unleashFlag: accountLayoutEnabled } = useFeatureFlag(UNLEASH_FLAG.ACCOUNTS_LAYOUT, false)
+  if (accountLayoutEnabled) {
+    return <DahliaSiteHeader {...props} />
+  }
+
+  return <BloomSiteHeader {...props} />
 }
 
 export { SiteHeader as default, SiteHeader }

@@ -23,15 +23,17 @@
 
 .green-background {
   background-color: var(--seeds-color-green-100);
+  padding: var(--seeds-s2) var(--seeds-s8) var(--seeds-s8) !important;
+  margin: 0 !important;
+}
+
+.preference-content-wrapper {
+  margin: 0 var(--seeds-s9) 0;
 }
 
 .preference-instructions {
   font-size: var(--seeds-font-size-sm);
   color: var(--seeds-color-gray-700);
-}
-
-.preference-content-wrapper {
-  margin-left: var(--seeds-s9);
 }
 
 .preference-checkbox {
@@ -46,13 +48,6 @@
 .preference-note {
   font-size: var(--seeds-font-size-sm);
   color: var(--seeds-color-gray-700);
-}
-
-.step-footer {
-  background-color: var(--seeds-color-primary-lighter);
-  padding: var(--seeds-s8);
-  display: flex;
-  justify-content: center;
 }
 
 .read-more-url {

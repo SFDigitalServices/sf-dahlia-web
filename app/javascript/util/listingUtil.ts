@@ -726,6 +726,8 @@ export const listingHasVeteransPreference = (listing: RailsListing): boolean => 
 }
 
 // replicates logic in ListingDataService.loadListing()
+// listing: { Listing_Lottery_Preferences: [{ Lottery_Preference: { Name: "Certificate of Preference (COP)" } }] }
+// output:  { certificateOfPreference: "Certificate of Preference (COP)" }
 export const listingPreferenceNames = (listing: RailsListing): Record<string, string> => {
   const listingPrefNames =
     listing.Listing_Lottery_Preferences?.map((pref) => pref.Lottery_Preference.Name) || []
