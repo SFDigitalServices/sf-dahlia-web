@@ -16,12 +16,7 @@ jest.mock("../../../../../api/formApiService", () => ({
 
 const mockDeleteUploadedProofFile = deleteUploadedProofFile as jest.Mock
 
-Object.defineProperty(window, "scrollTo", {
-  value: jest.fn(),
-  writable: true,
-})
-Element.prototype.scrollTo = jest.fn()
-Element.prototype.scrollIntoView = jest.fn()
+window.HTMLElement.prototype.scrollIntoView = jest.fn()
 
 const certOfPreferenceContent: PreferenceContent = {
   preferenceName: "certificateOfPreference",
@@ -295,22 +290,28 @@ describe("ListingApplyPreferenceStepWrapper", () => {
         await user.click(screen.getByLabelText(t("t.close")))
         expect(screen.queryByText(t("error.pleaseSelectPreferenceOption"))).not.toBeInTheDocument()
       })
-
-      it("scrolls to the error section when submitting again with the preference-to-claim checkbox error shown", async () => {
-        // eslint-disable-next-line @typescript-eslint/unbound-method
-        const mockScrollIntoView = Element.prototype.scrollIntoView as jest.Mock
-        renderWrapper()
-        const user = userEvent.setup()
-
-        await user.click(screen.getByText(t("t.next")))
-        expect(screen.getByText(t("error.pleaseSelectPreferenceOption"))).toBeInTheDocument()
-
-        await user.click(screen.getByText(t("t.next")))
-        expect(mockScrollIntoView).toHaveBeenCalledWith({ behavior: "smooth", block: "start" })
-      })
     })
 
     describe("document and generic errors", () => {
+      it("scrolls to the error section when react-hook-form validation fails", async () => {
+        // eslint-disable-next-line @typescript-eslint/unbound-method
+        const mockScrollIntoView = window.HTMLElement.prototype.scrollIntoView as jest.Mock
+        renderLiveWorkComboWrapper()
+        const user = userEvent.setup()
+
+        await user.click(
+          screen.getByLabelText(t("e2cLiveWorkPreference.liveWorkSfPreference.title"))
+        )
+        await user.click(screen.getByText(t("t.next")))
+
+        await waitFor(() => {
+          expect(mockScrollIntoView).toHaveBeenCalledWith({
+            behavior: "smooth",
+            block: "start",
+          })
+        })
+      })
+
       it("shows the incomplete document error message when a claimed preference has a household member but no uploaded proof file", async () => {
         renderWrapper({
           preferenceContents: [assistedHousingPreferenceContent],

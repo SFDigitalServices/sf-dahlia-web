@@ -66,7 +66,7 @@ const ListingApplyPreferenceStepWrapper = ({
   // https://github.com/react-hook-form/react-hook-form/issues/2887#issuecomment-802577357
   /* eslint-disable @typescript-eslint/unbound-method */
   const { reset, register, handleSubmit, formState, clearErrors, setValue } = formMethods
-  const { errors, isValid } = formState
+  const { errors } = formState
   /* eslint-enable @typescript-eslint/unbound-method */
 
   // populate the page's form values from formData
@@ -232,6 +232,10 @@ const ListingApplyPreferenceStepWrapper = ({
     handleNextStep()
   }
 
+  const onError = () => {
+    errorSectionRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })
+  }
+
   const headerClassNames = [
     styles["preference-header"],
     greenHeader ? styles["green-background"] : "",
@@ -270,7 +274,7 @@ const ListingApplyPreferenceStepWrapper = ({
           />
         )}
       </div>
-      <Form onSubmit={handleSubmit(onSubmit)}>
+      <Form onSubmit={handleSubmit(onSubmit, onError)}>
         <Card.Section>
           <p className={styles["preference-instructions"]}>{t("label.pleaseSelectPreference")}</p>
           {comboPreference && subPreferenceClaimed && (
@@ -335,14 +339,7 @@ const ListingApplyPreferenceStepWrapper = ({
           )}
         </Card.Section>
         <Card.Footer className={stepStyles["step-footer"]}>
-          <Button
-            variant="primary"
-            type="submit"
-            onClick={() => {
-              if (!isValid || showRequiredCheckboxError)
-                errorSectionRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })
-            }}
-          >
+          <Button variant="primary" type="submit">
             {t("t.next")}
           </Button>
         </Card.Footer>
