@@ -318,6 +318,7 @@ export const ListingDetailsEligibility = ({
                         className="text-blue-700"
                         href="https://www.sf.gov/get-priority-housing-lottery-if-you-are-veteran"
                         newWindowTarget
+                        hideExternalLinkIcon
                       >
                         {t("listingsForSale.lotteryPreferences.moreAboutPriority")}
                       </Link>

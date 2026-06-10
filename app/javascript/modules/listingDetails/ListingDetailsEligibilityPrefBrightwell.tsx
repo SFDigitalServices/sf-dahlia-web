@@ -19,6 +19,7 @@ const ListingDetailsEligibilityPrefBrightwell = () => (
             className="text-blue-700"
             href={getSfGovUrl("https://www.sf.gov/learn-how-lottery-works-brightwell-west")}
             newWindowTarget
+            hideExternalLinkIcon
           >
             {t("listings.customListingType.educator.brightwell.preferences.part3")}
           </Link>

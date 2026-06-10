@@ -755,11 +755,17 @@ exports[`ListingDetailsEligibility displays custom listing details 'check if you
                 <br />
                 You can still apply. You will be ranked below SFUSD and City College employees in the lottery. 
                 <a
-                  class="text-blue-700"
+                  class="seeds-link text-blue-700"
                   href="https://www.sf.gov/learn-how-lottery-works-brightwell-west"
+                  rel="noreferrer"
                   target="_blank"
                 >
                   Learn how the lottery works for Brightwell West.
+                  <span
+                    class="seeds-screen-reader-only"
+                  >
+                    (opens in a new tab)
+                  </span>
                 </a>
               </p>
             </div>
@@ -1105,11 +1111,17 @@ exports[`ListingDetailsEligibility displays custom listing details 'check if you
                 </p>
                 <p>
                   <a
-                    class="text-blue-700"
+                    class="seeds-link text-blue-700"
                     href="https://www.sf.gov/learn-how-lottery-works-brightwell-west"
+                    rel="noreferrer"
                     target="_blank"
                   >
                     Learn how the lottery works for Brightwell West
+                    <span
+                      class="seeds-screen-reader-only"
+                    >
+                      (opens in a new tab)
+                    </span>
                   </a>
                 </p>
               </div>

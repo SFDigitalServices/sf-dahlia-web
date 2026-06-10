@@ -156,7 +156,6 @@ exports[`For Rent renders ForRent component 1`] = `
                 aria-label="DAHLIA San Francisco Housing Portal"
                 class="site-header__logo translate site-header__custom-width"
                 href="/"
-                target="_self"
               >
                 <div
                   class="site-header__logo-content site-header__image-only-container"
@@ -176,7 +175,6 @@ exports[`For Rent renders ForRent component 1`] = `
                 class="site-header__link  "
                 data-testid="Rent-0"
                 href="/listings/for-rent"
-                target="_self"
               >
                 <div>
                   Rent
@@ -186,7 +184,6 @@ exports[`For Rent renders ForRent component 1`] = `
                 class="site-header__link  "
                 data-testid="Buy-1"
                 href="/listings/for-sale"
-                target="_self"
               >
                 <div>
                   Buy
@@ -196,7 +193,6 @@ exports[`For Rent renders ForRent component 1`] = `
                 class="site-header__link  "
                 data-testid="My Favorites-2"
                 href="/favorites"
-                target="_self"
               >
                 <div>
                   My Favorites
@@ -206,7 +202,6 @@ exports[`For Rent renders ForRent component 1`] = `
                 class="site-header__link  "
                 data-testid="Get Assistance-3"
                 href="/get-assistance"
-                target="_self"
               >
                 <div>
                   Get Assistance
@@ -216,7 +211,6 @@ exports[`For Rent renders ForRent component 1`] = `
                 class="site-header__link  "
                 data-testid="Sign In-4"
                 href="/sign-in"
-                target="_self"
               >
                 <div>
                   Sign In
@@ -258,7 +252,6 @@ exports[`For Rent renders ForRent component 1`] = `
                     class="button"
                     href="/eligibility-estimator/rental"
                     tabindex="0"
-                    target="_self"
                   >
                     Find matching listings
                   </a>
@@ -469,8 +462,8 @@ exports[`For Rent renders ForRent component 1`] = `
                   >
                     <a
                       class="button"
+                      data-discover="true"
                       href="/additional-resources"
-                      target="_self"
                     >
                       View opportunities
                     </a>
@@ -695,11 +688,17 @@ exports[`For Rent renders ForRent component 1`] = `
               class="action-block__actions"
             >
               <a
-                class="button"
+                class="seeds-link button no-underline"
                 href="https://confirmsubscription.com/h/y/C3BAFCD742D47910"
+                rel="noreferrer"
                 target="_blank"
               >
                 Sign Up today
+                <span
+                  class="seeds-screen-reader-only"
+                >
+                  (opens in a new tab)
+                </span>
               </a>
             </div>
           </div>
@@ -798,30 +797,35 @@ exports[`For Rent renders ForRent component 1`] = `
             class="footer-nav"
           >
             <a
-              class="text-gray-500"
+              class="seeds-link text-gray-500"
               href="https://airtable.com/appUW1tM8te0Lmf6q/pagyZulZJCm1V4G8D/form?prefill_Last+visited=%2F&hide_Last+visited=true"
+              rel="noreferrer"
               target="_blank"
             >
               Give Feedback
+              <span
+                class="seeds-screen-reader-only"
+              >
+                (opens in a new tab)
+              </span>
             </a>
             <a
-              class="text-gray-500"
+              class="seeds-link text-gray-500"
               href="mailto:sfhousinginfo@sfgov.org"
-              target="_self"
             >
               Contact
             </a>
             <a
               class="text-gray-500"
+              data-discover="true"
               href="/disclaimer"
-              target="_self"
             >
               Disclaimer
             </a>
             <a
               class="text-gray-500"
+              data-discover="true"
               href="/privacy"
-              target="_self"
             >
               Privacy Policy
             </a>

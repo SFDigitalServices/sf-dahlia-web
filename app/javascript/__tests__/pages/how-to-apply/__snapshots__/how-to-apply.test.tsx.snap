@@ -156,7 +156,6 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
                 aria-label="DAHLIA San Francisco Housing Portal"
                 class="site-header__logo translate site-header__custom-width"
                 href="/"
-                target="_self"
               >
                 <div
                   class="site-header__logo-content site-header__image-only-container"
@@ -176,7 +175,6 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
                 class="site-header__link  "
                 data-testid="Rent-0"
                 href="/listings/for-rent"
-                target="_self"
               >
                 <div>
                   Rent
@@ -186,7 +184,6 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
                 class="site-header__link  "
                 data-testid="Buy-1"
                 href="/listings/for-sale"
-                target="_self"
               >
                 <div>
                   Buy
@@ -196,7 +193,6 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
                 class="site-header__link  "
                 data-testid="My Favorites-2"
                 href="/favorites"
-                target="_self"
               >
                 <div>
                   My Favorites
@@ -206,7 +202,6 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
                 class="site-header__link  "
                 data-testid="Get Assistance-3"
                 href="/get-assistance"
-                target="_self"
               >
                 <div>
                   Get Assistance
@@ -216,7 +211,6 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
                 class="site-header__link  "
                 data-testid="Sign In-4"
                 href="/sign-in"
-                target="_self"
               >
                 <div>
                   Sign In
@@ -849,30 +843,35 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
             class="footer-nav"
           >
             <a
-              class="text-gray-500"
+              class="seeds-link text-gray-500"
               href="https://airtable.com/appUW1tM8te0Lmf6q/pagyZulZJCm1V4G8D/form?prefill_Last+visited=%2F&hide_Last+visited=true"
+              rel="noreferrer"
               target="_blank"
             >
               Give Feedback
+              <span
+                class="seeds-screen-reader-only"
+              >
+                (opens in a new tab)
+              </span>
             </a>
             <a
-              class="text-gray-500"
+              class="seeds-link text-gray-500"
               href="mailto:sfhousinginfo@sfgov.org"
-              target="_self"
             >
               Contact
             </a>
             <a
               class="text-gray-500"
+              data-discover="true"
               href="/disclaimer"
-              target="_self"
             >
               Disclaimer
             </a>
             <a
               class="text-gray-500"
+              data-discover="true"
               href="/privacy"
-              target="_self"
             >
               Privacy Policy
             </a>
