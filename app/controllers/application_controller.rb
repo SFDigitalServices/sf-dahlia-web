@@ -37,4 +37,8 @@ class ApplicationController < ActionController::Base
   def use_react_app
     false
   end
+
+  def react_app_props(**extras)
+    { assetPaths: static_asset_paths }.merge(extras).compact
+  end
 end

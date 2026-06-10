@@ -1,33 +1,33 @@
 # Controller for the Account Information pages
 class AccountController < ApplicationController
     def my_account
-      @account_information_props = { assetPaths: static_asset_paths }
+      @account_information_props = react_app_props
       render 'my_account'
     end
 
     def account_settings
-      @account_information_props = { assetPaths: static_asset_paths }
+      @account_information_props = react_app_props
       render 'account_settings'
     end
 
     def my_applications
-      @account_information_props = { assetPaths: static_asset_paths }
+      @account_information_props = react_app_props
       render 'my_applications'
     end
 
     # New account layouts
     def account
-      @account_information_props = { assetPaths: static_asset_paths }
+      @account_information_props = react_app_props
       render 'account'
     end
 
     def settings
-      @account_information_props = { assetPaths: static_asset_paths }
+      @account_information_props = react_app_props
       render 'settings'
     end
 
     def applications
-      @account_information_props = { assetPaths: static_asset_paths }
+      @account_information_props = react_app_props
       render 'applications'
     end
 
