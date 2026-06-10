@@ -193,12 +193,13 @@ const HouseholdMemberMultiStepWrapper = ({
     }
     case "HouseholdMemberVerifyAddress": {
       if (!pendingMember) return null
+      const member = pendingMember
       return (
         <VerifyAddress
-          addressData={getHouseholdMemberAddress(pendingMember)}
-          onConfirm={() => saveHouseholdMember(pendingMember)}
+          addressData={getHouseholdMemberAddress(member)}
+          onConfirm={() => saveHouseholdMember(member)}
           onEdit={() => {
-            methods.reset(pendingMember)
+            methods.reset(member)
             setComponentToRender("HouseholdMemberForm")
           }}
         />

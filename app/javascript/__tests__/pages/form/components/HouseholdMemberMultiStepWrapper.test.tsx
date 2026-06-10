@@ -173,16 +173,21 @@ describe("HouseholdMemberMultiStepWrapper", () => {
 
     await user.click(screen.getByText("+ " + t("label.addHouseholdMember")))
     await user.type(screen.getByLabelText(/first name/i), "John")
-    await user.type(screen.getByLabelText(/last name/i), "Doe")
+    await user.type(screen.getByLabelText(/last name/i), "Smith")
+    await user.type(screen.getByLabelText("Month"), "6")
+    await user.type(screen.getByLabelText("Day"), "15")
+    await user.type(screen.getByLabelText("Year"), "1985")
     const yesButtons = screen.getAllByLabelText(t("t.yes"))
     await user.click(yesButtons[0])
-
-    await user.click(
-      screen.getByRole("button", {
-        name: t("label.householdMemberSave"),
-      })
+    await user.click(yesButtons[1])
+    await user.selectOptions(
+      screen.getByLabelText(t("label.householdMemberRelationship")),
+      "Spouse"
     )
+    await user.click(screen.getByRole("button", { name: t("label.householdMemberSave") }))
+
     expect(locateVerifiedAddress).not.toHaveBeenCalled()
+    expect(screen.getByText("John Smith")).toBeInTheDocument()
   })
 
   it("shows address verification screen when address validation succeeds", async () => {
