@@ -1,14 +1,16 @@
-import React from "react"
+import React, { useContext } from "react"
 import { t, Icon } from "@bloom-housing/ui-components"
 import { Heading, Tabs } from "@bloom-housing/ui-seeds"
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { ConfigContext } from "../lib/ConfigContext"
 import { getPathWithoutLanguagePrefix } from "../util/languageUtil"
 import {
   getMyAccountPath,
   getApplicationPath,
   getMyAccountSettingsPath,
   getSignInPath,
+  getMyAccountContactPath,
 } from "../util/routeUtil"
 import styles from "./AccountNav.module.scss"
 
@@ -20,6 +22,8 @@ const isNavActive = (localizedPath: string): boolean => {
 }
 
 const AccountNav = () => {
+  const { getAssetPath } = useContext(ConfigContext)
+
   return (
     <div className={styles.accountNav}>
       <Heading size="sm" className={styles.accountNavTitle}>
@@ -34,6 +38,17 @@ const AccountNav = () => {
           <Tabs.Tab href={getMyAccountPath()} active={isNavActive(getMyAccountPath())}>
             <Icon size="md-large" symbol="profile" className={styles.accountNavLinkIcon} />
             {t("accountLayout.nav.overview")}
+          </Tabs.Tab>
+          <Tabs.Tab
+            href={getMyAccountContactPath()}
+            active={isNavActive(getMyAccountContactPath())}
+          >
+            <img
+              src={getAssetPath("contact-info.png")}
+              alt=""
+              className={`${styles.accountNavLinkIcon} ${styles.accountNavLinkImage}`}
+            />
+            {t("accountLayout.nav.contactInfo")}
           </Tabs.Tab>
           <Tabs.Tab href={getApplicationPath()} active={isNavActive(getApplicationPath())}>
             <Icon size="md-large" symbol="application" className={styles.accountNavLinkIcon} />
