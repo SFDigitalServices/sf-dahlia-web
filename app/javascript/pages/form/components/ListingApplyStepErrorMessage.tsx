@@ -35,8 +35,12 @@ const ListingApplyStepErrorMessage = ({
       </div>
       {errorNote && (
         <div className={styles["error-note"]}>
-          {errorNoteHeading && <p>{errorNoteHeading}</p>}
-          <br />
+          {errorNoteHeading && (
+            <>
+              <p>{errorNoteHeading}</p>
+              <br />
+            </>
+          )}
           {renderInlineMarkup(errorNote)}
         </div>
       )}

@@ -144,7 +144,6 @@ exports[`Listing Detail renders a habitat listing 1`] = `
         <nav
           aria-label="main navigation"
           class="site-header__container"
-          role="navigation"
         >
           <div
             class="site-header__base  site-header__base-wrapped"
@@ -5191,7 +5190,6 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
         <nav
           aria-label="main navigation"
           class="site-header__container"
-          role="navigation"
         >
           <div
             class="site-header__base  site-header__base-wrapped"
@@ -10089,7 +10087,6 @@ exports[`Listing Detail renders an open rental listing 1`] = `
         <nav
           aria-label="main navigation"
           class="site-header__container"
-          role="navigation"
         >
           <div
             class="site-header__base  site-header__base-wrapped"
