@@ -9,6 +9,10 @@
     display: flex;
     p {
       padding: 0 var(--seeds-s4) 0;
+      flex-grow: 1;
+    }
+    button {
+      color: var(--seeds-color-white) !important;
     }
   }
   .error-note {
@@ -17,9 +21,6 @@
     p {
       color: var(--seeds-color-alert);
     }
-  }
-  button {
-    color: var(--seeds-color-white) !important;
   }
   a {
     color: var(--seeds-color-white);
