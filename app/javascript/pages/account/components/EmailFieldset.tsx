@@ -77,15 +77,30 @@ interface EmailFieldProps {
   errors?: UseFormMethods["errors"]
   onChange?: () => void
   note?: React.ReactNode
+  className?: string
+  controlClassName?: string
 }
 
-const EmailFieldset = ({ register, errors, defaultEmail, onChange, note }: EmailFieldProps) => {
+const EmailFieldset = ({
+  register,
+  errors,
+  defaultEmail,
+  onChange,
+  note,
+  className,
+  controlClassName,
+}: EmailFieldProps) => {
   return (
-    <Fieldset hasError={errors?.email} label={t("label.emailAddress")} note={note}>
+    <Fieldset
+      hasError={errors?.email}
+      label={t("label.emailAddress")}
+      note={note}
+      className={className}
+    >
       <Field
         dataTestId="email-field"
         className="pb-4"
-        controlClassName="mt-1"
+        controlClassName={`mt-1${controlClassName ? ` ${controlClassName}` : ""}`}
         type="email"
         name="email"
         placeholder="example@web.com"

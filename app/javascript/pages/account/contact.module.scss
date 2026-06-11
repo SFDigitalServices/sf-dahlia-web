@@ -1,0 +1,55 @@
+.contactCard {
+  max-width: var(--seeds-width-2xl);
+}
+
+.contactField {
+  max-width: var(--seeds-width-sm);
+}
+
+.noEmailCheckbox {
+  color: var(--seeds-color-blue-500);
+  font-weight: var(--seeds-font-weight-semibold);
+}
+
+.contactSection {
+  padding: var(--seeds-spacer-section) !important;
+}
+
+.contactMessage {
+  padding: var(--seeds-spacer-header) var(--seeds-spacer-container);
+}
+
+.header {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--seeds-spacer-content) var(--seeds-s16) !important;
+}
+
+.heading {
+  margin: var(--seeds-spacer-header) 0;
+}
+
+.iconBackground {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--seeds-rounded-full);
+  background: var(--seeds-color-blue-300);
+  width: var(--seeds-s16);
+  height: var(--seeds-s16);
+}
+
+.icon {
+  display: block;
+  width: var(--seeds-s8);
+  height: var(--seeds-s8);
+}
+
+.footer {
+  display: flex;
+  justify-content: center;
+  padding: var(--seeds-spacer-section);
+  background: var(--seeds-color-blue-100);
+}
