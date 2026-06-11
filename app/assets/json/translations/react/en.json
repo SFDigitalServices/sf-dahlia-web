@@ -43,6 +43,7 @@
   "accountLayout.accountCard.title": "Hi, %{name}",
   "accountLayout.contact.back": "Back to account overview",
   "accountLayout.contact.changeInfo": "Changes update contact info for all applications. This includes applications you already submitted.",
+  "accountLayout.contact.changesSaved": "Changes saved.",
   "accountLayout.contact.saveEmail": "Save email",
   "accountLayout.contact.subtitle": "We use this info to contact you about your application. Make sure it’s up to date.",
   "accountLayout.contact.title": "Your contact info",

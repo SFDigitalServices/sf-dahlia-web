@@ -79,6 +79,7 @@ interface EmailFieldProps {
   note?: React.ReactNode
   className?: string
   controlClassName?: string
+  emailRequired?: boolean
 }
 
 const EmailFieldset = ({
@@ -89,6 +90,7 @@ const EmailFieldset = ({
   note,
   className,
   controlClassName,
+  emailRequired = true,
 }: EmailFieldProps) => {
   return (
     <Fieldset
@@ -105,8 +107,8 @@ const EmailFieldset = ({
         name="email"
         placeholder="example@web.com"
         validation={{
-          required: "email:missing",
-          validate: emailValidation,
+          required: emailRequired ? "email:missing" : false,
+          validate: emailRequired ? emailValidation : undefined,
         }}
         labelClassName="sr-only"
         label="Email"
