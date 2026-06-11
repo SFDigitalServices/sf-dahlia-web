@@ -2,6 +2,10 @@
   padding: var(--seeds-spacer-section);
   gap: var(--seeds-spacer-text);
   margin-bottom: var(--seeds-spacer-content);
+
+  @media (max-width: theme("screens.sm")) {
+    border-radius: 0;
+  }
 }
 
 .subtitle {
@@ -24,4 +28,8 @@
 .changeButton {
   align-self: flex-start;
   margin-top: var(--seeds-spacer-text);
+
+  @media (max-width: theme("screens.sm")) {
+    width: 100%;
+  }
 }
