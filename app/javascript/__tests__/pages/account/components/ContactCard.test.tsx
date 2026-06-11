@@ -37,4 +37,12 @@ describe("ContactCard", () => {
     expect(container.querySelector('[data-icon="envelope"]')).toBeInTheDocument()
     expect(container.querySelector('[data-icon="phone"]')).toBeInTheDocument()
   })
+
+  it("displays content for when there is no contact info", () => {
+    const userWithoutContactInfo = { ...mockProfileStub, email: "", phone: "" }
+    render(<ContactCard user={userWithoutContactInfo} />)
+
+    expect(screen.getByText(t("accountLayout.accountCard.noInfo"))).toBeInTheDocument()
+    expect(screen.queryByText(t("accountLayout.accountCard.subtitle"))).not.toBeInTheDocument()
+  })
 })
