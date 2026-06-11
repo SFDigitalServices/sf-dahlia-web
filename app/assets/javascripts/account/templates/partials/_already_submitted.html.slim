@@ -1,0 +1,17 @@
+div ng-controller="AccountController"
+  header.modal-header
+    h1.modal-title.t-gamma.no-margin
+      | {{'already_submitted.title' | translate}}
+  section.modal-inner.bg-dust
+    p.c-steel
+      | {{'already_submitted.message' | translate}}
+
+    a.button.small ng-click="closeModal()" ui-sref="dahlia.short-form-review({id: currentApplication.id})"
+      | {{'label.view_application' | translate}}
+
+    p.feed-item-date
+      ' {{'t.submitted' | translate}}:
+      ' {{currentApplication.applicationSubmittedDate | date : "MMM d, yyyy" }}
+
+
+  ng-include src="'account/templates/partials/_modal_close.html'"

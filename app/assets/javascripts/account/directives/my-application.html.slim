@@ -1,0 +1,55 @@
+article.feed-item.animated-fade ng-class="applicationStyle()" ng-hide="isDeleted()"
+  .feed-item-inner
+    header.feed-item-header
+      h3.feed-item-title.skiptranslate
+        | {{listing.Name}}
+      p.feed-item-due
+        ' {{'t.application_deadline' | translate}}:
+        ' {{listing.Application_Due_Date | date : "MMM d, yyyy" }}
+    section.feed-item-content
+      .feed-item-details
+        p.feed-item-address.skiptranslate
+          | {{formattedAddress()}}
+        p.feed-item-number(ng-if="::isSubmitted()" translate="my_applications.your_lottery_number_is" translate-value-lottery-number="{{::lotteryNumber()}}" translate-compile)
+
+      .feed-item-action ng-if="::isSubmitted()"
+        p.feed-item-status
+          span.feed-item-label.is-submitted
+            ' {{'t.status' | translate}}:
+            span ng-if="::!submittedWithLotteryResults()"
+              | {{'t.submitted' | translate}}
+            span ng-if="::submittedWithLotteryResults()"
+              | {{'my_applications.results_posted' | translate}}
+        a.button.small ui-sref="dahlia.short-form-review({id: application.id})" ng-if="::!submittedWithLotteryResults()"
+          | {{'label.view_application' | translate}}
+        button.button.small.primary ng-click="viewLotteryResults()" ng-if="::submittedWithLotteryResults()"
+          span ng-if="!lotteryError.lotteryRank"
+            | {{'listings.view_lottery_results' | translate}}
+          span ng-if="lotteryError.lotteryRank"
+            | {{'listings.download_lottery_results' | translate}}
+
+      .feed-item-action ng-if="::!isSubmitted() && !isPastDue()"
+        p.feed-item-status
+          ' {{'t.status' | translate}}:
+          | {{'t.in_progress' | translate}}
+        a.button.small.primary ui-sref="dahlia.short-form-application.name({id: listing.Id, lang: getLanguageCode(application)})"
+          | {{'label.continue_application' | translate}}
+
+      .feed-item-action ng-if="::!isSubmitted() && isPastDue()"
+        p.feed-item-status
+          span.feed-item-label.is-past-due
+            ' {{'t.status' | translate}}:
+            | {{'t.never_submitted' | translate}}
+
+    footer.feed-item-footer
+      .feed-item-links
+        a.feed-item-link.lined ui-sref="dahlia.listing({id: listing.Id})"
+          | {{'label.see_listing' | translate}}
+        a.feed-item-link.lined ui-sref="dahlia.short-form-review({id: application.id})" ng-if="::submittedWithLotteryResults()"
+          | {{'label.view_application' | translate}}
+        button.button-link.btn-link.feed-item-link.a-alert.lined ng-if="!isSubmitted()" ng-click="deleteApplication(application.id)" ng-disabled="deleteDisabled"
+          | {{'t.delete' | translate}}
+      .feed-item-meta
+        p.feed-item-date
+          ' {{'label.edited' | translate}}:
+          ' {{application.applicationSubmittedDate | date : "MMM d, yyyy" }}
