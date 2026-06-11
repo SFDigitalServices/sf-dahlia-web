@@ -52,11 +52,9 @@ const WhatToDo = ({
             type: INVITE_TO_X.INTERVIEW,
           })
         }
-        setIsSubmitting(false)
       } catch (error) {
         console.error("Error submitting invite to interview response:", error)
-        // Still open the file upload URL even if API call fails
-        window.open(url, "_blank")
+      } finally {
         setIsSubmitting(false)
       }
     })()
