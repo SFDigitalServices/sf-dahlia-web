@@ -1,0 +1,35 @@
+.contactCard {
+  padding: var(--seeds-spacer-section);
+  gap: var(--seeds-spacer-text);
+  margin-bottom: var(--seeds-spacer-content);
+
+  @media (max-width: theme("screens.sm")) {
+    border-radius: 0;
+  }
+}
+
+.subtitle {
+  font-size: var(--seeds-font-size-sm);
+  color: var(--seeds-color-gray-750);
+  margin: var(--seeds-spacer-text) 0;
+}
+
+.contactRow {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--seeds-s2);
+}
+
+.contactIcon {
+  color: var(--seeds-color-gray-750);
+}
+
+.changeButton {
+  align-self: flex-start;
+  margin-top: var(--seeds-spacer-text);
+
+  @media (max-width: theme("screens.sm")) {
+    width: 100%;
+  }
+}
