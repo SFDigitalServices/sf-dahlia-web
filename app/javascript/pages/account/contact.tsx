@@ -17,7 +17,11 @@ const Contact = () => {
   const {
     register,
     formState: { errors },
+    watch,
   } = useForm()
+  const email = watch("email", "")
+  const noEmail = watch("noEmail", false)
+  const isSaveEmailEnabled = noEmail || email
   return (
     <Layout>
       <AccountLayout>
@@ -43,7 +47,7 @@ const Contact = () => {
               className={styles.noEmailCheckbox}
               register={register}
             />
-            <Button variant="primary-outlined" size="sm">
+            <Button variant="primary-outlined" size="sm" disabled={!isSaveEmailEnabled}>
               {t("accountLayout.contact.saveEmail")}
             </Button>
           </Card.Section>
