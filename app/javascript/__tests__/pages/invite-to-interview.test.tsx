@@ -1,5 +1,5 @@
 import React from "react"
-import { screen } from "@testing-library/react"
+import { screen, waitFor } from "@testing-library/react"
 import "@testing-library/jest-dom"
 import { t } from "@bloom-housing/ui-components"
 import { userEvent } from "@testing-library/user-event"
@@ -7,9 +7,13 @@ import InviteToPage from "../../pages/inviteTo/invite-to"
 import { renderAndLoadAsync } from "../__util__/renderUtils"
 import { ConfigContext } from "../../lib/ConfigContext"
 import { getListing } from "../../api/listingApiService"
+import { recordResponse } from "../../api/inviteToApiService"
 import { INVITE_TO_X } from "../../modules/constants"
 
 jest.mock("../../api/listingApiService")
+jest.mock("../../api/inviteToApiService", () => ({
+  recordResponse: jest.fn(),
+}))
 jest.mock("../../hooks/useFeatureFlag", () => ({
   useFeatureFlag: () => ({
     isEnabled: true,
@@ -143,6 +147,7 @@ describe("Invite to Interview", () => {
   })
 
   it("opens the scheduling URL when the scheduling button is clicked", async () => {
+    ;(recordResponse as jest.Mock).mockResolvedValue({})
     const windowOpenSpy = jest.spyOn(window, "open").mockImplementation(() => null)
     await renderWithContext(
       <InviteToPage
@@ -161,6 +166,17 @@ describe("Invite to Interview", () => {
     })
     await userEvent.click(button)
     expect(windowOpenSpy).toHaveBeenCalledWith("test-link", "_blank")
+    await waitFor(() => {
+      expect(recordResponse).toHaveBeenCalledWith({
+        appId: "test-id",
+        applicationNumber: "test-id",
+        listingId: "listing-id",
+        deadline: "2030-10-10",
+        action: "appointment",
+        response: "",
+        type: INVITE_TO_X.INTERVIEW,
+      })
+    })
     windowOpenSpy.mockRestore()
   })
 
