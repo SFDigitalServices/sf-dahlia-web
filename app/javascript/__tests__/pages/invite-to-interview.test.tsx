@@ -214,10 +214,8 @@ describe("Invite to Interview", () => {
         response: "",
         type: INVITE_TO_X.INTERVIEW,
       })
-      expect(windowOpenSpy).toHaveBeenCalledTimes(2)
-      expect(windowOpenSpy).toHaveBeenNthCalledWith(1, "test-link", "_blank")
-      expect(windowOpenSpy).toHaveBeenNthCalledWith(2, "test-link", "_blank")
-      expect(consoleErrorSpy).toHaveBeenCalledWith(
+      expect(windowOpenSpy).toHaveBeenCalledTimes(1)
+      expect(windowOpenSpy).toHaveBeenCalledWith("test-link", "_blank")
         "Error submitting invite to interview response:",
         error
       )
