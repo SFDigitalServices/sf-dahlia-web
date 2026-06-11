@@ -180,6 +180,53 @@ describe("Invite to Interview", () => {
     windowOpenSpy.mockRestore()
   })
 
+  it("still opens the scheduling URL and logs an error when recording response fails", async () => {
+    const error = new Error("record response failed")
+    ;(recordResponse as jest.Mock).mockRejectedValue(error)
+    const windowOpenSpy = jest.spyOn(window, "open").mockImplementation(() => null)
+    const consoleErrorSpy = jest.spyOn(console, "error")
+
+    await renderWithContext(
+      <InviteToPage
+        assetPaths={"/"}
+        urlParams={{
+          type: INVITE_TO_X.INTERVIEW,
+          deadline: "2030-10-10",
+          act: "yes",
+          appId: "test-id",
+        }}
+        schedulingUrl="test-link"
+      />
+    )
+
+    const button = screen.getByRole("button", {
+      name: t("inviteToInterviewPage.submitYourInfo.whatToDo.step1.p2"),
+    })
+    await userEvent.click(button)
+
+    await waitFor(() => {
+      expect(recordResponse).toHaveBeenCalledWith({
+        appId: "test-id",
+        applicationNumber: "test-id",
+        listingId: "listing-id",
+        deadline: "2030-10-10",
+        action: "appointment",
+        response: "",
+        type: INVITE_TO_X.INTERVIEW,
+      })
+      expect(windowOpenSpy).toHaveBeenCalledTimes(2)
+      expect(windowOpenSpy).toHaveBeenNthCalledWith(1, "test-link", "_blank")
+      expect(windowOpenSpy).toHaveBeenNthCalledWith(2, "test-link", "_blank")
+      expect(consoleErrorSpy).toHaveBeenCalledWith(
+        "Error submitting invite to interview response:",
+        error
+      )
+    })
+
+    windowOpenSpy.mockRestore()
+    consoleErrorSpy.mockRestore()
+  })
+
   it("shows the withdrawn page when the action is no", async () => {
     await renderWithContext(
       <InviteToPage
