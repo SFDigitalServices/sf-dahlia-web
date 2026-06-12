@@ -20,7 +20,7 @@ import {
   AppearanceStyleType,
   AppearanceSizeType,
   LinkButton,
-} from "@bloom-housing/ui-components"
+} from "@uic"
 import { Heading, Message } from "@bloom-housing/ui-seeds"
 import withAppSetup from "../../layouts/withAppSetup"
 import { getListing } from "../../api/listingApiService"

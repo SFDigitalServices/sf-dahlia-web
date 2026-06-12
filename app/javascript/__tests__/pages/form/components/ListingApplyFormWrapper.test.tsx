@@ -1,5 +1,5 @@
 import React from "react"
-import { t } from "@bloom-housing/ui-components"
+import { t } from "@uic"
 import { screen } from "@testing-library/react"
 import ListingApplyFormWrapper from "../../../../pages/form/components/ListingApplyFormWrapper"
 import { openRentalListing } from "../../../data/RailsRentalListing/listing-rental-open"

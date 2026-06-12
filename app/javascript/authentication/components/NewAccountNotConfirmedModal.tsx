@@ -1,4 +1,4 @@
-import { t, Button, AppearanceStyleType } from "@bloom-housing/ui-components"
+import { t, Button, AppearanceStyleType } from "@uic"
 import { Dialog } from "@bloom-housing/ui-seeds"
 import React, { useState } from "react"
 import { EmailBanners, requestEmail } from "./EmailBanners"

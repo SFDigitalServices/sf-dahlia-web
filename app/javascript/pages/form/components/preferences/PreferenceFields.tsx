@@ -1,6 +1,6 @@
 import React from "react"
 import { useFormContext } from "react-hook-form"
-import { Field, Select, t } from "@bloom-housing/ui-components"
+import { Field, Select, t } from "@uic"
 import { useFormEngineContext } from "../../../../formEngine/formEngineContext"
 import PreferenceProofUploadField from "./PreferenceProofUploadField"
 import { type PreferenceContent, type PreferenceFieldNames } from "./PreferenceUtils"

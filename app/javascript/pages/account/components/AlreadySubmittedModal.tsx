@@ -1,4 +1,4 @@
-import { t, LinkButton } from "@bloom-housing/ui-components"
+import { t, LinkButton } from "@uic"
 import { Dialog } from "@bloom-housing/ui-seeds"
 import React from "react"
 import { Application } from "../../../api/types/rails/application/RailsApplication"

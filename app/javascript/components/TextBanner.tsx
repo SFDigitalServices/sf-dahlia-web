@@ -1,5 +1,5 @@
 import React from "react"
-import { Icon } from "@bloom-housing/ui-components"
+import { Icon } from "@uic"
 import "./TextBanner.scss"
 
 type TextBannerProps = {

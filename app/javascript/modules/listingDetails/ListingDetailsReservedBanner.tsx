@@ -1,5 +1,5 @@
 import React from "react"
-import { Message, t } from "@bloom-housing/ui-components"
+import { Message, t } from "@uic"
 import { RESERVED_COMMUNITY_TYPES } from "../constants"
 import { getCustomListingType } from "../../util/languageUtil"
 import "./ListingDetailsReservedBanner.scss"

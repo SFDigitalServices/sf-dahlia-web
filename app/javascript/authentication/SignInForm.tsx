@@ -9,7 +9,7 @@ import {
   Icon,
   LinkButton,
   NavigationContext,
-} from "@bloom-housing/ui-components"
+} from "@uic"
 import { Link, Heading, Alert } from "@bloom-housing/ui-seeds"
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form"
 

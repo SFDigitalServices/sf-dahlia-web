@@ -1,7 +1,7 @@
 import React from "react"
 import { screen, waitFor } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
-import { t } from "@bloom-housing/ui-components"
+import { t } from "@uic"
 import ListingApplyPreferenceStepWrapper from "../../../../../pages/form/components/preferences/ListingApplyPreferenceStepWrapper"
 import { type PreferenceContent } from "../../../../../pages/form/components/preferences/PreferenceUtils"
 import { PREFERENCES } from "../../../../../modules/constants"

@@ -1,5 +1,5 @@
 import React from "react"
-import { QuantityRowSection, t } from "@bloom-housing/ui-components"
+import { QuantityRowSection, t } from "@uic"
 import { RailsListing } from "../listings/SharedHelpers"
 import { isLotteryComplete, isOpen } from "../../util/listingUtil"
 

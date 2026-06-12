@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { AppearanceStyleType, Button, Form, t, FormCard, Icon } from "@bloom-housing/ui-components"
+import { AppearanceStyleType, Button, Form, t, FormCard, Icon } from "@uic"
 import { Link, Heading, Alert } from "@bloom-housing/ui-seeds"
 import { useForm } from "react-hook-form"
 import { AppPages, getSignInPath } from "../util/routeUtil"

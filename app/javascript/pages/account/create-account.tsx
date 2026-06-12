@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import React from "react"
-import { AppearanceStyleType, Button, Form, LinkButton, t } from "@bloom-housing/ui-components"
+import { AppearanceStyleType, Button, Form, LinkButton, t } from "@uic"
 import { Card } from "@bloom-housing/ui-seeds"
 import withAppSetup from "../../layouts/withAppSetup"
 import Layout from "../../layouts/Layout"

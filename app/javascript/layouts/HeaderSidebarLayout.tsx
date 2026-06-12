@@ -1,6 +1,6 @@
 import React from "react"
 import Layout from "./Layout"
-import { PageHeader } from "@bloom-housing/ui-components"
+import { PageHeader } from "@uic"
 
 import "./HeaderSidebarLayout.scss"
 import ContactSideBarBlock from "./Sidebar/ContactSidebarBlock"

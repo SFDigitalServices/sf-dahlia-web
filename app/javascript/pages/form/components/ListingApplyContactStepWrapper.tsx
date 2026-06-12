@@ -1,7 +1,7 @@
 // https://github.com/react-hook-form/react-hook-form/issues/2887#issuecomment-802577357
 import React, { useEffect, useState } from "react"
 import { useForm, FormProvider } from "react-hook-form"
-import { Form, t } from "@bloom-housing/ui-components"
+import { Form, t } from "@uic"
 import { Button, Card, LoadingState } from "@bloom-housing/ui-seeds"
 import { useFormEngineContext } from "../../../formEngine/formEngineContext"
 import type { DataSchema } from "../../../formEngine/formSchemas"

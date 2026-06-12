@@ -1,5 +1,5 @@
 import React, { useContext, useState, useMemo, useEffect } from "react"
-import { Icon, StandardTable, Button, t } from "@bloom-housing/ui-components"
+import { Icon, StandardTable, Button, t } from "@uic"
 import { RailsListing } from "../listings/SharedHelpers"
 import { getMinMaxOccupancy, isSale } from "../../util/listingUtil"
 import ListingDetailsContext from "../../contexts/listingDetails/listingDetailsContext"

@@ -1,7 +1,7 @@
 import React from "react"
 import { useFeatureFlag } from "../hooks/useFeatureFlag"
 
-import { t } from "@bloom-housing/ui-components"
+import { t } from "@uic"
 
 import { SignInForm } from "../authentication/SignInForm"
 import FormsLayout from "../layouts/FormLayout"

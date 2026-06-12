@@ -1,0 +1,293 @@
+/* Vendored from @bloom-housing/ui-components src/actions/Button.scss.
+   Plain CSS only (no sass features) so this file can be renamed to .css
+   once the sass pipeline is removed. Sass nesting was flattened and the
+   filled-appearances / outlined-appearances / has-toggle mixins from
+   global/mixins.scss were inlined, preserving the original rule order. */
+
+.button {
+  /* Component Variables */
+  --normal-rounded: var(--bloom-rounded);
+  --normal-padding: var(--bloom-s4) var(--bloom-s6);
+  --label-transform: uppercase;
+  --label-font: var(--bloom-font-alt-sans);
+  --label-letter-spacing: var(--bloom-letter-spacing-widest);
+  --normal-font-size: var(--bloom-font-size-xs);
+  --label-weight: bold;
+  --small-rounded: var(--bloom-rounded);
+  --small-padding: var(--bloom-s3) var(--bloom-s6);
+  --small-font-size: var(--bloom-font-size-2xs);
+  --big-rounded: var(--bloom-rounded);
+  --big-padding: var(--bloom-s6);
+  --big-font-size: var(--bloom-font-size-xs);
+  --secondary-text-color: var(--bloom-text-color-light);
+  --unstyled-inline-font-size: var(--bloom-font-size-sm);
+  --inline-font-size: var(--bloom-font-size-sm);
+  --caps-font-size: var(--bloom-font-size-sm);
+
+  /* Base Styles */
+  position: relative;
+  border-radius: var(--normal-rounded);
+  padding: var(--normal-padding);
+  text-align: center;
+  text-transform: var(--label-transform);
+  font-family: var(--label-font);
+  display: inline-block;
+  letter-spacing: var(--label-letter-spacing);
+  font-size: var(--normal-font-size);
+  font-weight: var(--label-weight);
+  line-height: var(--bloom-line-height-snug);
+}
+
+.button.transition {
+  transition: all 200ms ease-out;
+}
+
+.button:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #fff, 0 0 3px 4px var(--bloom-color-accent-cool);
+}
+
+.button:hover {
+  border-color: var(--bloom-color-primary-dark);
+}
+
+.button:hover.transition {
+  transition: all 200ms ease-in;
+}
+
+.button:disabled {
+  pointer-events: none;
+  background-color: var(--bloom-color-white);
+  border-color: var(--bloom-color-gray-450);
+  color: var(--bloom-color-gray-450);
+}
+
+.button.is-secondary {
+  border-color: var(--bloom-color-gray-700);
+  color: var(--secondary-text-color);
+}
+
+.button.is-secondary:hover {
+  background-color: var(--bloom-color-gray-700);
+  color: var(--bloom-color-white);
+  border-color: var(--bloom-color-gray-700);
+}
+
+.button.is-small {
+  border-radius: var(--small-rounded);
+  padding: var(--small-padding);
+  font-size: var(--small-font-size);
+}
+
+.button.is-big {
+  border-radius: var(--big-rounded);
+  padding: var(--big-padding);
+  font-size: var(--big-font-size);
+}
+
+.button.is-normal-case {
+  text-transform: none;
+}
+
+.button.is-unstyled {
+  background: transparent;
+}
+
+.button.is-unstyled,
+.button.is-inline {
+  text-transform: none;
+  border: none;
+  padding: 0;
+  font-family: var(--bloom-font-sans);
+  letter-spacing: normal;
+  font-weight: 400;
+  text-decoration: underline;
+  margin: var(--bloom-s4);
+  font-size: var(--unstyled-inline-font-size);
+}
+
+.button.is-unstyled:hover,
+.button.is-inline:hover {
+  color: var(--bloom-color-primary);
+  background: transparent;
+}
+
+.button.is-inline {
+  color: var(--bloom-color-primary);
+  font-weight: 600;
+  font-size: var(--inline-font-size);
+  margin: 0;
+  text-decoration: none;
+}
+
+.button.is-inline.has-icon-left .button__icon {
+  margin-right: var(--bloom-s1);
+}
+
+.button.is-inline.has-icon-right .button__icon {
+  margin-left: var(--bloom-s1);
+}
+
+.button.has-icon-left .button__icon {
+  margin-right: var(--bloom-s3);
+}
+
+.button.has-icon-right .button__icon {
+  margin-left: var(--bloom-s3);
+}
+
+.button.is-text-caps {
+  color: var(--bloom-color-primary-dark);
+  border: none;
+  padding: 0;
+  font-family: var(--bloom-font-sans);
+  letter-spacing: normal;
+  text-decoration: underline;
+  margin: var(--bloom-s4);
+  text-transform: uppercase;
+  font-size: var(--caps-font-size);
+  display: block;
+}
+
+.button.is-text-caps:hover {
+  color: var(--bloom-color-primary-dark);
+  background: transparent;
+}
+
+.button.is-fullwidth {
+  width: 100%;
+}
+
+.button.is-loading .button__content {
+  opacity: 0;
+}
+
+/* filled-appearances mixin */
+
+.button.is-primary {
+  background-color: var(--primary-appearance-background-color, var(--bloom-color-primary));
+  border-color: var(--primary-appearance-border-color, var(--bloom-color-primary));
+  color: var(--primary-appearance-label-color, var(--bloom-color-white));
+}
+
+.button.is-primary:hover {
+  background-color: var(--primary-appearance-hover-background-color, var(--bloom-color-primary-dark));
+  border-color: var(--primary-appearance-hover-border-color, var(--bloom-color-primary-dark));
+  color: var(--primary-appearance-hover-label-color, var(--bloom-color-white));
+}
+
+.button.is-success {
+  background-color: var(--success-appearance-background-color, var(--bloom-color-success));
+  border-color: var(--success-appearance-border-color, var(--bloom-color-success));
+  color: var(--success-appearance-label-color, var(--bloom-color-white));
+}
+
+.button.is-success:hover {
+  background-color: var(--success-appearance-hover-background-color, var(--bloom-color-success-dark));
+  border-color: var(--success-appearance-hover-border-color, var(--bloom-color-success-dark));
+  color: var(--success-appearance-hover-label-color, var(--bloom-color-white));
+}
+
+.button.is-alert {
+  background-color: var(--alert-appearance-background-color, var(--bloom-color-alert));
+  border-color: var(--alert-appearance-border-color, var(--bloom-color-alert));
+  color: var(--alert-appearance-label-color, var(--bloom-color-white));
+}
+
+.button.is-alert:hover {
+  background-color: var(--alert-appearance-hover-background-color, var(--bloom-color-alert-dark));
+  border-color: var(--alert-appearance-hover-border-color, var(--bloom-color-alert-dark));
+  color: var(--alert-appearance-hover-label-color, var(--bloom-color-white));
+}
+
+.button.is-warning {
+  background-color: var(--warning-appearance-background-color, var(--bloom-color-warn));
+  border-color: var(--warning-appearance-border-color, var(--bloom-color-warn));
+  color: var(--warning-appearance-label-color, var(--bloom-text-color-dark));
+}
+
+.button.is-warning:hover {
+  background-color: var(--warning-appearance-hover-background-color, var(--bloom-color-warn-dark));
+  border-color: var(--warning-appearance-hover-border-color, var(--bloom-color-warn-dark));
+  color: var(--warning-appearance-hover-label-color, var(--bloom-color-white));
+}
+
+.button.is-borderless {
+  color: var(--borderless-filled-color, var(--bloom-color-primary));
+  border-color: transparent;
+  background: transparent;
+}
+
+.button.is-borderless:hover {
+  background: transparent;
+  border-color: transparent;
+  color: var(--bloom-color-primary-darker);
+}
+
+/* outlined-appearances mixin */
+
+.button {
+  background-color: var(--bloom-color-white);
+  color: var(--bloom-color-primary);
+  border-width: var(--bloom-border-2);
+  border-color: var(--bloom-color-primary);
+}
+
+.button:hover {
+  background-color: var(--outlined-appearance-hover-background-color, var(--bloom-color-primary-dark));
+  border-color: var(--outlined-appearance-hover-border-color, var(--bloom-color-primary-dark));
+  color: var(--outlined-appearance-hover-label-color, var(--bloom-color-white));
+}
+
+.button.is-outlined {
+  background: transparent;
+}
+
+.button.is-outlined.is-success {
+  color: var(--bloom-color-success);
+}
+
+.button.is-outlined.is-success:hover {
+  color: var(--bloom-color-white);
+}
+
+.button.is-outlined.is-alert {
+  color: var(--bloom-color-alert);
+}
+
+.button.is-outlined.is-alert:hover {
+  color: var(--bloom-color-white);
+}
+
+.button.is-outlined.is-warning {
+  color: var(--bloom-text-color-dark);
+}
+
+.button.is-outlined.is-warning:hover {
+  color: var(--bloom-color-white);
+}
+
+/* has-toggle mixin */
+
+button.has-toggle:after {
+  font-weight: bold;
+  display: inline-block;
+  margin-left: var(--bloom-s2);
+  margin-right: var(--bloom-s2);
+  font-size: var(--bloom-font-size-xs);
+  content: "⌃";
+  transform: rotate(180deg) translateY(2px);
+}
+
+button.has-toggle[aria-expanded="true"]:after {
+  margin-right: var(--bloom-s5);
+  transform: rotate(0deg) translateY(2px);
+}
+
+.button__loader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin-top: 2px;
+}

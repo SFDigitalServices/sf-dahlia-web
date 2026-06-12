@@ -7,7 +7,7 @@ import {
   LinkButton,
   Modal,
   t,
-} from "@bloom-housing/ui-components"
+} from "@uic"
 import { RailsListing } from "../listings/SharedHelpers"
 import { isLotteryComplete, showLotteryResultsPDFonly } from "../../util/listingUtil"
 import { getLotteryBucketDetails } from "../../api/listingApiService"

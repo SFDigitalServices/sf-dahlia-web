@@ -3,7 +3,7 @@ import ListingApplyHouseholdIncomeHeader from "./ListingApplyHouseholdIncomeHead
 import Currency from "./Currency"
 import Radio from "./Radio"
 import { Button, Card, LoadingState } from "@bloom-housing/ui-seeds"
-import { Form, t } from "@bloom-housing/ui-components"
+import { Form, t } from "@uic"
 import { useForm, FormProvider } from "react-hook-form"
 import { useFormEngineContext } from "../../../formEngine/formEngineContext"
 import styles from "./ListingApplyStepWrapper.module.scss"

@@ -1,5 +1,5 @@
 import React from "react"
-import { SidebarBlock, t } from "@bloom-housing/ui-components"
+import { SidebarBlock, t } from "@uic"
 import { RailsListing } from "../listings/SharedHelpers"
 import { getTranslatedString, localizedFormat, renderMarkup } from "../../util/languageUtil"
 import { isLotteryComplete, isOpen } from "../../util/listingUtil"

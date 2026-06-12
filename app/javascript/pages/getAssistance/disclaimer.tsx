@@ -3,7 +3,7 @@ import Layout from "../../layouts/Layout"
 import withAppSetup from "../../layouts/withAppSetup"
 import { ConfigContext } from "../../lib/ConfigContext"
 import { MailingListSignup } from "../../components/MailingListSignup"
-import { t, PageHeader } from "@bloom-housing/ui-components"
+import { t, PageHeader } from "@uic"
 import { AppPages } from "../../util/routeUtil"
 
 const Disclaimer = () => {

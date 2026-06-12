@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/unbound-method */
-import { FieldGroup, t } from "@bloom-housing/ui-components"
+import { FieldGroup, t } from "@uic"
 import React, { useEffect, useRef } from "react"
 import { useFormContext } from "react-hook-form"
 import styles from "./PrioritiesCheckbox.module.scss"

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import React from "react"
-import { t, Field, PhoneField, Select } from "@bloom-housing/ui-components"
+import { t, Field, PhoneField, Select } from "@uic"
 import { useFormContext } from "react-hook-form"
 
 interface PhoneProps {

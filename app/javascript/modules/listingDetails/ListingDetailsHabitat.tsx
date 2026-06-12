@@ -1,6 +1,6 @@
 import React from "react"
 import { RailsListing } from "../listings/SharedHelpers"
-import { Heading, t } from "@bloom-housing/ui-components"
+import { Heading, t } from "@uic"
 import { getSfGovUrl, renderMarkup } from "../../util/languageUtil"
 import { isHabitatListing } from "../../util/listingUtil"
 

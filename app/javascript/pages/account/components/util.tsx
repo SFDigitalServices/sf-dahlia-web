@@ -1,4 +1,4 @@
-import { t } from "@bloom-housing/ui-components"
+import { t } from "@uic"
 import { ErrorMessages, ErrorMessage } from "./ErrorSummaryBanner"
 import { AxiosError } from "axios"
 import { ErrorOption } from "react-hook-form"

@@ -1,6 +1,6 @@
 import React, { ReactNode } from "react"
 
-import { NavigationContext } from "@bloom-housing/ui-components"
+import { NavigationContext } from "@uic"
 
 import Link from "./Link"
 import Router from "./Router"

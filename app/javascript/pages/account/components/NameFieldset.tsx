@@ -1,4 +1,4 @@
-import { Field, t } from "@bloom-housing/ui-components"
+import { Field, t } from "@uic"
 import React from "react"
 import { UseFormMethods } from "react-hook-form"
 import Fieldset from "./Fieldset"

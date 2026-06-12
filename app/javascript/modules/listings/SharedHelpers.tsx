@@ -1,5 +1,5 @@
 import React from "react"
-import { ApplicationStatusType, StatusBarType, t } from "@bloom-housing/ui-components"
+import { ApplicationStatusType, StatusBarType, t } from "@uic"
 import {
   getFcfsSalesListingState,
   getTagContent,

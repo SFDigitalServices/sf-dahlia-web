@@ -1,5 +1,5 @@
 import React from "react"
-import { t } from "@bloom-housing/ui-components"
+import { t } from "@uic"
 import { Button, Heading, Card } from "@bloom-housing/ui-seeds"
 import { useFormEngineContext } from "../../../../formEngine/formEngineContext"
 import styles from "./ListingApplyHouseholdIntro.module.scss"

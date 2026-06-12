@@ -1,5 +1,5 @@
 import React from "react"
-import { t } from "@bloom-housing/ui-components"
+import { t } from "@uic"
 import { CardHeader } from "@bloom-housing/ui-seeds/src/blocks/Card"
 import stepStyles from "./ListingApplyStepWrapper.module.scss"
 

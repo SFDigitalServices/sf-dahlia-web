@@ -1,6 +1,6 @@
 import React, { Children, useEffect } from "react"
 import { useForm, FormProvider } from "react-hook-form"
-import { Form, t } from "@bloom-housing/ui-components"
+import { Form, t } from "@uic"
 import { Button, Card } from "@bloom-housing/ui-seeds"
 import { useFormEngineContext } from "../../../formEngine/formEngineContext"
 import type { DataSchema } from "../../../formEngine/formSchemas"

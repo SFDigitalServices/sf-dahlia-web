@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import React from "react"
-import { t, Field } from "@bloom-housing/ui-components"
+import { t, Field } from "@uic"
 import { FormErrorMessage } from "@bloom-housing/ui-seeds"
 import { useFormContext } from "react-hook-form"
 import { faCircleInfo } from "@fortawesome/free-solid-svg-icons"

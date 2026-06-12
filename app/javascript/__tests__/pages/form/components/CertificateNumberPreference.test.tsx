@@ -1,7 +1,7 @@
 import React from "react"
 import { screen } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
-import { t } from "@bloom-housing/ui-components"
+import { t } from "@uic"
 import CertificateNumberPreference from "../../../../pages/form/components/CertificateNumberPreference"
 import { renderWithFormContextWrapper } from "../../../__util__/renderUtils"
 

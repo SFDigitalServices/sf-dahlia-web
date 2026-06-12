@@ -1,5 +1,5 @@
 import React from "react"
-import { InfoCard, t } from "@bloom-housing/ui-components"
+import { InfoCard, t } from "@uic"
 import { RailsListing } from "../listings/SharedHelpers"
 import { isPluralSRO } from "../../util/listingUtil"
 

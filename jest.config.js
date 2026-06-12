@@ -35,6 +35,7 @@ module.exports = {
   setupFiles: ["<rootDir>/__tests__/jest.setup.js"],
   moduleNameMapper: {
     "\\.(scss|css|less|jpg)$": "identity-obj-proxy",
+    "^@uic$": "<rootDir>/components/uic",
     "^axios$": require.resolve("axios"),
   },
   transformIgnorePatterns: ["node_modules/?!(@bloom-housing/ui-components)"],

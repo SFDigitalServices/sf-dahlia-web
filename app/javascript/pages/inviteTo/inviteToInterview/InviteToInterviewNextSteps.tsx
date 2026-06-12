@@ -1,6 +1,6 @@
 import React, { useCallback } from "react"
 import { faPrint } from "@fortawesome/free-solid-svg-icons"
-import { Icon, IconFillColors, LoadingOverlay, Mobile, t } from "@bloom-housing/ui-components"
+import { Icon, IconFillColors, LoadingOverlay, Mobile, t } from "@uic"
 import { Heading, Button } from "@bloom-housing/ui-seeds"
 import RailsSaleListing from "../../../api/types/rails/listings/RailsSaleListing"
 import { isDeadlinePassed } from "../../../util/listingUtil"

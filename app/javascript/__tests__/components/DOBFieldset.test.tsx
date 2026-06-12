@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { DOBFieldValues, t } from "@bloom-housing/ui-components"
+import { DOBFieldValues, t } from "@uic"
 import {
   deduplicateDOBErrors,
   dobFieldsetErrors,

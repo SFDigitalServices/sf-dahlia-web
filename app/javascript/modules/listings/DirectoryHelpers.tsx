@@ -10,7 +10,7 @@ import {
   PageHeader,
   StackedTableRow,
   t,
-} from "@bloom-housing/ui-components"
+} from "@uic"
 import dayjs from "dayjs"
 import {
   DIRECTORY_SECTION_OPEN_LOTTERIES,

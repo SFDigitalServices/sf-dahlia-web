@@ -12,9 +12,14 @@ dotenvFiles.forEach((dotenvFile) => {
   dotenv.config({ path: dotenvFile, silent: true })
 })
 
+const path = require("path")
+
 const commonOptions = {
   resolve: {
     extensions: [".css", ".ts", ".tsx", ".scss"],
+    alias: {
+      "@uic": path.resolve(__dirname, "../../app/javascript/components/uic"),
+    },
   },
   module: {
     rules: [sass, babel],

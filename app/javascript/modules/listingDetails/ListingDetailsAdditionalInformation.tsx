@@ -1,5 +1,5 @@
 import React, { ReactNode } from "react"
-import { LinkButton, ListingDetailItem, Mobile, t } from "@bloom-housing/ui-components"
+import { LinkButton, ListingDetailItem, Mobile, t } from "@uic"
 import { RailsListing } from "../listings/SharedHelpers"
 import { TextTruncate } from "../../components/TextTruncate"
 import {

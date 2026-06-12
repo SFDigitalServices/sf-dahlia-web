@@ -1,6 +1,6 @@
 import React from "react"
 
-import { AppearanceStyleType, Button, Form, FormCard, Icon, t } from "@bloom-housing/ui-components"
+import { AppearanceStyleType, Button, Form, FormCard, Icon, t } from "@uic"
 
 import withAppSetup from "../layouts/withAppSetup"
 import { Alert, Link } from "@bloom-housing/ui-seeds"

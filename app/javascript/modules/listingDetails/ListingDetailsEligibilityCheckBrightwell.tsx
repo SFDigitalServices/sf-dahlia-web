@@ -1,5 +1,5 @@
 import React from "react"
-import { Card, ListSection, t } from "@bloom-housing/ui-components"
+import { Card, ListSection, t } from "@uic"
 import { renderInlineMarkup, getSfGovUrl } from "../../util/languageUtil"
 import Link from "../../navigation/Link"
 

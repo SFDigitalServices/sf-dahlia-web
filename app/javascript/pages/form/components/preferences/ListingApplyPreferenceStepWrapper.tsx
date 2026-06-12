@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 import { useForm, FormProvider } from "react-hook-form"
-import { Form, Field, t } from "@bloom-housing/ui-components"
+import { Form, Field, t } from "@uic"
 import { Button, Card, FormErrorMessage } from "@bloom-housing/ui-seeds"
 import { useFormEngineContext } from "../../../../formEngine/formEngineContext"
 import ListingApplyStepErrorMessage from "../ListingApplyStepErrorMessage"

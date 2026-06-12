@@ -7,7 +7,7 @@ import {
   Form,
   t,
   FieldGroup,
-} from "@bloom-housing/ui-components"
+} from "@uic"
 import { useForm } from "react-hook-form"
 import "./counselor-filter.scss"
 

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import React from "react"
-import { Select, t } from "@bloom-housing/ui-components"
+import { Select, t } from "@uic"
 import { RegisterOptions, useFormContext } from "react-hook-form"
 interface FormSelectProps {
   label: string

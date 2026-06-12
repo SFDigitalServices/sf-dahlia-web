@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { Card } from "@bloom-housing/ui-seeds"
-import { Icon, UniversalIconType } from "@bloom-housing/ui-components"
+import { Icon, UniversalIconType } from "@uic"
 import { DOBFieldValues } from "../pages/account/components/DOBFieldset"
 
 // We will strictly validate the email address using the following regex.

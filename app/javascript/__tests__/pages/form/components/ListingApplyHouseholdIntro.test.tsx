@@ -1,5 +1,5 @@
 import React from "react"
-import { t } from "@bloom-housing/ui-components"
+import { t } from "@uic"
 import { render, screen } from "@testing-library/react"
 import { FormEngineProvider } from "../../../../formEngine/formEngineContext"
 import ListingApplyHouseholdIntro from "../../../../pages/form/components/household/ListingApplyHouseholdIntro"

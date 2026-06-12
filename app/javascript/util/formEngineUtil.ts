@@ -1,7 +1,7 @@
 import type { DataSchema, StepInfoSchema } from "../formEngine/formSchemas"
 import dayjs, { type Dayjs } from "dayjs"
 import customParseFormat from "dayjs/plugin/customParseFormat"
-import { t } from "@bloom-housing/ui-components"
+import { t } from "@uic"
 
 export const translationFromDataSchema = (
   translationKey: string,

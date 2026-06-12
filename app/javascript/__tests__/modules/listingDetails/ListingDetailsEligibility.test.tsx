@@ -18,7 +18,7 @@ import {
   rentalEducatorListing2,
   rentalEducatorBrightwellListing,
 } from "../../data/RailsRentalListing/listing-rental-educator"
-import { t } from "@bloom-housing/ui-components"
+import { t } from "@uic"
 import { renderAndLoadAsync } from "../../__util__/renderUtils"
 import { fcfsSaleListing } from "../../data/RailsSaleListing/listing-sale-fcfs"
 

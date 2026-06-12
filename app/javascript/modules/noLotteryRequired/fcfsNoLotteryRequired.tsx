@@ -1,7 +1,7 @@
 import { Card, Link } from "@bloom-housing/ui-seeds"
 import { getSfGovUrl } from "../../util/languageUtil"
 import { CardFooter, CardHeader, CardSection } from "@bloom-housing/ui-seeds/src/blocks/Card"
-import { t } from "@bloom-housing/ui-components"
+import { t } from "@uic"
 
 import React from "react"
 import "./fcfsNoLotteryRequired.scss"

@@ -1,7 +1,7 @@
 import React from "react"
 import { screen, waitFor } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
-import { t } from "@bloom-housing/ui-components"
+import { t } from "@uic"
 import ListingApplyContactStepWrapper from "../../../../pages/form/components/ListingApplyContactStepWrapper"
 import { renderWithFormContextWrapper } from "../../../__util__/renderUtils"
 import { locateVerifiedAddress } from "../../../../api/formApiService"

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import React from "react"
-import { t, Field, Select } from "@bloom-housing/ui-components"
+import { t, Field, Select } from "@uic"
 import { FormErrorMessage, Heading } from "@bloom-housing/ui-seeds"
 import { LISTING_APPLY_FORMS_INPUT_MAX_LENGTH, LATIN_REGEX } from "../../../modules/constants"
 import { useFormContext } from "react-hook-form"

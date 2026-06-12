@@ -5,7 +5,7 @@ import { applicationWithOpenListing } from "../data/RailsApplication/application
 import { ApplicationItem } from "../../components/ApplicationItem"
 import { renderAndLoadAsync } from "../__util__/renderUtils"
 import { formatTimeOfDay, localizedFormat } from "../../util/languageUtil"
-import { t } from "@bloom-housing/ui-components"
+import { t } from "@uic"
 
 jest.mock("../../api/listingApiService", () => ({
   getLotteryBucketDetails: () =>

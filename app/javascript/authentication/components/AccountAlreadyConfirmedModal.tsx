@@ -1,4 +1,4 @@
-import { AppearanceStyleType, Button, t } from "@bloom-housing/ui-components"
+import { AppearanceStyleType, Button, t } from "@uic"
 import React from "react"
 import { Dialog } from "@bloom-housing/ui-seeds"
 

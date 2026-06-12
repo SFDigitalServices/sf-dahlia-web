@@ -1,7 +1,7 @@
 import React from "react"
 import { faCheck } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { t } from "@bloom-housing/ui-components"
+import { t } from "@uic"
 import { CardHeader } from "@bloom-housing/ui-seeds/src/blocks/Card"
 import { Link } from "@bloom-housing/ui-seeds"
 import listingApplyStepWrapperStyles from "./ListingApplyStepWrapper.module.scss"

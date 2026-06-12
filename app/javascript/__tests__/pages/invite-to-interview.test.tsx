@@ -1,7 +1,7 @@
 import React from "react"
 import { screen } from "@testing-library/react"
 import "@testing-library/jest-dom"
-import { t } from "@bloom-housing/ui-components"
+import { t } from "@uic"
 import { userEvent } from "@testing-library/user-event"
 import InviteToPage from "../../pages/inviteTo/invite-to"
 import { renderAndLoadAsync } from "../__util__/renderUtils"

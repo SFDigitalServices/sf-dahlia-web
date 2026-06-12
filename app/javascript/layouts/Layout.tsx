@@ -9,7 +9,7 @@ import {
   LangItem,
   SiteFooter,
   t,
-} from "@bloom-housing/ui-components"
+} from "@uic"
 import SiteHeader, { MenuLink } from "../components/SiteHeader/SiteHeader"
 import Markdown from "markdown-to-jsx"
 import UserContext from "../authentication/context/UserContext"

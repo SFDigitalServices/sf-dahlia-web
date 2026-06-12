@@ -1,4 +1,4 @@
-import { t } from "@bloom-housing/ui-components"
+import { t } from "@uic"
 import { faEnvelope, faPhone } from "@fortawesome/free-solid-svg-icons"
 import { Card, Button, Heading, Link, Icon } from "@bloom-housing/ui-seeds"
 import { getMyAccountContactPath } from "../../../util/routeUtil"

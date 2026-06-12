@@ -1,5 +1,5 @@
 import React, { ErrorInfo, ReactNode } from "react"
-import { ActionBlock, AppearanceStyleType, Button, t } from "@bloom-housing/ui-components"
+import { ActionBlock, AppearanceStyleType, Button, t } from "@uic"
 import "./ErrorBoundary.scss"
 import { localizedPath } from "../util/routeUtil"
 

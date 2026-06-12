@@ -1,4 +1,4 @@
-import { LinkButton, SidebarBlock, t } from "@bloom-housing/ui-components"
+import { LinkButton, SidebarBlock, t } from "@uic"
 import React from "react"
 import { isRental } from "../../util/listingUtil"
 import RailsRentalListing from "../../api/types/rails/listings/RailsRentalListing"

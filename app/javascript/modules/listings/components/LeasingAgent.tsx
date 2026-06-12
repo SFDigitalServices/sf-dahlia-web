@@ -1,4 +1,4 @@
-import { Icon, IconFillColors, t } from "@bloom-housing/ui-components"
+import { Icon, IconFillColors, t } from "@uic"
 import { Heading } from "@bloom-housing/ui-seeds"
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"

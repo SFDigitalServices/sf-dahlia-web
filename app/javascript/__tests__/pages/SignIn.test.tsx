@@ -6,7 +6,7 @@ import { fireEvent, render, screen, waitFor } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
 import { post } from "../../api/apiService"
 import { SiteAlert } from "../../components/SiteAlert"
-import { t } from "@bloom-housing/ui-components"
+import { t } from "@uic"
 import "@testing-library/jest-dom"
 import TagManager from "react-gtm-module"
 

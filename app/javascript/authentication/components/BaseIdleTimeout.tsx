@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useEffect, useState } from "react"
 
-import { AlertTypes, AppearanceStyleType, Button } from "@bloom-housing/ui-components"
+import { AlertTypes, AppearanceStyleType, Button } from "@uic"
 import { Dialog } from "@bloom-housing/ui-seeds"
 
 const PROMPT_TIMEOUT = 60000

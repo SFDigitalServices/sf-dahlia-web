@@ -1,6 +1,6 @@
 import React from "react"
 import { useFormContext } from "react-hook-form"
-import { Field, Select, t } from "@bloom-housing/ui-components"
+import { Field, Select, t } from "@uic"
 import { Link } from "@bloom-housing/ui-seeds"
 import { renderInlineMarkup } from "../../../../util/languageUtil"
 import { getNestedError } from "../../../../util/formEngineUtil"

@@ -7,7 +7,7 @@ import {
   LinkButton,
   PageHeader,
   Heading,
-} from "@bloom-housing/ui-components"
+} from "@uic"
 
 import { getRentalListings, EligibilityFilters } from "../../api/listingsApiService"
 import { GenericDirectory } from "../../modules/listings/GenericDirectory"

@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react"
-import { ImageCard, t } from "@bloom-housing/ui-components"
-import type { ImageItem } from "@bloom-housing/ui-components"
+import { ImageCard, t } from "@uic"
+import type { ImageItem } from "@uic"
 import { RailsListing } from "../listings/SharedHelpers"
 import { getShareListingPath } from "../../util/routeUtil"
 import { getListingAddressString, getTagContent } from "../../util/listingUtil"

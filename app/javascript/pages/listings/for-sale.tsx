@@ -1,6 +1,6 @@
 import React, { Dispatch, SetStateAction } from "react"
 
-import { ActionBlock, ActionBlockLayout, Heading, t } from "@bloom-housing/ui-components"
+import { ActionBlock, ActionBlockLayout, Heading, t } from "@uic"
 
 import { getSaleListings, EligibilityFilters } from "../../api/listingsApiService"
 import Layout from "../../layouts/Layout"

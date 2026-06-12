@@ -1,5 +1,5 @@
 import React from "react"
-import { Heading, ListSection, t } from "@bloom-housing/ui-components"
+import { Heading, ListSection, t } from "@uic"
 import { getSfGovUrl, renderInlineMarkup, renderMarkup } from "../util/languageUtil"
 
 export enum BeforeApplyingType {

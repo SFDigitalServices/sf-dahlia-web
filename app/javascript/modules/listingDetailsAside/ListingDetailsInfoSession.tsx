@@ -1,6 +1,6 @@
 import React from "react"
 import { getEventNote, RailsListing } from "../listings/SharedHelpers"
-import { EventSection, t } from "@bloom-housing/ui-components"
+import { EventSection, t } from "@uic"
 import { localizedFormat, getTranslatedString } from "../../util/languageUtil"
 import { getEventTimeString } from "../../util/listingUtil"
 

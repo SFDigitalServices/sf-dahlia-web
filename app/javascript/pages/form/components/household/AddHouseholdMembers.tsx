@@ -1,5 +1,5 @@
 import React from "react"
-import { t } from "@bloom-housing/ui-components"
+import { t } from "@uic"
 import { Button, Card, Heading } from "@bloom-housing/ui-seeds"
 import { useFormEngineContext } from "../../../../formEngine/formEngineContext"
 import { getPrimaryApplicantData, getFullName } from "../../../../util/listingApplyUtil"

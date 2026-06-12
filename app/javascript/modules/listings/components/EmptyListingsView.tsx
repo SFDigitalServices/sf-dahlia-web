@@ -1,7 +1,7 @@
 import { Heading } from "@bloom-housing/ui-seeds"
 import React, { ReactNode } from "react"
 import "./EmptyListingsView.scss"
-import { Icon, t, UniversalIconType } from "@bloom-housing/ui-components"
+import { Icon, t, UniversalIconType } from "@uic"
 import { renderInlineMarkup } from "../../../util/languageUtil"
 import { DirectorySectionType, DirectoryType } from "../DirectoryHelpers"
 import {

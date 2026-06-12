@@ -1,6 +1,6 @@
 import React, { useContext } from "react"
 
-import { t } from "@bloom-housing/ui-components"
+import { t } from "@uic"
 
 import { getHomepagePath, getSignInPath } from "../../util/routeUtil"
 import UserContext from "../context/UserContext"

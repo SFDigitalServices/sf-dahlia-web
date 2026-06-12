@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from "react"
 import withAppSetup from "../../layouts/withAppSetup"
 import UserContext from "../../authentication/context/UserContext"
 
-import { Form, DOBFieldValues, t } from "@bloom-housing/ui-components"
+import { Form, DOBFieldValues, t } from "@uic"
 import { DeepMap, FieldError, useForm } from "react-hook-form"
 import { Card, Alert } from "@bloom-housing/ui-seeds"
 import { AppPages, RedirectType } from "../../util/routeUtil"

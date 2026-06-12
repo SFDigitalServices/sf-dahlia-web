@@ -10,7 +10,7 @@ import {
   NavigationContext,
   SiteHeader as BloomSiteHeader,
   t,
-} from "@bloom-housing/ui-components"
+} from "@uic"
 import UserContext from "../../authentication/context/UserContext"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import { UNLEASH_FLAG } from "../../modules/constants"

@@ -30,7 +30,7 @@ import { RailsListing } from "../modules/listings/SharedHelpers"
 import { LANGUAGE_CONFIGS, getCustomListingType, getReservedCommunityType } from "./languageUtil"
 import { GroupedUnitsByOccupancy } from "../modules/listingDetails/ListingDetailsPricingTable"
 import { getRangeString } from "../modules/listings/DirectoryHelpers"
-import { t } from "@bloom-housing/ui-components"
+import { t } from "@uic"
 import { ListingState } from "../modules/listings/ListingState"
 
 export const isDalpListing = (listing: RailsRentalListing | RailsSaleListing) => {

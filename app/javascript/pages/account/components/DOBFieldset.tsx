@@ -1,5 +1,5 @@
 import React from "react"
-import { t, Field } from "@bloom-housing/ui-components"
+import { t, Field } from "@uic"
 import dayjs from "dayjs"
 import customParseFormat from "dayjs/plugin/customParseFormat"
 import { UseFormMethods, FieldError, DeepMap } from "react-hook-form"

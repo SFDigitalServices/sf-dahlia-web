@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import React from "react"
-import { t, FieldGroup } from "@bloom-housing/ui-components"
+import { t, FieldGroup } from "@uic"
 import { useFormContext } from "react-hook-form"
 import styles from "./YesNoRadio.module.scss"
 

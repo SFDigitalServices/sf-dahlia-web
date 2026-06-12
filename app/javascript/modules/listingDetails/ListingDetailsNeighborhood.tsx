@@ -1,5 +1,5 @@
 import React from "react"
-import { Desktop, ListingDetailItem, Mobile, t } from "@bloom-housing/ui-components"
+import { Desktop, ListingDetailItem, Mobile, t } from "@uic"
 import { getListingAddressString } from "../../util/listingUtil"
 import { RailsListing } from "../listings/SharedHelpers"
 import { getCurrentLanguage } from "../../util/languageUtil"

@@ -8,7 +8,7 @@ import {
   Mobile,
   Button,
   Heading,
-} from "@bloom-housing/ui-components"
+} from "@uic"
 import React, { useState } from "react"
 import AssistanceLayout from "../../layouts/HeaderSidebarLayout"
 import withAppSetup from "../../layouts/withAppSetup"

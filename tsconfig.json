@@ -9,6 +9,10 @@
     "target": "es6",
     "lib": ["es5", "es6", "es7", "es2017", "dom"],
     "moduleResolution": "node",
+    "baseUrl": ".",
+    "paths": {
+      "@uic": ["app/javascript/components/uic/index.ts"]
+    },
     "sourceMap": true,
     "jsx": "react",
     "noEmit": false,

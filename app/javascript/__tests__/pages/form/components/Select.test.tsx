@@ -1,5 +1,5 @@
 import React from "react"
-import { t } from "@bloom-housing/ui-components"
+import { t } from "@uic"
 import { screen } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
 import FormSelect from "../../../../pages/form/components/Select"

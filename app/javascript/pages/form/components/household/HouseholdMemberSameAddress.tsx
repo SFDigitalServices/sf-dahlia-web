@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import React from "react"
-import { t } from "@bloom-housing/ui-components"
+import { t } from "@uic"
 import { useFormContext } from "react-hook-form"
 import styles from "./HouseholdMemberSameAddress.module.scss"
 import YesNoRadio from "../YesNoRadio"

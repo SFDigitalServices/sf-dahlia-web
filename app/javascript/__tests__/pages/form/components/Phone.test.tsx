@@ -1,6 +1,6 @@
 import React from "react"
 import { screen } from "@testing-library/react"
-import { t } from "@bloom-housing/ui-components"
+import { t } from "@uic"
 import Phone from "../../../../pages/form/components/Phone"
 import { renderWithFormContextWrapper } from "../../../__util__/renderUtils"
 import userEvent from "@testing-library/user-event"

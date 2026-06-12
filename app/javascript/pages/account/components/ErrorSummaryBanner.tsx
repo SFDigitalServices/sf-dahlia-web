@@ -1,5 +1,5 @@
 import React from "react"
-import { t } from "@bloom-housing/ui-components"
+import { t } from "@uic"
 import { Alert } from "@bloom-housing/ui-seeds"
 import { DeepMap, FieldValues, FieldError } from "react-hook-form"
 import { renderInlineMarkup } from "../../../util/languageUtil"
