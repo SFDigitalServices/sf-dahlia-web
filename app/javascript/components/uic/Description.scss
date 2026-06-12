@@ -1,0 +1,66 @@
+/* Vendored from @bloom-housing/ui-components src/text/Description.scss.
+   Plain CSS only; the clearfix mixin was inlined, $screen-md (768px)
+   inlined, and sass nesting flattened. */
+
+.column-definition-list {
+  --title-font-family: var(--bloom-font-serif);
+  --title-font-size-desktop: var(--bloom-font-size-xl);
+  --title-font-size-mobile: var(--bloom-font-size-lg);
+  --title-text-color: var(--bloom-color-gray-800);
+  --body-font-size: var(--bloom-font-size-sm);
+  --border-color: var(--bloom-color-gray-450);
+  --last-row-grid: span 2 / span 2;
+}
+
+.column-definition-list::after {
+  display: table;
+  clear: both;
+  content: "";
+}
+
+@media (min-width: 768px) {
+  .column-definition-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: var(--bloom-s4);
+    grid-row-gap: 0.15rem;
+  }
+}
+
+.column-definition-list .description__title {
+  font-family: var(--title-font-family);
+  font-size: var(--title-font-size-mobile);
+  color: var(--title-text-color);
+  margin-bottom: var(--bloom-s1);
+  clear: left;
+  height: auto;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .column-definition-list .description__title {
+    padding-left: var(--bloom-s4);
+    border-left: 2px solid var(--border-color);
+    float: left;
+    margin-bottom: var(--bloom-s3);
+    font-size: var(--title-font-size-desktop);
+  }
+}
+
+.column-definition-list .description__body {
+  font-size: var(--body-font-size);
+  margin-bottom: var(--bloom-s5);
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .column-definition-list .description__body {
+    margin-bottom: 0;
+    float: left;
+    padding-top: 0.4em;
+  }
+
+  .column-definition-list .description__body:last-of-type {
+    grid-column: var(--last-row-grid);
+  }
+}

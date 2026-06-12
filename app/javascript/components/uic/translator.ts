@@ -36,4 +36,8 @@ const t = (phrase: string, options?: any): string => {
   return "{{ Missing Translation Phrases }}"
 }
 
-export { t as default, t }
+// The package's locale() effectively always returned "en" once phrases were
+// loaded (and crashed otherwise); only used for English ordinal suffixes.
+const locale = () => "en"
+
+export { t as default, t, locale }

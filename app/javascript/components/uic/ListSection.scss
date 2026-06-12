@@ -1,0 +1,12 @@
+/* Vendored from @bloom-housing/ui-components src/sections/ListSection.scss.
+   Plain CSS only; @apply/@screen expanded. */
+
+.list-section {
+  margin-top: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .list-section {
+    margin-top: 0;
+  }
+}

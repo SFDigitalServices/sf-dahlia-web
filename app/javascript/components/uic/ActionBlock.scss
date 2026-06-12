@@ -1,0 +1,132 @@
+/* Vendored from @bloom-housing/ui-components src/blocks/ActionBlock.scss.
+   Plain CSS only; @apply rules expanded to literal values and sass
+   nesting flattened. */
+
+.action-block {
+  display: flex;
+  text-align: center;
+  padding: 1rem;
+}
+
+.action-block.primary-lighter {
+  background-color: var(--bloom-color-primary-lighter);
+}
+
+.action-block.primary-darker {
+  background-color: var(--bloom-color-primary-darker);
+  color: var(--bloom-color-white);
+}
+
+.action-block.primary-darker .action-block__icon {
+  border-color: var(--bloom-color-white);
+}
+
+@media (max-width: 640px) {
+  .action-block .action-block__actions {
+    display: flex;
+    justify-items: center;
+  }
+}
+
+.action-block .action-block__actions .button {
+  margin: 0.25rem;
+}
+
+.action-block .action-block__subheader {
+  padding-top: 0.5rem;
+  font-family: var(--bloom-font-sans);
+}
+
+.action-block__block {
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  padding-bottom: 2rem;
+}
+
+.action-block__block .action-block__head {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.action-block__block .action-block__icon {
+  padding: 1rem;
+  border-style: solid;
+  border-bottom-width: 4px;
+  border-color: var(--bloom-color-primary);
+  margin-bottom: 1.5rem;
+}
+
+@media (max-width: 640px) {
+  .action-block__block .action-block__actions {
+    display: block;
+    text-align: center;
+  }
+}
+
+.action-block__inline {
+  align-items: baseline;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+@media (max-width: 640px) {
+  .action-block__inline {
+    display: block;
+    text-align: center;
+  }
+}
+
+.action-block__inline .action-block__actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+@media (max-width: 640px) {
+  .action-block__inline .action-block__actions {
+    display: block;
+    text-align: center;
+  }
+}
+
+.action-block__inline .action-block__head {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+}
+
+@media (max-width: 640px) {
+  .action-block__inline .action-block__head {
+    display: block;
+  }
+}
+
+.action-block__inline .action-block__icon {
+  padding: 1rem;
+  border-style: solid;
+  border-right-width: 4px;
+  border-color: var(--bloom-color-primary);
+}
+
+@media (max-width: 640px) {
+  .action-block__inline .action-block__icon {
+    display: inline-block;
+    border-style: solid;
+    border-right-width: 0;
+    border-bottom-width: 4px;
+    margin-bottom: 1rem;
+  }
+}
+
+.action-block__inline .action-block__header {
+  margin-inline-start: 1.5rem;
+}
+
+@media (max-width: 640px) {
+  .action-block__inline .action-block__header {
+    margin-inline-start: 0;
+  }
+}
