@@ -18,18 +18,36 @@ Branch: `jdunning/poc/vendor-uic`.
 | 2 — Forms | ✅ done |
 | 3 — Layout & listings | ✅ done |
 | 4 — Special cases | ✅ done |
-| 5 — Global styles & package removal | ⬜ not started |
+| 5 — Global styles & package removal | ✅ done |
 
-Everything the app renders now resolves to vendored code under
-`app/javascript/components/uic/`. The only remaining ties to the package are:
+**`@bloom-housing/ui-components` has been uninstalled.** Everything the app
+renders or builds with now lives in the repo. Full jest suite (835), eslint, and
+tsc are green; a standalone sass compile of all vendored globals also succeeds.
 
-1. the barrel's `export * from "@bloom-housing/ui-components"` (kept until Phase 5
-   so any not-yet-vendored symbol still resolves),
-2. the vendored `translator` forwarding phrases to the package's own `addTranslation`
-   (so package-internal components still translate while the star export lives), and
-3. the 16 global SCSS `@import`s in `app/javascript/components/base.scss` (Phase 5).
+Phase 5 specifics:
+- The 16 global SCSS files were vendored **as-is (kept sass)** per maintainer
+  choice — copied verbatim into `app/javascript/components/uic/global/` (+
+  `/tokens`), with `base.scss` `@import`s repointed to `./uic/global/*`.
+- The package's two build-time exports were vendored too: its Tailwind theme →
+  `config/tailwind/bloomTheme.js` (consumed by the repo's `tailwind.config.js`),
+  and `tailwind.tosass.js` → `config/webpack/loaders/tailwindToSass.js` (feeds the
+  sass loader's `additionalData`, i.e. the `$screen-*`/`$tailwind-*` vars).
+- The barrel's `export *` and the translator's `addTranslation` forwarding were
+  removed.
+- Three transitive deps had to be promoted to **direct** because the package was
+  their only path: `node-polyglot`, `tailwindcss-rtl`, and `typesafe-actions`
+  (the last is used by the auth/listing-details context reducers).
+- A `resolutions` pin for `@types/react`/`@types/react-dom` (^18) was added:
+  removing the package let `@bloom-housing/ui-seeds` resolve a nested
+  `@types/react@19` (whose `ReactNode` includes `bigint`), which broke tsc.
+- `jest.config.js` `transformIgnorePatterns` was a **malformed no-op**
+  (`node_modules/?!(…)` — missing the `(?!` lookahead paren) that silently
+  transformed *all* of `node_modules`. It was rewritten to a correct lookahead
+  that transforms only `@bloom-housing/ui-seeds` (still-untranspiled ESM).
 
-Full jest suite, eslint, and tsc are green after Phase 4 (835 tests).
+Remaining (separate, out-of-scope efforts): convert the repo's own SCSS —
+`base.scss` still uses `@tailwind`/`@apply`/`$vars` — to drop `sass` entirely,
+and upgrade off Tailwind v2.
 
 ## Key findings
 

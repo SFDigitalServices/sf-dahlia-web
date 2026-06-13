@@ -75,23 +75,23 @@ $colors: (
   ),
 );
 
-@import "@bloom-housing/ui-components/src/global/mixins.scss";
-@import "@bloom-housing/ui-components/src/global/markdown.scss";
-@import "@bloom-housing/ui-components/src/global/text.scss";
-@import "@bloom-housing/ui-components/src/global/blocks.scss";
-@import "@bloom-housing/ui-components/src/global/accordion.scss";
-@import "@bloom-housing/ui-components/src/global/custom_counter.scss";
-@import "@bloom-housing/ui-components/src/global/forms.scss";
-@import "@bloom-housing/ui-components/src/global/lists.scss";
-@import "@bloom-housing/ui-components/src/global/tables.scss";
-@import "@bloom-housing/ui-components/src/global/homepage.scss";
-@import "@bloom-housing/ui-components/src/global/print.scss";
+@import "./uic/global/mixins.scss";
+@import "./uic/global/markdown.scss";
+@import "./uic/global/text.scss";
+@import "./uic/global/blocks.scss";
+@import "./uic/global/accordion.scss";
+@import "./uic/global/custom_counter.scss";
+@import "./uic/global/forms.scss";
+@import "./uic/global/lists.scss";
+@import "./uic/global/tables.scss";
+@import "./uic/global/homepage.scss";
+@import "./uic/global/print.scss";
 
-@import "@bloom-housing/ui-components/src/global/tokens/borders.scss";
-@import "@bloom-housing/ui-components/src/global/tokens/colors.scss";
-@import "@bloom-housing/ui-components/src/global/tokens/fonts.scss";
-@import "@bloom-housing/ui-components/src/global/tokens/screens.scss";
-@import "@bloom-housing/ui-components/src/global/tokens/sizes.scss";
+@import "./uic/global/tokens/borders.scss";
+@import "./uic/global/tokens/colors.scss";
+@import "./uic/global/tokens/fonts.scss";
+@import "./uic/global/tokens/screens.scss";
+@import "./uic/global/tokens/sizes.scss";
 
 // /* ***********/
 // /* Additional stylesheets are contained within individual component folders */

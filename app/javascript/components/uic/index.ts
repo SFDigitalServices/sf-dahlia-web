@@ -1,17 +1,10 @@
-/* eslint-disable import/export --
- * Names exported both here and by the star re-export are intentional overrides:
- * per ES module semantics, explicit named exports take precedence over `export *`.
- */
 /**
  * Vendored ui-components barrel (see docs/uic-migration-plan.md).
  *
- * Everything still comes from @bloom-housing/ui-components via the star
- * re-export below; vendored local copies are listed as explicit named
- * re-exports, which take precedence over the star export. As components
- * are migrated, add their names here. When the star export is gone, the
- * package can be uninstalled.
+ * Every symbol the app uses is now a local vendored copy re-exported below;
+ * the @bloom-housing/ui-components package has been removed. This file is the
+ * single import surface (`@uic`) for all former package components.
  */
-export * from "@bloom-housing/ui-components"
 
 // Type-only names must use `export type` so babel/webpack drop them at runtime.
 export { t, addTranslation } from "./translator"
