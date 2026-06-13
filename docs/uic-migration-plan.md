@@ -24,6 +24,10 @@ Branch: `jdunning/poc/vendor-uic`.
 renders or builds with now lives in the repo. Full jest suite (835), eslint, and
 tsc are green; a standalone sass compile of all vendored globals also succeeds.
 
+Static verification is complete. The only outstanding item is the end-to-end
+**browser smoke-test**, which is pending a webpack dev-server restart (see
+[Operational notes](#operational-notes)).
+
 Phase 5 specifics:
 - The 16 global SCSS files were vendored **as-is (kept sass)** per maintainer
   choice — copied verbatim into `app/javascript/components/uic/global/` (+
@@ -49,6 +53,19 @@ Remaining (separate, out-of-scope efforts): convert the repo's own SCSS —
 `base.scss` still uses `@tailwind`/`@apply`/`$vars` — to drop `sass` entirely,
 and upgrade off Tailwind v2.
 
+## Operational notes
+
+- **The running webpack dev server must be restarted after the Phase 5 install.**
+  Uninstalling the package and re-running `yarn install` re-hoisted the dependency
+  tree: `@bloom-housing/ui-seeds`'s nested `focus-trap-react` and `react-tabs`
+  moved up to top-level `node_modules`. Both still resolve correctly, but a
+  *running* `webpack-dev-server` caches the old nested module paths and throws
+  `ENOENT … @bloom-housing/ui-seeds/node_modules/focus-trap-react/...` (and the
+  same for `react-tabs`) in the browser until it is restarted. This is **not** a
+  code issue — tsc/jest/sass are all green. The dev server is not in
+  `Procfile.development`; it's started separately, so restart that process (and,
+  if it persists, clear `node_modules/.cache` / `tmp/cache`).
+
 ## Key findings
 
 - This repo **never imports AgTable/AgGrid** from the package. The `ag-grid-community` in our
@@ -64,24 +81,35 @@ and upgrade off Tailwind v2.
 
 ## Cutover mechanism
 
-`app/javascript/components/uic/index.ts` is a barrel that re-exports the whole package
-(`export * from "@bloom-housing/ui-components"`) and overrides symbols with vendored local
-copies as they are migrated (explicit local exports take precedence over `export *`).
+`app/javascript/components/uic/index.ts` is the barrel and the single import surface
+(`@uic`) for all former package components. **It now re-exports only vendored local
+modules** — the original `export * from "@bloom-housing/ui-components"` (which let
+not-yet-migrated symbols still resolve while local copies took precedence) has been
+removed, and the package is uninstalled.
 
-All app imports of `"@bloom-housing/ui-components"` are rewritten once to the `@uic` alias
-(tsconfig `paths`, webpack `resolve.alias`, jest `moduleNameMapper`). After that, migration
-proceeds symbol-by-symbol inside the barrel with no further call-site churn. When the
-`export *` line is finally removed, the package can be uninstalled.
+During the migration, all app imports of `"@bloom-housing/ui-components"` were rewritten
+once to the `@uic` alias (tsconfig `paths`, webpack `resolve.alias`, jest
+`moduleNameMapper`) — that wiring is still how `@uic` resolves — and the work then
+proceeded symbol-by-symbol inside the barrel with no further call-site churn until the
+star export could be dropped.
 
 ### Style conversion rules
 
-- Vendored styles are written as `.scss` files containing **only plain, un-nested CSS** —
-  no `@import`, no mixins, no `@apply`, no `$variables` — so they keep working in today's
-  sass pipeline and can be renamed to `.css` when sass is removed.
-- Values come from the existing `--bloom-*` custom properties (defined by the package token
-  files until Phase 5 ports them to a local `:root` block).
+These applied to the **per-component** styles (phases 1–4):
+
+- Vendored component styles are written as `.scss` files containing **only plain,
+  un-nested CSS** — no `@import`, no mixins, no `@apply`, no `$variables` — so they keep
+  working in today's sass pipeline and can be renamed to `.css` when sass is removed.
+- Values come from the existing `--bloom-*` custom properties, now defined by the
+  vendored token files under `app/javascript/components/uic/global/tokens/`.
 - Sass mixins used by a component (`filled-appearances`, `outlined-appearances`, etc.) are
   inlined and flattened into the component's stylesheet.
+
+**The 16 global files (Phase 5) were the exception**: they were vendored *as-is, kept as
+sass* (per maintainer choice), so they still use `@apply`, the shared mixins, and the
+`$screen-*` / `$tailwind-*` variables the sass loader prepends. They will need this same
+plain-CSS conversion if/when `sass` is dropped — but `base.scss` itself still uses
+`@tailwind`/`@apply`/`$vars`, so that's a separate effort regardless.
 
 ## Component inventory (what we use)
 
@@ -103,11 +131,13 @@ future vendoring:
 - **Type-only re-exports must use `export type`** in the barrel. Babel strips
   interfaces, so a value-style `export { SomeType }` triggers a webpack
   "export not found" warning at runtime. Use `export type { … }`.
-- **Dual polyglot instances.** While `export *` is still present, package-internal
-  components call the *package's* `t`, not the vendored one. The vendored
-  `addTranslation` therefore forwards phrases to the package's `addTranslation` too;
-  otherwise package components render `{{ Missing Translation Phrases }}`. This
-  forwarding can be deleted in Phase 5 once the star export is gone.
+- **Dual polyglot instances (resolved in Phase 5).** While `export *` was still
+  present (phases 1–4), package-internal components called the *package's* `t`, not
+  the vendored one, so the vendored `addTranslation` had to forward phrases to the
+  package's `addTranslation` too — otherwise package components rendered
+  `{{ Missing Translation Phrases }}`. That forwarding was removed once the star
+  export went away. Watch for this class of bug any time a vendored singleton
+  (translator, icon registry, etc.) coexists with a still-imported package copy.
 - **CSS source-order dependencies.** Several package rules rely on stylesheet
   injection order rather than specificity. The gallery `Modal` was the worst case: the
   open modal carries both `modal__inner-with-footer` (`--modal-margin-top: bloom-s6`)
@@ -136,13 +166,33 @@ future vendoring:
   `querySelector` (losing the `HTMLElement` typing — use `querySelector<HTMLElement>`),
   and flagged faithful-copy patterns. Re-run tsc after `--fix`, and prefer targeted
   `eslint-disable` with an "avoid behavior drift" note over rewriting upstream logic.
-- **The barrel override pattern trips `import/export`.** `index.ts` has a file-level
-  `/* eslint-disable import/export */` because explicit named exports intentionally shadow
-  the `export *`.
+- **The barrel override pattern tripped `import/export` (phases 0–4).** While the
+  `export *` coexisted with explicit named exports that intentionally shadowed it,
+  `index.ts` needed a file-level `/* eslint-disable import/export */`. That disable
+  was removed in Phase 5 along with the star export.
 - **Pre-existing tsc noise.** A type error in the package's nested `markdown-to-jsx` types
   is not ours; filter type-check output with `| grep -v markdown-to-jsx`.
 - **Visual spot-check after every phase.** Snapshot tests catch markup drift but not
   layout regressions (the gallery footer bug passed all tests). Open the real pages.
+- **Transitive-dep traps when uninstalling the package.** Several deps resolved *only*
+  through `@bloom-housing/ui-components` and broke on removal: `node-polyglot`,
+  `tailwindcss-rtl`, and — least obvious — `typesafe-actions` (used by the app's own
+  auth and listing-details context reducers, not anything UI). After uninstalling, tsc
+  and the build surface these; promote each to a direct dependency at its
+  already-installed version.
+- **Nested `@types/react` after the dependency tree changes.** Removing the package let
+  `@bloom-housing/ui-seeds` resolve a *nested* `@types/react@19` (whose `ReactNode`
+  includes `bigint`), which conflicts with the app's v18 types and breaks tsc. Fix with a
+  `resolutions` pin for `@types/react`/`@types/react-dom` (^18) **and** delete the stale
+  nested copy (`rm -rf node_modules/@bloom-housing/ui-seeds/node_modules/@types/react*`)
+  before reinstalling — yarn won't always prune it on its own.
+- **`jest.config` `transformIgnorePatterns` was a malformed no-op.** The old value,
+  `node_modules/?!(@bloom-housing/ui-components)`, was missing the `(?!` lookahead paren,
+  so it matched nothing and jest silently transformed *all* of `node_modules`. Removing
+  it reverted jest to its default (ignore all node_modules) and broke the
+  still-untranspiled `@bloom-housing/ui-seeds` ESM (`Unexpected token 'export'`). The
+  correct form is `node_modules/(?!(@bloom-housing/ui-seeds)/)`.
+- **Restart the dev server after the uninstall** — see [Operational notes](#operational-notes).
 
 ## Phases
 
@@ -193,12 +243,20 @@ natively (button + aria) instead of `react-accessible-accordion`, and
   The app's forked `SiteHeader` now imports the vendored `../uic/SiteHeader.scss` instead
   of the package subpath, removing the last direct package import in app code.
 
-### Phase 5 — Global styles & removal
-Port the 16 `base.scss` package imports: token files → a local `:root` CSS-vars file; the rest
-(markdown, text, forms, tables, …) → plain CSS. Remove `export *` from the barrel and the
-translator's `addTranslation` forwarding, then uninstall `@bloom-housing/ui-components` (taking
-ag-grid 26, react-beautiful-dnd, mapbox, react-map-gl, aria-autocomplete, react-text-mask,
-react-accessible-accordion, react-media with it). Note: `react-focus-lock`,
-`react-remove-scroll`, and `react-transition-group` were promoted to **direct** dependencies in
-Phase 4 and must stay. Then evaluate converting the repo's own SCSS to drop `sass` and upgrade
-Tailwind (separate effort).
+### Phase 5 — Global styles & removal ✅
+Vendored the 16 `base.scss` global imports and removed the package. See the
+[Status](#status) section for exactly what was done — note the globals were
+vendored **as-is (kept sass)** rather than converted to plain CSS, which differs
+from this section's original plan ("token files → `:root`; the rest → plain CSS").
+
+Uninstalling `@bloom-housing/ui-components` also dropped its old transitive baggage
+(ag-grid 26, react-beautiful-dnd, mapbox, react-map-gl, aria-autocomplete,
+react-text-mask, react-accessible-accordion, react-media). `react-focus-lock`,
+`react-remove-scroll`, and `react-transition-group` (promoted in Phase 4) plus
+`node-polyglot`, `tailwindcss-rtl`, and `typesafe-actions` (promoted here) are now
+direct dependencies and must stay.
+
+Follow-up (separate efforts, not in this migration): convert the repo's own SCSS —
+`base.scss` still uses `@tailwind`/`@apply`/`$vars` — to drop `sass` entirely
+(which would also convert the as-is global files to plain CSS), and upgrade off
+Tailwind v2.
