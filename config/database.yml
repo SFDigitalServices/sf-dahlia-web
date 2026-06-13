@@ -9,7 +9,9 @@ default: &default
 <% if ENV['DATABASE_PASSWORD'] %>
   password: <%= ENV['DATABASE_PASSWORD'] %>
 <% end %>
-  host: <%= ENV['DATABASE_HOST'] || 'localhost' %>
+<% if ENV['DATABASE_HOST'] %>
+  host: <%= ENV['DATABASE_HOST'] %>
+<% end %>
 
 development:
   <<: *default
