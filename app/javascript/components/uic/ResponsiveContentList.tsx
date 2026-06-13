@@ -18,6 +18,7 @@ const resetAccordionUuid = () => {
 }
 
 interface AccordionItemState {
+  insideItem: boolean
   expanded: boolean
   toggle: () => void
   buttonId: string
@@ -25,6 +26,7 @@ interface AccordionItemState {
 }
 
 const AccordionItemContext = createContext<AccordionItemState>({
+  insideItem: false,
   expanded: false,
   toggle: () => {
     // no-op default
@@ -33,10 +35,22 @@ const AccordionItemContext = createContext<AccordionItemState>({
   panelId: "",
 })
 
+// react-accessible-accordion's AccordionItem renders nothing outside an
+// Accordion, so a ResponsiveContentItem used without a ResponsiveContentList
+// wrapper historically had no mobile branch. Several tests (and potentially
+// pages) rely on that, so the native rewrite keeps the same rule.
+const AccordionListContext = createContext(false)
+
 const ResponsiveContentList = (props: ResponsiveContentProps) => (
   <>
     <Mobile>
-      <div className="accordion">{props.children}</div>
+      {/* The provider sits inside the Mobile branch only, like the original
+          Accordion did — items rendered through the Desktop branch must not
+          see it, or they would mount their mobile sub-branch too whenever
+          both media queries match (e.g. tests that mock matchMedia). */}
+      <AccordionListContext.Provider value={true}>
+        <div className="accordion">{props.children}</div>
+      </AccordionListContext.Provider>
     </Mobile>
     <Desktop>
       <ul className="responsive-content-list">{props.children}</ul>
@@ -48,6 +62,7 @@ const MobileAccordionItem = (props: ResponsiveContentProps) => {
   const [expanded, setExpanded] = useState(false)
   const id = React.useId()
   const state: AccordionItemState = {
+    insideItem: true,
     expanded,
     toggle: () => setExpanded((value) => !value),
     buttonId: `accordion__heading-${id}`,
@@ -61,21 +76,25 @@ const MobileAccordionItem = (props: ResponsiveContentProps) => {
   )
 }
 
-const ResponsiveContentItem = (props: ResponsiveContentProps) => (
-  <>
-    <Mobile>
-      <MobileAccordionItem>{props.children}</MobileAccordionItem>
-    </Mobile>
-    <Desktop>
-      <li className={"responsive-content-item " + (props.desktopClass || "")}>
-        {props.children}
-      </li>
-    </Desktop>
-  </>
-)
+const ResponsiveContentItem = (props: ResponsiveContentProps) => {
+  const insideList = useContext(AccordionListContext)
+  return (
+    <>
+      <Mobile>
+        {insideList ? <MobileAccordionItem>{props.children}</MobileAccordionItem> : null}
+      </Mobile>
+      <Desktop>
+        <li className={"responsive-content-item " + (props.desktopClass || "")}>
+          {props.children}
+        </li>
+      </Desktop>
+    </>
+  )
+}
 
 const MobileAccordionItemHeading = (props: ResponsiveContentProps) => {
-  const { expanded, toggle, buttonId, panelId } = useContext(AccordionItemContext)
+  const { insideItem, expanded, toggle, buttonId, panelId } = useContext(AccordionItemContext)
+  if (!insideItem) return null
 
   return (
     <div className="accordion__heading" role="heading" aria-level={2}>
@@ -111,7 +130,8 @@ const ResponsiveContentItemHeader = (props: ResponsiveContentProps) => (
 )
 
 const MobileAccordionItemPanel = (props: ResponsiveContentProps) => {
-  const { expanded, buttonId, panelId } = useContext(AccordionItemContext)
+  const { insideItem, expanded, buttonId, panelId } = useContext(AccordionItemContext)
+  if (!insideItem) return null
 
   return (
     <div

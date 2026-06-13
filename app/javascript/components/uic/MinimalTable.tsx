@@ -1,0 +1,41 @@
+/* Vendored from @bloom-housing/ui-components src/tables/MinimalTable.tsx.
+   `draggable`/`setData` props removed along with StandardTable's drag support. */
+import * as React from "react"
+import { TableHeaders, StandardTable, StandardTableData } from "./StandardTable"
+
+export interface MinimalTableProps {
+  /** The headers for the table passed as text content with optional settings */
+  headers: TableHeaders
+  /** The table data passed as records of column name to cell data with optional settings */
+  data?: StandardTableData
+  /** Removes cell margins on the left of every row's first cell */
+  flushLeft?: boolean
+  /** Removes cell margins on the right of every row's last cell */
+  flushRight?: boolean
+  /** If the table should collapse on mobile views to show repeating columns on the left for every row */
+  responsiveCollapse?: boolean
+  /** A class name applied to the root of the table */
+  className?: string
+  /** A class name applied to the cells of the table */
+  cellClassName?: string
+  /** An id applied to the table */
+  id?: string
+}
+
+const MinimalTable = (props: MinimalTableProps) => {
+  const tableClasses = ["td-plain", "th-plain", props.className]
+  if (props.flushLeft) tableClasses.push("is-flush-left")
+  if (props.flushRight) tableClasses.push("is-flush-right")
+  return (
+    <StandardTable
+      headers={props.headers}
+      data={props.data}
+      tableClassName={tableClasses.join(" ")}
+      cellClassName={props.cellClassName || "px-5 py-3"}
+      responsiveCollapse={props.responsiveCollapse}
+      id={props.id}
+    />
+  )
+}
+
+export { MinimalTable as default, MinimalTable }

@@ -1,0 +1,137 @@
+/* Vendored from @bloom-housing/ui-components src/notifications/AlertBox.scss.
+   Plain CSS only: sass nesting flattened. */
+
+.alert-box {
+  --vertical-padding: var(--bloom-s3);
+  --horizontal-padding: var(--bloom-s4);
+  --background-color: var(--bloom-color-primary-light);
+  --alert-background-color: var(--bloom-color-alert-light);
+  --alert-invert-background-color: var(--bloom-color-alert);
+  --notice-background-color: var(--bloom-color-primary-light);
+  --notice-invert-background-color: var(--bloom-color-primary);
+  --success-background-color: var(--bloom-color-success-light);
+  --success-invert-background-color: var(--bloom-color-success);
+  --warn-background-color: var(--bloom-color-warn-light);
+  --warn-invert-background-color: var(--bloom-color-warn);
+  --text-color: var(--bloom-color-gray-950);
+  --close-icon-color: var(--bloom-color-gray-950);
+  --font-weight: 500;
+  --max-width: var(--bloom-width-5xl);
+  --line-height: 1.375;
+  --body-margin: inherit;
+  --body-font-size: var(--bloom-font-size-sm);
+  --body-close-font-size: var(--bloom-font-size-2xl);
+
+  padding: var(--vertical-padding) var(--horizontal-padding);
+  background-color: var(--background-color);
+  color: var(--text-color);
+  font-weight: var(--font-weight);
+  position: relative;
+  display: flex;
+  align-items: center;
+  line-height: var(--line-height);
+}
+
+.alert-box .alert-box_inner {
+  margin: auto;
+  max-width: var(--max-width);
+  padding-inline: var(--horizontal-padding);
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.alert-box.narrow {
+  padding-block: var(--bloom-s1_5);
+}
+
+.alert-box.invert {
+  color: var(--bloom-color-white);
+}
+
+.alert-box.invert a {
+  color: var(--bloom-color-white);
+  text-decoration: underline;
+}
+
+.alert-box.invert svg {
+  fill: var(--bloom-color-white);
+}
+
+.alert-box.alert {
+  background-color: var(--alert-background-color);
+}
+
+.alert-box.alert.invert {
+  background-color: var(--alert-invert-background-color);
+}
+
+.alert-box.primary {
+  background-color: var(--notice-background-color);
+}
+
+.alert-box.primary.invert {
+  background-color: var(--notice-invert-background-color);
+}
+
+.alert-box.success {
+  background-color: var(--success-background-color);
+}
+
+.alert-box.success.invert {
+  background-color: var(--success-invert-background-color);
+}
+
+.alert-box.warn {
+  background-color: var(--warn-background-color);
+}
+
+.alert-box__head {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.alert-box__title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.alert-box__body {
+  font-weight: var(--font-weight);
+  font-size: var(--body-font-size);
+  margin: var(--body-margin);
+}
+
+.alert-box__close {
+  font-size: var(--body-close-font-size);
+  inset-inline-end: var(--horizontal-padding);
+  margin-inline-start: var(--bloom-s3);
+  padding: 0;
+  line-height: var(--bloom-s4);
+  color: var(--close-icon-color);
+}
+
+.alert-box__close-inverted {
+  color: white;
+}
+
+.alert-box__icon {
+  margin-inline-end: var(--bloom-s3);
+}
+
+.alert-box__sticky {
+  position: sticky;
+  inset-block-start: var(--bloom-s3);
+  margin-block-start: var(--bloom-s3);
+  margin-inline-end: var(--bloom-s3);
+  z-index: 10;
+  margin-inline-start: auto;
+  width: fit-content;
+}
+
+.alert-box__sticky + * {
+  --alert-box-height: -3.6rem;
+  margin-block-start: var(--alert-box-height);
+}

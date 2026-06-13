@@ -1,21 +1,16 @@
-/* eslint-disable unicorn/prefer-ternary */
-import React, { useState, useContext, useLayoutEffect, useEffect, useRef } from "react"
+// Vendored from @bloom-housing/ui-components src/headers/SiteHeader.tsx
+// (This is the package's stock header. The app's own fork lives at
+// app/javascript/components/SiteHeader/SiteHeader.tsx and renders this one
+// when the new-account-layout flag is off.)
+import React, { useState, useContext, useLayoutEffect } from "react"
 import { CSSTransition } from "react-transition-group"
-import {
-  LanguageNav,
-  LangItem,
-  Icon,
-  Button,
-  AppearanceSizeType,
-  NavigationContext,
-  SiteHeader as BloomSiteHeader,
-  t,
-} from "@uic"
-import UserContext from "../../authentication/context/UserContext"
-import { useFeatureFlag } from "../../hooks/useFeatureFlag"
-import { UNLEASH_FLAG } from "../../modules/constants"
-import "../uic/SiteHeader.scss"
-import styles from "./SiteHeader.module.scss"
+import { LanguageNav, LangItem } from "./LanguageNav"
+import { Icon } from "./Icon"
+import { Button } from "./Button"
+import { AppearanceSizeType } from "./AppearanceTypes"
+import { t } from "./translator"
+import "./SiteHeader.scss"
+import { NavigationContext } from "./NavigationContext"
 
 type LogoWidth = "slim" | "base" | "medium" | "wide"
 type SiteHeaderWidth = "base" | "wide"
@@ -75,52 +70,7 @@ const changeMenuShow = (
   setMenus(indexOfTitle !== -1 ? menus.filter((menu) => menu !== title) : [...menus, title])
 }
 
-interface MobileDrawerProps {
-  in: boolean
-  onClose: () => void
-  closeLabel?: string
-  children: React.ReactNode
-}
-
-const MobileDrawer = ({ in: isOpen, onClose, closeLabel, children }: MobileDrawerProps) => {
-  const nodeRef = useRef<HTMLSpanElement>(null)
-
-  return (
-    <CSSTransition
-      nodeRef={nodeRef}
-      in={isOpen}
-      timeout={400}
-      classNames={"site-header__drawer-transition"}
-      unmountOnExit
-    >
-      <span ref={nodeRef} className={"site-header__mobile-drawer-dropdown-container"}>
-        <div className={"site-header__mobile-drawer-dropdown"}>
-          <button
-            className={"site-header__mobile-drawer-close-row"}
-            onClick={onClose}
-            onKeyPress={(event) => {
-              if (event.key === "Enter") {
-                onClose()
-              }
-            }}
-            aria-label={closeLabel ?? t("t.close")}
-          >
-            <Icon
-              size="small"
-              symbol="closeSmall"
-              fill={"#ffffff"}
-              className={"site-header__icon-spacing"}
-            />
-          </button>
-          {children}
-        </div>
-      </span>
-    </CSSTransition>
-  )
-}
-
-const DahliaSiteHeader = (props: SiteHeaderProps) => {
-  const { profile } = useContext(UserContext)
+const SiteHeader = (props: SiteHeaderProps) => {
   const [activeMenu, setActiveMenu] = useState<string | null>()
   const [activeMobileMenus, setActiveMobileMenus] = useState<string[]>([])
   const [isDesktop, setIsDesktop] = useState(true)
@@ -128,31 +78,27 @@ const DahliaSiteHeader = (props: SiteHeaderProps) => {
   const [mobileMenu, setMobileMenu] = useState(false)
 
   const [navbarClass, setNavbarClass] = useState("site-header__navbar-inline")
-  const headerRef = useRef<HTMLElement>(null)
 
   const updateNavbarClass = () => {
-    const logoOffset = document.querySelector("#site-header-logo")?.getBoundingClientRect().left
-    const linksOffset = document.querySelector("#site-header-links")?.getBoundingClientRect().left
+    // If the links have flex-wrapped onto the next line, apply the background color
+    const logoOffset = document.querySelector<HTMLElement>("#site-header-logo")?.offsetLeft
+    const linksOffset = document.querySelector<HTMLElement>("#site-header-links")?.offsetLeft
     if (linksOffset === undefined || logoOffset === undefined) return
     return linksOffset === 0 || linksOffset === logoOffset
       ? setNavbarClass("site-header__navbar-wrapped")
       : setNavbarClass("site-header__navbar-inline")
   }
-  const DESKTOP_MIN_WIDTH = props.desktopMinWidth || 767
 
   const { LinkComponent } = useContext(NavigationContext)
 
-  const toggleDesktopMenu = (menuTitle: string) => {
-    setActiveMenu((current) => (current === menuTitle ? null : menuTitle))
-  }
-
+  const DESKTOP_MIN_WIDTH = props.desktopMinWidth || 767 // @screen md
+  // Enables toggling off navbar links when entering mobile
   useLayoutEffect(() => {
     const updateMedia = () => {
       if (window.innerWidth > DESKTOP_MIN_WIDTH) {
         setIsDesktop(true)
       } else {
         setIsDesktop(false)
-        setActiveMenu(null)
       }
       updateNavbarClass()
     }
@@ -161,27 +107,8 @@ const DahliaSiteHeader = (props: SiteHeaderProps) => {
 
     window.addEventListener("resize", updateMedia)
     return () => window.removeEventListener("resize", updateMedia)
+     
   }, [DESKTOP_MIN_WIDTH, props.languages])
-
-  useEffect(() => {
-    if (!activeMenu) return
-
-    const handlePointerDown = (event: MouseEvent) => {
-      if (headerRef.current?.contains(event.target as Node)) return
-      setActiveMenu(null)
-    }
-
-    const handleEscape = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setActiveMenu(null)
-    }
-
-    document.addEventListener("mousedown", handlePointerDown)
-    document.addEventListener("keydown", handleEscape)
-    return () => {
-      document.removeEventListener("mousedown", handlePointerDown)
-      document.removeEventListener("keydown", handleEscape)
-    }
-  }, [activeMenu])
 
   const getLogoWidthClass = () => {
     if (props.logoWidth === "slim") return "site-header__logo-width-slim"
@@ -191,46 +118,14 @@ const DahliaSiteHeader = (props: SiteHeaderProps) => {
     return ""
   }
 
-  const renderAccountDropdownTitle = (menuTitle: string, showTitle: boolean) => {
-    const lastSpace = menuTitle.lastIndexOf(" ")
-
-    return (
-      <span
-        className={`site-header__dropdown-title-content${
-          showTitle ? ` ${styles["dropdown-title-content-spaced"]}` : ""
-        }`}
-      >
-        <span
-          className={`${styles["account-avatar"]} ${
-            showTitle ? styles["account-avatar-with-title"] : styles["account-avatar-mobile"]
-          }`}
-        >
-          {profile?.firstName?.[0] ?? ""}
-          {profile?.lastName?.[0] ?? ""}
-        </span>
-        <span className="site-header__dropdown-title-with-icon">
-          {showTitle && (
-            <>
-              {lastSpace !== -1 && (
-                <span className="site-header__dropdown-title-split">
-                  {menuTitle.slice(0, lastSpace)}
-                </span>
-              )}
-              {lastSpace !== -1 ? menuTitle.slice(lastSpace + 1) : menuTitle}
-            </>
-          )}
-          <Icon size="small" symbol="arrowDown" fill="#555555" className="pl-2" />
-        </span>
-      </span>
-    )
-  }
-
+  // Render set of styled menu links
   const getDropdownOptions = (
     options: MenuLink[],
     buttonClassName: string,
     parentMenu?: string
   ) => {
     const dropdownOptionKeyDown = (event: React.KeyboardEvent<HTMLElement>, index: number) => {
+      // Close menu when tabbing out backwards or forwards
       if (
         (event.shiftKey && event.key === "Tab" && isDesktop && index === 0 && parentMenu) ||
         (event.key === "Tab" &&
@@ -259,7 +154,7 @@ const DahliaSiteHeader = (props: SiteHeaderProps) => {
       )
     }
 
-    const dropdownOptionClassname = `${buttonClassName} ${props.dropdownItemClassName ?? ""}`
+    const dropdownOptionClassname = `${buttonClassName} ${props.dropdownItemClassName || ""}`
 
     return options.map((option, index) => {
       return (
@@ -299,26 +194,33 @@ const DahliaSiteHeader = (props: SiteHeaderProps) => {
     })
   }
 
-  const toggleAccountMenu = (menuTitle: string) => {
-    setActiveMenu((current) => (current === menuTitle ? null : menuTitle))
-    if (!isDesktop) {
-      setMobileMenu(false)
-      setMobileDrawer(false)
+  // Render the desktop dropdown that opens on mouse hover
+  const getDesktopDropdown = (menuTitle: string, subMenus: MenuLink[]) => {
+    // Combine the last word of a multi-word header into one span to prevent chevron icon from wrapping onto its own line
+    const getMenuTitle = () => {
+      const splitTitle = menuTitle.split(" ")
+      return (
+        <span>
+          {splitTitle.length > 1 && (
+            <span className={"site-header__dropdown-title-split"}>
+              {[...splitTitle].splice(0, splitTitle.length - 1).join(" ")}
+            </span>
+          )}
+          <span className={"site-header__dropdown-title-with-icon"}>
+            {splitTitle.length > 1 ? splitTitle[splitTitle.length - 1] : menuTitle}
+            <Icon size="small" symbol="arrowDown" fill={"#555555"} className={"pl-2"} />
+          </span>
+        </span>
+      )
     }
-  }
 
-  const getAccountDropdown = (menuLink: MenuLink, showTitle: boolean) => {
     return (
-      <span key={menuLink.title}>
-        {renderAccountDropdownTitle(menuLink.title, showTitle)}
-        {isDesktop && activeMenu === menuLink.title && (
+      <span key={menuTitle}>
+        {getMenuTitle()}
+        {activeMenu === menuTitle && (
           <span className={"site-header__dropdown-container"}>
             <div className={"site-header__dropdown"}>
-              {getDropdownOptions(
-                menuLink.subMenuLinks ?? [],
-                "site-header__dropdown-item",
-                menuLink.title
-              )}
+              {getDropdownOptions(subMenus, "site-header__dropdown-item", menuTitle)}
             </div>
           </span>
         )}
@@ -326,41 +228,7 @@ const DahliaSiteHeader = (props: SiteHeaderProps) => {
     )
   }
 
-  const getDesktopDropdown = (menuLink: MenuLink) => {
-    return getAccountDropdown(menuLink, isDesktop && navbarClass === "site-header__navbar-inline")
-  }
-
-  const getAccountMenuLink = () => props.menuLinks.find((menuLink) => menuLink.subMenuLinks)
-
-  const getMobileNavMenuLinks = () => props.menuLinks.filter((menuLink) => !menuLink.subMenuLinks)
-
-  const getMobileHeader = () => {
-    const accountLink = getAccountMenuLink()
-    if (!accountLink) return null
-
-    const isOpen = activeMenu === accountLink.title
-
-    return (
-      <button
-        type="button"
-        className={`site-header__link site-header__dropdown-title ${styles["mobile-account-link"]}`}
-        onClick={() => toggleAccountMenu(accountLink.title)}
-        onKeyDown={(event) => {
-          if (event.key === "Enter" || event.key === " ") {
-            event.preventDefault()
-            toggleAccountMenu(accountLink.title)
-          }
-        }}
-        aria-expanded={isOpen}
-        aria-haspopup="true"
-        aria-label={accountLink.title}
-        data-testid={`${accountLink.title}-mobile`}
-      >
-        {getAccountDropdown(accountLink, false)}
-      </button>
-    )
-  }
-
+  // Build styled mobile menu options
   const buildMobileMenuOptions = (
     menuLinks: MenuLink[],
     dropdownSublinkOptionClassName: string,
@@ -370,8 +238,7 @@ const DahliaSiteHeader = (props: SiteHeaderProps) => {
     return (
       <>
         {menuLinks.map((menuLink, index) => {
-          if (menuLink.subMenuLinks && !props.flattenSubMenus) {
-            return (
+          return menuLink.subMenuLinks && !props.flattenSubMenus ? (
               <div key={`${menuLink.title}-${index}`}>
                 <button
                   className={dropdownOptionClassName}
@@ -402,69 +269,58 @@ const DahliaSiteHeader = (props: SiteHeaderProps) => {
                   </div>
                 )}
               </div>
-            )
-          } else {
-            return (
+            ) : (
               <div key={`${menuLink.title}-${index}`}>
                 {props.flattenSubMenus && menuLink.subMenuLinks
                   ? getDropdownOptions(menuLink.subMenuLinks, dropdownOptionClassName ?? "")
                   : getDropdownOptions([menuLink], dropdownOptionClassName ?? "")}
               </div>
             )
-          }
         })}
       </>
     )
   }
 
-  const getMobileAccountDropdownMenu = () => {
-    const accountLink = getAccountMenuLink()
-    if (!accountLink) return null
-
-    const isOpen = activeMenu === accountLink.title
-
-    if (props.mobileDrawer) {
-      return (
-        <MobileDrawer
-          in={isOpen}
-          onClose={() => setActiveMenu(null)}
-          closeLabel={props.strings?.close}
-        >
-          {getDropdownOptions(
-            accountLink.subMenuLinks ?? [],
-            "site-header__mobile-drawer-dropdown-item"
-          )}
-        </MobileDrawer>
-      )
-    }
-
-    if (!isOpen) return null
-
-    return (
-      <span className={"site-header__mobile-dropdown-container"}>
-        <div className={"site-header__mobile-dropdown"}>
-          {getDropdownOptions(accountLink.subMenuLinks ?? [], "site-header__mobile-dropdown-item")}
-        </div>
-      </span>
-    )
-  }
-
+  // Render the mobile drawer that opens on menu press when prop mobileDrawer is set
   const getMobileDrawer = () => {
     return (
-      <MobileDrawer
+      <CSSTransition
         in={mobileDrawer}
-        onClose={() => setMobileDrawer(false)}
-        closeLabel={props.strings?.close}
+        timeout={400}
+        classNames={"site-header__drawer-transition"}
+        unmountOnExit
       >
-        {buildMobileMenuOptions(
-          getMobileNavMenuLinks(),
-          "site-header__mobile-drawer-dropdown-item site-header__mobile-drawer-dropdown-item-sublink",
-          "site-header__mobile-drawer-dropdown-item"
-        )}
-      </MobileDrawer>
+        <span className={"site-header__mobile-drawer-dropdown-container"}>
+          <div className={"site-header__mobile-drawer-dropdown"}>
+            <button
+              className={"site-header__mobile-drawer-close-row"}
+              onClick={() => setMobileDrawer(false)}
+              onKeyPress={(event) => {
+                if (event.key === "Enter") {
+                  setMobileDrawer(false)
+                }
+              }}
+              aria-label={props.strings?.close ?? t("t.close")}
+            >
+              <Icon
+                size="small"
+                symbol="arrowForward"
+                fill={"#ffffff"}
+                className={"site-header__icon-spacing"}
+              />
+            </button>
+            {buildMobileMenuOptions(
+              props.menuLinks,
+              "site-header__mobile-drawer-dropdown-item site-header__mobile-drawer-dropdown-item-sublink",
+              "site-header__mobile-drawer-dropdown-item"
+            )}
+          </div>
+        </span>
+      </CSSTransition>
     )
   }
 
+  // Renders the default mobile dropdown that opens on menu press
   const getMobileDropdown = () => {
     return (
       <>
@@ -472,7 +328,7 @@ const DahliaSiteHeader = (props: SiteHeaderProps) => {
           <span className={"site-header__mobile-dropdown-container"}>
             <div className={"site-header__mobile-dropdown"}>
               {buildMobileMenuOptions(
-                getMobileNavMenuLinks(),
+                props.menuLinks,
                 "site-header__mobile-dropdown-item site-header__mobile-dropdown-item-sublink",
                 "site-header__mobile-dropdown-item"
               )}
@@ -487,16 +343,14 @@ const DahliaSiteHeader = (props: SiteHeaderProps) => {
     return (
       <>
         {props.menuLinks.map((menuLink, index) => {
-          let menuContent: JSX.Element
-          if (menuLink.subMenuLinks) {
-            menuContent = getDesktopDropdown(menuLink)
-          } else {
-            menuContent = <div key={menuLink.title}>{menuLink.title}</div>
-          }
+          const menuContent: JSX.Element = menuLink.subMenuLinks ? (
+            getDesktopDropdown(menuLink.title, menuLink.subMenuLinks)
+          ) : (
+            <div key={menuLink.title}>{menuLink.title}</div>
+          )
 
           if (!menuLink.subMenuLinks) {
-            if (menuLink.href) {
-              return (
+            return menuLink.href ? (
                 <LinkComponent
                   className={`site-header__link ${props.menuItemClassName ?? ""} ${
                     menuLink.className ?? ""
@@ -507,9 +361,7 @@ const DahliaSiteHeader = (props: SiteHeaderProps) => {
                 >
                   {menuContent}
                 </LinkComponent>
-              )
-            } else {
-              return (
+              ) : (
                 <button
                   className={`site-header__link ${
                     props.menuItemClassName ?? ""
@@ -528,27 +380,28 @@ const DahliaSiteHeader = (props: SiteHeaderProps) => {
                   {menuContent}
                 </button>
               )
-            }
           } else {
-            const isOpen = activeMenu === menuLink.title
             return (
-              <button
-                type="button"
+              <span
                 className={`site-header__link site-header__dropdown-title`}
+                tabIndex={0}
                 key={`${menuLink.title}-${index}`}
-                onClick={() => toggleDesktopMenu(menuLink.title)}
-                onKeyDown={(event) => {
-                  if (event.key === "Enter" || event.key === " ") {
-                    event.preventDefault()
-                    toggleDesktopMenu(menuLink.title)
+                onKeyPress={(event) => {
+                  if (event.key === "Enter") {
+                    setActiveMenu(menuLink.title)
                   }
                 }}
-                aria-expanded={isOpen}
-                aria-haspopup="true"
+                onMouseEnter={() => {
+                  setActiveMenu(menuLink.title)
+                }}
+                onMouseLeave={() => {
+                  setActiveMenu(null)
+                }}
+                role={"button"}
                 data-testid={`${menuLink.title}-${index}`}
               >
                 {menuContent}
-              </button>
+              </span>
             )
           }
         })}
@@ -556,56 +409,64 @@ const DahliaSiteHeader = (props: SiteHeaderProps) => {
     )
   }
 
-  const mobileHeaderAction = () => {
-    if (!props.mobileDrawer) {
-      setMobileMenu(!mobileMenu)
-    } else {
-      setMobileDrawer(!mobileDrawer)
+  const getMobileHeader = () => {
+    const mobileHeaderAction = () => {
+      if (!props.mobileDrawer) {
+        setMobileMenu(!mobileMenu)
+      } else {
+        setMobileDrawer(!mobileDrawer)
+      }
+      setActiveMobileMenus([])
     }
-    setActiveMenu(null)
-    setActiveMobileMenus([])
-  }
 
-  const getMobileMenu = () => {
-    return props.mobileText ? (
-      <button
-        className={`site-header__mobile-menu-text-button ${styles["mobile-menu-button"]}`}
-        onClick={() => {
-          mobileHeaderAction()
-        }}
-        onKeyPress={(event) => {
-          if (event.key === "Enter") {
-            event.preventDefault()
-            mobileHeaderAction()
-          }
-        }}
-      >
-        <div className={"site-header__mobile-menu-text-button-content"}>
-          {props.strings?.menu ?? t("t.menu")}
-        </div>
-        <Icon
-          symbol={mobileMenu ? "closeSmall" : "hamburger"}
-          size={"base"}
-          className={"site-header__mobile-menu-icon"}
-        />
-      </button>
-    ) : (
-      <Button
-        size={AppearanceSizeType.small}
-        onClick={() => {
-          mobileHeaderAction()
-        }}
-        icon={mobileMenu ? "closeSmall" : "hamburger"}
-        iconSize="base"
-        className={`site-header__mobile-menu-button ${styles["mobile-menu-button"]}`}
-        unstyled
-      >
-        <span className={"site-header__mobile-menu-button-text"}>
-          {mobileMenu
-            ? (props.strings?.close ?? t("t.close"))
-            : (props.strings?.menu ?? t("t.menu"))}
-        </span>
-      </Button>
+    return (
+      <>
+        {props.mobileText ? (
+          <button
+            className={"site-header__mobile-menu-text-button"}
+            onClick={() => {
+              mobileHeaderAction()
+            }}
+            onKeyPress={(event) => {
+              if (event.key === "Enter") {
+                event.preventDefault()
+                mobileHeaderAction()
+              }
+            }}
+          >
+            <div className={"site-header__mobile-menu-text-button-content"}>
+              {props.strings?.menu ?? t("t.menu")}
+            </div>
+            <Icon
+              symbol={mobileMenu ? "closeSmall" : "hamburger"}
+              size={"base"}
+              className={"site-header__mobile-menu-icon"}
+            />
+          </button>
+        ) : (
+          <Button
+            size={AppearanceSizeType.small}
+            onClick={() => {
+              if (!props.mobileDrawer) {
+                setMobileMenu(!mobileMenu)
+              } else {
+                setMobileDrawer(!mobileDrawer)
+              }
+              setActiveMobileMenus([])
+            }}
+            icon={mobileMenu ? "closeSmall" : "hamburger"}
+            iconSize="base"
+            className={"site-header__mobile-menu-button"}
+            unstyled
+          >
+            <span className={"site-header__mobile-menu-button-text"}>
+              {mobileMenu
+                ? (props.strings?.close ?? t("t.close"))
+                : (props.strings?.menu ?? t("t.menu"))}
+            </span>
+          </Button>
+        )}
+      </>
     )
   }
 
@@ -646,7 +507,7 @@ const DahliaSiteHeader = (props: SiteHeaderProps) => {
   }
 
   return (
-    <header className={"site-header"} ref={headerRef}>
+    <header className={"site-header"}>
       {props.mainContentId && (
         <a className="site-header__skip-link" href={`#${props.mainContentId}`}>
           {props.strings?.skipToMainContent}
@@ -662,7 +523,8 @@ const DahliaSiteHeader = (props: SiteHeaderProps) => {
         <div className="site-header__notice-text">{props.notice ?? ""}</div>
       </div>
 
-      <nav className="site-header__container" aria-label="main navigation">
+      { }
+      <nav className="site-header__container" role="navigation" aria-label="main navigation">
         <div
           className={`site-header__base ${
             props.siteHeaderWidth === "wide" ? "site-header__width-wide" : ""
@@ -672,7 +534,6 @@ const DahliaSiteHeader = (props: SiteHeaderProps) => {
               : "site-header__base-inline"
           }`}
         >
-          {!isDesktop && getMobileMenu()}
           {getLogo()}
           <div
             id={"site-header-links"}
@@ -683,19 +544,9 @@ const DahliaSiteHeader = (props: SiteHeaderProps) => {
         </div>
       </nav>
       {!isDesktop && mobileMenu && getMobileDropdown()}
-      {!isDesktop && getMobileAccountDropdownMenu()}
       {getMobileDrawer()}
     </header>
   )
-}
-
-const SiteHeader = (props: SiteHeaderProps) => {
-  const { unleashFlag: accountLayoutEnabled } = useFeatureFlag(UNLEASH_FLAG.ACCOUNTS_LAYOUT, false)
-  if (accountLayoutEnabled) {
-    return <DahliaSiteHeader {...props} />
-  }
-
-  return <BloomSiteHeader {...props} />
 }
 
 export { SiteHeader as default, SiteHeader }

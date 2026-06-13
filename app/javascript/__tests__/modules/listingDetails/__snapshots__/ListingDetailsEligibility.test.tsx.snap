@@ -3021,6 +3021,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
                 <a
                   aria-label="Read more about the Certificate of Preference"
                   href="https://www.sf.gov/learn-about-certificate-preference-cop"
+                  rel="noreferrer"
                   target="_blank"
                 >
                   Read More
@@ -3061,6 +3062,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
                 <a
                   aria-label="Read more about the Displaced Tenant Housing Preference"
                   href="https://www.sf.gov/learn-about-displaced-tenant-housing-preference-dthp"
+                  rel="noreferrer"
                   target="_blank"
                 >
                   Read More
@@ -3101,6 +3103,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
                 <a
                   aria-label="Read more about the Live or Work in San Francisco Preference"
                   href="https://www.sf.gov/get-priority-housing-lottery"
+                  rel="noreferrer"
                   target="_blank"
                 >
                   Read More
@@ -3110,6 +3113,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
                 <a
                   aria-label="View document checklist for the Live or Work in San Francisco Preference"
                   href="/document-checklist#live-or-work-sf"
+                  rel="noreferrer"
                   target="_blank"
                 >
                   View Document Checklist
@@ -3694,6 +3698,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
                 <a
                   aria-label="Read more about the Certificate of Preference"
                   href="https://www.sf.gov/learn-about-certificate-preference-cop"
+                  rel="noreferrer"
                   target="_blank"
                 >
                   Read More
@@ -3734,6 +3739,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
                 <a
                   aria-label="Read more about the Displaced Tenant Housing Preference"
                   href="https://www.sf.gov/learn-about-displaced-tenant-housing-preference-dthp"
+                  rel="noreferrer"
                   target="_blank"
                 >
                   Read More
@@ -3774,6 +3780,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
                 <a
                   aria-label="Read more about the Live or Work in San Francisco Preference"
                   href="https://www.sf.gov/get-priority-housing-lottery"
+                  rel="noreferrer"
                   target="_blank"
                 >
                   Read More
@@ -3783,6 +3790,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
                 <a
                   aria-label="View document checklist for the Live or Work in San Francisco Preference"
                   href="/document-checklist#live-or-work-sf"
+                  rel="noreferrer"
                   target="_blank"
                 >
                   View Document Checklist
@@ -4376,6 +4384,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
                 <a
                   aria-label="Read more about the Certificate of Preference"
                   href="https://www.sf.gov/learn-about-certificate-preference-cop"
+                  rel="noreferrer"
                   target="_blank"
                 >
                   Read More
@@ -4416,6 +4425,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
                 <a
                   aria-label="Read more about the Displaced Tenant Housing Preference"
                   href="https://www.sf.gov/learn-about-displaced-tenant-housing-preference-dthp"
+                  rel="noreferrer"
                   target="_blank"
                 >
                   Read More
@@ -4456,6 +4466,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
                 <a
                   aria-label="Read more about the Live or Work in San Francisco Preference"
                   href="https://www.sf.gov/get-priority-housing-lottery"
+                  rel="noreferrer"
                   target="_blank"
                 >
                   Read More
@@ -4465,6 +4476,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
                 <a
                   aria-label="View document checklist for the Live or Work in San Francisco Preference"
                   href="/document-checklist#live-or-work-sf"
+                  rel="noreferrer"
                   target="_blank"
                 >
                   View Document Checklist
@@ -5193,6 +5205,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
                 <a
                   aria-label="Read more about the Certificate of Preference"
                   href="https://www.sf.gov/learn-about-certificate-preference-cop"
+                  rel="noreferrer"
                   target="_blank"
                 >
                   Read More
@@ -5233,6 +5246,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
                 <a
                   aria-label="Read more about the Displaced Tenant Housing Preference"
                   href="https://www.sf.gov/learn-about-displaced-tenant-housing-preference-dthp"
+                  rel="noreferrer"
                   target="_blank"
                 >
                   Read More
@@ -5273,6 +5287,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
                 <a
                   aria-label="Read more about the Live or Work in San Francisco Preference"
                   href="https://www.sf.gov/get-priority-housing-lottery"
+                  rel="noreferrer"
                   target="_blank"
                 >
                   Read More
@@ -5282,6 +5297,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
                 <a
                   aria-label="View document checklist for the Live or Work in San Francisco Preference"
                   href="/document-checklist#live-or-work-sf"
+                  rel="noreferrer"
                   target="_blank"
                 >
                   View Document Checklist
@@ -5733,6 +5749,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
                 <a
                   aria-label="Read more about the Certificate of Preference"
                   href="https://www.sf.gov/learn-about-certificate-preference-cop"
+                  rel="noreferrer"
                   target="_blank"
                 >
                   Read More
@@ -5773,6 +5790,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
                 <a
                   aria-label="Read more about the Displaced Tenant Housing Preference"
                   href="https://www.sf.gov/learn-about-displaced-tenant-housing-preference-dthp"
+                  rel="noreferrer"
                   target="_blank"
                 >
                   Read More
@@ -5813,6 +5831,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
                 <a
                   aria-label="Read more about the Live or Work in San Francisco Preference"
                   href="https://www.sf.gov/get-priority-housing-lottery"
+                  rel="noreferrer"
                   target="_blank"
                 >
                   Read More
@@ -5822,6 +5841,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
                 <a
                   aria-label="View document checklist for the Live or Work in San Francisco Preference"
                   href="/document-checklist#live-or-work-sf"
+                  rel="noreferrer"
                   target="_blank"
                 >
                   View Document Checklist
@@ -6415,6 +6435,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
                 <a
                   aria-label="Read more about the Certificate of Preference"
                   href="https://www.sf.gov/learn-about-certificate-preference-cop"
+                  rel="noreferrer"
                   target="_blank"
                 >
                   Read More
@@ -6455,6 +6476,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
                 <a
                   aria-label="Read more about the Displaced Tenant Housing Preference"
                   href="https://www.sf.gov/learn-about-displaced-tenant-housing-preference-dthp"
+                  rel="noreferrer"
                   target="_blank"
                 >
                   Read More
@@ -6495,6 +6517,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
                 <a
                   aria-label="Read more about the Live or Work in San Francisco Preference"
                   href="https://www.sf.gov/get-priority-housing-lottery"
+                  rel="noreferrer"
                   target="_blank"
                 >
                   Read More
@@ -6504,6 +6527,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
                 <a
                   aria-label="View document checklist for the Live or Work in San Francisco Preference"
                   href="/document-checklist#live-or-work-sf"
+                  rel="noreferrer"
                   target="_blank"
                 >
                   View Document Checklist
@@ -6981,6 +7005,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
                 <a
                   aria-label="Read more about the Certificate of Preference"
                   href="https://www.sf.gov/learn-about-certificate-preference-cop"
+                  rel="noreferrer"
                   target="_blank"
                 >
                   Read More
@@ -7021,6 +7046,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
                 <a
                   aria-label="Read more about the Displaced Tenant Housing Preference"
                   href="https://www.sf.gov/learn-about-displaced-tenant-housing-preference-dthp"
+                  rel="noreferrer"
                   target="_blank"
                 >
                   Read More
@@ -7061,6 +7087,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
                 <a
                   aria-label="Read more about the Live or Work in San Francisco Preference"
                   href="https://www.sf.gov/get-priority-housing-lottery"
+                  rel="noreferrer"
                   target="_blank"
                 >
                   Read More
@@ -7070,6 +7097,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
                 <a
                   aria-label="View document checklist for the Live or Work in San Francisco Preference"
                   href="/document-checklist#live-or-work-sf"
+                  rel="noreferrer"
                   target="_blank"
                 >
                   View Document Checklist
