@@ -1,6 +1,6 @@
 import React from "react"
 import { getEventNote, RailsListing } from "../../modules/listings/SharedHelpers"
-import "./ListingDetailsOpenHouses.scss"
+import "./ListingDetailsOpenHouses.css"
 import { Heading, t } from "@uic"
 import { getEventDateTime, getEventTimeString, sortByDateTimeString } from "../../util/listingUtil"
 import { getTranslatedString, localizedFormat } from "../../util/languageUtil"

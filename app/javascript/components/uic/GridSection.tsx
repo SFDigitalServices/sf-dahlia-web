@@ -1,6 +1,6 @@
 // Vendored from @bloom-housing/ui-components src/sections/GridSection.tsx
 import * as React from "react"
-import "./GridSection.scss"
+import "./GridSection.css"
 
 export interface GridCellProps {
   children: React.ReactNode

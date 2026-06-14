@@ -1,6 +1,6 @@
 // Vendored from @bloom-housing/ui-components src/navigation/FooterNav.tsx
 import * as React from "react"
-import "./FooterNav.scss"
+import "./FooterNav.css"
 
 export interface FooterNavProps {
   children?: React.ReactNode

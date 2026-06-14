@@ -11,7 +11,7 @@ import type RailsSaleListing from "../../api/types/rails/listings/RailsSaleListi
 import type RailsRentalListing from "../../api/types/rails/listings/RailsRentalListing"
 import type { ListingEvent } from "../../api/types/rails/listings/BaseRailsListing"
 import fallbackImg from "../../../assets/images/bg@1200.jpg"
-import "./SharedHelpers.scss"
+import "./SharedHelpers.css"
 import { ListingState } from "./ListingState"
 
 export type RailsListing = RailsSaleListing | RailsRentalListing

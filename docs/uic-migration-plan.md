@@ -341,7 +341,61 @@ Original plan (for reference) — each item below was confirmed by grep:
 Caveat: Tailwind v2's JIT purge already drops unused *utility* classes, so this phase targets
 hand-written rules and `@apply` blocks, not utilities.
 
-### Phase 7 — Tailwind v4 + sass removal (the big rock; depends on Phase 6)
+### Phase 7 — Tailwind v4 + sass removal ✅ (done 2026-06-13)
+
+Branch: `jdunning/chore/update-tailwind-remove-sass`. Tailwind v2.2 → **v4.3**; first-party
+sass removed (all app stylesheets are now plain `.css`).
+
+**What changed:**
+- **Theme** → `app/javascript/styles/theme.css`: `@import "tailwindcss" important;` (the
+  `important` keyword preserves v2's `important: true` cascade), a `@source` glob, and an
+  `@theme` block translating the former `bloomTheme.js` (colors→`--color-*`, screens→
+  `--breakpoint-*` incl. the **lg=1200** override, fontSize→`--text-*`, fontFamily→`--font-*`,
+  letterSpacing→`--tracking-*`). `--color-*: initial` clears TW defaults so only the bloom
+  palette exists (matching v2's full `colors` replacement). A `@layer base` rule restores the v2
+  default border color (gray-450; v4 defaults to currentColor).
+- **Entry** `base.scss` → `base.css`: remote font `@import`s first (kept), then
+  `@import "../styles/theme.css"`, tokens, and globals (all `.css`). IE11 hack and the v2
+  duplicate-`@import "tailwindcss/utilities"` specificity trick dropped.
+- **All ~115 `.scss` → `.css`** via script: `@screen <bp>` → media queries, `$screen-*`/`$tailwind-*`
+  → literal px / `var(--bloom-*)`, `map-get($tailwind-gray, N)` → `var(--bloom-color-gray-N)`,
+  `#{}` interpolation inlined, `//` comments → `/* */`, the lone `has-toggle` mixin inlined.
+  **CSS nesting was kept** (native nesting / Lightning CSS handles it) — only sass-specific syntax
+  was rewritten. 126+ JS `import "./x.scss"` rewritten to `.css`; `custom.d.ts` updated.
+- **`@reference`**: 31 JS-imported component `.css` files that use `@apply` got a
+  `@reference "<rel>/styles/theme.css"` line (v4 compiles each separately-imported file in
+  isolation, so `@apply` of custom utilities needs the theme in scope). Globals don't need it —
+  they're `@import`ed into `base.css`'s single compilation unit.
+- **Webpack**: `loaders/sass.js` replaced by `loaders/css.js` (`style-loader` → `css-loader`
+  (with `url.filter` to leave root-relative `/images/...` alone) → `postcss-loader` with
+  `@tailwindcss/postcss`). `tailwindToSass.js`, `tailwind.config.js`, `bloomTheme.js` deleted.
+  Removed deps: `tailwindcss-rtl` (no RTL languages/variants used), `autoprefixer`,
+  `postcss-preset-env`, `postcss-flexbugs-fixes`, `cssnano`, `clone-deep`, `postcss-nested`,
+  `resolve-url-loader` (v4/Lightning CSS handles prefixing + nesting).
+- **Utility renames**: `flex-grow`→`grow`, `outline-none`→`outline-hidden` (v4 semantics).
+- **Two pre-existing upstream CSS bugs** surfaced by Lightning CSS and fixed: a `@md {` typo in
+  `tables.css` (was silently dead under sass; now a real `@media (min-width: 768px)`) and
+  `var(seeds-s4)` → `var(--seeds-s4)` in `ApplicationItem.css`.
+
+**sass is NOT fully gone — by necessity.** `@bloom-housing/ui-seeds` is consumed from source
+(`/src`) and ships sass component styles (`Card.scss`, etc.) that import its own tokens. A
+**minimal sass rule** (`loaders/sass.js`: style → css → sass-loader, no postcss/Tailwind, since
+ui-seeds' scss uses no `@apply`/`@tailwind`) is kept **solely for that third-party package**.
+`sass` + `sass-loader` therefore remain as deps. If ui-seeds ever ships prebuilt CSS (or is
+dropped), sass can go entirely.
+
+**Verified**: production `webpack` build green (0 errors, only pre-existing asset-size warnings),
+`tsc`, full `jest` (835/835), `yarn lint` (0). **Visual smoke-test still pending** — jest mocks
+CSS (`identity-obj-proxy`), so it cannot catch layout/styling regressions. Run the standard
+surface: listings directory, listing detail (pricing tables + gallery modal), header/footer,
+language nav, account pages, and the `?featureFlag[temp.webapp.newAccountLayout]=false` header.
+
+**Watch-out for visual review:** in v2 `important: true`, `@apply`'d declarations inside component
+CSS were `!important`; in v4 they are **not** (only directly-used utility classes are, via the
+`important` import flag). Component rules that relied on an `@apply`'d property out-specifying
+something may differ — check the smoke-test surface for cascade regressions.
+
+#### Original plan (for reference)
 
 After the sweep, the remaining sass usage is just `@apply` / `@screen` / injected vars. Migrate:
 

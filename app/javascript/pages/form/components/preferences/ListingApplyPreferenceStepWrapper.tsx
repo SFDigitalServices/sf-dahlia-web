@@ -14,8 +14,8 @@ import {
   generatePreferenceFieldNames,
   getPreferenceData,
 } from "./PreferenceUtils"
-import styles from "./ListingApplyPreferenceStepWrapper.module.scss"
-import stepStyles from "../ListingApplyStepWrapper.module.scss"
+import styles from "./ListingApplyPreferenceStepWrapper.module.css"
+import stepStyles from "../ListingApplyStepWrapper.module.css"
 
 interface ListingApplyPreferenceStepWrapperProps {
   greenHeader?: boolean

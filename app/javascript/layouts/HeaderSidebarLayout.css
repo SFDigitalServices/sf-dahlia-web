@@ -1,0 +1,47 @@
+@reference "../styles/theme.css";
+.page-header {
+  background-size: cover;
+  background-position: center;
+  padding: var(--bloom-s6) 0;
+
+  @media (min-width: 768px) {
+    padding: var(--bloom-s12);
+  }
+
+  .page-header__group {
+    padding-left: 0;
+
+    @media (max-width: 768px) {
+      width: full;
+      align-items: center;
+    }
+
+    @media (max-width: 1200px) {
+      margin-left: 0;
+    }
+
+    .page-header__title {
+      font-size: var(--bloom-font-size-3xl);
+      text-align: start !important;
+      word-break: normal;
+      padding-bottom: var(--bloom-s4);
+
+      @media (max-width: 768px) {
+        text-align: center !important;
+        @apply w-2/3;
+      }
+    }
+
+    .page-header__lead {
+      text-align: start !important;
+      word-break: normal;
+      font-size: var(--bloom-font-size-lg);
+
+      @media (max-width: 768px) {
+        font-size: var(--bloom-font-size-sm);
+        text-align: center !important;
+        @apply w-2/3;
+      }
+    }
+  }
+}

@@ -2,7 +2,7 @@
 import * as React from "react"
 import { Icon, IconFillColors, UniversalIconType } from "./Icon"
 import { ApplicationStatusType } from "./ApplicationStatusType"
-import "./ApplicationStatus.scss"
+import "./ApplicationStatus.css"
 
 export interface ApplicationStatusProps {
   content: string

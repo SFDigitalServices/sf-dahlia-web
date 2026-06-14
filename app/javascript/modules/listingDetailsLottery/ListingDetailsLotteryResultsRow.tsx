@@ -1,7 +1,7 @@
 import React from "react"
 import { Heading, t } from "@uic"
 import type { RailsLotteryBucket } from "../../api/types/rails/listings/RailsLotteryBucket"
-import "./ListingDetailsLotteryResultsRow.scss"
+import "./ListingDetailsLotteryResultsRow.css"
 import { defaultIfNotTranslated } from "../../util/languageUtil"
 
 interface LotteryResultsRowProps {

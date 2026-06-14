@@ -17,7 +17,7 @@ import { renderInlineMarkup } from "../../../util/languageUtil"
 import { ConfigContext } from "../../../lib/ConfigContext"
 import InviteToLeasingAgentInfo from "../InviteToLeasingAgentInfo"
 
-import styles from "../invite-to.module.scss"
+import styles from "../invite-to.module.css"
 import { HOME_SF_PHONE } from "../../../modules/constants"
 
 interface InviteToInterviewDocumentsProps {

@@ -1,7 +1,7 @@
 // Vendored from @bloom-housing/ui-components src/sections/InfoCardGrid.tsx
 import * as React from "react"
 import { Heading } from "./Heading"
-import "./InfoCardGrid.scss"
+import "./InfoCardGrid.css"
 
 export interface InfoCardGridProps {
   title: string

@@ -1,0 +1,22 @@
+@reference "../../styles/theme.css";
+/* Vendored from @bloom-housing/ui-components src/text/Message.scss.
+   Plain CSS only; @apply rules expanded to literal values. */
+
+.message {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  background-color: var(--bloom-color-primary-lighter);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: var(--bloom-letter-spacing-wider);
+  font-size: var(--bloom-font-size-xs);
+  border-left-width: 2px;
+  border-color: var(--bloom-color-primary);
+}
+
+.message.is-warning {
+  background-color: var(--bloom-color-accent-warm-lighter);
+  border-color: var(--bloom-color-accent-warm);
+}

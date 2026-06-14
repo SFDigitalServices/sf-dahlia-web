@@ -9,7 +9,7 @@ import { Icon } from "./Icon"
 import { Button } from "./Button"
 import { AppearanceSizeType } from "./AppearanceTypes"
 import { t } from "./translator"
-import "./SiteHeader.scss"
+import "./SiteHeader.css"
 import { NavigationContext } from "./NavigationContext"
 
 type LogoWidth = "slim" | "base" | "medium" | "wide"

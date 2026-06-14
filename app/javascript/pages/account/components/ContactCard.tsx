@@ -4,7 +4,7 @@ import { Card, Button, Heading, Link, Icon } from "@bloom-housing/ui-seeds"
 import { getMyAccountContactPath } from "../../../util/routeUtil"
 import React from "react"
 import { User } from "../../../authentication/user"
-import styles from "./ContactCard.module.scss"
+import styles from "./ContactCard.module.css"
 
 interface ContactCardProps {
   user?: User

@@ -24,7 +24,7 @@ import {
   upcomingLotteriesView,
 } from "./DirectoryHelpers"
 import { RailsListing } from "./SharedHelpers"
-import "./ListingDirectory.scss"
+import "./ListingDirectory.css"
 import { MailingListSignup } from "../../components/MailingListSignup"
 import DirectoryPageNavigationBar from "./DirectoryPageNavigationBar"
 import {

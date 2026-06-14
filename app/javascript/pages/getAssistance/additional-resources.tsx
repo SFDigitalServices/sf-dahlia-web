@@ -3,7 +3,7 @@ import withAppSetup from "../../layouts/withAppSetup"
 import AssistanceLayout from "../../layouts/HeaderSidebarLayout"
 import additionalResources from "../../../assets/json/additional-resources.json"
 import { InfoCard, InfoCardGrid, t } from "@uic"
-import "./additional-resources.scss"
+import "./additional-resources.css"
 import { getSfGovUrl } from "../../util/languageUtil"
 import { AppPages } from "../../util/routeUtil"
 

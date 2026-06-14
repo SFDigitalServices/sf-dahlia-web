@@ -1,6 +1,6 @@
 // Vendored from @bloom-housing/ui-components src/blocks/InfoCard.tsx
 import * as React from "react"
-import "./InfoCard.scss"
+import "./InfoCard.css"
 import Markdown from "markdown-to-jsx"
 
 export interface InfoCardProps {

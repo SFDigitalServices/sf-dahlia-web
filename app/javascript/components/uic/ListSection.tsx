@@ -1,6 +1,6 @@
 // Vendored from @bloom-housing/ui-components src/sections/ListSection.tsx
 import * as React from "react"
-import "./ListSection.scss"
+import "./ListSection.css"
 
 export interface ListSectionProps {
   title: string

@@ -1,6 +1,6 @@
 import React from "react"
 import { RailsListing } from "../../modules/listings/SharedHelpers"
-import "./ListingDetailsSeeTheUnit.scss"
+import "./ListingDetailsSeeTheUnit.css"
 import { t, Heading, Icon, IconFillColors } from "@uic"
 import { Heading as HeadingSeeds, Link } from "@bloom-housing/ui-seeds"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"

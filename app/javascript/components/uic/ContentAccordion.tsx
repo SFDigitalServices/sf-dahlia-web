@@ -1,7 +1,7 @@
 // Vendored from @bloom-housing/ui-components src/page_components/listing/ContentAccordion.tsx
 import React, { useState, useRef } from "react"
 import { Icon, IconFillColors } from "./Icon"
-import "./ContentAccordion.scss"
+import "./ContentAccordion.css"
 
 interface ContentAccordionProps {
   customBarContent?: React.ReactNode

@@ -8,7 +8,7 @@ import { Heading, HeaderType } from "./Heading"
 import { Tag } from "./Tag"
 import { AppearanceShadeType, AppearanceStyleType } from "./AppearanceTypes"
 import { Icon, IconFillColors } from "./Icon"
-import "./ListingCard.scss"
+import "./ListingCard.css"
 import { NavigationContext } from "./NavigationContext"
 
 interface ListingCardTableProps extends StandardTableProps, StackedTableProps {}

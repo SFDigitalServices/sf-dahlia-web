@@ -5,7 +5,7 @@ import { Button, Card } from "@bloom-housing/ui-seeds"
 import { useFormEngineContext } from "../../../formEngine/formEngineContext"
 import type { DataSchema } from "../../../formEngine/formSchemas"
 import { translationFromDataSchema } from "../../../util/formEngineUtil"
-import styles from "./ListingApplyStepWrapper.module.scss"
+import styles from "./ListingApplyStepWrapper.module.css"
 import getFormComponentRegistry from "../../../formEngine/formComponentRegistry"
 import ListingApplyStepErrorMessage from "./ListingApplyStepErrorMessage"
 

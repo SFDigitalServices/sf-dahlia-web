@@ -1,0 +1,292 @@
+@reference "../../styles/theme.css";
+/* Vendored from @bloom-housing/ui-components src/blocks/FormCard.scss.
+   Plain CSS only (no sass features) so this file can be renamed to .css
+   once the sass pipeline is removed. Tailwind @apply rules were expanded
+   to their literal values, @screen blocks became media queries, and the
+   `headings` mixin was inlined. Colors and type come from --bloom-* vars
+   (the bloom tailwind theme maps its color/font utilities to these). */
+
+.form-card {
+  --title-font-size: var(--bloom-font-size-2xl);
+  background-color: var(--bloom-color-white);
+}
+
+@media (min-width: 768px) {
+  .form-card {
+    margin-bottom: 1.5rem;
+    border-width: 1px;
+    border-color: var(--bloom-color-gray-450);
+    border-radius: 0.5rem;
+  }
+}
+
+@media print {
+  .form-card {
+    border-width: 0;
+  }
+}
+
+.form-card hr,
+.form-card .border-b {
+  border-color: var(--bloom-color-gray-450);
+}
+
+.form-card .hr {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.form-card__title {
+  text-align: center;
+  width: fit-content;
+  margin-top: 1rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 1rem;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  border-top-width: 4px;
+  border-color: var(--bloom-color-primary);
+  line-height: 1.25;
+  font-size: var(--title-font-size);
+}
+
+@media (min-width: 768px) {
+  .form-card__title {
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+.form-card__title.is-borderless {
+  padding-top: 0;
+  margin-top: 0;
+  border-top-width: 0;
+}
+
+.form-card__back {
+  margin-left: 2rem;
+  margin-bottom: -1.25rem;
+}
+
+@media (min-width: 768px) {
+  .form-card__back {
+    margin-top: 1.25rem;
+  }
+}
+
+.form-card__back a {
+  text-decoration: underline;
+}
+
+.form-card__lead,
+.form-card__group {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .form-card__lead,
+  .form-card__group {
+    margin-left: 2rem;
+    margin-right: 2rem;
+  }
+}
+
+@media print {
+  .form-card__lead,
+  .form-card__group {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+.form-card__lead {
+  padding-top: 3rem;
+  padding-bottom: 2rem;
+}
+
+@media (min-width: 768px) {
+  .form-card__lead {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+@media print {
+  .form-card__lead {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .form-card__group {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+@media print {
+  .form-card__group {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+.form-card__header {
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .form-card__header {
+    border-bottom-left-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
+  }
+}
+
+.form-card__header_group {
+  color: var(--bloom-color-white);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--bloom-color-primary);
+  padding: 1rem;
+  height: 4rem;
+}
+
+@media (min-width: 768px) {
+  .form-card__header_group {
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+  }
+}
+
+@media print {
+  .form-card__header_group {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+}
+
+.form-card__header_group h1,
+.form-card__header_group h2,
+.form-card__header_group h3,
+.form-card__header_group h4,
+.form-card__header_group h5,
+.form-card__header_group h6 {
+  font-size: var(--bloom-font-size-xl);
+  font-family: var(--bloom-font-alt-sans);
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 0;
+}
+
+.form-card__header_nav {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  background-color: var(--bloom-color-white);
+  border-bottom-left-radius: 0.5rem;
+  border-bottom-right-radius: 0.5rem;
+  overflow: auto;
+}
+
+@media (min-width: 768px) {
+  .form-card__header_nav {
+    padding: 1rem;
+  }
+}
+
+@media print {
+  .form-card__header_nav {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+}
+
+.form-card__pager {
+  text-align: center;
+}
+
+.form-card__pager button,
+.form-card__pager .button {
+  margin-bottom: 0;
+}
+
+.form-card__pager-row {
+  padding-left: 2rem;
+  padding-right: 2rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.form-card__pager-row.primary {
+  background-color: var(--bloom-color-primary-lighter);
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+.form-card__pager-row.border-t,
+.form-card__pager-row.border-b {
+  border-color: var(--bloom-color-gray-450);
+}
+
+.form--card__sub-header {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  background-color: var(--bloom-color-gray-300);
+  display: flex;
+  justify-content: space-between;
+  border-style: solid;
+  border-top-width: 1px;
+  border-color: var(--bloom-color-gray-450);
+}
+
+.form--card__sub-header .edit-link {
+  align-self: center;
+}
+
+@media print {
+  .form--card__sub-header {
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+  }
+}
+
+.form-card__sub-title {
+  margin-bottom: 0;
+  color: var(--bloom-color-gray-700);
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+
+.form-card__paragraph-title {
+  text-transform: uppercase;
+  color: var(--bloom-color-gray-750);
+  letter-spacing: var(--bloom-letter-spacing-widest);
+  font-weight: 600;
+  font-family: var(--bloom-font-sans);
+  font-size: var(--bloom-font-size-sm);
+  margin-bottom: 0.5rem;
+  display: inline-block;
+}
+
+.form-card__header-icon {
+  padding-right: 1rem;
+  padding-left: 1rem;
+  padding-bottom: 1rem;
+  display: inline-block;
+  border-bottom-width: 4px;
+  border-color: var(--bloom-color-primary);
+  margin-bottom: 1rem;
+}

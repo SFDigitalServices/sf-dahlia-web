@@ -1,82 +1,23 @@
-const cssnano = require('cssnano')({ preset: 'default' })
-const path = require('path');
-// postcss options
-let minimize = false
-const plugins = [
-  require('postcss-flexbugs-fixes'),
-  require('postcss-preset-env')({
-    autoprefixer: {
-      flexbox: 'no-2009'
-    },
-    stage: 3
-  }),
-  require('tailwindcss')('./tailwind.config.js')
-]
-
-const bloomTheme = require('../../../tailwind.config.js')
-
-// eslint-disable-next-line import/order
-const tailwindVars = require('./tailwindToSass.js')(
-  bloomTheme
-)
-
-const isProduction = process.env.NODE_ENV === 'production'
-
-if (isProduction) {
-  plugins.push(cssnano)
-  minimize = true
-}
+/*
+ * Minimal sass loader — ONLY for third-party @bloom-housing/ui-seeds, which is
+ * consumed from source (/src) and ships sass component styles (Card.scss, etc.)
+ * that import its own tokens. All first-party styles were converted to plain CSS
+ * in the Tailwind v4 migration; this rule exists solely so the external sass
+ * package keeps compiling. ui-seeds' scss uses no @apply/@tailwind, so it needs
+ * no postcss/Tailwind processing — just sass -> css.
+ */
+const isProduction = process.env.NODE_ENV === "production"
 
 module.exports = {
-  test: /\.(scss|sass)$/,
+  test: /\.scss$/,
   use: [
-    // 'file-loader',
-    // Creates `style` nodes from JS strings
-    // the singleton option reduces the number of style tags injected into the page
-    // at one point we had more than 80 style tags, which could interfere with hyperlink previews
     {
-      loader: 'style-loader',
+      loader: "style-loader",
       options: {
-        // the singleton option crashes the browser in E2E tests
-        injectType: isProduction ? 'singletonStyleTag' : 'styleTag',
-      }
+        injectType: isProduction ? "singletonStyleTag" : "styleTag",
+      },
     },
-    // Translates CSS into CommonJS
-    // https://stackoverflow.com/questions/72970312/webpack-wont-compile-when-i-use-an-image-url-in-scss
-    { loader: 'css-loader', options: { sourceMap: !isProduction } },
-    // Various CSS pre and post-processors, including tailwind.
-    // See postcss.config.js for specifics
-    // This line must come after style/css loaders and before the sass loader
-    {
-      loader: 'postcss-loader',
-      options: {
-        postcssOptions: {
-          plugins: plugins,
-          minimize: minimize,
-          sourceMap: !isProduction
-        }
-      }
-    },
-    {
-      loader: 'resolve-url-loader',
-      options: {
-        attempts: 1,
-        sourceMap: !isProduction,
-        root: path.resolve(__dirname, "../../../app/assets")
-      }
-    },
-    // Compiles Sass to CSS
-    {
-      loader: 'sass-loader',
-      options: {
-        additionalData: tailwindVars,
-        sourceMap: true,
-        sassOptions: {
-          logger: {
-            warn: console.warn
-          }
-        }
-      }
-    }
-  ]
+    { loader: "css-loader", options: { sourceMap: !isProduction } },
+    { loader: "sass-loader", options: { sourceMap: !isProduction } },
+  ],
 }

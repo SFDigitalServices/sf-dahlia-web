@@ -1,5 +1,5 @@
 import React from "react"
-import stepStyles from "../ListingApplyStepWrapper.module.scss"
+import stepStyles from "../ListingApplyStepWrapper.module.css"
 import { Button, Card, Heading } from "@bloom-housing/ui-seeds"
 import { t } from "@uic"
 import Name from "../Name"
@@ -8,7 +8,7 @@ import DateOfBirth from "../DateOfBirth"
 import HouseholdMemberSameAddress from "./HouseholdMemberSameAddress"
 import YesNoRadio from "../YesNoRadio"
 import Select from "../Select"
-import styles from "./HouseholdMemberForm.module.scss"
+import styles from "./HouseholdMemberForm.module.css"
 import { RELATIONSHIP_OPTIONS } from "../../../../modules/constants"
 
 const HouseholdMemberForm = ({

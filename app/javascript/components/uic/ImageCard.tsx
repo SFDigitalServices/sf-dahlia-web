@@ -2,7 +2,7 @@
 import React, { useMemo, useState } from "react"
 import { LocalizedLink } from "./LocalizedLink"
 import { ApplicationStatus } from "./ApplicationStatus"
-import "./ImageCard.scss"
+import "./ImageCard.css"
 import { Tag } from "./Tag"
 import { TooltipProps, Tooltip } from "./Tooltip"
 import { ApplicationStatusType } from "./ApplicationStatusType"

@@ -4,7 +4,7 @@ import type { ReactNode } from "react"
 import { Icon, IconTypes, IconFillColors } from "./Icon"
 import type { AlertTypes } from "./alertTypes"
 import { colorClasses } from "./alertTypes"
-import "./AlertBox.scss"
+import "./AlertBox.css"
 
 export interface AlertBoxProps {
   boundToLayoutWidth?: boolean

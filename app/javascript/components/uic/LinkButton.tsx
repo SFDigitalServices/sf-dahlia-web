@@ -1,6 +1,6 @@
 // Vendored from @bloom-housing/ui-components src/actions/LinkButton.tsx
 import React, { useContext } from "react"
-import "./Button.scss"
+import "./Button.css"
 import { buttonClassesForProps, buttonInner, ButtonProps } from "./Button"
 import { NavigationContext } from "./NavigationContext"
 import { isExternalLink } from "./links"

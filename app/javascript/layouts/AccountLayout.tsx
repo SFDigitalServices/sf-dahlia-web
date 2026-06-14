@@ -1,6 +1,6 @@
 import React from "react"
 import AccountNav from "./AccountNav"
-import styles from "./AccountLayout.module.scss"
+import styles from "./AccountLayout.module.css"
 
 export interface AccountLayoutProps {
   children: React.ReactNode

@@ -1,5 +1,5 @@
 import React, { ReactNode, useContext } from "react"
-import "./DirectoryPageNavigationBar.scss"
+import "./DirectoryPageNavigationBar.css"
 import { Icon, t, UniversalIconType } from "@uic"
 import { ListingsGroups } from "./DirectoryHelpers"
 import { ConfigContext } from "../../lib/ConfigContext"

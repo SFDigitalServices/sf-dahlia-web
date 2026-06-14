@@ -2,11 +2,11 @@ import React, { useMemo } from "react"
 import { t, Form } from "@uic"
 import { Button, Card, Heading } from "@bloom-housing/ui-seeds"
 import { FormProvider, useForm } from "react-hook-form"
-import stepStyles from "../ListingApplyStepWrapper.module.scss"
+import stepStyles from "../ListingApplyStepWrapper.module.css"
 import { useFormEngineContext } from "../../../../formEngine/formEngineContext"
 import { getAddress, translationFromDataSchema } from "../../../../util/formEngineUtil"
 import ListingApplyHouseholdMonthlyRent from "./ListingApplyHouseholdMonthlyRent"
-import styles from "./ListingApplyhouseholdMonthlyRentStep.module.scss"
+import styles from "./ListingApplyhouseholdMonthlyRentStep.module.css"
 import { getPrimaryApplicantData } from "../../../../util/listingApplyUtil"
 
 type HouseholdMember = {

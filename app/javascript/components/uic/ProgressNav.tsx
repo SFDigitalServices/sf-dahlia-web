@@ -1,6 +1,6 @@
 // Vendored from @bloom-housing/ui-components src/navigation/ProgressNav.tsx
 import React from "react"
-import "./ProgressNav.scss"
+import "./ProgressNav.css"
 import { t } from "./translator"
 
 type ProgressNavStyle = "bar" | "dot"

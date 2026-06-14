@@ -25,7 +25,7 @@ import PasswordFieldset, {
   passwordSortOrder,
 } from "./components/PasswordFieldset"
 import { FormHeader, FormSection, getDobStringFromDobObject } from "../../util/accountUtil"
-import "./styles/account.scss"
+import "./styles/account.css"
 import { User } from "../../authentication/user"
 import { createAccount } from "../../api/authApiService"
 import {
@@ -35,7 +35,7 @@ import {
 } from "./components/ErrorSummaryBanner"
 import { ExpandedAccountAxiosError, getErrorMessage } from "./components/util"
 
-import "./create-account.scss"
+import "./create-account.css"
 import { DataLayerEvent, useGTMDataLayer } from "../../hooks/analytics/useGTMDataLayer"
 import { AppPages, getSignInPath } from "../../util/routeUtil"
 

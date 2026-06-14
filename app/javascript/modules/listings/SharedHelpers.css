@@ -1,0 +1,6 @@
+@reference "../../styles/theme.css";
+.links-space {
+  a + a {
+    @apply ml-1;
+  }
+}

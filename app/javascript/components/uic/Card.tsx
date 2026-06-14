@@ -1,6 +1,6 @@
 // Vendored from @bloom-housing/ui-components src/blocks/Card.tsx
 import React from "react"
-import "./Card.scss"
+import "./Card.css"
 
 export interface CardHeaderProps {
   /** An additional element(s) you can add to the side of the main child element(s) */

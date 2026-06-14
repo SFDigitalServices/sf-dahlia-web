@@ -1,6 +1,6 @@
 // Vendored from @bloom-housing/ui-components src/navigation/LanguageNav.tsx
 import React from "react"
-import "./LanguageNav.scss"
+import "./LanguageNav.css"
 
 export type LangItem = {
   label: string

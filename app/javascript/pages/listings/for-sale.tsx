@@ -7,7 +7,7 @@ import Layout from "../../layouts/Layout"
 import withAppSetup from "../../layouts/withAppSetup"
 import type RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
 import Link from "../../navigation/Link"
-import "./for-sale.scss"
+import "./for-sale.css"
 
 import { GenericDirectory } from "../../modules/listings/GenericDirectory"
 import {

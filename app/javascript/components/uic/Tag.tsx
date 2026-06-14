@@ -1,7 +1,7 @@
 // Vendored from @bloom-housing/ui-components src/text/Tag.tsx
 import * as React from "react"
 import { AppearanceProps, classNamesForAppearanceTypes } from "./AppearanceTypes"
-import "./Tag.scss"
+import "./Tag.css"
 
 export interface TagProps extends AppearanceProps {
   className?: string

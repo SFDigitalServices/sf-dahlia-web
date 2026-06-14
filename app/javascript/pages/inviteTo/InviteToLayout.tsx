@@ -9,7 +9,7 @@ import {
   getCurrentLanguage,
   localizedFormat,
 } from "../../util/languageUtil"
-import styles from "./invite-to.module.scss"
+import styles from "./invite-to.module.css"
 import InviteToLeasingAgentInfo from "./InviteToLeasingAgentInfo"
 import Layout from "../../layouts/Layout"
 import { INVITE_TO_X } from "../../modules/constants"

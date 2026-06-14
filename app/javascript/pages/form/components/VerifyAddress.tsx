@@ -4,8 +4,8 @@ import { Button, Heading } from "@bloom-housing/ui-seeds"
 import { CardSection } from "@bloom-housing/ui-seeds/src/blocks/Card"
 import { useFormEngineContext } from "../../../formEngine/formEngineContext"
 import { getFormattedAddress } from "../../../util/formEngineUtil"
-import styles from "./VerifyAddress.module.scss"
-import stepStyles from "./ListingApplyStepWrapper.module.scss"
+import styles from "./VerifyAddress.module.css"
+import stepStyles from "./ListingApplyStepWrapper.module.css"
 
 const VerifyAddress = () => {
   const { handleNextStep, formData, handlePrevStep } = useFormEngineContext()

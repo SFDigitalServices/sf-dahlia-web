@@ -4,7 +4,7 @@ import "../util/deferReactOnRailsAutoRender"
 
 import ReactOnRails from "react-on-rails"
 
-import "../components/base.scss"
+import "../components/base.css"
 import "core-js/stable"
 import "regenerator-runtime/runtime"
 

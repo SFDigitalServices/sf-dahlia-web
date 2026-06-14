@@ -1,0 +1,6 @@
+@reference "../../styles/theme.css";
+.educator1-banner {
+  @apply normal-case;
+  @apply tracking-tight;
+  font-size: var(--bloom-font-size-xs);
+}

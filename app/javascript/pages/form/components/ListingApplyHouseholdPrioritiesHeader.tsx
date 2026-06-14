@@ -2,7 +2,7 @@ import React from "react"
 import { t } from "@uic"
 import { CardHeader } from "@bloom-housing/ui-seeds/src/blocks/Card"
 import { useFormEngineContext } from "../../../formEngine/formEngineContext"
-import listingApplyStepWrapperStyles from "./ListingApplyStepWrapper.module.scss"
+import listingApplyStepWrapperStyles from "./ListingApplyStepWrapper.module.css"
 
 const ListingApplyHouseholdPrioritiesHeader = () => {
   const formEngineContext = useFormEngineContext()

@@ -24,7 +24,7 @@ import {
 } from "../util/routeUtil"
 import EmailFieldset from "../pages/account/components/EmailFieldset"
 import PasswordFieldset from "../pages/account/components/PasswordFieldset"
-import "../pages/account/styles/account.scss"
+import "../pages/account/styles/account.css"
 import { AxiosError } from "axios"
 import UserContext from "./context/UserContext"
 import { AccountAlreadyConfirmedModal } from "./components/AccountAlreadyConfirmedModal"

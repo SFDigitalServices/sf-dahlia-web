@@ -1,5 +1,5 @@
 import React, { ReactNode, useRef, useLayoutEffect, MutableRefObject } from "react"
-import "./ListingsGroupHeader.scss"
+import "./ListingsGroupHeader.css"
 
 export interface ListingsGroupProps {
   title: string

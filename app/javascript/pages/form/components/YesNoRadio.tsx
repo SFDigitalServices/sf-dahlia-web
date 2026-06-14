@@ -2,7 +2,7 @@
 import React from "react"
 import { t, FieldGroup } from "@uic"
 import { useFormContext } from "react-hook-form"
-import styles from "./YesNoRadio.module.scss"
+import styles from "./YesNoRadio.module.css"
 
 interface YesNoRadioProps {
   label?: string

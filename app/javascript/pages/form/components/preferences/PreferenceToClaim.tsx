@@ -5,7 +5,7 @@ import { Link } from "@bloom-housing/ui-seeds"
 import { renderInlineMarkup } from "../../../../util/languageUtil"
 import { type PreferenceContent, type PreferenceFieldNames } from "./PreferenceUtils"
 import PreferenceFields from "./PreferenceFields"
-import styles from "./ListingApplyPreferenceStepWrapper.module.scss"
+import styles from "./ListingApplyPreferenceStepWrapper.module.css"
 
 interface PreferenceCheckboxProps {
   showRequiredCheckboxError: boolean

@@ -61,7 +61,7 @@ const ListingDetail = () => {
   )
   useTranslate(flagsReady ? isCloudTranslationEnabled : undefined)
 
-  const alertClasses = "flex-grow mt-6 max-w-6xl w-full"
+  const alertClasses = "grow mt-6 max-w-6xl w-full"
   const { router } = useContext(NavigationContext)
   const { getAssetPath } = useContext(ConfigContext)
   const [listing, setListing] = useState<RailsListing>(null)

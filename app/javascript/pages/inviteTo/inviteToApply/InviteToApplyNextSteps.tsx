@@ -10,7 +10,7 @@ import {
   getBMRApplicationUrl,
   localizedFormat,
 } from "../../../util/languageUtil"
-import styles from "../invite-to.module.scss"
+import styles from "../invite-to.module.css"
 import { ConfigContext } from "../../../lib/ConfigContext"
 import InviteToLayout from "../InviteToLayout"
 import { recordResponse } from "../../../api/inviteToApiService"

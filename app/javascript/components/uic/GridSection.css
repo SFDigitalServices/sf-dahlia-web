@@ -1,0 +1,91 @@
+@reference "../../styles/theme.css";
+/* Vendored from @bloom-housing/ui-components src/sections/GridSection.scss.
+   Plain CSS only; @apply/@screen expanded and sass nesting flattened. */
+
+.grid-section {
+  --subtitle-font-size: var(--bloom-font-size-xs);
+}
+
+.grid-section .grid-item {
+  margin-bottom: 1rem;
+  overflow-wrap: break-word; /* temp fix */
+}
+
+@media (min-width: 768px) {
+  .grid-section .grid-item {
+    margin-bottom: 0;
+  }
+}
+
+.grid-section.has-separator {
+  border-top-width: 1px;
+  border-color: var(--bloom-color-gray-450);
+  padding-top: 2rem;
+  margin-top: 2rem;
+}
+
+.grid-section:not(.has-separator) + .grid-section {
+  margin-top: 1.5rem;
+}
+
+.grid-section__header {
+  margin-bottom: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+
+.grid-section__header-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.grid-section__title {
+  font-family: var(--bloom-font-alt-sans);
+  font-size: var(--bloom-font-size-xl);
+  display: inline-block;
+  width: 80%;
+}
+
+@media (min-width: 640px) {
+  .grid-section__title {
+    width: auto;
+  }
+}
+
+.grid-section__subtitle {
+  margin-bottom: 1rem;
+  color: var(--bloom-color-gray-750);
+  text-transform: uppercase;
+  font-family: var(--bloom-font-alt-sans);
+  font-weight: 700;
+  font-size: var(--subtitle-font-size);
+  letter-spacing: var(--bloom-letter-spacing-widest);
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.grid-section__description {
+  font-family: var(--bloom-font-sans);
+  font-size: var(--bloom-font-size-base);
+  color: var(--bloom-color-gray-750);
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.grid-section__inner.is-tinted {
+  background-color: var(--bloom-color-primary-lighter);
+}
+
+.grid-section__inner.is-inset {
+  padding: 2rem;
+}
+
+.grid-section__inner.is-reversed {
+  direction: rtl;
+}
+
+.grid-section__edit-link {
+  margin-top: var(--bloom-s1);
+}

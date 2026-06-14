@@ -1,0 +1,69 @@
+/* Vendored verbatim from @bloom-housing/ui-components src/global/lists.scss */
+/* responsive content spacing */
+.responsive-content-list {
+  .responsive-content-item {
+    @media (min-width: 768px) {
+      @apply pt-12;
+      @apply pb-4;
+      margin-left: -100vw;
+      margin-right: -100vw;
+      padding-left: 100vw;
+      padding-right: 100vw;
+    }
+  }
+
+  .header-hidden {
+    @media (min-width: 768px) {
+      padding-block: 0;
+    }
+  }
+}
+
+.numbered-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.numbered-list li {
+  position: relative;
+  display: block;
+  counter-increment: list;
+  margin-block-start: 0;
+  margin-inline-end: 0;
+  margin-block-end: 1rem;
+  margin-inline-start: 2rem;
+}
+.numbered-list li:before {
+  display: inline-block;
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: -2rem;
+  text-align: center;
+  content: counter(list);
+  border-radius: 50%;
+  color: #555;
+  width: 1.5rem;
+  height: 1.5rem;
+  line-height: 1.5rem;
+  box-shadow: inset 0 0 0 1px #333;
+}
+.numbered-list li:last-of-type {
+  margin-bottom: 0.5rem;
+}
+@media (min-width: 768px) {
+  .numbered-list li {
+    margin-block-start: 0;
+    margin-inline-end: 0;
+    margin-block-end: 1.5rem;
+    margin-inline-start: 2.5rem;
+  }
+  .numbered-list li:before {
+    font-size: 1rem;
+    line-height: 1.3125;
+    width: 2rem;
+    height: 2rem;
+    line-height: 2rem;
+    inset-block-start: -0.25rem;
+    inset-inline-start: -2.5rem;
+  }
+}

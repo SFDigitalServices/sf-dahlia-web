@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { t } from "@uic"
 import { CardSection } from "@bloom-housing/ui-seeds/src/blocks/Card"
 import { Button } from "@bloom-housing/ui-seeds"
-import styles from "./ListingApplyStepErrorMessage.module.scss"
+import styles from "./ListingApplyStepErrorMessage.module.css"
 import { renderInlineMarkup } from "../../../util/languageUtil"
 
 interface ListingApplyStepErrorMessageProps {

@@ -14,8 +14,8 @@ import {
 import UserContext from "../../authentication/context/UserContext"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import { UNLEASH_FLAG } from "../../modules/constants"
-import "../uic/SiteHeader.scss"
-import styles from "./SiteHeader.module.scss"
+import "../uic/SiteHeader.css"
+import styles from "./SiteHeader.module.css"
 
 type LogoWidth = "slim" | "base" | "medium" | "wide"
 type SiteHeaderWidth = "base" | "wide"

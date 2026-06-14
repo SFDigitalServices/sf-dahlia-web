@@ -3,7 +3,7 @@ import React from "react"
 import { t, Field } from "@uic"
 import { useFormContext } from "react-hook-form"
 import { EMAIL_REGEX, LISTING_APPLY_FORMS_INPUT_MAX_LENGTH } from "../../../modules/constants"
-import styles from "./EmailAddress.module.scss"
+import styles from "./EmailAddress.module.css"
 
 interface EmailAddressProps {
   label: string

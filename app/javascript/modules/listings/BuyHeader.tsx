@@ -1,6 +1,6 @@
 import { Heading, PageHeader, t } from "@uic"
 import React from "react"
-import "./BuyHeader.scss"
+import "./BuyHeader.css"
 import { BeforeApplyingForSale, BeforeApplyingType } from "../../components/BeforeApplyingForSale"
 import { renderInlineMarkup } from "../../util/languageUtil"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"

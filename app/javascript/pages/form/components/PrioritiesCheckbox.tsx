@@ -2,7 +2,7 @@
 import { FieldGroup, t } from "@uic"
 import React, { useEffect, useRef } from "react"
 import { useFormContext } from "react-hook-form"
-import styles from "./PrioritiesCheckbox.module.scss"
+import styles from "./PrioritiesCheckbox.module.css"
 import { LISTING_PRIORITY_OPTIONS } from "../../../modules/constants"
 
 interface PrioritiesCheckboxProps {

@@ -5,7 +5,7 @@ import { getListingAddressString } from "../../../util/listingUtil"
 import { localizedFormat, formatTimeOfDay } from "../../../util/languageUtil"
 import { useFormEngineContext } from "../../../formEngine/formEngineContext"
 import fallbackImg from "../../../../assets/images/bg@1200.jpg"
-import styles from "./ListingApplyIntro.module.scss"
+import styles from "./ListingApplyIntro.module.css"
 import { getSignInPath } from "../../../util/routeUtil"
 
 const ListingApplyIntro = () => {

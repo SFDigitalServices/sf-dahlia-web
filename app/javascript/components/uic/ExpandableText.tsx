@@ -1,7 +1,7 @@
 // Vendored from @bloom-housing/ui-components src/actions/ExpandableText.tsx
 import React, { useState } from "react"
 import Markdown, { MarkdownToJSX } from "markdown-to-jsx"
-import "./ExpandableText.scss"
+import "./ExpandableText.css"
 
 export interface ExpandableTextProps {
   children: string

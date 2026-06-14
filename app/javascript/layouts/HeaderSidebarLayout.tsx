@@ -2,7 +2,7 @@ import React from "react"
 import Layout from "./Layout"
 import { PageHeader } from "@uic"
 
-import "./HeaderSidebarLayout.scss"
+import "./HeaderSidebarLayout.css"
 import ContactSideBarBlock from "./Sidebar/ContactSidebarBlock"
 import { ConfigContext } from "../lib/ConfigContext"
 

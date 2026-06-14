@@ -35,7 +35,7 @@ import ListingDetailsContext from "../../contexts/listingDetails/listingDetailsC
 import type RailsUnit from "../../api/types/rails/listings/RailsUnit"
 import ErrorBoundary, { BoundaryScope } from "../../components/ErrorBoundary"
 import { ListingDetailsHMITable } from "./ListingDetailsHMITable"
-import "./ListingDetailsEligibility.scss"
+import "./ListingDetailsEligibility.css"
 import { ListingDetailsChisholmPreferences } from "./ListingDetailsChisholmPreferences"
 import { stripMostTags } from "../../util/filterUtil"
 import Link from "../../navigation/Link"

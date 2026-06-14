@@ -5,7 +5,7 @@ import RailsRentalListing from "../../api/types/rails/listings/RailsRentalListin
 import RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
 import { getHousingCounselorsPath } from "../../util/routeUtil"
 import { getSfGovUrl } from "../../util/languageUtil"
-import "./listing-details-need-help.scss"
+import "./listing-details-need-help.css"
 
 export const NeedHelpBlock = ({ listing }: { listing: RailsSaleListing | RailsRentalListing }) => {
   const isListingRental = isRental(listing)

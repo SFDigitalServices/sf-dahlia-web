@@ -1,6 +1,6 @@
 // Vendored from @bloom-housing/ui-components src/blocks/FormCard.tsx
 import * as React from "react"
-import "./FormCard.scss"
+import "./FormCard.css"
 
 export interface FormCardProps {
   header?: React.ReactNode

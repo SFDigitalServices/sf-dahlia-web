@@ -1,6 +1,6 @@
 // Vendored from @bloom-housing/ui-components src/text/Message.tsx
 import * as React from "react"
-import "./Message.scss"
+import "./Message.css"
 
 export interface MessageProps {
   children: React.ReactNode

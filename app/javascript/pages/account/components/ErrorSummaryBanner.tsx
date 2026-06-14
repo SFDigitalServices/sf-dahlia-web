@@ -7,7 +7,7 @@ import { nameFieldsetErrors } from "./NameFieldset"
 import { dobFieldsetErrors, DOBFieldValues } from "./DOBFieldset"
 import { passwordFieldsetErrors } from "./PasswordFieldset"
 import { emailFieldsetErrors } from "./EmailFieldset"
-import "./ErrorSummaryBanner.scss"
+import "./ErrorSummaryBanner.css"
 
 const handleScrollToDOBError = (errors: DeepMap<FieldValues, FieldError>) => {
   const errorKeys = Object.keys(errors)

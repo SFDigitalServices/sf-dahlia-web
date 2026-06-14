@@ -1,6 +1,6 @@
 // Vendored from @bloom-housing/ui-components src/blocks/ActionBlock.tsx
 import React from "react"
-import "./ActionBlock.scss"
+import "./ActionBlock.css"
 
 export enum ActionBlockLayout {
   block = "block",

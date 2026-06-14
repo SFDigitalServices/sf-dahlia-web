@@ -1,6 +1,6 @@
 // Vendored from @bloom-housing/ui-components src/footers/SiteFooter.tsx
 import * as React from "react"
-import "./SiteFooter.scss"
+import "./SiteFooter.css"
 
 export interface FooterProps {
   children: React.ReactNode

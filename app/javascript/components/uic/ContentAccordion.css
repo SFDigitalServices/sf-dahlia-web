@@ -1,0 +1,41 @@
+@reference "../../styles/theme.css";
+/* Vendored from @bloom-housing/ui-components src/page_components/listing/ContentAccordion.scss.
+   Plain CSS only; @apply rules expanded to literal values. */
+
+.accordion-blue-theme__bar {
+  background-color: var(--bloom-color-primary-light);
+  padding: 1rem;
+  border-bottom-width: 1px;
+  border-color: var(--bloom-color-primary);
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--bloom-font-sans);
+  font-size: var(--bloom-font-size-sm);
+  color: var(--bloom-color-gray-800);
+}
+
+.accordion-gray-theme__bar {
+  background-color: var(--bloom-color-gray-400);
+  padding: 1rem;
+  border-width: 0;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--bloom-font-sans);
+  font-size: var(--bloom-font-size-base);
+  color: var(--bloom-color-gray-900);
+}
+
+.accordion-gray-theme__bar svg {
+  fill: #1f2937; /* gray-800 */
+}
+
+.accordion-gray-theme__bar.accordion-open {
+  border-radius: 8px 8px 0px 0px;
+}
+
+.toggle-header-content {
+  font-family: var(--bloom-font-sans);
+  font-size: var(--bloom-font-size-sm);
+  color: var(--bloom-color-gray-800);
+}

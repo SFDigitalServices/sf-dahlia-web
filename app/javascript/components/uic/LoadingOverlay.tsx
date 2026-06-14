@@ -1,7 +1,7 @@
 // Vendored from @bloom-housing/ui-components src/overlays/LoadingOverlay.tsx
 import React, { useMemo } from "react"
 import { Icon } from "./Icon"
-import "./LoadingOverlay.scss"
+import "./LoadingOverlay.css"
 
 type LoadingOverlayProps = {
   isLoading: boolean

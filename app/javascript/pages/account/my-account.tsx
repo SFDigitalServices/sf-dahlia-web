@@ -32,7 +32,7 @@ const AccountDashCard = ({
   return (
     <a
       href={link}
-      className="text-black block outline-none focus:underline flex-1 w-full md:w-1/2  h-auto max-h-72"
+      className="text-black block outline-hidden focus:underline flex-1 w-full md:w-1/2  h-auto max-h-72"
     >
       <Card
         spacing="md"
@@ -65,7 +65,7 @@ const MyAccount = (_props: MyAccountProps) => {
       <section className="bg-gray-300 flex justify-center">
         <h1 className="sr-only">{t("nav.myDashboard")}</h1>
         <div className="w-full md:py-16 max-w-5xl">
-          <div className="bg-gray-300 h-full flex flex-grow flex-col md:flex-row md:gap-7">
+          <div className="bg-gray-300 h-full flex grow flex-col md:flex-row md:gap-7">
             <AccountDashCard
               title={t("accountDashboard.myApplications.title")}
               description={t("accountDashboard.myApplications.description")}

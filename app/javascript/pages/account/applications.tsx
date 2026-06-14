@@ -17,12 +17,12 @@ import { getCurrentLanguage, renderInlineMarkup } from "../../util/languageUtil"
 import { deleteApplication, getApplications } from "../../api/authApiService"
 import { Application } from "../../api/types/rails/application/RailsApplication"
 import { isRental, isSale } from "../../util/listingUtil"
-import "./styles/my-applications.scss"
+import "./styles/my-applications.css"
 import { DoubleSubmittedModal } from "./components/DoubleSubmittedModal"
 import { AlreadySubmittedModal } from "./components/AlreadySubmittedModal"
 import { extractModalParamsFromUrl } from "./components/util"
 import { withAuthentication } from "../../authentication/withAuthentication"
-import styles from "./styles/applications.module.scss"
+import styles from "./styles/applications.module.css"
 
 const noApplications = () => {
   return (

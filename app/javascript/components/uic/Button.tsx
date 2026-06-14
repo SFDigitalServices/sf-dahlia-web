@@ -1,6 +1,6 @@
 // Vendored from @bloom-housing/ui-components src/actions/Button.tsx
 import * as React from "react"
-import "./Button.scss"
+import "./Button.css"
 import { AppearanceProps, classNamesForAppearanceTypes } from "./AppearanceTypes"
 import { Icon, IconSize, UniversalIconType } from "./Icon"
 

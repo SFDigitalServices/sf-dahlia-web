@@ -31,7 +31,7 @@ import MetaTags from "./MetaTags"
 import ErrorBoundary, { BoundaryScope } from "../components/ErrorBoundary"
 import { HelmetProvider } from "react-helmet-async"
 
-import "./Layout.scss"
+import "./Layout.css"
 import { isTokenValid } from "../authentication/token"
 
 export interface LayoutProps {

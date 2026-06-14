@@ -6,7 +6,7 @@ import { renderInlineMarkup } from "../../../../util/languageUtil"
 import { getNestedError } from "../../../../util/formEngineUtil"
 import PreferenceFields from "./PreferenceFields"
 import { type PreferenceContent, type PreferenceFieldNames } from "./PreferenceUtils"
-import styles from "./ListingApplyPreferenceStepWrapper.module.scss"
+import styles from "./ListingApplyPreferenceStepWrapper.module.css"
 
 interface PreferenceToClaimComboProps {
   checkboxLabel: string

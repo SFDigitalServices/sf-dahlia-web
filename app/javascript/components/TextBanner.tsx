@@ -1,6 +1,6 @@
 import React from "react"
 import { Icon } from "@uic"
-import "./TextBanner.scss"
+import "./TextBanner.css"
 
 type TextBannerProps = {
   header: string

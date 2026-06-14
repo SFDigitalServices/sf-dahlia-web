@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { t } from "@uic"
 import { CardHeader } from "@bloom-housing/ui-seeds/src/blocks/Card"
 import { Link } from "@bloom-housing/ui-seeds"
-import listingApplyStepWrapperStyles from "./ListingApplyStepWrapper.module.scss"
+import listingApplyStepWrapperStyles from "./ListingApplyStepWrapper.module.css"
 
 const ListingApplyVeteransPreferenceHeader = () => {
   const titleString = t("e7aVeteransPreference.title")

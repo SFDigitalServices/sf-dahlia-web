@@ -7,7 +7,7 @@ import { ConfigContext } from "../../../../lib/ConfigContext"
 import { useFormContext } from "react-hook-form"
 import { uploadProofFile, deleteUploadedProofFile } from "../../../../api/formApiService"
 import { getNestedError } from "../../../../util/formEngineUtil"
-import styles from "./PreferenceProofUploadField.module.scss"
+import styles from "./PreferenceProofUploadField.module.css"
 
 interface PreferenceProofUploadFieldProps {
   sessionId: string

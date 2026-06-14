@@ -1,7 +1,7 @@
 // Vendored from @bloom-housing/ui-components src/overlays/Overlay.tsx
 // The portal root is the `#__next` element provided by application-react.html.slim.
 import React, { useState, useEffect } from "react"
-import "./Overlay.scss"
+import "./Overlay.css"
 import useKeyPress from "./useKeyPress"
 import { createPortal } from "react-dom"
 import FocusLock from "react-focus-lock"

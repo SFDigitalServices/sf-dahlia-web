@@ -2,7 +2,7 @@
 import React from "react"
 import { t } from "@uic"
 import { useFormContext } from "react-hook-form"
-import styles from "./HouseholdMemberSameAddress.module.scss"
+import styles from "./HouseholdMemberSameAddress.module.css"
 import YesNoRadio from "../YesNoRadio"
 import Address from "../Address"
 

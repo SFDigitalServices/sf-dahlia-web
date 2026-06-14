@@ -9,7 +9,7 @@ import {
   FieldGroup,
 } from "@uic"
 import { useForm } from "react-hook-form"
-import "./counselor-filter.scss"
+import "./counselor-filter.css"
 
 interface CounselorFilterProps {
   handleFilterData: (filterData: { language: string; services: string[] }) => void

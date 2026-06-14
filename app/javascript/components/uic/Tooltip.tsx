@@ -1,7 +1,7 @@
 // Vendored from @bloom-housing/ui-components src/blocks/Tooltip.tsx
 import React, { useState, useRef, useEffect } from "react"
 import useKeyPress from "./useKeyPress"
-import "./Tooltip.scss"
+import "./Tooltip.css"
 
 export interface TooltipProps {
   className?: string

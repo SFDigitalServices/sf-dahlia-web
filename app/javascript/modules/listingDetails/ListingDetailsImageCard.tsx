@@ -7,7 +7,7 @@ import { getListingAddressString, getTagContent } from "../../util/listingUtil"
 import { ConfigContext } from "../../lib/ConfigContext"
 import { ListingAddress } from "../../components/ListingAddress"
 import fallbackImg from "../../../assets/images/bg@1200.jpg"
-import "./ListingDetailsImageCard.scss"
+import "./ListingDetailsImageCard.css"
 import { getTranslatedString } from "../../util/languageUtil"
 
 export interface ListingDetailsImageCardProps {

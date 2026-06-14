@@ -7,7 +7,7 @@ import {
   ResponsiveContentItemBody,
 } from "./ResponsiveContentList"
 import { ListingDetailHeader, ListingDetailHeaderProps } from "./ListingDetailHeader"
-import "./ListingDetails.scss"
+import "./ListingDetails.css"
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const ListingDetails = (props: any) => (

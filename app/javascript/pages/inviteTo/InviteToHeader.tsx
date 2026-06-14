@@ -2,7 +2,7 @@ import React from "react"
 import { t } from "@uic"
 import { Card, Button, Heading } from "@bloom-housing/ui-seeds"
 import RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
-import styles from "./invite-to.module.scss"
+import styles from "./invite-to.module.css"
 
 const InviteToApplyHeader = ({ listing }: { listing: RailsSaleListing }) => (
   <Card className={styles.listingCard}>

@@ -4,7 +4,7 @@ import { CardFooter, CardHeader, CardSection } from "@bloom-housing/ui-seeds/src
 import { t } from "@uic"
 
 import React from "react"
-import "./fcfsNoLotteryRequired.scss"
+import "./fcfsNoLotteryRequired.css"
 
 export const fcfsNoLotteryRequired = () => {
   return (

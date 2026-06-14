@@ -1,7 +1,7 @@
 import React from "react"
 import { t } from "@uic"
 import { CardHeader } from "@bloom-housing/ui-seeds/src/blocks/Card"
-import stepStyles from "./ListingApplyStepWrapper.module.scss"
+import stepStyles from "./ListingApplyStepWrapper.module.css"
 
 const ListingApplyHouseholdIncomeHeader = () => {
   const titleString = t("d2Income.title")

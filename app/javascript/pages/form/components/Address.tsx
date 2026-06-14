@@ -5,7 +5,7 @@ import { FormErrorMessage, Heading } from "@bloom-housing/ui-seeds"
 import { LISTING_APPLY_FORMS_INPUT_MAX_LENGTH, LATIN_REGEX } from "../../../modules/constants"
 import { useFormContext } from "react-hook-form"
 import { stateOptions } from "../../../util/formEngineUtil"
-import styles from "./Address.module.scss"
+import styles from "./Address.module.css"
 import { renderInlineMarkup } from "../../../util/languageUtil"
 
 interface AddressProps {

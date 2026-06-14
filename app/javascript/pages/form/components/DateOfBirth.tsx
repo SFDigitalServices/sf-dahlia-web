@@ -11,7 +11,7 @@ import {
   parseDate,
 } from "../../../util/formEngineUtil"
 import { validAge } from "../../../util/listingApplyUtil"
-import styles from "./DateOfBirth.module.scss"
+import styles from "./DateOfBirth.module.css"
 
 interface DateOfBirthProps {
   label: string

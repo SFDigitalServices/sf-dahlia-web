@@ -1,0 +1,145 @@
+/*
+ * Tailwind v4 theme — translated from the former config/tailwind/bloomTheme.js.
+ *
+ * Every color/size/font resolves to a --bloom-* custom property defined in the
+ * token files (app/javascript/components/uic/global/tokens/*.css). This file is
+ * the single source of the Tailwind theme: it is @imported by base.css (which
+ * emits the utilities/preflight) and @reference'd by component CSS that uses
+ * @apply (so the compiler knows the theme without re-emitting anything).
+ *
+ * `important` preserves the v2 `important: true` behavior the app's cascade
+ * relied on (utilities win over component CSS).
+ */
+@import "tailwindcss" important;
+
+/* Scan the app for class usage (paths are relative to this file). */
+@source "../**/*.{tsx,ts}";
+
+@theme {
+  /* Breakpoints (v2 screens; note lg=1200, an app override of the TW default). */
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1200px;
+  --breakpoint-xl: 1280px;
+  --breakpoint-2xl: 1440px;
+
+  /* Font families */
+  --font-sans: var(--bloom-font-sans);
+  --font-serif: var(--bloom-font-serif);
+  --font-alt-sans: var(--bloom-font-alt-sans);
+
+  /* Font sizes */
+  --text-3xs: var(--bloom-font-size-3xs);
+  --text-2xs: var(--bloom-font-size-2xs);
+  --text-xs: var(--bloom-font-size-xs);
+  --text-sm: var(--bloom-font-size-sm);
+  --text-base: var(--bloom-font-size-base);
+  --text-lg: var(--bloom-font-size-lg);
+  --text-xl: var(--bloom-font-size-xl);
+  --text-2xl: var(--bloom-font-size-2xl);
+  --text-3xl: var(--bloom-font-size-3xl);
+  --text-3xl--line-height: 1.25;
+  --text-4xl: var(--bloom-font-size-4xl);
+  --text-4xl--line-height: 1.25;
+  --text-5xl: var(--bloom-font-size-5xl);
+  --text-6xl: var(--bloom-font-size-6xl);
+  --text-7xl: var(--bloom-font-size-7xl);
+
+  /* Letter spacing */
+  --tracking-tightest: var(--bloom-letter-spacing-tightest);
+  --tracking-tighter: var(--bloom-letter-spacing-tighter);
+  --tracking-tight: var(--bloom-letter-spacing-tight);
+  --tracking-normal: 0;
+  --tracking-wide: var(--bloom-letter-spacing-wide);
+  --tracking-wider: var(--bloom-letter-spacing-wider);
+  --tracking-widest: var(--bloom-letter-spacing-widest);
+  --tracking-ultrawide: var(--bloom-letter-spacing-ultrawide);
+
+  /* Colors — clear TW defaults so only the bloom palette exists, matching v2
+     (the v2 config fully replaced `colors`). */
+  --color-*: initial;
+  --color-primary: var(--bloom-color-primary);
+  --color-primary-dark: var(--bloom-color-primary-dark);
+  --color-primary-darker: var(--bloom-color-primary-darker);
+  --color-primary-light: var(--bloom-color-primary-light);
+  --color-primary-lighter: var(--bloom-color-primary-lighter);
+  --color-alert: var(--bloom-color-alert);
+  --color-alert-light: var(--bloom-color-alert-light);
+  --color-alert-lighter: var(--bloom-color-alert-lighter);
+  --color-alert-dark: var(--bloom-color-alert-dark);
+  --color-alert-darker: var(--bloom-color-alert-darker);
+  --color-success: var(--bloom-color-success);
+  --color-success-light: var(--bloom-color-success-light);
+  --color-success-lighter: var(--bloom-color-success-lighter);
+  --color-success-dark: var(--bloom-color-success-dark);
+  --color-success-darker: var(--bloom-color-success-darker);
+  --color-warn: var(--bloom-color-warn);
+  --color-warn-light: var(--bloom-color-warn-light);
+  --color-warn-lighter: var(--bloom-color-warn-lighter);
+  --color-warn-dark: var(--bloom-color-warn-dark);
+  --color-warn-darker: var(--bloom-color-warn-darker);
+  --color-text: var(--bloom-text-color);
+  --color-text-light: var(--bloom-text-color-light);
+  --color-text-lighter: var(--bloom-text-color-lighter);
+  --color-text-dark: var(--bloom-text-color-dark);
+  --color-text-darker: var(--bloom-text-color-darker);
+  --color-accent-cool: var(--bloom-color-accent-cool);
+  --color-accent-cool-light: var(--bloom-color-accent-cool-light);
+  --color-accent-cool-lighter: var(--bloom-color-accent-cool-lighter);
+  --color-accent-cool-dark: var(--bloom-color-accent-cool-dark);
+  --color-accent-cool-darker: var(--bloom-color-accent-cool-darker);
+  --color-accent-warm: var(--bloom-color-accent-warm);
+  --color-accent-warm-light: var(--bloom-color-accent-warm-light);
+  --color-accent-warm-lighter: var(--bloom-color-accent-warm-lighter);
+  --color-accent-warm-dark: var(--bloom-color-accent-warm-dark);
+  --color-accent-warm-darker: var(--bloom-color-accent-warm-darker);
+  --color-white: var(--bloom-color-white);
+  --color-black: var(--bloom-color-black);
+  --color-blue-900: var(--bloom-color-blue-900);
+  --color-blue-700: var(--bloom-color-blue-700);
+  --color-blue-500: var(--bloom-color-blue-500);
+  --color-blue-300: var(--bloom-color-blue-300);
+  --color-blue-100: var(--bloom-color-blue-100);
+  --color-red-900: var(--bloom-color-red-900);
+  --color-red-700: var(--bloom-color-red-700);
+  --color-red-500: var(--bloom-color-red-500);
+  --color-red-300: var(--bloom-color-red-300);
+  --color-red-100: var(--bloom-color-red-100);
+  --color-yellow-900: var(--bloom-color-yellow-900);
+  --color-yellow-700: var(--bloom-color-yellow-700);
+  --color-yellow-500: var(--bloom-color-yellow-500);
+  --color-yellow-300: var(--bloom-color-yellow-300);
+  --color-yellow-100: var(--bloom-color-yellow-100);
+  --color-green-900: var(--bloom-color-green-900);
+  --color-green-700: var(--bloom-color-green-700);
+  --color-green-500: var(--bloom-color-green-500);
+  --color-green-300: var(--bloom-color-green-300);
+  --color-green-100: var(--bloom-color-green-100);
+  --color-gray-950: var(--bloom-color-gray-950);
+  --color-gray-900: var(--bloom-color-gray-900);
+  --color-gray-850: var(--bloom-color-gray-850);
+  --color-gray-800: var(--bloom-color-gray-800);
+  --color-gray-750: var(--bloom-color-gray-750);
+  --color-gray-700: var(--bloom-color-gray-700);
+  --color-gray-650: var(--bloom-color-gray-650);
+  --color-gray-600: var(--bloom-color-gray-600);
+  --color-gray-550: var(--bloom-color-gray-550);
+  --color-gray-500: var(--bloom-color-gray-500);
+  --color-gray-450: var(--bloom-color-gray-450);
+  --color-gray-400: var(--bloom-color-gray-400);
+  --color-gray-300: var(--bloom-color-gray-300);
+  --color-gray-200: var(--bloom-color-gray-200);
+  --color-gray-100: var(--bloom-color-gray-100);
+}
+
+/* v4 defaults the border color to currentColor; the v2 config defaulted it to
+   gray-450. Restore that so unspecified `border` utilities look unchanged. */
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--bloom-color-gray-450);
+  }
+}

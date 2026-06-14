@@ -1,7 +1,7 @@
 // Vendored from @bloom-housing/ui-components src/page_components/listing/ListingDetailHeader.tsx
 import * as React from "react"
 import { Icon } from "./Icon"
-import "./ListingDetailHeader.scss"
+import "./ListingDetailHeader.css"
 
 export interface ListingDetailHeaderProps {
   imageAlt: string

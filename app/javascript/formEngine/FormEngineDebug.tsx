@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { type StepInfoSchema } from "./formSchemas"
-import "./FormEngineDebug.scss"
+import "./FormEngineDebug.css"
 import { updateFormPath } from "../util/formEngineUtil"
 
 interface FormEngineDebugProps {

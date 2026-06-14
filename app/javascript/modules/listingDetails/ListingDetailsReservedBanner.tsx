@@ -2,7 +2,7 @@ import React from "react"
 import { Message, t } from "@uic"
 import { RESERVED_COMMUNITY_TYPES } from "../constants"
 import { getCustomListingType } from "../../util/languageUtil"
-import "./ListingDetailsReservedBanner.scss"
+import "./ListingDetailsReservedBanner.css"
 
 export interface ListingDetailsReservedBannerProps {
   reservedCommunityMinimumAge?: number

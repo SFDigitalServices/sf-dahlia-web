@@ -13,7 +13,7 @@ import type { RailsAmiChart } from "../../api/types/rails/listings/RailsAmiChart
 import ListingDetailsContext from "../../contexts/listingDetails/listingDetailsContext"
 import { getCurrencyString, getRangeString } from "../listings/DirectoryHelpers"
 import { defaultIfNotTranslated, renderInlineMarkup } from "../../util/languageUtil"
-import "./ListingDetailsPricingTable.scss"
+import "./ListingDetailsPricingTable.css"
 
 export interface ListingDetailsPricingTableProps {
   listing: RailsListing

@@ -2,6 +2,7 @@
 
 // const { globalMutableWebpackConfig: baseClientWebpackConfig, merge } = require('shakapacker')
 const { generateWebpackConfig, merge } = require("shakapacker")
+const css = require("./loaders/css")
 const sass = require("./loaders/sass")
 const babel = require("./loaders/babel")
 const webpack = require("webpack")
@@ -22,15 +23,16 @@ const commonOptions = {
     },
   },
   module: {
-    rules: [sass, babel],
+    rules: [css, sass, babel],
   },
 }
 
 const generatedWebpackConfig = generateWebpackConfig()
-const scssConfigIndex = generatedWebpackConfig.module.rules.findIndex((config) =>
-  config.test && config.test.source && config.test.source.match("scss")
+// Drop shakapacker's generated style rule(s) (css/scss/sass) — we add our own
+// Tailwind-v4 css rule via commonOptions above.
+generatedWebpackConfig.module.rules = generatedWebpackConfig.module.rules.filter(
+  (rule) => !(rule.test && rule.test.source && /css|sass|scss/.test(rule.test.source))
 )
-generatedWebpackConfig.module.rules.splice(scssConfigIndex, 1)
 
 generatedWebpackConfig.plugins.unshift(
   new webpack.DefinePlugin({

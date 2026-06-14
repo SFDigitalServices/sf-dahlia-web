@@ -10,7 +10,7 @@ import {
   getAddressErrorEmailLink,
   translationFromDataSchema,
 } from "../../../util/formEngineUtil"
-import styles from "./ListingApplyStepWrapper.module.scss"
+import styles from "./ListingApplyStepWrapper.module.css"
 import ListingApplyStepErrorMessage from "./ListingApplyStepErrorMessage"
 import { locateVerifiedAddress } from "../../../api/formApiService"
 import YesNoRadio from "./YesNoRadio"

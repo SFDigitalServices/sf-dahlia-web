@@ -21,7 +21,7 @@ import {
   paperApplicationURLs,
 } from "../../util/listingUtil"
 import { getSfGovUrl, renderInlineMarkup } from "../../util/languageUtil"
-import "./ListingDetailsApply.scss"
+import "./ListingDetailsApply.css"
 import { localizedPath } from "../../util/routeUtil"
 import { ListingState } from "../listings/ListingState"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"

@@ -18,7 +18,7 @@ import { User } from "../../authentication/user"
 import { withAuthentication } from "../../authentication/withAuthentication"
 
 import ContactCard from "./components/ContactCard"
-import styles from "./account.module.scss"
+import styles from "./account.module.css"
 
 const overviewSections = [
   {

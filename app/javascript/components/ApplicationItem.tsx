@@ -9,7 +9,7 @@ import {
 } from "@uic"
 import { Card, Link } from "@bloom-housing/ui-seeds"
 import ExternalLink from "../navigation/Link"
-import "./ApplicationItem.scss"
+import "./ApplicationItem.css"
 import {
   formatTimeOfDay,
   getCurrentLanguage,

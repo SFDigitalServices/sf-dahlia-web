@@ -2,7 +2,7 @@
 import * as React from "react"
 import { LinkButton } from "./LinkButton"
 import { t } from "./translator"
-import "./Hero.scss"
+import "./Hero.css"
 
 export interface HeroProps {
   allApplicationsClosed?: boolean

@@ -1,5 +1,5 @@
 import React, { useRef, useLayoutEffect, MutableRefObject } from "react"
-import "./ListingsGroup.scss"
+import "./ListingsGroup.css"
 import { Button, Icon, UniversalIconType } from "@uic"
 
 export interface ListingsGroupProps {

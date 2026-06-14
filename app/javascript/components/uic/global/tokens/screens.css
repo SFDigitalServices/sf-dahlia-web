@@ -1,0 +1,8 @@
+/* Vendored verbatim from @bloom-housing/ui-components src/global/tokens/screens.scss */
+:root {
+  --bloom-screen-sm: 640px;
+  --bloom-screen-md: 768px;
+  --bloom-screen-lg: 1200px;
+  --bloom-screen-xl: 1280px;
+  --bloom-screen-2xl: 1440px;
+}

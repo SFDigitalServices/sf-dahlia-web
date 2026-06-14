@@ -15,7 +15,7 @@ import {
 } from "../../util/listingUtil"
 import FormEngine from "../../formEngine/formEngine"
 import listingApplicationDefaultRental from "../../formEngine/listingApplicationDefaultRental.json"
-import "./overrides.scss"
+import "./overrides.css"
 
 export interface ListingApplicationStaticData {
   listing?: RailsListing

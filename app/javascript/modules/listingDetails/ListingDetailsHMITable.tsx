@@ -5,7 +5,7 @@ import { getMinMaxOccupancy, isSale } from "../../util/listingUtil"
 import ListingDetailsContext from "../../contexts/listingDetails/listingDetailsContext"
 import { faAngleDown, faAngleUp } from "@fortawesome/free-solid-svg-icons"
 import { RailsAmiChart, RailsAmiChartValue } from "../../api/types/rails/listings/RailsAmiChart"
-import "./ListingDetailsEligibility.scss"
+import "./ListingDetailsEligibility.css"
 
 export interface ListingDetailsEligibilityProps {
   listing: RailsListing

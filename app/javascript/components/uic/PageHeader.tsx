@@ -1,6 +1,6 @@
 // Vendored from @bloom-housing/ui-components src/headers/PageHeader.tsx
 import * as React from "react"
-import "./PageHeader.scss"
+import "./PageHeader.css"
 
 export interface PageHeaderProps {
   className?: string

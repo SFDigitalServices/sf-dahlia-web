@@ -1,6 +1,6 @@
 // Vendored from @bloom-housing/ui-components src/text/Description.tsx
 import * as React from "react"
-import "./Description.scss"
+import "./Description.css"
 import Markdown, { MarkdownToJSX } from "markdown-to-jsx"
 
 export interface DescriptionProps {

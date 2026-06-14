@@ -3,8 +3,8 @@ import { t } from "@uic"
 import { Button, Card, Heading } from "@bloom-housing/ui-seeds"
 import { useFormEngineContext } from "../../../../formEngine/formEngineContext"
 import { getPrimaryApplicantData, getFullName } from "../../../../util/listingApplyUtil"
-import stepStyles from "../ListingApplyStepWrapper.module.scss"
-import styles from "./AddHouseholdMembers.module.scss"
+import stepStyles from "../ListingApplyStepWrapper.module.css"
+import styles from "./AddHouseholdMembers.module.css"
 interface AddHouseholdMemberProps {
   householdMembers: Record<string, unknown>[]
   handleAddHouseholdMember: () => void

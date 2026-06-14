@@ -1,6 +1,6 @@
 // Vendored from @bloom-housing/ui-components src/lists/PreferencesList.tsx
 import * as React from "react"
-import "./PreferencesList.scss"
+import "./PreferencesList.css"
 import { locale } from "./translator"
 
 export interface ListPreferenceLink {

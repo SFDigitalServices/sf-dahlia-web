@@ -1,0 +1,17 @@
+/* Vendored from @bloom-housing/ui-components src/page_components/listing/ListingDetails.scss.
+   Plain CSS only; 768px (768px) inlined. */
+
+.details {
+  --desktop-width: calc(100% * (2 / 3));
+  --mobile-width: 100%;
+
+  width: var(--mobile-width);
+}
+
+@media (min-width: 768px) {
+  .details {
+    width: var(--desktop-width);
+    padding-right: var(--bloom-s8);
+    padding-top: var(--bloom-s8);
+  }
+}

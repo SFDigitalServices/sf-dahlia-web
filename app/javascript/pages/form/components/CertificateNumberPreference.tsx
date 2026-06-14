@@ -6,7 +6,7 @@ import { Link } from "@bloom-housing/ui-seeds"
 import { useFormEngineContext } from "../../../formEngine/formEngineContext"
 import { getPrimaryApplicantData } from "../../../util/listingApplyUtil"
 import { getSfGovUrl, renderInlineMarkup } from "../../../util/languageUtil"
-import styles from "./CertificateNumberPreference.module.scss"
+import styles from "./CertificateNumberPreference.module.css"
 
 interface CertificateNumberPreferenceProps {
   name: string

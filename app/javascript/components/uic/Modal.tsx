@@ -1,6 +1,6 @@
 // Vendored from @bloom-housing/ui-components src/overlays/Modal.tsx
 import React, { useEffect, useRef } from "react"
-import "./Modal.scss"
+import "./Modal.css"
 import { Icon, IconFillColors } from "./Icon"
 import { Overlay, OverlayProps } from "./Overlay"
 import { nanoid } from "nanoid"

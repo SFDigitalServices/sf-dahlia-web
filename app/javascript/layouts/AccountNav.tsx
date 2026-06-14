@@ -12,7 +12,7 @@ import {
   getSignInPath,
   getMyAccountContactPath,
 } from "../util/routeUtil"
-import styles from "./AccountNav.module.scss"
+import styles from "./AccountNav.module.css"
 
 const isNavActive = (localizedPath: string): boolean => {
   return (

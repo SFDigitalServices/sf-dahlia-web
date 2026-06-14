@@ -1,6 +1,6 @@
 import React, { ErrorInfo, ReactNode } from "react"
 import { ActionBlock, AppearanceStyleType, Button, t } from "@uic"
-import "./ErrorBoundary.scss"
+import "./ErrorBoundary.css"
 import { localizedPath } from "../util/routeUtil"
 
 export enum BoundaryScope {

@@ -1,7 +1,7 @@
 import React from "react"
 import { t, LoadingOverlay } from "@uic"
 import { Card, Heading } from "@bloom-housing/ui-seeds"
-import styles from "./invite-to.module.scss"
+import styles from "./invite-to.module.css"
 import { renderMarkup, localizedFormat } from "../../util/languageUtil"
 import RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
 import FormLayout from "../../layouts/FormLayout"

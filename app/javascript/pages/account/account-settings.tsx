@@ -31,7 +31,7 @@ import DOBFieldset, {
   dobSortOrder,
   handleDOBServerErrors,
 } from "./components/DOBFieldset"
-import "./styles/account.scss"
+import "./styles/account.css"
 import {
   updateNameOrDOB as apiUpdateNameOrDOB,
   updateEmail,

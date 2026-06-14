@@ -7,7 +7,7 @@ import { ListingDetailsLotteryPreferences } from "./ListingDetailsLotteryPrefere
 import { getLotteryResults } from "../../api/listingApiService"
 import { ListingDetailsLotteryRanking } from "./ListingDetailsLotteryRanking"
 import { ListingDetailsLotterySearchFooter } from "./ListingDetailsLotterySearchFooter"
-import "./ListingDetailsLotterySearchForm.scss"
+import "./ListingDetailsLotterySearchForm.css"
 import ErrorBoundary, { BoundaryScope } from "../../components/ErrorBoundary"
 import { isEducator, isEducatorOne, isEducatorBrightwell } from "../../util/listingUtil"
 import { ListingDetailsLotteryPreferencesEducator } from "./ListingDetailsLotteryPreferencesEducator"
