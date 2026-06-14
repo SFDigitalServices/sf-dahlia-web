@@ -484,7 +484,8 @@ node-polyglot replaced by an `i18next`-backed façade (`t()` unchanged, instance
 `loadTranslations`/request behind a module-scoped ref — the global mutable singleton is gone),
 `%{var}` interpolation kept via an i18next delimiter override, the 11 `||||` plural keys handled
 in the façade (English rule, matching prior behavior; bundles untouched). `node-polyglot` removed,
-`i18next` pinned to exact `25.8.0` (25.9+ emits a console banner that breaks `jest-fail-on-console`).
+`i18next` pinned to exact `26.3.1` (the 25.9–25.10 line emitted a console banner that broke
+`jest-fail-on-console`; 26.3.1 does not — exact pin guards against a silent reintroduction).
 Deferred (see design doc §8): native `{{var}}`/`_one`/`_other` bundle migration, per-locale plurals,
 `useTranslation` hook migration, `react-i18next`/provider, `AsyncLocalStorage` server scoping.
 

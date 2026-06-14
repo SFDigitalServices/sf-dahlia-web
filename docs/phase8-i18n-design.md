@@ -284,11 +284,13 @@ Status: **steps 1–4 and 6 complete; step 5 (manual 4-language smoke) pending a
   - `app/javascript/__tests__/components/uic/translator.test.ts` — 14 façade unit tests.
   - `package.json` — removed `node-polyglot`; added `i18next` as a **direct** dependency.
 
-- **i18next version is pinned to exact `25.8.0` (no `^`).** Do **not** bump blindly: i18next
-  `25.9.0+` prints a one-time promotional `console.info` (the Locize banner) on `init()`, and this
-  repo's `jest-fail-on-console` turns any test-time console call into a failure — bumping breaks the
-  entire jest suite (verified: 25.10.10 failed all 136 suites). If upgrading later, first find a
-  supported way to silence that banner, or mock it in `setupTests`.
+- **i18next version is pinned to exact `26.3.1` (no `^`).** History/caution: the `25.9.x–25.10.x`
+  line printed a one-time promotional `console.info` (the Locize banner) on `init()`, and this repo's
+  `jest-fail-on-console` turns any test-time console call into a failure — that range broke the entire
+  jest suite (verified: 25.10.10 failed all 136 suites). **`26.3.1` does not emit the banner** (full
+  suite green). The exact pin is kept deliberately so a future patch bump can't silently reintroduce a
+  console call; if bumping, re-run the full jest suite and, if a banner returns, silence it (option in
+  `init`) or mock it in `setupTests`.
 
 - **No `react-i18next` / `<I18nextProvider>`** was added — see §3.4 scope note; folded into the
   deferred hook migration (§8 item 3).
