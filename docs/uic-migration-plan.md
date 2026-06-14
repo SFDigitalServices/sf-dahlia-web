@@ -260,3 +260,143 @@ Follow-up (separate efforts, not in this migration): convert the repo's own SCSS
 `base.scss` still uses `@tailwind`/`@apply`/`$vars` — to drop `sass` entirely
 (which would also convert the as-is global files to plain CSS), and upgrade off
 Tailwind v2.
+
+## Post-vendoring roadmap
+
+The vendoring is complete; what remains is cleanup and modernization. A survey of the
+vendored code surfaced one structural fact that drives the ordering below:
+
+> **The global SCSS files barely use "real" sass.** Their dependence is almost entirely
+> Tailwind v2 directives (`@apply`, `@screen`) plus the injected `$tailwind-*` / `$screen-*`
+> variables that `config/webpack/loaders/tailwindToSass.js` prepends via the sass loader's
+> `additionalData`. Genuine sass features are nearly absent: `mixins.scss` is the only file
+> with `@mixin`/`@use`/`math.`, and **9 of its 10 mixins are dead** (only `has-toggle` is
+> still `@include`d; `filled-appearances`/`outlined-appearances`/etc. were inlined into the
+> per-component `.scss` during phases 1–4). The per-component `.scss` files are already plain
+> CSS by the Phase 1–4 conversion rule.
+
+Consequence: **"drop sass" and "Tailwind v2 → v4" are effectively one project.** sass can't be
+removed without resolving `@apply`/`@screen`/`$tailwind-*`, and the cleanest resolution is the
+v4 migration itself (v4 is CSS-first: `@theme` tokens, no JS config, `@screen` removed, `@apply`
+reworked). Doing them separately means doing the hard part twice.
+
+Order: **Phase 6 (orphan sweep) → Phase 7 (Tailwind v4 + sass removal) → Phase 8 (translation
+rearchitecture).** Translation is last because it's independent of the CSS work and carries the
+most design weight (SSR + a library swap).
+
+### Phase 6 — Orphaned-style sweep ✅ (done 2026-06-13)
+
+Delete dead CSS so there's less to migrate in Phase 7. Each item below was confirmed by grep,
+not assumed.
+
+**What was removed** (branch `jdunning/poc/vendor-uic`):
+- `base.scss`: the AG Grid import pair, the entire `.ag-theme-alpine.ag-theme-bloom` block, and
+  `.data-pager*` rules; plus the orphaned Bulma `$vars` block (`$scheme-main`/`$colors`/etc.).
+  `ag-grid-community` was dropped from `package.json` + `yarn.lock` (nothing in source imports it).
+- `global/mixins.scss`: 9 of 10 mixins (kept only `has-toggle`); `@use "sass:math"` went with them.
+- `global/tables.scss`: the deleted-in-Phase-4 draggable leftovers (`.table__draggable-cell`,
+  `.table__is-dragging`) and the unused reserved-units feature (`td.reserved`, `.reserved-icon`,
+  `tr.group-reserved`).
+- `global/blocks.scss`: `.notice-block`, `.shadow-left`/`.md:shadow-left` + `$shadow-left-slight`,
+  `.sidebar-detail-layout`.
+- `global/text.scss`: `.info-group__item`.
+
+**Verified green**: standalone sass compile of all globals (1616 → 1515 lines), `tsc --noEmit`,
+full jest (835/835, 129 snapshots).
+
+**Learnings:**
+- **Grep across *every* source surface before deleting a selector**, not just `.tsx`. Classes
+  reach the DOM from `.slim`/`.erb` Rails templates, from translation JSON rendered through
+  `renderMarkup`, and from template-literal `className` composition (e.g. `action-block__${x}`).
+  The high-confidence deletions here were the ones with zero hits across `.tsx/.ts/.slim/.rb/.erb/.json`.
+- **Some "orphans" are fossils of earlier phases.** The draggable-table rules were dead because
+  Phase 4 deleted that branch; the reserved-units styling (`td.reserved` et al.) had no emitter
+  left. When a vendored component drops a feature, its global CSS often lingers.
+- **Mind shared sass vars when deleting rules** — removing `.shadow-left` also orphaned
+  `$shadow-left-slight`; removing the last `math.div` user let `@use "sass:math"` go. Re-running
+  the standalone sass compile catches dangling refs immediately.
+- **A standalone `sass.compile` of the globals (with the tosass vars prepended) is the fast
+  feedback loop** for this kind of work — far quicker than a full webpack build, and the
+  output-line delta (1616 → 1515) is a cheap sanity check that real rules were removed.
+- Repo-wide `yarn lint` carries a backlog of pre-existing errors unrelated to vendoring; scope
+  lint expectations to touched files (eslint doesn't cover scss anyway).
+
+Original plan (for reference) — each item below was confirmed by grep:
+
+- **AG Grid is fully orphaned.** `base.scss` imports `ag-grid-community/styles/*.css` and carries
+  the entire `.ag-theme-alpine.ag-theme-bloom { … }` block plus `.data-pager*` rules (~110 lines),
+  but nothing under `app/javascript/**/*.tsx` renders AgGrid/AgTable (this repo never used the
+  package's table — see [Key findings](#key-findings)). Remove the imports, the theme block, and
+  the data-pager rules; check whether `ag-grid-community` can then leave `package.json`.
+- **9/10 mixins in `global/mixins.scss` are dead** — only `has-toggle` is used. Drop
+  `custom-linear-gradient`, `overlay-image`, `clearfix`, `has-image-skeleton`,
+  `filled-appearances`, `outlined-appearances`, `transition-timing`, `ellipsis`, `headings`.
+- **Selector sweep across the remaining globals** (`homepage.scss`, `print.scss`,
+  `custom_counter.scss`, `blocks.scss`, `lists.scss`, `text.scss`, `forms.scss`, `tables.scss`):
+  grep each top-level class selector against `app/javascript/**/*.tsx` **and**
+  `app/views/**/*.slim` (Rails templates can reference these too) before deleting.
+- **Bulma leftovers in `base.scss` (lines ~50–76)** — `$scheme-main`, the `$colors` map, etc.
+  Determine whether Bulma is still in the pipeline at all; if not, these are orphans too.
+
+Caveat: Tailwind v2's JIT purge already drops unused *utility* classes, so this phase targets
+hand-written rules and `@apply` blocks, not utilities.
+
+### Phase 7 — Tailwind v4 + sass removal (the big rock; depends on Phase 6)
+
+After the sweep, the remaining sass usage is just `@apply` / `@screen` / injected vars. Migrate:
+
+- `tailwind.config.js` + `config/tailwind/bloomTheme.js` → a CSS-first `@theme` block. v4 drops
+  the JS config; the `--bloom-*` custom properties the components already consume map naturally
+  onto `@theme` tokens.
+- Replace every `@screen <bp>` with a media query. **Use this repo's breakpoints, not v4
+  defaults** — `$screen-lg` is **1200px** here (not 1024), `$screen-sm`=640, `$screen-md`=768
+  (see [Gotchas](#gotchas--lessons-learned)). Confirm no kept rule still references
+  `$screen-print` (it compiled to garbage and never applied).
+- Retire `config/webpack/loaders/tailwindToSass.js` and the sass-loader `additionalData` in
+  `config/webpack/loaders/sass.js`; rework the loader chain for plain CSS (drop `sass-loader`,
+  keep postcss/tailwind). Rename `.scss` → `.css` once `@import`/`$vars`/`@apply` are gone.
+- `base.scss` itself (`@tailwind base/components/utilities`, `@apply`, Bulma `$vars`) is the
+  largest single file to convert.
+
+This is the highest-risk phase — re-run the full vendoring smoke-test surface (listings
+directory, listing detail pricing tables + gallery modal, header/footer, language nav) plus the
+`?featureFlag[temp.webapp.newAccountLayout]=false` header path. Snapshot tests won't catch layout
+regressions (the gallery-footer bug passed all tests).
+
+### Phase 8 — Translation rearchitecture (move to a maintained library)
+
+Current state and why it must change:
+
+- `uic/translator.ts` holds a **module-level global mutable singleton** (`(global as any).Translator`
+  + a single `node-polyglot` instance) that `addTranslation` mutates at bootstrap from
+  `util/languageUtil.tsx`. This is client-only by design — hostile to SSR (shared mutable state
+  across requests, no per-request locale), which blocks rendering these pages under TanStack Start.
+- `locale()` is **hardcoded to `"en"`** (translator.ts:35); the 4-language support works only
+  because polyglot phrases are swapped wholesale per navigation.
+- `node-polyglot` is ~2 years stale and was promoted to a direct dep only to keep this alive.
+
+Decision (per maintainer): **move to a maintained i18n library** (recommend `i18next` /
+`react-i18next` — SSR-friendly, request-scoped instances, consumes the existing nested
+`assets/json/translations/react/{en,es,zh,tl}.json` bundles, and its `{{var}}` interpolation is
+close to polyglot's `%{var}`). Plan:
+
+- **Keep `t()` as a stable façade** over the new backend to avoid churning all **207 call sites**
+  at once. `getTranslationWithArguments` (the `key*arg:val*arg:val` syntax) becomes a thin shim
+  over the new interpolation.
+- Make the active instance **request-scoped via React context/provider** instead of a global
+  singleton — this is the actual SSR unblock.
+- Reconcile interpolation token syntax (`%{x}` → `{{x}}`) — likely a build-time transform of the
+  JSON bundles or an i18next interpolation-format override.
+- Wire dayjs locale + the `LANGUAGE_CONFIGS` lazy-`import()` bundle loading into the provider.
+
+Write a short design doc for this phase before implementing — the façade-vs-hooks decision and
+the interpolation reconciliation are the load-bearing choices.
+
+### Running fix-list (incidental issues noticed while planning)
+
+1. AG Grid CSS in `base.scss` is dead weight — Phase 6.
+2. `translator.ts` global mutable singleton — core SSR blocker, Phase 8.
+3. `locale()` hardcoded to `"en"` despite 4-language support — brittle, Phase 8.
+4. Bulma `$vars` block in `base.scss` (50–76) — confirm Bulma is still wired or treat as orphan.
+5. Confirm no kept global still references `$screen-print` (compiles to invalid media query).
+6. `markdown-to-jsx` nested-types tsc noise (currently grep-filtered) — pin/resolve cleanly.

@@ -19,7 +19,6 @@
     "@fortawesome/free-solid-svg-icons": "^6.6.0",
     "@fortawesome/react-fontawesome": "^0.2.2",
     "@unleash/proxy-client-react": "^4.2.2",
-    "ag-grid-community": "^32.0.1",
     "autoprefixer": "^10.4.7",
     "axios": "^1.16.0",
     "babel-loader": "^9.1.2",

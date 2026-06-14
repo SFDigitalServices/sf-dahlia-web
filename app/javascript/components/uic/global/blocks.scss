@@ -104,55 +104,9 @@ details.disclosure {
   @apply font-semibold;
 }
 
-.notice-block {
-  @apply flex;
-  @apply flex-row;
-  @apply flex-wrap;
-  @apply max-w-5xl;
-  @apply m-auto;
-  @apply mt-5;
-  @apply mb-12;
-  @apply text-center;
-  @apply p-4;
-  @apply bg-primary-lighter;
-}
-
-$shadow-left-slight: -3px 0px 3px -1px rgba(0, 0, 0, 0.1);
-
-.shadow-left {
-  box-shadow: $shadow-left-slight;
-}
-.md\:shadow-left {
-  @screen md {
-    box-shadow: $shadow-left-slight;
-  }
-}
-
 // temp global style until status bar component
 .status-bar__status {
   .tag.is-pill {
     @apply block;
-  }
-}
-
-.sidebar-detail-layout {
-  display: flex;
-  flex-direction: column;
-  gap: var(--bloom-s6);
-  margin-inline: auto;
-  max-width: var(--bloom-screen-2xl);
-
-  @media (min-width: 1000px) {
-    flex-direction: row;
-  }
-
-  & > div {
-    flex-grow: 1;
-  }
-
-  & > aside {
-    @media (min-width: 1000px) {
-      width: var(--bloom-s72);
-    }
   }
 }

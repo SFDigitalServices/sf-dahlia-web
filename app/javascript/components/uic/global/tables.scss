@@ -50,12 +50,6 @@ https://www.cssscript.com/pure-html5-css3-responsive-table-solution/ */
       @apply border-0;
     }
   }
-
-  tr.group-reserved td {
-    @apply border-l-8;
-    @apply border-solid;
-    @apply border-accent-warm;
-  }
 }
 
 table {
@@ -342,35 +336,6 @@ table tr:nth-of-type(even) {
   @apply bg-primary-lighter;
 }
 
-td.reserved {
-  @apply font-sans;
-  @apply font-bold;
-  @apply uppercase;
-  @apply text-3xs;
-  @apply leading-tight;
-  @apply py-2;
-  @apply text-gray-750;
-  @apply bg-accent-warm-lighter;
-  @apply tracking-widest;
-  @apply pl-2;
-  @apply border-l-8;
-  @apply border-b;
-  @apply border-t;
-  @apply border-solid;
-  @apply border-accent-warm;
-
-  .reserved-icon {
-    @apply text-accent-warm;
-    @apply text-xs;
-  }
-}
-
-tr.group-reserved td:first-of-type {
-  @apply border-l-8;
-  @apply border-solid;
-  @apply border-accent-warm;
-}
-
 .table__thumbnail img {
   max-height: 80px;
   max-width: 142px;
@@ -382,18 +347,6 @@ table.td-plain {
   .table__thumbnail img {
     @apply -my-1;
   }
-  .table__is-dragging {
-    @apply border-t;
-  }
-}
-
-.table__draggable-cell {
-  width: 60px;
-  padding: 0px;
-}
-
-.table__is-dragging {
-  display: table;
 }
 
 .category-table-parent {
