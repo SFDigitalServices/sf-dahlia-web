@@ -13,11 +13,11 @@
     @apply mx-2;
     @apply px-4;
     .text-banner-icon {
+      display: none;
+      padding-right: 1rem;
       @media (min-width: 768px) {
         display: block;
       }
-      display: none;
-      padding-right: 1rem;
     }
     .text-banner-content {
       @media (min-width: 768px) {
@@ -27,10 +27,6 @@
 
       .text-banner-header {
         width: fit-content;
-        @media (min-width: 768px) {
-          border-bottom: none;
-          padding-bottom: 0px;
-        }
         border-bottom: 3px solid green;
         padding-bottom: 0.4rem;
         font-family: "Lato", sans-serif;
@@ -39,6 +35,10 @@
         font-size: 1rem;
         letter-spacing: 0.12rem;
         margin-bottom: 0.5rem;
+        @media (min-width: 768px) {
+          border-bottom: none;
+          padding-bottom: 0px;
+        }
       }
       .text-banner-text {
         color: #555;

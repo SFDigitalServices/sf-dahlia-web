@@ -6,9 +6,9 @@
   }
 
   .see-the-unit__heading {
+    padding-bottom: var(--seeds-spacer-content);
     h2.text__underline-weighted {
       margin-bottom: 0px !important;
     }
-    padding-bottom: var(--seeds-spacer-content);
   }
 }

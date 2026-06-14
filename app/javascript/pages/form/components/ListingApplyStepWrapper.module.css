@@ -8,10 +8,10 @@
 .step-title {
   margin: 0 var(--seeds-s4) var(--seeds-s4);
   font-size: var(--seeds-type-heading-size-2xl-mobile);
+  text-align: center;
   @media (min-width: theme("screens.md")) {
     font-size: var(--seeds-type-heading-size-2xl);
   }
-  text-align: center;
 
   &.no-back {
     margin-top: var(--seeds-s4);

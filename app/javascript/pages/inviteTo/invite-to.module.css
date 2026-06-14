@@ -67,6 +67,8 @@
     flex-direction: column;
     flex: 0 0 33.333%;
     gap: var(--seeds-spacer-text);
+    padding: var(--seeds-spacer-section) 0 0 var(--seeds-spacer-content);
+    border-left: 1px solid var(--seeds-color-gray-450);
     @media (max-width: theme("screens.sm")) {
       padding: var(--seeds-spacer-section) var(--seeds-spacer-content) var(--seeds-s10)
         var(--seeds-spacer-content);
@@ -80,8 +82,6 @@
     h3 {
       margin: var(--seeds-spacer-text) 0;
     }
-    padding: var(--seeds-spacer-section) 0 0 var(--seeds-spacer-content);
-    border-left: 1px solid var(--seeds-color-gray-450);
   }
   .infoSubSection {
     display: flex;

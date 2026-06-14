@@ -38,10 +38,10 @@
     padding-block: var(--seeds-s4);
     color: var(--seeds-color-white);
     --card-content-padding-inline: var(--seeds-s8);
+    text-transform: uppercase;
     @media (max-width: theme("screens.md")) {
       --card-content-padding-inline: var(--seeds-s4);
     }
-    text-transform: uppercase;
   }
 
   .listing-apply-form-nav {

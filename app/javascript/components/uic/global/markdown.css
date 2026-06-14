@@ -2,6 +2,14 @@
 .markdown {
   /* Set sizing and gaps for built-in HTML elements */
 
+  /* Certain text blocks in the application form flow use this extra styling: */
+
+  /* Used for a larger lead paragraph: */
+
+  /* Used for a (1), (2), (3) section on the application form flow: */
+
+  /* Used for lengthy (1), (2), (3), etc. such as the How it Works page: */
+
   h2 {
     margin-block: var(--bloom-s8) var(--bloom-s5);
     font-size: var(--bloom-font-size-2xl);
@@ -30,8 +38,6 @@
     margin-inline-start: var(--bloom-s6);
   }
 
-  /* Certain text blocks in the application form flow use this extra styling: */
-
   &.markdown-informational {
     font-size: var(--bloom-font-size-sm);
     color: var(--bloom-color-gray-750);
@@ -53,16 +59,12 @@
     }
   }
 
-  /* Used for a larger lead paragraph: */
-
   .markdown__lead {
     font-family: var(--bloom-font-sans);
     font-size: var(--bloom-font-size-base);
     color: var(--bloom-color-gray-700);
     margin-block: var(--bloom-s3) var(--bloom-s4);
   }
-
-  /* Used for a (1), (2), (3) section on the application form flow: */
 
   ol.large-numbers {
     counter-reset: list-number;
@@ -91,8 +93,6 @@
     }
   }
 
-  /* Used for lengthy (1), (2), (3), etc. such as the How it Works page: */
-
   ol.process-list {
     font-size: 1.06rem;
     line-height: 1.5;
@@ -102,6 +102,8 @@
     padding-block: 20px 0;
     padding-inline: var(--bloom-s5) 0;
     position: relative;
+
+    /* The homepage How it Works section uses a horizontal layout: */
 
     & > li {
       border-inline-start: 1px solid var(--bloom-color-gray-450);
@@ -140,8 +142,6 @@
         border-inline-start-color: transparent;
       }
     }
-
-    /* The homepage How it Works section uses a horizontal layout: */
 
     &.has-horizontal-layout {
       display: flex;

@@ -25,15 +25,15 @@
 }
 
 .counselor-icon {
+  padding-right: 0;
   @media (min-width: 768px) {
     padding-right: var(--bloom-s2);
   }
-  padding-right: 0;
 }
 
 .page-main {
+  @apply md:ml-8;
   @media (min-width: 1200px) {
     @apply ml-0;
   }
-  @apply md:ml-8;
 }
