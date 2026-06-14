@@ -411,17 +411,48 @@ language nav, account pages, and the `?featureFlag[temp.webapp.newAccountLayout]
   loses.** First instance: `.open-houses div { padding-bottom: 0 !important }` lost to
   `.pb-3 { … !important }`, leaving stray bottom padding on open-house links. Targeted fix: wrap
   the override in `@layer components` (earlier than `utilities` → its `!important` wins again).
-  **~26 first-party CSS files use `!important`** — others may have the same latent bug. The
-  robust systemic fix is to place **all** first-party CSS in `@layer components` (then `!important`
-  overrides work and the blanket `important` import flag could likely be dropped), but that also
-  changes our-CSS-vs-ui-seeds (unlayered) normal-declaration precedence, so it needs a dedicated
-  pass with full visual regression. For now, fix instances as found by wrapping in `@layer
-  components`.
+  **~26 first-party CSS files use `!important`** — all had the same latent bug. **Fixed
+  systemically in Phase 7.5** (below): all first-party CSS is now wrapped in `@layer components`
+  and ui-seeds in `@layer seeds`, so `!important` overrides win and ui-seeds-vs-first-party
+  precedence is preserved.
 
 **Watch-out for visual review:** in v2 `important: true`, `@apply`'d declarations inside component
 CSS were `!important`; in v4 they are **not** (only directly-used utility classes are, via the
 `important` import flag). Component rules that relied on an `@apply`'d property out-specifying
 something may differ — check the smoke-test surface for cascade regressions.
+
+### Phase 7.5 — Systemic cascade-layer rework ✅ (done 2026-06-14)
+
+Replaced the per-instance `@layer components` wrapping (open-houses) with a uniform, automatic
+scheme so every first-party `!important` reliably beats a Tailwind utility `!important`, and
+first-party CSS reliably overrides ui-seeds.
+
+**Layer order** (declared in `app/javascript/styles/theme.css`):
+`@layer theme, base, seeds, components, utilities;`
+
+- `seeds` — `@bloom-housing/ui-seeds` CSS (compiled by sass-loader).
+- `components` — all first-party app CSS.
+- `utilities` — Tailwind utilities (`!important` via the import flag).
+
+Mechanics (cascade layers): for **normal** declarations a later layer wins (so `components` beats
+`seeds`, and `utilities` beats `components` — the v2 "utilities win" behavior); for **`!important`**
+declarations precedence is reversed, an earlier layer wins (so a first-party `!important` in
+`components` beats a utility `!important` in `utilities` — the override escape hatch). ui-seeds in
+`seeds` < `components` reproduces v2's first-party-beats-ui-seeds source-order behavior.
+
+**Implementation** — a single PostCSS plugin factory, `config/webpack/loaders/wrapLayer.js`:
+- `css.js` runs it after `@tailwindcss/postcss` to wrap first-party CSS in `@layer components`.
+- `sass.js` gained a `postcss-loader` step that wraps ui-seeds in `@layer seeds`.
+- It leaves `@import`/`@charset`/`@layer`/`@property` at the top level and wraps everything else.
+
+**Gotcha that cost the most time:** `@tailwindcss/postcss` inlines the `@import "tailwindcss"`
+(and theme.css's other `@import`s) **into the entry file (`base.css`) before** `wrapLayer` runs, so
+skipping by filename (`theme.css`) doesn't work — Tailwind's emitted `@layer theme/base/utilities`
+blocks and order statements arrive in the same root. An early version wrapped *those* too, nesting
+`utilities` as a **sublayer** of `components` (`components.utilities`) and scrambling the cascade
+(symptom: `.pb-3` still beat `.open-houses … !important`). Fix: never wrap `@layer`/`@property`
+at-rules — only bare rules. Verified live (computed `padding-bottom: 0px`) and via inspecting the
+resolved layer statement order in `document.styleSheets`.
 
 #### Original plan (for reference)
 

@@ -10,6 +10,19 @@
  * `important` preserves the v2 `important: true` behavior the app's cascade
  * relied on (utilities win over component CSS).
  */
+
+/*
+ * Cascade layer order (must precede the Tailwind import). `seeds` and
+ * `components` are app-defined; Tailwind emits theme/base/utilities. Ordering:
+ *   - normal declarations: later layer wins → components beats seeds (we can
+ *     override ui-seeds internals); utilities beats components.
+ *   - !important: earlier layer wins → a first-party !important in components
+ *     beats a utility !important (the override escape hatch).
+ * ui-seeds CSS is wrapped in `seeds` and first-party CSS in `components` by
+ * config/webpack/loaders/wrapLayer.js.
+ */
+@layer theme, base, seeds, components, utilities;
+
 @import "tailwindcss" important;
 
 /* Scan the app for class usage (paths are relative to this file). */

@@ -1,15 +1,10 @@
-/* In @layer components so these !important overrides beat the @layer utilities
-   `pb-*` !important classes. Tailwind v4 puts utilities in a cascade layer, and
-   for !important declarations an earlier layer (components) wins over a later one
-   (utilities) regardless of specificity — unlike unlayered CSS, which loses to a
-   layered !important. */
-@layer components {
-  .open-houses {
-    div {
+/* The layerComponents postcss plugin wraps this in @layer components, so these
+   !important overrides beat the @layer utilities `pb-*` !important classes. */
+.open-houses {
+  div {
+    padding-bottom: 0px !important;
+    p {
       padding-bottom: 0px !important;
-      p {
-        padding-bottom: 0px !important;
-      }
     }
   }
 }

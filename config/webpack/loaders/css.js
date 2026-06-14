@@ -7,6 +7,8 @@
  * CSS), so postcss-import / autoprefixer / preset-env / sass-loader /
  * resolve-url-loader are all unnecessary.
  */
+const path = require("path")
+
 const isProduction = process.env.NODE_ENV === "production"
 
 module.exports = {
@@ -35,7 +37,16 @@ module.exports = {
       loader: "postcss-loader",
       options: {
         postcssOptions: {
-          plugins: [require("@tailwindcss/postcss")],
+          // wrapLayer must run after @tailwindcss/postcss so it wraps
+          // fully-expanded CSS. theme.css is the Tailwind entry (it declares the
+          // layers itself), so it is skipped. See ./wrapLayer.js.
+          plugins: [
+            require("@tailwindcss/postcss"),
+            require("./wrapLayer")({
+              layer: "components",
+              skip: (file) => file.endsWith(path.join("app", "javascript", "styles", "theme.css")),
+            }),
+          ],
         },
         sourceMap: !isProduction,
       },
