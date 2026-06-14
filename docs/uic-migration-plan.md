@@ -402,6 +402,22 @@ language nav, account pages, and the `?featureFlag[temp.webapp.newAccountLayout]
   conversion** — `@apply` parses as an at-rule, so the partition must keep block-less at-rules
   (`@apply`) in the head with declarations and only hoist *block* at-rules.
 
+- **Cascade-layer `!important` inversion (class of bug).** v4 puts utilities in `@layer
+  utilities`. With cascade layers, `!important` precedence is **inverted**: an `!important`
+  declaration in a layer beats an `!important` declaration in **unlayered** CSS, regardless of
+  selector specificity (normal declarations work the opposite way). In v2 there were no layers,
+  so a component rule's `!important` beat a utility's `!important` by specificity. Result: any
+  **unlayered component CSS that used `!important` to override a Tailwind utility now silently
+  loses.** First instance: `.open-houses div { padding-bottom: 0 !important }` lost to
+  `.pb-3 { … !important }`, leaving stray bottom padding on open-house links. Targeted fix: wrap
+  the override in `@layer components` (earlier than `utilities` → its `!important` wins again).
+  **~26 first-party CSS files use `!important`** — others may have the same latent bug. The
+  robust systemic fix is to place **all** first-party CSS in `@layer components` (then `!important`
+  overrides work and the blanket `important` import flag could likely be dropped), but that also
+  changes our-CSS-vs-ui-seeds (unlayered) normal-declaration precedence, so it needs a dedicated
+  pass with full visual regression. For now, fix instances as found by wrapping in `@layer
+  components`.
+
 **Watch-out for visual review:** in v2 `important: true`, `@apply`'d declarations inside component
 CSS were `!important`; in v4 they are **not** (only directly-used utility classes are, via the
 `important` import flag). Component rules that relied on an `@apply`'d property out-specifying
