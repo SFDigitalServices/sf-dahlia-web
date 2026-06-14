@@ -478,6 +478,18 @@ regressions (the gallery-footer bug passed all tests).
 
 ### Phase 8 — Translation rearchitecture (move to a maintained library)
 
+**Status: implemented (code + automated verification complete); manual 4-language smoke pending.**
+Full design and as-built notes: `docs/phase8-i18n-design.md`. Summary of what landed:
+node-polyglot replaced by an `i18next`-backed façade (`t()` unchanged, instance created per
+`loadTranslations`/request behind a module-scoped ref — the global mutable singleton is gone),
+`%{var}` interpolation kept via an i18next delimiter override, the 11 `||||` plural keys handled
+in the façade (English rule, matching prior behavior; bundles untouched). `node-polyglot` removed,
+`i18next` pinned to exact `25.8.0` (25.9+ emits a console banner that breaks `jest-fail-on-console`).
+Deferred (see design doc §8): native `{{var}}`/`_one`/`_other` bundle migration, per-locale plurals,
+`useTranslation` hook migration, `react-i18next`/provider, `AsyncLocalStorage` server scoping.
+
+Original analysis (retained for context):
+
 Current state and why it must change:
 
 - `uic/translator.ts` holds a **module-level global mutable singleton** (`(global as any).Translator`

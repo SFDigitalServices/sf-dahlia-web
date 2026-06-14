@@ -1,4 +1,4 @@
-import { t, addTranslation } from "@uic"
+import { t, createTranslationInstance, setActiveTranslationInstance } from "@uic"
 import Markdown from "markdown-to-jsx"
 import dayjs, { PluginFunc } from "dayjs"
 import utc from "dayjs/plugin/utc"
@@ -85,13 +85,17 @@ const loadDefaultTranslation = async (): Promise<PhraseBundle> =>
  * @param prefix is a string, cannot be blank or null.
  */
 export const loadTranslations = async (prefix: LanguagePrefix): Promise<void> => {
-  addTranslation(await loadDefaultTranslation())
+  // English is always loaded as the fallback bundle; the target language (if not
+  // English) is loaded alongside it and selected as the active language. i18next's
+  // fallbackLng="en" then mirrors polyglot's old "merge en, overlay target" behavior.
+  const resources: Record<string, PhraseBundle> = { en: await loadDefaultTranslation() }
 
   const config = LANGUAGE_CONFIGS[prefix]
-
   if (!config.isDefault) {
-    addTranslation(await config.load())
+    resources[prefix] = await config.load()
   }
+
+  setActiveTranslationInstance(createTranslationInstance(prefix, resources))
 
   // load the plugin for localized formats https://day.js.org/docs/en/plugin/localized-format
   const localizedFormat: PluginFunc<unknown> = require("dayjs/plugin/localizedFormat")

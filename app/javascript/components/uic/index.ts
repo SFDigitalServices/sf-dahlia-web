@@ -7,7 +7,14 @@
  */
 
 // Type-only names must use `export type` so babel/webpack drop them at runtime.
-export { t, addTranslation } from "./translator"
+export {
+  t,
+  addTranslation,
+  createTranslationInstance,
+  setActiveTranslationInstance,
+  locale,
+} from "./translator"
+export type { TranslationBundle } from "./translator"
 export { Icon, IconFillColors } from "./Icon"
 export type { IconFill, IconSize, IconTypes, UniversalIconType, IconProps } from "./Icon"
 export {
