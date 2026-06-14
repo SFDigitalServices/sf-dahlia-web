@@ -10,7 +10,7 @@ import {
   SiteFooter,
   t,
 } from "@uic"
-import SiteHeader, { MenuLink } from "../components/SiteHeader/SiteHeader"
+import { SiteHeader, MenuLink } from "../components/SiteHeader/SiteHeader"
 import Markdown from "markdown-to-jsx"
 import UserContext from "../authentication/context/UserContext"
 import { ConfigContext } from "../lib/ConfigContext"
