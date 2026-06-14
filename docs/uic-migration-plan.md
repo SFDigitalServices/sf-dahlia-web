@@ -390,6 +390,18 @@ CSS (`identity-obj-proxy`), so it cannot catch layout/styling regressions. Run t
 surface: listings directory, listing detail (pricing tables + gallery modal), header/footer,
 language nav, account pages, and the `?featureFlag[temp.webapp.newAccountLayout]=false` header.
 
+**Post-migration visual fixes (commit on the same branch):**
+- **Nested `@media` cascade order.** Keeping native CSS nesting changed cascade vs sass: sass
+  *hoisted* a rule's nested `@media`/style rules to **after** its bare declarations + `@apply`,
+  so the `@media` value won at the breakpoint. In source order, a bare decl/`@apply` written
+  *after* a nested `@media` now comes later and overrides it. This broke directory unit-table
+  column alignment (`@media{text-left}` before `@apply text-right`) and hid expanded
+  unit-accordion type names (`@media{display:block}` before `display:none`). Fixed with a PostCSS
+  pass that moves nested style rules + block at-rules after bare decls/`@apply` (19 rules, 10
+  files), replicating sass output. **This is a general gotcha for any future sass→nested-CSS
+  conversion** — `@apply` parses as an at-rule, so the partition must keep block-less at-rules
+  (`@apply`) in the head with declarations and only hoist *block* at-rules.
+
 **Watch-out for visual review:** in v2 `important: true`, `@apply`'d declarations inside component
 CSS were `!important`; in v4 they are **not** (only directly-used utility classes are, via the
 `important` import flag). Component rules that relied on an `@apply`'d property out-specifying
