@@ -272,7 +272,7 @@ rationale. The one item with no follow-up planned: `renderMarkup` / `renderInlin
 
 ## 9. Implementation notes (as built)
 
-Status: **steps 1–4 and 6 complete; step 5 (manual 4-language smoke) pending a running dev env.**
+Status: **complete — all steps 1–6 done, including the manual 4-language smoke (step 5).**
 
 - **Files changed:**
   - `app/javascript/components/uic/translator.ts` — rewritten as the i18next-backed façade
@@ -284,13 +284,14 @@ Status: **steps 1–4 and 6 complete; step 5 (manual 4-language smoke) pending a
   - `app/javascript/__tests__/components/uic/translator.test.ts` — 14 façade unit tests.
   - `package.json` — removed `node-polyglot`; added `i18next` as a **direct** dependency.
 
-- **i18next version is pinned to exact `26.3.1` (no `^`).** History/caution: the `25.9.x–25.10.x`
-  line printed a one-time promotional `console.info` (the Locize banner) on `init()`, and this repo's
-  `jest-fail-on-console` turns any test-time console call into a failure — that range broke the entire
-  jest suite (verified: 25.10.10 failed all 136 suites). **`26.3.1` does not emit the banner** (full
-  suite green). The exact pin is kept deliberately so a future patch bump can't silently reintroduce a
-  console call; if bumping, re-run the full jest suite and, if a banner returns, silence it (option in
-  `init`) or mock it in `setupTests`.
+- **i18next version is `^26.3.1`.** History/caution: the `25.9.x–25.10.x` line printed a one-time
+  promotional `console.info` (the Locize banner) on `init()`, and this repo's `jest-fail-on-console`
+  turns any test-time console call into a failure — that range broke the entire jest suite (verified:
+  25.10.10 failed all 136 suites). **`26.x` does not emit the banner** (full suite green on 26.3.1),
+  and Locize has publicly committed to dropping the console marketing
+  (https://www.locize.com/blog/i18next-support-notice/), so the caret range is safe. If a future
+  release nonetheless reintroduces a console call, re-pin exact and/or silence it (option in `init`)
+  or mock it in `setupTests`.
 
 - **No `react-i18next` / `<I18nextProvider>`** was added — see §3.4 scope note; folded into the
   deferred hook migration (§8 item 3).
@@ -298,7 +299,20 @@ Status: **steps 1–4 and 6 complete; step 5 (manual 4-language smoke) pending a
 - **Verification done:** `tsc --noEmit` clean; eslint clean on changed files; full jest
   **136 suites / 849 tests** pass (835 prior + 14 new), all snapshots unchanged — confirming
   interpolation and plural output are byte-identical to the polyglot implementation for English.
-  Jest exercises the real English bundle only; the **4-language smoke (§5.2) is the remaining gate.**
+
+- **Manual 4-language smoke (§5.2) — PASSED** (2026-06-14, via agent-browser against
+  `localhost:3000`, all four languages en/es/zh/tl):
+  - **No leaked tokens** (`%{...}` or `||||`) on the rental directory, listing detail, housing
+    counselors, sign-in, or create-account in any language.
+  - **Translation + language switch:** distinct translated `h1`s per language (e.g. "Rent affordable
+    housing" / "Alquile una vivienda asequible" / "租用可負擔房屋" / "Umupa ng abot-kayang pabahay";
+    create-account: "Create an account" / "Crear una cuenta" / "建立帳戶" / "Gumawa ng account").
+    Clicking the language nav (Español) navigates to `/es` with Spanish content.
+  - **Pluralization (both branches, the exact `||||` keys):** housing-counselors filter rendered
+    "Showing 1 result:" (singular) and "Showing 5 results:" (plural); listing-detail eligibility
+    showed person/people and persona/personas correctly chosen.
+  - **dayjs localization:** listing-detail dates localized per language (EN "April 16, 2026" →
+    ES "16 de abril de 2026").
 
 ## 8. Deferred work / candidate follow-ups (explicitly NOT in Phase 8)
 

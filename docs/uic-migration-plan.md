@@ -478,7 +478,7 @@ regressions (the gallery-footer bug passed all tests).
 
 ### Phase 8 — Translation rearchitecture (move to a maintained library)
 
-**Status: implemented (code + automated verification complete); manual 4-language smoke pending.**
+**Status: COMPLETE — code, automated verification, and the manual 4-language smoke all done.**
 Full design and as-built notes: `docs/phase8-i18n-design.md`. Summary of what landed:
 node-polyglot replaced by an `i18next`-backed façade (`t()` unchanged, instance created per
 `loadTranslations`/request behind a module-scoped ref — the global mutable singleton is gone),

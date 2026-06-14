@@ -29,7 +29,7 @@
     "dayjs": "^1.10.7",
     "dotenv": "2.0.0",
     "eslint-formatter-compact": "8.39.0",
-    "i18next": "26.3.1",
+    "i18next": "^26.3.1",
     "markdown-to-jsx": "7.4.3",
     "mini-css-extract-plugin": "^2.7.6",
     "mockdate": "3.0.5",
