@@ -297,3 +297,15 @@ export enum INVITE_TO_X {
   APPLY = "I2A",
   INTERVIEW = "I2I",
 }
+
+export enum I2X_ACTIONS {
+  SUBMIT = "submit",
+  APPOINTMENT = "appointment",
+}
+
+export enum I2A_RESPONSES {
+  SUBMIT = "submit",
+  YES = "yes",
+  NO = "no",
+  CONTACT = "contact",
+}

@@ -699,44 +699,32 @@
         }
       },
       "componentType": "step",
-      "componentName": "ListingApplyStepWrapper",
+      "componentName": "ListingApplyPreferenceStepWrapper",
       "props": {
         "title": "e7PreferencesPrograms.title",
-        "description": "e7PreferencesPrograms.haveNotHeardOfPreferences"
-      },
-      "children": [
-        {
-          "componentName": "CertificateNumberPreference",
-          "props": {
-            "name": "e7PreferencesPrograms.certOfPreference",
-            "showDescription": true,
-            "description": "e7PreferencesPrograms.certOfPreferenceDesc",
-            "numberName": "e7PreferencesPrograms.certOfPreferenceCertificate",
-            "numberDescription": "e7PreferencesPrograms.needCertificateForPreference",
-            "readMoreUrl": "https://www.sf.gov/learn-about-certificate-preference-cop",
-            "fieldNames": {
-              "checkbox": "_copMemberCheckbox",
-              "copMember": "copMember",
-              "copNumber": "copNumber"
-            }
-          }
+        "description": "e7PreferencesPrograms.haveNotHeardOfPreferences",
+        "fieldNames": {
+          "claimedPreferences": "claimedPreferences"
         },
-        {
-          "componentName": "CertificateNumberPreference",
-          "props": {
-            "name": "e7PreferencesPrograms.displaced",
-            "description": "e7PreferencesPrograms.displacedTenantsDesc",
-            "numberName": "e7PreferencesPrograms.displacedCertificate",
-            "numberDescription": "e7PreferencesPrograms.needCertificateForPreference",
-            "readMoreUrl": "https://www.sf.gov/learn-about-displaced-tenant-housing-preference-dthp",
-            "fieldNames": {
-              "checkbox": "_dthpMemberCheckbox",
-              "dthpMember": "dthpMember",
-              "dthpNumber": "dthpNumber"
-            }
+        "preferenceContents": [
+          {
+            "preferenceName": "certificateOfPreference",
+            "checkboxLabel": "e7PreferencesPrograms.certOfPreference",
+            "checkboxDescription": "e7PreferencesPrograms.certOfPreferenceDesc",
+            "proofHouseholdMemberLabel": "label.applicantPreferencesHouseholdMember",
+            "certificateNumberLabel": "e7PreferencesPrograms.certOfPreferenceCertificate",
+            "certificateNumberNote": "e7PreferencesPrograms.needCertificateForPreference"
+          },
+          {
+            "preferenceName": "displacedTenant",
+            "checkboxLabel": "e7PreferencesPrograms.displaced",
+            "checkboxDescription": "e7PreferencesPrograms.displacedTenantsDesc",
+            "proofHouseholdMemberLabel": "label.applicantPreferencesHouseholdMember",
+            "certificateNumberLabel": "e7PreferencesPrograms.displacedCertificate",
+            "certificateNumberNote": "e7PreferencesPrograms.needCertificateForPreference"
           }
-        }
-      ]
+        ]
+      }
     },
     {
       "stepInfo": {
