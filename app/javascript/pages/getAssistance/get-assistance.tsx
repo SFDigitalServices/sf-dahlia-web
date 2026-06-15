@@ -1,4 +1,4 @@
-import { ActionBlock, Icon, t, Heading } from "@bloom-housing/ui-components"
+import { ActionBlock, Icon, t, Heading } from "@uic"
 import Link from "../../navigation/Link"
 import React from "react"
 import withAppSetup from "../../layouts/withAppSetup"

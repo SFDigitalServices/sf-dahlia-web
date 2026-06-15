@@ -1,5 +1,5 @@
 import React from "react"
-import { Heading, t } from "@bloom-housing/ui-components"
+import { Heading, t } from "@uic"
 import type { RailsLotteryResult } from "../../api/types/rails/listings/RailsLotteryResult"
 import { defaultOrMachineTranslationIfNotTranslated, renderMarkup } from "../../util/languageUtil"
 import { LOTTERY_RANKING_VIDEO_URL } from "../constants"

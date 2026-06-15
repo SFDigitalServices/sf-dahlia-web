@@ -1,5 +1,5 @@
 import React from "react"
-import { t, Icon, IconFillColors } from "@bloom-housing/ui-components"
+import { t, Icon, IconFillColors } from "@uic"
 import { Heading } from "@bloom-housing/ui-seeds"
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons"
 import { renderInlineMarkup } from "../../util/languageUtil"

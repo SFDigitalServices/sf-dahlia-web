@@ -1,6 +1,6 @@
 import React from "react"
 import { useFormContext, useWatch } from "react-hook-form"
-import { Field, t } from "@bloom-housing/ui-components"
+import { Field, t } from "@uic"
 import { Link } from "@bloom-housing/ui-seeds"
 import { renderInlineMarkup } from "../../../../util/languageUtil"
 import { type PreferenceContent, type PreferenceFieldNames } from "./PreferenceUtils"

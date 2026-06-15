@@ -1,4 +1,4 @@
-import { t, addTranslation } from "@bloom-housing/ui-components"
+import { t, addTranslation } from "@uic"
 import Markdown from "markdown-to-jsx"
 import dayjs, { PluginFunc } from "dayjs"
 import utc from "dayjs/plugin/utc"

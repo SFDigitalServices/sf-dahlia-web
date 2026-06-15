@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react"
 import { useDropzone, type FileWithPath, type FileRejection } from "react-dropzone"
 import { localizedFormat, renderInlineMarkup } from "../../../../util/languageUtil"
-import { t, Field, Select, Icon } from "@bloom-housing/ui-components"
+import { t, Field, Select, Icon } from "@uic"
 import { Card, Button, FormErrorMessage } from "@bloom-housing/ui-seeds"
 import { ConfigContext } from "../../../../lib/ConfigContext"
 import { useFormContext } from "react-hook-form"

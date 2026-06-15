@@ -12,6 +12,9 @@ const createAxiosInstance = (): AxiosInstance => {
   if (!isTokenValid()) {
     throw new Error("Token expired")
   }
+  // axios's default export intentionally exposes `.create`; the named-export
+  // lint warning is a false positive here.
+  // eslint-disable-next-line import/no-named-as-default-member
   return axios.create({
     headers: getHeaders(),
     transformResponse: (res, headers) => {

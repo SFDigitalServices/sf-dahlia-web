@@ -1,5 +1,5 @@
 import React from "react"
-import { t } from "@bloom-housing/ui-components"
+import { t } from "@uic"
 import { LOTTERY_SEARCH_FORM_STATUS } from "./ListingDetailsLotterySearchForm"
 import { RailsListing } from "../listings/SharedHelpers"
 

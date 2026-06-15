@@ -1,6 +1,6 @@
 import React from "react"
 import { render, screen } from "@testing-library/react"
-import SiteHeader, { SiteHeaderProps } from "../../components/SiteHeader/SiteHeader"
+import { SiteHeader, SiteHeaderProps } from "../../components/SiteHeader/SiteHeader"
 import NavigationProvider from "../../navigation/NavigationProvider"
 import { setupUserContext } from "../__util__/accountUtils"
 

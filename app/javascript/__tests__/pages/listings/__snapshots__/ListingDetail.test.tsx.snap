@@ -803,25 +803,21 @@ exports[`Listing Detail renders a habitat listing 1`] = `
             >
               <div
                 class="accordion"
-                data-accordion-component="Accordion"
               >
                 <div
                   class="accordion__item"
-                  data-accordion-component="AccordionItem"
                 >
                   <div
                     aria-level="2"
                     class="accordion__heading"
-                    data-accordion-component="AccordionItemHeading"
                     role="heading"
                   >
                     <div
-                      aria-controls="accordion__panel-:re:"
+                      aria-controls="accordion__panel-:r6:"
                       aria-disabled="false"
                       aria-expanded="false"
                       class="accordion__button"
-                      data-accordion-component="AccordionItemButton"
-                      id="accordion__heading-:re:"
+                      id="accordion__heading-:r6:"
                       role="button"
                       tabindex="0"
                     >
@@ -904,11 +900,10 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                     </hgroup>
                   </header>
                   <div
-                    aria-hidden="true"
+                    aria-labelledby="accordion__heading-:r6:"
                     class="accordion__panel"
-                    data-accordion-component="AccordionItemPanel"
                     hidden=""
-                    id="accordion__panel-:re:"
+                    id="accordion__panel-:r6:"
                   >
                     <div
                       class="border-b border-gray-400 md:border-b-0"
@@ -1361,21 +1356,18 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                 </li>
                 <div
                   class="accordion__item"
-                  data-accordion-component="AccordionItem"
                 >
                   <div
                     aria-level="2"
                     class="accordion__heading"
-                    data-accordion-component="AccordionItemHeading"
                     role="heading"
                   >
                     <div
-                      aria-controls="accordion__panel-:rf:"
+                      aria-controls="accordion__panel-:r7:"
                       aria-disabled="false"
                       aria-expanded="false"
                       class="accordion__button"
-                      data-accordion-component="AccordionItemButton"
-                      id="accordion__heading-:rf:"
+                      id="accordion__heading-:r7:"
                       role="button"
                       tabindex="0"
                     >
@@ -1454,11 +1446,10 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                     </hgroup>
                   </header>
                   <div
-                    aria-hidden="true"
+                    aria-labelledby="accordion__heading-:r7:"
                     class="accordion__panel"
-                    data-accordion-component="AccordionItemPanel"
                     hidden=""
-                    id="accordion__panel-:rf:"
+                    id="accordion__panel-:r7:"
                   >
                     <ul>
                       <li
@@ -2185,21 +2176,18 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                 </li>
                 <div
                   class="accordion__item"
-                  data-accordion-component="AccordionItem"
                 >
                   <div
                     aria-level="2"
                     class="accordion__heading"
-                    data-accordion-component="AccordionItemHeading"
                     role="heading"
                   >
                     <div
-                      aria-controls="accordion__panel-:rg:"
+                      aria-controls="accordion__panel-:r8:"
                       aria-disabled="false"
                       aria-expanded="false"
                       class="accordion__button"
-                      data-accordion-component="AccordionItemButton"
-                      id="accordion__heading-:rg:"
+                      id="accordion__heading-:r8:"
                       role="button"
                       tabindex="0"
                     >
@@ -2278,11 +2266,10 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                     </hgroup>
                   </header>
                   <div
-                    aria-hidden="true"
+                    aria-labelledby="accordion__heading-:r8:"
                     class="accordion__panel"
-                    data-accordion-component="AccordionItemPanel"
                     hidden=""
-                    id="accordion__panel-:rg:"
+                    id="accordion__panel-:r8:"
                   >
                     <section
                       class="aside-block see-the-unit translate"
@@ -2577,21 +2564,18 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                 </li>
                 <div
                   class="accordion__item"
-                  data-accordion-component="AccordionItem"
                 >
                   <div
                     aria-level="2"
                     class="accordion__heading"
-                    data-accordion-component="AccordionItemHeading"
                     role="heading"
                   >
                     <div
-                      aria-controls="accordion__panel-:rh:"
+                      aria-controls="accordion__panel-:r9:"
                       aria-disabled="false"
                       aria-expanded="false"
                       class="accordion__button"
-                      data-accordion-component="AccordionItemButton"
-                      id="accordion__heading-:rh:"
+                      id="accordion__heading-:r9:"
                       role="button"
                       tabindex="0"
                     >
@@ -2674,11 +2658,10 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                     </hgroup>
                   </header>
                   <div
-                    aria-hidden="true"
+                    aria-labelledby="accordion__heading-:r9:"
                     class="accordion__panel"
-                    data-accordion-component="AccordionItemPanel"
                     hidden=""
-                    id="accordion__panel-:rh:"
+                    id="accordion__panel-:r9:"
                   >
                     <div
                       class="listing-detail-panel"
@@ -3185,21 +3168,18 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                 </li>
                 <div
                   class="accordion__item"
-                  data-accordion-component="AccordionItem"
                 >
                   <div
                     aria-level="2"
                     class="accordion__heading"
-                    data-accordion-component="AccordionItemHeading"
                     role="heading"
                   >
                     <div
-                      aria-controls="accordion__panel-:rk:"
+                      aria-controls="accordion__panel-:ra:"
                       aria-disabled="false"
                       aria-expanded="false"
                       class="accordion__button"
-                      data-accordion-component="AccordionItemButton"
-                      id="accordion__heading-:rk:"
+                      id="accordion__heading-:ra:"
                       role="button"
                       tabindex="0"
                     >
@@ -3282,11 +3262,10 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                     </hgroup>
                   </header>
                   <div
-                    aria-hidden="true"
+                    aria-labelledby="accordion__heading-:ra:"
                     class="accordion__panel"
-                    data-accordion-component="AccordionItemPanel"
                     hidden=""
-                    id="accordion__panel-:rk:"
+                    id="accordion__panel-:ra:"
                   >
                     <iframe
                       class="md:mb-6 md:pl-16 pl-0"
@@ -3355,21 +3334,18 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                 </li>
                 <div
                   class="accordion__item"
-                  data-accordion-component="AccordionItem"
                 >
                   <div
                     aria-level="2"
                     class="accordion__heading"
-                    data-accordion-component="AccordionItemHeading"
                     role="heading"
                   >
                     <div
-                      aria-controls="accordion__panel-:ri:"
+                      aria-controls="accordion__panel-:rb:"
                       aria-disabled="false"
                       aria-expanded="false"
                       class="accordion__button"
-                      data-accordion-component="AccordionItemButton"
-                      id="accordion__heading-:ri:"
+                      id="accordion__heading-:rb:"
                       role="button"
                       tabindex="0"
                     >
@@ -3452,11 +3428,10 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                     </hgroup>
                   </header>
                   <div
-                    aria-hidden="true"
+                    aria-labelledby="accordion__heading-:rb:"
                     class="accordion__panel"
-                    data-accordion-component="AccordionItemPanel"
                     hidden=""
-                    id="accordion__panel-:ri:"
+                    id="accordion__panel-:rb:"
                   >
                     <iframe
                       class="md:mb-6 md:pl-16 pl-0"
@@ -3525,21 +3500,18 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                 </li>
                 <div
                   class="accordion__item"
-                  data-accordion-component="AccordionItem"
                 >
                   <div
                     aria-level="2"
                     class="accordion__heading"
-                    data-accordion-component="AccordionItemHeading"
                     role="heading"
                   >
                     <div
-                      aria-controls="accordion__panel-:rj:"
+                      aria-controls="accordion__panel-:rc:"
                       aria-disabled="false"
                       aria-expanded="false"
                       class="accordion__button"
-                      data-accordion-component="AccordionItemButton"
-                      id="accordion__heading-:rj:"
+                      id="accordion__heading-:rc:"
                       role="button"
                       tabindex="0"
                     >
@@ -3622,11 +3594,10 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                     </hgroup>
                   </header>
                   <div
-                    aria-hidden="true"
+                    aria-labelledby="accordion__heading-:rc:"
                     class="accordion__panel"
-                    data-accordion-component="AccordionItemPanel"
                     hidden=""
-                    id="accordion__panel-:rj:"
+                    id="accordion__panel-:rc:"
                   >
                     <div
                       class="listing-detail-panel"
@@ -5689,25 +5660,21 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
             >
               <div
                 class="accordion"
-                data-accordion-component="Accordion"
               >
                 <div
                   class="accordion__item"
-                  data-accordion-component="AccordionItem"
                 >
                   <div
                     aria-level="2"
                     class="accordion__heading"
-                    data-accordion-component="AccordionItemHeading"
                     role="heading"
                   >
                     <div
-                      aria-controls="accordion__panel-:rt:"
+                      aria-controls="accordion__panel-:rd:"
                       aria-disabled="false"
                       aria-expanded="false"
                       class="accordion__button"
-                      data-accordion-component="AccordionItemButton"
-                      id="accordion__heading-:rt:"
+                      id="accordion__heading-:rd:"
                       role="button"
                       tabindex="0"
                     >
@@ -5790,11 +5757,10 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                     </hgroup>
                   </header>
                   <div
-                    aria-hidden="true"
+                    aria-labelledby="accordion__heading-:rd:"
                     class="accordion__panel"
-                    data-accordion-component="AccordionItemPanel"
                     hidden=""
-                    id="accordion__panel-:rt:"
+                    id="accordion__panel-:rd:"
                   >
                     <div
                       class="border-b border-gray-400 md:border-b-0"
@@ -6388,21 +6354,18 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                 </li>
                 <div
                   class="accordion__item"
-                  data-accordion-component="AccordionItem"
                 >
                   <div
                     aria-level="2"
                     class="accordion__heading"
-                    data-accordion-component="AccordionItemHeading"
                     role="heading"
                   >
                     <div
-                      aria-controls="accordion__panel-:ru:"
+                      aria-controls="accordion__panel-:re:"
                       aria-disabled="false"
                       aria-expanded="false"
                       class="accordion__button"
-                      data-accordion-component="AccordionItemButton"
-                      id="accordion__heading-:ru:"
+                      id="accordion__heading-:re:"
                       role="button"
                       tabindex="0"
                     >
@@ -6485,11 +6448,10 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                     </hgroup>
                   </header>
                   <div
-                    aria-hidden="true"
+                    aria-labelledby="accordion__heading-:re:"
                     class="accordion__panel"
-                    data-accordion-component="AccordionItemPanel"
                     hidden=""
-                    id="accordion__panel-:ru:"
+                    id="accordion__panel-:re:"
                   >
                     <ul>
                       <li
@@ -7545,21 +7507,18 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                 </li>
                 <div
                   class="accordion__item"
-                  data-accordion-component="AccordionItem"
                 >
                   <div
                     aria-level="2"
                     class="accordion__heading"
-                    data-accordion-component="AccordionItemHeading"
                     role="heading"
                   >
                     <div
-                      aria-controls="accordion__panel-:rv:"
+                      aria-controls="accordion__panel-:rf:"
                       aria-disabled="false"
                       aria-expanded="false"
                       class="accordion__button"
-                      data-accordion-component="AccordionItemButton"
-                      id="accordion__heading-:rv:"
+                      id="accordion__heading-:rf:"
                       role="button"
                       tabindex="0"
                     >
@@ -7642,11 +7601,10 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                     </hgroup>
                   </header>
                   <div
-                    aria-hidden="true"
+                    aria-labelledby="accordion__heading-:rf:"
                     class="accordion__panel"
-                    data-accordion-component="AccordionItemPanel"
                     hidden=""
-                    id="accordion__panel-:rv:"
+                    id="accordion__panel-:rf:"
                   >
                     <div
                       class="listing-detail-panel"
@@ -8297,21 +8255,18 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                 </li>
                 <div
                   class="accordion__item"
-                  data-accordion-component="AccordionItem"
                 >
                   <div
                     aria-level="2"
                     class="accordion__heading"
-                    data-accordion-component="AccordionItemHeading"
                     role="heading"
                   >
                     <div
-                      aria-controls="accordion__panel-:r10:"
+                      aria-controls="accordion__panel-:rg:"
                       aria-disabled="false"
                       aria-expanded="false"
                       class="accordion__button"
-                      data-accordion-component="AccordionItemButton"
-                      id="accordion__heading-:r10:"
+                      id="accordion__heading-:rg:"
                       role="button"
                       tabindex="0"
                     >
@@ -8394,11 +8349,10 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                     </hgroup>
                   </header>
                   <div
-                    aria-hidden="true"
+                    aria-labelledby="accordion__heading-:rg:"
                     class="accordion__panel"
-                    data-accordion-component="AccordionItemPanel"
                     hidden=""
-                    id="accordion__panel-:r10:"
+                    id="accordion__panel-:rg:"
                   >
                     <div
                       class="listing-detail-panel"
@@ -10639,25 +10593,21 @@ exports[`Listing Detail renders an open rental listing 1`] = `
             >
               <div
                 class="accordion"
-                data-accordion-component="Accordion"
               >
                 <div
                   class="accordion__item"
-                  data-accordion-component="AccordionItem"
                 >
                   <div
                     aria-level="2"
                     class="accordion__heading"
-                    data-accordion-component="AccordionItemHeading"
                     role="heading"
                   >
                     <div
-                      aria-controls="accordion__panel-:r1:"
+                      aria-controls="accordion__panel-:r0:"
                       aria-disabled="false"
                       aria-expanded="false"
                       class="accordion__button"
-                      data-accordion-component="AccordionItemButton"
-                      id="accordion__heading-:r1:"
+                      id="accordion__heading-:r0:"
                       role="button"
                       tabindex="0"
                     >
@@ -10740,11 +10690,10 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                     </hgroup>
                   </header>
                   <div
-                    aria-hidden="true"
+                    aria-labelledby="accordion__heading-:r0:"
                     class="accordion__panel"
-                    data-accordion-component="AccordionItemPanel"
                     hidden=""
-                    id="accordion__panel-:r1:"
+                    id="accordion__panel-:r0:"
                   >
                     <div
                       class="border-b border-gray-400 md:border-b-0"
@@ -11449,21 +11398,18 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                 </li>
                 <div
                   class="accordion__item"
-                  data-accordion-component="AccordionItem"
                 >
                   <div
                     aria-level="2"
                     class="accordion__heading"
-                    data-accordion-component="AccordionItemHeading"
                     role="heading"
                   >
                     <div
-                      aria-controls="accordion__panel-:r2:"
+                      aria-controls="accordion__panel-:r1:"
                       aria-disabled="false"
                       aria-expanded="false"
                       class="accordion__button"
-                      data-accordion-component="AccordionItemButton"
-                      id="accordion__heading-:r2:"
+                      id="accordion__heading-:r1:"
                       role="button"
                       tabindex="0"
                     >
@@ -11546,11 +11492,10 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                     </hgroup>
                   </header>
                   <div
-                    aria-hidden="true"
+                    aria-labelledby="accordion__heading-:r1:"
                     class="accordion__panel"
-                    data-accordion-component="AccordionItemPanel"
                     hidden=""
-                    id="accordion__panel-:r2:"
+                    id="accordion__panel-:r1:"
                   >
                     <ul>
                       <li
@@ -13248,21 +13193,18 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                 </li>
                 <div
                   class="accordion__item"
-                  data-accordion-component="AccordionItem"
                 >
                   <div
                     aria-level="2"
                     class="accordion__heading"
-                    data-accordion-component="AccordionItemHeading"
                     role="heading"
                   >
                     <div
-                      aria-controls="accordion__panel-:r3:"
+                      aria-controls="accordion__panel-:r2:"
                       aria-disabled="false"
                       aria-expanded="false"
                       class="accordion__button"
-                      data-accordion-component="AccordionItemButton"
-                      id="accordion__heading-:r3:"
+                      id="accordion__heading-:r2:"
                       role="button"
                       tabindex="0"
                     >
@@ -13345,11 +13287,10 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                     </hgroup>
                   </header>
                   <div
-                    aria-hidden="true"
+                    aria-labelledby="accordion__heading-:r2:"
                     class="accordion__panel"
-                    data-accordion-component="AccordionItemPanel"
                     hidden=""
-                    id="accordion__panel-:r3:"
+                    id="accordion__panel-:r2:"
                   >
                     <div
                       class="listing-detail-panel"
@@ -14309,21 +14250,18 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                 </li>
                 <div
                   class="accordion__item"
-                  data-accordion-component="AccordionItem"
                 >
                   <div
                     aria-level="2"
                     class="accordion__heading"
-                    data-accordion-component="AccordionItemHeading"
                     role="heading"
                   >
                     <div
-                      aria-controls="accordion__panel-:r6:"
+                      aria-controls="accordion__panel-:r3:"
                       aria-disabled="false"
                       aria-expanded="false"
                       class="accordion__button"
-                      data-accordion-component="AccordionItemButton"
-                      id="accordion__heading-:r6:"
+                      id="accordion__heading-:r3:"
                       role="button"
                       tabindex="0"
                     >
@@ -14406,11 +14344,10 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                     </hgroup>
                   </header>
                   <div
-                    aria-hidden="true"
+                    aria-labelledby="accordion__heading-:r3:"
                     class="accordion__panel"
-                    data-accordion-component="AccordionItemPanel"
                     hidden=""
-                    id="accordion__panel-:r6:"
+                    id="accordion__panel-:r3:"
                   >
                     <iframe
                       class="md:mb-6 md:pl-16 pl-0"
@@ -14479,12 +14416,10 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                 </li>
                 <div
                   class="accordion__item"
-                  data-accordion-component="AccordionItem"
                 >
                   <div
                     aria-level="2"
                     class="accordion__heading"
-                    data-accordion-component="AccordionItemHeading"
                     role="heading"
                   >
                     <div
@@ -14492,7 +14427,6 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                       aria-disabled="false"
                       aria-expanded="false"
                       class="accordion__button"
-                      data-accordion-component="AccordionItemButton"
                       id="accordion__heading-:r4:"
                       role="button"
                       tabindex="0"
@@ -14576,9 +14510,8 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                     </hgroup>
                   </header>
                   <div
-                    aria-hidden="true"
+                    aria-labelledby="accordion__heading-:r4:"
                     class="accordion__panel"
-                    data-accordion-component="AccordionItemPanel"
                     hidden=""
                     id="accordion__panel-:r4:"
                   >
@@ -14649,12 +14582,10 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                 </li>
                 <div
                   class="accordion__item"
-                  data-accordion-component="AccordionItem"
                 >
                   <div
                     aria-level="2"
                     class="accordion__heading"
-                    data-accordion-component="AccordionItemHeading"
                     role="heading"
                   >
                     <div
@@ -14662,7 +14593,6 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                       aria-disabled="false"
                       aria-expanded="false"
                       class="accordion__button"
-                      data-accordion-component="AccordionItemButton"
                       id="accordion__heading-:r5:"
                       role="button"
                       tabindex="0"
@@ -14746,9 +14676,8 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                     </hgroup>
                   </header>
                   <div
-                    aria-hidden="true"
+                    aria-labelledby="accordion__heading-:r5:"
                     class="accordion__panel"
-                    data-accordion-component="AccordionItemPanel"
                     hidden=""
                     id="accordion__panel-:r5:"
                   >

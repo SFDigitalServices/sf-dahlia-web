@@ -1,4 +1,4 @@
-import { t } from "@bloom-housing/ui-components"
+import { t } from "@uic"
 import React from "react"
 import { isEducatorTwo, isEducatorBrightwell } from "../../util/listingUtil"
 import { getPriorityTypes } from "./DirectoryHelpers"

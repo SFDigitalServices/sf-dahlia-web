@@ -194,6 +194,9 @@ module.exports = {
     "app/javascript/test-coverage",
   ],
   settings: {
+    // "@uic" is a webpack/tsconfig path alias for app/javascript/components/uic
+    // (see docs/uic-migration-plan.md); the node resolver can't see aliases.
+    "import/core-modules": ["@uic"],
     react: {
       // Must be updated when package.json react version is bumped
       version: "18.2.0",

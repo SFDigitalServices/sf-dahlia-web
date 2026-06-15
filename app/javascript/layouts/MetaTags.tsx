@@ -1,6 +1,6 @@
 import React, { useContext } from "react"
 
-import { t } from "@bloom-housing/ui-components"
+import { t } from "@uic"
 import { Helmet } from "react-helmet-async"
 
 import { ConfigContext } from "../lib/ConfigContext"

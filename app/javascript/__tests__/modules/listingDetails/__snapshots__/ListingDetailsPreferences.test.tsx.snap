@@ -38,6 +38,7 @@ exports[`ListingDetailsPreferences display 3 default preferences - COP, DTHP, L/
           <a
             aria-label="Read more about the Certificate of Preference"
             href="https://www.sf.gov/learn-about-certificate-preference-cop"
+            rel="noreferrer"
             target="_blank"
           >
             Read More
@@ -78,6 +79,7 @@ exports[`ListingDetailsPreferences display 3 default preferences - COP, DTHP, L/
           <a
             aria-label="Read more about the Displaced Tenant Housing Preference"
             href="https://www.sf.gov/learn-about-displaced-tenant-housing-preference-dthp"
+            rel="noreferrer"
             target="_blank"
           >
             Read More
@@ -118,6 +120,7 @@ exports[`ListingDetailsPreferences display 3 default preferences - COP, DTHP, L/
           <a
             aria-label="Read more about the Live or Work in San Francisco Preference"
             href="https://www.sf.gov/get-priority-housing-lottery"
+            rel="noreferrer"
             target="_blank"
           >
             Read More
@@ -127,6 +130,7 @@ exports[`ListingDetailsPreferences display 3 default preferences - COP, DTHP, L/
           <a
             aria-label="View document checklist for the Live or Work in San Francisco Preference"
             href="/document-checklist#live-or-work-sf"
+            rel="noreferrer"
             target="_blank"
           >
             View Document Checklist
@@ -176,6 +180,7 @@ exports[`ListingDetailsPreferences display 6 preferences 1`] = `
           <a
             aria-label="Read more about the Certificate of Preference"
             href="https://www.sf.gov/learn-about-certificate-preference-cop"
+            rel="noreferrer"
             target="_blank"
           >
             Read More
@@ -216,6 +221,7 @@ exports[`ListingDetailsPreferences display 6 preferences 1`] = `
           <a
             aria-label="Read more about the Rent Burdened / Assisted Housing Preference"
             href="https://www.sf.gov/get-priority-housing-lottery"
+            rel="noreferrer"
             target="_blank"
           >
             Read More
@@ -225,6 +231,7 @@ exports[`ListingDetailsPreferences display 6 preferences 1`] = `
           <a
             aria-label="View document checklist for the Rent Burdened / Assisted Housing Preference"
             href="/document-checklist#rent-burdened-assisted-housing"
+            rel="noreferrer"
             target="_blank"
           >
             View Document Checklist
@@ -265,6 +272,7 @@ exports[`ListingDetailsPreferences display 6 preferences 1`] = `
           <a
             aria-label="Read more about the Displaced Tenant Housing Preference"
             href="https://www.sf.gov/learn-about-displaced-tenant-housing-preference-dthp"
+            rel="noreferrer"
             target="_blank"
           >
             Read More
@@ -305,6 +313,7 @@ exports[`ListingDetailsPreferences display 6 preferences 1`] = `
           <a
             aria-label="Read more about the Neighborhood Resident Housing Preference"
             href="https://www.sf.gov/get-priority-housing-lottery"
+            rel="noreferrer"
             target="_blank"
           >
             Read More
@@ -314,6 +323,7 @@ exports[`ListingDetailsPreferences display 6 preferences 1`] = `
           <a
             aria-label="View document checklist for the Neighborhood Resident Housing Preference"
             href="/document-checklist#nrhp"
+            rel="noreferrer"
             target="_blank"
           >
             View Document Checklist
@@ -354,6 +364,7 @@ exports[`ListingDetailsPreferences display 6 preferences 1`] = `
           <a
             aria-label="Read more about the Live or Work in San Francisco Preference"
             href="https://www.sf.gov/get-priority-housing-lottery"
+            rel="noreferrer"
             target="_blank"
           >
             Read More
@@ -363,6 +374,7 @@ exports[`ListingDetailsPreferences display 6 preferences 1`] = `
           <a
             aria-label="View document checklist for the Live or Work in San Francisco Preference"
             href="/document-checklist#live-or-work-sf"
+            rel="noreferrer"
             target="_blank"
           >
             View Document Checklist
@@ -398,6 +410,7 @@ exports[`ListingDetailsPreferences display 6 preferences 1`] = `
           <a
             aria-label="View document checklist for the Alice Griffith Housing Development Resident"
             href="/document-checklist#hope-sf"
+            rel="noreferrer"
             target="_blank"
           >
             View Document Checklist
@@ -447,6 +460,7 @@ exports[`ListingDetailsPreferences displays right to return preference 1`] = `
           <a
             aria-label="Read more about the Sunnydale Right to Return Preference"
             href="https://www.sf.gov/certain-buildings-have-special-lottery-preferences"
+            rel="noreferrer"
             target="_blank"
           >
             Read More
@@ -456,6 +470,7 @@ exports[`ListingDetailsPreferences displays right to return preference 1`] = `
           <a
             aria-label="View document checklist for the Sunnydale Right to Return Preference"
             href="/document-checklist#undefined"
+            rel="noreferrer"
             target="_blank"
           >
             View Document Checklist

@@ -1,7 +1,7 @@
 import React from "react"
 import stepStyles from "../ListingApplyStepWrapper.module.scss"
 import { Button, Card, Heading } from "@bloom-housing/ui-seeds"
-import { t } from "@bloom-housing/ui-components"
+import { t } from "@uic"
 import Name from "../Name"
 import { UseFormMethods } from "react-hook-form"
 import DateOfBirth from "../DateOfBirth"

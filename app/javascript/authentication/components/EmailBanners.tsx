@@ -1,4 +1,4 @@
-import { t } from "@bloom-housing/ui-components"
+import { t } from "@uic"
 import { Alert } from "@bloom-housing/ui-seeds"
 import React from "react"
 import { confirmEmail } from "../../api/authApiService"

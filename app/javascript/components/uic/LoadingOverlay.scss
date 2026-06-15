@@ -1,0 +1,31 @@
+/* Vendored from @bloom-housing/ui-components src/overlays/LoadingOverlay.scss.
+   Plain CSS only: @apply utilities expanded (-mt-8/-ml-8 = -2rem), sass
+   nesting flattened. */
+
+.loading-overlay {
+  --padding: inherit;
+  padding: var(--padding);
+  position: relative;
+  pointer-events: none;
+}
+
+.loading-overlay:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  background-color: rgba(215, 215, 215, 0.5);
+}
+
+.loading-overlay .loading-overlay__spinner {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  color: var(--bloom-color-white);
+  margin-top: -2rem;
+  margin-left: -2rem;
+  z-index: 10;
+}

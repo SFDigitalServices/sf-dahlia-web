@@ -1,7 +1,7 @@
 import React from "react"
 import { getEventNote, RailsListing } from "../../modules/listings/SharedHelpers"
 import "./ListingDetailsOpenHouses.scss"
-import { Heading, t } from "@bloom-housing/ui-components"
+import { Heading, t } from "@uic"
 import { getEventDateTime, getEventTimeString, sortByDateTimeString } from "../../util/listingUtil"
 import { getTranslatedString, localizedFormat } from "../../util/languageUtil"
 import { ListingEvent } from "../../api/types/rails/listings/BaseRailsListing"

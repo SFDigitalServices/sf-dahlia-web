@@ -1,6 +1,6 @@
 import React, { useContext } from "react"
 
-import { t, SiteAlert, Hero, ActionBlock, Heading } from "@bloom-housing/ui-components"
+import { t, SiteAlert, Hero, ActionBlock, Heading } from "@uic"
 
 import Layout from "../layouts/Layout"
 import withAppSetup from "../layouts/withAppSetup"

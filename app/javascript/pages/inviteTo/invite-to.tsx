@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react"
-import { NavigationContext } from "@bloom-housing/ui-components"
+import { NavigationContext } from "@uic"
 import withAppSetup from "../../layouts/withAppSetup"
 import { AppPages, generateSubmitLink } from "../../util/routeUtil"
 import { getListing } from "../../api/listingApiService"

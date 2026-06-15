@@ -1,5 +1,5 @@
 import React from "react"
-import { ExpandableContent, Heading, Icon, t } from "@bloom-housing/ui-components"
+import { ExpandableContent, Heading, Icon, t } from "@uic"
 import { LOTTERY_RANKING_VIDEO_URL } from "../constants"
 import { ListingDetailsLotteryResultsRow } from "./ListingDetailsLotteryResultsRow"
 import Link from "../../navigation/Link"

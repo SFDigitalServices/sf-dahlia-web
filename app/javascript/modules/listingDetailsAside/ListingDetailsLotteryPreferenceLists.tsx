@@ -1,6 +1,6 @@
 import React from "react"
 import { RailsListing } from "../listings/SharedHelpers"
-import { AppearanceStyleType, t, SidebarBlock, LinkButton } from "@bloom-housing/ui-components"
+import { AppearanceStyleType, t, SidebarBlock, LinkButton } from "@uic"
 import type { ListingLotteryPreference } from "../../api/types/rails/listings/BaseRailsListing"
 import { isLotteryComplete } from "../../util/listingUtil"
 

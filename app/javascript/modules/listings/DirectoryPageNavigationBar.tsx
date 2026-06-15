@@ -1,6 +1,6 @@
 import React, { ReactNode, useContext } from "react"
 import "./DirectoryPageNavigationBar.scss"
-import { Icon, t, UniversalIconType } from "@bloom-housing/ui-components"
+import { Icon, t, UniversalIconType } from "@uic"
 import { ListingsGroups } from "./DirectoryHelpers"
 import { ConfigContext } from "../../lib/ConfigContext"
 interface DirectorySectionInfoObject {

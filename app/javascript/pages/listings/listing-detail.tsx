@@ -7,7 +7,7 @@ import {
   NavigationContext,
   SiteAlert,
   t,
-} from "@bloom-housing/ui-components"
+} from "@uic"
 
 import Layout from "../../layouts/Layout"
 import withAppSetup from "../../layouts/withAppSetup"

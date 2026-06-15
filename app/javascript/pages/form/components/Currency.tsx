@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import React from "react"
-import { t, Field } from "@bloom-housing/ui-components"
+import { t, Field } from "@uic"
 import { useFormContext } from "react-hook-form"
 
 interface CurrencyProps {

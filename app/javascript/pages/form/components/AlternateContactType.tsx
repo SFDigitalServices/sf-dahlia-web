@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import React from "react"
-import { t, Field } from "@bloom-housing/ui-components"
+import { t, Field } from "@uic"
 import { Heading, FormErrorMessage } from "@bloom-housing/ui-seeds"
 import { useFormContext } from "react-hook-form"
 import styles from "./AlternateContactType.module.scss"

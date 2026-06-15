@@ -1,0 +1,17 @@
+/* Vendored from @bloom-housing/ui-components src/global/mixins.scss */
+
+@mixin has-toggle() {
+  &:after {
+    font-weight: bold;
+    display: inline-block;
+    margin-left: var(--bloom-s2);
+    margin-right: var(--bloom-s2);
+    font-size: var(--bloom-font-size-xs);
+    content: "⌃";
+    transform: rotate(180deg) translateY(2px);
+  }
+  &[aria-expanded="true"]:after {
+    margin-right: var(--bloom-s5);
+    transform: rotate(0deg) translateY(2px);
+  }
+}

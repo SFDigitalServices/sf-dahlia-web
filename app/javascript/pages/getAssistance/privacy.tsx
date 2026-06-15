@@ -1,7 +1,7 @@
 import React from "react"
 import withAppSetup from "../../layouts/withAppSetup"
 import Layout from "../../layouts/Layout"
-import { t, PageHeader } from "@bloom-housing/ui-components"
+import { t, PageHeader } from "@uic"
 import { renderMarkup } from "../../util/languageUtil"
 import { MailingListSignup } from "../../components/MailingListSignup"
 import { ConfigContext } from "../../lib/ConfigContext"

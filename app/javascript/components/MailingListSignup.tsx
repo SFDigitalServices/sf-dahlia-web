@@ -1,5 +1,5 @@
 import React, { useContext } from "react"
-import { ActionBlock, Heading, Icon, t } from "@bloom-housing/ui-components"
+import { ActionBlock, Heading, Icon, t } from "@uic"
 import Link from "../navigation/Link"
 import { ConfigContext } from "../lib/ConfigContext"
 

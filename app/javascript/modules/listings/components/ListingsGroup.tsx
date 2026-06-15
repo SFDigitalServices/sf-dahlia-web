@@ -1,6 +1,6 @@
 import React, { useRef, useLayoutEffect, MutableRefObject } from "react"
 import "./ListingsGroup.scss"
-import { Button, Icon, UniversalIconType } from "@bloom-housing/ui-components"
+import { Button, Icon, UniversalIconType } from "@uic"
 
 export interface ListingsGroupProps {
   children?: React.ReactNode

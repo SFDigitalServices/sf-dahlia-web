@@ -1,0 +1,47 @@
+/* Vendored from @bloom-housing/ui-components src/blocks/Tooltip.scss.
+   Plain CSS only: @apply utilities expanded (w-full = 100%, p-2 = 0.5rem,
+   rounded = 0.25rem; colors/font sizes map to --bloom-* vars), sass nesting
+   flattened, theme("colors.primary-dark") inlined. */
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+  width: fit-content;
+}
+
+.tooltip__element {
+  width: 100%;
+  position: fixed;
+  background-color: var(--bloom-color-primary-dark);
+  color: var(--bloom-color-white);
+  border-radius: 0.25rem;
+  padding: 0.5rem;
+  font-size: var(--bloom-font-size-sm);
+  font-weight: 700;
+  text-align: center;
+  text-transform: none;
+  opacity: 0;
+  visibility: hidden;
+  transform: translate(-50%, calc(-100% - 10px * 2));
+
+  max-width: 280px;
+  transition: opacity 0.2s;
+}
+
+.tooltip__element--visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.tooltip__element::before {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  left: 50%;
+  bottom: -8px;
+  transform: translateX(-50%);
+  border-width: 10px 7px 0 7px;
+  border-color: var(--bloom-color-primary-dark) transparent transparent transparent;
+}

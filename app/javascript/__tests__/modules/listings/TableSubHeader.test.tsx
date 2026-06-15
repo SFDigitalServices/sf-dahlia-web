@@ -1,7 +1,7 @@
 import React from "react"
 import { render } from "@testing-library/react"
 import TableSubHeader from "../../../modules/listings/TableSubHeader"
-import { t } from "@bloom-housing/ui-components"
+import { t } from "@uic"
 import { rentalEducatorListing2 } from "../../data/RailsRentalListing/listing-rental-educator"
 import RailsRentalListing from "../../../api/types/rails/listings/RailsRentalListing"
 

@@ -7,7 +7,7 @@ import React, {
   useEffect,
   useState,
 } from "react"
-import { LoadingOverlay, StackedTableRow, t } from "@bloom-housing/ui-components"
+import { LoadingOverlay, StackedTableRow, t } from "@uic"
 
 import type RailsRentalListing from "../../api/types/rails/listings/RailsRentalListing"
 import { EligibilityFilters } from "../../api/listingsApiService"

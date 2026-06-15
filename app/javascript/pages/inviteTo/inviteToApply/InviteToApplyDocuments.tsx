@@ -6,7 +6,7 @@ import {
   ContentAccordion,
   IconFillColors,
   SidebarBlock,
-} from "@bloom-housing/ui-components"
+} from "@uic"
 import { Heading, Button, Message } from "@bloom-housing/ui-seeds"
 import { faPrint, faEnvelope } from "@fortawesome/free-solid-svg-icons"
 import RailsSaleListing from "../../../api/types/rails/listings/RailsSaleListing"

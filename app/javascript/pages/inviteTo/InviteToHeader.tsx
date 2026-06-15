@@ -1,5 +1,5 @@
 import React from "react"
-import { t } from "@bloom-housing/ui-components"
+import { t } from "@uic"
 import { Card, Button, Heading } from "@bloom-housing/ui-seeds"
 import RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
 import styles from "./invite-to.module.scss"

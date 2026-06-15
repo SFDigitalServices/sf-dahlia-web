@@ -1,5 +1,5 @@
 import React from "react"
-import { ListSection, t } from "@bloom-housing/ui-components"
+import { ListSection, t } from "@uic"
 import { renderInlineMarkup, getSfGovUrl } from "../../util/languageUtil"
 
 export const ListingDetailsChisholmPreferences = ({

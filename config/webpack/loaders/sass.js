@@ -16,7 +16,7 @@ const plugins = [
 const bloomTheme = require('../../../tailwind.config.js')
 
 // eslint-disable-next-line import/order
-const tailwindVars = require('@bloom-housing/ui-components/tailwind.tosass.js')(
+const tailwindVars = require('./tailwindToSass.js')(
   bloomTheme
 )
 

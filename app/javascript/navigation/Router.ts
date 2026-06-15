@@ -1,6 +1,6 @@
 import { UrlObject } from "url"
 
-import { GenericRouter, GenericRouterOptions } from "@bloom-housing/ui-components"
+import { GenericRouter, GenericRouterOptions } from "@uic"
 
 import { getNewLanguagePath } from "../util/routeUtil"
 

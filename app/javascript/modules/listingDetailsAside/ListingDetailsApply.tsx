@@ -9,7 +9,7 @@ import {
   OrDivider,
   SidebarBlock,
   t,
-} from "@bloom-housing/ui-components"
+} from "@uic"
 import { RailsListing } from "../listings/SharedHelpers"
 import {
   acceptingPaperApplications,

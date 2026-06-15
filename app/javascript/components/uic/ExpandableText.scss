@@ -1,0 +1,20 @@
+/* Vendored from @bloom-housing/ui-components src/actions/ExpandableText.scss.
+   Plain CSS only; @apply rules expanded to literal values. */
+
+.expandable-text p:not(:last-child),
+.expandable-text ul:not(:last-child) {
+  margin-bottom: 0.9em;
+}
+
+.expandable-text ul {
+  list-style: disc;
+  margin-left: 1.4em;
+}
+
+.button-toggle {
+  color: var(--bloom-color-primary);
+  cursor: pointer;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-word;
+}

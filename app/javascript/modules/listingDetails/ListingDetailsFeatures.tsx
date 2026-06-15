@@ -1,7 +1,7 @@
 import React from "react"
 import { RailsListing } from "../listings/SharedHelpers"
 import { ListingDetailsUnitAccordions } from "./ListingDetailsUnitAccordions"
-import { AdditionalFees, Description, ListingDetailItem, t } from "@bloom-housing/ui-components"
+import { AdditionalFees, Description, ListingDetailItem, t } from "@uic"
 import { isBMR, isRental, isSale } from "../../util/listingUtil"
 import { stripMostTags } from "../../util/filterUtil"
 import { isValidUrl } from "../../util/urlUtil"

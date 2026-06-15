@@ -5,7 +5,7 @@ import { getListing, getPreferences } from "../../api/listingApiService"
 import type { RailsListing } from "../../modules/listings/SharedHelpers"
 import type { RailsListingPreference } from "../../api/types/rails/listings/RailsListingPreferences"
 import { AppPages, getListingDetailPath } from "../../util/routeUtil"
-import { LoadingOverlay } from "@bloom-housing/ui-components"
+import { LoadingOverlay } from "@uic"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import { UNLEASH_FLAG } from "../../modules/constants"
 import {

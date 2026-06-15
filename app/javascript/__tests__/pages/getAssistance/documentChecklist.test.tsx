@@ -2,7 +2,7 @@ import { renderAndLoadAsync } from "../../__util__/renderUtils"
 import DocumentChecklist from "../../../pages/getAssistance/document-checklist"
 import React from "react"
 import { within } from "@testing-library/react"
-import { t } from "@bloom-housing/ui-components"
+import { t } from "@uic"
 
 describe("<DocumentChecklist />", () => {
   it("shows the correct header text", async () => {

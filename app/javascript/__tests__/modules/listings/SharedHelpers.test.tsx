@@ -1,5 +1,5 @@
 import { getImageCardProps, getListingStatuses } from "../../../modules/listings/SharedHelpers"
-import { ApplicationStatusType, StatusBarType } from "@bloom-housing/ui-components"
+import { ApplicationStatusType, StatusBarType } from "@uic"
 import type RailsRentalListing from "../../../api/types/rails/listings/RailsRentalListing"
 import { notYetOpenSaleFcfsListing } from "../../data/RailsSaleListing/listing-sale-fcfs-not-yet-open"
 import { closedFcfsSaleListing } from "../../data/RailsSaleListing/listing-sale-fcfs-closed"

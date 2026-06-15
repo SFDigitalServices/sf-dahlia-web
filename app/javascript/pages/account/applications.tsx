@@ -9,7 +9,7 @@ import {
   Button,
   AppearanceStyleType,
   AppearanceBorderType,
-} from "@bloom-housing/ui-components"
+} from "@uic"
 import { Card, Dialog, Heading } from "@bloom-housing/ui-seeds"
 import { ApplicationItem } from "../../components/ApplicationItem"
 import { AppPages, getApplicationPath, getLocalizedPath, RedirectType } from "../../util/routeUtil"

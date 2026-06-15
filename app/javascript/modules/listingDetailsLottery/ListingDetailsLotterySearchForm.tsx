@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { Field, Heading, Icon, IconFillColors, t } from "@bloom-housing/ui-components"
+import { Field, Heading, Icon, IconFillColors, t } from "@uic"
 import { useForm } from "react-hook-form"
 import type { RailsLotteryResult } from "../../api/types/rails/listings/RailsLotteryResult"
 import { RailsListing } from "../listings/SharedHelpers"

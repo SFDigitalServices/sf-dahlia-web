@@ -1,4 +1,4 @@
-import { Heading, PageHeader, t } from "@bloom-housing/ui-components"
+import { Heading, PageHeader, t } from "@uic"
 import React from "react"
 import "./BuyHeader.scss"
 import { BeforeApplyingForSale, BeforeApplyingType } from "../../components/BeforeApplyingForSale"

@@ -10,11 +10,11 @@ import {
   NavigationContext,
   SiteHeader as BloomSiteHeader,
   t,
-} from "@bloom-housing/ui-components"
+} from "@uic"
 import UserContext from "../../authentication/context/UserContext"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import { UNLEASH_FLAG } from "../../modules/constants"
-import "@bloom-housing/ui-components/src/headers/SiteHeader.scss"
+import "../uic/SiteHeader.scss"
 import styles from "./SiteHeader.module.scss"
 
 type LogoWidth = "slim" | "base" | "medium" | "wide"

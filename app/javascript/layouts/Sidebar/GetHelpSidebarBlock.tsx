@@ -1,4 +1,4 @@
-import { LinkButton, SidebarBlock, t } from "@bloom-housing/ui-components"
+import { LinkButton, SidebarBlock, t } from "@uic"
 import React from "react"
 import { getSfGovUrl, renderInlineMarkup } from "../../util/languageUtil"
 

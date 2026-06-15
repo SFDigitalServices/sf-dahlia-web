@@ -1,0 +1,37 @@
+// Vendored from @bloom-housing/ui-components src/helpers/translator.tsx
+import Polyglot from "node-polyglot"
+
+interface TranslatorConfig {
+  polyglot?: Polyglot
+}
+
+const translatorConfig: TranslatorConfig = {}
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+;(global as any).Translator = translatorConfig
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const addTranslation = (translationPhrases: any, resetPolyglot = false) => {
+  if (!translatorConfig.polyglot || resetPolyglot) {
+    // Set up the initial Polyglot instance and phrases
+    translatorConfig.polyglot = new Polyglot({
+      phrases: translationPhrases,
+    })
+  } else {
+    // Extend the Polyglot instance with new phrases
+    translatorConfig.polyglot.extend(translationPhrases)
+  }
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const t = (phrase: string, options?: any): string => {
+  if (translatorConfig.polyglot) {
+    return translatorConfig.polyglot.t(phrase, options)
+  }
+  return "{{ Missing Translation Phrases }}"
+}
+
+// The package's locale() effectively always returned "en" once phrases were
+// loaded (and crashed otherwise); only used for English ordinal suffixes.
+const locale = () => "en"
+
+export { t as default, t, locale }

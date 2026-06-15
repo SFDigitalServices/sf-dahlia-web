@@ -2,7 +2,7 @@ import React from "react"
 import Layout from "../../layouts/Layout"
 import withAppSetup from "../../layouts/withAppSetup"
 import { Card } from "@bloom-housing/ui-seeds"
-import { Icon, t, type UniversalIconType } from "@bloom-housing/ui-components"
+import { Icon, t, type UniversalIconType } from "@uic"
 import {
   AppPages,
   getMyAccountSettingsPath,

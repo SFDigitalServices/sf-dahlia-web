@@ -8,7 +8,7 @@ import PasswordFieldset, {
 } from "../../pages/account/components/PasswordFieldset"
 import { useForm } from "react-hook-form"
 import { ExpandedAccountAxiosError, getErrorMessage } from "../../pages/account/components/util"
-import { t } from "@bloom-housing/ui-components"
+import { t } from "@uic"
 
 const WrappedPasswordFieldset = () => {
   const {

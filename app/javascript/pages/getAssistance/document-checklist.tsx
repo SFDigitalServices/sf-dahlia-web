@@ -1,4 +1,4 @@
-import { ContentAccordion, t } from "@bloom-housing/ui-components"
+import { ContentAccordion, t } from "@uic"
 import React from "react"
 import AssistanceLayout from "../../layouts/HeaderSidebarLayout"
 import withAppSetup from "../../layouts/withAppSetup"

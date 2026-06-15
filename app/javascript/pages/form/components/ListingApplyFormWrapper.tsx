@@ -1,5 +1,5 @@
 import React from "react"
-import { ProgressNav, t } from "@bloom-housing/ui-components"
+import { ProgressNav, t } from "@uic"
 import { Card, Heading } from "@bloom-housing/ui-seeds"
 import { useFormEngineContext } from "../../../formEngine/formEngineContext"
 import styles from "./ListingApplyFormWrapper.module.scss"

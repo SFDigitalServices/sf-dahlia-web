@@ -2,7 +2,7 @@ import React from "react"
 import { screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event" // default import
 import { useForm, FormProvider } from "react-hook-form"
-import { t } from "@bloom-housing/ui-components"
+import { t } from "@uic"
 import HouseholdMemberForm from "../../../../pages/form/components/household/HouseholdMemberForm"
 import { renderWithFormContextWrapper } from "../../../__util__/renderUtils"
 

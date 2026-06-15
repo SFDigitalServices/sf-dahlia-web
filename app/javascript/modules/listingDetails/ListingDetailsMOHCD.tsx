@@ -1,5 +1,5 @@
 import React, { useContext } from "react"
-import { Mobile, Desktop, t } from "@bloom-housing/ui-components"
+import { Mobile, Desktop, t } from "@uic"
 import { ConfigContext } from "../../lib/ConfigContext"
 
 export const ListingDetailsMOHCD = () => {

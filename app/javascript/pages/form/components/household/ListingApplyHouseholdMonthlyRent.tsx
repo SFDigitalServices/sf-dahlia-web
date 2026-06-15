@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/unbound-method */
-import { Field, t } from "@bloom-housing/ui-components"
+import { Field, t } from "@uic"
 import React, { useEffect } from "react"
 import { useFormContext, useWatch } from "react-hook-form"
 import { GroupedAddress } from "./ListingApplyHouseholdMonthlyRentStep"

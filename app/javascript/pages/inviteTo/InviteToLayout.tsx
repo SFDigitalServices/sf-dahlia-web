@@ -1,6 +1,6 @@
 import React from "react"
 import { Heading, Message } from "@bloom-housing/ui-seeds"
-import { SidebarBlock, Icon, PageHeader, Desktop, t } from "@bloom-housing/ui-components"
+import { SidebarBlock, Icon, PageHeader, Desktop, t } from "@uic"
 import RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
 import { getListingAddressString, isDeadlinePassed } from "../../util/listingUtil"
 import {

@@ -5,7 +5,7 @@ import { openRentalListing } from "../../data/RailsRentalListing/listing-rental-
 import { habitatListing } from "../../data/RailsSaleListing/listing-sale-habitat"
 import { sroRentalListing } from "../../data/RailsRentalListing/listing-rental-sro"
 import { renderAndLoadAsync } from "../../__util__/renderUtils"
-import { resetAccordionUuid } from "@bloom-housing/ui-components"
+import { resetAccordionUuid } from "@uic"
 import TagManager from "react-gtm-module"
 
 const axios = require("axios")

@@ -9,7 +9,7 @@ import {
   ExpandableSection,
   SidebarBlock,
   Desktop,
-} from "@bloom-housing/ui-components"
+} from "@uic"
 import { getTranslatedString, localizedFormat, renderInlineMarkup } from "../../util/languageUtil"
 import { ListingDetailsLotteryPreferenceLists } from "./ListingDetailsLotteryPreferenceLists"
 export interface ListingDetailsProcessProps {

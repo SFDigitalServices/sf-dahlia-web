@@ -1,6 +1,6 @@
 import React from "react"
 import { RailsListing } from "../listings/SharedHelpers"
-import { Icon, t } from "@bloom-housing/ui-components"
+import { Icon, t } from "@uic"
 import { localizedFormat, formatTimeOfDay } from "../../util/languageUtil"
 import { getFcfsSalesListingState, isFcfsSalesListing, isOpen } from "../../util/listingUtil"
 import { Message } from "@bloom-housing/ui-seeds"

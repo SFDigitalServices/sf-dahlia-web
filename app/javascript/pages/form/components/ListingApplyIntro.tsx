@@ -1,5 +1,5 @@
 import React from "react"
-import { t } from "@bloom-housing/ui-components"
+import { t } from "@uic"
 import { Button, Heading, Message } from "@bloom-housing/ui-seeds"
 import { getListingAddressString } from "../../../util/listingUtil"
 import { localizedFormat, formatTimeOfDay } from "../../../util/languageUtil"

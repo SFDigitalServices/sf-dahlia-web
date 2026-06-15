@@ -1,7 +1,7 @@
 import React from "react"
 import { screen } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
-import { t } from "@bloom-housing/ui-components"
+import { t } from "@uic"
 import ListingApplyHouseholdIncomeStep from "../../../../pages/form/components/ListingApplyHouseholdIncomeStep"
 import { renderWithFormContextWrapper } from "../../../__util__/renderUtils"
 import { checkHouseholdEligibility } from "../../../../api/formApiService"

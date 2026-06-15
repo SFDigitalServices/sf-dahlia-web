@@ -1,5 +1,5 @@
 import React from "react"
-import { t } from "@bloom-housing/ui-components"
+import { t } from "@uic"
 import { screen } from "@testing-library/react"
 import ListingApplyPublicHousingHeader from "../../../../pages/form/components/ListingApplyPublicHousingHeader"
 import { renderWithFormContextWrapper } from "../../../__util__/renderUtils"

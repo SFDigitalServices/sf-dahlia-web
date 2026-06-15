@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react"
-import { CategoryTable, ContentAccordion, Icon, t } from "@bloom-housing/ui-components"
+import { CategoryTable, ContentAccordion, Icon, t } from "@uic"
 import { RailsListing } from "../listings/SharedHelpers"
 import {
   isHabitatListing,

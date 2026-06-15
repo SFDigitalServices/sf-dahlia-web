@@ -1,5 +1,5 @@
 import React, { useMemo } from "react"
-import { t, Form } from "@bloom-housing/ui-components"
+import { t, Form } from "@uic"
 import { Button, Card, Heading } from "@bloom-housing/ui-seeds"
 import { FormProvider, useForm } from "react-hook-form"
 import stepStyles from "../ListingApplyStepWrapper.module.scss"

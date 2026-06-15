@@ -7,7 +7,7 @@ import EmailFieldset, {
 import { render, screen } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
 import { useForm } from "react-hook-form"
-import { t } from "@bloom-housing/ui-components"
+import { t } from "@uic"
 import { ExpandedAccountAxiosError, getErrorMessage } from "../../pages/account/components/util"
 
 const FieldSetWrapper = () => {

@@ -1,7 +1,7 @@
 // New accounts layout for my-account.tsx
 import React from "react"
 import { Button, Heading, Tabs } from "@bloom-housing/ui-seeds"
-import { Icon, t, UniversalIconType } from "@bloom-housing/ui-components"
+import { Icon, t, UniversalIconType } from "@uic"
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import Layout from "../../layouts/Layout"

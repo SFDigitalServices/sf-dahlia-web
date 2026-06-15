@@ -1,6 +1,6 @@
 import React from "react"
 import { render, screen } from "@testing-library/react"
-import { t } from "@bloom-housing/ui-components"
+import { t } from "@uic"
 import ContactCard from "../../../../pages/account/components/ContactCard"
 import { mockProfileStub } from "../../../__util__/accountUtils"
 import { getMyAccountContactPath } from "../../../../util/routeUtil"

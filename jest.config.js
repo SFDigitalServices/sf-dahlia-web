@@ -35,9 +35,13 @@ module.exports = {
   setupFiles: ["<rootDir>/__tests__/jest.setup.js"],
   moduleNameMapper: {
     "\\.(scss|css|less|jpg)$": "identity-obj-proxy",
+    "^@uic$": "<rootDir>/components/uic",
     "^axios$": require.resolve("axios"),
   },
-  transformIgnorePatterns: ["node_modules/?!(@bloom-housing/ui-components)"],
+  // @bloom-housing/ui-seeds ships untranspiled ESM and must be transformed by
+  // babel; everything else under node_modules is left ignored. (Previously this
+  // pattern named @bloom-housing/ui-components, which has since been vendored.)
+  transformIgnorePatterns: ["node_modules/(?!(@bloom-housing/ui-seeds)/)"],
   moduleFileExtensions: ["js", "jsx", "ts", "tsx"],
   testEnvironment: "jsdom",
   testSequencer: "<rootDir>/__tests__/CustomTestSequencer.ts",
