@@ -44,6 +44,7 @@ type InviteToUrlParams = {
 
 type ServerProps = {
   assetPaths: unknown
+  documentsPath?: boolean
   urlParams?: InviteToUrlParams
   uploadUrl?: string
   schedulingUrl?: string
@@ -109,7 +110,11 @@ const App = (serverProps: ServerProps) => (
       )}
       {INVITE_TO_PATHS.flatMap((p) =>
         localizedPaths(p).map((routePath) => (
-          <Route key={routePath} path={routePath} element={<InviteToPage {...serverProps} />} />
+          <Route
+            key={routePath}
+            path={routePath}
+            element={<InviteToPage {...serverProps} urlParams={serverProps.urlParams ?? {}} />}
+          />
         ))
       )}
       <Route path="*" element={<AngularRoute />} />

@@ -37,8 +37,7 @@ const ListingApplyForm = (_: ListingApplyFormProps) => {
   const { flagsReady, unleashFlag: formEngine } = useFeatureFlag(UNLEASH_FLAG.FORM_ENGINE, false)
 
   useMemo(() => {
-    if (flagsReady && !formEngine)
-      window.location.assign(`${getListingDetailPath()}/${listingId}`)
+    if (flagsReady && !formEngine) window.location.assign(`${getListingDetailPath()}/${listingId}`)
   }, [flagsReady, formEngine, listingId])
 
   useEffect(() => {
