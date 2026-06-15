@@ -10,6 +10,8 @@ import {
   generateHouseholdMemberOptions,
 } from "../../../../util/listingApplyUtil"
 import { getNestedError } from "../../../../util/formEngineUtil"
+import { renderInlineMarkup } from "../../../../util/languageUtil"
+import styles from "./ListingApplyPreferenceStepWrapper.module.scss"
 
 interface PreferenceFieldsProps {
   preferenceContent: PreferenceContent
@@ -57,6 +59,7 @@ const PreferenceFields = ({
         id={householdMemberId}
         name={householdMemberId}
         label={t(proofHouseholdMemberLabel)}
+        labelClassName={styles["preference-fields-label"]}
         options={generateHouseholdMemberOptions(eligibleHouseholdMembers)}
         placeholder={t("label.selectOne")}
         controlClassName="control"
@@ -91,7 +94,8 @@ const PreferenceFields = ({
         <Field
           name={certificateNumber}
           label={t(certificateNumberLabel)}
-          note={certificateNumberNote && t(certificateNumberNote)}
+          labelClassName={styles["preference-fields-label"]}
+          note={certificateNumberNote && <p>{renderInlineMarkup(t(certificateNumberNote))}</p>}
           placeholder={t("label.certificateNumber")}
           register={register}
         />
