@@ -1,22 +1,29 @@
-import React from "react"
+import React, { useContext } from "react"
 import { t, Icon } from "@bloom-housing/ui-components"
 import { Heading, Tabs } from "@bloom-housing/ui-seeds"
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { ConfigContext } from "../lib/ConfigContext"
 import { getPathWithoutLanguagePrefix } from "../util/languageUtil"
 import {
-  getAccountPath,
-  getApplicationsPath,
-  getSettingsPath,
+  getMyAccountPath,
+  getApplicationPath,
+  getMyAccountSettingsPath,
   getSignInPath,
+  getMyAccountContactPath,
 } from "../util/routeUtil"
 import styles from "./AccountNav.module.scss"
 
-const isNavActive = (navPath: string): boolean => {
-  return getPathWithoutLanguagePrefix(window.location.pathname) === navPath
+const isNavActive = (localizedPath: string): boolean => {
+  return (
+    getPathWithoutLanguagePrefix(window.location.pathname) ===
+    getPathWithoutLanguagePrefix(localizedPath)
+  )
 }
 
 const AccountNav = () => {
+  const { getAssetPath } = useContext(ConfigContext)
+
   return (
     <div className={styles.accountNav}>
       <Heading size="sm" className={styles.accountNavTitle}>
@@ -28,15 +35,29 @@ const AccountNav = () => {
         className={`vertical-sidebar-layout ${styles.accountNavTabs}`}
       >
         <Tabs.TabList>
-          <Tabs.Tab href={getAccountPath()} active={isNavActive(getAccountPath())}>
+          <Tabs.Tab href={getMyAccountPath()} active={isNavActive(getMyAccountPath())}>
             <Icon size="md-large" symbol="profile" className={styles.accountNavLinkIcon} />
             {t("accountLayout.nav.overview")}
           </Tabs.Tab>
-          <Tabs.Tab href={getApplicationsPath()} active={isNavActive(getApplicationsPath())}>
+          <Tabs.Tab
+            href={getMyAccountContactPath()}
+            active={isNavActive(getMyAccountContactPath())}
+          >
+            <img
+              src={getAssetPath("contact-info.png")}
+              alt=""
+              className={`${styles.accountNavLinkIcon} ${styles.accountNavLinkImage}`}
+            />
+            {t("accountLayout.nav.contactInfo")}
+          </Tabs.Tab>
+          <Tabs.Tab href={getApplicationPath()} active={isNavActive(getApplicationPath())}>
             <Icon size="md-large" symbol="application" className={styles.accountNavLinkIcon} />
             {t("accountLayout.nav.applications")}
           </Tabs.Tab>
-          <Tabs.Tab href={getSettingsPath()} active={isNavActive(getSettingsPath())}>
+          <Tabs.Tab
+            href={getMyAccountSettingsPath()}
+            active={isNavActive(getMyAccountSettingsPath())}
+          >
             <Icon size="md-large" symbol="settings" className={styles.accountNavLinkIcon} />
             {t("accountSettings.title.sentenceCase")}
           </Tabs.Tab>

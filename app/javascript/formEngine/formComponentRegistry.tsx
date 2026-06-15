@@ -25,17 +25,16 @@ import Radio from "../pages/form/components/Radio"
 import VeteransPreferenceRadio from "../pages/form/components/VeteransPreferenceRadio"
 import Currency from "../pages/form/components/Currency"
 import AlternateContactType from "../pages/form/components/AlternateContactType"
-import MonthlyRent from "../pages/form/components/MonthlyRent"
 import PrioritiesCheckbox from "../pages/form/components/PrioritiesCheckbox"
 import PreferenceCheckboxGroup from "../pages/form/components/PreferenceCheckboxGroup"
-import ListingApplyPreferenceStepWrapper from "../pages/form/components/ListingApplyPreferenceStepWrapper"
-import ListingApplyLiveWorkPreference from "../pages/form/components/ListingApplyLiveWorkPreference"
-import CertificateNumberPreference from "../pages/form/components/CertificateNumberPreference"
+import ListingApplyPreferenceStepWrapper from "../pages/form/components/preferences/ListingApplyPreferenceStepWrapper"
 import ListingApplyIncomeVouchersHeader from "../pages/form/components/ListingApplyIncomeVouchersHeader"
 import ListingApplyHouseholdIncomeHeader from "../pages/form/components/ListingApplyHouseholdIncomeHeader"
 import ListingApplyVeteransPreferenceHeader from "../pages/form/components/ListingApplyVeteransPreferenceHeader"
 import ListingApplyHouseholdPrioritiesHeader from "../pages/form/components/ListingApplyHouseholdPrioritiesHeader"
 import ListingApplyHouseholdIncomeStep from "../pages/form/components/ListingApplyHouseholdIncomeStep"
+import ListingApplyHouseholdMonthlyRentStep from "../pages/form/components/household/ListingApplyHouseholdMonthlyRentStep"
+import ListingApplyHouseholdMonthlyRent from "../pages/form/components/household/ListingApplyHouseholdMonthlyRent"
 
 export default function getFormComponentRegistry() {
   return {
@@ -50,7 +49,6 @@ export default function getFormComponentRegistry() {
     HouseholdMemberMultiStepWrapper,
     ListingApplyHouseholdIncomeStep,
     ListingApplyPreferencesIntro,
-    ListingApplyLiveWorkPreference,
     ListingApplyRentBurdenPreference,
     ListingApplyDemographics,
     ListingApplyReviewSummary,
@@ -58,6 +56,7 @@ export default function getFormComponentRegistry() {
     ListingApplyReviewApplication,
     ListingApplyContactStepWrapper,
     ListingApplyPreferenceStepWrapper,
+    ListingApplyHouseholdMonthlyRentStep,
     // Field-level components
     Select,
     Radio,
@@ -70,10 +69,9 @@ export default function getFormComponentRegistry() {
     Address,
     Currency,
     AlternateContactType,
-    MonthlyRent,
     PrioritiesCheckbox,
     PreferenceCheckboxGroup,
-    CertificateNumberPreference,
+    ListingApplyHouseholdMonthlyRent,
     // Other components
     ListingApplyPublicHousingHeader,
     ListingApplyIncomeVouchersHeader,

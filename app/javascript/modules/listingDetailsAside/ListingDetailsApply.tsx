@@ -89,7 +89,7 @@ const StandardHowToApply = ({
             {renderInlineMarkup(
               t("listings.apply.fulfillEligibilityRequirements", {
                 url: isHabitatListing
-                  ? "http://www.habitatgsf.org/innes-ave/"
+                  ? "https://habitatgsf.org/amber-drive-sf/"
                   : getSfGovUrl(
                       "https://sf.gov/determine-if-you-can-buy-affordable-housing-program"
                     ),

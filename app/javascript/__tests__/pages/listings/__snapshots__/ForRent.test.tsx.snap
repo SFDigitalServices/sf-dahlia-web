@@ -143,7 +143,6 @@ exports[`For Rent renders ForRent component 1`] = `
         <nav
           aria-label="main navigation"
           class="site-header__container"
-          role="navigation"
         >
           <div
             class="site-header__base  site-header__base-wrapped"
@@ -191,29 +190,20 @@ exports[`For Rent renders ForRent component 1`] = `
               </a>
               <a
                 class="site-header__link  "
-                data-testid="My Favorites-2"
-                href="/favorites"
-              >
-                <div>
-                  My Favorites
-                </div>
-              </a>
-              <a
-                class="site-header__link  "
-                data-testid="Get Assistance-3"
+                data-testid="Get assistance-2"
                 href="/get-assistance"
               >
                 <div>
-                  Get Assistance
+                  Get assistance
                 </div>
               </a>
               <a
                 class="site-header__link  "
-                data-testid="Sign In-4"
+                data-testid="Sign in-3"
                 href="/sign-in"
               >
                 <div>
-                  Sign In
+                  Sign in
                 </div>
               </a>
             </div>

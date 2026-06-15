@@ -110,3 +110,19 @@ export const userObjectGenerator = ({
     headers: generateHeaders(email || staticUserData.email),
   }
 }
+
+export const interceptUnleashFlags = () => {
+  cy.intercept(
+    "GET",
+    "https://dahlia-feature-service-fbc319c3f542.herokuapp.com/api/frontend**",
+    (request) => {
+      request.continue((response) => {
+        response.body.toggles.forEach((toggle) => {
+          if (toggle.name === "temp.webapp.newAccountLayout") {
+            toggle.enabled = true
+          }
+        })
+      })
+    }
+  ).as("unleashFlags")
+}

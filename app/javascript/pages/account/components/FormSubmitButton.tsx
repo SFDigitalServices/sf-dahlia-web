@@ -1,4 +1,4 @@
-import { Button } from "@bloom-housing/ui-components"
+import { Button } from "@bloom-housing/ui-seeds"
 import React from "react"
 
 interface FormSubmitButtonProps {
@@ -9,7 +9,7 @@ interface FormSubmitButtonProps {
 const FormSubmitButton = ({ loading, label }: FormSubmitButtonProps) => {
   return (
     <div className="flex justify-center pt-2">
-      <Button loading={loading} type="submit">
+      <Button loadingMessage={loading ? label : undefined} type="submit" variant="primary-outlined">
         {label}
       </Button>
     </div>

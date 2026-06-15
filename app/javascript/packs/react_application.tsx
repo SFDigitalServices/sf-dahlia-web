@@ -32,7 +32,9 @@ import ListingApplyForm from "../pages/form/listing-apply-form"
 import Account from "../pages/account/account"
 import Applications from "../pages/account/applications"
 import Settings from "../pages/account/settings"
+import Contact from "../pages/account/contact"
 import type { INVITE_TO_X } from "../modules/constants"
+
 
 type InviteToUrlParams = {
   type?: INVITE_TO_X
@@ -75,6 +77,7 @@ const PAGE_ROUTES = [
   [Account, "/account"],
   [Applications, "/account/applications"],
   [Settings, "/account/settings"],
+  [Contact, "/account/contact"],
 ] as const
 
 const INVITE_TO_PATHS = [

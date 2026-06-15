@@ -47,6 +47,18 @@ export const showStep = (
   return true
 }
 
+/****************
+ * TODO: DAH-4160
+ * Modify condition logic to handle more complex navigation scenarios
+ * e.g. showing the live/work preference based on the live/work status of household members
+ */
+// export const processCondition = (condition, dataSources) => {
+//   if (condition.customFunctionName) {
+//     return customFunctionRegistry[condition.customFunctionName](dataSources)
+//   }
+//  ...
+// }
+
 export const calculateNextStep = (
   currentStepIndex: number,
   stepInfoMap: StepInfoSchema[],
@@ -141,7 +153,17 @@ export const updateFormPath = (newStepIndex: number, stepInfoMap: StepInfoSchema
   const newPath = paths.join("/")
   window.history.pushState({}, "", newPath)
 }
-
+export const getAddress = (
+  addressStreet: string,
+  addressCity: string,
+  addressState: string,
+  addressZipcode: string,
+  addressAptOrUnit?: string
+) => {
+  return [addressStreet, addressAptOrUnit, addressCity, addressState, addressZipcode]
+    .filter(Boolean)
+    .join(", ")
+}
 export const getFormattedAddress = (address: {
   street1?: string
   street2?: string

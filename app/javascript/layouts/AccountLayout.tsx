@@ -8,9 +8,11 @@ export interface AccountLayoutProps {
 
 const AccountLayout = ({ children }: AccountLayoutProps) => {
   return (
-    <div className={styles.accountLayout}>
-      <AccountNav />
-      {children}
+    <div className={styles.accountLayoutBackground}>
+      <div className={styles.accountLayout}>
+        <AccountNav />
+        <div className={styles.accountLayoutContent}>{children}</div>
+      </div>
     </div>
   )
 }
