@@ -75,7 +75,13 @@ const InviteToPage = ({
     // no action from applicant - preview submit page
     if (!act) {
       return (
-        <InviteToInterviewNextSteps listing={listing} deadline={deadline} url={schedulingUrl} />
+        <InviteToInterviewNextSteps
+          listing={listing}
+          deadline={deadline}
+          url={schedulingUrl}
+          appId={appId}
+          isTest={isTest}
+        />
       )
     }
     if (act === "no") {
@@ -90,7 +96,13 @@ const InviteToPage = ({
     }
     if (act === "yes") {
       return (
-        <InviteToInterviewNextSteps listing={listing} deadline={deadline} url={schedulingUrl} />
+        <InviteToInterviewNextSteps
+          listing={listing}
+          deadline={deadline}
+          url={schedulingUrl}
+          appId={appId}
+          isTest={isTest}
+        />
       )
     }
     if (isDeadlinePassed(deadline)) return <InviteToDeadlinePassed listing={listing} />
