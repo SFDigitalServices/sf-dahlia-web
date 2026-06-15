@@ -154,7 +154,17 @@ export const updateFormPath = (newStepIndex: number, stepInfoMap: StepInfoSchema
   const newPath = paths.join("/")
   window.history.pushState({}, "", newPath)
 }
-
+export const getAddress = (
+  addressStreet: string,
+  addressCity: string,
+  addressState: string,
+  addressZipcode: string,
+  addressAptOrUnit?: string
+) => {
+  return [addressStreet, addressAptOrUnit, addressCity, addressState, addressZipcode]
+    .filter(Boolean)
+    .join(", ")
+}
 export const getFormattedAddress = (address: {
   street1?: string
   street2?: string
