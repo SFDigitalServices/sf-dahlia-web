@@ -10,16 +10,17 @@ describe("Forgot Password Page", () => {
     }).as("password")
 
     cy.visit("/forgot-password")
-    cy.get('input[name="email"]').clear().type("john.doe@example.com")
-    cy.get('button[type="submit"]').click()
+    cy.get('input[name="email"]').type("john.doe@example.com")
+    cy.get('input[name="email"]').should("have.value", "john.doe@example.com")
+    cy.get('input[type="submit"]').click()
     cy.wait("@password").its("response.statusCode").should("eq", 200)
-    cy.contains("We sent you an email").should("be.visible")
+    cy.contains("We've sent you an email.").should("be.visible")
   })
 
   it("should show an error for non email address", () => {
     cy.visit("/forgot-password")
     cy.get('input[name="email"]').clear().type("test@")
-    cy.get('button[type="submit"]').click()
-    cy.contains("Email entered incorrectly").should("be.visible")
+    cy.get('input[type="submit"]').click()
+    cy.contains("You'll need to resolve any errors before moving on.").should("be.visible")
   })
 })
