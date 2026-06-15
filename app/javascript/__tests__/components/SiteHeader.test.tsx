@@ -1,5 +1,6 @@
 import React from "react"
 import { render, screen } from "@testing-library/react"
+import { MemoryRouter } from "react-router"
 import SiteHeader, { SiteHeaderProps } from "../../components/SiteHeader/SiteHeader"
 import { setupUserContext } from "../__util__/accountUtils"
 
@@ -20,7 +21,9 @@ describe("SiteHeader", () => {
     siteHeaderProps: Partial<SiteHeaderProps> = {}
   ) =>
     render(
-      <SiteHeader homeURL="/" logoSrc="/logo.svg" menuLinks={menuLinks} {...siteHeaderProps} />
+      <MemoryRouter>
+        <SiteHeader homeURL="/" logoSrc="/logo.svg" menuLinks={menuLinks} {...siteHeaderProps} />
+      </MemoryRouter>
     )
 
   it("renders account avatar with initials of user", () => {
