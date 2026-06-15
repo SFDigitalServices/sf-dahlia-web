@@ -1,7 +1,6 @@
 import React from "react"
 import { render, screen } from "@testing-library/react"
 import SiteHeader, { SiteHeaderProps } from "../../components/SiteHeader/SiteHeader"
-import NavigationProvider from "../../navigation/NavigationProvider"
 import { setupUserContext } from "../__util__/accountUtils"
 
 const accountMenuLinks = [
@@ -21,9 +20,7 @@ describe("SiteHeader", () => {
     siteHeaderProps: Partial<SiteHeaderProps> = {}
   ) =>
     render(
-      <NavigationProvider>
-        <SiteHeader homeURL="/" logoSrc="/logo.svg" menuLinks={menuLinks} {...siteHeaderProps} />
-      </NavigationProvider>
+      <SiteHeader homeURL="/" logoSrc="/logo.svg" menuLinks={menuLinks} {...siteHeaderProps} />
     )
 
   it("renders account avatar with initials of user", () => {

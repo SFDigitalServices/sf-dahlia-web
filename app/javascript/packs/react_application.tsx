@@ -35,7 +35,6 @@ import Settings from "../pages/account/settings"
 import Contact from "../pages/account/contact"
 import type { INVITE_TO_X } from "../modules/constants"
 
-
 type InviteToUrlParams = {
   type?: INVITE_TO_X
   deadline?: string
