@@ -28,7 +28,6 @@ import AlternateContactType from "../pages/form/components/AlternateContactType"
 import PrioritiesCheckbox from "../pages/form/components/PrioritiesCheckbox"
 import PreferenceCheckboxGroup from "../pages/form/components/PreferenceCheckboxGroup"
 import ListingApplyPreferenceStepWrapper from "../pages/form/components/preferences/ListingApplyPreferenceStepWrapper"
-import CertificateNumberPreference from "../pages/form/components/CertificateNumberPreference"
 import ListingApplyIncomeVouchersHeader from "../pages/form/components/ListingApplyIncomeVouchersHeader"
 import ListingApplyHouseholdIncomeHeader from "../pages/form/components/ListingApplyHouseholdIncomeHeader"
 import ListingApplyVeteransPreferenceHeader from "../pages/form/components/ListingApplyVeteransPreferenceHeader"
@@ -72,7 +71,6 @@ export default function getFormComponentRegistry() {
     AlternateContactType,
     PrioritiesCheckbox,
     PreferenceCheckboxGroup,
-    CertificateNumberPreference,
     ListingApplyHouseholdMonthlyRent,
     // Other components
     ListingApplyPublicHousingHeader,
