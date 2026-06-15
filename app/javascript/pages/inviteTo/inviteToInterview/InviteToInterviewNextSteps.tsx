@@ -10,7 +10,7 @@ import { ConfigContext } from "../../../lib/ConfigContext"
 import InviteToLayout from "../InviteToLayout"
 import InviteToGetHelp from "../InviteToGetHelp"
 import InviteToLeasingAgentInfo from "../InviteToLeasingAgentInfo"
-import { INVITE_TO_X } from "../../../modules/constants"
+import { INVITE_TO_X, I2X_ACTIONS } from "../../../modules/constants"
 import { recordResponse } from "../../../api/inviteToApiService"
 
 interface InviteToInterviewNextStepsProps {
@@ -47,7 +47,7 @@ const WhatToDo = ({
             applicationNumber: appId,
             listingId: listing.Id,
             deadline,
-            action: "appointment",
+            action: I2X_ACTIONS.APPOINTMENT,
             response: "",
             type: INVITE_TO_X.INTERVIEW,
           })
