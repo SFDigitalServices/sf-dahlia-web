@@ -16,11 +16,7 @@ jest.mock("../../../../../api/formApiService", () => ({
 
 const mockDeleteUploadedProofFile = deleteUploadedProofFile as jest.Mock
 
-Object.defineProperty(window, "scrollTo", {
-  value: jest.fn(),
-  writable: true,
-})
-Element.prototype.scrollTo = jest.fn()
+window.HTMLElement.prototype.scrollIntoView = jest.fn()
 
 const certOfPreferenceContent: PreferenceContent = {
   preferenceName: "certificateOfPreference",
@@ -75,6 +71,13 @@ const workInSfPreferenceContent: PreferenceContent = {
   proofTypeNote: "e2cLiveWorkPreference.documentMustShowCorrectNameForWork",
   proofHouseholdMemberLabel: "label.applicantPreferencesDocumentName",
   proofUploadButtonLabel: "label.uploadProofOfPreference",
+}
+
+const liveWorkComboPreference = {
+  checkboxLabel: "e2cLiveWorkPreference.liveWorkSfPreference.title",
+  checkboxDescription: "e2cLiveWorkPreference.liveWorkSfPreference.description",
+  preferenceName: "liveWorkInSf",
+  subPreferenceSelectLabel: "label.preferenceOptionToClaim",
 }
 
 const renderWrapper = ({
@@ -157,6 +160,13 @@ const renderWrapper = ({
   )
 }
 
+const renderLiveWorkComboWrapper = () =>
+  renderWrapper({
+    preferenceContents: [liveInSfPreferenceContent, workInSfPreferenceContent],
+    subPreferenceClaimed: "_liveOrWorkInSfClaimedPreference",
+    comboPreference: liveWorkComboPreference,
+  })
+
 describe("ListingApplyPreferenceStepWrapper", () => {
   beforeEach(() => {
     jest.clearAllMocks()
@@ -166,229 +176,295 @@ describe("ListingApplyPreferenceStepWrapper", () => {
     jest.spyOn(console, "warn").mockImplementation()
   })
 
-  it("renders the page title, instructions, and back/next buttons", () => {
-    renderWrapper()
-    expect(screen.getByText(t("e2cLiveWorkPreference.title"))).toBeInTheDocument()
-    expect(screen.getByText(t("e2cLiveWorkPreference.instructions"))).toBeInTheDocument()
-    expect(screen.getByText(t("t.back"))).toBeInTheDocument()
-    expect(screen.getByText(t("t.next"))).toBeInTheDocument()
-  })
-
-  it("renders the standard preference checkbox label and description", () => {
-    renderWrapper()
-    expect(screen.getByLabelText(t("e7PreferencesPrograms.certOfPreference"))).toBeInTheDocument()
-    expect(screen.getByText(t("label.pleaseSelectPreference"))).toBeInTheDocument()
-  })
-
-  it("renders the opt-out checkbox when optOut field name is provided", () => {
-    renderWrapper()
-    expect(screen.getByLabelText(t("label.dontWantPreference"))).toBeInTheDocument()
-    expect(screen.getByText(t("label.stillHaveOpportunityToClaim"))).toBeInTheDocument()
-  })
-
-  it("calls handlePrevStep when the back button is clicked", async () => {
-    const { mockHandlePrevStep } = renderWrapper()
-    const user = userEvent.setup()
-    await user.click(screen.getByText(t("t.back")))
-    expect(mockHandlePrevStep).toHaveBeenCalled()
-  })
-
-  it("shows the required-checkbox error when submitting with no selections and an opt-out", async () => {
-    renderWrapper()
-    const user = userEvent.setup()
-    await user.click(screen.getByText(t("t.next")))
-    expect(screen.getByText(t("error.pleaseSelectPreferenceOption"))).toBeInTheDocument()
-    expect(screen.getByText(t("error.pleaseSelectPreferenceContent"))).toBeInTheDocument()
-    expect(screen.getByText(t("error.pleaseSelectAnOption"))).toBeInTheDocument()
-  })
-
-  it("does not require a selection when there is no opt-out checkbox", async () => {
-    const { mockSaveFormData, mockHandleNextStep } = renderWrapper({ includeOptOut: false })
-    const user = userEvent.setup()
-    await user.click(screen.getByText(t("t.next")))
-    expect(screen.queryByText(t("error.pleaseSelectPreferenceOption"))).not.toBeInTheDocument()
-    expect(mockSaveFormData).toHaveBeenCalled()
-    expect(mockHandleNextStep).toHaveBeenCalled()
-  })
-
-  it("clears the required-checkbox error when the preference checkbox is selected", async () => {
-    renderWrapper()
-    const user = userEvent.setup()
-    await user.click(screen.getByText(t("t.next")))
-    expect(screen.getByText(t("error.pleaseSelectPreferenceOption"))).toBeInTheDocument()
-
-    await user.click(screen.getByLabelText(t("e7PreferencesPrograms.certOfPreference")))
-    expect(screen.queryByText(t("error.pleaseSelectPreferenceOption"))).not.toBeInTheDocument()
-  })
-
-  it("clears the required-checkbox error when the opt-out checkbox is selected", async () => {
-    renderWrapper()
-    const user = userEvent.setup()
-    await user.click(screen.getByText(t("t.next")))
-    expect(screen.getByText(t("error.pleaseSelectPreferenceOption"))).toBeInTheDocument()
-
-    await user.click(screen.getByLabelText(t("label.dontWantPreference")))
-    expect(screen.queryByText(t("error.pleaseSelectPreferenceOption"))).not.toBeInTheDocument()
-  })
-
-  it("dismisses the required-checkbox error when the close button is clicked", async () => {
-    renderWrapper()
-    const user = userEvent.setup()
-    await user.click(screen.getByText(t("t.next")))
-    expect(screen.getByText(t("error.pleaseSelectPreferenceOption"))).toBeInTheDocument()
-
-    await user.click(screen.getByLabelText(t("t.close")))
-    expect(screen.queryByText(t("error.pleaseSelectPreferenceOption"))).not.toBeInTheDocument()
-  })
-
-  it("dismisses the incomplete-document error when the close button is clicked", async () => {
-    renderWrapper({
-      preferenceContents: [assistedHousingPreferenceContent],
+  describe("rendering and initialization", () => {
+    it("renders the page title, instructions, and back/next buttons", () => {
+      renderWrapper()
+      expect(screen.getByText(t("e2cLiveWorkPreference.title"))).toBeInTheDocument()
+      expect(screen.getByText(t("e2cLiveWorkPreference.instructions"))).toBeInTheDocument()
+      expect(screen.getByText(t("t.back"))).toBeInTheDocument()
+      expect(screen.getByText(t("t.next"))).toBeInTheDocument()
     })
-    const user = userEvent.setup()
 
-    await user.click(screen.getByLabelText(t("e3aAssistedHousingPreference.preference.title")))
-    await user.selectOptions(
-      screen.getByLabelText(t("label.applicantPreferencesDocumentName")),
-      "primaryApplicant"
-    )
-    await user.click(screen.getByText(t("t.next")))
-    expect(await screen.findByText(t("error.pleaseCompletePreference"))).toBeInTheDocument()
-
-    await user.click(screen.getByLabelText(t("t.close")))
-    await waitFor(() => {
-      expect(screen.queryByText(t("error.pleaseCompletePreference"))).not.toBeInTheDocument()
+    it("renders the standard preference checkbox label and description", () => {
+      renderWrapper()
+      expect(screen.getByLabelText(t("e7PreferencesPrograms.certOfPreference"))).toBeInTheDocument()
+      expect(screen.getByText(t("label.pleaseSelectPreference"))).toBeInTheDocument()
     })
-  })
 
-  it("unchecks any claimed preference when opt-out is selected", async () => {
-    renderWrapper()
-    const user = userEvent.setup()
+    it("renders the opt-out checkbox when optOut field name is provided", () => {
+      renderWrapper()
+      expect(screen.getByLabelText(t("label.dontWantPreference"))).toBeInTheDocument()
+      expect(screen.getByText(t("label.stillHaveOpportunityToClaim"))).toBeInTheDocument()
+    })
 
-    const prefCheckbox = screen.getByLabelText(t("e7PreferencesPrograms.certOfPreference"))
-    await user.click(prefCheckbox)
-    expect(prefCheckbox).toBeChecked()
-
-    await user.click(screen.getByLabelText(t("label.dontWantPreference")))
-    expect(prefCheckbox).not.toBeChecked()
-  })
-
-  it("unchecks opt-out when a preference checkbox is selected", async () => {
-    renderWrapper()
-    const user = userEvent.setup()
-
-    const optOutCheckbox = screen.getByLabelText(t("label.dontWantPreference"))
-    await user.click(optOutCheckbox)
-    expect(optOutCheckbox).toBeChecked()
-
-    await user.click(screen.getByLabelText(t("e7PreferencesPrograms.certOfPreference")))
-    expect(optOutCheckbox).not.toBeChecked()
-  })
-
-  it("submits successfully with the opt-out checked", async () => {
-    const { mockSaveFormData, mockHandleNextStep } = renderWrapper()
-    const user = userEvent.setup()
-
-    await user.click(screen.getByLabelText(t("label.dontWantPreference")))
-    await user.click(screen.getByText(t("t.next")))
-
-    expect(mockSaveFormData).toHaveBeenCalledWith(
-      expect.objectContaining({
-        _certOptOut: true,
-        claimedPreferences: expect.any(Object),
-      })
-    )
-    expect(mockHandleNextStep).toHaveBeenCalled()
-  })
-
-  it("populates the opt-out default value from formData", () => {
-    renderWrapper({ formData: { _certOptOut: true } })
-    expect(screen.getByLabelText(t("label.dontWantPreference"))).toBeChecked()
-  })
-
-  it("renders without crashing when greenHeader is true", () => {
-    renderWrapper({ greenHeader: true })
-    expect(screen.getByText(t("e2cLiveWorkPreference.title"))).toBeInTheDocument()
-  })
-
-  it("throws when a preference content has an unknown preference name", () => {
-    const consoleErrorSpy = jest.spyOn(console, "error").mockImplementation()
-    expect(() =>
+    it("renders multiple preference checkboxes", () => {
       renderWrapper({
-        preferenceContents: [
-          {
-            preferenceName: "notARealPreference",
-            checkboxLabel: "e7PreferencesPrograms.certOfPreference",
-            checkboxDescription: "e7PreferencesPrograms.certOfPreferenceDesc",
-            proofHouseholdMemberLabel: "label.applicantPreferencesDocumentName",
-            proofUploadButtonLabel: "label.uploadProofOfPreference",
-          },
-        ],
+        preferenceContents: [certOfPreferenceContent, displacedTenantPreferenceContent],
       })
-    ).toThrow("notARealPreference is not a valid preference name.")
-    consoleErrorSpy.mockRestore()
+      expect(screen.getByLabelText(t("e7PreferencesPrograms.certOfPreference"))).toBeInTheDocument()
+      expect(screen.getByLabelText(t("e7PreferencesPrograms.displaced"))).toBeInTheDocument()
+    })
+
+    it("populates the opt-out default value from formData", () => {
+      renderWrapper({ formData: { _certOptOut: true } })
+      expect(screen.getByLabelText(t("label.dontWantPreference"))).toBeChecked()
+    })
+
+    it("renders without crashing when greenHeader is true", () => {
+      renderWrapper({ greenHeader: true })
+      expect(screen.getByText(t("e2cLiveWorkPreference.title"))).toBeInTheDocument()
+    })
   })
 
-  it("throws when listing preferences are missing the requested preference", () => {
-    const consoleErrorSpy = jest.spyOn(console, "error").mockImplementation()
-    expect(() =>
-      renderWrapper({
-        preferenceContents: [veteranPreferenceContent],
-        preferences: [
-          {
-            preferenceName: PREFERENCES.certificateOfPreference,
-            listingPreferenceID: "pref-other",
-          } as unknown as RailsListingPreference,
-        ],
+  describe("navigation and submission", () => {
+    it("calls handlePrevStep when the back button is clicked", async () => {
+      const { mockHandlePrevStep } = renderWrapper()
+      const user = userEvent.setup()
+      await user.click(screen.getByText(t("t.back")))
+      expect(mockHandlePrevStep).toHaveBeenCalled()
+    })
+
+    it("does not require a selection when there is no opt-out checkbox", async () => {
+      const { mockSaveFormData, mockHandleNextStep } = renderWrapper({ includeOptOut: false })
+      const user = userEvent.setup()
+      await user.click(screen.getByText(t("t.next")))
+      expect(screen.queryByText(t("error.pleaseSelectPreferenceOption"))).not.toBeInTheDocument()
+      expect(mockSaveFormData).toHaveBeenCalled()
+      expect(mockHandleNextStep).toHaveBeenCalled()
+    })
+
+    it("submits successfully with the opt-out checked", async () => {
+      const { mockSaveFormData, mockHandleNextStep } = renderWrapper()
+      const user = userEvent.setup()
+
+      await user.click(screen.getByLabelText(t("label.dontWantPreference")))
+      await user.click(screen.getByText(t("t.next")))
+
+      expect(mockSaveFormData).toHaveBeenCalledWith(
+        expect.objectContaining({
+          _certOptOut: true,
+          claimedPreferences: expect.any(Object),
+        })
+      )
+      expect(mockHandleNextStep).toHaveBeenCalled()
+    })
+  })
+
+  describe("validation and error handling", () => {
+    describe("preference-to-claim checkbox errors", () => {
+      it("shows the preference-to-claim checkbox error when submitting with no selections and an opt-out", async () => {
+        renderWrapper()
+        const user = userEvent.setup()
+        await user.click(screen.getByText(t("t.next")))
+        expect(screen.getByText(t("error.pleaseSelectPreferenceOption"))).toBeInTheDocument()
+        expect(screen.getByText(t("error.pleaseSelectPreferenceContent"))).toBeInTheDocument()
+        expect(screen.getByText(t("error.pleaseSelectAnOption"))).toBeInTheDocument()
       })
-    ).toThrow(`${PREFERENCES.veteran} is missing for this listing.`)
-    consoleErrorSpy.mockRestore()
+
+      it("clears the preference-to-claim checkbox error when the preference checkbox is selected", async () => {
+        renderWrapper()
+        const user = userEvent.setup()
+        await user.click(screen.getByText(t("t.next")))
+        expect(screen.getByText(t("error.pleaseSelectPreferenceOption"))).toBeInTheDocument()
+
+        await user.click(screen.getByLabelText(t("e7PreferencesPrograms.certOfPreference")))
+        expect(screen.queryByText(t("error.pleaseSelectPreferenceOption"))).not.toBeInTheDocument()
+      })
+
+      it("clears the preference-to-claim checkbox when the opt-out checkbox is selected", async () => {
+        renderWrapper()
+        const user = userEvent.setup()
+        await user.click(screen.getByText(t("t.next")))
+        expect(screen.getByText(t("error.pleaseSelectPreferenceOption"))).toBeInTheDocument()
+
+        await user.click(screen.getByLabelText(t("label.dontWantPreference")))
+        expect(screen.queryByText(t("error.pleaseSelectPreferenceOption"))).not.toBeInTheDocument()
+      })
+
+      it("dismisses the preference-to-claim checkbox error when the close button is clicked", async () => {
+        renderWrapper()
+        const user = userEvent.setup()
+        await user.click(screen.getByText(t("t.next")))
+        expect(screen.getByText(t("error.pleaseSelectPreferenceOption"))).toBeInTheDocument()
+
+        await user.click(screen.getByLabelText(t("t.close")))
+        expect(screen.queryByText(t("error.pleaseSelectPreferenceOption"))).not.toBeInTheDocument()
+      })
+    })
+
+    describe("document and generic errors", () => {
+      it("scrolls to the error section when react-hook-form validation fails", async () => {
+        // eslint-disable-next-line @typescript-eslint/unbound-method
+        const mockScrollIntoView = window.HTMLElement.prototype.scrollIntoView as jest.Mock
+        renderLiveWorkComboWrapper()
+        const user = userEvent.setup()
+
+        await user.click(
+          screen.getByLabelText(t("e2cLiveWorkPreference.liveWorkSfPreference.title"))
+        )
+        await user.click(screen.getByText(t("t.next")))
+
+        await waitFor(() => {
+          expect(mockScrollIntoView).toHaveBeenCalledWith({
+            behavior: "smooth",
+            block: "start",
+          })
+        })
+      })
+
+      it("shows the incomplete document error message when a claimed preference has a household member but no uploaded proof file", async () => {
+        renderWrapper({
+          preferenceContents: [assistedHousingPreferenceContent],
+        })
+        const user = userEvent.setup()
+
+        await user.click(screen.getByLabelText(t("e3aAssistedHousingPreference.preference.title")))
+        await user.selectOptions(
+          screen.getByLabelText(t("label.applicantPreferencesDocumentName")),
+          "primaryApplicant"
+        )
+        await user.click(screen.getByText(t("t.next")))
+
+        expect(await screen.findByText(t("error.pleaseCompletePreference"))).toBeInTheDocument()
+        expect(
+          await screen.findByText(t("error.pleaseCompletePreferenceContent"))
+        ).toBeInTheDocument()
+      })
+
+      it("dismisses the incomplete-document error when the close button is clicked", async () => {
+        renderWrapper({
+          preferenceContents: [assistedHousingPreferenceContent],
+        })
+        const user = userEvent.setup()
+
+        await user.click(screen.getByLabelText(t("e3aAssistedHousingPreference.preference.title")))
+        await user.selectOptions(
+          screen.getByLabelText(t("label.applicantPreferencesDocumentName")),
+          "primaryApplicant"
+        )
+        await user.click(screen.getByText(t("t.next")))
+        expect(await screen.findByText(t("error.pleaseCompletePreference"))).toBeInTheDocument()
+
+        await user.click(screen.getByLabelText(t("t.close")))
+        await waitFor(() => {
+          expect(screen.queryByText(t("error.pleaseCompletePreference"))).not.toBeInTheDocument()
+        })
+      })
+
+      it("dismisses the generic error when the close button is clicked", async () => {
+        renderLiveWorkComboWrapper()
+        const user = userEvent.setup()
+
+        await user.click(
+          screen.getByLabelText(t("e2cLiveWorkPreference.liveWorkSfPreference.title"))
+        )
+        await user.click(screen.getByText(t("t.next")))
+        expect(await screen.findByText(t("error.formSubmission"))).toBeInTheDocument()
+
+        await user.click(screen.getByLabelText(t("t.close")))
+        await waitFor(() => {
+          expect(screen.queryByText(t("error.formSubmission"))).not.toBeInTheDocument()
+        })
+      })
+    })
   })
 
-  it("shows the incomplete document error message when a claimed preference has a household member but no uploaded proof file", async () => {
-    renderWrapper({
-      preferenceContents: [assistedHousingPreferenceContent],
+  describe("preference selection behavior", () => {
+    it("unchecks any claimed preference when opt-out is selected", async () => {
+      renderWrapper()
+      const user = userEvent.setup()
+
+      const prefCheckbox = screen.getByLabelText(t("e7PreferencesPrograms.certOfPreference"))
+      await user.click(prefCheckbox)
+      expect(prefCheckbox).toBeChecked()
+
+      await user.click(screen.getByLabelText(t("label.dontWantPreference")))
+      expect(prefCheckbox).not.toBeChecked()
     })
-    const user = userEvent.setup()
 
-    await user.click(screen.getByLabelText(t("e3aAssistedHousingPreference.preference.title")))
-    await user.selectOptions(
-      screen.getByLabelText(t("label.applicantPreferencesDocumentName")),
-      "primaryApplicant"
-    )
-    await user.click(screen.getByText(t("t.next")))
+    it("unchecks opt-out when a preference checkbox is selected", async () => {
+      renderWrapper()
+      const user = userEvent.setup()
 
-    expect(await screen.findByText(t("error.pleaseCompletePreference"))).toBeInTheDocument()
-    expect(await screen.findByText(t("error.pleaseCompletePreferenceContent"))).toBeInTheDocument()
+      const optOutCheckbox = screen.getByLabelText(t("label.dontWantPreference"))
+      await user.click(optOutCheckbox)
+      expect(optOutCheckbox).toBeChecked()
+
+      await user.click(screen.getByLabelText(t("e7PreferencesPrograms.certOfPreference")))
+      expect(optOutCheckbox).not.toBeChecked()
+    })
   })
 
-  it("renders multiple preference checkboxes", () => {
-    renderWrapper({
-      preferenceContents: [certOfPreferenceContent, displacedTenantPreferenceContent],
+  describe("combo preferences", () => {
+    it("unchecks the combo preference when opt-out is selected", async () => {
+      renderLiveWorkComboWrapper()
+      const user = userEvent.setup()
+
+      const comboCheckbox = screen.getByLabelText(
+        t("e2cLiveWorkPreference.liveWorkSfPreference.title")
+      )
+      await user.click(comboCheckbox)
+      expect(comboCheckbox).toBeChecked()
+      expect(screen.getByLabelText(t("label.preferenceOptionToClaim"))).toBeInTheDocument()
+
+      await user.click(screen.getByLabelText(t("label.dontWantPreference")))
+
+      await waitFor(() => {
+        expect(comboCheckbox).not.toBeChecked()
+      })
+      expect(screen.queryByLabelText(t("label.preferenceOptionToClaim"))).not.toBeInTheDocument()
     })
-    expect(screen.getByLabelText(t("e7PreferencesPrograms.certOfPreference"))).toBeInTheDocument()
-    expect(screen.getByLabelText(t("e7PreferencesPrograms.displaced"))).toBeInTheDocument()
+
+    it("keeps the combo select value visible after choosing a sub-preference", async () => {
+      renderLiveWorkComboWrapper()
+      const user = userEvent.setup()
+
+      await user.click(screen.getByLabelText(t("e2cLiveWorkPreference.liveWorkSfPreference.title")))
+      await user.selectOptions(
+        screen.getByLabelText(t("label.preferenceOptionToClaim")),
+        "workInSf"
+      )
+
+      expect(
+        screen.getByDisplayValue(t("e2cLiveWorkPreference.liveWorkSfPreference.workSfPreference"))
+      ).toBeInTheDocument()
+      expect(screen.getByLabelText(t("label.applicantPreferencesDocumentName"))).toBeInTheDocument()
+    })
   })
 
-  it("keeps the combo select value visible after choosing a sub-preference", async () => {
-    renderWrapper({
-      preferenceContents: [liveInSfPreferenceContent, workInSfPreferenceContent],
-      subPreferenceClaimed: "_liveOrWorkInSfClaimedPreference",
-      comboPreference: {
-        checkboxLabel: "e2cLiveWorkPreference.liveWorkSfPreference.title",
-        checkboxDescription: "e2cLiveWorkPreference.liveWorkSfPreference.description",
-        preferenceName: "liveWorkInSf",
-        subPreferenceSelectLabel: "label.preferenceOptionToClaim",
-      },
+  describe("configuration validation", () => {
+    it("throws when a preference content has an unknown preference name", () => {
+      const consoleErrorSpy = jest.spyOn(console, "error").mockImplementation()
+      expect(() =>
+        renderWrapper({
+          preferenceContents: [
+            {
+              preferenceName: "notARealPreference",
+              checkboxLabel: "e7PreferencesPrograms.certOfPreference",
+              checkboxDescription: "e7PreferencesPrograms.certOfPreferenceDesc",
+              proofHouseholdMemberLabel: "label.applicantPreferencesDocumentName",
+              proofUploadButtonLabel: "label.uploadProofOfPreference",
+            },
+          ],
+        })
+      ).toThrow("notARealPreference is not a valid preference name.")
+      consoleErrorSpy.mockRestore()
     })
-    const user = userEvent.setup()
 
-    await user.click(screen.getByLabelText(t("e2cLiveWorkPreference.liveWorkSfPreference.title")))
-    await user.selectOptions(screen.getByLabelText(t("label.preferenceOptionToClaim")), "workInSf")
-
-    expect(
-      screen.getByDisplayValue(t("e2cLiveWorkPreference.liveWorkSfPreference.workSfPreference"))
-    ).toBeInTheDocument()
-    expect(screen.getByLabelText(t("label.applicantPreferencesDocumentName"))).toBeInTheDocument()
+    it("throws when listing preferences are missing the requested preference", () => {
+      const consoleErrorSpy = jest.spyOn(console, "error").mockImplementation()
+      expect(() =>
+        renderWrapper({
+          preferenceContents: [veteranPreferenceContent],
+          preferences: [
+            {
+              preferenceName: PREFERENCES.certificateOfPreference,
+              listingPreferenceID: "pref-other",
+            } as unknown as RailsListingPreference,
+          ],
+        })
+      ).toThrow(`${PREFERENCES.veteran} is missing for this listing.`)
+      consoleErrorSpy.mockRestore()
+    })
   })
 })

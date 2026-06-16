@@ -11,7 +11,7 @@ export type PreferenceContent = {
   proofTypeSingleValue?: string
   certificateNumberLabel?: string
   certificateNumberNote?: string
-  proofUploadButtonLabel: string
+  proofUploadButtonLabel?: string
 }
 
 // Preference pages have more complex fields, so we generate
