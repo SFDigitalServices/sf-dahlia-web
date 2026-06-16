@@ -9,6 +9,7 @@ import ListingApplyHouseholdMonthlyRent from "./ListingApplyHouseholdMonthlyRent
 import styles from "./ListingApplyhouseholdMonthlyRentStep.module.scss"
 import { getPrimaryApplicantData } from "../../../../util/listingApplyUtil"
 
+// TODO: DAH-4176 centralize HouseholdMember and GroupedAddress data for other pages to use
 type HouseholdMember = {
   firstName: string
   lastName: string

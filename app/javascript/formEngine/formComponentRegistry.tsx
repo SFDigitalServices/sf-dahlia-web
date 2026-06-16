@@ -35,7 +35,11 @@ import ListingApplyHouseholdPrioritiesHeader from "../pages/form/components/List
 import ListingApplyHouseholdIncomeStep from "../pages/form/components/ListingApplyHouseholdIncomeStep"
 import ListingApplyHouseholdMonthlyRentStep from "../pages/form/components/household/ListingApplyHouseholdMonthlyRentStep"
 import ListingApplyHouseholdMonthlyRent from "../pages/form/components/household/ListingApplyHouseholdMonthlyRent"
+import ListingApplyStepHeaderNeighborhoodPreference from "../pages/form/components/ListingApplyStepHeaderNeighborhoodPreference"
 
+// TODO better typescript typing
+// add return type `Record<string, React.FunctionComponent>`
+// remove nested destructuring in all components' props to conform to the React.FunctionComponent type
 export default function getFormComponentRegistry() {
   return {
     ListingApplyFormWrapper,
@@ -78,5 +82,6 @@ export default function getFormComponentRegistry() {
     ListingApplyHouseholdIncomeHeader,
     ListingApplyVeteransPreferenceHeader,
     ListingApplyHouseholdPrioritiesHeader,
+    ListingApplyStepHeaderNeighborhoodPreference,
   }
 }
