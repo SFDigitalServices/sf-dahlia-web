@@ -77,38 +77,21 @@ interface EmailFieldProps {
   errors?: UseFormMethods["errors"]
   onChange?: () => void
   note?: React.ReactNode
-  className?: string
-  controlClassName?: string
-  emailRequired?: boolean
 }
 
-const EmailFieldset = ({
-  register,
-  errors,
-  defaultEmail,
-  onChange,
-  note,
-  className,
-  controlClassName,
-  emailRequired = true,
-}: EmailFieldProps) => {
+const EmailFieldset = ({ register, errors, defaultEmail, onChange, note }: EmailFieldProps) => {
   return (
-    <Fieldset
-      hasError={errors?.email}
-      label={t("label.emailAddress")}
-      note={note}
-      className={className}
-    >
+    <Fieldset hasError={errors?.email} label={t("label.emailAddress")} note={note}>
       <Field
         dataTestId="email-field"
         className="pb-4"
-        controlClassName={`mt-1${controlClassName ? ` ${controlClassName}` : ""}`}
+        controlClassName="mt-1"
         type="email"
         name="email"
         placeholder="example@web.com"
         validation={{
-          required: emailRequired ? "email:missing" : false,
-          validate: emailRequired ? emailValidation : undefined,
+          required: "email:missing",
+          validate: emailValidation,
         }}
         labelClassName="sr-only"
         label="Email"
