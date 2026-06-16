@@ -154,6 +154,7 @@ exports[`For Rent renders ForRent component 1`] = `
               <a
                 aria-label="DAHLIA San Francisco Housing Portal"
                 class="site-header__logo translate site-header__custom-width"
+                data-discover="true"
                 href="/"
               >
                 <div
@@ -172,6 +173,7 @@ exports[`For Rent renders ForRent component 1`] = `
             >
               <a
                 class="site-header__link  "
+                data-discover="true"
                 data-testid="Rent-0"
                 href="/listings/for-rent"
               >
@@ -181,6 +183,7 @@ exports[`For Rent renders ForRent component 1`] = `
               </a>
               <a
                 class="site-header__link  "
+                data-discover="true"
                 data-testid="Buy-1"
                 href="/listings/for-sale"
               >
@@ -190,6 +193,7 @@ exports[`For Rent renders ForRent component 1`] = `
               </a>
               <a
                 class="site-header__link  "
+                data-discover="true"
                 data-testid="Get assistance-2"
                 href="/get-assistance"
               >
@@ -199,6 +203,7 @@ exports[`For Rent renders ForRent component 1`] = `
               </a>
               <a
                 class="site-header__link  "
+                data-discover="true"
                 data-testid="Sign in-3"
                 href="/sign-in"
               >

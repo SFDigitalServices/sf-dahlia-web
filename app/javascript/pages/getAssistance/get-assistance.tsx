@@ -1,5 +1,5 @@
 import { ActionBlock, Icon, t, Heading, LinkButton } from "@bloom-housing/ui-components"
-import { Link as RouterLink } from "react-router"
+import { Link } from "react-router"
 import React from "react"
 import withAppSetup from "../../layouts/withAppSetup"
 import {
@@ -33,9 +33,9 @@ const GetAssistance = () => {
         background="none"
         icon={<Icon size="2xl" symbol={faPeopleGroup} fill={bloomTheme.theme.colors.gray["750"]} />}
         actions={[
-          <RouterLink key="housing-counselors" className="button" to={getHousingCounselorsPath()}>
+          <Link key="housing-counselors" className="button" to={getHousingCounselorsPath()}>
             {t("housingCounselor.findAHousingCounselor")}
-          </RouterLink>,
+          </Link>,
         ]}
       />
       <ActionBlock
@@ -48,13 +48,13 @@ const GetAssistance = () => {
           <Icon size="2xl" symbol={faHouseChimney} fill={bloomTheme.theme.colors.gray["750"]} />
         }
         actions={[
-          <RouterLink
+          <Link
             key="additional-resources"
             className="button w-3/4 md:w-auto"
             to={getAdditionalResourcesPath()}
           >
             {t("assistance.title.additionalHousingOpportunities.button")}
-          </RouterLink>,
+          </Link>,
         ]}
       />
       <ActionBlock
@@ -81,9 +81,9 @@ const GetAssistance = () => {
           <Icon size="2xl" symbol={faClipboardList} fill={bloomTheme.theme.colors.gray["750"]} />
         }
         actions={[
-          <RouterLink key="document-checklist" className="button" to={getDocumentChecklistPath()}>
+          <Link key="document-checklist" className="button" to={getDocumentChecklistPath()}>
             {t("label.viewDocumentChecklist")}
-          </RouterLink>,
+          </Link>,
         ]}
       />
       <ActionBlock
