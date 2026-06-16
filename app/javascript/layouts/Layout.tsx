@@ -26,6 +26,7 @@ import {
   getLocalizedPath,
   getPrivacyPolicyPath,
   getSignInPath,
+  localizedPath,
 } from "../util/routeUtil"
 import MetaTags from "./MetaTags"
 import ErrorBoundary, { BoundaryScope } from "../components/ErrorBoundary"
@@ -75,15 +76,15 @@ const getMenuLinks = (signedIn: boolean, signOut: () => void) => {
   const menuLinks: MenuLink[] = [
     {
       title: t("nav.rent"),
-      href: "/listings/for-rent",
+      href: localizedPath("/listings/for-rent"),
     },
     {
       title: t("nav.buy"),
-      href: "/listings/for-sale",
+      href: localizedPath("/listings/for-sale"),
     },
     {
       title: t("nav.getAssistance"),
-      href: "/get-assistance",
+      href: localizedPath("/get-assistance"),
     },
   ]
 
@@ -93,17 +94,17 @@ const getMenuLinks = (signedIn: boolean, signOut: () => void) => {
       subMenuLinks: [
         {
           title: t("nav.myDashboard"),
-          href: "/account",
+          href: localizedPath("/account"),
           iconElement: <Icon symbol="profile" size="medium" className="pr-2" />,
         },
         {
           title: t("nav.myApplications"),
-          href: "/account/applications",
+          href: localizedPath("/account/applications"),
           iconElement: <Icon symbol="application" size="medium" className="pr-2" />,
         },
         {
           title: t("nav.accountSettings"),
-          href: "/account/settings",
+          href: localizedPath("/account/settings"),
           iconElement: <Icon symbol="settings" size="medium" className="pr-2" />,
         },
         {
@@ -122,7 +123,7 @@ const getMenuLinks = (signedIn: boolean, signOut: () => void) => {
   } else {
     menuLinks.push({
       title: t("nav.signIn"),
-      href: "/sign-in",
+      href: localizedPath("/sign-in"),
     })
   }
   return menuLinks
