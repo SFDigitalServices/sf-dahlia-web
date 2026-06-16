@@ -46,6 +46,7 @@
   "accountLayout.contact.changeInfo": "Changes update contact info for all applications. This includes applications you already submitted.",
   "accountLayout.contact.changesSaved": "Changes saved.",
   "accountLayout.contact.saveEmail": "Save email",
+  "accountLayout.contact.savePhone": "Save phone number",
   "accountLayout.contact.subtitle": "We use this info to contact you about your application. Make sure it’s up to date.",
   "accountLayout.contact.title": "Your contact info",
   "accountLayout.nav.account": "Account",
