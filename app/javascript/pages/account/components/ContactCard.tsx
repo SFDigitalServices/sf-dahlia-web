@@ -1,7 +1,7 @@
 import { t } from "@bloom-housing/ui-components"
 import { faEnvelope, faPhone } from "@fortawesome/free-solid-svg-icons"
 import { Card, Button, Heading, Link, Icon } from "@bloom-housing/ui-seeds"
-import { getMyAccountContactPath } from "../../../util/routeUtil"
+import { getMyAccountContactPath, getMyAccountSettingsPath } from "../../../util/routeUtil"
 import React from "react"
 import { User } from "../../../authentication/user"
 import styles from "./ContactCard.module.scss"
@@ -27,7 +27,7 @@ const ContactCard = ({ user }: ContactCardProps) => {
         {user?.email ? (
           <span>{user.email}</span>
         ) : (
-          <Link href={getMyAccountContactPath()}>{t("accountLayout.accountCard.addEmail")}</Link>
+          <Link href={getMyAccountSettingsPath()}>{t("accountLayout.accountCard.addEmail")}</Link>
         )}
       </div>
       <div className={styles.contactRow}>
