@@ -49,3 +49,15 @@
   padding: var(--seeds-spacer-section);
   background: var(--seeds-color-blue-100);
 }
+
+.email {
+  font-size: var(--seeds-font-size-md);
+  font-weight: var(--seeds-font-weight-semibold);
+  color: var(--seeds-color-gray-750);
+}
+
+.changeEmail {
+  font-size: var(--seeds-font-size-sm);
+  color: var(--seeds-color-gray-750);
+  margin-top: var(--seeds-spacer-header);
+}

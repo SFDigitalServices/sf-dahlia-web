@@ -42,6 +42,7 @@
   "accountLayout.accountCard.subtitle": "Make sure your contact info is correct. We use this to send updates about your applications.",
   "accountLayout.accountCard.title": "Hi, %{name}",
   "accountLayout.contact.back": "Back to account overview",
+  "accountLayout.contact.changeEmail": "To change your email, update your <a href='%{href}'>account settings</a>.",
   "accountLayout.contact.changeInfo": "Changes update contact info for all applications. This includes applications you already submitted.",
   "accountLayout.contact.changesSaved": "Changes saved.",
   "accountLayout.contact.saveEmail": "Save email",

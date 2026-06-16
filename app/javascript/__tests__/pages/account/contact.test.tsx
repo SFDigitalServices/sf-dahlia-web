@@ -50,7 +50,7 @@ describe("<Contact />", () => {
     })
 
     it("contains the contact info page", () => {
-      expect(getByRole("link", { name: "Back to account" })).toBeInTheDocument()
+      expect(getByRole("link", { name: "Back to account overview" })).toBeInTheDocument()
     })
   })
 

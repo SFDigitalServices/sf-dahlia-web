@@ -1,34 +1,25 @@
 /* eslint-disable @typescript-eslint/unbound-method */
-import React, { useContext, useState } from "react"
-import { Field, t } from "@bloom-housing/ui-components"
-import { Message, Link, Card, Heading, Button } from "@bloom-housing/ui-seeds"
+import React, { useContext } from "react"
+import { t } from "@bloom-housing/ui-components"
+import { Message, Link, Card, Heading } from "@bloom-housing/ui-seeds"
 import Layout from "../../layouts/Layout"
 import AccountLayout from "../../layouts/AccountLayout"
 import withAppSetup from "../../layouts/withAppSetup"
-import { AppPages, getMyAccountPath, RedirectType } from "../../util/routeUtil"
+import {
+  AppPages,
+  getMyAccountPath,
+  getMyAccountSettingsPath,
+  RedirectType,
+} from "../../util/routeUtil"
 import { withAuthentication } from "../../authentication/withAuthentication"
 import { ConfigContext } from "../../lib/ConfigContext"
-import EmailFieldset, { emailFieldsetErrors, emailSortOrder } from "./components/EmailFieldset"
-import { ErrorSummaryBanner } from "./components/ErrorSummaryBanner"
-import { getErrorMessage } from "./components/util"
-import { useForm } from "react-hook-form"
 import styles from "./contact.module.scss"
+import UserContext from "../../authentication/context/UserContext"
+import { renderInlineMarkup } from "../../util/languageUtil"
 
 const Contact = () => {
   const { getAssetPath } = useContext(ConfigContext)
-  const [showSaveBanner, setShowSaveBanner] = useState(false)
-  const {
-    register,
-    formState: { errors },
-    watch,
-    handleSubmit,
-    clearErrors,
-    setValue,
-  } = useForm({ mode: "onTouched" })
-  const email = watch("email", "")
-  const noEmail = watch("noEmail", false)
-  const isSaveEmailEnabled = noEmail || email
-
+  const { profile } = useContext(UserContext)
   return (
     <Layout>
       <AccountLayout>
@@ -43,47 +34,16 @@ const Contact = () => {
             {t("accountLayout.contact.subtitle")}
           </Card.Header>
           <Message>{t("accountLayout.contact.changeInfo")}</Message>
-          {showSaveBanner && (
-            <Message variant="success">{t("accountLayout.contact.changesSaved")}</Message>
-          )}
           <Card.Section divider="inset" className={styles.contactSection}>
-            <ErrorSummaryBanner
-              errors={errors}
-              sortOrder={emailSortOrder}
-              messageMap={(messageKey) => getErrorMessage(messageKey, emailFieldsetErrors, true)}
-            />
-            <EmailFieldset
-              register={register}
-              errors={errors}
-              className={styles.contactField}
-              emailRequired={!noEmail}
-            />
-            <Field
-              type="checkbox"
-              name="noEmail"
-              label={t("label.applicantNoEmail")}
-              className={styles.noEmailCheckbox}
-              register={register}
-              onChange={(e) => {
-                if (e.target.checked) {
-                  setValue("email", "")
-                  clearErrors("email")
-                }
-              }}
-            />
-            <Button
-              variant="primary-outlined"
-              size="sm"
-              disabled={!isSaveEmailEnabled}
-              onClick={() => {
-                void handleSubmit(
-                  () => setShowSaveBanner(true),
-                  () => setShowSaveBanner(false)
-                )()
-              }}
-            >
-              {t("accountLayout.contact.saveEmail")}
-            </Button>
+            <Heading priority={2} size="md" className={styles.heading}>
+              {t("label.emailAddress")}
+            </Heading>
+            <p className={styles.email}>{profile?.email}</p>
+            <p className={styles.changeEmail}>
+              {renderInlineMarkup(
+                t("accountLayout.contact.changeEmail", { href: getMyAccountSettingsPath() })
+              )}
+            </p>
           </Card.Section>
           <Card.Section className={styles.contactSection}>Phone coming soon!</Card.Section>
           <Card.Footer className={styles.footer}>
