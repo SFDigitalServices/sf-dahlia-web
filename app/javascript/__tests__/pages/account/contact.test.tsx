@@ -7,9 +7,9 @@ import {
 import Contact from "../../../pages/account/contact"
 import React from "react"
 import { type RenderResult } from "@testing-library/react"
-import { setupUserContext } from "../../__util__/accountUtils"
+import { mockProfileStub, setupUserContext } from "../../__util__/accountUtils"
 import { withAuthentication } from "../../../authentication/withAuthentication"
-import { RedirectType } from "../../../util/routeUtil"
+import { getMyAccountSettingsPath, RedirectType } from "../../../util/routeUtil"
 
 jest.mock("react-gtm-module", () => ({
   initialize: jest.fn(),
@@ -34,6 +34,7 @@ describe("<Contact />", () => {
 
   describe("when the user is signed in", () => {
     let getByRole: RenderResult["getByRole"]
+    let getByText: RenderResult["getByText"]
     let originalLocation: Location
 
     beforeEach(async () => {
@@ -42,6 +43,7 @@ describe("<Contact />", () => {
       const WrappedComponent = withAuthentication(Contact, { redirectType: RedirectType.Account })
       const renderResult = await renderAndLoadAsync(<WrappedComponent assetPaths={{}} />)
       getByRole = renderResult.getByRole
+      getByText = renderResult.getByText
     })
 
     afterEach(() => {
@@ -51,6 +53,17 @@ describe("<Contact />", () => {
 
     it("contains the contact info page", () => {
       expect(getByRole("link", { name: "Back to account overview" })).toBeInTheDocument()
+    })
+
+    it("displays the current email from the user profile", () => {
+      expect(getByText(mockProfileStub.email)).toBeInTheDocument()
+    })
+
+    it("displays the link to change the email", () => {
+      expect(getByRole("link", { name: "account settings" })).toHaveAttribute(
+        "href",
+        getMyAccountSettingsPath()
+      )
     })
   })
 
