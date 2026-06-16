@@ -54,7 +54,13 @@ const HouseholdMemberMultiStepWrapper = ({
     if (isEditingHouseholdMember) {
       updatedHouseholdMembers[currentMemberIndex] = data
     } else {
-      updatedHouseholdMembers.push({ ...data, id: nanoid(18) })
+      updatedHouseholdMembers.push({
+        ...data,
+        id: nanoid(18),
+        // TODO: DAH-4161
+        // call to the geocoding API to check for the actual neighborhood match
+        neighborhoodPreferenceAddressMatch: true,
+      })
     }
     saveFormData({ ...formData, [householdMembers]: updatedHouseholdMembers })
     setHouseholdMembersArray(updatedHouseholdMembers)

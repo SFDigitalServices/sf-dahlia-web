@@ -94,3 +94,15 @@ export const getProofOptions = (preferenceName: string): { value: string; label:
   }
   return PROOF_OPTIONS[lookupName as keyof typeof PROOF_OPTIONS]
 }
+
+// TODO: DAH-4176 implement this Angular function in React
+// Service.eligibleForRentBurden = ->
+//   return false unless Service.listingHasPreference('rentBurden')
+//   totalMonthlyRent = _.sumBy(Service.application.groupedHouseholdAddresses, 'monthlyRent')
+//   incomeTotal = parseFloat(Service.application.householdIncome.incomeTotal)
+//   if Service.application.householdIncome.incomeTimeframe == 'per_month'
+//     ratio = totalMonthlyRent / incomeTotal
+//   else
+//     ratio = (totalMonthlyRent * 12) / incomeTotal
+//   # must have answered "No" and rent > 50% of income
+//   Service.application.hasPublicHousing == 'No' && ratio >= .5

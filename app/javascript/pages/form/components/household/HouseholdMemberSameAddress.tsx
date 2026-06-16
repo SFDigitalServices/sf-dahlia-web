@@ -6,6 +6,7 @@ import styles from "./HouseholdMemberSameAddress.module.scss"
 import YesNoRadio from "../YesNoRadio"
 import Address from "../Address"
 
+// TODO: DAH-4176 centralize HouseholdMember data
 const fieldNames = {
   addressStreet: "householdMemberAddressStreet",
   addressAptOrUnit: "householdMemberAddressAptOrUnit",
