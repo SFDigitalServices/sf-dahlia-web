@@ -10,7 +10,7 @@ import withAppSetup from "../../layouts/withAppSetup"
 import {
   AppPages,
   RedirectType,
-  getApplicationPath,
+  getApplicationsPath,
   getMyAccountSettingsPath,
 } from "../../util/routeUtil"
 import UserContext from "../../authentication/context/UserContext"
@@ -26,7 +26,7 @@ const overviewSections = [
     heading: "accountLayout.nav.applications",
     text: "accountLayout.account.p1",
     buttonLabel: "accountLayout.account.seeApps",
-    href: getApplicationPath(),
+    href: getApplicationsPath(),
   },
   {
     icon: "settings",
