@@ -2,7 +2,7 @@ import {
   getAssistancePath,
   getMyAccountSettingsPath,
   getApplicationPath,
-  getApplicationsPath,
+  getMyAccountApplicationsPath,
   getMyAccountPath,
   getNewLanguagePath,
   getRentalDirectoryPath,
@@ -35,9 +35,9 @@ describe("routeUtil", () => {
       expect(getMyAccountPath("")).toBe("/account")
     })
 
-    it("returns the correct path for getApplicationsPath", () => {
-      expect(getApplicationsPath("/es/sign-in")).toBe("/es/account/applications")
-      expect(getApplicationsPath("")).toBe("/account/applications")
+    it("returns the correct path for getMyAccountApplicationsPath", () => {
+      expect(getMyAccountApplicationsPath("/es/sign-in")).toBe("/es/account/applications")
+      expect(getMyAccountApplicationsPath("")).toBe("/account/applications")
     })
 
     it("returns the correct path for getApplicationPath", () => {

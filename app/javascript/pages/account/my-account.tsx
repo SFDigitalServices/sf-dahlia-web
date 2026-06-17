@@ -6,7 +6,7 @@ import { Icon, t, type UniversalIconType } from "@bloom-housing/ui-components"
 import {
   AppPages,
   getMyAccountSettingsPath,
-  getApplicationsPath,
+  getMyAccountApplicationsPath,
   RedirectType,
 } from "../../util/routeUtil"
 import { renderInlineMarkup } from "../../util/languageUtil"
@@ -69,7 +69,7 @@ const MyAccount = (_props: MyAccountProps) => {
             <AccountDashCard
               title={t("accountDashboard.myApplications.title")}
               description={t("accountDashboard.myApplications.description")}
-              link={getApplicationsPath()}
+              link={getMyAccountApplicationsPath()}
               icon="application"
               removeBottomBorder
             />

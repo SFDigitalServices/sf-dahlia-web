@@ -5,7 +5,7 @@ import { AppearanceStyleType, Button, Form, FormCard, Icon, t } from "@bloom-hou
 import withAppSetup from "../layouts/withAppSetup"
 import { Alert, Link } from "@bloom-housing/ui-seeds"
 import FormLayout from "../layouts/FormLayout"
-import { AppPages, getApplicationsPath, getSignInPath } from "../util/routeUtil"
+import { AppPages, getMyAccountApplicationsPath, getSignInPath } from "../util/routeUtil"
 import { useForm } from "react-hook-form"
 import PasswordFieldset from "./account/components/PasswordFieldset"
 import { resetPassword } from "../api/authApiService"
@@ -64,7 +64,7 @@ const ResetPassword = (_props: ResetPasswordProps) => {
     // TODO: DAH-2987 API integration
     resetPassword(data.password)
       .then(() => {
-        window.location.assign(getApplicationsPath())
+        window.location.assign(getMyAccountApplicationsPath())
       })
       .catch(() => {
         setServerError(t("error.account.genericServerError"))

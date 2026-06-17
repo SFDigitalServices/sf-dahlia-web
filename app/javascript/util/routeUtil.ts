@@ -89,7 +89,7 @@ export const getResetPasswordPath = localizedPathGetter("/reset-password")
 
 // Accounts after signing in pages
 export const getMyAccountPath = localizedPathGetter("/account")
-export const getApplicationsPath = localizedPathGetter("/account/applications")
+export const getMyAccountApplicationsPath = localizedPathGetter("/account/applications")
 export const getApplicationPath = localizedPathGetter("/applications")
 export const getMyAccountSettingsPath = localizedPathGetter("/account/settings")
 export const getMyAccountContactPath = localizedPathGetter("/account/contact")
@@ -147,7 +147,7 @@ export const mapAlertParamToEnum = (param: string | null): AlertReason => {
 
 export const SignInRedirectUrls = {
   [RedirectType.Account]: getMyAccountPath(),
-  [RedirectType.Applications]: getApplicationsPath(),
+  [RedirectType.Applications]: getMyAccountApplicationsPath(),
   [RedirectType.Settings]: getMyAccountSettingsPath(),
   [RedirectType.Home]: getHomepagePath(),
 }
