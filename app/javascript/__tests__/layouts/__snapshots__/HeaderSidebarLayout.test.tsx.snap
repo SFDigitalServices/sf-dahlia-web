@@ -154,6 +154,7 @@ exports[`<HeaderSidebarLayout /> Contact Bar renders Contact Information 1`] = `
               <a
                 aria-label="DAHLIA San Francisco Housing Portal"
                 class="site-header__logo translate site-header__custom-width"
+                data-discover="true"
                 href="/"
               >
                 <div
@@ -172,6 +173,7 @@ exports[`<HeaderSidebarLayout /> Contact Bar renders Contact Information 1`] = `
             >
               <a
                 class="site-header__link  "
+                data-discover="true"
                 data-testid="Rent-0"
                 href="/listings/for-rent"
               >
@@ -181,6 +183,7 @@ exports[`<HeaderSidebarLayout /> Contact Bar renders Contact Information 1`] = `
               </a>
               <a
                 class="site-header__link  "
+                data-discover="true"
                 data-testid="Buy-1"
                 href="/listings/for-sale"
               >
@@ -190,6 +193,7 @@ exports[`<HeaderSidebarLayout /> Contact Bar renders Contact Information 1`] = `
               </a>
               <a
                 class="site-header__link  "
+                data-discover="true"
                 data-testid="Get assistance-2"
                 href="/get-assistance"
               >
@@ -199,6 +203,7 @@ exports[`<HeaderSidebarLayout /> Contact Bar renders Contact Information 1`] = `
               </a>
               <a
                 class="site-header__link  "
+                data-discover="true"
                 data-testid="Sign in-3"
                 href="/sign-in"
               >
@@ -475,30 +480,33 @@ exports[`<HeaderSidebarLayout /> Contact Bar renders Contact Information 1`] = `
             class="footer-nav"
           >
             <a
-              class="text-gray-500"
+              class="seeds-link text-gray-500 no-underline"
               href="https://airtable.com/appUW1tM8te0Lmf6q/pagyZulZJCm1V4G8D/form?prefill_Last+visited=%2F&hide_Last+visited=true"
+              rel="noreferrer"
               target="_blank"
             >
               Give Feedback
+              <span
+                class="seeds-screen-reader-only"
+              >
+                (opens in a new tab)
+              </span>
             </a>
             <a
-              class="text-gray-500"
+              class="seeds-link text-gray-500 no-underline"
               href="mailto:sfhousinginfo@sfgov.org"
-              target="_self"
             >
               Contact
             </a>
             <a
-              class="text-gray-500"
+              class="seeds-link text-gray-500 no-underline"
               href="/disclaimer"
-              target="_self"
             >
               Disclaimer
             </a>
             <a
-              class="text-gray-500"
+              class="seeds-link text-gray-500 no-underline"
               href="/privacy"
-              target="_self"
             >
               Privacy Policy
             </a>

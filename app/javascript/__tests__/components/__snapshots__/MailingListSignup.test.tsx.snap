@@ -97,11 +97,17 @@ exports[`MailingListSignup displays mailing list sign up 1`] = `
       class="action-block__actions"
     >
       <a
-        class="button"
-        href=""
+        class="seeds-link button no-underline"
+        href="https://confirmsubscription.com/h/y/C3BAFCD742D47910"
+        rel="noreferrer"
         target="_blank"
       >
         Sign Up today
+        <span
+          class="seeds-screen-reader-only"
+        >
+          (opens in a new tab)
+        </span>
       </a>
     </div>
   </div>

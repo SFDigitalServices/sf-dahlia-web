@@ -1,5 +1,5 @@
-import { ActionBlock, Icon, t, Heading } from "@bloom-housing/ui-components"
-import Link from "../../navigation/Link"
+import { ActionBlock, Icon, t, Heading, LinkButton } from "@bloom-housing/ui-components"
+import { Link } from "react-router"
 import React from "react"
 import withAppSetup from "../../layouts/withAppSetup"
 import {
@@ -33,13 +33,7 @@ const GetAssistance = () => {
         background="none"
         icon={<Icon size="2xl" symbol={faPeopleGroup} fill={bloomTheme.theme.colors.gray["750"]} />}
         actions={[
-          <Link
-            key="housing-counselors"
-            className="button"
-            external={true}
-            href={getHousingCounselorsPath()}
-            target="_blank"
-          >
+          <Link key="housing-counselors" className="button" to={getHousingCounselorsPath()}>
             {t("housingCounselor.findAHousingCounselor")}
           </Link>,
         ]}
@@ -57,9 +51,7 @@ const GetAssistance = () => {
           <Link
             key="additional-resources"
             className="button w-3/4 md:w-auto"
-            external={true}
-            href={getAdditionalResourcesPath()}
-            target="_blank"
+            to={getAdditionalResourcesPath()}
           >
             {t("assistance.title.additionalHousingOpportunities.button")}
           </Link>,
@@ -71,15 +63,14 @@ const GetAssistance = () => {
         background="none"
         icon={<Icon size="2xl" symbol={faDoorOpen} fill={bloomTheme.theme.colors.gray["750"]} />}
         actions={[
-          <Link
+          <LinkButton
             key="sf-services"
             className="button"
-            external={true}
-            href={"https://sfserviceguide.org/"}
-            target="_blank"
+            href="https://sfserviceguide.org/"
+            newTab
           >
             {t("assistance.title.sfServices.button")}
-          </Link>,
+          </LinkButton>,
         ]}
       />
       <ActionBlock
@@ -90,13 +81,7 @@ const GetAssistance = () => {
           <Icon size="2xl" symbol={faClipboardList} fill={bloomTheme.theme.colors.gray["750"]} />
         }
         actions={[
-          <Link
-            key="document-checklist"
-            className="button"
-            external={true}
-            href={getDocumentChecklistPath()}
-            target="_blank"
-          >
+          <Link key="document-checklist" className="button" to={getDocumentChecklistPath()}>
             {t("label.viewDocumentChecklist")}
           </Link>,
         ]}
@@ -107,15 +92,14 @@ const GetAssistance = () => {
         background="none"
         icon={<Icon size="2xl" symbol={faYoutube} fill={bloomTheme.theme.colors.gray["750"]} />}
         actions={[
-          <Link
+          <LinkButton
             key="dahlia-videos"
             className="button"
-            external={true}
-            href={"https://www.youtube.com/playlist?list=PL7dcWHJTcA51TBqhghJ9LfSGEGoFB7aWG"}
-            target="_blank"
+            href="https://www.youtube.com/playlist?list=PL7dcWHJTcA51TBqhghJ9LfSGEGoFB7aWG"
+            newTab
           >
             {t("assistance.title.dahliaVideos.button")}
-          </Link>,
+          </LinkButton>,
         ]}
       />
     </HeaderSidebarLayout>

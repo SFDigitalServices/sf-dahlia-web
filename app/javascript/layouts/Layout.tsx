@@ -14,7 +14,7 @@ import SiteHeader, { MenuLink } from "../components/SiteHeader/SiteHeader"
 import Markdown from "markdown-to-jsx"
 import UserContext from "../authentication/context/UserContext"
 import { ConfigContext } from "../lib/ConfigContext"
-import Link from "../navigation/Link"
+import { Link } from "@bloom-housing/ui-seeds"
 import {
   getCurrentLanguage,
   getSfGovUrl,
@@ -26,6 +26,7 @@ import {
   getLocalizedPath,
   getPrivacyPolicyPath,
   getSignInPath,
+  localizedPath,
 } from "../util/routeUtil"
 import MetaTags from "./MetaTags"
 import ErrorBoundary, { BoundaryScope } from "../components/ErrorBoundary"
@@ -75,15 +76,15 @@ const getMenuLinks = (signedIn: boolean, signOut: () => void) => {
   const menuLinks: MenuLink[] = [
     {
       title: t("nav.rent"),
-      href: "/listings/for-rent",
+      href: localizedPath("/listings/for-rent"),
     },
     {
       title: t("nav.buy"),
-      href: "/listings/for-sale",
+      href: localizedPath("/listings/for-sale"),
     },
     {
       title: t("nav.getAssistance"),
-      href: "/get-assistance",
+      href: localizedPath("/get-assistance"),
     },
   ]
 
@@ -93,17 +94,17 @@ const getMenuLinks = (signedIn: boolean, signOut: () => void) => {
       subMenuLinks: [
         {
           title: t("nav.myDashboard"),
-          href: "/account",
+          href: localizedPath("/account"),
           iconElement: <Icon symbol="profile" size="medium" className="pr-2" />,
         },
         {
           title: t("nav.myApplications"),
-          href: "/account/applications",
+          href: localizedPath("/account/applications"),
           iconElement: <Icon symbol="application" size="medium" className="pr-2" />,
         },
         {
           title: t("nav.accountSettings"),
-          href: "/account/settings",
+          href: localizedPath("/account/settings"),
           iconElement: <Icon symbol="settings" size="medium" className="pr-2" />,
         },
         {
@@ -122,7 +123,7 @@ const getMenuLinks = (signedIn: boolean, signOut: () => void) => {
   } else {
     menuLinks.push({
       title: t("nav.signIn"),
-      href: "/sign-in",
+      href: localizedPath("/sign-in"),
     })
   }
   return menuLinks
@@ -229,20 +230,20 @@ const Layout = (props: LayoutProps) => {
           </FooterSection>
           <FooterNav copyright={`© ${t("footer.cityCountyOfSf")}`}>
             <Link
-              className="text-gray-500"
+              className="text-gray-500 no-underline"
               href={`https://airtable.com/appUW1tM8te0Lmf6q/pagyZulZJCm1V4G8D/form?prefill_Last+visited=${encodeURIComponent(window.location.pathname)}&hide_Last+visited=true`}
-              target="_blank"
-              external={true}
+              newWindowTarget
+              hideExternalLinkIcon
             >
               {t("footer.giveFeedback")}
             </Link>
-            <Link className="text-gray-500" external={true} href="mailto:sfhousinginfo@sfgov.org">
+            <Link className="text-gray-500 no-underline" href="mailto:sfhousinginfo@sfgov.org">
               {t("footer.contact")}
             </Link>
-            <Link className="text-gray-500" href={getDisclaimerPath()}>
+            <Link className="text-gray-500 no-underline" href={getDisclaimerPath()}>
               {t("footer.disclaimer")}
             </Link>
-            <Link className="text-gray-500" href={getPrivacyPolicyPath()}>
+            <Link className="text-gray-500 no-underline" href={getPrivacyPolicyPath()}>
               {t("footer.privacyPolicy")}
             </Link>
           </FooterNav>
