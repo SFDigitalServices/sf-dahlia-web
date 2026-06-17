@@ -7,7 +7,7 @@ import { ConfigContext } from "../lib/ConfigContext"
 import { getPathWithoutLanguagePrefix } from "../util/languageUtil"
 import {
   getMyAccountPath,
-  getApplicationPath,
+  getApplicationsPath,
   getMyAccountSettingsPath,
   getSignInPath,
   getMyAccountContactPath,
@@ -50,7 +50,7 @@ const AccountNav = () => {
             />
             {t("accountLayout.nav.contactInfo")}
           </Tabs.Tab>
-          <Tabs.Tab href={getApplicationPath()} active={isNavActive(getApplicationPath())}>
+          <Tabs.Tab href={getApplicationsPath()} active={isNavActive(getApplicationsPath())}>
             <Icon size="md-large" symbol="application" className={styles.accountNavLinkIcon} />
             {t("accountLayout.nav.applications")}
           </Tabs.Tab>
