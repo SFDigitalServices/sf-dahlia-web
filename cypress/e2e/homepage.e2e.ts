@@ -97,45 +97,50 @@ describe("Homepage integration tests", () => {
   describe("using the nav bar", () => {
     beforeEach(() => {
       cy.intercept("GET", "**/api/v1/listings.json?type=rental*", { fixture: "listings.json" }).as(
-        "listings"
+        "rentalListings"
       )
       cy.intercept("GET", "**/api/v1/listings.json?type=ownership*", {
         fixture: "saleListings.json",
-      }).as("listings")
+      }).as("saleListings")
     })
     describe("navigating to the for-rent page", () => {
       it("navigates to the for-rent page in english by default", () => {
         cy.visit("/")
+        cy.wait("@unleashFlags")
         cy.findAndClickMenuItem("/listings/for-rent")
-        cy.wait("@listings")
+        cy.wait("@rentalListings")
         cy.location("pathname").should("eq", "/listings/for-rent")
       })
 
       it("navigates to the for-rent page in english when specified", () => {
         cy.visit("/en")
+        cy.wait("@unleashFlags")
         cy.findAndClickMenuItem("/listings/for-rent")
-        cy.wait("@listings")
+        cy.wait("@rentalListings")
         cy.location("pathname").should("eq", "/listings/for-rent")
       })
 
       it("navigates to the for-rent page in spanish", () => {
         cy.visit("/es")
+        cy.wait("@unleashFlags")
         cy.findAndClickMenuItem("/listings/for-rent")
-        cy.wait("@listings")
+        cy.wait("@rentalListings")
         cy.location("pathname").should("eq", "/es/listings/for-rent")
       })
 
       it("navigates to the for-rent page in Chinese", () => {
         cy.visit("/zh")
+        cy.wait("@unleashFlags")
         cy.findAndClickMenuItem("/listings/for-rent")
-        cy.wait("@listings")
+        cy.wait("@rentalListings")
         cy.location("pathname").should("eq", "/zh/listings/for-rent")
       })
 
       it("navigates to the for-rent page in Tagalog", () => {
         cy.visit("/tl")
+        cy.wait("@unleashFlags")
         cy.findAndClickMenuItem("/listings/for-rent")
-        cy.wait("@listings")
+        cy.wait("@rentalListings")
         cy.location("pathname").should("eq", "/tl/listings/for-rent")
       })
     })
@@ -143,15 +148,17 @@ describe("Homepage integration tests", () => {
     describe("navigating to the for-sale page", () => {
       it("navigates to the for-sale page in english by default", () => {
         cy.visit("/")
+        cy.wait("@unleashFlags")
         cy.findAndClickMenuItem("/listings/for-sale")
-        cy.wait("@listings")
+        cy.wait("@saleListings")
         cy.location("pathname").should("eq", "/listings/for-sale")
       })
 
       it("navigates to the for-sale page in spanish", () => {
         cy.visit("/es")
+        cy.wait("@unleashFlags")
         cy.findAndClickMenuItem("/listings/for-sale")
-        cy.wait("@listings")
+        cy.wait("@saleListings")
         cy.location("pathname").should("eq", "/es/listings/for-sale")
       })
     })
@@ -159,12 +166,14 @@ describe("Homepage integration tests", () => {
     describe("navigating to the get-assistance page", () => {
       it("navigates to the get-assistance page in english by default", () => {
         cy.visit("/")
+        cy.wait("@unleashFlags")
         cy.findAndClickMenuItem("/get-assistance")
         cy.location("pathname").should("eq", "/get-assistance")
       })
 
       it("navigates to the get-assistance page in spanish", () => {
         cy.visit("/es")
+        cy.wait("@unleashFlags")
         cy.findAndClickMenuItem("/get-assistance")
         cy.location("pathname").should("eq", "/es/get-assistance")
       })
@@ -172,12 +181,14 @@ describe("Homepage integration tests", () => {
     describe("navigating to the sign-in page", () => {
       it("navigates to the sign-in page in english by default", () => {
         cy.visit("/")
+        cy.wait("@unleashFlags")
         cy.findAndClickMenuItem("/sign-in")
         cy.location("pathname").should("eq", "/sign-in")
       })
 
       it("navigates to the sign-in page in spanish", () => {
         cy.visit("/es")
+        cy.wait("@unleashFlags")
         cy.findAndClickMenuItem("/sign-in")
         cy.location("pathname").should("eq", "/es/sign-in")
       })

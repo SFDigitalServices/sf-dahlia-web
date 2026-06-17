@@ -1,4 +1,5 @@
 import React, { useMemo, useEffect, useState } from "react"
+import { useParams } from "react-router"
 import Layout from "../../layouts/Layout"
 import withAppSetup from "../../layouts/withAppSetup"
 import { getListing, getPreferences } from "../../api/listingApiService"
@@ -26,31 +27,30 @@ export interface ListingApplicationStaticData {
 
 interface ListingApplyFormProps {
   assetPaths: unknown
-  listingId: string
 }
 
-const ListingApplyForm = (props: ListingApplyFormProps) => {
+const ListingApplyForm = (_: ListingApplyFormProps) => {
+  const { id: listingId } = useParams()
   const [listing, setListing] = useState<RailsListing>(null)
   const [preferences, setPreferences] = useState<RailsListingPreference[]>(null)
 
   const { flagsReady, unleashFlag: formEngine } = useFeatureFlag(UNLEASH_FLAG.FORM_ENGINE, false)
 
   useMemo(() => {
-    if (flagsReady && !formEngine)
-      window.location.assign(`${getListingDetailPath()}/${props.listingId}`)
-  }, [flagsReady, formEngine, props.listingId])
+    if (flagsReady && !formEngine) window.location.assign(`${getListingDetailPath()}/${listingId}`)
+  }, [flagsReady, formEngine, listingId])
 
   useEffect(() => {
-    void getListing(props.listingId).then((listing: RailsListing) => {
+    void getListing(listingId).then((listing: RailsListing) => {
       setListing(listing)
     })
-  }, [props.listingId])
+  }, [listingId])
 
   useEffect(() => {
-    void getPreferences(props.listingId).then((preferences: RailsListingPreference[]) => {
+    void getPreferences(listingId).then((preferences: RailsListingPreference[]) => {
       setPreferences(preferences)
     })
-  }, [props.listingId])
+  }, [listingId])
 
   // ShortFormApplicationService.js.coffee#L19
   const sessionId = useMemo(() => self.crypto.randomUUID(), [])

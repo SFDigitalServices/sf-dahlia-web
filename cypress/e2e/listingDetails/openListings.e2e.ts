@@ -20,7 +20,7 @@ function verifyRentalListing(
     cy.intercept(`${id}.json`, { fixture: "openRentalListing.json" }).as("openRentalListing")
   }
 
-  cy.visit(`${langPart}/listings/${id}?react=true`)
+  cy.visit(`${langPart}/listings/${id}`)
   if (Cypress.env("salesforceInstanceUrl") === "https://sfhousing.my.salesforce.com") {
     cy.wait("@openRentalListing")
     cy.wait("@units")
@@ -56,7 +56,7 @@ function verifySaleListing(
     cy.intercept(`${id}.json`, { fixture: "openSaleListing.json" }).as("openSaleListing")
   }
 
-  cy.visit(`${langPart}/listings/${id}?react=true`)
+  cy.visit(`${langPart}/listings/${id}`)
   if (Cypress.env("salesforceInstanceUrl") === "https://sfhousing.my.salesforce.com") {
     cy.wait("@openSaleListing")
     cy.wait("@units")
@@ -134,7 +134,7 @@ describe("Listing Details for Open Listings", () => {
             fixture: "openRentalListing.json",
           }).as("openRentalListing")
         }
-        cy.visit(`${langPart}/listings/${testListings.OPEN_RENTAL.id}?react=true`)
+        cy.visit(`${langPart}/listings/${testListings.OPEN_RENTAL.id}`)
         if (Cypress.env("salesforceInstanceUrl") === "https://sfhousing.my.salesforce.com") {
           cy.wait("@openRentalListing")
           cy.wait("@units")
@@ -170,7 +170,7 @@ describe("Listing Details for Open Listings", () => {
           )
         }
 
-        cy.visit(`${langPart}/listings/${testListings.OPEN_SALE.id}?react=true`)
+        cy.visit(`${langPart}/listings/${testListings.OPEN_SALE.id}`)
         if (Cypress.env("salesforceInstanceUrl") === "https://sfhousing.my.salesforce.com") {
           cy.wait("@openSaleListing")
           cy.wait("@units")

@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { act, render, RenderOptions, RenderResult } from "@testing-library/react"
 import React from "react"
+import { MemoryRouter } from "react-router"
 import crypto from "crypto"
 import { useForm, FormProvider } from "react-hook-form"
 import { FormEngineProvider } from "../../formEngine/formEngineContext"
@@ -37,7 +38,12 @@ export const renderAndLoadAsync = async (
   let renderResponse: RenderResult = {} as RenderResult
   // eslint-disable-next-line @typescript-eslint/require-await
   await act(async () => {
-    renderResponse = render(ui, options)
+    renderResponse = render(ui, {
+      wrapper: ({ children }: { children: React.ReactNode }) => (
+        <MemoryRouter>{children}</MemoryRouter>
+      ),
+      ...options,
+    }) as RenderResult
   })
 
   return renderResponse

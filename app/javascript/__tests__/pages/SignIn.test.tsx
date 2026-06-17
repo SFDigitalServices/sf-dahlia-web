@@ -240,7 +240,7 @@ describe("<SignIn />", () => {
   })
 
   it("handles enter key press as submit", async () => {
-    const { getByTestId } = render(<SignIn assetPaths={{}} />)
+    const { getByTestId } = await renderAndLoadAsync(<SignIn assetPaths={{}} />)
     ;(post as jest.Mock).mockRejectedValue({
       response: {
         status: 422,

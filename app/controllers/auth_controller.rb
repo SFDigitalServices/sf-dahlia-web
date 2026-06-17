@@ -1,21 +1,21 @@
 # Controller for the authentication pages.
 class AuthController < ApplicationController
   def sign_in
-    @sign_in_props = { assetPaths: static_asset_paths }
+    @sign_in_props = react_app_props
   end
 
   def create_account
-    @create_account_props = { assetPaths: static_asset_paths }
+    @create_account_props = react_app_props
     render 'create_account'
   end
 
   def forgot_password
-    @forgot_password_props = { assetPaths: static_asset_paths }
+    @forgot_password_props = react_app_props
     render 'forgot_password'
   end
 
   def reset_password
-    @reset_password_props = { assetPaths: static_asset_paths }
+    @reset_password_props = react_app_props
     render 'reset_password'
   end
 
