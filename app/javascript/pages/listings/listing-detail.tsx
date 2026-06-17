@@ -1,13 +1,7 @@
 import React, { useContext, useEffect, useState } from "react"
+import { useLocation, useNavigate } from "react-router"
 
-import {
-  ListingDetails,
-  LoadingOverlay,
-  Mobile,
-  NavigationContext,
-  SiteAlert,
-  t,
-} from "@bloom-housing/ui-components"
+import { ListingDetails, LoadingOverlay, Mobile, SiteAlert, t } from "@bloom-housing/ui-components"
 
 import Layout from "../../layouts/Layout"
 import withAppSetup from "../../layouts/withAppSetup"
@@ -62,7 +56,8 @@ const ListingDetail = () => {
   useTranslate(flagsReady ? isCloudTranslationEnabled : undefined)
 
   const alertClasses = "flex-grow mt-6 max-w-6xl w-full"
-  const { router } = useContext(NavigationContext)
+  const navigate = useNavigate()
+  const { pathname } = useLocation()
   const { getAssetPath } = useContext(ConfigContext)
   const [listing, setListing] = useState<RailsListing>(null)
   const isApplicationOpen =
@@ -114,14 +109,16 @@ const ListingDetail = () => {
   }, [listing?.listingID, fetchAmiCharts, fetchedAmiCharts, fetchingAmiCharts, fetchedUnits, units])
 
   useEffect(() => {
-    const path = getPathWithoutLanguagePrefix(router.pathname)
-    void getListing(path.split("/")[2]).then((listing: RailsListing) => {
+    void (async () => {
+      const path = getPathWithoutLanguagePrefix(pathname)
+      const listing = await getListing(path.split("/")[2])
       if (!listing) {
-        router.push("/")
+        await navigate("/")
+        return
       }
       setListing(listing)
-    })
-  }, [router, router.pathname])
+    })()
+  }, [navigate, pathname])
 
   const getDescription = (listing: RailsListing) =>
     `${getListingAddressString(listing)}. ${t(

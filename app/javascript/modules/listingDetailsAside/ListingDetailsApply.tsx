@@ -78,7 +78,9 @@ const StandardHowToApply = ({
 }) => {
   const [paperApplicationsOpen, setPaperApplicationsOpen] = useState(false)
   const { unleashFlag: formEngine } = useFeatureFlag(UNLEASH_FLAG.FORM_ENGINE, false)
-  const formUrl = `listings/${listingId}/${formEngine ? "apply/intro?react=true" : "apply-welcome/intro"}`
+  const formUrl = localizedPath(
+    `listings/${listingId}/${formEngine ? "apply/intro" : "apply-welcome/intro"}`
+  )
   return (
     <SidebarBlock title={t("listings.apply.howToApply")} priority={2}>
       {!isListingRental && (

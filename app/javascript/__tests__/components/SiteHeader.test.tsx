@@ -1,7 +1,7 @@
 import React from "react"
 import { render, screen } from "@testing-library/react"
+import { MemoryRouter } from "react-router"
 import SiteHeader, { SiteHeaderProps } from "../../components/SiteHeader/SiteHeader"
-import NavigationProvider from "../../navigation/NavigationProvider"
 import { setupUserContext } from "../__util__/accountUtils"
 
 const accountMenuLinks = [
@@ -21,9 +21,9 @@ describe("SiteHeader", () => {
     siteHeaderProps: Partial<SiteHeaderProps> = {}
   ) =>
     render(
-      <NavigationProvider>
+      <MemoryRouter>
         <SiteHeader homeURL="/" logoSrc="/logo.svg" menuLinks={menuLinks} {...siteHeaderProps} />
-      </NavigationProvider>
+      </MemoryRouter>
     )
 
   it("renders account avatar with initials of user", () => {

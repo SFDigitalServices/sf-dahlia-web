@@ -1,5 +1,5 @@
 import React from "react"
-import { render, within } from "@testing-library/react"
+import { within } from "@testing-library/react"
 import AssistanceLayout from "../../layouts/HeaderSidebarLayout"
 import { renderAndLoadAsync } from "../__util__/renderUtils"
 
@@ -38,8 +38,8 @@ describe("<HeaderSidebarLayout />", () => {
   })
 
   describe("Contact Bar", () => {
-    it("renders Contact Information", () => {
-      const { asFragment } = render(
+    it("renders Contact Information", async () => {
+      const { asFragment } = await renderAndLoadAsync(
         <AssistanceLayout title="Title Text" subtitle="Subtitle Text">
           <h1>{CHILD_CONTENT}</h1>
         </AssistanceLayout>
