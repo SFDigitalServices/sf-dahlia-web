@@ -1,7 +1,7 @@
 # Controller for the DAHLIA homepage.
 class HomeController < ApplicationController
   def index
-    @home_props = { assetPaths: static_asset_paths }
+    @home_props = react_app_props
   end
 
   protected

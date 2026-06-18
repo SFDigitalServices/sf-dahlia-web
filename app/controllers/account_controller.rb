@@ -18,7 +18,7 @@ class AccountController < ApplicationController
       return
     end
 
-    @account_information_props = { assetPaths: static_asset_paths }
+    @account_information_props = react_app_props
     render 'contact'
   end
 
@@ -31,7 +31,7 @@ class AccountController < ApplicationController
   private
 
   def render_account_page(new_layout:, old_layout:)
-    @account_information_props = { assetPaths: static_asset_paths }
+    @account_information_props = react_app_props
     render(new_account_layout? ? new_layout : old_layout)
   end
 

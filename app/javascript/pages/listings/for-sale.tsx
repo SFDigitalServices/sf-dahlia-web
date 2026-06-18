@@ -1,12 +1,18 @@
 import React, { Dispatch, SetStateAction } from "react"
 
-import { ActionBlock, ActionBlockLayout, Heading, t } from "@bloom-housing/ui-components"
+import {
+  ActionBlock,
+  ActionBlockLayout,
+  Heading,
+  LinkButton,
+  t,
+} from "@bloom-housing/ui-components"
+import { Link } from "@bloom-housing/ui-seeds"
 
 import { getSaleListings, EligibilityFilters } from "../../api/listingsApiService"
 import Layout from "../../layouts/Layout"
 import withAppSetup from "../../layouts/withAppSetup"
 import type RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
-import Link from "../../navigation/Link"
 import "./for-sale.scss"
 
 import { GenericDirectory } from "../../modules/listings/GenericDirectory"
@@ -103,22 +109,21 @@ const getFindMoreActionBlock = (isSalesDirectory: boolean) => {
                 <Link
                   className="button"
                   key="action-1"
-                  external
-                  href={"https://housing.sfgov.org/listings/for-sale"}
+                  href="https://housing.sfgov.org/listings/for-sale"
+                  newWindowTarget
                 >
                   {t("saleDirectory.callout.firstComeFirstServed")}
                 </Link>
               ),
-              <Link
+
+              <LinkButton
                 className={`button ${isSalesDirectory ? "ml-8" : ""}`}
                 key={isSalesDirectory ? "action-1" : "action-2"}
-                external
-                href={
-                  "https://www.sf.gov/reports--december-2024--city-second-program-current-listings"
-                }
+                href="https://www.sf.gov/reports--december-2024--city-second-program-current-listings"
+                newTab
               >
                 {t("saleDirectory.callout.citySecondLoan")}
-              </Link>,
+              </LinkButton>,
             ]}
           />
         </div>

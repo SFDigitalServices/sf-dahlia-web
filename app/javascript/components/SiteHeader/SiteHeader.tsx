@@ -1,5 +1,6 @@
 /* eslint-disable unicorn/prefer-ternary */
 import React, { useState, useContext, useLayoutEffect, useEffect, useRef } from "react"
+import { Link } from "react-router"
 import { CSSTransition } from "react-transition-group"
 import {
   LanguageNav,
@@ -7,13 +8,13 @@ import {
   Icon,
   Button,
   AppearanceSizeType,
-  NavigationContext,
   SiteHeader as BloomSiteHeader,
   t,
 } from "@bloom-housing/ui-components"
 import UserContext from "../../authentication/context/UserContext"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import { UNLEASH_FLAG } from "../../modules/constants"
+import { localizedPath } from "../../util/routeUtil"
 import "@bloom-housing/ui-components/src/headers/SiteHeader.scss"
 import styles from "./SiteHeader.module.scss"
 
@@ -140,8 +141,6 @@ const DahliaSiteHeader = (props: SiteHeaderProps) => {
   }
   const DESKTOP_MIN_WIDTH = props.desktopMinWidth || 767
 
-  const { LinkComponent } = useContext(NavigationContext)
-
   const toggleDesktopMenu = (menuTitle: string) => {
     setActiveMenu((current) => (current === menuTitle ? null : menuTitle))
   }
@@ -265,16 +264,16 @@ const DahliaSiteHeader = (props: SiteHeaderProps) => {
       return (
         <div key={index}>
           {option.href ? (
-            <LinkComponent
+            <Link
               className={dropdownOptionClassname}
               key={`${option.title}-${index}`}
-              href={option.href}
+              to={localizedPath(option.href)}
               onKeyDown={(event) => {
                 dropdownOptionKeyDown(event, index)
               }}
             >
               {dropdownOptionContent(option)}
-            </LinkComponent>
+            </Link>
           ) : (
             <button
               tabIndex={0}
@@ -497,16 +496,16 @@ const DahliaSiteHeader = (props: SiteHeaderProps) => {
           if (!menuLink.subMenuLinks) {
             if (menuLink.href) {
               return (
-                <LinkComponent
+                <Link
                   className={`site-header__link ${props.menuItemClassName ?? ""} ${
                     menuLink.className ?? ""
                   }`}
-                  href={menuLink.href}
+                  to={localizedPath(menuLink.href)}
                   key={`${menuLink.title}-${index}`}
                   data-testid={`${menuLink.title}-${index}`}
                 >
                   {menuContent}
-                </LinkComponent>
+                </Link>
               )
             } else {
               return (
@@ -612,11 +611,11 @@ const DahliaSiteHeader = (props: SiteHeaderProps) => {
   const getLogo = () => {
     return (
       <div className={`site-header__logo-container ${getLogoWidthClass()}`} id={"site-header-logo"}>
-        <LinkComponent
+        <Link
           className={`site-header__logo ${props.logoClass ?? ""} ${
             (props.logoWidth && "site-header__custom-width") ?? ""
           }`}
-          href={props.homeURL}
+          to={localizedPath(props.homeURL)}
           aria-label={props.strings?.logoAriaLable ?? t("t.homePage")}
         >
           <div
@@ -640,7 +639,7 @@ const DahliaSiteHeader = (props: SiteHeaderProps) => {
               </div>
             )}
           </div>
-        </LinkComponent>
+        </Link>
       </div>
     )
   }
