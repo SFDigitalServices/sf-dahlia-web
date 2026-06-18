@@ -219,7 +219,7 @@ describe("<MyApplications />", () => {
       const button = within(modal).getByRole("link", {
         name: /view application/i,
       })
-      expect(button).toHaveAttribute("href", "/account/applications/a0o6s000001cn02AAA")
+      expect(button).toHaveAttribute("href", "/applications/a0o6s000001cn02AAA")
     })
   })
 })
