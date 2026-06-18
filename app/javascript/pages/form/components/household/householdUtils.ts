@@ -3,7 +3,7 @@ export type HouseholdMember = {
   firstName: string
   lastName: string
   middleName?: string
-  hasSameAddressAsApplicant: boolean
+  hasSameAddressAsApplicant: string
   householdMemberAddressStreet?: string
   householdMemberAddressAptOrUnit?: string
   householdMemberAddressCity?: string
@@ -19,7 +19,7 @@ const entireHousehold = (formData: Record<string, unknown>): Array<HouseholdMemb
     firstName: formData.primaryApplicantFirstName as string,
     lastName: formData.primaryApplicantLastName as string,
     middleName: formData.primaryApplicantMiddleName as string,
-    hasSameAddressAsApplicant: true,
+    hasSameAddressAsApplicant: "true",
     householdMemberAddressStreet: formData.primaryApplicantAddressStreet as string,
     householdMemberAddressAptOrUnit: formData.primaryApplicantAddressAptOrUnit as string,
     householdMemberAddressCity: formData.primaryApplicantAddressCity as string,
@@ -41,6 +41,6 @@ export const liveInTheNeighborhoodHouseholdMembers = (formData: Record<string, u
     (member) =>
       member.neighborhoodPreferenceAddressMatch &&
       (member.householdMemberAddressCity?.toLowerCase() === "san francisco" ||
-        (member.hasSameAddressAsApplicant && primaryApplicantLivesInSf))
+        (member.hasSameAddressAsApplicant === "true" && primaryApplicantLivesInSf))
   )
 }

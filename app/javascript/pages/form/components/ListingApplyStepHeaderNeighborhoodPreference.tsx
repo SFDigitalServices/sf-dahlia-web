@@ -5,6 +5,7 @@ import { useFormEngineContext } from "../../../formEngine/formEngineContext"
 import styles from "./preferences/ListingApplyPreferenceStepWrapper.module.scss"
 import { renderInlineMarkup } from "../../../util/languageUtil"
 import { liveInTheNeighborhoodHouseholdMembers } from "./household/householdUtils"
+import { eligibleForAssistedHousingOrRentBurden } from "./ListingApplyStepHeaderNeighborhoodPreferenceUtils"
 
 const GoodNewsHeader = ({ addressesString }: { addressesString: string }) => {
   return (
@@ -33,16 +34,14 @@ const ListingApplyStepHeaderNeighborhoodPreference = () => {
   const formEngineContext = useFormEngineContext()
   const { formData } = formEngineContext
 
-  // TODO: DAH-4176
-  // const eligibleForAssistedHousingOrRentBurden =
-  //  formData.hasPublicHousing === 'yes' || eligibleForRentBurden(formData.householdIncome, formData.householdIncome)
-  const eligibleForAssistedHousingOrRentBurden = false
+  const eligibleForAssistedHousingOrRentBurdenValue =
+    eligibleForAssistedHousingOrRentBurden(formData)
 
   const liveInTheNeighborhoodAddresses = [
     ...new Set(
       liveInTheNeighborhoodHouseholdMembers(formData)
         .map((member) => member.householdMemberAddressStreet)
-        .filter((addressStreet) => typeof addressStreet === "string" && addressStreet.length > 1)
+        .filter((addressStreet) => typeof addressStreet === "string" && addressStreet.length > 0)
     ),
   ]
 
@@ -55,7 +54,8 @@ const ListingApplyStepHeaderNeighborhoodPreference = () => {
           address: liveInTheNeighborhoodAddresses[0],
         })
 
-  if (eligibleForAssistedHousingOrRentBurden) return <Header addressesString={addressesString} />
+  if (eligibleForAssistedHousingOrRentBurdenValue)
+    return <Header addressesString={addressesString} />
   return <GoodNewsHeader addressesString={addressesString} />
 }
 
