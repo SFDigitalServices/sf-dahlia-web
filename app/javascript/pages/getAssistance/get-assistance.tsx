@@ -18,6 +18,11 @@ import {
 } from "../../util/routeUtil"
 import HeaderSidebarLayout from "../../layouts/HeaderSidebarLayout"
 import ContactSideBarBlock from "../../layouts/Sidebar/ContactSidebarBlock"
+import {
+  InformationalContent,
+  InformationalSection,
+  InformationalStack,
+} from "../../components/informational/InformationalPageElements"
 
 const GetAssistance = () => {
   return (
@@ -27,81 +32,107 @@ const GetAssistance = () => {
       mainPage={true}
       sidebarContent={<ContactSideBarBlock />}
     >
-      <ActionBlock
-        header={<Heading priority={2}>{t("assistance.title.housingCouneslors")}</Heading>}
-        subheader={t("assistance.subtitle.housingCouneslors")}
-        background="none"
-        icon={<Icon size="2xl" symbol={faPeopleGroup} fill={bloomTheme.theme.colors.gray["750"]} />}
-        actions={[
-          <Link key="housing-counselors" className="button" to={getHousingCounselorsPath()}>
-            {t("housingCounselor.findAHousingCounselor")}
-          </Link>,
-        ]}
-      />
-      <ActionBlock
-        header={
-          <Heading priority={2}>{t("assistance.title.additionalHousingOpportunities")}</Heading>
-        }
-        subheader={t("assistance.subtitle.additionalHousingOpportunities")}
-        background="primary-lighter"
-        icon={
-          <Icon size="2xl" symbol={faHouseChimney} fill={bloomTheme.theme.colors.gray["750"]} />
-        }
-        actions={[
-          <Link
-            key="additional-resources"
-            className="button w-3/4 md:w-auto"
-            to={getAdditionalResourcesPath()}
-          >
-            {t("assistance.title.additionalHousingOpportunities.button")}
-          </Link>,
-        ]}
-      />
-      <ActionBlock
-        header={<Heading priority={2}>{t("assistance.title.sfServices")}</Heading>}
-        subheader={t("assistance.subtitle.sfServices")}
-        background="none"
-        icon={<Icon size="2xl" symbol={faDoorOpen} fill={bloomTheme.theme.colors.gray["750"]} />}
-        actions={[
-          <LinkButton
-            key="sf-services"
-            className="button"
-            href="https://sfserviceguide.org/"
-            newTab
-          >
-            {t("assistance.title.sfServices.button")}
-          </LinkButton>,
-        ]}
-      />
-      <ActionBlock
-        header={<Heading priority={2}>{t("assistance.title.documentChecklist")}</Heading>}
-        subheader={t("assistance.subtitle.documentChecklist")}
-        background="primary-lighter"
-        icon={
-          <Icon size="2xl" symbol={faClipboardList} fill={bloomTheme.theme.colors.gray["750"]} />
-        }
-        actions={[
-          <Link key="document-checklist" className="button" to={getDocumentChecklistPath()}>
-            {t("label.viewDocumentChecklist")}
-          </Link>,
-        ]}
-      />
-      <ActionBlock
-        header={<Heading priority={2}>{t("assistance.title.dahliaVideos")}</Heading>}
-        subheader={t("assistance.subtitle.dahliaVideos")}
-        background="none"
-        icon={<Icon size="2xl" symbol={faYoutube} fill={bloomTheme.theme.colors.gray["750"]} />}
-        actions={[
-          <LinkButton
-            key="dahlia-videos"
-            className="button"
-            href="https://www.youtube.com/playlist?list=PL7dcWHJTcA51TBqhghJ9LfSGEGoFB7aWG"
-            newTab
-          >
-            {t("assistance.title.dahliaVideos.button")}
-          </LinkButton>,
-        ]}
-      />
+      <InformationalContent>
+        <InformationalSection>
+          <InformationalStack>
+            <ActionBlock
+              header={<Heading priority={2}>{t("assistance.title.housingCouneslors")}</Heading>}
+              subheader={t("assistance.subtitle.housingCouneslors")}
+              background="none"
+              icon={
+                <Icon
+                  size="2xl"
+                  symbol={faPeopleGroup}
+                  fill={bloomTheme.theme.colors.gray["750"]}
+                />
+              }
+              actions={[
+                <Link key="housing-counselors" className="button" to={getHousingCounselorsPath()}>
+                  {t("housingCounselor.findAHousingCounselor")}
+                </Link>,
+              ]}
+            />
+            <ActionBlock
+              header={
+                <Heading priority={2}>
+                  {t("assistance.title.additionalHousingOpportunities")}
+                </Heading>
+              }
+              subheader={t("assistance.subtitle.additionalHousingOpportunities")}
+              background="primary-lighter"
+              icon={
+                <Icon
+                  size="2xl"
+                  symbol={faHouseChimney}
+                  fill={bloomTheme.theme.colors.gray["750"]}
+                />
+              }
+              actions={[
+                <Link
+                  key="additional-resources"
+                  className="button w-3/4 md:w-auto"
+                  to={getAdditionalResourcesPath()}
+                >
+                  {t("assistance.title.additionalHousingOpportunities.button")}
+                </Link>,
+              ]}
+            />
+            <ActionBlock
+              header={<Heading priority={2}>{t("assistance.title.sfServices")}</Heading>}
+              subheader={t("assistance.subtitle.sfServices")}
+              background="none"
+              icon={
+                <Icon size="2xl" symbol={faDoorOpen} fill={bloomTheme.theme.colors.gray["750"]} />
+              }
+              actions={[
+                <LinkButton
+                  key="sf-services"
+                  className="button"
+                  href="https://sfserviceguide.org/"
+                  newTab
+                >
+                  {t("assistance.title.sfServices.button")}
+                </LinkButton>,
+              ]}
+            />
+            <ActionBlock
+              header={<Heading priority={2}>{t("assistance.title.documentChecklist")}</Heading>}
+              subheader={t("assistance.subtitle.documentChecklist")}
+              background="primary-lighter"
+              icon={
+                <Icon
+                  size="2xl"
+                  symbol={faClipboardList}
+                  fill={bloomTheme.theme.colors.gray["750"]}
+                />
+              }
+              actions={[
+                <Link key="document-checklist" className="button" to={getDocumentChecklistPath()}>
+                  {t("label.viewDocumentChecklist")}
+                </Link>,
+              ]}
+            />
+            <ActionBlock
+              header={<Heading priority={2}>{t("assistance.title.dahliaVideos")}</Heading>}
+              subheader={t("assistance.subtitle.dahliaVideos")}
+              background="none"
+              icon={
+                <Icon size="2xl" symbol={faYoutube} fill={bloomTheme.theme.colors.gray["750"]} />
+              }
+              actions={[
+                <LinkButton
+                  key="dahlia-videos"
+                  className="button"
+                  href="https://www.youtube.com/playlist?list=PL7dcWHJTcA51TBqhghJ9LfSGEGoFB7aWG"
+                  newTab
+                >
+                  {t("assistance.title.dahliaVideos.button")}
+                </LinkButton>,
+              ]}
+            />
+          </InformationalStack>
+        </InformationalSection>
+      </InformationalContent>
     </HeaderSidebarLayout>
   )
 }

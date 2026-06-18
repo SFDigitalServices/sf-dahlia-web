@@ -6,6 +6,14 @@ import { getSfGovUrl, renderInlineMarkup } from "../../util/languageUtil"
 import { PREFERENCES_IDS } from "../../modules/constants"
 import useTranslate from "../../hooks/useTranslate"
 import { AppPages } from "../../util/routeUtil"
+import {
+  InformationalCallout,
+  InformationalContent,
+  InformationalDivider,
+  InformationalHeaderGroup,
+  InformationalSection,
+  InformationalStack,
+} from "../../components/informational/InformationalPageElements"
 
 const DocumentChecklist = () => {
   // false means useTranslate will not be disabled when GoogleCloudTranslate is enabled
@@ -19,7 +27,7 @@ const DocumentChecklist = () => {
         <div className="space-y-2.5">
           <p>{renderInlineMarkup(t("documentChecklist.nrhpDoc1"), "<ul><li>")}</p>
           <p>{t("documentChecklist.nrhpDoc2")}</p>
-          <ul className="list-disc ml-7">
+          <ul className="info-template-list info-template-list--unordered">
             <li>{t("label.proof.telephoneBill")}</li>
             <li>{t("label.proof.cableBill")}</li>
             <li>{t("label.proof.electricBill")}</li>
@@ -39,10 +47,10 @@ const DocumentChecklist = () => {
       expanded: (
         <div>
           <p className="pb-2.5">{t("documentChecklist.twoWaysDesc")}</p>
-          <ul className="space-y-2.5 list-decimal ml-7">
+          <ol className="info-template-list info-template-list--ordered info-template-list--compact">
             <li>
               <p className="pb-2.5">{t("documentChecklist.liveSfDesc")}</p>
-              <ul className="list-disc ml-2">
+              <ul className="info-template-list info-template-list--unordered info-template-list--nested">
                 <li>{t("label.proof.telephoneBill")}</li>
                 <li>{t("label.proof.cableBill")}</li>
                 <li>{t("label.proof.electricBill")}</li>
@@ -56,12 +64,12 @@ const DocumentChecklist = () => {
             </li>
             <li>
               <p className="pb-2.5">{t("documentChecklist.workSfDesc")}</p>
-              <ul className="list-disc ml-2">
+              <ul className="info-template-list info-template-list--unordered info-template-list--nested">
                 <li>{t("label.proof.paystubEmployer")}</li>
                 <li>{t("label.proof.letterFromEmployer")}</li>
               </ul>
             </li>
-          </ul>
+          </ol>
         </div>
       ),
     },
@@ -105,12 +113,12 @@ const DocumentChecklist = () => {
         <div className="space-y-2.5">
           <p>{renderInlineMarkup(t("documentChecklist.ociiSponsored"))}</p>
           <p>{t("documentChecklist.twoWaysDesc")}</p>
-          <ol className="list-decimal ml-7">
+          <ol className="info-template-list info-template-list--ordered">
             <li>
               <p className="pb-2.5">
                 {renderInlineMarkup(t("documentChecklist.assistedHousingDesc"))}
               </p>
-              <ul className="list-disc ml-7">
+              <ul className="info-template-list info-template-list--unordered">
                 <li>
                   <p className="pb-2.5">{t("label.proof.leaseAgreement")}</p>
                 </li>
@@ -118,13 +126,13 @@ const DocumentChecklist = () => {
             </li>
             <li>
               <p className="pb-2.5">{t("documentChecklist.rentBurdenDoc1")}</p>
-              <ol style={{ listStyleType: "lower-alpha" }} className="ml-7">
+              <ol className="info-template-list info-template-list--ordered info-template-list--lower-alpha">
                 <li>
                   <p>{t("label.proof.leaseAgreement")}</p>
                 </li>
                 <li>
                   <p className="pb-2.5">{t("documentChecklist.rentBurdenDoc2")}</p>
-                  <ul className="list-disc ml-7">
+                  <ul className="info-template-list info-template-list--unordered">
                     <li>{t("label.proof.moneyOrder")}</li>
                     <li>{t("label.proof.cancelledCheck")}</li>
                     <li>{t("label.proof.debitFromBank")}</li>
@@ -145,7 +153,7 @@ const DocumentChecklist = () => {
           {/* When there are human translated strings, those will take precedence */}
           <p className="translate">{t("documentChecklist.hopeSf.p1")}</p>
           <p className="translate">{t("documentChecklist.hopeSf.p2")}</p>
-          <ul className="list-disc ml-7">
+          <ul className="info-template-list info-template-list--unordered">
             <li className="translate">{t("label.proof.sfhaLetterVerifyingResidency")}</li>
             <li>{t("label.proof.sfhaLease")}</li>
             <li>{t("label.proof.sfCityId")}</li>
@@ -162,9 +170,7 @@ const DocumentChecklist = () => {
     <div id={pref.id} key={pref.id}>
       <ContentAccordion
         customBarContent={pref.title}
-        customExpandedContent={
-          <div className="p-5 rounded-b-lg border-2 border-gray-400">{pref.expanded}</div>
-        }
+        customExpandedContent={<InformationalCallout>{pref.expanded}</InformationalCallout>}
         accordionTheme={"gray"}
         initialExpanded={pref.id === anchor}
       />
@@ -175,9 +181,9 @@ const DocumentChecklist = () => {
       title={t("assistance.title.documentChecklist")}
       subtitle={t("assistance.subtitle.documentChecklist")}
     >
-      {
-        <div className="flex flex-col w-full ">
-          <div className="space-y-4 p-6 md:py-11 md:pr-11 lg:pl-0">
+      <InformationalContent>
+        <InformationalSection>
+          <InformationalHeaderGroup>
             <h2>{t("documentChecklist.preferenceHeader")}</h2>
             <p>{t("documentChecklist.p1")}</p>
             <p>{t("documentChecklist.p2")}</p>
@@ -190,16 +196,15 @@ const DocumentChecklist = () => {
                 })
               )}
             </p>
-
-            {preferences}
-          </div>
-          <div className="md:pr-11 md:pl-0">
-            <hr />
-          </div>
-          <div className="space-y-4 p-6 md:py-11 md:pr-11 lg:pl-0">
+          </InformationalHeaderGroup>
+          {preferences}
+        </InformationalSection>
+        <InformationalDivider />
+        <InformationalSection>
+          <InformationalStack>
             <h2>{t("documentChecklist.homebuyerHeader")}</h2>
             <p>{t("documentChecklist.homebuyerDesc")}</p>
-            <ol className="list-decimal ml-7">
+            <ol className="info-template-list info-template-list--ordered">
               <li>{t("documentChecklist.homebuyerEducationDesc")}</li>
               <li>
                 {renderInlineMarkup(
@@ -212,9 +217,9 @@ const DocumentChecklist = () => {
               </li>
             </ol>
             <p>{t("label.applicationUploadBothDocuments")}</p>
-          </div>
-        </div>
-      }
+          </InformationalStack>
+        </InformationalSection>
+      </InformationalContent>
     </AssistanceLayout>
   )
 }

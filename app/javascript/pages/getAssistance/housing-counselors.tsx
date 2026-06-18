@@ -18,6 +18,10 @@ import housingCounselorsList from "../../../assets/json/housing_counselors_react
 import CounselorFilter from "./counselor-filter"
 import { renderInlineMarkup } from "../../util/languageUtil"
 import { AppPages } from "../../util/routeUtil"
+import {
+  InformationalContent,
+  InformationalSection,
+} from "../../components/informational/InformationalPageElements"
 
 const HOME_SF = {
   fullName: "Home SF (Rentals and Ownership)",
@@ -138,7 +142,10 @@ const HousingCounselor = (housingCounselor: CounselorData) => {
       </Mobile>
       <Desktop>
         <p className="flex">
-          <a className="icon-item pb-2" href={`tel:+1${housingCounselor.phone}`}>
+          <a
+            className="icon-item pb-2 info-template-contact-link"
+            href={`tel:+1${housingCounselor.phone}`}
+          >
             <Icon
               className="counselor-icon"
               symbol="phone"
@@ -151,7 +158,10 @@ const HousingCounselor = (housingCounselor: CounselorData) => {
           </a>
           {housingCounselor.extension && <span>&nbsp;{housingCounselor.extension}</span>}
         </p>
-        <a className="icon-item pb-2" href={`mailto:${housingCounselor.email}`}>
+        <a
+          className="icon-item pb-2 info-template-contact-link"
+          href={`mailto:${housingCounselor.email}`}
+        >
           <Icon
             className="counselor-icon"
             symbol={faEnvelope}
@@ -165,7 +175,7 @@ const HousingCounselor = (housingCounselor: CounselorData) => {
 
         {housingCounselor.website && (
           <a
-            className="icon-item"
+            className="icon-item info-template-link-direct"
             target="_blank"
             rel="noreferrer noopener"
             href={housingCounselor.website}
@@ -232,28 +242,32 @@ const HousingCounselors = () => {
       subtitle={t("assistance.subtitle.housingCouneslors")}
     >
       <div className="page-main">
-        <div className="md:mr-8 md:mb-2 md:mt-4">
-          <div id="home-sf" className="m-6 mb-2 md:m-0 md:mb-0 md:mt-12">
-            <Heading priority={2}>{t("assistance.housingCounselors.startHere.title")}</Heading>
-            <p className="text-base my-4">{t("assistance.housingCounselors.startHere.subtitle")}</p>
-            {HousingCounselor(HOME_SF)}
-          </div>
-          <div className="border-b w-full border-gray-500 md:my-9" />
-          <div className="px-6 pt-6 md:pl-0 md:mt-12">
-            <CounselorFilter
-              handleFilterData={setFilterData}
-              clearClick={() => {
-                setFilterData({ language: "any", services: [] })
-              }}
-            />
-          </div>
-          <div className="flex flex-col m-6 md:m-0">
-            <Heading priority={3} className="text-lg">
-              {getResults(filteredList.length)}
-            </Heading>
-            {filteredList.map((counselor) => HousingCounselor(counselor))}
-          </div>
-        </div>
+        <InformationalContent>
+          <InformationalSection className="md:mr-8 md:mb-2 md:mt-4 pb-0">
+            <div id="home-sf" className="mb-2 md:mb-0 md:mt-2">
+              <Heading priority={2}>{t("assistance.housingCounselors.startHere.title")}</Heading>
+              <p className="text-base my-4">
+                {t("assistance.housingCounselors.startHere.subtitle")}
+              </p>
+              {HousingCounselor(HOME_SF)}
+            </div>
+            <div className="border-b w-full border-gray-500 md:my-9" />
+            <div className="pt-6 md:pl-0 md:mt-12">
+              <CounselorFilter
+                handleFilterData={setFilterData}
+                clearClick={() => {
+                  setFilterData({ language: "any", services: [] })
+                }}
+              />
+            </div>
+            <div className="flex flex-col">
+              <Heading priority={3} className="text-lg">
+                {getResults(filteredList.length)}
+              </Heading>
+              {filteredList.map((counselor) => HousingCounselor(counselor))}
+            </div>
+          </InformationalSection>
+        </InformationalContent>
       </div>
     </AssistanceLayout>
   )
