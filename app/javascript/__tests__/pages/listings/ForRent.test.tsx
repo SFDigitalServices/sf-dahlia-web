@@ -1,9 +1,10 @@
 import React from "react"
-import { render, cleanup, screen, waitFor } from "@testing-library/react"
+import { cleanup, screen, waitFor } from "@testing-library/react"
 import ForRent from "../../../../javascript/pages/listings/for-rent"
 import { sroRentalListing } from "../../data/RailsRentalListing/listing-rental-sro"
 import { useFeatureFlag } from "../../../hooks/useFeatureFlag"
 import { openRentalListing } from "../../data/RailsRentalListing/listing-rental-open"
+import { renderAndLoadAsync } from "../../__util__/renderUtils"
 
 const axios = require("axios")
 
@@ -59,7 +60,7 @@ describe("For Rent", () => {
         listings: [openRentalListing],
       },
     })
-    const { findByText, asFragment } = render(<ForRent assetPaths="/" />)
+    const { findByText, asFragment } = await renderAndLoadAsync(<ForRent assetPaths="/" />)
 
     expect(await findByText("Rent affordable housing")).toBeDefined()
     ;(await findByText("Enter a lottery")).click()
@@ -72,7 +73,7 @@ describe("For Rent", () => {
   it("listings with multiple listings render the first image in the array", async () => {
     axios.get.mockResolvedValue({ data: { listings: [sroRentalListing] } })
 
-    const { findByAltText } = render(<ForRent assetPaths="/" />)
+    const { findByAltText } = await renderAndLoadAsync(<ForRent assetPaths="/" />)
 
     await waitFor(
       () => {

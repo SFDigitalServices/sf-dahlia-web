@@ -14,7 +14,7 @@ import { GenericDirectory } from "../../modules/listings/GenericDirectory"
 import Layout from "../../layouts/Layout"
 import withAppSetup from "../../layouts/withAppSetup"
 import type RailsRentalListing from "../../api/types/rails/listings/RailsRentalListing"
-import Link from "../../navigation/Link"
+import { Link } from "react-router"
 import {
   AppPages,
   getAdditionalResourcesPath,
@@ -94,7 +94,7 @@ const getFindMoreActionBlock = () => {
             background="primary-darker"
             layout={ActionBlockLayout.inline}
             actions={[
-              <Link className="button" key="action-1" href={getAdditionalResourcesPath()}>
+              <Link className="button" key="action-1" to={getAdditionalResourcesPath()}>
                 {t("rentalDirectory.calloutbutton")}
               </Link>,
             ]}

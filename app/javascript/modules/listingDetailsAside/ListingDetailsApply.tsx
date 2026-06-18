@@ -78,7 +78,9 @@ const StandardHowToApply = ({
 }) => {
   const [paperApplicationsOpen, setPaperApplicationsOpen] = useState(false)
   const { unleashFlag: formEngine } = useFeatureFlag(UNLEASH_FLAG.FORM_ENGINE, false)
-  const formUrl = `listings/${listingId}/${formEngine ? "apply/intro?react=true" : "apply-welcome/intro"}`
+  const formUrl = localizedPath(
+    `listings/${listingId}/${formEngine ? "apply/intro" : "apply-welcome/intro"}`
+  )
   return (
     <SidebarBlock title={t("listings.apply.howToApply")} priority={2}>
       {!isListingRental && (
@@ -87,7 +89,7 @@ const StandardHowToApply = ({
             {renderInlineMarkup(
               t("listings.apply.fulfillEligibilityRequirements", {
                 url: isHabitatListing
-                  ? "http://www.habitatgsf.org/innes-ave/"
+                  ? "https://habitatgsf.org/amber-drive-sf/"
                   : getSfGovUrl(
                       "https://sf.gov/determine-if-you-can-buy-affordable-housing-program"
                     ),

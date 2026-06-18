@@ -155,8 +155,8 @@ exports[`Listing Detail renders a habitat listing 1`] = `
               <a
                 aria-label="DAHLIA San Francisco Housing Portal"
                 class="site-header__logo translate site-header__custom-width"
+                data-discover="true"
                 href="/"
-                target="_self"
               >
                 <div
                   class="site-header__logo-content site-header__image-only-container"
@@ -174,9 +174,9 @@ exports[`Listing Detail renders a habitat listing 1`] = `
             >
               <a
                 class="site-header__link  "
+                data-discover="true"
                 data-testid="Rent-0"
                 href="/listings/for-rent"
-                target="_self"
               >
                 <div>
                   Rent
@@ -184,9 +184,9 @@ exports[`Listing Detail renders a habitat listing 1`] = `
               </a>
               <a
                 class="site-header__link  "
+                data-discover="true"
                 data-testid="Buy-1"
                 href="/listings/for-sale"
-                target="_self"
               >
                 <div>
                   Buy
@@ -194,9 +194,9 @@ exports[`Listing Detail renders a habitat listing 1`] = `
               </a>
               <a
                 class="site-header__link  "
+                data-discover="true"
                 data-testid="Get assistance-2"
                 href="/get-assistance"
-                target="_self"
               >
                 <div>
                   Get assistance
@@ -204,9 +204,9 @@ exports[`Listing Detail renders a habitat listing 1`] = `
               </a>
               <a
                 class="site-header__link  "
+                data-discover="true"
                 data-testid="Sign in-3"
                 href="/sign-in"
-                target="_self"
               >
                 <div>
                   Sign in
@@ -390,7 +390,7 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                 >
                   These units are offered by 
                   <a
-                    href="http://www.habitatgsf.org/innes-ave"
+                    href="https://habitatgsf.org/amber-drive-sf/"
                     target="_blank"
                   >
                     Habitat for Humanity Greater San Francisco
@@ -407,7 +407,7 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                   >
                     You must go to a 
                     <a
-                      href="http://www.habitatgsf.org/innes-ave"
+                      href="https://habitatgsf.org/amber-drive-sf/"
                       target="_blank"
                     >
                       Habitat for Humanity information session
@@ -489,26 +489,9 @@ exports[`Listing Detail renders a habitat listing 1`] = `
               </p>
             </div>
             <div
-              class="flex justify-center md:my-6 md:pr-8 md:px-0 md:w-2/3 px-3 w-full"
+              class="md:pr-8 md:w-2/3 mx-2 w-full"
             >
-              <span
-                class="ui-icon ui-large spinner-animation"
-              >
-                <svg
-                  fill="currentColor"
-                  viewBox="0 0 100 100"
-                >
-                  <circle
-                    cx="50"
-                    cy="50"
-                    fill="none"
-                    r="32"
-                    stroke="currentColor"
-                    stroke-dasharray="150.79644737231007 52.26548245743669"
-                    stroke-width="9"
-                  />
-                </svg>
-              </span>
+              <ul />
             </div>
             <ul>
               <li
@@ -1491,7 +1474,7 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                             >
                               Go to a 
                               <a
-                                href="http://www.habitatgsf.org/innes-ave"
+                                href="https://habitatgsf.org/amber-drive-sf/"
                                 target="_blank"
                               >
                                 Habitat for Humanity information session
@@ -1511,7 +1494,7 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                             >
                               Meet the 
                               <a
-                                href="https://media.api.sf.gov/documents/DALP_Manual_-_2025.pdf"
+                                href="https://www.sf.gov/sites/default/files/2024-08/Inclusionary%20Affordable%20Housing%20Monitoring%20and%20Procedures%20Manual%20Final%207.25.24.pdf"
                                 target="_blank"
                               >
                                 income requirements
@@ -1532,7 +1515,7 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                           >
                             Read 
                             <a
-                              href="http://www.habitatgsf.org/innes-ave"
+                              href="https://habitatgsf.org/amber-drive-sf/"
                               target="_blank"
                             >
                               our full list of requirements
@@ -1719,7 +1702,7 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                           >
                             Go to a 
                             <a
-                              href="http://www.habitatgsf.org/innes-ave"
+                              href="https://habitatgsf.org/amber-drive-sf/"
                               target="_blank"
                             >
                               Habitat for Humanity information session
@@ -1739,7 +1722,7 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                           >
                             Meet the 
                             <a
-                              href="https://media.api.sf.gov/documents/DALP_Manual_-_2025.pdf"
+                              href="https://www.sf.gov/sites/default/files/2024-08/Inclusionary%20Affordable%20Housing%20Monitoring%20and%20Procedures%20Manual%20Final%207.25.24.pdf"
                               target="_blank"
                             >
                               income requirements
@@ -1760,7 +1743,7 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                         >
                           Read 
                           <a
-                            href="http://www.habitatgsf.org/innes-ave"
+                            href="https://habitatgsf.org/amber-drive-sf/"
                             target="_blank"
                           >
                             our full list of requirements
@@ -1986,7 +1969,7 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                           >
                             Go to a 
                             <a
-                              href="http://www.habitatgsf.org/innes-ave"
+                              href="https://habitatgsf.org/amber-drive-sf/"
                               target="_blank"
                             >
                               Habitat for Humanity information session
@@ -2006,7 +1989,7 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                           >
                             Meet the 
                             <a
-                              href="https://media.api.sf.gov/documents/DALP_Manual_-_2025.pdf"
+                              href="https://www.sf.gov/sites/default/files/2024-08/Inclusionary%20Affordable%20Housing%20Monitoring%20and%20Procedures%20Manual%20Final%207.25.24.pdf"
                               target="_blank"
                             >
                               income requirements
@@ -2027,7 +2010,7 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                         >
                           Read 
                           <a
-                            href="http://www.habitatgsf.org/innes-ave"
+                            href="https://habitatgsf.org/amber-drive-sf/"
                             target="_blank"
                           >
                             our full list of requirements
@@ -4081,7 +4064,7 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                           >
                             Go to a 
                             <a
-                              href="http://www.habitatgsf.org/innes-ave"
+                              href="https://habitatgsf.org/amber-drive-sf/"
                               target="_blank"
                             >
                               Habitat for Humanity information session
@@ -4101,7 +4084,7 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                           >
                             Meet the 
                             <a
-                              href="https://media.api.sf.gov/documents/DALP_Manual_-_2025.pdf"
+                              href="https://www.sf.gov/sites/default/files/2024-08/Inclusionary%20Affordable%20Housing%20Monitoring%20and%20Procedures%20Manual%20Final%207.25.24.pdf"
                               target="_blank"
                             >
                               income requirements
@@ -4122,7 +4105,7 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                         >
                           Read 
                           <a
-                            href="http://www.habitatgsf.org/innes-ave"
+                            href="https://habitatgsf.org/amber-drive-sf/"
                             target="_blank"
                           >
                             our full list of requirements
@@ -4908,11 +4891,17 @@ exports[`Listing Detail renders a habitat listing 1`] = `
               class="action-block__actions"
             >
               <a
-                class="button"
+                class="seeds-link button no-underline"
                 href="https://confirmsubscription.com/h/y/C3BAFCD742D47910"
+                rel="noreferrer"
                 target="_blank"
               >
                 Sign Up today
+                <span
+                  class="seeds-screen-reader-only"
+                >
+                  (opens in a new tab)
+                </span>
               </a>
             </div>
           </div>
@@ -5011,30 +5000,33 @@ exports[`Listing Detail renders a habitat listing 1`] = `
             class="footer-nav"
           >
             <a
-              class="text-gray-500"
+              class="seeds-link text-gray-500 no-underline"
               href="https://airtable.com/appUW1tM8te0Lmf6q/pagyZulZJCm1V4G8D/form?prefill_Last+visited=%2F&hide_Last+visited=true"
+              rel="noreferrer"
               target="_blank"
             >
               Give Feedback
+              <span
+                class="seeds-screen-reader-only"
+              >
+                (opens in a new tab)
+              </span>
             </a>
             <a
-              class="text-gray-500"
+              class="seeds-link text-gray-500 no-underline"
               href="mailto:sfhousinginfo@sfgov.org"
-              target="_self"
             >
               Contact
             </a>
             <a
-              class="text-gray-500"
+              class="seeds-link text-gray-500 no-underline"
               href="/disclaimer"
-              target="_self"
             >
               Disclaimer
             </a>
             <a
-              class="text-gray-500"
+              class="seeds-link text-gray-500 no-underline"
               href="/privacy"
-              target="_self"
             >
               Privacy Policy
             </a>
@@ -5201,8 +5193,8 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
               <a
                 aria-label="DAHLIA San Francisco Housing Portal"
                 class="site-header__logo translate site-header__custom-width"
+                data-discover="true"
                 href="/"
-                target="_self"
               >
                 <div
                   class="site-header__logo-content site-header__image-only-container"
@@ -5220,9 +5212,9 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
             >
               <a
                 class="site-header__link  "
+                data-discover="true"
                 data-testid="Rent-0"
                 href="/listings/for-rent"
-                target="_self"
               >
                 <div>
                   Rent
@@ -5230,9 +5222,9 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
               </a>
               <a
                 class="site-header__link  "
+                data-discover="true"
                 data-testid="Buy-1"
                 href="/listings/for-sale"
-                target="_self"
               >
                 <div>
                   Buy
@@ -5240,9 +5232,9 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
               </a>
               <a
                 class="site-header__link  "
+                data-discover="true"
                 data-testid="Get assistance-2"
                 href="/get-assistance"
-                target="_self"
               >
                 <div>
                   Get assistance
@@ -5250,9 +5242,9 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
               </a>
               <a
                 class="site-header__link  "
+                data-discover="true"
                 data-testid="Sign in-3"
                 href="/sign-in"
-                target="_self"
               >
                 <div>
                   Sign in
@@ -5387,27 +5379,8 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
               </div>
             </div>
             <div
-              class="flex justify-center md:my-6 md:pr-8 md:px-0 md:w-2/3 px-3 w-full"
-            >
-              <span
-                class="ui-icon ui-large spinner-animation"
-              >
-                <svg
-                  fill="currentColor"
-                  viewBox="0 0 100 100"
-                >
-                  <circle
-                    cx="50"
-                    cy="50"
-                    fill="none"
-                    r="32"
-                    stroke="currentColor"
-                    stroke-dasharray="150.79644737231007 52.26548245743669"
-                    stroke-width="9"
-                  />
-                </svg>
-              </span>
-            </div>
+              class="md:my-6 md:pr-8 sm:px-4 lg:pl-0 lg:pr-8 md:w-2/3 px-2 w-full"
+            />
             <div
               class="md:w-2/3 md:pr-8"
             >
@@ -6554,7 +6527,35 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                             class="w-full text-xs"
                           >
                             <thead>
-                              <tr />
+                              <tr>
+                                <th
+                                  class=""
+                                >
+                                  <span
+                                    class=""
+                                  >
+                                    household size
+                                  </span>
+                                </th>
+                                <th
+                                  class=""
+                                >
+                                  <span
+                                    class=""
+                                  >
+                                    maximum income per month
+                                  </span>
+                                </th>
+                                <th
+                                  class=""
+                                >
+                                  <span
+                                    class=""
+                                  >
+                                    maximum income per year
+                                  </span>
+                                </th>
+                              </tr>
                             </thead>
                             <tbody />
                           </table>
@@ -6891,7 +6892,35 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                           class="w-full text-xs"
                         >
                           <thead>
-                            <tr />
+                            <tr>
+                              <th
+                                class=""
+                              >
+                                <span
+                                  class=""
+                                >
+                                  household size
+                                </span>
+                              </th>
+                              <th
+                                class=""
+                              >
+                                <span
+                                  class=""
+                                >
+                                  maximum income per month
+                                </span>
+                              </th>
+                              <th
+                                class=""
+                              >
+                                <span
+                                  class=""
+                                >
+                                  maximum income per year
+                                </span>
+                              </th>
+                            </tr>
                           </thead>
                           <tbody />
                         </table>
@@ -7269,7 +7298,35 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                           class="w-full text-xs"
                         >
                           <thead>
-                            <tr />
+                            <tr>
+                              <th
+                                class=""
+                              >
+                                <span
+                                  class=""
+                                >
+                                  household size
+                                </span>
+                              </th>
+                              <th
+                                class=""
+                              >
+                                <span
+                                  class=""
+                                >
+                                  maximum income per month
+                                </span>
+                              </th>
+                              <th
+                                class=""
+                              >
+                                <span
+                                  class=""
+                                >
+                                  maximum income per year
+                                </span>
+                              </th>
+                            </tr>
                           </thead>
                           <tbody />
                         </table>
@@ -9039,7 +9096,35 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                           class="w-full text-xs"
                         >
                           <thead>
-                            <tr />
+                            <tr>
+                              <th
+                                class=""
+                              >
+                                <span
+                                  class=""
+                                >
+                                  household size
+                                </span>
+                              </th>
+                              <th
+                                class=""
+                              >
+                                <span
+                                  class=""
+                                >
+                                  maximum income per month
+                                </span>
+                              </th>
+                              <th
+                                class=""
+                              >
+                                <span
+                                  class=""
+                                >
+                                  maximum income per year
+                                </span>
+                              </th>
+                            </tr>
                           </thead>
                           <tbody />
                         </table>
@@ -9805,11 +9890,17 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
               class="action-block__actions"
             >
               <a
-                class="button"
+                class="seeds-link button no-underline"
                 href="https://confirmsubscription.com/h/y/C3BAFCD742D47910"
+                rel="noreferrer"
                 target="_blank"
               >
                 Sign Up today
+                <span
+                  class="seeds-screen-reader-only"
+                >
+                  (opens in a new tab)
+                </span>
               </a>
             </div>
           </div>
@@ -9908,30 +9999,33 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
             class="footer-nav"
           >
             <a
-              class="text-gray-500"
+              class="seeds-link text-gray-500 no-underline"
               href="https://airtable.com/appUW1tM8te0Lmf6q/pagyZulZJCm1V4G8D/form?prefill_Last+visited=%2F&hide_Last+visited=true"
+              rel="noreferrer"
               target="_blank"
             >
               Give Feedback
+              <span
+                class="seeds-screen-reader-only"
+              >
+                (opens in a new tab)
+              </span>
             </a>
             <a
-              class="text-gray-500"
+              class="seeds-link text-gray-500 no-underline"
               href="mailto:sfhousinginfo@sfgov.org"
-              target="_self"
             >
               Contact
             </a>
             <a
-              class="text-gray-500"
+              class="seeds-link text-gray-500 no-underline"
               href="/disclaimer"
-              target="_self"
             >
               Disclaimer
             </a>
             <a
-              class="text-gray-500"
+              class="seeds-link text-gray-500 no-underline"
               href="/privacy"
-              target="_self"
             >
               Privacy Policy
             </a>
@@ -10098,8 +10192,8 @@ exports[`Listing Detail renders an open rental listing 1`] = `
               <a
                 aria-label="DAHLIA San Francisco Housing Portal"
                 class="site-header__logo translate site-header__custom-width"
+                data-discover="true"
                 href="/"
-                target="_self"
               >
                 <div
                   class="site-header__logo-content site-header__image-only-container"
@@ -10117,9 +10211,9 @@ exports[`Listing Detail renders an open rental listing 1`] = `
             >
               <a
                 class="site-header__link  "
+                data-discover="true"
                 data-testid="Rent-0"
                 href="/listings/for-rent"
-                target="_self"
               >
                 <div>
                   Rent
@@ -10127,9 +10221,9 @@ exports[`Listing Detail renders an open rental listing 1`] = `
               </a>
               <a
                 class="site-header__link  "
+                data-discover="true"
                 data-testid="Buy-1"
                 href="/listings/for-sale"
-                target="_self"
               >
                 <div>
                   Buy
@@ -10137,9 +10231,9 @@ exports[`Listing Detail renders an open rental listing 1`] = `
               </a>
               <a
                 class="site-header__link  "
+                data-discover="true"
                 data-testid="Get assistance-2"
                 href="/get-assistance"
-                target="_self"
               >
                 <div>
                   Get assistance
@@ -10147,9 +10241,9 @@ exports[`Listing Detail renders an open rental listing 1`] = `
               </a>
               <a
                 class="site-header__link  "
+                data-discover="true"
                 data-testid="Sign in-3"
                 href="/sign-in"
-                target="_self"
               >
                 <div>
                   Sign in
@@ -10295,27 +10389,8 @@ exports[`Listing Detail renders an open rental listing 1`] = `
               </div>
             </div>
             <div
-              class="flex justify-center md:my-6 md:pr-8 md:px-0 md:w-2/3 px-3 w-full"
-            >
-              <span
-                class="ui-icon ui-large spinner-animation"
-              >
-                <svg
-                  fill="currentColor"
-                  viewBox="0 0 100 100"
-                >
-                  <circle
-                    cx="50"
-                    cy="50"
-                    fill="none"
-                    r="32"
-                    stroke="currentColor"
-                    stroke-dasharray="150.79644737231007 52.26548245743669"
-                    stroke-width="9"
-                  />
-                </svg>
-              </span>
-            </div>
+              class="md:my-6 md:pr-8 sm:px-4 lg:pl-0 lg:pr-8 md:w-2/3 px-2 w-full"
+            />
             <ul>
               <li
                 class="responsive-content-item header-hidden"
@@ -11699,7 +11774,35 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                             class="w-full text-xs"
                           >
                             <thead>
-                              <tr />
+                              <tr>
+                                <th
+                                  class=""
+                                >
+                                  <span
+                                    class=""
+                                  >
+                                    household size
+                                  </span>
+                                </th>
+                                <th
+                                  class=""
+                                >
+                                  <span
+                                    class=""
+                                  >
+                                    maximum income per month
+                                  </span>
+                                </th>
+                                <th
+                                  class=""
+                                >
+                                  <span
+                                    class=""
+                                  >
+                                    maximum income per year
+                                  </span>
+                                </th>
+                              </tr>
                             </thead>
                             <tbody />
                           </table>
@@ -12250,7 +12353,35 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                           class="w-full text-xs"
                         >
                           <thead>
-                            <tr />
+                            <tr>
+                              <th
+                                class=""
+                              >
+                                <span
+                                  class=""
+                                >
+                                  household size
+                                </span>
+                              </th>
+                              <th
+                                class=""
+                              >
+                                <span
+                                  class=""
+                                >
+                                  maximum income per month
+                                </span>
+                              </th>
+                              <th
+                                class=""
+                              >
+                                <span
+                                  class=""
+                                >
+                                  maximum income per year
+                                </span>
+                              </th>
+                            </tr>
                           </thead>
                           <tbody />
                         </table>
@@ -12842,7 +12973,35 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                           class="w-full text-xs"
                         >
                           <thead>
-                            <tr />
+                            <tr>
+                              <th
+                                class=""
+                              >
+                                <span
+                                  class=""
+                                >
+                                  household size
+                                </span>
+                              </th>
+                              <th
+                                class=""
+                              >
+                                <span
+                                  class=""
+                                >
+                                  maximum income per month
+                                </span>
+                              </th>
+                              <th
+                                class=""
+                              >
+                                <span
+                                  class=""
+                                >
+                                  maximum income per year
+                                </span>
+                              </th>
+                            </tr>
                           </thead>
                           <tbody />
                         </table>
@@ -15470,7 +15629,35 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                           class="w-full text-xs"
                         >
                           <thead>
-                            <tr />
+                            <tr>
+                              <th
+                                class=""
+                              >
+                                <span
+                                  class=""
+                                >
+                                  household size
+                                </span>
+                              </th>
+                              <th
+                                class=""
+                              >
+                                <span
+                                  class=""
+                                >
+                                  maximum income per month
+                                </span>
+                              </th>
+                              <th
+                                class=""
+                              >
+                                <span
+                                  class=""
+                                >
+                                  maximum income per year
+                                </span>
+                              </th>
+                            </tr>
                           </thead>
                           <tbody />
                         </table>
@@ -16553,11 +16740,17 @@ exports[`Listing Detail renders an open rental listing 1`] = `
               class="action-block__actions"
             >
               <a
-                class="button"
+                class="seeds-link button no-underline"
                 href="https://confirmsubscription.com/h/y/C3BAFCD742D47910"
+                rel="noreferrer"
                 target="_blank"
               >
                 Sign Up today
+                <span
+                  class="seeds-screen-reader-only"
+                >
+                  (opens in a new tab)
+                </span>
               </a>
             </div>
           </div>
@@ -16656,30 +16849,33 @@ exports[`Listing Detail renders an open rental listing 1`] = `
             class="footer-nav"
           >
             <a
-              class="text-gray-500"
+              class="seeds-link text-gray-500 no-underline"
               href="https://airtable.com/appUW1tM8te0Lmf6q/pagyZulZJCm1V4G8D/form?prefill_Last+visited=%2F&hide_Last+visited=true"
+              rel="noreferrer"
               target="_blank"
             >
               Give Feedback
+              <span
+                class="seeds-screen-reader-only"
+              >
+                (opens in a new tab)
+              </span>
             </a>
             <a
-              class="text-gray-500"
+              class="seeds-link text-gray-500 no-underline"
               href="mailto:sfhousinginfo@sfgov.org"
-              target="_self"
             >
               Contact
             </a>
             <a
-              class="text-gray-500"
+              class="seeds-link text-gray-500 no-underline"
               href="/disclaimer"
-              target="_self"
             >
               Disclaimer
             </a>
             <a
-              class="text-gray-500"
+              class="seeds-link text-gray-500 no-underline"
               href="/privacy"
-              target="_self"
             >
               Privacy Policy
             </a>
