@@ -143,11 +143,14 @@ const ListingApplyContactStepWrapper = ({
           [addressCity]: response.address?.city,
           [addressState]: response.address?.state,
           [addressZipcode]: response.address?.zip,
-          [addressVerified]: "true",
+          [addressVerified]: "false",
           // TODO: DAH-4161
           // call to the geocoding API to check for the actual neighborhood match
           [neighborhoodPreferenceAddressMatch]: true,
         })
+        // TODO: this is an antipattern, `...data` should include all data from the response
+        // it works here because the contact step is always followed by the verify-address step
+        // we should be setting the `[addressVerified]` flag in the VerifyAddress component
         handleNextStep({ ...formData, ...data })
       })
       .catch((error) => {

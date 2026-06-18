@@ -8,7 +8,7 @@ const buildFormData = (overrides: Record<string, unknown> = {}) => ({
   primaryApplicantAddressAptOrUnit: "Unit 4",
   primaryApplicantAddressCity: "San Francisco",
   primaryApplicantAddressState: "CA",
-  primaryApplicantAddressZip: "94103",
+  primaryApplicantAddressZipcode: "94103",
   primaryApplicantNeighborhoodPreferenceAddressMatch: true,
   householdMembers: [],
   ...overrides,

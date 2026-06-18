@@ -82,7 +82,8 @@ const HouseholdMemberMultiStepWrapper = ({
       updated[currentMemberIndex] = {
         ...data,
         id: householdMembersArray[currentMemberIndex]?.id,
-        neighborhoodPreferenceAddressMatch: householdMembersArray[currentMemberIndex]?.neighborhoodPreferenceAddressMatch
+        neighborhoodPreferenceAddressMatch:
+          householdMembersArray[currentMemberIndex]?.neighborhoodPreferenceAddressMatch,
       }
     } else {
       updated.push({

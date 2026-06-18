@@ -24,7 +24,7 @@ const entireHousehold = (formData: Record<string, unknown>): Array<HouseholdMemb
     householdMemberAddressAptOrUnit: formData.primaryApplicantAddressAptOrUnit as string,
     householdMemberAddressCity: formData.primaryApplicantAddressCity as string,
     householdMemberAddressState: formData.primaryApplicantAddressState as string,
-    householdMemberAddressZipcode: formData.primaryApplicantAddressZip as string,
+    householdMemberAddressZipcode: formData.primaryApplicantAddressZipcode as string,
     neighborhoodPreferenceAddressMatch:
       formData.primaryApplicantNeighborhoodPreferenceAddressMatch as boolean,
   }
