@@ -1,11 +1,11 @@
 import React, { useContext } from "react"
 
 import { t, SiteAlert, Hero, ActionBlock, Heading } from "@bloom-housing/ui-components"
+import { Link } from "@bloom-housing/ui-seeds"
 
 import Layout from "../layouts/Layout"
 import withAppSetup from "../layouts/withAppSetup"
 import { ConfigContext } from "../lib/ConfigContext"
-import Link from "../navigation/Link"
 import { AppPages, getRentalDirectoryPath, getSaleDirectoryPath } from "../util/routeUtil"
 
 interface HomePageProps {
@@ -38,7 +38,13 @@ const HomePage = (_props: HomePageProps) => {
         <ActionBlock
           header={<Heading priority={2}>{t("welcome.newListingEmailAlert")}</Heading>}
           actions={[
-            <Link className="button" key="action-1" external={true} href={listingsAlertUrl}>
+            <Link
+              className="button no-underline"
+              key="action-1"
+              href={listingsAlertUrl}
+              newWindowTarget
+              hideExternalLinkIcon
+            >
               {t("welcome.signUpToday")}
             </Link>,
           ]}

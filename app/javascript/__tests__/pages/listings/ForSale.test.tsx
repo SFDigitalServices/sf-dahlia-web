@@ -1,9 +1,10 @@
 import React from "react"
-import { render, cleanup } from "@testing-library/react"
+import { cleanup } from "@testing-library/react"
 import ForSale from "../../../pages/listings/for-sale"
 import { openSaleListing } from "../../data/RailsSaleListing/listing-sale-open"
 import { fcfsSaleListing } from "../../data/RailsSaleListing/listing-sale-fcfs"
 import { useFeatureFlag } from "../../../hooks/useFeatureFlag"
+import { renderAndLoadAsync } from "../../__util__/renderUtils"
 
 const axios = require("axios")
 
@@ -48,7 +49,7 @@ describe("For Sale", () => {
   it("renders ForSale component", async () => {
     axios.get.mockResolvedValue({ data: { listings: [] } })
 
-    const { findByText, asFragment } = render(<ForSale assetPaths="/" />)
+    const { findByText, asFragment } = await renderAndLoadAsync(<ForSale assetPaths="/" />)
 
     expect(await findByText("Buy affordable housing")).toBeDefined()
     expect(asFragment()).toMatchSnapshot()
@@ -57,7 +58,7 @@ describe("For Sale", () => {
   it("listings with multiple listings render the first image in the array", async () => {
     axios.get.mockResolvedValue({ data: { listings: [openSaleListing, fcfsSaleListing] } })
 
-    const { findAllByAltText } = render(<ForSale assetPaths="/" />)
+    const { findAllByAltText } = await renderAndLoadAsync(<ForSale assetPaths="/" />)
 
     const image = await findAllByAltText("This is a listing image")
     expect(image[0].getAttribute("src")).toBe(openSaleListing.Listing_Images[0].displayImageURL)

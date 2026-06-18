@@ -1,7 +1,7 @@
 describe("Rental listings directory page", () => {
   beforeEach(() => {
     cy.intercept("api/v1/listings.json**", { fixture: "listings.json" }).as("listings")
-    cy.visit("/listings/for-rent?react=true")
+    cy.visit("/listings/for-rent")
     cy.wait("@listings")
   })
 
@@ -14,7 +14,7 @@ describe("Rental listings directory page", () => {
       .first()
       .within(() => {
         cy.get("table").click()
-        cy.url().should("include", "/listings/for-rent?react=true")
+        cy.url().should("include", "/listings/for-rent")
         cy.get("@listingDetails.all").should("have.length", 0)
         cy.contains("a", "See Details").click()
         cy.wait("@listingDetails").its("response.statusCode").should("eq", 200)
