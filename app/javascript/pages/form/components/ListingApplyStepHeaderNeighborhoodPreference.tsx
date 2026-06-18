@@ -51,7 +51,7 @@ const ListingApplyStepHeaderNeighborhoodPreference = () => {
           address: liveInTheNeighborhoodAddresses.join(" and "), // not great for non-english, but the Angular code does this
         })
       : t("e2aNeighborhoodPreference.instructionsP1Singular", {
-          address: liveInTheNeighborhoodAddresses[0],
+          address: liveInTheNeighborhoodAddresses[0] || "", // this component should not render if array is empty
         })
 
   if (eligibleForAssistedHousingOrRentBurdenValue)
