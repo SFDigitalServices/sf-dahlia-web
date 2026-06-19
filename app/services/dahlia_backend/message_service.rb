@@ -88,7 +88,7 @@ module DahliaBackend
                                                          _application_number, _app_id, _action)
       return if fields.nil?
 
-      log_info("Prepared fields for I2X response: #{fields.inspect}")
+      log_info("Prepared fields for I2X response: action=#{_action.inspect}, listingId=#{fields.dig(:data, :applicationIds)&.length || fields[:listingId]}")
 
       endpoint = get_response_endpoint(_action, _response)
       return log_error("Invalid action type: #{_action}", nil) unless endpoint
@@ -220,14 +220,14 @@ module DahliaBackend
     # @param [Hash] fields Message fields
     # @return [Object, nil] Response from API or nil if sending fails
     def send_message(endpoint, fields)
-      log_info("Sending message to #{endpoint}: #{fields}")
+      log_info("Sending message to #{endpoint}")
       response = client.post(endpoint, fields)
 
       if response
-        log_info("Successfully sent message to: #{fields[:email]}")
+        log_info("Successfully sent message to #{endpoint}")
         response
       else
-        log_error("Failed to send message to #{endpoint}: #{fields.to_json}", nil)
+        log_error("Failed to send message to #{endpoint}", nil)
         nil
       end
     end
