@@ -63,22 +63,18 @@ class AddressValidationService
 
     # we do not accept PO Boxes
     if po_box?(@validation)
-      Rails.logger.info(
-        'Address validation: ' \
-        "Raised an address validation error for a PO Box #{@validation.to_json}",
-      )
+      Rails.logger.info('Address validation: Raised an address validation error for a PO Box')
       return true
     end
 
     if duplicate_unit?(@validation)
-      Rails.logger.info("Address validation: Duplicate unit #{@validation.to_json}")
+      Rails.logger.info('Address validation: Duplicate unit detected')
       return true
     end
 
     if @validation.present? && !@validation.verifications.delivery.success
-      Rails.logger.warn(
-        "Address validation: Easypost validation failed #{@validation.to_json}",
-      )
+      errors = @validation.verifications.delivery.errors.map(&:code)
+      Rails.logger.warn("Address validation: EasyPost validation failed - error codes: #{errors}")
       return true
     end
 
