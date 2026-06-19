@@ -1,9 +1,16 @@
-.error-summary-banner {
+.error-summary-banner.seeds-common-message {
+  --alert-padding: var(--seeds-spacer-content);
   button[aria-label="Close"] {
     display: none;
   }
 }
 
 .error-summary-banner.seeds-common-message > [data-part="content"] {
-  max-width: fit-content;
+  max-width: 100%;
+}
+
+.error-list {
+  padding-block-start: var(--seeds-s1);
+  padding-inline-start: var(--seeds-s3);
+  list-style: disc;
 }

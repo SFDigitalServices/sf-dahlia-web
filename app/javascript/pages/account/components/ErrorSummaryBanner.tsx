@@ -9,13 +9,21 @@ import { passwordFieldsetErrors } from "./PasswordFieldset"
 import { emailFieldsetErrors } from "./EmailFieldset"
 import "./ErrorSummaryBanner.scss"
 
+const scrollToFieldError = (fieldName: string) => {
+  const errorElement = document.querySelector(fieldName)
+  if (errorElement) {
+    errorElement.scrollIntoView({ behavior: "smooth", block: "center" })
+    ;(errorElement as HTMLElement)?.focus()
+  }
+}
+
 const handleScrollToDOBError = (errors: DeepMap<FieldValues, FieldError>) => {
   const errorKeys = Object.keys(errors)
   const dobErrors: DeepMap<DOBFieldValues, FieldError> = errors[errorKeys[0]]
   if (dobErrors) {
     const dobErrorKeys = Object.keys(dobErrors)
-    if (dobErrorKeys.length > 0 && dobErrors[dobErrorKeys[0]]?.ref) {
-      dobErrors[dobErrorKeys[0]].ref.scrollIntoView({ behavior: "smooth", block: "center" })
+    if (dobErrorKeys.length > 0) {
+      scrollToFieldError(`dobObject.${dobErrorKeys[0]}`)
     }
   }
 }
@@ -31,9 +39,8 @@ export const scrollToErrorOnSubmit =
       return
     }
 
-    if (errorKeys.length === 1 && errors[errorKeys[0]]?.ref) {
-      errors[errorKeys[0]].ref.scrollIntoView({ behavior: "smooth", block: "center" })
-      errors[errorKeys[0]].ref.focus()
+    if (errorKeys.length === 1) {
+      scrollToFieldError(errorKeys[0])
     } else {
       ref.current?.scrollIntoView({ behavior: "smooth", block: "center" })
       ref.current?.focus()
@@ -88,7 +95,7 @@ export const ErrorSummaryBanner = ({
   return (
     <Alert fullwidth variant="alert" className="error-summary-banner">
       {t("error.accountBanner.header")}
-      <ul className="list-disc list-inside pl-2 pt-1" ref={listRef}>
+      <ul className="error-list" ref={listRef}>
         {sortedErrors.map((key: string) => {
           let fieldError = errors[key]
 
@@ -100,16 +107,11 @@ export const ErrorSummaryBanner = ({
           }
 
           return fieldError && fieldError.message ? (
-            <li className="list-outside" key={key}>
+            <li key={key}>
               <button
                 type="button"
                 className="align-middle text-blue-500 cursor-pointer background-none border-none p-0 text-left"
-                onClick={() => {
-                  if (fieldError.ref) {
-                    fieldError.ref.scrollIntoView({ behavior: "smooth", block: "center" })
-                    fieldError.ref.focus()
-                  }
-                }}
+                onClick={() => scrollToFieldError(key)}
               >
                 {renderInlineMarkup(fieldError.message as string)}
               </button>
