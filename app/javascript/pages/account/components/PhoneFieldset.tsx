@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import React from "react"
 import { Field, ErrorMessage, Select, t } from "@bloom-housing/ui-components"
-import { Controller, useFormContext } from "react-hook-form"
+import { useFormContext } from "react-hook-form"
 import Fieldset from "./Fieldset"
 import { PhoneMask } from "./PhoneMask"
 import { ErrorMessages } from "./ErrorSummaryBanner"
@@ -52,7 +52,6 @@ const PhoneFieldset = ({
 }: PhoneFieldsetProps) => {
   const {
     register,
-    control,
     formState: { errors },
     setValue,
     clearErrors,
@@ -74,11 +73,9 @@ const PhoneFieldset = ({
   ) => (
     <div className={`field ${errors[name] ? "error" : ""}`}>
       <div className="control">
-        <Controller
+        <PhoneMask
           name={name}
-          control={control}
-          rules={{ validate: phoneValidation(required) }}
-          as={PhoneMask}
+          ref={register({ validate: phoneValidation(required) })}
           disabled={disabled}
         />
       </div>

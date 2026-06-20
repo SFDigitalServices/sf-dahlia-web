@@ -5,7 +5,7 @@ const PHONE_MASK = [/\d/, /\d/, /\d/, "-", /\d/, /\d/, /\d/, "-", /\d/, /\d/, /\
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const PhoneMask = React.forwardRef((props: any, ref: any) => {
-  const { value, onChange, name, disabled } = props
+  const { value, onChange, onBlur, name, disabled } = props
 
   return (
     <MaskedInput
@@ -14,16 +14,25 @@ export const PhoneMask = React.forwardRef((props: any, ref: any) => {
       type="tel"
       guide={false}
       id={name}
-      value={value}
       name={name}
       disabled={disabled}
+      value={value}
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       onChange={(e: any) => {
         e.persist()
-        onChange(e)
+        onChange?.(e)
       }}
-      ref={ref}
-      aria-labelledby={"phone-label"}
+      onBlur={onBlur}
+      render={(textMaskRef, inputProps) => (
+        <input
+          {...inputProps}
+          ref={(node) => {
+            textMaskRef(node)
+            typeof ref === "function" && ref(node)
+          }}
+          aria-labelledby="phone-label"
+        />
+      )}
     />
   )
 })

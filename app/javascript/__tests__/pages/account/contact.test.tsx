@@ -35,6 +35,7 @@ describe("<Contact />", () => {
   describe("when the user is signed in", () => {
     let getByRole: RenderResult["getByRole"]
     let getByText: RenderResult["getByText"]
+    let getByDisplayValue: RenderResult["getByDisplayValue"]
     let originalLocation: Location
 
     beforeEach(async () => {
@@ -44,6 +45,7 @@ describe("<Contact />", () => {
       const renderResult = await renderAndLoadAsync(<WrappedComponent assetPaths={{}} />)
       getByRole = renderResult.getByRole
       getByText = renderResult.getByText
+      getByDisplayValue = renderResult.getByDisplayValue
     })
 
     afterEach(() => {
@@ -64,6 +66,10 @@ describe("<Contact />", () => {
         "href",
         getMyAccountSettingsPath()
       )
+    })
+
+    it("displays the current phone from the user profile", () => {
+      expect(getByDisplayValue(mockProfileStub.phone)).toBeInTheDocument()
     })
   })
 
