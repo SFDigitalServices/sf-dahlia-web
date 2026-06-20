@@ -6,6 +6,7 @@ import Fieldset from "./Fieldset"
 import { PhoneMask } from "./PhoneMask"
 import { ErrorMessages } from "./ErrorSummaryBanner"
 import { getErrorMessage } from "./util"
+import styles from "./PhoneFieldset.module.scss"
 
 export const phoneFieldsetErrors: ErrorMessages = {
   "phone:missing": {
@@ -39,17 +40,7 @@ interface PhoneFormValues {
   additionalPhoneType: string
 }
 
-interface PhoneFieldsetProps {
-  fieldLabelClassName: string
-  checkboxLabelClassName: string
-  checkboxGroupClassName: string
-}
-
-const PhoneFieldset = ({
-  fieldLabelClassName,
-  checkboxLabelClassName,
-  checkboxGroupClassName,
-}: PhoneFieldsetProps) => {
+const PhoneFieldset = () => {
   const {
     register,
     formState: { errors },
@@ -98,7 +89,7 @@ const PhoneFieldset = ({
       <Select
         name="phoneType"
         label={t("label.whatTypeOfNumber")}
-        labelClassName={fieldLabelClassName}
+        labelClassName={styles.fieldLabel}
         options={phoneTypeOptions}
         disabled={noPhone}
         defaultValue={watch("phoneType")}
@@ -113,13 +104,13 @@ const PhoneFieldset = ({
         }}
         controlClassName="control"
       />
-      <span className={checkboxGroupClassName}>
+      <span className={styles.checkboxGroup}>
         <Field
           type="checkbox"
           name="noPhone"
           register={register}
           label={t("label.applicantNoPhone")}
-          className={checkboxLabelClassName}
+          className={styles.checkboxLabel}
           disabled={hasAdditionalPhone}
           onChange={(e) => {
             if (e.target.checked) {
@@ -134,7 +125,7 @@ const PhoneFieldset = ({
           name="additionalPhoneCheckbox"
           register={register}
           label={t("label.applicantAdditionalPhone")}
-          className={checkboxLabelClassName}
+          className={styles.checkboxLabel}
           disabled={noPhone}
           onChange={(e) => {
             if (!e.target.checked) {
@@ -146,12 +137,12 @@ const PhoneFieldset = ({
         />
       </span>
       {hasAdditionalPhone && (
-        <>
+        <div className={styles.additionalPhoneFields}>
           {renderPhoneField("additionalPhone", true, false)}
           <Select
             name="additionalPhoneType"
             label={t("label.whatTypeOfNumber")}
-            labelClassName={fieldLabelClassName}
+            labelClassName={styles.fieldLabel}
             options={phoneTypeOptions}
             defaultValue={watch("additionalPhoneType")}
             error={!!errors.additionalPhoneType}
@@ -165,7 +156,7 @@ const PhoneFieldset = ({
             }}
             controlClassName="control"
           />
-        </>
+        </div>
       )}
     </Fieldset>
   )

@@ -84,11 +84,7 @@ const ContactPhoneForm = ({
       <Card.Section className={styles.phoneSection}>
         <FormProvider {...formMethods}>
           <Form onSubmit={handleSubmit(onSubmit)}>
-            <PhoneFieldset
-              fieldLabelClassName={styles.fieldLabel}
-              checkboxLabelClassName={styles.checkboxLabel}
-              checkboxGroupClassName={styles.phoneCheckboxGroup}
-            />
+            <PhoneFieldset />
             <Button
               type="submit"
               variant="primary-outlined"

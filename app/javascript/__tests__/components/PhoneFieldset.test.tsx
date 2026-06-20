@@ -24,11 +24,7 @@ const FieldsetWrapper = () => {
 
   return (
     <FormProvider {...formMethods}>
-      <PhoneFieldset
-        fieldLabelClassName="field-label"
-        checkboxLabelClassName="checkbox-label"
-        checkboxGroupClassName="checkbox-group"
-      />
+      <PhoneFieldset />
     </FormProvider>
   )
 }
@@ -125,11 +121,7 @@ describe("PhoneFieldset", () => {
                 .catch(() => {})
             }}
           >
-            <PhoneFieldset
-              fieldLabelClassName="field-label"
-              checkboxLabelClassName="checkbox-label"
-              checkboxGroupClassName="checkbox-group"
-            />
+            <PhoneFieldset />
             <button type="submit">Save</button>
           </form>
         </FormProvider>

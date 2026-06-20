@@ -30,7 +30,6 @@ export const PhoneMask = React.forwardRef((props: any, ref: any) => {
             textMaskRef(node)
             typeof ref === "function" && ref(node)
           }}
-          aria-labelledby="phone-label"
         />
       )}
     />
