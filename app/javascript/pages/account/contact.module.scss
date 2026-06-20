@@ -6,7 +6,7 @@
   max-width: var(--seeds-width-sm);
 }
 
-.noEmailCheckbox {
+.checkboxLabel {
   color: var(--seeds-color-blue-500);
   font-weight: var(--seeds-font-weight-semibold);
 }
@@ -60,4 +60,23 @@
   font-size: var(--seeds-font-size-sm);
   color: var(--seeds-color-gray-750);
   margin-top: var(--seeds-spacer-header);
+}
+
+.phoneSection {
+  padding-inline: var(--seeds-spacer-container);
+}
+
+.phoneCheckboxGroup {
+  display: block;
+  padding-top: var(--seeds-spacer-header);
+}
+
+.fieldLabel {
+  font-size: var(--seeds-font-size-sm);
+  font-weight: var(--seeds-font-weight-semibold);
+  margin-bottom: var(--seeds-s2);
+}
+
+.saveButton {
+  margin-top: var(--seeds-spacer-content);
 }
