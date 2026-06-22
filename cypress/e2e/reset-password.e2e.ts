@@ -25,7 +25,8 @@ describe("Reset Password Page", () => {
         "&reset_password=true&uid=chefcurry%40gsw.com"
     )
     cy.wait("@validate_token")
-    cy.get('input[name="password"]').clear().type("test1ng!")
+    cy.get('input[name="password"]').clear()
+    cy.get('input[name="password"]').type("test1ng!")
     cy.get('button[type="submit"]').click()
     cy.wait("@password")
     cy.url().should("include", "/account/applications")
@@ -64,7 +65,8 @@ describe("Reset Password Page", () => {
         "&reset_password=true&uid=luka%40lal.com"
     )
     cy.wait("@validate_token")
-    cy.get('input[name="password"]').clear().type("test")
+    cy.get('input[name="password"]').clear()
+    cy.get('input[name="password"]').type("test")
     cy.get('button[type="submit"]').click()
     cy.contains(
       "Choose a strong password with at least 8 characters, 1 letter, and 1 number"
