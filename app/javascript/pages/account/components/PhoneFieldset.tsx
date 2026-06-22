@@ -1,12 +1,27 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import React from "react"
 import { Field, ErrorMessage, Select, t } from "@bloom-housing/ui-components"
-import { useFormContext } from "react-hook-form"
+import { useFormContext, ErrorOption } from "react-hook-form"
 import Fieldset from "./Fieldset"
 import { PhoneMask } from "./PhoneMask"
 import { ErrorMessages } from "./ErrorSummaryBanner"
-import { getErrorMessage } from "./util"
+import { ExpandedAccountAxiosError, getErrorMessage } from "./util"
 import styles from "./PhoneFieldset.module.scss"
+
+export interface PhoneFormValues {
+  phone: string
+  phoneType: string
+  noPhone: boolean
+  additionalPhoneCheckbox: boolean
+  additionalPhone: string
+  additionalPhoneType: string
+}
+
+export const handlePhoneServerErrors = (
+  _error: ExpandedAccountAxiosError
+): [keyof PhoneFormValues, ErrorOption] => {
+  return ["phone", { message: "phone:server:generic", shouldFocus: true }]
+}
 
 export const phoneFieldsetErrors: ErrorMessages = {
   "phone:missing": {
@@ -21,6 +36,10 @@ export const phoneFieldsetErrors: ErrorMessages = {
     default: "accountLayout.contact.errorPhone",
     abbreviated: "accountLayout.contact.errorPhoneBanner",
   },
+  "phone:server:generic": {
+    default: "error.account.genericServerError",
+    abbreviated: "error.account.genericServerError.abbreviated",
+  },
 }
 
 const phoneValidation = (required: boolean) => (value: string) => {
@@ -29,15 +48,6 @@ const phoneValidation = (required: boolean) => (value: string) => {
   if (!digits) return "phone:missing"
   if (digits !== 10) return "phone:invalid"
   return true
-}
-
-interface PhoneFormValues {
-  phone: string
-  phoneType: string
-  noPhone: boolean
-  additionalPhoneCheckbox: boolean
-  additionalPhone: string
-  additionalPhoneType: string
 }
 
 const PhoneFieldset = () => {
@@ -67,7 +77,9 @@ const PhoneFieldset = () => {
         <PhoneMask
           name={name}
           aria-label={
-            name === "phone" ? t("accountLayout.contact.phoneLabel") : t("label.applicantAdditionalPhone")
+            name === "phone"
+              ? t("accountLayout.contact.phoneLabel")
+              : t("label.applicantAdditionalPhone")
           }
           aria-describedby={errors[name] ? `${name}-error` : undefined}
           aria-invalid={!!errors[name]}

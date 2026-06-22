@@ -1,5 +1,4 @@
-import { userObjectGenerator } from "../../support/util"
-import { interceptUnleashFlags } from "../../support/util"
+import { userObjectGenerator, interceptUnleashFlags } from "../../support/util"
 
 const AUTH = {
   status: "success",

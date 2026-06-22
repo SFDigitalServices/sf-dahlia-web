@@ -26,7 +26,7 @@ export const PhoneMask = React.forwardRef<HTMLInputElement, PhoneMaskProps>(
               if (typeof ref === "function") {
                 ref(node)
               } else if (ref) {
-                ;(ref as React.MutableRefObject<HTMLInputElement | null>).current = node
+                ref.current = node
               }
             }}
           />

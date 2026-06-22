@@ -1,11 +1,13 @@
-/* eslint-disable @typescript-eslint/unbound-method */
 import React from "react"
-import PhoneFieldset, { phoneFieldsetErrors } from "../../pages/account/components/PhoneFieldset"
+import PhoneFieldset, {
+  handlePhoneServerErrors,
+  phoneFieldsetErrors,
+} from "../../pages/account/components/PhoneFieldset"
 import { render, screen } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
 import { FormProvider, useForm } from "react-hook-form"
 import { t } from "@bloom-housing/ui-components"
-import { getErrorMessage } from "../../pages/account/components/util"
+import { ExpandedAccountAxiosError, getErrorMessage } from "../../pages/account/components/util"
 
 const defaultValues = {
   phone: "",
@@ -149,6 +151,25 @@ describe("PhoneFieldset", () => {
     )
   })
 
+  describe("handlePhoneServerErrors", () => {
+    it("sets a generic server error on the phone field", () => {
+      const error = {
+        response: {
+          status: 500,
+          data: { errors: { full_messages: [] } },
+        },
+      } as unknown as ExpandedAccountAxiosError
+
+      expect(handlePhoneServerErrors(error)).toEqual([
+        "phone",
+        {
+          message: "phone:server:generic",
+          shouldFocus: true,
+        },
+      ])
+    })
+  })
+
   describe("phoneFieldsetErrors", () => {
     const testCases = [
       {
@@ -180,6 +201,16 @@ describe("PhoneFieldset", () => {
         key: "phone:invalid",
         abbreviated: true,
         expected: "accountLayout.contact.errorPhoneBanner",
+      },
+      {
+        key: "phone:server:generic",
+        abbreviated: false,
+        expected: "error.account.genericServerError",
+      },
+      {
+        key: "phone:server:generic",
+        abbreviated: true,
+        expected: "error.account.genericServerError.abbreviated",
       },
     ]
 

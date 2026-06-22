@@ -18,10 +18,14 @@ import UserContext from "../../authentication/context/UserContext"
 import { User } from "../../authentication/user"
 import { renderInlineMarkup } from "../../util/languageUtil"
 import { FormProvider, useForm } from "react-hook-form"
-import PhoneFieldset, { phoneFieldsetErrors } from "./components/PhoneFieldset"
+import PhoneFieldset, {
+  handlePhoneServerErrors,
+  phoneFieldsetErrors,
+  PhoneFormValues,
+} from "./components/PhoneFieldset"
 import { updatePhone } from "../../api/authApiService"
 import { ErrorSummaryBanner } from "./components/ErrorSummaryBanner"
-import { getErrorMessage } from "./components/util"
+import { ExpandedAccountAxiosError, getErrorMessage } from "./components/util"
 
 const getPhoneDefaultValues = (profile: User) => ({
   phone: profile.phone ?? "",
@@ -41,7 +45,7 @@ const ContactPhoneForm = ({
 }) => {
   const [showSaveBanner, setShowSaveBanner] = useState(false)
   const [loading, setLoading] = useState(false)
-  const formMethods = useForm({
+  const formMethods = useForm<PhoneFormValues>({
     mode: "onSubmit",
     reValidateMode: "onChange",
     shouldFocusError: false,
@@ -50,9 +54,10 @@ const ContactPhoneForm = ({
   const {
     handleSubmit,
     formState: { errors },
+    setError,
   } = formMethods
 
-  const onSubmit = async (data: Record<string, string>) => {
+  const onSubmit = async (data: PhoneFormValues) => {
     setLoading(true)
     try {
       const updatedContact = await updatePhone({
@@ -65,7 +70,7 @@ const ContactPhoneForm = ({
       saveProfile(updatedContact)
       setShowSaveBanner(true)
     } catch (error) {
-      console.error(error)
+      setError(...handlePhoneServerErrors(error as ExpandedAccountAxiosError))
       setShowSaveBanner(false)
     } finally {
       setLoading(false)
