@@ -33,11 +33,11 @@ class InviteToController < ApplicationController
     return unless request.head?
 
     Rails.logger.info(
-      'InviteToController#ignore_head_requests: ignoring HEAD request' \
+      'InviteToController#ignore_head_requests: ignoring HEAD request ' \
       "action=#{action_name}, " \
       "listing_id=#{params[:id].inspect}, " \
-      "url=#{request.original_url}, " \
-      "referrer=#{request.referrer.inspect}, " \
+      "url=#{request.original_url.split('?').first}, " \
+      "referrer=#{request.referrer&.split('?')&.first.inspect}, " \
       "user_agent=#{request.user_agent.inspect}, " \
       "remote_ip=#{request.remote_ip}",
     )
