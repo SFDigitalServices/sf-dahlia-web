@@ -90,7 +90,7 @@ const ContactPhoneForm = ({
               variant="primary-outlined"
               className={styles.saveButton}
               size="sm"
-              loadingMessage={loading && t("accountLayout.contact.savePhone")}
+              loadingMessage={loading ? t("accountLayout.contact.savePhone") : undefined}
             >
               {t("accountLayout.contact.savePhone")}
             </Button>
