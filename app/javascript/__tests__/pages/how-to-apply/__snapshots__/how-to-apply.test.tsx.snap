@@ -239,10 +239,10 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
           </hgroup>
         </header>
         <article
-          class="flex flex-wrap flex-col md:flex-row relative max-w-5xl lg:m-auto w-full"
+          class="info-template-container"
         >
           <div
-            class="w-full md:w-2/3"
+            class="info-template-main-content"
             data-testid="info-main-content"
           >
             <section

@@ -146,7 +146,7 @@
     "typescript-eslint": "8.46.0",
     "url-join": "^4.0.1",
     "webpack-bundle-analyzer": "^4.4.2",
-    "webpack-dev-server": "^5.2.4"
+    "webpack-dev-server": "^5.2.5"
   },
   "scripts": {
     "postinstall": "bower install",
