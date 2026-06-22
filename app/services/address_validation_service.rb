@@ -74,7 +74,9 @@ class AddressValidationService
 
     if @validation.present? && !@validation.verifications.delivery.success
       errors = Array(@validation.verifications.delivery.errors).map(&:code).compact
-      Rails.logger.warn("Address validation: EasyPost validation failed - error codes: #{errors.join(', ')}")
+      Rails.logger.warn(
+        "Address validation: EasyPost validation failed - error codes: #{errors.join(', ')}",
+      )
       return true
     end
 

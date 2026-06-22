@@ -88,7 +88,11 @@ module DahliaBackend
                                                          _application_number, _app_id, _action)
       return if fields.nil?
 
-      log_info("Prepared fields for I2X response: action=#{_action.inspect}, listingId=#{(fields[:listingId] || listing_id).inspect}, applicationIdsCount=#{Array(fields.dig(:data, :applicationIds)).length}")
+      log_info(
+        "Prepared fields for I2X response: action=#{_action.inspect}, " \
+        "listingId=#{(fields[:listingId] || listing_id).inspect}, " \
+        "applicationIdsCount=#{Array(fields.dig(:data, :applicationIds)).length}",
+      )
 
       endpoint = get_response_endpoint(_action, _response)
       return log_error("Invalid action type: #{_action}", nil) unless endpoint
