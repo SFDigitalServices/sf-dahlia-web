@@ -1,0 +1,54 @@
+.contactCard {
+  max-width: var(--seeds-width-2xl);
+}
+
+.contactSection {
+  padding: var(--seeds-spacer-section) !important;
+}
+
+.header {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--seeds-spacer-content) var(--seeds-s16) !important;
+}
+
+.heading {
+  margin: var(--seeds-spacer-header) 0;
+}
+
+.iconBackground {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--seeds-rounded-full);
+  background: var(--seeds-color-blue-300);
+  width: var(--seeds-s16);
+  height: var(--seeds-s16);
+}
+
+.icon {
+  display: block;
+  width: var(--seeds-s8);
+  height: var(--seeds-s8);
+}
+
+.footer {
+  display: flex;
+  justify-content: center;
+  padding: var(--seeds-spacer-section);
+  background: var(--seeds-color-blue-100);
+}
+
+.email {
+  font-size: var(--seeds-font-size-md);
+  font-weight: var(--seeds-font-weight-semibold);
+  color: var(--seeds-color-gray-750);
+}
+
+.changeEmail {
+  font-size: var(--seeds-font-size-sm);
+  color: var(--seeds-color-gray-750);
+  margin-top: var(--seeds-spacer-header);
+}
