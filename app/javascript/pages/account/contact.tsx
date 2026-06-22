@@ -24,12 +24,12 @@ import { ErrorSummaryBanner } from "./components/ErrorSummaryBanner"
 import { getErrorMessage } from "./components/util"
 
 const getPhoneDefaultValues = (profile: User) => ({
-  phone: profile.phone,
-  phoneType: profile.phoneType,
-  noPhone: !profile.phone,
+  phone: profile.phone ?? "",
+  phoneType: profile.phoneType ?? "",
+  noPhone: !profile.phone && !profile.alternatePhone,
   additionalPhoneCheckbox: !!profile.alternatePhone,
-  additionalPhone: profile.alternatePhone,
-  additionalPhoneType: profile.alternatePhoneType,
+  additionalPhone: profile.alternatePhone ?? "",
+  additionalPhoneType: profile.alternatePhoneType ?? "",
 })
 
 const ContactPhoneForm = ({
@@ -90,7 +90,7 @@ const ContactPhoneForm = ({
               variant="primary-outlined"
               className={styles.saveButton}
               size="sm"
-              loadingMessage={loading && t("accountLayout.contact.savePhone")}
+              loadingMessage={loading ? t("accountLayout.contact.savePhone") : undefined}
             >
               {t("accountLayout.contact.savePhone")}
             </Button>

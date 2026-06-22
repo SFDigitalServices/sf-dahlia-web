@@ -66,6 +66,11 @@ const PhoneFieldset = () => {
       <div className="control">
         <PhoneMask
           name={name}
+          aria-label={
+            name === "phone" ? t("accountLayout.contact.phoneLabel") : t("label.applicantAdditionalPhone")
+          }
+          aria-describedby={errors[name] ? `${name}-error` : undefined}
+          aria-invalid={!!errors[name]}
           ref={register({ validate: phoneValidation(required) })}
           disabled={disabled}
         />

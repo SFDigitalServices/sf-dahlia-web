@@ -3,35 +3,37 @@ import MaskedInput from "react-text-mask"
 
 const PHONE_MASK = [/\d/, /\d/, /\d/, "-", /\d/, /\d/, /\d/, "-", /\d/, /\d/, /\d/, /\d/]
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const PhoneMask = React.forwardRef((props: any, ref: any) => {
-  const { value, onChange, onBlur, name, disabled } = props
+type PhoneMaskProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, "type"> & {
+  name: string
+}
 
-  return (
-    <MaskedInput
-      mask={PHONE_MASK}
-      className="input"
-      type="tel"
-      guide={false}
-      id={name}
-      name={name}
-      disabled={disabled}
-      value={value}
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      onChange={(e: any) => {
-        e.persist()
-        onChange?.(e)
-      }}
-      onBlur={onBlur}
-      render={(textMaskRef, inputProps) => (
-        <input
-          {...inputProps}
-          ref={(node) => {
-            textMaskRef(node)
-            typeof ref === "function" && ref(node)
-          }}
-        />
-      )}
-    />
-  )
-})
+export const PhoneMask = React.forwardRef<HTMLInputElement, PhoneMaskProps>(
+  ({ name, className, ...rest }, ref) => {
+    return (
+      <MaskedInput
+        {...rest}
+        mask={PHONE_MASK}
+        className={["input", className].filter(Boolean).join(" ")}
+        type="tel"
+        guide={false}
+        id={name}
+        name={name}
+        render={(textMaskRef, inputProps) => (
+          <input
+            {...inputProps}
+            ref={(node) => {
+              textMaskRef(node)
+              if (typeof ref === "function") {
+                ref(node)
+              } else if (ref) {
+                ;(ref as React.MutableRefObject<HTMLInputElement | null>).current = node
+              }
+            }}
+          />
+        )}
+      />
+    )
+  }
+)
+
+PhoneMask.displayName = "PhoneMask"
