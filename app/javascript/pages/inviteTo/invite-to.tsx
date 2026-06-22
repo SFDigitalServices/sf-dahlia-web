@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useState } from "react"
-import { NavigationContext } from "@bloom-housing/ui-components"
+import React, { useEffect, useState } from "react"
+import { useLocation, useNavigate } from "react-router"
 import withAppSetup from "../../layouts/withAppSetup"
 import { AppPages, generateSubmitLink } from "../../util/routeUtil"
 import { getListing } from "../../api/listingApiService"
@@ -44,16 +44,17 @@ const InviteToPage = ({
   documentsPath,
 }: HomePageProps) => {
   const [listing, setListing] = useState<RailsSaleListing>(null)
-  const { router } = useContext(NavigationContext)
+  const { pathname } = useLocation()
+  const navigate = useNavigate()
   useEffect(() => {
-    const path = getPathWithoutLanguagePrefix(router.pathname)
+    const path = getPathWithoutLanguagePrefix(pathname)
     void getListing(path.split("/")[2]).then((listing: RailsSaleListing) => {
       if (!listing) {
-        router.push("/")
+        void navigate("/")
       }
       setListing(listing)
     })
-  }, [router, router.pathname])
+  }, [navigate, pathname])
 
   const { unleashFlag: isI2AEnabled } = useFeatureFlag("partners.inviteToApply", false)
   const { unleashFlag: isI2IEnabledFlag } = useVariantFlag("all.i2i", false)

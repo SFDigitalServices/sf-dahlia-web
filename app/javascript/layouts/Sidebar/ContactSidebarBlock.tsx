@@ -22,16 +22,28 @@ const SidebarContactInfo = () => (
       {t("assistance.contact.questionsAboutPrograms.contactCall.title")}
       <ul className="list-disc list-inside mt-1">
         <li>
-          English: <a href="tel:+14157015622">(415) 701-5622</a>
+          English:{" "}
+          <a className="info-template-contact-link" href="tel:+14157015622">
+            (415) 701-5622
+          </a>
         </li>
         <li>
-          Español: <a href="tel:+14157015624">(415) 701-5624</a>
+          Español:{" "}
+          <a className="info-template-contact-link" href="tel:+14157015624">
+            (415) 701-5624
+          </a>
         </li>
         <li>
-          中文: <a href="tel:+14157015623">(415) 701-5623</a>
+          中文:{" "}
+          <a className="info-template-contact-link" href="tel:+14157015623">
+            (415) 701-5623
+          </a>
         </li>
         <li>
-          Filipino: <a href="tel:+14157015570">(415) 701-5570</a>
+          Filipino:{" "}
+          <a className="info-template-contact-link" href="tel:+14157015570">
+            (415) 701-5570
+          </a>
         </li>
       </ul>
     </div>
@@ -58,11 +70,7 @@ const SidebarListingQuestion = () => (
 )
 
 const ContactSideBarBlock = () => (
-  <SidebarBlock
-    className="w-full md:w-1/3 md:max-w-xs text-gray-950 md:border-l border-t md:border-t-0 border-gray-450 border-b-0 p-6 mx-0"
-    title={t("footer.contact")}
-    priority={2}
-  >
+  <SidebarBlock className="info-template-sidebar" title={t("footer.contact")} priority={2}>
     <span className="text-gray-950">
       <SidebarListingQuestion />
       <SidebarSFHelp />

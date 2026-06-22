@@ -29,7 +29,12 @@ const InviteToHeader = ({
       />
       <strong>{listing?.Building_Name_for_Process}</strong>
       <p>{listing && getListingAddressString(listing, false)}</p>
-      <a href={`/${getCurrentLanguage()}/listings/${listing?.Id}`}>{t(headerText)}</a>
+      <a
+        className="info-template-link-direct"
+        href={`/${getCurrentLanguage()}/listings/${listing?.Id}`}
+      >
+        {t(headerText)}
+      </a>
     </div>
   )
 }

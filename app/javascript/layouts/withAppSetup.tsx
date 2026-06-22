@@ -9,7 +9,6 @@ import IdleTimeout from "../authentication/components/IdleTimeout"
 import UserProvider from "../authentication/context/UserProvider"
 import ListingDetailsProvider from "../contexts/listingDetails/listingDetailsProvider"
 import { ConfigProvider } from "../lib/ConfigContext"
-import NavigationProvider from "../navigation/NavigationProvider"
 import ErrorBoundary, { BoundaryScope } from "../components/ErrorBoundary"
 import "@bloom-housing/ui-seeds/src/global/app-css.scss"
 import { useGTMInitializer } from "../hooks/analytics/useInitializeGTM"
@@ -46,21 +45,19 @@ const withAppSetup =
       const { unleashFlag: clerkEnabled } = useFeatureFlag(UNLEASH_FLAG.CLERK_AUTH, false)
       const Providers = (
         <ErrorBoundary boundaryScope={BoundaryScope.page}>
-          <NavigationProvider>
-            <ListingDetailsProvider>
-              {/* eslint-disable react/prop-types */}
-              <ConfigProvider assetPaths={props.assetPaths}>
-                <UserProvider>
-                  <IdleTimeout
-                    onTimeout={() => console.log("Logout")}
-                    useFormTimeout={configuration?.useFormTimeout}
-                    pageName={configuration?.pageName}
-                  />
-                  <Component {...props} />
-                </UserProvider>
-              </ConfigProvider>
-            </ListingDetailsProvider>
-          </NavigationProvider>
+          <ListingDetailsProvider>
+            {/* eslint-disable react/prop-types */}
+            <ConfigProvider assetPaths={props.assetPaths}>
+              <UserProvider>
+                <IdleTimeout
+                  onTimeout={() => console.log("Logout")}
+                  useFormTimeout={configuration?.useFormTimeout}
+                  pageName={configuration?.pageName}
+                />
+                <Component {...props} />
+              </UserProvider>
+            </ConfigProvider>
+          </ListingDetailsProvider>
         </ErrorBoundary>
       )
 

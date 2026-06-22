@@ -10,7 +10,7 @@ const visitListing = (mobile, language) => {
     cy.viewport(MOBILE_VIEWPORT_WIDTH, MOBILE_VIEWPORT_HEIGHT)
   }
 
-  cy.visit(`${langPart}/listings/${listingId}?react=true`)
+  cy.visit(`${langPart}/listings/${listingId}`)
   if (Cypress.env("salesforceInstanceUrl") === "https://sfhousing.my.salesforce.com") {
     cy.wait("@completedRentalListing")
     cy.wait("@units")

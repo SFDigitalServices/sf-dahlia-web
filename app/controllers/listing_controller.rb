@@ -1,11 +1,11 @@
 # Controller for the listing detail page
 class ListingController < ApplicationController
   def index
-    @listing_detail_props = { assetPaths: static_asset_paths }
+    @listing_detail_props = react_app_props
   end
 
   def how_to_apply
-    @how_to_apply_props = { assetPaths: static_asset_paths }
+    @how_to_apply_props = react_app_props
     render 'how_to_apply'
   end
 

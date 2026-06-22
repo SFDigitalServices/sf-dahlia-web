@@ -1,8 +1,8 @@
 import React from "react"
 import { ExpandableContent, Heading, Icon, t } from "@bloom-housing/ui-components"
+import { Link } from "@bloom-housing/ui-seeds"
 import { LOTTERY_RANKING_VIDEO_URL } from "../constants"
 import { ListingDetailsLotteryResultsRow } from "./ListingDetailsLotteryResultsRow"
-import Link from "../../navigation/Link"
 import type { RailsLotteryResult } from "../../api/types/rails/listings/RailsLotteryResult"
 import { getSfGovUrl, renderMarkup } from "../../util/languageUtil"
 
@@ -113,9 +113,8 @@ export const ListingDetailsLotteryRanking = ({
               <p className="mb-2">
                 <Link
                   className="text-blue-700"
-                  external={true}
                   href={getSfGovUrl("https://sf.gov/after-rental-housing-lottery")}
-                  target="_blank"
+                  newWindowTarget
                 >
                   {t("lottery.nextStepsLearnMore")}
                 </Link>

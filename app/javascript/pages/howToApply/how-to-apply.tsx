@@ -1,4 +1,5 @@
-import React, { ReactNode, useEffect, useState, useContext } from "react"
+import React, { ReactNode, useEffect, useState } from "react"
+import { useLocation, useNavigate } from "react-router"
 import type RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
 import {
   localizedFormat,
@@ -12,7 +13,6 @@ import { isValidUrl } from "../../util/urlUtil"
 import {
   Icon,
   t,
-  NavigationContext,
   LoadingOverlay,
   ExpandableContent,
   Order,
@@ -361,18 +361,21 @@ const WhatHappensNextSection = () => {
 const HowToApply = (_props: HowToApplyProps) => {
   const [listing, setListing] = useState<RailsSaleListing>(null)
 
-  const { router } = useContext(NavigationContext)
+  const navigate = useNavigate()
+  const { pathname } = useLocation()
 
   // identical data loading strategy to the Listing Details page
   useEffect(() => {
-    const path = getPathWithoutLanguagePrefix(router.pathname)
-    void getListing(path.split("/")[2]).then((listing: RailsSaleListing) => {
+    void (async () => {
+      const path = getPathWithoutLanguagePrefix(pathname)
+      const listing = await getListing(path.split("/")[2])
       if (!listing) {
-        router.push("/")
+        await navigate("/")
+        return
       }
       setListing(listing)
-    })
-  }, [router, router.pathname])
+    })()
+  }, [navigate, pathname])
 
   return (
     <LoadingOverlay isLoading={!listing}>
