@@ -13,9 +13,9 @@ const defaultValues = {
   phone: "",
   phoneType: "",
   noPhone: false,
-  additionalPhoneCheckbox: false,
-  additionalPhone: "",
-  additionalPhoneType: "",
+  secondPhoneCheckbox: false,
+  secondPhone: "",
+  secondPhoneType: "",
 }
 
 const FieldsetWrapper = () => {
@@ -88,7 +88,7 @@ describe("PhoneFieldset", () => {
     expect(screen.getByRole("combobox")).toBeDisabled()
   })
 
-  it("shows additional phone fields when additional phone is checked", async () => {
+  it("shows second phone fields when second phone is checked", async () => {
     const user = userEvent.setup()
     render(<FieldsetWrapper />)
 
@@ -98,7 +98,7 @@ describe("PhoneFieldset", () => {
     expect(screen.getAllByRole("combobox")).toHaveLength(2)
   })
 
-  it("disables no phone checkbox when additional phone is checked", async () => {
+  it("disables no phone checkbox when second phone is checked", async () => {
     const user = userEvent.setup()
     render(<FieldsetWrapper />)
 
@@ -107,7 +107,7 @@ describe("PhoneFieldset", () => {
     expect(screen.getByRole("checkbox", { name: t("label.applicantNoPhone") })).toBeDisabled()
   })
 
-  it("includes additional phone in submit data", async () => {
+  it("includes second phone in submit data", async () => {
     const user = userEvent.setup()
     const onSubmit = jest.fn()
 
@@ -136,17 +136,17 @@ describe("PhoneFieldset", () => {
     await user.selectOptions(screen.getByRole("combobox"), "Cell")
     await user.click(screen.getByRole("checkbox", { name: t("label.applicantAdditionalPhone") }))
 
-    const [, additionalPhone] = screen.getAllByRole("textbox")
-    await user.type(additionalPhone, "5105550199")
+    const [, secondPhone] = screen.getAllByRole("textbox")
+    await user.type(secondPhone, "5105550199")
     await user.selectOptions(screen.getAllByRole("combobox")[1], "Home")
     await user.click(screen.getByRole("button", { name: "Save" }))
 
     expect(onSubmit).toHaveBeenCalled()
     expect(onSubmit.mock.calls[0][0]).toEqual(
       expect.objectContaining({
-        additionalPhoneCheckbox: true,
-        additionalPhone: "510-555-0199",
-        additionalPhoneType: "Home",
+        secondPhoneCheckbox: true,
+        secondPhone: "510-555-0199",
+        secondPhoneType: "Home",
       })
     )
   })

@@ -31,9 +31,9 @@ const getPhoneDefaultValues = (profile: User) => ({
   phone: profile.phone ?? "",
   phoneType: profile.phoneType ?? "",
   noPhone: !profile.phone && !profile.alternatePhone,
-  additionalPhoneCheckbox: !!profile.alternatePhone,
-  additionalPhone: profile.alternatePhone ?? "",
-  additionalPhoneType: profile.alternatePhoneType ?? "",
+  secondPhoneCheckbox: !!profile.alternatePhone,
+  secondPhone: profile.alternatePhone ?? "",
+  secondPhoneType: profile.alternatePhoneType ?? "",
 })
 
 const ContactPhoneForm = ({
@@ -64,8 +64,8 @@ const ContactPhoneForm = ({
         ...profile,
         phone: data.phone,
         phoneType: data.phoneType,
-        alternatePhone: data.additionalPhone,
-        alternatePhoneType: data.additionalPhoneType,
+        alternatePhone: data.secondPhone,
+        alternatePhoneType: data.secondPhoneType,
       })
       saveProfile(updatedContact)
       setShowSaveBanner(true)

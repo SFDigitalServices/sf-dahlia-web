@@ -12,9 +12,9 @@ export interface PhoneFormValues {
   phone: string
   phoneType: string
   noPhone: boolean
-  additionalPhoneCheckbox: boolean
-  additionalPhone: string
-  additionalPhoneType: string
+  secondPhoneCheckbox: boolean
+  secondPhone: string
+  secondPhoneType: string
 }
 
 export const handlePhoneServerErrors = (
@@ -60,7 +60,7 @@ const PhoneFieldset = () => {
   } = useFormContext<PhoneFormValues>()
 
   const noPhone = watch("noPhone", false)
-  const hasAdditionalPhone = watch("additionalPhoneCheckbox", false)
+  const hasSecondPhone = watch("secondPhoneCheckbox", false)
   const phoneTypeOptions = [
     { label: t("label.phoneCell"), value: "Cell" },
     { label: t("label.phoneHome"), value: "Home" },
@@ -68,7 +68,7 @@ const PhoneFieldset = () => {
   ]
 
   const renderPhoneField = (
-    name: "phone" | "additionalPhone",
+    name: "phone" | "secondPhone",
     required: boolean,
     disabled: boolean
   ) => (
@@ -79,7 +79,7 @@ const PhoneFieldset = () => {
           aria-label={
             name === "phone"
               ? t("accountLayout.contact.phoneLabel")
-              : t("label.applicantAdditionalPhone")
+              : t("label.applicantSecondPhone")
           }
           aria-describedby={errors[name] ? `${name}-error` : undefined}
           aria-invalid={!!errors[name]}
@@ -97,7 +97,7 @@ const PhoneFieldset = () => {
 
   return (
     <Fieldset
-      hasError={["phone", "phoneType", "additionalPhone", "additionalPhoneType"].some(
+      hasError={["phone", "phoneType", "secondPhone", "secondPhoneType"].some(
         (name) => errors[name]
       )}
       label={t("accountLayout.contact.phoneLabel")}
@@ -128,7 +128,7 @@ const PhoneFieldset = () => {
           register={register}
           label={t("label.applicantNoPhone")}
           className={styles.checkboxLabel}
-          disabled={hasAdditionalPhone}
+          disabled={hasSecondPhone}
           onChange={(e) => {
             if (e.target.checked) {
               setValue("phone", "")
@@ -139,33 +139,33 @@ const PhoneFieldset = () => {
         />
         <Field
           type="checkbox"
-          name="additionalPhoneCheckbox"
+          name="secondPhoneCheckbox"
           register={register}
           label={t("label.applicantAdditionalPhone")}
           className={styles.checkboxLabel}
           disabled={noPhone}
           onChange={(e) => {
             if (!e.target.checked) {
-              setValue("additionalPhone", "")
-              setValue("additionalPhoneType", "")
-              clearErrors(["additionalPhone", "additionalPhoneType"])
+              setValue("secondPhone", "")
+              setValue("secondPhoneType", "")
+              clearErrors(["secondPhone", "secondPhoneType"])
             }
           }}
         />
       </span>
-      {hasAdditionalPhone && (
-        <div className={styles.additionalPhoneFields}>
-          {renderPhoneField("additionalPhone", true, false)}
+      {hasSecondPhone && (
+        <div className={styles.secondPhoneFields}>
+          {renderPhoneField("secondPhone", true, false)}
           <Select
-            name="additionalPhoneType"
+            name="secondPhoneType"
             label={t("label.whatTypeOfNumber")}
             labelClassName={styles.fieldLabel}
             options={phoneTypeOptions}
-            defaultValue={watch("additionalPhoneType")}
-            error={!!errors.additionalPhoneType}
+            defaultValue={watch("secondPhoneType")}
+            error={!!errors.secondPhoneType}
             errorMessage={
-              errors.additionalPhoneType?.message &&
-              getErrorMessage(errors.additionalPhoneType.message, phoneFieldsetErrors, false)
+              errors.secondPhoneType?.message &&
+              getErrorMessage(errors.secondPhoneType.message, phoneFieldsetErrors, false)
             }
             register={register}
             validation={{
