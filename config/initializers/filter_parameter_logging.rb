@@ -20,6 +20,8 @@ Rails.application.config.filter_parameters += [
   :address1,
   :mailingAddress,
   :street,
+  :street1,
+  :street2,
   :city,
   :state,
   :zip,
