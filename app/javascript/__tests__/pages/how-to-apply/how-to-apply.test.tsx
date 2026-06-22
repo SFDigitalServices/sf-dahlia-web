@@ -1,5 +1,6 @@
 import React from "react"
 import { cleanup, render, screen, waitFor } from "@testing-library/react"
+import { MemoryRouter, useNavigate } from "react-router"
 import { renderAndLoadAsync } from "../../__util__/renderUtils"
 import HowToApply from "../../../pages/howToApply/how-to-apply"
 import LeasingAgent from "../../../modules/listings/components/LeasingAgent"
@@ -11,6 +12,11 @@ const axios = require("axios")
 
 jest.mock("axios")
 
+jest.mock("react-router", () => ({
+  ...jest.requireActual("react-router"),
+  useNavigate: jest.fn(),
+}))
+
 jest.mock("react-helmet-async", () => {
   return {
     HelmetProvider: ({ children }: { children: React.ReactNode }) => children, // Mock HelmetProvider
@@ -19,6 +25,10 @@ jest.mock("react-helmet-async", () => {
 })
 
 describe("<HowToApply />", () => {
+  beforeEach(() => {
+    ;(useNavigate as jest.Mock).mockReturnValue(jest.fn())
+  })
+
   afterEach(() => {
     cleanup()
     jest.clearAllMocks()
@@ -79,9 +89,9 @@ describe("<HowToApply />", () => {
     expect(getAllByText(`Apply to ${listingData.data.listing.Name}`)).not.toBeNull()
   })
 
-  it("renders not-yet-open components", () => {
+  it("renders not-yet-open components", async () => {
     axios.get.mockResolvedValue({ data: { listing: notYetOpenSaleFcfsListing } })
-    const { findByText } = render(<HowToApply assetPaths={{}} />)
+    const { findByText } = await renderAndLoadAsync(<HowToApply assetPaths={{}} />)
     const datetime = notYetOpenSaleFcfsListing.Application_Start_Date_Time || ""
     const date = localizedFormat(datetime, "LL")
     const time = formatTimeOfDay(datetime)
@@ -91,10 +101,14 @@ describe("<HowToApply />", () => {
     ).toBeDefined()
   })
 
-  it("redirects to home page if listing not found", () => {
+  it("redirects to home page if listing not found", async () => {
+    const mockNavigate = jest.fn()
+    ;(useNavigate as jest.Mock).mockReturnValue(mockNavigate)
     axios.get.mockResolvedValue({ data: { listing: null } })
-    render(<HowToApply assetPaths={{}} />)
-    expect(window.location.pathname).toBe("/")
+    render(<HowToApply assetPaths={{}} />, { wrapper: MemoryRouter })
+    await waitFor(() => {
+      expect(mockNavigate).toHaveBeenCalledWith("/")
+    })
   })
 
   it("shows the correct leasing agent box for the listing", async () => {

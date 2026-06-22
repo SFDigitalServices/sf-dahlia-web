@@ -348,8 +348,9 @@ exports[`GenericDirectory displays the directory no matches page with no listing
         class="action-block__actions"
       >
         <a
-          class="button"
+          class="seeds-link button no-underline"
           href=""
+          rel="noreferrer"
           target="_blank"
         >
           Sign Up today
@@ -1175,8 +1176,9 @@ exports[`GenericDirectory displays the rental directory page with listings 1`] =
         class="action-block__actions"
       >
         <a
-          class="button"
+          class="seeds-link button no-underline"
           href=""
+          rel="noreferrer"
           target="_blank"
         >
           Sign Up today

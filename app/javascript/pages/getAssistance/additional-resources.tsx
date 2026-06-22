@@ -6,6 +6,10 @@ import { InfoCard, InfoCardGrid, t } from "@bloom-housing/ui-components"
 import "./additional-resources.scss"
 import { getSfGovUrl } from "../../util/languageUtil"
 import { AppPages } from "../../util/routeUtil"
+import {
+  InformationalContent,
+  InformationalSection,
+} from "../../components/informational/InformationalPageElements"
 
 const AdditionalResources = () => {
   return (
@@ -13,33 +17,38 @@ const AdditionalResources = () => {
       title={t("assistance.title.additionalHousingOpportunities")}
       subtitle={t("assistance.subtitle.additionalHousingOpportunities")}
     >
-      <div className="flex flex-col ml-8 mr-8 mb-8 mt-8 lg:ml-0">
-        {additionalResources.categories.map((category) => {
-          return (
-            <div className="info-card-grid-additional-resources mb-0 md:mb-8" key={category.title}>
-              <InfoCardGrid
-                title={t(category.title)}
-                subtitle={t(category.subtitle)}
-                defaultHeadingStyle
+      <InformationalContent>
+        <InformationalSection className="pt-8 md:pt-11">
+          {additionalResources.categories.map((category) => {
+            return (
+              <div
+                className="info-card-grid-additional-resources mb-0 md:mb-8"
+                key={category.title}
               >
-                {category.resources.map((resource) => {
-                  return (
-                    <InfoCard
-                      title={t(resource.title)}
-                      subtitle={t(resource.agency)}
-                      externalHref={getSfGovUrl(resource.externalUrl)}
-                      className="info-card-additional-resources is-normal-primary-lighter"
-                      key={resource.title}
-                    >
-                      {<div className="text-gray-950 text-xs">{t(resource.description)}</div>}
-                    </InfoCard>
-                  )
-                })}
-              </InfoCardGrid>
-            </div>
-          )
-        })}
-      </div>
+                <InfoCardGrid
+                  title={t(category.title)}
+                  subtitle={t(category.subtitle)}
+                  defaultHeadingStyle
+                >
+                  {category.resources.map((resource) => {
+                    return (
+                      <InfoCard
+                        title={t(resource.title)}
+                        subtitle={t(resource.agency)}
+                        externalHref={getSfGovUrl(resource.externalUrl)}
+                        className="info-card-additional-resources is-normal-primary-lighter"
+                        key={resource.title}
+                      >
+                        {<div className="text-gray-950 text-xs">{t(resource.description)}</div>}
+                      </InfoCard>
+                    )
+                  })}
+                </InfoCardGrid>
+              </div>
+            )
+          })}
+        </InformationalSection>
+      </InformationalContent>
     </AssistanceLayout>
   )
 }

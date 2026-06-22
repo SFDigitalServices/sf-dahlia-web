@@ -1,5 +1,5 @@
 import React from "react"
-import { render, cleanup, waitFor } from "@testing-library/react"
+import { cleanup, waitFor } from "@testing-library/react"
 import ListingDetail from "../../../../javascript/pages/listings/listing-detail"
 import { openRentalListing } from "../../data/RailsRentalListing/listing-rental-open"
 import { habitatListing } from "../../data/RailsSaleListing/listing-sale-habitat"
@@ -53,7 +53,7 @@ describe("Listing Detail", () => {
     axios.get.mockResolvedValue({
       data: { listing: openRentalListing, units: openRentalListing.Units, ami: [] },
     })
-    const { findAllByText, asFragment } = render(<ListingDetail assetPaths="/" />)
+    const { findAllByText, asFragment } = await renderAndLoadAsync(<ListingDetail assetPaths="/" />)
 
     expect(await findAllByText(openRentalListing.Name)).toBeDefined()
     expect(asFragment()).toMatchSnapshot()
@@ -63,7 +63,7 @@ describe("Listing Detail", () => {
     axios.get.mockResolvedValue({
       data: { listing: habitatListing, units: habitatListing.Units, ami: [] },
     })
-    const { findAllByText, asFragment } = render(<ListingDetail assetPaths="/" />)
+    const { findAllByText, asFragment } = await renderAndLoadAsync(<ListingDetail assetPaths="/" />)
 
     expect(await findAllByText(habitatListing.Name)).toBeDefined()
     expect(asFragment()).toMatchSnapshot()
@@ -73,7 +73,7 @@ describe("Listing Detail", () => {
     axios.get.mockResolvedValue({
       data: { listing: sroRentalListing, units: sroRentalListing.Units, ami: [] },
     })
-    const { findAllByText, asFragment } = render(<ListingDetail assetPaths="/" />)
+    const { findAllByText, asFragment } = await renderAndLoadAsync(<ListingDetail assetPaths="/" />)
 
     expect(await findAllByText(sroRentalListing.Name)).toBeDefined()
     expect(asFragment()).toMatchSnapshot()
@@ -108,7 +108,7 @@ describe("Listing Detail", () => {
     axios.get.mockResolvedValue({
       data: { listing: openRentalListing, units: openRentalListing.Units, ami: [] },
     })
-    const { container } = render(<ListingDetail assetPaths="/" />)
+    const { container } = await renderAndLoadAsync(<ListingDetail assetPaths="/" />)
 
     await waitFor(() => {
       expect(container.querySelectorAll(".spinner-animation")).toHaveLength(0)

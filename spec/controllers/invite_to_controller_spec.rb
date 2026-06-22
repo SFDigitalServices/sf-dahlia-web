@@ -8,10 +8,14 @@ RSpec.describe InviteToController do
   let(:decoded_token) do
     [
       {
-        deadline: deadline,
-        appId: application_number,
-        act: response_value,
+        'data' => {
+          'deadline' => deadline,
+          'appId' => application_number,
+          'act' => response_value,
+          'type' => 'I2A',
+        },
       },
+      { 'alg' => 'HS256', 'typ' => 'JWT' },
     ]
   end
   let(:fixed_iat) { 946_512_000 }
