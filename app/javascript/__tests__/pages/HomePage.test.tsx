@@ -52,7 +52,9 @@ describe("<HomePage />", () => {
     it("renders the email sign up link", async () => {
       const { getByTestId } = await renderAndLoadAsync(<HomePage assetPaths={{}} />)
       const mainContentContainer = getByTestId("main-content-test-id")
-      const signUpLink = getLinkByText(mainContentContainer, "Sign Up today")
+      const signUpLink = within(mainContentContainer).getByRole("link", {
+        name: /Sign Up today/i,
+      })
       expect(signUpLink).toHaveAttribute(
         "href",
         "https://confirmsubscription.com/h/y/C3BAFCD742D47910"

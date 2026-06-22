@@ -1,6 +1,6 @@
 import React, { useContext } from "react"
 import { ActionBlock, Heading, Icon, t } from "@bloom-housing/ui-components"
-import Link from "../navigation/Link"
+import { Link } from "@bloom-housing/ui-seeds"
 import { ConfigContext } from "../lib/ConfigContext"
 
 export const MailingListSignup = () => {
@@ -14,11 +14,11 @@ export const MailingListSignup = () => {
       icon={<Icon size="3xl" symbol="mailThin" fill="transparent" />}
       actions={[
         <Link
-          className="button"
+          className="button no-underline"
           key="action-1"
-          external={true}
           href={listingsAlertUrl}
-          target="_blank"
+          newWindowTarget
+          hideExternalLinkIcon
         >
           {t("welcome.signUpToday")}
         </Link>,
