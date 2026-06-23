@@ -47,8 +47,10 @@ describe("Sign In integration tests", () => {
     cy.get('[aria-label="Close"]').first().click()
     cy.contains("Email or password is incorrect.").should("not.exist")
 
-    cy.get('input[name="email"]').clear().type("user@example.com")
-    cy.get('input[name="password"]').clear().type("wrongpassword1")
+    cy.get('input[name="email"]').clear()
+    cy.get('input[name="email"]').type("user@example.com")
+    cy.get('input[name="password"]').clear()
+    cy.get('input[name="password"]').type("wrongpassword1")
     cy.get('button[type="submit"]').click()
 
     cy.wait("@signInFailed")
