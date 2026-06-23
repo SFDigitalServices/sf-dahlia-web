@@ -87,6 +87,8 @@ const MyAccount = (_props: MyAccountProps) => {
   )
 }
 
+export { MyAccount }
+
 export default withAppSetup(withAuthentication(MyAccount, { redirectType: RedirectType.Account }), {
   pageName: AppPages.MyAccount,
 })
