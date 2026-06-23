@@ -14,6 +14,10 @@ jest.mock("../../../api/apiService", () => ({
   authenticatedPut: jest.fn(),
 }))
 
+jest.mock("../../../hooks/useFeatureFlag", () => ({
+  useFeatureFlag: () => ({ flagsReady: true, unleashFlag: true }),
+}))
+
 describe("<SettingsPage />", () => {
   describe("when the user is signed in", () => {
     let promise

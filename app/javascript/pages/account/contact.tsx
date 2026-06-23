@@ -1,10 +1,13 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import React, { useContext } from "react"
+import { Navigate } from "react-router"
 import { t } from "@bloom-housing/ui-components"
 import { Message, Link, Card, Heading } from "@bloom-housing/ui-seeds"
 import Layout from "../../layouts/Layout"
 import AccountLayout from "../../layouts/AccountLayout"
 import withAppSetup from "../../layouts/withAppSetup"
+import { useFeatureFlag } from "../../hooks/useFeatureFlag"
+import { UNLEASH_FLAG } from "../../modules/constants"
 import {
   AppPages,
   getMyAccountPath,
@@ -18,8 +21,14 @@ import UserContext from "../../authentication/context/UserContext"
 import { renderInlineMarkup } from "../../util/languageUtil"
 
 const Contact = () => {
+  const { unleashFlag: accountLayoutEnabled } = useFeatureFlag(UNLEASH_FLAG.ACCOUNTS_LAYOUT, false)
   const { getAssetPath } = useContext(ConfigContext)
   const { profile } = useContext(UserContext)
+
+  if (!accountLayoutEnabled) {
+    return <Navigate to={getMyAccountPath()} replace />
+  }
+
   return (
     <Layout>
       <AccountLayout>
