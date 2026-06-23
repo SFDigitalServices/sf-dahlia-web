@@ -52,6 +52,9 @@ describe("Create Account Page", () => {
     cy.url().should("include", "/sign-in")
     cy.contains("Check your email to finish creating your account").should("be.visible")
 
+    cy.contains(/send email again/i)
+      .should("be.visible")
+      .and("not.be.disabled")
     cy.contains(/send email again/i).click()
 
     cy.wait("@confirmation")
