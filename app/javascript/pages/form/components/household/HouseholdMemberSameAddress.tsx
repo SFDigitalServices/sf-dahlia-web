@@ -14,7 +14,7 @@ const fieldNames = {
   addressZipcode: "householdMemberAddressZipcode",
 }
 
-const HouseholdMemberSameAddress = () => {
+const HouseholdMemberSameAddress = ({ addressError }: { addressError?: string | null }) => {
   const { watch } = useFormContext()
   const hasSameAddress = watch("hasSameAddressAsApplicant")
   const showAddressField = hasSameAddress === "false"
@@ -30,6 +30,7 @@ const HouseholdMemberSameAddress = () => {
           <Address
             showAptOrUnit={true}
             requireAddress={showAddressField}
+            addressError={addressError ?? undefined}
             note="c3HouseholdMemberForm.memberAddressDesc"
             fieldNames={fieldNames}
           />
