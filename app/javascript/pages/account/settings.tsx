@@ -45,7 +45,7 @@ import { ExpandedAccountAxiosError, getErrorMessage } from "./components/util"
 import { withAuthentication } from "../../authentication/withAuthentication"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import { UNLEASH_FLAG } from "../../modules/constants"
-import MyAccountSettings from "./account-settings"
+import { AccountSettingsPage as MyAccountSettingsPage } from "./account-settings"
 
 const Banner = ({
   showBanner,
@@ -487,11 +487,11 @@ interface SettingsProps {
   assetPaths: unknown
 }
 
-const Settings = ({ assetPaths }: SettingsProps) => {
+const Settings = (_props: SettingsProps) => {
   const { unleashFlag: accountLayoutEnabled } = useFeatureFlag(UNLEASH_FLAG.ACCOUNTS_LAYOUT, false)
 
   if (!accountLayoutEnabled) {
-    return <MyAccountSettings assetPaths={assetPaths} />
+    return <MyAccountSettingsPage />
   }
 
   return (

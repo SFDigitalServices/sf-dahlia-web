@@ -465,6 +465,8 @@ const AccountSettingsPage = () => {
   return <AccountSettings profile={profile} />
 }
 
+export { AccountSettingsPage }
+
 export default withAppSetup(
   withAuthentication(AccountSettingsPage, { redirectType: RedirectType.Settings }),
   {

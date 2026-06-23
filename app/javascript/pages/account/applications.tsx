@@ -24,7 +24,7 @@ import { extractModalParamsFromUrl } from "./components/util"
 import { withAuthentication } from "../../authentication/withAuthentication"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import { UNLEASH_FLAG } from "../../modules/constants"
-import MyApplications from "./my-applications"
+import { MyApplications } from "./my-applications"
 import styles from "./styles/applications.module.scss"
 
 const noApplications = () => {
@@ -264,11 +264,11 @@ const ApplicationsPage = () => {
   )
 }
 
-const Applications = ({ assetPaths }: ApplicationsProps) => {
+const Applications = (_props: ApplicationsProps) => {
   const { unleashFlag: accountLayoutEnabled } = useFeatureFlag(UNLEASH_FLAG.ACCOUNTS_LAYOUT, false)
 
   if (!accountLayoutEnabled) {
-    return <MyApplications assetPaths={assetPaths} />
+    return <MyApplications />
   }
 
   return <ApplicationsPage />
