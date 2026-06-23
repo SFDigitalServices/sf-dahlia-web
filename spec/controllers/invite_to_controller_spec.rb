@@ -219,6 +219,50 @@ RSpec.describe InviteToController do
     end
   end
 
+  describe 'ignore HEAD requests' do
+    it 'ignores index HEAD requests' do
+      head :index, params: {
+        id: listing_id,
+        t: fixed_token,
+        type: 'I2A',
+        deadline: deadline,
+        act: response_value,
+        appId: application_number,
+      }
+
+      expect(response).to have_http_status(:ok)
+      expect(response.body).to be_blank
+      expect(Rails.logger).to have_received(:info).with(
+        a_string_including(
+          'InviteToController#ignore_head_requests: ignoring HEAD request',
+          'action=index',
+          "listing_id=\"#{listing_id}\"",
+        ),
+      )
+      expect(DahliaBackend::MessageService).not_to have_received(:send_invite_to_response)
+    end
+
+    it 'ignores documents HEAD requests' do
+      head :documents, params: {
+        id: listing_id,
+        deadline: deadline,
+        appId: application_number,
+        act: response_value,
+      }
+
+      expect(response).to have_http_status(:ok)
+      expect(response.body).to be_blank
+      expect(Rails.logger).to have_received(:info).with(
+        a_string_including(
+          'InviteToController#ignore_head_requests: ignoring HEAD request',
+          'action=documents',
+          "listing_id=\"#{listing_id}\"",
+        ),
+      )
+      expect(DahliaBackend::MessageService).not_to have_received(:send_invite_to_response)
+    end
+  end
+
   describe 'React layout usage' do
     it 'uses React layout for all actions' do
       allow(Force::ShortFormService).to receive(:get).with(application_number).and_return({ 'uploadURL' => 'test-upload-url' })

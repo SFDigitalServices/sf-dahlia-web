@@ -1,5 +1,7 @@
 # Invite to X controller
 class InviteToController < ApplicationController
+  before_action :ignore_head_requests
+
   def index
     decoded_params = decode_token(params[:t])
     if decoded_params.is_a?(String)
@@ -26,6 +28,21 @@ class InviteToController < ApplicationController
   end
 
   private
+
+  def ignore_head_requests
+    return unless request.head?
+
+    Rails.logger.info(
+      'InviteToController#ignore_head_requests: ignoring HEAD request ' \
+      "action=#{action_name}, " \
+      "listing_id=#{params[:id].inspect}, " \
+      "url=#{request.original_url.split('?').first}, " \
+      "referrer=#{request.referrer&.split('?')&.first.inspect}, " \
+      "user_agent=#{request.user_agent.inspect}, " \
+      "remote_ip=#{request.remote_ip}",
+    )
+    head :ok
+  end
 
   # Deprecated I2A pilot - remove references to applicationNumber and response in DAH-4045
   def props(decoded_params = params)
