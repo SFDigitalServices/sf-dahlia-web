@@ -16,6 +16,10 @@ jest.mock("react-gtm-module", () => ({
   dataLayer: jest.fn(),
 }))
 
+jest.mock("../../../hooks/useFeatureFlag", () => ({
+  useFeatureFlag: () => ({ flagsReady: true, unleashFlag: true }),
+}))
+
 describe("<Account />", () => {
   beforeEach(() => {
     document.documentElement.lang = "en"

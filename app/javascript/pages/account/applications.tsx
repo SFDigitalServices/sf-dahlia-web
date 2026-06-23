@@ -22,6 +22,9 @@ import { DoubleSubmittedModal } from "./components/DoubleSubmittedModal"
 import { AlreadySubmittedModal } from "./components/AlreadySubmittedModal"
 import { extractModalParamsFromUrl } from "./components/util"
 import { withAuthentication } from "../../authentication/withAuthentication"
+import { useFeatureFlag } from "../../hooks/useFeatureFlag"
+import { UNLEASH_FLAG } from "../../modules/constants"
+import MyApplications from "./my-applications"
 import styles from "./styles/applications.module.scss"
 
 const noApplications = () => {
@@ -138,7 +141,11 @@ const determineApplicationItemList = (
   )
 }
 
-const Applications = () => {
+interface ApplicationsProps {
+  assetPaths: unknown
+}
+
+const ApplicationsPage = () => {
   const [error, setError] = React.useState<string | null>(null)
   const [loading, setLoading] = React.useState<boolean>(true)
   const [applications, setApplications] = React.useState<Application[]>([])
@@ -255,6 +262,16 @@ const Applications = () => {
       </AccountLayout>
     </Layout>
   )
+}
+
+const Applications = ({ assetPaths }: ApplicationsProps) => {
+  const { unleashFlag: accountLayoutEnabled } = useFeatureFlag(UNLEASH_FLAG.ACCOUNTS_LAYOUT, false)
+
+  if (!accountLayoutEnabled) {
+    return <MyApplications assetPaths={assetPaths} />
+  }
+
+  return <ApplicationsPage />
 }
 
 export default withAppSetup(

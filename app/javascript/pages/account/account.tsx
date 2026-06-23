@@ -7,6 +7,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import Layout from "../../layouts/Layout"
 import AccountLayout from "../../layouts/AccountLayout"
 import withAppSetup from "../../layouts/withAppSetup"
+import { useFeatureFlag } from "../../hooks/useFeatureFlag"
+import { UNLEASH_FLAG } from "../../modules/constants"
 import {
   AppPages,
   RedirectType,
@@ -18,6 +20,7 @@ import { User } from "../../authentication/user"
 import { withAuthentication } from "../../authentication/withAuthentication"
 
 import ContactCard from "./components/ContactCard"
+import MyAccount from "./my-account"
 import styles from "./account.module.scss"
 
 const overviewSections = [
@@ -104,8 +107,18 @@ const AccountOverview = ({
   </>
 )
 
-const Account = () => {
+interface AccountProps {
+  assetPaths: unknown
+}
+
+const Account = ({ assetPaths }: AccountProps) => {
+  const { unleashFlag: accountLayoutEnabled } = useFeatureFlag(UNLEASH_FLAG.ACCOUNTS_LAYOUT, false)
   const { signOut, profile } = React.useContext(UserContext)
+
+  if (!accountLayoutEnabled) {
+    return <MyAccount assetPaths={assetPaths} />
+  }
+
   return (
     <Layout>
       <AccountLayout>
