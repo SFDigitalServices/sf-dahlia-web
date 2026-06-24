@@ -5,7 +5,7 @@
   "packageManager": "yarn@1.22.22",
   "dependencies": {
     "@axe-core/react": "^4.2.2",
-    "@babel/core": "^7.22.5",
+    "@babel/core": "^7.29.6",
     "@babel/plugin-transform-runtime": "^7.22.5",
     "@babel/preset-env": "^7.22.5",
     "@babel/preset-react": "^7.22.5",
