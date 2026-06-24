@@ -18,6 +18,7 @@ Rails.application.config.filter_parameters += [
   # address fields
   :address,
   :address1,
+  :company,
   :mailingAddress,
   :street,
   :street1,
