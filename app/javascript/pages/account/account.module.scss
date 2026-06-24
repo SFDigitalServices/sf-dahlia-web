@@ -11,7 +11,7 @@
       box-shadow: none;
     }
 
-    @media (min-width: theme("screens.lg")) {
+    @media (min-width: theme("screens.md")) {
       :global(.tabs-tab) {
         cursor: default;
       }
@@ -32,14 +32,14 @@
 }
 
 .overviewOverLg {
-  @media (min-width: theme("screens.lg")) {
+  @media (min-width: theme("screens.md")) {
     display: none;
   }
 }
 
 .overviewUnderLg {
   display: none;
-  @media (min-width: theme("screens.lg")) {
+  @media (min-width: theme("screens.md")) {
     display: block;
   }
 }
@@ -49,7 +49,7 @@
   flex-direction: row;
   align-items: center;
   padding: var(--seeds-spacer-section);
-  @media (max-width: theme("screens.lg")) {
+  @media (max-width: theme("screens.md")) {
     :global(.tabs-tab-link) {
       display: flex;
       flex-direction: row;
@@ -95,7 +95,7 @@
   display: none;
   width: var(--seeds-s40);
   margin-left: var(--seeds-s8);
-  @media (min-width: theme("screens.lg")) {
+  @media (min-width: theme("screens.md")) {
     display: inline-flex;
   }
 }
@@ -103,7 +103,7 @@
 .overviewIcon {
   margin-left: var(--seeds-s8);
   color: var(--seeds-color-primary);
-  @media (min-width: theme("screens.lg")) {
+  @media (min-width: theme("screens.md")) {
     display: none;
   }
 }

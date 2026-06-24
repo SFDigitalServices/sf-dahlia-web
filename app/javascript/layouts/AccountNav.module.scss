@@ -1,5 +1,5 @@
 .accountNav {
-  @media (max-width: theme("screens.sm")) {
+  @media (max-width: theme("screens.md")) {
     display: none;
   }
   width: var(--seeds-s52);
