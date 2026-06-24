@@ -31,30 +31,23 @@
   }
 }
 
-.overviewOverLg {
-  @media (min-width: theme("screens.md")) {
-    display: none;
-  }
-}
-
-.overviewUnderLg {
-  display: none;
-  @media (min-width: theme("screens.md")) {
-    display: block;
-  }
-}
-
 .overviewSection {
   display: flex;
   flex-direction: row;
   align-items: center;
   padding: var(--seeds-spacer-section);
-  @media (max-width: theme("screens.md")) {
+
+  :global(.tabs-tab-link) {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+  }
+
+  @media (min-width: theme("screens.md")) {
     :global(.tabs-tab-link) {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      width: 100%;
+      pointer-events: none;
+      cursor: default;
     }
   }
 }
@@ -93,10 +86,12 @@
 
 .overviewButton {
   display: none;
+  flex-shrink: 0;
   width: var(--seeds-s40);
   margin-left: var(--seeds-s8);
   @media (min-width: theme("screens.md")) {
     display: inline-flex;
+    pointer-events: auto;
   }
 }
 
