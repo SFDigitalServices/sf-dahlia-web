@@ -93,17 +93,17 @@ const getMenuLinks = (signedIn: boolean, signOut: () => void) => {
       title: t("accountLayout.nav.account"),
       subMenuLinks: [
         {
-          title: t("nav.myDashboard"),
+          title: t("accountLayout.nav.overview"),
           href: localizedPath("/account"),
           iconElement: <Icon symbol="profile" size="medium" className="pr-2" />,
         },
         {
-          title: t("nav.myApplications"),
+          title: t("accountLayout.nav.applications"),
           href: localizedPath("/account/applications"),
           iconElement: <Icon symbol="application" size="medium" className="pr-2" />,
         },
         {
-          title: t("nav.accountSettings"),
+          title: t("accountSettings.title.sentenceCase"),
           href: localizedPath("/account/settings"),
           iconElement: <Icon symbol="settings" size="medium" className="pr-2" />,
         },
