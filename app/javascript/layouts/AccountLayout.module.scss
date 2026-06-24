@@ -20,5 +20,7 @@
 }
 
 .accountLayoutContent {
+  flex: 1;
+  min-width: 0;
   padding-top: var(--seeds-s7);
 }
