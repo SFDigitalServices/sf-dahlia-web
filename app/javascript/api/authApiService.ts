@@ -77,6 +77,22 @@ export const updateNameOrDOB = async (user: User): Promise<User> => {
   }).then(({ data }) => data.contact)
 }
 
+export const updatePhone = async (user: User): Promise<User> => {
+  return authenticatedPut<{ contact: User }>("/api/v1/account/update", {
+    contact: {
+      email: user.email,
+      firstName: user.firstName,
+      middleName: user.middleName,
+      lastName: user.lastName,
+      DOB: user.DOB,
+      phone: user.phone,
+      phoneType: user.phoneType,
+      alternatePhone: user.alternatePhone,
+      alternatePhoneType: user.alternatePhoneType,
+    },
+  }).then(({ data }) => data.contact)
+}
+
 export const updateEmail = async (email: string): Promise<string> =>
   authenticatedPut<{ status: string }>("/api/v1/auth", {
     user: {

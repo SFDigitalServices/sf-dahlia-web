@@ -11,6 +11,10 @@ export type ExpandedAccountAxiosError = AxiosError<{
     full_messages: string[]
     firstName: string[]
     lastName: string[]
+    phone: string[]
+    phoneType: string[]
+    alternatePhone: string[]
+    alternatePhoneType: string[]
   }
 }>
 
