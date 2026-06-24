@@ -43,6 +43,7 @@ const withAppSetup =
 
     function ProvidersWithConditionalClerk() {
       const { unleashFlag: clerkEnabled } = useFeatureFlag(UNLEASH_FLAG.CLERK_AUTH, false)
+      console.log("clerkEnabled", clerkEnabled)
       const Providers = (
         <ErrorBoundary boundaryScope={BoundaryScope.page}>
           <ListingDetailsProvider>
