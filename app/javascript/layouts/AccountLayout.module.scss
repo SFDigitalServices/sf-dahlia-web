@@ -11,7 +11,7 @@
   gap: var(--seeds-spacer-content);
   width: 100%;
 
-  @media (max-width: theme("screens.lg")) {
+  @media (max-width: theme("screens.md")) {
     padding: var(--seeds-s14) var(--seeds-spacer-content);
   }
   @media (max-width: theme("screens.sm")) {
@@ -20,5 +20,7 @@
 }
 
 .accountLayoutContent {
+  flex: 1;
+  min-width: 0;
   padding-top: var(--seeds-s7);
 }
