@@ -2,6 +2,7 @@ import type { DataSchema, StepInfoSchema } from "../formEngine/formSchemas"
 import dayjs, { type Dayjs } from "dayjs"
 import customParseFormat from "dayjs/plugin/customParseFormat"
 import { t } from "@bloom-housing/ui-components"
+import { type Address } from "../api/formApiService"
 
 export const translationFromDataSchema = (
   translationKey: string,
@@ -177,17 +178,11 @@ export const getFormattedAddress = (address: {
 }
 
 export const getAddressErrorEmailLink = (
-  data: Record<string, unknown>,
+  address: Address,
   staticData: Record<string, unknown>,
   formData: Record<string, unknown>
 ) => {
-  const formattedAddress = getFormattedAddress({
-    street1: formData["primaryApplicantAddressStreet"] as string,
-    street2: formData["primaryApplicantAddressAptOrUnit"] as string,
-    city: formData["primaryApplicantAddressCity"] as string,
-    state: formData["primaryApplicantAddressState"] as string,
-    zip: formData["primaryApplicantAddressZipcode"] as string,
-  })
+  const formattedAddress = getFormattedAddress(address)
   const mailParams = {
     subject: `[Invalid Address Error] ${t("error.addressValidation.notFoundSubject")}`,
     body: t("error.addressValidation.notFoundBody", {

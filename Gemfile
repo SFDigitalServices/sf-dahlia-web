@@ -56,6 +56,9 @@ gem 'public_suffix' # used for config/initializers/cookie_jar.rb
 # handy ruby extensions
 gem 'facets', require: false
 
+# Windows does not have zoneinfo files, so bundle the tzinfo-data gem
+gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
+
 gem 'rack', '>= 2.2.3'
 # for redirecting
 gem 'rack-rewrite', '~> 1.5.0'

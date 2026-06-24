@@ -257,6 +257,8 @@ const MyApplications = () => {
   )
 }
 
+export { MyApplications }
+
 export default withAppSetup(
   withAuthentication(MyApplications, { redirectType: RedirectType.Applications }),
   {

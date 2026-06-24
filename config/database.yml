@@ -3,6 +3,15 @@ default: &default
   encoding: utf8
   pool: 5
   timeout: 5000
+<% if ENV['DATABASE_USERNAME'] %>
+  username: <%= ENV['DATABASE_USERNAME'] %>
+<% end %>
+<% if ENV['DATABASE_PASSWORD'] %>
+  password: <%= ENV['DATABASE_PASSWORD'] %>
+<% end %>
+<% if ENV['DATABASE_HOST'] %>
+  host: <%= ENV['DATABASE_HOST'] %>
+<% end %>
 
 development:
   <<: *default
