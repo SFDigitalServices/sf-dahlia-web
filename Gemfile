@@ -70,7 +70,7 @@ gem 'easypost', '>=3.0.1'
 gem 'StreetAddress', github: 'Exygy/street-address', require: 'street_address'
 
 # google translation
-gem 'faraday', '~> 2.14.2'
+gem 'faraday', '~> 2.14.3'
 gem 'google-cloud-translate-v2'
 # JSON optimization
 gem 'oj'
