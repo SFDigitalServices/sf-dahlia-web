@@ -88,12 +88,10 @@ module DahliaBackend
                                                          _application_number, _app_id, _action)
       return if fields.nil?
 
-      applicants_count = Array(fields.dig(:data, :applicationIds)).length +
-        Array(fields[:applicants]).length
       log_info(
         "Prepared fields for I2X response: action=#{_action.inspect}, " \
         "listingId=#{(fields[:listingId] || listing_id).inspect}, " \
-        "applicantsCount=#{applicants_count}",
+        "appId=#{_app_id.inspect}",
       )
 
       endpoint = get_response_endpoint(_action, _response)

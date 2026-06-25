@@ -72,11 +72,10 @@ class Api::V1::ShortFormController < ApiController
       Force::ShortFormService.create_or_update(application_params, applicant_attrs)
     if response.present?
       Rails.logger.info(
-        'ShortFormController#submit_application: [' \
+        'ShortFormController#submit_application: ' \
         "locale='#{params[:locale]}', " \
         "listingID='#{params.dig('application', 'listingID')}', " \
-        "lotteryNumber='#{response['lotteryNumber']}'" \
-        ']',
+        "lotteryNumber='#{response['lotteryNumber']}'"
       )
       process_submit_app_response(response)
       render json: response
