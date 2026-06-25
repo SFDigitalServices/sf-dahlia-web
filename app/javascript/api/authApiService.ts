@@ -61,7 +61,7 @@ export const deleteApplication = async (id: string) =>
 export const forgotPassword = async (email: string): Promise<string> =>
   post<{ message: string }>("/api/v1/auth/password", {
     email,
-    redirect_url: getResetPasswordPath(),
+    redirect_url: `${window.location.origin}${getResetPasswordPath()}`,
     locale: getCurrentLanguage(),
   }).then(({ data }) => data.message)
 
