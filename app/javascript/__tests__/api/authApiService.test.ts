@@ -102,7 +102,7 @@ describe("authApiService", () => {
       expect(post).toHaveBeenCalledWith(url, {
         email,
         locale: "en",
-        redirect_url: "/reset-password",
+        redirect_url: `${window.location.origin}/reset-password`,
       })
     })
   })
