@@ -9,16 +9,19 @@
 
 .preference-header {
   padding-bottom: var(--seeds-s8);
-  h1 {
-    margin-top: var(--seeds-s6);
-    margin-bottom: var(--seeds-s4);
-    font-size: var(--seeds-font-size-2xl);
-    text-align: center;
-  }
-  p {
-    font-size: var(--seeds-font-size-md);
-    color: var(--seeds-color-gray-800);
-  }
+}
+
+.step-title {
+  margin-top: var(--seeds-s6);
+  margin-bottom: var(--seeds-s4);
+  font-size: var(--seeds-font-size-2xl);
+  text-align: center;
+}
+
+.step-description {
+  font-size: var(--seeds-font-size-md);
+  color: var(--seeds-color-gray-800);
+  margin-bottom: var(--seeds-s4);
 }
 
 .green-background {

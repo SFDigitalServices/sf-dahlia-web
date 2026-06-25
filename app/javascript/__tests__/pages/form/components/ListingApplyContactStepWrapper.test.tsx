@@ -36,6 +36,7 @@ const renderListingApplyContactStepWrapper = (formData: Record<string, unknown> 
         addressState: "addressState",
         addressZipcode: "addressZipcode",
         addressVerified: "addressVerified",
+        neighborhoodPreferenceAddressMatch: "primaryApplicantNeighborhoodPreferenceAddressMatch",
         mailingAddressCheckbox: "mailingAddressCheckbox",
         mailingAddressStreet: "mailingAddressStreet",
         mailingAddressCity: "mailingAddressCity",
