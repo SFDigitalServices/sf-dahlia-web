@@ -46,6 +46,7 @@ import { withAuthentication } from "../../authentication/withAuthentication"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import { UNLEASH_FLAG } from "../../modules/constants"
 import { AccountSettingsPage as MyAccountSettingsPage } from "./account-settings"
+import settingsStyles from "./settings.module.scss"
 
 const Banner = ({
   showBanner,
@@ -439,7 +440,7 @@ const AccountSettings = ({ profile }: { profile: User }) => {
   }, [profile])
 
   return (
-    <Card className="w-full pb-8">
+    <Card className={`w-full pb-8 ${settingsStyles.settingsCard}`}>
       {nameUpdateBanner || nameSavedBanner ? (
         <FormHeader
           className={"border-none"}

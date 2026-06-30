@@ -74,7 +74,7 @@ const getLanguageItems = () => {
   return languageItems
 }
 
-const getMenuLinks = (signedIn: boolean, signOut: () => void, accountLayoutEnabled: boolean) => {
+const getMenuLinks = (signedIn: boolean, signOut: () => void, accountLayoutEnabled: boolean, getAssetPath: (path: string) => string) => {
   const menuLinks: MenuLink[] = [
     {
       title: t("nav.rent"),
@@ -99,6 +99,22 @@ const getMenuLinks = (signedIn: boolean, signOut: () => void, accountLayoutEnabl
           href: localizedPath("/account"),
           iconElement: <Icon symbol="profile" size="medium" className="pr-2" />,
         },
+        ...(accountLayoutEnabled
+          ? [
+              {
+                title: t("accountLayout.nav.contactInfo"),
+                href: localizedPath("/account/contact"),
+                iconElement: (
+                  <img
+                    src={getAssetPath("contact-info.png")}
+                    alt=""
+                    className="pr-2"
+                    style={{ width: "1.5rem", height: "1.5rem" }}
+                  />
+                ),
+              },
+            ]
+          : []),
         {
           title: accountLayoutEnabled
             ? t("accountLayout.nav.applications")
@@ -190,7 +206,7 @@ const Layout = (props: LayoutProps) => {
             mobileText={true}
             logoWidth={"medium"}
             logoClass="translate"
-            menuLinks={getMenuLinks(isTokenValid(), signOut, accountLayoutEnabled)}
+            menuLinks={getMenuLinks(isTokenValid(), signOut, accountLayoutEnabled, getAssetPath)}
             strings={{
               skipToMainContent: t("t.skipToMainContent"),
               logoAriaLable: t("t.dahliaSanFranciscoHousingPortal"),

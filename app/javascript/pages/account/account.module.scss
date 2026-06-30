@@ -11,7 +11,7 @@
       box-shadow: none;
     }
 
-    @media (min-width: theme("screens.md")) {
+    @media (min-width: 769px) {
       :global(.tabs-tab) {
         cursor: default;
       }
@@ -27,6 +27,12 @@
     }
     :global(.tabs-tab) .overviewIcon {
       color: var(--seeds-color-primary);
+    }
+
+    @media (max-width: theme("screens.sm")) {
+      border-radius: 0;
+      border-left: none;
+      border-right: none;
     }
   }
 }
@@ -44,7 +50,7 @@
     width: 100%;
   }
 
-  @media (min-width: theme("screens.md")) {
+  @media (min-width: 769px) {
     :global(.tabs-tab-link) {
       pointer-events: none;
       cursor: default;
@@ -89,7 +95,7 @@
   flex-shrink: 0;
   width: var(--seeds-s40);
   margin-left: var(--seeds-s8);
-  @media (min-width: theme("screens.md")) {
+  @media (min-width: 769px) {
     display: inline-flex;
     pointer-events: auto;
   }
@@ -98,7 +104,7 @@
 .overviewIcon {
   margin-left: var(--seeds-s8);
   color: var(--seeds-color-primary);
-  @media (min-width: theme("screens.md")) {
+  @media (min-width: 769px) {
     display: none;
   }
 }

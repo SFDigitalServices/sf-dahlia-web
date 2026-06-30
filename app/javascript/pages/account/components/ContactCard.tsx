@@ -40,7 +40,12 @@ const ContactCard = ({ user }: ContactCardProps) => {
       </div>
 
       <span>
-        <Button variant="primary" className={styles.changeButton} href={getMyAccountContactPath()}>
+        <Button
+          variant="primary-outlined"
+          className={styles.changeButton}
+          href={getMyAccountContactPath()}
+          size="sm"
+        >
           {hasContactInfo
             ? t("accountLayout.accountCard.changeInfo")
             : t("accountLayout.accountCard.addInfo")}
