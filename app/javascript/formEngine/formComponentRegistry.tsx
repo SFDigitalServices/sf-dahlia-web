@@ -35,7 +35,7 @@ import ListingApplyHouseholdPrioritiesHeader from "../pages/form/components/List
 import ListingApplyHouseholdIncomeStep from "../pages/form/components/ListingApplyHouseholdIncomeStep"
 import ListingApplyHouseholdMonthlyRentStep from "../pages/form/components/household/ListingApplyHouseholdMonthlyRentStep"
 import ListingApplyHouseholdMonthlyRent from "../pages/form/components/household/ListingApplyHouseholdMonthlyRent"
-import ListingApplyStepHeaderNeighborhoodPreference from "../pages/form/components/ListingApplyStepHeaderNeighborhoodPreference"
+import ListingApplyStepHeaderNeighborhoodPreferences from "../pages/form/components/preferences/ListingApplyStepHeaderNeighborhoodPreferences"
 
 // TODO better typescript typing
 // add return type `Record<string, React.FunctionComponent>`
@@ -82,6 +82,6 @@ export default function getFormComponentRegistry() {
     ListingApplyHouseholdIncomeHeader,
     ListingApplyVeteransPreferenceHeader,
     ListingApplyHouseholdPrioritiesHeader,
-    ListingApplyStepHeaderNeighborhoodPreference,
+    ListingApplyStepHeaderNeighborhoodPreferences,
   }
 }
