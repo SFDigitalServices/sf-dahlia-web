@@ -22,9 +22,9 @@ import InviteToPage from "../pages/inviteTo/invite-to"
 import AdditionalResources from "../pages/getAssistance/additional-resources"
 import Disclaimer from "../pages/getAssistance/disclaimer"
 import Privacy from "../pages/getAssistance/privacy"
-import MyApplications from "../pages/account/my-applications"
+import MyApplications from "../pages/account/my-applications" // eslint-disable-line import/no-named-as-default
 import AccountSettings from "../pages/account/account-settings"
-import MyAccount from "../pages/account/my-account"
+import MyAccount from "../pages/account/my-account" // eslint-disable-line import/no-named-as-default
 import CreateAccount from "../pages/account/create-account"
 import ForgotPassword from "../pages/forgot-password"
 import ResetPassword from "../pages/reset-password"

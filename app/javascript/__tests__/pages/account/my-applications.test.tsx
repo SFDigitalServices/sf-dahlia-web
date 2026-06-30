@@ -7,7 +7,7 @@ import {
 } from "../../__util__/renderUtils"
 import MyApplications, {
   determineApplicationItemList,
-} from "../../../pages/account/my-applications"
+} from "../../../pages/account/my-applications" // eslint-disable-line import/no-named-as-default
 import React from "react"
 import { authenticatedGet, authenticatedDelete } from "../../../api/apiService"
 import { fireEvent, render, screen, waitFor, within } from "@testing-library/react"

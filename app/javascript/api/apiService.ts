@@ -12,6 +12,7 @@ const createAxiosInstance = (): AxiosInstance => {
   if (!isTokenValid()) {
     throw new Error("Token expired")
   }
+  // eslint-disable-next-line import/no-named-as-default-member
   return axios.create({
     headers: getHeaders(),
     transformResponse: (res, headers) => {
