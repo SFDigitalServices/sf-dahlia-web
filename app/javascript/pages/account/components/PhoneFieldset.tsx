@@ -73,9 +73,11 @@ const PhoneFieldset = () => {
     disabled: boolean
   ) => (
     <div className={`field ${errors[name] ? "error" : ""}`}>
-      <label htmlFor={name} className={styles.fieldLabel}>
-        {t("accountLayout.contact.phoneLabel")}
-      </label>
+      {name === "secondPhone" && (
+        <label htmlFor={name} className={styles.fieldLabel}>
+          {t("accountLayout.contact.phoneLabel")}
+        </label>
+      )}
       <div className="control">
         <PhoneMask
           name={name}
