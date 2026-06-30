@@ -220,7 +220,7 @@ describe("ListingApplyPreferenceStepWrapper", () => {
 
     it("renders the header component when headerComponentName is provided", () => {
       renderWrapper({
-        headerComponentName: "ListingApplyStepHeaderNeighborhoodPreference",
+        headerComponentName: "ListingApplyStepHeaderNrhpPreference",
         formData: {
           primaryApplicantFirstName: "Alice",
           primaryApplicantMiddleName: "M",

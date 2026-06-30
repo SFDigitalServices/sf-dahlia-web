@@ -463,7 +463,8 @@ ShortFormApplicationController = (
       $scope.checkForNeighborhoodOrLiveWork()
 
   $scope.checkForNeighborhoodOrLiveWork = ->
-    if ShortFormApplicationService.eligibleForNRHP()
+    # if ShortFormApplicationService.eligibleForNRHP()
+    if false # TODO revert debug
       ShortFormNavigationService.goToApplicationPage('dahlia.short-form-application.neighborhood-preference')
     else if ShortFormApplicationService.eligibleForADHP()
       ShortFormNavigationService.goToApplicationPage('dahlia.short-form-application.adhp-preference')

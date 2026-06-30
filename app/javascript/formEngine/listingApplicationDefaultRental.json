@@ -563,7 +563,7 @@
         "title": "label.goodNewsForHigherRanking",
         "description": "e2aNeighborhoodPreference.instructionsP2",
         "greenHeader": true,
-        "headerComponentName": "ListingApplyStepHeaderNeighborhoodPreference",
+        "headerComponentName": "ListingApplyStepHeaderNrhpPreference",
         "fieldNames": {
           "claimedPreferences": "claimedPreferences",
           "optOut": "_neighborhoodResidenceOptOut"
@@ -600,30 +600,27 @@
         }
       },
       "componentType": "step",
-      "componentName": "ListingApplyStepWrapper",
+      "componentName": "ListingApplyPreferenceStepWrapper",
       "props": {
-        "title": "label.good_news_for_higher_ranking",
-        "description": "e2bAdhpPreference.instructionsP2"
-      },
-      "children": [
-        {
-          "componentName": "PreferenceCheckboxGroup",
-          "props": {
-            "name": "e2bAdhpPreference.preference.title",
-            "description": "e2bAdhpPreference.preference.description",
-            "showProofType": true,
-            "members": {
-              "dataSource": "form",
-              "dataKey": "members"
-            },
-            "fieldNames": {
-              "member": "antiDisplacementPrefMember",
-              "proofDocType": "antiDisplacementPrefProofDocType",
-              "proofDoc": "antiDisplacementPrefProofDoc"
-            }
+        "title": "label.goodNewsForHigherRanking",
+        "description": "e3aAssistedHousingPreference.instructions",
+        "greenHeader": true,
+        "headerComponentName": "ListingApplyStepHeaderAdhpPreference",
+        "fieldNames": {
+          "claimedPreferences": "claimedPreferences",
+          "optOut": "_antiDisplacementOptOut"
+        },
+        "preferenceContents": [
+          {
+            "preferenceName": "antiDisplacement",
+            "checkboxLabel": "e2bAdhpPreference.preference.title",
+            "checkboxDescription": "e2bAdhpPreference.preference.shortDescription",
+            "proofHouseholdMemberLabel": "label.applicantPreferencesDocumentName",
+            "proofTypeLabel": "label.preferenceProofAddressDocuments",
+            "proofUploadButtonLabel": "label.uploadProofOfPreference"
           }
-        }
-      ]
+        ]
+      }
     },
     {
       "stepInfo": {

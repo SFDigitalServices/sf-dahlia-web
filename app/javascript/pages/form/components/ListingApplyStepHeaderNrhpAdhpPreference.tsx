@@ -5,37 +5,55 @@ import { useFormEngineContext } from "../../../formEngine/formEngineContext"
 import styles from "./preferences/ListingApplyPreferenceStepWrapper.module.scss"
 import { renderInlineMarkup } from "../../../util/languageUtil"
 import { liveInTheNeighborhoodHouseholdMembers } from "./household/householdUtils"
-import { eligibleForAssistedHousingOrRentBurden } from "./ListingApplyStepHeaderNeighborhoodPreferenceUtils"
 
-const GoodNewsHeader = ({ addressesString }: { addressesString: string }) => {
+const eligibleForAssistedHousingOrRentBurdenValue = () => {
+  // TODO: DAH-4176
+  // formData.hasPublicHousing === 'yes' || eligibleForRentBurden(...)
+  return false
+}
+
+const GoodNewsHeader = ({
+  addressesString,
+  instructionsP2,
+}: {
+  addressesString: string
+  instructionsP2: string
+}) => {
   return (
     <CardHeader divider="inset" className={styles["green-background"]}>
       <h1 className={styles["step-title"]}>{t("label.goodNewsForHigherRanking")}</h1>
       <p className={styles["step-description"]}>{renderInlineMarkup(addressesString)}</p>
-      <p className={styles["step-description"]}>
-        {renderInlineMarkup(t("e2aNeighborhoodPreference.instructionsP2"))}
-      </p>
+      <p className={styles["step-description"]}>{renderInlineMarkup(t(instructionsP2))}</p>
     </CardHeader>
   )
 }
 
-const Header = ({ addressesString }: { addressesString: string }) => {
+const Header = ({
+  addressesString,
+  instructionsP2,
+}: {
+  addressesString: string
+  instructionsP2: string
+}) => {
   return (
     <CardHeader divider="inset">
       <h1 className={styles["step-title"]}>{renderInlineMarkup(addressesString)}</h1>
-      <p className={styles["step-description"]}>
-        {renderInlineMarkup(t("e2aNeighborhoodPreference.instructionsP2"))}
-      </p>
+      <p className={styles["step-description"]}>{renderInlineMarkup(t(instructionsP2))}</p>
     </CardHeader>
   )
 }
 
-const ListingApplyStepHeaderNeighborhoodPreference = () => {
+const ListingApplyStepHeaderNrhpAdhpPreference = ({
+  instructionsP1Plural,
+  instructionsP1Singular,
+  instructionsP2,
+}: {
+  instructionsP1Plural: string
+  instructionsP1Singular: string
+  instructionsP2: string
+}) => {
   const formEngineContext = useFormEngineContext()
   const { formData } = formEngineContext
-
-  const eligibleForAssistedHousingOrRentBurdenValue =
-    eligibleForAssistedHousingOrRentBurden(formData)
 
   const liveInTheNeighborhoodAddresses = [
     ...new Set(
@@ -47,16 +65,17 @@ const ListingApplyStepHeaderNeighborhoodPreference = () => {
 
   const addressesString =
     liveInTheNeighborhoodAddresses.length > 1
-      ? t("e2aNeighborhoodPreference.instructionsP1Plural", {
+      ? t(instructionsP1Plural, {
           address: liveInTheNeighborhoodAddresses.join(" and "), // not great for non-english, but the Angular code does this
         })
-      : t("e2aNeighborhoodPreference.instructionsP1Singular", {
+      : t(instructionsP1Singular, {
           address: liveInTheNeighborhoodAddresses[0] || "", // this component should not render if array is empty
         })
 
-  if (eligibleForAssistedHousingOrRentBurdenValue)
-    return <Header addressesString={addressesString} />
-  return <GoodNewsHeader addressesString={addressesString} />
+  if (eligibleForAssistedHousingOrRentBurdenValue())
+    return <Header addressesString={addressesString} instructionsP2={instructionsP2} />
+
+  return <GoodNewsHeader addressesString={addressesString} instructionsP2={instructionsP2} />
 }
 
-export default ListingApplyStepHeaderNeighborhoodPreference
+export default ListingApplyStepHeaderNrhpAdhpPreference
