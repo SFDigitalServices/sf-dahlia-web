@@ -78,6 +78,7 @@ const ContactPhoneForm = ({
         alternatePhoneType: data.secondPhoneType,
       })
       saveProfile(updatedContact)
+      formMethods.reset(data)
       setShowSaveBanner(true)
     } catch (error) {
       setError(...handlePhoneServerErrors(error as ExpandedAccountAxiosError))
@@ -140,9 +141,7 @@ const Contact = () => {
           </Card.Header>
           <Message>{t("accountLayout.contact.changeInfo")}</Message>
           <Card.Section divider="inset" className={styles.contactSection}>
-            <label className={styles.contactFieldLabel}>
-              {t("label.emailAddress")}
-            </label>
+            <p className={styles.contactFieldLabel}>{t("label.emailAddress")}</p>
             <p className={styles.email}>{profile?.email}</p>
             <p className={styles.changeEmail}>
               {renderInlineMarkup(
