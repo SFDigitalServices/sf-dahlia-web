@@ -139,7 +139,7 @@ const DahliaSiteHeader = (props: SiteHeaderProps) => {
       ? setNavbarClass("site-header__navbar-wrapped")
       : setNavbarClass("site-header__navbar-inline")
   }
-  const DESKTOP_MIN_WIDTH = props.desktopMinWidth || 767
+  const DESKTOP_MIN_WIDTH = props.desktopMinWidth || 768
 
   const toggleDesktopMenu = (menuTitle: string) => {
     setActiveMenu((current) => (current === menuTitle ? null : menuTitle))
