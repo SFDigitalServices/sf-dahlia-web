@@ -10,7 +10,7 @@ import {
   SiteFooter,
   t,
 } from "@bloom-housing/ui-components"
-import SiteHeader, { MenuLink } from "../components/SiteHeader/SiteHeader"
+import SiteHeader, { MenuLink } from "../components/SiteHeader/SiteHeader" // eslint-disable-line import/no-named-as-default
 import Markdown from "markdown-to-jsx"
 import UserContext from "../authentication/context/UserContext"
 import { ConfigContext } from "../lib/ConfigContext"
@@ -74,7 +74,12 @@ const getLanguageItems = () => {
   return languageItems
 }
 
-const getMenuLinks = (signedIn: boolean, signOut: () => void, accountLayoutEnabled: boolean, getAssetPath: (path: string) => string) => {
+const getMenuLinks = (
+  signedIn: boolean,
+  signOut: () => void,
+  accountLayoutEnabled: boolean,
+  getAssetPath: (path: string) => string
+) => {
   const menuLinks: MenuLink[] = [
     {
       title: t("nav.rent"),
