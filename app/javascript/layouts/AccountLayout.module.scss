@@ -23,4 +23,19 @@
   flex: 1;
   min-width: 0;
   padding-top: var(--seeds-s7);
+  @media (max-width: theme("screens.md")) {
+    padding-top: 0;
+  }
+}
+
+.accountBreadcrumbs {
+  display: none;
+  @media (max-width: theme("screens.md")) {
+    display: block;
+    position: sticky;
+    z-index: 1;
+    top: 0;
+    background-color: var(--seeds-color-gray-300);
+    padding: var(--seeds-spacer-header);
+  }
 }
