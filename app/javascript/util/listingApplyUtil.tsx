@@ -94,3 +94,6 @@ export const getProofOptions = (preferenceName: string): { value: string; label:
   }
   return PROOF_OPTIONS[lookupName as keyof typeof PROOF_OPTIONS]
 }
+
+// TODO: DAH-4176 implement this Angular function in React
+// Service.eligibleForRentBurden = -> ...
