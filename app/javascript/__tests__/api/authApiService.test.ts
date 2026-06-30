@@ -15,7 +15,9 @@ import {
   getApplications,
   deleteApplication,
   resetPassword,
+  updatePhone,
 } from "../../api/authApiService"
+import { mockProfileStub } from "../__util__/accountUtils"
 
 jest.mock("axios")
 
@@ -100,7 +102,7 @@ describe("authApiService", () => {
       expect(post).toHaveBeenCalledWith(url, {
         email,
         locale: "en",
-        redirect_url: "/reset-password",
+        redirect_url: `${window.location.origin}/reset-password`,
       })
     })
   })
@@ -134,6 +136,26 @@ describe("authApiService", () => {
           current_password: oldPassword,
         })
       )
+    })
+  })
+
+  describe("updatePhone", () => {
+    it("calls apiService authenticatedPut", async () => {
+      const url = "/api/v1/account/update"
+      await updatePhone(mockProfileStub)
+      expect(authenticatedPut).toHaveBeenCalledWith(url, {
+        contact: {
+          email: mockProfileStub.email,
+          firstName: mockProfileStub.firstName,
+          middleName: mockProfileStub.middleName,
+          lastName: mockProfileStub.lastName,
+          DOB: mockProfileStub.DOB,
+          phone: mockProfileStub.phone,
+          phoneType: mockProfileStub.phoneType,
+          alternatePhone: mockProfileStub.alternatePhone,
+          alternatePhoneType: mockProfileStub.alternatePhoneType,
+        },
+      })
     })
   })
 

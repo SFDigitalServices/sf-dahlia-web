@@ -1,10 +1,13 @@
 /* eslint-disable @typescript-eslint/unbound-method */
-import React, { useContext } from "react"
-import { t } from "@bloom-housing/ui-components"
-import { Message, Link, Card, Heading } from "@bloom-housing/ui-seeds"
+import React, { useContext, useState } from "react"
+import { Form, t } from "@bloom-housing/ui-components"
+import { Navigate } from "react-router"
+import { Message, Link, Card, Heading, Button } from "@bloom-housing/ui-seeds"
 import Layout from "../../layouts/Layout"
 import AccountLayout from "../../layouts/AccountLayout"
 import withAppSetup from "../../layouts/withAppSetup"
+import { useFeatureFlag } from "../../hooks/useFeatureFlag"
+import { UNLEASH_FLAG } from "../../modules/constants"
 import {
   AppPages,
   getMyAccountPath,
@@ -15,11 +18,106 @@ import { withAuthentication } from "../../authentication/withAuthentication"
 import { ConfigContext } from "../../lib/ConfigContext"
 import styles from "./contact.module.scss"
 import UserContext from "../../authentication/context/UserContext"
+import { User } from "../../authentication/user"
 import { renderInlineMarkup } from "../../util/languageUtil"
+import { FormProvider, useForm } from "react-hook-form"
+import PhoneFieldset, {
+  handlePhoneServerErrors,
+  phoneFieldsetErrors,
+  PhoneFormValues,
+} from "./components/PhoneFieldset"
+import { updatePhone } from "../../api/authApiService"
+import { ErrorSummaryBanner } from "./components/ErrorSummaryBanner"
+import { ExpandedAccountAxiosError, getErrorMessage } from "./components/util"
+
+const getPhoneDefaultValues = (profile: User) => ({
+  phone: profile.phone ?? "",
+  phoneType: profile.phoneType ?? "",
+  noPhone: !profile.phone && !profile.alternatePhone,
+  secondPhoneCheckbox: !!profile.alternatePhone,
+  secondPhone: profile.alternatePhone ?? "",
+  secondPhoneType: profile.alternatePhoneType ?? "",
+})
+
+const ContactPhoneForm = ({
+  profile,
+  saveProfile,
+}: {
+  profile: User
+  saveProfile: (profile: User) => void
+}) => {
+  const [showSaveBanner, setShowSaveBanner] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const formMethods = useForm<PhoneFormValues>({
+    mode: "onSubmit",
+    reValidateMode: "onChange",
+    shouldFocusError: false,
+    defaultValues: getPhoneDefaultValues(profile),
+  })
+  const {
+    handleSubmit,
+    formState: { errors },
+    setError,
+  } = formMethods
+
+  const onSubmit = async (data: PhoneFormValues) => {
+    setLoading(true)
+    try {
+      const updatedContact = await updatePhone({
+        ...profile,
+        phone: data.phone,
+        phoneType: data.phoneType,
+        alternatePhone: data.secondPhone,
+        alternatePhoneType: data.secondPhoneType,
+      })
+      saveProfile(updatedContact)
+      setShowSaveBanner(true)
+    } catch (error) {
+      setError(...handlePhoneServerErrors(error as ExpandedAccountAxiosError))
+      setShowSaveBanner(false)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  return (
+    <>
+      {showSaveBanner && (
+        <Message variant="success">{t("accountLayout.contact.changesSaved")}</Message>
+      )}
+      <ErrorSummaryBanner
+        errors={errors}
+        messageMap={(messageKey) => getErrorMessage(messageKey, phoneFieldsetErrors, true)}
+      />
+      <Card.Section className={styles.phoneSection}>
+        <FormProvider {...formMethods}>
+          <Form onSubmit={handleSubmit(onSubmit)}>
+            <PhoneFieldset />
+            <Button
+              type="submit"
+              variant="primary-outlined"
+              className={styles.saveButton}
+              size="sm"
+              loadingMessage={loading ? t("accountLayout.contact.savePhone") : undefined}
+            >
+              {t("accountLayout.contact.savePhone")}
+            </Button>
+          </Form>
+        </FormProvider>
+      </Card.Section>
+    </>
+  )
+}
 
 const Contact = () => {
+  const { unleashFlag: accountLayoutEnabled } = useFeatureFlag(UNLEASH_FLAG.ACCOUNTS_LAYOUT, false)
   const { getAssetPath } = useContext(ConfigContext)
-  const { profile } = useContext(UserContext)
+  const { profile, saveProfile } = useContext(UserContext)
+
+  if (!accountLayoutEnabled) {
+    return <Navigate to={getMyAccountPath()} replace />
+  }
+
   return (
     <Layout>
       <AccountLayout>
@@ -45,7 +143,7 @@ const Contact = () => {
               )}
             </p>
           </Card.Section>
-          <Card.Section className={styles.contactSection}>Phone coming soon!</Card.Section>
+          {profile && <ContactPhoneForm profile={profile} saveProfile={saveProfile} />}
           <Card.Footer className={styles.footer}>
             <Link href={getMyAccountPath()}>{t("accountLayout.contact.back")}</Link>
           </Card.Footer>

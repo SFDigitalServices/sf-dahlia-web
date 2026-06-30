@@ -27,6 +27,9 @@ interface User {
 
   DOB?: string
   phone?: string
+  phoneType?: string
+  alternatePhone?: string
+  alternatePhoneType?: string
 }
 
 interface UserData {

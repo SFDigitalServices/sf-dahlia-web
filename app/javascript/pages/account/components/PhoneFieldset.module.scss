@@ -1,0 +1,19 @@
+.fieldLabel {
+  font-size: var(--seeds-font-size-sm);
+  font-weight: var(--seeds-font-weight-semibold);
+  margin-bottom: var(--seeds-s2);
+}
+
+.checkboxLabel {
+  color: var(--seeds-color-blue-500);
+  font-weight: var(--seeds-font-weight-semibold);
+}
+
+.checkboxGroup {
+  display: block;
+  padding-top: var(--seeds-spacer-header);
+}
+
+.secondPhoneFields {
+  padding-top: var(--seeds-spacer-header);
+}

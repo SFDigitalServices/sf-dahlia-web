@@ -64,6 +64,16 @@ class Api::V1::AccountController < ApiController
   def account_params
     params
       .require(:contact)
-      .permit(:firstName, :middleName, :lastName, :DOB, :email)
+      .permit(
+        :firstName,
+        :middleName,
+        :lastName,
+        :DOB,
+        :email,
+        :phone,
+        :phoneType,
+        :alternatePhone,
+        :alternatePhoneType,
+      )
   end
 end

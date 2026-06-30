@@ -61,7 +61,7 @@ export const deleteApplication = async (id: string) =>
 export const forgotPassword = async (email: string): Promise<string> =>
   post<{ message: string }>("/api/v1/auth/password", {
     email,
-    redirect_url: getResetPasswordPath(),
+    redirect_url: `${window.location.origin}${getResetPasswordPath()}`,
     locale: getCurrentLanguage(),
   }).then(({ data }) => data.message)
 
@@ -73,6 +73,22 @@ export const updateNameOrDOB = async (user: User): Promise<User> => {
       middleName: user.middleName,
       lastName: user.lastName,
       DOB: user.DOB,
+    },
+  }).then(({ data }) => data.contact)
+}
+
+export const updatePhone = async (user: User): Promise<User> => {
+  return authenticatedPut<{ contact: User }>("/api/v1/account/update", {
+    contact: {
+      email: user.email,
+      firstName: user.firstName,
+      middleName: user.middleName,
+      lastName: user.lastName,
+      DOB: user.DOB,
+      phone: user.phone,
+      phoneType: user.phoneType,
+      alternatePhone: user.alternatePhone,
+      alternatePhoneType: user.alternatePhoneType,
     },
   }).then(({ data }) => data.contact)
 }

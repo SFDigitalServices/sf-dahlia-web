@@ -7,6 +7,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import Layout from "../../layouts/Layout"
 import AccountLayout from "../../layouts/AccountLayout"
 import withAppSetup from "../../layouts/withAppSetup"
+import { useFeatureFlag } from "../../hooks/useFeatureFlag"
+import { UNLEASH_FLAG } from "../../modules/constants"
 import {
   AppPages,
   RedirectType,
@@ -18,6 +20,7 @@ import { User } from "../../authentication/user"
 import { withAuthentication } from "../../authentication/withAuthentication"
 
 import ContactCard from "./components/ContactCard"
+import { MyAccount } from "./my-account"
 import styles from "./account.module.scss"
 
 const overviewSections = [
@@ -67,30 +70,17 @@ const OverviewSection = ({
   </>
 )
 
-const AccountOverview = ({
-  signOut,
-  hasButton,
-  user,
-}: {
-  signOut: () => void
-  hasButton: boolean
-  user?: User
-}) => (
+const AccountOverview = ({ signOut, user }: { signOut: () => void; user?: User }) => (
   <>
     <ContactCard user={user} />
     <Tabs
       className="vertical-sidebar-layout"
-      navigation={hasButton}
-      navigationLabel={hasButton && t("accountLayout.nav.title")}
-      onSelect={!hasButton && (() => false)}
+      navigation
+      navigationLabel={t("accountLayout.nav.title")}
     >
       <Tabs.TabList>
         {overviewSections.map((section) => (
-          <Tabs.Tab
-            key={section.href}
-            className={styles.overviewSection}
-            href={hasButton && section.href}
-          >
+          <Tabs.Tab key={section.href} className={styles.overviewSection} href={section.href}>
             <OverviewSection {...section} />
           </Tabs.Tab>
         ))}
@@ -104,18 +94,23 @@ const AccountOverview = ({
   </>
 )
 
-const Account = () => {
+interface AccountProps {
+  assetPaths: unknown
+}
+
+const Account = ({ assetPaths }: AccountProps) => {
+  const { unleashFlag: accountLayoutEnabled } = useFeatureFlag(UNLEASH_FLAG.ACCOUNTS_LAYOUT, false)
   const { signOut, profile } = React.useContext(UserContext)
+
+  if (!accountLayoutEnabled) {
+    return <MyAccount assetPaths={assetPaths} />
+  }
+
   return (
     <Layout>
       <AccountLayout>
         <div className={styles.overview}>
-          <div className={styles.overviewOverLg}>
-            <AccountOverview signOut={signOut} hasButton={true} user={profile} />
-          </div>
-          <div className={styles.overviewUnderLg}>
-            <AccountOverview signOut={signOut} hasButton={false} user={profile} />
-          </div>
+          <AccountOverview signOut={signOut} user={profile} />
         </div>
       </AccountLayout>
     </Layout>

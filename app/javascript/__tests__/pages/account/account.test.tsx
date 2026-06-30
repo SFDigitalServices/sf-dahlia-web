@@ -6,7 +6,8 @@ import {
 } from "../../__util__/renderUtils"
 import Account from "../../../pages/account/account"
 import React from "react"
-import { within, type RenderResult } from "@testing-library/react"
+import { MemoryRouter } from "react-router"
+import { within, screen } from "@testing-library/react"
 import { setupUserContext } from "../../__util__/accountUtils"
 import { withAuthentication } from "../../../authentication/withAuthentication"
 import { RedirectType } from "../../../util/routeUtil"
@@ -14,6 +15,15 @@ import { RedirectType } from "../../../util/routeUtil"
 jest.mock("react-gtm-module", () => ({
   initialize: jest.fn(),
   dataLayer: jest.fn(),
+}))
+
+jest.mock("../../../hooks/useFeatureFlag", () => ({
+  useFeatureFlag: () => ({ flagsReady: true, unleashFlag: true }),
+}))
+
+jest.mock("react-router", () => ({
+  ...jest.requireActual("react-router"),
+  useLocation: jest.fn(),
 }))
 
 describe("<Account />", () => {
@@ -33,15 +43,21 @@ describe("<Account />", () => {
   })
 
   describe("when the user is signed in", () => {
-    let getByRole: RenderResult["getByRole"]
     let originalLocation: Location
+    let overviewNav: HTMLElement
 
     beforeEach(async () => {
       originalLocation = mockWindowLocation()
       setupUserContext({ loggedIn: true })
       const WrappedComponent = withAuthentication(Account, { redirectType: RedirectType.Account })
-      const renderResult = await renderAndLoadAsync(<WrappedComponent assetPaths={{}} />)
-      getByRole = renderResult.getByRole
+      await renderAndLoadAsync(<WrappedComponent assetPaths={{}} />, {
+        wrapper: ({ children }) => (
+          <MemoryRouter initialEntries={["/account"]}>{children}</MemoryRouter>
+        ),
+      })
+      overviewNav = screen
+        .getAllByRole("navigation", { name: "Account" })
+        .find((nav) => within(nav).queryByRole("link", { name: "See applications" }))!
     })
 
     afterEach(() => {
@@ -50,14 +66,12 @@ describe("<Account />", () => {
     })
 
     it("contains three tabs within the account layout", () => {
-      const tablist = getByRole("tablist")
-      expect(within(tablist).getAllByRole("tab")).toHaveLength(3)
+      expect(within(overviewNav).getAllByRole("listitem")).toHaveLength(3)
     })
 
     it("first tab has title 'Application and lottery results'", () => {
-      const tabs = within(getByRole("tablist")).getAllByRole("tab")
       expect(
-        within(tabs[0]).getByRole("heading", {
+        within(overviewNav).getByRole("heading", {
           level: 2,
           name: "Application and lottery results",
         })
@@ -65,9 +79,9 @@ describe("<Account />", () => {
     })
 
     it("second link has title Account settings", () => {
-      const tabs = within(getByRole("tablist")).getAllByRole("tab")
+      const listItems = within(overviewNav).getAllByRole("listitem")
       expect(
-        within(tabs[1]).getByRole("heading", { level: 2, name: "Account settings" })
+        within(listItems[1]).getByRole("heading", { level: 2, name: "Account settings" })
       ).toBeInTheDocument()
     })
   })
