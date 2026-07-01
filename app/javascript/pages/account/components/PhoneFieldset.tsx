@@ -81,11 +81,7 @@ const PhoneFieldset = () => {
       <div className="control">
         <PhoneMask
           name={name}
-          aria-label={
-            name === "phone"
-              ? t("accountLayout.contact.phoneLabel")
-              : t("label.applicantSecondPhone")
-          }
+          aria-label={name === "phone" ? t("accountLayout.contact.phoneLabel") : undefined}
           aria-describedby={errors[name] ? `${name}-error` : undefined}
           aria-invalid={!!errors[name]}
           ref={register({ validate: phoneValidation(required) })}
