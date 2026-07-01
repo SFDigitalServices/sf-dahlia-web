@@ -104,7 +104,10 @@
           "mailingAddressCity": "primaryApplicantMailingAddressCity",
           "mailingAddressState": "primaryApplicantMailingAddressState",
           "mailingAddressZipcode": "primaryApplicantMailingAddressZipcode",
-          "question": "primaryApplicantWorkInSf"
+          "question": "primaryApplicantWorkInSf",
+          "liveInSf": "_liveInSf",
+          "workInSf": "_workInSf",
+          "liveWorkInSf": "_liveWorkInSf"
         }
       }
     },
@@ -630,14 +633,23 @@
         "slug": "live-work-preference",
         "sectionName": "preferences",
         "navigationArrival": {
-          "showStepIfAllPresent": [
+          "showStepIfAnyPresent": [
             {
               "dataSource": "preferenceNames",
               "dataKey": "liveWorkInSf"
             },
+
             {
               "dataSource": "form",
-              "dataKey": "_addressNeighborhoodMatch"
+              "dataKey": "_liveInSf"
+            },
+            {
+              "dataSource": "form",
+              "dataKey": "_workInSf"
+            },
+            {
+              "dataSource": "form",
+              "dataKey": "_liveWorkInSf"
             }
           ]
         }

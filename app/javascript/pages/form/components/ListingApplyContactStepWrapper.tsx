@@ -8,6 +8,7 @@ import type { DataSchema } from "../../../formEngine/formSchemas"
 import {
   addressesMatch,
   getAddressErrorEmailLink,
+  getLiveWorkInSfMembers,
   translationFromDataSchema,
 } from "../../../util/formEngineUtil"
 import styles from "./ListingApplyStepWrapper.module.scss"
@@ -40,6 +41,9 @@ interface ListingApplyContactStepWrapperProps {
     mailingAddressState: string
     mailingAddressZipcode: string
     question: string
+    liveInSf: string
+    workInSf: string
+    liveWorkInSf: string
   }
 }
 
@@ -66,6 +70,9 @@ const ListingApplyContactStepWrapper = ({
     mailingAddressState,
     mailingAddressZipcode,
     question,
+    liveInSf,
+    workInSf,
+    liveWorkInSf,
   },
 }: ListingApplyContactStepWrapperProps) => {
   const formEngineContext = useFormEngineContext()
@@ -102,6 +109,12 @@ const ListingApplyContactStepWrapper = ({
 
   const onSubmit = (data: Record<string, unknown>) => {
     setLoading(true)
+    const { liveInSfMembers, workInSfMembers, liveWorkInSfMembers } = getLiveWorkInSfMembers(data)
+    const liveWorkInSfEligibility = {
+      [liveInSf]: liveInSfMembers,
+      [workInSf]: workInSfMembers,
+      [liveWorkInSf]: liveWorkInSfMembers,
+    }
     const address = {
       street1: data[addressStreet] as string,
       street2: data[addressAptOrUnit] as string,
@@ -119,12 +132,13 @@ const ListingApplyContactStepWrapper = ({
     if (formData[addressVerified] === "true") {
       // Skip if the user has already verified this address
       if (alreadyVerified) {
-        handleNextStep({ ...formData, ...data })
+        handleNextStep({ ...formData, ...data, ...liveWorkInSfEligibility })
         return
       } else {
         // The user wants to enter a different address
         saveFormData({
           ...data,
+          ...liveWorkInSfEligibility,
           [addressStreet]: address.street1,
           [addressAptOrUnit]: address.street2,
           [addressCity]: address.city,
@@ -138,6 +152,7 @@ const ListingApplyContactStepWrapper = ({
       .then((response) => {
         saveFormData({
           ...data,
+          ...liveWorkInSfEligibility,
           [addressStreet]: response.address?.street1,
           [addressAptOrUnit]: response.address?.street2,
           [addressCity]: response.address?.city,

@@ -10,6 +10,7 @@ export type HouseholdMember = {
   householdMemberAddressState?: string
   householdMemberAddressZipcode?: string
   neighborhoodPreferenceAddressMatch?: boolean
+  workInSf?: string
 }
 
 const entireHousehold = (formData: Record<string, unknown>): Array<HouseholdMember> => {
