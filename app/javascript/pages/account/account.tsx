@@ -70,7 +70,7 @@ const OverviewSection = ({
     {isImage && getAssetPath ? (
       <span className={styles.infoIcon}>
         <img
-          src={getAssetPath(`${icon}.png`)}
+          src={getAssetPath(`${icon}.svg`)}
           alt=""
           style={{ width: "var(--seeds-s10)", height: "var(--seeds-s10)" }}
         />

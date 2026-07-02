@@ -132,7 +132,7 @@ const Contact = () => {
         <Card className={styles.contactCard}>
           <Card.Header className={styles.header}>
             <div className={styles.iconBackground}>
-              <img src={getAssetPath("contact-info.png")} alt="" className={styles.icon} />
+              <img src={getAssetPath("contact-info.svg")} alt="" className={styles.icon} />
             </div>
             <Heading priority={1} size="2xl" className={styles.heading}>
               {t("accountLayout.contact.title")}

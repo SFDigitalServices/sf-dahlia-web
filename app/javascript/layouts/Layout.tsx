@@ -111,7 +111,7 @@ const getMenuLinks = (
                 href: localizedPath("/account/contact"),
                 iconElement: (
                   <img
-                    src={getAssetPath("contact-info.png")}
+                    src={getAssetPath("contact-info.svg")}
                     alt=""
                     className="pr-2"
                     style={{ height: "1rem" }}
