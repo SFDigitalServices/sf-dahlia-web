@@ -308,7 +308,10 @@
       "componentName": "HouseholdMemberMultiStepWrapper",
       "props": {
         "fieldNames": {
-          "householdMembers": "householdMembers"
+          "householdMembers": "householdMembers",
+          "liveInSf": "_liveInSf",
+          "workInSf": "_workInSf",
+          "liveWorkInSf": "_liveWorkInSf"
         }
       }
     },

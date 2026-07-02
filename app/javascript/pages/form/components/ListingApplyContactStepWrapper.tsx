@@ -109,7 +109,7 @@ const ListingApplyContactStepWrapper = ({
 
   const onSubmit = (data: Record<string, unknown>) => {
     setLoading(true)
-    const { livesInSf, worksInSf, liveWorksInSf } = getLiveWorkInSfMembers(data)
+    const { livesInSf, worksInSf, liveWorksInSf } = getLiveWorkInSfMembers({ ...formData, ...data })
     const liveWorkInSfEligibility = {
       [liveInSf]: livesInSf,
       [workInSf]: worksInSf,

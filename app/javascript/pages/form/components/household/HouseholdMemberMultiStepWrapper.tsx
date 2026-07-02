@@ -8,10 +8,14 @@ import VerifyAddress from "../VerifyAddress"
 import { locateVerifiedAddress, type Address } from "../../../../api/formApiService"
 import { addressesMatch, getAddressErrorEmailLink } from "../../../../util/formEngineUtil"
 import { t } from "@bloom-housing/ui-components"
+import { getLiveWorkInSfMembers } from "./householdUtils"
 
 interface HouseholdMemberMultiStepWrapperProps {
   fieldNames: {
     householdMembers: string
+    liveInSf: string
+    workInSf: string
+    liveWorkInSf: string
   }
 }
 const householdMemberFields = {
@@ -30,7 +34,7 @@ type multiStepComponents =
   | "HouseholdMemberVerifyAddress"
 
 const HouseholdMemberMultiStepWrapper = ({
-  fieldNames: { householdMembers },
+  fieldNames: { householdMembers, liveInSf, workInSf, liveWorkInSf },
 }: HouseholdMemberMultiStepWrapperProps) => {
   const { saveFormData, formData, staticData, handleNextStep } = useFormEngineContext()
   const [currentMemberIndex, setCurrentMemberIndex] = useState<number>(0)
@@ -94,7 +98,19 @@ const HouseholdMemberMultiStepWrapper = ({
         neighborhoodPreferenceAddressMatch: true,
       })
     }
-    saveFormData({ ...formData, [householdMembers]: updated })
+
+    // Calculate live/work eligibility against the updated members array
+    const { livesInSf, worksInSf, liveWorksInSf } = getLiveWorkInSfMembers({
+      ...formData,
+      [householdMembers]: updated,
+    })
+    saveFormData({
+      ...formData,
+      [householdMembers]: updated,
+      [liveInSf]: livesInSf,
+      [workInSf]: worksInSf,
+      [liveWorkInSf]: liveWorksInSf,
+    })
     setHouseholdMembersArray(updated)
     setPendingMember(null)
     setComponentToRender("AddHouseholdMembers")
@@ -163,7 +179,17 @@ const HouseholdMemberMultiStepWrapper = ({
   const handleDeleteHouseholdMember = () => {
     const updatedHouseholdMembers = [...householdMembersArray]
     updatedHouseholdMembers.splice(currentMemberIndex, 1)
-    saveFormData({ ...formData, [householdMembers]: updatedHouseholdMembers })
+    const { livesInSf, worksInSf, liveWorksInSf } = getLiveWorkInSfMembers({
+      ...formData,
+      [householdMembers]: updatedHouseholdMembers,
+    })
+    saveFormData({
+      ...formData,
+      [householdMembers]: updatedHouseholdMembers,
+      [liveInSf]: livesInSf,
+      [workInSf]: worksInSf,
+      [liveWorkInSf]: liveWorksInSf,
+    })
     setHouseholdMembersArray(updatedHouseholdMembers)
     setComponentToRender("AddHouseholdMembers")
   }
