@@ -68,12 +68,13 @@ const OverviewSection = ({
 }) => (
   <>
     {isImage && getAssetPath ? (
-      <img
-        src={getAssetPath(`${icon}.png`)}
-        alt=""
-        className={styles.infoIcon}
-        style={{ width: "var(--seeds-s6)", height: "var(--seeds-s6)" }}
-      />
+      <span className={styles.infoIcon}>
+        <img
+          src={getAssetPath(`${icon}.png`)}
+          alt=""
+          style={{ width: "var(--seeds-s6)", height: "var(--seeds-s6)" }}
+        />
+      </span>
     ) : (
       <Icon className={styles.infoIcon} size="xlarge" symbol={icon as UniversalIconType} />
     )}
