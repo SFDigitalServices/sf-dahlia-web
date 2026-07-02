@@ -11,6 +11,8 @@
       box-shadow: none;
     }
 
+    // 769px = screens.md (768px) + 1px to avoid overlap with max-width media queries
+    // and to match the SiteHeader JS breakpoint (window.innerWidth > 768)
     @media (min-width: 769px) {
       :global(.tabs-tab) {
         cursor: default;
@@ -50,6 +52,7 @@
     width: 100%;
   }
 
+  // 769px = screens.md + 1px (see comment above)
   @media (min-width: 769px) {
     :global(.tabs-tab-link) {
       pointer-events: none;
@@ -95,7 +98,7 @@
   flex-shrink: 0;
   width: var(--seeds-s40);
   margin-left: var(--seeds-s8);
-  @media (min-width: 769px) {
+  @media (min-width: 769px) { // screens.md + 1px
     display: inline-flex;
     pointer-events: auto;
   }
@@ -104,7 +107,7 @@
 .overviewIcon {
   margin-left: var(--seeds-s8);
   color: var(--seeds-color-primary);
-  @media (min-width: 769px) {
+  @media (min-width: 769px) { // screens.md + 1px
     display: none;
   }
 }

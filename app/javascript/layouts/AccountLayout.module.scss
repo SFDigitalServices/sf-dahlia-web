@@ -15,7 +15,7 @@
   gap: var(--seeds-spacer-content);
   width: 100%;
 
-  @media (max-width: 768px) {
+  @media (max-width: theme("screens.md")) {
     padding: var(--seeds-s14) var(--seeds-spacer-content);
   }
   @media (max-width: theme("screens.sm")) {
