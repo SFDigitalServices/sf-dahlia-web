@@ -13,6 +13,12 @@ export type HouseholdMember = {
   workInSf?: string
 }
 
+export type HouseholdMemberInfo = {
+  id: string
+  firstName: string
+  lastName: string
+}
+
 const entireHousehold = (formData: Record<string, unknown>): Array<HouseholdMember> => {
   const householdMembers = (formData.householdMembers || []) as Array<HouseholdMember>
   const primaryApplicantMember = {
@@ -21,6 +27,7 @@ const entireHousehold = (formData: Record<string, unknown>): Array<HouseholdMemb
     lastName: formData.primaryApplicantLastName as string,
     middleName: formData.primaryApplicantMiddleName as string,
     hasSameAddressAsApplicant: "true",
+    workInSf: formData.primaryApplicantWorkInSf as string,
     householdMemberAddressStreet: formData.primaryApplicantAddressStreet as string,
     householdMemberAddressAptOrUnit: formData.primaryApplicantAddressAptOrUnit as string,
     householdMemberAddressCity: formData.primaryApplicantAddressCity as string,
@@ -44,4 +51,64 @@ export const liveInTheNeighborhoodHouseholdMembers = (formData: Record<string, u
       (member.householdMemberAddressCity?.toLowerCase() === "san francisco" ||
         (member.hasSameAddressAsApplicant === "true" && primaryApplicantLivesInSf))
   )
+}
+
+const householdMemberInfo = (member: HouseholdMember) => ({
+  id: member.id,
+  firstName: member.firstName,
+  lastName: member.lastName,
+})
+
+export const getLiveWorkInSfMembers = (
+  data: Record<string, unknown>
+): {
+  liveInSfMembers: Array<HouseholdMemberInfo>
+  workInSfMembers: Array<HouseholdMemberInfo>
+  liveWorkInSfMembers: Array<HouseholdMemberInfo>
+  livesInSf: string
+  worksInSf: string
+  liveWorksInSf: string
+} => {
+  const allHouseholdMembers = entireHousehold(data)
+
+  const primaryLivesInSf =
+    (data.primaryApplicantAddressCity as string)?.toLowerCase().trim() === "san francisco"
+  const memberLivesInSf = (member: HouseholdMember) =>
+    member.hasSameAddressAsApplicant === "true"
+      ? primaryLivesInSf
+      : member.householdMemberAddressCity?.toLowerCase().trim() === "san francisco"
+
+  // TODO: DAH-4161 Use member info to populate select dropdown
+  // Identify and populate eligible live/work in SF members
+  const liveInSfMembers: HouseholdMemberInfo[] = []
+  const workInSfMembers: HouseholdMemberInfo[] = []
+  const liveWorkInSfMembers: HouseholdMemberInfo[] = []
+
+  for (const member of allHouseholdMembers) {
+    const livesInSf = memberLivesInSf(member)
+    const worksInSf = member.workInSf === "true"
+    if (!livesInSf && !worksInSf) continue
+
+    const memberInfo = householdMemberInfo(member)
+    if (livesInSf) liveInSfMembers.push(memberInfo)
+    if (worksInSf) workInSfMembers.push(memberInfo)
+    if (livesInSf && worksInSf) liveWorkInSfMembers.push(memberInfo)
+  }
+
+  // Determines elibility to conditionally show live/work preference
+  const checkMemberEligibility = (members: Array<HouseholdMemberInfo>) =>
+    members.length > 0 ? "true" : "false"
+
+  const livesInSf = checkMemberEligibility(liveInSfMembers)
+  const worksInSf = checkMemberEligibility(workInSfMembers)
+  const liveWorksInSf = checkMemberEligibility(liveWorkInSfMembers)
+
+  return {
+    liveInSfMembers,
+    workInSfMembers,
+    liveWorkInSfMembers,
+    livesInSf,
+    worksInSf,
+    liveWorksInSf,
+  }
 }

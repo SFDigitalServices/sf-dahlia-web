@@ -8,7 +8,6 @@ import type { DataSchema } from "../../../formEngine/formSchemas"
 import {
   addressesMatch,
   getAddressErrorEmailLink,
-  getLiveWorkInSfMembers,
   translationFromDataSchema,
 } from "../../../util/formEngineUtil"
 import styles from "./ListingApplyStepWrapper.module.scss"
@@ -17,6 +16,7 @@ import { locateVerifiedAddress } from "../../../api/formApiService"
 import YesNoRadio from "./YesNoRadio"
 import Phone from "./Phone"
 import Address from "./Address"
+import { getLiveWorkInSfMembers } from "./household/householdUtils"
 
 interface ListingApplyContactStepWrapperProps {
   title: string
@@ -109,11 +109,11 @@ const ListingApplyContactStepWrapper = ({
 
   const onSubmit = (data: Record<string, unknown>) => {
     setLoading(true)
-    const { liveInSfMembers, workInSfMembers, liveWorkInSfMembers } = getLiveWorkInSfMembers(data)
+    const { livesInSf, worksInSf, liveWorksInSf } = getLiveWorkInSfMembers(data)
     const liveWorkInSfEligibility = {
-      [liveInSf]: liveInSfMembers,
-      [workInSf]: workInSfMembers,
-      [liveWorkInSf]: liveWorkInSfMembers,
+      [liveInSf]: livesInSf,
+      [workInSf]: worksInSf,
+      [liveWorkInSf]: liveWorksInSf,
     }
     const address = {
       street1: data[addressStreet] as string,
@@ -159,7 +159,8 @@ const ListingApplyContactStepWrapper = ({
           [addressState]: response.address?.state,
           [addressZipcode]: response.address?.zip,
           [addressVerified]: "false",
-          // TODO: DAH-4161
+          // TODO: DAH-4161 will refine eligibility to include neighborhood pref
+          ...liveWorkInSfEligibility,
           // call to the geocoding API to check for the actual neighborhood match
           [neighborhoodPreferenceAddressMatch]: true,
         })

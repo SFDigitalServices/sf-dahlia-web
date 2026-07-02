@@ -3,7 +3,6 @@ import dayjs, { type Dayjs } from "dayjs"
 import customParseFormat from "dayjs/plugin/customParseFormat"
 import { t } from "@bloom-housing/ui-components"
 import { type Address } from "../api/formApiService"
-import { HouseholdMember } from "../pages/form/components/household/householdUtils"
 
 export const translationFromDataSchema = (
   translationKey: string,
@@ -47,43 +46,6 @@ export const showStep = (
     return !processedConditions.some(Boolean)
   }
   return true
-}
-
-/****************
- * TODO: DAH-4160
- * Modify condition logic to handle more complex navigation scenarios
- * e.g. showing the live/work preference based on the live/work status of household members
- */
-// export const processCondition = (condition, dataSources) => {
-//   if (condition.customFunctionName) {
-//     return customFunctionRegistry[condition.customFunctionName](dataSources)
-//   }
-//  ...
-// }
-
-export const getLiveWorkInSfMembers = (
-  formData: Record<string, unknown>
-): { liveInSfMembers: string; workInSfMembers: string; liveWorkInSfMembers: string } => {
-  const members = (formData.householdMembers || []) as Array<HouseholdMember>
-  const primaryLivesInSf =
-    (formData.primaryApplicantAddressCity as string)?.toLowerCase().trim() === "san francisco"
-
-  const memberLivesInSf = (member: HouseholdMember) =>
-    member.hasSameAddressAsApplicant === "true"
-      ? primaryLivesInSf
-      : member.householdMemberAddressCity?.toLowerCase().trim() === "san francisco"
-
-  const liveInSfMembers = primaryLivesInSf || members.some((member) => memberLivesInSf(member))
-  const workInSfMembers =
-    formData.primaryApplicantWorkInSf === "true" ||
-    members.some((member) => member.workInSf === "true")
-  const liveWorkInSfMembers = liveInSfMembers && workInSfMembers
-
-  return {
-    liveInSfMembers: liveInSfMembers ? "true" : "false",
-    workInSfMembers: workInSfMembers ? "true" : "false",
-    liveWorkInSfMembers: liveWorkInSfMembers ? "true" : "false",
-  }
 }
 
 export const calculateNextStep = (
