@@ -5,9 +5,9 @@ import {
   mockWindowLocation,
   restoreWindowLocation,
 } from "../../__util__/renderUtils"
-import MyApplications, {
+import MyApplicationsPage, {
   determineApplicationItemList,
-} from "../../../pages/account/my-applications" // eslint-disable-line import/no-named-as-default
+} from "../../../pages/account/my-applications"
 import React from "react"
 import { authenticatedGet, authenticatedDelete } from "../../../api/apiService"
 import { fireEvent, render, screen, waitFor, within } from "@testing-library/react"
@@ -39,7 +39,7 @@ jest.mock("@bloom-housing/ui-seeds", () => {
   }
 })
 
-describe("<MyApplications />", () => {
+describe("<MyApplicationsPage />", () => {
   let originalLocation: Location
 
   beforeEach(() => {
@@ -59,7 +59,7 @@ describe("<MyApplications />", () => {
     })
 
     it("redirects to the sign in page", async () => {
-      const { queryByText } = await renderAndLoadAsync(<MyApplications assetPaths={{}} />)
+      const { queryByText } = await renderAndLoadAsync(<MyApplicationsPage assetPaths={{}} />)
 
       expect(window.location.assign).toHaveBeenCalledWith("/sign-in?redirect=applications")
       expect(queryByText("My applications")).toBeNull()
@@ -77,12 +77,12 @@ describe("<MyApplications />", () => {
     })
 
     it("shows the correct header text", async () => {
-      const { getByText } = await renderAndLoadAsync(<MyApplications assetPaths={{}} />)
+      const { getByText } = await renderAndLoadAsync(<MyApplicationsPage assetPaths={{}} />)
       expect(getByText("My applications")).not.toBeNull()
     })
 
     it("calls getApplications", async () => {
-      await renderAndLoadAsync(<MyApplications assetPaths={{}} />)
+      await renderAndLoadAsync(<MyApplicationsPage assetPaths={{}} />)
       expect(authenticatedGet).toHaveBeenCalledWith("/api/v1/account/my-applications")
     })
 
@@ -155,7 +155,7 @@ describe("<MyApplications />", () => {
       it("should successfully call deleteApplication when the delete button is clicked", async () => {
         await renderAndLoadAsync(
           <>
-            <MyApplications assetPaths={{}} />
+            <MyApplicationsPage assetPaths={{}} />
             <div id="seeds-overlay-portal" />
           </>
         )
@@ -197,7 +197,7 @@ describe("<MyApplications />", () => {
 
     it("renders the correct double submit modal", async () => {
       window.location.href = "http://dahlia.com?doubleSubmit=true"
-      await renderAndLoadAsync(<MyApplications assetPaths={{}} />)
+      await renderAndLoadAsync(<MyApplicationsPage assetPaths={{}} />)
       const modal = screen.getByTestId("modalMock")
       within(modal).getByRole("link", {
         name: /dahliahousingportal@sfgov\.org/i,
@@ -213,7 +213,7 @@ describe("<MyApplications />", () => {
       })
 
       window.location.href = "http://dahlia.com?alreadySubmittedId=a0o6s000001cn02AAA"
-      await renderAndLoadAsync(<MyApplications assetPaths={{}} />)
+      await renderAndLoadAsync(<MyApplicationsPage assetPaths={{}} />)
       const modal = screen.getByTestId("modalMock")
       within(modal).getByText(/submitted: june 5, 2024/i)
       const button = within(modal).getByRole("link", {
