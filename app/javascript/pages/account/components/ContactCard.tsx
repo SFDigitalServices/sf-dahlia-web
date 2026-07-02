@@ -41,7 +41,7 @@ const ContactCard = ({ user }: ContactCardProps) => {
 
       <span>
         <Button
-          variant="primary-outlined"
+          variant="primary"
           className={styles.changeButton}
           href={getMyAccountContactPath()}
           size="sm"

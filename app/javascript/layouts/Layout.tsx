@@ -114,7 +114,7 @@ const getMenuLinks = (
                     src={getAssetPath("contact-info.png")}
                     alt=""
                     className="pr-2"
-                    style={{ width: "1.5rem", height: "1.5rem" }}
+                    style={{ height: "1rem" }}
                   />
                 ),
               },

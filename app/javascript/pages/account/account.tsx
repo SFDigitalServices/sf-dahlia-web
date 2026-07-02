@@ -72,7 +72,7 @@ const OverviewSection = ({
         <img
           src={getAssetPath(`${icon}.png`)}
           alt=""
-          style={{ width: "var(--seeds-s6)", height: "var(--seeds-s6)" }}
+          style={{ width: "var(--seeds-s10)", height: "var(--seeds-s10)" }}
         />
       </span>
     ) : (
