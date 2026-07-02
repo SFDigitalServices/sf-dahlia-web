@@ -1,6 +1,10 @@
 .contactCard {
   max-width: var(--seeds-width-2xl);
 
+  @media (max-width: theme("screens.md")) {
+    max-width: none;
+  }
+
   @media (max-width: theme("screens.sm")) {
     border-radius: 0;
     border-left: none;
