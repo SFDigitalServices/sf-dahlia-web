@@ -4,7 +4,7 @@ import {
   mockWindowLocation,
   restoreWindowLocation,
 } from "../../__util__/renderUtils"
-import MyAccount from "../../../pages/account/my-account"
+import MyAccount from "../../../pages/account/my-account" // eslint-disable-line import/no-named-as-default
 import React from "react"
 import { setupUserContext } from "../../__util__/accountUtils"
 import { withAuthentication } from "../../../authentication/withAuthentication"

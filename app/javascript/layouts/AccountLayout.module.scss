@@ -1,5 +1,9 @@
 .accountLayoutBackground {
   background-color: var(--seeds-color-gray-300);
+
+  @media (max-width: theme("screens.sm")) {
+    background-color: var(--seeds-color-white);
+  }
 }
 
 .accountLayout {
@@ -11,11 +15,12 @@
   gap: var(--seeds-spacer-content);
   width: 100%;
 
-  @media (max-width: theme("screens.md")) {
+  @media (max-width: 768px) {
     padding: var(--seeds-s14) var(--seeds-spacer-content);
   }
   @media (max-width: theme("screens.sm")) {
     padding: 0;
+    gap: 0;
   }
 }
 
@@ -23,4 +28,8 @@
   flex: 1;
   min-width: 0;
   padding-top: var(--seeds-s7);
+
+  @media (max-width: theme("screens.sm")) {
+    padding-top: 0;
+  }
 }

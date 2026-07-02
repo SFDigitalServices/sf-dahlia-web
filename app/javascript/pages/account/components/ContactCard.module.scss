@@ -5,6 +5,9 @@
 
   @media (max-width: theme("screens.sm")) {
     border-radius: 0;
+    border-left: none;
+    border-right: none;
+    margin-bottom: 0;
   }
 }
 
@@ -28,8 +31,4 @@
 .changeButton {
   align-self: flex-start;
   margin-top: var(--seeds-spacer-text);
-
-  @media (max-width: theme("screens.sm")) {
-    width: 100%;
-  }
 }

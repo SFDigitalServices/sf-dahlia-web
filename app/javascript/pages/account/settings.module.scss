@@ -1,0 +1,7 @@
+.settingsCard {
+  @media (max-width: theme("screens.sm")) {
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+  }
+}
