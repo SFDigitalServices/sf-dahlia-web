@@ -1,7 +1,7 @@
 import React from "react"
 import { render, screen } from "@testing-library/react"
 import { MemoryRouter } from "react-router"
-import SiteHeader, { SiteHeaderProps } from "../../components/SiteHeader/SiteHeader" // eslint-disable-line import/no-named-as-default
+import { SiteHeader, SiteHeaderProps } from "../../components/SiteHeader/SiteHeader"
 import { setupUserContext } from "../__util__/accountUtils"
 
 const accountMenuLinks = [

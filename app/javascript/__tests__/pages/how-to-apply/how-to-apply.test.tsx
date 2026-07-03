@@ -3,7 +3,7 @@ import { cleanup, render, screen, waitFor } from "@testing-library/react"
 import { MemoryRouter, useNavigate } from "react-router"
 import { renderAndLoadAsync } from "../../__util__/renderUtils"
 import HowToApply from "../../../pages/howToApply/how-to-apply"
-import LeasingAgent from "../../../modules/listings/components/LeasingAgent" // eslint-disable-line import/no-named-as-default
+import { LeasingAgent } from "../../../modules/listings/components/LeasingAgent"
 import { notYetOpenSaleFcfsListing } from "../../data/RailsSaleListing/listing-sale-fcfs-not-yet-open"
 import { fcfsSaleListing } from "../../data/RailsSaleListing/listing-sale-fcfs"
 import { openFcfsSaleListing } from "../../data/RailsSaleListing/listing-sale-fcfs-open"
