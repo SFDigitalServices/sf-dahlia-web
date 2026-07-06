@@ -498,7 +498,7 @@ describe("ListingApplyPreferenceStepWrapper", () => {
       consoleErrorSpy.mockRestore()
     })
 
-    describe("stale preference cleanup", () => {
+    describe("reset claimed preferences when eligibility changes", () => {
       const liveWorkListingPreferences = [
         {
           preferenceName: PREFERENCES.liveWorkInSf,
