@@ -88,7 +88,7 @@ export const ErrorSummaryBanner = ({
   return (
     <Alert fullwidth variant="alert" className="error-summary-banner">
       {t("error.accountBanner.header")}
-      <ul className="list-disc list-inside pl-2 pt-1" ref={listRef}>
+      <ul className="error-list" ref={listRef}>
         {sortedErrors.map((key: string) => {
           let fieldError = errors[key]
 
@@ -100,7 +100,7 @@ export const ErrorSummaryBanner = ({
           }
 
           return fieldError && fieldError.message ? (
-            <li className="list-outside" key={key}>
+            <li key={key}>
               <button
                 type="button"
                 className="align-middle text-blue-500 cursor-pointer background-none border-none p-0 text-left"

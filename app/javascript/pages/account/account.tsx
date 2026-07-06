@@ -70,30 +70,17 @@ const OverviewSection = ({
   </>
 )
 
-const AccountOverview = ({
-  signOut,
-  hasButton,
-  user,
-}: {
-  signOut: () => void
-  hasButton: boolean
-  user?: User
-}) => (
+const AccountOverview = ({ signOut, user }: { signOut: () => void; user?: User }) => (
   <>
     <ContactCard user={user} />
     <Tabs
       className="vertical-sidebar-layout"
-      navigation={hasButton}
-      navigationLabel={hasButton && t("accountLayout.nav.title")}
-      onSelect={!hasButton && (() => false)}
+      navigation
+      navigationLabel={t("accountLayout.nav.title")}
     >
       <Tabs.TabList>
         {overviewSections.map((section) => (
-          <Tabs.Tab
-            key={section.href}
-            className={styles.overviewSection}
-            href={hasButton && section.href}
-          >
+          <Tabs.Tab key={section.href} className={styles.overviewSection} href={section.href}>
             <OverviewSection {...section} />
           </Tabs.Tab>
         ))}
@@ -123,12 +110,7 @@ const Account = ({ assetPaths }: AccountProps) => {
     <Layout>
       <AccountLayout>
         <div className={styles.overview}>
-          <div className={styles.overviewOverLg}>
-            <AccountOverview signOut={signOut} hasButton={true} user={profile} />
-          </div>
-          <div className={styles.overviewUnderLg}>
-            <AccountOverview signOut={signOut} hasButton={false} user={profile} />
-          </div>
+          <AccountOverview signOut={signOut} user={profile} />
         </div>
       </AccountLayout>
     </Layout>

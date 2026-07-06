@@ -29,6 +29,7 @@ describe("Listing Detail", () => {
     cleanup()
     jest.clearAllMocks()
     jest.resetAllMocks()
+    jest.useRealTimers()
   })
   beforeEach(() => {
     // This component pulls in react-media, which needs this custom mock

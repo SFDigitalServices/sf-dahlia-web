@@ -1,5 +1,4 @@
-import { interceptUnleashFlags } from "../support/util"
-import { userObjectGenerator, generateHeaders } from "../support/util"
+import { interceptUnleashFlags, userObjectGenerator, generateHeaders } from "../support/util"
 
 describe("Sign In integration tests", () => {
   beforeEach(() => {

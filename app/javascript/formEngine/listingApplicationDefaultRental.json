@@ -98,6 +98,7 @@
           "addressState": "primaryApplicantAddressState",
           "addressZipcode": "primaryApplicantAddressZipcode",
           "addressVerified": "_addressVerified",
+          "neighborhoodPreferenceAddressMatch": "primaryApplicantNeighborhoodPreferenceAddressMatch",
           "mailingAddressCheckbox": "_primaryApplicantMailingAddressCheckbox",
           "mailingAddressStreet": "primaryApplicantMailingAddressStreet",
           "mailingAddressCity": "primaryApplicantMailingAddressCity",
@@ -557,30 +558,28 @@
         }
       },
       "componentType": "step",
-      "componentName": "ListingApplyStepWrapper",
+      "componentName": "ListingApplyPreferenceStepWrapper",
       "props": {
         "title": "label.goodNewsForHigherRanking",
-        "description": "e2aNeighborhoodPreference.instructionsP2"
-      },
-      "children": [
-        {
-          "componentName": "PreferenceCheckboxGroup",
-          "props": {
-            "name": "e2aNeighborhoodPreference.preference.title",
-            "description": "e2aNeighborhoodPreference.preference.description",
-            "showProofType": true,
-            "members": {
-              "dataSource": "form",
-              "dataKey": "members"
-            },
-            "fieldNames": {
-              "member": "neighborhoodPrefMember",
-              "proofDocType": "neighborhoodPrefProofDocType",
-              "proofDoc": "neighborhoodPrefProofDoc"
-            }
+        "description": "e2aNeighborhoodPreference.instructionsP2",
+        "greenHeader": true,
+        "headerComponentName": "ListingApplyStepHeaderNeighborhoodPreference",
+        "fieldNames": {
+          "claimedPreferences": "claimedPreferences",
+          "optOut": "_neighborhoodResidenceOptOut"
+        },
+        "preferenceContents": [
+          {
+            "preferenceName": "neighborhoodResidence",
+            "checkboxLabel": "e2aNeighborhoodPreference.preference.title",
+            "checkboxDescription": "e2aNeighborhoodPreference.preference.shortDescription",
+            "proofHouseholdMemberLabel": "label.applicantPreferencesDocumentName",
+            "proofTypeLabel": "label.preferenceProofAddressDocuments",
+            "proofTypeNote": "e2cLiveWorkPreference.documentMustShowCorrectName",
+            "proofUploadButtonLabel": "label.uploadProofOfPreference"
           }
-        }
-      ]
+        ]
+      }
     },
     {
       "stepInfo": {
