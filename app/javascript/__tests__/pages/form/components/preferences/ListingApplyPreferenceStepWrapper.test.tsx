@@ -96,6 +96,9 @@ const renderWrapper = ({
   title = "e2cLiveWorkPreference.title",
   description = "e2cLiveWorkPreference.instructions",
   greenHeader,
+  liveInSf,
+  workInSf,
+  liveWorkInSf,
 }: {
   preferenceContents?: PreferenceContent[]
   optOut?: string
@@ -113,6 +116,9 @@ const renderWrapper = ({
   title?: string
   description?: string
   greenHeader?: boolean
+  liveInSf?: string
+  workInSf?: string
+  liveWorkInSf?: string
 } = {}) => {
   const optOutFieldName = includeOptOut ? (optOut ?? "_certOptOut") : undefined
   const defaultPreferences: RailsListingPreference[] = comboPreference
@@ -139,6 +145,9 @@ const renderWrapper = ({
         claimedPreferences: "claimedPreferences",
         optOut: optOutFieldName,
         subPreferenceClaimed,
+        liveInSf,
+        workInSf,
+        liveWorkInSf,
       }}
       preferenceContents={preferenceContents}
       comboPreference={comboPreference}
@@ -487,6 +496,91 @@ describe("ListingApplyPreferenceStepWrapper", () => {
         })
       ).toThrow(`${PREFERENCES.veteran} is missing for this listing.`)
       consoleErrorSpy.mockRestore()
+    })
+
+    describe("stale preference cleanup", () => {
+      const liveWorkListingPreferences = [
+        {
+          preferenceName: PREFERENCES.liveWorkInSf,
+          listingPreferenceID: "pref-combo",
+        },
+        {
+          preferenceName: PREFERENCES.liveInSf,
+          listingPreferenceID: "pref-live",
+        },
+        {
+          preferenceName: PREFERENCES.workInSf,
+          listingPreferenceID: "pref-work",
+        },
+      ] as unknown as RailsListingPreference[]
+
+      it("removes a claimed liveInSf preference when the applicant is no longer live-eligible", () => {
+        const { mockSaveFormData } = renderWrapper({
+          preferenceContents: [liveInSfPreferenceContent, workInSfPreferenceContent],
+          liveInSf: "_liveInSf",
+          workInSf: "_workInSf",
+          formData: {
+            _liveInSf: "false",
+            _workInSf: "true",
+            claimedPreferences: {
+              liveInSf: { preferenceClaimed: true },
+              workInSf: { preferenceClaimed: true },
+            },
+          },
+        })
+
+        expect(mockSaveFormData).toHaveBeenCalledWith({
+          claimedPreferences: {
+            workInSf: { preferenceClaimed: true },
+          },
+        })
+      })
+
+      it("removes a claimed combo preference when live/work eligibility is lost", () => {
+        const { mockSaveFormData } = renderWrapper({
+          preferenceContents: [liveInSfPreferenceContent, workInSfPreferenceContent],
+          subPreferenceClaimed: "_liveOrWorkInSfClaimedPreference",
+          comboPreference: liveWorkComboPreference,
+          liveWorkInSf: "_liveWorkInSf",
+          preferences: liveWorkListingPreferences,
+          formData: {
+            _liveWorkInSf: "false",
+            claimedPreferences: {
+              liveWorkInSf: { preferenceClaimed: true },
+            },
+          },
+        })
+
+        expect(mockSaveFormData).toHaveBeenCalledWith({
+          claimedPreferences: {},
+        })
+      })
+
+      it("clears a stale live/work selection and saves it with the new claimed preferences", () => {
+        const { mockSaveFormData } = renderWrapper({
+          preferenceContents: [liveInSfPreferenceContent, workInSfPreferenceContent],
+          subPreferenceClaimed: "_liveOrWorkInSfClaimedPreference",
+          comboPreference: liveWorkComboPreference,
+          liveInSf: "_liveInSf",
+          liveWorkInSf: "_liveWorkInSf",
+          preferences: liveWorkListingPreferences,
+          formData: {
+            _liveInSf: "false",
+            _liveWorkInSf: "true",
+            _liveOrWorkInSfClaimedPreference: "liveInSf",
+            claimedPreferences: {
+              liveWorkInSf: { preferenceClaimed: true },
+            },
+          },
+        })
+
+        expect(mockSaveFormData).toHaveBeenCalledWith({
+          claimedPreferences: {
+            liveWorkInSf: { preferenceClaimed: true },
+          },
+          _liveOrWorkInSfClaimedPreference: "",
+        })
+      })
     })
   })
 })
