@@ -70,6 +70,7 @@ const ListingApplyPreferenceStepWrapper = ({
   const preferences = staticData.preferences!
   const currentStepInfo = stepInfoMap[currentStepIndex]
 
+  // Determine which live/work fields to show based on eligibility
   const liveEligible = !!liveInSf && formData[liveInSf] === "true"
   const workEligible = !!workInSf && formData[workInSf] === "true"
   const liveWorkEligible = !!liveWorkInSf && formData[liveWorkInSf] === "true"
@@ -109,7 +110,7 @@ const ListingApplyPreferenceStepWrapper = ({
       ClaimedPreference
     >
     const defaultClaimedPreferencesValues = {
-      ...preferenceContents.reduce(
+      ...eligiblePreferenceContents.reduce(
         (acc, preferenceContent) => ({
           ...acc,
           [preferenceContent.preferenceName]:
@@ -117,7 +118,7 @@ const ListingApplyPreferenceStepWrapper = ({
         }),
         {} as Record<string, ClaimedPreference>
       ),
-      ...(comboPreference && {
+      ...(showComboPreference && {
         [comboPreference.preferenceName]:
           claimedPreferencesValue[comboPreference.preferenceName] || {},
       }),
@@ -136,28 +137,48 @@ const ListingApplyPreferenceStepWrapper = ({
   const [showGenericError, setShowGenericError] = useState(false)
   const [showMissingDocumentError, setShowMissingDocumentError] = useState(false)
 
-  /*************
-   * TODO: DAH-4160
-   * Conditionally render the comboPreference based on the live/work status of household members
-   * for reference, the Angular function that checks these conditions is named `Service.showPreference`
-   * If live/work statuses get modified on other form pages, we may need to reset this page
-   */
-
+  // If live/work status is updated on other pages, reset claimed preferences
   useEffect(() => {
-    if (comboPreference && !showComboPreference) {
-      setValue(`${claimedPreferences}.${comboPreference.preferenceName}`, {})
-    }
-    if (subPreferenceClaimed) {
-      const subPrefValue = formData[subPreferenceClaimed] as string
-      if (
-        (subPrefValue === "liveInSf" && !liveEligible) ||
-        (subPrefValue === "workInSf" && !workEligible)
-      ) {
-        setValue(subPreferenceClaimed, "")
-      }
+    const existingClaimedPreferences = (formData[claimedPreferences] || {}) as Record<
+      string,
+      ClaimedPreference
+    >
+    const stalePreferences: string[] = []
+    if (liveInSf && !liveEligible) stalePreferences.push("liveInSf")
+    if (workInSf && !workEligible) stalePreferences.push("workInSf")
+    if (comboPreference && liveWorkInSf && !showComboPreference)
+      stalePreferences.push(comboPreference.preferenceName)
+
+    const claimedPreferencesToRemove = stalePreferences.filter(
+      (key) => existingClaimedPreferences[key]?.preferenceClaimed
+    )
+
+    const subPreferenceValue = subPreferenceClaimed
+      ? (formData[subPreferenceClaimed] as string)
+      : ""
+    const hasStaleSubPreference =
+      (subPreferenceValue === "liveInSf" && !liveEligible) ||
+      (subPreferenceValue === "workInSf" && !workEligible)
+
+    if (claimedPreferencesToRemove.length === 0 && !hasStaleSubPreference) return
+
+    const updatedClaimedPreferences = Object.fromEntries(
+      Object.entries(existingClaimedPreferences).filter(
+        ([key]) => !claimedPreferencesToRemove.includes(key)
+      )
+    )
+
+    if (hasStaleSubPreference && subPreferenceClaimed) {
+      setValue(subPreferenceClaimed, "")
+      saveFormData({
+        [claimedPreferences]: updatedClaimedPreferences,
+        [subPreferenceClaimed]: "",
+      })
+    } else {
+      saveFormData({ [claimedPreferences]: updatedClaimedPreferences })
     }
     /* eslint-disable-next-line react-hooks/exhaustive-deps */
-  }, [setValue])
+  }, [])
 
   // checks for any errors *except* preference-to-claim checkbox field errors
   const showErrorHeaders = () => {

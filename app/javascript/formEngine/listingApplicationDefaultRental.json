@@ -313,7 +313,7 @@
           "liveInSf": "_liveInSf",
           "workInSf": "_workInSf",
           "liveWorkInSf": "_liveWorkInSf",
-          "liveOrWorkInSf": "liveOrWorkInSf"
+          "liveOrWorkInSf": "_liveOrWorkInSf"
         }
       }
     },
