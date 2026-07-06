@@ -101,7 +101,7 @@ const HouseholdMemberMultiStepWrapper = ({
     }
 
     // Calculate live/work eligibility against the updated members array
-    const { livesInSf, worksInSf, liveWorksInSf } = getLiveWorkInSfMembers({
+    const { livesInSf, worksInSf, liveWorksInSf, showLiveWorkPreference } = getLiveWorkInSfMembers({
       ...formData,
       [householdMembers]: updated,
     })
@@ -111,6 +111,7 @@ const HouseholdMemberMultiStepWrapper = ({
       [liveInSf]: livesInSf,
       [workInSf]: worksInSf,
       [liveWorkInSf]: liveWorksInSf,
+      [liveOrWorkInSf]: showLiveWorkPreference,
     })
     setHouseholdMembersArray(updated)
     setPendingMember(null)

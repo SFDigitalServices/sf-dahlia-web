@@ -312,7 +312,8 @@
           "householdMembers": "householdMembers",
           "liveInSf": "_liveInSf",
           "workInSf": "_workInSf",
-          "liveWorkInSf": "_liveWorkInSf"
+          "liveWorkInSf": "_liveWorkInSf",
+          "liveOrWorkInSf": "liveOrWorkInSf"
         }
       }
     },
