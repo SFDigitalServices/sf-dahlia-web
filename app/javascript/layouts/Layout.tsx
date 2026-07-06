@@ -34,6 +34,8 @@ import { HelmetProvider } from "react-helmet-async"
 
 import "./Layout.scss"
 import { isTokenValid } from "../authentication/token"
+import { useFeatureFlag } from "../hooks/useFeatureFlag"
+import { UNLEASH_FLAG } from "../modules/constants"
 
 export interface LayoutProps {
   children: React.ReactNode
@@ -72,7 +74,7 @@ const getLanguageItems = () => {
   return languageItems
 }
 
-const getMenuLinks = (signedIn: boolean, signOut: () => void) => {
+const getMenuLinks = (signedIn: boolean, signOut: () => void, accountLayoutEnabled: boolean) => {
   const menuLinks: MenuLink[] = [
     {
       title: t("nav.rent"),
@@ -93,22 +95,26 @@ const getMenuLinks = (signedIn: boolean, signOut: () => void) => {
       title: t("accountLayout.nav.account"),
       subMenuLinks: [
         {
-          title: t("nav.myDashboard"),
+          title: accountLayoutEnabled ? t("accountLayout.nav.overview") : t("nav.myDashboard"),
           href: localizedPath("/account"),
           iconElement: <Icon symbol="profile" size="medium" className="pr-2" />,
         },
         {
-          title: t("nav.myApplications"),
+          title: accountLayoutEnabled
+            ? t("accountLayout.nav.applications")
+            : t("nav.myApplications"),
           href: localizedPath("/account/applications"),
           iconElement: <Icon symbol="application" size="medium" className="pr-2" />,
         },
         {
-          title: t("nav.accountSettings"),
+          title: accountLayoutEnabled
+            ? t("accountSettings.title.sentenceCase")
+            : t("nav.accountSettings"),
           href: localizedPath("/account/settings"),
           iconElement: <Icon symbol="settings" size="medium" className="pr-2" />,
         },
         {
-          title: t("accountLayout.nav.signOut"),
+          title: accountLayoutEnabled ? t("accountLayout.nav.signOut") : t("nav.signOut"),
           iconElement: <div className="w-6" />, // Empty div to keep the icon space
           onClick: () => {
             // FIXME: Setup Site alert message for logging out DAH-974
@@ -132,6 +138,7 @@ const getMenuLinks = (signedIn: boolean, signOut: () => void) => {
 const Layout = (props: LayoutProps) => {
   const { getAssetPath } = useContext(ConfigContext)
   const { signOut } = useContext(UserContext)
+  const { unleashFlag: accountLayoutEnabled } = useFeatureFlag(UNLEASH_FLAG.ACCOUNTS_LAYOUT, false)
 
   if (window.document["documentMode"]) {
     /* eslint-disable-next-line react-hooks/immutability */
@@ -183,7 +190,7 @@ const Layout = (props: LayoutProps) => {
             mobileText={true}
             logoWidth={"medium"}
             logoClass="translate"
-            menuLinks={getMenuLinks(isTokenValid(), signOut)}
+            menuLinks={getMenuLinks(isTokenValid(), signOut, accountLayoutEnabled)}
             strings={{
               skipToMainContent: t("t.skipToMainContent"),
               logoAriaLable: t("t.dahliaSanFranciscoHousingPortal"),

@@ -2,6 +2,10 @@
   max-width: var(--seeds-width-2xl);
 }
 
+.contactField {
+  max-width: var(--seeds-width-sm);
+}
+
 .contactSection {
   padding: var(--seeds-spacer-section) !important;
 }
@@ -51,4 +55,12 @@
   font-size: var(--seeds-font-size-sm);
   color: var(--seeds-color-gray-750);
   margin-top: var(--seeds-spacer-header);
+}
+
+.phoneSection {
+  padding-inline: var(--seeds-spacer-container);
+}
+
+.saveButton {
+  margin-top: var(--seeds-spacer-content);
 }

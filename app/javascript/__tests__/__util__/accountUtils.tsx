@@ -12,6 +12,10 @@ export const mockProfileStub: User = {
   firstName: "FirstName",
   lastName: "LastName",
   middleName: "MiddleName",
+  phone: "111-111-1111",
+  phoneType: "Home",
+  alternatePhone: "222-222-2222",
+  alternatePhoneType: "Cell",
 }
 
 export const setupUserContext = ({

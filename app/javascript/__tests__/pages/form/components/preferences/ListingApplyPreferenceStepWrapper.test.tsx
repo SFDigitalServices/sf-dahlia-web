@@ -86,6 +86,7 @@ const renderWrapper = ({
   subPreferenceClaimed,
   comboPreference,
   includeOptOut = true,
+  headerComponentName,
   formData = {
     primaryApplicantFirstName: "Alice",
     primaryApplicantMiddleName: "M",
@@ -106,6 +107,7 @@ const renderWrapper = ({
     subPreferenceSelectLabel: string
   }
   includeOptOut?: boolean
+  headerComponentName?: string
   formData?: Record<string, unknown>
   preferences?: RailsListingPreference[]
   title?: string
@@ -132,6 +134,7 @@ const renderWrapper = ({
       title={title}
       description={description}
       greenHeader={greenHeader}
+      headerComponentName={headerComponentName}
       fieldNames={{
         claimedPreferences: "claimedPreferences",
         optOut: optOutFieldName,
@@ -213,6 +216,25 @@ describe("ListingApplyPreferenceStepWrapper", () => {
     it("renders without crashing when greenHeader is true", () => {
       renderWrapper({ greenHeader: true })
       expect(screen.getByText(t("e2cLiveWorkPreference.title"))).toBeInTheDocument()
+    })
+
+    it("renders the header component when headerComponentName is provided", () => {
+      renderWrapper({
+        headerComponentName: "ListingApplyStepHeaderNeighborhoodPreference",
+        formData: {
+          primaryApplicantFirstName: "Alice",
+          primaryApplicantMiddleName: "M",
+          primaryApplicantLastName: "Walker",
+          primaryApplicantAddressStreet: "123 Main St",
+          primaryApplicantAddressCity: "San Francisco",
+          primaryApplicantNeighborhoodPreferenceAddressMatch: true,
+        },
+      })
+
+      expect(
+        screen.getByRole("heading", { name: t("label.goodNewsForHigherRanking") })
+      ).toBeInTheDocument()
+      expect(screen.queryByText(t("e2cLiveWorkPreference.instructions"))).not.toBeInTheDocument()
     })
   })
 

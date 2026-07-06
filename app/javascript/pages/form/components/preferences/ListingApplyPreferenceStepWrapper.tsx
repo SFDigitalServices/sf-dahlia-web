@@ -3,6 +3,7 @@ import { useForm, FormProvider } from "react-hook-form"
 import { Form, Field, t } from "@bloom-housing/ui-components"
 import { Button, Card, FormErrorMessage } from "@bloom-housing/ui-seeds"
 import { useFormEngineContext } from "../../../../formEngine/formEngineContext"
+import getFormComponentRegistry from "../../../../formEngine/formComponentRegistry"
 import ListingApplyStepErrorMessage from "../ListingApplyStepErrorMessage"
 import PreferenceToClaim from "./PreferenceToClaim"
 import PreferenceToClaimCombo from "./PreferenceToClaimCombo"
@@ -19,6 +20,7 @@ import stepStyles from "../ListingApplyStepWrapper.module.scss"
 
 interface ListingApplyPreferenceStepWrapperProps {
   greenHeader?: boolean
+  headerComponentName?: string
   title: string
   description: string
   fieldNames: {
@@ -36,6 +38,7 @@ interface ListingApplyPreferenceStepWrapperProps {
 }
 
 const ListingApplyPreferenceStepWrapper = ({
+  headerComponentName,
   greenHeader,
   title,
   description,
@@ -56,6 +59,12 @@ const ListingApplyPreferenceStepWrapper = ({
   /* eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion */
   const preferences = staticData.preferences!
   const currentStepInfo = stepInfoMap[currentStepIndex]
+
+  let headerComponent
+  if (headerComponentName) {
+    const componentRegistry = getFormComponentRegistry()
+    headerComponent = React.createElement(componentRegistry[headerComponentName])
+  }
 
   const formMethods = useForm({
     mode: "onSubmit",
@@ -248,10 +257,14 @@ const ListingApplyPreferenceStepWrapper = ({
           {t("t.back")}
         </Button>
       </Card.Section>
-      <Card.Header className={headerClassNames} divider="inset">
-        <h1 className={stepStyles["step-title"]}>{t(title)}</h1>
-        <p className={stepStyles["step-description"]}>{renderInlineMarkup(t(description))}</p>
-      </Card.Header>
+      {headerComponent ? (
+        <>{headerComponent}</>
+      ) : (
+        <Card.Header className={headerClassNames} divider="inset">
+          <h1 className={styles["step-title"]}>{t(title)}</h1>
+          <p className={styles["step-description"]}>{renderInlineMarkup(t(description))}</p>
+        </Card.Header>
+      )}
       <div ref={errorSectionRef}>
         {showRequiredCheckboxError && (
           <ListingApplyStepErrorMessage
