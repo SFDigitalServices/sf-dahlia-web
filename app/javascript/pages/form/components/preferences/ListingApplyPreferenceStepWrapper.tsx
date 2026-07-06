@@ -71,9 +71,9 @@ const ListingApplyPreferenceStepWrapper = ({
   const currentStepInfo = stepInfoMap[currentStepIndex]
 
   // Determine which live/work fields to show based on eligibility
-  const liveEligible = !!liveInSf && formData[liveInSf] === "true"
-  const workEligible = !!workInSf && formData[workInSf] === "true"
-  const liveWorkEligible = !!liveWorkInSf && formData[liveWorkInSf] === "true"
+  const liveEligible = !liveInSf || formData[liveInSf] === "true"
+  const workEligible = !workInSf || formData[workInSf] === "true"
+  const liveWorkEligible = !liveWorkInSf || formData[liveWorkInSf] === "true"
   const showComboPreference = comboPreference && subPreferenceClaimed && liveWorkEligible
   const eligiblePreferenceContents = preferenceContents.filter((content) => {
     if (content.preferenceName === "liveInSf") return liveEligible

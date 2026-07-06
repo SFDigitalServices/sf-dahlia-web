@@ -43,6 +43,10 @@ const renderListingApplyContactStepWrapper = (formData: Record<string, unknown> 
         mailingAddressState: "mailingAddressState",
         mailingAddressZipcode: "mailingAddressZipcode",
         question: "question",
+        liveInSf: "liveInSf",
+        workInSf: "workInSf",
+        liveWorkInSf: "liveWorkInSf",
+        liveOrWorkInSf: "liveOrWorkInSf",
       }}
     />,
     {
