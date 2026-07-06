@@ -107,7 +107,8 @@
           "question": "primaryApplicantWorkInSf",
           "liveInSf": "_liveInSf",
           "workInSf": "_workInSf",
-          "liveWorkInSf": "_liveWorkInSf"
+          "liveWorkInSf": "_liveWorkInSf",
+          "liveOrWorkInSf": "_liveOrWorkInSf"
         }
       }
     },
@@ -636,23 +637,15 @@
         "slug": "live-work-preference",
         "sectionName": "preferences",
         "navigationArrival": {
-          "showStepIfAnyPresent": [
+          "showStepIfAllPresent": [
             {
               "dataSource": "preferenceNames",
               "dataKey": "liveWorkInSf"
             },
-
             {
               "dataSource": "form",
-              "dataKey": "_liveInSf"
-            },
-            {
-              "dataSource": "form",
-              "dataKey": "_workInSf"
-            },
-            {
-              "dataSource": "form",
-              "dataKey": "_liveWorkInSf"
+              "dataKey": "_liveOrWorkInSf",
+              "dataValueToMatch": "true"
             }
           ]
         }
@@ -665,7 +658,10 @@
         "fieldNames": {
           "claimedPreferences": "claimedPreferences",
           "optOut": "_liveOrWorkInSfOptOut",
-          "subPreferenceClaimed": "_liveOrWorkInSfClaimedPreference"
+          "subPreferenceClaimed": "_liveOrWorkInSfClaimedPreference",
+          "liveInSf": "_liveInSf",
+          "workInSf": "_workInSf",
+          "liveWorkInSf": "_liveWorkInSf"
         },
         "comboPreference": {
           "checkboxLabel": "e2cLiveWorkPreference.liveWorkSfPreference.title",

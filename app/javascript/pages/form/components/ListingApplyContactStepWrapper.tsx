@@ -44,6 +44,7 @@ interface ListingApplyContactStepWrapperProps {
     liveInSf: string
     workInSf: string
     liveWorkInSf: string
+    liveOrWorkInSf: string
   }
 }
 
@@ -73,6 +74,7 @@ const ListingApplyContactStepWrapper = ({
     liveInSf,
     workInSf,
     liveWorkInSf,
+    liveOrWorkInSf,
   },
 }: ListingApplyContactStepWrapperProps) => {
   const formEngineContext = useFormEngineContext()
@@ -109,11 +111,15 @@ const ListingApplyContactStepWrapper = ({
 
   const onSubmit = (data: Record<string, unknown>) => {
     setLoading(true)
-    const { livesInSf, worksInSf, liveWorksInSf } = getLiveWorkInSfMembers({ ...formData, ...data })
+    const { livesInSf, worksInSf, liveWorksInSf, showLiveWorkPreference } = getLiveWorkInSfMembers({
+      ...formData,
+      ...data,
+    })
     const liveWorkInSfEligibility = {
       [liveInSf]: livesInSf,
       [workInSf]: worksInSf,
       [liveWorkInSf]: liveWorksInSf,
+      [liveOrWorkInSf]: showLiveWorkPreference,
     }
     const address = {
       street1: data[addressStreet] as string,
@@ -152,14 +158,13 @@ const ListingApplyContactStepWrapper = ({
       .then((response) => {
         saveFormData({
           ...data,
-          ...liveWorkInSfEligibility,
           [addressStreet]: response.address?.street1,
           [addressAptOrUnit]: response.address?.street2,
           [addressCity]: response.address?.city,
           [addressState]: response.address?.state,
           [addressZipcode]: response.address?.zip,
           [addressVerified]: "false",
-          // TODO: DAH-4161 will refine eligibility to include neighborhood pref
+          // TODO: DAH-4161 Refine eligibility to include neighborhood pref
           ...liveWorkInSfEligibility,
           // call to the geocoding API to check for the actual neighborhood match
           [neighborhoodPreferenceAddressMatch]: true,

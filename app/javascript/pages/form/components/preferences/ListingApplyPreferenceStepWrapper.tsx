@@ -27,6 +27,9 @@ interface ListingApplyPreferenceStepWrapperProps {
     claimedPreferences: string // claimedPreferences object is used by all preference pages, it should be the same string for all preference pages in the schema
     optOut?: string
     subPreferenceClaimed?: string
+    liveInSf?: string
+    workInSf?: string
+    liveWorkInSf?: string
   }
   preferenceContents: PreferenceContent[]
   comboPreference?: {
@@ -42,7 +45,14 @@ const ListingApplyPreferenceStepWrapper = ({
   greenHeader,
   title,
   description,
-  fieldNames: { claimedPreferences, optOut, subPreferenceClaimed },
+  fieldNames: {
+    claimedPreferences,
+    optOut,
+    subPreferenceClaimed,
+    liveInSf,
+    workInSf,
+    liveWorkInSf,
+  },
   preferenceContents,
   comboPreference,
 }: ListingApplyPreferenceStepWrapperProps) => {
@@ -59,6 +69,16 @@ const ListingApplyPreferenceStepWrapper = ({
   /* eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion */
   const preferences = staticData.preferences!
   const currentStepInfo = stepInfoMap[currentStepIndex]
+
+  const liveEligible = !!liveInSf && formData[liveInSf] === "true"
+  const workEligible = !!workInSf && formData[workInSf] === "true"
+  const liveWorkEligible = !!liveWorkInSf && formData[liveWorkInSf] === "true"
+  const showComboPreference = comboPreference && subPreferenceClaimed && liveWorkEligible
+  const eligiblePreferenceContents = preferenceContents.filter((content) => {
+    if (content.preferenceName === "liveInSf") return liveEligible
+    if (content.preferenceName === "workInSf") return workEligible
+    return true
+  })
 
   let headerComponent
   if (headerComponentName) {
@@ -122,11 +142,22 @@ const ListingApplyPreferenceStepWrapper = ({
    * for reference, the Angular function that checks these conditions is named `Service.showPreference`
    * If live/work statuses get modified on other form pages, we may need to reset this page
    */
-  // useEffect(() => {
-  //   if (comboPreference) {
-  //     console.log(formData.householdMembers)
-  //   }
-  // }, [comboPreference])
+
+  useEffect(() => {
+    if (comboPreference && !showComboPreference) {
+      setValue(`${claimedPreferences}.${comboPreference.preferenceName}`, {})
+    }
+    if (subPreferenceClaimed) {
+      const subPrefValue = formData[subPreferenceClaimed] as string
+      if (
+        (subPrefValue === "liveInSf" && !liveEligible) ||
+        (subPrefValue === "workInSf" && !workEligible)
+      ) {
+        setValue(subPreferenceClaimed, "")
+      }
+    }
+    /* eslint-disable-next-line react-hooks/exhaustive-deps */
+  }, [setValue])
 
   // checks for any errors *except* preference-to-claim checkbox field errors
   const showErrorHeaders = () => {
@@ -290,7 +321,7 @@ const ListingApplyPreferenceStepWrapper = ({
       <Form onSubmit={handleSubmit(onSubmit, onError)}>
         <Card.Section>
           <p className={styles["preference-instructions"]}>{t("label.pleaseSelectPreference")}</p>
-          {comboPreference && subPreferenceClaimed && (
+          {showComboPreference && (
             <PreferenceToClaimCombo
               checkboxLabel={comboPreference.checkboxLabel}
               checkboxDescription={comboPreference.checkboxDescription}
@@ -311,8 +342,8 @@ const ListingApplyPreferenceStepWrapper = ({
               }
             />
           )}
-          {!comboPreference &&
-            preferenceContents.map((content) => (
+          {!showComboPreference &&
+            eligiblePreferenceContents.map((content) => (
               <PreferenceToClaim
                 key={content.preferenceName}
                 showRequiredCheckboxError={showRequiredCheckboxError}

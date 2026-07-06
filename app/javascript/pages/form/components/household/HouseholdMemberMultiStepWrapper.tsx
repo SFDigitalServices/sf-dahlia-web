@@ -16,6 +16,7 @@ interface HouseholdMemberMultiStepWrapperProps {
     liveInSf: string
     workInSf: string
     liveWorkInSf: string
+    liveOrWorkInSf: string
   }
 }
 const householdMemberFields = {
@@ -34,7 +35,7 @@ type multiStepComponents =
   | "HouseholdMemberVerifyAddress"
 
 const HouseholdMemberMultiStepWrapper = ({
-  fieldNames: { householdMembers, liveInSf, workInSf, liveWorkInSf },
+  fieldNames: { householdMembers, liveInSf, workInSf, liveWorkInSf, liveOrWorkInSf },
 }: HouseholdMemberMultiStepWrapperProps) => {
   const { saveFormData, formData, staticData, handleNextStep } = useFormEngineContext()
   const [currentMemberIndex, setCurrentMemberIndex] = useState<number>(0)
@@ -179,7 +180,7 @@ const HouseholdMemberMultiStepWrapper = ({
   const handleDeleteHouseholdMember = () => {
     const updatedHouseholdMembers = [...householdMembersArray]
     updatedHouseholdMembers.splice(currentMemberIndex, 1)
-    const { livesInSf, worksInSf, liveWorksInSf } = getLiveWorkInSfMembers({
+    const { livesInSf, worksInSf, liveWorksInSf, showLiveWorkPreference } = getLiveWorkInSfMembers({
       ...formData,
       [householdMembers]: updatedHouseholdMembers,
     })
@@ -189,6 +190,7 @@ const HouseholdMemberMultiStepWrapper = ({
       [liveInSf]: livesInSf,
       [workInSf]: worksInSf,
       [liveWorkInSf]: liveWorksInSf,
+      [liveOrWorkInSf]: showLiveWorkPreference,
     })
     setHouseholdMembersArray(updatedHouseholdMembers)
     setComponentToRender("AddHouseholdMembers")
