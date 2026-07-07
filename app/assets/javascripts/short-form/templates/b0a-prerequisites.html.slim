@@ -17,14 +17,14 @@
       / My credit score is at least 650
       / Special checkbox for Habitat Listing
       / it does not get saved to Salesforce.
-      .checkbox-group ng-if="listingIsHabitat()"
-        .checkbox-block.margin-bottom--2x
-          input#application_habitat_credit_score name="application_habitat_credit_score" type="checkbox" ng-model="application.hasMinimumCreditScore" ng-required="true" ng-class="{ error: inputInvalid('application_habitat_credit_score')}"
-          label.checkbox-block_label for="application_habitat_credit_score" ng-class="{ error: inputInvalid('application_habitat_credit_score')}"
-            strong.caps.form-label
-              | {{'label.application_habitat_credit_score' | translate}}
-            small.error id="application_habitat_credit_scoreError" ng-show="inputInvalid('application_habitat_credit_score')"
-              | {{'label.field_required' | translate}}
+      / .checkbox-group ng-if="listingIsHabitat()"
+      /   .checkbox-block.margin-bottom--2x
+      /     input#application_habitat_credit_score name="application_habitat_credit_score" type="checkbox" ng-model="application.hasMinimumCreditScore" ng-required="true" ng-class="{ error: inputInvalid('application_habitat_credit_score')}"
+      /     label.checkbox-block_label for="application_habitat_credit_score" ng-class="{ error: inputInvalid('application_habitat_credit_score')}"
+      /       strong.caps.form-label
+      /         | {{'label.application_habitat_credit_score' | translate}}
+      /       small.error id="application_habitat_credit_scoreError" ng-show="inputInvalid('application_habitat_credit_score')"
+      /         | {{'label.field_required' | translate}}
       / I have attended 10 hours of Homebuyer Education in the past year.
       .checkbox-group ng-if="!listingIsHabitat()"
         .checkbox-block.margin-bottom--2x
