@@ -12,7 +12,6 @@ import {
   AppPages,
   RedirectType,
   getMyAccountApplicationsPath,
-  getMyAccountContactPath,
   getMyAccountSettingsPath,
 } from "../../util/routeUtil"
 import UserContext from "../../authentication/context/UserContext"
@@ -25,14 +24,6 @@ import { MyAccount } from "./my-account"
 import styles from "./account.module.scss"
 
 const overviewSections = [
-  {
-    icon: "contact-info",
-    heading: "accountLayout.nav.contactInfo",
-    text: "accountLayout.account.p3",
-    buttonLabel: "accountLayout.account.editContact",
-    href: getMyAccountContactPath(),
-    isImage: true,
-  },
   {
     icon: "application",
     heading: "accountLayout.nav.applications",
