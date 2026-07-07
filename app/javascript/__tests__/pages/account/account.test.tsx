@@ -65,20 +65,11 @@ describe("<Account />", () => {
       restoreWindowLocation(originalLocation)
     })
 
-    it("contains four tabs within the account layout", () => {
-      expect(within(overviewNav).getAllByRole("listitem")).toHaveLength(4)
+    it("contains three tabs within the account layout", () => {
+      expect(within(overviewNav).getAllByRole("listitem")).toHaveLength(3)
     })
 
-    it("first tab has title 'Your contact info'", () => {
-      expect(
-        within(overviewNav).getByRole("heading", {
-          level: 2,
-          name: "Your contact info",
-        })
-      ).toBeInTheDocument()
-    })
-
-    it("second tab has title 'Application and lottery results'", () => {
+    it("first tab has title 'Application and lottery results'", () => {
       expect(
         within(overviewNav).getByRole("heading", {
           level: 2,
@@ -87,10 +78,10 @@ describe("<Account />", () => {
       ).toBeInTheDocument()
     })
 
-    it("third link has title Account settings", () => {
+    it("second link has title Account settings", () => {
       const listItems = within(overviewNav).getAllByRole("listitem")
       expect(
-        within(listItems[2]).getByRole("heading", { level: 2, name: "Account settings" })
+        within(listItems[1]).getByRole("heading", { level: 2, name: "Account settings" })
       ).toBeInTheDocument()
     })
   })
