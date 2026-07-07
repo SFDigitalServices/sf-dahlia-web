@@ -1706,7 +1706,6 @@
   "listingsForSale.beforeApplyingHabitat.step1": "asistir a una <a href='%{url}' target='_blank'>sesión informativa de Habitat for Humanity</a>",
   "listingsForSale.beforeApplyingHabitat.step2": "No haber sido propietario de una propiedad residencial en los últimos 3 años",
   "listingsForSale.beforeApplyingHabitat.step3": "cumplir con los <a href='%{url}' target='_blank'>requisitos de ingresos</a>",
-  "listingsForSale.beforeApplyingHabitat.step4": "Tener una puntuación de crédito de 650 o mayor",
   "listingsForSale.buyHeader.getHelp.body1": "Se ofrecen algunas oportunidades para la compra de una vivienda sin pasar por un sorteo.",
   "listingsForSale.buyHeader.getHelp.body2": "En su lugar, revisaremos las solicitudes en el orden en el que las recibimos, es decir, por orden de llegada.",
   "listingsForSale.buyHeader.getHelp.option.BMR": "Unidades con valores <a target='_blank' href='%{url}'>por debajo del precio de mercado (BMR, siglas en inglés)</a>. Muchas veces, los precios se pueden negociar.",
