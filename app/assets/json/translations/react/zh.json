@@ -1706,6 +1706,7 @@
   "listingsForSale.beforeApplyingHabitat.step1": "參加 <a href='%{url}' target='_blank'>Habitat for Humanity 說明會</a>",
   "listingsForSale.beforeApplyingHabitat.step2": "過去 3 年內未擁有任何住宅房產",
   "listingsForSale.beforeApplyingHabitat.step3": "符合<a href='%{url}' target='_blank'>收入要求</a>",
+  "listingsForSale.beforeApplyingHabitat.step4": "信用分數達 650 分以上",
   "listingsForSale.buyHeader.getHelp.body1": "還有一些機會可以直接購屋，無需參加抽籤。",
   "listingsForSale.buyHeader.getHelp.body2": "相反，我們將按照收件順序進行審核 (依先到先審原則)。",
   "listingsForSale.buyHeader.getHelp.option.BMR": "以<a target='_blank' href='%{url}'>低於市價 (BMR) 的價格</a>。特定情況下可接受議價。",

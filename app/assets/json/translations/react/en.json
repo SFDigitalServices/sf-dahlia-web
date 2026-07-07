@@ -1739,6 +1739,7 @@
   "listingsForSale.beforeApplyingHabitat.step1": "Go to a <a href='%{url}' target='_blank'>Habitat for Humanity information session</a>",
   "listingsForSale.beforeApplyingHabitat.step2": "Haven't owned residential property in the past 3 years",
   "listingsForSale.beforeApplyingHabitat.step3": "Meet the <a href='%{url}' target='_blank'>income requirements</a>",
+  "listingsForSale.beforeApplyingHabitat.step4": "Have a 650 credit score or higher",
   "listingsForSale.buyHeader.getHelp.body1": "There are some opportunities to buy a home without entering a lottery.",
   "listingsForSale.buyHeader.getHelp.body2": "Instead, we review applications in the order we receive them - first come, first served.",
   "listingsForSale.buyHeader.getHelp.option.BMR": "At a <a target='_blank' href='%{url}'>below-market-rate (BMR) price</a>. Sometimes, prices are negotiable.",
