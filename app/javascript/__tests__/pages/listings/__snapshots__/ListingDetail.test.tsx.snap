@@ -1501,11 +1501,6 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                               </a>
                             </p>
                           </li>
-                          <li
-                            class="text-gray-750 primary-lighter-markup-link"
-                          >
-                            Have a 650 credit score or higher
-                          </li>
                         </ol>
                         <div
                           class="text-gray-750 primary-lighter-markup-link-desktop"
@@ -1728,11 +1723,6 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                               income requirements
                             </a>
                           </p>
-                        </li>
-                        <li
-                          class="text-gray-750 primary-lighter-markup-link"
-                        >
-                          Have a 650 credit score or higher
                         </li>
                       </ol>
                       <div
@@ -1995,11 +1985,6 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                               income requirements
                             </a>
                           </p>
-                        </li>
-                        <li
-                          class="text-gray-750 primary-lighter-markup-link"
-                        >
-                          Have a 650 credit score or higher
                         </li>
                       </ol>
                       <div
@@ -4090,11 +4075,6 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                               income requirements
                             </a>
                           </p>
-                        </li>
-                        <li
-                          class="text-gray-750 primary-lighter-markup-link"
-                        >
-                          Have a 650 credit score or higher
                         </li>
                       </ol>
                       <div
