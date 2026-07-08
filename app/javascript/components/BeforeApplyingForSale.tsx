@@ -51,7 +51,6 @@ export const BeforeApplyingForSale = ({ beforeApplyingType }: BeforeApplyingForS
           })}`
         ),
       },
-      { content: t("listingsForSale.beforeApplyingHabitat.step4") },
     ]
   } else if (
     beforeApplyingType === BeforeApplyingType.DIRECTORY ||

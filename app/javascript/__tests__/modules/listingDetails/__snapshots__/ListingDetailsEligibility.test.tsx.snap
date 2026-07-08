@@ -6793,11 +6793,6 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
               </a>
             </p>
           </li>
-          <li
-            class="text-gray-750 primary-lighter-markup-link"
-          >
-            Have a 650 credit score or higher
-          </li>
         </ol>
         <div
           class="text-gray-750 primary-lighter-markup-link-desktop"
