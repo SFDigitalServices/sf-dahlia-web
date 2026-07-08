@@ -50,7 +50,7 @@ const ContactPhoneForm = ({
   const [loading, setLoading] = useState(false)
   const formMethods = useForm<PhoneFormValues>({
     mode: "onSubmit",
-    reValidateMode: "onChange",
+    reValidateMode: "onSubmit",
     shouldFocusError: false,
     defaultValues: getPhoneDefaultValues(profile),
   })

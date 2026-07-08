@@ -86,6 +86,9 @@ const PhoneFieldset = () => {
           aria-invalid={!!errors[name]}
           ref={register({ validate: phoneValidation(required) })}
           disabled={disabled}
+          onChange={() => {
+            clearErrors(name)
+          }}
         />
       </div>
       {errors[name]?.message && (
