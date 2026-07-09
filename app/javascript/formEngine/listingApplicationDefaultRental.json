@@ -563,7 +563,7 @@
         "title": "label.goodNewsForHigherRanking",
         "description": "e2aNeighborhoodPreference.instructionsP2",
         "greenHeader": true,
-        "headerComponentName": "ListingApplyStepHeaderNeighborhoodPreference",
+        "headerComponentName": "ListingApplyStepHeaderNeighborhoodPreferences",
         "headerComponentProps": {
           "instructionsP1Plural": "e2aNeighborhoodPreference.instructionsP1Plural",
           "instructionsP1Singular": "e2aNeighborhoodPreference.instructionsP1Singular",
@@ -608,9 +608,9 @@
       "componentName": "ListingApplyPreferenceStepWrapper",
       "props": {
         "title": "label.goodNewsForHigherRanking",
-        "description": "e3aAssistedHousingPreference.instructions",
+        "description": "e2bAdhpPreference.instructionsP2",
         "greenHeader": true,
-        "headerComponentName": "ListingApplyStepHeaderNeighborhoodPreference",
+        "headerComponentName": "ListingApplyStepHeaderNeighborhoodPreferences",
         "headerComponentProps": {
           "instructionsP1Plural": "e2bAdhpPreference.instructionsP1Plural",
           "instructionsP1Singular": "e2bAdhpPreference.instructionsP1Singular",
