@@ -37,10 +37,8 @@ import ListingApplyHouseholdMonthlyRentStep from "../pages/form/components/house
 import ListingApplyHouseholdMonthlyRent from "../pages/form/components/household/ListingApplyHouseholdMonthlyRent"
 import ListingApplyStepHeaderNeighborhoodPreferences from "../pages/form/components/preferences/ListingApplyStepHeaderNeighborhoodPreferences"
 
-// TODO better typescript typing
-// add return type `Record<string, React.FunctionComponent>`
-// remove nested destructuring in all components' props to conform to the React.FunctionComponent type
-export default function getFormComponentRegistry() {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export default function getFormComponentRegistry(): Record<string, React.FunctionComponent<any>> {
   return {
     ListingApplyFormWrapper,
     // Step-level components
