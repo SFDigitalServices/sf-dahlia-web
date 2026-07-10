@@ -23,10 +23,9 @@
 }
 
 .site-header__dropdown {
-  div:nth-child(2),
-  div:nth-child(3) {
+  div:not(:first-child):not(:last-child) {
     .site-header__dropdown-item {
-      border: none;
+      border-top: none;
     }
   }
 }

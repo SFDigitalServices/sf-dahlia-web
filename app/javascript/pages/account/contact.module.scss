@@ -1,5 +1,15 @@
 .contactCard {
   max-width: var(--seeds-width-2xl);
+
+  @media (max-width: theme("screens.md")) {
+    max-width: none;
+  }
+
+  @media (max-width: theme("screens.sm")) {
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+  }
 }
 
 .contactField {
@@ -46,9 +56,18 @@
 }
 
 .email {
-  font-size: var(--seeds-font-size-md);
+  font-size: var(--seeds-font-size-sm);
   font-weight: var(--seeds-font-weight-semibold);
   color: var(--seeds-color-gray-750);
+}
+
+.contactFieldLabel {
+  display: block;
+  font-family: "Lato", sans-serif;
+  font-size: var(--seeds-font-size-sm);
+  font-weight: var(--seeds-font-weight-semibold);
+  color: var(--seeds-color-gray-750);
+  margin-bottom: var(--seeds-s2);
 }
 
 .changeEmail {
@@ -59,6 +78,12 @@
 
 .phoneSection {
   padding-inline: var(--seeds-spacer-container);
+
+  :global(.fieldset-legend) {
+    font-size: var(--seeds-font-size-sm);
+    font-weight: var(--seeds-font-weight-semibold);
+    color: var(--seeds-color-gray-750);
+  }
 }
 
 .saveButton {

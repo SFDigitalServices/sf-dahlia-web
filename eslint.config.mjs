@@ -20,6 +20,7 @@ export default defineConfig(
   {
     ignores: [
       "app/assets/**", // Legacy Rails assets
+      "app/javascript/test-coverage/**", // Generated test coverage reports
       "lib/**", // Ruby library code
       "vendor/**", // Ruby gems
       "*.config.js",
