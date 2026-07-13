@@ -105,10 +105,7 @@
           "mailingAddressState": "primaryApplicantMailingAddressState",
           "mailingAddressZipcode": "primaryApplicantMailingAddressZipcode",
           "question": "primaryApplicantWorkInSf",
-          "liveInSf": "_liveInSf",
-          "workInSf": "_workInSf",
-          "liveWorkInSf": "_liveWorkInSf",
-          "liveOrWorkInSf": "_liveOrWorkInSf"
+          "showLiveWorkInSfPrefStep": "_showLiveWorkInSfPrefStep"
         }
       }
     },
@@ -308,13 +305,10 @@
       "componentType": "multiStep",
       "componentName": "HouseholdMemberMultiStepWrapper",
       "props": {
-        "fieldNames": {
-          "householdMembers": "householdMembers",
-          "liveInSf": "_liveInSf",
-          "workInSf": "_workInSf",
-          "liveWorkInSf": "_liveWorkInSf",
-          "liveOrWorkInSf": "_liveOrWorkInSf"
-        }
+        "showLiveWorkInSfPrefStep": "_showLiveWorkInSfPrefStep"
+      },
+      "fieldNames": {
+        "householdMembers": "householdMembers"
       }
     },
     {
@@ -645,7 +639,7 @@
             },
             {
               "dataSource": "form",
-              "dataKey": "_liveOrWorkInSf",
+              "dataKey": "_showLiveWorkInSfPrefStep",
               "dataValueToMatch": "true"
             }
           ]
@@ -656,9 +650,6 @@
       "props": {
         "title": "e2cLiveWorkPreference.title",
         "description": "e2cLiveWorkPreference.instructions",
-        "liveInSf": "_liveInSf",
-        "workInSf": "_workInSf",
-        "liveWorkInSf": "_liveWorkInSf",
         "fieldNames": {
           "claimedPreferences": "claimedPreferences",
           "optOut": "_liveOrWorkInSfOptOut",

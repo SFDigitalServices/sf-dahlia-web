@@ -11,12 +11,9 @@ import { t } from "@bloom-housing/ui-components"
 import { getLiveWorkInSfMembers } from "./householdUtils"
 
 interface HouseholdMemberMultiStepWrapperProps {
+  showLiveWorkInSfPrefStep: string
   fieldNames: {
     householdMembers: string
-    liveInSf: string
-    workInSf: string
-    liveWorkInSf: string
-    liveOrWorkInSf: string
   }
 }
 const householdMemberFields = {
@@ -35,7 +32,8 @@ type multiStepComponents =
   | "HouseholdMemberVerifyAddress"
 
 const HouseholdMemberMultiStepWrapper = ({
-  fieldNames: { householdMembers, liveInSf, workInSf, liveWorkInSf, liveOrWorkInSf },
+  showLiveWorkInSfPrefStep,
+  fieldNames: { householdMembers },
 }: HouseholdMemberMultiStepWrapperProps) => {
   const { saveFormData, formData, staticData, handleNextStep } = useFormEngineContext()
   const [currentMemberIndex, setCurrentMemberIndex] = useState<number>(0)
@@ -101,17 +99,14 @@ const HouseholdMemberMultiStepWrapper = ({
     }
 
     // Calculate live/work eligibility against the updated members array
-    const { livesInSf, worksInSf, liveWorksInSf, showLiveWorkPreference } = getLiveWorkInSfMembers({
+    const { showLiveWorkPreference } = getLiveWorkInSfMembers({
       ...formData,
       [householdMembers]: updated,
     })
     saveFormData({
       ...formData,
       [householdMembers]: updated,
-      [liveInSf]: livesInSf,
-      [workInSf]: worksInSf,
-      [liveWorkInSf]: liveWorksInSf,
-      [liveOrWorkInSf]: showLiveWorkPreference,
+      [showLiveWorkInSfPrefStep]: showLiveWorkPreference,
     })
     setHouseholdMembersArray(updated)
     setPendingMember(null)
@@ -181,17 +176,14 @@ const HouseholdMemberMultiStepWrapper = ({
   const handleDeleteHouseholdMember = () => {
     const updatedHouseholdMembers = [...householdMembersArray]
     updatedHouseholdMembers.splice(currentMemberIndex, 1)
-    const { livesInSf, worksInSf, liveWorksInSf, showLiveWorkPreference } = getLiveWorkInSfMembers({
+    const { showLiveWorkPreference } = getLiveWorkInSfMembers({
       ...formData,
       [householdMembers]: updatedHouseholdMembers,
     })
     saveFormData({
       ...formData,
       [householdMembers]: updatedHouseholdMembers,
-      [liveInSf]: livesInSf,
-      [workInSf]: worksInSf,
-      [liveWorkInSf]: liveWorksInSf,
-      [liveOrWorkInSf]: showLiveWorkPreference,
+      [showLiveWorkInSfPrefStep]: showLiveWorkPreference,
     })
     setHouseholdMembersArray(updatedHouseholdMembers)
     setComponentToRender("AddHouseholdMembers")

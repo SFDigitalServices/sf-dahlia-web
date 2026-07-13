@@ -17,15 +17,13 @@ import {
 } from "./PreferenceUtils"
 import styles from "./ListingApplyPreferenceStepWrapper.module.scss"
 import stepStyles from "../ListingApplyStepWrapper.module.scss"
+import { getLiveWorkInSfMembers } from "../household/householdUtils"
 
 interface ListingApplyPreferenceStepWrapperProps {
   greenHeader?: boolean
   headerComponentName?: string
   title: string
   description: string
-  liveInSf?: string
-  workInSf?: string
-  liveWorkInSf?: string
   fieldNames: {
     claimedPreferences: string // claimedPreferences object is used by all preference pages, it should be the same string for all preference pages in the schema
     optOut?: string
@@ -45,9 +43,6 @@ const ListingApplyPreferenceStepWrapper = ({
   greenHeader,
   title,
   description,
-  liveInSf,
-  workInSf,
-  liveWorkInSf,
   fieldNames: { claimedPreferences, optOut, subPreferenceClaimed },
   preferenceContents,
   comboPreference,
@@ -67,13 +62,13 @@ const ListingApplyPreferenceStepWrapper = ({
   const currentStepInfo = stepInfoMap[currentStepIndex]
 
   // Determine which live/work fields to show based on eligibility
-  const liveEligible = !liveInSf || formData[liveInSf] === "true"
-  const workEligible = !workInSf || formData[workInSf] === "true"
-  const liveWorkEligible = !liveWorkInSf || formData[liveWorkInSf] === "true"
-  const showComboPreference = comboPreference && subPreferenceClaimed && liveWorkEligible
+  const { livesInSf, worksInSf, liveWorksInSf } = getLiveWorkInSfMembers({
+    ...formData,
+  })
+  const showComboPreference = comboPreference && subPreferenceClaimed && liveWorksInSf
   const eligiblePreferenceContents = preferenceContents.filter((content) => {
-    if (content.preferenceName === "liveInSf") return liveEligible
-    if (content.preferenceName === "workInSf") return workEligible
+    if (content.preferenceName === "liveInSf") return livesInSf
+    if (content.preferenceName === "workInSf") return worksInSf
     return true
   })
 
@@ -140,9 +135,9 @@ const ListingApplyPreferenceStepWrapper = ({
       ClaimedPreference
     >
     const stalePreferences: string[] = []
-    if (liveInSf && !liveEligible) stalePreferences.push("liveInSf")
-    if (workInSf && !workEligible) stalePreferences.push("workInSf")
-    if (comboPreference && liveWorkInSf && !showComboPreference)
+    if (livesInSf) stalePreferences.push("liveInSf")
+    if (worksInSf) stalePreferences.push("workInSf")
+    if (comboPreference && liveWorksInSf && !showComboPreference)
       stalePreferences.push(comboPreference.preferenceName)
 
     const claimedPreferencesToRemove = stalePreferences.filter(
@@ -153,8 +148,8 @@ const ListingApplyPreferenceStepWrapper = ({
       ? (formData[subPreferenceClaimed] as string)
       : ""
     const hasStaleSubPreference =
-      (subPreferenceValue === "liveInSf" && !liveEligible) ||
-      (subPreferenceValue === "workInSf" && !workEligible)
+      (subPreferenceValue === "liveInSf" && !livesInSf) ||
+      (subPreferenceValue === "workInSf" && !worksInSf)
 
     if (claimedPreferencesToRemove.length === 0 && !hasStaleSubPreference) return
 

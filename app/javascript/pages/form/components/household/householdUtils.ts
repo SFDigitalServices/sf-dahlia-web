@@ -59,9 +59,6 @@ const householdMemberInfo = (member: HouseholdMember) => ({
   lastName: member.lastName,
 })
 
-const checkLiveWorkEligibility = (liveWorkMembers: Array<HouseholdMemberInfo>) =>
-  liveWorkMembers.length > 0 ? "true" : "false"
-
 export const getLiveWorkInSfMembers = (
   data: Record<string, unknown>
 ): {
@@ -69,9 +66,9 @@ export const getLiveWorkInSfMembers = (
   //   liveInSfMembers: Array<HouseholdMemberInfo>
   //   workInSfMembers: Array<HouseholdMemberInfo>
   //   liveWorkInSfMembers: Array<HouseholdMemberInfo>
-  livesInSf: string
-  worksInSf: string
-  liveWorksInSf: string
+  livesInSf: boolean
+  worksInSf: boolean
+  liveWorksInSf: boolean
   showLiveWorkPreference: string
 } => {
   const allHouseholdMembers = entireHousehold(data)
@@ -100,10 +97,10 @@ export const getLiveWorkInSfMembers = (
     if (livesInSf && worksInSf) liveWorkInSfMembers.push(memberInfo)
   }
 
-  const livesInSf = checkLiveWorkEligibility(liveInSfMembers)
-  const worksInSf = checkLiveWorkEligibility(workInSfMembers)
-  const liveWorksInSf = checkLiveWorkEligibility(liveWorkInSfMembers)
-  const showLiveWorkPreference = livesInSf === "true" || worksInSf === "true" ? "true" : "false"
+  const livesInSf = liveInSfMembers.length > 0
+  const worksInSf = workInSfMembers.length > 0
+  const liveWorksInSf = liveWorkInSfMembers.length > 0
+  const showLiveWorkPreference = livesInSf || worksInSf ? "true" : "false"
 
   return {
     // liveInSfMembers,
