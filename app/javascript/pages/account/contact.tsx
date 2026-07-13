@@ -50,15 +50,22 @@ const ContactPhoneForm = ({
   const [loading, setLoading] = useState(false)
   const formMethods = useForm<PhoneFormValues>({
     mode: "onSubmit",
-    reValidateMode: "onChange",
+    reValidateMode: "onSubmit",
     shouldFocusError: false,
     defaultValues: getPhoneDefaultValues(profile),
   })
   const {
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isDirty },
     setError,
   } = formMethods
+
+  // Hide the "Changes saved" banner when the user makes new changes
+  React.useEffect(() => {
+    if (isDirty) {
+      setShowSaveBanner(false)
+    }
+  }, [isDirty])
 
   const onSubmit = async (data: PhoneFormValues) => {
     setLoading(true)
@@ -71,6 +78,7 @@ const ContactPhoneForm = ({
         alternatePhoneType: data.secondPhoneType,
       })
       saveProfile(updatedContact)
+      formMethods.reset(data)
       setShowSaveBanner(true)
     } catch (error) {
       setError(...handlePhoneServerErrors(error as ExpandedAccountAxiosError))
@@ -124,18 +132,16 @@ const Contact = () => {
         <Card className={styles.contactCard}>
           <Card.Header className={styles.header}>
             <div className={styles.iconBackground}>
-              <img src={getAssetPath("contact-info.png")} alt="" className={styles.icon} />
+              <img src={getAssetPath("contact-info.svg")} alt="" className={styles.icon} />
             </div>
             <Heading priority={1} size="2xl" className={styles.heading}>
               {t("accountLayout.contact.title")}
             </Heading>
-            {t("accountLayout.contact.subtitle")}
+            <p className="field-note text-base">{t("accountLayout.contact.subtitle")}</p>
           </Card.Header>
           <Message>{t("accountLayout.contact.changeInfo")}</Message>
           <Card.Section divider="inset" className={styles.contactSection}>
-            <Heading priority={2} size="md" className={styles.heading}>
-              {t("label.emailAddress")}
-            </Heading>
+            <p className={styles.contactFieldLabel}>{t("label.emailAddress")}</p>
             <p className={styles.email}>{profile?.email}</p>
             <p className={styles.changeEmail}>
               {renderInlineMarkup(

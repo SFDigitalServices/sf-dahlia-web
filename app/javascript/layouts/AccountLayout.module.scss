@@ -1,5 +1,9 @@
 .accountLayoutBackground {
   background-color: var(--seeds-color-gray-300);
+
+  @media (max-width: theme("screens.sm")) {
+    background-color: var(--seeds-color-white);
+  }
 }
 
 .accountLayout {
@@ -16,6 +20,7 @@
   }
   @media (max-width: theme("screens.sm")) {
     padding: 0;
+    gap: 0;
   }
 }
 
