@@ -11,9 +11,9 @@ import { t } from "@bloom-housing/ui-components"
 import { getLiveWorkInSfMembers } from "./householdUtils"
 
 interface HouseholdMemberMultiStepWrapperProps {
-  showLiveWorkInSfPrefStep: string
   fieldNames: {
     householdMembers: string
+    showLiveWorkInSfPrefStep: string
   }
 }
 const householdMemberFields = {
@@ -32,8 +32,7 @@ type multiStepComponents =
   | "HouseholdMemberVerifyAddress"
 
 const HouseholdMemberMultiStepWrapper = ({
-  showLiveWorkInSfPrefStep,
-  fieldNames: { householdMembers },
+  fieldNames: { householdMembers, showLiveWorkInSfPrefStep },
 }: HouseholdMemberMultiStepWrapperProps) => {
   const { saveFormData, formData, staticData, handleNextStep } = useFormEngineContext()
   const [currentMemberIndex, setCurrentMemberIndex] = useState<number>(0)

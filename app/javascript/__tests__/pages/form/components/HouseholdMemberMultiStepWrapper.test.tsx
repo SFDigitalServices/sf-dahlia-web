@@ -78,9 +78,9 @@ describe("HouseholdMemberMultiStepWrapper", () => {
   const renderHouseholdMemberMultiStepWrapper = (formData = {}) => {
     return renderWithFormContextWrapper(
       <HouseholdMemberMultiStepWrapper
-        showLiveWorkInSfPrefStep="showLiveWorkInSfPrefStep"
         fieldNames={{
           householdMembers: "householdMembers",
+          showLiveWorkInSfPrefStep: "showLiveWorkInSfPrefStep",
         }}
       />,
       {
