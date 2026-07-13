@@ -5,7 +5,7 @@ import {
   mockWindowLocation,
   restoreWindowLocation,
 } from "../../__util__/renderUtils"
-import AccountSettingsPage from "../../../pages/account/account-settings"
+import AccountSettingsPage from "../../../pages/account/account-settings" // eslint-disable-line import/no-named-as-default
 import { fireEvent, screen, within, act } from "@testing-library/react"
 import { authenticatedPut } from "../../../api/apiService"
 import { mockProfileStub, setupUserContext } from "../../__util__/accountUtils"

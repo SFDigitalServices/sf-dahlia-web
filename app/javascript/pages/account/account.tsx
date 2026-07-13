@@ -1,5 +1,4 @@
-// New accounts layout for my-account.tsx
-import React from "react"
+import React, { useContext } from "react"
 import { Button, Heading, Tabs } from "@bloom-housing/ui-seeds"
 import { Icon, t, UniversalIconType } from "@bloom-housing/ui-components"
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons"
@@ -18,6 +17,7 @@ import {
 import UserContext from "../../authentication/context/UserContext"
 import { User } from "../../authentication/user"
 import { withAuthentication } from "../../authentication/withAuthentication"
+import { ConfigContext } from "../../lib/ConfigContext"
 
 import ContactCard from "./components/ContactCard"
 import { MyAccount } from "./my-account"
@@ -46,15 +46,29 @@ const OverviewSection = ({
   text,
   buttonLabel,
   href,
+  isImage,
+  getAssetPath,
 }: {
   icon: string
   heading: string
   text: string
   buttonLabel: string
   href: string
+  isImage?: boolean
+  getAssetPath?: (path: string) => string
 }) => (
   <>
-    <Icon className={styles.infoIcon} size="xlarge" symbol={icon as UniversalIconType} />
+    {isImage && getAssetPath ? (
+      <span className={styles.infoIcon}>
+        <img
+          src={getAssetPath(`${icon}.svg`)}
+          alt=""
+          style={{ width: "var(--seeds-s10)", height: "var(--seeds-s10)" }}
+        />
+      </span>
+    ) : (
+      <Icon className={styles.infoIcon} size="xlarge" symbol={icon as UniversalIconType} />
+    )}
     <div className={styles.overviewContent}>
       <Heading priority={2} size="md" className={styles.overviewHeading}>
         {t(heading)}
@@ -70,29 +84,33 @@ const OverviewSection = ({
   </>
 )
 
-const AccountOverview = ({ signOut, user }: { signOut: () => void; user?: User }) => (
-  <>
-    <ContactCard user={user} />
-    <Tabs
-      className="vertical-sidebar-layout"
-      navigation
-      navigationLabel={t("accountLayout.nav.title")}
-    >
-      <Tabs.TabList>
-        {overviewSections.map((section) => (
-          <Tabs.Tab key={section.href} className={styles.overviewSection} href={section.href}>
-            <OverviewSection {...section} />
+const AccountOverview = ({ signOut, user }: { signOut: () => void; user?: User }) => {
+  const { getAssetPath } = useContext(ConfigContext)
+
+  return (
+    <>
+      <ContactCard user={user} />
+      <Tabs
+        className="vertical-sidebar-layout"
+        navigation
+        navigationLabel={t("accountLayout.nav.title")}
+      >
+        <Tabs.TabList>
+          {overviewSections.map((section) => (
+            <Tabs.Tab key={section.href} className={styles.overviewSection} href={section.href}>
+              <OverviewSection {...section} getAssetPath={getAssetPath} />
+            </Tabs.Tab>
+          ))}
+          <Tabs.Tab className={styles.overviewFooter}>
+            <Button variant="text" onClick={signOut} className={styles.signOut}>
+              {t("accountLayout.account.signOut")}
+            </Button>
           </Tabs.Tab>
-        ))}
-        <Tabs.Tab className={styles.overviewFooter}>
-          <Button variant="text" onClick={signOut} className={styles.signOut}>
-            {t("accountLayout.account.signOut")}
-          </Button>
-        </Tabs.Tab>
-      </Tabs.TabList>
-    </Tabs>
-  </>
-)
+        </Tabs.TabList>
+      </Tabs>
+    </>
+  )
+}
 
 interface AccountProps {
   assetPaths: unknown
