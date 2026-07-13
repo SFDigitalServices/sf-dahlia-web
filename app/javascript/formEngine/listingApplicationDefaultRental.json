@@ -305,10 +305,10 @@
       "componentType": "multiStep",
       "componentName": "HouseholdMemberMultiStepWrapper",
       "props": {
-        "showLiveWorkInSfPrefStep": "_showLiveWorkInSfPrefStep"
-      },
-      "fieldNames": {
-        "householdMembers": "householdMembers"
+        "fieldNames": {
+          "householdMembers": "householdMembers",
+          "showLiveWorkInSfPrefStep": "_showLiveWorkInSfPrefStep"
+        }
       }
     },
     {

@@ -84,7 +84,6 @@ export const getLiveWorkInSfMembers = (
   // Identify and populate eligible live/work in SF members
   const liveInSfMembers: HouseholdMemberInfo[] = []
   const workInSfMembers: HouseholdMemberInfo[] = []
-  const liveWorkInSfMembers: HouseholdMemberInfo[] = []
 
   for (const member of allHouseholdMembers) {
     const livesInSf = memberLivesInSf(member)
@@ -94,12 +93,11 @@ export const getLiveWorkInSfMembers = (
     const memberInfo = householdMemberInfo(member)
     if (livesInSf) liveInSfMembers.push(memberInfo)
     if (worksInSf) workInSfMembers.push(memberInfo)
-    if (livesInSf && worksInSf) liveWorkInSfMembers.push(memberInfo)
   }
 
-  const livesInSf = liveInSfMembers.length > 0
-  const worksInSf = workInSfMembers.length > 0
-  const liveWorksInSf = liveWorkInSfMembers.length > 0
+  const livesInSf = liveInSfMembers.length > 0 && workInSfMembers.length === 0
+  const worksInSf = workInSfMembers.length > 0 && liveInSfMembers.length === 0
+  const liveWorksInSf = liveInSfMembers.length > 0 && workInSfMembers.length > 0
   const showLiveWorkPreference = livesInSf || worksInSf ? "true" : "false"
 
   return {
