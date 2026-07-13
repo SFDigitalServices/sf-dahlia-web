@@ -80,6 +80,16 @@ const liveWorkComboPreference = {
   subPreferenceSelectLabel: "label.preferenceOptionToClaim",
 }
 
+const liveWorkHousehold = ({
+  livesInSf = true,
+  worksInSf = true,
+}: { livesInSf?: boolean; worksInSf?: boolean } = {}) => ({
+  primaryApplicantFirstName: "Alice",
+  primaryApplicantLastName: "Walker",
+  primaryApplicantAddressCity: livesInSf ? "San Francisco" : "Oakland",
+  primaryApplicantWorkInSf: worksInSf ? "true" : "false", // verify key name in entireHousehold
+})
+
 const renderWrapper = ({
   preferenceContents = [certOfPreferenceContent],
   optOut,
@@ -87,18 +97,11 @@ const renderWrapper = ({
   comboPreference,
   includeOptOut = true,
   headerComponentName,
-  formData = {
-    primaryApplicantFirstName: "Alice",
-    primaryApplicantMiddleName: "M",
-    primaryApplicantLastName: "Walker",
-  },
+  formData = liveWorkHousehold(),
   preferences,
   title = "e2cLiveWorkPreference.title",
   description = "e2cLiveWorkPreference.instructions",
   greenHeader,
-  liveInSf,
-  workInSf,
-  liveWorkInSf,
 }: {
   preferenceContents?: PreferenceContent[]
   optOut?: string
@@ -116,9 +119,6 @@ const renderWrapper = ({
   title?: string
   description?: string
   greenHeader?: boolean
-  liveInSf?: string
-  workInSf?: string
-  liveWorkInSf?: string
 } = {}) => {
   const optOutFieldName = includeOptOut ? (optOut ?? "_certOptOut") : undefined
   const defaultPreferences: RailsListingPreference[] = comboPreference
@@ -145,9 +145,6 @@ const renderWrapper = ({
         claimedPreferences: "claimedPreferences",
         optOut: optOutFieldName,
         subPreferenceClaimed,
-        liveInSf,
-        workInSf,
-        liveWorkInSf,
       }}
       preferenceContents={preferenceContents}
       comboPreference={comboPreference}
@@ -517,11 +514,8 @@ describe("ListingApplyPreferenceStepWrapper", () => {
       it("removes a claimed liveInSf preference when the applicant is no longer live-eligible", () => {
         const { mockSaveFormData } = renderWrapper({
           preferenceContents: [liveInSfPreferenceContent, workInSfPreferenceContent],
-          liveInSf: "_liveInSf",
-          workInSf: "_workInSf",
           formData: {
-            _liveInSf: "false",
-            _workInSf: "true",
+            ...liveWorkHousehold({ livesInSf: false, worksInSf: true }),
             claimedPreferences: {
               liveInSf: { preferenceClaimed: true },
               workInSf: { preferenceClaimed: true },
@@ -530,9 +524,7 @@ describe("ListingApplyPreferenceStepWrapper", () => {
         })
 
         expect(mockSaveFormData).toHaveBeenCalledWith({
-          claimedPreferences: {
-            workInSf: { preferenceClaimed: true },
-          },
+          claimedPreferences: { workInSf: { preferenceClaimed: true } },
         })
       })
 
@@ -541,13 +533,10 @@ describe("ListingApplyPreferenceStepWrapper", () => {
           preferenceContents: [liveInSfPreferenceContent, workInSfPreferenceContent],
           subPreferenceClaimed: "_liveOrWorkInSfClaimedPreference",
           comboPreference: liveWorkComboPreference,
-          liveWorkInSf: "_liveWorkInSf",
           preferences: liveWorkListingPreferences,
           formData: {
-            _liveWorkInSf: "false",
-            claimedPreferences: {
-              liveWorkInSf: { preferenceClaimed: true },
-            },
+            ...liveWorkHousehold({ livesInSf: false, worksInSf: false }),
+            claimedPreferences: { liveWorkInSf: { preferenceClaimed: true } },
           },
         })
 
@@ -556,28 +545,21 @@ describe("ListingApplyPreferenceStepWrapper", () => {
         })
       })
 
-      it("clears a stale live/work selection and saves it with the new claimed preferences", () => {
+      it("clears a stale live/work selection along with the combo claim", () => {
         const { mockSaveFormData } = renderWrapper({
           preferenceContents: [liveInSfPreferenceContent, workInSfPreferenceContent],
           subPreferenceClaimed: "_liveOrWorkInSfClaimedPreference",
           comboPreference: liveWorkComboPreference,
-          liveInSf: "_liveInSf",
-          liveWorkInSf: "_liveWorkInSf",
           preferences: liveWorkListingPreferences,
           formData: {
-            _liveInSf: "false",
-            _liveWorkInSf: "true",
+            ...liveWorkHousehold({ livesInSf: false, worksInSf: true }),
             _liveOrWorkInSfClaimedPreference: "liveInSf",
-            claimedPreferences: {
-              liveWorkInSf: { preferenceClaimed: true },
-            },
+            claimedPreferences: { liveWorkInSf: { preferenceClaimed: true } },
           },
         })
 
         expect(mockSaveFormData).toHaveBeenCalledWith({
-          claimedPreferences: {
-            liveWorkInSf: { preferenceClaimed: true },
-          },
+          claimedPreferences: {},
           _liveOrWorkInSfClaimedPreference: "",
         })
       })
