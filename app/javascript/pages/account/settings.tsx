@@ -33,6 +33,7 @@ import DOBFieldset, {
   handleDOBServerErrors,
 } from "./components/DOBFieldset"
 import "./styles/account.scss"
+import sharedStyles from "./shared-styles.module.scss"
 import {
   updateNameOrDOB as apiUpdateNameOrDOB,
   updateEmail,
@@ -46,7 +47,6 @@ import { withAuthentication } from "../../authentication/withAuthentication"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import { UNLEASH_FLAG } from "../../modules/constants"
 import { AccountSettingsPage as MyAccountSettingsPage } from "./account-settings"
-import settingsStyles from "./settings.module.scss"
 
 const Banner = ({
   showBanner,
@@ -440,7 +440,7 @@ const AccountSettings = ({ profile }: { profile: User }) => {
   }, [profile])
 
   return (
-    <Card className={`w-full pb-8 ${settingsStyles.settingsCard}`}>
+    <Card className={sharedStyles.card}>
       {nameUpdateBanner || nameSavedBanner ? (
         <FormHeader
           className={"border-none"}
