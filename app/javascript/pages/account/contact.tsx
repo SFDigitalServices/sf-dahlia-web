@@ -130,7 +130,7 @@ const Contact = () => {
   return (
     <Layout>
       <AccountLayout>
-        <Card className={sharedStyles.contactCard}>
+        <Card className={sharedStyles.card}>
           <Card.Header className={sharedStyles.header}>
             <div className={sharedStyles.iconBackground}>
               <img src={getAssetPath("contact-info.svg")} alt="" className={styles.icon} />
