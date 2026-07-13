@@ -3,6 +3,9 @@ import dayjs, { type Dayjs } from "dayjs"
 import customParseFormat from "dayjs/plugin/customParseFormat"
 import { t } from "@bloom-housing/ui-components"
 import { type Address } from "../api/formApiService"
+import { useEffect } from "react"
+import { useFormEngineContext } from "../formEngine/formEngineContext"
+import { ClaimedPreference } from "../pages/form/components/preferences/PreferenceUtils"
 
 export const translationFromDataSchema = (
   translationKey: string,
@@ -277,4 +280,70 @@ export const getNestedError = (
     if (acc && typeof acc === "object") return acc[key] as Record<string, unknown> | undefined
     return undefined
   }, errors)
+}
+
+/**
+ * If live/work eligibility was changed on other form pages, removes stale
+ * live/work claimed preferences (and the sub-preference selection) from
+ * formData on mount. Other claimed preferences are untouched.
+ */
+export const useResetClaimedLiveWorkPreferences = ({
+  setValue,
+  claimedPreferences,
+  subPreferenceClaimed,
+  comboPreferenceName,
+  showComboPreference,
+  livesInSf,
+  worksInSf,
+}: {
+  setValue: (name: string, value: unknown) => void
+  claimedPreferences: string
+  subPreferenceClaimed?: string
+  comboPreferenceName?: string
+  showComboPreference: boolean
+  livesInSf: boolean
+  worksInSf: boolean
+}) => {
+  const { formData, saveFormData } = useFormEngineContext()
+
+  useEffect(() => {
+    const existingClaimedPreferences = (formData[claimedPreferences] || {}) as Record<
+      string,
+      ClaimedPreference
+    >
+    const stalePreferences: string[] = []
+    if (!livesInSf) stalePreferences.push("liveInSf")
+    if (!worksInSf) stalePreferences.push("workInSf")
+    if (comboPreferenceName && !showComboPreference) stalePreferences.push(comboPreferenceName)
+
+    const claimedPreferencesToRemove = stalePreferences.filter(
+      (key) => existingClaimedPreferences[key]?.preferenceClaimed
+    )
+
+    const subPreferenceValue = subPreferenceClaimed
+      ? (formData[subPreferenceClaimed] as string)
+      : ""
+    const hasStaleSubPreference =
+      (subPreferenceValue === "liveInSf" && !livesInSf) ||
+      (subPreferenceValue === "workInSf" && !worksInSf)
+
+    if (claimedPreferencesToRemove.length === 0 && !hasStaleSubPreference) return
+
+    const updatedClaimedPreferences = Object.fromEntries(
+      Object.entries(existingClaimedPreferences).filter(
+        ([key]) => !claimedPreferencesToRemove.includes(key)
+      )
+    )
+
+    if (hasStaleSubPreference && subPreferenceClaimed) {
+      setValue(subPreferenceClaimed, "")
+      saveFormData({
+        [claimedPreferences]: updatedClaimedPreferences,
+        [subPreferenceClaimed]: "",
+      })
+    } else {
+      saveFormData({ [claimedPreferences]: updatedClaimedPreferences })
+    }
+    /* eslint-disable-next-line react-hooks/exhaustive-deps */
+  }, [])
 }

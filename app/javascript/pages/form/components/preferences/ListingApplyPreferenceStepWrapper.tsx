@@ -7,7 +7,11 @@ import getFormComponentRegistry from "../../../../formEngine/formComponentRegist
 import ListingApplyStepErrorMessage from "../ListingApplyStepErrorMessage"
 import PreferenceToClaim from "./PreferenceToClaim"
 import PreferenceToClaimCombo from "./PreferenceToClaimCombo"
-import { generateStepDefaultValues, getNestedError } from "../../../../util/formEngineUtil"
+import {
+  generateStepDefaultValues,
+  getNestedError,
+  useResetClaimedLiveWorkPreferences,
+} from "../../../../util/formEngineUtil"
 import { renderInlineMarkup } from "../../../../util/languageUtil"
 import {
   type ClaimedPreference,
@@ -123,53 +127,21 @@ const ListingApplyPreferenceStepWrapper = ({
     /* eslint-disable-next-line react-hooks/exhaustive-deps */
   }, [reset])
 
+  // If live/work status is updated on other pages, reset claimed preferences
+  useResetClaimedLiveWorkPreferences({
+    setValue,
+    claimedPreferences,
+    subPreferenceClaimed,
+    comboPreferenceName: comboPreference?.preferenceName,
+    showComboPreference: !!showComboPreference,
+    livesInSf,
+    worksInSf,
+  })
+
   const errorSectionRef = useRef<HTMLDivElement>(null)
   const [showRequiredCheckboxError, setShowRequiredCheckboxError] = useState(false)
   const [showGenericError, setShowGenericError] = useState(false)
   const [showMissingDocumentError, setShowMissingDocumentError] = useState(false)
-
-  // If live/work status is updated on other pages, reset claimed preferences
-  useEffect(() => {
-    const existingClaimedPreferences = (formData[claimedPreferences] || {}) as Record<
-      string,
-      ClaimedPreference
-    >
-    const stalePreferences: string[] = []
-    if (livesInSf) stalePreferences.push("liveInSf")
-    if (worksInSf) stalePreferences.push("workInSf")
-    if (comboPreference && liveWorksInSf && !showComboPreference)
-      stalePreferences.push(comboPreference.preferenceName)
-
-    const claimedPreferencesToRemove = stalePreferences.filter(
-      (key) => existingClaimedPreferences[key]?.preferenceClaimed
-    )
-
-    const subPreferenceValue = subPreferenceClaimed
-      ? (formData[subPreferenceClaimed] as string)
-      : ""
-    const hasStaleSubPreference =
-      (subPreferenceValue === "liveInSf" && !livesInSf) ||
-      (subPreferenceValue === "workInSf" && !worksInSf)
-
-    if (claimedPreferencesToRemove.length === 0 && !hasStaleSubPreference) return
-
-    const updatedClaimedPreferences = Object.fromEntries(
-      Object.entries(existingClaimedPreferences).filter(
-        ([key]) => !claimedPreferencesToRemove.includes(key)
-      )
-    )
-
-    if (hasStaleSubPreference && subPreferenceClaimed) {
-      setValue(subPreferenceClaimed, "")
-      saveFormData({
-        [claimedPreferences]: updatedClaimedPreferences,
-        [subPreferenceClaimed]: "",
-      })
-    } else {
-      saveFormData({ [claimedPreferences]: updatedClaimedPreferences })
-    }
-    /* eslint-disable-next-line react-hooks/exhaustive-deps */
-  }, [])
 
   // checks for any errors *except* preference-to-claim checkbox field errors
   const showErrorHeaders = () => {
