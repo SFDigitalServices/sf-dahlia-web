@@ -23,13 +23,13 @@ interface ListingApplyPreferenceStepWrapperProps {
   headerComponentName?: string
   title: string
   description: string
+  liveInSf?: string
+  workInSf?: string
+  liveWorkInSf?: string
   fieldNames: {
     claimedPreferences: string // claimedPreferences object is used by all preference pages, it should be the same string for all preference pages in the schema
     optOut?: string
     subPreferenceClaimed?: string
-    liveInSf?: string
-    workInSf?: string
-    liveWorkInSf?: string
   }
   preferenceContents: PreferenceContent[]
   comboPreference?: {
@@ -45,14 +45,10 @@ const ListingApplyPreferenceStepWrapper = ({
   greenHeader,
   title,
   description,
-  fieldNames: {
-    claimedPreferences,
-    optOut,
-    subPreferenceClaimed,
-    liveInSf,
-    workInSf,
-    liveWorkInSf,
-  },
+  liveInSf,
+  workInSf,
+  liveWorkInSf,
+  fieldNames: { claimedPreferences, optOut, subPreferenceClaimed },
   preferenceContents,
   comboPreference,
 }: ListingApplyPreferenceStepWrapperProps) => {

@@ -656,13 +656,13 @@
       "props": {
         "title": "e2cLiveWorkPreference.title",
         "description": "e2cLiveWorkPreference.instructions",
+        "liveInSf": "_liveInSf",
+        "workInSf": "_workInSf",
+        "liveWorkInSf": "_liveWorkInSf",
         "fieldNames": {
           "claimedPreferences": "claimedPreferences",
           "optOut": "_liveOrWorkInSfOptOut",
-          "subPreferenceClaimed": "_liveOrWorkInSfClaimedPreference",
-          "liveInSf": "_liveInSf",
-          "workInSf": "_workInSf",
-          "liveWorkInSf": "_liveWorkInSf"
+          "subPreferenceClaimed": "_liveOrWorkInSfClaimedPreference"
         },
         "comboPreference": {
           "checkboxLabel": "e2cLiveWorkPreference.liveWorkSfPreference.title",
