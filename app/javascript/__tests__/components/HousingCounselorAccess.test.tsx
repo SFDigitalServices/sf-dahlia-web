@@ -46,8 +46,7 @@ describe("HousingCounselorAccess", () => {
       expect(
         screen.getByText(t("accountSettings.housingCounselor.description"))
       ).toBeInTheDocument()
-      expect(screen.getByText(t("accountSettings.housingCounselor.label"))).toBeInTheDocument()
-      expect(screen.getByRole("combobox")).toBeInTheDocument()
+      expect(screen.getByLabelText(t("accountSettings.housingCounselor.label"))).toBeInTheDocument()
       expect(
         screen.getByLabelText(t("accountSettings.housingCounselor.checkbox"))
       ).toBeInTheDocument()

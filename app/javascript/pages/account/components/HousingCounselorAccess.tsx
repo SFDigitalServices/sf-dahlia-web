@@ -31,9 +31,10 @@ const ShareAccess = ({
   errors?: UseFormMethods["errors"]
 }) => {
   return (
-    <div className={styles.hcSections}>
+    <div>
       <p className="field-note">{t("accountSettings.housingCounselor.description")}</p>
       <Select
+        id="housingCounselorAgency"
         name="housingCounselorAgency"
         label={t("accountSettings.housingCounselor.label")}
         placeholder={t("accountSettings.housingCounselor.placeholder")}
