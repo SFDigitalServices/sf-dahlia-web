@@ -646,8 +646,7 @@
             },
             {
               "dataSource": "form",
-              "dataKey": "_showLiveWorkInSfPrefStep",
-              "dataValueToMatch": "true"
+              "dataKey": "_showLiveWorkInSfPrefStep"
             }
           ]
         }

@@ -141,6 +141,8 @@ const ListingApplyPreferenceStepWrapper = ({
     showComboPreference: !!showComboPreference,
     livesInSf,
     worksInSf,
+    formData,
+    saveFormData,
   })
 
   const errorSectionRef = useRef<HTMLDivElement>(null)

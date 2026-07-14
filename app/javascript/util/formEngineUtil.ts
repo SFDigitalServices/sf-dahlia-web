@@ -4,7 +4,6 @@ import customParseFormat from "dayjs/plugin/customParseFormat"
 import { t } from "@bloom-housing/ui-components"
 import { type Address } from "../api/formApiService"
 import { useEffect } from "react"
-import { useFormEngineContext } from "../formEngine/formEngineContext"
 import { ClaimedPreference } from "../pages/form/components/preferences/PreferenceUtils"
 
 export const translationFromDataSchema = (
@@ -295,6 +294,8 @@ export const useResetClaimedLiveWorkPreferences = ({
   showComboPreference,
   livesInSf,
   worksInSf,
+  formData,
+  saveFormData,
 }: {
   setValue: (name: string, value: unknown) => void
   claimedPreferences: string
@@ -303,9 +304,9 @@ export const useResetClaimedLiveWorkPreferences = ({
   showComboPreference: boolean
   livesInSf: boolean
   worksInSf: boolean
+  formData: Record<string, unknown>
+  saveFormData: (data: Record<string, unknown>) => void
 }) => {
-  const { formData, saveFormData } = useFormEngineContext()
-
   useEffect(() => {
     const existingClaimedPreferences = (formData[claimedPreferences] || {}) as Record<
       string,
