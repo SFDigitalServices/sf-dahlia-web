@@ -6,6 +6,7 @@ import Fieldset from "./Fieldset"
 import { ErrorMessages } from "./ErrorSummaryBanner"
 import { getErrorMessage } from "./util"
 import { getHousingCounselorAgencies, HousingCounselorAgency } from "../../../api/authApiService"
+import { formatTimeOfDay, localizedFormat } from "../../../util/languageUtil"
 import styles from "./HousingCounselorAccess.module.scss"
 
 export const housingCounselorFieldsetErrors: ErrorMessages = {
@@ -42,8 +43,8 @@ const ShareAccess = ({
           label={t("accountSettings.housingCounselor.label")}
           placeholder={t("accountSettings.housingCounselor.placeholder")}
           options={(agencies || []).map((agency) => ({
-            label: agency.Name,
-            value: agency.Id,
+            label: agency.name,
+            value: agency.id,
           }))}
           register={register}
           error={!!errors?.housingCounselingAgencyId}
@@ -92,28 +93,47 @@ const ShareAccess = ({
 }
 
 const RevokeAccess = ({
-  housingCounselorAgency,
+  housingCounselorAgencyId,
   lastModified,
 }: {
-  housingCounselorAgency: string
-  lastModified: string
+  housingCounselorAgencyId: string
+  lastModified?: string
 }) => {
+  const [agencies, setAgencies] = useState<HousingCounselorAgency[]>(null)
+
+  useEffect(() => {
+    void getHousingCounselorAgencies().then(setAgencies)
+  }, [])
+
+  const agency = agencies?.find(({ id }) => id === housingCounselorAgencyId)
+
+  if (!agency) {
+    return (
+      <LoadingState loading>
+        <div />
+      </LoadingState>
+    )
+  }
+
   return (
     <div className="field-note">
       <p className={styles.hcSharedWith}>
-        {t("accountSettings.housingCounselor.sharedWith", { agencyName: housingCounselorAgency })}
+        {t("accountSettings.housingCounselor.sharedWith", { agencyName: agency.name })}
       </p>
       <p>
-        {t("accountSettings.housingCounselor.agencyCan", { agencyName: housingCounselorAgency })}
+        {t("accountSettings.housingCounselor.agencyCan", {
+          agencyName: agency.shortName || agency.name,
+        })}
       </p>
       <ul className={styles.hcList}>
         <li>{t("accountSettings.housingCounselor.p2")}</li>
         <li>{t("accountSettings.housingCounselor.p3")}</li>
         <li>{t("accountSettings.housingCounselor.p4")}</li>
       </ul>
-      {t("accountSettings.housingCounselor.sharedOn", {
-        sharedDate: lastModified,
-      })}
+      {lastModified &&
+        t("accountSettings.housingCounselor.sharedOn", {
+          sharedDate: `${localizedFormat(lastModified, "LL")} at ${formatTimeOfDay(lastModified)}`,
+        })}
     </div>
   )
 }
@@ -121,18 +141,21 @@ const RevokeAccess = ({
 const HousingCounselorAccess = ({
   register,
   errors,
-  housingCounselorAgency,
+  housingCounselorAgencyId,
   lastModified,
 }: {
   register: UseFormMethods["register"]
   errors?: UseFormMethods["errors"]
-  housingCounselorAgency?: string
+  housingCounselorAgencyId?: string
   lastModified?: string
 }) => {
   return (
     <Fieldset label={t("accountSettings.housingCounselor.heading")}>
-      {housingCounselorAgency ? (
-        <RevokeAccess housingCounselorAgency={housingCounselorAgency} lastModified={lastModified} />
+      {housingCounselorAgencyId ? (
+        <RevokeAccess
+          housingCounselorAgencyId={housingCounselorAgencyId}
+          lastModified={lastModified}
+        />
       ) : (
         <ShareAccess register={register} errors={errors} />
       )}

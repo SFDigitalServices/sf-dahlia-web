@@ -310,7 +310,7 @@ const HousingCounselorSection = ({ user, setUser }: SectionProps) => {
           <HousingCounselorAccess
             register={register}
             errors={errors}
-            housingCounselorAgency={user?.housingCounselingAgencyName}
+            housingCounselorAgencyId={user?.housingCounselingAgencyId}
             lastModified={user?.housingCounselingAgencyLastModified}
           />
           <div className={settingsStyles.settingsButton}>

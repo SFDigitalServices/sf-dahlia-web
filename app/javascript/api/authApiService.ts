@@ -106,8 +106,9 @@ export const updateHousingCounselorAccess = async (user: User): Promise<User> =>
   }).then(({ data }) => data.contact)
 
 export type HousingCounselorAgency = {
-  Id: string
-  Name: string
+  id: string
+  name: string
+  shortName: string | null
 }
 
 export const getHousingCounselorAgencies = async (): Promise<HousingCounselorAgency[]> =>
