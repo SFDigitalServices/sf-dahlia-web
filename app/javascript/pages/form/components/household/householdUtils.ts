@@ -10,6 +10,13 @@ export type HouseholdMember = {
   householdMemberAddressState?: string
   householdMemberAddressZipcode?: string
   neighborhoodPreferenceAddressMatch?: boolean
+  workInSf?: string
+}
+
+export type HouseholdMemberInfo = {
+  id: string
+  firstName: string
+  lastName: string
 }
 
 const entireHousehold = (formData: Record<string, unknown>): Array<HouseholdMember> => {
@@ -20,6 +27,7 @@ const entireHousehold = (formData: Record<string, unknown>): Array<HouseholdMemb
     lastName: formData.primaryApplicantLastName as string,
     middleName: formData.primaryApplicantMiddleName as string,
     hasSameAddressAsApplicant: "true",
+    workInSf: formData.primaryApplicantWorkInSf as string,
     householdMemberAddressStreet: formData.primaryApplicantAddressStreet as string,
     householdMemberAddressAptOrUnit: formData.primaryApplicantAddressAptOrUnit as string,
     householdMemberAddressCity: formData.primaryApplicantAddressCity as string,
@@ -43,4 +51,62 @@ export const liveInTheNeighborhoodHouseholdMembers = (formData: Record<string, u
       (member.householdMemberAddressCity?.toLowerCase() === "san francisco" ||
         (member.hasSameAddressAsApplicant === "true" && primaryApplicantLivesInSf))
   )
+}
+
+const householdMemberInfo = (member: HouseholdMember) => ({
+  id: member.id,
+  firstName: member.firstName,
+  lastName: member.lastName,
+})
+
+export const getLiveWorkInSfMembers = (
+  data: Record<string, unknown>
+): {
+  // TODO: DAH-4161
+  //   liveInSfMembers: Array<HouseholdMemberInfo>
+  //   workInSfMembers: Array<HouseholdMemberInfo>
+  //   liveWorkInSfMembers: Array<HouseholdMemberInfo>
+  livesInSf: boolean
+  worksInSf: boolean
+  liveWorksInSf: boolean
+  showLiveWorkPreference: boolean
+} => {
+  const allHouseholdMembers = entireHousehold(data)
+
+  const primaryLivesInSf =
+    (data.primaryApplicantAddressCity as string)?.toLowerCase().trim() === "san francisco"
+  const memberLivesInSf = (member: HouseholdMember) =>
+    member.hasSameAddressAsApplicant === "true"
+      ? primaryLivesInSf
+      : member.householdMemberAddressCity?.toLowerCase().trim() === "san francisco"
+
+  // TODO: DAH-4161 Use member info to populate select dropdown
+  // Identify and populate eligible live/work in SF members
+  const liveInSfMembers: HouseholdMemberInfo[] = []
+  const workInSfMembers: HouseholdMemberInfo[] = []
+
+  for (const member of allHouseholdMembers) {
+    const livesInSf = memberLivesInSf(member)
+    const worksInSf = member.workInSf === "true"
+    if (!livesInSf && !worksInSf) continue
+
+    const memberInfo = householdMemberInfo(member)
+    if (livesInSf) liveInSfMembers.push(memberInfo)
+    if (worksInSf) workInSfMembers.push(memberInfo)
+  }
+
+  const livesInSf = liveInSfMembers.length > 0 && workInSfMembers.length === 0
+  const worksInSf = workInSfMembers.length > 0 && liveInSfMembers.length === 0
+  const liveWorksInSf = liveInSfMembers.length > 0 && workInSfMembers.length > 0
+  const showLiveWorkPreference = livesInSf || worksInSf || liveWorksInSf
+
+  return {
+    // liveInSfMembers,
+    // workInSfMembers,
+    // liveWorkInSfMembers,
+    livesInSf,
+    worksInSf,
+    liveWorksInSf,
+    showLiveWorkPreference,
+  }
 }
