@@ -35,6 +35,7 @@ import DOBFieldset, {
 import HousingCounselorAccess, {
   housingCounselorFieldsetErrors,
 } from "./components/HousingCounselorAccess"
+import SuccessToast from "./components/SuccessToast"
 import "./styles/account.scss"
 import {
   updateNameOrDOB as apiUpdateNameOrDOB,
@@ -245,24 +246,30 @@ const PasswordSection = ({ user, setUser }: SectionProps) => {
 
 const HousingCounselorSection = (_props: SectionProps) => {
   const [housingCounselorAgency, setHousingCounselorAgency] = useState(undefined)
+  const [successToast, setSuccessToast] = useState<string | null>(null)
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({ mode: "onTouched" })
-
   const accessShared = !!housingCounselorAgency
-
   const onSubmit = (data: { housingCounselorAgency?: string }) => {
+    const toastMessage = accessShared
+      ? "accountSettings.housingCounselor.toastStoppedSharing"
+      : "accountSettings.housingCounselor.toastShared"
+
     if (accessShared) {
       setHousingCounselorAgency(undefined)
     } else {
       setHousingCounselorAgency(data.housingCounselorAgency)
     }
+
+    setSuccessToast(toastMessage)
   }
 
   return (
     <>
+      {successToast && <SuccessToast>{t(successToast)}</SuccessToast>}
       {!accessShared && (
         <ErrorSummaryBanner
           errors={errors}

@@ -88,6 +88,8 @@
   "accountSettings.housingCounselor.shareButton": "Share my account",
   "accountSettings.housingCounselor.sharedOn": "Shared on: %{sharedDate}",
   "accountSettings.housingCounselor.sharedWith": "Your account is shared with %{agencyName}",
+  "accountSettings.housingCounselor.toastShared": "You shared your account. We sent a confirmation to your email.",
+  "accountSettings.housingCounselor.toastStoppedSharing": "You stopped sharing your account. We sent a confirmation to your email.",
   "accountSettings.informationChangeNotice": "Your information will be changed on any applications that you haven't submitted yet.",
   "accountSettings.rememberYourPassword": "When changing your password make sure you make note of it so you remember it in the future.",
   "accountSettings.saveDateOfBirth": "Save date of birth",
