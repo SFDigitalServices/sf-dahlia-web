@@ -467,6 +467,10 @@ const DateOfBirthSection = ({ user, setUser }: SectionProps) => {
 }
 
 const AccountSettings = ({ profile }: { profile: User }) => {
+  const { unleashFlag: housingCounselorAccessEnabled } = useFeatureFlag(
+    UNLEASH_FLAG.HOUSING_COUNSELOR_ACCESS,
+    false
+  )
   const [user, setUser] = useState(null)
   const [nameUpdateBanner, setNameUpdateBanner] = useState(false)
   const [nameSavedBanner, setNameSavedBanner] = useState(false)
@@ -528,7 +532,7 @@ const AccountSettings = ({ profile }: { profile: User }) => {
       <DateOfBirthSection user={user} setUser={setUser} />
       <EmailSection user={user} setUser={setUser} />
       <PasswordSection user={user} setUser={setUser} />
-      <HousingCounselorSection user={user} setUser={setUser} />
+      {housingCounselorAccessEnabled && <HousingCounselorSection user={user} setUser={setUser} />}
     </Card>
   )
 }
