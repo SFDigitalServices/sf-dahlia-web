@@ -98,6 +98,7 @@ const renderWrapper = ({
   comboPreference,
   includeOptOut = true,
   headerComponentName,
+  headerComponentProps,
   formData = liveWorkHousehold(),
   preferences,
   title = "e2cLiveWorkPreference.title",
