@@ -1,35 +1,28 @@
-interface User {
-  /**  */
-  uid: string
-
-  id: number
-
-  /**  */
+interface Contact {
   email: string
-
-  /**  */
-  created_at: Date
-
-  /**  */
-  updated_at: Date
-
   firstName?: string
-
   middleName?: string
-
   lastName?: string
-
-  dobObject?: {
-    birthDay: string
-    birthMonth: string
-    birthYear: string
-  }
-
   DOB?: string
   phone?: string
   phoneType?: string
   alternatePhone?: string
   alternatePhoneType?: string
+  housingCounselingAgencyName?: string
+  housingCounselingAgencyLastModified?: string
+  housingCounselingAgencyId?: string
+}
+
+interface User extends Contact {
+  uid: string
+  id: number
+  created_at: Date
+  updated_at: Date
+  dobObject?: {
+    birthDay: string
+    birthMonth: string
+    birthYear: string
+  }
 }
 
 interface UserData {
@@ -37,4 +30,4 @@ interface UserData {
   success: boolean
 }
 
-export { User, UserData }
+export { Contact, User, UserData }

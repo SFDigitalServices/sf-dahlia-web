@@ -1,10 +1,25 @@
 import { AxiosResponse } from "axios"
-import { User, UserData } from "../authentication/user"
+import { Contact, User, UserData } from "../authentication/user"
 import { authenticatedDelete, authenticatedGet, authenticatedPut, post } from "./apiService"
 import { AuthHeaders, setAuthHeaders } from "../authentication/token"
 import { Application } from "./types/rails/application/RailsApplication"
 import { getCurrentLanguage, getRoutePrefix, LanguagePrefix } from "../util/languageUtil"
 import { getResetPasswordPath } from "../util/routeUtil"
+
+const contactObject = (user: User): Contact => ({
+  email: user.email,
+  firstName: user.firstName,
+  middleName: user.middleName,
+  lastName: user.lastName,
+  DOB: user.DOB,
+  phone: user.phone,
+  phoneType: user.phoneType,
+  alternatePhone: user.alternatePhone,
+  alternatePhoneType: user.alternatePhoneType,
+  housingCounselingAgencyName: user.housingCounselingAgencyName,
+  housingCounselingAgencyLastModified: user.housingCounselingAgencyLastModified,
+  housingCounselingAgencyId: user.housingCounselingAgencyId,
+})
 
 export const signIn = async (email: string, password: string): Promise<User> =>
   post<UserData>("/api/v1/auth/sign_in", {
@@ -67,29 +82,13 @@ export const forgotPassword = async (email: string): Promise<string> =>
 
 export const updateNameOrDOB = async (user: User): Promise<User> => {
   return authenticatedPut<{ contact: User }>("/api/v1/account/update", {
-    contact: {
-      email: user.email,
-      firstName: user.firstName,
-      middleName: user.middleName,
-      lastName: user.lastName,
-      DOB: user.DOB,
-    },
+    contact: contactObject(user),
   }).then(({ data }) => data.contact)
 }
 
 export const updatePhone = async (user: User): Promise<User> => {
   return authenticatedPut<{ contact: User }>("/api/v1/account/update", {
-    contact: {
-      email: user.email,
-      firstName: user.firstName,
-      middleName: user.middleName,
-      lastName: user.lastName,
-      DOB: user.DOB,
-      phone: user.phone,
-      phoneType: user.phoneType,
-      alternatePhone: user.alternatePhone,
-      alternatePhoneType: user.alternatePhoneType,
-    },
+    contact: contactObject(user),
   }).then(({ data }) => data.contact)
 }
 
@@ -99,6 +98,12 @@ export const updateEmail = async (email: string): Promise<string> =>
       email,
     },
   }).then(({ data }) => data.status)
+
+export const updateHousingCounselorAgency = async (user: User): Promise<User> => {
+  return authenticatedPut<{ contact: User }>("/api/v1/account/update", {
+    contact: contactObject(user),
+  }).then(({ data }) => data.contact)
+}
 
 export const resetPassword = async (new_password: string): Promise<string> =>
   authenticatedPut<{ message: string }>("/api/v1/auth/password", {
