@@ -44,7 +44,7 @@ const AccountNav = () => {
             active={isNavActive(getMyAccountContactPath())}
           >
             <img
-              src={getAssetPath("contact-info.png")}
+              src={getAssetPath("contact-info.svg")}
               alt=""
               className={`${styles.accountNavLinkIcon} ${styles.accountNavLinkImage}`}
             />

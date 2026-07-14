@@ -73,18 +73,22 @@ const PhoneFieldset = () => {
     disabled: boolean
   ) => (
     <div className={`field ${errors[name] ? "error" : ""}`}>
+      {name === "secondPhone" && (
+        <label htmlFor={name} className={styles.fieldLabel}>
+          {t("accountLayout.contact.phoneLabel")}
+        </label>
+      )}
       <div className="control">
         <PhoneMask
           name={name}
-          aria-label={
-            name === "phone"
-              ? t("accountLayout.contact.phoneLabel")
-              : t("label.applicantSecondPhone")
-          }
+          aria-label={name === "phone" ? t("accountLayout.contact.phoneLabel") : undefined}
           aria-describedby={errors[name] ? `${name}-error` : undefined}
           aria-invalid={!!errors[name]}
           ref={register({ validate: phoneValidation(required) })}
           disabled={disabled}
+          onChange={() => {
+            clearErrors(name)
+          }}
         />
       </div>
       {errors[name]?.message && (
