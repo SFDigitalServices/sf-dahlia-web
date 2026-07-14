@@ -5,7 +5,7 @@ import UserContext from "../../authentication/context/UserContext"
 
 import { Form, DOBFieldValues, t } from "@bloom-housing/ui-components"
 import { DeepMap, FieldError, useForm } from "react-hook-form"
-import { Card, Alert } from "@bloom-housing/ui-seeds"
+import { Card, Alert, Button } from "@bloom-housing/ui-seeds"
 import { AppPages, RedirectType } from "../../util/routeUtil"
 import { User } from "../../authentication/user"
 import Layout from "../../layouts/Layout"
@@ -32,6 +32,9 @@ import DOBFieldset, {
   dobSortOrder,
   handleDOBServerErrors,
 } from "./components/DOBFieldset"
+import HousingCounselorAccess, {
+  housingCounselorFieldsetErrors,
+} from "./components/HousingCounselorAccess"
 import "./styles/account.scss"
 import {
   updateNameOrDOB as apiUpdateNameOrDOB,
@@ -236,6 +239,54 @@ const PasswordSection = ({ user, setUser }: SectionProps) => {
           passwordType="accountSettings"
         />
       </UpdateForm>
+    </>
+  )
+}
+
+const HousingCounselorSection = (_props: SectionProps) => {
+  const [housingCounselorAgency, setHousingCounselorAgency] = useState(undefined)
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({ mode: "onTouched" })
+
+  const accessShared = !!housingCounselorAgency
+
+  const onSubmit = (data: { housingCounselorAgency?: string }) => {
+    if (accessShared) {
+      setHousingCounselorAgency(undefined)
+    } else {
+      setHousingCounselorAgency(data.housingCounselorAgency)
+    }
+  }
+
+  return (
+    <>
+      {!accessShared && (
+        <ErrorSummaryBanner
+          errors={errors}
+          messageMap={(messageKey) =>
+            getErrorMessage(messageKey, housingCounselorFieldsetErrors, true)
+          }
+        />
+      )}
+      <FormSection>
+        <Form className="p-2 md:py-2 md:px-10" onSubmit={handleSubmit(onSubmit)}>
+          <HousingCounselorAccess
+            register={register}
+            errors={errors}
+            housingCounselorAgency={housingCounselorAgency}
+          />
+          <div className={settingsStyles.settingsButton}>
+            <Button type="submit" variant={accessShared ? "alert-outlined" : "primary-outlined"}>
+              {accessShared
+                ? t("accountSettings.housingCounselor.revokeButton")
+                : t("accountSettings.housingCounselor.shareButton")}
+            </Button>
+          </div>
+        </Form>
+      </FormSection>
     </>
   )
 }
@@ -470,6 +521,7 @@ const AccountSettings = ({ profile }: { profile: User }) => {
       <DateOfBirthSection user={user} setUser={setUser} />
       <EmailSection user={user} setUser={setUser} />
       <PasswordSection user={user} setUser={setUser} />
+      <HousingCounselorSection user={user} setUser={setUser} />
     </Card>
   )
 }
