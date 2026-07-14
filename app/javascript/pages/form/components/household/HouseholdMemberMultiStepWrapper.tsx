@@ -8,10 +8,12 @@ import VerifyAddress from "../VerifyAddress"
 import { locateVerifiedAddress, type Address } from "../../../../api/formApiService"
 import { addressesMatch, getAddressErrorEmailLink } from "../../../../util/formEngineUtil"
 import { t } from "@bloom-housing/ui-components"
+import { getLiveWorkInSfMembers } from "./householdUtils"
 
 interface HouseholdMemberMultiStepWrapperProps {
   fieldNames: {
     householdMembers: string
+    showLiveWorkInSfPrefStep: string
   }
 }
 const householdMemberFields = {
@@ -30,7 +32,7 @@ type multiStepComponents =
   | "HouseholdMemberVerifyAddress"
 
 const HouseholdMemberMultiStepWrapper = ({
-  fieldNames: { householdMembers },
+  fieldNames: { householdMembers, showLiveWorkInSfPrefStep },
 }: HouseholdMemberMultiStepWrapperProps) => {
   const { saveFormData, formData, staticData, handleNextStep } = useFormEngineContext()
   const [currentMemberIndex, setCurrentMemberIndex] = useState<number>(0)
@@ -94,7 +96,17 @@ const HouseholdMemberMultiStepWrapper = ({
         neighborhoodPreferenceAddressMatch: true,
       })
     }
-    saveFormData({ ...formData, [householdMembers]: updated })
+
+    // Calculate live/work eligibility against the updated members array
+    const { showLiveWorkPreference } = getLiveWorkInSfMembers({
+      ...formData,
+      [householdMembers]: updated,
+    })
+    saveFormData({
+      ...formData,
+      [householdMembers]: updated,
+      [showLiveWorkInSfPrefStep]: showLiveWorkPreference,
+    })
     setHouseholdMembersArray(updated)
     setPendingMember(null)
     setComponentToRender("AddHouseholdMembers")
@@ -163,7 +175,15 @@ const HouseholdMemberMultiStepWrapper = ({
   const handleDeleteHouseholdMember = () => {
     const updatedHouseholdMembers = [...householdMembersArray]
     updatedHouseholdMembers.splice(currentMemberIndex, 1)
-    saveFormData({ ...formData, [householdMembers]: updatedHouseholdMembers })
+    const { showLiveWorkPreference } = getLiveWorkInSfMembers({
+      ...formData,
+      [householdMembers]: updatedHouseholdMembers,
+    })
+    saveFormData({
+      ...formData,
+      [householdMembers]: updatedHouseholdMembers,
+      [showLiveWorkInSfPrefStep]: showLiveWorkPreference,
+    })
     setHouseholdMembersArray(updatedHouseholdMembers)
     setComponentToRender("AddHouseholdMembers")
   }
