@@ -21,6 +21,7 @@ import stepStyles from "../ListingApplyStepWrapper.module.scss"
 interface ListingApplyPreferenceStepWrapperProps {
   greenHeader?: boolean
   headerComponentName?: string
+  headerComponentProps?: Record<string, string>
   title: string
   description: string
   fieldNames: {
@@ -39,6 +40,7 @@ interface ListingApplyPreferenceStepWrapperProps {
 
 const ListingApplyPreferenceStepWrapper = ({
   headerComponentName,
+  headerComponentProps,
   greenHeader,
   title,
   description,
@@ -63,7 +65,10 @@ const ListingApplyPreferenceStepWrapper = ({
   let headerComponent
   if (headerComponentName) {
     const componentRegistry = getFormComponentRegistry()
-    headerComponent = React.createElement(componentRegistry[headerComponentName])
+    headerComponent = React.createElement(
+      componentRegistry[headerComponentName],
+      headerComponentProps
+    )
   }
 
   const formMethods = useForm({
