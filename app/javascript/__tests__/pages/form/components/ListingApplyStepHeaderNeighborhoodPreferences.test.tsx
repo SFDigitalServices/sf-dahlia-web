@@ -1,38 +1,33 @@
 import React from "react"
 import { screen } from "@testing-library/react"
 import { t } from "@bloom-housing/ui-components"
-import ListingApplyStepHeaderNeighborhoodPreference from "../../../../pages/form/components/ListingApplyStepHeaderNeighborhoodPreference"
+import ListingApplyStepHeaderNeighborhoodPreferences from "../../../../pages/form/components/preferences/ListingApplyStepHeaderNeighborhoodPreferences"
 import { liveInTheNeighborhoodHouseholdMembers } from "../../../../pages/form/components/household/householdUtils"
-import { eligibleForAssistedHousingOrRentBurden } from "../../../../pages/form/components/ListingApplyStepHeaderNeighborhoodPreferenceUtils"
 import { renderWithFormContextWrapper } from "../../../__util__/renderUtils"
 
 jest.mock("../../../../pages/form/components/household/householdUtils", () => ({
   liveInTheNeighborhoodHouseholdMembers: jest.fn(),
 }))
 
-jest.mock(
-  "../../../../pages/form/components/ListingApplyStepHeaderNeighborhoodPreferenceUtils",
-  () => ({
-    eligibleForAssistedHousingOrRentBurden: jest.fn(),
-  })
-)
-
 const mockLiveInTheNeighborhoodHouseholdMembers = liveInTheNeighborhoodHouseholdMembers as jest.Mock
-const mockEligibleForAssistedHousingOrRentBurden =
-  eligibleForAssistedHousingOrRentBurden as jest.Mock
 
 const renderNeighborhoodPreferenceHeader = (formData: Record<string, unknown> = {}) => {
-  renderWithFormContextWrapper(<ListingApplyStepHeaderNeighborhoodPreference />, {
-    formData,
-    renderForm: false,
-  })
+  renderWithFormContextWrapper(
+    <ListingApplyStepHeaderNeighborhoodPreferences
+      instructionsP1Plural="e2aNeighborhoodPreference.instructionsP1Plural"
+      instructionsP1Singular="e2aNeighborhoodPreference.instructionsP1Singular"
+      instructionsP2="e2aNeighborhoodPreference.instructionsP2"
+    />,
+    {
+      formData,
+      renderForm: false,
+    }
+  )
 }
 
-describe("ListingApplyStepHeaderNeighborhoodPreference", () => {
+describe("ListingApplyStepHeaderNeighborhoodPreferences", () => {
   beforeEach(() => {
     mockLiveInTheNeighborhoodHouseholdMembers.mockReset()
-    mockEligibleForAssistedHousingOrRentBurden.mockReset()
-    mockEligibleForAssistedHousingOrRentBurden.mockReturnValue(false)
   })
 
   it("renders the good news header and singular address copy", () => {
@@ -130,33 +125,5 @@ describe("ListingApplyStepHeaderNeighborhoodPreference", () => {
         })
       )
     ).toBeInTheDocument()
-  })
-
-  it("renders the standard header when eligibleForAssistedHousingOrRentBurden is true", () => {
-    mockEligibleForAssistedHousingOrRentBurden.mockReturnValue(true)
-    mockLiveInTheNeighborhoodHouseholdMembers.mockReturnValue([
-      {
-        id: "1",
-        firstName: "John",
-        lastName: "Doe",
-        hasSameAddressAsApplicant: true,
-        householdMemberAddressStreet: "123 Main St",
-        neighborhoodPreferenceAddressMatch: true,
-      },
-    ])
-
-    renderNeighborhoodPreferenceHeader()
-
-    expect(
-      screen.getByRole("heading", {
-        name: t("e2aNeighborhoodPreference.instructionsP1Singular", {
-          address: "123 Main St",
-        }),
-      })
-    ).toBeInTheDocument()
-    expect(
-      screen.queryByRole("heading", { name: t("label.goodNewsForHigherRanking") })
-    ).not.toBeInTheDocument()
-    expect(screen.getByText(/Just upload valid proof of this address and/i)).toBeInTheDocument()
   })
 })
