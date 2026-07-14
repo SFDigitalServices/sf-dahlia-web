@@ -66,6 +66,9 @@ Rails.application.routes.draw do
         get 'confirm' => 'account#confirm'
         get 'check-account' => 'account#check_account'
       end
+      scope '/housing-counselor' do
+        get 'agencies' => 'housing_counselor#agencies'
+      end
     end
   end
 

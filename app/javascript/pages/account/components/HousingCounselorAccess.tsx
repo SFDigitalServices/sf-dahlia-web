@@ -1,14 +1,15 @@
 import { Field, Select, t } from "@bloom-housing/ui-components"
-import React from "react"
+import { LoadingState } from "@bloom-housing/ui-seeds"
+import React, { useEffect, useState } from "react"
 import { UseFormMethods } from "react-hook-form"
 import Fieldset from "./Fieldset"
 import { ErrorMessages } from "./ErrorSummaryBanner"
 import { getErrorMessage } from "./util"
-import { localizedFormat } from "../../../util/languageUtil"
+import { getHousingCounselorAgencies, HousingCounselorAgency } from "../../../api/authApiService"
 import styles from "./HousingCounselorAccess.module.scss"
 
 export const housingCounselorFieldsetErrors: ErrorMessages = {
-  "housingCounselorAgency:missing": {
+  "housingCounselingAgencyId:missing": {
     default: "accountSettings.housingCounselor.fieldError",
     abbreviated: "accountSettings.housingCounselor.fieldError",
   },
@@ -18,11 +19,6 @@ export const housingCounselorFieldsetErrors: ErrorMessages = {
   },
 }
 
-const testHousingCounselors = [
-  { label: "Test Agency A", value: "Test Agency A" },
-  { label: "Test Agency B", value: "Test Agency B" },
-]
-
 const ShareAccess = ({
   register,
   errors,
@@ -30,61 +26,78 @@ const ShareAccess = ({
   register: UseFormMethods["register"]
   errors?: UseFormMethods["errors"]
 }) => {
+  const [agencies, setAgencies] = useState<HousingCounselorAgency[]>(null)
+
+  useEffect(() => {
+    void getHousingCounselorAgencies().then((agencies) => setAgencies(agencies ?? []))
+  }, [])
+
   return (
-    <div>
-      <p className="field-note">{t("accountSettings.housingCounselor.description")}</p>
-      <Select
-        id="housingCounselorAgency"
-        name="housingCounselorAgency"
-        label={t("accountSettings.housingCounselor.label")}
-        placeholder={t("accountSettings.housingCounselor.placeholder")}
-        options={testHousingCounselors}
-        register={register}
-        error={!!errors?.housingCounselorAgency}
-        errorMessage={
-          errors?.housingCounselorAgency?.message &&
-          getErrorMessage(
-            errors.housingCounselorAgency.message as string,
-            housingCounselorFieldsetErrors,
-            false
-          )
-        }
-        validation={{
-          required: "housingCounselorAgency:missing",
-        }}
-        controlClassName="control"
-      />
+    <LoadingState loading={!agencies}>
       <div>
-        <p>{t("accountSettings.housingCounselor.p1")}</p>
-        <ul className={styles.hcList}>
-          <li>{t("accountSettings.housingCounselor.p2")}</li>
-          <li>{t("accountSettings.housingCounselor.p3")}</li>
-          <li>{t("accountSettings.housingCounselor.p4")}</li>
-        </ul>
+        <p className="field-note">{t("accountSettings.housingCounselor.description")}</p>
+        <Select
+          id="housingCounselingAgencyId"
+          name="housingCounselingAgencyId"
+          label={t("accountSettings.housingCounselor.label")}
+          placeholder={t("accountSettings.housingCounselor.placeholder")}
+          options={(agencies || []).map((agency) => ({
+            label: agency.Name,
+            value: agency.Id,
+          }))}
+          register={register}
+          error={!!errors?.housingCounselingAgencyId}
+          errorMessage={
+            errors?.housingCounselingAgencyId?.message &&
+            getErrorMessage(
+              errors.housingCounselingAgencyId.message as string,
+              housingCounselorFieldsetErrors,
+              false
+            )
+          }
+          validation={{
+            required: "housingCounselingAgencyId:missing",
+          }}
+          controlClassName="control"
+        />
+        <div>
+          <p>{t("accountSettings.housingCounselor.p1")}</p>
+          <ul className={styles.hcList}>
+            <li>{t("accountSettings.housingCounselor.p2")}</li>
+            <li>{t("accountSettings.housingCounselor.p3")}</li>
+            <li>{t("accountSettings.housingCounselor.p4")}</li>
+          </ul>
+        </div>
+        <Field
+          type="checkbox"
+          name="housingCounselorCheckbox"
+          label={t("accountSettings.housingCounselor.checkbox")}
+          register={register}
+          error={!!errors?.housingCounselorCheckbox}
+          errorMessage={
+            errors?.housingCounselorCheckbox?.message &&
+            getErrorMessage(
+              errors.housingCounselorCheckbox.message as string,
+              housingCounselorFieldsetErrors,
+              false
+            )
+          }
+          validation={{
+            required: "housingCounselorAgree:required",
+          }}
+        />
       </div>
-      <Field
-        type="checkbox"
-        name="housingCounselorCheckbox"
-        label={t("accountSettings.housingCounselor.checkbox")}
-        register={register}
-        error={!!errors?.housingCounselorCheckbox}
-        errorMessage={
-          errors?.housingCounselorCheckbox?.message &&
-          getErrorMessage(
-            errors.housingCounselorCheckbox.message as string,
-            housingCounselorFieldsetErrors,
-            false
-          )
-        }
-        validation={{
-          required: "housingCounselorAgree:required",
-        }}
-      />
-    </div>
+    </LoadingState>
   )
 }
 
-const RevokeAccess = ({ housingCounselorAgency }: { housingCounselorAgency: string }) => {
+const RevokeAccess = ({
+  housingCounselorAgency,
+  lastModified,
+}: {
+  housingCounselorAgency: string
+  lastModified: string
+}) => {
   return (
     <div className="field-note">
       <p className={styles.hcSharedWith}>
@@ -99,7 +112,7 @@ const RevokeAccess = ({ housingCounselorAgency }: { housingCounselorAgency: stri
         <li>{t("accountSettings.housingCounselor.p4")}</li>
       </ul>
       {t("accountSettings.housingCounselor.sharedOn", {
-        sharedDate: localizedFormat(new Date(), "MMMM D, YYYY [at] h:mm A"),
+        sharedDate: lastModified,
       })}
     </div>
   )
@@ -109,15 +122,17 @@ const HousingCounselorAccess = ({
   register,
   errors,
   housingCounselorAgency,
+  lastModified,
 }: {
   register: UseFormMethods["register"]
   errors?: UseFormMethods["errors"]
   housingCounselorAgency?: string
+  lastModified?: string
 }) => {
   return (
     <Fieldset label={t("accountSettings.housingCounselor.heading")}>
       {housingCounselorAgency ? (
-        <RevokeAccess housingCounselorAgency={housingCounselorAgency} />
+        <RevokeAccess housingCounselorAgency={housingCounselorAgency} lastModified={lastModified} />
       ) : (
         <ShareAccess register={register} errors={errors} />
       )}

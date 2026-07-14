@@ -8,9 +8,9 @@ interface Contact {
   phoneType?: string
   alternatePhone?: string
   alternatePhoneType?: string
-  housingCounselingAgencyName?: string
-  housingCounselingAgencyLastModified?: string
-  housingCounselingAgencyId?: string
+  housingCounselingAgencyName?: string | null
+  housingCounselingAgencyLastModified?: string | null
+  housingCounselingAgencyId?: string | null
 }
 
 interface User extends Contact {

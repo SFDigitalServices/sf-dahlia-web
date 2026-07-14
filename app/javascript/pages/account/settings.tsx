@@ -41,6 +41,7 @@ import {
   updateNameOrDOB as apiUpdateNameOrDOB,
   updateEmail,
   updatePassword,
+  updateHousingCounselorAccess,
 } from "../../api/authApiService"
 import { FormHeader, FormSection, getDobStringFromDobObject } from "../../util/accountUtil"
 import { AxiosError } from "axios"
@@ -244,27 +245,53 @@ const PasswordSection = ({ user, setUser }: SectionProps) => {
   )
 }
 
-const HousingCounselorSection = (_props: SectionProps) => {
-  const [housingCounselorAgency, setHousingCounselorAgency] = useState(undefined)
+const HousingCounselorSection = ({ user, setUser }: SectionProps) => {
+  const { saveProfile } = useContext(UserContext)
+  const [loading, setLoading] = useState(false)
   const [successToast, setSuccessToast] = useState<string | null>(null)
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({ mode: "onTouched" })
-  const accessShared = !!housingCounselorAgency
-  const onSubmit = (data: { housingCounselorAgency?: string }) => {
+  const accessShared = !!user?.housingCounselingAgencyId
+
+  const onSubmit = (data: { housingCounselingAgencyId?: string }) => {
+    if (!user) return
+
+    setLoading(true)
     const toastMessage = accessShared
       ? "accountSettings.housingCounselor.toastStoppedSharing"
       : "accountSettings.housingCounselor.toastShared"
 
-    if (accessShared) {
-      setHousingCounselorAgency(undefined)
-    } else {
-      setHousingCounselorAgency(data.housingCounselorAgency)
-    }
+    const newUser: User = accessShared
+      ? {
+          ...user,
+          housingCounselingAgencyId: null,
+        }
+      : {
+          ...user,
+          housingCounselingAgencyId: data.housingCounselingAgencyId,
+        }
 
-    setSuccessToast(toastMessage)
+    updateHousingCounselorAccess(newUser)
+      .then((contact) => {
+        const updatedUser: User = {
+          ...newUser,
+          housingCounselingAgencyId: contact?.housingCounselingAgencyId,
+          housingCounselingAgencyName: contact?.housingCounselingAgencyName,
+          housingCounselingAgencyLastModified: contact?.housingCounselingAgencyLastModified,
+        }
+        setUser(updatedUser)
+        saveProfile(updatedUser)
+        setSuccessToast(toastMessage)
+      })
+      .catch(() => {
+        setSuccessToast(null)
+      })
+      .finally(() => {
+        setLoading(false)
+      })
   }
 
   return (
@@ -283,10 +310,15 @@ const HousingCounselorSection = (_props: SectionProps) => {
           <HousingCounselorAccess
             register={register}
             errors={errors}
-            housingCounselorAgency={housingCounselorAgency}
+            housingCounselorAgency={user?.housingCounselingAgencyName}
+            lastModified={user?.housingCounselingAgencyLastModified}
           />
           <div className={settingsStyles.settingsButton}>
-            <Button type="submit" variant={accessShared ? "alert-outlined" : "primary-outlined"}>
+            <Button
+              type="submit"
+              variant={accessShared ? "alert-outlined" : "primary-outlined"}
+              disabled={loading}
+            >
               {accessShared
                 ? t("accountSettings.housingCounselor.revokeButton")
                 : t("accountSettings.housingCounselor.shareButton")}

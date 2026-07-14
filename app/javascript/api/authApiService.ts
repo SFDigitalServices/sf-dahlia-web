@@ -5,6 +5,7 @@ import { AuthHeaders, setAuthHeaders } from "../authentication/token"
 import { Application } from "./types/rails/application/RailsApplication"
 import { getCurrentLanguage, getRoutePrefix, LanguagePrefix } from "../util/languageUtil"
 import { getResetPasswordPath } from "../util/routeUtil"
+import { housingCounselorAgencies } from "./apiEndpoints"
 
 const contactObject = (user: User): Contact => ({
   email: user.email,
@@ -99,11 +100,20 @@ export const updateEmail = async (email: string): Promise<string> =>
     },
   }).then(({ data }) => data.status)
 
-export const updateHousingCounselorAgency = async (user: User): Promise<User> => {
-  return authenticatedPut<{ contact: User }>("/api/v1/account/update", {
+export const updateHousingCounselorAccess = async (user: User): Promise<User> =>
+  authenticatedPut<{ contact: User }>("/api/v1/account/update", {
     contact: contactObject(user),
   }).then(({ data }) => data.contact)
+
+export type HousingCounselorAgency = {
+  Id: string
+  Name: string
 }
+
+export const getHousingCounselorAgencies = async (): Promise<HousingCounselorAgency[]> =>
+  authenticatedGet<{ agencies: HousingCounselorAgency[] }>(housingCounselorAgencies()).then(
+    ({ data }) => data.agencies
+  )
 
 export const resetPassword = async (new_password: string): Promise<string> =>
   authenticatedPut<{ message: string }>("/api/v1/auth/password", {

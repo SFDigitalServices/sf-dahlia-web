@@ -74,6 +74,7 @@ class Api::V1::AccountController < ApiController
         :phoneType,
         :alternatePhone,
         :alternatePhoneType,
+        :housingCounselingAgencyId,
       )
   end
 end
