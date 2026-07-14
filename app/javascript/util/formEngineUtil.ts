@@ -336,6 +336,7 @@ export const useResetClaimedLiveWorkPreferences = ({
       )
     )
 
+    // TODO: DAH-4122 Delete uploaded preference proof files
     if (hasStaleSubPreference && subPreferenceClaimed) {
       setValue(subPreferenceClaimed, "")
       saveFormData({
