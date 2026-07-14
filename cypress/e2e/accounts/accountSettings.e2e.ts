@@ -21,7 +21,7 @@ describe("Account Settings", () => {
     cy.signIn()
 
     cy.visit("/account/settings")
-    cy.contains("Security and sign-in settings for accessing your account")
+    cy.contains("We use this information to help you fill in your application.")
 
     // Submit a name change
     cy.get('input[name="firstName"]').clear().type("Jane")
