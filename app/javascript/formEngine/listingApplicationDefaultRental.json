@@ -565,7 +565,12 @@
         "title": "label.goodNewsForHigherRanking",
         "description": "e2aNeighborhoodPreference.instructionsP2",
         "greenHeader": true,
-        "headerComponentName": "ListingApplyStepHeaderNeighborhoodPreference",
+        "headerComponentName": "ListingApplyStepHeaderNeighborhoodPreferences",
+        "headerComponentProps": {
+          "instructionsP1Plural": "e2aNeighborhoodPreference.instructionsP1Plural",
+          "instructionsP1Singular": "e2aNeighborhoodPreference.instructionsP1Singular",
+          "instructionsP2": "e2aNeighborhoodPreference.instructionsP2"
+        },
         "fieldNames": {
           "claimedPreferences": "claimedPreferences",
           "optOut": "_neighborhoodResidenceOptOut"
@@ -602,30 +607,32 @@
         }
       },
       "componentType": "step",
-      "componentName": "ListingApplyStepWrapper",
+      "componentName": "ListingApplyPreferenceStepWrapper",
       "props": {
-        "title": "label.good_news_for_higher_ranking",
-        "description": "e2bAdhpPreference.instructionsP2"
-      },
-      "children": [
-        {
-          "componentName": "PreferenceCheckboxGroup",
-          "props": {
-            "name": "e2bAdhpPreference.preference.title",
-            "description": "e2bAdhpPreference.preference.description",
-            "showProofType": true,
-            "members": {
-              "dataSource": "form",
-              "dataKey": "members"
-            },
-            "fieldNames": {
-              "member": "antiDisplacementPrefMember",
-              "proofDocType": "antiDisplacementPrefProofDocType",
-              "proofDoc": "antiDisplacementPrefProofDoc"
-            }
+        "title": "label.goodNewsForHigherRanking",
+        "description": "e2bAdhpPreference.instructionsP2",
+        "greenHeader": true,
+        "headerComponentName": "ListingApplyStepHeaderNeighborhoodPreferences",
+        "headerComponentProps": {
+          "instructionsP1Plural": "e2bAdhpPreference.instructionsP1Plural",
+          "instructionsP1Singular": "e2bAdhpPreference.instructionsP1Singular",
+          "instructionsP2": "e2bAdhpPreference.instructionsP2"
+        },
+        "fieldNames": {
+          "claimedPreferences": "claimedPreferences",
+          "optOut": "_antiDisplacementOptOut"
+        },
+        "preferenceContents": [
+          {
+            "preferenceName": "antiDisplacement",
+            "checkboxLabel": "e2bAdhpPreference.preference.title",
+            "checkboxDescription": "e2bAdhpPreference.preference.shortDescription",
+            "proofHouseholdMemberLabel": "label.applicantPreferencesDocumentName",
+            "proofTypeLabel": "label.preferenceProofAddressDocuments",
+            "proofUploadButtonLabel": "label.uploadProofOfPreference"
           }
-        }
-      ]
+        ]
+      }
     },
     {
       "stepInfo": {

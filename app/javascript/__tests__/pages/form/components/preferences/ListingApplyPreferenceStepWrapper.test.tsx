@@ -85,6 +85,7 @@ const liveWorkHousehold = ({
   worksInSf = true,
 }: { livesInSf?: boolean; worksInSf?: boolean } = {}) => ({
   primaryApplicantFirstName: "Alice",
+  primaryApplicantMiddleName: "M",
   primaryApplicantLastName: "Walker",
   primaryApplicantAddressCity: livesInSf ? "San Francisco" : "Oakland",
   primaryApplicantWorkInSf: worksInSf ? "true" : "false", // verify key name in entireHousehold
@@ -114,6 +115,7 @@ const renderWrapper = ({
   }
   includeOptOut?: boolean
   headerComponentName?: string
+  headerComponentProps?: Record<string, string>
   formData?: Record<string, unknown>
   preferences?: RailsListingPreference[]
   title?: string
@@ -141,6 +143,7 @@ const renderWrapper = ({
       description={description}
       greenHeader={greenHeader}
       headerComponentName={headerComponentName}
+      headerComponentProps={headerComponentProps}
       fieldNames={{
         claimedPreferences: "claimedPreferences",
         optOut: optOutFieldName,
@@ -226,7 +229,12 @@ describe("ListingApplyPreferenceStepWrapper", () => {
 
     it("renders the header component when headerComponentName is provided", () => {
       renderWrapper({
-        headerComponentName: "ListingApplyStepHeaderNeighborhoodPreference",
+        headerComponentName: "ListingApplyStepHeaderNeighborhoodPreferences",
+        headerComponentProps: {
+          instructionsP1Plural: "e2aNeighborhoodPreference.instructionsP1Plural",
+          instructionsP1Singular: "e2aNeighborhoodPreference.instructionsP1Singular",
+          instructionsP2: "e2aNeighborhoodPreference.instructionsP2",
+        },
         formData: {
           primaryApplicantFirstName: "Alice",
           primaryApplicantMiddleName: "M",
