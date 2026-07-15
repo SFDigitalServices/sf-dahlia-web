@@ -72,6 +72,14 @@ describe("HousingCounselorAccess", () => {
       expect(screen.queryByText(t("accountSettings.housingCounselor.checkboxError"))).toBeNull()
     })
 
+    it("populates the agency select with agencies from the API", async () => {
+      render(<ShareAccessWrapper />)
+
+      const agencySelect = await screen.findByLabelText(t("accountSettings.housingCounselor.label"))
+      expect(agencySelect).toContainHTML("Test Agency A")
+      expect(agencySelect).toContainHTML("Test Agency B")
+    })
+
     it("renders validation errors when required fields are missing", async () => {
       const user = userEvent.setup()
       render(<ShareAccessWrapper />)
@@ -123,6 +131,22 @@ describe("HousingCounselorAccess", () => {
       expect(mockLocalizedFormat).toHaveBeenCalled()
       expect(screen.queryByLabelText(t("accountSettings.housingCounselor.label"))).toBeNull()
       expect(screen.queryByLabelText(t("accountSettings.housingCounselor.checkbox"))).toBeNull()
+    })
+
+    it("falls back to the agency name when shortName is null", async () => {
+      mockGetHousingCounselorAgencies.mockResolvedValue([
+        { id: "123", name: "Test Agency A", shortName: null },
+      ])
+
+      render(<HousingCounselorAccess register={jest.fn()} housingCounselorAgencyId="123" />)
+
+      await waitFor(() => {
+        expect(
+          screen.getByText(
+            t("accountSettings.housingCounselor.agencyCan", { agencyName: "Test Agency A" })
+          )
+        ).toBeInTheDocument()
+      })
     })
   })
 
