@@ -7,11 +7,12 @@ import {
 } from "../../__util__/renderUtils"
 import SettingsPage from "../../../pages/account/settings"
 import { fireEvent, screen, within, act } from "@testing-library/react"
-import { authenticatedPut } from "../../../api/apiService"
+import { authenticatedGet, authenticatedPut } from "../../../api/apiService"
 import { mockProfileStub, setupUserContext } from "../../__util__/accountUtils"
 
 jest.mock("../../../api/apiService", () => ({
   authenticatedPut: jest.fn(),
+  authenticatedGet: jest.fn(),
 }))
 
 jest.mock("../../../hooks/useFeatureFlag", () => ({
@@ -27,6 +28,7 @@ describe("<SettingsPage />", () => {
       document.documentElement.lang = "en"
       originalLocation = mockWindowLocation()
       setupUserContext({ loggedIn: true })
+      ;(authenticatedGet as jest.Mock).mockResolvedValue({ data: { agencies: [] } })
       promise = Promise.resolve()
       await renderAndLoadAsync(<SettingsPage assetPaths={{}} />)
     })
