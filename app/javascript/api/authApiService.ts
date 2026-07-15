@@ -5,7 +5,7 @@ import { AuthHeaders, setAuthHeaders } from "../authentication/token"
 import { Application } from "./types/rails/application/RailsApplication"
 import { getCurrentLanguage, getRoutePrefix, LanguagePrefix } from "../util/languageUtil"
 import { getResetPasswordPath } from "../util/routeUtil"
-import { housingCounselorAgencies } from "./apiEndpoints"
+import { housingCounselorAgencies, updateHousingCounselor } from "./apiEndpoints"
 
 const contactObject = (user: User): Contact => ({
   email: user.email,
@@ -17,8 +17,6 @@ const contactObject = (user: User): Contact => ({
   phoneType: user.phoneType,
   alternatePhone: user.alternatePhone,
   alternatePhoneType: user.alternatePhoneType,
-  housingCounselingAgencyName: user.housingCounselingAgencyName,
-  housingCounselingAgencyLastModified: user.housingCounselingAgencyLastModified,
   housingCounselingAgencyId: user.housingCounselingAgencyId,
 })
 
@@ -101,7 +99,7 @@ export const updateEmail = async (email: string): Promise<string> =>
   }).then(({ data }) => data.status)
 
 export const updateHousingCounselorAccess = async (user: User): Promise<User> =>
-  authenticatedPut<{ contact: User }>("/api/v1/account/update", {
+  authenticatedPut<{ contact: User }>(updateHousingCounselor(), {
     contact: contactObject(user),
   }).then(({ data }) => data.contact)
 

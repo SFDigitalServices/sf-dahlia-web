@@ -24,6 +24,29 @@ class Api::V1::AccountController < ApiController
     render json: { contact: salesforce_contact }
   end
 
+  def update_housing_counselor
+    contact = account_params
+    access = contact[:housingCounselingAgencyId].presence
+    agency_id = access
+    # If no agency id exists, get the current agency id from Salesforce for the revoke emails
+    unless agency_id
+      current_agency = Force::AccountService.get(current_user.salesforce_contact_id)
+      agency_id = current_agency && current_agency['housingCounselingAgencyId']
+    end
+
+    contact[:contactID] = current_user.salesforce_contact_id
+    contact[:webAppID] = current_user.id
+    salesforce_contact = Force::AccountService.create_or_update(contact.as_json)
+
+    DahliaBackend::MessageService.send_housing_counselor_access(
+      housing_counselor_action: access ? 'ACCESS_GRANTED' : 'ACCESS_REVOKED',
+      contact_id: current_user.salesforce_contact_id,
+      agency_id: agency_id,
+    )
+
+    render json: { contact: salesforce_contact }
+  end
+
   def check_account
     if User.find_by_email(params[:email]&.downcase)
       render json: { account_exists: true }

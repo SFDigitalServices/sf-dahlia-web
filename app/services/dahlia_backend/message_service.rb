@@ -18,6 +18,14 @@ module DahliaBackend
         new.send_invite_to_response(_deadline, _app_id, _application_number, _response, _action,
                                           listing_id, nil)
       end
+
+      def send_housing_counselor_access(housing_counselor_action:, contact_id:, agency_id:)
+        new.send_housing_counselor_access(
+          action: housing_counselor_action,
+          contact_id: contact_id,
+          agency_id: agency_id,
+        )
+      end
     end
 
     attr_reader :client
@@ -81,6 +89,30 @@ module DahliaBackend
       send_message(endpoint, fields)
     rescue StandardError => e
       log_error('Error sending I2X response', e)
+      nil
+    end
+
+    # Sends housing counselor confirmation emails for access shared or revoked
+    # @param action [String] ACCESS_GRANTED or ACCESS_REVOKED
+    # @param contact_id [String] Salesforce Contact Id of the applicant
+    # @param agency_id [String] Salesforce Account Id of the housing counselor agency
+    def send_housing_counselor_access(action:, contact_id:, agency_id:)
+      if contact_id.blank? || agency_id.blank?
+        return log_error(
+          "Null contact or agency id: action=#{action}, contactId=#{contact_id}, agencyId=#{agency_id}",
+          nil,
+        )
+      end
+
+      fields = {
+        action: action,
+        contactId: contact_id,
+        agencyId: agency_id,
+      }
+      send_message('/api/v1/message/housing-counselor', fields)
+      log_info("Sent housing counselor message with fields: #{fields}")
+    rescue StandardError => e
+      log_error('Error sending housing counselor message', e)
       nil
     end
 
