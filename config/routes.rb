@@ -40,6 +40,7 @@ Rails.application.routes.draw do
       # Deprecated I2A pilot - remove in DAH-4045
       post 'invite-to-apply/record-response' => 'invite_to_response#record_response'
       post 'next-steps/record-response' => 'invite_to_response#record_response'
+      post 'next-steps/log-human-verified' => 'invite_to_response#log_human_verified'
       scope '/short-form' do
         post 'validate-household' => 'short_form#validate_household'
         get 'listing-application/:listing_id' => 'short_form#show_listing_application_for_user'

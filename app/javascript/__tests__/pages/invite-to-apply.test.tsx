@@ -236,6 +236,30 @@ describe("Invite to Apply", () => {
       expect(recordResponse).toHaveBeenCalledTimes(1)
     })
 
+    it("arms client-side auto-recording when clientRecordingMode is not off", async () => {
+      // Exercises the full `enabled` gate in invite-to.tsx (clientRecordingMode + type/deadline
+      // checks) rather than short-circuiting at the default "off".
+      await renderWithContext(
+        <InviteToPage
+          assetPaths={"/"}
+          clientRecordingMode="on"
+          urlParams={{
+            type: INVITE_TO_X.APPLY,
+            deadline: mockFutureDeadline,
+            act: "yes",
+            appId: "a0o123",
+          }}
+        />
+      )
+      expect(
+        screen.getByText(
+          t("inviteToApplyPage.submitYourInfo.deadline", {
+            day: localizedFormat(mockFutureDeadline, "ll"),
+          })
+        )
+      ).toBeInTheDocument()
+    })
+
     it("does not call recordResponse when submit is clicked and isTest is true", async () => {
       await renderWithContext(
         <InviteToPage
