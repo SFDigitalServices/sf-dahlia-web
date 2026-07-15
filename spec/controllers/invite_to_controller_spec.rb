@@ -67,12 +67,18 @@ RSpec.describe InviteToController do
     allow(DahliaBackend::MessageService).to receive(:send_invite_to_response)
     allow(Rails.logger).to receive(:info)
     allow(controller).to receive(:encode_token).and_return(fixed_token)
+    allow(Rails.configuration.unleash).to receive(:is_enabled?)
+      .with('temp.webapp.inviteToClientRecording').and_return(false)
+    allow(Rails.configuration.unleash).to receive(:get_variant)
+      .with('temp.webapp.inviteToClientRecording').and_return(nil)
   end
 
   describe '#index' do
     context 'with valid parameters' do
       before do
-        allow(Force::ShortFormService).to receive(:get).with(application_number).and_return({ 'uploadURL' => 'test-upload-url', 'leaseupAppointmentSchedulingURL' => 'test-scheduling-url' })
+        allow(Force::ShortFormService).to receive(:get).with(application_number).and_return({
+                                                                                              'uploadURL' => 'test-upload-url', 'leaseupAppointmentSchedulingURL' => 'test-scheduling-url'
+                                                                                            })
 
         get :index, params: {
           id: listing_id,
@@ -94,18 +100,19 @@ RSpec.describe InviteToController do
 
       it 'sets the invite_to_props instance variable' do
         expect(assigns(:invite_to_props)).to eq({
-                                                        assetPaths: { logo: 'logo.png' },
-                                                        urlParams: {
-                                                          type: 'I2A',
-                                                          deadline: deadline,
-                                                          act: response_value,
-                                                          appId: application_number,
-                                                          isTest: false,
-                                                        },
-                                                        uploadUrl: 'test-upload-url',
-                                                        schedulingUrl: 'test-scheduling-url',
-                                                        submitPreviewLinkTokenParam: fixed_token,
-                                                      })
+                                                  assetPaths: { logo: 'logo.png' },
+                                                  urlParams: {
+                                                    type: 'I2A',
+                                                    deadline: deadline,
+                                                    act: response_value,
+                                                    appId: application_number,
+                                                    isTest: false,
+                                                  },
+                                                  clientRecordingMode: 'off',
+                                                  uploadUrl: 'test-upload-url',
+                                                  schedulingUrl: 'test-scheduling-url',
+                                                  submitPreviewLinkTokenParam: fixed_token,
+                                                })
       end
 
       # TODO: update deprecated I2A pilot
@@ -123,7 +130,9 @@ RSpec.describe InviteToController do
 
     context 'when DahliaBackend::MessageService raises an error' do
       before do
-        allow(Force::ShortFormService).to receive(:get).with(application_number).and_return({ 'uploadURL' => 'test-upload-url', 'leaseupAppointmentSchedulingURL' => 'test-scheduling-url' })
+        allow(Force::ShortFormService).to receive(:get).with(application_number).and_return({
+                                                                                              'uploadURL' => 'test-upload-url', 'leaseupAppointmentSchedulingURL' => 'test-scheduling-url'
+                                                                                            })
         allow(DahliaBackend::MessageService).to receive(:send_invite_to_response).and_raise(
           StandardError, 'API Error'
         )
@@ -187,6 +196,94 @@ RSpec.describe InviteToController do
 
       it 'returns a successful response' do
         expect(response).to be_ok
+      end
+    end
+  end
+
+  describe 'client recording feature flag' do
+    let(:variant_double) { instance_double(Unleash::Variant, name: variant_name) }
+    let(:variant_name) { 'on' }
+
+    before do
+      allow(Force::ShortFormService).to receive(:get).with(application_number).and_return(
+        { 'uploadURL' => 'test-upload-url',
+          'leaseupAppointmentSchedulingURL' => 'test-scheduling-url' },
+      )
+    end
+
+    def request_index
+      get :index, params: {
+        id: listing_id,
+        t: fixed_token,
+        type: 'I2A',
+        deadline: deadline,
+        act: response_value,
+        appId: application_number,
+      }
+    end
+
+    context "when the flag is enabled with the 'on' variant" do
+      before do
+        allow(Rails.configuration.unleash).to receive(:is_enabled?)
+          .with('temp.webapp.inviteToClientRecording').and_return(true)
+        allow(Rails.configuration.unleash).to receive(:get_variant)
+          .with('temp.webapp.inviteToClientRecording').and_return(variant_double)
+        request_index
+      end
+
+      it 'does not call record_response server-side' do
+        expect(DahliaBackend::MessageService).not_to have_received(:send_invite_to_response)
+      end
+
+      it "includes clientRecordingMode: 'on' in the props" do
+        expect(assigns(:invite_to_props)).to include(clientRecordingMode: 'on')
+      end
+    end
+
+    context 'when the flag is enabled with no configured variant' do
+      before do
+        allow(Rails.configuration.unleash).to receive(:is_enabled?)
+          .with('temp.webapp.inviteToClientRecording').and_return(true)
+        allow(Rails.configuration.unleash).to receive(:get_variant)
+          .with('temp.webapp.inviteToClientRecording').and_return(nil)
+        request_index
+      end
+
+      it "defaults to 'on' (skips server-side recording)" do
+        expect(DahliaBackend::MessageService).not_to have_received(:send_invite_to_response)
+        expect(assigns(:invite_to_props)).to include(clientRecordingMode: 'on')
+      end
+    end
+
+    context "when the flag is enabled with the 'shadow' variant" do
+      let(:variant_name) { 'shadow' }
+
+      before do
+        allow(Rails.configuration.unleash).to receive(:is_enabled?)
+          .with('temp.webapp.inviteToClientRecording').and_return(true)
+        allow(Rails.configuration.unleash).to receive(:get_variant)
+          .with('temp.webapp.inviteToClientRecording').and_return(variant_double)
+        request_index
+      end
+
+      it 'still records server-side on GET (unchanged applicant behavior)' do
+        expect(DahliaBackend::MessageService).to have_received(:send_invite_to_response)
+      end
+
+      it "includes clientRecordingMode: 'shadow' in the props" do
+        expect(assigns(:invite_to_props)).to include(clientRecordingMode: 'shadow')
+      end
+    end
+
+    context 'when the flag is disabled' do
+      before { request_index }
+
+      it 'still records server-side on GET with act present' do
+        expect(DahliaBackend::MessageService).to have_received(:send_invite_to_response)
+      end
+
+      it "includes clientRecordingMode: 'off' in the props" do
+        expect(assigns(:invite_to_props)).to include(clientRecordingMode: 'off')
       end
     end
   end

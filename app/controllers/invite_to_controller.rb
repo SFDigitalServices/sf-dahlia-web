@@ -1,5 +1,7 @@
 # Invite to X controller
 class InviteToController < ApplicationController
+  CLIENT_RECORDING_FLAG = 'temp.webapp.inviteToClientRecording'
+
   before_action :ignore_head_requests
 
   def index
@@ -18,7 +20,25 @@ class InviteToController < ApplicationController
         schedulingUrl: application['leaseupAppointmentSchedulingURL'],
       )
     end
-    record_response(decoded_params)
+    # 'on'     - client is the source of truth; skip server-side recording entirely.
+    # 'shadow' - keep recording server-side (unchanged behavior) but let the client run
+    #            its human-detection in parallel and log-only, so we can measure it
+    #            against real traffic before flipping to 'on'.
+    # 'off'    - legacy behavior: record server-side on GET.
+    if client_recording_mode == 'on'
+      # Resolve act/appId the same way props() does, so legacy links carrying
+      # 'response'/'applicationNumber' don't log misleading nils.
+      act = decoded_params['act'] || decoded_params['response']
+      app_id = decoded_params['appId'] || decoded_params['applicationNumber']
+      Rails.logger.info(
+        'InviteToController#index: *NOT* recording server-side, deferring to client ' \
+        "act=#{act.inspect}, " \
+        "appId=#{app_id.inspect}, " \
+        "deadline=#{decoded_params['deadline'].inspect}",
+      )
+    else
+      record_response(decoded_params)
+    end
     render 'invite_to'
   end
 
@@ -57,8 +77,26 @@ class InviteToController < ApplicationController
     {
       assetPaths: static_asset_paths,
       urlParams: url_params,
+      clientRecordingMode: client_recording_mode,
       submitPreviewLinkTokenParam: encode_token(url_params.except(:act, :response)),
     }.compact
+  end
+
+  # Resolves the rollout state of the client-side recording feature from the
+  # 'temp.webapp.inviteToClientRecording' Unleash flag:
+  #   flag disabled                       -> 'off'    (legacy server-side recording)
+  #   flag enabled, variant 'shadow'      -> 'shadow' (server records; client detects + logs)
+  #   flag enabled, any other/no variant  -> 'on'     (client records; server does not)
+  def client_recording_mode
+    return @client_recording_mode if defined?(@client_recording_mode)
+
+    @client_recording_mode =
+      if Rails.configuration.unleash.is_enabled?(CLIENT_RECORDING_FLAG)
+        variant = Rails.configuration.unleash.get_variant(CLIENT_RECORDING_FLAG)
+        variant&.name == 'shadow' ? 'shadow' : 'on'
+      else
+        'off'
+      end
   end
 
   def record_response(decoded_params)
