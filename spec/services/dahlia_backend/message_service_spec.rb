@@ -346,8 +346,10 @@ RSpec.describe DahliaBackend::MessageService do
           '/api/v1/message/housing-counselor',
           {
             action: 'ACCESS_GRANTED',
-            contactId: contact_id,
-            agencyId: agency_id,
+            data: {
+              contactId: contact_id,
+              agencyId: agency_id,
+            },
           },
         )
 

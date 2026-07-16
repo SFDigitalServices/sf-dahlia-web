@@ -106,8 +106,10 @@ module DahliaBackend
 
       fields = {
         action: action,
-        contactId: contact_id,
-        agencyId: agency_id,
+        data: {
+          contactId: contact_id,
+          agencyId: agency_id,
+        },
       }
       send_message('/api/v1/message/housing-counselor', fields)
       log_info("Sent housing counselor message with fields: #{fields}")
