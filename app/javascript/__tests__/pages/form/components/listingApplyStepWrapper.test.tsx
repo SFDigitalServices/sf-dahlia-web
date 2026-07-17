@@ -28,6 +28,7 @@ const buildFormEngineContextValue = (
       preferenceNames: {},
     },
     stepInfoMap: [{ slug: "test", fieldNames }],
+    completedSections: [],
     sectionNames: [],
     currentStepIndex: 0,
     handleNextStep: jest.fn(),

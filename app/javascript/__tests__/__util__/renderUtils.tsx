@@ -99,6 +99,7 @@ export const renderWithFormContextWrapper = (
     formData: { ...formData },
     staticData: { ...defaultStaticData, ...staticData },
     stepInfoMap: [...stepInfoMap, ...defaultStepInfoMap],
+    completedSections: [],
     sectionNames: [],
     currentStepIndex: 0,
     handleNextStep: mockHandleNextStep,

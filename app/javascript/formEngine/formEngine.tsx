@@ -24,6 +24,7 @@ interface FormEngineProps {
 const FormEngine = ({ sessionId, schema, staticData }: FormEngineProps) => {
   const [formData, setFormData] = useState<Record<string, unknown>>(generateInitialFormData(schema))
   const [currentStepIndex, setCurrentStepIndex] = useState<number>(0)
+  const [completedSections, setCompletedSections] = useState<string[]>([])
   const { unleashFlag: formEngineDebug } = useFeatureFlag(UNLEASH_FLAG.FORM_ENGINE_DEBUG, false)
   const parsedSchema = parseFormSchema(schema)
 
@@ -58,6 +59,18 @@ const FormEngine = ({ sessionId, schema, staticData }: FormEngineProps) => {
         currentFormData || formData
       )
       if (newStepIndex < totalSteps) {
+        // TODO WIP: any validation errors on a step will mark all subsequent sections as incomplete
+        // so applicants can no longer jump forward to previously completed sections
+        const currentSectionName = stepInfoMap[currentStepIndex].sectionName
+        const newSectionName = stepInfoMap[newStepIndex].sectionName
+        if (
+          currentSectionName &&
+          !completedSections.includes(currentSectionName) &&
+          currentSectionName !== newSectionName
+        ) {
+          setCompletedSections([...completedSections, currentSectionName])
+        }
+
         setCurrentStepIndex(newStepIndex)
         updateFormPath(newStepIndex, stepInfoMap)
         window.scrollTo(0, 0)
@@ -92,6 +105,7 @@ const FormEngine = ({ sessionId, schema, staticData }: FormEngineProps) => {
     formData: formData,
     saveFormData: saveFormData,
     stepInfoMap: stepInfoMap,
+    completedSections: completedSections,
     sectionNames: sectionNames,
     currentStepIndex: currentStepIndex,
     handleNextStep,
