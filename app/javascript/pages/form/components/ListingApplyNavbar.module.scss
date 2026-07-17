@@ -1,0 +1,113 @@
+.progress-nav {
+  display: table;
+  width: 100%;
+}
+
+// TODO WIP: remove unneeded styles, consolidate selectors
+
+.progress-nav-item {
+  top: var(--seeds-s0_5);
+  font-size: var(--seeds-font-size-sm);
+  position: relative;
+  text-align: center;
+  text-transform: capitalize;
+  display: table-cell;
+  white-space: normal;
+  float: none;
+  @media (min-width: theme("screens.md")) {
+    padding: 0rem;
+  }
+  @media (max-width: theme("screens.md")) {
+    font-size: var(--seeds-font-size-xs);
+  }
+
+  &:before {
+    position: absolute;
+    height: var(--seeds-s3);
+    width: var(--seeds-s3);
+    border-radius: 50%;
+    inset-block-start: 0;
+    inset-inline-start: 0.5rem;
+    content: "";
+    transform: translateX(-50%);
+    z-index: 2;
+    position: absolute;
+    left: 50%;
+    background-color: #99cd00;
+    border: var(--seeds-border-1) solid #fff;
+  }
+
+  &:after {
+    position: absolute;
+    width: 100%;
+    inset-inline-start: 0.9rem;
+    inset-block-start: 0.4rem;
+    content: "";
+    height: 1px;
+    top: var(--seeds-s1_5);
+    background-color: var(--seeds-color-gray-450);
+  }
+
+  &:first-of-type {
+    &:after {
+      inset-inline-start: 32%;
+    }
+  }
+
+  &:last-of-type {
+    &:after {
+      inset-inline-start: auto;
+      inset-inline-end: 80%;
+    }
+  }
+
+  &:first-of-type:after {
+    left: 50%;
+  }
+
+  &:last-of-type:after {
+    left: auto;
+    right: 50%;
+    z-index: 1;
+  }
+}
+
+.progress-nav-item-text {
+  color: var(--seeds-color-gray-850);
+  cursor: default;
+  display: block;
+  position: relative;
+  pointer-events: none;
+  padding-inline-end: var(--seeds-s4);
+  padding-top: var(--seeds-s5);
+  padding-left: var(--seeds-s2_5);
+  z-index: 3;
+}
+
+.is-active {
+  span {
+    color: var(--seeds-color-gray-850);
+    font-weight: var(--seeds-font-weight-bold);
+  }
+}
+
+.is-complete {
+  &:before {
+    background-color: #99cd00;
+    border: var(--seeds-border-1) solid #fff;
+  }
+}
+
+.is-active::before {
+  width: var(--seeds-s2_5);
+  height: var(--seeds-s2_5);
+  top: var(--seeds-s0_5);
+  background-color: var(--seeds-color-primary);
+}
+
+.is-disabled::before {
+  width: var(--seeds-s2_5);
+  height: var(--seeds-s2_5);
+  top: var(--seeds-s0_5);
+  background-color: var(--seeds-color-gray-450);
+}

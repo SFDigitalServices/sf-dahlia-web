@@ -3,7 +3,7 @@ import { ProgressNav, t } from "@bloom-housing/ui-components"
 import { Card, Heading } from "@bloom-housing/ui-seeds"
 import { useFormEngineContext } from "../../../formEngine/formEngineContext"
 import styles from "./ListingApplyFormWrapper.module.scss"
-
+import ListingApplyNavBar from "./ListingApplyNavbar"
 interface ListingApplyFormWrapperProps {
   currentStepIndex: number
   children: React.ReactNode
@@ -14,6 +14,7 @@ const ListingApplyFormWrapper = ({ children }: ListingApplyFormWrapperProps) => 
   const {
     staticData: { listing },
     currentStepIndex,
+    completedSections,
     stepInfoMap,
     sectionNames,
   } = formEngineContext
@@ -35,10 +36,16 @@ const ListingApplyFormWrapper = ({ children }: ListingApplyFormWrapperProps) => 
             </Card.Section>
             <Card.Section className={styles["listing-apply-form-nav"]}>
               <ProgressNav
-                labels={sectionNames}
+                labels={sectionNames.map((name) => t(name))}
                 currentPageSection={currentSectionIndex + 1}
                 completedSections={currentSectionIndex}
                 mounted={true}
+                removeSrHeader
+              />
+              <ListingApplyNavBar
+                labels={sectionNames}
+                currentPageSection={currentSectionIndex + 1}
+                completedSections={completedSections}
                 removeSrHeader
               />
             </Card.Section>

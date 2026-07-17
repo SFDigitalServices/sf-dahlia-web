@@ -22,7 +22,7 @@
     {
       "stepInfo": {
         "slug": "name",
-        "sectionName": "you"
+        "sectionName": "shortFormNav.you"
       },
       "componentType": "step",
       "componentName": "ListingApplyStepWrapper",
@@ -73,7 +73,7 @@
     {
       "stepInfo": {
         "slug": "contact",
-        "sectionName": "you"
+        "sectionName": "shortFormNav.you"
       },
       "componentType": "step",
       "componentName": "ListingApplyContactStepWrapper",
@@ -111,7 +111,7 @@
     {
       "stepInfo": {
         "slug": "verify-address",
-        "sectionName": "you",
+        "sectionName": "shortFormNav.you",
         "navigationArrival": {
           "hideStepIfAnyPresent": [
             {
@@ -131,7 +131,7 @@
     {
       "stepInfo": {
         "slug": "alternate-contact-type",
-        "sectionName": "household"
+        "sectionName": "shortFormNav.you"
       },
       "componentType": "step",
       "componentName": "ListingApplyStepWrapper",
@@ -154,7 +154,7 @@
     {
       "stepInfo": {
         "slug": "alternate-contact-name",
-        "sectionName": "household",
+        "sectionName": "shortFormNav.you",
         "navigationArrival": {
           "hideStepIfAnyPresent": [
             {
@@ -188,7 +188,7 @@
     {
       "stepInfo": {
         "slug": "alternate-contact-phone-address",
-        "sectionName": "household",
+        "sectionName": "shortFormNav.you",
         "navigationArrival": {
           "hideStepIfAnyPresent": [
             {
@@ -245,7 +245,7 @@
     {
       "stepInfo": {
         "slug": "household-intro",
-        "sectionName": "household",
+        "sectionName": "shortFormNav.household",
         "navigationArrival": {
           "hideStepIfAnyPresent": [
             {
@@ -268,7 +268,7 @@
     {
       "stepInfo": {
         "slug": "household-overview",
-        "sectionName": "household",
+        "sectionName": "shortFormNav.household",
         "navigationArrival": {
           "hideStepIfAnyPresent": [
             {
@@ -290,7 +290,7 @@
     {
       "stepInfo": {
         "slug": "household-members",
-        "sectionName": "household",
+        "sectionName": "shortFormNav.household",
         "navigationArrival": {
           "hideStepIfAnyPresent": [
             {
@@ -312,7 +312,7 @@
     {
       "stepInfo": {
         "slug": "household-public-housing",
-        "sectionName": "household",
+        "sectionName": "shortFormNav.household",
         "navigationArrival": {
           "showStepIfAnyPresent": [
             {
@@ -343,7 +343,7 @@
     {
       "stepInfo": {
         "slug": "household-monthly-rent",
-        "sectionName": "household",
+        "sectionName": "shortFormNav.household",
         "navigationArrival": {
           "showStepIfAnyPresent": [
             {
@@ -365,7 +365,7 @@
     {
       "stepInfo": {
         "slug": "household-priorities",
-        "sectionName": "household"
+        "sectionName": "shortFormNav.household"
       },
       "componentType": "step",
       "componentName": "ListingApplyStepWrapper",
@@ -392,7 +392,7 @@
     {
       "stepInfo": {
         "slug": "income-vouchers",
-        "sectionName": "income"
+        "sectionName": "shortFormNav.income"
       },
       "componentType": "step",
       "componentName": "ListingApplyStepWrapper",
@@ -416,7 +416,7 @@
     {
       "stepInfo": {
         "slug": "income-household",
-        "sectionName": "income",
+        "sectionName": "shortFormNav.income",
         "navigationArrival": {
           "showStepIfAnyPresent": [
             {
@@ -463,14 +463,14 @@
     {
       "stepInfo": {
         "slug": "preferences-intro",
-        "sectionName": "preferences"
+        "sectionName": "shortFormNav.preferences"
       },
       "componentName": "ListingApplyPreferencesIntro"
     },
     {
       "stepInfo": {
         "slug": "assisted-housing-preference",
-        "sectionName": "preferences",
+        "sectionName": "shortFormNav.preferences",
         "navigationArrival": {
           "showStepIfAllPresent": [
             {
@@ -511,7 +511,7 @@
     {
       "stepInfo": {
         "slug": "rent-burdened-preference",
-        "sectionName": "preferences",
+        "sectionName": "shortFormNav.preferences",
         "navigationArrival": {
           "showStepIfAllPresent": [
             {
@@ -543,7 +543,7 @@
     {
       "stepInfo": {
         "slug": "neighborhood-preference",
-        "sectionName": "preferences",
+        "sectionName": "shortFormNav.preferences",
         "navigationArrival": {
           "showStepIfAllPresent": [
             {
@@ -584,7 +584,7 @@
     {
       "stepInfo": {
         "slug": "adhp-preference",
-        "sectionName": "preferences",
+        "sectionName": "shortFormNav.preferences",
         "navigationArrival": {
           "showStepIfAllPresent": [
             {
@@ -628,7 +628,7 @@
     {
       "stepInfo": {
         "slug": "live-work-preference",
-        "sectionName": "preferences",
+        "sectionName": "shortFormNav.preferences",
         "navigationArrival": {
           "showStepIfAllPresent": [
             {
@@ -683,7 +683,7 @@
     {
       "stepInfo": {
         "slug": "preferences-programs",
-        "sectionName": "preferences",
+        "sectionName": "shortFormNav.preferences",
         "navigationArrival": {
           "showStepIfAnyPresent": [
             {
@@ -728,7 +728,7 @@
     {
       "stepInfo": {
         "slug": "veterans-preference",
-        "sectionName": "preferences",
+        "sectionName": "shortFormNav.preferences",
         "navigationArrival": {
           "showStepIfAnyPresent": [
             {
@@ -759,7 +759,7 @@
     {
       "stepInfo": {
         "slug": "review-optional",
-        "sectionName": "review"
+        "sectionName": "shortFormNav.review"
       },
       "componentType": "step",
       "componentName": "ListingApplyDemographics"
@@ -767,7 +767,7 @@
     {
       "stepInfo": {
         "slug": "review-summary",
-        "sectionName": "review"
+        "sectionName": "shortFormNav.review"
       },
       "componentType": "step",
       "componentName": "ListingApplyReviewSummary"
@@ -775,7 +775,7 @@
     {
       "stepInfo": {
         "slug": "review-terms",
-        "sectionName": "review"
+        "sectionName": "shortFormNav.review"
       },
       "componentType": "step",
       "componentName": "ListingApplyTerms"
@@ -783,7 +783,7 @@
     {
       "stepInfo": {
         "slug": "review-application",
-        "sectionName": "review"
+        "sectionName": "shortFormNav.review"
       },
       "componentType": "step",
       "componentName": "ListingApplyReviewApplication"
