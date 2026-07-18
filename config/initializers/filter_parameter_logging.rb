@@ -15,7 +15,13 @@ Rails.application.config.filter_parameters += [
   :additionalPhone,
   :dob,
   :DOB,
-  # address fields
+  # sensitive demographics / location (short form)
+  :gender,
+  :raceEthnicity,
+  :sexualOrientation,
+  :hiv,
+  :xCoordinate,
+  :yCoordinate,
   :address,
   :address1,
   :company,
