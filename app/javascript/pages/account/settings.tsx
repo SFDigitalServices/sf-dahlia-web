@@ -5,7 +5,7 @@ import UserContext from "../../authentication/context/UserContext"
 
 import { Form, DOBFieldValues, t } from "@bloom-housing/ui-components"
 import { DeepMap, FieldError, useForm } from "react-hook-form"
-import { Card, Alert } from "@bloom-housing/ui-seeds"
+import { Card, Alert, Button } from "@bloom-housing/ui-seeds"
 import { AppPages, RedirectType } from "../../util/routeUtil"
 import { User } from "../../authentication/user"
 import Layout from "../../layouts/Layout"
@@ -32,11 +32,16 @@ import DOBFieldset, {
   dobSortOrder,
   handleDOBServerErrors,
 } from "./components/DOBFieldset"
+import HousingCounselorAccess, {
+  housingCounselorFieldsetErrors,
+} from "./components/HousingCounselorAccess"
+import SuccessToast from "./components/SuccessToast"
 import "./styles/account.scss"
 import {
   updateNameOrDOB as apiUpdateNameOrDOB,
   updateEmail,
   updatePassword,
+  updateHousingCounselorAccess,
 } from "../../api/authApiService"
 import { FormHeader, FormSection, getDobStringFromDobObject } from "../../util/accountUtil"
 import { AxiosError } from "axios"
@@ -240,6 +245,91 @@ const PasswordSection = ({ user, setUser }: SectionProps) => {
   )
 }
 
+const HousingCounselorSection = ({ user, setUser }: SectionProps) => {
+  const { saveProfile } = useContext(UserContext)
+  const [loading, setLoading] = useState(false)
+  const [successToast, setSuccessToast] = useState<string | null>(null)
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({ mode: "onTouched" })
+  const accessShared = !!user?.housingCounselingAgencyId
+
+  const onSubmit = (data: { housingCounselingAgencyId?: string }) => {
+    if (!user) return
+
+    setLoading(true)
+    const toastMessage = accessShared
+      ? "accountSettings.housingCounselor.toastStoppedSharing"
+      : "accountSettings.housingCounselor.toastShared"
+
+    const newUser: User = accessShared
+      ? {
+          ...user,
+          housingCounselingAgencyId: null,
+        }
+      : {
+          ...user,
+          housingCounselingAgencyId: data.housingCounselingAgencyId,
+        }
+
+    updateHousingCounselorAccess(newUser)
+      .then((contact) => {
+        const updatedUser: User = {
+          ...newUser,
+          housingCounselingAgencyId: contact?.housingCounselingAgencyId,
+          housingCounselingAgencyName: contact?.housingCounselingAgencyName,
+          housingCounselingAgencyLastModified: contact?.housingCounselingAgencyLastModified,
+        }
+        setUser(updatedUser)
+        saveProfile(updatedUser)
+        setSuccessToast(toastMessage)
+      })
+      .catch(() => {
+        setSuccessToast(null)
+      })
+      .finally(() => {
+        setLoading(false)
+      })
+  }
+
+  return (
+    <>
+      {successToast && <SuccessToast>{t(successToast)}</SuccessToast>}
+      {!accessShared && (
+        <ErrorSummaryBanner
+          errors={errors}
+          messageMap={(messageKey) =>
+            getErrorMessage(messageKey, housingCounselorFieldsetErrors, true)
+          }
+        />
+      )}
+      <FormSection>
+        <Form className="p-2 md:py-2 md:px-10" onSubmit={handleSubmit(onSubmit)}>
+          <HousingCounselorAccess
+            register={register}
+            errors={errors}
+            housingCounselorAgencyId={user?.housingCounselingAgencyId}
+            lastModified={user?.housingCounselingAgencyLastModified}
+          />
+          <div className={settingsStyles.settingsButton}>
+            <Button
+              type="submit"
+              variant={accessShared ? "alert-outlined" : "primary-outlined"}
+              disabled={loading}
+            >
+              {accessShared
+                ? t("accountSettings.housingCounselor.revokeButton")
+                : t("accountSettings.housingCounselor.shareButton")}
+            </Button>
+          </div>
+        </Form>
+      </FormSection>
+    </>
+  )
+}
+
 const updateNameOrDOB = async (
   newUser: User,
   saveProfile: (profile: User) => void,
@@ -409,6 +499,10 @@ const DateOfBirthSection = ({ user, setUser }: SectionProps) => {
 }
 
 const AccountSettings = ({ profile }: { profile: User }) => {
+  const { unleashFlag: housingCounselorAccessEnabled } = useFeatureFlag(
+    UNLEASH_FLAG.HOUSING_COUNSELOR_ACCESS,
+    false
+  )
   const [user, setUser] = useState(null)
   const [nameUpdateBanner, setNameUpdateBanner] = useState(false)
   const [nameSavedBanner, setNameSavedBanner] = useState(false)
@@ -470,6 +564,7 @@ const AccountSettings = ({ profile }: { profile: User }) => {
       <DateOfBirthSection user={user} setUser={setUser} />
       <EmailSection user={user} setUser={setUser} />
       <PasswordSection user={user} setUser={setUser} />
+      {housingCounselorAccessEnabled && <HousingCounselorSection user={user} setUser={setUser} />}
     </Card>
   )
 }

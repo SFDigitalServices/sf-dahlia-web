@@ -7,16 +7,23 @@ import {
 } from "../../__util__/renderUtils"
 import SettingsPage from "../../../pages/account/settings"
 import { fireEvent, screen, within, act } from "@testing-library/react"
-import { authenticatedPut } from "../../../api/apiService"
+import { authenticatedGet, authenticatedPut } from "../../../api/apiService"
 import { mockProfileStub, setupUserContext } from "../../__util__/accountUtils"
+import { useFeatureFlag } from "../../../hooks/useFeatureFlag"
 
 jest.mock("../../../api/apiService", () => ({
   authenticatedPut: jest.fn(),
+  authenticatedGet: jest.fn(),
 }))
 
 jest.mock("../../../hooks/useFeatureFlag", () => ({
-  useFeatureFlag: () => ({ flagsReady: true, unleashFlag: true }),
+  useFeatureFlag: jest.fn(() => ({ flagsReady: true, unleashFlag: true })),
 }))
+
+const mockAgencies = [
+  { id: "123", name: "Test Agency A", shortName: "A" },
+  { id: "456", name: "Test Agency B", shortName: "B" },
+]
 
 describe("<SettingsPage />", () => {
   describe("when the user is signed in", () => {
@@ -26,7 +33,9 @@ describe("<SettingsPage />", () => {
     beforeEach(async () => {
       document.documentElement.lang = "en"
       originalLocation = mockWindowLocation()
+      ;(useFeatureFlag as jest.Mock).mockReturnValue({ flagsReady: true, unleashFlag: true })
       setupUserContext({ loggedIn: true })
+      ;(authenticatedGet as jest.Mock).mockResolvedValue({ data: { agencies: [] } })
       promise = Promise.resolve()
       await renderAndLoadAsync(<SettingsPage assetPaths={{}} />)
     })
@@ -694,11 +703,180 @@ describe("<SettingsPage />", () => {
     })
   })
 
+  describe("when the user grants their housing counselor agency access", () => {
+    let originalLocation: Location
+    let mockContext: ReturnType<typeof setupUserContext>
+
+    afterEach(() => {
+      jest.restoreAllMocks()
+      restoreWindowLocation(originalLocation)
+    })
+
+    describe("when the feature flag is enabled", () => {
+      beforeEach(async () => {
+        document.documentElement.lang = "en"
+        originalLocation = mockWindowLocation()
+        ;(useFeatureFlag as jest.Mock).mockReturnValue({ flagsReady: true, unleashFlag: true })
+        mockContext = setupUserContext({ loggedIn: true })
+        ;(authenticatedGet as jest.Mock).mockResolvedValue({ data: { agencies: mockAgencies } })
+        await renderAndLoadAsync(<SettingsPage assetPaths={{}} />)
+      })
+
+      it("renders the housing counselor section on the page", async () => {
+        expect(
+          await screen.findByRole("group", {
+            name: /share your account with a housing counselor/i,
+          })
+        ).toBeInTheDocument()
+        expect(screen.getByRole("button", { name: /share my account/i })).toBeInTheDocument()
+      })
+
+      it("shares access with a housing counselor agency when the user clicks the share button", async () => {
+        ;(authenticatedPut as jest.Mock).mockResolvedValue({
+          data: {
+            contact: {
+              ...mockProfileStub,
+              housingCounselingAgencyId: "123",
+            },
+          },
+        })
+
+        const agencySelect = await screen.findByLabelText(/counseling agency/i)
+        const agreeCheckbox = screen.getByLabelText(/i agree to share my account with this agency/i)
+        const shareButton = screen.getByRole("button", { name: /share my account/i })
+
+        await act(async () => {
+          fireEvent.change(agencySelect, { target: { value: "123" } })
+          fireEvent.click(agreeCheckbox)
+          fireEvent.click(shareButton)
+          await Promise.resolve()
+        })
+
+        expect(
+          await screen.findByText(
+            /you shared your account\. we sent a confirmation to your email\./i
+          )
+        ).toBeInTheDocument()
+        expect(authenticatedPut).toHaveBeenCalledWith(
+          "/api/v1/account/update-housing-counselor",
+          expect.objectContaining({
+            contact: expect.objectContaining({
+              housingCounselingAgencyId: "123",
+            }),
+          })
+        )
+        expect(mockContext.saveProfile).toHaveBeenCalledWith(
+          expect.objectContaining({
+            housingCounselingAgencyId: "123",
+          })
+        )
+      })
+
+      it("does not show a success toast when sharing fails", async () => {
+        ;(authenticatedPut as jest.Mock).mockRejectedValue(new Error("Network error"))
+
+        const agencySelect = await screen.findByLabelText(/counseling agency/i)
+        const agreeCheckbox = screen.getByLabelText(/i agree to share my account with this agency/i)
+        const shareButton = screen.getByRole("button", { name: /share my account/i })
+
+        await act(async () => {
+          fireEvent.change(agencySelect, { target: { value: "123" } })
+          fireEvent.click(agreeCheckbox)
+          fireEvent.click(shareButton)
+          await Promise.resolve()
+        })
+
+        expect(
+          screen.queryByText(/you shared your account\. we sent a confirmation to your email\./i)
+        ).toBeNull()
+      })
+    })
+
+    describe("when the user revokes their housing counselor agency access", () => {
+      beforeEach(async () => {
+        document.documentElement.lang = "en"
+        originalLocation = mockWindowLocation()
+        ;(useFeatureFlag as jest.Mock).mockReturnValue({ flagsReady: true, unleashFlag: true })
+        mockContext = setupUserContext({
+          loggedIn: true,
+          mockProfile: {
+            ...mockProfileStub,
+            housingCounselingAgencyId: "123",
+          },
+        })
+        ;(authenticatedGet as jest.Mock).mockResolvedValue({ data: { agencies: mockAgencies } })
+        await renderAndLoadAsync(<SettingsPage assetPaths={{}} />)
+      })
+
+      it("revokes housing counselor access when the user clicks the revoke button", async () => {
+        ;(authenticatedPut as jest.Mock).mockResolvedValue({
+          data: {
+            contact: {
+              ...mockProfileStub,
+              housingCounselingAgencyId: null,
+            },
+          },
+        })
+
+        expect(
+          await screen.findByText(/your account is shared with test agency a/i)
+        ).toBeInTheDocument()
+
+        const revokeButton = screen.getByRole("button", { name: /stop sharing/i })
+
+        await act(async () => {
+          fireEvent.click(revokeButton)
+          await Promise.resolve()
+        })
+
+        expect(
+          await screen.findByText(
+            /you stopped sharing your account\. we sent a confirmation to your email\./i
+          )
+        ).toBeInTheDocument()
+        expect(authenticatedPut).toHaveBeenCalledWith(
+          "/api/v1/account/update-housing-counselor",
+          expect.objectContaining({
+            contact: expect.objectContaining({
+              housingCounselingAgencyId: null,
+            }),
+          })
+        )
+        expect(mockContext.saveProfile).toHaveBeenCalledWith(
+          expect.objectContaining({
+            housingCounselingAgencyId: null,
+          })
+        )
+      })
+    })
+
+    describe("when the feature flag is disabled", () => {
+      beforeEach(async () => {
+        document.documentElement.lang = "en"
+        originalLocation = mockWindowLocation()
+        ;(useFeatureFlag as jest.Mock).mockReturnValue({ flagsReady: true, unleashFlag: false })
+        setupUserContext({ loggedIn: true })
+        ;(authenticatedGet as jest.Mock).mockResolvedValue({ data: { agencies: mockAgencies } })
+        await renderAndLoadAsync(<SettingsPage assetPaths={{}} />)
+      })
+
+      it("does not render the housing counselor section", () => {
+        expect(
+          screen.queryByRole("group", {
+            name: /share your account with a housing counselor/i,
+          })
+        ).toBeNull()
+        expect(screen.queryByRole("button", { name: /share my account/i })).toBeNull()
+      })
+    })
+  })
+
   describe("when the user is not signed in", () => {
     let originalLocation: Location
 
     beforeEach(async () => {
       originalLocation = mockWindowLocation()
+      ;(useFeatureFlag as jest.Mock).mockReturnValue({ flagsReady: true, unleashFlag: true })
       setupUserContext({ loggedIn: false })
 
       await renderAndLoadAsync(<SettingsPage assetPaths={{}} />)

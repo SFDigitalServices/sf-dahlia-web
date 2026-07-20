@@ -1,0 +1,11 @@
+.hcList {
+  list-style: disc;
+  padding-left: var(--seeds-s5);
+  margin: 0;
+  padding: 0 var(--seeds-spacer-content) var(--seeds-spacer-content) var(--seeds-spacer-content);
+}
+
+.hcSharedWith {
+  font-weight: var(--seeds-font-weight-semibold);
+  padding: var(--seeds-spacer-text) 0;
+}
