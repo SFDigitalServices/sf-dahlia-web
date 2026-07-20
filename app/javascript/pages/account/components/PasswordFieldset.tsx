@@ -173,14 +173,11 @@ const PasswordFieldset = ({
   labelText,
   email,
 }: PasswordFieldsetProps) => {
-  const [passwordValidationContent, setPasswordValidationContent] = React.useState("")
-  const newPassword: string = watch("password", "")
+  // Derive the validation content directly from `watch` during render. Mirroring it into
+  // state via an effect lags one keystroke behind under React 19's rendering/effect timing.
+  const passwordValidationContent: string = watch("password", "")
 
   const hasError = errors?.currentPassword || errors?.password
-
-  React.useEffect(() => {
-    setPasswordValidationContent(newPassword)
-  }, [newPassword, setPasswordValidationContent])
 
   return (
     <Fieldset hasError={hasError} label={labelText}>

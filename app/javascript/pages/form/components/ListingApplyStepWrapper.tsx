@@ -96,7 +96,10 @@ const ListingApplyStepWrapper = ({
         )}
         <Form onSubmit={formMethods.handleSubmit(onSubmit)}>
           {Children.map(children, (child) => {
-            const { schema } = (child as React.ReactElement).props
+            // React 19 types `ReactElement.props` as `unknown`; describe the shape we read.
+            const { schema } = (
+              child as React.ReactElement<{ schema?: { props?: { divider?: boolean } } }>
+            ).props
             return (
               <Card.Section divider={schema?.props?.divider === false ? undefined : "inset"}>
                 {child}

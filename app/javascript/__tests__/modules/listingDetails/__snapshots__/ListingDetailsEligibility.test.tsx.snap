@@ -335,7 +335,7 @@ exports[`ListingDetailsEligibility displays ListingDetailsChisholmPreferences fo
           >
             <svg
               aria-hidden="true"
-              class="svg-inline--fa fa-angle-down "
+              class="svg-inline--fa fa-angle-down"
               data-icon="angle-down"
               data-prefix="fas"
               focusable="false"
@@ -992,7 +992,7 @@ exports[`ListingDetailsEligibility displays custom listing details 'check if you
           >
             <svg
               aria-hidden="true"
-              class="svg-inline--fa fa-angle-down "
+              class="svg-inline--fa fa-angle-down"
               data-icon="angle-down"
               data-prefix="fas"
               focusable="false"
@@ -1632,7 +1632,7 @@ exports[`ListingDetailsEligibility displays custom listing details check if you'
           >
             <svg
               aria-hidden="true"
-              class="svg-inline--fa fa-angle-down "
+              class="svg-inline--fa fa-angle-down"
               data-icon="angle-down"
               data-prefix="fas"
               focusable="false"
@@ -2299,7 +2299,7 @@ exports[`ListingDetailsEligibility displays custom listing details check if you'
           >
             <svg
               aria-hidden="true"
-              class="svg-inline--fa fa-angle-down "
+              class="svg-inline--fa fa-angle-down"
               data-icon="angle-down"
               data-prefix="fas"
               focusable="false"
@@ -2882,7 +2882,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
           >
             <svg
               aria-hidden="true"
-              class="svg-inline--fa fa-angle-down "
+              class="svg-inline--fa fa-angle-down"
               data-icon="angle-down"
               data-prefix="fas"
               focusable="false"
@@ -3555,7 +3555,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
           >
             <svg
               aria-hidden="true"
-              class="svg-inline--fa fa-angle-down "
+              class="svg-inline--fa fa-angle-down"
               data-icon="angle-down"
               data-prefix="fas"
               focusable="false"
@@ -4237,7 +4237,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
           >
             <svg
               aria-hidden="true"
-              class="svg-inline--fa fa-angle-down "
+              class="svg-inline--fa fa-angle-down"
               data-icon="angle-down"
               data-prefix="fas"
               focusable="false"
@@ -5012,7 +5012,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
           >
             <svg
               aria-hidden="true"
-              class="svg-inline--fa fa-angle-down "
+              class="svg-inline--fa fa-angle-down"
               data-icon="angle-down"
               data-prefix="fas"
               focusable="false"
@@ -5573,7 +5573,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
           >
             <svg
               aria-hidden="true"
-              class="svg-inline--fa fa-angle-down "
+              class="svg-inline--fa fa-angle-down"
               data-icon="angle-down"
               data-prefix="fas"
               focusable="false"
@@ -6276,7 +6276,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
           >
             <svg
               aria-hidden="true"
-              class="svg-inline--fa fa-angle-down "
+              class="svg-inline--fa fa-angle-down"
               data-icon="angle-down"
               data-prefix="fas"
               focusable="false"
@@ -7356,7 +7356,7 @@ exports[`ListingDetailsEligibility does not display ListingDetailsChisholmPrefer
           >
             <svg
               aria-hidden="true"
-              class="svg-inline--fa fa-angle-down "
+              class="svg-inline--fa fa-angle-down"
               data-icon="angle-down"
               data-prefix="fas"
               focusable="false"
@@ -8001,7 +8001,7 @@ exports[`ListingDetailsEligibility does not display lottery preferences for fcfs
           >
             <svg
               aria-hidden="true"
-              class="svg-inline--fa fa-angle-down "
+              class="svg-inline--fa fa-angle-down"
               data-icon="angle-down"
               data-prefix="fas"
               focusable="false"

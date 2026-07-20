@@ -266,7 +266,7 @@ exports[`ListingDetailsHMITable does not render ListingDetailsPricingTable when 
     >
       <svg
         aria-hidden="true"
-        class="svg-inline--fa fa-angle-down "
+        class="svg-inline--fa fa-angle-down"
         data-icon="angle-down"
         data-prefix="fas"
         focusable="false"
@@ -550,7 +550,7 @@ exports[`ListingDetailsHMITable renders ListingDetailsHMITable component with re
     >
       <svg
         aria-hidden="true"
-        class="svg-inline--fa fa-angle-down "
+        class="svg-inline--fa fa-angle-down"
         data-icon="angle-down"
         data-prefix="fas"
         focusable="false"
@@ -861,7 +861,7 @@ exports[`ListingDetailsHMITable renders ListingDetailsPricingTable component wit
     >
       <svg
         aria-hidden="true"
-        class="svg-inline--fa fa-angle-down "
+        class="svg-inline--fa fa-angle-down"
         data-icon="angle-down"
         data-prefix="fas"
         focusable="false"

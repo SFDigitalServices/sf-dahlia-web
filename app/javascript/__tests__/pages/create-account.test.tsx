@@ -106,7 +106,9 @@ const mockHeaders = {
 }
 
 describe("<CreateAccount />", () => {
-  jest.setTimeout(10000)
+  // React 19's heavier renders push this form-heavy suite past the old 10s ceiling under
+  // parallel workers; give it more headroom.
+  jest.setTimeout(30000)
 
   let user
   let originalLocation: Location

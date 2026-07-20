@@ -15,7 +15,6 @@ exports[`ListingDetailsAside renders ListingDetailsAside component fcfs 1`] = `
           <img
             alt=""
             class="detail-header__image "
-            src=""
           />
         </span>
         <hgroup
@@ -393,7 +392,7 @@ exports[`ListingDetailsAside renders ListingDetailsAside component fcfs 1`] = `
                       >
                         <svg
                           aria-hidden="true"
-                          class="svg-inline--fa fa-envelope "
+                          class="svg-inline--fa fa-envelope"
                           data-icon="envelope"
                           data-prefix="fas"
                           focusable="false"
@@ -538,7 +537,6 @@ exports[`ListingDetailsAside renders ListingDetailsAside component rental 1`] = 
           <img
             alt=""
             class="detail-header__image "
-            src=""
           />
         </span>
         <hgroup
@@ -796,7 +794,6 @@ exports[`ListingDetailsAside renders ListingDetailsAside component sales 1`] = `
           <img
             alt=""
             class="detail-header__image "
-            src=""
           />
         </span>
         <hgroup
@@ -1141,7 +1138,7 @@ exports[`ListingDetailsAside renders ListingDetailsAside component sales 1`] = `
                       >
                         <svg
                           aria-hidden="true"
-                          class="svg-inline--fa fa-envelope "
+                          class="svg-inline--fa fa-envelope"
                           data-icon="envelope"
                           data-prefix="fas"
                           focusable="false"
