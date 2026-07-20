@@ -2,6 +2,18 @@
 
 module DahliaBackend
   class MessageService
+    ENDPOINTS = {
+      application_submission: '/messages/application-submission',
+      invite_to_apply_response: {
+        'yes' => '/messages/invite-to-apply/response/yes',
+        'no' => '/messages/invite-to-apply/response/no',
+        'contact' => '/messages/invite-to-apply/response/contact',
+        'submit' => '/messages/invite-to-apply/response/submit',
+      }.freeze,
+      message: '/api/v1/message',
+      housing_counselor: '/api/v1/message/housing-counselor',
+    }.freeze
+
     class << self
       # Sends application confirmation to the applicant
       # @param [Hash] application_params Parameters from the application
@@ -17,6 +29,14 @@ module DahliaBackend
                                         listing_id, _force = nil)
         new.send_invite_to_response(_deadline, _app_id, _application_number, _response, _action,
                                           listing_id, nil)
+      end
+
+      def send_housing_counselor_access(housing_counselor_action:, contact_id:, agency_id:)
+        new.send_housing_counselor_access(
+          action: housing_counselor_action,
+          contact_id: contact_id,
+          agency_id: agency_id,
+        )
       end
     end
 
@@ -38,7 +58,7 @@ module DahliaBackend
       fields = prepare_submission_fields(application_params, application_response, locale)
       return if fields.nil?
 
-      send_message('/messages/application-submission', fields)
+      send_message(ENDPOINTS[:application_submission], fields)
     rescue StandardError => e
       log_error('Error sending confirmation', e)
       nil
@@ -47,14 +67,9 @@ module DahliaBackend
     # Deprecate I2A pilot in DAH-4045
     def get_response_endpoint(act, response)
       if response && act.blank?
-        case response
-        when 'yes' then '/messages/invite-to-apply/response/yes'
-        when 'no' then '/messages/invite-to-apply/response/no'
-        when 'contact' then '/messages/invite-to-apply/response/contact'
-        when 'submit' then '/messages/invite-to-apply/response/submit'
-        end
+        ENDPOINTS[:invite_to_apply_response][response]
       elsif act.present?
-        '/api/v1/message'
+        ENDPOINTS[:message]
       else
         nil
       end
@@ -81,6 +96,32 @@ module DahliaBackend
       send_message(endpoint, fields)
     rescue StandardError => e
       log_error('Error sending I2X response', e)
+      nil
+    end
+
+    # Sends housing counselor confirmation emails for access shared or revoked
+    # @param action [String] ACCESS_GRANTED or ACCESS_REVOKED
+    # @param contact_id [String] Salesforce Contact Id of the applicant
+    # @param agency_id [String] Salesforce Account Id of the housing counselor agency
+    def send_housing_counselor_access(action:, contact_id:, agency_id:)
+      if contact_id.blank? || agency_id.blank?
+        return log_error(
+          "Null contact or agency id: action=#{action}, contactId=#{contact_id}, agencyId=#{agency_id}",
+          nil,
+        )
+      end
+
+      fields = {
+        action: action,
+        data: {
+          contactId: contact_id,
+          agencyId: agency_id,
+        },
+      }
+      send_message(ENDPOINTS[:housing_counselor], fields)
+      log_info("Sent housing counselor message with fields: #{fields}")
+    rescue StandardError => e
+      log_error('Error sending housing counselor message', e)
       nil
     end
 

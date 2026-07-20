@@ -77,7 +77,12 @@ describe("HouseholdMemberMultiStepWrapper", () => {
 
   const renderHouseholdMemberMultiStepWrapper = (formData = {}) => {
     return renderWithFormContextWrapper(
-      <HouseholdMemberMultiStepWrapper fieldNames={{ householdMembers: "householdMembers" }} />,
+      <HouseholdMemberMultiStepWrapper
+        fieldNames={{
+          householdMembers: "householdMembers",
+          showLiveWorkInSfPrefStep: "showLiveWorkInSfPrefStep",
+        }}
+      />,
       {
         stepInfoMap: [{ slug: "household-member-form", fieldNames: [] }],
         formData,

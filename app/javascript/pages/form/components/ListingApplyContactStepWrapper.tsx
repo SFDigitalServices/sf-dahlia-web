@@ -16,6 +16,7 @@ import { locateVerifiedAddress } from "../../../api/formApiService"
 import YesNoRadio from "./YesNoRadio"
 import Phone from "./Phone"
 import Address from "./Address"
+import { getLiveWorkInSfMembers } from "./household/householdUtils"
 
 interface ListingApplyContactStepWrapperProps {
   title: string
@@ -40,6 +41,7 @@ interface ListingApplyContactStepWrapperProps {
     mailingAddressState: string
     mailingAddressZipcode: string
     question: string
+    showLiveWorkInSfPrefStep: string
   }
 }
 
@@ -66,6 +68,7 @@ const ListingApplyContactStepWrapper = ({
     mailingAddressState,
     mailingAddressZipcode,
     question,
+    showLiveWorkInSfPrefStep,
   },
 }: ListingApplyContactStepWrapperProps) => {
   const formEngineContext = useFormEngineContext()
@@ -102,6 +105,11 @@ const ListingApplyContactStepWrapper = ({
 
   const onSubmit = (data: Record<string, unknown>) => {
     setLoading(true)
+    const { showLiveWorkPreference } = getLiveWorkInSfMembers({
+      ...formData,
+      ...data,
+    })
+
     const address = {
       street1: data[addressStreet] as string,
       street2: data[addressAptOrUnit] as string,
@@ -119,12 +127,17 @@ const ListingApplyContactStepWrapper = ({
     if (formData[addressVerified] === "true") {
       // Skip if the user has already verified this address
       if (alreadyVerified) {
-        handleNextStep({ ...formData, ...data })
+        handleNextStep({
+          ...formData,
+          ...data,
+          [showLiveWorkInSfPrefStep]: showLiveWorkPreference,
+        })
         return
       } else {
         // The user wants to enter a different address
         saveFormData({
           ...data,
+          [showLiveWorkInSfPrefStep]: showLiveWorkPreference,
           [addressStreet]: address.street1,
           [addressAptOrUnit]: address.street2,
           [addressCity]: address.city,
@@ -144,7 +157,7 @@ const ListingApplyContactStepWrapper = ({
           [addressState]: response.address?.state,
           [addressZipcode]: response.address?.zip,
           [addressVerified]: "false",
-          // TODO: DAH-4161
+          [showLiveWorkInSfPrefStep]: showLiveWorkPreference,
           // call to the geocoding API to check for the actual neighborhood match
           [neighborhoodPreferenceAddressMatch]: true,
         })
