@@ -2,6 +2,18 @@
 
 module DahliaBackend
   class MessageService
+    ENDPOINTS = {
+      application_submission: '/messages/application-submission',
+      invite_to_apply_response: {
+        'yes' => '/messages/invite-to-apply/response/yes',
+        'no' => '/messages/invite-to-apply/response/no',
+        'contact' => '/messages/invite-to-apply/response/contact',
+        'submit' => '/messages/invite-to-apply/response/submit',
+      }.freeze,
+      message: '/api/v1/message',
+      housing_counselor: '/api/v1/message/housing-counselor',
+    }.freeze
+
     class << self
       # Sends application confirmation to the applicant
       # @param [Hash] application_params Parameters from the application
@@ -46,7 +58,7 @@ module DahliaBackend
       fields = prepare_submission_fields(application_params, application_response, locale)
       return if fields.nil?
 
-      send_message('/messages/application-submission', fields)
+      send_message(ENDPOINTS[:application_submission], fields)
     rescue StandardError => e
       log_error('Error sending confirmation', e)
       nil
@@ -55,14 +67,9 @@ module DahliaBackend
     # Deprecate I2A pilot in DAH-4045
     def get_response_endpoint(act, response)
       if response && act.blank?
-        case response
-        when 'yes' then '/messages/invite-to-apply/response/yes'
-        when 'no' then '/messages/invite-to-apply/response/no'
-        when 'contact' then '/messages/invite-to-apply/response/contact'
-        when 'submit' then '/messages/invite-to-apply/response/submit'
-        end
+        ENDPOINTS[:invite_to_apply_response][response]
       elsif act.present?
-        '/api/v1/message'
+        ENDPOINTS[:message]
       else
         nil
       end
@@ -111,7 +118,7 @@ module DahliaBackend
           agencyId: agency_id,
         },
       }
-      send_message('/api/v1/message/housing-counselor', fields)
+      send_message(ENDPOINTS[:housing_counselor], fields)
       log_info("Sent housing counselor message with fields: #{fields}")
     rescue StandardError => e
       log_error('Error sending housing counselor message', e)
