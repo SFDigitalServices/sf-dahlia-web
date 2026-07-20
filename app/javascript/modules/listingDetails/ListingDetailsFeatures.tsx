@@ -87,7 +87,7 @@ export const ListingDetailsFeatures = ({ listing, imageSrc }: ListingDetailsFeat
   return (
     <ListingDetailItem
       imageAlt={""}
-      imageSrc={imageSrc}
+      imageSrc={imageSrc || undefined}
       title={t("listings.features.header")}
       subtitle={
         isSale(listing)

@@ -34,7 +34,7 @@ export const ListingDetailsNeighborhood = ({
           <ListingDetailItem
             desktopClass="bg-primary-lighter"
             imageAlt={""}
-            imageSrc={imageSrc}
+            imageSrc={imageSrc || undefined}
             title={t("listings.neighborhood.header")}
             subtitle={t("listings.neighborhood.subheader")}
           >
@@ -54,7 +54,7 @@ export const ListingDetailsNeighborhood = ({
           <ListingDetailItem
             desktopClass="bg-primary-lighter"
             imageAlt={""}
-            imageSrc={imageSrc}
+            imageSrc={imageSrc || undefined}
             title={t("listings.neighborhood.header.mobile")}
             subtitle={t("listings.neighborhood.subheader")}
           >
@@ -78,7 +78,7 @@ export const ListingDetailsNeighborhood = ({
     <ListingDetailItem
       desktopClass="bg-primary-lighter"
       imageAlt={""}
-      imageSrc={imageSrc}
+      imageSrc={imageSrc || undefined}
       title={t("listings.neighborhood.header")}
       subtitle={t("listings.neighborhood.subheader")}
     >

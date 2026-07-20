@@ -22,7 +22,7 @@ export const MobileListingDetailsLottery = ({ imageSrc, listing }: ListingDetail
       <Mobile>
         <ListingDetailItem
           imageAlt={""}
-          imageSrc={imageSrc}
+          imageSrc={imageSrc || undefined}
           title={t("lottery")}
           subtitle={t("lottery.lotteryInfoSubheader")}
         >
