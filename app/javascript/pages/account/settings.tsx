@@ -37,6 +37,7 @@ import HousingCounselorAccess, {
 } from "./components/HousingCounselorAccess"
 import SuccessToast from "./components/SuccessToast"
 import "./styles/account.scss"
+import sharedStyles from "./shared-styles.module.scss"
 import {
   updateNameOrDOB as apiUpdateNameOrDOB,
   updateEmail,
@@ -534,7 +535,7 @@ const AccountSettings = ({ profile }: { profile: User }) => {
   }, [profile])
 
   return (
-    <Card className={`w-full pb-8 ${settingsStyles.settingsCard}`}>
+    <Card className={sharedStyles.card}>
       {nameUpdateBanner || nameSavedBanner ? (
         <FormHeader
           className={"border-none"}

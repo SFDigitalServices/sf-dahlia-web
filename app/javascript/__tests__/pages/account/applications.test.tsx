@@ -58,7 +58,9 @@ describe("<ApplicationsPage />", () => {
       const { queryByRole } = await renderAndLoadAsync(<ApplicationsPage assetPaths={{}} />)
 
       expect(window.location.assign).toHaveBeenCalledWith("/sign-in?redirect=applications")
-      expect(queryByRole("heading", { name: "My applications", level: 1 })).toBeNull()
+      expect(
+        queryByRole("heading", { name: "Applications and lottery results", level: 1 })
+      ).toBeNull()
     })
   })
 
@@ -74,7 +76,9 @@ describe("<ApplicationsPage />", () => {
 
     it("shows the correct header text", async () => {
       await renderAndLoadAsync(<ApplicationsPage assetPaths={{}} />)
-      expect(screen.getByRole("heading", { name: "My applications", level: 1 })).not.toBeNull()
+      expect(
+        screen.getByRole("heading", { name: "Applications and lottery results", level: 1 })
+      ).not.toBeNull()
     })
 
     it("calls getApplications", async () => {
@@ -157,7 +161,9 @@ describe("<ApplicationsPage />", () => {
             <div id="seeds-overlay-portal" />
           </>
         )
-        expect(screen.getByRole("heading", { name: "My applications", level: 1 })).not.toBeNull()
+        expect(
+          screen.getByRole("heading", { name: "Applications and lottery results", level: 1 })
+        ).not.toBeNull()
 
         fireEvent.click(screen.getByRole("button", { name: /Delete/i }))
 
