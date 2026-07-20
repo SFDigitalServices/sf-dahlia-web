@@ -52,6 +52,7 @@ import { withAuthentication } from "../../authentication/withAuthentication"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import { UNLEASH_FLAG } from "../../modules/constants"
 import { AccountSettingsPage as MyAccountSettingsPage } from "./account-settings"
+import settingsStyles from "./settings.module.scss"
 
 const Banner = ({
   showBanner,
