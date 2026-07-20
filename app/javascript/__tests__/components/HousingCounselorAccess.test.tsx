@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import React from "react"
-import { render, screen } from "@testing-library/react"
+import { render, screen, waitFor } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
 import { useForm } from "react-hook-form"
 import { t } from "@bloom-housing/ui-components"
@@ -8,13 +8,26 @@ import HousingCounselorAccess, {
   housingCounselorFieldsetErrors,
 } from "../../pages/account/components/HousingCounselorAccess"
 import { getErrorMessage } from "../../pages/account/components/util"
-import { localizedFormat } from "../../util/languageUtil"
+import { localizedFormat, formatTimeOfDay } from "../../util/languageUtil"
+import { getHousingCounselorAgencies } from "../../api/authApiService"
 
 jest.mock("../../util/languageUtil", () => ({
   ...jest.requireActual("../../util/languageUtil"),
   localizedFormat: jest.fn(),
+  formatTimeOfDay: jest.fn(),
 }))
 const mockLocalizedFormat = jest.mocked(localizedFormat)
+const mockFormatTimeOfDay = jest.mocked(formatTimeOfDay)
+
+jest.mock("../../api/authApiService", () => ({
+  getHousingCounselorAgencies: jest.fn(),
+}))
+const mockGetHousingCounselorAgencies = jest.mocked(getHousingCounselorAgencies)
+
+const mockAgencies = [
+  { id: "123", name: "Test Agency A", shortName: "A" },
+  { id: "456", name: "Test Agency B", shortName: "B" },
+]
 
 const ShareAccessWrapper = () => {
   const {
@@ -33,16 +46,20 @@ const ShareAccessWrapper = () => {
 
 describe("HousingCounselorAccess", () => {
   beforeEach(() => {
-    mockLocalizedFormat.mockReturnValue("January 1, 2020 at 12:00 AM")
+    mockLocalizedFormat.mockReturnValue("January 1, 2020")
+    mockFormatTimeOfDay.mockReturnValue("12:00 AM")
+    mockGetHousingCounselorAgencies.mockResolvedValue(mockAgencies)
   })
 
   describe("Share HC access", () => {
-    it("renders the content to share access with an HC agency", () => {
+    it("renders the content to share access with an HC agency", async () => {
       render(<ShareAccessWrapper />)
 
-      expect(
-        screen.getByRole("group", { name: t("accountSettings.housingCounselor.heading") })
-      ).toBeInTheDocument()
+      await waitFor(() => {
+        expect(
+          screen.getByRole("group", { name: t("accountSettings.housingCounselor.heading") })
+        ).toBeInTheDocument()
+      })
       expect(
         screen.getByText(t("accountSettings.housingCounselor.description"))
       ).toBeInTheDocument()
@@ -55,9 +72,23 @@ describe("HousingCounselorAccess", () => {
       expect(screen.queryByText(t("accountSettings.housingCounselor.checkboxError"))).toBeNull()
     })
 
+    it("populates the agency select with agencies from the API", async () => {
+      render(<ShareAccessWrapper />)
+
+      const agencySelect = await screen.findByLabelText(t("accountSettings.housingCounselor.label"))
+      expect(agencySelect).toContainHTML("Test Agency A")
+      expect(agencySelect).toContainHTML("Test Agency B")
+    })
+
     it("renders validation errors when required fields are missing", async () => {
       const user = userEvent.setup()
       render(<ShareAccessWrapper />)
+
+      await waitFor(() => {
+        expect(
+          screen.getByLabelText(t("accountSettings.housingCounselor.label"))
+        ).toBeInTheDocument()
+      })
 
       await user.click(
         screen.getByRole("button", { name: t("accountSettings.housingCounselor.shareButton") })
@@ -71,18 +102,24 @@ describe("HousingCounselorAccess", () => {
   })
 
   describe("Revoke HC access", () => {
-    it("renders the content about the current HC agency with access", () => {
-      render(<HousingCounselorAccess register={jest.fn()} housingCounselorAgency="Test Agency A" />)
+    it("renders the content about the current HC agency with access", async () => {
+      render(
+        <HousingCounselorAccess
+          register={jest.fn()}
+          housingCounselorAgencyId="123"
+          lastModified="2020-01-01T00:00:00Z"
+        />
+      )
 
+      await waitFor(() => {
+        expect(
+          screen.getByText(
+            t("accountSettings.housingCounselor.sharedWith", { agencyName: "Test Agency A" })
+          )
+        ).toBeInTheDocument()
+      })
       expect(
-        screen.getByText(
-          t("accountSettings.housingCounselor.sharedWith", { agencyName: "Test Agency A" })
-        )
-      ).toBeInTheDocument()
-      expect(
-        screen.getByText(
-          t("accountSettings.housingCounselor.agencyCan", { agencyName: "Test Agency A" })
-        )
+        screen.getByText(t("accountSettings.housingCounselor.agencyCan", { agencyName: "A" }))
       ).toBeInTheDocument()
       expect(
         screen.getByText(
@@ -95,17 +132,33 @@ describe("HousingCounselorAccess", () => {
       expect(screen.queryByLabelText(t("accountSettings.housingCounselor.label"))).toBeNull()
       expect(screen.queryByLabelText(t("accountSettings.housingCounselor.checkbox"))).toBeNull()
     })
+
+    it("falls back to the agency name when shortName is null", async () => {
+      mockGetHousingCounselorAgencies.mockResolvedValue([
+        { id: "123", name: "Test Agency A", shortName: null },
+      ])
+
+      render(<HousingCounselorAccess register={jest.fn()} housingCounselorAgencyId="123" />)
+
+      await waitFor(() => {
+        expect(
+          screen.getByText(
+            t("accountSettings.housingCounselor.agencyCan", { agencyName: "Test Agency A" })
+          )
+        ).toBeInTheDocument()
+      })
+    })
   })
 
   describe("Housing counselor access fieldset errors", () => {
     const testCases = [
       {
-        key: "housingCounselorAgency:missing",
+        key: "housingCounselingAgencyId:missing",
         abbreviated: false,
         expected: "accountSettings.housingCounselor.fieldError",
       },
       {
-        key: "housingCounselorAgency:missing",
+        key: "housingCounselingAgencyId:missing",
         abbreviated: true,
         expected: "accountSettings.housingCounselor.fieldError",
       },

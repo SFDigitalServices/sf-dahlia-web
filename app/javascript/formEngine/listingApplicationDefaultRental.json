@@ -104,7 +104,8 @@
           "mailingAddressCity": "primaryApplicantMailingAddressCity",
           "mailingAddressState": "primaryApplicantMailingAddressState",
           "mailingAddressZipcode": "primaryApplicantMailingAddressZipcode",
-          "question": "primaryApplicantWorkInSf"
+          "question": "primaryApplicantWorkInSf",
+          "showLiveWorkInSfPrefStep": "_showLiveWorkInSfPrefStep"
         }
       }
     },
@@ -305,7 +306,8 @@
       "componentName": "HouseholdMemberMultiStepWrapper",
       "props": {
         "fieldNames": {
-          "householdMembers": "householdMembers"
+          "householdMembers": "householdMembers",
+          "showLiveWorkInSfPrefStep": "_showLiveWorkInSfPrefStep"
         }
       }
     },
@@ -644,7 +646,7 @@
             },
             {
               "dataSource": "form",
-              "dataKey": "_addressNeighborhoodMatch"
+              "dataKey": "_showLiveWorkInSfPrefStep"
             }
           ]
         }

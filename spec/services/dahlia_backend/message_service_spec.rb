@@ -318,4 +318,110 @@ RSpec.describe DahliaBackend::MessageService do
       end
     end
   end
+
+  describe '.send_housing_counselor_access' do
+    it 'creates a new instance and calls the instance method' do
+      expect_any_instance_of(described_class).to receive(:send_housing_counselor_access)
+        .with(action: 'ACCESS_GRANTED', contact_id: '123', agency_id: '456')
+
+      described_class.send_housing_counselor_access(
+        housing_counselor_action: 'ACCESS_GRANTED',
+        contact_id: '123',
+        agency_id: '456',
+      )
+    end
+  end
+
+  describe '#send_housing_counselor_access' do
+    let(:contact_id) { '123' }
+    let(:agency_id) { '456' }
+
+    context 'with valid parameters' do
+      before do
+        allow(client).to receive(:post).and_return({ success: true })
+      end
+
+      it 'posts the housing counselor message' do
+        expect(client).to receive(:post).with(
+          '/api/v1/message/housing-counselor',
+          {
+            action: 'ACCESS_GRANTED',
+            data: {
+              contactId: contact_id,
+              agencyId: agency_id,
+            },
+          },
+        )
+
+        service.send_housing_counselor_access(
+          action: 'ACCESS_GRANTED',
+          contact_id: contact_id,
+          agency_id: agency_id,
+        )
+      end
+
+      it 'logs success' do
+        service.send_housing_counselor_access(
+          action: 'ACCESS_REVOKED',
+          contact_id: contact_id,
+          agency_id: agency_id,
+        )
+
+        expect(Rails.logger).to have_received(:info).with(
+          a_string_including('Sent housing counselor message'),
+        )
+      end
+    end
+
+    context 'when contact_id is blank' do
+      it 'logs an error and does not post' do
+        expect(client).not_to receive(:post)
+
+        service.send_housing_counselor_access(
+          action: 'ACCESS_GRANTED',
+          contact_id: nil,
+          agency_id: agency_id,
+        )
+
+        expect(Rails.logger).to have_received(:error).with(
+          a_string_including('Null contact or agency id'),
+        )
+      end
+    end
+
+    context 'when agency_id is blank' do
+      it 'logs an error and does not post' do
+        expect(client).not_to receive(:post)
+
+        service.send_housing_counselor_access(
+          action: 'ACCESS_REVOKED',
+          contact_id: contact_id,
+          agency_id: '',
+        )
+
+        expect(Rails.logger).to have_received(:error).with(
+          a_string_including('Null contact or agency id'),
+        )
+      end
+    end
+
+    context 'when an error occurs' do
+      before do
+        allow(client).to receive(:post).and_raise(StandardError, 'Service Error')
+      end
+
+      it 'logs the error and returns nil' do
+        result = service.send_housing_counselor_access(
+          action: 'ACCESS_GRANTED',
+          contact_id: contact_id,
+          agency_id: agency_id,
+        )
+
+        expect(result).to be_nil
+        expect(Rails.logger).to have_received(:error).with(
+          a_string_including('Error sending housing counselor message'),
+        )
+      end
+    end
+  end
 end

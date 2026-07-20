@@ -7,7 +7,11 @@ import getFormComponentRegistry from "../../../../formEngine/formComponentRegist
 import ListingApplyStepErrorMessage from "../ListingApplyStepErrorMessage"
 import PreferenceToClaim from "./PreferenceToClaim"
 import PreferenceToClaimCombo from "./PreferenceToClaimCombo"
-import { generateStepDefaultValues, getNestedError } from "../../../../util/formEngineUtil"
+import {
+  generateStepDefaultValues,
+  getNestedError,
+  useResetClaimedLiveWorkPreferences,
+} from "../../../../util/formEngineUtil"
 import { renderInlineMarkup } from "../../../../util/languageUtil"
 import {
   type ClaimedPreference,
@@ -17,6 +21,7 @@ import {
 } from "./PreferenceUtils"
 import styles from "./ListingApplyPreferenceStepWrapper.module.scss"
 import stepStyles from "../ListingApplyStepWrapper.module.scss"
+import { getLiveWorkInSfMembers } from "../household/householdUtils"
 
 interface ListingApplyPreferenceStepWrapperProps {
   greenHeader?: boolean
@@ -62,6 +67,17 @@ const ListingApplyPreferenceStepWrapper = ({
   const preferences = staticData.preferences!
   const currentStepInfo = stepInfoMap[currentStepIndex]
 
+  // Determine which live/work fields to show based on eligibility
+  const { livesInSf, worksInSf, liveWorksInSf } = getLiveWorkInSfMembers({
+    ...formData,
+  })
+  const showComboPreference = comboPreference && subPreferenceClaimed && liveWorksInSf
+  const eligiblePreferenceContents = preferenceContents.filter((content) => {
+    if (content.preferenceName === "liveInSf") return livesInSf
+    if (content.preferenceName === "workInSf") return worksInSf
+    return true
+  })
+
   let headerComponent
   if (headerComponentName) {
     const componentRegistry = getFormComponentRegistry()
@@ -94,7 +110,7 @@ const ListingApplyPreferenceStepWrapper = ({
       ClaimedPreference
     >
     const defaultClaimedPreferencesValues = {
-      ...preferenceContents.reduce(
+      ...eligiblePreferenceContents.reduce(
         (acc, preferenceContent) => ({
           ...acc,
           [preferenceContent.preferenceName]:
@@ -102,7 +118,7 @@ const ListingApplyPreferenceStepWrapper = ({
         }),
         {} as Record<string, ClaimedPreference>
       ),
-      ...(comboPreference && {
+      ...(showComboPreference && {
         [comboPreference.preferenceName]:
           claimedPreferencesValue[comboPreference.preferenceName] || {},
       }),
@@ -116,22 +132,23 @@ const ListingApplyPreferenceStepWrapper = ({
     /* eslint-disable-next-line react-hooks/exhaustive-deps */
   }, [reset])
 
+  // If live/work status is updated on other pages, reset claimed preferences
+  useResetClaimedLiveWorkPreferences({
+    setValue,
+    claimedPreferences,
+    subPreferenceClaimed,
+    comboPreferenceName: comboPreference?.preferenceName,
+    showComboPreference: !!showComboPreference,
+    livesInSf,
+    worksInSf,
+    formData,
+    saveFormData,
+  })
+
   const errorSectionRef = useRef<HTMLDivElement>(null)
   const [showRequiredCheckboxError, setShowRequiredCheckboxError] = useState(false)
   const [showGenericError, setShowGenericError] = useState(false)
   const [showMissingDocumentError, setShowMissingDocumentError] = useState(false)
-
-  /*************
-   * TODO: DAH-4160
-   * Conditionally render the comboPreference based on the live/work status of household members
-   * for reference, the Angular function that checks these conditions is named `Service.showPreference`
-   * If live/work statuses get modified on other form pages, we may need to reset this page
-   */
-  // useEffect(() => {
-  //   if (comboPreference) {
-  //     console.log(formData.householdMembers)
-  //   }
-  // }, [comboPreference])
 
   // checks for any errors *except* preference-to-claim checkbox field errors
   const showErrorHeaders = () => {
@@ -295,7 +312,7 @@ const ListingApplyPreferenceStepWrapper = ({
       <Form onSubmit={handleSubmit(onSubmit, onError)}>
         <Card.Section>
           <p className={styles["preference-instructions"]}>{t("label.pleaseSelectPreference")}</p>
-          {comboPreference && subPreferenceClaimed && (
+          {showComboPreference && (
             <PreferenceToClaimCombo
               checkboxLabel={comboPreference.checkboxLabel}
               checkboxDescription={comboPreference.checkboxDescription}
@@ -316,8 +333,8 @@ const ListingApplyPreferenceStepWrapper = ({
               }
             />
           )}
-          {!comboPreference &&
-            preferenceContents.map((content) => (
+          {!showComboPreference &&
+            eligiblePreferenceContents.map((content) => (
               <PreferenceToClaim
                 key={content.preferenceName}
                 showRequiredCheckboxError={showRequiredCheckboxError}

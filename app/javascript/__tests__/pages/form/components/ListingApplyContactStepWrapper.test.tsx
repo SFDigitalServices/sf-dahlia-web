@@ -43,6 +43,7 @@ const renderListingApplyContactStepWrapper = (formData: Record<string, unknown> 
         mailingAddressState: "mailingAddressState",
         mailingAddressZipcode: "mailingAddressZipcode",
         question: "question",
+        showLiveWorkInSfPrefStep: "showLiveWorkInSfPrefStep",
       }}
     />,
     {
@@ -179,5 +180,25 @@ describe("ListingApplyContactStepWrapper", () => {
     await waitFor(() => {
       expect(screen.getByText(t("error.addressValidationPoBox"))).toBeInTheDocument()
     })
+  })
+
+  it("skips verification when the address is already verified", async () => {
+    const { mockHandleNextStep } = renderListingApplyContactStepWrapper({
+      addressStreet: "123 Main St",
+      addressAptOrUnit: "Apt 4B",
+      addressCity: "San Francisco",
+      addressState: "CA",
+      addressZipcode: "94105",
+      addressVerified: "true",
+      phone: "111-111-1111",
+      phoneType: "cell",
+      noPhoneCheckbox: false,
+      question: "false",
+    })
+
+    await userEvent.setup().click(screen.getByRole("button", { name: /next/i }))
+
+    await waitFor(() => expect(mockHandleNextStep).toHaveBeenCalled())
+    expect(mockLocateVerifiedAddress).not.toHaveBeenCalled()
   })
 })

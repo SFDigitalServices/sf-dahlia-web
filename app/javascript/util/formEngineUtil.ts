@@ -3,6 +3,8 @@ import dayjs, { type Dayjs } from "dayjs"
 import customParseFormat from "dayjs/plugin/customParseFormat"
 import { t } from "@bloom-housing/ui-components"
 import { type Address } from "../api/formApiService"
+import { useEffect } from "react"
+import { ClaimedPreference } from "../pages/form/components/preferences/PreferenceUtils"
 
 export const translationFromDataSchema = (
   translationKey: string,
@@ -47,18 +49,6 @@ export const showStep = (
   }
   return true
 }
-
-/****************
- * TODO: DAH-4160
- * Modify condition logic to handle more complex navigation scenarios
- * e.g. showing the live/work preference based on the live/work status of household members
- */
-// export const processCondition = (condition, dataSources) => {
-//   if (condition.customFunctionName) {
-//     return customFunctionRegistry[condition.customFunctionName](dataSources)
-//   }
-//  ...
-// }
 
 export const calculateNextStep = (
   currentStepIndex: number,
@@ -289,4 +279,73 @@ export const getNestedError = (
     if (acc && typeof acc === "object") return acc[key] as Record<string, unknown> | undefined
     return undefined
   }, errors)
+}
+
+/**
+ * If live/work eligibility was changed on other form pages, removes stale
+ * live/work claimed preferences (and the sub-preference selection) from
+ * formData on mount. Other claimed preferences are untouched.
+ */
+export const useResetClaimedLiveWorkPreferences = ({
+  setValue,
+  claimedPreferences,
+  subPreferenceClaimed,
+  comboPreferenceName,
+  showComboPreference,
+  livesInSf,
+  worksInSf,
+  formData,
+  saveFormData,
+}: {
+  setValue: (name: string, value: unknown) => void
+  claimedPreferences: string
+  subPreferenceClaimed?: string
+  comboPreferenceName?: string
+  showComboPreference: boolean
+  livesInSf: boolean
+  worksInSf: boolean
+  formData: Record<string, unknown>
+  saveFormData: (data: Record<string, unknown>) => void
+}) => {
+  useEffect(() => {
+    const existingClaimedPreferences = (formData[claimedPreferences] || {}) as Record<
+      string,
+      ClaimedPreference
+    >
+    const stalePreferences: string[] = []
+    if (!livesInSf) stalePreferences.push("liveInSf")
+    if (!worksInSf) stalePreferences.push("workInSf")
+    if (comboPreferenceName && !showComboPreference) stalePreferences.push(comboPreferenceName)
+
+    const claimedPreferencesToRemove = stalePreferences.filter(
+      (key) => existingClaimedPreferences[key]?.preferenceClaimed
+    )
+
+    const subPreferenceValue = subPreferenceClaimed
+      ? (formData[subPreferenceClaimed] as string)
+      : ""
+    const hasStaleSubPreference =
+      (subPreferenceValue === "liveInSf" && !livesInSf) ||
+      (subPreferenceValue === "workInSf" && !worksInSf)
+
+    if (claimedPreferencesToRemove.length === 0 && !hasStaleSubPreference) return
+
+    const updatedClaimedPreferences = Object.fromEntries(
+      Object.entries(existingClaimedPreferences).filter(
+        ([key]) => !claimedPreferencesToRemove.includes(key)
+      )
+    )
+
+    // TODO: DAH-4122 Delete uploaded preference proof files
+    if (hasStaleSubPreference && subPreferenceClaimed) {
+      setValue(subPreferenceClaimed, "")
+      saveFormData({
+        [claimedPreferences]: updatedClaimedPreferences,
+        [subPreferenceClaimed]: "",
+      })
+    } else {
+      saveFormData({ [claimedPreferences]: updatedClaimedPreferences })
+    }
+    /* eslint-disable-next-line react-hooks/exhaustive-deps */
+  }, [])
 }
