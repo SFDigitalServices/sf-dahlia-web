@@ -268,6 +268,8 @@ const CreateAccount = (_props: CreateAccountProps) => {
   )
 }
 
+export { CreateAccount }
+
 export default withAppSetup(CreateAccount, {
   useFormTimeout: true,
   pageName: AppPages.CreateAccount,
