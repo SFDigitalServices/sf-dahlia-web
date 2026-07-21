@@ -5,3 +5,9 @@
     border-right: none;
   }
 }
+
+.settingsButton {
+  display: flex;
+  justify-content: center;
+  padding-top: var(--seeds-spacer-text);
+}

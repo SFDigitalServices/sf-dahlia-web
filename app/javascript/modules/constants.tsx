@@ -162,10 +162,11 @@ export const DIRECTORY_PAGE_HEADER = "page-header"
 
 // Unleash feature flags
 export const UNLEASH_FLAG = {
+  ACCOUNTS_LAYOUT: "temp.webapp.newAccountLayout",
   CLERK_AUTH: "temp.webapp.auth.clerk",
   FORM_ENGINE: "perm.webapp.formEngine",
   FORM_ENGINE_DEBUG: "perm.webapp.formEngine.debug",
-  ACCOUNTS_LAYOUT: "temp.webapp.newAccountLayout",
+  HOUSING_COUNSELOR_ACCESS: "temp.all.housingCounselorAccess",
 }
 
 export const LISTING_APPLY_FORMS_INPUT_MAX_LENGTH = {
