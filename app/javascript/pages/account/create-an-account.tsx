@@ -1,11 +1,13 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import React from "react"
+import { useSignUp } from "@clerk/clerk-react"
 import { Form, t } from "@bloom-housing/ui-components"
 import { Card, Heading, Link, Button } from "@bloom-housing/ui-seeds"
 import { useForm } from "react-hook-form"
 import withAppSetup from "../../layouts/withAppSetup"
 import Layout from "../../layouts/Layout"
 import { AppPages, getAssistancePath, getSignInPath } from "../../util/routeUtil"
+import { getCurrentLanguage } from "../../util/languageUtil"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import { UNLEASH_FLAG } from "../../modules/constants"
 import { CreateAccount } from "./create-account"
@@ -18,16 +20,27 @@ interface CreateAnAccountProps {
   assetPaths: unknown
 }
 
-const onSubmit = (_data: { email: string }) => {
-  console.log("Create an account submitted", _data)
-}
-
 const CreateAnAccountPage = () => {
+  const { isLoaded, signUp } = useSignUp()
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({ mode: "onTouched", shouldFocusError: false })
+  } = useForm<{ email: string }>({ mode: "onTouched", shouldFocusError: false })
+  const onSubmit = async ({ email }: { email: string }) => {
+    if (!isLoaded || !signUp) return
+    const locale = getCurrentLanguage()
+    try {
+      await signUp.create({
+        emailAddress: email,
+        locale,
+        unsafeMetadata: { locale }, // Account creation can only update public metadata
+      })
+      await signUp.prepareEmailAddressVerification({ strategy: "email_code" })
+    } catch (error) {
+      console.error("Account creation error", error)
+    }
+  }
 
   return (
     <Layout title={t("pageTitle.createAccount")}>
@@ -41,7 +54,7 @@ const CreateAnAccountPage = () => {
               <p className="field-note">{t("createAccount.codeDescription")}</p>
               <Form onSubmit={handleSubmit(onSubmit)}>
                 <EmailFieldset register={register} errors={errors} />
-                <Button variant="primary" size="sm" type="submit">
+                <Button variant="primary" size="sm" type="submit" disabled={!isLoaded}>
                   {t("createAccount.getCode")}
                 </Button>
               </Form>
