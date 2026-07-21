@@ -96,10 +96,15 @@ const ListingApplyStepWrapper = ({
         )}
         <Form onSubmit={formMethods.handleSubmit(onSubmit)}>
           {Children.map(children, (child) => {
-            // React 19 types `ReactElement.props` as `unknown`; describe the shape we read.
-            const { schema } = (
-              child as React.ReactElement<{ schema?: { props?: { divider?: boolean } } }>
-            ).props
+            // `children` may include non-element values (e.g. `false` from a conditional
+            // `{cond && <X/>}`, strings, or null). Guard with isValidElement before reading
+            // `.props`, since React 19 types `ReactElement.props` as `unknown` and an unsafe
+            // cast here would throw at runtime for non-element children.
+            const schema = React.isValidElement<{ schema?: { props?: { divider?: boolean } } }>(
+              child
+            )
+              ? child.props.schema
+              : undefined
             return (
               <Card.Section divider={schema?.props?.divider === false ? undefined : "inset"}>
                 {child}
