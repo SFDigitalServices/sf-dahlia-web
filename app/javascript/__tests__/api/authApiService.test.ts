@@ -16,6 +16,8 @@ import {
   deleteApplication,
   resetPassword,
   updatePhone,
+  getHousingCounselorAgencies,
+  updateHousingCounselorAccess,
 } from "../../api/authApiService"
 import { mockProfileStub } from "../__util__/accountUtils"
 
@@ -154,8 +156,61 @@ describe("authApiService", () => {
           phoneType: mockProfileStub.phoneType,
           alternatePhone: mockProfileStub.alternatePhone,
           alternatePhoneType: mockProfileStub.alternatePhoneType,
+          housingCounselingAgencyId: mockProfileStub.housingCounselingAgencyId,
         },
       })
+    })
+  })
+
+  describe("getHousingCounselorAgencies", () => {
+    it("calls apiService authenticatedGet and returns agencies", async () => {
+      const agencies = [
+        { id: "123", name: "Test Agency A", shortName: "A" },
+        { id: "456", name: "Test Agency B", shortName: "B" },
+      ]
+      ;(authenticatedGet as jest.Mock).mockResolvedValue({ data: { agencies } })
+      const result = await getHousingCounselorAgencies()
+      expect(authenticatedGet).toHaveBeenCalledWith("/api/v1/housing-counselor/agencies")
+      expect(result).toEqual(agencies)
+    })
+  })
+
+  describe("updateHousingCounselorAccess", () => {
+    it("calls apiService authenticatedPut with the contact and agency id", async () => {
+      await updateHousingCounselorAccess(mockProfileStub)
+      expect(authenticatedPut).toHaveBeenCalledWith("/api/v1/account/update-housing-counselor", {
+        contact: {
+          email: mockProfileStub.email,
+          firstName: mockProfileStub.firstName,
+          middleName: mockProfileStub.middleName,
+          lastName: mockProfileStub.lastName,
+          DOB: mockProfileStub.DOB,
+          phone: mockProfileStub.phone,
+          phoneType: mockProfileStub.phoneType,
+          alternatePhone: mockProfileStub.alternatePhone,
+          alternatePhoneType: mockProfileStub.alternatePhoneType,
+          housingCounselingAgencyId: mockProfileStub.housingCounselingAgencyId,
+        },
+      })
+    })
+
+    it("calls update-housing-counselor to clear housingCounselingAgencyId", async () => {
+      const user = {
+        ...mockProfileStub,
+        housingCounselingAgencyId: null,
+      }
+      ;(authenticatedPut as jest.Mock).mockResolvedValue({ data: { contact: user } })
+
+      await updateHousingCounselorAccess(user)
+
+      expect(authenticatedPut).toHaveBeenCalledWith(
+        "/api/v1/account/update-housing-counselor",
+        expect.objectContaining({
+          contact: expect.objectContaining({
+            housingCounselingAgencyId: null,
+          }),
+        })
+      )
     })
   })
 

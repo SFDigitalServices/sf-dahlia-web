@@ -17,6 +17,7 @@ import {
 import { withAuthentication } from "../../authentication/withAuthentication"
 import { ConfigContext } from "../../lib/ConfigContext"
 import styles from "./contact.module.scss"
+import sharedStyles from "./shared-styles.module.scss"
 import UserContext from "../../authentication/context/UserContext"
 import { User } from "../../authentication/user"
 import { renderInlineMarkup } from "../../util/languageUtil"
@@ -129,12 +130,12 @@ const Contact = () => {
   return (
     <Layout>
       <AccountLayout>
-        <Card className={styles.contactCard}>
-          <Card.Header className={styles.header}>
-            <div className={styles.iconBackground}>
+        <Card className={sharedStyles.card}>
+          <Card.Header className={sharedStyles.header}>
+            <div className={sharedStyles.iconBackground}>
               <img src={getAssetPath("contact-info.svg")} alt="" className={styles.icon} />
             </div>
-            <Heading priority={1} size="2xl" className={styles.heading}>
+            <Heading priority={1} size="2xl" className={sharedStyles.heading}>
               {t("accountLayout.contact.title")}
             </Heading>
             <p className="field-note text-base">{t("accountLayout.contact.subtitle")}</p>

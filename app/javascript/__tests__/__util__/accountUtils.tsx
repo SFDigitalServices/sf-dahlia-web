@@ -16,6 +16,7 @@ export const mockProfileStub: User = {
   phoneType: "Home",
   alternatePhone: "222-222-2222",
   alternatePhoneType: "Cell",
+  housingCounselingAgencyId: null,
 }
 
 export const setupUserContext = ({
