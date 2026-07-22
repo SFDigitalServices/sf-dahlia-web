@@ -113,7 +113,7 @@ export interface GISDataResponse {
 }
 
 export const getNeighborhoodPreferenceMatch = async (
-  address: { street1: string; street2: string; city: string; state: string; zip: string },
+  address: Address,
   staticData: StaticData,
   applicantInfo: { firstName: string; middleName: string; lastName: string; dob: string }
 ): Promise<boolean | null> => {

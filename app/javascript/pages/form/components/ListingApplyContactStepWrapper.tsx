@@ -12,11 +12,12 @@ import {
 } from "../../../util/formEngineUtil"
 import styles from "./ListingApplyStepWrapper.module.scss"
 import ListingApplyStepErrorMessage from "./ListingApplyStepErrorMessage"
-import { locateVerifiedAddress } from "../../../api/formApiService"
+import { getNeighborhoodPreferenceMatch, locateVerifiedAddress } from "../../../api/formApiService"
 import YesNoRadio from "./YesNoRadio"
 import Phone from "./Phone"
 import Address from "./Address"
 import { getLiveWorkInSfMembers } from "./household/householdUtils"
+import { getPrimaryApplicantData } from "../../../util/listingApplyUtil"
 
 interface ListingApplyContactStepWrapperProps {
   title: string
@@ -149,11 +150,11 @@ const ListingApplyContactStepWrapper = ({
     }
     locateVerifiedAddress(address)
       .then((response) => {
-        // const neighborhoodMatch = await getNeighborhoodPreferenceMatch(
-        //   address,
-        //   listing,
-        //   projectId
-        // )
+        const neighborhoodMatch = getNeighborhoodPreferenceMatch(
+          address,
+          staticData,
+          getPrimaryApplicantData(formData)
+        )
         saveFormData({
           ...data,
           [addressStreet]: response.address?.street1,
@@ -163,8 +164,7 @@ const ListingApplyContactStepWrapper = ({
           [addressZipcode]: response.address?.zip,
           [addressVerified]: "false",
           [showLiveWorkInSfPrefStep]: showLiveWorkPreference,
-          // call to the geocoding API to check for the actual neighborhood match
-          [neighborhoodPreferenceAddressMatch]: true,
+          [neighborhoodPreferenceAddressMatch]: neighborhoodMatch,
         })
         // TODO: this is an antipattern, `...data` should include all data from the response
         // it works here because the contact step is always followed by the verify-address step

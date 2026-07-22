@@ -5,10 +5,15 @@ import { useFormEngineContext } from "../../../../formEngine/formEngineContext"
 import HouseholdMemberForm from "./HouseholdMemberForm"
 import AddHouseholdMembers from "./AddHouseholdMembers"
 import VerifyAddress from "../VerifyAddress"
-import { locateVerifiedAddress, type Address } from "../../../../api/formApiService"
+import {
+  getNeighborhoodPreferenceMatch,
+  locateVerifiedAddress,
+  type Address,
+} from "../../../../api/formApiService"
 import { addressesMatch, getAddressErrorEmailLink } from "../../../../util/formEngineUtil"
 import { t } from "@bloom-housing/ui-components"
 import { getLiveWorkInSfMembers } from "./householdUtils"
+import { formatApplicantDOB } from "../../../../util/listingApplyUtil"
 
 interface HouseholdMemberMultiStepWrapperProps {
   fieldNames: {
@@ -17,6 +22,12 @@ interface HouseholdMemberMultiStepWrapperProps {
   }
 }
 const householdMemberFields = {
+  firstName: "householdMemberFirstName",
+  middleName: "householdMemberMiddleName",
+  lastName: "householdMemberLastName",
+  birthMonth: "householdMemberBirthMonth",
+  birthDay: "householdMemberBirthDay",
+  birthYear: "householdMemberBirthYear",
   street1: "householdMemberAddressStreet",
   street2: "householdMemberAddressAptOrUnit",
   city: "householdMemberAddressCity",
@@ -80,6 +91,17 @@ const HouseholdMemberMultiStepWrapper = ({
 
   const saveHouseholdMember = (data: Record<string, unknown>) => {
     const updated = [...householdMembersArray]
+    const householdMemberAddress = getHouseholdMemberAddress(data)
+    const { firstName, middleName, lastName, birthMonth, birthDay, birthYear } = data as Record<
+      string,
+      string
+    >
+    const houseHoldMemberInfo = {
+      firstName: firstName,
+      middleName: middleName,
+      lastName: lastName,
+      dob: formatApplicantDOB(birthMonth, birthDay, birthYear),
+    }
     if (isEditingHouseholdMember) {
       updated[currentMemberIndex] = {
         ...data,
@@ -91,9 +113,11 @@ const HouseholdMemberMultiStepWrapper = ({
       updated.push({
         ...data,
         id: nanoid(18),
-        // TODO: DAH-4161
-        // call to the geocoding API to check for the actual neighborhood match
-        neighborhoodPreferenceAddressMatch: true,
+        neighborhoodPreferenceAddressMatch: getNeighborhoodPreferenceMatch(
+          householdMemberAddress,
+          staticData,
+          houseHoldMemberInfo
+        ),
       })
     }
 
@@ -133,7 +157,6 @@ const HouseholdMemberMultiStepWrapper = ({
       saveHouseholdMember({ ...data, [householdMemberFields.addressVerified]: "true" })
       return
     }
-
     setLoading(true)
     locateVerifiedAddress(getHouseholdMemberAddress(data))
       .then((response) => {
