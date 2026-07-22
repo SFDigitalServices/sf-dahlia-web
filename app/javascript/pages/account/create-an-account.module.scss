@@ -1,0 +1,20 @@
+.card {
+  width: 100%;
+  @media (max-width: theme("screens.md")) {
+    border: none;
+  }
+}
+
+.helpFooter {
+  background: var(--seeds-color-primary-lighter);
+}
+
+.helpLink {
+  color: var(--seeds-color-primary-darker);
+  font-size: var(--seeds-font-size-sm);
+}
+
+.card h1,
+.card h2 {
+  padding-bottom: var(--seeds-spacer-header);
+}
