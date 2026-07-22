@@ -5,6 +5,16 @@ import ListingApplyFormWrapper from "../../../../pages/form/components/ListingAp
 import { openRentalListing } from "../../../data/RailsRentalListing/listing-rental-open"
 import { renderWithFormContextWrapper } from "../../../__util__/renderUtils"
 
+// TODO WIP: remove once we remove the bloom component
+jest.mock("@bloom-housing/ui-components", () => {
+  const actual = jest.requireActual("@bloom-housing/ui-components")
+
+  return {
+    ...actual,
+    ProgressNav: () => <div data-testid="mock-progress-nav" />,
+  }
+})
+
 describe("ListingApplyFormWrapper", () => {
   it("renders with layout when hideLayout is omitted", () => {
     renderWithFormContextWrapper(

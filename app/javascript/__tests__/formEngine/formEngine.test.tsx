@@ -3,7 +3,6 @@ import { render, screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import FormEngine from "../../formEngine/formEngine"
 import { openRentalListing } from "../data/RailsRentalListing/listing-rental-open"
-import { defineCryptoApi } from "../__util__/renderUtils"
 import type { FormSchema } from "../../formEngine/formSchemas"
 import { useFormEngineContext } from "../../formEngine/formEngineContext"
 
@@ -58,8 +57,6 @@ jest.mock("../../formEngine/recursiveRenderer", () => {
     },
   }
 })
-
-defineCryptoApi()
 
 const staticData = {
   listing: openRentalListing,

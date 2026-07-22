@@ -7,6 +7,7 @@ import { useForm, FormProvider } from "react-hook-form"
 import { FormEngineProvider } from "../../formEngine/formEngineContext"
 import { openRentalListing } from "../data/RailsRentalListing/listing-rental-open"
 import { type StepInfoSchema } from "../../formEngine/formSchemas"
+import { type SectionInfo } from "../../formEngine/formEngine"
 
 export const mockWindowLocation = (): typeof window.location => {
   const originalLocation = { ...window.location }
@@ -65,21 +66,25 @@ export const renderWithFormContextWrapper = (
     formData = {},
     staticData = {},
     stepInfoMap = [],
+    sectionMap = [],
     renderForm = true,
   }: {
     formData?: Record<string, unknown>
     staticData?: Record<string, unknown>
     stepInfoMap?: StepInfoSchema[]
+    sectionMap?: SectionInfo[]
     renderForm?: boolean
     // eslint-disable-next-line unicorn/no-object-as-default-parameter
   } = {
     formData: {},
     staticData: {},
     stepInfoMap: [],
+    sectionMap: [],
     renderForm: true,
   }
 ) => {
-  const defaultStepInfoMap = [{ slug: "test", fieldNames: [] }]
+  const defaultStepInfoMap = [{ slug: "test-slug", fieldNames: [] }]
+  const defaultSectionMap = [{ name: "shortFormNav.you", stepSlugs: ["test-slug"] }]
 
   const defaultStaticData = {
     listing: openRentalListing,
@@ -99,7 +104,8 @@ export const renderWithFormContextWrapper = (
     formData: { ...formData },
     staticData: { ...defaultStaticData, ...staticData },
     stepInfoMap: [...stepInfoMap, ...defaultStepInfoMap],
-    completedSections: [],
+    sectionMap: [...sectionMap, ...defaultSectionMap],
+    completedSections: {},
     sectionNames: [],
     currentStepIndex: 0,
     handleNextStep: mockHandleNextStep,

@@ -1,12 +1,11 @@
 import React from "react"
 import { t } from "@bloom-housing/ui-components"
-import { render, screen, waitFor } from "@testing-library/react"
+import { screen, waitFor } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
-import { FormEngineProvider } from "../../../../formEngine/formEngineContext"
 import ListingApplyStepWrapper from "../../../../pages/form/components/ListingApplyStepWrapper"
-import { openRentalListing } from "../../../data/RailsRentalListing/listing-rental-open"
 import Phone from "../../../../pages/form/components/Phone"
 import YesNoRadio from "../../../../pages/form/components/YesNoRadio"
+import { renderWithFormContextWrapper } from "../../../__util__/renderUtils"
 
 Object.defineProperty(window, "scrollTo", {
   value: jest.fn(),
@@ -14,34 +13,10 @@ Object.defineProperty(window, "scrollTo", {
 })
 Element.prototype.scrollTo = jest.fn()
 
-const buildFormEngineContextValue = (
-  fieldNames: string[],
-  formData: Record<string, unknown> = {}
-) => {
-  return {
-    sessionId: "test-session-id",
-    formData,
-    saveFormData: jest.fn(),
-    staticData: {
-      listing: openRentalListing,
-      preferences: [],
-      preferenceNames: {},
-    },
-    stepInfoMap: [{ slug: "test", fieldNames }],
-    completedSections: [],
-    sectionNames: [],
-    currentStepIndex: 0,
-    handleNextStep: jest.fn(),
-    handlePrevStep: jest.fn(),
-    jumpToStep: jest.fn(),
-  }
-}
-
 describe("<ListingApplyStepWrapper />", () => {
   it("renders a form step and child components", () => {
     const fieldNames = ["firstName", "middleName", "lastName"]
     const formData = { testField: null }
-    const formEngineContextValue = buildFormEngineContextValue(fieldNames, formData)
 
     const title = "b1Name.title"
     const label = "label.applicantPhone"
@@ -51,12 +26,15 @@ describe("<ListingApplyStepWrapper />", () => {
         phone: "phone",
       },
     }
-    render(
-      <FormEngineProvider value={formEngineContextValue}>
-        <ListingApplyStepWrapper title={title}>
-          <Phone {...phoneProps} />
-        </ListingApplyStepWrapper>
-      </FormEngineProvider>
+    renderWithFormContextWrapper(
+      <ListingApplyStepWrapper title={title}>
+        <Phone {...phoneProps} />
+      </ListingApplyStepWrapper>,
+      {
+        formData,
+        stepInfoMap: [{ slug: "test", fieldNames }],
+        renderForm: false,
+      }
     )
 
     expect(screen.getByText(t(title))).toBeInTheDocument()
@@ -65,7 +43,6 @@ describe("<ListingApplyStepWrapper />", () => {
 
   it("renders the header component when headerComponentName is provided", () => {
     const fieldNames = ["phone"]
-    const formEngineContextValue = buildFormEngineContextValue(fieldNames)
     const yesNoRadioProps = {
       note: "label.pleaseSelectOne",
       fieldNames: {
@@ -73,15 +50,17 @@ describe("<ListingApplyStepWrapper />", () => {
       },
     }
 
-    render(
-      <FormEngineProvider value={formEngineContextValue}>
-        <ListingApplyStepWrapper
-          title="c4HouseholdPublicHousing.titleYou"
-          headerComponentName="ListingApplyPublicHousingHeader"
-        >
-          <YesNoRadio {...yesNoRadioProps} />
-        </ListingApplyStepWrapper>
-      </FormEngineProvider>
+    renderWithFormContextWrapper(
+      <ListingApplyStepWrapper
+        title="c4HouseholdPublicHousing.titleYou"
+        headerComponentName="ListingApplyPublicHousingHeader"
+      >
+        <YesNoRadio {...yesNoRadioProps} />
+      </ListingApplyStepWrapper>,
+      {
+        stepInfoMap: [{ slug: "test", fieldNames }],
+        renderForm: false,
+      }
     )
 
     expect(
@@ -92,19 +71,20 @@ describe("<ListingApplyStepWrapper />", () => {
   it("clears form errors when the error message close button is clicked", async () => {
     const user = userEvent.setup()
     const fieldNames = ["phone"]
-    const formEngineContextValue = buildFormEngineContextValue(fieldNames)
     const phoneProps = {
       label: "label.applicantPhone",
       fieldNames: {
         phone: "phone",
       },
     }
-    render(
-      <FormEngineProvider value={formEngineContextValue}>
-        <ListingApplyStepWrapper title="b1Name.title">
-          <Phone {...phoneProps} />
-        </ListingApplyStepWrapper>
-      </FormEngineProvider>
+    renderWithFormContextWrapper(
+      <ListingApplyStepWrapper title="b1Name.title">
+        <Phone {...phoneProps} />
+      </ListingApplyStepWrapper>,
+      {
+        stepInfoMap: [{ slug: "test", fieldNames }],
+        renderForm: false,
+      }
     )
 
     await user.click(screen.getByRole("button", { name: t("t.next") }))
@@ -121,7 +101,6 @@ describe("<ListingApplyStepWrapper />", () => {
   it("clears de-registered field values by merging blankValues into saveFormData", async () => {
     const user = userEvent.setup()
     const fieldNames = ["phone", "additionalPhone"]
-    const formEngineContextValue = buildFormEngineContextValue(fieldNames)
     const phoneProps = {
       label: "label.applicantPhone",
       fieldNames: {
@@ -130,18 +109,20 @@ describe("<ListingApplyStepWrapper />", () => {
       },
       showAdditionalPhoneNumber: false,
     }
-    render(
-      <FormEngineProvider value={formEngineContextValue}>
-        <ListingApplyStepWrapper title="b1Name.title">
-          <Phone {...phoneProps} />
-        </ListingApplyStepWrapper>
-      </FormEngineProvider>
+    const { mockSaveFormData } = renderWithFormContextWrapper(
+      <ListingApplyStepWrapper title="b1Name.title">
+        <Phone {...phoneProps} />
+      </ListingApplyStepWrapper>,
+      {
+        stepInfoMap: [{ slug: "test", fieldNames }],
+        renderForm: false,
+      }
     )
 
     await user.type(screen.getByRole("textbox"), "1234567890")
     await user.click(screen.getByRole("button", { name: t("t.next") }))
     await waitFor(() => {
-      expect(formEngineContextValue.saveFormData).toHaveBeenCalledWith(
+      expect(mockSaveFormData).toHaveBeenCalledWith(
         expect.objectContaining({
           phone: "(123) 456-7890",
           additionalPhone: null,

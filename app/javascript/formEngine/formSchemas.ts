@@ -84,16 +84,6 @@ export const getFieldNames = (schema: unknown): string[] => {
   return fieldNameGroups.flatMap((group) => Object.values(group))
 }
 
-const getSectionNames = (schema: unknown): string[] => {
-  return getNestedValuesByKey("sectionName", schema, []).filter((name) => typeof name === "string")
-}
-
-export const generateSectionNames = (schema: FormSchema): string[] => {
-  return getSectionNames(schema)
-    .filter((name) => typeof name === "string")
-    .filter((val, idx, ary) => ary.indexOf(val) === idx) // remove duplicates
-}
-
 export const generateInitialFormData = (schema: FormSchema): Record<string, unknown> => {
   const fieldNames = getFieldNames(schema).reduce(
     (acc, fieldName) => {
