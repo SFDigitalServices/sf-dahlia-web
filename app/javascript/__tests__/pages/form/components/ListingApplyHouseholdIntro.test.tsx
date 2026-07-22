@@ -1,52 +1,35 @@
 import React from "react"
 import { t } from "@bloom-housing/ui-components"
-import { render, screen } from "@testing-library/react"
-import { FormEngineProvider } from "../../../../formEngine/formEngineContext"
+import { screen } from "@testing-library/react"
 import ListingApplyHouseholdIntro from "../../../../pages/form/components/household/ListingApplyHouseholdIntro"
-import { openRentalListing } from "../../../data/RailsRentalListing/listing-rental-open"
 import userEvent from "@testing-library/user-event"
+import { renderWithFormContextWrapper } from "../../../__util__/renderUtils"
 
 describe("ListingApplyHouseholdIntro", () => {
-  const formEngineContextValue = {
-    sessionId: "test-session-id",
-    formData: {},
-    saveFormData: jest.fn(),
-    staticData: {
-      listing: openRentalListing,
-      form: {},
-      preferences: [],
-      preferenceNames: {},
-    },
-    stepInfoMap: [{ slug: "test", fieldNames: [] }],
-    completedSections: [],
-    sectionNames: [],
-    currentStepIndex: 0,
-    handleNextStep: jest.fn(),
-    handlePrevStep: jest.fn(),
-    jumpToStep: jest.fn(),
-  }
+  let mockHandleNextStep: jest.Mock
 
   beforeEach(() => {
-    render(
-      <FormEngineProvider value={formEngineContextValue}>
-        <ListingApplyHouseholdIntro />
-      </FormEngineProvider>
-    )
+    ;({ mockHandleNextStep } = renderWithFormContextWrapper(<ListingApplyHouseholdIntro />, {
+      renderForm: false,
+    }))
   })
 
   const user = userEvent.setup()
+
   it("renders the component", () => {
     expect(screen.getByText(t("c1HouseholdIntro.title"))).not.toBeNull()
   })
+
   it("skips to the next section if alone", async () => {
     await user.click(screen.getByText(t("label.liveAlone")))
-    expect(formEngineContextValue.handleNextStep).toHaveBeenCalledWith({
+    expect(mockHandleNextStep).toHaveBeenCalledWith({
       liveAlone: "true",
       householdMembers: null,
     })
   })
+
   it("goes to the next page if there are household members", async () => {
     await user.click(screen.getByText(t("label.otherPeople")))
-    expect(formEngineContextValue.handleNextStep).toHaveBeenCalledWith({ liveAlone: "false" })
+    expect(mockHandleNextStep).toHaveBeenCalledWith({ liveAlone: "false" })
   })
 })

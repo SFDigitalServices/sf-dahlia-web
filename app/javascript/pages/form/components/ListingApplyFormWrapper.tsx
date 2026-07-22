@@ -14,14 +14,17 @@ const ListingApplyFormWrapper = ({ children }: ListingApplyFormWrapperProps) => 
   const {
     staticData: { listing },
     currentStepIndex,
-    completedSections,
     stepInfoMap,
-    sectionNames,
+    sectionMap,
+    completedSections,
   } = formEngineContext
 
   const currentStepChild = children[currentStepIndex]
   const currentStepInfo = stepInfoMap[currentStepIndex]
-  const currentSectionIndex = sectionNames.indexOf(currentStepInfo.sectionName)
+  const sectionNames = sectionMap.map((section) => section.name)
+  const currentSectionIndex = sectionMap.findIndex(
+    (section) => section.name === currentStepInfo.sectionName
+  )
   const showLayout = !currentStepInfo.hideLayout
 
   return (
@@ -43,10 +46,9 @@ const ListingApplyFormWrapper = ({ children }: ListingApplyFormWrapperProps) => 
                 removeSrHeader
               />
               <ListingApplyNavBar
-                labels={sectionNames}
-                currentPageSection={currentSectionIndex + 1}
+                sectionMap={sectionMap}
                 completedSections={completedSections}
-                removeSrHeader
+                currentSectionName={currentStepInfo.sectionName || ""}
               />
             </Card.Section>
           </Card>

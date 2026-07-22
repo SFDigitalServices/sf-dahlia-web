@@ -3,43 +3,25 @@
 import React from "react"
 import styles from "./ListingApplyNavbar.module.scss"
 import { t } from "@bloom-housing/ui-components"
+import { type SectionInfo } from "../../../formEngine/formEngine"
 
-const NavItem = (props: {
-  section: number
+const NavItem = ({
+  sectionComplete,
+  currentSection,
+  label,
+}: {
   sectionComplete: boolean
-  currentPageSection: number
+  currentSection: boolean
   label: string
-  strings?: {
-    screenReaderCompleted?: string
-    screenReaderNotCompleted?: string
-    screenReaderTitle?: string
-  }
 }) => {
   let bgColor = styles["is-disabled"]
-  if (props.section === props.currentPageSection) {
+  if (currentSection) {
     bgColor = styles["is-active"]
-  } else if (props.sectionComplete) {
+  } else if (sectionComplete) {
     bgColor = styles["is-complete"]
   }
 
-  const srTextBuilder = (): string | React.ReactNode => {
-    if (props.section < props.currentPageSection) {
-      return (
-        // Add translations strings from bloom
-        <span className="sr-only">
-          {props.strings?.screenReaderCompleted ?? t("progressNav.completed")}
-        </span>
-      )
-    } else if (props.section > props.currentPageSection) {
-      return (
-        <span className="sr-only">
-          {props.strings?.screenReaderNotCompleted ?? t("progressNav.notCompleted")}
-        </span>
-      )
-    } else {
-      return ""
-    }
-  }
+  // TODO WIP: use button and/or onClick event, get onClick handler has prop
 
   return (
     <li className={`${styles["progress-nav-item"]} ${bgColor}`}>
@@ -48,36 +30,41 @@ const NavItem = (props: {
         aria-current={bgColor === styles["is-active"]}
         className={styles["progress-nav-item-text"]}
       >
-        {t(props.label)} {srTextBuilder()}
+        {t(label)}
       </span>
     </li>
   )
 }
 
-const ListingApplyNavBar = (props: {
-  currentPageSection: number
-  completedSections: string[]
-  removeSrHeader?: boolean
-  labels: string[]
-  strings?: {
-    screenReaderHeading?: string
-  }
+const ListingApplyNavBar = ({
+  sectionMap,
+  completedSections,
+  currentSectionName,
+}: {
+  sectionMap: SectionInfo[]
+  completedSections: Record<string, boolean>
+  currentSectionName: string
 }) => {
+  const currentSectionIdx = sectionMap.findIndex((section) => section.name === currentSectionName)
+  const currentSectionIncomplete = !completedSections[currentSectionName]
+  const isSectionComplete = (sectionToRender: SectionInfo, idx: number): boolean => {
+    if (!completedSections[sectionToRender.name]) return false
+
+    // if the current section is incomplete, all subsequent sections are marked as incomplete
+    if (currentSectionIncomplete && currentSectionIdx < idx) return false
+
+    return true
+  }
+
   return (
     <div aria-label={"progress"}>
-      {!props.removeSrHeader && (
-        <h2 className="sr-only">
-          {props.strings?.screenReaderHeading ?? t("progressNav.srHeading")}
-        </h2>
-      )}
       <ol className={styles["progress-nav"]}>
-        {props.labels.map((label, i) => (
+        {sectionMap.map((section, idx) => (
           <NavItem
-            key={label}
-            section={i + 1}
-            sectionComplete={props.completedSections.includes(label)}
-            currentPageSection={props.currentPageSection}
-            label={label}
+            key={section.name}
+            sectionComplete={isSectionComplete(section, idx)}
+            currentSection={currentSectionName === section.name}
+            label={section.name}
           />
         ))}
       </ol>

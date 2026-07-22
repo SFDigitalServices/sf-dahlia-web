@@ -51,6 +51,7 @@
       background-color: var(--seeds-color-blue-100);
       padding: var(--seeds-s4) 0 var(--seeds-s6);
     }
+    // TODO WIP: remove this once we remove use of bloom's progress-nav
     :global {
       .progress-nav {
         width: 100%;

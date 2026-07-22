@@ -3,8 +3,6 @@
   width: 100%;
 }
 
-// TODO WIP: remove unneeded styles, consolidate selectors
-
 .progress-nav-item {
   top: var(--seeds-s0_5);
   font-size: var(--seeds-font-size-sm);
@@ -12,8 +10,6 @@
   text-align: center;
   text-transform: capitalize;
   display: table-cell;
-  white-space: normal;
-  float: none;
   @media (min-width: theme("screens.md")) {
     padding: 0rem;
   }
@@ -33,7 +29,6 @@
     z-index: 2;
     position: absolute;
     left: 50%;
-    background-color: #99cd00;
     border: var(--seeds-border-1) solid #fff;
   }
 
@@ -86,7 +81,6 @@
 
 .is-active {
   span {
-    color: var(--seeds-color-gray-850);
     font-weight: var(--seeds-font-weight-bold);
   }
 }
