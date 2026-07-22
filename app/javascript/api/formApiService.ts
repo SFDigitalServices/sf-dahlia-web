@@ -3,6 +3,7 @@ import { post, apiDelete } from "./apiService"
 import { getCurrentLanguage } from "../util/languageUtil"
 import { Application } from "./types/rails/application/RailsApplication"
 import { getPrimaryApplicantData } from "../util/listingApplyUtil"
+import { StaticData } from "../formEngine/formEngineContext"
 
 type UploadProofFileResponse = {
   success: boolean
@@ -103,6 +104,49 @@ export const locateVerifiedAddress = async (address: Address): Promise<VerifiedA
     address,
   }).then((response) => response.data)
   return response
+}
+
+export interface GISDataResponse {
+  gis_data: {
+    boundary_match: boolean | null
+  }
+}
+
+export const getNeighborhoodPreferenceMatch = async (
+  address: { street1: string; street2: string; city: string; state: string; zip: string },
+  staticData: StaticData,
+  applicantInfo: { firstName: string; middleName: string; lastName: string; dob: string }
+): Promise<boolean | null> => {
+  const { listing, preferenceNames = {} } = staticData
+  //     # pick out only the data we need send to the geocoder and format it
+  // ['member', 'applicant'].forEach (user) ->
+  //   options[user].dob = ShortFormDataService.formatUserDOB(options[user])
+  //   options[user] = _.pick options[user], ['firstName', 'lastName', 'dob']
+  // options.address = _.pick options.address, ['address1', 'city', 'state', 'zip']
+  // options.listing = _.pick options.listing, ['Id', 'Name']
+  const getProjectIdForBoundaryMatching = (): string | null => {
+    if (!listing) return null
+    if ("antiDisplacement" in preferenceNames) return "ADHP"
+    if ("neighborhoodResidence" in preferenceNames) return listing?.Project_ID
+    return null
+  }
+
+  const params = {
+    address,
+    listing: { id: listing?.Id, name: listing?.Building_Name },
+    project_id: getProjectIdForBoundaryMatching(),
+    //member, applicant sent over for logging purposes
+    member: applicantInfo,
+  }
+
+  try {
+    const response = await post<GISDataResponse>("/api/v1/addresses/gis-data.json", {
+      params,
+    })
+    return response.data.gis_data.boundary_match
+  } catch {
+    return null
+  }
 }
 
 export enum LanguagePrefix {
