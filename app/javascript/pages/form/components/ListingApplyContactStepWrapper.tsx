@@ -152,6 +152,13 @@ const ListingApplyContactStepWrapper = ({
       .then((response) =>
         getNeighborhoodPreferenceMatch(address, staticData, getPrimaryApplicantData(formData)).then(
           (neighborhoodMatch) => {
+            const existingHouseholdMembers =
+              (formData.householdMembers as Record<string, unknown>[]) || []
+            const syncHouseholdMemberPreference = existingHouseholdMembers.map((householdMember) =>
+              householdMember.hasSameAddressAsApplicant === "true"
+                ? { ...householdMember, neighborhoodPreferenceAddressMatch: neighborhoodMatch }
+                : householdMember
+            )
             saveFormData({
               ...data,
               [addressStreet]: response.address?.street1,
@@ -162,6 +169,9 @@ const ListingApplyContactStepWrapper = ({
               [addressVerified]: "false",
               [showLiveWorkInSfPrefStep]: showLiveWorkPreference,
               [neighborhoodPreferenceAddressMatch]: neighborhoodMatch,
+              ...(existingHouseholdMembers.length > 0 && {
+                householdMembers: syncHouseholdMemberPreference,
+              }),
             })
             handleNextStep({ ...formData, ...data })
           }
