@@ -121,10 +121,11 @@ const getProjectIdForBoundaryMatching = (staticData: StaticData): string | null 
 }
 
 export const getNeighborhoodPreferenceMatch = async (
-  address: Address,
+  verifiedAddressResponse: VerifiedAddressResponse,
   staticData: StaticData,
   applicantInfo: { firstName: string; middleName: string; lastName: string; dob: string }
 ): Promise<boolean | null> => {
+  const { address } = verifiedAddressResponse
   const params = {
     address: {
       address1: address.street1,

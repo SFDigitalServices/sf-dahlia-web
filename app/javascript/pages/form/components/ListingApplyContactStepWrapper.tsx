@@ -150,32 +150,34 @@ const ListingApplyContactStepWrapper = ({
     }
     locateVerifiedAddress(address)
       .then((response) =>
-        getNeighborhoodPreferenceMatch(address, staticData, getPrimaryApplicantData(formData)).then(
-          (neighborhoodMatch) => {
-            const existingHouseholdMembers =
-              (formData.householdMembers as Record<string, unknown>[]) || []
-            const syncHouseholdMemberPreference = existingHouseholdMembers.map((householdMember) =>
-              householdMember.hasSameAddressAsApplicant === "true"
-                ? { ...householdMember, neighborhoodPreferenceAddressMatch: neighborhoodMatch }
-                : householdMember
-            )
-            saveFormData({
-              ...data,
-              [addressStreet]: response.address?.street1,
-              [addressAptOrUnit]: response.address?.street2,
-              [addressCity]: response.address?.city,
-              [addressState]: response.address?.state,
-              [addressZipcode]: response.address?.zip,
-              [addressVerified]: "false",
-              [showLiveWorkInSfPrefStep]: showLiveWorkPreference,
-              [neighborhoodPreferenceAddressMatch]: neighborhoodMatch,
-              ...(existingHouseholdMembers.length > 0 && {
-                householdMembers: syncHouseholdMemberPreference,
-              }),
-            })
-            handleNextStep({ ...formData, ...data })
-          }
-        )
+        getNeighborhoodPreferenceMatch(
+          response,
+          staticData,
+          getPrimaryApplicantData(formData)
+        ).then((neighborhoodMatch) => {
+          const existingHouseholdMembers =
+            (formData.householdMembers as Record<string, unknown>[]) || []
+          const syncHouseholdMemberPreference = existingHouseholdMembers.map((householdMember) =>
+            householdMember.hasSameAddressAsApplicant === "true"
+              ? { ...householdMember, neighborhoodPreferenceAddressMatch: neighborhoodMatch }
+              : householdMember
+          )
+          saveFormData({
+            ...data,
+            [addressStreet]: response.address?.street1,
+            [addressAptOrUnit]: response.address?.street2,
+            [addressCity]: response.address?.city,
+            [addressState]: response.address?.state,
+            [addressZipcode]: response.address?.zip,
+            [addressVerified]: "false",
+            [showLiveWorkInSfPrefStep]: showLiveWorkPreference,
+            [neighborhoodPreferenceAddressMatch]: neighborhoodMatch,
+            ...(existingHouseholdMembers.length > 0 && {
+              householdMembers: syncHouseholdMemberPreference,
+            }),
+          })
+          handleNextStep({ ...formData, ...data })
+        })
       )
       .catch((error) => {
         if (error.response?.status === 422) {

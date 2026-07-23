@@ -163,7 +163,7 @@ const HouseholdMemberMultiStepWrapper = ({
     }
     locateVerifiedAddress(address)
       .then((response) =>
-        getNeighborhoodPreferenceMatch(address, staticData, houseHoldMemberInfo).then(
+        getNeighborhoodPreferenceMatch(response, staticData, houseHoldMemberInfo).then(
           (neighborhoodMatch) => {
             setApiErrorMessage(null)
             setPendingMember({
