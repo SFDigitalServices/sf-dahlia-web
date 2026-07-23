@@ -35,6 +35,7 @@ const householdMemberFields = {
   zip: "householdMemberAddressZipcode",
   sameAddressAsApplicant: "hasSameAddressAsApplicant",
   addressVerified: "householdMemberAddressVerified",
+  neighborhoodPreferenceAddressMatch: "neighborhoodPreferenceAddressMatch",
 }
 
 type multiStepComponents =
@@ -91,17 +92,6 @@ const HouseholdMemberMultiStepWrapper = ({
 
   const saveHouseholdMember = (data: Record<string, unknown>) => {
     const updated = [...householdMembersArray]
-    const householdMemberAddress = getHouseholdMemberAddress(data)
-    const { firstName, middleName, lastName, birthMonth, birthDay, birthYear } = data as Record<
-      string,
-      string
-    >
-    const houseHoldMemberInfo = {
-      firstName: firstName,
-      middleName: middleName,
-      lastName: lastName,
-      dob: formatApplicantDOB(birthMonth, birthDay, birthYear),
-    }
     if (isEditingHouseholdMember) {
       updated[currentMemberIndex] = {
         ...data,
@@ -113,11 +103,6 @@ const HouseholdMemberMultiStepWrapper = ({
       updated.push({
         ...data,
         id: nanoid(18),
-        neighborhoodPreferenceAddressMatch: getNeighborhoodPreferenceMatch(
-          householdMemberAddress,
-          staticData,
-          houseHoldMemberInfo
-        ),
       })
     }
 
@@ -154,24 +139,49 @@ const HouseholdMemberMultiStepWrapper = ({
 
   const handleUpdateHouseholdMember = (data: Record<string, string>) => {
     if (!addressNeedsVerification(data)) {
-      saveHouseholdMember({ ...data, [householdMemberFields.addressVerified]: "true" })
+      // Household member inherits primary applicant's NRHP status if shared household
+      const neighborhoodPreferenceMatch =
+        data[householdMemberFields.sameAddressAsApplicant] === "true"
+          ? formData.primaryApplicantNeighborhoodPreferenceAddressMatch
+          : householdMembersArray[currentMemberIndex]?.[
+              householdMemberFields.neighborhoodPreferenceAddressMatch
+            ]
+
+      saveHouseholdMember({
+        ...data,
+        [householdMemberFields.addressVerified]: "true",
+        [householdMemberFields.neighborhoodPreferenceAddressMatch]: neighborhoodPreferenceMatch,
+      })
       return
     }
     setLoading(true)
-    locateVerifiedAddress(getHouseholdMemberAddress(data))
-      .then((response) => {
-        setApiErrorMessage(null)
-        setPendingMember({
-          ...data,
-          [householdMemberFields.street1]: response.address?.street1,
-          [householdMemberFields.street2]: response.address?.street2,
-          [householdMemberFields.city]: response.address?.city,
-          [householdMemberFields.state]: response.address?.state,
-          [householdMemberFields.zip]: response.address?.zip,
-          [householdMemberFields.addressVerified]: "true",
-        })
-        setComponentToRender("HouseholdMemberVerifyAddress")
-      })
+    const address = getHouseholdMemberAddress(data)
+    const { firstName, middleName, lastName, birthMonth, birthDay, birthYear } = data
+    const houseHoldMemberInfo = {
+      firstName: firstName,
+      middleName: middleName,
+      lastName: lastName,
+      dob: formatApplicantDOB(birthMonth, birthDay, birthYear),
+    }
+    locateVerifiedAddress(address)
+      .then((response) =>
+        getNeighborhoodPreferenceMatch(address, staticData, houseHoldMemberInfo).then(
+          (neighborhoodMatch) => {
+            setApiErrorMessage(null)
+            setPendingMember({
+              ...data,
+              [householdMemberFields.street1]: response.address?.street1,
+              [householdMemberFields.street2]: response.address?.street2,
+              [householdMemberFields.city]: response.address?.city,
+              [householdMemberFields.state]: response.address?.state,
+              [householdMemberFields.zip]: response.address?.zip,
+              [householdMemberFields.addressVerified]: "true",
+              [householdMemberFields.neighborhoodPreferenceAddressMatch]: neighborhoodMatch,
+            })
+            setComponentToRender("HouseholdMemberVerifyAddress")
+          }
+        )
+      )
       .catch((error) => {
         if (error.response?.status === 422) {
           setApiErrorMessage(

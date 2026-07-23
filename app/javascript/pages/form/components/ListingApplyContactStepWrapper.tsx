@@ -149,28 +149,24 @@ const ListingApplyContactStepWrapper = ({
       }
     }
     locateVerifiedAddress(address)
-      .then((response) => {
-        const neighborhoodMatch = getNeighborhoodPreferenceMatch(
-          address,
-          staticData,
-          getPrimaryApplicantData(formData)
+      .then((response) =>
+        getNeighborhoodPreferenceMatch(address, staticData, getPrimaryApplicantData(formData)).then(
+          (neighborhoodMatch) => {
+            saveFormData({
+              ...data,
+              [addressStreet]: response.address?.street1,
+              [addressAptOrUnit]: response.address?.street2,
+              [addressCity]: response.address?.city,
+              [addressState]: response.address?.state,
+              [addressZipcode]: response.address?.zip,
+              [addressVerified]: "false",
+              [showLiveWorkInSfPrefStep]: showLiveWorkPreference,
+              [neighborhoodPreferenceAddressMatch]: neighborhoodMatch,
+            })
+            handleNextStep({ ...formData, ...data })
+          }
         )
-        saveFormData({
-          ...data,
-          [addressStreet]: response.address?.street1,
-          [addressAptOrUnit]: response.address?.street2,
-          [addressCity]: response.address?.city,
-          [addressState]: response.address?.state,
-          [addressZipcode]: response.address?.zip,
-          [addressVerified]: "false",
-          [showLiveWorkInSfPrefStep]: showLiveWorkPreference,
-          [neighborhoodPreferenceAddressMatch]: neighborhoodMatch,
-        })
-        // TODO: this is an antipattern, `...data` should include all data from the response
-        // it works here because the contact step is always followed by the verify-address step
-        // we should be setting the `[addressVerified]` flag in the VerifyAddress component
-        handleNextStep({ ...formData, ...data })
-      })
+      )
       .catch((error) => {
         if (error.response?.status === 422) {
           setApiErrorMessage(
