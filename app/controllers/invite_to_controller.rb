@@ -122,31 +122,23 @@ class InviteToController < ApplicationController
     #    },
     #   {"alg" => "HS256", "typ" => "JWT"}
     # ]
-    decoded_token = JWT.decode(
-      token,
-      ENV.fetch('JWT_TOKEN_SECRET', nil),
-      true,
-      { algorithm: ENV.fetch('JWT_ALGORITHM', nil), verify_expiration: false },
-    )
+
+    decoded_token = JsonWebTokenService.decode_token(token)
     Rails.logger.info(
       'InviteToController#decode_token: ' \
-      "Decoded JWT #{decoded_token}",
+      'Decoded JWT Success',
     )
-    decoded_token.first['data']
-  rescue JWT::DecodeError
+    decoded_token
+  rescue JsonWebTokenService::InvalidTokenError => e
     Rails.logger.info(
       'InviteToController#decode_token: ' \
-      "Invalid JWT in #{request.original_url}",
+      "Invalid JWT in #{request.original_url}: #{e.message}",
     )
     root_url
   end
 
   def encode_token(params)
-    JWT.encode(
-      { data: params },
-      ENV.fetch('JWT_TOKEN_SECRET', nil),
-      ENV.fetch('JWT_ALGORITHM', nil),
-    )
+    JsonWebTokenService.encode_token(params)
   end
 
   def deadline_has_passed?(deadline)
