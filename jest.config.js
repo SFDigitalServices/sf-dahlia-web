@@ -20,9 +20,6 @@ module.exports = {
     },
   },
   preset: "ts-jest",
-  // React 19 renders are heavier; large pages (e.g. listing detail) can exceed the 5s
-  // default, especially under parallel workers with coverage. Raise the ceiling.
-  testTimeout: 20000,
   rootDir: "./app/javascript",
   roots: ["<rootDir>/"],
   transform: {
