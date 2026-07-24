@@ -4,13 +4,18 @@ import { userEvent } from "@testing-library/user-event"
 import { t } from "@bloom-housing/ui-components"
 import ListingApplyContactStepWrapper from "../../../../pages/form/components/ListingApplyContactStepWrapper"
 import { renderWithFormContextWrapper } from "../../../__util__/renderUtils"
-import { locateVerifiedAddress } from "../../../../api/formApiService"
+import {
+  checkNeighborhoodPreferenceMatch,
+  locateVerifiedAddress,
+} from "../../../../api/formApiService"
 
 jest.mock("../../../../api/formApiService", () => ({
   locateVerifiedAddress: jest.fn(),
+  checkNeighborhoodPreferenceMatch: jest.fn(),
 }))
 
 const mockLocateVerifiedAddress = locateVerifiedAddress as jest.Mock
+const mockCheckNeighborhoodPreferenceMatch = checkNeighborhoodPreferenceMatch as jest.Mock
 
 Object.defineProperty(window, "scrollTo", {
   value: jest.fn(),
@@ -44,6 +49,7 @@ const renderListingApplyContactStepWrapper = (formData: Record<string, unknown> 
         mailingAddressZipcode: "mailingAddressZipcode",
         question: "question",
         showLiveWorkInSfPrefStep: "showLiveWorkInSfPrefStep",
+        showNRHPPrefStep: "showNRHPPrefStep",
       }}
     />,
     {
@@ -91,6 +97,7 @@ describe("ListingApplyContactStepWrapper", () => {
         invalid: false,
       },
     })
+    mockCheckNeighborhoodPreferenceMatch.mockResolvedValue(true)
   })
   it("displays the error banner for any validation errors", async () => {
     renderListingApplyContactStepWrapper({})

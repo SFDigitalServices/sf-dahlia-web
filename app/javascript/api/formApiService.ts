@@ -3,6 +3,7 @@ import { post, apiDelete } from "./apiService"
 import { getCurrentLanguage } from "../util/languageUtil"
 import { Application } from "./types/rails/application/RailsApplication"
 import { getPrimaryApplicantData } from "../util/listingApplyUtil"
+import { StaticData } from "../formEngine/formEngineContext"
 
 type UploadProofFileResponse = {
   success: boolean
@@ -103,6 +104,43 @@ export const locateVerifiedAddress = async (address: Address): Promise<VerifiedA
     address,
   }).then((response) => response.data)
   return response
+}
+
+export interface GISDataResponse {
+  gis_data: {
+    boundary_match: boolean | null
+  }
+}
+
+const getProjectIdForBoundaryMatching = (staticData: StaticData): string | null => {
+  const { listing, preferenceNames = {} } = staticData
+  if (!listing) return null
+  if ("antiDisplacement" in preferenceNames) return "ADHP"
+  if ("neighborhoodResidence" in preferenceNames) return listing?.Project_ID
+  return null
+}
+
+export const checkNeighborhoodPreferenceMatch = async (
+  verifiedAddressResponse: VerifiedAddressResponse,
+  staticData: StaticData,
+  applicantInfo: { firstName: string; middleName: string; lastName: string; dob: string }
+): Promise<boolean | null> => {
+  const { address } = verifiedAddressResponse
+  const params = {
+    address: {
+      address1: address.street1,
+      city: address.city,
+      state: address.state,
+      zip: address.zip,
+    },
+    listing: { Id: staticData.listing?.Id, Name: staticData.listing?.Building_Name },
+    project_id: getProjectIdForBoundaryMatching(staticData),
+    // member information sent over for logging purposes
+    member: applicantInfo,
+  }
+
+  const response = await post<GISDataResponse>("/api/v1/addresses/gis-data.json", params)
+  return response.data.gis_data.boundary_match
 }
 
 export enum LanguagePrefix {

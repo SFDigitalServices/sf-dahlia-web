@@ -62,10 +62,8 @@ const householdMemberInfo = (member: HouseholdMember) => ({
 export const getLiveWorkInSfMembers = (
   data: Record<string, unknown>
 ): {
-  // TODO: DAH-4161
-  //   liveInSfMembers: Array<HouseholdMemberInfo>
-  //   workInSfMembers: Array<HouseholdMemberInfo>
-  //   liveWorkInSfMembers: Array<HouseholdMemberInfo>
+  liveInSfMembers: Array<HouseholdMemberInfo>
+  workInSfMembers: Array<HouseholdMemberInfo>
   livesInSf: boolean
   worksInSf: boolean
   liveWorksInSf: boolean
@@ -80,7 +78,6 @@ export const getLiveWorkInSfMembers = (
       ? primaryLivesInSf
       : member.householdMemberAddressCity?.toLowerCase().trim() === "san francisco"
 
-  // TODO: DAH-4161 Use member info to populate select dropdown
   // Identify and populate eligible live/work in SF members
   const liveInSfMembers: HouseholdMemberInfo[] = []
   const workInSfMembers: HouseholdMemberInfo[] = []
@@ -98,15 +95,34 @@ export const getLiveWorkInSfMembers = (
   const livesInSf = liveInSfMembers.length > 0 && workInSfMembers.length === 0
   const worksInSf = workInSfMembers.length > 0 && liveInSfMembers.length === 0
   const liveWorksInSf = liveInSfMembers.length > 0 && workInSfMembers.length > 0
+
   const showLiveWorkPreference = livesInSf || worksInSf || liveWorksInSf
 
   return {
-    // liveInSfMembers,
-    // workInSfMembers,
-    // liveWorkInSfMembers,
+    liveInSfMembers,
+    workInSfMembers,
     livesInSf,
     worksInSf,
     liveWorksInSf,
     showLiveWorkPreference,
+  }
+}
+
+export const getEligiblePreferenceMembers = (
+  formData: Record<string, unknown>,
+  preferenceName: string
+): HouseholdMemberInfo[] => {
+  const { liveInSfMembers, workInSfMembers } = getLiveWorkInSfMembers(formData)
+
+  switch (preferenceName) {
+    case "liveInSf":
+      return liveInSfMembers
+    case "workInSf":
+      return workInSfMembers
+    case "neighborhoodResidence":
+    case "antiDisplacement":
+      return liveInTheNeighborhoodHouseholdMembers(formData)
+    default:
+      return entireHousehold(formData)
   }
 }

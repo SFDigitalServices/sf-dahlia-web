@@ -4,7 +4,7 @@ import { PROOF_OPTIONS } from "../modules/constants"
 
 export const getFullName = (person: {
   firstName: string
-  middleName: string
+  middleName?: string
   lastName: string
 }) => {
   return `${person.firstName || ""} ${person.middleName || ""} ${person.lastName || ""}`
@@ -13,11 +13,11 @@ export const getFullName = (person: {
 export type HouseholdMember = {
   id: string
   firstName: string
-  middleName: string
+  middleName?: string
   lastName: string
-  birthYear: string
-  birthMonth: string
-  birthDay: string
+  birthYear?: string
+  birthMonth?: string
+  birthDay?: string
 }
 
 export const validAge = (
@@ -38,16 +38,22 @@ export const validAge = (
 export const validVeteranAge = (birthDate: Dayjs): boolean => {
   return dayjs().diff(birthDate, "year") >= 17
 }
+export const formatApplicantDOB = (month?: string, day?: string, year?: string): string =>
+  year && month && day ? `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}` : ""
 
 export const getPrimaryApplicantData = (formData: Record<string, unknown>) => {
   const firstName = formData.primaryApplicantFirstName as string
   const middleName = formData.primaryApplicantMiddleName as string
   const lastName = formData.primaryApplicantLastName as string
+  const birthMonth = formData.primaryApplicantBirthMonth as string
+  const birthDay = formData.primaryApplicantBirthDate as string
+  const birthYear = formData.primaryApplicantBirthYear as string
+
   return {
     firstName,
     middleName,
     lastName,
-    dob: (formData.primaryApplicantDob as string) || "1990-01-01", // TODO: update after DAH-3543
+    dob: formatApplicantDOB(birthMonth, birthDay, birthYear) || "1990-01-01",
   }
 }
 

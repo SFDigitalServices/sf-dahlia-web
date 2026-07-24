@@ -4,14 +4,11 @@ import { Field, Select, t } from "@bloom-housing/ui-components"
 import { useFormEngineContext } from "../../../../formEngine/formEngineContext"
 import PreferenceProofUploadField from "./PreferenceProofUploadField"
 import { type PreferenceContent, type PreferenceFieldNames } from "./PreferenceUtils"
-import {
-  getProofOptions,
-  allHouseholdMembers,
-  generateHouseholdMemberOptions,
-} from "../../../../util/listingApplyUtil"
+import { getProofOptions, generateHouseholdMemberOptions } from "../../../../util/listingApplyUtil"
 import { getNestedError } from "../../../../util/formEngineUtil"
 import { renderInlineMarkup } from "../../../../util/languageUtil"
 import styles from "./ListingApplyPreferenceStepWrapper.module.scss"
+import { getEligiblePreferenceMembers } from "../household/householdUtils"
 
 interface PreferenceFieldsProps {
   preferenceContent: PreferenceContent
@@ -49,9 +46,7 @@ const PreferenceFields = ({
   /* eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion */
   const listing = staticData.listing!
 
-  // TODO: DAH-4161
-  // look up eligibility of household members for particular preferences, like in `Service.eligibleMembers`
-  const eligibleHouseholdMembers = allHouseholdMembers(formData)
+  const eligibleHouseholdMembers = getEligiblePreferenceMembers(formData, preferenceName)
 
   return (
     <>

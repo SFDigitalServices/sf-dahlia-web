@@ -358,7 +358,7 @@ describe("ListingApplyPreferenceStepWrapper", () => {
         await user.click(screen.getByLabelText(t("e3aAssistedHousingPreference.preference.title")))
         await user.selectOptions(
           screen.getByLabelText(t("label.applicantPreferencesDocumentName")),
-          "primaryApplicant"
+          "primary"
         )
         await user.click(screen.getByText(t("t.next")))
 
@@ -377,7 +377,7 @@ describe("ListingApplyPreferenceStepWrapper", () => {
         await user.click(screen.getByLabelText(t("e3aAssistedHousingPreference.preference.title")))
         await user.selectOptions(
           screen.getByLabelText(t("label.applicantPreferencesDocumentName")),
-          "primaryApplicant"
+          "primary"
         )
         await user.click(screen.getByText(t("t.next")))
         expect(await screen.findByText(t("error.pleaseCompletePreference"))).toBeInTheDocument()
