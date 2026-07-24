@@ -4,7 +4,7 @@ import { PROOF_OPTIONS } from "../modules/constants"
 
 export const getFullName = (person: {
   firstName: string
-  middleName: string
+  middleName?: string
   lastName: string
 }) => {
   return `${person.firstName || ""} ${person.middleName || ""} ${person.lastName || ""}`

@@ -105,7 +105,8 @@
           "mailingAddressState": "primaryApplicantMailingAddressState",
           "mailingAddressZipcode": "primaryApplicantMailingAddressZipcode",
           "question": "primaryApplicantWorkInSf",
-          "showLiveWorkInSfPrefStep": "_showLiveWorkInSfPrefStep"
+          "showLiveWorkInSfPrefStep": "_showLiveWorkInSfPrefStep",
+          "showNRHPPrefStep": "_showNRHPPrefStep"
         }
       }
     },
@@ -307,7 +308,8 @@
       "props": {
         "fieldNames": {
           "householdMembers": "householdMembers",
-          "showLiveWorkInSfPrefStep": "_showLiveWorkInSfPrefStep"
+          "showLiveWorkInSfPrefStep": "_showLiveWorkInSfPrefStep",
+          "showNRHPPrefStep": "_showNRHPPrefStep"
         }
       }
     },
@@ -554,7 +556,7 @@
             },
             {
               "dataSource": "form",
-              "dataKey": "_preferenceAddressMatch"
+              "dataKey": "_showNRHPPrefStep"
             }
           ]
         }
