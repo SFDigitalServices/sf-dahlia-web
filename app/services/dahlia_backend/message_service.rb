@@ -58,7 +58,9 @@ module DahliaBackend
       fields = prepare_submission_fields(application_params, application_response, locale)
       return if fields.nil?
 
-      send_message(ENDPOINTS[:application_submission], fields)
+      send_message('/messages/application-submission', fields, {
+                     listingId: fields[:listingId],
+                   })
     rescue StandardError => e
       log_error('Error sending confirmation', e)
       nil
@@ -88,12 +90,20 @@ module DahliaBackend
                                                          _application_number, _app_id, _action)
       return if fields.nil?
 
-      log_info("Prepared fields for I2X response: #{fields.inspect}")
+      log_info(
+        "Prepared fields for I2X response: action=#{_action.inspect}, " \
+        "listingId=#{(fields[:listingId] || listing_id).inspect}, " \
+        "appId=#{_app_id.inspect}",
+      )
 
       endpoint = get_response_endpoint(_action, _response)
       return log_error("Invalid action type: #{_action}", nil) unless endpoint
 
-      send_message(endpoint, fields)
+      send_message(endpoint, fields, {
+                     action: _action,
+                     listingId: fields[:listingId] || listing_id,
+                     appId: _app_id,
+                   })
     rescue StandardError => e
       log_error('Error sending I2X response', e)
       nil
@@ -219,17 +229,23 @@ module DahliaBackend
     # @param [String] endpoint API endpoint
     # @param [Hash] fields Message fields
     # @return [Object, nil] Response from API or nil if sending fails
-    def send_message(endpoint, fields)
-      log_info("Sending message to #{endpoint}: #{fields}")
+    def send_message(endpoint, fields, context = {})
+      context_suffix = context.present? ? " (#{format_log_context(context)})" : ''
+
+      log_info("Sending message to #{endpoint}#{context_suffix}")
       response = client.post(endpoint, fields)
 
       if response
-        log_info("Successfully sent message to: #{fields[:email]}")
+        log_info("Successfully sent message to #{endpoint}#{context_suffix}")
         response
       else
-        log_error("Failed to send message to #{endpoint}: #{fields.to_json}", nil)
+        log_error("Failed to send message to #{endpoint}#{context_suffix}", nil)
         nil
       end
+    end
+
+    def format_log_context(context)
+      context.map { |key, value| "#{key}=#{value.inspect}" }.join(', ')
     end
 
     def valid_params?(application_params, application_response)
