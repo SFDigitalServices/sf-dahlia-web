@@ -6,31 +6,52 @@ import { t } from "@bloom-housing/ui-components"
 import { type SectionInfo } from "../../../formEngine/formEngine"
 
 const NavItem = ({
-  sectionComplete,
+  sectionAccessible,
   currentSection,
-  label,
+  sectionName,
+  onSectionClick,
 }: {
-  sectionComplete: boolean
+  sectionAccessible: boolean
   currentSection: boolean
-  label: string
+  sectionName: string
+  onSectionClick: (sectionName: string) => void
 }) => {
-  let bgColor = styles["is-disabled"]
-  if (currentSection) {
-    bgColor = styles["is-active"]
-  } else if (sectionComplete) {
-    bgColor = styles["is-complete"]
+  const handleClick = () => {
+    onSectionClick(sectionName)
   }
 
-  // TODO WIP: use button and/or onClick event, get onClick handler has prop
+  if (currentSection)
+    return (
+      <li className={`${styles["progress-nav-item"]} ${styles["is-active"]}`}>
+        <span
+          aria-disabled={false}
+          aria-current={true}
+          className={styles["progress-nav-item-text"]}
+        >
+          {t(sectionName)}
+        </span>
+      </li>
+    )
+
+  if (sectionAccessible)
+    return (
+      <li className={`${styles["progress-nav-item"]} ${styles["is-accessible"]}`}>
+        <button
+          type="button"
+          aria-disabled={false}
+          aria-current={false}
+          className={styles["progress-nav-item-text"]}
+          onClick={handleClick}
+        >
+          {t(sectionName)}
+        </button>
+      </li>
+    )
 
   return (
-    <li className={`${styles["progress-nav-item"]} ${bgColor}`}>
-      <span
-        aria-disabled={bgColor === styles["is-disabled"]}
-        aria-current={bgColor === styles["is-active"]}
-        className={styles["progress-nav-item-text"]}
-      >
-        {t(label)}
+    <li className={`${styles["progress-nav-item"]} ${styles["is-disabled"]}`}>
+      <span aria-disabled={true} aria-current={false} className={styles["progress-nav-item-text"]}>
+        {t(sectionName)}
       </span>
     </li>
   )
@@ -40,20 +61,34 @@ const ListingApplyNavBar = ({
   sectionMap,
   completedSections,
   currentSectionName,
+  jumpToStep,
 }: {
   sectionMap: SectionInfo[]
   completedSections: Record<string, boolean>
   currentSectionName: string
+  jumpToStep: (stepSlug: string) => void
 }) => {
   const currentSectionIdx = sectionMap.findIndex((section) => section.name === currentSectionName)
   const currentSectionIncomplete = !completedSections[currentSectionName]
-  const isSectionComplete = (sectionToRender: SectionInfo, idx: number): boolean => {
-    if (!completedSections[sectionToRender.name]) return false
+  const isSectionAccessible = (sectionName: string, idx: number): boolean => {
+    // if all previous sections are complete, then a section is accessible regardless of its completion status
+    if (idx > 0 && sectionMap.slice(0, idx).every((section) => completedSections[section.name]))
+      return true
 
-    // if the current section is incomplete, all subsequent sections are marked as incomplete
+    if (!completedSections[sectionName]) return false
+
+    // if the current section is incomplete, all subsequent sections are inaccessible, regardless of their completion status
     if (currentSectionIncomplete && currentSectionIdx < idx) return false
 
     return true
+  }
+
+  const handleSectionClick = (sectionName: string) => {
+    const firstStepOfSection = sectionMap.find((section) => section.name === sectionName)
+      ?.stepSlugs[0]
+    if (!firstStepOfSection) return
+
+    jumpToStep(firstStepOfSection)
   }
 
   return (
@@ -62,9 +97,10 @@ const ListingApplyNavBar = ({
         {sectionMap.map((section, idx) => (
           <NavItem
             key={section.name}
-            sectionComplete={isSectionComplete(section, idx)}
+            sectionAccessible={isSectionAccessible(section.name, idx)}
             currentSection={currentSectionName === section.name}
-            label={section.name}
+            sectionName={section.name}
+            onSectionClick={handleSectionClick}
           />
         ))}
       </ol>

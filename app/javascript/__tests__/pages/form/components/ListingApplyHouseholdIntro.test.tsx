@@ -23,13 +23,13 @@ describe("ListingApplyHouseholdIntro", () => {
   it("skips to the next section if alone", async () => {
     await user.click(screen.getByText(t("label.liveAlone")))
     expect(mockHandleNextStep).toHaveBeenCalledWith({
-      liveAlone: "true",
+      liveAlone: true,
       householdMembers: null,
     })
   })
 
   it("goes to the next page if there are household members", async () => {
     await user.click(screen.getByText(t("label.otherPeople")))
-    expect(mockHandleNextStep).toHaveBeenCalledWith({ liveAlone: "false" })
+    expect(mockHandleNextStep).toHaveBeenCalledWith({ liveAlone: false })
   })
 })

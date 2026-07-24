@@ -252,9 +252,7 @@
           "hideStepIfAnyPresent": [
             {
               "dataSource": "form",
-              "dataKey": "householdMembers",
-              "dataValueToMatch": "null",
-              "negate": true
+              "dataKey": "householdMembers"
             }
           ]
         }
@@ -276,12 +274,12 @@
             {
               "dataSource": "form",
               "dataKey": "liveAlone",
-              "dataValueToMatch": "true"
+              "dataValueToMatch": true
             },
             {
               "dataSource": "form",
               "dataKey": "householdMembers",
-              "dataValueToMatch": "null"
+              "dataValueToMatch": null
             }
           ]
         }
@@ -298,7 +296,7 @@
             {
               "dataSource": "form",
               "dataKey": "liveAlone",
-              "dataValueToMatch": "true"
+              "dataValueToMatch": true
             }
           ]
         }

@@ -1,4 +1,4 @@
-import React, { useMemo } from "react"
+import React, { useMemo, useEffect, useRef } from "react"
 import { t, Form } from "@bloom-housing/ui-components"
 import { Button, Card, Heading } from "@bloom-housing/ui-seeds"
 import { FormProvider, useForm } from "react-hook-form"
@@ -8,6 +8,7 @@ import { getAddress, translationFromDataSchema } from "../../../../util/formEngi
 import ListingApplyHouseholdMonthlyRent from "./ListingApplyHouseholdMonthlyRent"
 import styles from "./ListingApplyhouseholdMonthlyRentStep.module.scss"
 import { getPrimaryApplicantData } from "../../../../util/listingApplyUtil"
+import ListingApplyStepErrorMessage from "../ListingApplyStepErrorMessage"
 
 // TODO: DAH-4176 centralize HouseholdMember and GroupedAddress data for other pages to use
 type HouseholdMember = {
@@ -40,8 +41,18 @@ const ListingApplyHouseholdMonthlyRentStep = ({
   householdTitle,
   description,
 }: ListingApplyHouseholdMonthlyRent) => {
-  const { staticData, formData, saveFormData, handleNextStep, handlePrevStep } =
-    useFormEngineContext()
+  const {
+    staticData,
+    formData,
+    stepInfoMap,
+    currentStepIndex,
+    saveFormData,
+    handleNextStep,
+    handlePrevStep,
+    handleSetSectionCompletion,
+  } = useFormEngineContext()
+
+  const currentStepInfo = stepInfoMap[currentStepIndex]
 
   const groupedAddresses = useMemo<GroupedAddress[]>(() => {
     const { firstName: primaryFirstName, lastName: primaryLastName } =
@@ -125,6 +136,17 @@ const ListingApplyHouseholdMonthlyRentStep = ({
     defaultValues,
   })
 
+  const errorSectionRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (Object.keys(formMethods.formState.errors).length > 0) {
+      errorSectionRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })
+      handleSetSectionCompletion(currentStepInfo.sectionName, false)
+    } else {
+      handleSetSectionCompletion(currentStepInfo.sectionName, true)
+    }
+  }, [formMethods.formState.errors, handleSetSectionCompletion, currentStepInfo.sectionName])
+
   const onSubmit = (data: Record<string, unknown>) => {
     const groupedHouseholdAddresses = groupedAddresses.map((group) => ({
       address: group.address,
@@ -159,6 +181,14 @@ const ListingApplyHouseholdMonthlyRentStep = ({
           </Heading>
           {description && <p className="field-note text-base">{t(description)}</p>}
         </Card.Header>
+        <div ref={errorSectionRef}>
+          {Object.keys(formMethods.formState.errors).length > 0 && (
+            <ListingApplyStepErrorMessage
+              errorMessage={t("error.formSubmission")}
+              onClose={() => formMethods.clearErrors()}
+            />
+          )}
+        </div>
         <Form onSubmit={formMethods.handleSubmit(onSubmit)}>
           <Card.Section className={styles["rent-container"]}>
             {groupedAddresses.map((group, index) => (

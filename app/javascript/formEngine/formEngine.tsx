@@ -23,7 +23,7 @@ interface FormEngineProps {
 
 export type SectionInfo = {
   name: string
-  stepSlugs: string[] // note: some steps are conditionally rendered
+  stepSlugs: string[] // note: some steps are conditionally rendered, but the first step should always be rendered
 }
 
 const FormEngineMultiStep = ({
@@ -65,6 +65,8 @@ const FormEngineMultiStep = ({
         })
       }
     }
+    console.log("ASDFASDF", sections)
+
     return sections
   }, [stepInfoMap])
 
@@ -81,12 +83,9 @@ const FormEngineMultiStep = ({
       currentFormData || formData
     )
     if (stepInfoMap[newStepIndex]) {
-      // TODO WIP: any validation errors on a step will mark the current section as incomplete
-      // so applicants can no longer jump forward to previously completed sections.
-      // once the step is complete again, mark the current section as complete again
-
       const currentSectionName = stepInfoMap[currentStepIndex].sectionName
       const newSectionName = stepInfoMap[newStepIndex].sectionName
+      console.log(newSectionName)
       if (
         currentSectionName &&
         currentSectionName !== newSectionName &&
@@ -118,6 +117,14 @@ const FormEngineMultiStep = ({
     window.scrollTo(0, 0)
   }
 
+  // set and reset section completion only if they were previously completed,
+  // which is indicated by their presence in the `completedSections` object
+  const handleSetSectionCompletion = (sectionName: string | undefined, isComplete: boolean) => {
+    if (!sectionName || completedSections[sectionName] === undefined) return
+
+    setCompletedSections((prev) => ({ ...prev, [sectionName]: isComplete }))
+  }
+
   const formEngineContextValue: FormEngineContext = {
     sessionId,
     staticData,
@@ -130,6 +137,7 @@ const FormEngineMultiStep = ({
     handleNextStep,
     handlePrevStep,
     jumpToStep,
+    handleSetSectionCompletion,
   }
 
   return (

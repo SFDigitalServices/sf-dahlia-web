@@ -10,24 +10,30 @@ const HouseholdMemberFormWrapper = ({
   handleUpdateHouseholdMember = jest.fn(),
   handleDeleteHouseholdMember = jest.fn(),
   handleCancelAddHouseholdMember = jest.fn(),
+  onSetSectionCompletion = jest.fn(),
+  onRemoveApiErrorMessage = jest.fn(),
   isEditing = false,
 }: {
   handleUpdateHouseholdMember?: jest.Mock
   handleDeleteHouseholdMember?: jest.Mock
   handleCancelAddHouseholdMember?: jest.Mock
+  onSetSectionCompletion?: jest.Mock
+  onRemoveApiErrorMessage?: jest.Mock
   isEditing?: boolean
 }) => {
-  const methods = useForm()
+  const formMethods = useForm()
   return (
-    <FormProvider {...methods}>
+    <FormProvider {...formMethods}>
       <HouseholdMemberForm
         handleUpdateHouseholdMember={handleUpdateHouseholdMember}
         handleDeleteHouseholdMember={handleDeleteHouseholdMember}
         handleCancelAddHouseholdMember={handleCancelAddHouseholdMember}
+        onSetSectionCompletion={onSetSectionCompletion}
+        onRemoveApiErrorMessage={onRemoveApiErrorMessage}
         isEditing={isEditing}
         addressError={null}
         loading={false}
-        methods={methods}
+        formMethods={formMethods}
       />
     </FormProvider>
   )

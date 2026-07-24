@@ -97,6 +97,7 @@ export const renderWithFormContextWrapper = (
   const mockHandlePrevStep = jest.fn()
   const mockJumpToStep = jest.fn()
   const mockSaveFormData = jest.fn()
+  const mockHandleSetSectionCompletion = jest.fn()
 
   const formEngineContextValue = {
     sessionId: "test-session-id-1234",
@@ -110,6 +111,7 @@ export const renderWithFormContextWrapper = (
     currentStepIndex: 0,
     handleNextStep: mockHandleNextStep,
     handlePrevStep: mockHandlePrevStep,
+    handleSetSectionCompletion: mockHandleSetSectionCompletion,
     jumpToStep: mockJumpToStep,
   }
 
@@ -146,5 +148,6 @@ export const renderWithFormContextWrapper = (
     mockHandlePrevStep,
     mockJumpToStep,
     mockSaveFormData,
+    mockHandleSetSectionCompletion,
   }
 }

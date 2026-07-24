@@ -68,11 +68,9 @@
 }
 
 .progress-nav-item-text {
-  color: var(--seeds-color-gray-850);
-  cursor: default;
+  color: var(--seeds-color-gray-850) !important;
   display: block;
   position: relative;
-  pointer-events: none;
   padding-inline-end: var(--seeds-s4);
   padding-top: var(--seeds-s5);
   padding-left: var(--seeds-s2_5);
@@ -85,7 +83,8 @@
   }
 }
 
-.is-complete {
+.is-accessible {
+  cursor: pointer;
   &:before {
     background-color: #99cd00;
     border: var(--seeds-border-1) solid #fff;

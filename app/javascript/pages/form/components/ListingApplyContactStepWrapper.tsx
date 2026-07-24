@@ -1,5 +1,5 @@
 // https://github.com/react-hook-form/react-hook-form/issues/2887#issuecomment-802577357
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState, useRef } from "react"
 import { useForm, FormProvider } from "react-hook-form"
 import { Form, t } from "@bloom-housing/ui-components"
 import { Button, Card, LoadingState } from "@bloom-housing/ui-seeds"
@@ -89,6 +89,7 @@ const ListingApplyContactStepWrapper = ({
     currentStepIndex,
     handleNextStep,
     handlePrevStep,
+    handleSetSectionCompletion,
   } = formEngineContext
 
   const currentStepInfo = stepInfoMap[currentStepIndex]
@@ -106,11 +107,22 @@ const ListingApplyContactStepWrapper = ({
 
   const [apiErrorMessage, setApiErrorMessage] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
+
+  const errorSectionRef = useRef<HTMLDivElement>(null)
+
   useEffect(() => {
     if (Object.keys(formMethods.formState.errors).length > 0 || apiErrorMessage) {
-      window.scrollTo(0, 0)
+      errorSectionRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })
+      handleSetSectionCompletion(currentStepInfo.sectionName, false)
+    } else {
+      handleSetSectionCompletion(currentStepInfo.sectionName, true)
     }
-  }, [formMethods.formState.errors, apiErrorMessage])
+  }, [
+    formMethods.formState.errors,
+    apiErrorMessage,
+    handleSetSectionCompletion,
+    currentStepInfo.sectionName,
+  ])
 
   const onSubmit = async (data: Record<string, unknown>) => {
     setLoading(true)
@@ -226,15 +238,17 @@ const ListingApplyContactStepWrapper = ({
             {translationFromDataSchema(title, titleVars, staticData, formData)}
           </h1>
         </Card.Header>
-        {(Object.keys(formMethods.formState.errors).length > 0 || apiErrorMessage) && (
-          <ListingApplyStepErrorMessage
-            errorMessage={t("error.formSubmission")}
-            onClose={() => {
-              formMethods.clearErrors()
-              setApiErrorMessage(null)
-            }}
-          />
-        )}
+        <div ref={errorSectionRef}>
+          {(Object.keys(formMethods.formState.errors).length > 0 || apiErrorMessage) && (
+            <ListingApplyStepErrorMessage
+              errorMessage={t("error.formSubmission")}
+              onClose={() => {
+                formMethods.clearErrors()
+                setApiErrorMessage(null)
+              }}
+            />
+          )}
+        </div>
         <Form onSubmit={formMethods.handleSubmit(onSubmit)}>
           <Card.Section>
             <Phone

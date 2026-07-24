@@ -1,5 +1,5 @@
 import React from "react"
-import { ProgressNav, t } from "@bloom-housing/ui-components"
+import { t } from "@bloom-housing/ui-components"
 import { Card, Heading } from "@bloom-housing/ui-seeds"
 import { useFormEngineContext } from "../../../formEngine/formEngineContext"
 import styles from "./ListingApplyFormWrapper.module.scss"
@@ -17,14 +17,11 @@ const ListingApplyFormWrapper = ({ children }: ListingApplyFormWrapperProps) => 
     stepInfoMap,
     sectionMap,
     completedSections,
+    jumpToStep,
   } = formEngineContext
 
   const currentStepChild = children[currentStepIndex]
   const currentStepInfo = stepInfoMap[currentStepIndex]
-  const sectionNames = sectionMap.map((section) => section.name)
-  const currentSectionIndex = sectionMap.findIndex(
-    (section) => section.name === currentStepInfo.sectionName
-  )
   const showLayout = !currentStepInfo.hideLayout
 
   return (
@@ -38,17 +35,11 @@ const ListingApplyFormWrapper = ({ children }: ListingApplyFormWrapperProps) => 
               </Heading>
             </Card.Section>
             <Card.Section className={styles["listing-apply-form-nav"]}>
-              <ProgressNav
-                labels={sectionNames.map((name) => t(name))}
-                currentPageSection={currentSectionIndex + 1}
-                completedSections={currentSectionIndex}
-                mounted={true}
-                removeSrHeader
-              />
               <ListingApplyNavBar
                 sectionMap={sectionMap}
                 completedSections={completedSections}
                 currentSectionName={currentStepInfo.sectionName || ""}
+                jumpToStep={jumpToStep}
               />
             </Card.Section>
           </Card>

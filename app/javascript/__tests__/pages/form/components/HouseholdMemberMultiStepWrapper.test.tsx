@@ -191,14 +191,14 @@ describe("HouseholdMemberMultiStepWrapper", () => {
     expect(mockHandleNextStep).toHaveBeenCalledWith({ ...formData, householdMembers: members })
   })
 
-  it("saves empty household members array when done adding people is clicked with no members", async () => {
+  it("saves null value when done adding people is clicked with no members", async () => {
     const { mockSaveFormData, mockHandleNextStep } = renderHouseholdMemberMultiStepWrapper()
     const user = userEvent.setup()
 
     await user.click(screen.getByText(t("label.doneAddingPeople")))
 
-    expect(mockSaveFormData).toHaveBeenCalledWith({ householdMembers: [] })
-    expect(mockHandleNextStep).toHaveBeenCalledWith({ householdMembers: [] })
+    expect(mockSaveFormData).toHaveBeenCalledWith({ householdMembers: null })
+    expect(mockHandleNextStep).toHaveBeenCalledWith({ householdMembers: null })
   })
 
   it("returns to the add household members page when cancel is clicked while adding a new member", async () => {
