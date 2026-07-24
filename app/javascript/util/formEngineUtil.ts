@@ -286,7 +286,7 @@ export const getNestedError = (
  * live/work claimed preferences (and the sub-preference selection) from
  * formData on mount. Other claimed preferences are untouched.
  */
-export const useResetClaimedLiveWorkPreferences = ({
+export const useResetClaimedPreferences = ({
   setValue,
   claimedPreferences,
   subPreferenceClaimed,
@@ -294,6 +294,7 @@ export const useResetClaimedLiveWorkPreferences = ({
   showComboPreference,
   livesInSf,
   worksInSf,
+  liveInNeighborhood,
   formData,
   saveFormData,
 }: {
@@ -304,6 +305,7 @@ export const useResetClaimedLiveWorkPreferences = ({
   showComboPreference: boolean
   livesInSf: boolean
   worksInSf: boolean
+  liveInNeighborhood: boolean
   formData: Record<string, unknown>
   saveFormData: (data: Record<string, unknown>) => void
 }) => {
@@ -316,6 +318,7 @@ export const useResetClaimedLiveWorkPreferences = ({
     if (!livesInSf) stalePreferences.push("liveInSf")
     if (!worksInSf) stalePreferences.push("workInSf")
     if (comboPreferenceName && !showComboPreference) stalePreferences.push(comboPreferenceName)
+    if (!liveInNeighborhood) stalePreferences.push("neighborhoodResidence")
 
     const claimedPreferencesToRemove = stalePreferences.filter(
       (key) => existingClaimedPreferences[key]?.preferenceClaimed

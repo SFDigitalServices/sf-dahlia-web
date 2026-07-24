@@ -10,7 +10,7 @@ import PreferenceToClaimCombo from "./PreferenceToClaimCombo"
 import {
   generateStepDefaultValues,
   getNestedError,
-  useResetClaimedLiveWorkPreferences,
+  useResetClaimedPreferences,
 } from "../../../../util/formEngineUtil"
 import { renderInlineMarkup } from "../../../../util/languageUtil"
 import {
@@ -21,7 +21,10 @@ import {
 } from "./PreferenceUtils"
 import styles from "./ListingApplyPreferenceStepWrapper.module.scss"
 import stepStyles from "../ListingApplyStepWrapper.module.scss"
-import { getLiveWorkInSfMembers } from "../household/householdUtils"
+import {
+  getLiveWorkInSfMembers,
+  liveInTheNeighborhoodHouseholdMembers,
+} from "../household/householdUtils"
 
 interface ListingApplyPreferenceStepWrapperProps {
   greenHeader?: boolean
@@ -132,8 +135,8 @@ const ListingApplyPreferenceStepWrapper = ({
     /* eslint-disable-next-line react-hooks/exhaustive-deps */
   }, [reset])
 
-  // If live/work status is updated on other pages, reset claimed preferences
-  useResetClaimedLiveWorkPreferences({
+  // If eligibility is updated on other pages, reset claimed preferences
+  useResetClaimedPreferences({
     setValue,
     claimedPreferences,
     subPreferenceClaimed,
@@ -141,6 +144,7 @@ const ListingApplyPreferenceStepWrapper = ({
     showComboPreference: !!showComboPreference,
     livesInSf,
     worksInSf,
+    liveInNeighborhood: liveInTheNeighborhoodHouseholdMembers(formData).length > 0,
     formData,
     saveFormData,
   })
