@@ -6,7 +6,7 @@ import HouseholdMemberForm from "./HouseholdMemberForm"
 import AddHouseholdMembers from "./AddHouseholdMembers"
 import VerifyAddress from "../VerifyAddress"
 import {
-  getNeighborhoodPreferenceMatch,
+  checkNeighborhoodPreferenceMatch,
   locateVerifiedAddress,
   type Address,
 } from "../../../../api/formApiService"
@@ -163,7 +163,7 @@ const HouseholdMemberMultiStepWrapper = ({
     }
     locateVerifiedAddress(address)
       .then((response) =>
-        getNeighborhoodPreferenceMatch(response, staticData, houseHoldMemberInfo).then(
+        checkNeighborhoodPreferenceMatch(response, staticData, houseHoldMemberInfo).then(
           (neighborhoodMatch) => {
             setApiErrorMessage(null)
             setPendingMember({

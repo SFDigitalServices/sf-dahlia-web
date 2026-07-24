@@ -12,7 +12,10 @@ import {
 } from "../../../util/formEngineUtil"
 import styles from "./ListingApplyStepWrapper.module.scss"
 import ListingApplyStepErrorMessage from "./ListingApplyStepErrorMessage"
-import { getNeighborhoodPreferenceMatch, locateVerifiedAddress } from "../../../api/formApiService"
+import {
+  checkNeighborhoodPreferenceMatch,
+  locateVerifiedAddress,
+} from "../../../api/formApiService"
 import YesNoRadio from "./YesNoRadio"
 import Phone from "./Phone"
 import Address from "./Address"
@@ -150,7 +153,7 @@ const ListingApplyContactStepWrapper = ({
     }
     locateVerifiedAddress(address)
       .then((response) =>
-        getNeighborhoodPreferenceMatch(
+        checkNeighborhoodPreferenceMatch(
           response,
           staticData,
           getPrimaryApplicantData(formData)

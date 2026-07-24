@@ -120,7 +120,7 @@ const getProjectIdForBoundaryMatching = (staticData: StaticData): string | null 
   return null
 }
 
-export const getNeighborhoodPreferenceMatch = async (
+export const checkNeighborhoodPreferenceMatch = async (
   verifiedAddressResponse: VerifiedAddressResponse,
   staticData: StaticData,
   applicantInfo: { firstName: string; middleName: string; lastName: string; dob: string }

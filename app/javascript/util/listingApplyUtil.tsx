@@ -13,11 +13,11 @@ export const getFullName = (person: {
 export type HouseholdMember = {
   id: string
   firstName: string
-  middleName: string
+  middleName?: string
   lastName: string
-  birthYear: string
-  birthMonth: string
-  birthDay: string
+  birthYear?: string
+  birthMonth?: string
+  birthDay?: string
 }
 
 export const validAge = (
