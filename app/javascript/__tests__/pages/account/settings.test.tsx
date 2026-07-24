@@ -389,8 +389,9 @@ describe("<SettingsPage />", () => {
           })
         )
 
-        expect(newPasswordField.getAttribute("value")).toBe("")
-        expect(currentPasswordField.getAttribute("value")).toBe("")
+        // React 19 omits the empty `value` attribute; assert on the value property instead.
+        expect(newPasswordField).toHaveValue("")
+        expect(currentPasswordField).toHaveValue("")
       })
     })
 

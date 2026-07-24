@@ -72,6 +72,10 @@ module.exports = {
         additionalData: tailwindVars,
         sourceMap: true,
         sassOptions: {
+          // ui-components v14 added an `exports` map that hides its deep
+          // `src/**/*.scss` files from Node resolution. includePaths lets
+          // sass resolve those imports directly from the filesystem.
+          includePaths: [path.resolve(__dirname, "../../../node_modules")],
           logger: {
             warn: console.warn
           }

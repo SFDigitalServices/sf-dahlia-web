@@ -24,7 +24,7 @@ export const MobileListingDetailsProcess = ({
       <Mobile>
         <ListingDetailItem
           imageAlt={""}
-          imageSrc={imageSrc}
+          imageSrc={imageSrc || undefined}
           title={t("listings.process.header")}
           subtitle={t("listings.process.subheader")}
           hideHeader={true}

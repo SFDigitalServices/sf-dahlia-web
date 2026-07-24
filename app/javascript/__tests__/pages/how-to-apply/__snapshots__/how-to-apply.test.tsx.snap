@@ -8,57 +8,6 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
     <div
       class="site-content"
     >
-      <title
-        class="notranslate"
-      >
-        Apply to TEST Sale Listing (do not modify) - Homeownership Acres
-      </title>
-      <meta
-        charset="utf-8"
-      />
-      <meta
-        content="IE=edge"
-        http-equiv="X-UA-Compatible"
-      />
-      <meta
-        content="width=device-width, initial-scale=1"
-        name="viewport"
-      />
-      <meta
-        content="M1zcm6GGM6sHSF_jvkq254DbYAj94JYbFC7ArZDAXlg"
-        name="google-site-verification"
-      />
-      <meta
-        content="http://localhost/"
-        property="og:url"
-      />
-      <meta
-        content="website"
-        property="og:type"
-      />
-      <meta
-        content="Apply to TEST Sale Listing (do not modify) - Homeownership Acres"
-        property="og:title"
-      />
-      <meta
-        content="DAHLIA San Francisco Housing Portal"
-        property="og:description"
-      />
-      <meta
-        content="DAHLIA San Francisco Housing Portal"
-        name="description"
-      />
-      <meta
-        property="og:image"
-      />
-      <meta
-        content="DAHLIA San Francisco Housing Portal"
-        property="og:site_name"
-      />
-      <meta
-        content="summary_large_image"
-        name="twitter:card"
-      />
       <header
         class="site-header"
       >
@@ -919,7 +868,7 @@ exports[`<HowToApply /> shows the correct leasing agent box for the listing 1`] 
         >
           <svg
             aria-hidden="true"
-            class="svg-inline--fa fa-envelope "
+            class="svg-inline--fa fa-envelope"
             data-icon="envelope"
             data-prefix="fas"
             focusable="false"
