@@ -77,7 +77,9 @@ describe("listingApplyUtil", () => {
         primaryApplicantFirstName: "Alice",
         primaryApplicantMiddleName: "B",
         primaryApplicantLastName: "Cooper",
-        primaryApplicantDob: "1985-06-15",
+        primaryApplicantBirthMonth: "06",
+        primaryApplicantBirthDate: "15",
+        primaryApplicantBirthYear: "1985",
       }
       expect(getPrimaryApplicantData(formData)).toEqual({
         firstName: "Alice",

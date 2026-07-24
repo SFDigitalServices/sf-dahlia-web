@@ -38,8 +38,8 @@ export const validAge = (
 export const validVeteranAge = (birthDate: Dayjs): boolean => {
   return dayjs().diff(birthDate, "year") >= 17
 }
-export const formatApplicantDOB = (month: string, day: string, year: string): string =>
-  `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`
+export const formatApplicantDOB = (month?: string, day?: string, year?: string): string =>
+  year && month && day ? `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}` : ""
 
 export const getPrimaryApplicantData = (formData: Record<string, unknown>) => {
   const firstName = formData.primaryApplicantFirstName as string

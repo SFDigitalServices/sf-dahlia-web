@@ -4,13 +4,18 @@ import userEvent from "@testing-library/user-event"
 import { t } from "@bloom-housing/ui-components"
 import HouseholdMemberMultiStepWrapper from "../../../../pages/form/components/household/HouseholdMemberMultiStepWrapper"
 import { renderWithFormContextWrapper } from "../../../__util__/renderUtils"
-import { locateVerifiedAddress } from "../../../../api/formApiService"
+import {
+  checkNeighborhoodPreferenceMatch,
+  locateVerifiedAddress,
+} from "../../../../api/formApiService"
 
 jest.mock("../../../../api/formApiService", () => ({
   locateVerifiedAddress: jest.fn(),
+  checkNeighborhoodPreferenceMatch: jest.fn(),
 }))
 
 const mockLocateVerifiedAddress = locateVerifiedAddress as jest.Mock
+const mockCheckNeighborhoodPreferenceMatch = checkNeighborhoodPreferenceMatch as jest.Mock
 
 const createNewHouseholdMember = async (
   user: ReturnType<typeof userEvent.setup>,
@@ -73,6 +78,7 @@ describe("HouseholdMemberMultiStepWrapper", () => {
         zip: "94105",
       },
     })
+    mockCheckNeighborhoodPreferenceMatch.mockResolvedValue(true)
   })
 
   const renderHouseholdMemberMultiStepWrapper = (formData = {}) => {
@@ -81,6 +87,7 @@ describe("HouseholdMemberMultiStepWrapper", () => {
         fieldNames={{
           householdMembers: "householdMembers",
           showLiveWorkInSfPrefStep: "showLiveWorkInSfPrefStep",
+          showNRHPPrefStep: "showNRHPPrefStep",
         }}
       />,
       {
