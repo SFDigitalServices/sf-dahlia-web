@@ -2,6 +2,7 @@ import React, { useState } from "react"
 import { type StepInfoSchema } from "./formSchemas"
 import "./FormEngineDebug.scss"
 import { updateFormPath } from "../util/formEngineUtil"
+import { getCurrentLanguage, LanguagePrefix } from "../util/languageUtil"
 
 interface FormEngineDebugProps {
   currentStepIndex: number
@@ -9,6 +10,20 @@ interface FormEngineDebugProps {
   setCurrentStepIndex: (step: number) => void
   staticData: Record<string, unknown>
   formData: Record<string, unknown>
+}
+
+// Builds a link to the equivalent listing in the legacy Angular short-form
+// application ("apply-welcome" flow), so devs can quickly compare behavior
+// against the old form while debugging the new react form engine. The
+// Angular flow is served by the same Rails app (via the catch-all
+// angular#index route) on every environment - prod, full/staging, and PR
+// review apps alike - so this just swaps the path on the current origin
+// rather than pointing at a fixed host.
+const getAngularFormUrl = (staticData: Record<string, unknown>): string => {
+  const listing = staticData.listing as { listingID?: string } | undefined
+  const lang = getCurrentLanguage(window.location.pathname)
+  const langPrefix = lang && lang !== LanguagePrefix.English ? `/${lang}` : ""
+  return `${window.location.origin}${langPrefix}/listings/${listing?.listingID ?? ""}/apply-welcome/intro`
 }
 
 const Steps = ({
@@ -78,6 +93,11 @@ const FormEngineDebug = ({
             {showStepInfo ? "hide" : "show"} step info
           </button>
           {showStepInfo && <ViewJson data={stepInfoMap[currentStepIndex]} />}
+        </div>
+        <div>
+          <button onClick={() => window.location.href = getAngularFormUrl(staticData)}>
+            angular form
+          </button>
         </div>
       </div>
       <div>
