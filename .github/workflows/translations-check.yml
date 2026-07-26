@@ -8,6 +8,10 @@ on:
       - "scripts/known-translation-gaps.json"
       - ".github/workflows/translations-check.yml"
 
+# Both jobs only read the checked-out tree; nothing writes back to the repo.
+permissions:
+  contents: read
+
 jobs:
   check-sorting:
     runs-on: ubuntu-latest
