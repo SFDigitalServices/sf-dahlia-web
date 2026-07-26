@@ -1,9 +1,12 @@
-name: Check Translation Files Sorting
+name: Check Translation Files
 
 on:
   pull_request:
     paths:
       - "app/assets/json/translations/react/*.json"
+      - "scripts/check-translation-parity.js"
+      - "scripts/known-translation-gaps.json"
+      - ".github/workflows/translations-check.yml"
 
 jobs:
   check-sorting:
@@ -47,3 +50,21 @@ jobs:
               rm sorted.json
             fi
           done
+
+  check-key-parity:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "20"
+
+      # loadTranslations() overlays each locale on top of en.json, so a key that is
+      # missing from es/tl/zh renders the English string with no error anywhere.
+      # This is the only thing in CI that catches that.
+      - name: Check translation key parity
+        run: node scripts/check-translation-parity.js
