@@ -7,7 +7,7 @@ import { useFormEngineContext } from "../../../../formEngine/formEngineContext"
 import { getAddress, translationFromDataSchema } from "../../../../util/formEngineUtil"
 import ListingApplyHouseholdMonthlyRent from "./ListingApplyHouseholdMonthlyRent"
 import styles from "./ListingApplyhouseholdMonthlyRentStep.module.scss"
-import { getPrimaryApplicantData } from "../../../../util/listingApplyUtil"
+import { getPrimaryApplicantName } from "../../../../util/listingApplyUtil"
 
 // TODO: DAH-4176 centralize HouseholdMember and GroupedAddress data for other pages to use
 type HouseholdMember = {
@@ -45,7 +45,7 @@ const ListingApplyHouseholdMonthlyRentStep = ({
 
   const groupedAddresses = useMemo<GroupedAddress[]>(() => {
     const { firstName: primaryFirstName, lastName: primaryLastName } =
-      getPrimaryApplicantData(formData)
+      getPrimaryApplicantName(formData)
     const householdMembers = (formData.householdMembers as HouseholdMember[]) ?? []
     const primaryAddress = getAddress(
       formData.primaryApplicantAddressStreet as string,

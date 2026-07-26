@@ -2,7 +2,7 @@ import React from "react"
 import { t } from "@bloom-housing/ui-components"
 import { Button, Card, Heading } from "@bloom-housing/ui-seeds"
 import { useFormEngineContext } from "../../../../formEngine/formEngineContext"
-import { getPrimaryApplicantData, getFullName } from "../../../../util/listingApplyUtil"
+import { getPrimaryApplicantName, getFullName } from "../../../../util/listingApplyUtil"
 import stepStyles from "../ListingApplyStepWrapper.module.scss"
 import styles from "./AddHouseholdMembers.module.scss"
 interface AddHouseholdMemberProps {
@@ -50,7 +50,7 @@ const AddHouseholdMembers = ({
   handleSubmitHouseholdMembers,
 }: AddHouseholdMemberProps) => {
   const { jumpToStep, formData } = useFormEngineContext()
-  const primaryApplicant = getPrimaryApplicantData(formData)
+  const primaryApplicant = getPrimaryApplicantName(formData)
   return (
     <Card>
       <Card.Header divider="inset">

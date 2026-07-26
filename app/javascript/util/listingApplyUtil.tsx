@@ -39,16 +39,14 @@ export const validVeteranAge = (birthDate: Dayjs): boolean => {
   return dayjs().diff(birthDate, "year") >= 17
 }
 
-export const getPrimaryApplicantData = (formData: Record<string, unknown>) => {
+// The primary applicant's name, for display alongside household members.
+// For the Salesforce-shaped applicant record, see
+// `util/applicationTransforms/getPrimaryApplicantData`.
+export const getPrimaryApplicantName = (formData: Record<string, unknown>) => {
   const firstName = formData.primaryApplicantFirstName as string
   const middleName = formData.primaryApplicantMiddleName as string
   const lastName = formData.primaryApplicantLastName as string
-  return {
-    firstName,
-    middleName,
-    lastName,
-    dob: (formData.primaryApplicantDob as string) || "1990-01-01", // TODO: update after DAH-3543
-  }
+  return { firstName, middleName, lastName }
 }
 
 export const allHouseholdMembers = (formData: Record<string, unknown>): HouseholdMember[] => {

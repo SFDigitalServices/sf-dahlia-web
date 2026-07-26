@@ -2,7 +2,7 @@ import { AxiosResponse } from "axios"
 import { post, apiDelete } from "./apiService"
 import { getCurrentLanguage } from "../util/languageUtil"
 import { Application } from "./types/rails/application/RailsApplication"
-import { getPrimaryApplicantData } from "../util/listingApplyUtil"
+import { formDataToApplication } from "../util/applicationTransforms"
 
 type UploadProofFileResponse = {
   success: boolean
@@ -117,12 +117,10 @@ export const submitForm = async (
   listingId: string
 ): Promise<Record<string, unknown>> => {
   const applicationData: Partial<Application> = {
+    ...formDataToApplication(formData),
     listingID: listingId,
     applicationLanguage: LanguagePrefix[getCurrentLanguage()],
     status: "Submitted",
-    primaryApplicant: getPrimaryApplicantData(formData),
-    householdMembers: [],
-    annualIncome: 0, // TODO: update after DAH-3683
     applicationSubmittedDate: new Date().toISOString().split("T")[0],
   }
   return post<Record<string, unknown>>("/api/v1/short-form/application", {

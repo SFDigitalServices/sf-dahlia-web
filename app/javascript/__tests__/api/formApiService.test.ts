@@ -67,7 +67,9 @@ describe("formApiService", () => {
         primaryApplicantFirstName: "First name",
         primaryApplicantMiddleName: "Middle name",
         primaryApplicantLastName: "Last name",
-        primaryApplicantDob: "1990-01-01",
+        primaryApplicantBirthYear: "1990",
+        primaryApplicantBirthMonth: "1",
+        primaryApplicantBirthDate: "1",
       }
       await submitForm(formData, "testListingId")
 
@@ -84,7 +86,8 @@ describe("formApiService", () => {
             dob: "1990-01-01",
           },
           householdMembers: [],
-          annualIncome: 0,
+          adaPrioritiesSelected: "None;",
+          formMetadata: "{}",
           applicationSubmittedDate: today,
         },
         autosave: false,
@@ -92,6 +95,25 @@ describe("formApiService", () => {
         locale: "en",
         uploaded_file: { file: "todo.png" },
       })
+    })
+
+    it("maps the whole form, not just the applicant's name", async () => {
+      await submitForm(
+        {
+          primaryApplicantFirstName: "Alice",
+          primaryApplicantLastName: "Cooper",
+          householdIncome: "1250",
+          householdIncomeMultiplier: "per_month",
+          householdMembers: [{ firstName: "Carol", lastName: "Cooper", relationship: "Sibling" }],
+        },
+        "testListingId"
+      )
+
+      const { application } = (post as jest.Mock).mock.calls[0][1]
+      expect(application.monthlyIncome).toBe(1250)
+      expect(application.householdMembers).toEqual([
+        { firstName: "Carol", lastName: "Cooper", relationship: "Sibling" },
+      ])
     })
   })
 

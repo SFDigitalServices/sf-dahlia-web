@@ -3,7 +3,7 @@ import MockDate from "mockdate"
 import {
   validAge,
   validVeteranAge,
-  getPrimaryApplicantData,
+  getPrimaryApplicantName,
   allHouseholdMembers,
   getProofOptions,
 } from "../../util/listingApplyUtil"
@@ -71,29 +71,18 @@ describe("listingApplyUtil", () => {
     })
   })
 
-  describe("getPrimaryApplicantData", () => {
+  describe("getPrimaryApplicantName", () => {
     it("extracts primary applicant name fields from form data", () => {
       const formData = {
         primaryApplicantFirstName: "Alice",
         primaryApplicantMiddleName: "B",
         primaryApplicantLastName: "Cooper",
-        primaryApplicantDob: "1985-06-15",
       }
-      expect(getPrimaryApplicantData(formData)).toEqual({
+      expect(getPrimaryApplicantName(formData)).toEqual({
         firstName: "Alice",
         middleName: "B",
         lastName: "Cooper",
-        dob: "1985-06-15",
       })
-    })
-
-    it("defaults dob when primaryApplicantDob is not present", () => {
-      const formData = {
-        primaryApplicantFirstName: "Alice",
-        primaryApplicantMiddleName: "",
-        primaryApplicantLastName: "Cooper",
-      }
-      expect(getPrimaryApplicantData(formData).dob).toBe("1990-01-01")
     })
   })
 
