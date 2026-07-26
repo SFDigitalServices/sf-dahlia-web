@@ -26,6 +26,7 @@ export default defineConfig(
       "*.config.js",
       "config/webpack/**/*",
       "lighthouserc.js",
+      "scripts/**", // Standalone Node/shell tooling, outside the TS project
       "public/**",
       "node_modules/**",
       "spec/e2e/**", // Legacy E2E tests

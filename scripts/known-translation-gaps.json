@@ -1,0 +1,133 @@
+{
+  "README": [
+    "Keys exempted from scripts/check-translation-parity.js.",
+    "",
+    "This is a ratchet, not a resolution. Every key listed here is rendering the",
+    "ENGLISH string to speakers of that language right now, because loadTranslations()",
+    "in app/javascript/util/languageUtil.tsx overlays the locale file on top of",
+    "en.json — a missing key silently falls back rather than erroring.",
+    "",
+    "The list was seeded from the state of main on 2026-07-25 so the check could be",
+    "turned on without blocking unrelated PRs. It should only ever get shorter.",
+    "Do not add to it to make a build pass; add the translated strings instead."
+  ],
+  "gaps": {
+    "es": [
+      {
+        "reason": "Language switcher labels are deliberately shown in their own language ('Español', '中文'), so the en.json values are correct for every locale and the fallback is intended.",
+        "keys": ["languages.en", "languages.es", "languages.tl", "languages.zh"]
+      },
+      {
+        "reason": "Key-name mismatch, not a missing translation: en.json defines 'label.Other' while the locale files define 'label.Other.other'. The locale value is also the untranslated string 'Other'. Needs reconciling in a follow-up — see PR description.",
+        "keys": ["label.Other"]
+      },
+      {
+        "reason": "The en.json value is an empty string, so there is nothing to translate. Candidate for deletion.",
+        "keys": ["listings.occupancyDescriptionAllSroPlural"]
+      },
+      {
+        "reason": "DAH-4213 housing counselor agency access shipped ahead of its translations. These 20 strings render in English today and are the reason this check was written.",
+        "keys": [
+          "accountSettings.housingCounselor.agencyCan",
+          "accountSettings.housingCounselor.banner.shortError",
+          "accountSettings.housingCounselor.banner.title",
+          "accountSettings.housingCounselor.checkbox",
+          "accountSettings.housingCounselor.checkboxError",
+          "accountSettings.housingCounselor.description",
+          "accountSettings.housingCounselor.fieldError",
+          "accountSettings.housingCounselor.heading",
+          "accountSettings.housingCounselor.label",
+          "accountSettings.housingCounselor.p1",
+          "accountSettings.housingCounselor.p2",
+          "accountSettings.housingCounselor.p3",
+          "accountSettings.housingCounselor.p4",
+          "accountSettings.housingCounselor.placeholder",
+          "accountSettings.housingCounselor.revokeButton",
+          "accountSettings.housingCounselor.shareButton",
+          "accountSettings.housingCounselor.sharedOn",
+          "accountSettings.housingCounselor.sharedWith",
+          "accountSettings.housingCounselor.toastShared",
+          "accountSettings.housingCounselor.toastStoppedSharing"
+        ]
+      }
+    ],
+    "tl": [
+      {
+        "reason": "Language switcher labels are deliberately shown in their own language ('Español', '中文'), so the en.json values are correct for every locale and the fallback is intended.",
+        "keys": ["languages.en", "languages.es", "languages.tl", "languages.zh"]
+      },
+      {
+        "reason": "Key-name mismatch, not a missing translation: en.json defines 'label.Other' while the locale files define 'label.Other.other'. The locale value is also the untranslated string 'Other'. Needs reconciling in a follow-up — see PR description.",
+        "keys": ["label.Other"]
+      },
+      {
+        "reason": "The en.json value is an empty string, so there is nothing to translate. Candidate for deletion.",
+        "keys": ["listings.occupancyDescriptionAllSroPlural"]
+      },
+      {
+        "reason": "DAH-4213 housing counselor agency access shipped ahead of its translations. These 20 strings render in English today and are the reason this check was written.",
+        "keys": [
+          "accountSettings.housingCounselor.agencyCan",
+          "accountSettings.housingCounselor.banner.shortError",
+          "accountSettings.housingCounselor.banner.title",
+          "accountSettings.housingCounselor.checkbox",
+          "accountSettings.housingCounselor.checkboxError",
+          "accountSettings.housingCounselor.description",
+          "accountSettings.housingCounselor.fieldError",
+          "accountSettings.housingCounselor.heading",
+          "accountSettings.housingCounselor.label",
+          "accountSettings.housingCounselor.p1",
+          "accountSettings.housingCounselor.p2",
+          "accountSettings.housingCounselor.p3",
+          "accountSettings.housingCounselor.p4",
+          "accountSettings.housingCounselor.placeholder",
+          "accountSettings.housingCounselor.revokeButton",
+          "accountSettings.housingCounselor.shareButton",
+          "accountSettings.housingCounselor.sharedOn",
+          "accountSettings.housingCounselor.sharedWith",
+          "accountSettings.housingCounselor.toastShared",
+          "accountSettings.housingCounselor.toastStoppedSharing"
+        ]
+      }
+    ],
+    "zh": [
+      {
+        "reason": "Language switcher labels are deliberately shown in their own language ('Español', '中文'), so the en.json values are correct for every locale and the fallback is intended.",
+        "keys": ["languages.en", "languages.es", "languages.tl", "languages.zh"]
+      },
+      {
+        "reason": "Key-name mismatch, not a missing translation: en.json defines 'label.Other' while the locale files define 'label.Other.other'. The locale value is also the untranslated string 'Other'. Needs reconciling in a follow-up — see PR description.",
+        "keys": ["label.Other"]
+      },
+      {
+        "reason": "The en.json value is an empty string, so there is nothing to translate. Candidate for deletion.",
+        "keys": ["listings.occupancyDescriptionAllSroPlural"]
+      },
+      {
+        "reason": "DAH-4213 housing counselor agency access shipped ahead of its translations. These 20 strings render in English today and are the reason this check was written.",
+        "keys": [
+          "accountSettings.housingCounselor.agencyCan",
+          "accountSettings.housingCounselor.banner.shortError",
+          "accountSettings.housingCounselor.banner.title",
+          "accountSettings.housingCounselor.checkbox",
+          "accountSettings.housingCounselor.checkboxError",
+          "accountSettings.housingCounselor.description",
+          "accountSettings.housingCounselor.fieldError",
+          "accountSettings.housingCounselor.heading",
+          "accountSettings.housingCounselor.label",
+          "accountSettings.housingCounselor.p1",
+          "accountSettings.housingCounselor.p2",
+          "accountSettings.housingCounselor.p3",
+          "accountSettings.housingCounselor.p4",
+          "accountSettings.housingCounselor.placeholder",
+          "accountSettings.housingCounselor.revokeButton",
+          "accountSettings.housingCounselor.shareButton",
+          "accountSettings.housingCounselor.sharedOn",
+          "accountSettings.housingCounselor.sharedWith",
+          "accountSettings.housingCounselor.toastShared",
+          "accountSettings.housingCounselor.toastStoppedSharing"
+        ]
+      }
+    ]
+  }
+}
