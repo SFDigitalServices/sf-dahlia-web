@@ -77,6 +77,7 @@ describe("HouseholdMemberForm", () => {
     await user.click(screen.getByText(t("label.householdMemberDelete")))
     expect(handleDeleteHouseholdMember).toHaveBeenCalledTimes(1)
   })
+
   it("clicking save button with populated fields triggers form submission", async () => {
     const handleUpdateHouseholdMember = jest.fn()
     renderHouseholdMemberForm({ handleUpdateHouseholdMember })
@@ -97,5 +98,16 @@ describe("HouseholdMemberForm", () => {
 
     await user.click(screen.getByRole("button", { name: t("label.householdMemberSave") }))
     expect(handleUpdateHouseholdMember).toHaveBeenCalledTimes(1)
+  })
+
+  it("clears form errors when closing the error banner", async () => {
+    const user = userEvent.setup()
+    renderHouseholdMemberForm()
+
+    await user.click(screen.getByRole("button", { name: t("label.householdMemberSave") }))
+    expect(screen.getByText(t("error.formSubmission"))).toBeInTheDocument()
+
+    await user.click(screen.getByRole("button", { name: t("t.close") }))
+    expect(screen.queryByText(t("error.formSubmission"))).not.toBeInTheDocument()
   })
 })

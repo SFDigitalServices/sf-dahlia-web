@@ -85,7 +85,6 @@ const FormEngineMultiStep = ({
     if (stepInfoMap[newStepIndex]) {
       const currentSectionName = stepInfoMap[currentStepIndex].sectionName
       const newSectionName = stepInfoMap[newStepIndex].sectionName
-      console.log(newSectionName)
       if (
         currentSectionName &&
         currentSectionName !== newSectionName &&
@@ -160,8 +159,6 @@ const FormEngine = ({ sessionId, schema, staticData }: FormEngineProps) => {
   const { unleashFlag: formEngineDebug } = useFeatureFlag(UNLEASH_FLAG.FORM_ENGINE_DEBUG, false)
 
   const parsedSchema = useMemo(() => parseFormSchema(schema), [schema])
-
-  console.log("ASDFASDF", parsedSchema)
 
   if (typeof parsedSchema === "string") {
     return <h1>{parsedSchema}</h1>

@@ -273,6 +273,22 @@ describe("HouseholdMemberMultiStepWrapper", () => {
     expect(await screen.findByText(/this address was not found/i)).toBeInTheDocument()
   })
 
+  it("clears api error message when the error banner is closed", async () => {
+    mockLocateVerifiedAddress.mockRejectedValue({ response: { status: 422 } })
+    renderHouseholdMemberMultiStepWrapper()
+    const user = userEvent.setup()
+
+    await createNewHouseholdMember(user, { sameAddress: false })
+
+    await waitFor(() => expect(mockLocateVerifiedAddress).toHaveBeenCalled())
+    expect(await screen.findByText(/this address was not found/i)).toBeInTheDocument()
+
+    await user.click(screen.getByLabelText(t("t.close")))
+    await waitFor(() => {
+      expect(screen.queryByText(/this address was not found/i)).not.toBeInTheDocument()
+    })
+  })
+
   it("shows an error when validation fails with a non-422 error", async () => {
     mockLocateVerifiedAddress.mockRejectedValue({ response: { status: 500 } })
 

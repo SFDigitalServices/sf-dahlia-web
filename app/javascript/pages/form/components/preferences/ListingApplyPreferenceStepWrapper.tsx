@@ -160,7 +160,6 @@ const ListingApplyPreferenceStepWrapper = ({
   const [showGenericError, setShowGenericError] = useState(false)
   const [showMissingDocumentError, setShowMissingDocumentError] = useState(false)
 
-  // checks for any errors *except* preference-to-claim checkbox field errors
   const showErrorHeaders = () => {
     const preferenceNames = preferenceContents.map((content) => content.preferenceName)
     if (comboPreference) preferenceNames.push(comboPreference.preferenceName)
