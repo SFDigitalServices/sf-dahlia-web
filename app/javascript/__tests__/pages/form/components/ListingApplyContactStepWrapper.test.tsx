@@ -208,4 +208,63 @@ describe("ListingApplyContactStepWrapper", () => {
     await waitFor(() => expect(mockHandleNextStep).toHaveBeenCalled())
     expect(mockLocateVerifiedAddress).not.toHaveBeenCalled()
   })
+  it("saves the neighborhood match and NRHP flag with the verified address", async () => {
+    mockCheckNeighborhoodPreferenceMatch.mockResolvedValue(true)
+    const { mockSaveFormData } = renderListingApplyContactStepWrapper({
+      addressStreet: "123 Main Street",
+      addressAptOrUnit: "",
+      addressCity: "San Francisco",
+      addressState: "CA",
+      addressZipcode: "94105",
+      addressVerified: "false",
+      phone: "123-456-7890",
+      phoneType: "cell",
+      noPhoneCheckbox: false,
+      question: "false",
+      primaryApplicantAddressCity: "San Francisco",
+    })
+
+    const user = userEvent.setup()
+    await user.click(screen.getByRole("button", { name: /next/i }))
+
+    await waitFor(() =>
+      expect(mockSaveFormData).toHaveBeenLastCalledWith(
+        expect.objectContaining({
+          primaryApplicantNeighborhoodPreferenceAddressMatch: true,
+          showNRHPPrefStep: true,
+        })
+      )
+    )
+  })
+  it("syncs same-address household members to the primary's neighborhood pref", async () => {
+    mockCheckNeighborhoodPreferenceMatch.mockResolvedValue(true)
+    const { mockSaveFormData } = renderListingApplyContactStepWrapper({
+      addressStreet: "1360 43rd Ave",
+      addressCity: "San Francisco",
+      addressState: "CA",
+      addressZipcode: "94122",
+      addressVerified: "false",
+      phone: "111-111-1111",
+      phoneType: "cell",
+      noPhoneCheckbox: false,
+      question: "false",
+      primaryApplicantAddressCity: "San Francisco",
+      householdMembers: [
+        { id: "1", hasSameAddressAsApplicant: "true", neighborhoodPreferenceAddressMatch: null },
+        { id: "2", hasSameAddressAsApplicant: "false", householdMemberAddressCity: "Oakland" },
+      ],
+    })
+
+    const user = userEvent.setup()
+    await user.click(screen.getByRole("button", { name: /next/i }))
+
+    await waitFor(() => {
+      const saved = mockSaveFormData.mock.calls.at(-1)[0]
+      expect(saved.householdMembers[0].neighborhoodPreferenceAddressMatch).toBe(true)
+      expect(saved.householdMembers[1]).not.toHaveProperty(
+        "neighborhoodPreferenceAddressMatch",
+        true
+      )
+    })
+  })
 })

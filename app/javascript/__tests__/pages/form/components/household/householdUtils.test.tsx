@@ -1,4 +1,7 @@
-import { liveInTheNeighborhoodHouseholdMembers } from "../../../../../pages/form/components/household/householdUtils"
+import {
+  getEligiblePreferenceMembers,
+  liveInTheNeighborhoodHouseholdMembers,
+} from "../../../../../pages/form/components/household/householdUtils"
 
 const buildFormData = (overrides: Record<string, unknown> = {}) => ({
   primaryApplicantFirstName: "Alice",
@@ -99,6 +102,47 @@ describe("householdUtils", () => {
           })
         )
       ).toEqual([expect.objectContaining({ id: "primary" })])
+    })
+  })
+  describe("getEligiblePreferenceMembers", () => {
+    const memberInSf = {
+      id: "1",
+      firstName: "Jordan",
+      lastName: "Lee",
+      hasSameAddressAsApplicant: "false",
+      householdMemberAddressCity: "San Francisco",
+      workInSf: "true",
+      neighborhoodPreferenceAddressMatch: true,
+    }
+
+    const formData = buildFormData({ householdMembers: [memberInSf] })
+
+    it("returns live-in-SF members for liveInSf", () => {
+      const result = getEligiblePreferenceMembers(formData, "liveInSf")
+      expect(result.some((member) => member.id === "1")).toBe(true)
+    })
+
+    it("returns work-in-SF members for workInSf", () => {
+      const result = getEligiblePreferenceMembers(formData, "workInSf")
+      expect(result.some((member) => member.id === "1")).toBe(true)
+    })
+
+    it("returns neighborhood members for neighborhoodResidence", () => {
+      expect(getEligiblePreferenceMembers(formData, "neighborhoodResidence")).toEqual(
+        liveInTheNeighborhoodHouseholdMembers(formData)
+      )
+    })
+
+    it("returns neighborhood members for antiDisplacement", () => {
+      expect(getEligiblePreferenceMembers(formData, "antiDisplacement")).toEqual(
+        liveInTheNeighborhoodHouseholdMembers(formData)
+      )
+    })
+
+    it("returns the entire household for any other preference", () => {
+      const result = getEligiblePreferenceMembers(formData, "certificateOfPreference")
+      expect(result.some((member) => member.id === "primary")).toBe(true)
+      expect(result.some((member) => member.id === "1")).toBe(true)
     })
   })
 })
