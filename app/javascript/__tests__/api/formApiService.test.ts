@@ -226,5 +226,14 @@ describe("formApiService", () => {
         expect.objectContaining({ project_id: "9999-000" })
       )
     })
+    it("early returns null without hitting the API when there is no listing", async () => {
+      const result = await checkNeighborhoodPreferenceMatch(
+        verifiedAddressResponse,
+        { listing: null, preferenceNames: {} } as never,
+        applicantInfo
+      )
+      expect(result).toBeNull()
+      expect(post).not.toHaveBeenCalled()
+    })
   })
 })
