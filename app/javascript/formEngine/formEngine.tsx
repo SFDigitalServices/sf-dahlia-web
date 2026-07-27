@@ -117,7 +117,12 @@ const FormEngineMultiStep = ({
   // set and reset section completion only if they were previously completed,
   // which is indicated by their presence in the `completedSections` object
   const handleSetSectionCompletion = (sectionName: string | undefined, isComplete: boolean) => {
-    if (!sectionName || completedSections[sectionName] === undefined) return
+    if (
+      !sectionName ||
+      completedSections[sectionName] === undefined ||
+      completedSections[sectionName] === isComplete
+    )
+      return
 
     setCompletedSections((prev) => ({ ...prev, [sectionName]: isComplete }))
   }
@@ -173,6 +178,8 @@ const FormEngine = ({ sessionId, schema, staticData }: FormEngineProps) => {
       />
     )
   }
+
+  return <h1>Invalid Schema Type</h1>
 }
 
 export default FormEngine

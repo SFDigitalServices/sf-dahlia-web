@@ -70,7 +70,7 @@ describe("PreferenceProofUploadField", () => {
     renderComponent()
     const user = userEvent.setup()
 
-    const submitButton = screen.getByText("next")
+    const submitButton = screen.getByText(t("t.next"))
     await user.click(submitButton)
     expect(screen.getByText(t("error.pleaseSelectAnOption"))).toBeInTheDocument()
   })

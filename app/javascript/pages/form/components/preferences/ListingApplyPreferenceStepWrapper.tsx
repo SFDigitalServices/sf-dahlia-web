@@ -212,7 +212,6 @@ const ListingApplyPreferenceStepWrapper = ({
   const handlePreferenceCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const isChecked = e.target.checked
     if (isChecked) {
-      // setShowRequiredCheckboxError(false)
       clearErrors("missingRequiredClaimPrefCheckbox")
     }
     if (isChecked && optOut) {
@@ -263,7 +262,6 @@ const ListingApplyPreferenceStepWrapper = ({
     // users can submit without checking any checkbox if there is no opt-out checkbox
     const somePrefsChecked = Object.values(checkboxValues).some((val) => !!val)
     if (!somePrefsChecked && optOut) {
-      // setShowRequiredCheckboxError(true)
       setError("missingRequiredClaimPrefCheckbox", {
         type: "manual",
         message: "At least one checkbox must be checked if opt-out checkbox is present.",

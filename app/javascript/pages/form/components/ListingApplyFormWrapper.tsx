@@ -38,7 +38,7 @@ const ListingApplyFormWrapper = ({ children }: ListingApplyFormWrapperProps) => 
               <ListingApplyNavBar
                 sectionMap={sectionMap}
                 completedSections={completedSections}
-                currentSectionName={currentStepInfo.sectionName || ""}
+                currentSectionName={currentStepInfo.sectionName}
                 jumpToStep={jumpToStep}
               />
             </Card.Section>

@@ -153,6 +153,21 @@ describe("FormEngine", () => {
     expect(screen.getByText("Schema contains invalid component names")).not.toBeNull()
   })
 
+  it("renders an error when schema type is invalid", () => {
+    const schemaWithInvalidType = mockSchema({
+      componentType: "",
+    })
+
+    render(
+      <FormEngine
+        sessionId="test-session-id"
+        schema={schemaWithInvalidType}
+        staticData={staticData}
+      />
+    )
+    expect(screen.getByText("Invalid Schema Type")).not.toBeNull()
+  })
+
   it("renders with a valid multiStepLayout schema", () => {
     render(<FormEngine sessionId="test-session-id" schema={mockSchema()} staticData={staticData} />)
     expect(screen.getByTestId("step-index").textContent).toBe("0")

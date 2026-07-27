@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { act, render, RenderOptions, RenderResult } from "@testing-library/react"
 import React from "react"
+import { act, render, RenderOptions, RenderResult } from "@testing-library/react"
+import { t } from "@bloom-housing/ui-components"
 import { MemoryRouter } from "react-router"
 import crypto from "crypto"
 import { useForm, FormProvider } from "react-hook-form"
@@ -107,7 +108,6 @@ export const renderWithFormContextWrapper = (
     stepInfoMap: [...stepInfoMap, ...defaultStepInfoMap],
     sectionMap: [...sectionMap, ...defaultSectionMap],
     completedSections: {},
-    sectionNames: [],
     currentStepIndex: 0,
     handleNextStep: mockHandleNextStep,
     handlePrevStep: mockHandlePrevStep,
@@ -117,7 +117,8 @@ export const renderWithFormContextWrapper = (
 
   const Wrapper = ({ children }: { children: React.ReactNode }) => {
     const formMethods = useForm({
-      mode: "all",
+      mode: "onSubmit",
+      reValidateMode: "onChange",
       shouldFocusError: false,
       defaultValues: {},
     })
@@ -133,7 +134,7 @@ export const renderWithFormContextWrapper = (
           {renderForm ? (
             <form onSubmit={onSubmit}>
               {children}
-              <button type="submit">next</button>
+              <button type="submit">{t("t.next")}</button>
             </form>
           ) : (
             children

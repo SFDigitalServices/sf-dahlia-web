@@ -65,11 +65,11 @@ const ListingApplyNavBar = ({
 }: {
   sectionMap: SectionInfo[]
   completedSections: Record<string, boolean>
-  currentSectionName: string
+  currentSectionName?: string
   jumpToStep: (stepSlug: string) => void
 }) => {
   const currentSectionIdx = sectionMap.findIndex((section) => section.name === currentSectionName)
-  const currentSectionIncomplete = !completedSections[currentSectionName]
+  const currentSectionIncomplete = currentSectionName && !completedSections[currentSectionName]
   const isSectionAccessible = (sectionName: string, idx: number): boolean => {
     // if all previous sections are complete, then a section is accessible regardless of its completion status
     if (idx > 0 && sectionMap.slice(0, idx).every((section) => completedSections[section.name]))
@@ -92,7 +92,7 @@ const ListingApplyNavBar = ({
   }
 
   return (
-    <div aria-label={"progress"}>
+    <nav aria-label={"progress"}>
       <ol className={styles["progress-nav"]}>
         {sectionMap.map((section, idx) => (
           <NavItem
@@ -104,7 +104,7 @@ const ListingApplyNavBar = ({
           />
         ))}
       </ol>
-    </div>
+    </nav>
   )
 }
 

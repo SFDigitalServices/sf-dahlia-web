@@ -38,9 +38,7 @@ describe("YesNoRadio", () => {
   it("renders error when no value is selected", async () => {
     renderYesNoRadio()
     const user = userEvent.setup()
-    await user.tab()
-    await user.tab()
-
-    expect(screen.queryByText(t("error.pleaseSelectAnOption"))).not.toBeNull()
+    await user.click(screen.getByRole("button", { name: t("t.next") }))
+    expect(await screen.findByText(t("error.pleaseSelectAnOption"))).not.toBeNull()
   })
 })

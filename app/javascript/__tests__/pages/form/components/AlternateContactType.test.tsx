@@ -32,11 +32,7 @@ describe("AlternateContactType", () => {
     renderAlternateContactType()
     const user = userEvent.setup()
     await user.click(screen.getByRole("radio", { name: t("label.Other") }))
-    const relationshipInput = screen.getByRole("textbox", {
-      name: t("label.whatIsYourRelationship"),
-    })
-    await user.click(relationshipInput)
-    await user.tab()
-    expect(screen.getByText(t("error.relationship"))).toBeInTheDocument()
+    await user.click(screen.getByRole("button", { name: t("t.next") }))
+    expect(await screen.findByText(t("error.relationship"))).toBeInTheDocument()
   })
 })

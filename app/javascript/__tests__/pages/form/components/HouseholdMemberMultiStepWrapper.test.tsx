@@ -93,6 +93,7 @@ describe("HouseholdMemberMultiStepWrapper", () => {
       {
         stepInfoMap: [{ slug: "household-member-form", fieldNames: [] }],
         formData,
+        renderForm: false,
       }
     )
   }

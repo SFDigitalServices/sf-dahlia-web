@@ -28,7 +28,7 @@ describe("Currency", () => {
     const user = userEvent.setup()
     renderCurrencyComponent()
 
-    await user.click(screen.getByRole("button", { name: "next" }))
+    await user.click(screen.getByRole("button", { name: t("t.next") }))
     expect(screen.queryByText(t(ERROR_MESSAGE))).not.toBeNull()
   })
 })

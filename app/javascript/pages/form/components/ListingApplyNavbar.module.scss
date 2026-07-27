@@ -22,12 +22,10 @@
     height: var(--seeds-s3);
     width: var(--seeds-s3);
     border-radius: 50%;
-    inset-block-start: 0;
     inset-inline-start: 0.5rem;
     content: "";
     transform: translateX(-50%);
     z-index: 2;
-    position: absolute;
     left: 50%;
     border: var(--seeds-border-1) solid #fff;
   }
@@ -36,7 +34,6 @@
     position: absolute;
     width: 100%;
     inset-inline-start: 0.9rem;
-    inset-block-start: 0.4rem;
     content: "";
     height: 1px;
     top: var(--seeds-s1_5);

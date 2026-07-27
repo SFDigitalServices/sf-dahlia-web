@@ -64,7 +64,6 @@ export const checkHouseholdEligibility = async (
       childrenUnder6: childrenUnder6,
     },
   }
-  console.log("Sending", params)
   return post<Record<string, unknown>>("/api/v1/short-form/validate-household", params).then(
     (response) => response.data
   )
