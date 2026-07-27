@@ -1,4 +1,3 @@
-// TODO WIP: capitalize file name per convention
 import React, { useState, useMemo } from "react"
 import { FormEngineProvider, type StaticData, type FormEngineContext } from "./formEngineContext"
 import {
@@ -65,7 +64,6 @@ const FormEngineMultiStep = ({
         })
       }
     }
-    console.log("ASDFASDF", sections)
 
     return sections
   }, [stepInfoMap])
