@@ -282,8 +282,8 @@ export const getNestedError = (
 }
 
 /**
- * If live/work eligibility was changed on other form pages, removes stale
- * live/work claimed preferences (and the sub-preference selection) from
+ * If live/work/nrhp eligibility was changed on other form pages, removes stale
+ * claimed preferences (and the sub-preference selection) from
  * formData on mount. Other claimed preferences are untouched.
  */
 export const useResetClaimedPreferences = ({
