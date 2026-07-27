@@ -3,7 +3,7 @@ import { post, apiDelete } from "./apiService"
 import { getCurrentLanguage } from "../util/languageUtil"
 import { Application } from "./types/rails/application/RailsApplication"
 import { getPrimaryApplicantData } from "../util/listingApplyUtil"
-import { StaticData } from "../formEngine/formEngineContext"
+import type { StaticData } from "../formEngine/formEngineContext"
 
 type UploadProofFileResponse = {
   success: boolean
@@ -126,6 +126,9 @@ export const checkNeighborhoodPreferenceMatch = async (
   applicantInfo: { firstName: string; middleName: string; lastName: string; dob: string }
 ): Promise<boolean | null> => {
   const { address } = verifiedAddressResponse
+  const projectId = getProjectIdForBoundaryMatching(staticData)
+  if (!projectId) return null
+
   const params = {
     address: {
       address1: address.street1,
@@ -134,7 +137,7 @@ export const checkNeighborhoodPreferenceMatch = async (
       zip: address.zip,
     },
     listing: { Id: staticData.listing?.Id, Name: staticData.listing?.Building_Name },
-    project_id: getProjectIdForBoundaryMatching(staticData),
+    project_id: projectId,
     // member information sent over for logging purposes
     member: applicantInfo,
   }
