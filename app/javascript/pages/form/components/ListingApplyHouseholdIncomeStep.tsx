@@ -139,6 +139,12 @@ const ListingApplyHouseholdIncomeStep = ({
               onClose={() => setApiErrorMessage(null)}
             />
           )}
+          {Object.keys(formMethods.formState.errors).length > 0 && (
+            <ListingApplyStepErrorMessage
+              errorMessage={t("error.formSubmission")}
+              onClose={() => formMethods.clearErrors()}
+            />
+          )}
         </div>
         <Form onSubmit={formMethods.handleSubmit(onSubmit)}>
           <LoadingState loading={loading}>
