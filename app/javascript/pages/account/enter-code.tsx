@@ -7,10 +7,11 @@ import { Card, Heading, Link, Button } from "@bloom-housing/ui-seeds"
 import { useForm } from "react-hook-form"
 import withAppSetup from "../../layouts/withAppSetup"
 import Layout from "../../layouts/Layout"
-import { AppPages, getAssistancePath, getCreateAccountPath } from "../../util/routeUtil"
+import { AppPages, getCreateAccountPath } from "../../util/routeUtil"
 import styles from "./enter-code.module.scss"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import { UNLEASH_FLAG } from "../../modules/constants"
+import GetHelp from "./components/GetHelp"
 
 const EnterCode = (_props: { assetPaths: unknown }) => {
   const navigate = useNavigate()
@@ -96,14 +97,7 @@ const EnterCode = (_props: { assetPaths: unknown }) => {
                 TODO: How to use a code
               </ExpandableContent>
             </Card.Section>
-            <Card.Section className={styles.helpFooter}>
-              <Heading priority={2} size="lg">
-                {t("createAccount.getHelp")}
-              </Heading>
-              <Link className={styles.helpLink} href={getAssistancePath()}>
-                {t("createAccount.getHelpLink")}
-              </Link>
-            </Card.Section>
+            <GetHelp />
           </Card>
         </div>
       </section>

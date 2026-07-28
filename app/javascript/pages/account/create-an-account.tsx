@@ -3,16 +3,17 @@ import React from "react"
 import { useNavigate } from "react-router"
 import { useSignUp } from "@clerk/clerk-react"
 import { Form, t } from "@bloom-housing/ui-components"
-import { Card, Heading, Link, Button } from "@bloom-housing/ui-seeds"
+import { Card, Heading, Button } from "@bloom-housing/ui-seeds"
 import { useForm } from "react-hook-form"
 import withAppSetup from "../../layouts/withAppSetup"
 import Layout from "../../layouts/Layout"
-import { AppPages, getAssistancePath, getEnterCodePath, getSignInPath } from "../../util/routeUtil"
+import { AppPages, getEnterCodePath, getSignInPath } from "../../util/routeUtil"
 import { getCurrentLanguage } from "../../util/languageUtil"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import { UNLEASH_FLAG } from "../../modules/constants"
 import { CreateAccount } from "./create-account"
 import EmailFieldset from "./components/EmailFieldset"
+import GetHelp from "./components/GetHelp"
 import "./create-account.scss"
 import "./styles/account.scss"
 import styles from "./create-an-account.module.scss"
@@ -70,14 +71,7 @@ const CreateAnAccountPage = () => {
                 {t("nav.signIn")}
               </Button>
             </Card.Section>
-            <Card.Section className={styles.helpFooter}>
-              <Heading priority={2} size="lg">
-                {t("createAccount.getHelp")}
-              </Heading>
-              <Link className={styles.helpLink} href={getAssistancePath()}>
-                {t("createAccount.getHelpLink")}
-              </Link>
-            </Card.Section>
+            <GetHelp />
           </Card>
         </div>
       </section>
