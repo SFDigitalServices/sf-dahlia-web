@@ -95,7 +95,7 @@ const FormEngineDebug = ({
           {showStepInfo && <ViewJson data={stepInfoMap[currentStepIndex]} />}
         </div>
         <div>
-          <button onClick={() => window.location.href = getAngularFormUrl(staticData)}>
+          <button onClick={() => (window.location.href = getAngularFormUrl(staticData))}>
             angular form
           </button>
         </div>
