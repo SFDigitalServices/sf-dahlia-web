@@ -1,12 +1,13 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import React from "react"
+import { useNavigate } from "react-router"
 import { useSignUp } from "@clerk/clerk-react"
 import { Form, t } from "@bloom-housing/ui-components"
 import { Card, Heading, Link, Button } from "@bloom-housing/ui-seeds"
 import { useForm } from "react-hook-form"
 import withAppSetup from "../../layouts/withAppSetup"
 import Layout from "../../layouts/Layout"
-import { AppPages, getAssistancePath, getSignInPath } from "../../util/routeUtil"
+import { AppPages, getAssistancePath, getEnterCodePath, getSignInPath } from "../../util/routeUtil"
 import { getCurrentLanguage } from "../../util/languageUtil"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import { UNLEASH_FLAG } from "../../modules/constants"
@@ -21,6 +22,7 @@ interface CreateAnAccountProps {
 }
 
 const CreateAnAccountPage = () => {
+  const navigate = useNavigate()
   const { isLoaded, signUp } = useSignUp()
   const {
     register,
@@ -37,6 +39,7 @@ const CreateAnAccountPage = () => {
         unsafeMetadata: { locale }, // Account creation can only update public metadata
       })
       await signUp.prepareEmailAddressVerification({ strategy: "email_code" })
+      void navigate(getEnterCodePath(), { state: { email } })
     } catch (error) {
       console.error("Account creation error", error)
     }
