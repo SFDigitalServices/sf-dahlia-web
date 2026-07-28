@@ -1,0 +1,55 @@
+.card {
+  width: 100%;
+  @media (max-width: theme("screens.md")) {
+    border: none;
+  }
+}
+
+.sentTo {
+  margin-bottom: var(--seeds-spacer-header);
+}
+
+.email {
+  font-weight: var(--seeds-font-weight-semibold);
+}
+
+.editEmail {
+  margin-left: var(--seeds-spacer-text);
+}
+
+.codeField {
+  font-weight: var(--seeds-font-weight-semibold);
+}
+
+.confirmButton {
+  margin-bottom: var(--seeds-spacer-content);
+}
+
+.resendRow {
+  margin-bottom: var(--seeds-spacer-header);
+}
+
+.didntGetEmail {
+  font-weight: var(--seeds-font-weight-semibold);
+  color: var(--seeds-color-text-base);
+}
+
+.sendAgain {
+  margin-left: var(--seeds-spacer-text);
+  font-weight: 200 !important;
+  font-family: inherit !important;
+}
+
+.helpFooter {
+  background: var(--seeds-color-primary-lighter);
+}
+
+.helpLink {
+  color: var(--seeds-color-primary-darker);
+  font-size: var(--seeds-font-size-sm);
+}
+
+.card h1,
+.card h2 {
+  padding-bottom: var(--seeds-spacer-header);
+}
