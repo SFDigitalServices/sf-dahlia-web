@@ -33,6 +33,7 @@ const CreateAnAccountPage = () => {
   const onSubmit = async ({ email }: { email: string }) => {
     if (!isLoaded || !signUp) return
     const locale = getCurrentLanguage()
+    console.log("Signing up with email and locale", email, locale)
     try {
       await signUp.create({
         emailAddress: email,

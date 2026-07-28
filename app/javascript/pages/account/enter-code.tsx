@@ -13,22 +13,13 @@ import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import { UNLEASH_FLAG } from "../../modules/constants"
 import GetHelp from "./components/GetHelp"
 
-const EnterCode = (_props: { assetPaths: unknown }) => {
-  const navigate = useNavigate()
-  const { state } = useLocation()
+const EnterCodePage = ({ email }: { email: string }) => {
   const { isLoaded } = useSignUp()
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<{ code: string }>({ mode: "onTouched", shouldFocusError: false })
-  const email = state?.email || "todo@email.com"
-  const { unleashFlag: clerkEnabled } = useFeatureFlag(UNLEASH_FLAG.CLERK_AUTH, false)
-  useEffect(() => {
-    if (!email || !clerkEnabled) {
-      void navigate(getCreateAccountPath())
-    }
-  }, [email, clerkEnabled, navigate])
 
   const onSubmit = ({ code }: { code: string }) => {
     if (!isLoaded) return
@@ -111,6 +102,25 @@ const EnterCode = (_props: { assetPaths: unknown }) => {
       </section>
     </Layout>
   )
+}
+
+const EnterCode = (_props: { assetPaths: unknown }) => {
+  const navigate = useNavigate()
+  const { state } = useLocation()
+  const email = state?.email || "todo@email.com"
+  const { unleashFlag: clerkEnabled } = useFeatureFlag(UNLEASH_FLAG.CLERK_AUTH, false)
+
+  useEffect(() => {
+    if (!email || !clerkEnabled) {
+      void navigate(getCreateAccountPath())
+    }
+  }, [email, clerkEnabled, navigate])
+
+  if (!clerkEnabled) {
+    return null
+  }
+
+  return <EnterCodePage email={email} />
 }
 
 export default withAppSetup(EnterCode, {
