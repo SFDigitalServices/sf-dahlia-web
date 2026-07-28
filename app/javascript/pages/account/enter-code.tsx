@@ -94,7 +94,15 @@ const EnterCode = (_props: { assetPaths: unknown }) => {
                   readLess: t("createAccount.howToUseCode"),
                 }}
               >
-                TODO: How to use a code
+                <div className="field-note">
+                  <ol className={styles.howToList}>
+                    <li>{t("createAccount.howTo.p1")}</li>
+                    <li>{t("createAccount.howTo.p2")}</li>
+                    <li>{t("createAccount.howTo.p3")}</li>
+                    <li>{t("createAccount.howTo.p4")}</li>
+                  </ol>
+                  <p>{t("createAccount.howTo.p5")}</p>
+                </div>
               </ExpandableContent>
             </Card.Section>
             <GetHelp />

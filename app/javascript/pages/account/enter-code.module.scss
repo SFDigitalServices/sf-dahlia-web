@@ -40,6 +40,12 @@
   font-family: inherit !important;
 }
 
+.howToList {
+  list-style-type: decimal;
+  margin-left: var(--seeds-spacer-content);
+  padding: var(--seeds-spacer-text) 0;
+}
+
 .card h1,
 .card h2 {
   padding-bottom: var(--seeds-spacer-header);
