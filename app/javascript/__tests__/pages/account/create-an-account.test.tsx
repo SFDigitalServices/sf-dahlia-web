@@ -2,6 +2,7 @@ import React from "react"
 import { useSignUp } from "@clerk/clerk-react"
 import { screen, waitFor, within, cleanup } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
+import { useNavigate } from "react-router"
 import CreateAnAccount from "../../../pages/account/create-an-account"
 import {
   renderAndLoadAsync,
@@ -26,6 +27,7 @@ jest.mock("react-router", () => ({
 
 describe("<CreateAnAccount />", () => {
   let originalLocation: Location
+  let mockNavigate: jest.Mock
   let mockSignUpCreate: jest.Mock
   let mockPrepareEmailAddressVerification: jest.Mock
 
@@ -33,6 +35,8 @@ describe("<CreateAnAccount />", () => {
     document.documentElement.lang = "en"
     originalLocation = mockWindowLocation()
     setupUserContext({ loggedIn: false })
+    mockNavigate = jest.fn()
+    ;(useNavigate as jest.Mock).mockReturnValue(mockNavigate)
     mockSignUpCreate = jest.fn().mockResolvedValue(undefined)
     mockPrepareEmailAddressVerification = jest.fn().mockResolvedValue(undefined)
     ;(useSignUp as jest.Mock).mockReturnValue({
@@ -91,6 +95,9 @@ describe("<CreateAnAccount />", () => {
 
     expect(mockPrepareEmailAddressVerification).toHaveBeenCalledWith({
       strategy: "email_code",
+    })
+    expect(mockNavigate).toHaveBeenCalledWith("/enter-code", {
+      state: { email: "test@example.com" },
     })
   })
 })
