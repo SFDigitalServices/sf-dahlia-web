@@ -30,13 +30,20 @@ describe("Create Account Page", () => {
   })
 
   it("should fill out the form and create an account successfully", () => {
-    cy.get('input[name="firstName"]').clear().type("John")
-    cy.get('input[name="lastName"]').clear().type("Doe")
-    cy.get('input[name="dobObject.birthMonth"]').clear().type("01")
-    cy.get('input[name="dobObject.birthDay"]').clear().type("01")
-    cy.get('input[name="dobObject.birthYear"]').clear().type("2000")
-    cy.get('input[name="email"]').clear().type("john.doe@example.com")
-    cy.get('input[name="password"]').clear().type("password123")
+    cy.get('input[name="firstName"]').should("not.be.disabled").clear()
+    cy.get('input[name="firstName"]').type("John")
+    cy.get('input[name="lastName"]').clear()
+    cy.get('input[name="lastName"]').type("Doe")
+    cy.get('input[name="dobObject.birthMonth"]').clear()
+    cy.get('input[name="dobObject.birthMonth"]').type("01")
+    cy.get('input[name="dobObject.birthDay"]').clear()
+    cy.get('input[name="dobObject.birthDay"]').type("01")
+    cy.get('input[name="dobObject.birthYear"]').clear()
+    cy.get('input[name="dobObject.birthYear"]').type("2000")
+    cy.get('input[name="email"]').clear()
+    cy.get('input[name="email"]').type("john.doe@example.com")
+    cy.get('input[name="password"]').clear()
+    cy.get('input[name="password"]').type("password123")
 
     cy.get('button[type="submit"]').click()
 
