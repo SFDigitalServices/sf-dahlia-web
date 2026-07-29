@@ -25,7 +25,7 @@ import Privacy from "../pages/getAssistance/privacy"
 import MyApplications from "../pages/account/my-applications" // eslint-disable-line import/no-named-as-default
 import AccountSettings from "../pages/account/account-settings"
 import MyAccount from "../pages/account/my-account" // eslint-disable-line import/no-named-as-default
-import CreateAccount from "../pages/account/create-account"
+import CreateAnAccount from "../pages/account/create-an-account"
 import ForgotPassword from "../pages/forgot-password"
 import ResetPassword from "../pages/reset-password"
 import ListingApplyForm from "../pages/form/listing-apply-form"
@@ -61,7 +61,7 @@ const PAGE_ROUTES = [
   [HowToApply, "/listings/:id/how-to-apply"],
   [ListingApplyForm, "/listings/:id/apply/intro"],
   [SignIn, "/sign-in"],
-  [CreateAccount, "/create-account"],
+  [CreateAnAccount, "/create-account"],
   [ForgotPassword, "/forgot-password"],
   [ResetPassword, "/reset-password"],
   [HousingCounselors, "/housing-counselors"],
