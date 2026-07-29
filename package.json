@@ -22,7 +22,7 @@
     "@unleash/proxy-client-react": "^4.2.2",
     "ag-grid-community": "^32.0.1",
     "autoprefixer": "^10.4.7",
-    "axios": "^1.16.0",
+    "axios": "^1.18.0",
     "babel-loader": "^9.1.2",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
     "bower": "1.8.8",
@@ -147,7 +147,7 @@
     "typescript-eslint": "8.46.0",
     "url-join": "^4.0.1",
     "webpack-bundle-analyzer": "^4.4.2",
-    "webpack-dev-server": "^5.2.5"
+    "webpack-dev-server": "^5.2.6"
   },
   "scripts": {
     "postinstall": "bower install",
