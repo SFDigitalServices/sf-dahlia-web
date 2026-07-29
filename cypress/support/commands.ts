@@ -16,8 +16,8 @@ Cypress.Commands.add("signIn", (email: string = "test@test.com") => {
 
   cy.visit("/sign-in")
   cy.contains("Sign in")
-  cy.get("input[name=email]").type("test@test.com")
-  cy.get("input[name=password]").type("password123")
+  cy.get("input[name=email]").should("not.be.disabled").type("test@test.com")
+  cy.get("input[name=password]").should("not.be.disabled").type("password123")
   cy.get("button[type=submit]").click()
 })
 
