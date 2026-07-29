@@ -62,6 +62,12 @@
     padding: 8px;
   }
 
+  a.button {
+    border: 1px solid transparent;
+    padding: 8px;
+    display: block;
+  }
+
   ul {
     list-style-type: numeric;
     list-style-position: inside;
