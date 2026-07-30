@@ -14,17 +14,23 @@ import { UNLEASH_FLAG } from "../../modules/constants"
 import GetHelp from "./components/GetHelp"
 
 const EnterCodePage = ({ email }: { email: string }) => {
-  const { isLoaded } = useSignUp()
+  const { isLoaded, signUp, setActive } = useSignUp()
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<{ code: string }>({ mode: "onTouched", shouldFocusError: false })
 
-  const onSubmit = ({ code }: { code: string }) => {
-    if (!isLoaded) return
+  const onSubmit = async ({ code }: { code: string }) => {
+    if (!isLoaded || !signUp) return
     try {
-      console.log("TODO: code submitted", code)
+      const completeSignUp = await signUp.attemptEmailAddressVerification({ code })
+      if (completeSignUp.status === "complete") {
+        await setActive({ session: completeSignUp.createdSessionId })
+        console.log("Code verified:", code)
+      } else {
+        console.error("Account creation failed:", completeSignUp)
+      }
     } catch (error) {
       console.error("Code verification error", error)
     }
