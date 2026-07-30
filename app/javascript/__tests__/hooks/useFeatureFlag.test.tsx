@@ -21,7 +21,7 @@ describe("useFeatureFlag", () => {
 
     const { result } = renderHook(() => useFeatureFlag("testFlag", false))
     expect(consoleSpy).toHaveBeenCalled()
-    expect(result.current).toStrictEqual({ unleashFlag: false, flagsReady: undefined })
+    expect(result.current).toStrictEqual({ unleashFlag: false, flagsReady: true })
   })
 
   it("returns the default value when there is a flagError", () => {
@@ -39,7 +39,7 @@ describe("useFeatureFlag", () => {
     const { result } = renderHook(() => useFeatureFlag("testFlag", false))
 
     expect(consoleSpy).not.toHaveBeenCalled()
-    expect(result.current).toStrictEqual({ flagsReady: undefined, unleashFlag: true })
+    expect(result.current).toStrictEqual({ flagsReady: true, unleashFlag: true })
   })
 
   it("returns true when the url override is set to true", () => {
@@ -78,7 +78,7 @@ describe("useFeatureFlag", () => {
     const { result } = renderHook(() => useFeatureFlag("testFlag", false))
 
     expect(consoleSpy).not.toHaveBeenCalled()
-    expect(result.current).toStrictEqual({ flagsReady: undefined, unleashFlag: true })
+    expect(result.current).toStrictEqual({ flagsReady: true, unleashFlag: true })
   })
 
   it("returns the default flag when the url override is set to something random and there is no unleash flag available", () => {
