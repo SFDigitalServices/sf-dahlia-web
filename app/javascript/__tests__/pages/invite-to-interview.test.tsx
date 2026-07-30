@@ -18,11 +18,13 @@ jest.mock("../../hooks/useFeatureFlag", () => ({
   useFeatureFlag: () => ({
     isEnabled: true,
     isLoading: false,
+    flagsReady: true,
     unleashFlag: true,
   }),
   useVariantFlag: () => ({
     isEnabled: true,
     isLoading: false,
+    flagsReady: true,
     unleashFlag: true,
     variant: {
       payload: {

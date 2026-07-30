@@ -1,3 +1,5 @@
+import { interceptUnleashFlags } from "../support/util"
+
 const setBirthYearAndVerifyError = (year: number, buttonText?: string) => {
   cy.get('input[name="dobObject.birthYear"]').should("be.focused").clear().type(`${year}`)
   buttonText && cy.contains("button", buttonText).click()
@@ -5,6 +7,8 @@ const setBirthYearAndVerifyError = (year: number, buttonText?: string) => {
 
 describe("Create Account Page", () => {
   beforeEach(() => {
+    interceptUnleashFlags()
+
     cy.intercept("POST", "/api/v1/auth", (req) => {
       req.reply({
         statusCode: 201,
