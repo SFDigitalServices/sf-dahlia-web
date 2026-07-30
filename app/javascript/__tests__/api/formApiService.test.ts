@@ -93,7 +93,6 @@ describe("formApiService", () => {
         primaryApplicantFirstName: "First name",
         primaryApplicantMiddleName: "Middle name",
         primaryApplicantLastName: "Last name",
-        primaryApplicantDob: "1990-01-01",
       }
       await submitForm(formData, "testListingId")
 

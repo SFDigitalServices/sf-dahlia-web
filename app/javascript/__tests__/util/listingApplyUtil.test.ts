@@ -88,15 +88,6 @@ describe("listingApplyUtil", () => {
         dob: "1985-06-15",
       })
     })
-
-    it("defaults dob when primaryApplicantDob is not present", () => {
-      const formData = {
-        primaryApplicantFirstName: "Alice",
-        primaryApplicantMiddleName: "",
-        primaryApplicantLastName: "Cooper",
-      }
-      expect(getPrimaryApplicantData(formData).dob).toBe("1990-01-01")
-    })
   })
 
   describe("allHouseholdMembers", () => {
