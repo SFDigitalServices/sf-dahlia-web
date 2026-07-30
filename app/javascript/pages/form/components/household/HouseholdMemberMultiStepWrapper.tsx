@@ -139,7 +139,7 @@ const HouseholdMemberMultiStepWrapper = ({
     methods.reset(householdMembersArray[index])
   }
 
-  const handleUpdateHouseholdMember = (data: Record<string, string>) => {
+  const handleUpdateHouseholdMember = async (data: Record<string, string>) => {
     if (!addressNeedsVerification(data)) {
       // Household member inherits primary applicant's NRHP status if shared household
       const neighborhoodPreferenceMatch =
@@ -165,40 +165,40 @@ const HouseholdMemberMultiStepWrapper = ({
       lastName: lastName,
       dob: formatApplicantDOB(birthMonth, birthDay, birthYear),
     }
-    locateVerifiedAddress(address)
-      .then((response) =>
-        checkNeighborhoodPreferenceMatch(response, staticData, houseHoldMemberInfo).then(
-          (neighborhoodMatch) => {
-            setApiErrorMessage(null)
-            setPendingMember({
-              ...data,
-              [householdMemberFields.street1]: response.address?.street1,
-              [householdMemberFields.street2]: response.address?.street2,
-              [householdMemberFields.city]: response.address?.city,
-              [householdMemberFields.state]: response.address?.state,
-              [householdMemberFields.zip]: response.address?.zip,
-              [householdMemberFields.addressVerified]: "true",
-              [householdMemberFields.neighborhoodPreferenceAddressMatch]: neighborhoodMatch,
-            })
-            setComponentToRender("HouseholdMemberVerifyAddress")
-          }
-        )
+    try {
+      const response = await locateVerifiedAddress(address)
+      const neighborhoodMatch = await checkNeighborhoodPreferenceMatch(
+        response,
+        staticData,
+        houseHoldMemberInfo
       )
-      .catch((error) => {
-        if (error.response?.status === 422) {
-          setApiErrorMessage(
-            t("error.addressValidation.notFound", {
-              mailParams: getAddressErrorEmailLink(data, staticData, formData),
-            })
-          )
-        } else {
-          setApiErrorMessage(t("error.alert.badRequest"))
-        }
-        methods.reset(data)
+
+      setApiErrorMessage(null)
+      setPendingMember({
+        ...data,
+        [householdMemberFields.street1]: response.address?.street1,
+        [householdMemberFields.street2]: response.address?.street2,
+        [householdMemberFields.city]: response.address?.city,
+        [householdMemberFields.state]: response.address?.state,
+        [householdMemberFields.zip]: response.address?.zip,
+        [householdMemberFields.addressVerified]: "true",
+        [householdMemberFields.neighborhoodPreferenceAddressMatch]: neighborhoodMatch,
       })
-      .finally(() => {
-        setLoading(false)
-      })
+      setComponentToRender("HouseholdMemberVerifyAddress")
+    } catch (error) {
+      if ((error as { response?: { status?: number } }).response?.status === 422) {
+        setApiErrorMessage(
+          t("error.addressValidation.notFound", {
+            mailParams: getAddressErrorEmailLink(data, staticData, formData),
+          })
+        )
+      } else {
+        setApiErrorMessage(t("error.alert.badRequest"))
+      }
+      methods.reset(data)
+    } finally {
+      setLoading(false)
+    }
   }
 
   const handleSubmitHouseholdMembers = () => {

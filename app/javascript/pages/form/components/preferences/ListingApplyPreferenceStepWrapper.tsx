@@ -144,7 +144,7 @@ const ListingApplyPreferenceStepWrapper = ({
     showComboPreference: !!showComboPreference,
     livesInSf,
     worksInSf,
-    liveInNeighborhood: liveInTheNeighborhoodHouseholdMembers(formData).length > 0,
+    liveInTheNeighborhood: liveInTheNeighborhoodHouseholdMembers(formData).length > 0,
     formData,
     saveFormData,
   })
