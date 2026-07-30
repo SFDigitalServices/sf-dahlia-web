@@ -1,0 +1,15 @@
+.card {
+  width: 100%;
+  @media (max-width: theme("screens.md")) {
+    border: none;
+  }
+}
+
+.card h1,
+.card h2 {
+  padding-bottom: var(--seeds-spacer-header);
+}
+
+.getCodeButton {
+  margin: var(--seeds-spacer-header) 0 var(--seeds-spacer-text) 0;
+}

@@ -9,6 +9,11 @@ class AuthController < ApplicationController
     render 'create_account'
   end
 
+  def enter_code
+    @enter_code_props = react_app_props
+    render 'enter_code'
+  end
+
   def forgot_password
     @forgot_password_props = react_app_props
     render 'forgot_password'
@@ -22,6 +27,6 @@ class AuthController < ApplicationController
   protected
 
   def use_react_app
-    ENV['SIGN_IN_PAGE_REACT'].to_s.casecmp('true').zero?
+    true
   end
 end

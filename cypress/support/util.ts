@@ -124,6 +124,9 @@ export const interceptUnleashFlags = () => {
           if (toggle.name === "temp.all.housingCounselorAccess") {
             toggle.enabled = false
           }
+          if (toggle.name === "temp.webapp.auth.clerk") {
+            toggle.enabled = false
+          }
         })
       })
     }

@@ -109,4 +109,23 @@ describe("FormEngineDebug", () => {
     await user.click(screen.getByRole("button", { name: /hide prefs data/i }))
     expect(screen.queryByText(/"preferenceName": "Test Preference Name"/)).toBeNull()
   })
+
+  it("links to the equivalent legacy Angular form for the listing", () => {
+    render(<FormEngineDebug {...props} />)
+
+    expect(screen.getByRole("link", { name: /angular form/i })).toHaveAttribute(
+      "href",
+      `/listings/${openRentalListing.listingID}/apply-welcome/intro`
+    )
+  })
+
+  it("includes the current language prefix in the Angular form link", () => {
+    window.history.pushState({}, "", "/es/listings/test-listing/apply/intro")
+    render(<FormEngineDebug {...props} />)
+
+    expect(screen.getByRole("link", { name: /angular form/i })).toHaveAttribute(
+      "href",
+      `/es/listings/${openRentalListing.listingID}/apply-welcome/intro`
+    )
+  })
 })

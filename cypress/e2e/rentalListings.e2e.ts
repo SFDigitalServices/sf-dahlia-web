@@ -46,6 +46,7 @@ describe("Rental listings directory page", () => {
   it("redirects to the correct section", () => {
     cy.viewport(640, 960)
     cy.visit("/listings/for-rent#upcoming-lotteries")
+    cy.reload()
     cy.wait("@listings")
     cy.get("#upcoming-lotteries").isInViewport()
   })

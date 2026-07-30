@@ -2,6 +2,7 @@ import React, { useState } from "react"
 import { type StepInfoSchema } from "./formSchemas"
 import "./FormEngineDebug.scss"
 import { updateFormPath } from "../util/formEngineUtil"
+import { localizedPath } from "../util/routeUtil"
 
 interface FormEngineDebugProps {
   currentStepIndex: number
@@ -9,6 +10,12 @@ interface FormEngineDebugProps {
   setCurrentStepIndex: (step: number) => void
   staticData: Record<string, unknown>
   formData: Record<string, unknown>
+}
+
+// Link to the equivalent legacy Angular form for the current listing.
+const getAngularFormUrl = (staticData: Record<string, unknown>): string => {
+  const listing = staticData.listing as { listingID?: string } | undefined
+  return localizedPath(`listings/${listing?.listingID ?? ""}/apply-welcome/intro`)
 }
 
 const Steps = ({
@@ -78,6 +85,9 @@ const FormEngineDebug = ({
             {showStepInfo ? "hide" : "show"} step info
           </button>
           {showStepInfo && <ViewJson data={stepInfoMap[currentStepIndex]} />}
+        </div>
+        <div>
+          <a href={getAngularFormUrl(staticData)}>angular form</a>
         </div>
       </div>
       <div>

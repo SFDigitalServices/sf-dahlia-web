@@ -45,7 +45,7 @@ jest.mock("@unleash/proxy-client-react", () => {
   return {
     __esModule: true,
     useFlag: () => true,
-    useFlagsStatus: () => ({ flagsError: false }),
+    useFlagsStatus: () => ({ flagsError: false, flagsReady: true }),
     FlagProvider: ({ children }) => children,
   }
 })
