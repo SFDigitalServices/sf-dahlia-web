@@ -47,7 +47,7 @@ More information about getting started can be found on the team confluence.
 1. `git clone https://github.com/SFDigitalServices/sf-dahlia-web.git` to create the project directory
    - Using gh is recommended. This can be installed with either [Brew](https://brew.sh/) or downloading directly from [Github](https://cli.github.com/)
 1. `cd sf-dahlia-web` to open the directory
-1. Using NVM, install 18.7.0 (or whatever version we are on) with `nvm install 18.7.0`
+1. Using NVM, install 22.22 (or whatever version we are on) with `nvm install 22.22`
 1. Using RVM, install 3.4.1 (or whatever version we are on) with `rvm instal 3.4.1`
    - If you're having trouble with this command, try checking your openssl version:
      - `openssl version`
