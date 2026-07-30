@@ -76,8 +76,8 @@ describe("<EnterCode />", () => {
     const user = userEvent.setup()
     const codeField = screen.getByRole("textbox", { name: /enter code/i })
 
-    await user.click(codeField)
-    await user.tab()
+    await user.type(codeField, "1")
+    await user.clear(codeField)
 
     expect(codeField).toBeInvalid()
     expect(screen.getByTestId("error-message")).toHaveTextContent("Enter code")
