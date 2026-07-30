@@ -40,6 +40,13 @@
   font-family: inherit !important;
 }
 
+.howToUseCode {
+  button {
+    font-weight: var(--seeds-font-weight-semibold) !important;
+    font-size: var(--seeds-font-size-base) !important;
+  }
+}
+
 .howToList {
   list-style-type: decimal;
   margin-left: var(--seeds-spacer-content);

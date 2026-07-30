@@ -19,7 +19,7 @@ const EnterCodePage = ({ email }: { email: string }) => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<{ code: string }>({ mode: "onTouched", shouldFocusError: false })
+  } = useForm<{ code: string }>({ mode: "onChange", shouldFocusError: false })
 
   const onSubmit = ({ code }: { code: string }) => {
     if (!isLoaded) return
@@ -80,6 +80,7 @@ const EnterCodePage = ({ email }: { email: string }) => {
               </p>
               <ExpandableContent
                 order={Order.below}
+                className={styles.howToUseCode}
                 strings={{
                   readMore: t("createAccount.howToUseCode"),
                   readLess: t("createAccount.howToUseCode"),
