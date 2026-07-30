@@ -294,7 +294,7 @@ export const useResetClaimedPreferences = ({
   showComboPreference,
   livesInSf,
   worksInSf,
-  liveInNeighborhood,
+  liveInTheNeighborhood,
   formData,
   saveFormData,
 }: {
@@ -305,7 +305,7 @@ export const useResetClaimedPreferences = ({
   showComboPreference: boolean
   livesInSf: boolean
   worksInSf: boolean
-  liveInNeighborhood: boolean
+  liveInTheNeighborhood: boolean
   formData: Record<string, unknown>
   saveFormData: (data: Record<string, unknown>) => void
 }) => {
@@ -318,7 +318,7 @@ export const useResetClaimedPreferences = ({
     if (!livesInSf) stalePreferences.push("liveInSf")
     if (!worksInSf) stalePreferences.push("workInSf")
     if (comboPreferenceName && !showComboPreference) stalePreferences.push(comboPreferenceName)
-    if (!liveInNeighborhood) stalePreferences.push("neighborhoodResidence")
+    if (!liveInTheNeighborhood) stalePreferences.push("neighborhoodResidence")
 
     const claimedPreferencesToRemove = stalePreferences.filter(
       (key) => existingClaimedPreferences[key]?.preferenceClaimed
