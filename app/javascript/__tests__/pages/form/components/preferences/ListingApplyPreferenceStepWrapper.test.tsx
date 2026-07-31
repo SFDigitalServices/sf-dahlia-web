@@ -520,20 +520,22 @@ describe("ListingApplyPreferenceStepWrapper", () => {
         },
       ] as unknown as RailsListingPreference[]
 
-      it("removes a claimed liveInSf preference when the applicant is no longer live-eligible", () => {
+      it("removes a claimed liveInSf preference when the claiming member is no longer live-eligible", () => {
         const { mockSaveFormData } = renderWrapper({
           preferenceContents: [liveInSfPreferenceContent, workInSfPreferenceContent],
           formData: {
             ...liveWorkHousehold({ livesInSf: false, worksInSf: true }),
             claimedPreferences: {
-              liveInSf: { preferenceClaimed: true },
-              workInSf: { preferenceClaimed: true },
+              liveInSf: { preferenceClaimed: true, householdMemberId: "primary" },
+              workInSf: { preferenceClaimed: true, householdMemberId: "primary" },
             },
           },
         })
 
         expect(mockSaveFormData).toHaveBeenCalledWith({
-          claimedPreferences: { workInSf: { preferenceClaimed: true } },
+          claimedPreferences: {
+            workInSf: { preferenceClaimed: true, householdMemberId: "primary" },
+          },
         })
       })
 
