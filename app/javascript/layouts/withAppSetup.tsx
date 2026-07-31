@@ -42,7 +42,14 @@ const withAppSetup =
     useGTMInitializer(process.env.GOOGLE_TAG_MANAGER_KEY)
 
     function ProvidersWithConditionalClerk() {
-      const { unleashFlag: clerkEnabled } = useFeatureFlag(UNLEASH_FLAG.CLERK_AUTH, false)
+      const { unleashFlag: clerkEnabled, flagsReady } = useFeatureFlag(
+        UNLEASH_FLAG.CLERK_AUTH,
+        false
+      )
+      if (!flagsReady) {
+        return null
+      }
+
       const Providers = (
         <ErrorBoundary boundaryScope={BoundaryScope.page}>
           <ListingDetailsProvider>
