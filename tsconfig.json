@@ -9,6 +9,9 @@
     "target": "es6",
     "lib": ["es5", "es6", "es7", "es2017", "dom"],
     "moduleResolution": "node",
+    "paths": {
+      "react-router": ["node_modules/react-router/dist/production/index"]
+    },
     "sourceMap": true,
     "jsx": "react",
     "noEmit": false,
