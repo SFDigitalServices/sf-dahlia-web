@@ -71,9 +71,10 @@ const ListingApplyPreferenceStepWrapper = ({
   const currentStepInfo = stepInfoMap[currentStepIndex]
 
   // Determine which live/work fields to show based on eligibility
-  const { livesInSf, worksInSf, liveWorksInSf } = getLiveWorkInSfMembers({
-    ...formData,
-  })
+  const { livesInSf, worksInSf, liveWorksInSf, liveInSfMembers, workInSfMembers } =
+    getLiveWorkInSfMembers({
+      ...formData,
+    })
   const showComboPreference = comboPreference && subPreferenceClaimed && liveWorksInSf
   const eligiblePreferenceContents = preferenceContents.filter((content) => {
     if (content.preferenceName === "liveInSf") return livesInSf
@@ -136,17 +137,21 @@ const ListingApplyPreferenceStepWrapper = ({
   }, [reset])
 
   // If eligibility is updated on other pages, reset claimed preferences
+
   useResetClaimedPreferences({
     setValue,
     claimedPreferences,
     subPreferenceClaimed,
     comboPreferenceName: comboPreference?.preferenceName,
-    showComboPreference: !!showComboPreference,
-    livesInSf,
-    worksInSf,
-    liveInTheNeighborhood: liveInTheNeighborhoodHouseholdMembers(formData).length > 0,
+    liveInSfMembers,
+    workInSfMembers,
+    liveInTheNeighborhoodMembers: liveInTheNeighborhoodHouseholdMembers(formData),
     formData,
     saveFormData,
+    preferenceNames: [
+      ...preferenceContents.map((content) => content.preferenceName),
+      ...(comboPreference ? [comboPreference.preferenceName] : []),
+    ],
   })
 
   const errorSectionRef = useRef<HTMLDivElement>(null)
