@@ -207,7 +207,7 @@ const HouseholdMemberMultiStepWrapper = ({
       } else {
         setApiErrorMessage(t("error.alert.badRequest"))
       }
-      methods.reset(data)
+      formMethods.reset(data)
     } finally {
       setLoading(false)
     }
