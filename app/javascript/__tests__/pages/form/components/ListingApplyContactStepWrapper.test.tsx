@@ -168,7 +168,7 @@ describe("ListingApplyContactStepWrapper", () => {
     })
   })
 
-  it("displays a generic error for a bad re response", async () => {
+  it("displays a generic error for a non-422 response", async () => {
     mockLocateVerifiedAddress.mockRejectedValue({
       response: { status: 500 },
     })
@@ -190,7 +190,7 @@ describe("ListingApplyContactStepWrapper", () => {
 
     await waitFor(() => {
       expect(mockLocateVerifiedAddress).toHaveBeenCalled()
-      expect(screen.getByText(t("error.alert.badRequest"))).toBeInTheDocument()
+      expect(screen.getByText(/Looks like something went wrong/i)).toBeInTheDocument()
     })
     expect(mockHandleNextStep).not.toHaveBeenCalled()
   })
