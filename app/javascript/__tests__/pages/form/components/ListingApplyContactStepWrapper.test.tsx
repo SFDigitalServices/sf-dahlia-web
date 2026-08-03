@@ -168,6 +168,33 @@ describe("ListingApplyContactStepWrapper", () => {
     })
   })
 
+  it("displays a generic error for a bad re response", async () => {
+    mockLocateVerifiedAddress.mockRejectedValue({
+      response: { status: 500 },
+    })
+    const { mockHandleNextStep } = renderListingApplyContactStepWrapper({
+      addressStreet: "123 Main St",
+      addressAptOrUnit: "Apt 4B",
+      addressCity: "San Francisco",
+      addressState: "CA",
+      addressZipcode: "94105",
+      addressVerified: "false",
+      phone: "111-111-1111",
+      phoneType: "cell",
+      noPhoneCheckbox: false,
+      question: "false",
+    })
+
+    const user = userEvent.setup()
+    await user.click(screen.getByRole("button", { name: /next/i }))
+
+    await waitFor(() => {
+      expect(mockLocateVerifiedAddress).toHaveBeenCalled()
+      expect(screen.getByText(t("error.alert.badRequest"))).toBeInTheDocument()
+    })
+    expect(mockHandleNextStep).not.toHaveBeenCalled()
+  })
+
   it("displays an error for pre-api validation", async () => {
     renderListingApplyContactStepWrapper({
       addressStreet: "Not allowed PO Box",

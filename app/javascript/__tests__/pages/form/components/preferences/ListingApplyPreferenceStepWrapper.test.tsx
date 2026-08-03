@@ -80,6 +80,15 @@ const liveWorkComboPreference = {
   subPreferenceSelectLabel: "label.preferenceOptionToClaim",
 }
 
+const neighborhoodResidencePreferenceContent: PreferenceContent = {
+  preferenceName: "neighborhoodResidence",
+  checkboxLabel: "e2cLiveWorkPreference.neighborhoodResidence.checkboxLabel",
+  checkboxDescription: "e2cLiveWorkPreference.neighborhoodResidence.description",
+  proofHouseholdMemberLabel: "e2cLiveWorkPreference.proofHouseholdMember",
+  proofTypeLabel: "e2cLiveWorkPreference.proofType",
+  proofUploadButtonLabel: "e2cLiveWorkPreference.uploadProof",
+}
+
 const liveWorkHousehold = ({
   livesInSf = true,
   worksInSf = true,
@@ -537,6 +546,24 @@ describe("ListingApplyPreferenceStepWrapper", () => {
             workInSf: { preferenceClaimed: true, householdMemberId: "primary" },
           },
         })
+      })
+
+      it("removes a claimed neighborhoodResidence preference when the claiming member is no longer eligible", () => {
+        const { mockSaveFormData } = renderWrapper({
+          preferenceContents: [neighborhoodResidencePreferenceContent],
+          formData: {
+            ...liveWorkHousehold({ livesInSf: false, worksInSf: false }),
+            primaryApplicantNeighborhoodPreferenceAddressMatch: false,
+            claimedPreferences: {
+              neighborhoodResidence: {
+                preferenceClaimed: true,
+                householdMemberId: "primary",
+              },
+            },
+          },
+        })
+
+        expect(mockSaveFormData).toHaveBeenCalledWith({ claimedPreferences: {} })
       })
 
       it("removes a claimed combo preference when live/work eligibility is lost", () => {
