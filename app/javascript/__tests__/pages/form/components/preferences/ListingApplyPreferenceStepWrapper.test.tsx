@@ -82,11 +82,12 @@ const liveWorkComboPreference = {
 
 const neighborhoodResidencePreferenceContent: PreferenceContent = {
   preferenceName: "neighborhoodResidence",
-  checkboxLabel: "e2cLiveWorkPreference.neighborhoodResidence.checkboxLabel",
-  checkboxDescription: "e2cLiveWorkPreference.neighborhoodResidence.description",
-  proofHouseholdMemberLabel: "e2cLiveWorkPreference.proofHouseholdMember",
-  proofTypeLabel: "e2cLiveWorkPreference.proofType",
-  proofUploadButtonLabel: "e2cLiveWorkPreference.uploadProof",
+  checkboxLabel: "e2aNeighborhoodPreference.preference.title",
+  checkboxDescription: "e2aNeighborhoodPreference.preference.shortDescription",
+  proofHouseholdMemberLabel: "label.applicantPreferencesDocumentName",
+  proofTypeLabel: "label.preferenceProofAddressDocuments",
+  proofTypeNote: "e2cLiveWorkPreference.documentMustShowCorrectName",
+  proofUploadButtonLabel: "label.uploadProofOfPreference",
 }
 
 const liveWorkHousehold = ({
