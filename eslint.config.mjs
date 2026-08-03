@@ -24,7 +24,6 @@ export default defineConfig(
       "lib/**", // Ruby library code
       "vendor/**", // Ruby gems
       "*.config.js",
-      "jest.esm-transform.js",
       "config/webpack/**/*",
       "lighthouserc.js",
       "public/**",
