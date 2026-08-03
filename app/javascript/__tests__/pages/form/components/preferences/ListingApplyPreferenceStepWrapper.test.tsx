@@ -80,6 +80,16 @@ const liveWorkComboPreference = {
   subPreferenceSelectLabel: "label.preferenceOptionToClaim",
 }
 
+const neighborhoodResidencePreferenceContent: PreferenceContent = {
+  preferenceName: "neighborhoodResidence",
+  checkboxLabel: "e2aNeighborhoodPreference.preference.title",
+  checkboxDescription: "e2aNeighborhoodPreference.preference.shortDescription",
+  proofHouseholdMemberLabel: "label.applicantPreferencesDocumentName",
+  proofTypeLabel: "label.preferenceProofAddressDocuments",
+  proofTypeNote: "e2cLiveWorkPreference.documentMustShowCorrectName",
+  proofUploadButtonLabel: "label.uploadProofOfPreference",
+}
+
 const liveWorkHousehold = ({
   livesInSf = true,
   worksInSf = true,
@@ -358,7 +368,7 @@ describe("ListingApplyPreferenceStepWrapper", () => {
         await user.click(screen.getByLabelText(t("e3aAssistedHousingPreference.preference.title")))
         await user.selectOptions(
           screen.getByLabelText(t("label.applicantPreferencesDocumentName")),
-          "primaryApplicant"
+          "primary"
         )
         await user.click(screen.getByText(t("t.next")))
 
@@ -377,7 +387,7 @@ describe("ListingApplyPreferenceStepWrapper", () => {
         await user.click(screen.getByLabelText(t("e3aAssistedHousingPreference.preference.title")))
         await user.selectOptions(
           screen.getByLabelText(t("label.applicantPreferencesDocumentName")),
-          "primaryApplicant"
+          "primary"
         )
         await user.click(screen.getByText(t("t.next")))
         expect(await screen.findByText(t("error.pleaseCompletePreference"))).toBeInTheDocument()
@@ -520,21 +530,41 @@ describe("ListingApplyPreferenceStepWrapper", () => {
         },
       ] as unknown as RailsListingPreference[]
 
-      it("removes a claimed liveInSf preference when the applicant is no longer live-eligible", () => {
+      it("removes a claimed liveInSf preference when the claiming member is no longer live-eligible", () => {
         const { mockSaveFormData } = renderWrapper({
           preferenceContents: [liveInSfPreferenceContent, workInSfPreferenceContent],
           formData: {
             ...liveWorkHousehold({ livesInSf: false, worksInSf: true }),
             claimedPreferences: {
-              liveInSf: { preferenceClaimed: true },
-              workInSf: { preferenceClaimed: true },
+              liveInSf: { preferenceClaimed: true, householdMemberId: "primary" },
+              workInSf: { preferenceClaimed: true, householdMemberId: "primary" },
             },
           },
         })
 
         expect(mockSaveFormData).toHaveBeenCalledWith({
-          claimedPreferences: { workInSf: { preferenceClaimed: true } },
+          claimedPreferences: {
+            workInSf: { preferenceClaimed: true, householdMemberId: "primary" },
+          },
         })
+      })
+
+      it("removes a claimed neighborhoodResidence preference when the claiming member is no longer eligible", () => {
+        const { mockSaveFormData } = renderWrapper({
+          preferenceContents: [neighborhoodResidencePreferenceContent],
+          formData: {
+            ...liveWorkHousehold({ livesInSf: false, worksInSf: false }),
+            primaryApplicantNeighborhoodPreferenceAddressMatch: false,
+            claimedPreferences: {
+              neighborhoodResidence: {
+                preferenceClaimed: true,
+                householdMemberId: "primary",
+              },
+            },
+          },
+        })
+
+        expect(mockSaveFormData).toHaveBeenCalledWith({ claimedPreferences: {} })
       })
 
       it("removes a claimed combo preference when live/work eligibility is lost", () => {
