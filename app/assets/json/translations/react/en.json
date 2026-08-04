@@ -308,7 +308,7 @@
   "createAccount.howTo.p3": "Look for an email from DAHLIA",
   "createAccount.howTo.p4": "Enter the 6-digit code above",
   "createAccount.howTo.p5": "It may take a few minutes to get the code. Check your spam or junk folder. Make sure the email address you entered is correct.",
-  "createAccount.howToUseCode": "How to use a code to sign in",
+  "createAccount.howToUseCode": "How to use a one-time code",
   "createAccount.mustBeOver18": "You must be 18 years of age or older to apply for affordable housing on DAHLIA.",
   "createAccount.okayToSkipPassword": "It's okay to skip this step. Next time you sign in, we'll just send you a code to use instead.",
   "createAccount.p1": "You'll use this information to log in to your account, so make sure you can remember it.",
