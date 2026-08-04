@@ -69,11 +69,11 @@ describe("<Account />", () => {
       expect(within(overviewNav).getAllByRole("listitem")).toHaveLength(3)
     })
 
-    it("first tab has title 'Application and lottery results'", () => {
+    it("first tab has title 'Applications and lottery results'", () => {
       expect(
         within(overviewNav).getByRole("heading", {
           level: 2,
-          name: "Application and lottery results",
+          name: "Applications and lottery results",
         })
       ).toBeInTheDocument()
     })

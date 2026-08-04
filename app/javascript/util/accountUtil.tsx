@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react"
-import { Card } from "@bloom-housing/ui-seeds"
+import { Card, Heading } from "@bloom-housing/ui-seeds"
 import { Icon, UniversalIconType } from "@bloom-housing/ui-components"
 import { DOBFieldValues } from "../pages/account/components/DOBFieldset"
+import sharedStyles from "../pages/account/shared-styles.module.scss"
 
 // We will strictly validate the email address using the following regex.
 // Devise will also validate the email address on the backend with a looser pattern.
@@ -26,18 +27,20 @@ export const FormHeader = ({
   className,
   iconSymbol = "profile",
 }: FormHeaderProps) => {
-  const classNames = ["flex justify-center py-8 text-center w-full flex-col items-center"]
+  const classNames = [sharedStyles.header]
   if (className) {
     classNames.push(className)
   }
 
   return (
     <Card.Header divider="flush" className={classNames.join(" ")}>
-      <div className="pb-4 px-4 border-blue-500 w-min" style={{ borderBottom: "3px solid" }}>
+      <div className={sharedStyles.iconBackground}>
         <Icon size="xlarge" className="md:hidden block" symbol={iconSymbol} />
         <Icon size="2xl" className="md:block hidden" symbol={iconSymbol} />
       </div>
-      <h1 className="mt-6 mb-4 text-xl md:text-2xl">{title}</h1>
+      <Heading priority={1} size="2xl" className={sharedStyles.heading}>
+        {title}
+      </Heading>
       <p className="field-note text-base">{description}</p>
     </Card.Header>
   )

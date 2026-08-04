@@ -24,6 +24,12 @@
   }
 }
 
+.accountLayout :global(.seeds-card) {
+  @media (max-width: theme("screens.md")) {
+    border-top-width: 0;
+  }
+}
+
 .accountLayoutContent {
   flex: 1;
   min-width: 0;
@@ -40,7 +46,7 @@
     position: sticky;
     z-index: 1;
     top: 0;
-    background-color: var(--seeds-color-gray-300);
+    background-color: var(--seeds-color-white);
     padding: var(--seeds-spacer-header);
   }
 }

@@ -4,13 +4,18 @@ import { userEvent } from "@testing-library/user-event"
 import { t } from "@bloom-housing/ui-components"
 import ListingApplyContactStepWrapper from "../../../../pages/form/components/ListingApplyContactStepWrapper"
 import { renderWithFormContextWrapper } from "../../../__util__/renderUtils"
-import { locateVerifiedAddress } from "../../../../api/formApiService"
+import {
+  checkNeighborhoodPreferenceMatch,
+  locateVerifiedAddress,
+} from "../../../../api/formApiService"
 
 jest.mock("../../../../api/formApiService", () => ({
   locateVerifiedAddress: jest.fn(),
+  checkNeighborhoodPreferenceMatch: jest.fn(),
 }))
 
 const mockLocateVerifiedAddress = locateVerifiedAddress as jest.Mock
+const mockCheckNeighborhoodPreferenceMatch = checkNeighborhoodPreferenceMatch as jest.Mock
 
 Object.defineProperty(window, "scrollTo", {
   value: jest.fn(),
@@ -44,6 +49,7 @@ const renderListingApplyContactStepWrapper = (formData: Record<string, unknown> 
         mailingAddressZipcode: "mailingAddressZipcode",
         question: "question",
         showLiveWorkInSfPrefStep: "showLiveWorkInSfPrefStep",
+        showNRHPPrefStep: "showNRHPPrefStep",
       }}
     />,
     {
@@ -91,6 +97,7 @@ describe("ListingApplyContactStepWrapper", () => {
         invalid: false,
       },
     })
+    mockCheckNeighborhoodPreferenceMatch.mockResolvedValue(true)
   })
   it("displays the error banner for any validation errors", async () => {
     renderListingApplyContactStepWrapper({})
@@ -161,6 +168,33 @@ describe("ListingApplyContactStepWrapper", () => {
     })
   })
 
+  it("displays a generic error for a non-422 response", async () => {
+    mockLocateVerifiedAddress.mockRejectedValue({
+      response: { status: 500 },
+    })
+    const { mockHandleNextStep } = renderListingApplyContactStepWrapper({
+      addressStreet: "123 Main St",
+      addressAptOrUnit: "Apt 4B",
+      addressCity: "San Francisco",
+      addressState: "CA",
+      addressZipcode: "94105",
+      addressVerified: "false",
+      phone: "111-111-1111",
+      phoneType: "cell",
+      noPhoneCheckbox: false,
+      question: "false",
+    })
+
+    const user = userEvent.setup()
+    await user.click(screen.getByRole("button", { name: /next/i }))
+
+    await waitFor(() => {
+      expect(mockLocateVerifiedAddress).toHaveBeenCalled()
+      expect(screen.getByText(/Looks like something went wrong/i)).toBeInTheDocument()
+    })
+    expect(mockHandleNextStep).not.toHaveBeenCalled()
+  })
+
   it("displays an error for pre-api validation", async () => {
     renderListingApplyContactStepWrapper({
       addressStreet: "Not allowed PO Box",
@@ -200,5 +234,64 @@ describe("ListingApplyContactStepWrapper", () => {
 
     await waitFor(() => expect(mockHandleNextStep).toHaveBeenCalled())
     expect(mockLocateVerifiedAddress).not.toHaveBeenCalled()
+  })
+  it("saves the neighborhood match and NRHP flag with the verified address", async () => {
+    mockCheckNeighborhoodPreferenceMatch.mockResolvedValue(true)
+    const { mockSaveFormData } = renderListingApplyContactStepWrapper({
+      addressStreet: "123 Main Street",
+      addressAptOrUnit: "",
+      addressCity: "San Francisco",
+      addressState: "CA",
+      addressZipcode: "94105",
+      addressVerified: "false",
+      phone: "123-456-7890",
+      phoneType: "cell",
+      noPhoneCheckbox: false,
+      question: "false",
+      primaryApplicantAddressCity: "San Francisco",
+    })
+
+    const user = userEvent.setup()
+    await user.click(screen.getByRole("button", { name: /next/i }))
+
+    await waitFor(() =>
+      expect(mockSaveFormData).toHaveBeenLastCalledWith(
+        expect.objectContaining({
+          primaryApplicantNeighborhoodPreferenceAddressMatch: true,
+          showNRHPPrefStep: true,
+        })
+      )
+    )
+  })
+  it("syncs same-address household members to the primary's neighborhood pref", async () => {
+    mockCheckNeighborhoodPreferenceMatch.mockResolvedValue(true)
+    const { mockSaveFormData } = renderListingApplyContactStepWrapper({
+      addressStreet: "1360 43rd Ave",
+      addressCity: "San Francisco",
+      addressState: "CA",
+      addressZipcode: "94122",
+      addressVerified: "false",
+      phone: "111-111-1111",
+      phoneType: "cell",
+      noPhoneCheckbox: false,
+      question: "false",
+      primaryApplicantAddressCity: "San Francisco",
+      householdMembers: [
+        { id: "1", hasSameAddressAsApplicant: "true", neighborhoodPreferenceAddressMatch: null },
+        { id: "2", hasSameAddressAsApplicant: "false", householdMemberAddressCity: "Oakland" },
+      ],
+    })
+
+    const user = userEvent.setup()
+    await user.click(screen.getByRole("button", { name: /next/i }))
+
+    await waitFor(() => {
+      const saved = mockSaveFormData.mock.calls.at(-1)[0]
+      expect(saved.householdMembers[0].neighborhoodPreferenceAddressMatch).toBe(true)
+      expect(saved.householdMembers[1]).not.toHaveProperty(
+        "neighborhoodPreferenceAddressMatch",
+        true
+      )
+    })
   })
 })

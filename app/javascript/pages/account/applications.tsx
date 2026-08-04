@@ -12,12 +12,14 @@ import {
 } from "@bloom-housing/ui-components"
 import { Card, Dialog, Heading } from "@bloom-housing/ui-seeds"
 import { ApplicationItem } from "../../components/ApplicationItem"
+import { FormHeader } from "../../util/accountUtil"
 import { AppPages, getApplicationPath, getLocalizedPath, RedirectType } from "../../util/routeUtil"
 import { getCurrentLanguage, renderInlineMarkup } from "../../util/languageUtil"
 import { deleteApplication, getApplications } from "../../api/authApiService"
 import { Application } from "../../api/types/rails/application/RailsApplication"
 import { isRental, isSale } from "../../util/listingUtil"
 import "./styles/my-applications.scss"
+import sharedStyles from "./shared-styles.module.scss"
 import { DoubleSubmittedModal } from "./components/DoubleSubmittedModal"
 import { AlreadySubmittedModal } from "./components/AlreadySubmittedModal"
 import { extractModalParamsFromUrl } from "./components/util"
@@ -25,7 +27,6 @@ import { withAuthentication } from "../../authentication/withAuthentication"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import { UNLEASH_FLAG } from "../../modules/constants"
 import { MyApplications } from "./my-applications"
-import styles from "./styles/applications.module.scss"
 
 const noApplications = () => {
   return (
@@ -206,19 +207,12 @@ const ApplicationsPage = () => {
   return (
     <Layout>
       <AccountLayout>
-        <Card className={`w-full mobile-card ${styles.applications}`}>
-          <Card.Header className="flex justify-center w-full flex-col items-center pb-8">
-            <div
-              className="py-4 border-blue-500 w-min px-4 md:px-8 mb-6"
-              style={{ borderBottom: "3px solid" }}
-            >
-              <Icon size="xlarge" className="md:hidden block" symbol={"application"} />
-              <Icon size="2xl" className="md:block hidden" symbol={"application"} />
-            </div>
-            <Heading priority={1} size="2xl">
-              {t("myApplications.title")}
-            </Heading>
-          </Card.Header>
+        <Card className={sharedStyles.card}>
+          <FormHeader
+            iconSymbol="application"
+            title={t("accountLayout.nav.applications")}
+            description={t("accountLayout.account.p1")}
+          />
           <AlreadySubmittedModal
             alreadySubmittedId={alreadySubmittedId}
             alreadySubmittedApplication={

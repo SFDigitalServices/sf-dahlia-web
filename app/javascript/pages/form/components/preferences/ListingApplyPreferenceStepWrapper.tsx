@@ -10,7 +10,7 @@ import PreferenceToClaimCombo from "./PreferenceToClaimCombo"
 import {
   generateStepDefaultValues,
   getNestedError,
-  useResetClaimedLiveWorkPreferences,
+  useResetClaimedPreferences,
 } from "../../../../util/formEngineUtil"
 import { renderInlineMarkup } from "../../../../util/languageUtil"
 import {
@@ -21,7 +21,10 @@ import {
 } from "./PreferenceUtils"
 import styles from "./ListingApplyPreferenceStepWrapper.module.scss"
 import stepStyles from "../ListingApplyStepWrapper.module.scss"
-import { getLiveWorkInSfMembers } from "../household/householdUtils"
+import {
+  getLiveWorkInSfMembers,
+  liveInTheNeighborhoodHouseholdMembers,
+} from "../household/householdUtils"
 
 interface ListingApplyPreferenceStepWrapperProps {
   greenHeader?: boolean
@@ -68,9 +71,10 @@ const ListingApplyPreferenceStepWrapper = ({
   const currentStepInfo = stepInfoMap[currentStepIndex]
 
   // Determine which live/work fields to show based on eligibility
-  const { livesInSf, worksInSf, liveWorksInSf } = getLiveWorkInSfMembers({
-    ...formData,
-  })
+  const { livesInSf, worksInSf, liveWorksInSf, liveInSfMembers, workInSfMembers } =
+    getLiveWorkInSfMembers({
+      ...formData,
+    })
   const showComboPreference = comboPreference && subPreferenceClaimed && liveWorksInSf
   const eligiblePreferenceContents = preferenceContents.filter((content) => {
     if (content.preferenceName === "liveInSf") return livesInSf
@@ -132,17 +136,22 @@ const ListingApplyPreferenceStepWrapper = ({
     /* eslint-disable-next-line react-hooks/exhaustive-deps */
   }, [reset])
 
-  // If live/work status is updated on other pages, reset claimed preferences
-  useResetClaimedLiveWorkPreferences({
+  // If eligibility is updated on other pages, reset claimed preferences
+
+  useResetClaimedPreferences({
     setValue,
     claimedPreferences,
     subPreferenceClaimed,
     comboPreferenceName: comboPreference?.preferenceName,
-    showComboPreference: !!showComboPreference,
-    livesInSf,
-    worksInSf,
+    liveInSfMembers,
+    workInSfMembers,
+    liveInTheNeighborhoodMembers: liveInTheNeighborhoodHouseholdMembers(formData),
     formData,
     saveFormData,
+    preferenceNames: [
+      ...preferenceContents.map((content) => content.preferenceName),
+      ...(comboPreference ? [comboPreference.preferenceName] : []),
+    ],
   })
 
   const errorSectionRef = useRef<HTMLDivElement>(null)
