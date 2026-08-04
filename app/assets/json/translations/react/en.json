@@ -287,6 +287,8 @@
   "createAccount.chooseDiffEmail": "Create a new account with a different email address and you won't lose any of the information you've entered so far.",
   "createAccount.choosePasswordOptional": "Choose password (optional)",
   "createAccount.codeDescription": "Enter your email address and we'll send you a code to set up your account.",
+  "createAccount.codeInvalid.p1": "That code did not work. Check for mistakes.",
+  "createAccount.codeInvalid.p2": "Sent more than 1 code? Use the newest one.",
   "createAccount.confirmCode": "Confirm code",
   "createAccount.continueWithApplication": "Continue with Application",
   "createAccount.createAnAccount": "Create an Account",
