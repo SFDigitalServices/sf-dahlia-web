@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useRef } from "react"
 import { ErrorMessage, Field, t } from "@bloom-housing/ui-components"
 import Fieldset from "./Fieldset"
 import styles from "./CodeField.module.scss"
@@ -13,6 +13,9 @@ const CodeField = ({
   error?: boolean
 }) => {
   const code = value.replace(/\D/g, "").slice(0, 6)
+  const inputsRef = useRef<(HTMLInputElement | null)[]>([])
+  const focusInput = (index: number) => inputsRef.current[index]?.focus()
+
   return (
     <Fieldset label={t("createAccount.enterCode")} hasError={error}>
       <div className={styles.codeGroup}>
@@ -31,13 +34,16 @@ const CodeField = ({
               const digits = target.value.replace(/\D/g, "").slice(0, 6)
               if (digits.length === 6) {
                 onChange(digits)
-                document.querySelector<HTMLElement>("#code-6")?.focus()
+                focusInput(5)
               } else if (digits.length === 1 && i === Math.min(code.length, 5)) {
                 onChange(code.slice(0, i) + digits)
-                document.querySelector<HTMLElement>(`#code-${Math.min(i + 2, 6)}`)?.focus()
+                focusInput(Math.min(i + 1, 5))
               }
             }}
             inputProps={{
+              ref: (element: HTMLInputElement | null) => {
+                inputsRef.current[i] = element
+              },
               value: code[i] ?? "",
               inputMode: "numeric",
               maxLength: 6,
@@ -46,7 +52,7 @@ const CodeField = ({
                 if (event.key !== "Backspace" || !code) return
                 event.preventDefault()
                 onChange(code.slice(0, -1))
-                document.querySelector<HTMLElement>(`#code-${code.length}`)?.focus()
+                focusInput(Math.max(code.length - 1, 0))
               },
               onFocus: (event: React.FocusEvent<HTMLInputElement>) => event.target.select(),
             }}
