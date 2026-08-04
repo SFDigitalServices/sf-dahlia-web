@@ -17,12 +17,8 @@
   margin-left: var(--seeds-spacer-text);
 }
 
-.codeField {
-  font-weight: var(--seeds-font-weight-semibold);
-}
-
 .confirmButton {
-  margin-bottom: var(--seeds-spacer-content);
+  margin: var(--seeds-spacer-content) 0;
 }
 
 .resendRow {
@@ -38,6 +34,12 @@
   margin-left: var(--seeds-spacer-text);
   font-weight: 200 !important;
   font-family: inherit !important;
+}
+
+.howToUseCode {
+  button {
+    font-weight: var(--seeds-font-weight-semibold) !important;
+  }
 }
 
 .howToList {
