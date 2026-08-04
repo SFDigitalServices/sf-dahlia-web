@@ -25,6 +25,10 @@
   margin: var(--seeds-spacer-header) 0 var(--seeds-spacer-content) 0;
 }
 
+.getCodeButton {
+  margin: var(--seeds-spacer-header) 0 var(--seeds-spacer-text) 0;
+}
+
 .oneTimeCodeNote {
   padding-top: var(--seeds-spacer-text);
 }

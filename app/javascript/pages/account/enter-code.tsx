@@ -7,20 +7,29 @@ import { Card, Heading, Link, Button } from "@bloom-housing/ui-seeds"
 import { useForm } from "react-hook-form"
 import withAppSetup from "../../layouts/withAppSetup"
 import Layout from "../../layouts/Layout"
-import { AppPages, getCreateAccountPath } from "../../util/routeUtil"
-import { getSfGovUrl } from "../../util/languageUtil"
+import { AppPages, getCreateAccountPath, getSignInPath } from "../../util/routeUtil"
 import styles from "./enter-code.module.scss"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import { UNLEASH_FLAG } from "../../modules/constants"
 import GetHelp from "./components/GetHelp"
 
-const EnterCodePage = ({ email }: { email: string }) => {
+type EnterCodeFlow = "signIn" | "createAccount"
+
+interface EnterCodePageProps {
+  email: string
+  flow: EnterCodeFlow
+  onEditEmail?: () => void
+}
+
+const EnterCodePage = ({ email, flow, onEditEmail }: EnterCodePageProps) => {
   const { isLoaded } = useSignUp()
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<{ code: string }>({ mode: "onChange", shouldFocusError: false })
+
+  const editEmailHref = flow === "signIn" ? getSignInPath() : getCreateAccountPath()
 
   const onSubmit = ({ code }: { code: string }) => {
     if (!isLoaded) return
@@ -42,9 +51,20 @@ const EnterCodePage = ({ email }: { email: string }) => {
               </Heading>
               <p className={styles.sentTo}>
                 {t("createAccount.weSentCodeTo")} <span className={styles.email}>{email}</span>
-                <Link className={styles.editEmail} href={getCreateAccountPath()}>
-                  {t("createAccount.editEmail")}
-                </Link>
+                {onEditEmail ? (
+                  <Button
+                    className={styles.editEmail}
+                    variant="text"
+                    size="md"
+                    onClick={onEditEmail}
+                  >
+                    {t("createAccount.editEmail")}
+                  </Button>
+                ) : (
+                  <Link className={styles.editEmail} href={editEmailHref}>
+                    {t("createAccount.editEmail")}
+                  </Link>
+                )}
               </p>
               <Form onSubmit={handleSubmit(onSubmit)}>
                 <Field
@@ -98,10 +118,7 @@ const EnterCodePage = ({ email }: { email: string }) => {
                 </div>
               </ExpandableContent>
             </Card.Section>
-            <GetHelp
-              text={t("createAccount.getHelpLink")}
-              href={getSfGovUrl("https://www.sf.gov/learn-how-to-create-dahlia-account")}
-            />
+            <GetHelp flow={flow} />
           </Card>
         </div>
       </section>
@@ -125,9 +142,10 @@ const EnterCode = (_props: { assetPaths: unknown }) => {
     return null
   }
 
-  return <EnterCodePage email={email} />
+  return <EnterCodePage email={email} flow="createAccount" />
 }
 
+export { EnterCodePage }
 export default withAppSetup(EnterCode, {
   useFormTimeout: true,
   pageName: AppPages.EnterCode,
