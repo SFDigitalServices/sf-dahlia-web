@@ -8,6 +8,7 @@ import { useForm } from "react-hook-form"
 import withAppSetup from "../../layouts/withAppSetup"
 import Layout from "../../layouts/Layout"
 import { AppPages, getCreateAccountPath } from "../../util/routeUtil"
+import { getSfGovUrl } from "../../util/languageUtil"
 import styles from "./enter-code.module.scss"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import { UNLEASH_FLAG } from "../../modules/constants"
@@ -97,7 +98,10 @@ const EnterCodePage = ({ email }: { email: string }) => {
                 </div>
               </ExpandableContent>
             </Card.Section>
-            <GetHelp />
+            <GetHelp
+              text={t("createAccount.getHelpLink")}
+              href={getSfGovUrl("https://www.sf.gov/learn-how-to-create-dahlia-account")}
+            />
           </Card>
         </div>
       </section>

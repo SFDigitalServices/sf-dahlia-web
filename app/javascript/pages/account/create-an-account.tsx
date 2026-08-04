@@ -8,7 +8,7 @@ import { useForm } from "react-hook-form"
 import withAppSetup from "../../layouts/withAppSetup"
 import Layout from "../../layouts/Layout"
 import { AppPages, getEnterCodePath, getSignInPath } from "../../util/routeUtil"
-import { getCurrentLanguage } from "../../util/languageUtil"
+import { getCurrentLanguage, getSfGovUrl } from "../../util/languageUtil"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import { UNLEASH_FLAG } from "../../modules/constants"
 import { CreateAccount } from "./create-account"
@@ -77,7 +77,10 @@ const CreateAnAccountPage = () => {
                 {t("nav.signIn")}
               </Button>
             </Card.Section>
-            <GetHelp />
+            <GetHelp
+              text={t("createAccount.getHelpLink")}
+              href={getSfGovUrl("https://www.sf.gov/learn-how-to-create-dahlia-account")}
+            />
           </Card>
         </div>
       </section>
