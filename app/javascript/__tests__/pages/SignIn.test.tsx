@@ -26,6 +26,13 @@ jest.mock("react-gtm-module", () => ({
   dataLayer: jest.fn(),
 }))
 
+jest.mock("../../hooks/useFeatureFlag", () => ({
+  useFeatureFlag: (flagName: string) => ({
+    flagsReady: true,
+    unleashFlag: flagName !== "temp.webapp.auth.clerk",
+  }),
+}))
+
 jest.mock("@bloom-housing/ui-seeds", () => {
   const originalModule = jest.requireActual("@bloom-housing/ui-seeds")
 
