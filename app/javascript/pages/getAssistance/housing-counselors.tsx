@@ -233,7 +233,9 @@ const HousingCounselors = () => {
         return counselor.services.some((service) => filterData.services.includes(service))
       })
     }
-    return filteredList
+    return [...filteredList].sort((a, b) =>
+      a.fullName.localeCompare(b.fullName, undefined, { sensitivity: "base" })
+    )
   }, [filterData])
 
   return (
