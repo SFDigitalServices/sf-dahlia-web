@@ -39,6 +39,7 @@ const CounselorFilter = ({ handleFilterData, clearClick }: CounselorFilterProps)
     { label: t("assistance.housingCounselors.services.languages.arabic"), value: "arabic" },
     { label: t("assistance.housingCounselors.services.languages.cantonese"), value: "cantonese" },
     { label: t("assistance.housingCounselors.services.languages.english"), value: "english" },
+    { label: t("assistance.housingCounselors.services.languages.filipino"), value: "filipino" },
     { label: t("assistance.housingCounselors.services.languages.french"), value: "french" },
     { label: t("assistance.housingCounselors.services.languages.mandarin"), value: "mandarin" },
     { label: t("assistance.housingCounselors.services.languages.russian"), value: "russian" },
