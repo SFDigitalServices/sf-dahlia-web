@@ -1,5 +1,5 @@
 import React from "react"
-import { useAuth, useSignIn } from "@clerk/clerk-react"
+import { useAuth, useSignIn, useSignUp } from "@clerk/clerk-react"
 import { screen, waitFor, within, cleanup } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
 import SignIn from "../../pages/sign-in"
@@ -16,9 +16,16 @@ jest.mock("@clerk/clerk-react", () => {
     ...Clerk,
     ClerkProvider: ({ children }: { children: React.ReactNode }) => children,
     useSignIn: jest.fn(),
+    useSignUp: jest.fn(),
     useAuth: jest.fn(() => ({ isLoaded: true, isSignedIn: false })),
   }
 })
+
+const switchToCodeView = async () => {
+  const user = userEvent.setup()
+  await user.click(screen.getByRole("button", { name: /get a one-time code to sign in/i }))
+  return user
+}
 
 const submitCredentials = async (password = "abcd1234") => {
   const user = userEvent.setup()
@@ -47,6 +54,7 @@ describe("<SignInFlow />", () => {
       signIn: { create: mockSignInCreate },
       setActive: mockSetActive,
     })
+    ;(useSignUp as jest.Mock).mockReturnValue({ isLoaded: true })
   })
 
   afterEach(() => {
@@ -54,13 +62,14 @@ describe("<SignInFlow />", () => {
     cleanup()
   })
 
-  it("shows the sign in form", async () => {
+  it("shows the password sign in flow by default", async () => {
     await renderAndLoadAsync(<SignIn assetPaths={{}} />)
 
     expect(screen.getByRole("heading", { name: /^sign in$/i, level: 1 })).not.toBeNull()
     expect(screen.getByRole("group", { name: /email/i })).not.toBeNull()
     expect(screen.getByRole("group", { name: /^password$/i })).not.toBeNull()
     expect(screen.getByRole("link", { name: /forgot password/i })).not.toBeNull()
+    expect(screen.getByRole("button", { name: /^sign in$/i })).not.toBeNull()
     expect(screen.getByRole("button", { name: /get a one-time code to sign in/i })).not.toBeNull()
     expect(screen.getByText(/one-time codes make signing in easier/i)).not.toBeNull()
     expect(screen.getByRole("heading", { name: /don't have an account\?/i })).not.toBeNull()
@@ -73,6 +82,28 @@ describe("<SignInFlow />", () => {
     expect(
       screen.getByRole("link", { name: /how to sign in or find help/i }).getAttribute("href")
     ).toBe("https://www.sf.gov/sign-in-to-your-dahlia-account")
+  })
+
+  it("switches to the code sign in flow", async () => {
+    await renderAndLoadAsync(<SignIn assetPaths={{}} />)
+    await switchToCodeView()
+
+    expect(
+      screen.getByText(/enter your email address and we'll send you a code to sign in/i)
+    ).not.toBeNull()
+    expect(screen.getByRole("button", { name: /^get a code$/i })).not.toBeNull()
+    expect(screen.getByRole("button", { name: /sign in with a password instead/i })).not.toBeNull()
+    expect(screen.queryByLabelText(/^password$/i)).toBeNull()
+  })
+
+  it("returns to the password flow from the code sign in flow", async () => {
+    await renderAndLoadAsync(<SignIn assetPaths={{}} />)
+    const user = await switchToCodeView()
+    await user.click(screen.getByRole("button", { name: /sign in with a password instead/i }))
+
+    expect(screen.getByRole("group", { name: /^password$/i })).not.toBeNull()
+    expect(screen.getByRole("button", { name: /^sign in$/i })).not.toBeNull()
+    expect(screen.queryByRole("button", { name: /^get a code$/i })).toBeNull()
   })
 
   it("redirects to the account overview when already signed in", async () => {
