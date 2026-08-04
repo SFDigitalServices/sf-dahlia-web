@@ -33,7 +33,6 @@ const CreateAnAccountPage = () => {
   const onSubmit = async ({ email }: { email: string }) => {
     if (!isLoaded || !signUp) return
     const locale = getCurrentLanguage()
-    console.log("Signing up with email and locale", email, locale)
     try {
       await signUp.create({
         emailAddress: email,
@@ -59,7 +58,13 @@ const CreateAnAccountPage = () => {
               <p className="field-note">{t("createAccount.codeDescription")}</p>
               <Form onSubmit={handleSubmit(onSubmit)}>
                 <EmailFieldset register={register} errors={errors} />
-                <Button variant="primary" size="sm" type="submit" disabled={!isLoaded}>
+                <Button
+                  className={styles.getCodeButton}
+                  variant="primary"
+                  size="sm"
+                  type="submit"
+                  disabled={!isLoaded}
+                >
                   {t("createAccount.getCode")}
                 </Button>
               </Form>

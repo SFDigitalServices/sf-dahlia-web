@@ -17,6 +17,10 @@
   margin-left: var(--seeds-spacer-text);
 }
 
+.codeField {
+  font-weight: var(--seeds-font-weight-semibold);
+}
+
 .confirmButton {
   margin: var(--seeds-spacer-content) 0;
 }
@@ -39,6 +43,7 @@
 .howToUseCode {
   button {
     font-weight: var(--seeds-font-weight-semibold) !important;
+    font-size: var(--seeds-font-size-base) !important;
   }
 }
 
