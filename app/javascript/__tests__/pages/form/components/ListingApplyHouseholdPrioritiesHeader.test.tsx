@@ -7,7 +7,7 @@ import { renderWithFormContextWrapper } from "../../../__util__/renderUtils"
 describe("ListingApplyHouseholdPrioritiesHeader", () => {
   it("renders the household title when liveAlone is false", () => {
     renderWithFormContextWrapper(<ListingApplyHouseholdPrioritiesHeader />, {
-      formData: { liveAlone: "false" },
+      formData: { liveAlone: false },
     })
 
     expect(screen.getByText(t("c7HouseholdPriorities.titleHousehold"))).toBeInTheDocument()
@@ -15,7 +15,7 @@ describe("ListingApplyHouseholdPrioritiesHeader", () => {
 
   it("renders the individual title when liveAlone is true", () => {
     renderWithFormContextWrapper(<ListingApplyHouseholdPrioritiesHeader />, {
-      formData: { liveAlone: "true" },
+      formData: { liveAlone: true },
     })
 
     expect(screen.getByText(t("c7HouseholdPriorities.titleYou"))).toBeInTheDocument()

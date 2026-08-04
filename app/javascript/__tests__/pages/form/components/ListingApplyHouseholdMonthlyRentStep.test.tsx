@@ -28,6 +28,7 @@ const renderListingApplyHousingMonthlyRent = (formData: Record<string, unknown> 
       stepInfoMap: [
         {
           slug: "householdMonthlyRent",
+          sectionName: "shortFormNav.household",
           fieldNames: ["householdMonthlyRent", "householdDoesNotPayRent"],
         },
       ],
@@ -88,7 +89,26 @@ describe("ListingApplyHouseholdMonthlyRentStep", () => {
     await userEvent.type(inputs[0], "1200")
     await userEvent.type(inputs[1], "800")
 
-    await userEvent.click(screen.getByRole("button", { name: /next/i }))
+    await userEvent.click(screen.getByRole("button", { name: t("t.next") }))
+  })
+
+  it("scrolls to the error section when validation errors are present", async () => {
+    const { mockHandleSetSectionCompletion } = renderListingApplyHousingMonthlyRent()
+
+    await userEvent.click(screen.getByRole("button", { name: t("t.next") }))
+
+    expect(screen.getByText(t("error.formSubmission"))).toBeInTheDocument()
+    expect(mockHandleSetSectionCompletion).toHaveBeenCalledWith("shortFormNav.household", false)
+  })
+
+  it("clears form errors when the error close button is clicked", async () => {
+    renderListingApplyHousingMonthlyRent()
+
+    await userEvent.click(screen.getByRole("button", { name: t("t.next") }))
+    expect(screen.getByText(t("error.formSubmission"))).toBeInTheDocument()
+
+    await userEvent.click(screen.getByRole("button", { name: t("t.close") }))
+    expect(screen.queryByText(t("error.formSubmission"))).not.toBeInTheDocument()
   })
 })
 

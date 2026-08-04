@@ -37,8 +37,8 @@ describe("EmailAddress", () => {
     const user = userEvent.setup()
     const emailInput = screen.getByRole("textbox")
     await user.type(emailInput, "invalid-email")
-    await user.tab()
-    expect(screen.getByText(t("error.email"))).toBeInTheDocument()
+    await user.click(screen.getByRole("button", { name: t("t.next") }))
+    expect(await screen.findByText(t("error.email"))).toBeInTheDocument()
   })
 
   it("disables the field if the checkbox is selected", async () => {

@@ -64,6 +64,7 @@ const ListingApplyPreferenceStepWrapper = ({
     currentStepIndex,
     handleNextStep,
     handlePrevStep,
+    handleSetSectionCompletion,
   } = useFormEngineContext()
 
   /* eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion */
@@ -99,7 +100,7 @@ const ListingApplyPreferenceStepWrapper = ({
 
   // https://github.com/react-hook-form/react-hook-form/issues/2887#issuecomment-802577357
   /* eslint-disable @typescript-eslint/unbound-method */
-  const { reset, register, handleSubmit, formState, clearErrors, setValue } = formMethods
+  const { reset, register, handleSubmit, formState, clearErrors, setValue, setError } = formMethods
   const { errors } = formState
   /* eslint-enable @typescript-eslint/unbound-method */
 
@@ -159,7 +160,6 @@ const ListingApplyPreferenceStepWrapper = ({
   const [showGenericError, setShowGenericError] = useState(false)
   const [showMissingDocumentError, setShowMissingDocumentError] = useState(false)
 
-  // checks for any errors *except* preference-to-claim checkbox field errors
   const showErrorHeaders = () => {
     const preferenceNames = preferenceContents.map((content) => content.preferenceName)
     if (comboPreference) preferenceNames.push(comboPreference.preferenceName)
@@ -180,8 +180,10 @@ const ListingApplyPreferenceStepWrapper = ({
       ) || !!(comboPreference && subPreferenceClaimed && errors[subPreferenceClaimed])
 
     setShowMissingDocumentError(hasMissingDocumentError)
+    setShowRequiredCheckboxError(!!errors["missingRequiredClaimPrefCheckbox"])
     setShowGenericError(hasGenericError)
   }
+
   useEffect(showErrorHeaders, [
     formState,
     errors, // we need to use `formState` instead of `errors`, but linter will complain if `errors` is missing
@@ -190,6 +192,15 @@ const ListingApplyPreferenceStepWrapper = ({
     preferenceContents,
     subPreferenceClaimed,
   ])
+
+  useEffect(() => {
+    if (Object.keys(formMethods.formState.errors).length > 0) {
+      errorSectionRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })
+      handleSetSectionCompletion(currentStepInfo.sectionName, false)
+    } else {
+      handleSetSectionCompletion(currentStepInfo.sectionName, true)
+    }
+  }, [formMethods.formState.errors, handleSetSectionCompletion, currentStepInfo.sectionName])
 
   const clearAllErrors = () => {
     clearErrors()
@@ -201,7 +212,7 @@ const ListingApplyPreferenceStepWrapper = ({
   const handlePreferenceCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const isChecked = e.target.checked
     if (isChecked) {
-      setShowRequiredCheckboxError(false)
+      clearErrors("missingRequiredClaimPrefCheckbox")
     }
     if (isChecked && optOut) {
       setValue(optOut, false)
@@ -251,7 +262,10 @@ const ListingApplyPreferenceStepWrapper = ({
     // users can submit without checking any checkbox if there is no opt-out checkbox
     const somePrefsChecked = Object.values(checkboxValues).some((val) => !!val)
     if (!somePrefsChecked && optOut) {
-      setShowRequiredCheckboxError(true)
+      setError("missingRequiredClaimPrefCheckbox", {
+        type: "manual",
+        message: "At least one checkbox must be checked if opt-out checkbox is present.",
+      })
       return
     }
 
@@ -269,11 +283,9 @@ const ListingApplyPreferenceStepWrapper = ({
       ...(optOut && { [optOut]: optOutValue }),
       ...(subPreferenceClaimed && { [subPreferenceClaimed]: subPreferenceClaimedValue }),
     })
-    handleNextStep()
-  }
 
-  const onError = () => {
-    errorSectionRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })
+    handleSetSectionCompletion(currentStepInfo.sectionName, true)
+    handleNextStep()
   }
 
   const headerClassNames = [
@@ -318,7 +330,7 @@ const ListingApplyPreferenceStepWrapper = ({
           />
         )}
       </div>
-      <Form onSubmit={handleSubmit(onSubmit, onError)}>
+      <Form onSubmit={handleSubmit(onSubmit)}>
         <Card.Section>
           <p className={styles["preference-instructions"]}>{t("label.pleaseSelectPreference")}</p>
           {showComboPreference && (

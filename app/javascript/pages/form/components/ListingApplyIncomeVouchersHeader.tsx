@@ -10,7 +10,7 @@ const ListingApplyIncomeVouchersHeader = () => {
   const { formData } = formEngineContext
 
   const titleString =
-    formData.liveAlone === "false"
+    formData.liveAlone === false
       ? t("d1IncomeVouchers.titleHousehold")
       : t("d1IncomeVouchers.titleYou")
 
