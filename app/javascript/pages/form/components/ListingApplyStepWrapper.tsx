@@ -104,15 +104,16 @@ const ListingApplyStepWrapper = ({
         </div>
         <Form onSubmit={formMethods.handleSubmit(onSubmit)}>
           {Children.map(children, (child) => {
-            // `children` may include non-element values (e.g. `false` from a conditional
-            // `{cond && <X/>}`, strings, or null). Guard with isValidElement before reading
-            // `.props`, since React 19 types `ReactElement.props` as `unknown` and an unsafe
-            // cast here would throw at runtime for non-element children.
-            const schema = React.isValidElement<{ schema?: { props?: { divider?: boolean } } }>(
-              child
-            )
-              ? child.props.schema
-              : undefined
+            // `isValidElement` narrows `child` enough to read `.props.schema`, which React 19
+            // types as `unknown`. Step children come from the form component registry via a
+            // validated schema, so a non-element here means the schema is misconfigured: log
+            // it rather than throwing, so a bad step doesn't blank out the applicant's form.
+            let schema: { props?: { divider?: boolean } } | undefined
+            if (React.isValidElement<{ schema?: { props?: { divider?: boolean } } }>(child)) {
+              schema = child.props.schema
+            } else if (child !== null && child !== undefined) {
+              console.error("Expected a React element as a step child, received:", child)
+            }
             return (
               <Card.Section divider={schema?.props?.divider === false ? undefined : "inset"}>
                 {child}

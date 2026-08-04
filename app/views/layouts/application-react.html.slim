@@ -20,9 +20,10 @@ html lang="en"
     == javascript_pack_tag 'react_application'
 
     / Only emit the stylesheet tag when the pack actually has an extracted CSS
-    / entry. All app styles are injected at runtime via style-loader, so the
-    / extracted CSS is not always present (e.g. dev/compile builds), and calling
-    / stylesheet_pack_tag unconditionally raises Shakapacker::Manifest::MissingEntryError.
+    / entry. All app styles are injected at runtime via style-loader, so when
+    / there's no extracted CSS (e.g. dev/compile builds) we emit no link tag and
+    / the page is still fully styled. Calling stylesheet_pack_tag unconditionally
+    / in that case raises Shakapacker::Manifest::MissingEntryError.
     - if Shakapacker.manifest.lookup_pack_with_chunks('react_application', type: :css)
       == stylesheet_pack_tag 'react_application'
     == csrf_meta_tags

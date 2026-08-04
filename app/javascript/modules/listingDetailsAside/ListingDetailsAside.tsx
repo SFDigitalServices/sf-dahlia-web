@@ -45,7 +45,7 @@ export const ListingDetailsAside = ({ listing, imageSrc }: ListingDetailsSidebar
     <ul>
       <ListingDetailItem
         imageAlt={""}
-        imageSrc={imageSrc || undefined}
+        imageSrc={imageSrc}
         title={t("listings.process.header")}
         subtitle={t("listings.process.subheader")}
         hideHeader={true}

@@ -15,6 +15,7 @@ exports[`ListingDetailsAside renders ListingDetailsAside component fcfs 1`] = `
           <img
             alt=""
             class="detail-header__image "
+            src="listing-units.svg"
           />
         </span>
         <hgroup
@@ -537,6 +538,7 @@ exports[`ListingDetailsAside renders ListingDetailsAside component rental 1`] = 
           <img
             alt=""
             class="detail-header__image "
+            src="listing-units.svg"
           />
         </span>
         <hgroup
@@ -794,6 +796,7 @@ exports[`ListingDetailsAside renders ListingDetailsAside component sales 1`] = `
           <img
             alt=""
             class="detail-header__image "
+            src="listing-units.svg"
           />
         </span>
         <hgroup

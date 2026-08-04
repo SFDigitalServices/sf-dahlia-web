@@ -18,7 +18,7 @@ export const MobileListingDetailsSeeTheUnit = ({
       <Mobile>
         <ListingDetailItem
           imageAlt={""}
-          imageSrc={imageSrc || undefined}
+          imageSrc={imageSrc}
           title={t("label.seeTheUnit")}
           hideHeader={true}
           desktopClass="header-hidden"

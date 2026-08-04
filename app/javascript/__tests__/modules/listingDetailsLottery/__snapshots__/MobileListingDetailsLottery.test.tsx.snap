@@ -16,6 +16,7 @@ exports[`MobileListingDetailsLottery does display when lottery listing is closed
         <img
           alt=""
           class="detail-header__image "
+          src="listing-units.svg"
         />
       </span>
       <hgroup

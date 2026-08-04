@@ -73,7 +73,7 @@ export const ListingDetailsAdditionalInformation = ({
   return (
     <ListingDetailItem
       imageAlt={""}
-      imageSrc={imageSrc || undefined}
+      imageSrc={imageSrc}
       title={t("listings.additionalInformation.header")}
       subtitle={t("listings.additionalInformation.subheader")}
     >
