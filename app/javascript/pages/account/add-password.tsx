@@ -57,7 +57,7 @@ const AddPasswordPage = () => {
               <Heading priority={1} size="2xl">
                 {t("createAccount.addPassword")}
               </Heading>
-              <Message fullwidth className={styles.skip}>
+              <Message fullwidth variant="primary" className={styles.skip}>
                 {t("createAccount.okayToSkipPassword")}
               </Message>
               <Form onSubmit={handleSubmit(onSubmit)}>
