@@ -7,7 +7,7 @@ import { Card, Heading, Link, Button } from "@bloom-housing/ui-seeds"
 import { Controller, useForm } from "react-hook-form"
 import withAppSetup from "../../layouts/withAppSetup"
 import Layout from "../../layouts/Layout"
-import { AppPages, getCreateAccountPath } from "../../util/routeUtil"
+import { AppPages, getAddPasswordPath, getCreateAccountPath } from "../../util/routeUtil"
 import styles from "./enter-code.module.scss"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import { UNLEASH_FLAG } from "../../modules/constants"
@@ -15,6 +15,7 @@ import GetHelp from "./components/GetHelp"
 import CodeField from "./components/CodeField"
 
 const EnterCodePage = ({ email }: { email: string }) => {
+  const navigate = useNavigate()
   const { isLoaded, signUp, setActive } = useSignUp()
   const {
     control,
@@ -35,6 +36,7 @@ const EnterCodePage = ({ email }: { email: string }) => {
       })
       if (completeSignUp.status === "complete") {
         await setActive({ session: completeSignUp.createdSessionId })
+        void navigate(getAddPasswordPath())
       } else {
         console.error("Account creation failed:", completeSignUp)
         setError("code", { message: "invalid" })

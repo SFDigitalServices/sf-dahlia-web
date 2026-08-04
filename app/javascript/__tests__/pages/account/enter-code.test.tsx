@@ -148,6 +148,7 @@ describe("<EnterCode />", () => {
       expect(mockAttemptEmailAddressVerification).toHaveBeenCalledWith({ code: "123456" })
     })
     expect(mockSetActive).toHaveBeenCalledWith({ session: "session_123" })
+    expect(mockNavigate).toHaveBeenCalledWith("/add-password")
     expect(screen.queryByTestId("error-message")).toBeNull()
   })
 
