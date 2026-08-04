@@ -39,6 +39,7 @@ const SignInFlow = () => {
         setShowError(true)
         return
       }
+      // TODO: if user has not completed their profile, redirect to profile page
       await setActive({ session: createdSessionId, redirectUrl: getMyAccountPath() })
     } catch (error) {
       console.error("Sign in error", error)

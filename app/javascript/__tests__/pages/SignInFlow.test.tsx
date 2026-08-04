@@ -1,8 +1,7 @@
 import React from "react"
-import { useSignIn } from "@clerk/clerk-react"
+import { useAuth, useSignIn } from "@clerk/clerk-react"
 import { screen, waitFor, within, cleanup } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
-import { useNavigate } from "react-router"
 import SignIn from "../../pages/sign-in"
 import {
   renderAndLoadAsync,
@@ -17,13 +16,9 @@ jest.mock("@clerk/clerk-react", () => {
     ...Clerk,
     ClerkProvider: ({ children }: { children: React.ReactNode }) => children,
     useSignIn: jest.fn(),
+    useAuth: jest.fn(() => ({ isLoaded: true, isSignedIn: false })),
   }
 })
-
-jest.mock("react-router", () => ({
-  ...jest.requireActual("react-router"),
-  useNavigate: jest.fn(),
-}))
 
 const submitCredentials = async (password = "abcd1234") => {
   const user = userEvent.setup()
@@ -35,26 +30,23 @@ const submitCredentials = async (password = "abcd1234") => {
 
 describe("<SignInFlow />", () => {
   let originalLocation: Location
-  let mockNavigate: jest.Mock
   let mockSignInCreate: jest.Mock
   let mockSetActive: jest.Mock
 
-  beforeEach(async () => {
+  beforeEach(() => {
     document.documentElement.lang = "en"
     originalLocation = mockWindowLocation()
     setupUserContext({ loggedIn: false })
-    mockNavigate = jest.fn()
-    ;(useNavigate as jest.Mock).mockReturnValue(mockNavigate)
     mockSignInCreate = jest
       .fn()
       .mockResolvedValue({ status: "complete", createdSessionId: "session-id" })
     mockSetActive = jest.fn().mockResolvedValue(undefined)
+    ;(useAuth as jest.Mock).mockReturnValue({ isLoaded: true, isSignedIn: false })
     ;(useSignIn as jest.Mock).mockReturnValue({
       isLoaded: true,
       signIn: { create: mockSignInCreate },
       setActive: mockSetActive,
     })
-    await renderAndLoadAsync(<SignIn assetPaths={{}} />)
   })
 
   afterEach(() => {
@@ -62,7 +54,9 @@ describe("<SignInFlow />", () => {
     cleanup()
   })
 
-  it("shows the sign in form", () => {
+  it("shows the sign in form", async () => {
+    await renderAndLoadAsync(<SignIn assetPaths={{}} />)
+
     expect(screen.getByRole("heading", { name: /^sign in$/i, level: 1 })).not.toBeNull()
     expect(screen.getByRole("group", { name: /email/i })).not.toBeNull()
     expect(screen.getByRole("group", { name: /^password$/i })).not.toBeNull()
@@ -81,22 +75,36 @@ describe("<SignInFlow />", () => {
     ).toBe("https://www.sf.gov/sign-in-to-your-dahlia-account")
   })
 
-  it("signs in and redirects on success", async () => {
+  it("redirects to the account overview when already signed in", async () => {
+    ;(useAuth as jest.Mock).mockReturnValue({ isLoaded: true, isSignedIn: true })
+
+    await renderAndLoadAsync(<SignIn assetPaths={{}} />)
+
+    expect(screen.queryByRole("heading", { name: /^sign in$/i, level: 1 })).toBeNull()
+  })
+
+  it("signs in and redirects to the account overview on success", async () => {
+    await renderAndLoadAsync(<SignIn assetPaths={{}} />)
     await submitCredentials()
+
     await waitFor(() => {
       expect(mockSignInCreate).toHaveBeenCalledWith({
         identifier: "test@test.com",
         password: "abcd1234",
       })
     })
-    expect(mockSetActive).toHaveBeenCalledWith({ session: "session-id" })
-    expect(mockNavigate).toHaveBeenCalledWith("/account")
+    expect(mockSetActive).toHaveBeenCalledWith({
+      session: "session-id",
+      redirectUrl: "/account",
+    })
   })
 
   it("shows one alert and logs the details when sign in fails", async () => {
     const consoleError = jest.spyOn(console, "error").mockImplementation(() => {})
     const clerkError = { errors: [{ code: "form_password_incorrect" }] }
     mockSignInCreate.mockRejectedValue(clerkError)
+
+    await renderAndLoadAsync(<SignIn assetPaths={{}} />)
     await submitCredentials("wrongPass1")
 
     await waitFor(() => {
@@ -104,7 +112,6 @@ describe("<SignInFlow />", () => {
     })
     expect(consoleError).toHaveBeenCalledWith("Sign in error", clerkError)
     expect(mockSetActive).not.toHaveBeenCalled()
-    expect(mockNavigate).not.toHaveBeenCalled()
 
     consoleError.mockRestore()
   })
