@@ -41,16 +41,16 @@ const CodeField = ({
               value: code[i] ?? "",
               inputMode: "numeric",
               maxLength: 6,
-// Remove code on backspace and move focus back
-onKeyDown: (event: React.KeyboardEvent<HTMLInputElement>) => {
-  if (event.key !== "Backspace") return
-  event.preventDefault()
-  if (!code) return
+              // Remove code on backspace and move focus back
+              onKeyDown: (event: React.KeyboardEvent<HTMLInputElement>) => {
+                if (event.key !== "Backspace") return
+                event.preventDefault()
+                if (!code) return
 
-  const index = Math.min(i, code.length - 1)
-  onChange(code.slice(0, index) + code.slice(index + 1))
-  document.querySelector<HTMLElement>(`#code-${Math.max(index, 1)}`)?.focus()
-},
+                const index = Math.min(i, code.length - 1)
+                onChange(code.slice(0, index) + code.slice(index + 1))
+                document.querySelector<HTMLElement>(`#code-${Math.max(index, 1)}`)?.focus()
+              },
               onFocus: (event: React.FocusEvent<HTMLInputElement>) => event.target.select(),
             }}
           />

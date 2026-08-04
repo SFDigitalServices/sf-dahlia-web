@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/unbound-method */
 import React, { useEffect } from "react"
 import { useNavigate } from "react-router"
 import { useUser } from "@clerk/clerk-react"
