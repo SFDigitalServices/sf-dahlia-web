@@ -107,18 +107,6 @@ RSpec.describe InviteToController do
                                                         submitPreviewLinkTokenParam: fixed_token,
                                                       })
       end
-
-      # TODO: update deprecated I2A pilot
-      # it 'calls record_response with correct parameters' do
-      #   expect(DahliaBackend::MessageService).to have_received(:send_invite_to_response).with(
-      #     deadline,
-      #     application_number,
-      #     nil,
-      #     response_value,
-      #     nil,
-      #     listing_id,
-      #   )
-      # end
     end
 
     context 'when DahliaBackend::MessageService raises an error' do

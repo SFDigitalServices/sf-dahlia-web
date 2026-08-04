@@ -11,8 +11,8 @@ class InviteToController < ApplicationController
     decoded_params ||= params
     @invite_to_props = props(decoded_params)
     # Get URL from application
-    if decoded_params['appId'].present? || decoded_params['applicationNumber'].present?
-      application = Force::ShortFormService.get(decoded_params['appId'] || decoded_params['applicationNumber'])
+    if decoded_params['appId'].present?
+      application = Force::ShortFormService.get(decoded_params['appId'])
       @invite_to_props = @invite_to_props.merge(
         uploadUrl: application['uploadURL'],
         schedulingUrl: application['leaseupAppointmentSchedulingURL'],
@@ -44,39 +44,34 @@ class InviteToController < ApplicationController
     head :ok
   end
 
-  # Deprecated I2A pilot - remove references to applicationNumber and response in DAH-4045
   def props(decoded_params = params)
     url_params = {
       type: decoded_params['type'],
       deadline: decoded_params['deadline'],
-      act: decoded_params['act'] || decoded_params['response'],
-      appId: decoded_params['appId'] || decoded_params['applicationNumber'],
+      act: decoded_params['act'],
+      appId: decoded_params['appId'],
       isTest: ActiveModel::Type::Boolean.new.cast(decoded_params['isTest']) == true,
     }
 
     {
       assetPaths: static_asset_paths,
       urlParams: url_params,
-      submitPreviewLinkTokenParam: encode_token(url_params.except(:act, :response)),
+      submitPreviewLinkTokenParam: encode_token(url_params.except(:act)),
     }.compact
   end
 
   def record_response(decoded_params)
     deadline = decoded_params['deadline']
-    response = decoded_params['response']
-    application_number = decoded_params['applicationNumber']
     invite_action = decoded_params['act']
     app_id = decoded_params['appId']
     is_test = ActiveModel::Type::Boolean.new.cast(decoded_params['isTest']) == true
 
-    if (invite_action.blank? && response.blank?) || (deadline && deadline_has_passed?(deadline)) || language_change? || is_test
+    if invite_action.blank? || (deadline && deadline_has_passed?(deadline)) || language_change? || is_test
       Rails.logger.info(
         'InviteToController#record_response: *NOT* recording ' \
         "deadline=#{deadline}, " \
         "app_id=#{app_id}, " \
-        "application_number=#{application_number}, " \
         "act=#{invite_action.inspect}, " \
-        "response=#{response.inspect}, " \
         "is_test=#{is_test}",
       )
       return
@@ -86,19 +81,14 @@ class InviteToController < ApplicationController
       'InviteToController#record_response: recording ' \
       "deadline=#{deadline}, " \
       "app_id=#{app_id}, " \
-      "application_number=#{application_number}, " \
       "act=#{invite_action}, " \
-      "response=#{response}, " \
       "is_test=#{is_test}",
     )
 
     DahliaBackend::MessageService.send_invite_to_response(
       deadline,
       app_id,
-      application_number,
-      response,
       invite_action,
-      params['id'], # listing_id
     )
   end
 

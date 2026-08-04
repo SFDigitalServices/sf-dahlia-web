@@ -303,10 +303,3 @@ export enum I2X_ACTIONS {
   SUBMIT = "submit",
   APPOINTMENT = "appointment",
 }
-
-export enum I2A_RESPONSES {
-  SUBMIT = "submit",
-  YES = "yes",
-  NO = "no",
-  CONTACT = "contact",
-}

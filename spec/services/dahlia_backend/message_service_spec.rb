@@ -5,10 +5,9 @@ RSpec.describe DahliaBackend::MessageService do
   let(:service) { described_class.new(client) }
 
   let(:listing_id) { 'listing123' }
-  let(:application_number) { 'APP123456' }
   let(:application_id) { 'app123' }
   let(:email) { 'test@example.com' }
-  let(:application_language) { 'en' }
+  let(:action) { 'yes' }
 
 
   let(:listing_data) do
@@ -43,27 +42,11 @@ RSpec.describe DahliaBackend::MessageService do
     }
   end
 
-  let(:application_data) do
-    {
-      'primaryApplicant' => {
-        'firstName' => 'John',
-        'email' => 'john@example.com',
-      },
-      'alternateContact' => {
-        'firstName' => 'Jane',
-        'email' => 'jane@example.com',
-      },
-      'lotteryNumber' => '54321',
-      'applicationLanguage' => application_language,
-    }
-  end
-
   before do
     allow(Rails.logger).to receive(:info)
     allow(Rails.logger).to receive(:warn)
     allow(Rails.logger).to receive(:error)
     allow(Force::ListingService).to receive(:listing).and_return(listing_data)
-    allow(Force::ShortFormService).to receive(:get).and_return(application_data)
   end
 
   describe '.send_application_confirmation' do
@@ -79,10 +62,9 @@ RSpec.describe DahliaBackend::MessageService do
   describe '.send_invite_to_response' do
     it 'creates a new instance and calls the instance method' do
       expect_any_instance_of(described_class).to receive(:send_invite_to_response)
-        .with('2024-12-31', application_id, application_number, 'yes', 'yes', listing_id, nil)
+        .with('2024-12-31', application_id, action, nil)
 
-      described_class.send_invite_to_response('2024-12-31', application_id, application_number,
-                                                    'yes', 'yes', listing_id)
+      described_class.send_invite_to_response('2024-12-31', application_id, action)
     end
   end
 
@@ -240,18 +222,22 @@ RSpec.describe DahliaBackend::MessageService do
 
       it 'sends the invite response for "yes"' do
         expect(client).to receive(:post).with('/api/v1/message', hash_including(
-                                                                                           {action: "YES", data: {applicationIds: ["app123"], isTestEmail: false}}
-                                                                                        ))
+                                                                          {
+                                                                            action: 'YES',
+                                                                            data: {
+                                                                              applicationIds: ['app123'],
+                                                                              isTestEmail: false,
+                                                                            },
+                                                                          }
+                                                                        ))
 
-        service.send_invite_to_response(deadline, application_id, application_number, 'yes', 'yes',
-                                              listing_id)
+        service.send_invite_to_response(deadline, application_id, 'yes')
       end
 
       it 'sends the invite response for "no"' do
         expect(client).to receive(:post).with('/api/v1/message', anything)
 
-        service.send_invite_to_response(deadline, application_id, application_number, 'no', 'no',
-                                              listing_id)
+        service.send_invite_to_response(deadline, application_id, 'no')
       end
 
       it 'sends the invite response for "contact"' do
@@ -259,8 +245,7 @@ RSpec.describe DahliaBackend::MessageService do
           '/api/v1/message', anything
         )
 
-        service.send_invite_to_response(deadline, application_id, application_number, 'contact', 'contact',
-                                              listing_id)
+        service.send_invite_to_response(deadline, application_id, 'contact')
       end
 
       it 'sends the invite response for "submit"' do
@@ -268,52 +253,31 @@ RSpec.describe DahliaBackend::MessageService do
           '/api/v1/message', anything
         )
 
-        service.send_invite_to_response(deadline, application_id, application_number, 'submit', 'submit',
-                                              listing_id)
+        service.send_invite_to_response(deadline, application_id, 'submit')
       end
     end
 
-    context 'with invalid response type' do
-      it 'returns nil for invalid response' do
-        result = service.send_invite_to_response(deadline, application_id, application_number, 'invalid', nil,
-                                                 listing_id)
+    context 'with missing action' do
+      it 'returns nil' do
+        result = service.send_invite_to_response(deadline, application_id, nil)
         expect(result).to be_nil
       end
     end
 
-    context 'when application cannot be fetched' do
-      before do
-        allow(Force::ShortFormService).to receive(:get).and_return(nil)
-      end
-
+    context 'with missing app id' do
       it 'returns nil' do
-        result = service.send_invite_to_response(deadline, application_id, application_number, 'yes', 'yes',
-                                                 listing_id)
-        expect(result).to be_nil
-      end
-    end
-
-    context 'when listing cannot be fetched' do
-      before do
-        allow(Force::ListingService).to receive(:listing).and_return(nil)
-      end
-
-      it 'returns nil' do
-        result = service.send_invite_to_response(deadline, application_id, application_number, 'yes', 'yes',
-                                                 listing_id)
+        result = service.send_invite_to_response(deadline, nil, 'yes')
         expect(result).to be_nil
       end
     end
 
     context 'when an error occurs' do
       before do
-        allow(Force::ShortFormService).to receive(:get).and_raise(StandardError,
-                                                                  'Service Error')
+        allow(client).to receive(:post).and_raise(StandardError, 'Service Error')
       end
 
       it 'returns nil' do
-        result = service.send_invite_to_response(deadline, application_id, application_number, 'yes', 'yes',
-                                                 listing_id)
+        result = service.send_invite_to_response(deadline, application_id, 'yes')
         expect(result).to be_nil
       end
     end

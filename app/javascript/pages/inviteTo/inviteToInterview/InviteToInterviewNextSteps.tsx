@@ -44,12 +44,8 @@ const WhatToDo = ({
         if (appId && !isTest) {
           await recordResponse({
             appId: appId,
-            applicationNumber: appId,
-            listingId: listing.Id,
             deadline,
             action: I2X_ACTIONS.APPOINTMENT,
-            response: "",
-            type: INVITE_TO_X.INTERVIEW,
           })
         }
       } catch (error) {
