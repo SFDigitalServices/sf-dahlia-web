@@ -45,6 +45,15 @@ const EnterCodePage = ({ email }: { email: string }) => {
     }
   }
 
+  const onResend = async () => {
+    if (!isLoaded || !signUp) return
+    try {
+      await signUp.prepareEmailAddressVerification({ strategy: "email_code" })
+    } catch (error) {
+      console.error("Code resend error", error)
+    }
+  }
+
   return (
     <Layout title={t("createAccount.enterCode")}>
       <section className="bg-gray-300 md:border-t md:border-gray-450">
@@ -89,7 +98,7 @@ const EnterCodePage = ({ email }: { email: string }) => {
                   variant="text"
                   size="md"
                   onClick={() => {
-                    console.log("TODO: resend code")
+                    void onResend()
                   }}
                 >
                   {t("createAccount.sendAgain")}
@@ -125,7 +134,7 @@ const EnterCodePage = ({ email }: { email: string }) => {
 const EnterCode = (_props: { assetPaths: unknown }) => {
   const navigate = useNavigate()
   const { state } = useLocation()
-  const email = state?.email || "todo@email.com"
+  const email = state?.email
   const { unleashFlag: clerkEnabled } = useFeatureFlag(UNLEASH_FLAG.CLERK_AUTH, false)
   useEffect(() => {
     if (!email || !clerkEnabled) {
