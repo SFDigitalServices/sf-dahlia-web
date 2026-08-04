@@ -204,7 +204,7 @@ const HousingCounselors = () => {
       }
       case 0: {
         return (
-          <div>
+          <div className="mb-8 md:mb-16">
             {t("assistance.housingCounselors.findACounselor.filter.zero.part1")}
             <br /> <br />
             {renderInlineMarkup(t("assistance.housingCounselors.findACounselor.filter.zero.part2"))}
