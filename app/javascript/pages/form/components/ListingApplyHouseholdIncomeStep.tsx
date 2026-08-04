@@ -86,6 +86,7 @@ const ListingApplyHouseholdIncomeStep = ({
     setLoading(true)
     // Skip validation if household has vouchers
     if (formData.householdVouchersSubsidies === "true") {
+      saveFormData({ ...data })
       handleNextStep({ ...formData, ...data })
       return
     }
