@@ -1,12 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { act, render, RenderOptions, RenderResult } from "@testing-library/react"
 import React from "react"
+import { act, render, RenderOptions, RenderResult } from "@testing-library/react"
+import { t } from "@bloom-housing/ui-components"
 import { MemoryRouter } from "react-router"
 import crypto from "crypto"
 import { useForm, FormProvider } from "react-hook-form"
 import { FormEngineProvider } from "../../formEngine/formEngineContext"
 import { openRentalListing } from "../data/RailsRentalListing/listing-rental-open"
 import { type StepInfoSchema } from "../../formEngine/formSchemas"
+import { type SectionInfo } from "../../formEngine/formEngine"
 
 export const mockWindowLocation = (): typeof window.location => {
   const originalLocation = { ...window.location }
@@ -65,21 +67,25 @@ export const renderWithFormContextWrapper = (
     formData = {},
     staticData = {},
     stepInfoMap = [],
+    sectionMap = [],
     renderForm = true,
   }: {
     formData?: Record<string, unknown>
     staticData?: Record<string, unknown>
     stepInfoMap?: StepInfoSchema[]
+    sectionMap?: SectionInfo[]
     renderForm?: boolean
     // eslint-disable-next-line unicorn/no-object-as-default-parameter
   } = {
     formData: {},
     staticData: {},
     stepInfoMap: [],
+    sectionMap: [],
     renderForm: true,
   }
 ) => {
-  const defaultStepInfoMap = [{ slug: "test", fieldNames: [] }]
+  const defaultStepInfoMap = [{ slug: "test-slug", fieldNames: [] }]
+  const defaultSectionMap = [{ name: "shortFormNav.you", stepSlugs: ["test-slug"] }]
 
   const defaultStaticData = {
     listing: openRentalListing,
@@ -92,6 +98,7 @@ export const renderWithFormContextWrapper = (
   const mockHandlePrevStep = jest.fn()
   const mockJumpToStep = jest.fn()
   const mockSaveFormData = jest.fn()
+  const mockHandleSetSectionCompletion = jest.fn()
 
   const formEngineContextValue = {
     sessionId: "test-session-id-1234",
@@ -99,16 +106,19 @@ export const renderWithFormContextWrapper = (
     formData: { ...formData },
     staticData: { ...defaultStaticData, ...staticData },
     stepInfoMap: [...stepInfoMap, ...defaultStepInfoMap],
-    sectionNames: [],
+    sectionMap: [...sectionMap, ...defaultSectionMap],
+    completedSections: {},
     currentStepIndex: 0,
     handleNextStep: mockHandleNextStep,
     handlePrevStep: mockHandlePrevStep,
+    handleSetSectionCompletion: mockHandleSetSectionCompletion,
     jumpToStep: mockJumpToStep,
   }
 
   const Wrapper = ({ children }: { children: React.ReactNode }) => {
     const formMethods = useForm({
-      mode: "all",
+      mode: "onSubmit",
+      reValidateMode: "onChange",
       shouldFocusError: false,
       defaultValues: {},
     })
@@ -124,7 +134,7 @@ export const renderWithFormContextWrapper = (
           {renderForm ? (
             <form onSubmit={onSubmit}>
               {children}
-              <button type="submit">next</button>
+              <button type="submit">{t("t.next")}</button>
             </form>
           ) : (
             children
@@ -139,5 +149,6 @@ export const renderWithFormContextWrapper = (
     mockHandlePrevStep,
     mockJumpToStep,
     mockSaveFormData,
+    mockHandleSetSectionCompletion,
   }
 }

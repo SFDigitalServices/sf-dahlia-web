@@ -4,7 +4,7 @@ import getFormComponentRegistry from "./formComponentRegistry"
 const DataSchema = z.object({
   dataSource: z.string(), // "listing", "form"
   dataKey: z.string(),
-  dataValueToMatch: z.optional(z.string()), // value validation for dataKey
+  dataValueToMatch: z.optional(z.union([z.string(), z.null(), z.boolean()])), // value validation for dataKey
   negate: z.optional(z.boolean()),
 })
 export type DataSchema = z.infer<typeof DataSchema>
@@ -82,16 +82,6 @@ const getNestedValuesByKey = (keyName: string, object: unknown, values: unknown[
 export const getFieldNames = (schema: unknown): string[] => {
   const fieldNameGroups = getNestedValuesByKey("fieldNames", schema, []) as Record<string, string>[]
   return fieldNameGroups.flatMap((group) => Object.values(group))
-}
-
-const getSectionNames = (schema: unknown): string[] => {
-  return getNestedValuesByKey("sectionName", schema, []).filter((name) => typeof name === "string")
-}
-
-export const generateSectionNames = (schema: FormSchema): string[] => {
-  return getSectionNames(schema)
-    .filter((name) => typeof name === "string")
-    .filter((val, idx, ary) => ary.indexOf(val) === idx) // remove duplicates
 }
 
 export const generateInitialFormData = (schema: FormSchema): Record<string, unknown> => {
