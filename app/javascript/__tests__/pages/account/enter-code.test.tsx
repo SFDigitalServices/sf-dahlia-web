@@ -1,5 +1,6 @@
 import React from "react"
 import { useSignUp } from "@clerk/clerk-react"
+import { t } from "@bloom-housing/ui-components"
 import { screen, waitFor, cleanup } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
 import { useLocation, useNavigate } from "react-router"
@@ -67,23 +68,21 @@ describe("<EnterCode />", () => {
 
   it("shows the enter code page", () => {
     expect(
-      screen.getByRole("heading", { name: /check your email for a code/i, level: 1 })
+      screen.getByRole("heading", { name: t("createAccount.checkEmail"), level: 1 })
     ).not.toBeNull()
-    expect(screen.getByText(/we sent a code to:/i)).not.toBeNull()
+    expect(screen.getByText(t("createAccount.weSentCodeTo"))).not.toBeNull()
     expect(screen.getByText("test@example.com")).not.toBeNull()
-    expect(screen.getByRole("link", { name: /edit email/i }).getAttribute("href")).toBe(
-      "/create-account"
-    )
-    expect(screen.getByRole("group", { name: /enter code/i })).not.toBeNull()
-    expect(screen.getAllByRole("textbox")).toHaveLength(6)
-    expect(screen.getByRole("button", { name: /confirm code/i })).not.toBeNull()
-    expect(screen.getByRole("button", { name: /send again/i })).not.toBeNull()
-    expect(screen.getByRole("button", { name: /how to use a one-time code/i })).not.toBeNull()
-    expect(screen.getByRole("heading", { name: /get help/i })).not.toBeNull()
     expect(
-      screen
-        .getByRole("link", { name: /how to create an account or find help/i })
-        .getAttribute("href")
+      screen.getByRole("link", { name: t("createAccount.editEmail") }).getAttribute("href")
+    ).toBe("/create-account")
+    expect(screen.getByRole("group", { name: t("createAccount.enterCode") })).not.toBeNull()
+    expect(screen.getAllByRole("textbox")).toHaveLength(6)
+    expect(screen.getByRole("button", { name: t("createAccount.confirmCode") })).not.toBeNull()
+    expect(screen.getByRole("button", { name: t("createAccount.sendAgain") })).not.toBeNull()
+    expect(screen.getByRole("button", { name: t("createAccount.howToUseCode") })).not.toBeNull()
+    expect(screen.getByRole("heading", { name: t("createAccount.getHelp") })).not.toBeNull()
+    expect(
+      screen.getByRole("link", { name: t("createAccount.getHelpLink") }).getAttribute("href")
     ).toBe("https://www.sf.gov/learn-how-to-create-dahlia-account")
   })
 
@@ -93,12 +92,12 @@ describe("<EnterCode />", () => {
 
     await user.click(digits[0])
     await user.keyboard("123")
-    await user.click(screen.getByRole("button", { name: /confirm code/i }))
+    await user.click(screen.getByRole("button", { name: t("createAccount.confirmCode") }))
 
     await waitFor(() => {
       const error = screen.getByTestId("error-message")
-      expect(error).toHaveTextContent("That code did not work. Check for mistakes.")
-      expect(error).toHaveTextContent("Sent more than 1 code? Use the newest one.")
+      expect(error).toHaveTextContent(t("createAccount.codeInvalid.p1"))
+      expect(error).toHaveTextContent(t("createAccount.codeInvalid.p2"))
     })
     digits.forEach((digit) => expect(digit).toBeInvalid())
     expect(mockAttemptEmailAddressVerification).not.toHaveBeenCalled()
@@ -142,7 +141,7 @@ describe("<EnterCode />", () => {
 
     await user.click(screen.getAllByRole("textbox")[0])
     await user.paste("123456")
-    await user.click(screen.getByRole("button", { name: /confirm code/i }))
+    await user.click(screen.getByRole("button", { name: t("createAccount.confirmCode") }))
 
     await waitFor(() => {
       expect(mockAttemptEmailAddressVerification).toHaveBeenCalledWith({ code: "123456" })
@@ -154,7 +153,7 @@ describe("<EnterCode />", () => {
   it("resends the code", async () => {
     const user = userEvent.setup()
 
-    await user.click(screen.getByRole("button", { name: /send again/i }))
+    await user.click(screen.getByRole("button", { name: t("createAccount.sendAgain") }))
 
     await waitFor(() => {
       expect(mockPrepareEmailAddressVerification).toHaveBeenCalledWith({
