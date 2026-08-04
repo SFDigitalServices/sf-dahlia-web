@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/unbound-method */
-import React, { useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { Navigate } from "react-router"
 import { useAuth, useSignIn } from "@clerk/clerk-react"
 import { Form, t } from "@bloom-housing/ui-components"
@@ -9,7 +9,12 @@ import Layout from "../layouts/Layout"
 import EmailFieldset from "../pages/account/components/EmailFieldset"
 import PasswordFieldset from "../pages/account/components/PasswordFieldset"
 import GetHelp from "../pages/account/components/GetHelp"
-import { getCreateAccountPath, getForgotPasswordPath, getMyAccountPath } from "../util/routeUtil"
+import {
+  createPath,
+  getCreateAccountPath,
+  getForgotPasswordPath,
+  getMyAccountPath,
+} from "../util/routeUtil"
 import { getSfGovUrl, renderInlineMarkup } from "../util/languageUtil"
 import styles from "./SignInFlow.module.scss"
 
@@ -22,12 +27,16 @@ const SignInFlow = () => {
   const { isLoaded: authLoaded, isSignedIn } = useAuth()
   const { isLoaded, signIn, setActive } = useSignIn()
   const [showError, setShowError] = useState(false)
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm<SignInFields>({ mode: "onTouched", shouldFocusError: false })
+  const alertRef = useRef<HTMLDivElement>(null)
+  const { register, handleSubmit, watch } = useForm<SignInFields>({ shouldFocusError: false })
+  /* eslint-disable-next-line react-hooks/incompatible-library */
+  const emailField = watch("email", undefined)
+
+  useEffect(() => {
+    if (showError) {
+      alertRef.current?.focus()
+    }
+  }, [showError])
 
   const onSubmit = async ({ email, password }: SignInFields) => {
     if (!isLoaded || !signIn) return
@@ -47,9 +56,17 @@ const SignInFlow = () => {
     }
   }
 
+  const onError = (errors: { email?: unknown; password?: unknown }) => {
+    if (errors.email || errors.password) {
+      setShowError(true)
+    }
+  }
+
   if (authLoaded && isSignedIn) {
     return <Navigate to={getMyAccountPath()} replace />
   }
+
+  const forgotPasswordPath = createPath(getForgotPasswordPath(), { email: emailField })
 
   return (
     <Layout title={t("pageTitle.signIn")}>
@@ -57,20 +74,22 @@ const SignInFlow = () => {
         <div className="flex flex-wrap relative md:max-w-lg mx-auto md:py-8">
           <Card className={styles.card}>
             {showError && (
-              <Alert fullwidth variant="alert" onClose={() => setShowError(false)}>
-                {renderInlineMarkup(
-                  t("signIn.badCredentialsWithResetLink", { url: getForgotPasswordPath() })
-                )}
-              </Alert>
+              <div ref={alertRef} tabIndex={-1}>
+                <Alert fullwidth variant="alert" onClose={() => setShowError(false)}>
+                  {renderInlineMarkup(
+                    t("signIn.badCredentialsWithResetLink", { url: forgotPasswordPath })
+                  )}
+                </Alert>
+              </div>
             )}
             <Card.Section divider="inset">
               <Heading priority={1} size="2xl">
                 {t("pageTitle.signIn")}
               </Heading>
-              <Form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
-                <EmailFieldset register={register} errors={errors} />
+              <Form className={styles.form} onSubmit={handleSubmit(onSubmit, onError)}>
+                <EmailFieldset register={register} />
                 <span className={styles.forgotPassword}>
-                  <Link href={getForgotPasswordPath()}>{t("signIn.forgotPassword")}</Link>
+                  <Link href={forgotPasswordPath}>{t("signIn.forgotPassword")}</Link>
                 </span>
                 <PasswordFieldset
                   register={register}
