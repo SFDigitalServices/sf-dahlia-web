@@ -62,7 +62,7 @@ export const withAuthentication = <P extends object>(
       if (isLoaded && !isSignedIn) {
         window.location.assign(getSignInPath(redirectType))
       }
-    }, [isLoaded, isSignedIn, redirectType])
+    }, [isLoaded, isSignedIn])
 
     if (!isLoaded || !isSignedIn) {
       return null
