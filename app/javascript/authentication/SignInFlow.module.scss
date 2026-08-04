@@ -1,0 +1,34 @@
+.card {
+  width: 100%;
+  @media (max-width: theme("screens.md")) {
+    --card-border-radius: 0;
+    border: none;
+  }
+}
+
+.card h1,
+.card h2 {
+  padding-bottom: var(--seeds-spacer-header);
+}
+
+.form {
+  position: relative;
+}
+
+.forgotPassword {
+  position: absolute;
+  right: 0;
+  font-size: var(--seeds-font-size-sm);
+}
+
+.signInButton {
+  margin: var(--seeds-spacer-header) 0 var(--seeds-spacer-content) 0;
+}
+
+.oneTimeCodeNote {
+  padding-top: var(--seeds-spacer-text);
+}
+
+.createAccountDescription {
+  padding-bottom: var(--seeds-spacer-header);
+}
