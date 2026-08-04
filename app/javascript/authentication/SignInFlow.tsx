@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import React, { useState } from "react"
-import { useNavigate } from "react-router"
-import { useSignIn } from "@clerk/clerk-react"
+import { Navigate } from "react-router"
+import { useAuth, useSignIn } from "@clerk/clerk-react"
 import { Form, t } from "@bloom-housing/ui-components"
 import { Alert, Button, Card, Heading, Link } from "@bloom-housing/ui-seeds"
 import { useForm } from "react-hook-form"
@@ -19,7 +19,7 @@ interface SignInFields {
 }
 
 const SignInFlow = () => {
-  const navigate = useNavigate()
+  const { isLoaded: authLoaded, isSignedIn } = useAuth()
   const { isLoaded, signIn, setActive } = useSignIn()
   const [showError, setShowError] = useState(false)
   const {
@@ -28,6 +28,7 @@ const SignInFlow = () => {
     watch,
     formState: { errors },
   } = useForm<SignInFields>({ mode: "onTouched", shouldFocusError: false })
+
   const onSubmit = async ({ email, password }: SignInFields) => {
     if (!isLoaded || !signIn) return
     setShowError(false)
@@ -38,12 +39,15 @@ const SignInFlow = () => {
         setShowError(true)
         return
       }
-      await setActive({ session: createdSessionId })
-      void navigate(getMyAccountPath())
+      await setActive({ session: createdSessionId, redirectUrl: getMyAccountPath() })
     } catch (error) {
       console.error("Sign in error", error)
       setShowError(true)
     }
+  }
+
+  if (authLoaded && isSignedIn) {
+    return <Navigate to={getMyAccountPath()} replace />
   }
 
   return (
