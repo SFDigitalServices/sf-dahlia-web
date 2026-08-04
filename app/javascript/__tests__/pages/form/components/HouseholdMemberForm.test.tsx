@@ -10,24 +10,30 @@ const HouseholdMemberFormWrapper = ({
   handleUpdateHouseholdMember = jest.fn(),
   handleDeleteHouseholdMember = jest.fn(),
   handleCancelAddHouseholdMember = jest.fn(),
+  onSetSectionCompletion = jest.fn(),
+  onRemoveApiErrorMessage = jest.fn(),
   isEditing = false,
 }: {
   handleUpdateHouseholdMember?: jest.Mock
   handleDeleteHouseholdMember?: jest.Mock
   handleCancelAddHouseholdMember?: jest.Mock
+  onSetSectionCompletion?: jest.Mock
+  onRemoveApiErrorMessage?: jest.Mock
   isEditing?: boolean
 }) => {
-  const methods = useForm()
+  const formMethods = useForm()
   return (
-    <FormProvider {...methods}>
+    <FormProvider {...formMethods}>
       <HouseholdMemberForm
         handleUpdateHouseholdMember={handleUpdateHouseholdMember}
         handleDeleteHouseholdMember={handleDeleteHouseholdMember}
         handleCancelAddHouseholdMember={handleCancelAddHouseholdMember}
+        onSetSectionCompletion={onSetSectionCompletion}
+        onRemoveApiErrorMessage={onRemoveApiErrorMessage}
         isEditing={isEditing}
         addressError={null}
         loading={false}
-        methods={methods}
+        formMethods={formMethods}
       />
     </FormProvider>
   )
@@ -71,6 +77,7 @@ describe("HouseholdMemberForm", () => {
     await user.click(screen.getByText(t("label.householdMemberDelete")))
     expect(handleDeleteHouseholdMember).toHaveBeenCalledTimes(1)
   })
+
   it("clicking save button with populated fields triggers form submission", async () => {
     const handleUpdateHouseholdMember = jest.fn()
     renderHouseholdMemberForm({ handleUpdateHouseholdMember })
@@ -91,5 +98,16 @@ describe("HouseholdMemberForm", () => {
 
     await user.click(screen.getByRole("button", { name: t("label.householdMemberSave") }))
     expect(handleUpdateHouseholdMember).toHaveBeenCalledTimes(1)
+  })
+
+  it("clears form errors when closing the error banner", async () => {
+    const user = userEvent.setup()
+    renderHouseholdMemberForm()
+
+    await user.click(screen.getByRole("button", { name: t("label.householdMemberSave") }))
+    expect(screen.getByText(t("error.formSubmission"))).toBeInTheDocument()
+
+    await user.click(screen.getByRole("button", { name: t("t.close") }))
+    expect(screen.queryByText(t("error.formSubmission"))).not.toBeInTheDocument()
   })
 })
