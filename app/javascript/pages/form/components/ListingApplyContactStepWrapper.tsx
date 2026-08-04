@@ -12,11 +12,18 @@ import {
 } from "../../../util/formEngineUtil"
 import styles from "./ListingApplyStepWrapper.module.scss"
 import ListingApplyStepErrorMessage from "./ListingApplyStepErrorMessage"
-import { locateVerifiedAddress } from "../../../api/formApiService"
+import {
+  checkNeighborhoodPreferenceMatch,
+  locateVerifiedAddress,
+} from "../../../api/formApiService"
 import YesNoRadio from "./YesNoRadio"
 import Phone from "./Phone"
 import Address from "./Address"
-import { getLiveWorkInSfMembers } from "./household/householdUtils"
+import {
+  getLiveWorkInSfMembers,
+  liveInTheNeighborhoodHouseholdMembers,
+} from "./household/householdUtils"
+import { getPrimaryApplicantData } from "../../../util/listingApplyUtil"
 
 interface ListingApplyContactStepWrapperProps {
   title: string
@@ -42,6 +49,7 @@ interface ListingApplyContactStepWrapperProps {
     mailingAddressZipcode: string
     question: string
     showLiveWorkInSfPrefStep: string
+    showNRHPPrefStep: string
   }
 }
 
@@ -69,6 +77,7 @@ const ListingApplyContactStepWrapper = ({
     mailingAddressZipcode,
     question,
     showLiveWorkInSfPrefStep,
+    showNRHPPrefStep,
   },
 }: ListingApplyContactStepWrapperProps) => {
   const formEngineContext = useFormEngineContext()
@@ -103,7 +112,7 @@ const ListingApplyContactStepWrapper = ({
     }
   }, [formMethods.formState.errors, apiErrorMessage])
 
-  const onSubmit = (data: Record<string, unknown>) => {
+  const onSubmit = async (data: Record<string, unknown>) => {
     setLoading(true)
     const { showLiveWorkPreference } = getLiveWorkInSfMembers({
       ...formData,
@@ -131,6 +140,8 @@ const ListingApplyContactStepWrapper = ({
           ...formData,
           ...data,
           [showLiveWorkInSfPrefStep]: showLiveWorkPreference,
+          [showNRHPPrefStep]:
+            liveInTheNeighborhoodHouseholdMembers({ ...formData, ...data }).length > 0,
         })
         return
       } else {
@@ -147,40 +158,60 @@ const ListingApplyContactStepWrapper = ({
         })
       }
     }
-    locateVerifiedAddress(address)
-      .then((response) => {
-        saveFormData({
+    try {
+      const response = await locateVerifiedAddress(address)
+      const neighborhoodMatch = await checkNeighborhoodPreferenceMatch(
+        response,
+        staticData,
+        getPrimaryApplicantData(formData)
+      )
+
+      const existingHouseholdMembers =
+        (formData.householdMembers as Record<string, unknown>[]) || []
+      const syncHouseholdMemberPreference = existingHouseholdMembers.map((householdMember) =>
+        householdMember.hasSameAddressAsApplicant === "true"
+          ? { ...householdMember, neighborhoodPreferenceAddressMatch: neighborhoodMatch }
+          : householdMember
+      )
+      const showNRHPPreference =
+        liveInTheNeighborhoodHouseholdMembers({
+          ...formData,
           ...data,
-          [addressStreet]: response.address?.street1,
-          [addressAptOrUnit]: response.address?.street2,
           [addressCity]: response.address?.city,
-          [addressState]: response.address?.state,
-          [addressZipcode]: response.address?.zip,
-          [addressVerified]: "false",
-          [showLiveWorkInSfPrefStep]: showLiveWorkPreference,
-          // call to the geocoding API to check for the actual neighborhood match
-          [neighborhoodPreferenceAddressMatch]: true,
-        })
-        // TODO: this is an antipattern, `...data` should include all data from the response
-        // it works here because the contact step is always followed by the verify-address step
-        // we should be setting the `[addressVerified]` flag in the VerifyAddress component
-        handleNextStep({ ...formData, ...data })
+          [neighborhoodPreferenceAddressMatch]: neighborhoodMatch,
+          householdMembers: syncHouseholdMemberPreference,
+        }).length > 0
+
+      saveFormData({
+        ...data,
+        [addressStreet]: response.address?.street1,
+        [addressAptOrUnit]: response.address?.street2,
+        [addressCity]: response.address?.city,
+        [addressState]: response.address?.state,
+        [addressZipcode]: response.address?.zip,
+        [addressVerified]: "false",
+        [showLiveWorkInSfPrefStep]: showLiveWorkPreference,
+        [showNRHPPrefStep]: showNRHPPreference,
+        [neighborhoodPreferenceAddressMatch]: neighborhoodMatch,
+        ...(existingHouseholdMembers.length > 0 && {
+          householdMembers: syncHouseholdMemberPreference,
+        }),
       })
-      .catch((error) => {
-        if (error.response?.status === 422) {
-          setApiErrorMessage(
-            t("error.addressValidation.notFound", {
-              mailParams: getAddressErrorEmailLink(address, staticData, formData),
-            })
-          )
-        } else {
-          setApiErrorMessage(t("error.alert.badRequest"))
-        }
-        formMethods.reset(data)
-      })
-      .finally(() => {
-        setLoading(false)
-      })
+      handleNextStep({ ...formData, ...data })
+    } catch (error) {
+      if ((error as { response?: { status?: number } }).response?.status === 422) {
+        setApiErrorMessage(
+          t("error.addressValidation.notFound", {
+            mailParams: getAddressErrorEmailLink(address, staticData, formData),
+          })
+        )
+      } else {
+        setApiErrorMessage(t("error.alert.badRequest"))
+      }
+      formMethods.reset(data)
+    } finally {
+      setLoading(false)
+    }
   }
   return (
     <FormProvider {...formMethods}>

@@ -22,7 +22,7 @@ const HouseholdMemberForm = ({
 }: {
   loading: boolean
   addressError: string | null
-  handleUpdateHouseholdMember: (member: Record<string, string>) => void
+  handleUpdateHouseholdMember: (data: Record<string, string>) => void | Promise<void>
   handleDeleteHouseholdMember: () => void
   handleCancelAddHouseholdMember: () => void
   methods: UseFormMethods<Record<string, unknown>>
