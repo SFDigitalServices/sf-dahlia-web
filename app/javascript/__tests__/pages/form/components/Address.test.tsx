@@ -57,8 +57,7 @@ describe("Address", () => {
   it("displays an error message if a required field is empty", async () => {
     renderAddressComponent()
     const user = userEvent.setup()
-    await user.click(screen.getByLabelText(t("label.address1")))
-    await user.tab()
-    expect(screen.getByText(t("error.address"))).toBeInTheDocument()
+    await user.click(screen.getByRole("button", { name: t("t.next") }))
+    expect(await screen.findByText(t("error.address"))).toBeInTheDocument()
   })
 })

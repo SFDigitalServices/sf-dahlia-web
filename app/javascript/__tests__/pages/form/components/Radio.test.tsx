@@ -58,7 +58,7 @@ describe("Radio", () => {
     const user = userEvent.setup()
     renderRadioComponent(true)
 
-    await user.click(screen.getByRole("button", { name: "next" }))
+    await user.click(screen.getByRole("button", { name: t("t.next") }))
     expect(screen.queryByText(t(ERROR_MESSAGE))).not.toBeNull()
   })
 })

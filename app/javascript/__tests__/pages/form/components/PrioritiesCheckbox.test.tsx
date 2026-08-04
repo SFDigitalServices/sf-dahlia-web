@@ -53,9 +53,7 @@ describe("PrioritiesCheckbox", () => {
   it("displays an error message if no items are checked", async () => {
     renderPrioritiesCheckbox()
     const user = userEvent.setup()
-    await user.tab()
-    await user.tab()
-
-    expect(screen.getByText(t("error.pleaseSelectAnOption"))).toBeInTheDocument()
+    await user.click(screen.getByRole("button", { name: t("t.next") }))
+    expect(await screen.findByText(t("error.pleaseSelectAnOption"))).toBeInTheDocument()
   })
 })

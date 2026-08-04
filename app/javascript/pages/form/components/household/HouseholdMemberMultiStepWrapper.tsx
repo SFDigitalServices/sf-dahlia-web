@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { nanoid } from "nanoid"
 import { useForm, FormProvider } from "react-hook-form"
 import { useFormEngineContext } from "../../../../formEngine/formEngineContext"
@@ -47,7 +47,15 @@ type multiStepComponents =
 const HouseholdMemberMultiStepWrapper = ({
   fieldNames: { householdMembers, showLiveWorkInSfPrefStep, showNRHPPrefStep },
 }: HouseholdMemberMultiStepWrapperProps) => {
-  const { saveFormData, formData, staticData, handleNextStep } = useFormEngineContext()
+  const {
+    stepInfoMap,
+    currentStepIndex,
+    saveFormData,
+    formData,
+    staticData,
+    handleNextStep,
+    handleSetSectionCompletion,
+  } = useFormEngineContext()
   const [currentMemberIndex, setCurrentMemberIndex] = useState<number>(0)
   const [componentToRender, setComponentToRender] =
     useState<multiStepComponents>("AddHouseholdMembers")
@@ -60,12 +68,16 @@ const HouseholdMemberMultiStepWrapper = ({
     (formData[householdMembers] as Record<string, unknown>[]) || []
   )
 
-  const methods = useForm({
+  const formMethods = useForm({
     mode: "onSubmit",
     reValidateMode: "onChange",
     shouldFocusError: false,
     defaultValues: householdMembersArray[currentMemberIndex],
   })
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [componentToRender])
 
   const getHouseholdMemberAddress = (data: Record<string, unknown>): Address => ({
     street1: (data[householdMemberFields.street1] as string) ?? "",
@@ -128,7 +140,7 @@ const HouseholdMemberMultiStepWrapper = ({
     setCurrentMemberIndex(householdMembersArray.length)
     setComponentToRender("HouseholdMemberForm")
     setApiErrorMessage(null)
-    methods.reset({})
+    formMethods.reset({})
   }
 
   const handleEditHouseholdMember = (index: number) => {
@@ -136,7 +148,7 @@ const HouseholdMemberMultiStepWrapper = ({
     setCurrentMemberIndex(index)
     setComponentToRender("HouseholdMemberForm")
     setApiErrorMessage(null)
-    methods.reset(householdMembersArray[index])
+    formMethods.reset(householdMembersArray[index])
   }
 
   const handleUpdateHouseholdMember = async (data: Record<string, string>) => {
@@ -195,15 +207,18 @@ const HouseholdMemberMultiStepWrapper = ({
       } else {
         setApiErrorMessage(t("error.alert.badRequest"))
       }
-      methods.reset(data)
+      formMethods.reset(data)
     } finally {
       setLoading(false)
     }
   }
 
   const handleSubmitHouseholdMembers = () => {
-    saveFormData({ ...formData, [householdMembers]: householdMembersArray })
-    handleNextStep({ ...formData, [householdMembers]: householdMembersArray })
+    // use `null` for zero household members, for navigation conditions
+    const householdMembersArrayOrNull =
+      householdMembersArray.length > 0 ? householdMembersArray : null
+    saveFormData({ ...formData, [householdMembers]: householdMembersArrayOrNull })
+    handleNextStep({ ...formData, [householdMembers]: householdMembersArrayOrNull })
     setComponentToRender("AddHouseholdMembers")
   }
 
@@ -238,15 +253,19 @@ const HouseholdMemberMultiStepWrapper = ({
   switch (componentToRender) {
     case "HouseholdMemberForm": {
       return (
-        <FormProvider {...methods}>
+        <FormProvider {...formMethods}>
           <HouseholdMemberForm
             handleUpdateHouseholdMember={handleUpdateHouseholdMember}
             handleDeleteHouseholdMember={handleDeleteHouseholdMember}
             handleCancelAddHouseholdMember={handleCancelAddHouseholdMember}
             isEditing={isEditingHouseholdMember}
-            methods={methods}
+            formMethods={formMethods}
             loading={loading}
             addressError={apiErrorMessage}
+            onSetSectionCompletion={(isComplete) =>
+              handleSetSectionCompletion(stepInfoMap[currentStepIndex]?.sectionName, isComplete)
+            }
+            onRemoveApiErrorMessage={() => setApiErrorMessage(null)}
           />
         </FormProvider>
       )
@@ -269,7 +288,7 @@ const HouseholdMemberMultiStepWrapper = ({
           addressData={getHouseholdMemberAddress(member)}
           onConfirm={() => saveHouseholdMember(member)}
           onEdit={() => {
-            methods.reset(member)
+            formMethods.reset(member)
             setComponentToRender("HouseholdMemberForm")
           }}
         />

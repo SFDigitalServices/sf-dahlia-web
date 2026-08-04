@@ -3,7 +3,6 @@ import { render, screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import FormEngine from "../../formEngine/formEngine"
 import { openRentalListing } from "../data/RailsRentalListing/listing-rental-open"
-import { defineCryptoApi } from "../__util__/renderUtils"
 import type { FormSchema } from "../../formEngine/formSchemas"
 import { useFormEngineContext } from "../../formEngine/formEngineContext"
 
@@ -39,6 +38,9 @@ jest.mock("../../formEngine/recursiveRenderer", () => {
         handlePrevStep,
         jumpToStep,
         saveFormData,
+        handleSetSectionCompletion,
+        sectionMap,
+        completedSections,
         formData,
         currentStepIndex,
       } = formEngineContext
@@ -47,19 +49,29 @@ jest.mock("../../formEngine/recursiveRenderer", () => {
           {/* expose context data so they can be easily tested with RTL */}
           <span data-testid="step-index">{currentStepIndex}</span>
           <span data-testid="form-data">{JSON.stringify(formData)}</span>
+          <span data-testid="section-map">{JSON.stringify(sectionMap)}</span>
+          <span data-testid="completed-sections">{JSON.stringify(completedSections)}</span>
           {/* test all possible navigation buttons */}
           <button onClick={() => handleNextStep()}>next</button>
           <button onClick={() => handleNextStep({ custom: "data" })}>next-with-data</button>
           <button onClick={() => handlePrevStep()}>back</button>
           <button onClick={() => jumpToStep("step-b")}>jump</button>
           <button onClick={() => saveFormData({ testField: "saved" })}>save</button>
+          {/* test section completion functions, which called while listening for form validation errors, in real usage*/}
+          <button onClick={() => handleSetSectionCompletion("shortFormNav.you", false)}>
+            set-section-you-false
+          </button>
+          <button onClick={() => handleSetSectionCompletion("shortFormNav.unknown", true)}>
+            set-section-unknown-true
+          </button>
+          <button onClick={() => handleSetSectionCompletion(undefined, true)}>
+            set-section-undefined-true
+          </button>
         </div>
       )
     },
   }
 })
-
-defineCryptoApi()
 
 const staticData = {
   listing: openRentalListing,
@@ -75,12 +87,22 @@ const mockSchema = (schemaOverrides?: Partial<FormSchema>): FormSchema => ({
   componentName: "ListingApplyFormWrapper",
   children: [
     {
-      stepInfo: { slug: "step-a" },
+      stepInfo: { slug: "step-a", sectionName: "shortFormNav.you" },
       componentType: "step",
       componentName: "ListingApplyIntro",
     },
     {
-      stepInfo: { slug: "step-b" },
+      stepInfo: { slug: "step-b", sectionName: "shortFormNav.you" },
+      componentType: "step",
+      componentName: "ListingApplyOverview",
+    },
+    {
+      stepInfo: { slug: "step-c", sectionName: "shortFormNav.household" },
+      componentType: "step",
+      componentName: "ListingApplyOverview",
+    },
+    {
+      stepInfo: { slug: "step-d", sectionName: "shortFormNav.household" },
       componentType: "step",
       componentName: "ListingApplyOverview",
     },
@@ -129,6 +151,21 @@ describe("FormEngine", () => {
     )
     expect(console.error).toHaveBeenCalled()
     expect(screen.getByText("Schema contains invalid component names")).not.toBeNull()
+  })
+
+  it("renders an error when schema type is invalid", () => {
+    const schemaWithInvalidType = mockSchema({
+      componentType: "",
+    })
+
+    render(
+      <FormEngine
+        sessionId="test-session-id"
+        schema={schemaWithInvalidType}
+        staticData={staticData}
+      />
+    )
+    expect(screen.getByText("Invalid Schema Type")).not.toBeNull()
   })
 
   it("renders with a valid multiStepLayout schema", () => {
@@ -205,6 +242,45 @@ describe("FormEngine", () => {
     await user.click(screen.getByText("save"))
     expect(JSON.parse(screen.getByTestId("form-data").textContent)).toMatchObject({
       testField: "saved",
+    })
+  })
+
+  it("groups step slugs into one section entry per section name", () => {
+    render(<FormEngine sessionId="test-session-id" schema={mockSchema()} staticData={staticData} />)
+
+    expect(JSON.parse(screen.getByTestId("section-map").textContent || "[]")).toEqual([
+      { name: "shortFormNav.you", stepSlugs: ["step-a", "step-b"] },
+      { name: "shortFormNav.household", stepSlugs: ["step-c", "step-d"] },
+    ])
+  })
+
+  it("marks the current section complete when moving forward to a different section", async () => {
+    mockCalculateNextStep.mockReturnValue(2)
+    render(<FormEngine sessionId="test-session-id" schema={mockSchema()} staticData={staticData} />)
+
+    await user.click(screen.getByText("next"))
+    expect(JSON.parse(screen.getByTestId("completed-sections").textContent || "{}")).toEqual({
+      "shortFormNav.you": true,
+    })
+  })
+
+  it("updates section completion only for previously tracked sections", async () => {
+    mockCalculateNextStep.mockReturnValue(2)
+    render(<FormEngine sessionId="test-session-id" schema={mockSchema()} staticData={staticData} />)
+
+    await user.click(screen.getByText("set-section-you-false"))
+    await user.click(screen.getByText("set-section-unknown-true"))
+    await user.click(screen.getByText("set-section-undefined-true"))
+    expect(JSON.parse(screen.getByTestId("completed-sections").textContent || "{}")).toEqual({})
+
+    await user.click(screen.getByText("next"))
+    expect(JSON.parse(screen.getByTestId("completed-sections").textContent || "{}")).toEqual({
+      "shortFormNav.you": true,
+    })
+
+    await user.click(screen.getByText("set-section-you-false"))
+    expect(JSON.parse(screen.getByTestId("completed-sections").textContent || "{}")).toEqual({
+      "shortFormNav.you": false,
     })
   })
 })
