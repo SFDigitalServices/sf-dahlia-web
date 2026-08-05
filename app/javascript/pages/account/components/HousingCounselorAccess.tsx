@@ -61,7 +61,7 @@ const ShareAccess = ({
           }}
           controlClassName="control"
         />
-        <div>
+        <div className={styles.hcPermissions}>
           <p>{t("accountSettings.housingCounselor.p1")}</p>
           <ul className={styles.hcList}>
             <li>{t("accountSettings.housingCounselor.p2")}</li>

@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect, useRef } from "react"
 import stepStyles from "../ListingApplyStepWrapper.module.scss"
 import { Button, Card, Heading, LoadingState } from "@bloom-housing/ui-seeds"
 import { t } from "@bloom-housing/ui-components"
@@ -10,6 +10,7 @@ import YesNoRadio from "../YesNoRadio"
 import Select from "../Select"
 import styles from "./HouseholdMemberForm.module.scss"
 import { RELATIONSHIP_OPTIONS } from "../../../../modules/constants"
+import ListingApplyStepErrorMessage from "../ListingApplyStepErrorMessage"
 
 const HouseholdMemberForm = ({
   loading,
@@ -17,20 +18,35 @@ const HouseholdMemberForm = ({
   handleUpdateHouseholdMember,
   handleDeleteHouseholdMember,
   handleCancelAddHouseholdMember,
-  methods,
+  onSetSectionCompletion,
+  onRemoveApiErrorMessage,
+  formMethods,
   isEditing,
 }: {
   loading: boolean
   addressError: string | null
-  handleUpdateHouseholdMember: (member: Record<string, string>) => void
+  handleUpdateHouseholdMember: (data: Record<string, string>) => void | Promise<void>
   handleDeleteHouseholdMember: () => void
   handleCancelAddHouseholdMember: () => void
-  methods: UseFormMethods<Record<string, unknown>>
+  onSetSectionCompletion: (isComplete: boolean) => void
+  onRemoveApiErrorMessage: () => void
+  formMethods: UseFormMethods<Record<string, unknown>>
   isEditing: boolean
 }) => {
+  const errorSectionRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (Object.keys(formMethods.formState.errors).length > 0 || addressError) {
+      errorSectionRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })
+      onSetSectionCompletion(false)
+    } else {
+      onSetSectionCompletion(true)
+    }
+  }, [formMethods.formState.errors, addressError, onSetSectionCompletion])
+
   const onMemberSave = () => {
-    void methods.handleSubmit(() =>
-      handleUpdateHouseholdMember(methods.getValues() as Record<string, string>)
+    void formMethods.handleSubmit(() =>
+      handleUpdateHouseholdMember(formMethods.getValues() as Record<string, string>)
     )()
   }
 
@@ -42,6 +58,17 @@ const HouseholdMemberForm = ({
         </Heading>
         <p className="field-note text-base">{t("c3HouseholdMemberForm.p1")}</p>
       </Card.Header>
+      <div ref={errorSectionRef}>
+        {(Object.keys(formMethods.formState.errors).length > 0 || addressError) && (
+          <ListingApplyStepErrorMessage
+            errorMessage={t("error.formSubmission")}
+            onClose={() => {
+              formMethods.clearErrors()
+              onRemoveApiErrorMessage()
+            }}
+          />
+        )}
+      </div>
       <Card.Section divider="inset">
         <Name
           label={"label.householdMemberName"}

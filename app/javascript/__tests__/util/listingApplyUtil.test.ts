@@ -77,7 +77,9 @@ describe("listingApplyUtil", () => {
         primaryApplicantFirstName: "Alice",
         primaryApplicantMiddleName: "B",
         primaryApplicantLastName: "Cooper",
-        primaryApplicantDob: "1985-06-15",
+        primaryApplicantBirthMonth: "06",
+        primaryApplicantBirthDate: "15",
+        primaryApplicantBirthYear: "1985",
       }
       expect(getPrimaryApplicantData(formData)).toEqual({
         firstName: "Alice",
@@ -85,15 +87,6 @@ describe("listingApplyUtil", () => {
         lastName: "Cooper",
         dob: "1985-06-15",
       })
-    })
-
-    it("defaults dob when primaryApplicantDob is not present", () => {
-      const formData = {
-        primaryApplicantFirstName: "Alice",
-        primaryApplicantMiddleName: "",
-        primaryApplicantLastName: "Cooper",
-      }
-      expect(getPrimaryApplicantData(formData).dob).toBe("1990-01-01")
     })
   })
 

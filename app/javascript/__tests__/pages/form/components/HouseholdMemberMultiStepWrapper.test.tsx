@@ -4,13 +4,18 @@ import userEvent from "@testing-library/user-event"
 import { t } from "@bloom-housing/ui-components"
 import HouseholdMemberMultiStepWrapper from "../../../../pages/form/components/household/HouseholdMemberMultiStepWrapper"
 import { renderWithFormContextWrapper } from "../../../__util__/renderUtils"
-import { locateVerifiedAddress } from "../../../../api/formApiService"
+import {
+  checkNeighborhoodPreferenceMatch,
+  locateVerifiedAddress,
+} from "../../../../api/formApiService"
 
 jest.mock("../../../../api/formApiService", () => ({
   locateVerifiedAddress: jest.fn(),
+  checkNeighborhoodPreferenceMatch: jest.fn(),
 }))
 
 const mockLocateVerifiedAddress = locateVerifiedAddress as jest.Mock
+const mockCheckNeighborhoodPreferenceMatch = checkNeighborhoodPreferenceMatch as jest.Mock
 
 const createNewHouseholdMember = async (
   user: ReturnType<typeof userEvent.setup>,
@@ -73,6 +78,7 @@ describe("HouseholdMemberMultiStepWrapper", () => {
         zip: "94105",
       },
     })
+    mockCheckNeighborhoodPreferenceMatch.mockResolvedValue(true)
   })
 
   const renderHouseholdMemberMultiStepWrapper = (formData = {}) => {
@@ -81,11 +87,13 @@ describe("HouseholdMemberMultiStepWrapper", () => {
         fieldNames={{
           householdMembers: "householdMembers",
           showLiveWorkInSfPrefStep: "showLiveWorkInSfPrefStep",
+          showNRHPPrefStep: "showNRHPPrefStep",
         }}
       />,
       {
         stepInfoMap: [{ slug: "household-member-form", fieldNames: [] }],
         formData,
+        renderForm: false,
       }
     )
   }
@@ -184,14 +192,14 @@ describe("HouseholdMemberMultiStepWrapper", () => {
     expect(mockHandleNextStep).toHaveBeenCalledWith({ ...formData, householdMembers: members })
   })
 
-  it("saves empty household members array when done adding people is clicked with no members", async () => {
+  it("saves null value when done adding people is clicked with no members", async () => {
     const { mockSaveFormData, mockHandleNextStep } = renderHouseholdMemberMultiStepWrapper()
     const user = userEvent.setup()
 
     await user.click(screen.getByText(t("label.doneAddingPeople")))
 
-    expect(mockSaveFormData).toHaveBeenCalledWith({ householdMembers: [] })
-    expect(mockHandleNextStep).toHaveBeenCalledWith({ householdMembers: [] })
+    expect(mockSaveFormData).toHaveBeenCalledWith({ householdMembers: null })
+    expect(mockHandleNextStep).toHaveBeenCalledWith({ householdMembers: null })
   })
 
   it("returns to the add household members page when cancel is clicked while adding a new member", async () => {
@@ -264,6 +272,22 @@ describe("HouseholdMemberMultiStepWrapper", () => {
 
     await waitFor(() => expect(mockLocateVerifiedAddress).toHaveBeenCalled())
     expect(await screen.findByText(/this address was not found/i)).toBeInTheDocument()
+  })
+
+  it("clears api error message when the error banner is closed", async () => {
+    mockLocateVerifiedAddress.mockRejectedValue({ response: { status: 422 } })
+    renderHouseholdMemberMultiStepWrapper()
+    const user = userEvent.setup()
+
+    await createNewHouseholdMember(user, { sameAddress: false })
+
+    await waitFor(() => expect(mockLocateVerifiedAddress).toHaveBeenCalled())
+    expect(await screen.findByText(/this address was not found/i)).toBeInTheDocument()
+
+    await user.click(screen.getByLabelText(t("t.close")))
+    await waitFor(() => {
+      expect(screen.queryByText(/this address was not found/i)).not.toBeInTheDocument()
+    })
   })
 
   it("shows an error when validation fails with a non-422 error", async () => {

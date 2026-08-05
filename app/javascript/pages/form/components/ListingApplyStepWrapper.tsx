@@ -1,4 +1,4 @@
-import React, { Children, useEffect } from "react"
+import React, { Children, useEffect, useRef } from "react"
 import { useForm, FormProvider } from "react-hook-form"
 import { Form, t } from "@bloom-housing/ui-components"
 import { Button, Card } from "@bloom-housing/ui-seeds"
@@ -33,6 +33,7 @@ const ListingApplyStepWrapper = ({
     currentStepIndex,
     handleNextStep,
     handlePrevStep,
+    handleSetSectionCompletion,
   } = formEngineContext
   const currentStepInfo = stepInfoMap[currentStepIndex]
   const defaultValues = currentStepInfo.fieldNames.reduce((acc, fieldName) => {
@@ -59,11 +60,16 @@ const ListingApplyStepWrapper = ({
     defaultValues,
   })
 
+  const errorSectionRef = useRef<HTMLDivElement>(null)
+
   useEffect(() => {
     if (Object.keys(formMethods.formState.errors).length > 0) {
-      window.scrollTo(0, 0)
+      errorSectionRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })
+      handleSetSectionCompletion(currentStepInfo.sectionName, false)
+    } else {
+      handleSetSectionCompletion(currentStepInfo.sectionName, true)
     }
-  }, [formMethods.formState.errors])
+  }, [formMethods.formState.errors, handleSetSectionCompletion, currentStepInfo.sectionName])
 
   const onSubmit = (data: Record<string, unknown>) => {
     saveFormData({ ...blankValues, ...data })
@@ -88,15 +94,26 @@ const ListingApplyStepWrapper = ({
             {description && <p className={styles["step-description"]}>{t(description)}</p>}
           </Card.Header>
         )}
-        {Object.keys(formMethods.formState.errors).length > 0 && (
-          <ListingApplyStepErrorMessage
-            errorMessage={t("error.formSubmission")}
-            onClose={() => formMethods.clearErrors()}
-          />
-        )}
+        <div ref={errorSectionRef}>
+          {Object.keys(formMethods.formState.errors).length > 0 && (
+            <ListingApplyStepErrorMessage
+              errorMessage={t("error.formSubmission")}
+              onClose={() => formMethods.clearErrors()}
+            />
+          )}
+        </div>
         <Form onSubmit={formMethods.handleSubmit(onSubmit)}>
           {Children.map(children, (child) => {
-            const { schema } = (child as React.ReactElement).props
+            // `isValidElement` narrows `child` enough to read `.props.schema`, which React 19
+            // types as `unknown`. Step children come from the form component registry via a
+            // validated schema, so a non-element here means the schema is misconfigured: log
+            // it rather than throwing, so a bad step doesn't blank out the applicant's form.
+            let schema: { props?: { divider?: boolean } } | undefined
+            if (React.isValidElement<{ schema?: { props?: { divider?: boolean } } }>(child)) {
+              schema = child.props.schema
+            } else if (child !== null && child !== undefined) {
+              console.error("Expected a React element as a step child, received:", child)
+            }
             return (
               <Card.Section divider={schema?.props?.divider === false ? undefined : "inset"}>
                 {child}

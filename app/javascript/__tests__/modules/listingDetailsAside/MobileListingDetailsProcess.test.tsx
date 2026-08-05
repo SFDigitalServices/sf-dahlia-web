@@ -21,7 +21,7 @@ describe("MobileListingDetailsProcess", () => {
     const { asFragment } = render(
       <MobileListingDetailsProcess
         listing={closedRentalListing}
-        imageSrc=""
+        imageSrc={"listing-units.svg"}
         isApplicationOpen={false}
       />
     )
@@ -44,7 +44,11 @@ describe("MobileListingDetailsProcess", () => {
     })
 
     const { asFragment } = render(
-      <MobileListingDetailsProcess listing={openSaleListing} imageSrc="" isApplicationOpen={true} />
+      <MobileListingDetailsProcess
+        listing={openSaleListing}
+        imageSrc={"listing-units.svg"}
+        isApplicationOpen={true}
+      />
     )
 
     expect(asFragment()).toMatchSnapshot()

@@ -30,7 +30,7 @@ describe("MobileListingDetailsLottery", () => {
     ;(useFeatureFlag as jest.Mock).mockReturnValue({ flagsReady: true, unleashFlag: true })
 
     const { asFragment } = render(
-      <MobileListingDetailsLottery imageSrc="" listing={fcfsSaleListing} />
+      <MobileListingDetailsLottery imageSrc={"listing-units.svg"} listing={fcfsSaleListing} />
     )
 
     expect(asFragment()).toMatchSnapshot()
@@ -40,7 +40,10 @@ describe("MobileListingDetailsLottery", () => {
     ;(useFeatureFlag as jest.Mock).mockReturnValue({ flagsReady: true, unleashFlag: false })
 
     const { asFragment } = render(
-      <MobileListingDetailsLottery imageSrc="" listing={notYetOpenSaleFcfsListing} />
+      <MobileListingDetailsLottery
+        imageSrc={"listing-units.svg"}
+        listing={notYetOpenSaleFcfsListing}
+      />
     )
 
     expect(asFragment()).toMatchSnapshot()
@@ -50,7 +53,7 @@ describe("MobileListingDetailsLottery", () => {
     ;(useFeatureFlag as jest.Mock).mockReturnValue({ flagsReady: true, unleashFlag: true })
 
     const { asFragment } = render(
-      <MobileListingDetailsLottery listing={closedRentalListing} imageSrc={""} />
+      <MobileListingDetailsLottery listing={closedRentalListing} imageSrc={"listing-units.svg"} />
     )
 
     expect(asFragment()).toMatchSnapshot()
