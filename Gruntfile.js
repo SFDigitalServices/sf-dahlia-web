@@ -207,7 +207,8 @@ module.exports = function (grunt) {
           // If token is present, pass to phrase, otherwise phrase will look for
           // the PHRASE_ACCESS_TOKEN env var.
           const token = grunt.option("phraseAccessToken")
-          return token ? `phrase pull --access_token ${token}` : "phrase pull"
+          // use custom config file name, so that manually running `phrase pull` does nothing
+          return token ? `phrase pull --access_token ${token} --config .phrase.grunt.yml` : "phrase pull --config .phrase.grunt.yml"
         },
       },
       phrasePush: {
@@ -215,7 +216,8 @@ module.exports = function (grunt) {
           // If token is present, pass to phrase, otherwise phrase will look for
           // the PHRASE_ACCESS_TOKEN env var.
           const token = grunt.option("phraseAccessToken")
-          return token ? `phrase push --access_token ${token}` : "phrase push"
+          // use custom config file name, so that manually running `phrase push` does nothing
+          return token ? `phrase push --access_token ${token} --config .phrase.grunt.yml` : "phrase push --config .phrase.grunt.yml"
         },
       },
       reactSort: {
