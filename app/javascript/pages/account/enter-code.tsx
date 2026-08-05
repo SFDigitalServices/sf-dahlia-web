@@ -7,7 +7,12 @@ import { Card, Heading, Link, Button } from "@bloom-housing/ui-seeds"
 import { Controller, useForm } from "react-hook-form"
 import withAppSetup from "../../layouts/withAppSetup"
 import Layout from "../../layouts/Layout"
-import { AppPages, getAddPasswordPath, getCreateAccountPath, getSignInPath } from "../../util/routeUtil"
+import {
+  AppPages,
+  getAddPasswordPath,
+  getCreateAccountPath,
+  getSignInPath,
+} from "../../util/routeUtil"
 import styles from "./enter-code.module.scss"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import { UNLEASH_FLAG } from "../../modules/constants"
@@ -38,7 +43,7 @@ const EnterCodePage = ({ email, flow, onEditEmail }: EnterCodePageProps) => {
 
   const editEmailHref = flow === "signIn" ? getSignInPath() : getCreateAccountPath()
 
-  const onSubmit = ({ code }: { code: string }) => {
+  const onSubmit = async ({ code }: { code: string }) => {
     if (!isLoaded || !signUp) return
     try {
       const completeSignUp = await signUp.attemptEmailAddressVerification({
@@ -76,7 +81,7 @@ const EnterCodePage = ({ email, flow, onEditEmail }: EnterCodePageProps) => {
                 {t("createAccount.checkEmail")}
               </Heading>
               <p className={styles.sentTo}>
-                {t("createAccount.weSentCodeTo")} 
+                {t("createAccount.weSentCodeTo")}
                 <br />
                 <span className={styles.email}>{email}</span>
                 {onEditEmail ? (
