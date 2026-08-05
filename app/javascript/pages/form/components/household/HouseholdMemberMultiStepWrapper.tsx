@@ -1,22 +1,34 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { nanoid } from "nanoid"
 import { useForm, FormProvider } from "react-hook-form"
 import { useFormEngineContext } from "../../../../formEngine/formEngineContext"
 import HouseholdMemberForm from "./HouseholdMemberForm"
 import AddHouseholdMembers from "./AddHouseholdMembers"
 import VerifyAddress from "../VerifyAddress"
-import { locateVerifiedAddress, type Address } from "../../../../api/formApiService"
+import {
+  checkNeighborhoodPreferenceMatch,
+  locateVerifiedAddress,
+  type Address,
+} from "../../../../api/formApiService"
 import { addressesMatch, getAddressErrorEmailLink } from "../../../../util/formEngineUtil"
 import { t } from "@bloom-housing/ui-components"
-import { getLiveWorkInSfMembers } from "./householdUtils"
+import { getLiveWorkInSfMembers, liveInTheNeighborhoodHouseholdMembers } from "./householdUtils"
+import { formatApplicantDOB } from "../../../../util/listingApplyUtil"
 
 interface HouseholdMemberMultiStepWrapperProps {
   fieldNames: {
     householdMembers: string
     showLiveWorkInSfPrefStep: string
+    showNRHPPrefStep: string
   }
 }
 const householdMemberFields = {
+  firstName: "householdMemberFirstName",
+  middleName: "householdMemberMiddleName",
+  lastName: "householdMemberLastName",
+  birthMonth: "householdMemberBirthMonth",
+  birthDay: "householdMemberBirthDay",
+  birthYear: "householdMemberBirthYear",
   street1: "householdMemberAddressStreet",
   street2: "householdMemberAddressAptOrUnit",
   city: "householdMemberAddressCity",
@@ -24,6 +36,7 @@ const householdMemberFields = {
   zip: "householdMemberAddressZipcode",
   sameAddressAsApplicant: "hasSameAddressAsApplicant",
   addressVerified: "householdMemberAddressVerified",
+  neighborhoodPreferenceAddressMatch: "neighborhoodPreferenceAddressMatch",
 }
 
 type multiStepComponents =
@@ -32,9 +45,17 @@ type multiStepComponents =
   | "HouseholdMemberVerifyAddress"
 
 const HouseholdMemberMultiStepWrapper = ({
-  fieldNames: { householdMembers, showLiveWorkInSfPrefStep },
+  fieldNames: { householdMembers, showLiveWorkInSfPrefStep, showNRHPPrefStep },
 }: HouseholdMemberMultiStepWrapperProps) => {
-  const { saveFormData, formData, staticData, handleNextStep } = useFormEngineContext()
+  const {
+    stepInfoMap,
+    currentStepIndex,
+    saveFormData,
+    formData,
+    staticData,
+    handleNextStep,
+    handleSetSectionCompletion,
+  } = useFormEngineContext()
   const [currentMemberIndex, setCurrentMemberIndex] = useState<number>(0)
   const [componentToRender, setComponentToRender] =
     useState<multiStepComponents>("AddHouseholdMembers")
@@ -47,12 +68,16 @@ const HouseholdMemberMultiStepWrapper = ({
     (formData[householdMembers] as Record<string, unknown>[]) || []
   )
 
-  const methods = useForm({
+  const formMethods = useForm({
     mode: "onSubmit",
     reValidateMode: "onChange",
     shouldFocusError: false,
     defaultValues: householdMembersArray[currentMemberIndex],
   })
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [componentToRender])
 
   const getHouseholdMemberAddress = (data: Record<string, unknown>): Address => ({
     street1: (data[householdMemberFields.street1] as string) ?? "",
@@ -84,28 +109,26 @@ const HouseholdMemberMultiStepWrapper = ({
       updated[currentMemberIndex] = {
         ...data,
         id: householdMembersArray[currentMemberIndex]?.id,
-        neighborhoodPreferenceAddressMatch:
-          householdMembersArray[currentMemberIndex]?.neighborhoodPreferenceAddressMatch,
       }
     } else {
       updated.push({
         ...data,
         id: nanoid(18),
-        // TODO: DAH-4161
-        // call to the geocoding API to check for the actual neighborhood match
-        neighborhoodPreferenceAddressMatch: true,
       })
     }
 
-    // Calculate live/work eligibility against the updated members array
     const { showLiveWorkPreference } = getLiveWorkInSfMembers({
       ...formData,
       [householdMembers]: updated,
     })
+    const showNRHPPreference =
+      liveInTheNeighborhoodHouseholdMembers({ ...formData, [householdMembers]: updated }).length > 0
+
     saveFormData({
       ...formData,
       [householdMembers]: updated,
       [showLiveWorkInSfPrefStep]: showLiveWorkPreference,
+      [showNRHPPrefStep]: showNRHPPreference,
     })
     setHouseholdMembersArray(updated)
     setPendingMember(null)
@@ -117,7 +140,7 @@ const HouseholdMemberMultiStepWrapper = ({
     setCurrentMemberIndex(householdMembersArray.length)
     setComponentToRender("HouseholdMemberForm")
     setApiErrorMessage(null)
-    methods.reset({})
+    formMethods.reset({})
   }
 
   const handleEditHouseholdMember = (index: number) => {
@@ -125,50 +148,77 @@ const HouseholdMemberMultiStepWrapper = ({
     setCurrentMemberIndex(index)
     setComponentToRender("HouseholdMemberForm")
     setApiErrorMessage(null)
-    methods.reset(householdMembersArray[index])
+    formMethods.reset(householdMembersArray[index])
   }
 
-  const handleUpdateHouseholdMember = (data: Record<string, string>) => {
+  const handleUpdateHouseholdMember = async (data: Record<string, string>) => {
     if (!addressNeedsVerification(data)) {
-      saveHouseholdMember({ ...data, [householdMemberFields.addressVerified]: "true" })
+      // Household member inherits primary applicant's NRHP status if shared household
+      const neighborhoodPreferenceMatch =
+        data[householdMemberFields.sameAddressAsApplicant] === "true"
+          ? formData.primaryApplicantNeighborhoodPreferenceAddressMatch
+          : householdMembersArray[currentMemberIndex]?.[
+              householdMemberFields.neighborhoodPreferenceAddressMatch
+            ]
+
+      saveHouseholdMember({
+        ...data,
+        [householdMemberFields.addressVerified]: "true",
+        [householdMemberFields.neighborhoodPreferenceAddressMatch]: neighborhoodPreferenceMatch,
+      })
       return
     }
-
     setLoading(true)
-    locateVerifiedAddress(getHouseholdMemberAddress(data))
-      .then((response) => {
-        setApiErrorMessage(null)
-        setPendingMember({
-          ...data,
-          [householdMemberFields.street1]: response.address?.street1,
-          [householdMemberFields.street2]: response.address?.street2,
-          [householdMemberFields.city]: response.address?.city,
-          [householdMemberFields.state]: response.address?.state,
-          [householdMemberFields.zip]: response.address?.zip,
-          [householdMemberFields.addressVerified]: "true",
-        })
-        setComponentToRender("HouseholdMemberVerifyAddress")
+    const address = getHouseholdMemberAddress(data)
+    const { firstName, middleName, lastName, birthMonth, birthDay, birthYear } = data
+    const houseHoldMemberInfo = {
+      firstName: firstName,
+      middleName: middleName,
+      lastName: lastName,
+      dob: formatApplicantDOB(birthMonth, birthDay, birthYear),
+    }
+    try {
+      const response = await locateVerifiedAddress(address)
+      const neighborhoodMatch = await checkNeighborhoodPreferenceMatch(
+        response,
+        staticData,
+        houseHoldMemberInfo
+      )
+
+      setApiErrorMessage(null)
+      setPendingMember({
+        ...data,
+        [householdMemberFields.street1]: response.address?.street1,
+        [householdMemberFields.street2]: response.address?.street2,
+        [householdMemberFields.city]: response.address?.city,
+        [householdMemberFields.state]: response.address?.state,
+        [householdMemberFields.zip]: response.address?.zip,
+        [householdMemberFields.addressVerified]: "true",
+        [householdMemberFields.neighborhoodPreferenceAddressMatch]: neighborhoodMatch,
       })
-      .catch((error) => {
-        if (error.response?.status === 422) {
-          setApiErrorMessage(
-            t("error.addressValidation.notFound", {
-              mailParams: getAddressErrorEmailLink(data, staticData, formData),
-            })
-          )
-        } else {
-          setApiErrorMessage(t("error.alert.badRequest"))
-        }
-        methods.reset(data)
-      })
-      .finally(() => {
-        setLoading(false)
-      })
+      setComponentToRender("HouseholdMemberVerifyAddress")
+    } catch (error) {
+      if ((error as { response?: { status?: number } }).response?.status === 422) {
+        setApiErrorMessage(
+          t("error.addressValidation.notFound", {
+            mailParams: getAddressErrorEmailLink(data, staticData, formData),
+          })
+        )
+      } else {
+        setApiErrorMessage(t("error.alert.badRequest"))
+      }
+      formMethods.reset(data)
+    } finally {
+      setLoading(false)
+    }
   }
 
   const handleSubmitHouseholdMembers = () => {
-    saveFormData({ ...formData, [householdMembers]: householdMembersArray })
-    handleNextStep({ ...formData, [householdMembers]: householdMembersArray })
+    // use `null` for zero household members, for navigation conditions
+    const householdMembersArrayOrNull =
+      householdMembersArray.length > 0 ? householdMembersArray : null
+    saveFormData({ ...formData, [householdMembers]: householdMembersArrayOrNull })
+    handleNextStep({ ...formData, [householdMembers]: householdMembersArrayOrNull })
     setComponentToRender("AddHouseholdMembers")
   }
 
@@ -179,10 +229,17 @@ const HouseholdMemberMultiStepWrapper = ({
       ...formData,
       [householdMembers]: updatedHouseholdMembers,
     })
+    const showNRHPPreference =
+      liveInTheNeighborhoodHouseholdMembers({
+        ...formData,
+        [householdMembers]: updatedHouseholdMembers,
+      }).length > 0
+
     saveFormData({
       ...formData,
       [householdMembers]: updatedHouseholdMembers,
       [showLiveWorkInSfPrefStep]: showLiveWorkPreference,
+      [showNRHPPrefStep]: showNRHPPreference,
     })
     setHouseholdMembersArray(updatedHouseholdMembers)
     setComponentToRender("AddHouseholdMembers")
@@ -196,15 +253,19 @@ const HouseholdMemberMultiStepWrapper = ({
   switch (componentToRender) {
     case "HouseholdMemberForm": {
       return (
-        <FormProvider {...methods}>
+        <FormProvider {...formMethods}>
           <HouseholdMemberForm
             handleUpdateHouseholdMember={handleUpdateHouseholdMember}
             handleDeleteHouseholdMember={handleDeleteHouseholdMember}
             handleCancelAddHouseholdMember={handleCancelAddHouseholdMember}
             isEditing={isEditingHouseholdMember}
-            methods={methods}
+            formMethods={formMethods}
             loading={loading}
             addressError={apiErrorMessage}
+            onSetSectionCompletion={(isComplete) =>
+              handleSetSectionCompletion(stepInfoMap[currentStepIndex]?.sectionName, isComplete)
+            }
+            onRemoveApiErrorMessage={() => setApiErrorMessage(null)}
           />
         </FormProvider>
       )
@@ -227,7 +288,7 @@ const HouseholdMemberMultiStepWrapper = ({
           addressData={getHouseholdMemberAddress(member)}
           onConfirm={() => saveHouseholdMember(member)}
           onEdit={() => {
-            methods.reset(member)
+            formMethods.reset(member)
             setComponentToRender("HouseholdMemberForm")
           }}
         />

@@ -1,5 +1,5 @@
 // https://github.com/react-hook-form/react-hook-form/issues/2887#issuecomment-802577357
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState, useRef } from "react"
 import { useForm, FormProvider } from "react-hook-form"
 import { Form, t } from "@bloom-housing/ui-components"
 import { Button, Card, LoadingState } from "@bloom-housing/ui-seeds"
@@ -12,11 +12,18 @@ import {
 } from "../../../util/formEngineUtil"
 import styles from "./ListingApplyStepWrapper.module.scss"
 import ListingApplyStepErrorMessage from "./ListingApplyStepErrorMessage"
-import { locateVerifiedAddress } from "../../../api/formApiService"
+import {
+  checkNeighborhoodPreferenceMatch,
+  locateVerifiedAddress,
+} from "../../../api/formApiService"
 import YesNoRadio from "./YesNoRadio"
 import Phone from "./Phone"
 import Address from "./Address"
-import { getLiveWorkInSfMembers } from "./household/householdUtils"
+import {
+  getLiveWorkInSfMembers,
+  liveInTheNeighborhoodHouseholdMembers,
+} from "./household/householdUtils"
+import { getPrimaryApplicantData } from "../../../util/listingApplyUtil"
 
 interface ListingApplyContactStepWrapperProps {
   title: string
@@ -42,6 +49,7 @@ interface ListingApplyContactStepWrapperProps {
     mailingAddressZipcode: string
     question: string
     showLiveWorkInSfPrefStep: string
+    showNRHPPrefStep: string
   }
 }
 
@@ -69,6 +77,7 @@ const ListingApplyContactStepWrapper = ({
     mailingAddressZipcode,
     question,
     showLiveWorkInSfPrefStep,
+    showNRHPPrefStep,
   },
 }: ListingApplyContactStepWrapperProps) => {
   const formEngineContext = useFormEngineContext()
@@ -80,6 +89,7 @@ const ListingApplyContactStepWrapper = ({
     currentStepIndex,
     handleNextStep,
     handlePrevStep,
+    handleSetSectionCompletion,
   } = formEngineContext
 
   const currentStepInfo = stepInfoMap[currentStepIndex]
@@ -97,13 +107,24 @@ const ListingApplyContactStepWrapper = ({
 
   const [apiErrorMessage, setApiErrorMessage] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
+
+  const errorSectionRef = useRef<HTMLDivElement>(null)
+
   useEffect(() => {
     if (Object.keys(formMethods.formState.errors).length > 0 || apiErrorMessage) {
-      window.scrollTo(0, 0)
+      errorSectionRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })
+      handleSetSectionCompletion(currentStepInfo.sectionName, false)
+    } else {
+      handleSetSectionCompletion(currentStepInfo.sectionName, true)
     }
-  }, [formMethods.formState.errors, apiErrorMessage])
+  }, [
+    formMethods.formState.errors,
+    apiErrorMessage,
+    handleSetSectionCompletion,
+    currentStepInfo.sectionName,
+  ])
 
-  const onSubmit = (data: Record<string, unknown>) => {
+  const onSubmit = async (data: Record<string, unknown>) => {
     setLoading(true)
     const { showLiveWorkPreference } = getLiveWorkInSfMembers({
       ...formData,
@@ -131,6 +152,8 @@ const ListingApplyContactStepWrapper = ({
           ...formData,
           ...data,
           [showLiveWorkInSfPrefStep]: showLiveWorkPreference,
+          [showNRHPPrefStep]:
+            liveInTheNeighborhoodHouseholdMembers({ ...formData, ...data }).length > 0,
         })
         return
       } else {
@@ -147,40 +170,60 @@ const ListingApplyContactStepWrapper = ({
         })
       }
     }
-    locateVerifiedAddress(address)
-      .then((response) => {
-        saveFormData({
+    try {
+      const response = await locateVerifiedAddress(address)
+      const neighborhoodMatch = await checkNeighborhoodPreferenceMatch(
+        response,
+        staticData,
+        getPrimaryApplicantData(formData)
+      )
+
+      const existingHouseholdMembers =
+        (formData.householdMembers as Record<string, unknown>[]) || []
+      const syncHouseholdMemberPreference = existingHouseholdMembers.map((householdMember) =>
+        householdMember.hasSameAddressAsApplicant === "true"
+          ? { ...householdMember, neighborhoodPreferenceAddressMatch: neighborhoodMatch }
+          : householdMember
+      )
+      const showNRHPPreference =
+        liveInTheNeighborhoodHouseholdMembers({
+          ...formData,
           ...data,
-          [addressStreet]: response.address?.street1,
-          [addressAptOrUnit]: response.address?.street2,
           [addressCity]: response.address?.city,
-          [addressState]: response.address?.state,
-          [addressZipcode]: response.address?.zip,
-          [addressVerified]: "false",
-          [showLiveWorkInSfPrefStep]: showLiveWorkPreference,
-          // call to the geocoding API to check for the actual neighborhood match
-          [neighborhoodPreferenceAddressMatch]: true,
-        })
-        // TODO: this is an antipattern, `...data` should include all data from the response
-        // it works here because the contact step is always followed by the verify-address step
-        // we should be setting the `[addressVerified]` flag in the VerifyAddress component
-        handleNextStep({ ...formData, ...data })
+          [neighborhoodPreferenceAddressMatch]: neighborhoodMatch,
+          householdMembers: syncHouseholdMemberPreference,
+        }).length > 0
+
+      saveFormData({
+        ...data,
+        [addressStreet]: response.address?.street1,
+        [addressAptOrUnit]: response.address?.street2,
+        [addressCity]: response.address?.city,
+        [addressState]: response.address?.state,
+        [addressZipcode]: response.address?.zip,
+        [addressVerified]: "false",
+        [showLiveWorkInSfPrefStep]: showLiveWorkPreference,
+        [showNRHPPrefStep]: showNRHPPreference,
+        [neighborhoodPreferenceAddressMatch]: neighborhoodMatch,
+        ...(existingHouseholdMembers.length > 0 && {
+          householdMembers: syncHouseholdMemberPreference,
+        }),
       })
-      .catch((error) => {
-        if (error.response?.status === 422) {
-          setApiErrorMessage(
-            t("error.addressValidation.notFound", {
-              mailParams: getAddressErrorEmailLink(address, staticData, formData),
-            })
-          )
-        } else {
-          setApiErrorMessage(t("error.alert.badRequest"))
-        }
-        formMethods.reset(data)
-      })
-      .finally(() => {
-        setLoading(false)
-      })
+      handleNextStep({ ...formData, ...data })
+    } catch (error) {
+      if ((error as { response?: { status?: number } }).response?.status === 422) {
+        setApiErrorMessage(
+          t("error.addressValidation.notFound", {
+            mailParams: getAddressErrorEmailLink(address, staticData, formData),
+          })
+        )
+      } else {
+        setApiErrorMessage(t("error.alert.badRequest"))
+      }
+      formMethods.reset(data)
+    } finally {
+      setLoading(false)
+    }
   }
   return (
     <FormProvider {...formMethods}>
@@ -195,15 +238,17 @@ const ListingApplyContactStepWrapper = ({
             {translationFromDataSchema(title, titleVars, staticData, formData)}
           </h1>
         </Card.Header>
-        {(Object.keys(formMethods.formState.errors).length > 0 || apiErrorMessage) && (
-          <ListingApplyStepErrorMessage
-            errorMessage={t("error.formSubmission")}
-            onClose={() => {
-              formMethods.clearErrors()
-              setApiErrorMessage(null)
-            }}
-          />
-        )}
+        <div ref={errorSectionRef}>
+          {(Object.keys(formMethods.formState.errors).length > 0 || apiErrorMessage) && (
+            <ListingApplyStepErrorMessage
+              errorMessage={t("error.formSubmission")}
+              onClose={() => {
+                formMethods.clearErrors()
+                setApiErrorMessage(null)
+              }}
+            />
+          )}
+        </div>
         <Form onSubmit={formMethods.handleSubmit(onSubmit)}>
           <Card.Section>
             <Phone

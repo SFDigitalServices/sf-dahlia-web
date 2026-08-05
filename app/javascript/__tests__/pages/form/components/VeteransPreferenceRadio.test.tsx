@@ -113,7 +113,7 @@ describe("VeteransPreferenceRadio", () => {
   it("displays an error when submitting without selecting an option", async () => {
     renderComponent()
     const user = userEvent.setup()
-    await user.click(screen.getByRole("button", { name: "next" }))
+    await user.click(screen.getByRole("button", { name: t("t.next") }))
 
     expect(screen.queryByText(t("error.pleaseSelectAnOption"))).toBeInTheDocument()
   })

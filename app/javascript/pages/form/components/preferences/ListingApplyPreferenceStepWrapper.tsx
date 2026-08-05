@@ -10,7 +10,7 @@ import PreferenceToClaimCombo from "./PreferenceToClaimCombo"
 import {
   generateStepDefaultValues,
   getNestedError,
-  useResetClaimedLiveWorkPreferences,
+  useResetClaimedPreferences,
 } from "../../../../util/formEngineUtil"
 import { renderInlineMarkup } from "../../../../util/languageUtil"
 import {
@@ -21,7 +21,10 @@ import {
 } from "./PreferenceUtils"
 import styles from "./ListingApplyPreferenceStepWrapper.module.scss"
 import stepStyles from "../ListingApplyStepWrapper.module.scss"
-import { getLiveWorkInSfMembers } from "../household/householdUtils"
+import {
+  getLiveWorkInSfMembers,
+  liveInTheNeighborhoodHouseholdMembers,
+} from "../household/householdUtils"
 
 interface ListingApplyPreferenceStepWrapperProps {
   greenHeader?: boolean
@@ -61,6 +64,7 @@ const ListingApplyPreferenceStepWrapper = ({
     currentStepIndex,
     handleNextStep,
     handlePrevStep,
+    handleSetSectionCompletion,
   } = useFormEngineContext()
 
   /* eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion */
@@ -68,9 +72,10 @@ const ListingApplyPreferenceStepWrapper = ({
   const currentStepInfo = stepInfoMap[currentStepIndex]
 
   // Determine which live/work fields to show based on eligibility
-  const { livesInSf, worksInSf, liveWorksInSf } = getLiveWorkInSfMembers({
-    ...formData,
-  })
+  const { livesInSf, worksInSf, liveWorksInSf, liveInSfMembers, workInSfMembers } =
+    getLiveWorkInSfMembers({
+      ...formData,
+    })
   const showComboPreference = comboPreference && subPreferenceClaimed && liveWorksInSf
   const eligiblePreferenceContents = preferenceContents.filter((content) => {
     if (content.preferenceName === "liveInSf") return livesInSf
@@ -95,7 +100,7 @@ const ListingApplyPreferenceStepWrapper = ({
 
   // https://github.com/react-hook-form/react-hook-form/issues/2887#issuecomment-802577357
   /* eslint-disable @typescript-eslint/unbound-method */
-  const { reset, register, handleSubmit, formState, clearErrors, setValue } = formMethods
+  const { reset, register, handleSubmit, formState, clearErrors, setValue, setError } = formMethods
   const { errors } = formState
   /* eslint-enable @typescript-eslint/unbound-method */
 
@@ -132,17 +137,22 @@ const ListingApplyPreferenceStepWrapper = ({
     /* eslint-disable-next-line react-hooks/exhaustive-deps */
   }, [reset])
 
-  // If live/work status is updated on other pages, reset claimed preferences
-  useResetClaimedLiveWorkPreferences({
+  // If eligibility is updated on other pages, reset claimed preferences
+
+  useResetClaimedPreferences({
     setValue,
     claimedPreferences,
     subPreferenceClaimed,
     comboPreferenceName: comboPreference?.preferenceName,
-    showComboPreference: !!showComboPreference,
-    livesInSf,
-    worksInSf,
+    liveInSfMembers,
+    workInSfMembers,
+    liveInTheNeighborhoodMembers: liveInTheNeighborhoodHouseholdMembers(formData),
     formData,
     saveFormData,
+    preferenceNames: [
+      ...preferenceContents.map((content) => content.preferenceName),
+      ...(comboPreference ? [comboPreference.preferenceName] : []),
+    ],
   })
 
   const errorSectionRef = useRef<HTMLDivElement>(null)
@@ -150,7 +160,6 @@ const ListingApplyPreferenceStepWrapper = ({
   const [showGenericError, setShowGenericError] = useState(false)
   const [showMissingDocumentError, setShowMissingDocumentError] = useState(false)
 
-  // checks for any errors *except* preference-to-claim checkbox field errors
   const showErrorHeaders = () => {
     const preferenceNames = preferenceContents.map((content) => content.preferenceName)
     if (comboPreference) preferenceNames.push(comboPreference.preferenceName)
@@ -171,8 +180,10 @@ const ListingApplyPreferenceStepWrapper = ({
       ) || !!(comboPreference && subPreferenceClaimed && errors[subPreferenceClaimed])
 
     setShowMissingDocumentError(hasMissingDocumentError)
+    setShowRequiredCheckboxError(!!errors["missingRequiredClaimPrefCheckbox"])
     setShowGenericError(hasGenericError)
   }
+
   useEffect(showErrorHeaders, [
     formState,
     errors, // we need to use `formState` instead of `errors`, but linter will complain if `errors` is missing
@@ -181,6 +192,15 @@ const ListingApplyPreferenceStepWrapper = ({
     preferenceContents,
     subPreferenceClaimed,
   ])
+
+  useEffect(() => {
+    if (Object.keys(formMethods.formState.errors).length > 0) {
+      errorSectionRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })
+      handleSetSectionCompletion(currentStepInfo.sectionName, false)
+    } else {
+      handleSetSectionCompletion(currentStepInfo.sectionName, true)
+    }
+  }, [formMethods.formState.errors, handleSetSectionCompletion, currentStepInfo.sectionName])
 
   const clearAllErrors = () => {
     clearErrors()
@@ -192,7 +212,7 @@ const ListingApplyPreferenceStepWrapper = ({
   const handlePreferenceCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const isChecked = e.target.checked
     if (isChecked) {
-      setShowRequiredCheckboxError(false)
+      clearErrors("missingRequiredClaimPrefCheckbox")
     }
     if (isChecked && optOut) {
       setValue(optOut, false)
@@ -242,7 +262,10 @@ const ListingApplyPreferenceStepWrapper = ({
     // users can submit without checking any checkbox if there is no opt-out checkbox
     const somePrefsChecked = Object.values(checkboxValues).some((val) => !!val)
     if (!somePrefsChecked && optOut) {
-      setShowRequiredCheckboxError(true)
+      setError("missingRequiredClaimPrefCheckbox", {
+        type: "manual",
+        message: "At least one checkbox must be checked if opt-out checkbox is present.",
+      })
       return
     }
 
@@ -260,11 +283,9 @@ const ListingApplyPreferenceStepWrapper = ({
       ...(optOut && { [optOut]: optOutValue }),
       ...(subPreferenceClaimed && { [subPreferenceClaimed]: subPreferenceClaimedValue }),
     })
-    handleNextStep()
-  }
 
-  const onError = () => {
-    errorSectionRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })
+    handleSetSectionCompletion(currentStepInfo.sectionName, true)
+    handleNextStep()
   }
 
   const headerClassNames = [
@@ -309,7 +330,7 @@ const ListingApplyPreferenceStepWrapper = ({
           />
         )}
       </div>
-      <Form onSubmit={handleSubmit(onSubmit, onError)}>
+      <Form onSubmit={handleSubmit(onSubmit)}>
         <Card.Section>
           <p className={styles["preference-instructions"]}>{t("label.pleaseSelectPreference")}</p>
           {showComboPreference && (

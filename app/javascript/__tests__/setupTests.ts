@@ -116,6 +116,8 @@ window.matchMedia = jest.fn().mockImplementation((query) => ({
   removeEventListener: jest.fn(),
   dispatchEvent: jest.fn(),
 }))
+window.scrollTo = jest.fn()
+window.HTMLElement.prototype.scrollIntoView = jest.fn()
 
 void loadTranslations(LanguagePrefix.English)
 

@@ -1,6 +1,7 @@
 import React, { createContext, ReactNode, useContext } from "react"
 import type { StepInfoSchema } from "./formSchemas"
 import type { ListingApplicationStaticData } from "../pages/form/listing-apply-form"
+import type { SectionInfo } from "./formEngine"
 
 export type StaticData = Record<string, unknown> & ListingApplicationStaticData
 
@@ -11,10 +12,12 @@ export interface FormEngineContext {
   saveFormData: (formDataFragment: Record<string, unknown>) => void
   currentStepIndex: number
   stepInfoMap: StepInfoSchema[]
-  sectionNames: string[]
+  sectionMap: SectionInfo[]
+  completedSections: Record<string, boolean>
   handleNextStep: (currentFormData?: Record<string, unknown>) => void
   handlePrevStep: () => void
   jumpToStep: (stepSlug: string) => void
+  handleSetSectionCompletion: (sectionName: string | undefined, isComplete: boolean) => void
 }
 
 export const FormEngineContext = createContext<FormEngineContext | undefined>(undefined)

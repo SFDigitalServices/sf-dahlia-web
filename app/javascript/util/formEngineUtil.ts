@@ -5,6 +5,10 @@ import { t } from "@bloom-housing/ui-components"
 import { type Address } from "../api/formApiService"
 import { useEffect } from "react"
 import { ClaimedPreference } from "../pages/form/components/preferences/PreferenceUtils"
+import {
+  HouseholdMember,
+  HouseholdMemberInfo,
+} from "../pages/form/components/household/householdUtils"
 
 export const translationFromDataSchema = (
   translationKey: string,
@@ -30,9 +34,8 @@ export const showStep = (
 ): boolean => {
   const processedConditions = conditions.map((condition) => {
     const value = dataSources[condition.dataSource][condition.dataKey]
-    const processedCondition = condition.dataValueToMatch
-      ? condition.dataValueToMatch === value
-      : value
+    const processedCondition =
+      condition.dataValueToMatch !== undefined ? condition.dataValueToMatch === value : value
     return condition.negate ? !processedCondition : !!processedCondition
   })
   if (operation === "showStepIfAllPresent") {
@@ -282,40 +285,79 @@ export const getNestedError = (
 }
 
 /**
- * If live/work eligibility was changed on other form pages, removes stale
- * live/work claimed preferences (and the sub-preference selection) from
- * formData on mount. Other claimed preferences are untouched.
+ * Preference eligibility may change if a user updates their information.
+ * If eligiblity of any household member was changed on other form pages,
+ * we need to check for potential stale claimed preferences, remove it from formData
+ * and reset the preference step UI to only show eligible members.
  */
-export const useResetClaimedLiveWorkPreferences = ({
+
+const claimedMemberIsEligible = (
+  claim: ClaimedPreference | undefined,
+  eligibleMembers: { id: string }[]
+): boolean => eligibleMembers.some((member) => member.id === claim?.householdMemberId)
+
+export const useResetClaimedPreferences = ({
   setValue,
   claimedPreferences,
   subPreferenceClaimed,
   comboPreferenceName,
-  showComboPreference,
-  livesInSf,
-  worksInSf,
+  liveInSfMembers,
+  workInSfMembers,
+  liveInTheNeighborhoodMembers,
   formData,
   saveFormData,
+  preferenceNames = [],
 }: {
   setValue: (name: string, value: unknown) => void
   claimedPreferences: string
   subPreferenceClaimed?: string
   comboPreferenceName?: string
-  showComboPreference: boolean
-  livesInSf: boolean
-  worksInSf: boolean
+  liveInSfMembers: HouseholdMemberInfo[]
+  workInSfMembers: HouseholdMemberInfo[]
+  liveInTheNeighborhoodMembers: HouseholdMember[]
   formData: Record<string, unknown>
   saveFormData: (data: Record<string, unknown>) => void
+  preferenceNames: string[]
 }) => {
   useEffect(() => {
     const existingClaimedPreferences = (formData[claimedPreferences] || {}) as Record<
       string,
       ClaimedPreference
     >
+    const isLiveWorkStep =
+      preferenceNames.includes("liveInSf") || preferenceNames.includes("workInSf")
+    const isNRHPStep = preferenceNames.includes("neighborhoodResidence")
     const stalePreferences: string[] = []
-    if (!livesInSf) stalePreferences.push("liveInSf")
-    if (!worksInSf) stalePreferences.push("workInSf")
-    if (comboPreferenceName && !showComboPreference) stalePreferences.push(comboPreferenceName)
+
+    if (isLiveWorkStep) {
+      if (!claimedMemberIsEligible(existingClaimedPreferences.liveInSf, liveInSfMembers)) {
+        stalePreferences.push("liveInSf")
+      }
+      if (!claimedMemberIsEligible(existingClaimedPreferences.workInSf, workInSfMembers)) {
+        stalePreferences.push("workInSf")
+      }
+
+      if (comboPreferenceName) {
+        const combo = existingClaimedPreferences[comboPreferenceName]
+        const liveOrWork = subPreferenceClaimed ? (formData[subPreferenceClaimed] as string) : ""
+        const liveWorkMembers =
+          { liveInSf: liveInSfMembers, workInSf: workInSfMembers }[liveOrWork] ?? []
+
+        if (combo?.preferenceClaimed && !claimedMemberIsEligible(combo, liveWorkMembers)) {
+          stalePreferences.push(comboPreferenceName)
+        }
+      }
+    }
+
+    if (isNRHPStep) {
+      const neighborhood = existingClaimedPreferences.neighborhoodResidence
+      if (
+        neighborhood?.preferenceClaimed &&
+        !claimedMemberIsEligible(neighborhood, liveInTheNeighborhoodMembers)
+      ) {
+        stalePreferences.push("neighborhoodResidence")
+      }
+    }
 
     const claimedPreferencesToRemove = stalePreferences.filter(
       (key) => existingClaimedPreferences[key]?.preferenceClaimed
@@ -324,11 +366,11 @@ export const useResetClaimedLiveWorkPreferences = ({
     const subPreferenceValue = subPreferenceClaimed
       ? (formData[subPreferenceClaimed] as string)
       : ""
-    const hasStaleSubPreference =
-      (subPreferenceValue === "liveInSf" && !livesInSf) ||
-      (subPreferenceValue === "workInSf" && !worksInSf)
-
-    if (claimedPreferencesToRemove.length === 0 && !hasStaleSubPreference) return
+    const hasStaleLiveOrWorkSubPreference =
+      isLiveWorkStep &&
+      ((subPreferenceValue === "liveInSf" && liveInSfMembers.length === 0) ||
+        (subPreferenceValue === "workInSf" && workInSfMembers.length === 0))
+    if (claimedPreferencesToRemove.length === 0 && !hasStaleLiveOrWorkSubPreference) return
 
     const updatedClaimedPreferences = Object.fromEntries(
       Object.entries(existingClaimedPreferences).filter(
@@ -336,8 +378,8 @@ export const useResetClaimedLiveWorkPreferences = ({
       )
     )
 
-    // TODO: DAH-4122 Delete uploaded preference proof files
-    if (hasStaleSubPreference && subPreferenceClaimed) {
+    // TODO: DAH-4122 Delete uploaded preference proof files and reset UI
+    if (hasStaleLiveOrWorkSubPreference && subPreferenceClaimed) {
       setValue(subPreferenceClaimed, "")
       saveFormData({
         [claimedPreferences]: updatedClaimedPreferences,

@@ -5,6 +5,7 @@ import {
   deleteUploadedProofFile,
   locateVerifiedAddress,
   checkHouseholdEligibility,
+  checkNeighborhoodPreferenceMatch,
 } from "../../api/formApiService"
 
 jest.mock("axios")
@@ -13,6 +14,31 @@ jest.mock("../../api/apiService", () => ({
   post: jest.fn(),
   apiDelete: jest.fn(),
 }))
+const staticData = ({
+  preferenceNames = {},
+  Project_ID = "2017-040",
+}: { preferenceNames?: Record<string, string>; Project_ID?: string } = {}) =>
+  ({
+    listing: { Id: "listing-1", Building_Name: "Shirley Chisholm Village", Project_ID },
+    preferenceNames,
+  }) as never
+
+const verifiedAddressResponse = {
+  // Uses Shirley Chisholm as the test listing/address for boundary match
+  address: {
+    street1: "1360 43rd Ave",
+    street2: "",
+    city: "San Francisco",
+    state: "CA",
+    zip: "94122",
+  },
+}
+const applicantInfo = {
+  firstName: "John",
+  middleName: "M",
+  lastName: "Smith",
+  dob: "1990-01-12",
+}
 
 describe("formApiService", () => {
   beforeEach(() => {
@@ -67,7 +93,6 @@ describe("formApiService", () => {
         primaryApplicantFirstName: "First name",
         primaryApplicantMiddleName: "Middle name",
         primaryApplicantLastName: "Last name",
-        primaryApplicantDob: "1990-01-01",
       }
       await submitForm(formData, "testListingId")
 
@@ -131,6 +156,83 @@ describe("formApiService", () => {
         listing_id: "testListingId",
       })
       expect(result).toEqual({ id: "test-id" })
+    })
+  })
+  describe("checkNeighborhoodPreferenceMatch", () => {
+    beforeEach(() => {
+      ;(post as jest.Mock).mockResolvedValue({ data: { gis_data: { boundary_match: true } } })
+    })
+
+    it("returns boundary match data", async () => {
+      const result = await checkNeighborhoodPreferenceMatch(
+        verifiedAddressResponse,
+        staticData({ preferenceNames: { neighborhoodResidence: "NRHP" } }),
+        applicantInfo
+      )
+
+      expect(result).toBe(true)
+      expect(post).toHaveBeenCalledWith("/api/v1/addresses/gis-data.json", {
+        address: { address1: "1360 43rd Ave", city: "San Francisco", state: "CA", zip: "94122" },
+        listing: { Id: "listing-1", Name: "Shirley Chisholm Village" },
+        project_id: "2017-040",
+        member: applicantInfo,
+      })
+    })
+
+    it("returns false when outside the boundary", async () => {
+      ;(post as jest.Mock).mockResolvedValue({ data: { gis_data: { boundary_match: false } } })
+      const result = await checkNeighborhoodPreferenceMatch(
+        verifiedAddressResponse,
+        staticData({ preferenceNames: { neighborhoodResidence: "NRHP" } }),
+        applicantInfo
+      )
+      expect(result).toBe(false)
+    })
+
+    it("returns null when the backend returns a null match", async () => {
+      ;(post as jest.Mock).mockResolvedValue({ data: { gis_data: { boundary_match: null } } })
+      const result = await checkNeighborhoodPreferenceMatch(
+        verifiedAddressResponse,
+        staticData({ preferenceNames: { neighborhoodResidence: "NRHP" } }),
+        applicantInfo
+      )
+      expect(result).toBeNull()
+    })
+
+    it("uses 'ADHP' as project_id when antiDisplacement is present", async () => {
+      await checkNeighborhoodPreferenceMatch(
+        verifiedAddressResponse,
+        staticData({ preferenceNames: { antiDisplacement: "ADHP" } }),
+        applicantInfo
+      )
+      expect(post).toHaveBeenCalledWith(
+        expect.any(String),
+        expect.objectContaining({ project_id: "ADHP" })
+      )
+    })
+
+    it("uses the listing Project_ID for neighborhoodResidence", async () => {
+      await checkNeighborhoodPreferenceMatch(
+        verifiedAddressResponse,
+        staticData({
+          preferenceNames: { neighborhoodResidence: "NRHP" },
+          Project_ID: "9999-000",
+        }),
+        applicantInfo
+      )
+      expect(post).toHaveBeenCalledWith(
+        expect.any(String),
+        expect.objectContaining({ project_id: "9999-000" })
+      )
+    })
+    it("returns null without hitting the API when the listing has neither neighborhood preference", async () => {
+      const result = await checkNeighborhoodPreferenceMatch(
+        verifiedAddressResponse,
+        staticData({ preferenceNames: { certificateOfPreference: "COP" } }),
+        applicantInfo
+      )
+      expect(result).toBeNull()
+      expect(post).not.toHaveBeenCalled()
     })
   })
 })
