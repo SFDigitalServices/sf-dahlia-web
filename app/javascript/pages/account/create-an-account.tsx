@@ -77,7 +77,7 @@ const CreateAnAccountPage = () => {
                 {t("nav.signIn")}
               </Button>
             </Card.Section>
-            <GetHelp />
+            <GetHelp flow="createAccount" />
           </Card>
         </div>
       </section>

@@ -7,14 +7,10 @@ import UserContext, { ContextProps } from "../../authentication/context/UserCont
 import { isTokenValid, parseUrlParams } from "../../authentication/token"
 import { getLocalizedPath, RedirectType } from "../../util/routeUtil"
 import { getCurrentLanguage } from "../../util/languageUtil"
+import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import TagManager from "react-gtm-module"
 
 // Mock the useGTMDataLayer hook
-jest.mock("react-gtm-module", () => ({
-  initialize: jest.fn(),
-  dataLayer: jest.fn(),
-}))
-
 jest.mock("react-gtm-module", () => ({
   initialize: jest.fn(),
   dataLayer: jest.fn(),
@@ -34,6 +30,10 @@ jest.mock("../../util/languageUtil", () => ({
 
 jest.mock("../../util/routeUtil", () => ({
   getLocalizedPath: jest.fn((path) => path),
+}))
+
+jest.mock("../../hooks/useFeatureFlag", () => ({
+  useFeatureFlag: jest.fn(() => ({ flagsReady: true, unleashFlag: false })),
 }))
 
 describe("withAuthentication", () => {
@@ -64,6 +64,7 @@ describe("withAuthentication", () => {
     ;(getCurrentLanguage as jest.Mock).mockReturnValue("en")
     ;(isTokenValid as jest.Mock).mockReset()
     ;(parseUrlParams as jest.Mock).mockReset()
+    ;(useFeatureFlag as jest.Mock).mockReturnValue({ flagsReady: true, unleashFlag: false })
 
     // Setup default mock return values
     ;(parseUrlParams as jest.Mock).mockReturnValue({

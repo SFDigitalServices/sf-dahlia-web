@@ -14,7 +14,7 @@ import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import { isTokenValid } from "../../authentication/token"
 
 jest.mock("../../hooks/useFeatureFlag", () => ({
-  useFeatureFlag: jest.fn(() => ({ flagsReady: true, unleashFlag: true })),
+  useFeatureFlag: jest.fn(() => ({ flagsReady: true, unleashFlag: false })),
 }))
 
 jest.mock("../../authentication/token", () => ({
@@ -57,7 +57,7 @@ jest.mock("@bloom-housing/ui-seeds", () => {
 describe("<SignIn />", () => {
   beforeEach(() => {
     jest.resetAllMocks()
-    ;(useFeatureFlag as jest.Mock).mockReturnValue({ flagsReady: true, unleashFlag: true })
+    ;(useFeatureFlag as jest.Mock).mockReturnValue({ flagsReady: true, unleashFlag: false })
     ;(isTokenValid as jest.Mock).mockReturnValue(false)
   })
 

@@ -165,6 +165,12 @@ const newPasswordValidation: Validate = (newPassword: string) => {
   }
   return true
 }
+
+const getPasswordValidation = (passwordType: PasswordFieldsetProps["passwordType"]) =>
+  passwordType === "signIn"
+    ? { required: "password:required" }
+    : { required: "password:required", validate: newPasswordValidation }
+
 const PasswordFieldset = ({
   register,
   errors,
@@ -220,10 +226,7 @@ const PasswordFieldset = ({
         label="password"
         labelClassName="sr-only"
         className="mt-0 mb-4"
-        validation={{
-          required: "password:required",
-          validate: newPasswordValidation,
-        }}
+        validation={getPasswordValidation(passwordType)}
         passwordVisibilityDefault={
           passwordType === "createAccount" || passwordType === "accountSettings"
         }
