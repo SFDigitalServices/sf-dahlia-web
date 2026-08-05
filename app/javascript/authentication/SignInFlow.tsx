@@ -125,9 +125,11 @@ const SignInFlow = () => {
               <Heading priority={2} size="lg">
                 {t("signIn.dontHaveAccount")}
               </Heading>
-              <p className={styles.createAccountDescription}>{t("signIn.createAccount")}</p>
+              <p className={styles.createAccountDescription}>
+                {t("signIn.createAccountDescription")}
+              </p>
               <Button variant="primary-outlined" size="sm" href={getCreateAccountPath()}>
-                {t("label.createAccount")}
+                {t("signIn.createAccount")}
               </Button>
             </Card.Section>
             <GetHelp flow="signIn" />
