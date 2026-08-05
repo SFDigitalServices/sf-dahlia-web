@@ -73,19 +73,19 @@ const SignInFlow = () => {
       <section className="bg-gray-300 md:border-t md:border-gray-450">
         <div className="flex flex-wrap relative md:max-w-lg mx-auto md:py-8">
           <Card className={styles.card}>
-            {showError && (
-              <div ref={alertRef} tabIndex={-1}>
-                <Alert fullwidth variant="alert" onClose={() => setShowError(false)}>
-                  {renderInlineMarkup(
-                    t("signIn.badCredentialsWithResetLink", { url: forgotPasswordPath })
-                  )}
-                </Alert>
-              </div>
-            )}
             <Card.Section divider="inset">
               <Heading priority={1} size="2xl">
                 {t("pageTitle.signIn")}
               </Heading>
+              {showError && (
+                <div ref={alertRef} tabIndex={-1} className={styles.errorAlert}>
+                  <Alert fullwidth variant="alert" onClose={() => setShowError(false)}>
+                    {renderInlineMarkup(
+                      t("signIn.badCredentialsWithResetLink", { url: forgotPasswordPath })
+                    )}
+                  </Alert>
+                </div>
+              )}
               <Form className={styles.form} onSubmit={handleSubmit(onSubmit, onError)}>
                 <EmailFieldset register={register} />
                 <span className={styles.forgotPassword}>
