@@ -83,7 +83,9 @@ describe("<EnterCode />", () => {
     expect(screen.getByRole("button", { name: t("createAccount.howToUseCode") })).not.toBeNull()
     expect(screen.getByRole("heading", { name: t("createAccount.getHelp") })).not.toBeNull()
     expect(
-      screen.getByRole("link", { name: t("createAccount.getHelpLink") }).getAttribute("href")
+      screen
+        .getByRole("link", { name: /how to create an account or find help/i })
+        .getAttribute("href")
     ).toBe("https://www.sf.gov/learn-how-to-create-dahlia-account")
   })
 
