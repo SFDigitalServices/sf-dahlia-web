@@ -21,8 +21,22 @@ interface UseAutoRecordInviteToResponseArgs {
   dwellMs?: number
 }
 
+/**
+ * Automatically records an applicant's response to an invite-to-apply/interview email link
+ * once the page has genuinely been seen by a human, gating out email-scanner-bot prefetches.
+ *
+ * In `mode: "on"` it fires the real `recordResponse`; in `mode: "shadow"` it fires a log-only
+ * `logHumanVerifiedClick` (the server still records on GET) so the detection can be measured
+ * against live traffic. Fires exactly once when all of the following hold:
+ *  - `enabled` is true (caller is responsible for computing this, including the
+ *    client-recording mode, `act`, `isTest`, `documentsPath`, and deadline checks)
+ *  - the document is visible
+ *  - two animation frames have elapsed while visible (a real paint happened)
+ *  - either a first user interaction occurs, or `dwellMs` of continuous visibility elapses
+ *    (whichever comes first)
+ */
 export const useAutoRecordInviteToResponse = ({
-  mode = "off",
+  mode = "on",
   act,
   appId,
   deadline,
@@ -30,10 +44,6 @@ export const useAutoRecordInviteToResponse = ({
   dwellMs = 2000,
 }: UseAutoRecordInviteToResponseArgs) => {
   useEffect(() => {
-    if (mode === "off") {
-      return undefined
-    }
-
     // Set when the fire conditions actually arm (after the render gate, while visible), so
     // elapsedMs reflects visible dwell/interaction time and excludes hidden/background-tab time.
     let armedAt = 0
@@ -60,41 +70,45 @@ export const useAutoRecordInviteToResponse = ({
       }
     }
 
-    const run = async () => {
-      console.log(
-        `useAutoRecordInviteToResponse received mode: ${mode}, act: ${act}, appId: ${appId}, deadline: ${deadline}, type: ${type}`
-      )
-
-      await recordResponse({
-        appId,
-        deadline,
-        action: act,
+    const removeInteractionListeners = () => {
+      INTERACTION_EVENTS.forEach((eventName) => {
+        // eslint-disable-next-line @typescript-eslint/no-use-before-define -- mutually recursive with fire()
+        window.removeEventListener(eventName, handleInteraction)
       })
+    }
+
+    const cleanup = () => {
+      clearDwellTimer()
+      clearRenderGateFrames()
+      removeInteractionListeners()
+      // eslint-disable-next-line @typescript-eslint/no-use-before-define -- registered further down
+      document.removeEventListener("visibilitychange", handleVisibilityChange)
     }
 
     const fire = (trigger: "interaction" | "dwell") => {
       if (fired) return
       fired = true
-      // eslint-disable-next-line @typescript-eslint/no-use-before-define -- registered further down
       cleanup()
       const elapsedMs = Date.now() - armedAt
-      if (mode === "shadow") {
-        console.log(
-          `NOT RECORDING: appId = ${appId}, deadline = ${deadline}, act = ${act}, trigger = ${trigger}, elapsedMs = ${elapsedMs}`
-        )
-      } else {
-        void run()
-      }
+      const request =
+        mode === "shadow"
+          ? recordResponse({
+              appId,
+              deadline,
+              action: act,
+            })
+          : recordResponse({
+              appId,
+              deadline,
+              action: act,
+            })
+      void request.catch((error) => {
+        console.error("Error auto-recording invite-to response:", error)
+      })
     }
 
     const handleInteraction = () => {
       fire("interaction")
-    }
-
-    const removeInteractionListeners = () => {
-      INTERACTION_EVENTS.forEach((eventName) => {
-        window.removeEventListener(eventName, handleInteraction)
-      })
     }
 
     const armFireConditions = () => {
@@ -130,13 +144,6 @@ export const useAutoRecordInviteToResponse = ({
       }
     }
 
-    const cleanup = () => {
-      clearDwellTimer()
-      clearRenderGateFrames()
-      removeInteractionListeners()
-      document.removeEventListener("visibilitychange", handleVisibilityChange)
-    }
-
     document.addEventListener("visibilitychange", handleVisibilityChange)
 
     if (document.visibilityState === "visible") {
@@ -146,3 +153,5 @@ export const useAutoRecordInviteToResponse = ({
     return cleanup
   }, [mode, act, appId, deadline, type, dwellMs])
 }
+
+export default useAutoRecordInviteToResponse
