@@ -63,7 +63,7 @@ const PAGE_ROUTES = [
   [ListingApplyForm, "/listings/:id/apply/intro"],
   [SignIn, "/sign-in"],
   [CreateAnAccount, "/create-account"],
-  [EnterCode, "/enter-code"],
+  [EnterCode, "/create-account/code"],
   [ForgotPassword, "/forgot-password"],
   [ResetPassword, "/reset-password"],
   [HousingCounselors, "/housing-counselors"],
