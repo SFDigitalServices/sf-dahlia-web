@@ -2,6 +2,7 @@ import React from "react"
 import { useAuth, useSignIn, useSignUp } from "@clerk/clerk-react"
 import { screen, waitFor, within, cleanup } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
+import { useNavigate } from "react-router"
 import SignIn from "../../pages/sign-in"
 import {
   renderAndLoadAsync,
@@ -21,6 +22,11 @@ jest.mock("@clerk/clerk-react", () => {
   }
 })
 
+jest.mock("react-router", () => ({
+  ...jest.requireActual("react-router"),
+  useNavigate: jest.fn(),
+}))
+
 const switchToCodeView = async () => {
   const user = userEvent.setup()
   await user.click(screen.getByRole("button", { name: /get a one-time code to sign in/i }))
@@ -38,20 +44,25 @@ const submitCredentials = async (password = "abcd1234") => {
 describe("<SignInFlow />", () => {
   let originalLocation: Location
   let mockSignInCreate: jest.Mock
+  let mockPrepareFirstFactor: jest.Mock
   let mockSetActive: jest.Mock
+  let mockNavigate: jest.Mock
 
   beforeEach(() => {
     document.documentElement.lang = "en"
     originalLocation = mockWindowLocation()
     setupUserContext({ loggedIn: false })
+    mockNavigate = jest.fn()
+    mockPrepareFirstFactor = jest.fn().mockResolvedValue(undefined)
     mockSignInCreate = jest
       .fn()
       .mockResolvedValue({ status: "complete", createdSessionId: "session-id" })
     mockSetActive = jest.fn().mockResolvedValue(undefined)
+    ;(useNavigate as jest.Mock).mockReturnValue(mockNavigate)
     ;(useAuth as jest.Mock).mockReturnValue({ isLoaded: true, isSignedIn: false })
     ;(useSignIn as jest.Mock).mockReturnValue({
       isLoaded: true,
-      signIn: { create: mockSignInCreate },
+      signIn: { create: mockSignInCreate, prepareFirstFactor: mockPrepareFirstFactor },
       setActive: mockSetActive,
     })
     ;(useSignUp as jest.Mock).mockReturnValue({ isLoaded: true })
@@ -104,6 +115,28 @@ describe("<SignInFlow />", () => {
     expect(screen.getByRole("group", { name: /^password$/i })).not.toBeNull()
     expect(screen.getByRole("button", { name: /^sign in$/i })).not.toBeNull()
     expect(screen.queryByRole("button", { name: /^get a code$/i })).toBeNull()
+  })
+
+  it("navigates to the sign-in code page when requesting a code", async () => {
+    mockSignInCreate.mockResolvedValue({
+      supportedFirstFactors: [{ strategy: "email_code", emailAddressId: "idn_email" }],
+    })
+    await renderAndLoadAsync(<SignIn assetPaths={{}} />)
+    const user = await switchToCodeView()
+    const emailGroup = screen.getByRole("group", { name: /email/i })
+    await user.type(within(emailGroup).getByRole("textbox"), "test@test.com")
+    await user.click(screen.getByRole("button", { name: /^get a code$/i }))
+
+    await waitFor(() => {
+      expect(mockSignInCreate).toHaveBeenCalledWith({ identifier: "test@test.com" })
+    })
+    expect(mockPrepareFirstFactor).toHaveBeenCalledWith({
+      strategy: "email_code",
+      emailAddressId: "idn_email",
+    })
+    expect(mockNavigate).toHaveBeenCalledWith("/sign-in/code", {
+      state: { email: "test@test.com" },
+    })
   })
 
   it("redirects to the account overview when already signed in", async () => {
