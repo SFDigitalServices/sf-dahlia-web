@@ -96,7 +96,7 @@ describe("<CreateAnAccount />", () => {
     expect(mockPrepareEmailAddressVerification).toHaveBeenCalledWith({
       strategy: "email_code",
     })
-    expect(mockNavigate).toHaveBeenCalledWith("/enter-code", {
+    expect(mockNavigate).toHaveBeenCalledWith("/create-account/code", {
       state: { email: "test@example.com" },
     })
   })

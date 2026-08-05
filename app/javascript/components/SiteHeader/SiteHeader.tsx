@@ -15,7 +15,6 @@ import UserContext from "../../authentication/context/UserContext"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import { UNLEASH_FLAG } from "../../modules/constants"
 import { localizedPath } from "../../util/routeUtil"
-import "@bloom-housing/ui-components/src/headers/SiteHeader.scss"
 import styles from "./SiteHeader.module.scss"
 
 type LogoWidth = "slim" | "base" | "medium" | "wide"

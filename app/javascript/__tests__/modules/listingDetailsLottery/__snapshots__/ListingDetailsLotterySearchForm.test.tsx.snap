@@ -41,14 +41,13 @@ exports[`ListingDetailsLotteryModal displays initial view with form and listing 
           class="control"
         >
           <input
-            aria-describedby="lotterySearchNumber-error"
+            aria-describedby="  lotterySearchNumber-error lotterySearchNumber-note lotterySearchNumber-sub-note"
             aria-invalid="false"
             class="input"
             id="lotterySearchNumber"
             name="lotterySearchNumber"
             placeholder="Enter Your Lottery Number"
             type="text"
-            value=""
           />
         </div>
         <span
