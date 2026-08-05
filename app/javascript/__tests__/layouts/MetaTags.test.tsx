@@ -16,13 +16,15 @@ describe("<MetaTags />", () => {
   })
 
   it("renders a default title", () => {
-    const { getByText } = render(<MetaTags />)
-    expect(getByText("DAHLIA San Francisco Housing Portal")).toBeInTheDocument()
+    render(<MetaTags />)
+    // React 19 hoists <title> into the document head.
+    expect(document.title).toEqual("DAHLIA San Francisco Housing Portal")
   })
 
   it("renders a description", () => {
-    const { container } = render(<MetaTags description="The Description" />)
-    const descriptionMeta = container.querySelector("meta[name='description']")
+    render(<MetaTags description="The Description" />)
+    // React 19 hoists <meta> tags into the document head.
+    const descriptionMeta = document.head.querySelector("meta[name='description']")
     expect(descriptionMeta?.getAttribute("content")).toEqual("The Description")
   })
 })

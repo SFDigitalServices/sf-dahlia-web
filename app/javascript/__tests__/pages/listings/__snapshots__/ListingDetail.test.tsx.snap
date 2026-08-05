@@ -8,58 +8,6 @@ exports[`Listing Detail renders a habitat listing 1`] = `
     <div
       class="site-content"
     >
-      <title
-        class="notranslate"
-      >
-        TEST: 36 Amber Drive
-      </title>
-      <meta
-        charset="utf-8"
-      />
-      <meta
-        content="IE=edge"
-        http-equiv="X-UA-Compatible"
-      />
-      <meta
-        content="width=device-width, initial-scale=1"
-        name="viewport"
-      />
-      <meta
-        content="M1zcm6GGM6sHSF_jvkq254DbYAj94JYbFC7ArZDAXlg"
-        name="google-site-verification"
-      />
-      <meta
-        content="http://localhost/"
-        property="og:url"
-      />
-      <meta
-        content="website"
-        property="og:type"
-      />
-      <meta
-        content="TEST: 36 Amber Drive"
-        property="og:title"
-      />
-      <meta
-        content="36 Amber Drive, San Francisco, CA 94131. Applications Closed Dec 1, 2022 at 5:00 PM"
-        property="og:description"
-      />
-      <meta
-        content="36 Amber Drive, San Francisco, CA 94131. Applications Closed Dec 1, 2022 at 5:00 PM"
-        name="description"
-      />
-      <meta
-        content="https://d31h23p2gsu1kr.cloudfront.net/images/listings/a0W0P00000GlKfBUAV-4d20089ed488fce1a695b73a8a4f090d.jpg"
-        property="og:image"
-      />
-      <meta
-        content="DAHLIA San Francisco Housing Portal"
-        property="og:site_name"
-      />
-      <meta
-        content="summary_large_image"
-        name="twitter:card"
-      />
       <header
         class="site-header"
       >
@@ -700,7 +648,7 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                                 >
                                   <svg
                                     aria-hidden="true"
-                                    class="svg-inline--fa fa-envelope "
+                                    class="svg-inline--fa fa-envelope"
                                     data-icon="envelope"
                                     data-prefix="fas"
                                     focusable="false"
@@ -799,12 +747,12 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                     role="heading"
                   >
                     <div
-                      aria-controls="accordion__panel-:re:"
+                      aria-controls="accordion__panel-_r_e_"
                       aria-disabled="false"
                       aria-expanded="false"
                       class="accordion__button"
                       data-accordion-component="AccordionItemButton"
-                      id="accordion__heading-:re:"
+                      id="accordion__heading-_r_e_"
                       role="button"
                       tabindex="0"
                     >
@@ -891,7 +839,7 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                     class="accordion__panel"
                     data-accordion-component="AccordionItemPanel"
                     hidden=""
-                    id="accordion__panel-:re:"
+                    id="accordion__panel-_r_e_"
                   >
                     <div
                       class="border-b border-gray-400 md:border-b-0"
@@ -1353,12 +1301,12 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                     role="heading"
                   >
                     <div
-                      aria-controls="accordion__panel-:rf:"
+                      aria-controls="accordion__panel-_r_f_"
                       aria-disabled="false"
                       aria-expanded="false"
                       class="accordion__button"
                       data-accordion-component="AccordionItemButton"
-                      id="accordion__heading-:rf:"
+                      id="accordion__heading-_r_f_"
                       role="button"
                       tabindex="0"
                     >
@@ -1441,7 +1389,7 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                     class="accordion__panel"
                     data-accordion-component="AccordionItemPanel"
                     hidden=""
-                    id="accordion__panel-:rf:"
+                    id="accordion__panel-_r_f_"
                   >
                     <ul>
                       <li
@@ -2162,12 +2110,12 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                     role="heading"
                   >
                     <div
-                      aria-controls="accordion__panel-:rg:"
+                      aria-controls="accordion__panel-_r_g_"
                       aria-disabled="false"
                       aria-expanded="false"
                       class="accordion__button"
                       data-accordion-component="AccordionItemButton"
-                      id="accordion__heading-:rg:"
+                      id="accordion__heading-_r_g_"
                       role="button"
                       tabindex="0"
                     >
@@ -2250,7 +2198,7 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                     class="accordion__panel"
                     data-accordion-component="AccordionItemPanel"
                     hidden=""
-                    id="accordion__panel-:rg:"
+                    id="accordion__panel-_r_g_"
                   >
                     <section
                       class="aside-block see-the-unit translate"
@@ -2314,7 +2262,7 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                                 >
                                   <svg
                                     aria-hidden="true"
-                                    class="svg-inline--fa fa-envelope "
+                                    class="svg-inline--fa fa-envelope"
                                     data-icon="envelope"
                                     data-prefix="fas"
                                     focusable="false"
@@ -2398,7 +2346,7 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                               >
                                 <svg
                                   aria-hidden="true"
-                                  class="svg-inline--fa fa-envelope "
+                                  class="svg-inline--fa fa-envelope"
                                   data-icon="envelope"
                                   data-prefix="fas"
                                   focusable="false"
@@ -2521,7 +2469,7 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                               >
                                 <svg
                                   aria-hidden="true"
-                                  class="svg-inline--fa fa-envelope "
+                                  class="svg-inline--fa fa-envelope"
                                   data-icon="envelope"
                                   data-prefix="fas"
                                   focusable="false"
@@ -2554,12 +2502,12 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                     role="heading"
                   >
                     <div
-                      aria-controls="accordion__panel-:rh:"
+                      aria-controls="accordion__panel-_r_j_"
                       aria-disabled="false"
                       aria-expanded="false"
                       class="accordion__button"
                       data-accordion-component="AccordionItemButton"
-                      id="accordion__heading-:rh:"
+                      id="accordion__heading-_r_j_"
                       role="button"
                       tabindex="0"
                     >
@@ -2646,7 +2594,7 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                     class="accordion__panel"
                     data-accordion-component="AccordionItemPanel"
                     hidden=""
-                    id="accordion__panel-:rh:"
+                    id="accordion__panel-_r_j_"
                   >
                     <div
                       class="listing-detail-panel"
@@ -3162,12 +3110,12 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                     role="heading"
                   >
                     <div
-                      aria-controls="accordion__panel-:rk:"
+                      aria-controls="accordion__panel-_r_o_"
                       aria-disabled="false"
                       aria-expanded="false"
                       class="accordion__button"
                       data-accordion-component="AccordionItemButton"
-                      id="accordion__heading-:rk:"
+                      id="accordion__heading-_r_o_"
                       role="button"
                       tabindex="0"
                     >
@@ -3254,7 +3202,7 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                     class="accordion__panel"
                     data-accordion-component="AccordionItemPanel"
                     hidden=""
-                    id="accordion__panel-:rk:"
+                    id="accordion__panel-_r_o_"
                   >
                     <iframe
                       class="md:mb-6 md:pl-16 pl-0"
@@ -3332,12 +3280,12 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                     role="heading"
                   >
                     <div
-                      aria-controls="accordion__panel-:ri:"
+                      aria-controls="accordion__panel-_r_k_"
                       aria-disabled="false"
                       aria-expanded="false"
                       class="accordion__button"
                       data-accordion-component="AccordionItemButton"
-                      id="accordion__heading-:ri:"
+                      id="accordion__heading-_r_k_"
                       role="button"
                       tabindex="0"
                     >
@@ -3424,7 +3372,7 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                     class="accordion__panel"
                     data-accordion-component="AccordionItemPanel"
                     hidden=""
-                    id="accordion__panel-:ri:"
+                    id="accordion__panel-_r_k_"
                   >
                     <iframe
                       class="md:mb-6 md:pl-16 pl-0"
@@ -3502,12 +3450,12 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                     role="heading"
                   >
                     <div
-                      aria-controls="accordion__panel-:rj:"
+                      aria-controls="accordion__panel-_r_l_"
                       aria-disabled="false"
                       aria-expanded="false"
                       class="accordion__button"
                       data-accordion-component="AccordionItemButton"
-                      id="accordion__heading-:rj:"
+                      id="accordion__heading-_r_l_"
                       role="button"
                       tabindex="0"
                     >
@@ -3594,7 +3542,7 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                     class="accordion__panel"
                     data-accordion-component="AccordionItemPanel"
                     hidden=""
-                    id="accordion__panel-:rj:"
+                    id="accordion__panel-_r_l_"
                   >
                     <div
                       class="listing-detail-panel"
@@ -4342,7 +4290,7 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                               >
                                 <svg
                                   aria-hidden="true"
-                                  class="svg-inline--fa fa-envelope "
+                                  class="svg-inline--fa fa-envelope"
                                   data-icon="envelope"
                                   data-prefix="fas"
                                   focusable="false"
@@ -5026,58 +4974,6 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
     <div
       class="site-content"
     >
-      <title
-        class="notranslate"
-      >
-        TEST Automated Listing (do not modify)
-      </title>
-      <meta
-        charset="utf-8"
-      />
-      <meta
-        content="IE=edge"
-        http-equiv="X-UA-Compatible"
-      />
-      <meta
-        content="width=device-width, initial-scale=1"
-        name="viewport"
-      />
-      <meta
-        content="M1zcm6GGM6sHSF_jvkq254DbYAj94JYbFC7ArZDAXlg"
-        name="google-site-verification"
-      />
-      <meta
-        content="http://localhost/"
-        property="og:url"
-      />
-      <meta
-        content="website"
-        property="og:type"
-      />
-      <meta
-        content="TEST Automated Listing (do not modify)"
-        property="og:title"
-      />
-      <meta
-        content=". Applications Closed Dec 31, 1999 at 5:00 PM"
-        property="og:description"
-      />
-      <meta
-        content=". Applications Closed Dec 31, 1999 at 5:00 PM"
-        name="description"
-      />
-      <meta
-        content="https://sfmohcd.org/sites/default/files/Documents/MOH/Housing%20Listing%20Photos/test-apologies.png"
-        property="og:image"
-      />
-      <meta
-        content="DAHLIA San Francisco Housing Portal"
-        property="og:site_name"
-      />
-      <meta
-        content="summary_large_image"
-        name="twitter:card"
-      />
       <header
         class="site-header"
       >
@@ -5655,12 +5551,12 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                     role="heading"
                   >
                     <div
-                      aria-controls="accordion__panel-:rt:"
+                      aria-controls="accordion__panel-_r_17_"
                       aria-disabled="false"
                       aria-expanded="false"
                       class="accordion__button"
                       data-accordion-component="AccordionItemButton"
-                      id="accordion__heading-:rt:"
+                      id="accordion__heading-_r_17_"
                       role="button"
                       tabindex="0"
                     >
@@ -5747,7 +5643,7 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                     class="accordion__panel"
                     data-accordion-component="AccordionItemPanel"
                     hidden=""
-                    id="accordion__panel-:rt:"
+                    id="accordion__panel-_r_17_"
                   >
                     <div
                       class="border-b border-gray-400 md:border-b-0"
@@ -6350,12 +6246,12 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                     role="heading"
                   >
                     <div
-                      aria-controls="accordion__panel-:ru:"
+                      aria-controls="accordion__panel-_r_18_"
                       aria-disabled="false"
                       aria-expanded="false"
                       class="accordion__button"
                       data-accordion-component="AccordionItemButton"
-                      id="accordion__heading-:ru:"
+                      id="accordion__heading-_r_18_"
                       role="button"
                       tabindex="0"
                     >
@@ -6442,7 +6338,7 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                     class="accordion__panel"
                     data-accordion-component="AccordionItemPanel"
                     hidden=""
-                    id="accordion__panel-:ru:"
+                    id="accordion__panel-_r_18_"
                   >
                     <ul>
                       <li
@@ -7591,12 +7487,12 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                     role="heading"
                   >
                     <div
-                      aria-controls="accordion__panel-:rv:"
+                      aria-controls="accordion__panel-_r_19_"
                       aria-disabled="false"
                       aria-expanded="false"
                       class="accordion__button"
                       data-accordion-component="AccordionItemButton"
-                      id="accordion__heading-:rv:"
+                      id="accordion__heading-_r_19_"
                       role="button"
                       tabindex="0"
                     >
@@ -7683,7 +7579,7 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                     class="accordion__panel"
                     data-accordion-component="AccordionItemPanel"
                     hidden=""
-                    id="accordion__panel-:rv:"
+                    id="accordion__panel-_r_19_"
                   >
                     <div
                       class="listing-detail-panel"
@@ -8343,12 +8239,12 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                     role="heading"
                   >
                     <div
-                      aria-controls="accordion__panel-:r10:"
+                      aria-controls="accordion__panel-_r_1a_"
                       aria-disabled="false"
                       aria-expanded="false"
                       class="accordion__button"
                       data-accordion-component="AccordionItemButton"
-                      id="accordion__heading-:r10:"
+                      id="accordion__heading-_r_1a_"
                       role="button"
                       tabindex="0"
                     >
@@ -8435,7 +8331,7 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                     class="accordion__panel"
                     data-accordion-component="AccordionItemPanel"
                     hidden=""
-                    id="accordion__panel-:r10:"
+                    id="accordion__panel-_r_1a_"
                   >
                     <div
                       class="listing-detail-panel"
@@ -10025,58 +9921,6 @@ exports[`Listing Detail renders an open rental listing 1`] = `
     <div
       class="site-content"
     >
-      <title
-        class="notranslate"
-      >
-        681 Florida - Casa Adelante
-      </title>
-      <meta
-        charset="utf-8"
-      />
-      <meta
-        content="IE=edge"
-        http-equiv="X-UA-Compatible"
-      />
-      <meta
-        content="width=device-width, initial-scale=1"
-        name="viewport"
-      />
-      <meta
-        content="M1zcm6GGM6sHSF_jvkq254DbYAj94JYbFC7ArZDAXlg"
-        name="google-site-verification"
-      />
-      <meta
-        content="http://localhost/"
-        property="og:url"
-      />
-      <meta
-        content="website"
-        property="og:type"
-      />
-      <meta
-        content="681 Florida - Casa Adelante"
-        property="og:title"
-      />
-      <meta
-        content="681 Florida St, San Francisco, CA 94110. Applications Closed May 30, 2024 at 5:00 PM"
-        property="og:description"
-      />
-      <meta
-        content="681 Florida St, San Francisco, CA 94110. Applications Closed May 30, 2024 at 5:00 PM"
-        name="description"
-      />
-      <meta
-        content="https://sfmohcd.org/sites/default/files/Documents/MOH/Housing%20Listing%20Photos/test-apologies.png"
-        property="og:image"
-      />
-      <meta
-        content="DAHLIA San Francisco Housing Portal"
-        property="og:site_name"
-      />
-      <meta
-        content="summary_large_image"
-        name="twitter:card"
-      />
       <header
         class="site-header"
       >
@@ -10707,12 +10551,12 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                     role="heading"
                   >
                     <div
-                      aria-controls="accordion__panel-:r1:"
+                      aria-controls="accordion__panel-_r_1_"
                       aria-disabled="false"
                       aria-expanded="false"
                       class="accordion__button"
                       data-accordion-component="AccordionItemButton"
-                      id="accordion__heading-:r1:"
+                      id="accordion__heading-_r_1_"
                       role="button"
                       tabindex="0"
                     >
@@ -10799,7 +10643,7 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                     class="accordion__panel"
                     data-accordion-component="AccordionItemPanel"
                     hidden=""
-                    id="accordion__panel-:r1:"
+                    id="accordion__panel-_r_1_"
                   >
                     <div
                       class="border-b border-gray-400 md:border-b-0"
@@ -11513,12 +11357,12 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                     role="heading"
                   >
                     <div
-                      aria-controls="accordion__panel-:r2:"
+                      aria-controls="accordion__panel-_r_2_"
                       aria-disabled="false"
                       aria-expanded="false"
                       class="accordion__button"
                       data-accordion-component="AccordionItemButton"
-                      id="accordion__heading-:r2:"
+                      id="accordion__heading-_r_2_"
                       role="button"
                       tabindex="0"
                     >
@@ -11605,7 +11449,7 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                     class="accordion__panel"
                     data-accordion-component="AccordionItemPanel"
                     hidden=""
-                    id="accordion__panel-:r2:"
+                    id="accordion__panel-_r_2_"
                   >
                     <ul>
                       <li
@@ -13396,12 +13240,12 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                     role="heading"
                   >
                     <div
-                      aria-controls="accordion__panel-:r3:"
+                      aria-controls="accordion__panel-_r_3_"
                       aria-disabled="false"
                       aria-expanded="false"
                       class="accordion__button"
                       data-accordion-component="AccordionItemButton"
-                      id="accordion__heading-:r3:"
+                      id="accordion__heading-_r_3_"
                       role="button"
                       tabindex="0"
                     >
@@ -13488,7 +13332,7 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                     class="accordion__panel"
                     data-accordion-component="AccordionItemPanel"
                     hidden=""
-                    id="accordion__panel-:r3:"
+                    id="accordion__panel-_r_3_"
                   >
                     <div
                       class="listing-detail-panel"
@@ -14457,12 +14301,12 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                     role="heading"
                   >
                     <div
-                      aria-controls="accordion__panel-:r6:"
+                      aria-controls="accordion__panel-_r_6_"
                       aria-disabled="false"
                       aria-expanded="false"
                       class="accordion__button"
                       data-accordion-component="AccordionItemButton"
-                      id="accordion__heading-:r6:"
+                      id="accordion__heading-_r_6_"
                       role="button"
                       tabindex="0"
                     >
@@ -14549,7 +14393,7 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                     class="accordion__panel"
                     data-accordion-component="AccordionItemPanel"
                     hidden=""
-                    id="accordion__panel-:r6:"
+                    id="accordion__panel-_r_6_"
                   >
                     <iframe
                       class="md:mb-6 md:pl-16 pl-0"
@@ -14627,12 +14471,12 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                     role="heading"
                   >
                     <div
-                      aria-controls="accordion__panel-:r4:"
+                      aria-controls="accordion__panel-_r_4_"
                       aria-disabled="false"
                       aria-expanded="false"
                       class="accordion__button"
                       data-accordion-component="AccordionItemButton"
-                      id="accordion__heading-:r4:"
+                      id="accordion__heading-_r_4_"
                       role="button"
                       tabindex="0"
                     >
@@ -14719,7 +14563,7 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                     class="accordion__panel"
                     data-accordion-component="AccordionItemPanel"
                     hidden=""
-                    id="accordion__panel-:r4:"
+                    id="accordion__panel-_r_4_"
                   >
                     <iframe
                       class="md:mb-6 md:pl-16 pl-0"
@@ -14797,12 +14641,12 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                     role="heading"
                   >
                     <div
-                      aria-controls="accordion__panel-:r5:"
+                      aria-controls="accordion__panel-_r_5_"
                       aria-disabled="false"
                       aria-expanded="false"
                       class="accordion__button"
                       data-accordion-component="AccordionItemButton"
-                      id="accordion__heading-:r5:"
+                      id="accordion__heading-_r_5_"
                       role="button"
                       tabindex="0"
                     >
@@ -14889,7 +14733,7 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                     class="accordion__panel"
                     data-accordion-component="AccordionItemPanel"
                     hidden=""
-                    id="accordion__panel-:r5:"
+                    id="accordion__panel-_r_5_"
                   >
                     <div
                       class="listing-detail-panel"

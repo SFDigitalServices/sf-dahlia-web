@@ -30,11 +30,8 @@ describe("FormSelect", () => {
   it("displays error when no value is selected", async () => {
     renderSelect()
     const user = userEvent.setup()
-    const select = screen.getByLabelText(t("label.householdMemberRelationship"))
-    await user.click(select)
-    await user.tab()
-
-    expect(screen.getByText(t("error.householdMemberRelationship"))).not.toBeNull()
+    await user.click(screen.getByRole("button", { name: t("t.next") }))
+    expect(await screen.findByText(t("error.householdMemberRelationship"))).not.toBeNull()
   })
 
   it("selects an option correctly", async () => {

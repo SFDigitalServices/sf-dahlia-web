@@ -9,7 +9,7 @@ const ListingApplyPublicHousingHeader = () => {
   const { formData } = formEngineContext
 
   const titleString =
-    formData.liveAlone === "false"
+    formData.liveAlone === false
       ? t("c4HouseholdPublicHousing.titleHousehold")
       : t("c4HouseholdPublicHousing.titleYou")
 

@@ -7,7 +7,7 @@ import { renderWithFormContextWrapper } from "../../../__util__/renderUtils"
 describe("ListingApplyPublicHousingHeader", () => {
   it("renders the household title when liveAlone is false", () => {
     renderWithFormContextWrapper(<ListingApplyPublicHousingHeader />, {
-      formData: { liveAlone: "false" },
+      formData: { liveAlone: false },
     })
 
     expect(screen.getByText(t("c4HouseholdPublicHousing.titleHousehold"))).toBeInTheDocument()
@@ -15,7 +15,7 @@ describe("ListingApplyPublicHousingHeader", () => {
 
   it("renders the individual title when liveAlone is true", () => {
     renderWithFormContextWrapper(<ListingApplyPublicHousingHeader />, {
-      formData: { liveAlone: "true" },
+      formData: { liveAlone: true },
     })
 
     expect(screen.getByText(t("c4HouseholdPublicHousing.titleYou"))).toBeInTheDocument()
