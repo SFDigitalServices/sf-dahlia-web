@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import React, { useEffect } from "react"
 import { useLocation, useNavigate } from "react-router"
-import { useSignUp } from "@clerk/clerk-react"
+import { useSignIn, useSignUp } from "@clerk/clerk-react"
 import { ExpandableContent, Form, Order, t } from "@bloom-housing/ui-components"
 import { Card, Heading, Link, Button } from "@bloom-housing/ui-seeds"
 import { Controller, useForm } from "react-hook-form"
@@ -11,6 +11,7 @@ import {
   AppPages,
   getAddPasswordPath,
   getCreateAccountPath,
+  getMyAccountPath,
   getSignInPath,
 } from "../../util/routeUtil"
 import styles from "./enter-code.module.scss"
@@ -28,7 +29,9 @@ interface EnterCodePageProps {
 
 const EnterCodePage = ({ email, flow }: EnterCodePageProps) => {
   const navigate = useNavigate()
-  const { isLoaded, signUp, setActive } = useSignUp()
+  const { isLoaded: signUpLoaded, signUp, setActive: setActiveSignUp } = useSignUp()
+  const { isLoaded: signInLoaded, signIn, setActive: setActiveSignIn } = useSignIn()
+  const isLoaded = flow === "signIn" ? signInLoaded : signUpLoaded
   const {
     control,
     handleSubmit,
@@ -43,13 +46,36 @@ const EnterCodePage = ({ email, flow }: EnterCodePageProps) => {
   const editEmailHref = flow === "signIn" ? getSignInPath() : getCreateAccountPath()
 
   const onSubmit = async ({ code }: { code: string }) => {
-    if (!isLoaded || !signUp) return
+    if (flow === "signIn") {
+      if (!signInLoaded || !signIn) return
+      try {
+        const completeSignIn = await signIn.attemptFirstFactor({
+          strategy: "email_code",
+          code,
+        })
+        if (completeSignIn.status === "complete") {
+          await setActiveSignIn({
+            session: completeSignIn.createdSessionId,
+            redirectUrl: getMyAccountPath(),
+          })
+        } else {
+          console.error("Sign in failed:", completeSignIn)
+          setError("code", { message: "invalid" })
+        }
+      } catch (error) {
+        console.error("Code verification error:", error)
+        setError("code", { message: "invalid" })
+      }
+      return
+    }
+
+    if (!signUpLoaded || !signUp) return
     try {
       const completeSignUp = await signUp.attemptEmailAddressVerification({
         code,
       })
       if (completeSignUp.status === "complete") {
-        await setActive({ session: completeSignUp.createdSessionId })
+        await setActiveSignUp({ session: completeSignUp.createdSessionId })
         void navigate(getAddPasswordPath())
       } else {
         console.error("Account creation failed:", completeSignUp)
@@ -62,7 +88,26 @@ const EnterCodePage = ({ email, flow }: EnterCodePageProps) => {
   }
 
   const onResend = async () => {
-    if (!isLoaded || !signUp) return
+    if (flow === "signIn") {
+      if (!signInLoaded || !signIn) return
+      try {
+        const emailCodeFactor = (signIn.supportedFirstFactors ?? []).find(
+          (factor) => factor.strategy === "email_code"
+        )
+        if (emailCodeFactor?.strategy !== "email_code") {
+          throw new Error("Email code factor missing")
+        }
+        await signIn.prepareFirstFactor({
+          strategy: "email_code",
+          emailAddressId: emailCodeFactor.emailAddressId,
+        })
+      } catch (error) {
+        console.error("Code resend error", error)
+      }
+      return
+    }
+
+    if (!signUpLoaded || !signUp) return
     try {
       await signUp.prepareEmailAddressVerification({ strategy: "email_code" })
     } catch (error) {

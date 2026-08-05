@@ -57,8 +57,26 @@ const SignInFlow = () => {
     }
   }
 
-  const onGetCodeSubmit = ({ email }: SignInFields) => {
-    void navigate(getSignInCodePath(), { state: { email } })
+  const onGetCodeSubmit = async ({ email }: SignInFields) => {
+    if (!isLoaded || !signIn) return
+    setShowError(false)
+    try {
+      const { supportedFirstFactors } = await signIn.create({ identifier: email })
+      const emailCodeFactor = (supportedFirstFactors ?? []).find(
+        (factor) => factor.strategy === "email_code"
+      )
+      if (emailCodeFactor?.strategy !== "email_code") {
+        throw new Error("Email code factor missing")
+      }
+      await signIn.prepareFirstFactor({
+        strategy: "email_code",
+        emailAddressId: emailCodeFactor.emailAddressId,
+      })
+      void navigate(getSignInCodePath(), { state: { email } })
+    } catch (error) {
+      console.error("Sign in code error", error)
+      setShowError(true)
+    }
   }
 
   if (authLoaded && isSignedIn) {
