@@ -303,7 +303,9 @@ describe("ListingApplyPreferenceStepWrapper", () => {
         renderWrapper()
         const user = userEvent.setup()
         await user.click(screen.getByText(t("t.next")))
-        expect(screen.getByText(t("error.pleaseSelectPreferenceOption"))).toBeInTheDocument()
+        expect(
+          await screen.findByText(t("error.pleaseSelectPreferenceOption"))
+        ).toBeInTheDocument()
         expect(screen.getByText(t("error.pleaseSelectPreferenceContent"))).toBeInTheDocument()
         expect(screen.getByText(t("error.pleaseSelectAnOption"))).toBeInTheDocument()
       })
@@ -312,30 +314,48 @@ describe("ListingApplyPreferenceStepWrapper", () => {
         renderWrapper()
         const user = userEvent.setup()
         await user.click(screen.getByText(t("t.next")))
-        expect(screen.getByText(t("error.pleaseSelectPreferenceOption"))).toBeInTheDocument()
+        expect(
+          await screen.findByText(t("error.pleaseSelectPreferenceOption"))
+        ).toBeInTheDocument()
 
         await user.click(screen.getByLabelText(t("e7PreferencesPrograms.certOfPreference")))
-        expect(screen.queryByText(t("error.pleaseSelectPreferenceOption"))).not.toBeInTheDocument()
+        await waitFor(() => {
+          expect(
+            screen.queryByText(t("error.pleaseSelectPreferenceOption"))
+          ).not.toBeInTheDocument()
+        })
       })
 
       it("clears the preference-to-claim checkbox when the opt-out checkbox is selected", async () => {
         renderWrapper()
         const user = userEvent.setup()
         await user.click(screen.getByText(t("t.next")))
-        expect(screen.getByText(t("error.pleaseSelectPreferenceOption"))).toBeInTheDocument()
+        expect(
+          await screen.findByText(t("error.pleaseSelectPreferenceOption"))
+        ).toBeInTheDocument()
 
         await user.click(screen.getByLabelText(t("label.dontWantPreference")))
-        expect(screen.queryByText(t("error.pleaseSelectPreferenceOption"))).not.toBeInTheDocument()
+        await waitFor(() => {
+          expect(
+            screen.queryByText(t("error.pleaseSelectPreferenceOption"))
+          ).not.toBeInTheDocument()
+        })
       })
 
       it("dismisses the preference-to-claim checkbox error when the close button is clicked", async () => {
         renderWrapper()
         const user = userEvent.setup()
         await user.click(screen.getByText(t("t.next")))
-        expect(screen.getByText(t("error.pleaseSelectPreferenceOption"))).toBeInTheDocument()
+        expect(
+          await screen.findByText(t("error.pleaseSelectPreferenceOption"))
+        ).toBeInTheDocument()
 
         await user.click(screen.getByLabelText(t("t.close")))
-        expect(screen.queryByText(t("error.pleaseSelectPreferenceOption"))).not.toBeInTheDocument()
+        await waitFor(() => {
+          expect(
+            screen.queryByText(t("error.pleaseSelectPreferenceOption"))
+          ).not.toBeInTheDocument()
+        })
       })
     })
 
