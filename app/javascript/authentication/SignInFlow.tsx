@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import React, { useState } from "react"
-import { Navigate } from "react-router"
+import { Navigate, useNavigate } from "react-router"
 import { useAuth, useSignIn } from "@clerk/clerk-react"
 import { Form, t } from "@bloom-housing/ui-components"
 import { Alert, Button, Card, Heading, Link } from "@bloom-housing/ui-seeds"
@@ -9,8 +9,12 @@ import Layout from "../layouts/Layout"
 import EmailFieldset from "../pages/account/components/EmailFieldset"
 import PasswordFieldset from "../pages/account/components/PasswordFieldset"
 import GetHelp from "../pages/account/components/GetHelp"
-import { EnterCodePage } from "../pages/account/enter-code"
-import { getCreateAccountPath, getForgotPasswordPath, getMyAccountPath } from "../util/routeUtil"
+import {
+  getCreateAccountPath,
+  getForgotPasswordPath,
+  getMyAccountPath,
+  getSignInCodePath,
+} from "../util/routeUtil"
 import { renderInlineMarkup } from "../util/languageUtil"
 import styles from "./SignInFlow.module.scss"
 
@@ -22,12 +26,12 @@ interface SignInFields {
 type SignInView = "code" | "password"
 
 const SignInFlow = () => {
+  const navigate = useNavigate()
   const { isLoaded: authLoaded, isSignedIn } = useAuth()
   const { isLoaded, signIn, setActive } = useSignIn()
   const [showError, setShowError] = useState(false)
   // Defaults to password sign in flow
   const [view, setView] = useState<SignInView>("password")
-  const [enterCodeEmail, setEnterCodeEmail] = useState<string | null>(null)
   const {
     register,
     handleSubmit,
@@ -54,24 +58,11 @@ const SignInFlow = () => {
   }
 
   const onGetCodeSubmit = ({ email }: SignInFields) => {
-    setEnterCodeEmail(email)
+    void navigate(getSignInCodePath(), { state: { email } })
   }
 
   if (authLoaded && isSignedIn) {
     return <Navigate to={getMyAccountPath()} replace />
-  }
-
-  if (enterCodeEmail) {
-    return (
-      <EnterCodePage
-        email={enterCodeEmail}
-        flow="signIn"
-        onEditEmail={() => {
-          setEnterCodeEmail(null)
-          setView("code")
-        }}
-      />
-    )
   }
 
   const codeSection = (

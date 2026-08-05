@@ -24,10 +24,9 @@ type EnterCodeFlow = "signIn" | "createAccount"
 interface EnterCodePageProps {
   email: string
   flow: EnterCodeFlow
-  onEditEmail?: () => void
 }
 
-const EnterCodePage = ({ email, flow, onEditEmail }: EnterCodePageProps) => {
+const EnterCodePage = ({ email, flow }: EnterCodePageProps) => {
   const navigate = useNavigate()
   const { isLoaded, signUp, setActive } = useSignUp()
   const {
@@ -84,20 +83,9 @@ const EnterCodePage = ({ email, flow, onEditEmail }: EnterCodePageProps) => {
                 {t("createAccount.weSentCodeTo")}
                 <br />
                 <span className={styles.email}>{email}</span>
-                {onEditEmail ? (
-                  <Button
-                    className={styles.editEmail}
-                    variant="text"
-                    size="md"
-                    onClick={onEditEmail}
-                  >
-                    {t("createAccount.editEmail")}
-                  </Button>
-                ) : (
-                  <Link className={styles.editEmail} href={editEmailHref}>
-                    {t("createAccount.editEmail")}
-                  </Link>
-                )}
+                <Link className={styles.editEmail} href={editEmailHref}>
+                  {t("createAccount.editEmail")}
+                </Link>
               </p>
               <Form onSubmit={handleSubmit(onSubmit)}>
                 <Controller
@@ -161,20 +149,22 @@ const EnterCodePage = ({ email, flow, onEditEmail }: EnterCodePageProps) => {
 
 const EnterCode = (_props: { assetPaths: unknown }) => {
   const navigate = useNavigate()
-  const { state } = useLocation()
+  const { pathname, state } = useLocation()
   const email = state?.email
+  const flow: EnterCodeFlow = pathname.includes("/sign-in/code") ? "signIn" : "createAccount"
+  const fallbackPath = flow === "signIn" ? getSignInPath() : getCreateAccountPath()
   const { unleashFlag: clerkEnabled } = useFeatureFlag(UNLEASH_FLAG.CLERK_AUTH, false)
   useEffect(() => {
     if (!email || !clerkEnabled) {
-      void navigate(getCreateAccountPath())
+      void navigate(fallbackPath)
     }
-  }, [email, clerkEnabled, navigate])
+  }, [email, clerkEnabled, fallbackPath, navigate])
 
-  if (!clerkEnabled) {
+  if (!clerkEnabled || !email) {
     return null
   }
 
-  return <EnterCodePage email={email} flow="createAccount" />
+  return <EnterCodePage email={email} flow={flow} />
 }
 
 export { EnterCodePage }

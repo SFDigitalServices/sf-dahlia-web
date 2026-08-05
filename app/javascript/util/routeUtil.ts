@@ -86,6 +86,7 @@ export const getCreateAccountPath = localizedPathGetter("/create-account")
 export const getEnterCodePath = localizedPathGetter("/create-account/code")
 export const getAddPasswordPath = localizedPathGetter("/add-password")
 export const getSignInPath = localizedPathGetter("/sign-in")
+export const getSignInCodePath = localizedPathGetter("/sign-in/code")
 export const getForgotPasswordPath = localizedPathGetter("/forgot-password")
 export const getResetPasswordPath = localizedPathGetter("/reset-password")
 
