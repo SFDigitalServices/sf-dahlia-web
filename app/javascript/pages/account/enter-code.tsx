@@ -144,7 +144,7 @@ const EnterCode = (_props: { assetPaths: unknown }) => {
     }
   }, [email, clerkEnabled, navigate])
 
-  if (!clerkEnabled) {
+  if (!email || !clerkEnabled) {
     return null
   }
 
