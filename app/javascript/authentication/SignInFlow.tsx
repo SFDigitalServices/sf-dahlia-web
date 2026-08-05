@@ -15,7 +15,7 @@ import {
   getForgotPasswordPath,
   getMyAccountPath,
 } from "../util/routeUtil"
-import { getSfGovUrl, renderInlineMarkup } from "../util/languageUtil"
+import { renderInlineMarkup } from "../util/languageUtil"
 import styles from "./SignInFlow.module.scss"
 
 interface SignInFields {
@@ -130,10 +130,7 @@ const SignInFlow = () => {
                 {t("label.createAccount")}
               </Button>
             </Card.Section>
-            <GetHelp
-              text={t("signIn.getHelpLink")}
-              href={getSfGovUrl("https://www.sf.gov/sign-in-to-your-dahlia-account")}
-            />
+            <GetHelp flow="signIn" />
           </Card>
         </div>
       </section>

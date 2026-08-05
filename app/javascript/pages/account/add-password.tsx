@@ -78,7 +78,7 @@ const AddPasswordPage = () => {
                 </div>
               </Form>
             </Card.Section>
-            <GetHelp />
+            <GetHelp flow="createAccount" />
           </Card>
         </div>
       </section>

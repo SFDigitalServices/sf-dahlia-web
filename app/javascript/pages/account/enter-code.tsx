@@ -7,7 +7,6 @@ import { Card, Heading, Link, Button } from "@bloom-housing/ui-seeds"
 import { Controller, useForm } from "react-hook-form"
 import withAppSetup from "../../layouts/withAppSetup"
 import Layout from "../../layouts/Layout"
-import { getSfGovUrl } from "../../util/languageUtil"
 import { AppPages, getAddPasswordPath, getCreateAccountPath } from "../../util/routeUtil"
 import styles from "./enter-code.module.scss"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
@@ -126,10 +125,7 @@ const EnterCodePage = ({ email }: { email: string }) => {
                 </div>
               </ExpandableContent>
             </Card.Section>
-            <GetHelp
-              text={t("createAccount.getHelpLink")}
-              href={getSfGovUrl("https://www.sf.gov/learn-how-to-create-dahlia-account")}
-            />
+            <GetHelp flow="createAccount" />
           </Card>
         </div>
       </section>
