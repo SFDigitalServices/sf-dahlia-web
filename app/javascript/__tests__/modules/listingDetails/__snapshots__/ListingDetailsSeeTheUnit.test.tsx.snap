@@ -64,7 +64,7 @@ exports[`ListingDetailsSeeTheUnit does not render SeeDetailsOnline when MLS and 
               >
                 <svg
                   aria-hidden="true"
-                  class="svg-inline--fa fa-envelope "
+                  class="svg-inline--fa fa-envelope"
                   data-icon="envelope"
                   data-prefix="fas"
                   focusable="false"
@@ -278,7 +278,7 @@ exports[`ListingDetailsSeeTheUnit renders SeeDetailsOnline when both MLS and Lis
               >
                 <svg
                   aria-hidden="true"
-                  class="svg-inline--fa fa-envelope "
+                  class="svg-inline--fa fa-envelope"
                   data-icon="envelope"
                   data-prefix="fas"
                   focusable="false"
@@ -504,7 +504,7 @@ exports[`ListingDetailsSeeTheUnit renders SeeDetailsOnline when only Listing_Onl
               >
                 <svg
                   aria-hidden="true"
-                  class="svg-inline--fa fa-envelope "
+                  class="svg-inline--fa fa-envelope"
                   data-icon="envelope"
                   data-prefix="fas"
                   focusable="false"
@@ -730,7 +730,7 @@ exports[`ListingDetailsSeeTheUnit renders SeeDetailsOnline when only MLS is set 
               >
                 <svg
                   aria-hidden="true"
-                  class="svg-inline--fa fa-envelope "
+                  class="svg-inline--fa fa-envelope"
                   data-icon="envelope"
                   data-prefix="fas"
                   focusable="false"

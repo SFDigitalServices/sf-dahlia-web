@@ -20,7 +20,9 @@ describe("ListingDetailsAside", () => {
       }
     })
 
-    const { asFragment } = render(<ListingDetailsAside listing={closedRentalListing} imageSrc="" />)
+    const { asFragment } = render(
+      <ListingDetailsAside listing={closedRentalListing} imageSrc={"listing-units.svg"} />
+    )
 
     expect(asFragment()).toMatchSnapshot()
   })
@@ -39,7 +41,9 @@ describe("ListingDetailsAside", () => {
       }
     })
 
-    const { asFragment } = render(<ListingDetailsAside listing={openSaleListing} imageSrc="" />)
+    const { asFragment } = render(
+      <ListingDetailsAside listing={openSaleListing} imageSrc={"listing-units.svg"} />
+    )
 
     expect(asFragment()).toMatchSnapshot()
   })
@@ -58,7 +62,9 @@ describe("ListingDetailsAside", () => {
       }
     })
 
-    const { asFragment } = render(<ListingDetailsAside listing={fcfsSaleListing} imageSrc="" />)
+    const { asFragment } = render(
+      <ListingDetailsAside listing={fcfsSaleListing} imageSrc={"listing-units.svg"} />
+    )
 
     expect(asFragment()).toMatchSnapshot()
   })
