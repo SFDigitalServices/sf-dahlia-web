@@ -1,4 +1,5 @@
 import React, { useContext } from "react"
+import { useAuth } from "@clerk/clerk-react"
 
 import {
   AlertBox,
@@ -13,6 +14,7 @@ import {
 import { SiteHeader, MenuLink } from "../components/SiteHeader/SiteHeader"
 import Markdown from "markdown-to-jsx"
 import UserContext from "../authentication/context/UserContext"
+import { clearHeaders, isTokenValid } from "../authentication/token"
 import { ConfigContext } from "../lib/ConfigContext"
 import { Link } from "@bloom-housing/ui-seeds"
 import {
@@ -33,7 +35,6 @@ import ErrorBoundary, { BoundaryScope } from "../components/ErrorBoundary"
 import { HelmetProvider } from "react-helmet-async"
 
 import "./Layout.scss"
-import { isTokenValid } from "../authentication/token"
 import { useFeatureFlag } from "../hooks/useFeatureFlag"
 import { UNLEASH_FLAG } from "../modules/constants"
 
@@ -76,7 +77,7 @@ const getLanguageItems = () => {
 
 const getMenuLinks = (
   signedIn: boolean,
-  signOut: () => void,
+  signOut: () => void | Promise<void>,
   accountLayoutEnabled: boolean,
   getAssetPath: (path: string) => string
 ) => {
@@ -138,11 +139,9 @@ const getMenuLinks = (
           title: accountLayoutEnabled ? t("accountLayout.nav.signOut") : t("nav.signOut"),
           iconElement: <div className="w-6" />, // Empty div to keep the icon space
           onClick: () => {
-            // FIXME: Setup Site alert message for logging out DAH-974
-            // setSiteAlertMessage(t("signIn.signedOutSuccessfully"), "notice")
-            signOut()
-            // TODO: convert this to use react router when SPA routing is added
-            window.location.href = getSignInPath()
+            void Promise.resolve(signOut()).finally(() => {
+              window.location.href = getSignInPath()
+            })
           },
         },
       ],
@@ -156,9 +155,15 @@ const getMenuLinks = (
   return menuLinks
 }
 
-const Layout = (props: LayoutProps) => {
+const LayoutContent = ({
+  signedIn,
+  signOut,
+  children,
+  title,
+  description,
+  image,
+}: LayoutProps & { signedIn: boolean; signOut: () => void | Promise<void> }) => {
   const { getAssetPath } = useContext(ConfigContext)
-  const { signOut } = useContext(UserContext)
   const { unleashFlag: accountLayoutEnabled } = useFeatureFlag(UNLEASH_FLAG.ACCOUNTS_LAYOUT, false)
 
   if (window.document["documentMode"]) {
@@ -195,7 +200,7 @@ const Layout = (props: LayoutProps) => {
     <HelmetProvider>
       <div className="notranslate site-wrapper">
         <div className="site-content">
-          <MetaTags title={props.title} description={props.description} image={props.image} />
+          <MetaTags title={title} description={description} image={image} />
           {topAlert}
           <SiteHeader
             homeURL={"/"}
@@ -211,7 +216,7 @@ const Layout = (props: LayoutProps) => {
             mobileText={true}
             logoWidth={"medium"}
             logoClass="translate"
-            menuLinks={getMenuLinks(isTokenValid(), signOut, accountLayoutEnabled, getAssetPath)}
+            menuLinks={getMenuLinks(signedIn, signOut, accountLayoutEnabled, getAssetPath)}
             strings={{
               skipToMainContent: t("t.skipToMainContent"),
               logoAriaLable: t("t.dahliaSanFranciscoHousingPortal"),
@@ -220,7 +225,7 @@ const Layout = (props: LayoutProps) => {
           />
 
           <main data-testid="main-content-test-id" id="main-content">
-            <ErrorBoundary boundaryScope={BoundaryScope.content}>{props.children}</ErrorBoundary>
+            <ErrorBoundary boundaryScope={BoundaryScope.content}>{children}</ErrorBoundary>
           </main>
         </div>
 
@@ -279,6 +284,36 @@ const Layout = (props: LayoutProps) => {
       </div>
     </HelmetProvider>
   )
+}
+
+const DeviseLayout = (props: LayoutProps) => {
+  const { signOut } = useContext(UserContext)
+  return <LayoutContent {...props} signedIn={isTokenValid()} signOut={() => signOut?.()} />
+}
+
+const ClerkLayout = (props: LayoutProps) => {
+  const { isSignedIn, signOut } = useAuth()
+  return (
+    <LayoutContent
+      {...props}
+      signedIn={Boolean(isSignedIn)}
+      signOut={async () => {
+        // Log out Devise user
+        clearHeaders()
+        await signOut()
+      }}
+    />
+  )
+}
+
+const Layout = (props: LayoutProps) => {
+  const { unleashFlag: clerkEnabled, flagsReady } = useFeatureFlag(UNLEASH_FLAG.CLERK_AUTH, false)
+
+  if (!flagsReady) {
+    return null
+  }
+
+  return clerkEnabled ? <ClerkLayout {...props} /> : <DeviseLayout {...props} />
 }
 
 export default Layout

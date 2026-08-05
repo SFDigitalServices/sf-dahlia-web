@@ -16,6 +16,7 @@ import {
   getMyAccountPath,
 } from "../util/routeUtil"
 import { renderInlineMarkup } from "../util/languageUtil"
+import { clearHeaders } from "./token"
 import styles from "./SignInFlow.module.scss"
 
 interface SignInFields {
@@ -49,6 +50,7 @@ const SignInFlow = () => {
         setShowError(true)
         return
       }
+      clearHeaders() // Clear headers in case of existing Devise session (while testing)
       // TODO: if user has not completed their profile, redirect to profile page
       await setActive({ session: createdSessionId, redirectUrl: getMyAccountPath() })
     } catch (error) {
