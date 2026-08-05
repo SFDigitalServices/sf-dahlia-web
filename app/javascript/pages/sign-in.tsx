@@ -1,14 +1,17 @@
 import React from "react"
+import { Navigate } from "react-router"
 import { useFeatureFlag } from "../hooks/useFeatureFlag"
 
 import { t } from "@bloom-housing/ui-components"
 
 import { SignInForm } from "../authentication/SignInForm"
 import { SignInFlow } from "../authentication/SignInFlow"
+import { isTokenValid } from "../authentication/token"
 import FormsLayout from "../layouts/FormLayout"
 import withAppSetup from "../layouts/withAppSetup"
-import { AppPages } from "../util/routeUtil"
+import { AppPages, getMyAccountPath } from "../util/routeUtil"
 import { UNLEASH_FLAG } from "../modules/constants"
+
 interface SignInProps {
   assetPaths: unknown
 }
@@ -22,6 +25,8 @@ const SignIn = (_props: SignInProps) => {
 
   if (clerkEnabled) {
     return <SignInFlow />
+  } else if (isTokenValid()) {
+    return <Navigate to={getMyAccountPath()} replace />
   }
 
   return (
