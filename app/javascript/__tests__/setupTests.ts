@@ -62,7 +62,7 @@ jest.mock("@clerk/clerk-react", () => {
   return {
     ...Clerk,
     ClerkProvider: ({ children }: { children: React.ReactNode }) => children,
-    useAuth: jest.fn(() => ({ isLoaded: true, isSignedIn: false })),
+    useAuth: jest.fn(() => ({ isLoaded: true, isSignedIn: false, signOut: jest.fn() })),
   }
 })
 

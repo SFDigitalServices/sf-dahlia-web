@@ -42,6 +42,7 @@ describe("<EnterCode />", () => {
 
   beforeEach(async () => {
     document.documentElement.lang = "en"
+    document.title = t("t.dahliaSanFranciscoHousingPortal")
     originalLocation = mockWindowLocation()
     setupUserContext({ loggedIn: false })
     mockNavigate = jest.fn()
