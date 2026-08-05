@@ -15,6 +15,10 @@ import InviteToInterviewNextSteps from "./inviteToInterview/InviteToInterviewNex
 import RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
 import { getPathWithoutLanguagePrefix } from "../../util/languageUtil"
 import { isDeadlinePassed } from "../../util/listingUtil"
+import {
+  ClientRecordingMode,
+  useAutoRecordInviteToResponse,
+} from "../../hooks/useAutoRecordInviteToResponse"
 
 interface UrlParams {
   type?: INVITE_TO_X
@@ -24,6 +28,7 @@ interface UrlParams {
   isTest?: boolean | string
   uploadUrl?: string
   schedulingUrl?: string
+  clientRecordingMode?: ClientRecordingMode
 }
 
 interface HomePageProps {
@@ -37,7 +42,7 @@ interface HomePageProps {
 }
 
 const InviteToPage = ({
-  urlParams: { type, deadline, act, appId, isTest },
+  urlParams: { type, deadline, act, appId, isTest, clientRecordingMode = "off" },
   uploadUrl,
   schedulingUrl,
   submitPreviewLinkTokenParam,
@@ -46,6 +51,15 @@ const InviteToPage = ({
   const [listing, setListing] = useState<RailsSaleListing>(null)
   const { pathname } = useLocation()
   const navigate = useNavigate()
+
+  useAutoRecordInviteToResponse({
+    mode: clientRecordingMode,
+    act,
+    appId,
+    deadline,
+    type,
+  })
+
   useEffect(() => {
     const path = getPathWithoutLanguagePrefix(pathname)
     void getListing(path.split("/")[2]).then((listing: RailsSaleListing) => {
