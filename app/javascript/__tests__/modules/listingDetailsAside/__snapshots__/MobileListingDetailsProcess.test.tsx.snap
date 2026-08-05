@@ -16,7 +16,7 @@ exports[`MobileListingDetailsProcess renders with listing with open application 
         <img
           alt=""
           class="detail-header__image "
-          src=""
+          src="listing-units.svg"
         />
       </span>
       <hgroup
