@@ -4,7 +4,7 @@ import { Navigate } from "react-router"
 import { useAuth, useSignIn } from "@clerk/clerk-react"
 import { Form, t } from "@bloom-housing/ui-components"
 import { Alert, Button, Card, Heading, Link } from "@bloom-housing/ui-seeds"
-import { useForm } from "react-hook-form"
+import { useForm, useWatch } from "react-hook-form"
 import Layout from "../layouts/Layout"
 import EmailFieldset from "../pages/account/components/EmailFieldset"
 import PasswordFieldset from "../pages/account/components/PasswordFieldset"
@@ -28,9 +28,10 @@ const SignInFlow = () => {
   const { isLoaded, signIn, setActive } = useSignIn()
   const [showError, setShowError] = useState(false)
   const alertRef = useRef<HTMLDivElement>(null)
-  const { register, handleSubmit, watch } = useForm<SignInFields>({ shouldFocusError: false })
-  /* eslint-disable-next-line react-hooks/incompatible-library */
-  const emailField = watch("email", undefined)
+  const { register, handleSubmit, watch, control } = useForm<SignInFields>({
+    shouldFocusError: false,
+  })
+  const emailField = useWatch<string>({ control, name: "email" })
 
   useEffect(() => {
     if (showError) {
