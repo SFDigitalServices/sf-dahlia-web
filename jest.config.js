@@ -36,6 +36,10 @@ module.exports = {
   moduleNameMapper: {
     "\\.(scss|css|less|jpg)$": "identity-obj-proxy",
     "^axios$": require.resolve("axios"),
+    // ui-components 14 tables pull in @dnd-kit -> @preact/signals-core. Under jsdom, Jest
+    // resolves the package's "browser" export (ESM), which it can't parse. Force the CJS
+    // build so the ui-components barrel import loads in tests.
+    "^@preact/signals-core$": require.resolve("@preact/signals-core"),
   },
   transformIgnorePatterns: ["node_modules/?!(@bloom-housing/ui-components)"],
   moduleFileExtensions: ["js", "jsx", "ts", "tsx"],

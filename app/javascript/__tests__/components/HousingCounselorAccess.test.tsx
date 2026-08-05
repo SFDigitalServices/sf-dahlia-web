@@ -55,13 +55,11 @@ describe("HousingCounselorAccess", () => {
     it("renders the content to share access with an HC agency", async () => {
       render(<ShareAccessWrapper />)
 
-      await waitFor(() => {
-        expect(
-          screen.getByRole("group", { name: t("accountSettings.housingCounselor.heading") })
-        ).toBeInTheDocument()
-      })
       expect(
-        screen.getByText(t("accountSettings.housingCounselor.description"))
+        await screen.findByText(t("accountSettings.housingCounselor.description"))
+      ).toBeInTheDocument()
+      expect(
+        screen.getByRole("group", { name: t("accountSettings.housingCounselor.heading") })
       ).toBeInTheDocument()
       expect(screen.getByLabelText(t("accountSettings.housingCounselor.label"))).toBeInTheDocument()
       expect(
