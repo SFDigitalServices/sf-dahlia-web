@@ -303,9 +303,7 @@ describe("ListingApplyPreferenceStepWrapper", () => {
         renderWrapper()
         const user = userEvent.setup()
         await user.click(screen.getByText(t("t.next")))
-        expect(
-          await screen.findByText(t("error.pleaseSelectPreferenceOption"))
-        ).toBeInTheDocument()
+        expect(await screen.findByText(t("error.pleaseSelectPreferenceOption"))).toBeInTheDocument()
         expect(screen.getByText(t("error.pleaseSelectPreferenceContent"))).toBeInTheDocument()
         expect(screen.getByText(t("error.pleaseSelectAnOption"))).toBeInTheDocument()
       })
@@ -314,9 +312,7 @@ describe("ListingApplyPreferenceStepWrapper", () => {
         renderWrapper()
         const user = userEvent.setup()
         await user.click(screen.getByText(t("t.next")))
-        expect(
-          await screen.findByText(t("error.pleaseSelectPreferenceOption"))
-        ).toBeInTheDocument()
+        expect(await screen.findByText(t("error.pleaseSelectPreferenceOption"))).toBeInTheDocument()
 
         await user.click(screen.getByLabelText(t("e7PreferencesPrograms.certOfPreference")))
         await waitFor(() => {
@@ -330,9 +326,7 @@ describe("ListingApplyPreferenceStepWrapper", () => {
         renderWrapper()
         const user = userEvent.setup()
         await user.click(screen.getByText(t("t.next")))
-        expect(
-          await screen.findByText(t("error.pleaseSelectPreferenceOption"))
-        ).toBeInTheDocument()
+        expect(await screen.findByText(t("error.pleaseSelectPreferenceOption"))).toBeInTheDocument()
 
         await user.click(screen.getByLabelText(t("label.dontWantPreference")))
         await waitFor(() => {
@@ -346,9 +340,7 @@ describe("ListingApplyPreferenceStepWrapper", () => {
         renderWrapper()
         const user = userEvent.setup()
         await user.click(screen.getByText(t("t.next")))
-        expect(
-          await screen.findByText(t("error.pleaseSelectPreferenceOption"))
-        ).toBeInTheDocument()
+        expect(await screen.findByText(t("error.pleaseSelectPreferenceOption"))).toBeInTheDocument()
 
         await user.click(screen.getByLabelText(t("t.close")))
         await waitFor(() => {
