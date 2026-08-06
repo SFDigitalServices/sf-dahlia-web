@@ -18,6 +18,7 @@ jest.mock("@clerk/clerk-react", () => {
   return {
     ...Clerk,
     ClerkProvider: ({ children }: { children: React.ReactNode }) => children,
+    useAuth: jest.fn(() => ({ isLoaded: true, isSignedIn: false })),
     useSignUp: jest.fn(),
   }
 })
@@ -41,6 +42,7 @@ describe("<EnterCode />", () => {
 
   beforeEach(async () => {
     document.documentElement.lang = "en"
+    document.title = t("t.dahliaSanFranciscoHousingPortal")
     originalLocation = mockWindowLocation()
     setupUserContext({ loggedIn: false })
     mockNavigate = jest.fn()
@@ -82,7 +84,9 @@ describe("<EnterCode />", () => {
     expect(screen.getByRole("button", { name: t("createAccount.howToUseCode") })).not.toBeNull()
     expect(screen.getByRole("heading", { name: t("createAccount.getHelp") })).not.toBeNull()
     expect(
-      screen.getByRole("link", { name: t("createAccount.getHelpLink") }).getAttribute("href")
+      screen
+        .getByRole("link", { name: /how to create an account or find help/i })
+        .getAttribute("href")
     ).toBe("https://www.sf.gov/learn-how-to-create-dahlia-account")
   })
 

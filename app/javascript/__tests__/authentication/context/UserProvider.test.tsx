@@ -20,6 +20,10 @@ jest.mock("../../../authentication/token", () => {
   }
 })
 
+jest.mock("../../../hooks/useFeatureFlag", () => ({
+  useFeatureFlag: () => ({ flagsReady: true, unleashFlag: false }),
+}))
+
 const mockGetItem = jest.fn()
 const mockSetItem = jest.fn()
 const mockRemoveItem = jest.fn()

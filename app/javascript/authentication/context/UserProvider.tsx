@@ -15,6 +15,8 @@ import UserContext, { ContextProps } from "./UserContext"
 import UserReducer from "./UserReducer"
 import { AxiosError } from "axios"
 import { useGTMDataLayerWithoutUserContext } from "../../hooks/analytics/useGTMDataLayer"
+import { useFeatureFlag } from "../../hooks/useFeatureFlag"
+import { UNLEASH_FLAG } from "../../modules/constants"
 
 interface UserProviderProps {
   children?: React.ReactNode
@@ -27,36 +29,46 @@ const UserProvider = (props: UserProviderProps) => {
   })
 
   const { pushToDataLayer } = useGTMDataLayerWithoutUserContext()
-
+  const { unleashFlag: clerkEnabled, flagsReady } = useFeatureFlag(UNLEASH_FLAG.CLERK_AUTH, false)
   // Load our profile as soon as we have an access token available
   useEffect(() => {
-    if (!state.profile) {
-      dispatch(startLoading())
-      attemptToSetAuthHeadersFromURL()
-      getProfile()
-        .then((profile) => {
-          dispatch(saveProfile(profile))
-        })
-        .catch((error) => {
-          if (error?.message === "Token expired") {
-            pushToDataLayer("logout", {
-              user_id: undefined,
-              reason: "Token expire",
-            })
-
-            // Give the DataLayer push some time to finish before the user is redirected
-            setTimeout(() => {
-              dispatch(signOutConnectionIssue())
-            }, 100)
-          } else {
-            dispatch(systemSignOut())
-          }
-        })
-        .finally(() => {
-          dispatch(stopLoading())
-        })
+    if (!flagsReady || !clerkEnabled) {
+      return
     }
-  }, [pushToDataLayer, state.profile])
+    if (state.profile || !state.initialStateLoaded) {
+      dispatch(systemSignOut())
+    }
+  }, [clerkEnabled, flagsReady, state.initialStateLoaded, state.profile])
+  useEffect(() => {
+    if (!flagsReady || clerkEnabled || state.profile) {
+      return
+    }
+
+    dispatch(startLoading())
+    attemptToSetAuthHeadersFromURL()
+    getProfile()
+      .then((profile) => {
+        dispatch(saveProfile(profile))
+      })
+      .catch((error) => {
+        if (error?.message === "Token expired") {
+          pushToDataLayer("logout", {
+            user_id: undefined,
+            reason: "Token expire",
+          })
+
+          // Give the DataLayer push some time to finish before the user is redirected
+          setTimeout(() => {
+            dispatch(signOutConnectionIssue())
+          }, 100)
+        } else {
+          dispatch(systemSignOut())
+        }
+      })
+      .finally(() => {
+        dispatch(stopLoading())
+      })
+  }, [clerkEnabled, flagsReady, pushToDataLayer, state.profile])
 
   const contextValues: ContextProps = {
     loading: state.loading,

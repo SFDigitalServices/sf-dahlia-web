@@ -1,30 +1,32 @@
 import React from "react"
+import { useAuth } from "@clerk/clerk-react"
 import { isTokenValid, parseUrlParams } from "./token"
 import UserContext from "./context/UserContext"
 import { getLocalizedPath, RedirectType } from "../util/routeUtil"
 import { getCurrentLanguage } from "../util/languageUtil"
 import { useGTMDataLayer } from "../hooks/analytics/useGTMDataLayer"
+import { useFeatureFlag } from "../hooks/useFeatureFlag"
+import { UNLEASH_FLAG } from "../modules/constants"
 
 interface WithAuthenticationProps {
   redirectType?: RedirectType
 }
 
+const getSignInPath = (redirectType?: RedirectType) => {
+  const redirectParam = redirectType ? `?redirect=${redirectType}` : ""
+  return getLocalizedPath("/sign-in", getCurrentLanguage(), redirectParam)
+}
+
 /**
  * Higher-order component that handles authentication for protected routes.
- * It will:
- * 1. Check for a valid token on mount
- * 2. Show nothing while profile is loading
- * 3. Redirect to sign-in if no valid token or no profile
- * 4. Render the wrapped component only when authenticated
- *
- * @param WrappedComponent The component to protect
- * @param redirectPath Optional path to redirect back to after sign-in
+ * When the Clerk flag is on, it checks the Clerk session; otherwise it uses
+ * the Devise token / UserContext profile.
  */
 export const withAuthentication = <P extends object>(
   WrappedComponent: React.ComponentType<P>,
   { redirectType }: WithAuthenticationProps = {}
 ) => {
-  const WithAuthenticationComponent = (props: P) => {
+  const DeviseAuthGate = (props: P) => {
     const { profile, loading, initialStateLoaded } = React.useContext(UserContext)
     const { pushToDataLayer } = useGTMDataLayer()
 
@@ -32,10 +34,7 @@ export const withAuthentication = <P extends object>(
       const params = parseUrlParams(window.location.href)
 
       if (!isTokenValid() && !loading && initialStateLoaded) {
-        const redirectParam = redirectType ? `?redirect=${redirectType}` : ""
-        const language = getCurrentLanguage()
-        const signInPath = getLocalizedPath("/sign-in", language, redirectParam)
-        window.location.assign(signInPath)
+        window.location.assign(getSignInPath(redirectType))
       } else if (
         profile &&
         params.get("access-token") &&
@@ -54,6 +53,32 @@ export const withAuthentication = <P extends object>(
     }
 
     return <WrappedComponent {...props} />
+  }
+
+  const ClerkAuthGate = (props: P) => {
+    const { isLoaded, isSignedIn } = useAuth()
+
+    React.useEffect(() => {
+      if (isLoaded && !isSignedIn) {
+        window.location.assign(getSignInPath(redirectType))
+      }
+    }, [isLoaded, isSignedIn])
+
+    if (!isLoaded || !isSignedIn) {
+      return null
+    }
+
+    return <WrappedComponent {...props} />
+  }
+
+  const WithAuthenticationComponent = (props: P) => {
+    const { unleashFlag: clerkEnabled, flagsReady } = useFeatureFlag(UNLEASH_FLAG.CLERK_AUTH, false)
+
+    if (!flagsReady) {
+      return null
+    }
+
+    return clerkEnabled ? <ClerkAuthGate {...props} /> : <DeviseAuthGate {...props} />
   }
 
   // Set display name for easier debugging

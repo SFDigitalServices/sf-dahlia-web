@@ -5,6 +5,7 @@ import { useFeatureFlag } from "../hooks/useFeatureFlag"
 import { t } from "@bloom-housing/ui-components"
 
 import { SignInForm } from "../authentication/SignInForm"
+import { SignInFlow } from "../authentication/SignInFlow"
 import { isTokenValid } from "../authentication/token"
 import FormsLayout from "../layouts/FormLayout"
 import withAppSetup from "../layouts/withAppSetup"
@@ -16,9 +17,14 @@ interface SignInProps {
 }
 
 const SignIn = (_props: SignInProps) => {
-  const { unleashFlag: clerkEnabled } = useFeatureFlag(UNLEASH_FLAG.CLERK_AUTH, false)
+  const { unleashFlag: clerkEnabled, flagsReady } = useFeatureFlag(UNLEASH_FLAG.CLERK_AUTH, false)
+
+  if (!flagsReady) {
+    return null
+  }
+
   if (clerkEnabled) {
-    console.log("Clerk authentication is enabled.")
+    return <SignInFlow />
   } else if (isTokenValid()) {
     return <Navigate to={getMyAccountPath()} replace />
   }
