@@ -10,8 +10,8 @@ export interface AuthLayoutProps {
 
 const AuthLayout = ({ children, title }: AuthLayoutProps) => (
   <Layout title={title}>
-    <section className="bg-gray-300 md:border-t md:border-gray-450">
-      <div className="flex flex-wrap relative md:max-w-lg mx-auto md:py-8">
+    <section className={styles.authLayoutBackground}>
+      <div className={styles.authLayoutContent}>
         <Card className={styles.card}>{children}</Card>
       </div>
     </section>

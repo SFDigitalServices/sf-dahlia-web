@@ -1,3 +1,23 @@
+.authLayoutBackground {
+  background-color: var(--seeds-color-gray-300);
+
+  @media (min-width: theme("screens.md")) {
+    border-top: 1px solid var(--seeds-color-gray-450);
+  }
+}
+
+.authLayoutContent {
+  display: flex;
+  flex-wrap: wrap;
+  position: relative;
+  margin-inline: auto;
+
+  @media (min-width: theme("screens.md")) {
+    max-width: var(--seeds-width-lg);
+    padding-block: var(--seeds-s8);
+  }
+}
+
 .card {
   width: 100%;
   @media (max-width: theme("screens.md")) {
