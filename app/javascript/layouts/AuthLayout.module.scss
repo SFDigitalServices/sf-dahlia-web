@@ -1,0 +1,12 @@
+.card {
+  width: 100%;
+  @media (max-width: theme("screens.md")) {
+    --card-border-radius: 0;
+    border: none;
+  }
+}
+
+.card h1,
+.card h2 {
+  padding-bottom: var(--seeds-spacer-header);
+}

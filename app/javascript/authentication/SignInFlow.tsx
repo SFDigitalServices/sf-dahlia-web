@@ -5,7 +5,7 @@ import { useAuth, useSignIn } from "@clerk/clerk-react"
 import { Form, t } from "@bloom-housing/ui-components"
 import { Alert, Button, Card, Heading, Link } from "@bloom-housing/ui-seeds"
 import { useForm, useWatch } from "react-hook-form"
-import Layout from "../layouts/Layout"
+import AuthLayout from "../layouts/AuthLayout"
 import EmailFieldset from "../pages/account/components/EmailFieldset"
 import PasswordFieldset from "../pages/account/components/PasswordFieldset"
 import GetHelp from "../pages/account/components/GetHelp"
@@ -72,74 +72,64 @@ const SignInFlow = () => {
   const forgotPasswordPath = createPath(getForgotPasswordPath(), { email: emailField })
 
   return (
-    <Layout title={t("pageTitle.signIn")}>
-      <section className="bg-gray-300 md:border-t md:border-gray-450">
-        <div className="flex flex-wrap relative md:max-w-lg mx-auto md:py-8">
-          <Card className={styles.card}>
-            <Card.Section divider="inset">
-              <Heading priority={1} size="2xl">
-                {t("pageTitle.signIn")}
-              </Heading>
-              {showError && (
-                <div ref={alertRef} tabIndex={-1} className={styles.errorAlert}>
-                  <Alert fullwidth variant="alert" onClose={() => setShowError(false)}>
-                    {renderInlineMarkup(
-                      t("signIn.badCredentialsWithResetLink", { url: forgotPasswordPath })
-                    )}
-                  </Alert>
-                </div>
+    <AuthLayout title={t("pageTitle.signIn")}>
+      <Card.Section divider="inset">
+        <Heading priority={1} size="2xl">
+          {t("pageTitle.signIn")}
+        </Heading>
+        {showError && (
+          <div ref={alertRef} tabIndex={-1} className={styles.errorAlert}>
+            <Alert fullwidth variant="alert" onClose={() => setShowError(false)}>
+              {renderInlineMarkup(
+                t("signIn.badCredentialsWithResetLink", { url: forgotPasswordPath })
               )}
-              <Form className={styles.form} onSubmit={handleSubmit(onSubmit, onError)}>
-                <EmailFieldset register={register} />
-                <span className={styles.forgotPassword}>
-                  <Link href={forgotPasswordPath}>{t("signIn.forgotPassword")}</Link>
-                </span>
-                <PasswordFieldset
-                  register={register}
-                  watch={watch}
-                  labelText={t("label.password")}
-                  passwordType="signIn"
-                />
-                <Button
-                  className={styles.signInButton}
-                  variant="primary"
-                  size="sm"
-                  type="submit"
-                  disabled={!isLoaded}
-                >
-                  {t("pageTitle.signIn")}
-                </Button>
-              </Form>
-              <Button
-                className={styles.oneTimeCodeLink}
-                variant="text"
-                size="md"
-                onClick={() => {
-                  console.log("TODO: switch to code flow")
-                }}
-              >
-                {t("signIn.oneTimeCode")}
-              </Button>
-              <p className={`field-note ${styles.oneTimeCodeNote}`}>
-                {t("signIn.oneTimeCodeNote")}
-              </p>
-            </Card.Section>
-            <Card.Section divider="flush">
-              <Heading priority={2} size="lg">
-                {t("signIn.dontHaveAccount")}
-              </Heading>
-              <p className={styles.createAccountDescription}>
-                {t("signIn.createAccountDescription")}
-              </p>
-              <Button variant="primary-outlined" size="sm" href={getCreateAccountPath()}>
-                {t("signIn.createAccount")}
-              </Button>
-            </Card.Section>
-            <GetHelp flow="signIn" />
-          </Card>
-        </div>
-      </section>
-    </Layout>
+            </Alert>
+          </div>
+        )}
+        <Form className={styles.form} onSubmit={handleSubmit(onSubmit, onError)}>
+          <EmailFieldset register={register} />
+          <span className={styles.forgotPassword}>
+            <Link href={forgotPasswordPath}>{t("signIn.forgotPassword")}</Link>
+          </span>
+          <PasswordFieldset
+            register={register}
+            watch={watch}
+            labelText={t("label.password")}
+            passwordType="signIn"
+          />
+          <Button
+            className={styles.signInButton}
+            variant="primary"
+            size="sm"
+            type="submit"
+            disabled={!isLoaded}
+          >
+            {t("pageTitle.signIn")}
+          </Button>
+        </Form>
+        <Button
+          className={styles.oneTimeCodeLink}
+          variant="text"
+          size="md"
+          onClick={() => {
+            console.log("TODO: switch to code flow")
+          }}
+        >
+          {t("signIn.oneTimeCode")}
+        </Button>
+        <p className={`field-note ${styles.oneTimeCodeNote}`}>{t("signIn.oneTimeCodeNote")}</p>
+      </Card.Section>
+      <Card.Section divider="flush">
+        <Heading priority={2} size="lg">
+          {t("signIn.dontHaveAccount")}
+        </Heading>
+        <p className={styles.createAccountDescription}>{t("signIn.createAccountDescription")}</p>
+        <Button variant="primary-outlined" size="sm" href={getCreateAccountPath()}>
+          {t("signIn.createAccount")}
+        </Button>
+      </Card.Section>
+      <GetHelp flow="signIn" />
+    </AuthLayout>
   )
 }
 

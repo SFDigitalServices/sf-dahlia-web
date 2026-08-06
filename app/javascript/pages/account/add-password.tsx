@@ -6,7 +6,7 @@ import { Form, t } from "@bloom-housing/ui-components"
 import { Card, Heading, Button, Message } from "@bloom-housing/ui-seeds"
 import { useForm } from "react-hook-form"
 import withAppSetup from "../../layouts/withAppSetup"
-import Layout from "../../layouts/Layout"
+import AuthLayout from "../../layouts/AuthLayout"
 import { AppPages, getCreateAccountPath } from "../../util/routeUtil"
 import styles from "./add-password.module.scss"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
@@ -49,40 +49,34 @@ const AddPasswordPage = () => {
   }
 
   return (
-    <Layout title={t("createAccount.addPassword")}>
-      <section className="bg-gray-300 md:border-t md:border-gray-450">
-        <div className="flex flex-wrap relative md:max-w-lg mx-auto md:py-8">
-          <Card className={styles.card}>
-            <Card.Section divider="flush">
-              <Heading priority={1} size="2xl">
-                {t("createAccount.addPassword")}
-              </Heading>
-              <Message fullwidth variant="primary" className={styles.skip}>
-                {t("createAccount.okayToSkipPassword")}
-              </Message>
-              <Form onSubmit={handleSubmit(onSubmit)}>
-                <PasswordFieldset
-                  register={register}
-                  errors={errors}
-                  watch={watch}
-                  passwordType="createAccount"
-                  labelText={t("createAccount.choosePasswordOptional")}
-                />
-                <div className={styles.actions}>
-                  <Button variant="primary" size="sm" type="submit" disabled={!isLoaded}>
-                    {t("createAccount.savePassword")}
-                  </Button>
-                  <Button variant="primary-outlined" size="sm" type="button" onClick={onSkip}>
-                    {t("createAccount.skipForNow")}
-                  </Button>
-                </div>
-              </Form>
-            </Card.Section>
-            <GetHelp flow="createAccount" />
-          </Card>
-        </div>
-      </section>
-    </Layout>
+    <AuthLayout title={t("createAccount.addPassword")}>
+      <Card.Section divider="flush">
+        <Heading priority={1} size="2xl">
+          {t("createAccount.addPassword")}
+        </Heading>
+        <Message fullwidth variant="primary" className={styles.skip}>
+          {t("createAccount.okayToSkipPassword")}
+        </Message>
+        <Form onSubmit={handleSubmit(onSubmit)}>
+          <PasswordFieldset
+            register={register}
+            errors={errors}
+            watch={watch}
+            passwordType="createAccount"
+            labelText={t("createAccount.choosePasswordOptional")}
+          />
+          <div className={styles.actions}>
+            <Button variant="primary" size="sm" type="submit" disabled={!isLoaded}>
+              {t("createAccount.savePassword")}
+            </Button>
+            <Button variant="primary-outlined" size="sm" type="button" onClick={onSkip}>
+              {t("createAccount.skipForNow")}
+            </Button>
+          </div>
+        </Form>
+      </Card.Section>
+      <GetHelp flow="createAccount" />
+    </AuthLayout>
   )
 }
 
