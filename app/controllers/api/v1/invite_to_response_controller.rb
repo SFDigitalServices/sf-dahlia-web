@@ -2,26 +2,21 @@ class Api::V1::InviteToResponseController < ApiController
   before_action :validate_token!, only: :record_response
 
   def record_response
-    params.expect(record: %i[response action])
-    response, action = params[:record].values_at(:response, :action)
+    params.expect(record: %i[deadline appId action])
+    # we must verify app id from token
+    type, _deadline, app_id, act = token_fields
+    return unauthorized! if [type, _deadline, app_id, act].any?(&:blank?)
 
-    type, deadline, application_id, application_number, listing_id = token_fields
-    return unauthorized! if [type, deadline, application_id, application_number,
-                             listing_id].any?(&:blank?)
-
-    parsed_deadline = parse_deadline(deadline)
+    parsed_deadline = parse_deadline(_deadline)
     return unauthorized! if parsed_deadline.blank?
 
     if deadline_passed?(parsed_deadline)
       Rails.logger.info('InviteToResponseController#record_response: deadline passed - not recording')
     else
       DahliaBackend::MessageService.send_invite_to_response(
-        deadline,
-        application_id,
-        application_number,
-        response,
-        action,
-        listing_id,
+        _deadline,
+        app_id,
+        act,
       )
     end
 
@@ -47,8 +42,7 @@ class Api::V1::InviteToResponseController < ApiController
       @token_payload[:type],
       @token_payload[:deadline],
       @token_payload[:appId],
-      @token_payload[:applicationNumber],
-      @token_payload[:listingId],
+      @token_payload[:act],
     ]
   end
 

@@ -8,6 +8,8 @@ class InviteToController < ApplicationController
       redirect_to decoded_params
       return
     end
+    # TODO: remove the `params` fallback once we are sure that all links are using the token
+
     decoded_params ||= params
     @invite_to_props = props(decoded_params)
     # Get URL from application
