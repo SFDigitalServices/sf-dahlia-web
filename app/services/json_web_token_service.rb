@@ -1,16 +1,19 @@
 class JsonWebTokenService
   class InvalidTokenError < StandardError; end
 
-  SECRET_KEY = ENV.fetch('JWT_TOKEN_SECRET')
-  ALGORITHM = ENV.fetch('JWT_ALGORITHM')
-  ALLOWED_ALGORITHMS = [ALGORITHM].freeze
+  SECRET_KEY = ENV.fetch('JWT_TOKEN_SECRET', nil)
+  ALGORITHM = ENV.fetch('JWT_ALGORITHM', nil)
+  ALLOWED_ALGORITHMS = [ALGORITHM].compact.freeze
 
   def self.encode_token(params)
+    raise InvalidTokenError, 'JWT is not configured' if SECRET_KEY.blank? || ALGORITHM.blank?
+
     JWT.encode({ data: params }, SECRET_KEY, ALGORITHM)
   end
 
   def self.decode_token(token)
     raise InvalidTokenError, 'Token is blank' if token.blank?
+    raise InvalidTokenError, 'JWT is not configured' if SECRET_KEY.blank? || ALGORITHM.blank?
 
     payload, = JWT.decode(
       token,
