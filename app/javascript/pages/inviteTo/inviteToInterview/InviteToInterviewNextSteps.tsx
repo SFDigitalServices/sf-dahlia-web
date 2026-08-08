@@ -42,14 +42,12 @@ const WhatToDo = ({
       window.open(url, "_blank")
       try {
         if (appId && !isTest) {
-          await recordResponse({
+          const token = new URLSearchParams(window.location.search).get("t") ?? ""
+
+          await recordResponse(token, {
             appId: appId,
-            applicationNumber: appId,
-            listingId: listing.Id,
             deadline,
             action: I2X_ACTIONS.APPOINTMENT,
-            response: "",
-            type: INVITE_TO_X.INTERVIEW,
           })
         }
       } catch (error) {

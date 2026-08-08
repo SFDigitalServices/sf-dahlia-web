@@ -16,7 +16,7 @@ import InviteToLayout from "../InviteToLayout"
 import { recordResponse } from "../../../api/inviteToApiService"
 import InviteToGetHelp from "../InviteToGetHelp"
 import InviteToLeasingAgentInfo from "../InviteToLeasingAgentInfo"
-import { INVITE_TO_X, I2X_ACTIONS, I2A_RESPONSES } from "../../../modules/constants"
+import { INVITE_TO_X, I2X_ACTIONS } from "../../../modules/constants"
 
 interface InviteToApplyNextStepsProps {
   listing: RailsSaleListing | null
@@ -68,14 +68,12 @@ const WhatToDo = ({
       window.open(url, "_blank")
       try {
         if (appId && !isTest) {
-          await recordResponse({
+          const token = new URLSearchParams(window.location.search).get("t") ?? ""
+
+          await recordResponse(token, {
             appId: appId,
-            applicationNumber: appId,
-            listingId: listing.Id,
             deadline,
             action: I2X_ACTIONS.SUBMIT,
-            response: I2A_RESPONSES.SUBMIT,
-            type: INVITE_TO_X.APPLY,
           })
         }
         setIsSubmitting(false)

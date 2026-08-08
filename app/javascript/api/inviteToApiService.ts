@@ -1,13 +1,19 @@
 import { post } from "./apiService"
 
-export const recordResponse = async (record: {
-  listingId: string
-  appId: string
-  applicationNumber: string
-  deadline: string
-  action: string
-  response: string
-  type: string
-}) => {
-  return post("/api/v1/next-steps/record-response", { record })
+export const recordResponse = async (
+  token: string,
+  record: {
+    appId: string
+    deadline: string
+    action: string
+  }
+) => {
+  if (!token) {
+    throw new Error("Missing required token param: t")
+  }
+
+  return post("/api/v1/next-steps/record-response", {
+    t: token,
+    record,
+  })
 }
