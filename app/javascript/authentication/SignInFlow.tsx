@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import React, { useEffect, useRef, useState } from "react"
-import { Navigate } from "react-router"
+import { Navigate, useNavigate } from "react-router"
 import { useAuth, useSignIn } from "@clerk/clerk-react"
 import { Form, t } from "@bloom-housing/ui-components"
 import { Alert, Button, Card, Heading, Link } from "@bloom-housing/ui-seeds"
@@ -14,6 +14,7 @@ import {
   getCreateAccountPath,
   getForgotPasswordPath,
   getMyAccountPath,
+  getSignInCodePath,
 } from "../util/routeUtil"
 import { renderInlineMarkup } from "../util/languageUtil"
 import { clearHeaders } from "./token"
@@ -31,8 +32,16 @@ const SignInFlow = () => {
   const { isLoaded: authLoaded, isSignedIn } = useAuth()
   const { isLoaded, signIn, setActive } = useSignIn()
   const [showError, setShowError] = useState(false)
-   const alertRef = useRef<HTMLDivElement>(null)
-  const { register, handleSubmit, watch, control } = useForm<SignInFields>({
+  // Defaults to password sign in flow
+  const [view, setView] = useState<SignInView>("password")
+  const alertRef = useRef<HTMLDivElement>(null)
+  const {
+    register,
+    handleSubmit,
+    watch,
+    control,
+    formState: { errors },
+  } = useForm<SignInFields>({
     shouldFocusError: false,
   })
   const emailField = useWatch<string>({ control, name: "email" })
@@ -43,16 +52,7 @@ const SignInFlow = () => {
     }
   }, [showError])
 
-  // Defaults to password sign in flow
-  const [view, setView] = useState<SignInView>("password")
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm<SignInFields>({ mode: "onTouched", shouldFocusError: false })
-
-  const onPasswordSubmit = async ({ email, password }: SignInFields) => {
+  const onSubmit = async ({ email, password }: SignInFields) => {
     if (!isLoaded || !signIn) return
     setShowError(false)
     try {
@@ -67,6 +67,12 @@ const SignInFlow = () => {
       await setActive({ session: createdSessionId, redirectUrl: getMyAccountPath() })
     } catch (error) {
       console.error("Sign in error", error)
+      setShowError(true)
+    }
+  }
+
+  const onError = (submitErrors: { email?: unknown; password?: unknown }) => {
+    if (submitErrors.email || submitErrors.password) {
       setShowError(true)
     }
   }
@@ -97,6 +103,8 @@ const SignInFlow = () => {
     return <Navigate to={getMyAccountPath()} replace />
   }
 
+  const forgotPasswordPath = createPath(getForgotPasswordPath(), { email: emailField })
+
   const codeSection = (
     <>
       <p className="field-note">{t("signIn.codeDescription")}</p>
@@ -120,10 +128,10 @@ const SignInFlow = () => {
 
   const passwordSection = (
     <>
-      <Form className={styles.form} onSubmit={handleSubmit(onPasswordSubmit)}>
-        <EmailFieldset register={register} errors={errors} />
+      <Form className={styles.form} onSubmit={handleSubmit(onSubmit, onError)}>
+        <EmailFieldset register={register} />
         <span className={styles.forgotPassword}>
-          <Link href={getForgotPasswordPath()}>{t("signIn.forgotPassword")}</Link>
+          <Link href={forgotPasswordPath}>{t("signIn.forgotPassword")}</Link>
         </span>
         <PasswordFieldset
           register={register}
@@ -157,37 +165,33 @@ const SignInFlow = () => {
   )
 
   return (
-    <Layout title={t("pageTitle.signIn")}>
-      <section className="bg-gray-300 md:border-t md:border-gray-450">
-        <div className="flex flex-wrap relative md:max-w-lg mx-auto md:py-8">
-          <Card className={styles.card}>
-            {showError && (
-              <Alert fullwidth variant="alert" onClose={() => setShowError(false)}>
-                {renderInlineMarkup(
-                  t("signIn.badCredentialsWithResetLink", { url: getForgotPasswordPath() })
-                )}
-              </Alert>
-            )}
-            <Card.Section divider="inset">
-              <Heading priority={1} size="2xl">
-                {t("pageTitle.signIn")}
-              </Heading>
-              {view === "code" ? codeSection : passwordSection}
-            </Card.Section>
-            <Card.Section divider="flush">
-              <Heading priority={2} size="lg">
-                {t("signIn.dontHaveAccount")}
-              </Heading>
-              <p className={styles.createAccountDescription}>{t("signIn.createAccount")}</p>
-              <Button variant="primary-outlined" size="sm" href={getCreateAccountPath()}>
-                {t("signIn.createAccountHeader")}
-              </Button>
-            </Card.Section>
-            <GetHelp flow="signIn" />
-          </Card>
-        </div>
-      </section>
-    </Layout>
+    <AuthLayout title={t("pageTitle.signIn")}>
+      <Card.Section divider="inset">
+        <Heading priority={1} size="2xl">
+          {t("pageTitle.signIn")}
+        </Heading>
+        {showError && (
+          <div ref={alertRef} tabIndex={-1} className={styles.errorAlert}>
+            <Alert fullwidth variant="alert" onClose={() => setShowError(false)}>
+              {renderInlineMarkup(
+                t("signIn.badCredentialsWithResetLink", { url: forgotPasswordPath })
+              )}
+            </Alert>
+          </div>
+        )}
+        {view === "code" ? codeSection : passwordSection}
+      </Card.Section>
+      <Card.Section divider="flush">
+        <Heading priority={2} size="lg">
+          {t("signIn.dontHaveAccount")}
+        </Heading>
+        <p className={styles.createAccountDescription}>{t("signIn.createAccountDescription")}</p>
+        <Button variant="primary-outlined" size="sm" href={getCreateAccountPath()}>
+          {t("signIn.createAccount")}
+        </Button>
+      </Card.Section>
+      <GetHelp flow="signIn" />
+    </AuthLayout>
   )
 }
 

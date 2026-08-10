@@ -7,7 +7,13 @@ import { Card, Heading, Link, Button } from "@bloom-housing/ui-seeds"
 import { Controller, useForm } from "react-hook-form"
 import withAppSetup from "../../layouts/withAppSetup"
 import AuthLayout from "../../layouts/AuthLayout"
-import { AppPages, getAddPasswordPath, getCreateAccountPath } from "../../util/routeUtil"
+import {
+  AppPages,
+  getAddPasswordPath,
+  getCreateAccountPath,
+  getMyAccountPath,
+  getSignInPath,
+} from "../../util/routeUtil"
 import styles from "./enter-code.module.scss"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import { UNLEASH_FLAG } from "../../modules/constants"
@@ -119,7 +125,7 @@ const EnterCodePage = ({ email, flow }: EnterCodePageProps) => {
           {t("createAccount.weSentCodeTo")}
           <br />
           <span className={styles.email}>{email}</span>
-          <Link className={styles.editEmail} href={getCreateAccountPath()}>
+          <Link className={styles.editEmail} href={editEmailHref}>
             {t("createAccount.editEmail")}
           </Link>
         </p>
@@ -175,7 +181,7 @@ const EnterCodePage = ({ email, flow }: EnterCodePageProps) => {
           </div>
         </ExpandableContent>
       </Card.Section>
-      <GetHelp flow="createAccount" />
+      <GetHelp flow={flow} />
     </AuthLayout>
   )
 }
