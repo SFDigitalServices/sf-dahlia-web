@@ -36,7 +36,7 @@ describe("Sign In integration tests", () => {
     }).as("signInFailed")
 
     cy.get('input[name="email"]').type("user@example.com")
-    cy.get('input[name="password"]').type("wrongpassword") // This password does not pass front end validation checks
+    cy.get('input[name="password"]').focus().blur() // An empty password does not pass front end validation checks
     cy.get('button[type="submit"]').click()
 
     cy.wait(1000)

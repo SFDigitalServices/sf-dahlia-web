@@ -1,4 +1,6 @@
 import React, { useContext } from "react"
+import { useNavigate } from "react-router"
+import { useAuth } from "@clerk/clerk-react"
 import { Button, Heading, Tabs } from "@bloom-housing/ui-seeds"
 import { Icon, t, UniversalIconType } from "@bloom-housing/ui-components"
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons"
@@ -13,8 +15,10 @@ import {
   RedirectType,
   getMyAccountApplicationsPath,
   getMyAccountSettingsPath,
+  getSignInPath,
 } from "../../util/routeUtil"
 import UserContext from "../../authentication/context/UserContext"
+import { clearHeaders } from "../../authentication/token"
 import { User } from "../../authentication/user"
 import { withAuthentication } from "../../authentication/withAuthentication"
 import { ConfigContext } from "../../lib/ConfigContext"
@@ -116,23 +120,57 @@ interface AccountProps {
   assetPaths: unknown
 }
 
-const Account = ({ assetPaths }: AccountProps) => {
-  const { unleashFlag: accountLayoutEnabled } = useFeatureFlag(UNLEASH_FLAG.ACCOUNTS_LAYOUT, false)
-  const { signOut, profile } = React.useContext(UserContext)
-
-  if (!accountLayoutEnabled) {
-    return <MyAccount assetPaths={assetPaths} />
-  }
+const DeviseAccount = () => {
+  const { signOut, profile } = useContext(UserContext)
 
   return (
     <Layout>
       <AccountLayout>
         <div className={styles.overview}>
-          <AccountOverview signOut={signOut} user={profile} />
+          <AccountOverview signOut={() => signOut?.()} user={profile} />
         </div>
       </AccountLayout>
     </Layout>
   )
+}
+
+const ClerkAccount = () => {
+  const { signOut } = useAuth()
+  const { profile } = useContext(UserContext)
+  const navigate = useNavigate()
+
+  return (
+    <Layout>
+      <AccountLayout>
+        <div className={styles.overview}>
+          <AccountOverview
+            signOut={() => {
+              clearHeaders()
+              void signOut().finally(() => {
+                void navigate(getSignInPath())
+              })
+            }}
+            user={profile}
+          />
+        </div>
+      </AccountLayout>
+    </Layout>
+  )
+}
+
+const Account = ({ assetPaths }: AccountProps) => {
+  const { unleashFlag: accountLayoutEnabled } = useFeatureFlag(UNLEASH_FLAG.ACCOUNTS_LAYOUT, false)
+  const { unleashFlag: clerkEnabled, flagsReady } = useFeatureFlag(UNLEASH_FLAG.CLERK_AUTH, false)
+
+  if (!accountLayoutEnabled) {
+    return <MyAccount assetPaths={assetPaths} />
+  }
+
+  if (!flagsReady) {
+    return null
+  }
+
+  return clerkEnabled ? <ClerkAccount /> : <DeviseAccount />
 }
 
 export default withAppSetup(withAuthentication(Account, { redirectType: RedirectType.Account }), {

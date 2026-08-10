@@ -17,7 +17,11 @@ interface SignInProps {
 }
 
 const SignIn = (_props: SignInProps) => {
-  const { unleashFlag: clerkEnabled } = useFeatureFlag(UNLEASH_FLAG.CLERK_AUTH, false)
+  const { unleashFlag: clerkEnabled, flagsReady } = useFeatureFlag(UNLEASH_FLAG.CLERK_AUTH, false)
+
+  if (!flagsReady) {
+    return null
+  }
 
   if (clerkEnabled) {
     return <SignInFlow />

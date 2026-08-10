@@ -6,14 +6,8 @@ import { ExpandableContent, Form, Order, t } from "@bloom-housing/ui-components"
 import { Card, Heading, Link, Button } from "@bloom-housing/ui-seeds"
 import { Controller, useForm } from "react-hook-form"
 import withAppSetup from "../../layouts/withAppSetup"
-import Layout from "../../layouts/Layout"
-import {
-  AppPages,
-  getAddPasswordPath,
-  getCreateAccountPath,
-  getMyAccountPath,
-  getSignInPath,
-} from "../../util/routeUtil"
+import AuthLayout from "../../layouts/AuthLayout"
+import { AppPages, getAddPasswordPath, getCreateAccountPath } from "../../util/routeUtil"
 import styles from "./enter-code.module.scss"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import { UNLEASH_FLAG } from "../../modules/constants"
@@ -116,79 +110,73 @@ const EnterCodePage = ({ email, flow }: EnterCodePageProps) => {
   }
 
   return (
-    <Layout title={t("createAccount.enterCode")}>
-      <section className="bg-gray-300 md:border-t md:border-gray-450">
-        <div className="flex flex-wrap relative md:max-w-lg mx-auto md:py-8">
-          <Card className={styles.card}>
-            <Card.Section divider="flush">
-              <Heading priority={1} size="2xl">
-                {t("createAccount.checkEmail")}
-              </Heading>
-              <p className={styles.sentTo}>
-                {t("createAccount.weSentCodeTo")}
-                <br />
-                <span className={styles.email}>{email}</span>
-                <Link className={styles.editEmail} href={editEmailHref}>
-                  {t("createAccount.editEmail")}
-                </Link>
-              </p>
-              <Form onSubmit={handleSubmit(onSubmit)}>
-                <Controller
-                  name="code"
-                  control={control}
-                  defaultValue=""
-                  rules={{ validate: (code: string) => /^\d{6}$/.test(code) }}
-                  render={({ value, onChange }) => (
-                    <CodeField value={value} onChange={onChange} error={!!errors.code} />
-                  )}
-                />
-                <Button
-                  className={styles.confirmButton}
-                  variant="primary"
-                  size="sm"
-                  type="submit"
-                  disabled={!isLoaded}
-                >
-                  {t("createAccount.confirmCode")}
-                </Button>
-              </Form>
-              <p className={styles.resendRow}>
-                <span className={styles.didntGetEmail}>{t("createAccount.didntGetEmail")}</span>
-                <Button
-                  className={styles.sendAgain}
-                  variant="text"
-                  size="md"
-                  onClick={() => {
-                    void onResend()
-                  }}
-                >
-                  {t("createAccount.sendAgain")}
-                </Button>
-              </p>
-              <ExpandableContent
-                className={styles.howToUseCode}
-                order={Order.below}
-                strings={{
-                  readMore: t("createAccount.howToUseCode"),
-                  readLess: t("createAccount.howToUseCode"),
-                }}
-              >
-                <div className="field-note">
-                  <ol className={styles.howToList}>
-                    <li>{t("createAccount.howTo.p1")}</li>
-                    <li>{t("createAccount.howTo.p2")}</li>
-                    <li>{t("createAccount.howTo.p3")}</li>
-                    <li>{t("createAccount.howTo.p4")}</li>
-                  </ol>
-                  <p>{t("createAccount.howTo.p5")}</p>
-                </div>
-              </ExpandableContent>
-            </Card.Section>
-            <GetHelp flow={flow} />
-          </Card>
-        </div>
-      </section>
-    </Layout>
+    <AuthLayout title={t("createAccount.enterCode")}>
+      <Card.Section divider="flush">
+        <Heading priority={1} size="2xl">
+          {t("createAccount.checkEmail")}
+        </Heading>
+        <p className={styles.sentTo}>
+          {t("createAccount.weSentCodeTo")}
+          <br />
+          <span className={styles.email}>{email}</span>
+          <Link className={styles.editEmail} href={getCreateAccountPath()}>
+            {t("createAccount.editEmail")}
+          </Link>
+        </p>
+        <Form onSubmit={handleSubmit(onSubmit)}>
+          <Controller
+            name="code"
+            control={control}
+            defaultValue=""
+            rules={{ validate: (code: string) => /^\d{6}$/.test(code) }}
+            render={({ value, onChange }) => (
+              <CodeField value={value} onChange={onChange} error={!!errors.code} />
+            )}
+          />
+          <Button
+            className={styles.confirmButton}
+            variant="primary"
+            size="sm"
+            type="submit"
+            disabled={!isLoaded}
+          >
+            {t("createAccount.confirmCode")}
+          </Button>
+        </Form>
+        <p className={styles.resendRow}>
+          <span className={styles.didntGetEmail}>{t("createAccount.didntGetEmail")}</span>
+          <Button
+            className={styles.sendAgain}
+            variant="text"
+            size="md"
+            onClick={() => {
+              void onResend()
+            }}
+          >
+            {t("createAccount.sendAgain")}
+          </Button>
+        </p>
+        <ExpandableContent
+          className={styles.howToUseCode}
+          order={Order.below}
+          strings={{
+            readMore: t("createAccount.howToUseCode"),
+            readLess: t("createAccount.howToUseCode"),
+          }}
+        >
+          <div className="field-note">
+            <ol className={styles.howToList}>
+              <li>{t("createAccount.howTo.p1")}</li>
+              <li>{t("createAccount.howTo.p2")}</li>
+              <li>{t("createAccount.howTo.p3")}</li>
+              <li>{t("createAccount.howTo.p4")}</li>
+            </ol>
+            <p>{t("createAccount.howTo.p5")}</p>
+          </div>
+        </ExpandableContent>
+      </Card.Section>
+      <GetHelp flow="createAccount" />
+    </AuthLayout>
   )
 }
 
@@ -205,7 +193,7 @@ const EnterCode = (_props: { assetPaths: unknown }) => {
     }
   }, [email, clerkEnabled, fallbackPath, navigate])
 
-  if (!clerkEnabled || !email) {
+  if (!email || !clerkEnabled) {
     return null
   }
 

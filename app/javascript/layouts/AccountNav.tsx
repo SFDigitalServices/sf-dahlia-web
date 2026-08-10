@@ -1,4 +1,5 @@
 import React, { useContext } from "react"
+import { useAuth } from "@clerk/clerk-react"
 import { t, Icon } from "@bloom-housing/ui-components"
 import { Heading, Tabs } from "@bloom-housing/ui-seeds"
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons"
@@ -12,6 +13,10 @@ import {
   getSignInPath,
   getMyAccountContactPath,
 } from "../util/routeUtil"
+import UserContext from "../authentication/context/UserContext"
+import { clearHeaders } from "../authentication/token"
+import { useFeatureFlag } from "../hooks/useFeatureFlag"
+import { UNLEASH_FLAG } from "../modules/constants"
 import styles from "./AccountNav.module.scss"
 
 const isNavActive = (localizedPath: string): boolean => {
@@ -21,7 +26,7 @@ const isNavActive = (localizedPath: string): boolean => {
   )
 }
 
-const AccountNav = () => {
+const AccountNavLinks = ({ signOut }: { signOut: () => void | Promise<void> }) => {
   const { getAssetPath } = useContext(ConfigContext)
 
   return (
@@ -64,19 +69,56 @@ const AccountNav = () => {
             <Icon size="md-large" symbol="settings" className={styles.accountNavLinkIcon} />
             {t("accountSettings.title.sentenceCase")}
           </Tabs.Tab>
-          <Tabs.Tab href={getSignInPath()}>
-            <FontAwesomeIcon
-              size="lg"
-              color="var(--seeds-color-gray-500)"
-              icon={faArrowLeft}
-              className={styles.accountNavLinkIcon}
-            />
-            {t("accountLayout.nav.signOut")}
+          <Tabs.Tab>
+            <button
+              type="button"
+              className={styles.signOutButton}
+              onClick={() => {
+                void Promise.resolve(signOut()).finally(() => {
+                  window.location.href = getSignInPath()
+                })
+              }}
+            >
+              <FontAwesomeIcon
+                size="lg"
+                color="var(--seeds-color-gray-500)"
+                icon={faArrowLeft}
+                className={styles.accountNavLinkIcon}
+              />
+              {t("accountLayout.nav.signOut")}
+            </button>
           </Tabs.Tab>
         </Tabs.TabList>
       </Tabs>
     </div>
   )
+}
+
+const DeviseAccountNav = () => {
+  const { signOut } = useContext(UserContext)
+  return <AccountNavLinks signOut={() => signOut?.()} />
+}
+
+const ClerkAccountNav = () => {
+  const { signOut } = useAuth()
+  return (
+    <AccountNavLinks
+      signOut={async () => {
+        clearHeaders()
+        await signOut()
+      }}
+    />
+  )
+}
+
+const AccountNav = () => {
+  const { unleashFlag: clerkEnabled, flagsReady } = useFeatureFlag(UNLEASH_FLAG.CLERK_AUTH, false)
+
+  if (!flagsReady) {
+    return null
+  }
+
+  return clerkEnabled ? <ClerkAccountNav /> : <DeviseAccountNav />
 }
 
 export default AccountNav

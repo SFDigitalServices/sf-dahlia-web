@@ -1,21 +1,22 @@
 /* eslint-disable @typescript-eslint/unbound-method */
-import React, { useState } from "react"
-import { Navigate, useNavigate } from "react-router"
+import React, { useEffect, useRef, useState } from "react"
+import { Navigate } from "react-router"
 import { useAuth, useSignIn } from "@clerk/clerk-react"
 import { Form, t } from "@bloom-housing/ui-components"
 import { Alert, Button, Card, Heading, Link } from "@bloom-housing/ui-seeds"
-import { useForm } from "react-hook-form"
-import Layout from "../layouts/Layout"
+import { useForm, useWatch } from "react-hook-form"
+import AuthLayout from "../layouts/AuthLayout"
 import EmailFieldset from "../pages/account/components/EmailFieldset"
 import PasswordFieldset from "../pages/account/components/PasswordFieldset"
 import GetHelp from "../pages/account/components/GetHelp"
 import {
+  createPath,
   getCreateAccountPath,
   getForgotPasswordPath,
   getMyAccountPath,
-  getSignInCodePath,
 } from "../util/routeUtil"
 import { renderInlineMarkup } from "../util/languageUtil"
+import { clearHeaders } from "./token"
 import styles from "./SignInFlow.module.scss"
 
 interface SignInFields {
@@ -30,6 +31,18 @@ const SignInFlow = () => {
   const { isLoaded: authLoaded, isSignedIn } = useAuth()
   const { isLoaded, signIn, setActive } = useSignIn()
   const [showError, setShowError] = useState(false)
+   const alertRef = useRef<HTMLDivElement>(null)
+  const { register, handleSubmit, watch, control } = useForm<SignInFields>({
+    shouldFocusError: false,
+  })
+  const emailField = useWatch<string>({ control, name: "email" })
+
+  useEffect(() => {
+    if (showError) {
+      alertRef.current?.focus()
+    }
+  }, [showError])
+
   // Defaults to password sign in flow
   const [view, setView] = useState<SignInView>("password")
   const {
@@ -49,6 +62,7 @@ const SignInFlow = () => {
         setShowError(true)
         return
       }
+      clearHeaders() // Clear headers in case of existing Devise session (while testing)
       // TODO: if user has not completed their profile, redirect to profile page
       await setActive({ session: createdSessionId, redirectUrl: getMyAccountPath() })
     } catch (error) {
@@ -166,7 +180,7 @@ const SignInFlow = () => {
               </Heading>
               <p className={styles.createAccountDescription}>{t("signIn.createAccount")}</p>
               <Button variant="primary-outlined" size="sm" href={getCreateAccountPath()}>
-                {t("label.createAccount")}
+                {t("signIn.createAccountHeader")}
               </Button>
             </Card.Section>
             <GetHelp flow="signIn" />
