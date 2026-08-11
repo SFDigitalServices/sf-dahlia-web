@@ -16,22 +16,20 @@ import {
 } from "../../util/routeUtil"
 import styles from "./enter-code.module.scss"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
-import { UNLEASH_FLAG } from "../../modules/constants"
+import { AUTH_FLOW, UNLEASH_FLAG } from "../../modules/constants"
 import GetHelp from "./components/GetHelp"
 import CodeField from "./components/CodeField"
 
-type EnterCodeFlow = "signIn" | "createAccount"
-
 interface EnterCodePageProps {
   email: string
-  flow: EnterCodeFlow
+  flow: AUTH_FLOW
 }
 
 const EnterCodePage = ({ email, flow }: EnterCodePageProps) => {
   const navigate = useNavigate()
   const { isLoaded: signUpLoaded, signUp, setActive: setActiveSignUp } = useSignUp()
   const { isLoaded: signInLoaded, signIn, setActive: setActiveSignIn } = useSignIn()
-  const isLoaded = flow === "signIn" ? signInLoaded : signUpLoaded
+  const isLoaded = flow === AUTH_FLOW.SIGN_IN ? signInLoaded : signUpLoaded
   const {
     control,
     handleSubmit,
@@ -43,10 +41,10 @@ const EnterCodePage = ({ email, flow }: EnterCodePageProps) => {
     shouldFocusError: false,
   })
 
-  const editEmailHref = flow === "signIn" ? getSignInPath() : getCreateAccountPath()
+  const editEmailHref = flow === AUTH_FLOW.SIGN_IN ? getSignInPath() : getCreateAccountPath()
 
   const onSubmit = async ({ code }: { code: string }) => {
-    if (flow === "signIn") {
+    if (flow === AUTH_FLOW.SIGN_IN) {
       if (!signInLoaded || !signIn) return
       try {
         const completeSignIn = await signIn.attemptFirstFactor({
@@ -88,7 +86,7 @@ const EnterCodePage = ({ email, flow }: EnterCodePageProps) => {
   }
 
   const onResend = async () => {
-    if (flow === "signIn") {
+    if (flow === AUTH_FLOW.SIGN_IN) {
       if (!signInLoaded || !signIn) return
       try {
         const emailCodeFactor = (signIn.supportedFirstFactors ?? []).find(
@@ -190,8 +188,10 @@ const EnterCode = (_props: { assetPaths: unknown }) => {
   const navigate = useNavigate()
   const { pathname, state } = useLocation()
   const email = state?.email
-  const flow: EnterCodeFlow = pathname.includes("/sign-in/code") ? "signIn" : "createAccount"
-  const fallbackPath = flow === "signIn" ? getSignInPath() : getCreateAccountPath()
+  const flow: AUTH_FLOW = pathname.includes("/sign-in/code")
+    ? AUTH_FLOW.SIGN_IN
+    : AUTH_FLOW.CREATE_ACCOUNT
+  const fallbackPath = flow === AUTH_FLOW.SIGN_IN ? getSignInPath() : getCreateAccountPath()
   const { unleashFlag: clerkEnabled } = useFeatureFlag(UNLEASH_FLAG.CLERK_AUTH, false)
   useEffect(() => {
     if (!email || !clerkEnabled) {

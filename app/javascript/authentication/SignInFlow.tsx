@@ -17,6 +17,7 @@ import {
   getSignInCodePath,
 } from "../util/routeUtil"
 import { renderInlineMarkup } from "../util/languageUtil"
+import { AUTH_FLOW } from "../modules/constants"
 import { clearHeaders } from "./token"
 import styles from "./SignInFlow.module.scss"
 
@@ -190,7 +191,7 @@ const SignInFlow = () => {
           {t("signIn.createAccount")}
         </Button>
       </Card.Section>
-      <GetHelp flow="signIn" />
+      <GetHelp flow={AUTH_FLOW.SIGN_IN} />
     </AuthLayout>
   )
 }
