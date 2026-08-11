@@ -18,13 +18,13 @@ const fireVisibilityChange = () => {
   document.dispatchEvent(new Event("visibilitychange"))
 }
 
-const flushRenderGateFrames = () => {
+const flushPaintFrames = () => {
   // Two nested requestAnimationFrame calls need to resolve.
   jest.advanceTimersByTime(100)
 }
 
 const baseArgs = {
-  enabled: true,
+  mode: "shadow" as const,
   act: "yes" as const,
   appId: "app-1",
   listingId: "listing-1",
@@ -51,7 +51,7 @@ describe("useAutoRecordInviteToResponse", () => {
   it("logs the human-verified click once after the dwell timer when visible", () => {
     renderHook(() => useAutoRecordInviteToResponse(baseArgs))
 
-    flushRenderGateFrames()
+    flushPaintFrames()
     jest.advanceTimersByTime(2000)
 
     expect(logHumanVerifiedClick).toHaveBeenCalledTimes(1)
@@ -70,7 +70,7 @@ describe("useAutoRecordInviteToResponse", () => {
   it("never records the response (recording stays server-side for now)", () => {
     renderHook(() => useAutoRecordInviteToResponse(baseArgs))
 
-    flushRenderGateFrames()
+    flushPaintFrames()
     jest.advanceTimersByTime(5000)
 
     expect(recordResponse).not.toHaveBeenCalled()
@@ -79,7 +79,7 @@ describe("useAutoRecordInviteToResponse", () => {
   it("fires early on pointermove before the dwell timer elapses, only once", () => {
     renderHook(() => useAutoRecordInviteToResponse(baseArgs))
 
-    flushRenderGateFrames()
+    flushPaintFrames()
     window.dispatchEvent(new Event("pointermove"))
 
     expect(logHumanVerifiedClick).toHaveBeenCalledTimes(1)
@@ -101,49 +101,70 @@ describe("useAutoRecordInviteToResponse", () => {
 
     setVisibility("visible")
     fireVisibilityChange()
-    flushRenderGateFrames()
+    flushPaintFrames()
     jest.advanceTimersByTime(2000)
 
     expect(logHumanVerifiedClick).toHaveBeenCalledTimes(1)
   })
 
-  it("does not fire when enabled is false", () => {
-    renderHook(() => useAutoRecordInviteToResponse({ ...baseArgs, enabled: false }))
-    flushRenderGateFrames()
+  it('does not fire when mode is "off"', () => {
+    renderHook(() => useAutoRecordInviteToResponse({ ...baseArgs, mode: "off" }))
+    flushPaintFrames()
+    jest.advanceTimersByTime(5000)
+    expect(logHumanVerifiedClick).not.toHaveBeenCalled()
+  })
+
+  it("does not fire when the mode prop is absent", () => {
+    renderHook(() => useAutoRecordInviteToResponse({ ...baseArgs, mode: undefined }))
+    flushPaintFrames()
+    jest.advanceTimersByTime(5000)
+    expect(logHumanVerifiedClick).not.toHaveBeenCalled()
+  })
+
+  it("does not fire for a test/preview link", () => {
+    renderHook(() => useAutoRecordInviteToResponse({ ...baseArgs, isTest: true }))
+    flushPaintFrames()
+    jest.advanceTimersByTime(5000)
+    expect(logHumanVerifiedClick).not.toHaveBeenCalled()
+  })
+
+  it("does not fire on the documents page", () => {
+    renderHook(() => useAutoRecordInviteToResponse({ ...baseArgs, documentsPath: true }))
+    flushPaintFrames()
     jest.advanceTimersByTime(5000)
     expect(logHumanVerifiedClick).not.toHaveBeenCalled()
   })
 
   it("does not fire when act is missing", () => {
     renderHook(() => useAutoRecordInviteToResponse({ ...baseArgs, act: undefined }))
-    flushRenderGateFrames()
+    flushPaintFrames()
     jest.advanceTimersByTime(5000)
     expect(logHumanVerifiedClick).not.toHaveBeenCalled()
   })
 
   it('does not fire when act is "submit"', () => {
     renderHook(() => useAutoRecordInviteToResponse({ ...baseArgs, act: "submit" }))
-    flushRenderGateFrames()
+    flushPaintFrames()
     jest.advanceTimersByTime(5000)
     expect(logHumanVerifiedClick).not.toHaveBeenCalled()
   })
 
   it("does not fire when deadline has passed", () => {
     renderHook(() => useAutoRecordInviteToResponse({ ...baseArgs, deadline: "2000-01-01" }))
-    flushRenderGateFrames()
+    flushPaintFrames()
     jest.advanceTimersByTime(5000)
     expect(logHumanVerifiedClick).not.toHaveBeenCalled()
   })
 
   it("logs again on a remount (no session guard, so repeat loads stay visible in logs)", () => {
     const { unmount } = renderHook(() => useAutoRecordInviteToResponse(baseArgs))
-    flushRenderGateFrames()
+    flushPaintFrames()
     jest.advanceTimersByTime(2000)
     expect(logHumanVerifiedClick).toHaveBeenCalledTimes(1)
     unmount()
 
     renderHook(() => useAutoRecordInviteToResponse(baseArgs))
-    flushRenderGateFrames()
+    flushPaintFrames()
     jest.advanceTimersByTime(2000)
     expect(logHumanVerifiedClick).toHaveBeenCalledTimes(2)
   })
@@ -152,7 +173,7 @@ describe("useAutoRecordInviteToResponse", () => {
     ;(logHumanVerifiedClick as jest.Mock).mockRejectedValueOnce(new Error("api fail"))
 
     renderHook(() => useAutoRecordInviteToResponse(baseArgs))
-    flushRenderGateFrames()
+    flushPaintFrames()
     jest.advanceTimersByTime(2000)
     await Promise.resolve()
     await Promise.resolve()
@@ -165,7 +186,7 @@ describe("useAutoRecordInviteToResponse", () => {
 
   it("resets the fire conditions when the page becomes hidden again before firing", () => {
     renderHook(() => useAutoRecordInviteToResponse(baseArgs))
-    flushRenderGateFrames() // arms while visible
+    flushPaintFrames() // arms while visible
 
     setVisibility("hidden")
     fireVisibilityChange() // else branch: clears the dwell timer + listeners
@@ -176,7 +197,7 @@ describe("useAutoRecordInviteToResponse", () => {
 
   it("cleans up on unmount before dwell elapses with no call and no leaked listeners/timers", () => {
     const { unmount } = renderHook(() => useAutoRecordInviteToResponse(baseArgs))
-    flushRenderGateFrames()
+    flushPaintFrames()
     unmount()
 
     expect(() => {

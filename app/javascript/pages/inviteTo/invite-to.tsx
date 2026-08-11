@@ -56,23 +56,14 @@ const InviteToPage = ({
   const listingId = getPathWithoutLanguagePrefix(pathname).split("/")[2]
 
   useAutoRecordInviteToResponse({
-    enabled:
-      clientRecordingMode !== "off" &&
-      !!act &&
-      act !== "submit" &&
-      act !== "appointment" &&
-      !isTestMode &&
-      !documentsPath &&
-      !!type &&
-      !!deadline &&
-      !isDeadlinePassed(deadline) &&
-      !!appId &&
-      !!listingId,
+    mode: clientRecordingMode,
     act,
     appId,
     listingId,
     deadline,
     type,
+    isTest: isTestMode,
+    documentsPath,
   })
 
   useEffect(() => {

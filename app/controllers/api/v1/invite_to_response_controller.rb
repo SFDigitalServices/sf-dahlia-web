@@ -32,9 +32,10 @@ class Api::V1::InviteToResponseController < ApiController
     render json: { error: 'Submit response error' }, status: :internal_server_error
   end
 
-  # Shadow-mode endpoint: records nothing to Salesforce or the backend. It only logs
-  # that the client-side human-detection judged this page view to be a real human, so
-  # we can compare against the server-side GET recording during the shadow rollout.
+  # Shadow-mode endpoint: records nothing - it never calls sf-dahlia-backend, so no
+  # Salesforce state changes and no applicant email is sent. It only logs that the
+  # client-side human-detection judged this page view to be a real human, so we can
+  # compare against the server-side GET recording during the shadow rollout.
   # Safe to call repeatedly.
   def log_human_verified
     params.expect(record: %i[type deadline appId listingId act trigger elapsedMs])
