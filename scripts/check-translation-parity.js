@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /*
  * Verifies that every key in the English translation file exists in each of the
- * other locale files.
+ * other locale files, and that the translated values themselves are well formed.
  *
  * Why this matters: loadTranslations() in app/javascript/util/languageUtil.tsx
  * loads en.json first and then overlays the target locale on top of it. A key
@@ -13,6 +13,12 @@
  * Keys that are intentionally identical across locales (proper nouns, acronyms)
  * do not need listing here — this checks key presence, not value difference.
  * Keys that are intentionally English-only go in known-translation-gaps.json.
+ *
+ * The value checks (CONTENT_CHECKS below) are ported from the Translation-Checker
+ * tool devs have been running by hand — https://github.com/chadbrokaw/Translation-Checker
+ * — which validates XLIFF pasted into a browser. The rules are the valuable part:
+ * they catch the ways strings get mangled in the Phrase round trip. Two of them
+ * are deliberately adapted rather than copied; see the notes on each.
  *
  * Usage:
  *   node scripts/check-translation-parity.js
@@ -73,6 +79,90 @@ const readKnownGaps = () => {
   }
 }
 
+const PLURAL_SEPARATOR = "||||"
+// Number of plural forms each locale needs once a string is pluralized. Chinese
+// uses a single form for all counts.
+const EXPECTED_PLURAL_FORMS = { zh: 1 }
+const DEFAULT_EXPECTED_PLURAL_FORMS = 2
+
+const MALFORMED_BARS = [/(?<!\|)\|{1,3}(?!\|)/, /\|{5,}/]
+const hasMalformedBars = (value) => MALFORMED_BARS.some((pattern) => pattern.test(value))
+
+const variablesIn = (value) => value.match(/%\{.*?\}/g) || []
+
+const CONTENT_CHECKS = [
+  {
+    id: "encoding",
+    label: "encoding error (e.g. &nbsp;, &amp;)",
+    // A literal "&amp;" or "nbsp;" in the JSON means the string was double-encoded
+    // somewhere between Phrase and the repo.
+    failed: (target) => /nbsp;/.test(target) || /&amp;/.test(target),
+  },
+  {
+    id: "variablePrefix",
+    label: "variable missing its % prefix",
+    failed: (target) => /(?<!%)\{.*?\}/.test(target),
+  },
+  {
+    id: "variableMismatch",
+    label: "variables differ from en.json",
+    // Compares the *set* of variable names, not the number of occurrences: a
+    // pluralized translation repeats each variable once per form, so counting
+    // occurrences (as the XLF tool does) false-positives on every plural.
+    needsBase: true,
+    failed: (target, base) => {
+      const names = (value) => [...new Set(variablesIn(value))].sort().join(",")
+      return names(target) !== names(base)
+    },
+  },
+  {
+    id: "pluralBars",
+    label: `plural separator is not exactly four bars (${PLURAL_SEPARATOR})`,
+    failed: (target) => hasMalformedBars(target),
+  },
+  {
+    id: "pluralForms",
+    label: "pluralized string has the wrong number of forms",
+    // Only pluralized translations are checked, and against what the *locale*
+    // needs rather than against en.json's form count. English often has one form
+    // where Spanish legitimately needs two, so comparing to the base locale (as
+    // the XLF tool does) flags correct translations.
+    //
+    // Malformed separators are skipped: already reported above, and the split
+    // would produce meaningless counts.
+    skip: (target) => !target.includes(PLURAL_SEPARATOR) || hasMalformedBars(target),
+    failed: (target, base, locale) => {
+      const expected = EXPECTED_PLURAL_FORMS[locale] ?? DEFAULT_EXPECTED_PLURAL_FORMS
+      return target.split(PLURAL_SEPARATOR).filter((form) => form.trim() !== "").length !== expected
+    },
+  },
+]
+
+/*
+ * Runs the value-level checks over one locale. Returns { [checkId]: [keys] },
+ * omitting checks that found nothing.
+ */
+const runContentChecks = (target, base, locale) => {
+  const problems = {}
+
+  for (const key of Object.keys(target)) {
+    const value = target[key]
+    if (typeof value !== "string" || value.trim() === "") continue
+    const baseValue = base[key]
+
+    for (const check of CONTENT_CHECKS) {
+      if (check.needsBase && typeof baseValue !== "string") continue
+      if (check.skip && check.skip(value, baseValue, locale)) continue
+      if (check.failed(value, baseValue, locale)) {
+        problems[check.id] = problems[check.id] || []
+        problems[check.id].push(key)
+      }
+    }
+  }
+
+  return problems
+}
+
 const main = () => {
   const asJson = process.argv.includes("--json")
 
@@ -118,6 +208,8 @@ const main = () => {
     const staleAllowlist = [...allowed].filter((key) => key in target)
     const orphanedAllowlist = [...allowed].filter((key) => !(key in base))
 
+    const contentProblems = runContentChecks(target, base, locale)
+
     results[locale] = {
       missing,
       empty,
@@ -125,10 +217,13 @@ const main = () => {
       allowedStillMissing,
       staleAllowlist,
       orphanedAllowlist,
+      contentProblems,
     }
     totalAllowed += allowedStillMissing.length
 
-    if (missing.length > 0 || empty.length > 0) failed = true
+    if (missing.length > 0 || empty.length > 0 || Object.keys(contentProblems).length > 0) {
+      failed = true
+    }
   }
 
   if (asJson) {
@@ -140,7 +235,11 @@ const main = () => {
 
   for (const [locale, result] of Object.entries(results)) {
     const { missing, empty, extra, allowedStillMissing, staleAllowlist, orphanedAllowlist } = result
-    const status = missing.length === 0 && empty.length === 0 ? "PASS" : "FAIL"
+    const { contentProblems } = result
+    const status =
+      missing.length === 0 && empty.length === 0 && Object.keys(contentProblems).length === 0
+        ? "PASS"
+        : "FAIL"
     console.log(`${status}  ${locale}.json`)
 
     if (missing.length > 0) {
@@ -150,6 +249,12 @@ const main = () => {
     if (empty.length > 0) {
       console.log(`  ${empty.length} key(s) present but empty (will render blank):`)
       empty.forEach((key) => console.log(`    - ${key}`))
+    }
+    for (const check of CONTENT_CHECKS) {
+      const keys = contentProblems[check.id]
+      if (!keys) continue
+      console.log(`  ${keys.length} key(s) with ${check.label}:`)
+      keys.forEach((key) => console.log(`    - ${key}`))
     }
     if (extra.length > 0) {
       console.log(`  note: ${extra.length} key(s) not present in ${BASE_LOCALE}.json (dead weight):`)
@@ -174,15 +279,16 @@ const main = () => {
   }
 
   if (failed) {
-    console.log("Translation parity check failed.")
+    console.log("Translation check failed.")
     console.log(
       `Add the missing keys to the locale files, or — if a key is intentionally English-only —\n` +
-        `add it to scripts/known-translation-gaps.json with a reason.`
+        `add it to scripts/known-translation-gaps.json with a reason. Value problems (variables,\n` +
+        `plural forms, encoding) need fixing in Phrase so the fix survives the next sync.`
     )
     process.exit(1)
   }
 
-  console.log("Translation parity check passed.")
+  console.log("Translation check passed.")
   if (totalAllowed > 0) {
     console.log(
       `${totalAllowed} allowlisted gap(s) remain in scripts/known-translation-gaps.json — these are\n` +
