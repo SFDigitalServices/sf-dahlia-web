@@ -14,6 +14,7 @@ import { INVITE_TO_X } from "../../modules/constants"
 jest.mock("../../api/listingApiService")
 jest.mock("../../api/inviteToApiService", () => ({
   recordResponse: jest.fn(),
+  logHumanVerifiedClick: jest.fn(),
 }))
 jest.mock("../../hooks/useFeatureFlag", () => ({
   useFeatureFlag: () => ({
@@ -238,13 +239,13 @@ describe("Invite to Apply", () => {
       expect(recordResponse).toHaveBeenCalledTimes(1)
     })
 
-    it("arms client-side auto-recording when clientRecordingMode is not off", async () => {
+    it("arms client-side human detection when clientRecordingMode is not off", async () => {
       // Exercises the full `enabled` gate in invite-to.tsx (clientRecordingMode + type/deadline
       // checks) rather than short-circuiting at the default "off".
       await renderWithContext(
         <InviteToPage
           assetPaths={"/"}
-          clientRecordingMode="on"
+          clientRecordingMode="shadow"
           urlParams={{
             type: INVITE_TO_X.APPLY,
             deadline: mockFutureDeadline,

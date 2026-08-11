@@ -1,5 +1,5 @@
 import { useEffect } from "react"
-import { recordResponse, logHumanVerifiedClick } from "../api/inviteToApiService"
+import { logHumanVerifiedClick } from "../api/inviteToApiService"
 import { isDeadlinePassed } from "../util/listingUtil"
 
 const INTERACTION_EVENTS = [
@@ -10,12 +10,13 @@ const INTERACTION_EVENTS = [
   "scroll",
 ] as const
 
-export type ClientRecordingMode = "off" | "shadow" | "on"
+// 'shadow' is currently the only active mode: the server still records on GET and the client
+// only logs its human-detection result. A client-records ('on') mode is deferred until
+// https://github.com/SFDigitalServices/sf-dahlia-web/pull/2993 lands.
+export type ClientRecordingMode = "off" | "shadow"
 
 interface UseAutoRecordInviteToResponseArgs {
   enabled: boolean
-  // "on" fires the real recordResponse; "shadow" fires a log-only call (server still records on GET).
-  mode?: ClientRecordingMode
   act?: "yes" | "no" | "contact" | "submit" | "appointment"
   appId?: string
   listingId?: string
@@ -26,44 +27,24 @@ interface UseAutoRecordInviteToResponseArgs {
 
 const AUTO_RECORD_ACTS = new Set(["yes", "no", "contact"])
 
-// Shadow and on modes use distinct guard keys so a session that later flips from shadow to on
-// still records for real (the shadow call must not block the real one).
-const guardKey = (appId: string, act: string, mode: ClientRecordingMode) =>
-  mode === "shadow" ? `i2x-shadow-${appId}-${act}` : `i2x-recorded-${appId}-${act}`
-
-const isGuardSet = (key: string) => {
-  try {
-    return sessionStorage.getItem(key) === "true"
-  } catch {
-    return false
-  }
-}
-
-const setGuard = (key: string) => {
-  try {
-    sessionStorage.setItem(key, "true")
-  } catch {
-    // Ignore private-mode / storage-disabled failures; server-side dedup is the backstop.
-  }
-}
-
 /**
- * Automatically records an applicant's response to an invite-to-apply/interview email link
- * once the page has genuinely been seen by a human, gating out email-scanner-bot prefetches.
+ * Detects whether an invite-to-apply/interview email link was opened by a human rather than
+ * prefetched by an email-scanner bot, and logs the result (nothing is recorded to Salesforce -
+ * the server still records on GET).
  *
- * In `mode: "on"` it fires the real `recordResponse`; in `mode: "shadow"` it fires a log-only
- * `logHumanVerifiedClick` (the server still records on GET) so the detection can be measured
- * against live traffic. Fires exactly once when all of the following hold:
+ * Fires exactly once per mount when all of the following hold:
  *  - `enabled` is true (caller is responsible for computing this, including the
  *    client-recording mode, `act`, `isTest`, `documentsPath`, and deadline checks)
  *  - the document is visible
  *  - two animation frames have elapsed while visible (a real paint happened)
  *  - either a first user interaction occurs, or `dwellMs` of continuous visibility elapses
  *    (whichever comes first)
+ *
+ * There is deliberately no cross-mount/session dedup guard: this is log-only telemetry, and a
+ * guard would hide repeat loads we want to see in the logs.
  */
 export const useAutoRecordInviteToResponse = ({
   enabled,
-  mode = "on",
   act,
   appId,
   listingId,
@@ -74,7 +55,6 @@ export const useAutoRecordInviteToResponse = ({
   useEffect(() => {
     if (
       !enabled ||
-      mode === "off" ||
       !act ||
       !AUTO_RECORD_ACTS.has(act) ||
       !appId ||
@@ -83,11 +63,6 @@ export const useAutoRecordInviteToResponse = ({
       !deadline ||
       isDeadlinePassed(deadline)
     ) {
-      return undefined
-    }
-
-    const key = guardKey(appId, act, mode)
-    if (isGuardSet(key)) {
       return undefined
     }
 
@@ -136,30 +111,16 @@ export const useAutoRecordInviteToResponse = ({
       if (fired) return
       fired = true
       cleanup()
-      setGuard(key)
-      const elapsedMs = Date.now() - armedAt
-      const request =
-        mode === "shadow"
-          ? logHumanVerifiedClick({
-              appId,
-              listingId,
-              deadline,
-              act,
-              type,
-              trigger,
-              elapsedMs,
-            })
-          : recordResponse({
-              appId,
-              applicationNumber: appId,
-              listingId,
-              deadline,
-              action: act,
-              response: act,
-              type,
-            })
-      void request.catch((error) => {
-        console.error("Error auto-recording invite-to response:", error)
+      void logHumanVerifiedClick({
+        appId,
+        listingId,
+        deadline,
+        act,
+        type,
+        trigger,
+        elapsedMs: Date.now() - armedAt,
+      }).catch((error) => {
+        console.error("Error logging human-verified invite-to click:", error)
       })
     }
 
@@ -207,7 +168,7 @@ export const useAutoRecordInviteToResponse = ({
     }
 
     return cleanup
-  }, [enabled, mode, act, appId, listingId, deadline, type, dwellMs])
+  }, [enabled, act, appId, listingId, deadline, type, dwellMs])
 }
 
 export default useAutoRecordInviteToResponse

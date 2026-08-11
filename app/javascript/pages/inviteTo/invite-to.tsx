@@ -68,7 +68,6 @@ const InviteToPage = ({
       !isDeadlinePassed(deadline) &&
       !!appId &&
       !!listingId,
-    mode: clientRecordingMode,
     act,
     appId,
     listingId,

@@ -20,25 +20,12 @@ class InviteToController < ApplicationController
         schedulingUrl: application['leaseupAppointmentSchedulingURL'],
       )
     end
-    # 'on'     - client is the source of truth; skip server-side recording entirely.
-    # 'shadow' - keep recording server-side (unchanged behavior) but let the client run
-    #            its human-detection in parallel and log-only, so we can measure it
-    #            against real traffic before flipping to 'on'.
-    # 'off'    - legacy behavior: record server-side on GET.
-    if client_recording_mode == 'on'
-      # Resolve act/appId the same way props() does, so legacy links carrying
-      # 'response'/'applicationNumber' don't log misleading nils.
-      act = decoded_params['act'] || decoded_params['response']
-      app_id = decoded_params['appId'] || decoded_params['applicationNumber']
-      Rails.logger.info(
-        'InviteToController#index: *NOT* recording server-side, deferring to client ' \
-        "act=#{act.inspect}, " \
-        "appId=#{app_id.inspect}, " \
-        "deadline=#{decoded_params['deadline'].inspect}",
-      )
-    else
-      record_response(decoded_params)
-    end
+    # Recording always happens server-side on GET for now. When the flag is enabled the
+    # client additionally runs its human-detection in parallel and logs only ('shadow'),
+    # so we can measure bot vs. human clicks against real traffic. Moving the recording
+    # to the client is deferred until
+    # https://github.com/SFDigitalServices/sf-dahlia-web/pull/2993 lands.
+    record_response(decoded_params)
     render 'invite_to'
   end
 
@@ -84,19 +71,14 @@ class InviteToController < ApplicationController
 
   # Resolves the rollout state of the client-side recording feature from the
   # 'temp.webapp.inviteToClientRecording' Unleash flag:
-  #   flag disabled                       -> 'off'    (legacy server-side recording)
-  #   flag enabled, variant 'shadow'      -> 'shadow' (server records; client detects + logs)
-  #   flag enabled, any other/no variant  -> 'on'     (client records; server does not)
+  #   flag disabled -> 'off'    (client hook inert)
+  #   flag enabled  -> 'shadow' (server records on GET; client detects humans, logs only)
+  # There is deliberately no 'on' (client-records) state yet - see PR #2993.
   def client_recording_mode
     return @client_recording_mode if defined?(@client_recording_mode)
 
     @client_recording_mode =
-      if Rails.configuration.unleash.is_enabled?(CLIENT_RECORDING_FLAG)
-        variant = Rails.configuration.unleash.get_variant(CLIENT_RECORDING_FLAG)
-        variant&.name == 'shadow' ? 'shadow' : 'on'
-      else
-        'off'
-      end
+      Rails.configuration.unleash.is_enabled?(CLIENT_RECORDING_FLAG) ? 'shadow' : 'off'
   end
 
   def record_response(decoded_params)
