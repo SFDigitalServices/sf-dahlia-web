@@ -53,6 +53,8 @@ const InviteToPage = ({
   const { pathname } = useLocation()
   const navigate = useNavigate()
   const isTestMode = isTest === true || isTest === "true"
+  // Single source of truth for the listing id parsed from the URL, so the hook and the
+  // getListing() fetch below can't diverge if the path parsing ever changes.
   const listingId = getPathWithoutLanguagePrefix(pathname).split("/")[2]
 
   useAutoRecordInviteToResponse({
@@ -67,14 +69,13 @@ const InviteToPage = ({
   })
 
   useEffect(() => {
-    const path = getPathWithoutLanguagePrefix(pathname)
-    void getListing(path.split("/")[2]).then((listing: RailsSaleListing) => {
+    void getListing(listingId).then((listing: RailsSaleListing) => {
       if (!listing) {
         void navigate("/")
       }
       setListing(listing)
     })
-  }, [navigate, pathname])
+  }, [navigate, listingId])
 
   const { unleashFlag: isI2AEnabled } = useFeatureFlag("partners.inviteToApply", false)
   const { unleashFlag: isI2IEnabledFlag } = useVariantFlag("all.i2i", false)
