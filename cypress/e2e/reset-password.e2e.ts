@@ -1,6 +1,10 @@
-import { userObjectGenerator } from "../support/util"
+import { interceptUnleashFlags, userObjectGenerator } from "../support/util"
 
 describe("Reset Password Page", () => {
+  beforeEach(() => {
+    interceptUnleashFlags()
+  })
+
   it("should submit request to change the password", () => {
     cy.intercept(
       "GET",
