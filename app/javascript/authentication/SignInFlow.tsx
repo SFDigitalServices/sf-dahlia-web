@@ -25,7 +25,7 @@ interface SignInFields {
   password: string
 }
 
-type SignInView = "code" | "password"
+type SignInView = "verificationCode" | "password"
 
 const SignInFlow = () => {
   const navigate = useNavigate()
@@ -105,7 +105,7 @@ const SignInFlow = () => {
 
   const forgotPasswordPath = createPath(getForgotPasswordPath(), { email: emailField })
 
-  const codeSection = (
+  const verificationCodeSection = (
     <>
       <p className="field-note">{t("signIn.codeDescription")}</p>
       <Form onSubmit={handleSubmit(onGetCodeSubmit)}>
@@ -155,7 +155,7 @@ const SignInFlow = () => {
         size="md"
         onClick={() => {
           setShowError(false)
-          setView("code")
+          setView("verificationCode")
         }}
       >
         {t("signIn.oneTimeCode")}
@@ -179,7 +179,7 @@ const SignInFlow = () => {
             </Alert>
           </div>
         )}
-        {view === "code" ? codeSection : passwordSection}
+        {view === "verificationCode" ? verificationCodeSection : passwordSection}
       </Card.Section>
       <Card.Section divider="flush">
         <Heading priority={2} size="lg">
