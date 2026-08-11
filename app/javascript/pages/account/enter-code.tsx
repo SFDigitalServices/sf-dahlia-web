@@ -29,7 +29,8 @@ const EnterCodePage = ({ email, flow }: EnterCodePageProps) => {
   const navigate = useNavigate()
   const { isLoaded: signUpLoaded, signUp, setActive: setActiveSignUp } = useSignUp()
   const { isLoaded: signInLoaded, signIn, setActive: setActiveSignIn } = useSignIn()
-  const isLoaded = flow === AUTH_FLOW.SIGN_IN ? signInLoaded : signUpLoaded
+  const isSignInFlow = flow === AUTH_FLOW.SIGN_IN
+  const isLoaded = isSignInFlow ? signInLoaded : signUpLoaded
   const {
     control,
     handleSubmit,
@@ -41,32 +42,31 @@ const EnterCodePage = ({ email, flow }: EnterCodePageProps) => {
     shouldFocusError: false,
   })
 
-  const editEmailHref = flow === AUTH_FLOW.SIGN_IN ? getSignInPath() : getCreateAccountPath()
+  const editEmailHref = isSignInFlow ? getSignInPath() : getCreateAccountPath()
 
-  const onSubmit = async ({ code }: { code: string }) => {
-    if (flow === AUTH_FLOW.SIGN_IN) {
-      if (!signInLoaded || !signIn) return
-      try {
-        const completeSignIn = await signIn.attemptFirstFactor({
-          strategy: "email_code",
-          code,
+  const verifySignInCode = async (code: string) => {
+    if (!signInLoaded || !signIn) return
+    try {
+      const completeSignIn = await signIn.attemptFirstFactor({
+        strategy: "email_code",
+        code,
+      })
+      if (completeSignIn.status === "complete") {
+        await setActiveSignIn({
+          session: completeSignIn.createdSessionId,
+          redirectUrl: getMyAccountPath(),
         })
-        if (completeSignIn.status === "complete") {
-          await setActiveSignIn({
-            session: completeSignIn.createdSessionId,
-            redirectUrl: getMyAccountPath(),
-          })
-        } else {
-          console.error("Sign in failed:", completeSignIn)
-          setError("code", { message: "invalid" })
-        }
-      } catch (error) {
-        console.error("Code verification error:", error)
+      } else {
+        console.error("Sign in failed:", completeSignIn)
         setError("code", { message: "invalid" })
       }
-      return
+    } catch (error) {
+      console.error("Code verification error:", error)
+      setError("code", { message: "invalid" })
     }
+  }
 
+  const verifySignUpCode = async (code: string) => {
     if (!signUpLoaded || !signUp) return
     try {
       const completeSignUp = await signUp.attemptEmailAddressVerification({
@@ -85,33 +85,37 @@ const EnterCodePage = ({ email, flow }: EnterCodePageProps) => {
     }
   }
 
-  const onResend = async () => {
-    if (flow === AUTH_FLOW.SIGN_IN) {
-      if (!signInLoaded || !signIn) return
-      try {
-        const emailCodeFactor = (signIn.supportedFirstFactors ?? []).find(
-          (factor) => factor.strategy === "email_code"
-        )
-        if (emailCodeFactor?.strategy !== "email_code") {
-          throw new Error("Email code factor missing")
-        }
-        await signIn.prepareFirstFactor({
-          strategy: "email_code",
-          emailAddressId: emailCodeFactor.emailAddressId,
-        })
-      } catch (error) {
-        console.error("Code resend error", error)
+  const onSubmit = async ({ code }: { code: string }) =>
+    isSignInFlow ? verifySignInCode(code) : verifySignUpCode(code)
+  const resendSignInCode = async () => {
+    if (!signInLoaded || !signIn) return
+    try {
+      const emailCodeFactor = signIn.supportedFirstFactors?.find(
+        (factor) => factor.strategy === "email_code"
+      )
+      if (emailCodeFactor?.strategy !== "email_code") {
+        console.error("Sign in email code factor missing")
+        return
       }
-      return
+      await signIn.prepareFirstFactor({
+        strategy: "email_code",
+        emailAddressId: emailCodeFactor.emailAddressId,
+      })
+    } catch (error) {
+      console.error("Sign in code resend error", error)
     }
+  }
 
+  const resendSignUpCode = async () => {
     if (!signUpLoaded || !signUp) return
     try {
       await signUp.prepareEmailAddressVerification({ strategy: "email_code" })
     } catch (error) {
-      console.error("Code resend error", error)
+      console.error("Sign up code resend error", error)
     }
   }
+
+  const onResend = async () => (isSignInFlow ? resendSignInCode() : resendSignUpCode())
 
   return (
     <AuthLayout title={t("createAccount.enterCode")}>
