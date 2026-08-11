@@ -1,85 +1,61 @@
-import React, { useState } from "react"
-import { AppearanceStyleType, Button, Form, t, FormCard, Icon } from "@bloom-housing/ui-components"
-import { Link, Heading, Alert } from "@bloom-housing/ui-seeds"
+/* eslint-disable @typescript-eslint/unbound-method */
+import { Form, t } from "@bloom-housing/ui-components"
+import { Button, Card, Heading } from "@bloom-housing/ui-seeds"
+import React from "react"
 import { useForm } from "react-hook-form"
-import { AppPages, getSignInPath } from "../util/routeUtil"
-import EmailFieldset from "../pages/account/components/EmailFieldset"
-import "../pages/account/styles/account.scss"
-import FormsLayout from "../layouts/FormLayout"
+import styles from "../authentication/SignInFlow.module.scss"
+import { useFeatureFlag } from "../hooks/useFeatureFlag"
+import AuthLayout from "../layouts/AuthLayout"
 import withAppSetup from "../layouts/withAppSetup"
-import { forgotPassword } from "../api/authApiService"
-const EmailSubmittedCard = () => {
+import { UNLEASH_FLAG } from "../modules/constants"
+import EmailFieldset from "../pages/account/components/EmailFieldset"
+import { AppPages, getCreateAccountPath } from "../util/routeUtil"
+import { ForgotPasswordForm } from "./forgot-password-form"
+
+const ForgotPasswordPage = () => {
+  const { register } = useForm({
+    shouldFocusError: false,
+  })
+
+  const emailParam = new URLSearchParams(window.location.search).get("email") ?? ""
+
   return (
-    <div className="text-center p-8">
-      <Heading priority={3} size="2xl" className="mb-4">
-        {t("forgotPassword.emailSent")}
-      </Heading>
-      <p>{t("forgotPassword.emailLink")}</p>
-    </div>
-  )
-}
-const ServerAlert = ({ message }: { message?: string }) => {
-  return (
-    message && (
-      <Alert fullwidth variant="alert" className="error-summary-banner">
-        {message}
-      </Alert>
-    )
+    <AuthLayout title={t("forgotPassword.title")}>
+      <Card.Section divider="inset">
+        <Heading priority={1} size="2xl">
+          {t("forgotPassword.title")}
+        </Heading>
+        <p className="field-note">{t("signIn.codeDescription")}</p>
+        {/* onSubmit={handleSubmit(onSubmit, onError)} */}
+        <Form className={styles.form}>
+          <EmailFieldset register={register} defaultEmail={emailParam} />
+          <Button className={styles.getCodeButton} variant="primary" size="sm" type="submit">
+            {t("createAccount.getCode")}
+          </Button>
+        </Form>
+      </Card.Section>
+
+      <Card.Section divider="flush">
+        <Heading priority={2} size="lg">
+          {t("signIn.dontHaveAccount")}
+        </Heading>
+        <p className={styles.createAccountDescription}>{t("signIn.createAccountDescription")}</p>
+        <Button variant="primary-outlined" size="sm" href={getCreateAccountPath()}>
+          {t("signIn.createAccount")}
+        </Button>
+      </Card.Section>
+    </AuthLayout>
   )
 }
 
 const ForgotPassword = () => {
-  const [emailSubmitted, setEmailSubmitted] = useState(false)
-  const [serverError, setServerError] = React.useState<string | null>(null)
+  const { unleashFlag: clerkEnabled } = useFeatureFlag(UNLEASH_FLAG.CLERK_AUTH, false)
 
-  // eslint-disable-next-line @typescript-eslint/unbound-method
-  const { register, handleSubmit, errors } = useForm()
-  const onSubmit = (data: { email: string }) => {
-    forgotPassword(data.email)
-      .then(() => {
-        setEmailSubmitted(true)
-      })
-      .catch((error) => {
-        if (error.response?.status !== 404) {
-          setServerError(t("error.account.genericServerError"))
-        } else {
-          setEmailSubmitted(true)
-        }
-      })
+  if (!clerkEnabled) {
+    return <ForgotPasswordForm />
   }
 
-  const urlParams = new URLSearchParams(window.location.search)
-  const emailParam = urlParams.get("email") || undefined
-
-  return (
-    <FormsLayout>
-      <ServerAlert message={serverError} />
-      <FormCard>
-        <div className="form-card__lead text-center border-b mx-0">
-          <Icon size="2xl" symbol="profile" />
-          <h2 className="form-card__title">{t("pageTitle.forgotPasswordLowercase")}</h2>
-          <p className="form-subtitle">{t("forgotPassword.subtitle")}</p>
-        </div>
-        {!emailSubmitted ? (
-          <div className="form-card__group pt-0">
-            <Form className="mt-10 relative" onSubmit={handleSubmit(onSubmit)}>
-              <EmailFieldset defaultEmail={emailParam} register={register} errors={errors} />
-              <div className="text-center mt-4">
-                <Button styleType={AppearanceStyleType.primary} type="submit">
-                  {t("label.sendEmail")}
-                </Button>
-              </div>
-              <div className="text-center mt-4">
-                <Link href={getSignInPath()}>{t("label.cancel")}</Link>
-              </div>
-            </Form>
-          </div>
-        ) : (
-          <EmailSubmittedCard />
-        )}
-      </FormCard>
-    </FormsLayout>
-  )
+  return <ForgotPasswordPage />
 }
 
 export default withAppSetup(ForgotPassword, {

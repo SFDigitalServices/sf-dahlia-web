@@ -2016,6 +2016,7 @@
   "signIn.accountAlreadyConfirmed.title": "Account already confirmed",
   "signIn.badCredentials": "Invalid login credentials. Please try again.",
   "signIn.badCredentialsWithResetLink": "Email or password is incorrect. Check for mistakes and try again. <a target='_blank' href='%{url}'>Reset your password</a> if you need to.",
+  "signIn.codeDescription": "Enter your email address and we'll send you a code to sign in.",
   "signIn.createAccount": "Create account",
   "signIn.createAccountDescription": "Save your progress, apply faster next time, and easily check lottery results",
   "signIn.dontHaveAccount": "Don't have an account?",

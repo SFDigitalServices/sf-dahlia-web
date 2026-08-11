@@ -18,6 +18,7 @@ import {
 import { renderInlineMarkup } from "../util/languageUtil"
 import { clearHeaders } from "./token"
 import styles from "./SignInFlow.module.scss"
+import { emailRegex } from "../util/accountUtil"
 
 interface SignInFields {
   email: string
@@ -69,7 +70,9 @@ const SignInFlow = () => {
     return <Navigate to={getMyAccountPath()} replace />
   }
 
-  const forgotPasswordPath = createPath(getForgotPasswordPath(), { email: emailField })
+  const forgotPasswordPath = createPath(getForgotPasswordPath(), {
+    email: emailField && emailRegex.test(emailField) ? emailField : "",
+  })
 
   return (
     <AuthLayout title={t("pageTitle.signIn")}>
