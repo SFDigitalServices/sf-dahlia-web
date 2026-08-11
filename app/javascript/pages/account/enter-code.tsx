@@ -206,7 +206,6 @@ const EnterCode = (_props: { assetPaths: unknown }) => {
   return <EnterCodePage email={email} flow={flow} />
 }
 
-export { EnterCodePage }
 export default withAppSetup(EnterCode, {
   useFormTimeout: true,
   pageName: AppPages.EnterCode,
