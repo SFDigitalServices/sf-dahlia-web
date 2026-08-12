@@ -1,22 +1,36 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import React, { useEffect } from "react"
 import { useLocation, useNavigate } from "react-router"
-import { useSignUp } from "@clerk/clerk-react"
+import { useSignIn, useSignUp } from "@clerk/clerk-react"
 import { ExpandableContent, Form, Order, t } from "@bloom-housing/ui-components"
 import { Card, Heading, Link, Button } from "@bloom-housing/ui-seeds"
 import { Controller, useForm } from "react-hook-form"
 import withAppSetup from "../../layouts/withAppSetup"
 import AuthLayout from "../../layouts/AuthLayout"
-import { AppPages, getAddPasswordPath, getCreateAccountPath } from "../../util/routeUtil"
+import {
+  AppPages,
+  getAddPasswordPath,
+  getCreateAccountPath,
+  getMyAccountPath,
+  getSignInPath,
+} from "../../util/routeUtil"
 import styles from "./enter-code.module.scss"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
-import { UNLEASH_FLAG } from "../../modules/constants"
+import { AUTH_FLOW, UNLEASH_FLAG } from "../../modules/constants"
 import GetHelp from "./components/GetHelp"
 import CodeField from "./components/CodeField"
 
-const EnterCodePage = ({ email }: { email: string }) => {
+interface EnterCodePageProps {
+  email: string
+  flow: AUTH_FLOW
+}
+
+const EnterCodePage = ({ email, flow }: EnterCodePageProps) => {
   const navigate = useNavigate()
-  const { isLoaded, signUp, setActive } = useSignUp()
+  const { isLoaded: signUpLoaded, signUp, setActive: setActiveSignUp } = useSignUp()
+  const { isLoaded: signInLoaded, signIn, setActive: setActiveSignIn } = useSignIn()
+  const isSignInFlow = flow === AUTH_FLOW.SIGN_IN
+  const isLoaded = isSignInFlow ? signInLoaded : signUpLoaded
   const {
     control,
     handleSubmit,
@@ -28,14 +42,38 @@ const EnterCodePage = ({ email }: { email: string }) => {
     shouldFocusError: false,
   })
 
-  const onSubmit = async ({ code }: { code: string }) => {
-    if (!isLoaded || !signUp) return
+  const editEmailHref = isSignInFlow ? getSignInPath() : getCreateAccountPath()
+
+  const verifySignInCode = async (code: string) => {
+    if (!signInLoaded || !signIn) return
+    try {
+      const completeSignIn = await signIn.attemptFirstFactor({
+        strategy: "email_code",
+        code,
+      })
+      if (completeSignIn.status === "complete") {
+        await setActiveSignIn({
+          session: completeSignIn.createdSessionId,
+          redirectUrl: getMyAccountPath(),
+        })
+      } else {
+        console.error("Sign in failed:", completeSignIn)
+        setError("code", { message: "invalid" })
+      }
+    } catch (error) {
+      console.error("Code verification error:", error)
+      setError("code", { message: "invalid" })
+    }
+  }
+
+  const verifySignUpCode = async (code: string) => {
+    if (!signUpLoaded || !signUp) return
     try {
       const completeSignUp = await signUp.attemptEmailAddressVerification({
         code,
       })
       if (completeSignUp.status === "complete") {
-        await setActive({ session: completeSignUp.createdSessionId })
+        await setActiveSignUp({ session: completeSignUp.createdSessionId })
         void navigate(getAddPasswordPath())
       } else {
         console.error("Account creation failed:", completeSignUp)
@@ -47,14 +85,37 @@ const EnterCodePage = ({ email }: { email: string }) => {
     }
   }
 
-  const onResend = async () => {
-    if (!isLoaded || !signUp) return
+  const onSubmit = async ({ code }: { code: string }) =>
+    isSignInFlow ? verifySignInCode(code) : verifySignUpCode(code)
+  const resendSignInCode = async () => {
+    if (!signInLoaded || !signIn) return
+    try {
+      const emailCodeFactor = signIn.supportedFirstFactors?.find(
+        (factor) => factor.strategy === "email_code"
+      )
+      if (emailCodeFactor?.strategy !== "email_code") {
+        console.error("Sign in email code factor missing")
+        return
+      }
+      await signIn.prepareFirstFactor({
+        strategy: "email_code",
+        emailAddressId: emailCodeFactor.emailAddressId,
+      })
+    } catch (error) {
+      console.error("Sign in code resend error", error)
+    }
+  }
+
+  const resendSignUpCode = async () => {
+    if (!signUpLoaded || !signUp) return
     try {
       await signUp.prepareEmailAddressVerification({ strategy: "email_code" })
     } catch (error) {
-      console.error("Code resend error", error)
+      console.error("Sign up code resend error", error)
     }
   }
+
+  const onResend = async () => (isSignInFlow ? resendSignInCode() : resendSignUpCode())
 
   return (
     <AuthLayout title={t("createAccount.enterCode")}>
@@ -66,7 +127,7 @@ const EnterCodePage = ({ email }: { email: string }) => {
           {t("createAccount.weSentCodeTo")}
           <br />
           <span className={styles.email}>{email}</span>
-          <Link className={styles.editEmail} href={getCreateAccountPath()}>
+          <Link className={styles.editEmail} href={editEmailHref}>
             {t("createAccount.editEmail")}
           </Link>
         </p>
@@ -122,27 +183,31 @@ const EnterCodePage = ({ email }: { email: string }) => {
           </div>
         </ExpandableContent>
       </Card.Section>
-      <GetHelp flow="createAccount" />
+      <GetHelp flow={flow} />
     </AuthLayout>
   )
 }
 
 const EnterCode = (_props: { assetPaths: unknown }) => {
   const navigate = useNavigate()
-  const { state } = useLocation()
+  const { pathname, state } = useLocation()
   const email = state?.email
+  const flow: AUTH_FLOW = pathname.includes("/sign-in/code")
+    ? AUTH_FLOW.SIGN_IN
+    : AUTH_FLOW.CREATE_ACCOUNT
+  const fallbackPath = flow === AUTH_FLOW.SIGN_IN ? getSignInPath() : getCreateAccountPath()
   const { unleashFlag: clerkEnabled } = useFeatureFlag(UNLEASH_FLAG.CLERK_AUTH, false)
   useEffect(() => {
     if (!email || !clerkEnabled) {
-      void navigate(getCreateAccountPath())
+      void navigate(fallbackPath)
     }
-  }, [email, clerkEnabled, navigate])
+  }, [email, clerkEnabled, fallbackPath, navigate])
 
   if (!email || !clerkEnabled) {
     return null
   }
 
-  return <EnterCodePage email={email} />
+  return <EnterCodePage email={email} flow={flow} />
 }
 
 export default withAppSetup(EnterCode, {

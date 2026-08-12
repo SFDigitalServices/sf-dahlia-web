@@ -10,7 +10,7 @@ import AuthLayout from "../../layouts/AuthLayout"
 import { AppPages, getEnterCodePath, getSignInPath } from "../../util/routeUtil"
 import { getCurrentLanguage } from "../../util/languageUtil"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
-import { UNLEASH_FLAG } from "../../modules/constants"
+import { AUTH_FLOW, UNLEASH_FLAG } from "../../modules/constants"
 import { CreateAccount } from "./create-account"
 import EmailFieldset from "./components/EmailFieldset"
 import GetHelp from "./components/GetHelp"
@@ -74,7 +74,7 @@ const CreateAnAccountPage = () => {
           {t("nav.signIn")}
         </Button>
       </Card.Section>
-      <GetHelp flow="createAccount" />
+      <GetHelp flow={AUTH_FLOW.CREATE_ACCOUNT} />
     </AuthLayout>
   )
 }

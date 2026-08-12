@@ -10,7 +10,7 @@ import AuthLayout from "../../layouts/AuthLayout"
 import { AppPages, getCreateAccountPath } from "../../util/routeUtil"
 import styles from "./add-password.module.scss"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
-import { UNLEASH_FLAG } from "../../modules/constants"
+import { AUTH_FLOW, UNLEASH_FLAG } from "../../modules/constants"
 import GetHelp from "./components/GetHelp"
 import PasswordFieldset from "./components/PasswordFieldset"
 import "./styles/account.scss"
@@ -75,7 +75,7 @@ const AddPasswordPage = () => {
           </div>
         </Form>
       </Card.Section>
-      <GetHelp flow="createAccount" />
+      <GetHelp flow={AUTH_FLOW.CREATE_ACCOUNT} />
     </AuthLayout>
   )
 }

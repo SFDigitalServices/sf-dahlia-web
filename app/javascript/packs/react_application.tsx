@@ -63,6 +63,7 @@ const PAGE_ROUTES = [
   [HowToApply, "/listings/:id/how-to-apply"],
   [ListingApplyForm, "/listings/:id/apply/intro"],
   [SignIn, "/sign-in"],
+  [EnterCode, "/sign-in/code"],
   [CreateAnAccount, "/create-account"],
   [EnterCode, "/create-account/code"],
   [AddPassword, "/add-password"],
