@@ -15,6 +15,10 @@ import InviteToInterviewNextSteps from "./inviteToInterview/InviteToInterviewNex
 import RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
 import { getPathWithoutLanguagePrefix } from "../../util/languageUtil"
 import { isDeadlinePassed } from "../../util/listingUtil"
+import {
+  useAutoRecordInviteToResponse,
+  ClientRecordingMode,
+} from "../../hooks/useAutoRecordInviteToResponse"
 
 interface UrlParams {
   type?: INVITE_TO_X
@@ -34,6 +38,7 @@ interface HomePageProps {
   documentsPath?: boolean
   uploadUrl?: string
   schedulingUrl?: string
+  clientRecordingMode?: ClientRecordingMode
 }
 
 const InviteToPage = ({
@@ -42,19 +47,35 @@ const InviteToPage = ({
   schedulingUrl,
   submitPreviewLinkTokenParam,
   documentsPath,
+  clientRecordingMode = "off",
 }: HomePageProps) => {
   const [listing, setListing] = useState<RailsSaleListing>(null)
   const { pathname } = useLocation()
   const navigate = useNavigate()
+  const isTestMode = isTest === true || isTest === "true"
+  // Single source of truth for the listing id parsed from the URL, so the hook and the
+  // getListing() fetch below can't diverge if the path parsing ever changes.
+  const listingId = getPathWithoutLanguagePrefix(pathname).split("/")[2]
+
+  useAutoRecordInviteToResponse({
+    mode: clientRecordingMode,
+    act,
+    appId,
+    listingId,
+    deadline,
+    type,
+    isTest: isTestMode,
+    documentsPath,
+  })
+
   useEffect(() => {
-    const path = getPathWithoutLanguagePrefix(pathname)
-    void getListing(path.split("/")[2]).then((listing: RailsSaleListing) => {
+    void getListing(listingId).then((listing: RailsSaleListing) => {
       if (!listing) {
         void navigate("/")
       }
       setListing(listing)
     })
-  }, [navigate, pathname])
+  }, [navigate, listingId])
 
   const { unleashFlag: isI2AEnabled } = useFeatureFlag("partners.inviteToApply", false)
   const { unleashFlag: isI2IEnabledFlag } = useVariantFlag("all.i2i", false)
