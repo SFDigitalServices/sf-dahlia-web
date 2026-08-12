@@ -49,6 +49,42 @@
           "accountSettings.housingCounselor.toastShared",
           "accountSettings.housingCounselor.toastStoppedSharing"
         ]
+      },
+      {
+        "reason": "DAH-4198 sign-in-with-email-and-code page shipped ahead of its translations. These 31 strings render in English today.",
+        "keys": [
+          "createAccount.addPassword",
+          "createAccount.checkEmail",
+          "createAccount.choosePasswordOptional",
+          "createAccount.codeDescription",
+          "createAccount.codeInvalid.p1",
+          "createAccount.codeInvalid.p2",
+          "createAccount.confirmCode",
+          "createAccount.didntGetEmail",
+          "createAccount.editEmail",
+          "createAccount.enterCode",
+          "createAccount.getCode",
+          "createAccount.getHelp",
+          "createAccount.getHelpLink",
+          "createAccount.howTo.p1",
+          "createAccount.howTo.p2",
+          "createAccount.howTo.p3",
+          "createAccount.howTo.p4",
+          "createAccount.howTo.p5",
+          "createAccount.howToUseCode",
+          "createAccount.okayToSkipPassword",
+          "createAccount.savePassword",
+          "createAccount.sendAgain",
+          "createAccount.skipForNow",
+          "createAccount.weSentCodeTo",
+          "signIn.codeDescription",
+          "signIn.createAccount",
+          "signIn.createAccountDescription",
+          "signIn.getHelpLink",
+          "signIn.oneTimeCode",
+          "signIn.oneTimeCodeNote",
+          "signIn.passwordInstead"
+        ]
       }
     ],
     "tl": [
@@ -88,6 +124,42 @@
           "accountSettings.housingCounselor.toastShared",
           "accountSettings.housingCounselor.toastStoppedSharing"
         ]
+      },
+      {
+        "reason": "DAH-4198 sign-in-with-email-and-code page shipped ahead of its translations. These 31 strings render in English today.",
+        "keys": [
+          "createAccount.addPassword",
+          "createAccount.checkEmail",
+          "createAccount.choosePasswordOptional",
+          "createAccount.codeDescription",
+          "createAccount.codeInvalid.p1",
+          "createAccount.codeInvalid.p2",
+          "createAccount.confirmCode",
+          "createAccount.didntGetEmail",
+          "createAccount.editEmail",
+          "createAccount.enterCode",
+          "createAccount.getCode",
+          "createAccount.getHelp",
+          "createAccount.getHelpLink",
+          "createAccount.howTo.p1",
+          "createAccount.howTo.p2",
+          "createAccount.howTo.p3",
+          "createAccount.howTo.p4",
+          "createAccount.howTo.p5",
+          "createAccount.howToUseCode",
+          "createAccount.okayToSkipPassword",
+          "createAccount.savePassword",
+          "createAccount.sendAgain",
+          "createAccount.skipForNow",
+          "createAccount.weSentCodeTo",
+          "signIn.codeDescription",
+          "signIn.createAccount",
+          "signIn.createAccountDescription",
+          "signIn.getHelpLink",
+          "signIn.oneTimeCode",
+          "signIn.oneTimeCodeNote",
+          "signIn.passwordInstead"
+        ]
       }
     ],
     "zh": [
@@ -126,6 +198,42 @@
           "accountSettings.housingCounselor.sharedWith",
           "accountSettings.housingCounselor.toastShared",
           "accountSettings.housingCounselor.toastStoppedSharing"
+        ]
+      },
+      {
+        "reason": "DAH-4198 sign-in-with-email-and-code page shipped ahead of its translations. These 31 strings render in English today.",
+        "keys": [
+          "createAccount.addPassword",
+          "createAccount.checkEmail",
+          "createAccount.choosePasswordOptional",
+          "createAccount.codeDescription",
+          "createAccount.codeInvalid.p1",
+          "createAccount.codeInvalid.p2",
+          "createAccount.confirmCode",
+          "createAccount.didntGetEmail",
+          "createAccount.editEmail",
+          "createAccount.enterCode",
+          "createAccount.getCode",
+          "createAccount.getHelp",
+          "createAccount.getHelpLink",
+          "createAccount.howTo.p1",
+          "createAccount.howTo.p2",
+          "createAccount.howTo.p3",
+          "createAccount.howTo.p4",
+          "createAccount.howTo.p5",
+          "createAccount.howToUseCode",
+          "createAccount.okayToSkipPassword",
+          "createAccount.savePassword",
+          "createAccount.sendAgain",
+          "createAccount.skipForNow",
+          "createAccount.weSentCodeTo",
+          "signIn.codeDescription",
+          "signIn.createAccount",
+          "signIn.createAccountDescription",
+          "signIn.getHelpLink",
+          "signIn.oneTimeCode",
+          "signIn.oneTimeCodeNote",
+          "signIn.passwordInstead"
         ]
       }
     ]
