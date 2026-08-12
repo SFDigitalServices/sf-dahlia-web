@@ -1,5 +1,5 @@
 import React from "react"
-import { useSignUp } from "@clerk/clerk-react"
+import { useSignIn, useSignUp } from "@clerk/clerk-react"
 import { t } from "@bloom-housing/ui-components"
 import { screen, waitFor, cleanup } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
@@ -20,6 +20,7 @@ jest.mock("@clerk/clerk-react", () => {
     ClerkProvider: ({ children }: { children: React.ReactNode }) => children,
     useAuth: jest.fn(() => ({ isLoaded: true, isSignedIn: false })),
     useSignUp: jest.fn(),
+    useSignIn: jest.fn(),
   }
 })
 
@@ -38,26 +39,44 @@ describe("<EnterCode />", () => {
   let mockNavigate: jest.Mock
   let mockAttemptEmailAddressVerification: jest.Mock
   let mockPrepareEmailAddressVerification: jest.Mock
-  let mockSetActive: jest.Mock
+  let mockAttemptFirstFactor: jest.Mock
+  let mockPrepareFirstFactor: jest.Mock
+  let mockSetActiveSignUp: jest.Mock
+  let mockSetActiveSignIn: jest.Mock
 
   beforeEach(async () => {
     document.documentElement.lang = "en"
-    document.title = t("t.dahliaSanFranciscoHousingPortal")
+    document.title = "DAHLIA San Francisco Housing Portal"
     originalLocation = mockWindowLocation()
     setupUserContext({ loggedIn: false })
     mockNavigate = jest.fn()
     mockAttemptEmailAddressVerification = jest.fn()
     mockPrepareEmailAddressVerification = jest.fn().mockResolvedValue(undefined)
-    mockSetActive = jest.fn().mockResolvedValue(undefined)
+    mockAttemptFirstFactor = jest.fn()
+    mockPrepareFirstFactor = jest.fn().mockResolvedValue(undefined)
+    mockSetActiveSignUp = jest.fn().mockResolvedValue(undefined)
+    mockSetActiveSignIn = jest.fn().mockResolvedValue(undefined)
     ;(useNavigate as jest.Mock).mockReturnValue(mockNavigate)
-    ;(useLocation as jest.Mock).mockReturnValue({ state: { email: "test@example.com" } })
+    ;(useLocation as jest.Mock).mockReturnValue({
+      pathname: "/create-account/code",
+      state: { email: "test@example.com" },
+    })
     ;(useFeatureFlag as jest.Mock).mockReturnValue({ flagsReady: true, unleashFlag: true })
     ;(useSignUp as jest.Mock).mockReturnValue({
       isLoaded: true,
-      setActive: mockSetActive,
+      setActive: mockSetActiveSignUp,
       signUp: {
         attemptEmailAddressVerification: mockAttemptEmailAddressVerification,
         prepareEmailAddressVerification: mockPrepareEmailAddressVerification,
+      },
+    })
+    ;(useSignIn as jest.Mock).mockReturnValue({
+      isLoaded: true,
+      setActive: mockSetActiveSignIn,
+      signIn: {
+        attemptFirstFactor: mockAttemptFirstFactor,
+        prepareFirstFactor: mockPrepareFirstFactor,
+        supportedFirstFactors: [{ strategy: "email_code", emailAddressId: "idn_email" }],
       },
     })
     await renderAndLoadAsync(<EnterCode assetPaths={{}} />)
@@ -136,7 +155,7 @@ describe("<EnterCode />", () => {
     ])
   })
 
-  it("verifies a valid code", async () => {
+  it("verifies a valid code for create account", async () => {
     const user = userEvent.setup()
     mockAttemptEmailAddressVerification.mockResolvedValue({
       status: "complete",
@@ -150,7 +169,8 @@ describe("<EnterCode />", () => {
     await waitFor(() => {
       expect(mockAttemptEmailAddressVerification).toHaveBeenCalledWith({ code: "123456" })
     })
-    expect(mockSetActive).toHaveBeenCalledWith({ session: "session_123" })
+    expect(mockSetActiveSignUp).toHaveBeenCalledWith({ session: "session_123" })
+    expect(mockAttemptFirstFactor).not.toHaveBeenCalled()
     expect(screen.queryByTestId("error-message")).toBeNull()
   })
 
@@ -168,6 +188,7 @@ describe("<EnterCode />", () => {
 
   it("redirects to create account when clerk is disabled", async () => {
     cleanup()
+    document.title = "DAHLIA San Francisco Housing Portal"
     ;(useFeatureFlag as jest.Mock).mockReturnValue({ flagsReady: true, unleashFlag: false })
     await renderAndLoadAsync(<EnterCode assetPaths={{}} />)
 
@@ -178,11 +199,88 @@ describe("<EnterCode />", () => {
 
   it("redirects to create account when email is missing", async () => {
     cleanup()
-    ;(useLocation as jest.Mock).mockReturnValue({ state: null })
+    document.title = "DAHLIA San Francisco Housing Portal"
+    ;(useLocation as jest.Mock).mockReturnValue({ pathname: "/create-account/code", state: null })
     await renderAndLoadAsync(<EnterCode assetPaths={{}} />)
 
     await waitFor(() => {
       expect(mockNavigate).toHaveBeenCalledWith("/create-account")
+    })
+  })
+
+  it("shows the sign-in enter code page", async () => {
+    cleanup()
+    ;(useLocation as jest.Mock).mockReturnValue({
+      pathname: "/sign-in/code",
+      state: { email: "test@example.com" },
+    })
+    await renderAndLoadAsync(<EnterCode assetPaths={{}} />)
+
+    expect(
+      screen.getByRole("link", { name: t("createAccount.editEmail") }).getAttribute("href")
+    ).toBe("/sign-in")
+    expect(
+      screen.getByRole("link", { name: /how to sign in or find help/i }).getAttribute("href")
+    ).toBe("https://www.sf.gov/sign-in-to-your-dahlia-account")
+  })
+
+  it("verifies a valid code for sign in", async () => {
+    cleanup()
+    ;(useLocation as jest.Mock).mockReturnValue({
+      pathname: "/sign-in/code",
+      state: { email: "test@example.com" },
+    })
+    mockAttemptFirstFactor.mockResolvedValue({
+      status: "complete",
+      createdSessionId: "session_456",
+    })
+    await renderAndLoadAsync(<EnterCode assetPaths={{}} />)
+
+    const user = userEvent.setup()
+    await user.click(screen.getAllByRole("textbox")[0])
+    await user.paste("123456")
+    await user.click(screen.getByRole("button", { name: t("createAccount.confirmCode") }))
+
+    await waitFor(() => {
+      expect(mockAttemptFirstFactor).toHaveBeenCalledWith({
+        strategy: "email_code",
+        code: "123456",
+      })
+    })
+    expect(mockSetActiveSignIn).toHaveBeenCalledWith({
+      session: "session_456",
+      redirectUrl: "/account",
+    })
+    expect(mockAttemptEmailAddressVerification).not.toHaveBeenCalled()
+  })
+
+  it("resends the code for sign in", async () => {
+    cleanup()
+    ;(useLocation as jest.Mock).mockReturnValue({
+      pathname: "/sign-in/code",
+      state: { email: "test@example.com" },
+    })
+    await renderAndLoadAsync(<EnterCode assetPaths={{}} />)
+
+    const user = userEvent.setup()
+    await user.click(screen.getByRole("button", { name: t("createAccount.sendAgain") }))
+
+    await waitFor(() => {
+      expect(mockPrepareFirstFactor).toHaveBeenCalledWith({
+        strategy: "email_code",
+        emailAddressId: "idn_email",
+      })
+    })
+  })
+
+  it("redirects to sign-in when email is missing from the sign-in code page", async () => {
+    cleanup()
+    document.title = "DAHLIA San Francisco Housing Portal"
+    ;(useLocation as jest.Mock).mockReturnValue({ pathname: "/sign-in/code", state: null })
+    await renderAndLoadAsync(<EnterCode assetPaths={{}} />)
+
+    await waitFor(() => {
+      expect(mockNavigate).toHaveBeenCalledWith("/sign-in")
     })
   })
 })

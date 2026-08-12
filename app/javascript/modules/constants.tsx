@@ -169,6 +169,12 @@ export const UNLEASH_FLAG = {
   HOUSING_COUNSELOR_ACCESS: "temp.all.housingCounselorAccess",
 }
 
+export enum AUTH_FLOW {
+  SIGN_IN = "signIn",
+  CREATE_ACCOUNT = "createAccount",
+  FORGOT_PASSWORD = "forgotPassword",
+}
+
 export const LISTING_APPLY_FORMS_INPUT_MAX_LENGTH = {
   firstName: 40,
   middleName: 20,
