@@ -3,21 +3,29 @@ import { Form, t } from "@bloom-housing/ui-components"
 import { Button, Card, Heading } from "@bloom-housing/ui-seeds"
 import React from "react"
 import { useForm } from "react-hook-form"
+import { useNavigate } from "react-router"
 import styles from "../authentication/SignInFlow.module.scss"
-import { useFeatureFlag } from "../hooks/useFeatureFlag"
 import AuthLayout from "../layouts/AuthLayout"
 import withAppSetup from "../layouts/withAppSetup"
-import { UNLEASH_FLAG } from "../modules/constants"
 import EmailFieldset from "../pages/account/components/EmailFieldset"
-import { AppPages, getCreateAccountPath } from "../util/routeUtil"
+import { AppPages, getCreateAccountPath, getSignInCodePath } from "../util/routeUtil"
 import { ForgotPasswordForm } from "./forgot-password-form"
+import { useFeatureFlag } from "../hooks/useFeatureFlag"
+import { UNLEASH_FLAG } from "../modules/constants"
 
 const ForgotPasswordPage = () => {
-  const { register } = useForm({
-    shouldFocusError: false,
-  })
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm()
+  const navigate = useNavigate()
+  const prefilledEmailParam = new URLSearchParams(window.location.search).get("email") ?? ""
 
-  const emailParam = new URLSearchParams(window.location.search).get("email") ?? ""
+  const onGetCodeSubmit = ({ email }: { email: string }) => {
+    // TODO
+    void navigate(getSignInCodePath(), { state: { email } })
+  }
 
   return (
     <AuthLayout title={t("forgotPassword.title")}>
@@ -25,10 +33,9 @@ const ForgotPasswordPage = () => {
         <Heading priority={1} size="2xl">
           {t("forgotPassword.title")}
         </Heading>
-        <p className="field-note">{t("signIn.codeDescription")}</p>
-        {/* onSubmit={handleSubmit(onSubmit, onError)} */}
-        <Form className={styles.form}>
-          <EmailFieldset register={register} defaultEmail={emailParam} />
+        <p className="field-note">{t("signIn.forgotPasswordDescription")}</p>
+        <Form className={styles.form} onSubmit={handleSubmit(onGetCodeSubmit)}>
+          <EmailFieldset register={register} errors={errors} defaultEmail={prefilledEmailParam} />
           <Button className={styles.getCodeButton} variant="primary" size="sm" type="submit">
             {t("createAccount.getCode")}
           </Button>
