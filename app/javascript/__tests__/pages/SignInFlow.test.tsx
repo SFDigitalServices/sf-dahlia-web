@@ -101,6 +101,17 @@ describe("<SignInFlow />", () => {
     ).toBe("https://www.sf.gov/sign-in-to-your-dahlia-account")
   })
 
+  it("shows a loading state until Clerk loads", async () => {
+    ;(useSignIn as jest.Mock).mockReturnValue({ isLoaded: false })
+
+    const { container } = await renderAndLoadAsync(<SignIn assetPaths={{}} />)
+
+    expect(container.querySelector("[aria-busy='true']")).not.toBeNull()
+    expect(screen.queryByLabelText(/^password$/i)).toBeNull()
+    expect(screen.queryByRole("button", { name: /^get a code$/i })).toBeNull()
+    expect(screen.queryByRole("group", { name: /email/i })).toBeNull()
+  })
+
   it("shows the code sign in flow by default when the last strategy used was a code", async () => {
     mockLastAuthenticationStrategy("email_code")
 
