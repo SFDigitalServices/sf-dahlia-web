@@ -45,7 +45,6 @@ const WhatToDo = ({
           const token = new URLSearchParams(window.location.search).get("t") ?? ""
 
           await recordResponse(token, {
-            listingId: listing.Id,
             action: I2X_ACTIONS.APPOINTMENT,
           })
         }
