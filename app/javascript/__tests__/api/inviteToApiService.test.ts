@@ -10,6 +10,7 @@ describe("inviteToApiService", () => {
   describe("recordResponse", () => {
     it("calls apiService post", async () => {
       post as jest.Mock
+      const token = "token123"
       const record = {
         listingId: "a0w123",
         appId: "a0o123",
@@ -19,7 +20,7 @@ describe("inviteToApiService", () => {
         response: "submit",
         type: INVITE_TO_X.APPLY,
       }
-      await recordResponse(record)
+      await recordResponse(token, record)
       expect(post).toHaveBeenCalled()
     })
   })

@@ -71,8 +71,7 @@ const WhatToDo = ({
           const token = new URLSearchParams(window.location.search).get("t") ?? ""
 
           await recordResponse(token, {
-            appId: appId,
-            deadline,
+            listingId: listing.Id,
             action: I2X_ACTIONS.SUBMIT,
           })
         }
@@ -84,7 +83,7 @@ const WhatToDo = ({
         setIsSubmitting(false)
       }
     })()
-  }, [appId, listing, deadline, fileUploadUrl, isTest])
+  }, [appId, listing, fileUploadUrl, isTest])
 
   return (
     <div className={`${styles.whatToDoList} markdown`}>

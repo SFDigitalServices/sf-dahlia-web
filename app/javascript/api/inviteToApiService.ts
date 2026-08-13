@@ -3,8 +3,8 @@ import { post } from "./apiService"
 export const recordResponse = async (
   token: string,
   record: {
-    appId: string
-    deadline: string
+    listingId: string
+    // most recent action taken (i.e. schedule appointment), rather than action originally specified in token (i.e. responded yes)
     action: string
   }
 ) => {

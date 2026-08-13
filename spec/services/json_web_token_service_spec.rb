@@ -3,6 +3,13 @@
 require 'rails_helper'
 
 RSpec.describe JsonWebTokenService do
+
+  before do
+    stub_const('JsonWebTokenService::SECRET_KEY', 'test_secret')
+    stub_const('JsonWebTokenService::ALGORITHM', 'HS256')
+    stub_const('JsonWebTokenService::ALLOWED_ALGORITHMS', ['HS256'])
+  end
+
   describe '.encode_token' do
     it 'encodes payload under data key' do
       token = described_class.encode_token({ 'appId' => 'a0o123' })

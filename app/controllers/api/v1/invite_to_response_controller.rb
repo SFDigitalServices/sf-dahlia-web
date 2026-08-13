@@ -2,7 +2,9 @@ class Api::V1::InviteToResponseController < ApiController
   before_action :validate_token!, only: :record_response
 
   def record_response
-    params.expect(record: %i[deadline appId action])
+    record_params = params.expect(record: %i[listingId action])
+    return unauthorized! if [record_params[:listingId], record_params[:action]].any?(&:blank?)
+
     # we must verify app id from token
     type, _deadline, app_id, act = token_fields
     return unauthorized! if [type, _deadline, app_id, act].any?(&:blank?)
@@ -16,7 +18,11 @@ class Api::V1::InviteToResponseController < ApiController
       DahliaBackend::MessageService.send_invite_to_response(
         _deadline,
         app_id,
-        act,
+        app_id,
+        # most recent action taken (i.e. schedule appointment), rather than action originally specified in token (i.e. responded yes)
+        record_params[:action],
+        record_params[:action],
+        record_params[:listingId]
       )
     end
 
