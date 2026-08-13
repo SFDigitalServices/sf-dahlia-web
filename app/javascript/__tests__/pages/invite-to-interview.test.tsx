@@ -169,14 +169,9 @@ describe("Invite to Interview", () => {
     await userEvent.click(button)
     expect(windowOpenSpy).toHaveBeenCalledWith("test-link", "_blank")
     await waitFor(() => {
-      expect(recordResponse).toHaveBeenCalledWith({
-        appId: "test-id",
-        applicationNumber: "test-id",
+      expect(recordResponse).toHaveBeenCalledWith("", {
         listingId: "listing-id",
-        deadline: "2030-10-10",
         action: "appointment",
-        response: "",
-        type: INVITE_TO_X.INTERVIEW,
       })
     })
     windowOpenSpy.mockRestore()
@@ -207,14 +202,9 @@ describe("Invite to Interview", () => {
     await userEvent.click(button)
 
     await waitFor(() => {
-      expect(recordResponse).toHaveBeenCalledWith({
-        appId: "test-id",
-        applicationNumber: "test-id",
+      expect(recordResponse).toHaveBeenCalledWith("", {
         listingId: "listing-id",
-        deadline: "2030-10-10",
         action: "appointment",
-        response: "",
-        type: INVITE_TO_X.INTERVIEW,
       })
       expect(windowOpenSpy).toHaveBeenCalledTimes(1)
       expect(windowOpenSpy).toHaveBeenCalledWith("test-link", "_blank")
