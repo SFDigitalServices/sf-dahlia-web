@@ -138,6 +138,7 @@ export const interceptUnleashFlags = () => {
           if (!existingToggleNames.has(toggleName))
             interceptedToggles.push({ name: toggleName, enabled: true } as IToggle)
         })
+        console.log("Intercepted and modified unleash flags:", interceptedToggles)
         response.body.toggles = interceptedToggles
       })
     }
