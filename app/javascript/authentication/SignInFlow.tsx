@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import React, { useEffect, useRef, useState } from "react"
 import { Navigate, useNavigate } from "react-router"
-import { useAuth, useSignIn } from "@clerk/clerk-react"
+import { useAuth, useClerk, useSignIn } from "@clerk/clerk-react"
 import { Form, t } from "@bloom-housing/ui-components"
 import { Alert, Button, Card, Heading, Link } from "@bloom-housing/ui-seeds"
 import { useForm, useWatch } from "react-hook-form"
@@ -32,9 +32,15 @@ const SignInFlow = () => {
   const navigate = useNavigate()
   const { isLoaded: authLoaded, isSignedIn } = useAuth()
   const { isLoaded, signIn, setActive } = useSignIn()
+  const { client } = useClerk()
   const [showError, setShowError] = useState(false)
-  // Defaults to password sign in flow
-  const [view, setView] = useState<SignInView>("password")
+  const [view, setView] = useState<SignInView | null>(null)
+  // Show the password view by default, or the code view if the user has previously signed in via code
+  useEffect(() => {
+    if (isLoaded && client?.lastAuthenticationStrategy === "email_code") {
+      setView("verificationCode")
+    }
+  }, [isLoaded, client?.lastAuthenticationStrategy])
   const alertRef = useRef<HTMLDivElement>(null)
   const {
     register,
