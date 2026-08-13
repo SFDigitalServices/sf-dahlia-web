@@ -34,11 +34,14 @@ const SignInFlow = () => {
   const { isLoaded, signIn, setActive } = useSignIn()
   const { client } = useClerk()
   const [showError, setShowError] = useState(false)
-  const [view, setView] = useState<SignInView | null>(null)
-  // Show the password view by default, or the code view if the user has previously signed in via code
+  const [view, setView] = useState<SignInView>("password")
+  // Default to password sign-in, but prefer the code flow if the user last signed in via email code.
   useEffect(() => {
-    if (isLoaded && client?.lastAuthenticationStrategy === "email_code") {
+    if (!isLoaded) return
+    if (client?.lastAuthenticationStrategy === "email_code") {
       setView("verificationCode")
+    } else {
+      setView("password")
     }
   }, [isLoaded, client?.lastAuthenticationStrategy])
   const alertRef = useRef<HTMLDivElement>(null)
