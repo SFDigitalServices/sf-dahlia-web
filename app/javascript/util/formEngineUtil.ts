@@ -34,9 +34,8 @@ export const showStep = (
 ): boolean => {
   const processedConditions = conditions.map((condition) => {
     const value = dataSources[condition.dataSource][condition.dataKey]
-    const processedCondition = condition.dataValueToMatch
-      ? condition.dataValueToMatch === value
-      : value
+    const processedCondition =
+      condition.dataValueToMatch !== undefined ? condition.dataValueToMatch === value : value
     return condition.negate ? !processedCondition : !!processedCondition
   })
   if (operation === "showStepIfAllPresent") {

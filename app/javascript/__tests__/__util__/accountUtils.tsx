@@ -1,4 +1,5 @@
 import React from "react"
+import { useAuth } from "@clerk/clerk-react"
 import UserContext, { ContextProps } from "../../authentication/context/UserContext"
 import { User } from "../../authentication/user"
 
@@ -44,6 +45,10 @@ export const setupUserContext = ({
     }
     return originalUseContext(context)
   })
+
+  if (jest.isMockFunction(useAuth)) {
+    useAuth.mockReturnValue({ isLoaded: true, isSignedIn: loggedIn, signOut: jest.fn() })
+  }
 
   return mockContextValue
 }

@@ -83,8 +83,10 @@ export const getListingDetailPath = localizedPathGetter("/listings")
 
 // Signing in and up pages
 export const getCreateAccountPath = localizedPathGetter("/create-account")
-export const getEnterCodePath = localizedPathGetter("/enter-code")
+export const getEnterCodePath = localizedPathGetter("/create-account/code")
+export const getAddPasswordPath = localizedPathGetter("/add-password")
 export const getSignInPath = localizedPathGetter("/sign-in")
+export const getSignInCodePath = localizedPathGetter("/sign-in/code")
 export const getForgotPasswordPath = localizedPathGetter("/forgot-password")
 export const getResetPasswordPath = localizedPathGetter("/reset-password")
 
@@ -182,6 +184,7 @@ export enum AppPages {
   SignIn = "sign in",
   CreateAccount = "create account",
   EnterCode = "enter code",
+  AddPassword = "add password",
   ForgotPassword = "forgot password",
   ResetPassword = "reset password",
   MyAccount = "my account",

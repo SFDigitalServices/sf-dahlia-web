@@ -1,6 +1,7 @@
 doctype html
 html lang="en"
   head
+    title DAHLIA San Francisco Housing Portal
     meta http-equiv="X-UA-Compatible" content="IE=edge"
     meta charset="utf-8"
     meta name="viewport" content="width=device-width, initial-scale=1"
@@ -19,7 +20,13 @@ html lang="en"
         })(window,document,'script','dataLayer','#{ENV['GOOGLE_TAG_MANAGER_KEY']}');
     == javascript_pack_tag 'react_application'
 
-    == stylesheet_pack_tag 'react_application'
+    / Only emit the stylesheet tag when the pack actually has an extracted CSS
+    / entry. All app styles are injected at runtime via style-loader, so when
+    / there's no extracted CSS (e.g. dev/compile builds) we emit no link tag and
+    / the page is still fully styled. Calling stylesheet_pack_tag unconditionally
+    / in that case raises Shakapacker::Manifest::MissingEntryError.
+    - if Shakapacker.manifest.lookup_pack_with_chunks('react_application', type: :css)
+      == stylesheet_pack_tag 'react_application'
     == csrf_meta_tags
 
   body

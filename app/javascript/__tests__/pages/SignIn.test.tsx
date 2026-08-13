@@ -1,4 +1,5 @@
 import React from "react"
+import { MemoryRouter, Route, Routes } from "react-router"
 
 import SignIn from "../../pages/sign-in"
 import { renderAndLoadAsync } from "../__util__/renderUtils"
@@ -9,6 +10,20 @@ import { SiteAlert } from "../../components/SiteAlert"
 import { t } from "@bloom-housing/ui-components"
 import "@testing-library/jest-dom"
 import TagManager from "react-gtm-module"
+import { useFeatureFlag } from "../../hooks/useFeatureFlag"
+import { isTokenValid } from "../../authentication/token"
+
+jest.mock("../../hooks/useFeatureFlag", () => ({
+  useFeatureFlag: jest.fn((flagName: string) => ({
+    flagsReady: true,
+    unleashFlag: flagName !== "temp.webapp.auth.clerk",
+  })),
+}))
+
+jest.mock("../../authentication/token", () => ({
+  ...jest.requireActual("../../authentication/token"),
+  isTokenValid: jest.fn(() => false),
+}))
 
 jest.mock("react-helmet-async", () => {
   return {
@@ -45,6 +60,11 @@ jest.mock("@bloom-housing/ui-seeds", () => {
 describe("<SignIn />", () => {
   beforeEach(() => {
     jest.resetAllMocks()
+    ;(useFeatureFlag as jest.Mock).mockImplementation((flagName: string) => ({
+      flagsReady: true,
+      unleashFlag: flagName !== "temp.webapp.auth.clerk",
+    }))
+    ;(isTokenValid as jest.Mock).mockReturnValue(false)
   })
 
   it("alerts if redirect is true", async () => {
@@ -397,5 +417,26 @@ describe("<SignIn />", () => {
       expect(screen.getByText("Account already confirmed")).not.toBeNull()
       expect(screen.getByText("Sign in to continue.")).not.toBeNull()
     })
+  })
+
+  it("redirects to the account overview if the user is already signed in", async () => {
+    ;(useFeatureFlag as jest.Mock).mockReturnValue({ flagsReady: true, unleashFlag: false })
+    ;(isTokenValid as jest.Mock).mockReturnValue(true)
+
+    await renderAndLoadAsync(<SignIn assetPaths={{}} />, {
+      wrapper: ({ children }: { children: React.ReactNode }) => (
+        <MemoryRouter initialEntries={["/sign-in"]}>
+          <Routes>
+            <Route path="/sign-in" element={children} />
+            <Route path="/account" element={<div>Account page</div>} />
+          </Routes>
+        </MemoryRouter>
+      ),
+    })
+
+    await waitFor(() => {
+      expect(screen.getByText("Account page")).not.toBeNull()
+    })
+    expect(screen.queryByRole("textbox", { name: /email/i })).toBeNull()
   })
 })

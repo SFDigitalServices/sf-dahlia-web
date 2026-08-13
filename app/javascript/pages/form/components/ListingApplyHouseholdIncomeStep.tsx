@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect, useRef } from "react"
 import ListingApplyHouseholdIncomeHeader from "./ListingApplyHouseholdIncomeHeader"
 import Currency from "./Currency"
 import Radio from "./Radio"
@@ -48,6 +48,7 @@ const ListingApplyHouseholdIncomeStep = ({
     currentStepIndex,
     handleNextStep,
     handlePrevStep,
+    handleSetSectionCompletion,
   } = formEngineContext
   const [apiErrorMessage, setApiErrorMessage] = React.useState<string | null>(null)
   const currentStepInfo = stepInfoMap[currentStepIndex]
@@ -64,11 +65,28 @@ const ListingApplyHouseholdIncomeStep = ({
     defaultValues,
   })
 
+  const errorSectionRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (Object.keys(formMethods.formState.errors).length > 0 || apiErrorMessage) {
+      errorSectionRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })
+      handleSetSectionCompletion(currentStepInfo.sectionName, false)
+    } else {
+      handleSetSectionCompletion(currentStepInfo.sectionName, true)
+    }
+  }, [
+    formMethods.formState.errors,
+    apiErrorMessage,
+    handleSetSectionCompletion,
+    currentStepInfo.sectionName,
+  ])
+
   const onSubmit = (data: Record<string, unknown>) => {
     setApiErrorMessage(null)
     setLoading(true)
     // Skip validation if household has vouchers
     if (formData.householdVouchersSubsidies === "true") {
+      saveFormData({ ...data })
       handleNextStep({ ...formData, ...data })
       return
     }
@@ -113,7 +131,7 @@ const ListingApplyHouseholdIncomeStep = ({
           </Button>
         </Card.Section>
         <ListingApplyHouseholdIncomeHeader />
-        <Form onSubmit={formMethods.handleSubmit(onSubmit)}>
+        <div ref={errorSectionRef}>
           {apiErrorMessage && (
             <ListingApplyStepErrorMessage
               errorMessage={t("error.notEligible")}
@@ -122,6 +140,14 @@ const ListingApplyHouseholdIncomeStep = ({
               onClose={() => setApiErrorMessage(null)}
             />
           )}
+          {Object.keys(formMethods.formState.errors).length > 0 && (
+            <ListingApplyStepErrorMessage
+              errorMessage={t("error.formSubmission")}
+              onClose={() => formMethods.clearErrors()}
+            />
+          )}
+        </div>
+        <Form onSubmit={formMethods.handleSubmit(onSubmit)}>
           <LoadingState loading={loading}>
             <Card.Section>
               <Currency

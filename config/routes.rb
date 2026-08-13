@@ -40,6 +40,7 @@ Rails.application.routes.draw do
       # Deprecated I2A pilot - remove in DAH-4045
       post 'invite-to-apply/record-response' => 'invite_to_response#record_response'
       post 'next-steps/record-response' => 'invite_to_response#record_response'
+      post 'next-steps/log-human-verified' => 'invite_to_response#log_human_verified'
       scope '/short-form' do
         post 'validate-household' => 'short_form#validate_household'
         get 'listing-application/:listing_id' => 'short_form#show_listing_application_for_user'
@@ -103,8 +104,10 @@ Rails.application.routes.draw do
   get '(:lang)/listings/:id/apply/intro' => 'form#listing_apply_form', lang: /(en|es|zh|tl)/
 
   get '(:lang)/sign-in' => 'auth#sign_in', lang: /(en|es|zh|tl)/
+  get '(:lang)/sign-in/code' => 'auth#enter_code', lang: /(en|es|zh|tl)/
   get '(:lang)/create-account' => 'auth#create_account', lang: /(en|es|zh|tl)/
-  get '(:lang)/enter-code' => 'auth#enter_code', lang: /(en|es|zh|tl)/
+  get '(:lang)/create-account/code' => 'auth#enter_code', lang: /(en|es|zh|tl)/
+  get '(:lang)/add-password' => 'auth#add_password', lang: /(en|es|zh|tl)/
   get '(:lang)/forgot-password' => 'auth#forgot_password', lang: /(en|es|zh|tl)/
   get '(:lang)/reset-password' => 'auth#reset_password', lang: /(en|es|zh|tl)/
 

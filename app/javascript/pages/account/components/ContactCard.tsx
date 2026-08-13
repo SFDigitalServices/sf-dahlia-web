@@ -12,10 +12,11 @@ interface ContactCardProps {
 
 const ContactCard = ({ user }: ContactCardProps) => {
   const hasContactInfo = user?.phone || user?.email
+  const name = [user?.firstName, user?.lastName].filter(Boolean).join(" ")
   return (
     <Card className={styles.contactCard}>
       <Heading priority={1} size="2xl">
-        {t("accountLayout.accountCard.title", { name: user.firstName + " " + user.lastName })}
+        {t("accountLayout.accountCard.title", { name: name || "" })}
       </Heading>
       <p className={styles.subtitle}>
         {t(

@@ -165,6 +165,12 @@ const newPasswordValidation: Validate = (newPassword: string) => {
   }
   return true
 }
+
+const getPasswordValidation = (passwordType: PasswordFieldsetProps["passwordType"]) =>
+  passwordType === "signIn"
+    ? { required: "password:required" }
+    : { required: "password:required", validate: newPasswordValidation }
+
 const PasswordFieldset = ({
   register,
   errors,
@@ -173,14 +179,11 @@ const PasswordFieldset = ({
   labelText,
   email,
 }: PasswordFieldsetProps) => {
-  const [passwordValidationContent, setPasswordValidationContent] = React.useState("")
-  const newPassword: string = watch("password", "")
+  // Derive the validation content directly from `watch` during render. Mirroring it into
+  // state via an effect lags one keystroke behind under React 19's rendering/effect timing.
+  const passwordValue: string = watch("password", "")
 
   const hasError = errors?.currentPassword || errors?.password
-
-  React.useEffect(() => {
-    setPasswordValidationContent(newPassword)
-  }, [newPassword, setPasswordValidationContent])
 
   return (
     <Fieldset hasError={hasError} label={labelText}>
@@ -215,7 +218,7 @@ const PasswordFieldset = ({
         </>
       )}
       {passwordType !== "signIn" && (
-        <NewPasswordInstructions passwordValidationContent={passwordValidationContent} />
+        <NewPasswordInstructions passwordValidationContent={passwordValue} />
       )}
       <PasswordField
         describedBy={errors?.password?.message ? undefined : "newPasswordInstructions"} // undefined will force the input to be described by the error message
@@ -223,10 +226,7 @@ const PasswordFieldset = ({
         label="password"
         labelClassName="sr-only"
         className="mt-0 mb-4"
-        validation={{
-          required: "password:required",
-          validate: newPasswordValidation,
-        }}
+        validation={getPasswordValidation(passwordType)}
         passwordVisibilityDefault={
           passwordType === "createAccount" || passwordType === "accountSettings"
         }

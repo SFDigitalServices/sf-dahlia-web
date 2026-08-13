@@ -44,8 +44,8 @@
                     "cityState": "San Francisco, CA 94134"
                 }
             ],
-            "website": "https://www.balancepro.org/workshops/",
-            "email": "sfhousing@balancepro.org",
+            "website": "https://www.bebalanced.org/",
+            "email": "sfhousing@bebalanced.org",
             "phone": "(800) 777-7526"
         },
         {
@@ -192,6 +192,69 @@
             "website": "http://www.seaccusa.org/",
             "email": "info@seaccusa.org",
             "phone": "(415) 885-2743"
+        },
+        {
+            "fullName": "Young Community Developers",
+            "shortName": "YCD",
+            "services": [
+                "rental"
+            ],
+            "languages": [
+                "english",
+                "spanish"
+            ],
+            "address": [
+                {
+                    "street": "150 Executive Park Blvd. #4000",
+                    "cityState": "San Francisco, CA 94134"
+                }
+            ],
+            "website": "https://ycdjobs.org/",
+            "email": "housing@ycdjobs.org",
+            "phone": "(415) 822-3491"
+        },
+        {
+            "fullName": "Compass Family Services",
+            "services": [
+                "rental"
+            ],
+            "languages": [
+                "english",
+                "spanish"
+            ],
+            "address": [
+                {
+                    "street": "37 Grove Street",
+                    "cityState": "San Francisco, CA 94102"
+                }
+            ],
+            "website": "https://compass-sf.org/",
+            "email": "chls-ns@compass-sf.org",
+            "phone": "(415) 644-0504"
+        },
+        {
+            "fullName": "Bayview Senior Services",
+            "services": [
+                "rental",
+                "seniorOnly"
+            ],
+            "languages": [
+                "english",
+                "spanish",
+                "cantonese",
+                "mandarin",
+                "filipino",
+                "samoan"
+            ],
+            "address": [
+                {
+                    "street": "5600 3rd Street, Suite A",
+                    "cityState": "San Francisco, CA 94124"
+                }
+            ],
+            "website": "https://bhpmss.org/",
+            "email": "info@bhpmss.org",
+            "phone": "(415) 762-2167"
         }
     ]
 }

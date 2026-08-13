@@ -96,7 +96,9 @@ const StandardHowToApply = ({
               })
             )}
           </p>
-          <p className={"mb-4"}>{t("listings.apply.eligibilityRequirementDescription")}</p>
+          {!isHabitatListing && (
+            <p className={"mb-4"}>{t("listings.apply.eligibilityRequirementDescription")}</p>
+          )}
         </>
       )}
       <LinkButton

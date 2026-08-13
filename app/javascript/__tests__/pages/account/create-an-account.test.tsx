@@ -16,6 +16,7 @@ jest.mock("@clerk/clerk-react", () => {
   return {
     ...Clerk,
     ClerkProvider: ({ children }: { children: React.ReactNode }) => children,
+    useAuth: jest.fn(() => ({ isLoaded: true, isSignedIn: false })),
     useSignUp: jest.fn(),
   }
 })
@@ -96,7 +97,7 @@ describe("<CreateAnAccount />", () => {
     expect(mockPrepareEmailAddressVerification).toHaveBeenCalledWith({
       strategy: "email_code",
     })
-    expect(mockNavigate).toHaveBeenCalledWith("/enter-code", {
+    expect(mockNavigate).toHaveBeenCalledWith("/create-account/code", {
       state: { email: "test@example.com" },
     })
   })

@@ -1,0 +1,29 @@
+.form {
+  position: relative;
+}
+
+.forgotPassword {
+  position: absolute;
+  right: 0;
+  font-size: var(--seeds-font-size-sm);
+}
+
+.signInButton {
+  margin: var(--seeds-spacer-text) 0 var(--seeds-spacer-content) 0;
+}
+
+.getCodeButton {
+  margin: var(--seeds-spacer-text) 0 var(--seeds-spacer-content) 0;
+}
+
+.oneTimeCodeNote {
+  padding-top: var(--seeds-spacer-text);
+}
+
+.createAccountDescription {
+  padding-bottom: var(--seeds-spacer-header);
+}
+
+.errorAlert {
+  margin-bottom: var(--seeds-spacer-header);
+}

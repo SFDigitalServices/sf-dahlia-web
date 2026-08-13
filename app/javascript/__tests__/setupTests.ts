@@ -62,13 +62,22 @@ jest.mock("@clerk/clerk-react", () => {
   return {
     ...Clerk,
     ClerkProvider: ({ children }: { children: React.ReactNode }) => children,
+    useAuth: jest.fn(() => ({ isLoaded: true, isSignedIn: false })),
   }
 })
+
+const setDefaultClerkAuth = () => {
+  const { useAuth } = jest.requireMock<typeof import("@clerk/clerk-react")>("@clerk/clerk-react")
+  if (jest.isMockFunction(useAuth)) {
+    useAuth.mockReturnValue({ isLoaded: true, isSignedIn: false, signOut: jest.fn() })
+  }
+}
 
 // eslint-disable-next-line jest/require-top-level-describe
 beforeEach(() => {
   jest.clearAllMocks()
   jest.resetAllMocks()
+  setDefaultClerkAuth()
   jest.spyOn(console, "log").mockImplementation(() => {})
 })
 
@@ -116,6 +125,8 @@ window.matchMedia = jest.fn().mockImplementation((query) => ({
   removeEventListener: jest.fn(),
   dispatchEvent: jest.fn(),
 }))
+window.scrollTo = jest.fn()
+window.HTMLElement.prototype.scrollIntoView = jest.fn()
 
 void loadTranslations(LanguagePrefix.English)
 

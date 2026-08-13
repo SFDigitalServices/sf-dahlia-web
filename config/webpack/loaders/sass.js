@@ -72,6 +72,16 @@ module.exports = {
         additionalData: tailwindVars,
         sourceMap: true,
         sassOptions: {
+          // ui-components v14.0.0 added an `exports` map to its package.json, which
+          // hides its deep `src/**/*.scss` files from Node resolution (v12/v13 had no
+          // `exports` field, so any path resolved):
+          //   https://github.com/bloom-housing/ui-components/pull/200
+          // A follow-up re-exported two global stylesheets, but not the ~16 deep
+          // `src/global/**` partials that base.scss imports:
+          //   https://github.com/bloom-housing/ui-components/pull/201
+          // includePaths lets sass resolve those imports straight off the filesystem,
+          // bypassing the exports map.
+          includePaths: [path.resolve(__dirname, "../../../node_modules")],
           logger: {
             warn: console.warn
           }
