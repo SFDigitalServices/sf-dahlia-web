@@ -1,3 +1,5 @@
+import { type IToggle } from "unleash-proxy-client"
+
 const staticUserData = {
   provider: "email",
   id: 123,
@@ -112,22 +114,32 @@ export const userObjectGenerator = ({
 }
 
 export const interceptUnleashFlags = () => {
+  const toggleOffNames = new Set(["temp.all.housingCounselorAccess", "temp.webapp.auth.clerk"])
+  const toggleOnNames = new Set(["temp.webapp.newAccountLayout"])
   cy.intercept(
     "GET",
     "https://dahlia-feature-service-fbc319c3f542.herokuapp.com/api/frontend**",
     (request) => {
       request.continue((response) => {
-        response.body.toggles.forEach((toggle) => {
-          if (toggle.name === "temp.webapp.newAccountLayout") {
-            toggle.enabled = true
-          }
-          if (toggle.name === "temp.all.housingCounselorAccess") {
-            toggle.enabled = false
-          }
-          if (toggle.name === "temp.webapp.auth.clerk") {
-            toggle.enabled = false
-          }
+        const interceptedToggles: IToggle[] = []
+        const existingToggleNames = new Set(
+          response.body.toggles.map((toggle: IToggle) => toggle.name) as string[]
+        )
+        // exclude "off" toggles from the payload
+        response.body.toggles.forEach((toggle: IToggle) => {
+          if (!toggleOffNames.has(toggle.name))
+            interceptedToggles.push({
+              ...toggle,
+              enabled: toggleOnNames.has(toggle.name) || toggle.enabled,
+            })
         })
+        // add "on" toggles to the payload if they're not already there
+        toggleOnNames.forEach((toggleName: string) => {
+          if (!existingToggleNames.has(toggleName))
+            interceptedToggles.push({ name: toggleName, enabled: true } as IToggle)
+        })
+        console.log("Intercepted and modified unleash flags:", interceptedToggles)
+        response.body.toggles = interceptedToggles
       })
     }
   ).as("unleashFlags")
