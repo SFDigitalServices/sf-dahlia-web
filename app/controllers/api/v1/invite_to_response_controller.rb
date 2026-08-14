@@ -1,9 +1,12 @@
 class Api::V1::InviteToResponseController < ApiController
+  include InviteToEventLogging
+
   before_action :validate_token!, only: :record_response
 
   def record_response
     record_params = params.expect(record: %i[listingId action])
-    return unauthorized! if [record_params[:listingId], record_params[:action]].any?(&:blank?)
+    return unauthorized! if [record_params[:listingId],
+                             record_params[:action]].any?(&:blank?)
 
     # we must verify app id from token
     type, _deadline, app_id, act = token_fields
@@ -22,7 +25,7 @@ class Api::V1::InviteToResponseController < ApiController
         # most recent action taken (i.e. schedule appointment), rather than action originally specified in token (i.e. responded yes)
         record_params[:action],
         record_params[:action],
-        record_params[:listingId]
+        record_params[:listingId],
       )
     end
 
@@ -40,23 +43,26 @@ class Api::V1::InviteToResponseController < ApiController
   # compare against the server-side GET recording during the shadow rollout.
   # Safe to call repeatedly.
   def log_human_verified
-    params.expect(record: %i[type deadline appId listingId act trigger elapsedMs])
+    record = params.expect(record: [:type, :deadline, :appId, :listingId, :act, :trigger,
+                                    :elapsedMs, { env: {} }])
     type, deadline, application_id, listing_id, act, trigger, elapsed_ms =
-      params[:record].values_at(:type, :deadline, :appId, :listingId, :act, :trigger,
-                                :elapsedMs)
+      record.values_at(:type, :deadline, :appId, :listingId, :act, :trigger, :elapsedMs)
 
-    # Values come from an unauthenticated public endpoint, so .inspect each one to
-    # neutralize newline/control-character log forging and make nil/blank values legible.
-    Rails.logger.info(
-      'InviteToResponseController#log_human_verified: ' \
-      'human-verified click (shadow, not recorded) ' \
-      "type=#{type.inspect}, " \
-      "listingId=#{listing_id.inspect}, " \
-      "deadline=#{deadline.inspect}, " \
-      "appId=#{application_id.inspect}, " \
-      "act=#{act.inspect}, " \
-      "trigger=#{trigger.inspect}, " \
-      "elapsedMs=#{elapsed_ms.inspect}",
+    # Values come from an unauthenticated public endpoint. log_invite_event serializes the
+    # payload with to_json, which escapes newline/control characters, so no per-field .inspect
+    # is needed to guard against log forging.
+    log_invite_event(
+      outcome: 'suppressed',
+      source: 'client_shadow',
+      reason: 'shadow_human_verified',
+      type: type,
+      listing_id: listing_id,
+      deadline: deadline,
+      app_id: application_id,
+      act: act,
+      trigger: trigger, # interaction | dwell | teardown
+      elapsed_ms: elapsed_ms,
+      env: record[:env]&.to_unsafe_h, # passive browser signals for post-hoc classification
     )
     render json: { success: true }, status: :ok
   rescue ActionController::ParameterMissing => e

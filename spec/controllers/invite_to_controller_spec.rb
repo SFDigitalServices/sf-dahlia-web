@@ -253,6 +253,77 @@ RSpec.describe InviteToController do
     end
   end
 
+  describe 'structured record_response logging' do
+    before do
+      allow(Force::ShortFormService).to receive(:get).with(application_number).and_return(
+        { 'uploadURL' => 'test-upload-url',
+          'leaseupAppointmentSchedulingURL' => 'test-scheduling-url' },
+      )
+    end
+
+    def request_with(payload)
+      allow(JsonWebTokenService).to receive(:decode_token).with('custom_token').and_return(payload)
+      get :index, params: { id: listing_id, t: 'custom_token' }
+    end
+
+    it 'logs a recorded event with ok:true when the send returns a result' do
+      allow(DahliaBackend::MessageService).to receive(:send_invite_to_response).and_return(true)
+      request_with(decoded_payload)
+
+      expect(Rails.logger).to have_received(:info).with(
+        a_string_including(
+          'invite_to.response',
+          '"outcome":"recorded"',
+          '"source":"get"',
+          '"ok":true',
+          '"act":"yes"',
+        ),
+      )
+    end
+
+    it 'logs ok:false when the send is swallowed (nil return)' do
+      allow(DahliaBackend::MessageService).to receive(:send_invite_to_response).and_return(nil)
+      request_with(decoded_payload)
+
+      expect(Rails.logger).to have_received(:info).with(
+        a_string_including('"outcome":"recorded"', '"ok":false'),
+      )
+    end
+
+    it 'names no_action when neither act nor response is present (e.g. a preview link)' do
+      request_with(decoded_payload.merge('act' => nil))
+
+      expect(DahliaBackend::MessageService).not_to have_received(:send_invite_to_response)
+      expect(Rails.logger).to have_received(:info).with(
+        a_string_including('"outcome":"suppressed"', '"reason":"no_action"'),
+      )
+    end
+
+    it 'names deadline_passed with resolved local comparison terms and a late_by delta' do
+      request_with(decoded_payload.merge('deadline' => '2020-01-01'))
+
+      expect(DahliaBackend::MessageService).not_to have_received(:send_invite_to_response)
+      expect(Rails.logger).to have_received(:info).with(
+        a_string_including(
+          '"reason":"deadline_passed"',
+          '"deadline_date":"2020-01-01"',
+          '"today":',
+          '"late_by":',
+        ),
+      )
+    end
+
+    it 'names language_change and captures the referrer that triggered it' do
+      request.headers['Referer'] = "http://test.host/es/listings/#{listing_id}/next-steps"
+      request_with(decoded_payload)
+
+      expect(DahliaBackend::MessageService).not_to have_received(:send_invite_to_response)
+      expect(Rails.logger).to have_received(:info).with(
+        a_string_including('"reason":"language_change"', '"referrer":'),
+      )
+    end
+  end
+
   describe '#documents' do
     before do
       get :documents, params: {

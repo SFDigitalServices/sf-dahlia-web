@@ -184,6 +184,7 @@ RSpec.describe Api::V1::InviteToResponseController, type: :controller do
         act: 'yes',
         trigger: 'interaction',
         elapsedMs: 1234,
+        env: { webdriver: false, ua: 'Mozilla/5.0 FBAN/FBIOS', coarse: true },
       }
     end
 
@@ -192,20 +193,32 @@ RSpec.describe Api::V1::InviteToResponseController, type: :controller do
       allow(Rails.logger).to receive(:info)
     end
 
-    it 'logs the human-verified click and records nothing' do
+    it 'logs the human-verified click as a structured shadow event and records nothing' do
       post :log_human_verified, params: { record: valid_record }
 
       expect(response).to be_ok
       expect(DahliaBackend::MessageService).not_to have_received(:send_invite_to_response)
       expect(Rails.logger).to have_received(:info).with(
         a_string_including(
-          'InviteToResponseController#log_human_verified:',
-          'human-verified click (shadow, not recorded)',
-          "appId=#{application_id.inspect}",
-          'act="yes"',
-          'trigger="interaction"',
-          'elapsedMs="1234"',
+          'invite_to.response',
+          '"event":"invite_to.response"',
+          '"outcome":"suppressed"',
+          '"source":"client_shadow"',
+          '"reason":"shadow_human_verified"',
+          '"app_id":"a0o123"',
+          '"act":"yes"',
+          '"trigger":"interaction"',
         ),
+      )
+    end
+
+    # Note: ActionController::Parameters stringifies scalars, so env booleans serialize as
+    # "false"/"true" rather than JSON booleans. Harmless for querying, but assert what we emit.
+    it 'includes the passive browser env snapshot for post-hoc classification' do
+      post :log_human_verified, params: { record: valid_record }
+
+      expect(Rails.logger).to have_received(:info).with(
+        a_string_including('"env":', '"ua":"Mozilla/5.0 FBAN/FBIOS"', '"webdriver":"false"'),
       )
     end
 

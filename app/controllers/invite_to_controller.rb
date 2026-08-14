@@ -1,5 +1,7 @@
 # Invite to X controller
 class InviteToController < ApplicationController
+  include InviteToEventLogging
+
   CLIENT_RECORDING_FLAG = 'temp.webapp.inviteToClientRecording'
 
   before_action :ignore_head_requests
@@ -91,30 +93,30 @@ class InviteToController < ApplicationController
     app_id = decoded_params['appId']
     is_test = ActiveModel::Type::Boolean.new.cast(decoded_params['isTest']) == true
 
-    if (invite_action.blank? && response.blank?) || (deadline && deadline_has_passed?(deadline)) || language_change? || is_test
-      Rails.logger.info(
-        'InviteToController#record_response: *NOT* recording ' \
-        "deadline=#{deadline}, " \
-        "app_id=#{app_id}, " \
-        "application_number=#{application_number}, " \
-        "act=#{invite_action.inspect}, " \
-        "response=#{response.inspect}, " \
-        "is_test=#{is_test}",
+    reason = suppression_reason(invite_action, response, deadline, is_test)
+    if reason
+      log_invite_event(
+        outcome: 'suppressed',
+        source: 'get',
+        reason: reason,
+        # Resolved local comparison terms, only set when the deadline is the reason.
+        **deadline_terms(deadline, reason),
+        # The one suppression that can silently eat a legitimate first click; capture what
+        # request.referrer actually was so language_change? can be audited.
+        referrer: (reason == 'language_change' ? request.referrer : nil),
+        deadline: deadline,
+        app_id: app_id,
+        act: invite_action,
+        is_test: is_test,
       )
       return
     end
 
-    Rails.logger.info(
-      'InviteToController#record_response: recording ' \
-      "deadline=#{deadline}, " \
-      "app_id=#{app_id}, " \
-      "application_number=#{application_number}, " \
-      "act=#{invite_action}, " \
-      "response=#{response}, " \
-      "is_test=#{is_test}",
-    )
-
-    DahliaBackend::MessageService.send_invite_to_response(
+    # send_invite_to_response returns nil on both the invalid-action guard and any
+    # rescued StandardError, so a non-nil result means "attempted and not
+    # swallowed", not a confirmed Salesforce write. Surfacing ok=false is still
+    # enough to tell a hiccup from a clean send.
+    result = DahliaBackend::MessageService.send_invite_to_response(
       deadline,
       app_id,
       application_number,
@@ -122,6 +124,53 @@ class InviteToController < ApplicationController
       invite_action,
       params['id'], # listing_id
     )
+
+    log_invite_event(
+      outcome: 'recorded',
+      source: 'get',
+      ok: !result.nil?,
+      deadline: deadline,
+      app_id: app_id,
+      act: invite_action,
+      is_test: is_test,
+    )
+  end
+
+  # Names the single reason a GET is not recorded instead of collapsing four
+  # causes into one branch. Order matches the original `||` precedence: a preview
+  # link (act blank) is `no_action`.
+  def suppression_reason(invite_action, response, deadline, is_test)
+    if invite_action.blank? && response.blank? then 'no_action'
+    elsif deadline && deadline_has_passed?(deadline) then 'deadline_passed'
+    elsif language_change? then 'language_change'
+    elsif is_test then 'test_link'
+    end
+  end
+
+  # Emits what the code actually compared, in resolved local terms, with a
+  # near-miss delta: late_by under an hour is a product conversation, under a
+  # minute is likely a clock/UX issue.
+  def deadline_terms(deadline, reason)
+    return {} unless reason == 'deadline_passed' && deadline.present?
+
+    deadline_time = Time.zone.parse(deadline)
+    {
+      deadline_date: deadline_time.to_date.to_s,
+      today: Time.zone.today.to_s,
+      late_by: format_duration((Time.zone.now - deadline_time).to_i),
+    }
+  rescue ArgumentError, TypeError
+    { deadline_raw: deadline } # unparseable - surface it rather than crash the log line
+  end
+
+  # Compact human duration ("2m", "3h", "5d") without pulling in a gem.
+  def format_duration(seconds)
+    seconds = seconds.abs
+    return "#{seconds}s" if seconds < 60
+    return "#{seconds / 60}m" if seconds < 3600
+    return "#{seconds / 3600}h" if seconds < 86_400
+
+    "#{seconds / 86_400}d"
   end
 
   def decode_token(token)

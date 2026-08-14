@@ -1,11 +1,34 @@
 import { renderHook, cleanup } from "@testing-library/react"
 import { useAutoRecordInviteToResponse } from "../../hooks/useAutoRecordInviteToResponse"
-import { recordResponse, logHumanVerifiedClick } from "../../api/inviteToApiService"
+import {
+  recordResponse,
+  logHumanVerifiedClick,
+  beaconHumanVerifiedClick,
+  snapshotEnv,
+} from "../../api/inviteToApiService"
 
 jest.mock("../../api/inviteToApiService", () => ({
   recordResponse: jest.fn(),
   logHumanVerifiedClick: jest.fn(),
+  beaconHumanVerifiedClick: jest.fn(),
+  snapshotEnv: jest.fn(),
 }))
+
+const TEST_ENV = {
+  webdriver: false,
+  ua: "test-ua",
+  touch: 0,
+  coarse: false,
+  cores: 8,
+  mem: 8,
+  screen: "800x600@1",
+  lang: "en",
+  tz: "UTC",
+}
+
+const firePageHide = () => {
+  window.dispatchEvent(new Event("pagehide"))
+}
 
 const setVisibility = (state: "visible" | "hidden") => {
   Object.defineProperty(document, "visibilityState", {
@@ -38,6 +61,7 @@ describe("useAutoRecordInviteToResponse", () => {
     jest.clearAllMocks()
     setVisibility("visible")
     ;(logHumanVerifiedClick as jest.Mock).mockResolvedValue(undefined)
+    ;(snapshotEnv as jest.Mock).mockReturnValue(TEST_ENV)
     jest.spyOn(console, "error").mockImplementation(() => {})
   })
 
@@ -193,6 +217,59 @@ describe("useAutoRecordInviteToResponse", () => {
 
     jest.advanceTimersByTime(5000)
     expect(logHumanVerifiedClick).not.toHaveBeenCalled()
+  })
+
+  it("attaches the env snapshot to the logged payload", () => {
+    renderHook(() => useAutoRecordInviteToResponse(baseArgs))
+    flushPaintFrames()
+    jest.advanceTimersByTime(2000)
+
+    expect(logHumanVerifiedClick).toHaveBeenCalledWith(
+      expect.objectContaining({ env: expect.objectContaining({ ua: "test-ua", webdriver: false }) })
+    )
+  })
+
+  it("beacons a teardown signal on pagehide after arming, without a normal log call", () => {
+    renderHook(() => useAutoRecordInviteToResponse(baseArgs))
+    flushPaintFrames() // arms while visible
+
+    firePageHide()
+
+    expect(beaconHumanVerifiedClick).toHaveBeenCalledTimes(1)
+    expect(beaconHumanVerifiedClick).toHaveBeenCalledWith(
+      expect.objectContaining({ trigger: "teardown", appId: "app-1" })
+    )
+    expect(logHumanVerifiedClick).not.toHaveBeenCalled()
+  })
+
+  it("does not beacon a teardown when the page never armed (hidden the whole time)", () => {
+    setVisibility("hidden")
+    renderHook(() => useAutoRecordInviteToResponse(baseArgs))
+
+    firePageHide()
+
+    expect(beaconHumanVerifiedClick).not.toHaveBeenCalled()
+  })
+
+  it("does not beacon a teardown once the click already fired via dwell", () => {
+    renderHook(() => useAutoRecordInviteToResponse(baseArgs))
+    flushPaintFrames()
+    jest.advanceTimersByTime(2000)
+    expect(logHumanVerifiedClick).toHaveBeenCalledTimes(1)
+
+    firePageHide()
+    expect(beaconHumanVerifiedClick).not.toHaveBeenCalled()
+  })
+
+  it("does not beacon a teardown after the page was hidden again (disarmed)", () => {
+    renderHook(() => useAutoRecordInviteToResponse(baseArgs))
+    flushPaintFrames() // arms
+
+    setVisibility("hidden")
+    fireVisibilityChange() // disarms
+
+    firePageHide()
+    expect(beaconHumanVerifiedClick).not.toHaveBeenCalled()
   })
 
   it("cleans up on unmount before dwell elapses with no call and no leaked listeners/timers", () => {

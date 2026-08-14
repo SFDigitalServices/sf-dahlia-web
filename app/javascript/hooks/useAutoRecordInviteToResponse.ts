@@ -1,5 +1,11 @@
 import { useEffect } from "react"
-import { logHumanVerifiedClick } from "../api/inviteToApiService"
+import {
+  logHumanVerifiedClick,
+  beaconHumanVerifiedClick,
+  snapshotEnv,
+  HumanVerifiedTrigger,
+  HumanVerifiedRecord,
+} from "../api/inviteToApiService"
 import { isDeadlinePassed } from "../util/listingUtil"
 
 // `pointerdown`/`pointermove` cover touch input too, so there is no separate `touchstart` here.
@@ -73,6 +79,10 @@ export const useAutoRecordInviteToResponse = ({
     // Set when the fire conditions actually arm (after the first paint, while visible), so
     // elapsedMs reflects visible dwell/interaction time and excludes hidden/background-tab time.
     let armedAt = 0
+    // True once armFireConditions has run (paint + visible proven). Only then is a teardown
+    // worth reporting: it means a real environment rendered the page, it just unloaded before
+    // the interaction/dwell gate completed.
+    let armed = false
     let fired = false
     let dwellTimeoutId: ReturnType<typeof setTimeout> | null = null
     let visibilityRafId1: number | null = null
@@ -107,25 +117,39 @@ export const useAutoRecordInviteToResponse = ({
       clearDwellTimer()
       cancelPendingFrames()
       removeInteractionListeners()
+      // eslint-disable-next-line @typescript-eslint/no-use-before-define -- registered in armFireConditions
+      window.removeEventListener("pagehide", handlePageHide)
       // eslint-disable-next-line @typescript-eslint/no-use-before-define -- registered further down
       document.removeEventListener("visibilitychange", handleVisibilityChange)
     }
+
+    const buildRecord = (trigger: HumanVerifiedTrigger): HumanVerifiedRecord => ({
+      appId,
+      listingId,
+      deadline,
+      act,
+      type,
+      trigger,
+      elapsedMs: Date.now() - armedAt,
+      env: snapshotEnv(),
+    })
 
     const fire = (trigger: "interaction" | "dwell") => {
       if (fired) return
       fired = true
       cleanup()
-      void logHumanVerifiedClick({
-        appId,
-        listingId,
-        deadline,
-        act,
-        type,
-        trigger,
-        elapsedMs: Date.now() - armedAt,
-      }).catch((error) => {
+      void logHumanVerifiedClick(buildRecord(trigger)).catch((error) => {
         console.error("Error logging human-verified invite-to click:", error)
       })
+    }
+
+    // Flush on unload if we armed (proved paint + visible) but never reached the stronger
+    // interaction/dwell gate. sendBeacon is the only send that survives teardown.
+    const handlePageHide = () => {
+      if (fired || !armed) return
+      fired = true
+      cleanup()
+      beaconHumanVerifiedClick(buildRecord("teardown"))
     }
 
     const handleInteraction = () => {
@@ -133,10 +157,14 @@ export const useAutoRecordInviteToResponse = ({
     }
 
     const armFireConditions = () => {
+      armed = true
       armedAt = Date.now()
       INTERACTION_EVENTS.forEach((eventName) => {
         window.addEventListener(eventName, handleInteraction, { passive: true, once: true })
       })
+      // pagehide fires on genuine unload/bfcache (reliable in mobile webviews where the tab is
+      // killed); a backgrounded-then-returned tab still reaches interaction/dwell instead.
+      window.addEventListener("pagehide", handlePageHide, { once: true })
       dwellTimeoutId = setTimeout(() => {
         fire("dwell")
       }, dwellTimeMs)
@@ -169,7 +197,10 @@ export const useAutoRecordInviteToResponse = ({
         cancelPendingFrames()
         afterFirstPaint()
       } else {
-        // Page hidden again before firing - pause/reset everything.
+        // Page hidden again before firing - pause/reset everything. Disarm so a pagehide that
+        // arrives while hidden doesn't report a teardown: an unload from a non-visible page is
+        // indistinguishable from a background prefetch and isn't evidence of a human.
+        armed = false
         cancelPendingFrames()
         clearDwellTimer()
         removeInteractionListeners()
