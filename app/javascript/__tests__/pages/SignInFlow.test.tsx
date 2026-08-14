@@ -32,7 +32,7 @@ const mockLastAuthenticationStrategy = (strategy: string | null) => {
   ;(useClerk as jest.Mock).mockReturnValue({ client: { lastAuthenticationStrategy: strategy } })
 }
 
-const switchToCodeView = async () => {
+const switchToVerificationCodeView = async () => {
   const user = userEvent.setup()
   await user.click(screen.getByRole("button", { name: /get a one-time code to sign in/i }))
   return user
@@ -135,7 +135,7 @@ describe("<SignInFlow />", () => {
 
   it("switches to the code sign in flow", async () => {
     await renderAndLoadAsync(<SignIn assetPaths={{}} />)
-    await switchToCodeView()
+    await switchToVerificationCodeView()
 
     expect(
       screen.getByText(/enter your email address and we'll send you a code to sign in/i)
@@ -147,7 +147,7 @@ describe("<SignInFlow />", () => {
 
   it("returns to the password flow from the code sign in flow", async () => {
     await renderAndLoadAsync(<SignIn assetPaths={{}} />)
-    const user = await switchToCodeView()
+    const user = await switchToVerificationCodeView()
     await user.click(screen.getByRole("button", { name: /sign in with a password instead/i }))
 
     expect(screen.getByRole("group", { name: /^password$/i })).not.toBeNull()
@@ -160,7 +160,7 @@ describe("<SignInFlow />", () => {
       supportedFirstFactors: [{ strategy: "email_code", emailAddressId: "idn_email" }],
     })
     await renderAndLoadAsync(<SignIn assetPaths={{}} />)
-    const user = await switchToCodeView()
+    const user = await switchToVerificationCodeView()
     const emailGroup = screen.getByRole("group", { name: /email/i })
     await user.type(within(emailGroup).getByRole("textbox"), "test@test.com")
     await user.click(screen.getByRole("button", { name: /^get a code$/i }))

@@ -4,7 +4,7 @@ import { t } from "@bloom-housing/ui-components"
 import { screen, waitFor, cleanup } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
 import { useLocation, useNavigate } from "react-router"
-import EnterCode from "../../../pages/account/enter-code"
+import EnterVerificationCode from "../../../pages/account/verification-code"
 import {
   renderAndLoadAsync,
   mockWindowLocation,
@@ -34,7 +34,7 @@ jest.mock("../../../hooks/useFeatureFlag", () => ({
   useFeatureFlag: jest.fn(() => ({ flagsReady: true, unleashFlag: true })),
 }))
 
-describe("<EnterCode />", () => {
+describe("<EnterVerificationCode />", () => {
   let originalLocation: Location
   let mockNavigate: jest.Mock
   let mockAttemptEmailAddressVerification: jest.Mock
@@ -79,7 +79,7 @@ describe("<EnterCode />", () => {
         supportedFirstFactors: [{ strategy: "email_code", emailAddressId: "idn_email" }],
       },
     })
-    await renderAndLoadAsync(<EnterCode assetPaths={{}} />)
+    await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
   })
 
   afterEach(() => {
@@ -190,7 +190,7 @@ describe("<EnterCode />", () => {
     cleanup()
     document.title = "DAHLIA San Francisco Housing Portal"
     ;(useFeatureFlag as jest.Mock).mockReturnValue({ flagsReady: true, unleashFlag: false })
-    await renderAndLoadAsync(<EnterCode assetPaths={{}} />)
+    await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
 
     await waitFor(() => {
       expect(mockNavigate).toHaveBeenCalledWith("/create-account")
@@ -201,7 +201,7 @@ describe("<EnterCode />", () => {
     cleanup()
     document.title = "DAHLIA San Francisco Housing Portal"
     ;(useLocation as jest.Mock).mockReturnValue({ pathname: "/create-account/code", state: null })
-    await renderAndLoadAsync(<EnterCode assetPaths={{}} />)
+    await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
 
     await waitFor(() => {
       expect(mockNavigate).toHaveBeenCalledWith("/create-account")
@@ -214,7 +214,7 @@ describe("<EnterCode />", () => {
       pathname: "/sign-in/code",
       state: { email: "test@example.com" },
     })
-    await renderAndLoadAsync(<EnterCode assetPaths={{}} />)
+    await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
 
     expect(
       screen.getByRole("link", { name: t("createAccount.editEmail") }).getAttribute("href")
@@ -234,7 +234,7 @@ describe("<EnterCode />", () => {
       status: "complete",
       createdSessionId: "session_456",
     })
-    await renderAndLoadAsync(<EnterCode assetPaths={{}} />)
+    await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
 
     const user = userEvent.setup()
     await user.click(screen.getAllByRole("textbox")[0])
@@ -260,7 +260,7 @@ describe("<EnterCode />", () => {
       pathname: "/sign-in/code",
       state: { email: "test@example.com" },
     })
-    await renderAndLoadAsync(<EnterCode assetPaths={{}} />)
+    await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
 
     const user = userEvent.setup()
     await user.click(screen.getByRole("button", { name: t("createAccount.sendAgain") }))
@@ -277,7 +277,7 @@ describe("<EnterCode />", () => {
     cleanup()
     document.title = "DAHLIA San Francisco Housing Portal"
     ;(useLocation as jest.Mock).mockReturnValue({ pathname: "/sign-in/code", state: null })
-    await renderAndLoadAsync(<EnterCode assetPaths={{}} />)
+    await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
 
     await waitFor(() => {
       expect(mockNavigate).toHaveBeenCalledWith("/sign-in")

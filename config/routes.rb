@@ -104,9 +104,9 @@ Rails.application.routes.draw do
   get '(:lang)/listings/:id/apply/intro' => 'form#listing_apply_form', lang: /(en|es|zh|tl)/
 
   get '(:lang)/sign-in' => 'auth#sign_in', lang: /(en|es|zh|tl)/
-  get '(:lang)/sign-in/code' => 'auth#enter_code', lang: /(en|es|zh|tl)/
+  get '(:lang)/sign-in/code' => 'auth#enter_verification_code', lang: /(en|es|zh|tl)/
   get '(:lang)/create-account' => 'auth#create_account', lang: /(en|es|zh|tl)/
-  get '(:lang)/create-account/code' => 'auth#enter_code', lang: /(en|es|zh|tl)/
+  get '(:lang)/create-account/code' => 'auth#enter_verification_code', lang: /(en|es|zh|tl)/
   get '(:lang)/add-password' => 'auth#add_password', lang: /(en|es|zh|tl)/
   get '(:lang)/forgot-password' => 'auth#forgot_password', lang: /(en|es|zh|tl)/
   get '(:lang)/reset-password' => 'auth#reset_password', lang: /(en|es|zh|tl)/
