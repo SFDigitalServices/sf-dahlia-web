@@ -1,0 +1,18 @@
+.codeGroup {
+  display: flex;
+  column-gap: var(--seeds-s2);
+
+  @media (max-width: theme("screens.sm")) {
+    column-gap: var(--seeds-s1);
+  }
+}
+
+.codeInput {
+  flex: 1 1 0;
+  min-width: 0;
+  max-width: var(--seeds-s14);
+  margin-bottom: 0;
+  input {
+    text-align: center;
+  }
+}

@@ -9,9 +9,9 @@ class AuthController < ApplicationController
     render 'create_account'
   end
 
-  def enter_code
-    @enter_code_props = react_app_props
-    render 'enter_code'
+  def enter_verification_code
+    @enter_verification_code_props = react_app_props
+    render 'enter_verification_code'
   end
 
   def add_password

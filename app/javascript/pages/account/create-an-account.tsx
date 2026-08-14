@@ -7,7 +7,7 @@ import { Card, Heading, Button } from "@bloom-housing/ui-seeds"
 import { useForm } from "react-hook-form"
 import withAppSetup from "../../layouts/withAppSetup"
 import AuthLayout from "../../layouts/AuthLayout"
-import { AppPages, getEnterCodePath, getSignInPath } from "../../util/routeUtil"
+import { AppPages, getVerificationCodePath, getSignInPath } from "../../util/routeUtil"
 import { getCurrentLanguage } from "../../util/languageUtil"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import { AUTH_FLOW, UNLEASH_FLAG } from "../../modules/constants"
@@ -40,7 +40,7 @@ const CreateAnAccountPage = () => {
         unsafeMetadata: { locale }, // Account creation can only update public metadata
       })
       await signUp.prepareEmailAddressVerification({ strategy: "email_code" })
-      void navigate(getEnterCodePath(), { state: { email } })
+      void navigate(getVerificationCodePath(), { state: { email } })
     } catch (error) {
       console.error("Account creation error", error)
     }
