@@ -149,7 +149,16 @@ export const useAutoRecordInviteToResponse = ({
       if (fired || !armed) return
       fired = true
       cleanup()
-      beaconHumanVerifiedClick(buildRecord("teardown"))
+      const record = buildRecord("teardown")
+      // sendBeacon returns false when it is unavailable or the browser refuses to queue
+      // (e.g. payload over the per-origin limit). Fall back to the normal request rather
+      // than dropping the signal: it may not survive an immediate unload, but the page is
+      // sometimes only being hidden (bfcache), where it completes fine.
+      if (!beaconHumanVerifiedClick(record)) {
+        void logHumanVerifiedClick(record).catch(() => {
+          // Nothing useful to do during teardown; the missing log line is the signal.
+        })
+      }
     }
 
     const handleInteraction = () => {

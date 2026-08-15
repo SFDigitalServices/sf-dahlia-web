@@ -368,6 +368,17 @@ RSpec.describe InviteToController do
       expect(controller.send(:deadline_terms, '2020-01-01', 'language_change')).to eq({})
     end
 
+    # A blank deadline must not be reported as an expired one: deadline_has_passed?
+    # treats unparseable input as passed, so truthiness alone would misclassify "".
+    it 'does not classify a blank deadline as deadline_passed' do
+      request_with(decoded_payload.merge('deadline' => ''))
+
+      expect(response).to be_ok
+      expect(Rails.logger).not_to have_received(:info).with(
+        a_string_including('"reason":"deadline_passed"'),
+      )
+    end
+
     it 'names test_link for a preview/test token' do
       request_with(decoded_payload.merge('isTest' => 'true'))
 

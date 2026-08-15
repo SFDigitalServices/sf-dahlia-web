@@ -263,6 +263,22 @@ RSpec.describe Api::V1::InviteToResponseController, type: :controller do
       expect(event.length).to be < 3000
     end
 
+    # to_unsafe_h converts nested ActionController::Parameters to HashWithIndifferentAccess,
+    # so the non-scalar filter catches them - assert that on an allow-listed key.
+    it 'drops a nested structure sent under an allow-listed env key' do
+      logged = []
+      allow(Rails.logger).to receive(:info) { |msg| logged << msg.to_s }
+
+      post :log_human_verified, params: {
+        record: valid_record.merge(env: { ua: { nested: { deep: 'sneaky-value' } }, tz: 'UTC' }),
+      }
+
+      expect(response).to be_ok
+      event = logged.find { |msg| msg.start_with?('invite_to.response ') }
+      expect(event).not_to include('sneaky-value')
+      expect(event).to include('"tz":"UTC"')
+    end
+
     it 'omits env entirely when no recognized keys are supplied' do
       post :log_human_verified, params: {
         record: valid_record.merge(env: { evil: 'nope' }),

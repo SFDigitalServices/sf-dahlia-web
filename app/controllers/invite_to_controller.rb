@@ -142,7 +142,12 @@ class InviteToController < ApplicationController
   # link (act blank) is `no_action`.
   def suppression_reason(invite_action, response, deadline, is_test)
     if invite_action.blank? && response.blank? then 'no_action'
-    elsif deadline && deadline_has_passed?(deadline) then 'deadline_passed'
+    # `.present?` rather than truthiness: an empty-string deadline would otherwise
+    # reach deadline_has_passed?, which reports unparseable input as passed, and a
+    # blank deadline would be misclassified as an expired one. Blank falls through
+    # to the recording path, matching the pre-existing behavior for a nil deadline -
+    # not recording a real "yes" is the worse failure.
+    elsif deadline.present? && deadline_has_passed?(deadline) then 'deadline_passed'
     elsif language_change? then 'language_change'
     elsif is_test then 'test_link'
     end

@@ -62,6 +62,8 @@ describe("useAutoRecordInviteToResponse", () => {
     setVisibility("visible")
     ;(logHumanVerifiedClick as jest.Mock).mockResolvedValue(undefined)
     ;(snapshotEnv as jest.Mock).mockReturnValue(TEST_ENV)
+    // Default to the browser accepting the beacon; tests that care override this.
+    ;(beaconHumanVerifiedClick as jest.Mock).mockReturnValue(true)
     jest.spyOn(console, "error").mockImplementation(() => {})
   })
 
@@ -239,6 +241,30 @@ describe("useAutoRecordInviteToResponse", () => {
     expect(beaconHumanVerifiedClick).toHaveBeenCalledWith(
       expect.objectContaining({ trigger: "teardown", appId: "app-1" })
     )
+    expect(logHumanVerifiedClick).not.toHaveBeenCalled()
+  })
+
+  it("falls back to the normal request when sendBeacon refuses to queue", () => {
+    ;(beaconHumanVerifiedClick as jest.Mock).mockReturnValue(false)
+
+    renderHook(() => useAutoRecordInviteToResponse(baseArgs))
+    flushPaintFrames()
+    firePageHide()
+
+    expect(beaconHumanVerifiedClick).toHaveBeenCalledTimes(1)
+    expect(logHumanVerifiedClick).toHaveBeenCalledWith(
+      expect.objectContaining({ trigger: "teardown" })
+    )
+  })
+
+  it("does not double-send when sendBeacon accepts the payload", () => {
+    ;(beaconHumanVerifiedClick as jest.Mock).mockReturnValue(true)
+
+    renderHook(() => useAutoRecordInviteToResponse(baseArgs))
+    flushPaintFrames()
+    firePageHide()
+
+    expect(beaconHumanVerifiedClick).toHaveBeenCalledTimes(1)
     expect(logHumanVerifiedClick).not.toHaveBeenCalled()
   })
 
