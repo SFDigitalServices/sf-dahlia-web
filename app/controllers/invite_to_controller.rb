@@ -153,7 +153,12 @@ class InviteToController < ApplicationController
   def deadline_terms(deadline, reason)
     return {} unless reason == 'deadline_passed' && deadline.present?
 
+    # Time.zone.parse returns nil (rather than raising) for input it cannot make
+    # sense of, e.g. "not-a-date", so nil must be handled explicitly - the rescue
+    # below would not catch the resulting NoMethodError.
     deadline_time = Time.zone.parse(deadline)
+    return { deadline_raw: deadline } if deadline_time.nil?
+
     {
       deadline_date: deadline_time.to_date.to_s,
       today: Time.zone.today.to_s,
@@ -212,8 +217,17 @@ class InviteToController < ApplicationController
     JsonWebTokenService.encode_token(params)
   end
 
+  # Time.zone.parse returns nil for input it cannot interpret (and raises for some
+  # malformed values), either of which previously 500'd the page. Treat a deadline
+  # we cannot verify as passed: suppressing is the conservative choice, and the
+  # structured log records deadline_raw so the bad value is still visible.
   def deadline_has_passed?(deadline)
-    Time.zone.parse(deadline).to_date < Time.zone.today
+    parsed = Time.zone.parse(deadline.to_s)
+    return true if parsed.nil?
+
+    parsed.to_date < Time.zone.today
+  rescue ArgumentError, TypeError
+    true
   end
 
   def language_change?

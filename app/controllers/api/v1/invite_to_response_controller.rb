@@ -1,6 +1,13 @@
 class Api::V1::InviteToResponseController < ApiController
   include InviteToEventLogging
 
+  # The passive browser signals snapshotEnv() sends. Allow-listed rather than
+  # permitting a free-form hash: this endpoint is unauthenticated, so an open
+  # `env` would let anyone write arbitrary keys and unbounded values into our logs.
+  ENV_KEYS = %i[webdriver ua touch coarse cores mem screen lang tz].freeze
+  # Longest value we will log per env field; `ua` is the only realistically long one.
+  ENV_VALUE_MAX = 256
+
   before_action :validate_token!, only: :record_response
 
   def record_response
@@ -44,7 +51,7 @@ class Api::V1::InviteToResponseController < ApiController
   # Safe to call repeatedly.
   def log_human_verified
     record = params.expect(record: [:type, :deadline, :appId, :listingId, :act, :trigger,
-                                    :elapsedMs, { env: {} }])
+                                    :elapsedMs, { env: ENV_KEYS }])
     type, deadline, application_id, listing_id, act, trigger, elapsed_ms =
       record.values_at(:type, :deadline, :appId, :listingId, :act, :trigger, :elapsedMs)
 
@@ -62,7 +69,7 @@ class Api::V1::InviteToResponseController < ApiController
       act: act,
       trigger: trigger, # interaction | dwell | teardown
       elapsed_ms: elapsed_ms,
-      env: record[:env]&.to_unsafe_h, # passive browser signals for post-hoc classification
+      env: sanitized_env(record[:env]),
     )
     render json: { success: true }, status: :ok
   rescue ActionController::ParameterMissing => e
@@ -76,6 +83,20 @@ class Api::V1::InviteToResponseController < ApiController
   end
 
   private
+
+  # Keeps only the known env keys, and only scalar values, truncated. Returns nil
+  # when nothing usable is left so the key drops out of the log line entirely.
+  def sanitized_env(env)
+    return nil if env.blank?
+
+    cleaned = env.to_unsafe_h.slice(*ENV_KEYS.map(&:to_s)).filter_map do |key, value|
+      next if value.is_a?(Array) || value.is_a?(Hash)
+
+      [key, value.to_s.truncate(ENV_VALUE_MAX)]
+    end.to_h
+
+    cleaned.presence
+  end
 
   def validate_token!
     payload = JsonWebTokenService.decode_token(params[:t])

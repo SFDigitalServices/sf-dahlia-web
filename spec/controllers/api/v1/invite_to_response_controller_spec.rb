@@ -222,6 +222,40 @@ RSpec.describe Api::V1::InviteToResponseController, type: :controller do
       )
     end
 
+    it 'drops unknown env keys, nested values, and over-long values' do
+      logged = []
+      allow(Rails.logger).to receive(:info) { |msg| logged << msg.to_s }
+
+      post :log_human_verified, params: {
+        record: valid_record.merge(
+          env: {
+            ua: 'a' * 400,
+            webdriver: false,
+            evil: 'should-not-be-logged',
+            nested: { deep: 'no' },
+          },
+        ),
+      }
+
+      expect(response).to be_ok
+      # Scope to our structured event: Rails' own "Parameters:" line echoes the raw
+      # request body, which the sanitizer does not (and cannot) control.
+      event = logged.find { |msg| msg.start_with?('invite_to.response ') }
+      expect(event).to include('"webdriver":"false"')
+      expect(event).not_to include('should-not-be-logged')
+      expect(event).not_to include('"evil"')
+      expect(event).not_to include('a' * 300)
+    end
+
+    it 'omits env entirely when no recognized keys are supplied' do
+      post :log_human_verified, params: {
+        record: valid_record.merge(env: { evil: 'nope' }),
+      }
+
+      expect(response).to be_ok
+      expect(Rails.logger).not_to have_received(:info).with(a_string_including('"env":'))
+    end
+
     it 'returns 400 when the record param is missing' do
       post :log_human_verified, params: { notRecord: {} }
       expect(response).to have_http_status(:bad_request)

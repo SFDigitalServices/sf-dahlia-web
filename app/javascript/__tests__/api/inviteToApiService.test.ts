@@ -64,6 +64,21 @@ describe("inviteToApiService", () => {
         })
       )
     })
+
+    // This runs inside the fire path, so a throwing property must never take the signal
+    // with it - some webviews raise on these reads rather than returning undefined.
+    it("falls back per-field when a property getter throws", () => {
+      const spy = jest.spyOn(navigator, "userAgent", "get").mockImplementation(() => {
+        throw new Error("blocked")
+      })
+
+      expect(() => snapshotEnv()).not.toThrow()
+      expect(snapshotEnv().ua).toBe("")
+      // Other fields still populate normally.
+      expect(snapshotEnv().screen).toMatch(/\d+x\d+@/)
+
+      spy.mockRestore()
+    })
   })
 
   describe("beaconHumanVerifiedClick", () => {
