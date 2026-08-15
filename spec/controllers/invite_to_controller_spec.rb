@@ -386,6 +386,35 @@ RSpec.describe InviteToController do
         a_string_including('"reason":"language_change"', '"referrer":'),
       )
     end
+
+    # The referrer that triggers language_change? is itself a next-steps URL, so it
+    # carries the invite JWT. It must never reach the logs.
+    it 'strips the query string from the logged referrer so the invite JWT is not logged' do
+      logged = []
+      allow(Rails.logger).to receive(:info) { |msg| logged << msg.to_s }
+      request.headers['Referer'] =
+        "http://test.host/es/listings/#{listing_id}/next-steps?t=SECRET.JWT.VALUE&act=yes"
+      request_with(decoded_payload)
+
+      event = logged.find { |msg| msg.start_with?('invite_to.response ') }
+      expect(event).to include('"reason":"language_change"')
+      expect(event).to include("\"referrer\":\"http://test.host/es/listings/#{listing_id}/next-steps\"")
+      expect(event).not_to include('SECRET.JWT.VALUE')
+      expect(event).not_to include('t=')
+    end
+
+    it 'marks an unparseable referrer rather than raising' do
+      # A real malformed referrer (invalid percent-escape) rather than stubbing
+      # URI.parse, which Rails itself calls during the request.
+      request.headers['Referer'] =
+        "http://test.host/es/listings/#{listing_id}/next-steps?t=%zz"
+      request_with(decoded_payload)
+
+      expect(response).to be_ok
+      expect(Rails.logger).to have_received(:info).with(
+        a_string_including('"referrer":"[unparseable]"'),
+      )
+    end
   end
 
   describe '#documents' do

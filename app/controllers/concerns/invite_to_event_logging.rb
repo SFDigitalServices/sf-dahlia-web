@@ -10,6 +10,11 @@ module InviteToEventLogging
 
   INVITE_EVENT = 'invite_to.response'.freeze
 
+  # Longest string we will log for any single field. Several of these events carry
+  # values from unauthenticated endpoints, so every value is bounded centrally here
+  # rather than at each call site - that way a new field cannot reintroduce the gap.
+  VALUE_MAX = 256
+
   private
 
   # outcome: 'recorded' | 'suppressed'
@@ -26,6 +31,16 @@ module InviteToEventLogging
       request_id: request.request_id,
     }.merge(fields).compact
 
-    Rails.logger.info("#{INVITE_EVENT} #{payload.to_json}")
+    Rails.logger.info("#{INVITE_EVENT} #{bound_values(payload).to_json}")
+  end
+
+  # Truncates strings and coerces anything non-scalar to a bounded string, so a
+  # hostile client cannot bloat a log line with a huge or deeply nested value.
+  def bound_values(value)
+    case value
+    when Hash then value.transform_values { |v| bound_values(v) }
+    when Numeric, TrueClass, FalseClass, NilClass then value
+    else value.to_s.truncate(VALUE_MAX)
+    end
   end
 end

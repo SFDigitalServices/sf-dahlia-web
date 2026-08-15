@@ -247,6 +247,22 @@ RSpec.describe Api::V1::InviteToResponseController, type: :controller do
       expect(event).not_to include('a' * 300)
     end
 
+    # Unauthenticated endpoint: every logged value is bounded, not just env.
+    it 'truncates over-long top-level fields' do
+      logged = []
+      allow(Rails.logger).to receive(:info) { |msg| logged << msg.to_s }
+
+      post :log_human_verified, params: {
+        record: valid_record.merge(type: 'T' * 5000, act: 'A' * 5000),
+      }
+
+      expect(response).to be_ok
+      event = logged.find { |msg| msg.start_with?('invite_to.response ') }
+      expect(event).not_to include('T' * 300)
+      expect(event).not_to include('A' * 300)
+      expect(event.length).to be < 3000
+    end
+
     it 'omits env entirely when no recognized keys are supplied' do
       post :log_human_verified, params: {
         record: valid_record.merge(env: { evil: 'nope' }),

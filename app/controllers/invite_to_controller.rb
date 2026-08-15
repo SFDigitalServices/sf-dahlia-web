@@ -101,9 +101,10 @@ class InviteToController < ApplicationController
         reason: reason,
         # Resolved local comparison terms, only set when the deadline is the reason.
         **deadline_terms(deadline, reason),
-        # The one suppression that can silently eat a legitimate first click; capture what
-        # request.referrer actually was so language_change? can be audited.
-        referrer: (reason == 'language_change' ? request.referrer : nil),
+        # The one suppression that can silently eat a legitimate first click, so
+        # capture the referrer to make language_change? auditable - scrubbed,
+        # because that referrer is itself a next-steps URL carrying the invite JWT.
+        referrer: (reason == 'language_change' ? scrubbed_referrer : nil),
         deadline: deadline,
         app_id: app_id,
         act: invite_action,
@@ -166,6 +167,22 @@ class InviteToController < ApplicationController
     }
   rescue ArgumentError, TypeError
     { deadline_raw: deadline } # unparseable - surface it rather than crash the log line
+  end
+
+  # language_change? only fires when the referrer is another next-steps URL, and
+  # those URLs carry the invite JWT in `?t=`. Logging the raw referrer would write
+  # live tokens into the logs, so keep only scheme/host/path - which is all the
+  # locale-prefix comparison needs anyway.
+  def scrubbed_referrer
+    referrer = request.referrer
+    return nil if referrer.blank?
+
+    uri = URI.parse(referrer)
+    uri.query = nil
+    uri.fragment = nil
+    uri.to_s
+  rescue URI::InvalidURIError
+    '[unparseable]'
   end
 
   # Compact human duration ("2m", "3h", "5d") without pulling in a gem.
