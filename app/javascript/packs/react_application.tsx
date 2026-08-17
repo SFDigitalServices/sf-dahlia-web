@@ -26,7 +26,7 @@ import MyApplications from "../pages/account/my-applications" // eslint-disable-
 import AccountSettings from "../pages/account/account-settings"
 import MyAccount from "../pages/account/my-account" // eslint-disable-line import/no-named-as-default
 import CreateAnAccount from "../pages/account/create-an-account"
-import EnterCode from "../pages/account/enter-code"
+import EnterVerificationCode from "../pages/account/verification-code"
 import AddPassword from "../pages/account/add-password"
 import ForgotPassword from "../pages/forgot-password"
 import ResetPassword from "../pages/reset-password"
@@ -63,9 +63,9 @@ const PAGE_ROUTES = [
   [HowToApply, "/listings/:id/how-to-apply"],
   [ListingApplyForm, "/listings/:id/apply/intro"],
   [SignIn, "/sign-in"],
-  [EnterCode, "/sign-in/code"],
+  [EnterVerificationCode, "/sign-in/code"],
   [CreateAnAccount, "/create-account"],
-  [EnterCode, "/create-account/code"],
+  [EnterVerificationCode, "/create-account/code"],
   [AddPassword, "/add-password"],
   [ForgotPassword, "/forgot-password"],
   [ResetPassword, "/reset-password"],

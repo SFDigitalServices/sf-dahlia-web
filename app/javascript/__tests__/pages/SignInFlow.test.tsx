@@ -1,5 +1,5 @@
 import React from "react"
-import { useAuth, useSignIn, useSignUp } from "@clerk/clerk-react"
+import { useAuth, useClerk, useSignIn, useSignUp } from "@clerk/clerk-react"
 import { screen, waitFor, within, cleanup } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
 import { useNavigate } from "react-router"
@@ -18,6 +18,7 @@ jest.mock("@clerk/clerk-react", () => {
     ClerkProvider: ({ children }: { children: React.ReactNode }) => children,
     useSignIn: jest.fn(),
     useSignUp: jest.fn(),
+    useClerk: jest.fn(),
     useAuth: jest.fn(() => ({ isLoaded: true, isSignedIn: false })),
   }
 })
@@ -27,7 +28,11 @@ jest.mock("react-router", () => ({
   useNavigate: jest.fn(),
 }))
 
-const switchToCodeView = async () => {
+const mockLastAuthenticationStrategy = (strategy: string | null) => {
+  ;(useClerk as jest.Mock).mockReturnValue({ client: { lastAuthenticationStrategy: strategy } })
+}
+
+const switchToVerificationCodeView = async () => {
   const user = userEvent.setup()
   await user.click(screen.getByRole("button", { name: /get a one-time code to sign in/i }))
   return user
@@ -66,6 +71,7 @@ describe("<SignInFlow />", () => {
       setActive: mockSetActive,
     })
     ;(useSignUp as jest.Mock).mockReturnValue({ isLoaded: true })
+    mockLastAuthenticationStrategy(null)
   })
 
   afterEach(() => {
@@ -95,9 +101,41 @@ describe("<SignInFlow />", () => {
     ).toBe("https://www.sf.gov/sign-in-to-your-dahlia-account")
   })
 
+  it("shows a loading state until Clerk loads", async () => {
+    ;(useSignIn as jest.Mock).mockReturnValue({ isLoaded: false })
+
+    const { container } = await renderAndLoadAsync(<SignIn assetPaths={{}} />)
+
+    expect(container.querySelector("[aria-busy='true']")).not.toBeNull()
+    expect(screen.queryByLabelText(/^password$/i)).toBeNull()
+    expect(screen.queryByRole("button", { name: /^get a code$/i })).toBeNull()
+    expect(screen.queryByRole("group", { name: /email/i })).toBeNull()
+  })
+
+  it("shows the code sign in flow by default when the last strategy used was a code", async () => {
+    mockLastAuthenticationStrategy("email_code")
+
+    await renderAndLoadAsync(<SignIn assetPaths={{}} />)
+
+    expect(
+      screen.getByText(/enter your email address and we'll send you a code to sign in/i)
+    ).not.toBeNull()
+    expect(screen.getByRole("button", { name: /^get a code$/i })).not.toBeNull()
+    expect(screen.queryByLabelText(/^password$/i)).toBeNull()
+  })
+
+  it("shows the password sign in flow when the last strategy used was a password", async () => {
+    mockLastAuthenticationStrategy("password")
+
+    await renderAndLoadAsync(<SignIn assetPaths={{}} />)
+
+    expect(screen.getByRole("group", { name: /^password$/i })).not.toBeNull()
+    expect(screen.queryByRole("button", { name: /^get a code$/i })).toBeNull()
+  })
+
   it("switches to the code sign in flow", async () => {
     await renderAndLoadAsync(<SignIn assetPaths={{}} />)
-    await switchToCodeView()
+    await switchToVerificationCodeView()
 
     expect(
       screen.getByText(/enter your email address and we'll send you a code to sign in/i)
@@ -109,7 +147,7 @@ describe("<SignInFlow />", () => {
 
   it("returns to the password flow from the code sign in flow", async () => {
     await renderAndLoadAsync(<SignIn assetPaths={{}} />)
-    const user = await switchToCodeView()
+    const user = await switchToVerificationCodeView()
     await user.click(screen.getByRole("button", { name: /sign in with a password instead/i }))
 
     expect(screen.getByRole("group", { name: /^password$/i })).not.toBeNull()
@@ -122,7 +160,7 @@ describe("<SignInFlow />", () => {
       supportedFirstFactors: [{ strategy: "email_code", emailAddressId: "idn_email" }],
     })
     await renderAndLoadAsync(<SignIn assetPaths={{}} />)
-    const user = await switchToCodeView()
+    const user = await switchToVerificationCodeView()
     const emailGroup = screen.getByRole("group", { name: /email/i })
     await user.type(within(emailGroup).getByRole("textbox"), "test@test.com")
     await user.click(screen.getByRole("button", { name: /^get a code$/i }))

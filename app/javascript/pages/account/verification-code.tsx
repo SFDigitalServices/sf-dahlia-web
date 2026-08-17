@@ -14,18 +14,18 @@ import {
   getMyAccountPath,
   getSignInPath,
 } from "../../util/routeUtil"
-import styles from "./enter-code.module.scss"
+import styles from "./verification-code.module.scss"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import { AUTH_FLOW, UNLEASH_FLAG } from "../../modules/constants"
 import GetHelp from "./components/GetHelp"
-import CodeField from "./components/CodeField"
+import VerificationCodeField from "./components/VerificationCodeField"
 
-interface EnterCodePageProps {
+interface EnterVerificationCodePageProps {
   email: string
   flow: AUTH_FLOW
 }
 
-const EnterCodePage = ({ email, flow }: EnterCodePageProps) => {
+const EnterVerificationCodePage = ({ email, flow }: EnterVerificationCodePageProps) => {
   const navigate = useNavigate()
   const { isLoaded: signUpLoaded, signUp, setActive: setActiveSignUp } = useSignUp()
   const { isLoaded: signInLoaded, signIn, setActive: setActiveSignIn } = useSignIn()
@@ -138,7 +138,7 @@ const EnterCodePage = ({ email, flow }: EnterCodePageProps) => {
             defaultValue=""
             rules={{ validate: (code: string) => /^\d{6}$/.test(code) }}
             render={({ value, onChange }) => (
-              <CodeField value={value} onChange={onChange} error={!!errors.code} />
+              <VerificationCodeField value={value} onChange={onChange} error={!!errors.code} />
             )}
           />
           <Button
@@ -188,7 +188,7 @@ const EnterCodePage = ({ email, flow }: EnterCodePageProps) => {
   )
 }
 
-const EnterCode = (_props: { assetPaths: unknown }) => {
+const EnterVerificationCode = (_props: { assetPaths: unknown }) => {
   const navigate = useNavigate()
   const { pathname, state } = useLocation()
   const email = state?.email
@@ -207,10 +207,10 @@ const EnterCode = (_props: { assetPaths: unknown }) => {
     return null
   }
 
-  return <EnterCodePage email={email} flow={flow} />
+  return <EnterVerificationCodePage email={email} flow={flow} />
 }
 
-export default withAppSetup(EnterCode, {
+export default withAppSetup(EnterVerificationCode, {
   useFormTimeout: true,
-  pageName: AppPages.EnterCode,
+  pageName: AppPages.EnterVerificationCode,
 })
