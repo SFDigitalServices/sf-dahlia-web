@@ -131,6 +131,13 @@ class InviteToController < ApplicationController
       source: 'get',
       ok: !result.nil?,
       deadline: deadline,
+      # Every invite JWT is expected to carry a deadline claim, so this should never
+      # be true. When it is, the expiry check was skipped entirely - a blank deadline
+      # short-circuits suppression_reason and nothing downstream re-checks it (the
+      # service ignores the deadline argument whenever an action is present). Flagged
+      # rather than suppressed so a legitimate response is never dropped; alert on it
+      # to catch a link generator that stopped setting the claim.
+      deadline_missing: (true if deadline.blank?),
       app_id: app_id,
       act: invite_action,
       is_test: is_test,

@@ -379,6 +379,27 @@ RSpec.describe InviteToController do
       )
     end
 
+    # A missing deadline means the expiry check was skipped entirely and nothing
+    # downstream re-checks it, so it must stay countable even though we still record.
+    [['blank', ''], ['nil', nil]].each do |label, value|
+      it "still records but flags deadline_missing for a #{label} deadline" do
+        request_with(decoded_payload.merge('deadline' => value))
+
+        expect(DahliaBackend::MessageService).to have_received(:send_invite_to_response)
+        expect(Rails.logger).to have_received(:info).with(
+          a_string_including('"outcome":"recorded"', '"deadline_missing":true'),
+        )
+      end
+    end
+
+    it 'omits deadline_missing entirely when a deadline is present' do
+      request_with(decoded_payload)
+
+      expect(Rails.logger).not_to have_received(:info).with(
+        a_string_including('"deadline_missing"'),
+      )
+    end
+
     it 'names test_link for a preview/test token' do
       request_with(decoded_payload.merge('isTest' => 'true'))
 
