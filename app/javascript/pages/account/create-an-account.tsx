@@ -7,10 +7,10 @@ import { Card, Heading, Button } from "@bloom-housing/ui-seeds"
 import { useForm } from "react-hook-form"
 import withAppSetup from "../../layouts/withAppSetup"
 import AuthLayout from "../../layouts/AuthLayout"
-import { AppPages, getEnterCodePath, getSignInPath } from "../../util/routeUtil"
+import { AppPages, getVerificationCodePath, getSignInPath } from "../../util/routeUtil"
 import { getCurrentLanguage } from "../../util/languageUtil"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
-import { UNLEASH_FLAG } from "../../modules/constants"
+import { AUTH_FLOW, UNLEASH_FLAG } from "../../modules/constants"
 import { CreateAccount } from "./create-account"
 import EmailFieldset from "./components/EmailFieldset"
 import GetHelp from "./components/GetHelp"
@@ -40,7 +40,7 @@ const CreateAnAccountPage = () => {
         unsafeMetadata: { locale }, // Account creation can only update public metadata
       })
       await signUp.prepareEmailAddressVerification({ strategy: "email_code" })
-      void navigate(getEnterCodePath(), { state: { email } })
+      void navigate(getVerificationCodePath(), { state: { email } })
     } catch (error) {
       console.error("Account creation error", error)
     }
@@ -74,7 +74,7 @@ const CreateAnAccountPage = () => {
           {t("nav.signIn")}
         </Button>
       </Card.Section>
-      <GetHelp flow="createAccount" />
+      <GetHelp flow={AUTH_FLOW.CREATE_ACCOUNT} />
     </AuthLayout>
   )
 }

@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import React, { useEffect, useRef, useState } from "react"
-import { Navigate } from "react-router"
-import { useAuth, useSignIn } from "@clerk/clerk-react"
+import { Navigate, useNavigate } from "react-router"
+import { useAuth, useClerk, useSignIn } from "@clerk/clerk-react"
 import { Form, t } from "@bloom-housing/ui-components"
-import { Alert, Button, Card, Heading, Link } from "@bloom-housing/ui-seeds"
+import { Alert, Button, Card, Heading, Link, LoadingState } from "@bloom-housing/ui-seeds"
 import { useForm, useWatch } from "react-hook-form"
 import AuthLayout from "../layouts/AuthLayout"
 import EmailFieldset from "../pages/account/components/EmailFieldset"
@@ -14,8 +14,10 @@ import {
   getCreateAccountPath,
   getForgotPasswordPath,
   getMyAccountPath,
+  getSignInCodePath,
 } from "../util/routeUtil"
 import { renderInlineMarkup } from "../util/languageUtil"
+import { AUTH_FLOW } from "../modules/constants"
 import { clearHeaders } from "./token"
 import styles from "./SignInFlow.module.scss"
 
@@ -24,12 +26,32 @@ interface SignInFields {
   password: string
 }
 
+type SignInView = "verificationCode" | "password"
+
 const SignInFlow = () => {
+  const navigate = useNavigate()
   const { isLoaded: authLoaded, isSignedIn } = useAuth()
   const { isLoaded, signIn, setActive } = useSignIn()
+  const { client } = useClerk()
   const [showError, setShowError] = useState(false)
+  const [view, setView] = useState<SignInView | null>(null)
+  // Default to password sign-in, but prefer the code flow if the user last signed in via email code.
+  useEffect(() => {
+    if (!isLoaded || view !== null) return
+    if (client?.lastAuthenticationStrategy === "email_code") {
+      setView("verificationCode")
+    } else {
+      setView("password")
+    }
+  }, [isLoaded, client?.lastAuthenticationStrategy, view])
   const alertRef = useRef<HTMLDivElement>(null)
-  const { register, handleSubmit, watch, control } = useForm<SignInFields>({
+  const {
+    register,
+    handleSubmit,
+    watch,
+    control,
+    formState: { errors },
+  } = useForm<SignInFields>({
     shouldFocusError: false,
   })
   const emailField = useWatch<string>({ control, name: "email" })
@@ -59,8 +81,30 @@ const SignInFlow = () => {
     }
   }
 
-  const onError = (errors: { email?: unknown; password?: unknown }) => {
-    if (errors.email || errors.password) {
+  const onError = (submitErrors: { email?: unknown; password?: unknown }) => {
+    if (submitErrors.email || submitErrors.password) {
+      setShowError(true)
+    }
+  }
+
+  const onGetCodeSubmit = async ({ email }: SignInFields) => {
+    if (!isLoaded || !signIn) return
+    setShowError(false)
+    try {
+      const { supportedFirstFactors } = await signIn.create({ identifier: email })
+      const emailCodeFactor = (supportedFirstFactors ?? []).find(
+        (factor) => factor.strategy === "email_code"
+      )
+      if (emailCodeFactor?.strategy !== "email_code") {
+        throw new Error("Email code factor missing")
+      }
+      await signIn.prepareFirstFactor({
+        strategy: "email_code",
+        emailAddressId: emailCodeFactor.emailAddressId,
+      })
+      void navigate(getSignInCodePath(), { state: { email } })
+    } catch (error) {
+      console.error("Sign in code error", error)
       setShowError(true)
     }
   }
@@ -70,6 +114,65 @@ const SignInFlow = () => {
   }
 
   const forgotPasswordPath = createPath(getForgotPasswordPath(), { email: emailField })
+
+  const verificationCodeSection = (
+    <>
+      <p className="field-note">{t("signIn.codeDescription")}</p>
+      <Form onSubmit={handleSubmit(onGetCodeSubmit)}>
+        <EmailFieldset register={register} errors={errors} />
+        <Button
+          className={styles.getCodeButton}
+          variant="primary"
+          size="sm"
+          type="submit"
+          disabled={!isLoaded}
+        >
+          {t("createAccount.getCode")}
+        </Button>
+      </Form>
+      <Button variant="text" size="md" onClick={() => setView("password")}>
+        {t("signIn.passwordInstead")}
+      </Button>
+    </>
+  )
+
+  const passwordSection = (
+    <>
+      <Form className={styles.form} onSubmit={handleSubmit(onSubmit, onError)}>
+        <EmailFieldset register={register} />
+        <span className={styles.forgotPassword}>
+          <Link href={forgotPasswordPath}>{t("signIn.forgotPassword")}</Link>
+        </span>
+        <PasswordFieldset
+          register={register}
+          watch={watch}
+          labelText={t("label.password")}
+          passwordType="signIn"
+        />
+        <Button
+          className={styles.signInButton}
+          variant="primary"
+          size="sm"
+          type="submit"
+          disabled={!isLoaded}
+        >
+          {t("pageTitle.signIn")}
+        </Button>
+      </Form>
+      <Button
+        className={styles.oneTimeCodeLink}
+        variant="text"
+        size="md"
+        onClick={() => {
+          setShowError(false)
+          setView("verificationCode")
+        }}
+      >
+        {t("signIn.oneTimeCode")}
+      </Button>
+      <p className={`field-note ${styles.oneTimeCodeNote}`}>{t("signIn.oneTimeCodeNote")}</p>
+    </>
+  )
 
   return (
     <AuthLayout title={t("pageTitle.signIn")}>
@@ -86,38 +189,9 @@ const SignInFlow = () => {
             </Alert>
           </div>
         )}
-        <Form className={styles.form} onSubmit={handleSubmit(onSubmit, onError)}>
-          <EmailFieldset register={register} />
-          <span className={styles.forgotPassword}>
-            <Link href={forgotPasswordPath}>{t("signIn.forgotPassword")}</Link>
-          </span>
-          <PasswordFieldset
-            register={register}
-            watch={watch}
-            labelText={t("label.password")}
-            passwordType="signIn"
-          />
-          <Button
-            className={styles.signInButton}
-            variant="primary"
-            size="sm"
-            type="submit"
-            disabled={!isLoaded}
-          >
-            {t("pageTitle.signIn")}
-          </Button>
-        </Form>
-        <Button
-          className={styles.oneTimeCodeLink}
-          variant="text"
-          size="md"
-          onClick={() => {
-            console.log("TODO: switch to code flow")
-          }}
-        >
-          {t("signIn.oneTimeCode")}
-        </Button>
-        <p className={`field-note ${styles.oneTimeCodeNote}`}>{t("signIn.oneTimeCodeNote")}</p>
+        <LoadingState loading={!view}>
+          {view === "verificationCode" ? verificationCodeSection : passwordSection}
+        </LoadingState>
       </Card.Section>
       <Card.Section divider="flush">
         <Heading priority={2} size="lg">
@@ -128,7 +202,7 @@ const SignInFlow = () => {
           {t("signIn.createAccount")}
         </Button>
       </Card.Section>
-      <GetHelp flow="signIn" />
+      <GetHelp flow={AUTH_FLOW.SIGN_IN} />
     </AuthLayout>
   )
 }

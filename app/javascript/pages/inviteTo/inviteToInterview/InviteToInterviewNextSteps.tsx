@@ -42,14 +42,11 @@ const WhatToDo = ({
       window.open(url, "_blank")
       try {
         if (appId && !isTest) {
-          await recordResponse({
-            appId: appId,
-            applicationNumber: appId,
+          const token = new URLSearchParams(window.location.search).get("t") ?? ""
+
+          await recordResponse(token, {
             listingId: listing.Id,
-            deadline,
             action: I2X_ACTIONS.APPOINTMENT,
-            response: "",
-            type: INVITE_TO_X.INTERVIEW,
           })
         }
       } catch (error) {
@@ -58,7 +55,7 @@ const WhatToDo = ({
         setIsSubmitting(false)
       }
     })()
-  }, [appId, listing, deadline, url, isTest])
+  }, [url, appId, isTest, listing.Id])
   return (
     <div className={`${styles.whatToDoList} markdown`}>
       <Heading priority={2} size="2xl">

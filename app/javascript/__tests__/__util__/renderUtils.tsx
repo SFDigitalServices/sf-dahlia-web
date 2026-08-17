@@ -32,17 +32,21 @@ export const restoreWindowLocation = (originalLocation: typeof window.location):
  *
  * This is useful when a component loads in data with a useEffect()
  * hook.
+ *
+ * By default the MemoryRouter starts at "/" - pass `initialEntries` to render
+ * under a specific path (e.g. for components that parse an id out of the URL).
  */
 export const renderAndLoadAsync = async (
   ui: React.ReactElement,
-  options?: Omit<RenderOptions, "queries">
+  options?: Omit<RenderOptions, "queries">,
+  initialEntries: string[] = ["/"]
 ): Promise<RenderResult> => {
   let renderResponse: RenderResult = {} as RenderResult
   // eslint-disable-next-line @typescript-eslint/require-await
   await act(async () => {
     renderResponse = render(ui, {
       wrapper: ({ children }: { children: React.ReactNode }) => (
-        <MemoryRouter>{children}</MemoryRouter>
+        <MemoryRouter initialEntries={initialEntries}>{children}</MemoryRouter>
       ),
       ...options,
     }) as RenderResult
