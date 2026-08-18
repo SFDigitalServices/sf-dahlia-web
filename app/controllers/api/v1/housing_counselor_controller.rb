@@ -9,14 +9,24 @@ class Api::V1::HousingCounselorController < ApiController
 
   # Authenticate housing counselor access to applicant contact ID in JWT
   def access
+    applicant_contact_id = JsonWebTokenService.decode_token(params[:t])['contactId']
+    if applicant_contact_id.blank?
+      Rails.logger.info(
+        'HousingCounselorController#access: JWT missing applicant contact ID',
+      )
+      render json: { error: 'unauthorized' }, status: :unauthorized
+      return
+    end
+
     result = Force::HousingCounselorService.authorize_access(
-      token: params[:t] || params[:token],
+      applicant_contact_id:,
       counselor_contact_id: current_user.salesforce_contact_id,
     )
     unless result
       Rails.logger.info(
         'HousingCounselorController#access: ' \
-        "Access denied for current user with contact ID=#{current_user.salesforce_contact_id}",
+        "Access denied for applicant contact ID=#{applicant_contact_id} " \
+        "and housing counselor contact ID=#{current_user.salesforce_contact_id}",
       )
       render json: { error: 'forbidden' }, status: :forbidden
       return

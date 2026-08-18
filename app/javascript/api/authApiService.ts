@@ -11,10 +11,7 @@ import { AuthHeaders, setAuthHeaders } from "../authentication/token"
 import { Application } from "./types/rails/application/RailsApplication"
 import { getCurrentLanguage, getRoutePrefix, LanguagePrefix } from "../util/languageUtil"
 import { getResetPasswordPath } from "../util/routeUtil"
-import {
-  housingCounselorAgencies,
-  updateHousingCounselor,
-} from "./apiEndpoints"
+import { housingCounselorAgencies, updateHousingCounselor } from "./apiEndpoints"
 
 const contactObject = (user: User): Contact => ({
   email: user.email,
