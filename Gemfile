@@ -76,10 +76,13 @@ gem 'google-cloud-translate-v2'
 gem 'oj'
 gem 'oj_mimic_json'
 
-# user authentication
+# Devise authentication
 # Note: devise 4.7.2 is unverified and causes undefined method `rails51?' errors.
 gem 'devise', '4.9.3'
 gem 'devise_token_auth', '~> 1.2.1'
+
+# Clerk authentication
+gem 'clerk-sdk-ruby', '~> 8.0.0', require: false
 
 # listing interest email token
 gem 'jwt'
