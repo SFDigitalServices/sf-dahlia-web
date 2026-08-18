@@ -28,13 +28,16 @@ class Api::V1::AccountController < ApiController
   def profile
     contact_id = current_user.salesforce_contact_id.presence
     contact = contact_id &&
-              Force::AccountService.get(contact_id, user_token_validation: true)
+              Force::AccountService.get(contact_id, { user_token_validation: true })
     if contact.blank?
       render json: { error: 'Could not get Salesforce contact ID' }, status: :not_found
       return
     end
 
-    render json: { success: true, data: contact.merge('id' => current_user.id) }
+    render json: {
+      success: true,
+      data: contact.merge('id' => current_user.id, 'uid' => contact['email']),
+    }
   end
 
   def create_profile
