@@ -773,6 +773,33 @@ describe("<SettingsPage />", () => {
         )
       })
 
+      it("shows an access granted toast", async () => {
+        ;(authenticatedPut as jest.Mock).mockResolvedValue({
+          data: {
+            contact: {
+              ...mockProfileStub,
+              housingCounselingAgencyId: "123",
+            },
+          },
+        })
+
+        const agencySelect = await screen.findByLabelText(/counseling agency/i)
+        const agreeCheckbox = screen.getByLabelText(/i agree to share my account with this agency/i)
+
+        await act(async () => {
+          fireEvent.change(agencySelect, { target: { value: "123" } })
+          fireEvent.click(agreeCheckbox)
+          fireEvent.click(screen.getByRole("button", { name: /share my account/i }))
+          await Promise.resolve()
+        })
+
+        expect(
+          await screen.findByText(
+            /you shared your account\. we sent a confirmation to your email\./i
+          )
+        ).toBeInTheDocument()
+      })
+
       it("does not show a success toast when sharing fails", async () => {
         ;(authenticatedPut as jest.Mock).mockRejectedValue(new Error("Network error"))
 
@@ -848,6 +875,32 @@ describe("<SettingsPage />", () => {
             housingCounselingAgencyId: null,
           })
         )
+      })
+
+      it("shows an access revoked toast", async () => {
+        ;(authenticatedPut as jest.Mock).mockResolvedValue({
+          data: {
+            contact: {
+              ...mockProfileStub,
+              housingCounselingAgencyId: null,
+            },
+          },
+        })
+
+        expect(
+          await screen.findByText(/your account is shared with test agency a/i)
+        ).toBeInTheDocument()
+
+        await act(async () => {
+          fireEvent.click(screen.getByRole("button", { name: /stop sharing/i }))
+          await Promise.resolve()
+        })
+
+        expect(
+          await screen.findByText(
+            /you stopped sharing your account\. we sent a confirmation to your email\./i
+          )
+        ).toBeInTheDocument()
       })
     })
 
