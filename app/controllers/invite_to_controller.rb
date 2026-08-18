@@ -24,11 +24,6 @@ class InviteToController < ApplicationController
         schedulingUrl: application['leaseupAppointmentSchedulingURL'],
       )
     end
-    # Recording always happens server-side on GET for now. When the flag is enabled the
-    # client additionally runs its human-detection in parallel and logs only ('shadow'),
-    # so we can measure bot vs. human clicks against real traffic. Moving the recording
-    # to the client is deferred until
-    # https://github.com/SFDigitalServices/sf-dahlia-web/pull/2993 lands.
     record_response(decoded_params)
     render 'invite_to'
   end
@@ -73,11 +68,8 @@ class InviteToController < ApplicationController
     }.compact
   end
 
-  # Resolves the rollout state of the client-side recording feature from the
-  # 'temp.webapp.inviteToClientRecording' Unleash flag:
-  #   flag disabled -> 'off'    (client hook inert)
-  #   flag enabled  -> 'shadow' (server records on GET; client detects humans, logs only)
-  # There is deliberately no 'on' (client-records) state yet - see PR #2993.
+  # 'off' = client hook inert. 'shadow' = server still records on GET, client only logs its
+  # human-detection result. A client-records 'on' state waits on PR #2993.
   def client_recording_mode
     return @client_recording_mode if defined?(@client_recording_mode)
 
@@ -99,11 +91,8 @@ class InviteToController < ApplicationController
         outcome: 'suppressed',
         source: 'get',
         reason: reason,
-        # Resolved local comparison terms, only set when the deadline is the reason.
         **deadline_terms(deadline, reason),
-        # The one suppression that can silently eat a legitimate first click, so
-        # capture the referrer to make language_change? auditable - scrubbed,
-        # because that referrer is itself a next-steps URL carrying the invite JWT.
+        # language_change? can silently eat a legitimate first click, so make it auditable.
         referrer: (reason == 'language_change' ? scrubbed_referrer : nil),
         deadline: deadline,
         app_id: app_id,
@@ -113,10 +102,8 @@ class InviteToController < ApplicationController
       return
     end
 
-    # send_invite_to_response returns nil on both the invalid-action guard and any
-    # rescued StandardError, so a non-nil result means "attempted and not
-    # swallowed", not a confirmed Salesforce write. Surfacing ok=false is still
-    # enough to tell a hiccup from a clean send.
+    # nil on both the invalid-action guard and any rescued error, so ok= below means
+    # "attempted and not swallowed", not a confirmed Salesforce write.
     result = DahliaBackend::MessageService.send_invite_to_response(
       deadline,
       app_id,
@@ -131,12 +118,8 @@ class InviteToController < ApplicationController
       source: 'get',
       ok: !result.nil?,
       deadline: deadline,
-      # Every invite JWT is expected to carry a deadline claim, so this should never
-      # be true. When it is, the expiry check was skipped entirely - a blank deadline
-      # short-circuits suppression_reason and nothing downstream re-checks it (the
-      # service ignores the deadline argument whenever an action is present). Flagged
-      # rather than suppressed so a legitimate response is never dropped; alert on it
-      # to catch a link generator that stopped setting the claim.
+      # Should never be true: a blank deadline means the expiry check was skipped
+      # entirely. Flagged rather than suppressed so a real response is never dropped.
       deadline_missing: (true if deadline.blank?),
       app_id: app_id,
       act: invite_action,
@@ -144,31 +127,23 @@ class InviteToController < ApplicationController
     )
   end
 
-  # Names the single reason a GET is not recorded instead of collapsing four
-  # causes into one branch. Order matches the original `||` precedence: a preview
-  # link (act blank) is `no_action`.
+  # Order matches the original `||` precedence: a preview link (act blank) is `no_action`.
   def suppression_reason(invite_action, response, deadline, is_test)
     if invite_action.blank? && response.blank? then 'no_action'
-    # `.present?` rather than truthiness: an empty-string deadline would otherwise
-    # reach deadline_has_passed?, which reports unparseable input as passed, and a
-    # blank deadline would be misclassified as an expired one. Blank falls through
-    # to the recording path, matching the pre-existing behavior for a nil deadline -
-    # not recording a real "yes" is the worse failure.
+    # `.present?` keeps a blank deadline out of deadline_has_passed?, which would report
+    # it as passed. Blank falls through to recording, as it did before.
     elsif deadline.present? && deadline_has_passed?(deadline) then 'deadline_passed'
     elsif language_change? then 'language_change'
     elsif is_test then 'test_link'
     end
   end
 
-  # Emits what the code actually compared, in resolved local terms, with a
-  # near-miss delta: late_by under an hour is a product conversation, under a
-  # minute is likely a clock/UX issue.
+  # What the code actually compared, in resolved local terms. A `late_by` under a minute
+  # points at a clock/UX issue rather than a genuinely late response.
   def deadline_terms(deadline, reason)
     return {} unless reason == 'deadline_passed' && deadline.present?
 
-    # Time.zone.parse returns nil (rather than raising) for input it cannot make
-    # sense of, e.g. "not-a-date", so nil must be handled explicitly - the rescue
-    # below would not catch the resulting NoMethodError.
+    # Time.zone.parse returns nil for input it cannot parse, which the rescue won't catch.
     deadline_time = Time.zone.parse(deadline)
     return { deadline_raw: deadline } if deadline_time.nil?
 
@@ -181,10 +156,8 @@ class InviteToController < ApplicationController
     { deadline_raw: deadline } # unparseable - surface it rather than crash the log line
   end
 
-  # language_change? only fires when the referrer is another next-steps URL, and
-  # those URLs carry the invite JWT in `?t=`. Logging the raw referrer would write
-  # live tokens into the logs, so keep only scheme/host/path - which is all the
-  # locale-prefix comparison needs anyway.
+  # The referrer here is always another next-steps URL, which carries the invite JWT in
+  # `?t=`. Keep only scheme/host/path so live tokens never reach the logs.
   def scrubbed_referrer
     referrer = request.referrer
     return nil if referrer.blank?
@@ -246,10 +219,8 @@ class InviteToController < ApplicationController
     JsonWebTokenService.encode_token(params)
   end
 
-  # Time.zone.parse returns nil for input it cannot interpret (and raises for some
-  # malformed values), either of which previously 500'd the page. Treat a deadline
-  # we cannot verify as passed: suppressing is the conservative choice, and the
-  # structured log records deadline_raw so the bad value is still visible.
+  # Time.zone.parse returns nil for some malformed input and raises on the rest, either of
+  # which previously 500'd the page. A deadline we cannot verify counts as passed.
   def deadline_has_passed?(deadline)
     parsed = Time.zone.parse(deadline.to_s)
     return true if parsed.nil?

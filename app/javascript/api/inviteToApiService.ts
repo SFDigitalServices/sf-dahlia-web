@@ -20,9 +20,8 @@ export const recordResponse = async (
 
 export type HumanVerifiedTrigger = "interaction" | "dwell" | "teardown"
 
-// Passive, cheap browser signals attached to every human-verified log. Spoofable, so never used
-// to gate/reject a click - only to classify the ambiguous "no signal" bucket after the fact
-// (e.g. an in-app-webview human vs. a headless scanner).
+// Passive browser signals attached to every human-verified log. Spoofable, so evidence only -
+// never a gate. Used to tell an in-app-webview human from a headless scanner after the fact.
 export interface EnvSnapshot {
   webdriver: boolean // true => automation; a bot tell
   ua: string // in-app webviews self-identify: FBAN/Instagram/GSA/Outlook-iOS/...
@@ -44,15 +43,15 @@ const safe = <T>(read: () => T, fallback: T): T => {
   }
 }
 
-// Runs inside the fire path, so it must never throw: losing the signal to a telemetry error
-// would defeat the point. Every lookup is individually guarded.
+// Runs inside the fire path, so every lookup is guarded individually - losing the signal to a
+// telemetry error would defeat the point.
 export const snapshotEnv = (): EnvSnapshot => {
   return {
     webdriver: safe(() => navigator.webdriver === true, false),
     ua: safe(() => navigator.userAgent, ""),
     touch: safe(() => navigator.maxTouchPoints, 0),
-    // Note the trailing `?.matches`: matchMedia is absent in some webviews (and in jsdom), and
-    // guarding only the call still throws when dereferencing the undefined result.
+    // The trailing `?.matches` matters: matchMedia is absent in some webviews, where guarding
+    // only the call still throws on the undefined result.
     coarse: safe(() => window.matchMedia?.("(pointer: coarse)")?.matches, false),
     cores: safe(() => navigator.hardwareConcurrency, null),
     mem: safe(() => (navigator as Navigator & { deviceMemory?: number }).deviceMemory, null),
@@ -76,15 +75,13 @@ export interface HumanVerifiedRecord {
   env: EnvSnapshot
 }
 
-// Shadow-mode only: records nothing, just logs that client-side detection judged this a real
-// human click. Used to measure the detection against live traffic before enabling client recording.
+// Shadow mode: records nothing, only logs that client-side detection judged this a human click.
 export const logHumanVerifiedClick = async (record: HumanVerifiedRecord) => {
   return post("/api/v1/next-steps/log-human-verified", { record })
 }
 
-// Teardown path: the page armed (painted + visible) but is unloading before the interaction/dwell
-// gate completed - common in email in-app webviews that get torn down fast. sendBeacon survives
-// unload where a fetch/XHR would be cancelled. Returns false if the browser refused to queue it.
+// Teardown path: sendBeacon survives unload, where a fetch would be cancelled. Returns false if
+// the browser refused to queue it.
 export const beaconHumanVerifiedClick = (record: HumanVerifiedRecord): boolean => {
   if (typeof navigator.sendBeacon !== "function") return false
   const blob = new Blob([JSON.stringify({ record })], { type: "application/json" })

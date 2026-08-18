@@ -1,9 +1,8 @@
 class Api::V1::InviteToResponseController < ApiController
   include InviteToEventLogging
 
-  # The passive browser signals snapshotEnv() sends. Allow-listed rather than
-  # permitting a free-form hash: this endpoint is unauthenticated, so an open
-  # `env` would let anyone write arbitrary keys and unbounded values into our logs.
+  # What snapshotEnv() sends. Allow-listed rather than a free-form hash because this
+  # endpoint is unauthenticated.
   ENV_KEYS = %i[webdriver ua touch coarse cores mem screen lang tz].freeze
 
   before_action :validate_token!, only: :record_response
@@ -42,20 +41,16 @@ class Api::V1::InviteToResponseController < ApiController
     render json: { error: 'Submit response error' }, status: :internal_server_error
   end
 
-  # Shadow-mode endpoint: records nothing - it never calls sf-dahlia-backend, so no
-  # Salesforce state changes and no applicant email is sent. It only logs that the
-  # client-side human-detection judged this page view to be a real human, so we can
-  # compare against the server-side GET recording during the shadow rollout.
-  # Safe to call repeatedly.
+  # Shadow-mode endpoint: never calls sf-dahlia-backend, so no Salesforce write and no
+  # applicant email. Logs only that client-side detection judged this a human. Idempotent.
   def log_human_verified
     record = params.expect(record: [:type, :deadline, :appId, :listingId, :act, :trigger,
                                     :elapsedMs, { env: ENV_KEYS }])
     type, deadline, application_id, listing_id, act, trigger, elapsed_ms =
       record.values_at(:type, :deadline, :appId, :listingId, :act, :trigger, :elapsedMs)
 
-    # Values come from an unauthenticated public endpoint. log_invite_event serializes the
-    # payload with to_json, which escapes newline/control characters, so no per-field .inspect
-    # is needed to guard against log forging.
+    # Values come from an unauthenticated endpoint; log_invite_event's to_json escapes
+    # control characters, so no per-field .inspect is needed against log forging.
     log_invite_event(
       outcome: 'suppressed',
       source: 'client_shadow',
@@ -82,9 +77,8 @@ class Api::V1::InviteToResponseController < ApiController
 
   private
 
-  # Keeps only the known env keys and drops non-scalar values. Truncation is handled
-  # centrally by log_invite_event. Returns nil when nothing usable is left, so the
-  # key drops out of the log line entirely.
+  # Keeps only the known env keys and drops non-scalar values; log_invite_event handles
+  # truncation. nil when nothing usable is left, so the key drops out of the line.
   def sanitized_env(env)
     return nil if env.blank?
 

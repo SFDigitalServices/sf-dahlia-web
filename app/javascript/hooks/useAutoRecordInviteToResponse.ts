@@ -79,9 +79,7 @@ export const useAutoRecordInviteToResponse = ({
     // Set when the fire conditions actually arm (after the first paint, while visible), so
     // elapsedMs reflects visible dwell/interaction time and excludes hidden/background-tab time.
     let armedAt = 0
-    // True once armFireConditions has run (paint + visible proven). Only then is a teardown
-    // worth reporting: it means a real environment rendered the page, it just unloaded before
-    // the interaction/dwell gate completed.
+    // True once paint + visible are proven. Only then is a teardown worth reporting.
     let armed = false
     let fired = false
     let dwellTimeoutId: ReturnType<typeof setTimeout> | null = null
@@ -143,17 +141,15 @@ export const useAutoRecordInviteToResponse = ({
       })
     }
 
-    // Flush on unload if we armed (proved paint + visible) but never reached the stronger
-    // interaction/dwell gate. sendBeacon is the only send that survives teardown.
+    // Flush on unload if we armed but never reached the stronger interaction/dwell gate -
+    // the normal shape of an in-app email webview that gets torn down fast.
     const handlePageHide = () => {
       if (fired || !armed) return
       fired = true
       cleanup()
       const record = buildRecord("teardown")
-      // sendBeacon returns false when it is unavailable or the browser refuses to queue
-      // (e.g. payload over the per-origin limit). Fall back to the normal request rather
-      // than dropping the signal: it may not survive an immediate unload, but the page is
-      // sometimes only being hidden (bfcache), where it completes fine.
+      // If the browser won't queue the beacon, still try the normal request: it may not
+      // survive an immediate unload, but a bfcache hide completes fine.
       if (!beaconHumanVerifiedClick(record)) {
         void logHumanVerifiedClick(record).catch(() => {
           // Nothing useful to do during teardown; the missing log line is the signal.
@@ -171,25 +167,17 @@ export const useAutoRecordInviteToResponse = ({
       INTERACTION_EVENTS.forEach((eventName) => {
         window.addEventListener(eventName, handleInteraction, { passive: true, once: true })
       })
-      // pagehide fires on genuine unload/bfcache (reliable in mobile webviews where the tab is
-      // killed); a backgrounded-then-returned tab still reaches interaction/dwell instead.
+      // pagehide, not unload: it fires reliably in mobile webviews where the tab is killed.
       window.addEventListener("pagehide", handlePageHide, { once: true })
       dwellTimeoutId = setTimeout(() => {
         fire("dwell")
       }, dwellTimeMs)
     }
 
-    // Waits for evidence that the browser has actually painted this page, which headless and
-    // sandboxed scanners often never do.
-    //
-    // A requestAnimationFrame callback runs *before* the paint of the frame it was scheduled
-    // for, so a single frame proves nothing was drawn yet. Scheduling a second frame from
-    // inside the first means we resume after that first frame was handed off for rendering.
-    // Note this is a heuristic, not a guarantee: the spec's "update the rendering" steps
-    // (https://html.spec.whatwg.org/multipage/webappapis.html#update-the-rendering) don't
-    // promise a commit to the screen between the two callbacks. It's fine that it may be a
-    // frame optimistic - it's one layer of the detection, and the visibility check and the
-    // interaction-or-dwell gate still have to pass before anything is logged.
+    // Waits for evidence the browser actually painted, which headless scanners often never do.
+    // A rAF callback runs *before* the paint of its own frame, so one frame proves nothing;
+    // the nested second frame resumes after the first was handed off for rendering. A
+    // heuristic, not a guarantee - visibility and the interaction/dwell gate still have to pass.
     const afterFirstPaint = () => {
       visibilityRafId1 = requestAnimationFrame(() => {
         visibilityRafId2 = requestAnimationFrame(() => {
@@ -206,9 +194,8 @@ export const useAutoRecordInviteToResponse = ({
         cancelPendingFrames()
         afterFirstPaint()
       } else {
-        // Page hidden again before firing - pause/reset everything. Disarm so a pagehide that
-        // arrives while hidden doesn't report a teardown: an unload from a non-visible page is
-        // indistinguishable from a background prefetch and isn't evidence of a human.
+        // Hidden before firing - reset, and disarm so a later pagehide reports no teardown:
+        // an unload from a hidden page is indistinguishable from a background prefetch.
         armed = false
         cancelPendingFrames()
         clearDwellTimer()
