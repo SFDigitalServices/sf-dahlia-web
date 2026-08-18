@@ -25,7 +25,7 @@ const SignIn = (_props: SignInProps) => {
 
   if (clerkEnabled) {
     return <SignInFlow />
-  } else if (isTokenValid() && !new URLSearchParams(window.location.search).get("t")) {
+  } else if (isTokenValid() && !new URLSearchParams(window.location.search).has("t")) {
     return <Navigate to={getMyAccountPath()} replace />
   }
 
