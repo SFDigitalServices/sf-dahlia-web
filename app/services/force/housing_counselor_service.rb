@@ -10,6 +10,15 @@ module Force
       return if applicant_contact_id.blank? || counselor_contact_id.blank?
 
       counselor = fetch_housing_counselor(counselor_contact_id)
+      unless counselor
+        Rails.logger.info(
+          'HousingCounselorService#authorize_access: counselor not found ' \
+          "applicant_contact_id=#{applicant_contact_id} " \
+          "counselor_contact_id=#{counselor_contact_id}",
+        )
+        return
+      end
+
       applicant = Force::AccountService.get(applicant_contact_id)
       unless access?(counselor, applicant)
         log_access_denied(
