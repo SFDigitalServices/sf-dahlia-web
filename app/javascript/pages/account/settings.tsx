@@ -258,25 +258,34 @@ const HousingCounselorSection = ({ user, setUser }: SectionProps) => {
   } = useForm({ mode: "onTouched" })
   const accessShared = !!user?.housingCounselingAgencyId
 
+  const clearToasts = () => {
+    setGrantToast(false)
+    setRevokeToast(false)
+  }
+
+  const saveHousingCounselorUser = (baseUser: User, contact?: User) => {
+    const updatedUser: User = {
+      ...baseUser,
+      housingCounselingAgencyId: contact?.housingCounselingAgencyId,
+      housingCounselingAgencyName: contact?.housingCounselingAgencyName,
+      housingCounselingAgencyLastModified: contact?.housingCounselingAgencyLastModified,
+    }
+    setUser(updatedUser)
+    saveProfile(updatedUser)
+  }
+
   const onShare = (data: { housingCounselingAgencyId?: string }) => {
     setLoading(true)
+    clearToasts()
     const newUser = { ...user, housingCounselingAgencyId: data.housingCounselingAgencyId }
 
     updateHousingCounselorAccess(newUser)
       .then((contact) => {
-        const updatedUser: User = {
-          ...newUser,
-          housingCounselingAgencyId: contact?.housingCounselingAgencyId,
-          housingCounselingAgencyName: contact?.housingCounselingAgencyName,
-          housingCounselingAgencyLastModified: contact?.housingCounselingAgencyLastModified,
-        }
-        setUser(updatedUser)
-        saveProfile(updatedUser)
-        setRevokeToast(false)
+        saveHousingCounselorUser(newUser, contact)
         setGrantToast(true)
       })
       .catch(() => {
-        setGrantToast(false)
+        clearToasts()
       })
       .finally(() => {
         setLoading(false)
@@ -285,22 +294,16 @@ const HousingCounselorSection = ({ user, setUser }: SectionProps) => {
 
   const onRevoke = () => {
     setLoading(true)
-    const newUser: User = {
-      ...user,
-      housingCounselingAgencyId: null,
-      housingCounselingAgencyName: null,
-      housingCounselingAgencyLastModified: null,
-    }
+    clearToasts()
+    const newUser: User = { ...user, housingCounselingAgencyId: null }
 
     updateHousingCounselorAccess(newUser)
-      .then(() => {
-        setUser(newUser)
-        saveProfile(newUser)
-        setGrantToast(false)
+      .then((contact) => {
+        saveHousingCounselorUser(newUser, contact)
         setRevokeToast(true)
       })
       .catch(() => {
-        setRevokeToast(false)
+        clearToasts()
       })
       .finally(() => {
         setLoading(false)
