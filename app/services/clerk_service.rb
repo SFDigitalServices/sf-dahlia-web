@@ -70,5 +70,8 @@ class ClerkService
     contact_id
   end
 
-  private_class_method def self.sdk = Clerk::SDK.new
+  def self.sdk
+    @sdk ||= Clerk::SDK.new
+  end
+  private_class_method :sdk
 end

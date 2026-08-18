@@ -90,7 +90,7 @@ const AddProfilePage = () => {
 
   return (
     <AuthLayout title={t("createAccount.finishSettingUp")}>
-      <Card.Section divider="flush" className={styles.header}>
+      <Card.Section divider="flush" className={sharedStyles.header}>
         <div className={sharedStyles.iconBackground}>
           <Icon size="2xl" symbol="profile" />
         </div>
