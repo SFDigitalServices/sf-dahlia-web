@@ -4,6 +4,7 @@ import {
   post,
   put,
   authenticatedPut,
+  authenticatedPost,
 } from "../../api/apiService"
 
 import {
@@ -18,6 +19,7 @@ import {
   updatePhone,
   getHousingCounselorAgencies,
   updateHousingCounselorAccess,
+  authenticateHousingCounselor,
 } from "../../api/authApiService"
 import { mockProfileStub } from "../__util__/accountUtils"
 
@@ -27,6 +29,7 @@ jest.mock("../../api/apiService", () => ({
   authenticatedGet: jest.fn(),
   authenticatedDelete: jest.fn(),
   authenticatedPut: jest.fn(),
+  authenticatedPost: jest.fn(),
   post: jest.fn(),
   put: jest.fn(),
 }))
@@ -36,6 +39,7 @@ describe("authApiService", () => {
     ;(authenticatedGet as jest.Mock).mockResolvedValue({ data: { data: "test-data" } })
     ;(authenticatedDelete as jest.Mock).mockResolvedValue({ data: { data: "test-data" } })
     ;(authenticatedPut as jest.Mock).mockResolvedValue({ data: { data: "test-data" } })
+    ;(authenticatedPost as jest.Mock).mockResolvedValue({ data: { success: true } })
     ;(post as jest.Mock).mockResolvedValue({ data: "test-data", headers: "test-headers" })
     ;(put as jest.Mock).mockResolvedValue({ data: { message: "test-message" } })
   })
@@ -158,6 +162,15 @@ describe("authApiService", () => {
           alternatePhoneType: mockProfileStub.alternatePhoneType,
           housingCounselingAgencyId: mockProfileStub.housingCounselingAgencyId,
         },
+      })
+    })
+  })
+
+  describe("authenticateHousingCounselor", () => {
+    it("posts the JWT to the housing counselor access endpoint", async () => {
+      await authenticateHousingCounselor("jwt.token")
+      expect(authenticatedPost).toHaveBeenCalledWith("/api/v1/housing-counselor/access", {
+        t: "jwt.token",
       })
     })
   })

@@ -33,7 +33,7 @@ import { NewAccountNotConfirmedModal } from "./components/NewAccountNotConfirmed
 import { ExpiredUnconfirmedModal } from "./components/ExpiredUnconfirmedModal"
 import { renderInlineMarkup } from "../util/languageUtil"
 import { authenticateHousingCounselor } from "../api/authApiService"
-import { isTokenValid } from "./token"
+import { clearHeaders, isTokenValid } from "./token"
 import { useGTMDataLayer } from "../hooks/analytics/useGTMDataLayer"
 
 const getHousingCounselorToken = () => new URLSearchParams(window.location.search).get("t")
@@ -239,6 +239,7 @@ const SignInForm = () => {
       )
       return true
     } catch {
+      clearHeaders()
       setRequestError({
         message: t("signIn.unknownError"),
         alertType: "alert",
