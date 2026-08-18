@@ -78,7 +78,7 @@ const AddProfilePage = () => {
         await createProfile(contact, sessionToken)
         const profile = await getProfile(sessionToken)
         saveProfile?.(profile)
-        void navigate(getMyAccountPath())
+        void navigate(getMyAccountPath(), { state: { accountReady: true } })
       } catch (error) {
         console.error("Add profile error:", error)
         setError("firstName", { message: "name:server:generic", shouldFocus: true })
@@ -144,21 +144,15 @@ const AddProfilePage = () => {
 const AddProfile = (_props: { assetPaths: unknown }) => {
   const navigate = useNavigate()
   const { isLoaded, isSignedIn } = useAuth()
-  const { profile, initialStateLoaded } = useContext(UserContext)
   const { unleashFlag: clerkEnabled } = useFeatureFlag(UNLEASH_FLAG.CLERK_AUTH, false)
-  const loading = !isLoaded || (isSignedIn && !profile && !initialStateLoaded)
 
   useEffect(() => {
     if (!clerkEnabled || (isLoaded && !isSignedIn)) {
       void navigate(getCreateAccountPath())
-      return
     }
-    if (!loading && profile) {
-      void navigate(getMyAccountPath())
-    }
-  }, [clerkEnabled, isLoaded, isSignedIn, loading, profile, navigate])
+  }, [clerkEnabled, isLoaded, isSignedIn, navigate])
 
-  if (!clerkEnabled || loading || !isSignedIn || profile) {
+  if (!clerkEnabled) {
     return null
   }
 
