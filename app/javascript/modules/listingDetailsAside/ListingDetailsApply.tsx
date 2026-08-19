@@ -1,4 +1,5 @@
-import React, { useState } from "react"
+import React, { useContext, useState } from "react"
+import { useAuth } from "@clerk/clerk-react"
 
 import {
   AppearanceStyleType,
@@ -22,10 +23,11 @@ import {
 } from "../../util/listingUtil"
 import { getSfGovUrl, renderInlineMarkup } from "../../util/languageUtil"
 import "./ListingDetailsApply.scss"
-import { localizedPath } from "../../util/routeUtil"
+import { getAddProfilePath, localizedPath } from "../../util/routeUtil"
 import { ListingState } from "../listings/ListingState"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import { UNLEASH_FLAG } from "../constants"
+import UserContext from "../../authentication/context/UserContext"
 
 export interface ListingDetailsApplyProps {
   listing: RailsListing
@@ -65,6 +67,36 @@ const ordinalHeader = (ordinal: number, title: string) => {
   )
 }
 
+/**
+ * If the React form engine is enabled, link to the React application.
+ * If Clerk is enabled and the user has an incomplete profile, redirect to the add profile page.
+ * Otherwise, link to the Angular application.
+ */
+const ApplyOnlineButton = ({ listingId }: { listingId: string }) => {
+  const { unleashFlag: clerkEnabled, flagsReady } = useFeatureFlag(UNLEASH_FLAG.CLERK_AUTH, false)
+  const { unleashFlag: formEngine } = useFeatureFlag(UNLEASH_FLAG.FORM_ENGINE, false)
+  const { isLoaded, isSignedIn } = useAuth()
+  const { profile, initialStateLoaded } = useContext(UserContext)
+  let applyLink = localizedPath(`listings/${listingId}/apply-welcome/intro`)
+  if (formEngine) {
+    applyLink = localizedPath(`listings/${listingId}/apply/intro`)
+  }
+  if (flagsReady && clerkEnabled && isLoaded && isSignedIn && initialStateLoaded && !profile) {
+    applyLink = getAddProfilePath()
+  }
+
+  return (
+    <LinkButton
+      styleType={AppearanceStyleType.primary}
+      className={"w-full"}
+      transition={true}
+      href={applyLink}
+    >
+      {t("label.applyOnline")}
+    </LinkButton>
+  )
+}
+
 const StandardHowToApply = ({
   listingId,
   isListingRental,
@@ -77,10 +109,6 @@ const StandardHowToApply = ({
   acceptingPaperApps: boolean
 }) => {
   const [paperApplicationsOpen, setPaperApplicationsOpen] = useState(false)
-  const { unleashFlag: formEngine } = useFeatureFlag(UNLEASH_FLAG.FORM_ENGINE, false)
-  const formUrl = localizedPath(
-    `listings/${listingId}/${formEngine ? "apply/intro" : "apply-welcome/intro"}`
-  )
   return (
     <SidebarBlock title={t("listings.apply.howToApply")} priority={2}>
       {!isListingRental && (
@@ -101,14 +129,7 @@ const StandardHowToApply = ({
           )}
         </>
       )}
-      <LinkButton
-        styleType={AppearanceStyleType.primary}
-        className={"w-full"}
-        transition={true}
-        href={formUrl}
-      >
-        {t("label.applyOnline")}
-      </LinkButton>
+      <ApplyOnlineButton listingId={listingId} />
       {process.env.COVID_UPDATE && (
         <div className={"mt-4"}>
           <Heading priority={2} className={"text-base text-gray-800 font-sans"}>
