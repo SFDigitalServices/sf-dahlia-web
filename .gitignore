@@ -59,6 +59,7 @@ coverage
 jest-test-coverage
 junit.xml
 cypress/screenshots/*
+cypress/results/*
 jestInspectOutput.txt
 
 # Yalc

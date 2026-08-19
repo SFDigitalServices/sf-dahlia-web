@@ -5,19 +5,16 @@ RSpec.describe InviteToController do
   let(:application_number) { 'APP123456' }
   let(:response_value) { 'yes' }
   let(:listing_id) { 'listing123' }
-  let(:decoded_token) do
-    [
-      {
-        'data' => {
-          'deadline' => deadline,
-          'appId' => application_number,
-          'act' => response_value,
-          'type' => 'I2A',
-        },
-      },
-      { 'alg' => 'HS256', 'typ' => 'JWT' },
-    ]
+
+  let(:decoded_payload) do
+    {
+      'deadline' => deadline,
+      'appId' => application_number,
+      'act' => response_value,
+      'type' => 'I2A',
+    }
   end
+
   let(:fixed_iat) { 946_512_000 }
   let(:fixed_exp) { 946_598_400 }
   let(:fixed_token) do
@@ -36,6 +33,7 @@ RSpec.describe InviteToController do
       'HS256',
     )
   end
+
   let(:is_test_token) do
     JWT.encode(
       {
@@ -59,20 +57,30 @@ RSpec.describe InviteToController do
                                  .and_return('TEST_TOKEN_SECRET')
     allow(ENV).to receive(:fetch).with('JWT_ALGORITHM', nil).and_return('HS256')
     allow(controller).to receive(:static_asset_paths).and_return({ logo: 'logo.png' })
-    allow(ENV).to receive(:fetch).with('SALESFORCE_INSTANCE_URL',
-                                       nil).and_return('test-salesforce-url')
-    allow(ENV).to receive(:fetch).with('SALESFORCE_API_VERSION',
-                                       '61.0').and_return('61.0')
+    allow(ENV).to receive(:fetch).with('SALESFORCE_INSTANCE_URL', nil).and_return('test-salesforce-url')
+    allow(ENV).to receive(:fetch).with('SALESFORCE_API_VERSION', '61.0').and_return('61.0')
     allow(ENV).to receive(:fetch).with('SALESFORCE_PROXY_URI', nil).and_return(nil)
     allow(DahliaBackend::MessageService).to receive(:send_invite_to_response)
     allow(Rails.logger).to receive(:info)
     allow(controller).to receive(:encode_token).and_return(fixed_token)
+
+    # Align with controller implementation (uses JsonWebTokenService, not JWT.decode directly)
+    allow(JsonWebTokenService).to receive(:decode_token).with(fixed_token).and_return(decoded_payload)
+    allow(JsonWebTokenService).to receive(:decode_token).with(is_test_token)
+      .and_return(decoded_payload.merge('isTest' => 'true'))
+    allow(JsonWebTokenService).to receive(:decode_token).with('test_token').and_return(decoded_payload)
+    allow(JsonWebTokenService).to receive(:decode_token).with('invalid_test_token')
+      .and_raise(JsonWebTokenService::InvalidTokenError, 'Invalid JWT')
+    allow(Rails.configuration.unleash).to receive(:is_enabled?)
+      .with('temp.webapp.inviteToClientRecording').and_return(false)
   end
 
   describe '#index' do
     context 'with valid parameters' do
       before do
-        allow(Force::ShortFormService).to receive(:get).with(application_number).and_return({ 'uploadURL' => 'test-upload-url', 'leaseupAppointmentSchedulingURL' => 'test-scheduling-url' })
+        allow(Force::ShortFormService).to receive(:get).with(application_number).and_return({
+                                                                                              'uploadURL' => 'test-upload-url', 'leaseupAppointmentSchedulingURL' => 'test-scheduling-url'
+                                                                                            })
 
         get :index, params: {
           id: listing_id,
@@ -94,18 +102,19 @@ RSpec.describe InviteToController do
 
       it 'sets the invite_to_props instance variable' do
         expect(assigns(:invite_to_props)).to eq({
-                                                        assetPaths: { logo: 'logo.png' },
-                                                        urlParams: {
-                                                          type: 'I2A',
-                                                          deadline: deadline,
-                                                          act: response_value,
-                                                          appId: application_number,
-                                                          isTest: false,
-                                                        },
-                                                        uploadUrl: 'test-upload-url',
-                                                        schedulingUrl: 'test-scheduling-url',
-                                                        submitPreviewLinkTokenParam: fixed_token,
-                                                      })
+                                                  assetPaths: { logo: 'logo.png' },
+                                                  urlParams: {
+                                                    type: 'I2A',
+                                                    deadline: deadline,
+                                                    act: response_value,
+                                                    appId: application_number,
+                                                    isTest: false,
+                                                  },
+                                                  clientRecordingMode: 'off',
+                                                  uploadUrl: 'test-upload-url',
+                                                  schedulingUrl: 'test-scheduling-url',
+                                                  submitPreviewLinkTokenParam: fixed_token,
+                                                })
       end
 
       # TODO: update deprecated I2A pilot
@@ -123,7 +132,9 @@ RSpec.describe InviteToController do
 
     context 'when DahliaBackend::MessageService raises an error' do
       before do
-        allow(Force::ShortFormService).to receive(:get).with(application_number).and_return({ 'uploadURL' => 'test-upload-url', 'leaseupAppointmentSchedulingURL' => 'test-scheduling-url' })
+        allow(Force::ShortFormService).to receive(:get).with(application_number).and_return({
+                                                                                              'uploadURL' => 'test-upload-url', 'leaseupAppointmentSchedulingURL' => 'test-scheduling-url'
+                                                                                            })
         allow(DahliaBackend::MessageService).to receive(:send_invite_to_response).and_raise(
           StandardError, 'API Error'
         )
@@ -145,7 +156,6 @@ RSpec.describe InviteToController do
 
     context 'with json web tokens' do
       before do
-        allow(JWT).to receive(:decode).and_return(decoded_token)
         allow(Force::ShortFormService).to receive(:get).with(application_number).and_return({ 'uploadURL' => 'test-upload-url' })
       end
 
@@ -160,7 +170,6 @@ RSpec.describe InviteToController do
       end
 
       it 'redirects to the listing details page if token is invalid' do
-        allow(JWT).to receive(:decode).and_raise(JWT::DecodeError)
         get :index, params: { id: listing_id, t: 'invalid_test_token' }
         expect(response).to redirect_to('/')
       end
@@ -187,6 +196,59 @@ RSpec.describe InviteToController do
 
       it 'returns a successful response' do
         expect(response).to be_ok
+      end
+    end
+  end
+
+  describe 'client recording feature flag' do
+    before do
+      allow(Force::ShortFormService).to receive(:get).with(application_number).and_return(
+        { 'uploadURL' => 'test-upload-url',
+          'leaseupAppointmentSchedulingURL' => 'test-scheduling-url' },
+      )
+    end
+
+    def request_index
+      get :index, params: {
+        id: listing_id,
+        t: fixed_token,
+        type: 'I2A',
+        deadline: deadline,
+        act: response_value,
+        appId: application_number,
+      }
+    end
+
+    context 'when the flag is enabled' do
+      before do
+        allow(Rails.configuration.unleash).to receive(:is_enabled?)
+          .with('temp.webapp.inviteToClientRecording').and_return(true)
+        allow(Rails.configuration.unleash).to receive(:get_variant)
+        request_index
+      end
+
+      it 'still records server-side on GET (unchanged applicant behavior)' do
+        expect(DahliaBackend::MessageService).to have_received(:send_invite_to_response)
+      end
+
+      it "includes clientRecordingMode: 'shadow' in the props" do
+        expect(assigns(:invite_to_props)).to include(clientRecordingMode: 'shadow')
+      end
+
+      it 'ignores any configured variant (there is no client-records mode yet)' do
+        expect(Rails.configuration.unleash).not_to have_received(:get_variant)
+      end
+    end
+
+    context 'when the flag is disabled' do
+      before { request_index }
+
+      it 'still records server-side on GET with act present' do
+        expect(DahliaBackend::MessageService).to have_received(:send_invite_to_response)
+      end
+
+      it "includes clientRecordingMode: 'off' in the props" do
+        expect(assigns(:invite_to_props)).to include(clientRecordingMode: 'off')
       end
     end
   end

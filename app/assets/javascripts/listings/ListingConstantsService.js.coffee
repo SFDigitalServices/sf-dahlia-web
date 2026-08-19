@@ -130,6 +130,7 @@ ListingConstantsService = () ->
   # Names of custom preferences that should be shown on the e7b-custom-preferences page
   Service.CUSTOM_PREFERENCE_NAMES = [
     'Treasure Island Resident (TIR) Preference',
+    'Employment or Disability Preference',
   ]
 
   Service.HCBS_PRIORITY_NAME = 'HCBS Units'

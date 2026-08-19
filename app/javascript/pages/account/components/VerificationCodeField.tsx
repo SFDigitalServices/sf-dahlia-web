@@ -1,9 +1,9 @@
 import React, { useRef } from "react"
 import { ErrorMessage, Field, t } from "@bloom-housing/ui-components"
 import Fieldset from "./Fieldset"
-import styles from "./CodeField.module.scss"
+import styles from "./VerificationCodeField.module.scss"
 
-const CodeField = ({
+const VerificationCodeField = ({
   value = "",
   onChange,
   error,
@@ -68,4 +68,4 @@ const CodeField = ({
   )
 }
 
-export default CodeField
+export default VerificationCodeField

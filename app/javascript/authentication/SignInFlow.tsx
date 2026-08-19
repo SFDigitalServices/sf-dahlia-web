@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import React, { useEffect, useRef, useState } from "react"
 import { Navigate, useNavigate } from "react-router"
-import { useAuth, useSignIn } from "@clerk/clerk-react"
+import { useAuth, useClerk, useSignIn } from "@clerk/clerk-react"
 import { Form, t } from "@bloom-housing/ui-components"
-import { Alert, Button, Card, Heading, Link } from "@bloom-housing/ui-seeds"
+import { Alert, Button, Card, Heading, Link, LoadingState } from "@bloom-housing/ui-seeds"
 import { useForm, useWatch } from "react-hook-form"
 import AuthLayout from "../layouts/AuthLayout"
 import EmailFieldset from "../pages/account/components/EmailFieldset"
@@ -33,9 +33,18 @@ const SignInFlow = () => {
   const navigate = useNavigate()
   const { isLoaded: authLoaded, isSignedIn } = useAuth()
   const { isLoaded, signIn, setActive } = useSignIn()
+  const { client } = useClerk()
   const [showError, setShowError] = useState(false)
-  // Defaults to password sign in flow
-  const [view, setView] = useState<SignInView>("password")
+  const [view, setView] = useState<SignInView | null>(null)
+  // Default to password sign-in, but prefer the code flow if the user last signed in via email code.
+  useEffect(() => {
+    if (!isLoaded || view !== null) return
+    if (client?.lastAuthenticationStrategy === "email_code") {
+      setView("verificationCode")
+    } else {
+      setView("password")
+    }
+  }, [isLoaded, client?.lastAuthenticationStrategy, view])
   const alertRef = useRef<HTMLDivElement>(null)
   const {
     register,
@@ -183,7 +192,9 @@ const SignInFlow = () => {
             </Alert>
           </div>
         )}
-        {view === "verificationCode" ? verificationCodeSection : passwordSection}
+        <LoadingState loading={!view}>
+          {view === "verificationCode" ? verificationCodeSection : passwordSection}
+        </LoadingState>
       </Card.Section>
       <Card.Section divider="flush">
         <Heading priority={2} size="lg">

@@ -1,5 +1,7 @@
 # Invite to X controller
 class InviteToController < ApplicationController
+  CLIENT_RECORDING_FLAG = 'temp.webapp.inviteToClientRecording'
+
   before_action :ignore_head_requests
 
   def index
@@ -8,6 +10,8 @@ class InviteToController < ApplicationController
       redirect_to decoded_params
       return
     end
+    # TODO: remove the `params` fallback once we are sure that all links are using the token
+
     decoded_params ||= params
     @invite_to_props = props(decoded_params)
     # Get URL from application
@@ -18,6 +22,11 @@ class InviteToController < ApplicationController
         schedulingUrl: application['leaseupAppointmentSchedulingURL'],
       )
     end
+    # Recording always happens server-side on GET for now. When the flag is enabled the
+    # client additionally runs its human-detection in parallel and logs only ('shadow'),
+    # so we can measure bot vs. human clicks against real traffic. Moving the recording
+    # to the client is deferred until
+    # https://github.com/SFDigitalServices/sf-dahlia-web/pull/2993 lands.
     record_response(decoded_params)
     render 'invite_to'
   end
@@ -57,8 +66,21 @@ class InviteToController < ApplicationController
     {
       assetPaths: static_asset_paths,
       urlParams: url_params,
+      clientRecordingMode: client_recording_mode,
       submitPreviewLinkTokenParam: encode_token(url_params.except(:act, :response)),
     }.compact
+  end
+
+  # Resolves the rollout state of the client-side recording feature from the
+  # 'temp.webapp.inviteToClientRecording' Unleash flag:
+  #   flag disabled -> 'off'    (client hook inert)
+  #   flag enabled  -> 'shadow' (server records on GET; client detects humans, logs only)
+  # There is deliberately no 'on' (client-records) state yet - see PR #2993.
+  def client_recording_mode
+    return @client_recording_mode if defined?(@client_recording_mode)
+
+    @client_recording_mode =
+      Rails.configuration.unleash.is_enabled?(CLIENT_RECORDING_FLAG) ? 'shadow' : 'off'
   end
 
   def record_response(decoded_params)
@@ -122,31 +144,23 @@ class InviteToController < ApplicationController
     #    },
     #   {"alg" => "HS256", "typ" => "JWT"}
     # ]
-    decoded_token = JWT.decode(
-      token,
-      ENV.fetch('JWT_TOKEN_SECRET', nil),
-      true,
-      { algorithm: ENV.fetch('JWT_ALGORITHM', nil), verify_expiration: false },
-    )
+
+    decoded_token = JsonWebTokenService.decode_token(token)
     Rails.logger.info(
       'InviteToController#decode_token: ' \
-      "Decoded JWT #{decoded_token}",
+      'Decoded JWT Success',
     )
-    decoded_token.first['data']
-  rescue JWT::DecodeError
+    decoded_token
+  rescue JsonWebTokenService::InvalidTokenError => e
     Rails.logger.info(
       'InviteToController#decode_token: ' \
-      "Invalid JWT in #{request.original_url}",
+      "Invalid JWT in #{request.original_url}: #{e.message}",
     )
     root_url
   end
 
   def encode_token(params)
-    JWT.encode(
-      { data: params },
-      ENV.fetch('JWT_TOKEN_SECRET', nil),
-      ENV.fetch('JWT_ALGORITHM', nil),
-    )
+    JsonWebTokenService.encode_token(params)
   end
 
   def deadline_has_passed?(deadline)

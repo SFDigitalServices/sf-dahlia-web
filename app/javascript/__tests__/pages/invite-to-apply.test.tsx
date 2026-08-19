@@ -1,5 +1,5 @@
 import React from "react"
-import { screen } from "@testing-library/react"
+import { screen, waitFor } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
 import "@testing-library/jest-dom"
 import { t } from "@bloom-housing/ui-components"
@@ -7,13 +7,14 @@ import InviteToPage from "../../pages/inviteTo/invite-to"
 import { renderAndLoadAsync } from "../__util__/renderUtils"
 import { localizedFormat } from "../../util/languageUtil"
 import { getListing } from "../../api/listingApiService"
-import { recordResponse } from "../../api/inviteToApiService"
+import { recordResponse, logHumanVerifiedClick } from "../../api/inviteToApiService"
 import { ConfigContext } from "../../lib/ConfigContext"
 import { INVITE_TO_X } from "../../modules/constants"
 
 jest.mock("../../api/listingApiService")
 jest.mock("../../api/inviteToApiService", () => ({
   recordResponse: jest.fn(),
+  logHumanVerifiedClick: jest.fn(),
 }))
 jest.mock("../../hooks/useFeatureFlag", () => ({
   useFeatureFlag: () => ({
@@ -59,9 +60,11 @@ const mockConfigContext = {
   listingsAlertUrl: "/",
 }
 
-const renderWithContext = async (component: React.ReactElement) => {
+const renderWithContext = async (component: React.ReactElement, initialEntries?: string[]) => {
   return renderAndLoadAsync(
-    <ConfigContext.Provider value={mockConfigContext}>{component}</ConfigContext.Provider>
+    <ConfigContext.Provider value={mockConfigContext}>{component}</ConfigContext.Provider>,
+    undefined,
+    initialEntries
   )
 }
 
@@ -236,6 +239,45 @@ describe("Invite to Apply", () => {
       await userEvent.click(button)
 
       expect(recordResponse).toHaveBeenCalledTimes(1)
+    })
+
+    it("arms client-side human detection when clientRecordingMode is not off", async () => {
+      // Exercises the full `enabled` gate in invite-to.tsx (clientRecordingMode + type/deadline
+      // checks) rather than short-circuiting at the default "off". Needs a listing id in the
+      // URL, or invite-to.tsx's listingId is undefined and the hook's enable gate never opens.
+      ;(logHumanVerifiedClick as jest.Mock).mockResolvedValue(undefined)
+
+      await renderWithContext(
+        <InviteToPage
+          assetPaths={"/"}
+          clientRecordingMode="shadow"
+          urlParams={{
+            type: INVITE_TO_X.APPLY,
+            deadline: mockFutureDeadline,
+            act: "yes",
+            appId: "a0o123",
+          }}
+        />,
+        ["/en/listings/listing-id/next-steps"]
+      )
+
+      // The hook only registers its interaction listeners after two animation frames have
+      // elapsed (its paint gate), so wait for those before dispatching.
+      await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)))
+      window.dispatchEvent(new Event("pointermove"))
+
+      await waitFor(() => {
+        expect(logHumanVerifiedClick).toHaveBeenCalledWith(
+          expect.objectContaining({
+            appId: "a0o123",
+            listingId: "listing-id",
+            deadline: mockFutureDeadline,
+            act: "yes",
+            type: INVITE_TO_X.APPLY,
+            trigger: "interaction",
+          })
+        )
+      })
     })
 
     it("does not call recordResponse when submit is clicked and isTest is true", async () => {
