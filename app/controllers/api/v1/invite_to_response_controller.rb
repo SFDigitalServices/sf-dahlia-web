@@ -1,9 +1,13 @@
 class Api::V1::InviteToResponseController < ApiController
   include InviteToEventLogging
 
-  # What snapshotEnv() sends. Allow-listed rather than a free-form hash because this
-  # endpoint is unauthenticated.
-  ENV_KEYS = %i[webdriver ua touch coarse cores mem screen lang tz].freeze
+  # What snapshotBrowser() sends. Allow-listed rather than a free-form hash because this
+  # endpoint is unauthenticated. camelCase because these are wire keys, matching the
+  # appId/listingId/elapsedMs params alongside them.
+  BROWSER_KEYS = %i[
+    webdriver userAgent maxTouchPoints coarsePointer cpuCores deviceMemory screen
+    language timezone
+  ].freeze
 
   before_action :validate_token!, only: :record_response
 
@@ -45,7 +49,7 @@ class Api::V1::InviteToResponseController < ApiController
   # applicant email. Logs only that client-side detection judged this a human. Idempotent.
   def log_human_verified
     record = params.expect(record: [:type, :deadline, :appId, :listingId, :act, :trigger,
-                                    :elapsedMs, { env: ENV_KEYS }])
+                                    :elapsedMs, { browser: BROWSER_KEYS }])
     type, deadline, application_id, listing_id, act, trigger, elapsed_ms =
       record.values_at(:type, :deadline, :appId, :listingId, :act, :trigger, :elapsedMs)
 
@@ -60,9 +64,9 @@ class Api::V1::InviteToResponseController < ApiController
       deadline: deadline,
       app_id: application_id,
       act: act,
-      trigger: trigger, # interaction | dwell | teardown
+      trigger: trigger, # interaction | dwellTime | pageExit
       elapsed_ms: elapsed_ms,
-      env: sanitized_env(record[:env]),
+      browser: sanitized_browser(record[:browser]),
     )
     render json: { success: true }, status: :ok
   rescue ActionController::ParameterMissing => e
@@ -77,15 +81,15 @@ class Api::V1::InviteToResponseController < ApiController
 
   private
 
-  # Keeps only the known env keys and drops non-scalar values; log_invite_event handles
-  # truncation. nil when nothing usable is left, so the key drops out of the line.
-  def sanitized_env(env)
-    return nil if env.blank?
+  # Keeps only the known browser keys and drops non-scalar values; log_invite_event
+  # handles truncation. nil when nothing usable is left, so the key drops out of the line.
+  def sanitized_browser(browser)
+    return nil if browser.blank?
 
-    env.to_unsafe_h
-       .slice(*ENV_KEYS.map(&:to_s))
-       .reject { |_key, value| value.is_a?(Array) || value.is_a?(Hash) }
-       .presence
+    browser.to_unsafe_h
+           .slice(*BROWSER_KEYS.map(&:to_s))
+           .reject { |_key, value| value.is_a?(Array) || value.is_a?(Hash) }
+           .presence
   end
 
   def validate_token!

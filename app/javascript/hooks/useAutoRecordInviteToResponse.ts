@@ -2,7 +2,7 @@ import { useEffect } from "react"
 import {
   logHumanVerifiedClick,
   beaconHumanVerifiedClick,
-  snapshotEnv,
+  snapshotBrowser,
   HumanVerifiedTrigger,
   HumanVerifiedRecord,
 } from "../api/inviteToApiService"
@@ -79,7 +79,7 @@ export const useAutoRecordInviteToResponse = ({
     // Set when the fire conditions actually arm (after the first paint, while visible), so
     // elapsedMs reflects visible dwell/interaction time and excludes hidden/background-tab time.
     let armedAt = 0
-    // True once paint + visible are proven. Only then is a teardown worth reporting.
+    // True once paint + visible are proven. Only then is a page exit worth reporting.
     let armed = false
     let fired = false
     let dwellTimeoutId: ReturnType<typeof setTimeout> | null = null
@@ -129,10 +129,10 @@ export const useAutoRecordInviteToResponse = ({
       type,
       trigger,
       elapsedMs: Date.now() - armedAt,
-      env: snapshotEnv(),
+      browser: snapshotBrowser(),
     })
 
-    const fire = (trigger: "interaction" | "dwell") => {
+    const fire = (trigger: "interaction" | "dwellTime") => {
       if (fired) return
       fired = true
       cleanup()
@@ -141,18 +141,18 @@ export const useAutoRecordInviteToResponse = ({
       })
     }
 
-    // Flush on unload if we armed but never reached the stronger interaction/dwell gate -
-    // the normal shape of an in-app email webview that gets torn down fast.
+    // Flush on page exit if we armed but never reached the stronger interaction/dwell gate -
+    // the normal shape of an in-app email webview that closes fast.
     const handlePageHide = () => {
       if (fired || !armed) return
       fired = true
       cleanup()
-      const record = buildRecord("teardown")
+      const record = buildRecord("pageExit")
       // If the browser won't queue the beacon, still try the normal request: it may not
       // survive an immediate unload, but a bfcache hide completes fine.
       if (!beaconHumanVerifiedClick(record)) {
         void logHumanVerifiedClick(record).catch(() => {
-          // Nothing useful to do during teardown; the missing log line is the signal.
+          // Nothing useful to do as the page goes away; the missing log line is the signal.
         })
       }
     }
@@ -170,7 +170,7 @@ export const useAutoRecordInviteToResponse = ({
       // pagehide, not unload: it fires reliably in mobile webviews where the tab is killed.
       window.addEventListener("pagehide", handlePageHide, { once: true })
       dwellTimeoutId = setTimeout(() => {
-        fire("dwell")
+        fire("dwellTime")
       }, dwellTimeMs)
     }
 
@@ -194,7 +194,7 @@ export const useAutoRecordInviteToResponse = ({
         cancelPendingFrames()
         afterFirstPaint()
       } else {
-        // Hidden before firing - reset, and disarm so a later pagehide reports no teardown:
+        // Hidden before firing - reset, and disarm so a later pagehide reports nothing:
         // an unload from a hidden page is indistinguishable from a background prefetch.
         armed = false
         cancelPendingFrames()

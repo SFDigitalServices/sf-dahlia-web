@@ -4,26 +4,26 @@ import {
   recordResponse,
   logHumanVerifiedClick,
   beaconHumanVerifiedClick,
-  snapshotEnv,
+  snapshotBrowser,
 } from "../../api/inviteToApiService"
 
 jest.mock("../../api/inviteToApiService", () => ({
   recordResponse: jest.fn(),
   logHumanVerifiedClick: jest.fn(),
   beaconHumanVerifiedClick: jest.fn(),
-  snapshotEnv: jest.fn(),
+  snapshotBrowser: jest.fn(),
 }))
 
-const TEST_ENV = {
+const TEST_BROWSER = {
   webdriver: false,
-  ua: "test-ua",
-  touch: 0,
-  coarse: false,
-  cores: 8,
-  mem: 8,
+  userAgent: "test-ua",
+  maxTouchPoints: 0,
+  coarsePointer: false,
+  cpuCores: 8,
+  deviceMemory: 8,
   screen: "800x600@1",
-  lang: "en",
-  tz: "UTC",
+  language: "en",
+  timezone: "UTC",
 }
 
 const firePageHide = () => {
@@ -61,7 +61,7 @@ describe("useAutoRecordInviteToResponse", () => {
     jest.clearAllMocks()
     setVisibility("visible")
     ;(logHumanVerifiedClick as jest.Mock).mockResolvedValue(undefined)
-    ;(snapshotEnv as jest.Mock).mockReturnValue(TEST_ENV)
+    ;(snapshotBrowser as jest.Mock).mockReturnValue(TEST_BROWSER)
     // Default to the browser accepting the beacon; tests that care override this.
     ;(beaconHumanVerifiedClick as jest.Mock).mockReturnValue(true)
     jest.spyOn(console, "error").mockImplementation(() => {})
@@ -88,7 +88,7 @@ describe("useAutoRecordInviteToResponse", () => {
         deadline: "3000-01-01",
         act: "yes",
         type: "I2A",
-        trigger: "dwell",
+        trigger: "dwellTime",
       })
     )
   })
@@ -227,11 +227,13 @@ describe("useAutoRecordInviteToResponse", () => {
     jest.advanceTimersByTime(2000)
 
     expect(logHumanVerifiedClick).toHaveBeenCalledWith(
-      expect.objectContaining({ env: expect.objectContaining({ ua: "test-ua", webdriver: false }) })
+      expect.objectContaining({
+        browser: expect.objectContaining({ userAgent: "test-ua", webdriver: false }),
+      })
     )
   })
 
-  it("beacons a teardown signal on pagehide after arming, without a normal log call", () => {
+  it("beacons a page-exit signal on pagehide after arming, without a normal log call", () => {
     renderHook(() => useAutoRecordInviteToResponse(baseArgs))
     flushPaintFrames() // arms while visible
 
@@ -239,7 +241,7 @@ describe("useAutoRecordInviteToResponse", () => {
 
     expect(beaconHumanVerifiedClick).toHaveBeenCalledTimes(1)
     expect(beaconHumanVerifiedClick).toHaveBeenCalledWith(
-      expect.objectContaining({ trigger: "teardown", appId: "app-1" })
+      expect.objectContaining({ trigger: "pageExit", appId: "app-1" })
     )
     expect(logHumanVerifiedClick).not.toHaveBeenCalled()
   })
@@ -253,7 +255,7 @@ describe("useAutoRecordInviteToResponse", () => {
 
     expect(beaconHumanVerifiedClick).toHaveBeenCalledTimes(1)
     expect(logHumanVerifiedClick).toHaveBeenCalledWith(
-      expect.objectContaining({ trigger: "teardown" })
+      expect.objectContaining({ trigger: "pageExit" })
     )
   })
 
@@ -268,7 +270,7 @@ describe("useAutoRecordInviteToResponse", () => {
     expect(logHumanVerifiedClick).not.toHaveBeenCalled()
   })
 
-  it("does not beacon a teardown when the page never armed (hidden the whole time)", () => {
+  it("does not beacon a page-exit signal when the page never armed (hidden the whole time)", () => {
     setVisibility("hidden")
     renderHook(() => useAutoRecordInviteToResponse(baseArgs))
 
@@ -277,7 +279,7 @@ describe("useAutoRecordInviteToResponse", () => {
     expect(beaconHumanVerifiedClick).not.toHaveBeenCalled()
   })
 
-  it("does not beacon a teardown once the click already fired via dwell", () => {
+  it("does not beacon a page-exit signal once the click already fired via dwell time", () => {
     renderHook(() => useAutoRecordInviteToResponse(baseArgs))
     flushPaintFrames()
     jest.advanceTimersByTime(2000)
@@ -287,7 +289,7 @@ describe("useAutoRecordInviteToResponse", () => {
     expect(beaconHumanVerifiedClick).not.toHaveBeenCalled()
   })
 
-  it("does not beacon a teardown after the page was hidden again (disarmed)", () => {
+  it("does not beacon a page-exit signal after the page was hidden again (disarmed)", () => {
     renderHook(() => useAutoRecordInviteToResponse(baseArgs))
     flushPaintFrames() // arms
 

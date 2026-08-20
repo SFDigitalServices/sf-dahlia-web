@@ -16,7 +16,7 @@ jest.mock("../../api/inviteToApiService", () => ({
   recordResponse: jest.fn(),
   logHumanVerifiedClick: jest.fn(),
   beaconHumanVerifiedClick: jest.fn(),
-  snapshotEnv: jest.fn(() => ({})),
+  snapshotBrowser: jest.fn(() => ({})),
 }))
 jest.mock("../../hooks/useFeatureFlag", () => ({
   useFeatureFlag: () => ({

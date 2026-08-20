@@ -184,7 +184,9 @@ RSpec.describe Api::V1::InviteToResponseController, type: :controller do
         act: 'yes',
         trigger: 'interaction',
         elapsedMs: 1234,
-        env: { webdriver: false, ua: 'Mozilla/5.0 FBAN/FBIOS', coarse: true },
+        browser: {
+          webdriver: false, userAgent: 'Mozilla/5.0 FBAN/FBIOS', coarsePointer: true
+        },
       }
     end
 
@@ -212,24 +214,26 @@ RSpec.describe Api::V1::InviteToResponseController, type: :controller do
       )
     end
 
-    # Note: ActionController::Parameters stringifies scalars, so env booleans serialize as
-    # "false"/"true" rather than JSON booleans. Harmless for querying, but assert what we emit.
-    it 'includes the passive browser env snapshot for post-hoc classification' do
+    # NOTE: ActionController::Parameters stringifies scalars, so browser booleans
+    # serialize as "false"/"true" rather than JSON booleans. Harmless for querying,
+    # but assert what we actually emit.
+    it 'includes the passive browser snapshot for post-hoc classification' do
       post :log_human_verified, params: { record: valid_record }
 
       expect(Rails.logger).to have_received(:info).with(
-        a_string_including('"env":', '"ua":"Mozilla/5.0 FBAN/FBIOS"', '"webdriver":"false"'),
+        a_string_including('"browser":', '"userAgent":"Mozilla/5.0 FBAN/FBIOS"',
+                           '"webdriver":"false"'),
       )
     end
 
-    it 'drops unknown env keys, nested values, and over-long values' do
+    it 'drops unknown browser keys, nested values, and over-long values' do
       logged = []
       allow(Rails.logger).to receive(:info) { |msg| logged << msg.to_s }
 
       post :log_human_verified, params: {
         record: valid_record.merge(
-          env: {
-            ua: 'a' * 400,
+          browser: {
+            userAgent: 'a' * 400,
             webdriver: false,
             evil: 'should-not-be-logged',
             nested: { deep: 'no' },
@@ -247,7 +251,7 @@ RSpec.describe Api::V1::InviteToResponseController, type: :controller do
       expect(event).not_to include('a' * 300)
     end
 
-    # Unauthenticated endpoint: every logged value is bounded, not just env.
+    # Unauthenticated endpoint: every logged value is bounded, not just the browser hash.
     it 'truncates over-long top-level fields' do
       logged = []
       allow(Rails.logger).to receive(:info) { |msg| logged << msg.to_s }
@@ -265,27 +269,29 @@ RSpec.describe Api::V1::InviteToResponseController, type: :controller do
 
     # to_unsafe_h converts nested ActionController::Parameters to HashWithIndifferentAccess,
     # so the non-scalar filter catches them - assert that on an allow-listed key.
-    it 'drops a nested structure sent under an allow-listed env key' do
+    it 'drops a nested structure sent under an allow-listed browser key' do
       logged = []
       allow(Rails.logger).to receive(:info) { |msg| logged << msg.to_s }
 
       post :log_human_verified, params: {
-        record: valid_record.merge(env: { ua: { nested: { deep: 'sneaky-value' } }, tz: 'UTC' }),
+        record: valid_record.merge(
+          browser: { userAgent: { nested: { deep: 'sneaky-value' } }, timezone: 'UTC' },
+        ),
       }
 
       expect(response).to be_ok
       event = logged.find { |msg| msg.start_with?('invite_to.response ') }
       expect(event).not_to include('sneaky-value')
-      expect(event).to include('"tz":"UTC"')
+      expect(event).to include('"timezone":"UTC"')
     end
 
-    it 'omits env entirely when no recognized keys are supplied' do
+    it 'omits the browser hash entirely when no recognized keys are supplied' do
       post :log_human_verified, params: {
-        record: valid_record.merge(env: { evil: 'nope' }),
+        record: valid_record.merge(browser: { evil: 'nope' }),
       }
 
       expect(response).to be_ok
-      expect(Rails.logger).not_to have_received(:info).with(a_string_including('"env":'))
+      expect(Rails.logger).not_to have_received(:info).with(a_string_including('"browser":'))
     end
 
     it 'returns 400 when the record param is missing' do
