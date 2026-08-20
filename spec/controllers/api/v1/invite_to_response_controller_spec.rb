@@ -20,7 +20,6 @@ RSpec.describe Api::V1::InviteToResponseController, type: :controller do
 
     let(:valid_record_params) do
       {
-        listingId: 'listing-id',
         action: 'submit',
       }
     end
@@ -38,12 +37,8 @@ RSpec.describe Api::V1::InviteToResponseController, type: :controller do
 
       expect(response).to have_http_status(:ok)
       expect(DahliaBackend::MessageService).to have_received(:send_invite_to_response).with(
-        deadline,
-        application_id,
         application_id,
         'submit',
-        'submit',
-        'listing-id',
       )
     end
 
@@ -105,7 +100,7 @@ RSpec.describe Api::V1::InviteToResponseController, type: :controller do
     it 'returns unauthorized when required record params are missing' do
       post :record_response, params: {
         t: token,
-        record: { action: 'submit' }, # missing listingId
+        record: { action: '' },
       }
 
       expect(response).to have_http_status(:unauthorized)

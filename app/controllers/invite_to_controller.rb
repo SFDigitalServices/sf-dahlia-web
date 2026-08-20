@@ -12,9 +12,7 @@ class InviteToController < ApplicationController
       redirect_to decoded_params
       return
     end
-    # TODO: remove the `params` fallback once we are sure that all links are using the token
 
-    decoded_params ||= params
     @invite_to_props = props(decoded_params)
     # Get URL from application
     if decoded_params['appId'].present? || decoded_params['applicationNumber'].present?
@@ -64,7 +62,7 @@ class InviteToController < ApplicationController
       assetPaths: static_asset_paths,
       urlParams: url_params,
       clientRecordingMode: client_recording_mode,
-      submitPreviewLinkTokenParam: encode_token(url_params.except(:act, :response)),
+      submitPreviewLinkTokenParam: encode_token(url_params.except(:act)),
     }.compact
   end
 
@@ -79,13 +77,11 @@ class InviteToController < ApplicationController
 
   def record_response(decoded_params)
     deadline = decoded_params['deadline']
-    response = decoded_params['response']
-    application_number = decoded_params['applicationNumber']
     invite_action = decoded_params['act']
     app_id = decoded_params['appId']
     is_test = ActiveModel::Type::Boolean.new.cast(decoded_params['isTest']) == true
 
-    reason = suppression_reason(invite_action, response, deadline, is_test)
+    reason = suppression_reason(invite_action, deadline, is_test)
     if reason
       log_invite_event(
         outcome: 'suppressed',
@@ -105,12 +101,8 @@ class InviteToController < ApplicationController
     # nil on both the invalid-action guard and any rescued error, so ok= below means
     # "attempted and not swallowed", not a confirmed Salesforce write.
     result = DahliaBackend::MessageService.send_invite_to_response(
-      deadline,
       app_id,
-      application_number,
-      response,
       invite_action,
-      params['id'], # listing_id
     )
 
     log_invite_event(
@@ -128,8 +120,8 @@ class InviteToController < ApplicationController
   end
 
   # Order matches the original `||` precedence: a preview link (act blank) is `no_action`.
-  def suppression_reason(invite_action, response, deadline, is_test)
-    if invite_action.blank? && response.blank? then 'no_action'
+  def suppression_reason(invite_action, deadline, is_test)
+    if invite_action.blank? then 'no_action'
     # `.present?` keeps a blank deadline out of deadline_has_passed?, which would report
     # it as passed. Blank falls through to recording, as it did before.
     elsif deadline.present? && deadline_has_passed?(deadline) then 'deadline_passed'
@@ -194,7 +186,8 @@ class InviteToController < ApplicationController
     #       "type" => "I2I",
     #       "deadline" => "1999-12-31",
     #       "act" => "yes",
-    #       "appId" => "12345678"
+    #       "appId" => "12345678",
+    #       "isTest" => false
     #     },
     #     "iat" => 946512000
     #    },

@@ -117,17 +117,12 @@ RSpec.describe InviteToController do
                                                 })
       end
 
-      # TODO: update deprecated I2A pilot
-      # it 'calls record_response with correct parameters' do
-      #   expect(DahliaBackend::MessageService).to have_received(:send_invite_to_response).with(
-      #     deadline,
-      #     application_number,
-      #     nil,
-      #     response_value,
-      #     nil,
-      #     listing_id,
-      #   )
-      # end
+      it 'calls send_invite_to_response with app_id and act' do
+        expect(DahliaBackend::MessageService).to have_received(:send_invite_to_response).with(
+          application_number,
+          response_value,
+        )
+      end
     end
 
     context 'when DahliaBackend::MessageService raises an error' do
@@ -228,7 +223,10 @@ RSpec.describe InviteToController do
       end
 
       it 'still records server-side on GET (unchanged applicant behavior)' do
-        expect(DahliaBackend::MessageService).to have_received(:send_invite_to_response)
+        expect(DahliaBackend::MessageService).to have_received(:send_invite_to_response).with(
+          application_number,
+          response_value,
+        )
       end
 
       it "includes clientRecordingMode: 'shadow' in the props" do
@@ -244,7 +242,10 @@ RSpec.describe InviteToController do
       before { request_index }
 
       it 'still records server-side on GET with act present' do
-        expect(DahliaBackend::MessageService).to have_received(:send_invite_to_response)
+        expect(DahliaBackend::MessageService).to have_received(:send_invite_to_response).with(
+          application_number,
+          response_value,
+        )
       end
 
       it "includes clientRecordingMode: 'off' in the props" do

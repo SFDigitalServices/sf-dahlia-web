@@ -7,8 +7,9 @@ module InviteToEventLogging
 
   INVITE_EVENT = 'invite_to.response'.freeze
 
-  # Longest string logged for any single field. Bounded centrally rather than per call
-  # site so a newly added field can't reintroduce the gap.
+  # Caps how long any single logged value can be. Doing it here, rather than at each
+  # call site, means a field someone adds later is capped automatically without having
+  # to remember to do it.
   VALUE_MAX = 256
 
   private
