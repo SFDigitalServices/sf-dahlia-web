@@ -249,7 +249,8 @@ const PasswordSection = ({ user, setUser }: SectionProps) => {
 const HousingCounselorSection = ({ user, setUser }: SectionProps) => {
   const { saveProfile } = useContext(UserContext)
   const [loading, setLoading] = useState(false)
-  const [successToast, setSuccessToast] = useState<string | null>(null)
+  const [grantToast, setGrantToast] = useState(false)
+  const [revokeToast, setRevokeToast] = useState(false)
   const {
     register,
     handleSubmit,
@@ -257,38 +258,52 @@ const HousingCounselorSection = ({ user, setUser }: SectionProps) => {
   } = useForm({ mode: "onTouched" })
   const accessShared = !!user?.housingCounselingAgencyId
 
-  const onSubmit = (data: { housingCounselingAgencyId?: string }) => {
-    if (!user) return
+  const clearToasts = () => {
+    setGrantToast(false)
+    setRevokeToast(false)
+  }
 
+  const saveHousingCounselorUser = (baseUser: User, contact?: User) => {
+    const updatedUser: User = {
+      ...baseUser,
+      housingCounselingAgencyId: contact?.housingCounselingAgencyId,
+      housingCounselingAgencyName: contact?.housingCounselingAgencyName,
+      housingCounselingAgencyLastModified: contact?.housingCounselingAgencyLastModified,
+    }
+    setUser(updatedUser)
+    saveProfile(updatedUser)
+  }
+
+  const onShare = (data: { housingCounselingAgencyId?: string }) => {
     setLoading(true)
-    const toastMessage = accessShared
-      ? "accountSettings.housingCounselor.toastStoppedSharing"
-      : "accountSettings.housingCounselor.toastShared"
-
-    const newUser: User = accessShared
-      ? {
-          ...user,
-          housingCounselingAgencyId: null,
-        }
-      : {
-          ...user,
-          housingCounselingAgencyId: data.housingCounselingAgencyId,
-        }
+    clearToasts()
+    const newUser = { ...user, housingCounselingAgencyId: data.housingCounselingAgencyId }
 
     updateHousingCounselorAccess(newUser)
       .then((contact) => {
-        const updatedUser: User = {
-          ...newUser,
-          housingCounselingAgencyId: contact?.housingCounselingAgencyId,
-          housingCounselingAgencyName: contact?.housingCounselingAgencyName,
-          housingCounselingAgencyLastModified: contact?.housingCounselingAgencyLastModified,
-        }
-        setUser(updatedUser)
-        saveProfile(updatedUser)
-        setSuccessToast(toastMessage)
+        saveHousingCounselorUser(newUser, contact)
+        setGrantToast(true)
       })
       .catch(() => {
-        setSuccessToast(null)
+        clearToasts()
+      })
+      .finally(() => {
+        setLoading(false)
+      })
+  }
+
+  const onRevoke = () => {
+    setLoading(true)
+    clearToasts()
+    const newUser: User = { ...user, housingCounselingAgencyId: null }
+
+    updateHousingCounselorAccess(newUser)
+      .then((contact) => {
+        saveHousingCounselorUser(newUser, contact)
+        setRevokeToast(true)
+      })
+      .catch(() => {
+        clearToasts()
       })
       .finally(() => {
         setLoading(false)
@@ -297,7 +312,12 @@ const HousingCounselorSection = ({ user, setUser }: SectionProps) => {
 
   return (
     <>
-      {successToast && <SuccessToast>{t(successToast)}</SuccessToast>}
+      {grantToast && (
+        <SuccessToast>{t("accountSettings.housingCounselor.toastShared")}</SuccessToast>
+      )}
+      {revokeToast && (
+        <SuccessToast>{t("accountSettings.housingCounselor.toastStoppedSharing")}</SuccessToast>
+      )}
       {!accessShared && (
         <ErrorSummaryBanner
           errors={errors}
@@ -307,7 +327,7 @@ const HousingCounselorSection = ({ user, setUser }: SectionProps) => {
         />
       )}
       <FormSection>
-        <Form className="p-2 md:py-2 md:px-10" onSubmit={handleSubmit(onSubmit)}>
+        <Form className="p-2 md:py-2 md:px-10" onSubmit={handleSubmit(onShare)}>
           <HousingCounselorAccess
             register={register}
             errors={errors}
@@ -316,9 +336,10 @@ const HousingCounselorSection = ({ user, setUser }: SectionProps) => {
           />
           <div className={settingsStyles.settingsButton}>
             <Button
-              type="submit"
+              type={accessShared ? "button" : "submit"}
               variant={accessShared ? "alert-outlined" : "primary-outlined"}
               disabled={loading}
+              onClick={accessShared ? onRevoke : undefined}
             >
               {accessShared
                 ? t("accountSettings.housingCounselor.revokeButton")
@@ -565,7 +586,9 @@ const AccountSettings = ({ profile }: { profile: User }) => {
       <DateOfBirthSection user={user} setUser={setUser} />
       <EmailSection user={user} setUser={setUser} />
       <PasswordSection user={user} setUser={setUser} />
-      {housingCounselorAccessEnabled && <HousingCounselorSection user={user} setUser={setUser} />}
+      {housingCounselorAccessEnabled && user && (
+        <HousingCounselorSection user={user} setUser={setUser} />
+      )}
     </Card>
   )
 }
