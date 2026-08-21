@@ -183,24 +183,26 @@ const EnterVerificationCodePage = ({ email, flow }: EnterVerificationCodePagePro
         <div className={styles.resendSection}>
           <p className={styles.resendRow}>
             <span className={styles.didntGetEmail}>{t("createAccount.didntGetEmail")}</span>
-            {resendSeconds > 0 ? (
-              <span className={styles.emailSent} role="status">
-                <FontAwesomeIcon icon={faCheck} />
-                {t("createAccount.emailSent")}
-              </span>
-            ) : (
-              <Button
-                className={styles.sendAgain}
-                variant="text"
-                size="md"
-                disabled={isResending}
-                onClick={() => {
-                  void onResend()
-                }}
-              >
-                {t("createAccount.sendAgain")}
-              </Button>
-            )}
+            <span aria-live="polite">
+              {resendSeconds > 0 ? (
+                <span className={styles.emailSent}>
+                  <FontAwesomeIcon icon={faCheck} />
+                  {t("createAccount.emailSent")}
+                </span>
+              ) : (
+                <Button
+                  className={styles.sendAgain}
+                  variant="text"
+                  size="md"
+                  disabled={isResending}
+                  onClick={() => {
+                    void onResend()
+                  }}
+                >
+                  {t("createAccount.sendAgain")}
+                </Button>
+              )}
+            </span>
           </p>
           {resendSeconds > 0 && (
             <p className="field-note">
