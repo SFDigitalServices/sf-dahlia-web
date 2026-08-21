@@ -322,7 +322,7 @@
   "createAccount.passwordShortInstructions": "Must be 8 characters",
   "createAccount.savePassword": "Save password",
   "createAccount.sendAgain": "Send again",
-  "createAccount.sendAgainIn": "If you need to, send again in %{seconds} seconds",
+  "createAccount.sendAgainIn": "If you need to, send again in %{smart_count} second |||| If you need to, send again in %{smart_count} seconds",
   "createAccount.skipForNow": "Skip for now",
   "createAccount.title.sentenceCase": "Create an account",
   "createAccount.weSentCodeTo": "We sent a code to:",

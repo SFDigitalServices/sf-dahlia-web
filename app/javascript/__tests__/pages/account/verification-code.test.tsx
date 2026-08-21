@@ -110,7 +110,7 @@ describe("<EnterVerificationCode />", () => {
     expect(screen.getAllByRole("textbox")).toHaveLength(6)
     expect(screen.getByRole("button", { name: t("createAccount.confirmCode") })).not.toBeNull()
     expect(screen.getByText(t("createAccount.emailSent"))).not.toBeNull()
-    expect(screen.getByText(t("createAccount.sendAgainIn", { seconds: 30 }))).not.toBeNull()
+    expect(screen.getByText(t("createAccount.sendAgainIn", { smart_count: 30 }))).not.toBeNull()
     expect(screen.queryByRole("button", { name: t("createAccount.sendAgain") })).toBeNull()
     expect(screen.getByRole("button", { name: t("createAccount.howToUseCode") })).not.toBeNull()
     expect(screen.getByRole("heading", { name: t("createAccount.getHelp") })).not.toBeNull()
@@ -198,23 +198,30 @@ describe("<EnterVerificationCode />", () => {
       strategy: "email_code",
     })
     expect(screen.getByText(t("createAccount.emailSent"))).not.toBeNull()
-    expect(screen.getByText(t("createAccount.sendAgainIn", { seconds: 30 }))).not.toBeNull()
+    expect(screen.getByText(t("createAccount.sendAgainIn", { smart_count: 30 }))).not.toBeNull()
     expect(screen.queryByRole("button", { name: t("createAccount.sendAgain") })).toBeNull()
   })
 
   it("restores send again after the resend countdown", () => {
-    expect(screen.getByText(t("createAccount.sendAgainIn", { seconds: 30 }))).not.toBeNull()
+    expect(screen.getByText(t("createAccount.sendAgainIn", { smart_count: 30 }))).not.toBeNull()
 
     act(() => {
       jest.advanceTimersByTime(1000)
     })
-    expect(screen.getByText(t("createAccount.sendAgainIn", { seconds: 29 }))).not.toBeNull()
+    expect(screen.getByText(t("createAccount.sendAgainIn", { smart_count: 29 }))).not.toBeNull()
+
+    for (let remaining = 28; remaining > 0; remaining--) {
+      act(() => {
+        jest.advanceTimersByTime(1000)
+      })
+    }
+    expect(screen.getByText(t("createAccount.sendAgainIn", { smart_count: 1 }))).not.toBeNull()
 
     expireResendVerificationCode()
 
     expect(screen.getByRole("button", { name: t("createAccount.sendAgain") })).not.toBeNull()
     expect(screen.queryByText(t("createAccount.emailSent"))).toBeNull()
-    expect(screen.queryByText(t("createAccount.sendAgainIn", { seconds: 1 }))).toBeNull()
+    expect(screen.queryByText(t("createAccount.sendAgainIn", { smart_count: 1 }))).toBeNull()
   })
 
   it("redirects to create account when clerk is disabled", async () => {
@@ -304,7 +311,7 @@ describe("<EnterVerificationCode />", () => {
       emailAddressId: "test_email",
     })
     expect(screen.getByText(t("createAccount.emailSent"))).not.toBeNull()
-    expect(screen.getByText(t("createAccount.sendAgainIn", { seconds: 30 }))).not.toBeNull()
+    expect(screen.getByText(t("createAccount.sendAgainIn", { smart_count: 30 }))).not.toBeNull()
     expect(screen.queryByRole("button", { name: t("createAccount.sendAgain") })).toBeNull()
   })
 

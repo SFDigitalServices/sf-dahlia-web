@@ -206,7 +206,7 @@ const EnterVerificationCodePage = ({ email, flow }: EnterVerificationCodePagePro
           </p>
           {resendSeconds > 0 && (
             <p className="field-note">
-              {t("createAccount.sendAgainIn", { seconds: resendSeconds })}
+              {t("createAccount.sendAgainIn", { smart_count: resendSeconds })}
             </p>
           )}
         </div>
