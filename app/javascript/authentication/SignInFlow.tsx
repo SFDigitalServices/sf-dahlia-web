@@ -103,7 +103,7 @@ const SignInFlow = () => {
         strategy: "email_code",
         emailAddressId: emailCodeFactor.emailAddressId,
       })
-      void navigate(getSignInCodePath(), { state: { email } })
+      void navigate(getSignInCodePath(), { state: { email, flow: AUTH_FLOW.SIGN_IN } })
     } catch (error) {
       console.error("Sign in code error", error)
       setShowError(true)

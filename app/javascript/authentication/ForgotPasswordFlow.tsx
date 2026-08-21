@@ -36,11 +36,12 @@ const ForgotPasswordFlow = () => {
         strategy: "reset_password_email_code",
         emailAddressId: resetFactor.emailAddressId,
       })
+    } catch (error) {
+      console.error("Forgot password error", error)
+    } finally {
       void navigate(getSignInCodePath(), {
         state: { email, flow: AUTH_FLOW.FORGOT_PASSWORD },
       })
-    } catch (error) {
-      console.error("Forgot password error", error)
     }
   }
 
