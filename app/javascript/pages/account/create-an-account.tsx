@@ -40,7 +40,7 @@ const CreateAnAccountPage = () => {
         unsafeMetadata: { locale }, // Account creation can only update public metadata
       })
       await signUp.prepareEmailAddressVerification({ strategy: "email_code" })
-      void navigate(getVerificationCodePath(), { state: { email } })
+      void navigate(getVerificationCodePath(), { state: { email, flow: AUTH_FLOW.CREATE_ACCOUNT } })
     } catch (error) {
       console.error("Account creation error", error)
     }

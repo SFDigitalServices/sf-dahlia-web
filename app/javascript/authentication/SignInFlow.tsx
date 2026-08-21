@@ -20,6 +20,7 @@ import { renderInlineMarkup } from "../util/languageUtil"
 import { AUTH_FLOW } from "../modules/constants"
 import { clearHeaders } from "./token"
 import styles from "./SignInFlow.module.scss"
+import { emailRegex } from "../util/accountUtil"
 
 interface SignInFields {
   email: string
@@ -102,7 +103,7 @@ const SignInFlow = () => {
         strategy: "email_code",
         emailAddressId: emailCodeFactor.emailAddressId,
       })
-      void navigate(getSignInCodePath(), { state: { email } })
+      void navigate(getSignInCodePath(), { state: { email, flow: AUTH_FLOW.SIGN_IN } })
     } catch (error) {
       console.error("Sign in code error", error)
       setShowError(true)
@@ -113,7 +114,9 @@ const SignInFlow = () => {
     return <Navigate to={getMyAccountPath()} replace />
   }
 
-  const forgotPasswordPath = createPath(getForgotPasswordPath(), { email: emailField })
+  const forgotPasswordPath = createPath(getForgotPasswordPath(), {
+    email: emailField && emailRegex.test(emailField) ? emailField : "",
+  })
 
   const verificationCodeSection = (
     <>

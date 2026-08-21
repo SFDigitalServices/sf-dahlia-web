@@ -10,9 +10,8 @@ import AuthLayout from "../../layouts/AuthLayout"
 import {
   AppPages,
   getAddPasswordPath,
-  getCreateAccountPath,
+  getAuthFlowPath,
   getMyAccountPath,
-  getSignInPath,
 } from "../../util/routeUtil"
 import styles from "./verification-code.module.scss"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
@@ -29,8 +28,8 @@ const EnterVerificationCodePage = ({ email, flow }: EnterVerificationCodePagePro
   const navigate = useNavigate()
   const { isLoaded: signUpLoaded, signUp, setActive: setActiveSignUp } = useSignUp()
   const { isLoaded: signInLoaded, signIn, setActive: setActiveSignIn } = useSignIn()
-  const isSignInFlow = flow === AUTH_FLOW.SIGN_IN
-  const isLoaded = isSignInFlow ? signInLoaded : signUpLoaded
+  const isForgotPasswordFlow = flow === AUTH_FLOW.FORGOT_PASSWORD
+  const isLoaded = flow === AUTH_FLOW.SIGN_IN ? signInLoaded : signUpLoaded
   const {
     control,
     handleSubmit,
@@ -42,7 +41,7 @@ const EnterVerificationCodePage = ({ email, flow }: EnterVerificationCodePagePro
     shouldFocusError: false,
   })
 
-  const editEmailHref = isSignInFlow ? getSignInPath() : getCreateAccountPath()
+  const editEmailHref = getAuthFlowPath(flow)
 
   const verifySignInCode = async (code: string) => {
     if (!signInLoaded || !signIn) return
@@ -85,8 +84,31 @@ const EnterVerificationCodePage = ({ email, flow }: EnterVerificationCodePagePro
     }
   }
 
-  const onSubmit = async ({ code }: { code: string }) =>
-    isSignInFlow ? verifySignInCode(code) : verifySignUpCode(code)
+  const verifyForgotPasswordCode = async (code: string) => {
+    if (!signInLoaded || !signIn) return
+    try {
+      const result = await signIn.attemptFirstFactor({
+        strategy: "reset_password_email_code",
+        code,
+      })
+
+      if (result.status === "needs_new_password") {
+        void navigate(getAddPasswordPath(), { state: { email, flow, code } })
+        return
+      }
+    } catch (error) {
+      console.error("Reset Password code verification error:", error)
+      setError("code", { message: "invalid" })
+    }
+  }
+
+  const verifyAuthCodeByFlow: Record<AUTH_FLOW, (code: string) => Promise<void>> = {
+    [AUTH_FLOW.SIGN_IN]: verifySignInCode,
+    [AUTH_FLOW.CREATE_ACCOUNT]: verifySignUpCode,
+    [AUTH_FLOW.FORGOT_PASSWORD]: verifyForgotPasswordCode,
+  }
+
+  const onSubmit = async ({ code }: { code: string }) => verifyAuthCodeByFlow[flow](code)
   const resendSignInCode = async () => {
     if (!signInLoaded || !signIn) return
     try {
@@ -115,8 +137,32 @@ const EnterVerificationCodePage = ({ email, flow }: EnterVerificationCodePagePro
     }
   }
 
-  const onResend = async () => (isSignInFlow ? resendSignInCode() : resendSignUpCode())
+  const resendForgotPasswordCode = async () => {
+    if (!signIn) return
+    try {
+      const resetCodeFactor = signIn.supportedFirstFactors?.find(
+        (factor) => factor.strategy === "reset_password_email_code"
+      )
+      if (resetCodeFactor?.strategy !== "reset_password_email_code") {
+        console.error("Reset password email code factor missing")
+        return
+      }
+      await signIn.prepareFirstFactor({
+        strategy: "reset_password_email_code",
+        emailAddressId: resetCodeFactor.emailAddressId,
+      })
+    } catch (error) {
+      console.error("Reset password code resend error", error)
+    }
+  }
 
+  const resendCodeByFlow: Record<AUTH_FLOW, () => Promise<void>> = {
+    [AUTH_FLOW.SIGN_IN]: resendSignInCode,
+    [AUTH_FLOW.CREATE_ACCOUNT]: resendSignUpCode,
+    [AUTH_FLOW.FORGOT_PASSWORD]: resendForgotPasswordCode,
+  }
+
+  const onResend = async () => resendCodeByFlow[flow]()
   return (
     <AuthLayout title={t("createAccount.enterCode")}>
       <Card.Section divider="flush">
@@ -131,6 +177,9 @@ const EnterVerificationCodePage = ({ email, flow }: EnterVerificationCodePagePro
             {t("createAccount.editEmail")}
           </Link>
         </p>
+        {isForgotPasswordFlow && (
+          <p className={styles["forgotPasswordDescription"]}>{t("signIn.forgotPasswordCode")}</p>
+        )}
         <Form onSubmit={handleSubmit(onSubmit)}>
           <Controller
             name="code"
@@ -190,18 +239,16 @@ const EnterVerificationCodePage = ({ email, flow }: EnterVerificationCodePagePro
 
 const EnterVerificationCode = (_props: { assetPaths: unknown }) => {
   const navigate = useNavigate()
-  const { pathname, state } = useLocation()
+  const { state } = useLocation()
   const email = state?.email
-  const flow: AUTH_FLOW = pathname.includes("/sign-in/code")
-    ? AUTH_FLOW.SIGN_IN
-    : AUTH_FLOW.CREATE_ACCOUNT
-  const fallbackPath = flow === AUTH_FLOW.SIGN_IN ? getSignInPath() : getCreateAccountPath()
+  const flow: AUTH_FLOW = state?.flow
+  const fallbackPath = getAuthFlowPath(flow)
   const { unleashFlag: clerkEnabled } = useFeatureFlag(UNLEASH_FLAG.CLERK_AUTH, false)
   useEffect(() => {
-    if (!email || !clerkEnabled) {
-      void navigate(fallbackPath)
+    if (!email || !flow || !clerkEnabled) {
+      void navigate(fallbackPath, { replace: true })
     }
-  }, [email, clerkEnabled, fallbackPath, navigate])
+  }, [email, clerkEnabled, fallbackPath, navigate, flow])
 
   if (!email || !clerkEnabled) {
     return null
