@@ -30,6 +30,7 @@ const CreateAnAccountPage = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<{ email: string }>({ mode: "onTouched", shouldFocusError: false })
+
   const onSubmit = async ({ email }: { email: string }) => {
     if (signUpStatus === "fetching" || !signUp) return
     const locale = getCurrentLanguage()

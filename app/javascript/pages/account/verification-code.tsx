@@ -44,10 +44,35 @@ const EnterVerificationCodePage = ({ email, flow }: EnterVerificationCodePagePro
 
   const editEmailHref = isSignInFlow ? getSignInPath() : getCreateAccountPath()
 
+  const transferToSignUp = async () => {
+    const { error } = await signUp.create({ transfer: true })
+    if (error) {
+      console.error("Account creation error", error)
+      setError("code", { message: "invalid" })
+      return
+    }
+    if (signUp.status === "complete") {
+      await signUp.finalize({
+        navigate: ({ decorateUrl }: { decorateUrl: (url: string) => string }) => {
+          void navigate(decorateUrl(getAddPasswordPath()))
+        },
+      })
+    } else {
+      console.error("Account creation error:", signUp)
+      setError("code", { message: "invalid" })
+    }
+  }
+
   const verifySignInCode = async (code: string) => {
     if (signInStatus === "fetching" || !signIn) return
-    await signIn.emailCode.verifyCode({ code })
-    if (signIn.status === "complete") {
+    const { error } = await signIn.emailCode.verifyCode({ code })
+    // user attempted to sign in with an email not linked to an account
+    if (error.errors[0]?.code === "sign_up_if_missing_transfer") {
+      void transferToSignUp()
+    } else if (error) {
+      console.error("Code verification error:", signIn)
+      setError("code", { message: "invalid" })
+    } else if (signIn.status === "complete") {
       await signIn.finalize({
         navigate: ({ decorateUrl }: { decorateUrl: (url: string) => string }) => {
           void navigate(decorateUrl(getMyAccountPath()))
@@ -70,7 +95,6 @@ const EnterVerificationCodePage = ({ email, flow }: EnterVerificationCodePagePro
         },
       })
     } else {
-      // Check why the sign-in is not complete
       console.error("Code verification error:", signUp)
       setError("code", { message: "invalid" })
     }
