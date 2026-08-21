@@ -1,5 +1,5 @@
 import React from "react"
-import { useAuth } from "@clerk/clerk-react"
+import { useAuth } from "@clerk/react"
 import { isTokenValid, parseUrlParams } from "./token"
 import UserContext from "./context/UserContext"
 import { getAddProfilePath, getLocalizedPath, RedirectType } from "../util/routeUtil"
