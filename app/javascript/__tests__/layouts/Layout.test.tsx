@@ -12,12 +12,12 @@ const getHeader = (container: HTMLElement) => {
   return header
 }
 
-describe("<Layout /> header auth links", () => {
+describe("<Layout />", () => {
   afterEach(() => {
     jest.restoreAllMocks()
   })
 
-  it("hides Sign in during the sign-in flow", async () => {
+  it("hides the sign in navigation header during the sign in flow", async () => {
     const { container } = await renderAndLoadAsync(
       <Layout>
         <div>content</div>
@@ -31,7 +31,7 @@ describe("<Layout /> header auth links", () => {
     expect(within(header).getByText("Rent")).not.toBeNull()
   })
 
-  it("hides Sign in during the create-account flow", async () => {
+  it("hides the sign in navigation header during the create account flow", async () => {
     const { container } = await renderAndLoadAsync(
       <Layout>
         <div>content</div>
@@ -45,7 +45,7 @@ describe("<Layout /> header auth links", () => {
     expect(within(header).getByText("Rent")).not.toBeNull()
   })
 
-  it("shows Account without the avatar when signed in without a profile", async () => {
+  it("shows the account navigation header without the avatar when signed in without a profile", async () => {
     setupUserContext({ loggedIn: true, hasProfile: false })
     const { container } = await renderAndLoadAsync(
       <Layout>
@@ -60,7 +60,7 @@ describe("<Layout /> header auth links", () => {
     expect(header.querySelector("[class*='account-avatar']")).toBeNull()
   })
 
-  it("hides Account on add-profile until the user finishes their profile", async () => {
+  it("hides the account navigation header on add profile until the user finishes their profile", async () => {
     setupUserContext({ loggedIn: true, hasProfile: false })
     const { container } = await renderAndLoadAsync(
       <Layout>
@@ -76,7 +76,7 @@ describe("<Layout /> header auth links", () => {
     expect(within(header).getByText("Rent")).not.toBeNull()
   })
 
-  it("shows Sign in after leaving the sign-in flow", async () => {
+  it("shows the sign in navigation header after leaving the sign in flow", async () => {
     const { container } = await renderAndLoadAsync(
       <Layout>
         <div>content</div>
@@ -89,7 +89,7 @@ describe("<Layout /> header auth links", () => {
     expect(within(header).getByText("Sign in")).not.toBeNull()
   })
 
-  it("shows Account after the user has signed in", async () => {
+  it("shows the account navigation header after the user has signed in", async () => {
     setupUserContext({ loggedIn: true })
     const { container } = await renderAndLoadAsync(
       <Layout>
