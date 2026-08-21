@@ -13,7 +13,7 @@
     "@babel/runtime": "^7.26.10",
     "@bloom-housing/ui-components": "^14.1.0",
     "@bloom-housing/ui-seeds": "^3.4.3",
-    "@clerk/clerk-react": "^5.61.6",
+    "@clerk/react": "^6.14.3",
     "@fortawesome/fontawesome-svg-core": "^6.6.0",
     "@fortawesome/free-brands-svg-icons": "^6.6.0",
     "@fortawesome/free-regular-svg-icons": "^6.6.0",

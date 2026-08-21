@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import React, { useEffect, useRef, useState } from "react"
 import { Navigate, useNavigate } from "react-router"
-import { useAuth, useClerk, useSignIn } from "@clerk/clerk-react"
+import { useAuth, useSignIn, useClerk } from "@clerk/react"
 import { Form, t } from "@bloom-housing/ui-components"
 import { Alert, Button, Card, Heading, Link, LoadingState } from "@bloom-housing/ui-seeds"
 import { useForm, useWatch } from "react-hook-form"
@@ -31,19 +31,19 @@ type SignInView = "verificationCode" | "password"
 const SignInFlow = () => {
   const navigate = useNavigate()
   const { isLoaded: authLoaded, isSignedIn } = useAuth()
-  const { isLoaded, signIn, setActive } = useSignIn()
   const { client } = useClerk()
+  const { signIn, fetchStatus: signInStatus } = useSignIn()
   const [showError, setShowError] = useState(false)
   const [view, setView] = useState<SignInView | null>(null)
   // Default to password sign-in, but prefer the code flow if the user last signed in via email code.
   useEffect(() => {
-    if (!isLoaded || view !== null) return
+    if (signInStatus === "fetching" || view !== null) return
     if (client?.lastAuthenticationStrategy === "email_code") {
       setView("verificationCode")
     } else {
       setView("password")
     }
-  }, [isLoaded, client?.lastAuthenticationStrategy, view])
+  }, [signInStatus, client?.lastAuthenticationStrategy, view])
   const alertRef = useRef<HTMLDivElement>(null)
   const {
     register,
@@ -63,18 +63,25 @@ const SignInFlow = () => {
   }, [showError])
 
   const onSubmit = async ({ email, password }: SignInFields) => {
-    if (!isLoaded || !signIn) return
+    if (signInStatus === "fetching" || !signIn) return
     setShowError(false)
     try {
-      const { status, createdSessionId } = await signIn.create({ identifier: email, password })
-      if (status !== "complete") {
-        console.error(`Sign in failed: ${status}`)
+      const { error } = await signIn.create({ identifier: email, password })
+      if (error) {
+        console.error(`Sign in failed: ${error}`)
         setShowError(true)
         return
       }
       clearHeaders() // Clear headers in case of existing Devise session (while testing)
       // TODO: if user has not completed their profile, redirect to profile page
-      await setActive({ session: createdSessionId, redirectUrl: getMyAccountPath() })
+      if (signIn.status === "complete") {
+        // await setActive({ session: createdSessionId, redirectUrl: getMyAccountPath() })
+        await signIn.finalize({
+          navigate: ({ decorateUrl }: { decorateUrl: (url: string) => string }) => {
+            void navigate(decorateUrl(getMyAccountPath()))
+          },
+        })
+      }
     } catch (error) {
       console.error("Sign in error", error)
       setShowError(true)
@@ -88,23 +95,19 @@ const SignInFlow = () => {
   }
 
   const onGetCodeSubmit = async ({ email }: SignInFields) => {
-    if (!isLoaded || !signIn) return
+    if (signInStatus === "fetching" || !signIn) return
     setShowError(false)
-    try {
-      const { supportedFirstFactors } = await signIn.create({ identifier: email })
-      const emailCodeFactor = (supportedFirstFactors ?? []).find(
-        (factor) => factor.strategy === "email_code"
-      )
-      if (emailCodeFactor?.strategy !== "email_code") {
-        throw new Error("Email code factor missing")
-      }
-      await signIn.prepareFirstFactor({
-        strategy: "email_code",
-        emailAddressId: emailCodeFactor.emailAddressId,
-      })
-      void navigate(getSignInCodePath(), { state: { email } })
-    } catch (error) {
+    const { error } = await signIn.create({ identifier: email })
+    if (error) {
       console.error("Sign in code error", error)
+      setShowError(true)
+      return
+    }
+    await signIn.emailCode.sendCode({ emailAddress: email })
+    if (signIn.status === "needs_first_factor") {
+      void navigate(getSignInCodePath(), { state: { email } })
+    } else {
+      console.error("Sign in code error", signIn)
       setShowError(true)
     }
   }
@@ -125,7 +128,7 @@ const SignInFlow = () => {
           variant="primary"
           size="sm"
           type="submit"
-          disabled={!isLoaded}
+          disabled={signInStatus === "fetching"}
         >
           {t("createAccount.getCode")}
         </Button>
@@ -154,7 +157,7 @@ const SignInFlow = () => {
           variant="primary"
           size="sm"
           type="submit"
-          disabled={!isLoaded}
+          disabled={signInStatus === "fetching"}
         >
           {t("pageTitle.signIn")}
         </Button>

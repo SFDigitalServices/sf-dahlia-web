@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import React, { useEffect } from "react"
 import { useLocation, useNavigate } from "react-router"
-import { useSignIn, useSignUp } from "@clerk/clerk-react"
+import { useSignIn, useSignUp } from "@clerk/react"
 import { ExpandableContent, Form, Order, t } from "@bloom-housing/ui-components"
 import { Card, Heading, Link, Button } from "@bloom-housing/ui-seeds"
 import { Controller, useForm } from "react-hook-form"
@@ -27,10 +27,10 @@ interface EnterVerificationCodePageProps {
 
 const EnterVerificationCodePage = ({ email, flow }: EnterVerificationCodePageProps) => {
   const navigate = useNavigate()
-  const { isLoaded: signUpLoaded, signUp, setActive: setActiveSignUp } = useSignUp()
-  const { isLoaded: signInLoaded, signIn, setActive: setActiveSignIn } = useSignIn()
+  const { signUp, fetchStatus: signUpStatus } = useSignUp()
+  const { signIn, fetchStatus: signInStatus } = useSignIn()
   const isSignInFlow = flow === AUTH_FLOW.SIGN_IN
-  const isLoaded = isSignInFlow ? signInLoaded : signUpLoaded
+  const isLoaded = isSignInFlow ? signInStatus !== "fetching" : signUpStatus !== "fetching"
   const {
     control,
     handleSubmit,
@@ -45,74 +45,48 @@ const EnterVerificationCodePage = ({ email, flow }: EnterVerificationCodePagePro
   const editEmailHref = isSignInFlow ? getSignInPath() : getCreateAccountPath()
 
   const verifySignInCode = async (code: string) => {
-    if (!signInLoaded || !signIn) return
-    try {
-      const completeSignIn = await signIn.attemptFirstFactor({
-        strategy: "email_code",
-        code,
+    if (signInStatus === "fetching" || !signIn) return
+    await signIn.emailCode.verifyCode({ code })
+    if (signIn.status === "complete") {
+      await signIn.finalize({
+        navigate: ({ decorateUrl }: { decorateUrl: (url: string) => string }) => {
+          void navigate(decorateUrl(getMyAccountPath()))
+        },
       })
-      if (completeSignIn.status === "complete") {
-        await setActiveSignIn({
-          session: completeSignIn.createdSessionId,
-          redirectUrl: getMyAccountPath(),
-        })
-      } else {
-        console.error("Sign in failed:", completeSignIn)
-        setError("code", { message: "invalid" })
-      }
-    } catch (error) {
-      console.error("Code verification error:", error)
+    } else {
+      // Check why the sign-in is not complete
+      console.error("Code verification error:", signIn)
       setError("code", { message: "invalid" })
     }
   }
 
   const verifySignUpCode = async (code: string) => {
-    if (!signUpLoaded || !signUp) return
-    try {
-      const completeSignUp = await signUp.attemptEmailAddressVerification({
-        code,
+    if (signUpStatus === "fetching" || !signUp) return
+    await signUp.emailCode.verifyCode({ code })
+    if (signUp.status === "complete") {
+      await signUp.finalize({
+        navigate: ({ decorateUrl }: { decorateUrl: (url: string) => string }) => {
+          void navigate(decorateUrl(getAddPasswordPath()))
+        },
       })
-      if (completeSignUp.status === "complete") {
-        await setActiveSignUp({ session: completeSignUp.createdSessionId })
-        void navigate(getAddPasswordPath())
-      } else {
-        console.error("Account creation failed:", completeSignUp)
-        setError("code", { message: "invalid" })
-      }
-    } catch (error) {
-      console.error("Code verification error:", error)
+    } else {
+      // Check why the sign-in is not complete
+      console.error("Code verification error:", signUp)
       setError("code", { message: "invalid" })
     }
   }
 
   const onSubmit = async ({ code }: { code: string }) =>
     isSignInFlow ? verifySignInCode(code) : verifySignUpCode(code)
+
   const resendSignInCode = async () => {
-    if (!signInLoaded || !signIn) return
-    try {
-      const emailCodeFactor = signIn.supportedFirstFactors?.find(
-        (factor) => factor.strategy === "email_code"
-      )
-      if (emailCodeFactor?.strategy !== "email_code") {
-        console.error("Sign in email code factor missing")
-        return
-      }
-      await signIn.prepareFirstFactor({
-        strategy: "email_code",
-        emailAddressId: emailCodeFactor.emailAddressId,
-      })
-    } catch (error) {
-      console.error("Sign in code resend error", error)
-    }
+    if (signInStatus === "fetching" || !signIn) return
+    await signIn.emailCode.sendCode()
   }
 
   const resendSignUpCode = async () => {
-    if (!signUpLoaded || !signUp) return
-    try {
-      await signUp.prepareEmailAddressVerification({ strategy: "email_code" })
-    } catch (error) {
-      console.error("Sign up code resend error", error)
-    }
+    if (signUpStatus === "fetching" || !signUp) return
+    await signUp.emailCode.sendCode()
   }
 
   const onResend = async () => (isSignInFlow ? resendSignInCode() : resendSignUpCode())
