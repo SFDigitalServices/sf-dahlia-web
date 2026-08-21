@@ -1,9 +1,11 @@
 /* eslint-disable @typescript-eslint/unbound-method */
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import { useLocation, useNavigate } from "react-router"
 import { useSignIn, useSignUp } from "@clerk/clerk-react"
 import { ExpandableContent, Form, Order, t } from "@bloom-housing/ui-components"
 import { Card, Heading, Link, Button } from "@bloom-housing/ui-seeds"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faCheck } from "@fortawesome/free-solid-svg-icons"
 import { Controller, useForm } from "react-hook-form"
 import withAppSetup from "../../layouts/withAppSetup"
 import AuthLayout from "../../layouts/AuthLayout"
@@ -31,6 +33,10 @@ const EnterVerificationCodePage = ({ email, flow }: EnterVerificationCodePagePro
   const { isLoaded: signInLoaded, signIn, setActive: setActiveSignIn } = useSignIn()
   const isSignInFlow = flow === AUTH_FLOW.SIGN_IN
   const isLoaded = isSignInFlow ? signInLoaded : signUpLoaded
+  // The user can send a new verification code every 30 seconds
+  const RESEND_VERIFICATION_CODE_SECONDS = 30
+  const [resendSeconds, setResendSeconds] = useState(RESEND_VERIFICATION_CODE_SECONDS)
+  const [isResending, setIsResending] = useState(false)
   const {
     control,
     handleSubmit,
@@ -41,6 +47,15 @@ const EnterVerificationCodePage = ({ email, flow }: EnterVerificationCodePagePro
     reValidateMode: "onSubmit",
     shouldFocusError: false,
   })
+
+  // Display a live countdown each second (1000 milliseconds) remaining
+  useEffect(() => {
+    if (resendSeconds <= 0) return
+    const timeout = window.setTimeout(() => {
+      setResendSeconds((seconds) => seconds - 1)
+    }, 1000)
+    return () => window.clearTimeout(timeout)
+  }, [resendSeconds])
 
   const editEmailHref = isSignInFlow ? getSignInPath() : getCreateAccountPath()
 
@@ -87,35 +102,49 @@ const EnterVerificationCodePage = ({ email, flow }: EnterVerificationCodePagePro
 
   const onSubmit = async ({ code }: { code: string }) =>
     isSignInFlow ? verifySignInCode(code) : verifySignUpCode(code)
-  const resendSignInCode = async () => {
-    if (!signInLoaded || !signIn) return
+
+  const resendSignInCode = async (): Promise<boolean> => {
+    if (!signInLoaded || !signIn) return false
     try {
       const emailCodeFactor = signIn.supportedFirstFactors?.find(
         (factor) => factor.strategy === "email_code"
       )
       if (emailCodeFactor?.strategy !== "email_code") {
         console.error("Sign in email code factor missing")
-        return
+        return false
       }
       await signIn.prepareFirstFactor({
         strategy: "email_code",
         emailAddressId: emailCodeFactor.emailAddressId,
       })
+      return true
     } catch (error) {
       console.error("Sign in code resend error", error)
+      return false
     }
   }
 
-  const resendSignUpCode = async () => {
-    if (!signUpLoaded || !signUp) return
+  const resendSignUpCode = async (): Promise<boolean> => {
+    if (!signUpLoaded || !signUp) return false
     try {
       await signUp.prepareEmailAddressVerification({ strategy: "email_code" })
+      return true
     } catch (error) {
       console.error("Sign up code resend error", error)
+      return false
     }
   }
 
-  const onResend = async () => (isSignInFlow ? resendSignInCode() : resendSignUpCode())
+  const onResend = async () => {
+    if (isResending || resendSeconds > 0) return
+    setIsResending(true)
+    try {
+      const sent = await (isSignInFlow ? resendSignInCode() : resendSignUpCode())
+      if (sent) setResendSeconds(RESEND_VERIFICATION_CODE_SECONDS)
+    } finally {
+      setIsResending(false)
+    }
+  }
 
   return (
     <AuthLayout title={t("createAccount.enterCode")}>
@@ -151,19 +180,34 @@ const EnterVerificationCodePage = ({ email, flow }: EnterVerificationCodePagePro
             {t("createAccount.confirmCode")}
           </Button>
         </Form>
-        <p className={styles.resendRow}>
-          <span className={styles.didntGetEmail}>{t("createAccount.didntGetEmail")}</span>
-          <Button
-            className={styles.sendAgain}
-            variant="text"
-            size="md"
-            onClick={() => {
-              void onResend()
-            }}
-          >
-            {t("createAccount.sendAgain")}
-          </Button>
-        </p>
+        <div className={styles.resendSection}>
+          <p className={styles.resendRow}>
+            <span className={styles.didntGetEmail}>{t("createAccount.didntGetEmail")}</span>
+            {resendSeconds > 0 ? (
+              <span className={styles.emailSent} role="status">
+                <FontAwesomeIcon icon={faCheck} />
+                {t("createAccount.emailSent")}
+              </span>
+            ) : (
+              <Button
+                className={styles.sendAgain}
+                variant="text"
+                size="md"
+                disabled={isResending}
+                onClick={() => {
+                  void onResend()
+                }}
+              >
+                {t("createAccount.sendAgain")}
+              </Button>
+            )}
+          </p>
+          {resendSeconds > 0 && (
+            <p className="field-note">
+              {t("createAccount.sendAgainIn", { seconds: resendSeconds })}
+            </p>
+          )}
+        </div>
         <ExpandableContent
           className={styles.howToUseCode}
           order={Order.below}
