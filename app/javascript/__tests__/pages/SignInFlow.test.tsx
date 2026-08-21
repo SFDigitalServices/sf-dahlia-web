@@ -10,6 +10,7 @@ import {
   restoreWindowLocation,
 } from "../__util__/renderUtils"
 import { setupUserContext } from "../__util__/accountUtils"
+import { authorizeHousingCounselor, getProfile } from "../../api/authApiService"
 
 jest.mock("@clerk/clerk-react", () => {
   const Clerk = jest.requireActual("@clerk/clerk-react")
@@ -19,9 +20,19 @@ jest.mock("@clerk/clerk-react", () => {
     useSignIn: jest.fn(),
     useSignUp: jest.fn(),
     useClerk: jest.fn(),
-    useAuth: jest.fn(() => ({ isLoaded: true, isSignedIn: false })),
+    useAuth: jest.fn(() => ({
+      isLoaded: true,
+      isSignedIn: false,
+      getToken: jest.fn().mockResolvedValue("clerk-session-token"),
+    })),
   }
 })
+
+jest.mock("../../api/authApiService", () => ({
+  ...jest.requireActual("../../api/authApiService"),
+  authorizeHousingCounselor: jest.fn(),
+  getProfile: jest.fn(),
+}))
 
 jest.mock("react-router", () => ({
   ...jest.requireActual("react-router"),
@@ -64,7 +75,11 @@ describe("<SignInFlow />", () => {
       .mockResolvedValue({ status: "complete", createdSessionId: "session-id" })
     mockSetActive = jest.fn().mockResolvedValue(undefined)
     ;(useNavigate as jest.Mock).mockReturnValue(mockNavigate)
-    ;(useAuth as jest.Mock).mockReturnValue({ isLoaded: true, isSignedIn: false })
+    ;(useAuth as jest.Mock).mockReturnValue({
+      isLoaded: true,
+      isSignedIn: false,
+      getToken: jest.fn().mockResolvedValue("clerk-session-token"),
+    })
     ;(useSignIn as jest.Mock).mockReturnValue({
       isLoaded: true,
       signIn: { create: mockSignInCreate, prepareFirstFactor: mockPrepareFirstFactor },
@@ -173,7 +188,7 @@ describe("<SignInFlow />", () => {
       emailAddressId: "idn_email",
     })
     expect(mockNavigate).toHaveBeenCalledWith("/sign-in/code", {
-      state: { email: "test@test.com" },
+      state: { email: "test@test.com", housingCounselorToken: null },
     })
   })
 
@@ -216,5 +231,52 @@ describe("<SignInFlow />", () => {
     expect(mockSetActive).not.toHaveBeenCalled()
 
     consoleError.mockRestore()
+  })
+
+  describe("housing counselor access", () => {
+    beforeEach(() => {
+      window.location.search = "?t=jwt.token"
+      ;(authorizeHousingCounselor as jest.Mock).mockResolvedValue(undefined)
+      ;(getProfile as jest.Mock).mockResolvedValue({ email: "test@test.com" })
+    })
+
+    it("authenticates with Clerk after a successful sign in", async () => {
+      await renderAndLoadAsync(<SignIn assetPaths={{}} />)
+      await submitCredentials()
+
+      await waitFor(() => {
+        expect(mockSetActive).toHaveBeenCalledWith({ session: "session-id" })
+      })
+      expect(authorizeHousingCounselor).toHaveBeenCalledWith("jwt.token", "clerk-session-token")
+      expect(mockNavigate).toHaveBeenCalledWith("/account")
+    })
+
+    it("shows an error and stays on sign in when housing counselor authentication fails", async () => {
+      ;(authorizeHousingCounselor as jest.Mock).mockRejectedValue(new Error("forbidden"))
+
+      await renderAndLoadAsync(<SignIn assetPaths={{}} />)
+      await submitCredentials()
+
+      await waitFor(() => {
+        expect(authorizeHousingCounselor).toHaveBeenCalledWith("jwt.token", "clerk-session-token")
+      })
+      expect(mockNavigate).not.toHaveBeenCalledWith("/account")
+      expect(screen.getByRole("heading", { name: /^sign in$/i, level: 1 })).not.toBeNull()
+    })
+
+    it("authenticates an already signed in Clerk user", async () => {
+      ;(useAuth as jest.Mock).mockReturnValue({
+        isLoaded: true,
+        isSignedIn: true,
+        getToken: jest.fn().mockResolvedValue("clerk-session-token"),
+      })
+
+      await renderAndLoadAsync(<SignIn assetPaths={{}} />)
+
+      await waitFor(() => {
+        expect(authorizeHousingCounselor).toHaveBeenCalledWith("jwt.token", "clerk-session-token")
+      })
+      expect(mockNavigate).toHaveBeenCalledWith("/account")
+    })
   })
 })

@@ -18,6 +18,7 @@ import {
 } from "../util/routeUtil"
 import { renderInlineMarkup } from "../util/languageUtil"
 import { AUTH_FLOW } from "../modules/constants"
+import { authorizeHousingCounselor } from "../api/authApiService"
 import { clearHeaders } from "./token"
 import styles from "./SignInFlow.module.scss"
 
@@ -28,13 +29,16 @@ interface SignInFields {
 
 type SignInView = "verificationCode" | "password"
 
+const getHousingCounselorToken = () => new URLSearchParams(window.location.search).get("t")
+
 const SignInFlow = () => {
   const navigate = useNavigate()
-  const { isLoaded: authLoaded, isSignedIn } = useAuth()
+  const { isLoaded: authLoaded, isSignedIn, getToken } = useAuth()
   const { isLoaded, signIn, setActive } = useSignIn()
   const { client } = useClerk()
   const [showError, setShowError] = useState(false)
   const [view, setView] = useState<SignInView | null>(null)
+  const housingCounselorChecked = useRef(false)
   // Default to password sign-in, but prefer the code flow if the user last signed in via email code.
   useEffect(() => {
     if (!isLoaded || view !== null) return
@@ -62,6 +66,20 @@ const SignInFlow = () => {
     }
   }, [showError])
 
+  const checkHousingCounselorAccess = async () => {
+    const token = getHousingCounselorToken()
+    if (!token) return true
+    try {
+      const sessionToken = await getToken()
+      if (!sessionToken) return false
+      await authorizeHousingCounselor(token, sessionToken)
+      return true
+    } catch {
+      setShowError(true)
+      return false
+    }
+  }
+
   const onSubmit = async ({ email, password }: SignInFields) => {
     if (!isLoaded || !signIn) return
     setShowError(false)
@@ -73,6 +91,14 @@ const SignInFlow = () => {
         return
       }
       clearHeaders() // Clear headers in case of existing Devise session (while testing)
+      const housingCounselorToken = getHousingCounselorToken()
+      if (housingCounselorToken) {
+        housingCounselorChecked.current = true
+        await setActive({ session: createdSessionId })
+        if (!(await checkHousingCounselorAccess())) return
+        void navigate(getMyAccountPath())
+        return
+      }
       // TODO: if user has not completed their profile, redirect to profile page
       await setActive({ session: createdSessionId, redirectUrl: getMyAccountPath() })
     } catch (error) {
@@ -102,14 +128,37 @@ const SignInFlow = () => {
         strategy: "email_code",
         emailAddressId: emailCodeFactor.emailAddressId,
       })
-      void navigate(getSignInCodePath(), { state: { email } })
+      void navigate(getSignInCodePath(), {
+        state: { email, housingCounselorToken: getHousingCounselorToken() },
+      })
     } catch (error) {
       console.error("Sign in code error", error)
       setShowError(true)
     }
   }
 
-  if (authLoaded && isSignedIn) {
+  useEffect(() => {
+    if (!authLoaded || !isSignedIn || housingCounselorChecked.current) return
+    const token = getHousingCounselorToken()
+    if (!token) return
+
+    housingCounselorChecked.current = true
+    void (async () => {
+      try {
+        const sessionToken = await getToken()
+        if (!sessionToken) {
+          setShowError(true)
+          return
+        }
+        await authorizeHousingCounselor(token, sessionToken)
+        void navigate(getMyAccountPath())
+      } catch {
+        setShowError(true)
+      }
+    })()
+  }, [authLoaded, getToken, isSignedIn, navigate])
+
+  if (authLoaded && isSignedIn && !getHousingCounselorToken()) {
     return <Navigate to={getMyAccountPath()} replace />
   }
 
