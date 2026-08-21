@@ -1,6 +1,7 @@
 import { Field, Select, t } from "@bloom-housing/ui-components"
 import { LoadingState } from "@bloom-housing/ui-seeds"
 import React, { useEffect, useState } from "react"
+import { useAuth } from "@clerk/clerk-react"
 import { UseFormMethods } from "react-hook-form"
 import Fieldset from "./Fieldset"
 import { ErrorMessages } from "./ErrorSummaryBanner"
@@ -28,10 +29,15 @@ const ShareAccess = ({
   errors?: UseFormMethods["errors"]
 }) => {
   const [agencies, setAgencies] = useState<HousingCounselorAgency[]>(null)
+  const { getToken } = useAuth()
 
   useEffect(() => {
-    void getHousingCounselorAgencies().then((agencies) => setAgencies(agencies ?? []))
-  }, [])
+    void (async () => {
+      const sessionToken = await getToken()
+      if (!sessionToken) return
+      setAgencies((await getHousingCounselorAgencies(sessionToken)) ?? [])
+    })()
+  }, [getToken])
 
   return (
     <LoadingState loading={!agencies}>
@@ -100,10 +106,15 @@ const RevokeAccess = ({
   lastModified?: string
 }) => {
   const [agencies, setAgencies] = useState<HousingCounselorAgency[]>(null)
+  const { getToken } = useAuth()
 
   useEffect(() => {
-    void getHousingCounselorAgencies().then(setAgencies)
-  }, [])
+    void (async () => {
+      const sessionToken = await getToken()
+      if (!sessionToken) return
+      setAgencies(await getHousingCounselorAgencies(sessionToken))
+    })()
+  }, [getToken])
 
   const agency = agencies?.find(({ id }) => id === housingCounselorAgencyId)
 

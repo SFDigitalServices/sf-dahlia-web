@@ -122,7 +122,7 @@ class Api::V1::AccountController < ApiController
   end
 
   def authenticate_user!(*args)
-    return super unless %w[profile create_profile].include?(action_name)
+    return super unless %w[profile create_profile update_housing_counselor].include?(action_name)
 
     @clerk_user_id = clerk&.user_id
     return if @clerk_user_id.present?

@@ -47,7 +47,12 @@ export const setupUserContext = ({
   })
 
   if (jest.isMockFunction(useAuth)) {
-    useAuth.mockReturnValue({ isLoaded: true, isSignedIn: loggedIn, signOut: jest.fn() })
+    useAuth.mockReturnValue({
+      isLoaded: true,
+      isSignedIn: loggedIn,
+      signOut: jest.fn(),
+      getToken: jest.fn().mockResolvedValue("clerk-session-token"),
+    })
   }
 
   return mockContextValue

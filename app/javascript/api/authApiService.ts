@@ -3,10 +3,10 @@ import { Contact, User, UserData } from "../authentication/user"
 import {
   authenticatedDelete,
   authenticatedGet,
-  authenticatedPost,
   authenticatedPut,
   get,
   post,
+  put,
 } from "./apiService"
 import { AuthHeaders, setAuthHeaders } from "../authentication/token"
 import { Application } from "./types/rails/application/RailsApplication"
@@ -25,6 +25,10 @@ const contactObject = (user: User): Contact => ({
   alternatePhone: user.alternatePhone,
   alternatePhoneType: user.alternatePhoneType,
   housingCounselingAgencyId: user.housingCounselingAgencyId,
+})
+
+const clerkHeaders = (sessionToken: string) => ({
+  headers: { Authorization: `Bearer ${sessionToken}` },
 })
 
 export const signIn = async (email: string, password: string): Promise<User> =>
@@ -73,14 +77,14 @@ export const createProfile = async (
   post<{ contact: { contactId: string } }>(
     "/api/v1/account/profile",
     { contact },
-    { headers: { Authorization: `Bearer ${sessionToken}` } }
+    clerkHeaders(sessionToken)
   ).then(({ data }) => data)
 
 export const getProfile = async (sessionToken?: string): Promise<User> =>
   sessionToken
-    ? get<UserData>("/api/v1/account/profile", {
-        headers: { Authorization: `Bearer ${sessionToken}` },
-      }).then(({ data }: AxiosResponse<UserData>) => data.data)
+    ? get<UserData>("/api/v1/account/profile", clerkHeaders(sessionToken)).then(
+        ({ data }: AxiosResponse<UserData>) => data.data
+      )
     : authenticatedGet<UserData>("/api/v1/auth/validate_token").then((res) => res.data.data)
 
 export const getApplications = async (): Promise<{ applications: Application[] }> =>
@@ -119,10 +123,15 @@ export const updateEmail = async (email: string): Promise<string> =>
     },
   }).then(({ data }) => data.status)
 
-export const updateHousingCounselorAccess = async (user: User): Promise<User> =>
-  authenticatedPut<{ contact: User }>(updateHousingCounselor(), {
-    contact: contactObject(user),
-  }).then(({ data }) => data.contact)
+export const updateHousingCounselorAccess = async (
+  user: User,
+  sessionToken: string
+): Promise<User> =>
+  put<{ contact: User }>(
+    updateHousingCounselor(),
+    { contact: contactObject(user) },
+    clerkHeaders(sessionToken)
+  ).then(({ data }) => data.contact)
 
 export type HousingCounselorAgency = {
   id: string
@@ -130,13 +139,19 @@ export type HousingCounselorAgency = {
   shortName: string | null
 }
 
-export const getHousingCounselorAgencies = async (): Promise<HousingCounselorAgency[]> =>
-  authenticatedGet<{ agencies: HousingCounselorAgency[] }>(housingCounselorAgencies()).then(
-    ({ data }) => data.agencies
-  )
+export const getHousingCounselorAgencies = async (
+  sessionToken: string
+): Promise<HousingCounselorAgency[]> =>
+  get<{ agencies: HousingCounselorAgency[] }>(
+    housingCounselorAgencies(),
+    clerkHeaders(sessionToken)
+  ).then(({ data }) => data.agencies)
 
-export const authorizeHousingCounselor = async (token: string): Promise<void> => {
-  await authenticatedPost("/api/v1/housing-counselor/access", { t: token })
+export const authenticateHousingCounselor = async (
+  token: string,
+  sessionToken: string
+): Promise<void> => {
+  await post("/api/v1/housing-counselor/access", { t: token }, clerkHeaders(sessionToken))
 }
 
 export const resetPassword = async (new_password: string): Promise<string> =>

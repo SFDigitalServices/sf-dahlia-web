@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import React, { useContext, useEffect, useState } from "react"
+import { useAuth } from "@clerk/clerk-react"
 import withAppSetup from "../../layouts/withAppSetup"
 import UserContext from "../../authentication/context/UserContext"
 
@@ -248,6 +249,7 @@ const PasswordSection = ({ user, setUser }: SectionProps) => {
 
 const HousingCounselorSection = ({ user, setUser }: SectionProps) => {
   const { saveProfile } = useContext(UserContext)
+  const { getToken } = useAuth()
   const [loading, setLoading] = useState(false)
   const [successToast, setSuccessToast] = useState<string | null>(null)
   const {
@@ -275,8 +277,13 @@ const HousingCounselorSection = ({ user, setUser }: SectionProps) => {
           housingCounselingAgencyId: data.housingCounselingAgencyId,
         }
 
-    updateHousingCounselorAccess(newUser)
-      .then((contact) => {
+    void (async () => {
+      try {
+        const sessionToken = await getToken()
+        if (!sessionToken) {
+          throw new Error("Missing Clerk session token")
+        }
+        const contact = await updateHousingCounselorAccess(newUser, sessionToken)
         const updatedUser: User = {
           ...newUser,
           housingCounselingAgencyId: contact?.housingCounselingAgencyId,
@@ -286,13 +293,12 @@ const HousingCounselorSection = ({ user, setUser }: SectionProps) => {
         setUser(updatedUser)
         saveProfile(updatedUser)
         setSuccessToast(toastMessage)
-      })
-      .catch(() => {
+      } catch {
         setSuccessToast(null)
-      })
-      .finally(() => {
+      } finally {
         setLoading(false)
-      })
+      }
+    })()
   }
 
   return (
@@ -500,10 +506,12 @@ const DateOfBirthSection = ({ user, setUser }: SectionProps) => {
 }
 
 const AccountSettings = ({ profile }: { profile: User }) => {
+  const { unleashFlag: clerkEnabled } = useFeatureFlag(UNLEASH_FLAG.CLERK_AUTH, false)
   const { unleashFlag: housingCounselorAccessEnabled } = useFeatureFlag(
     UNLEASH_FLAG.HOUSING_COUNSELOR_ACCESS,
     false
   )
+  const showHousingCounselorSection = clerkEnabled && housingCounselorAccessEnabled
   const [user, setUser] = useState(null)
   const [nameUpdateBanner, setNameUpdateBanner] = useState(false)
   const [nameSavedBanner, setNameSavedBanner] = useState(false)
@@ -565,7 +573,7 @@ const AccountSettings = ({ profile }: { profile: User }) => {
       <DateOfBirthSection user={user} setUser={setUser} />
       <EmailSection user={user} setUser={setUser} />
       <PasswordSection user={user} setUser={setUser} />
-      {housingCounselorAccessEnabled && <HousingCounselorSection user={user} setUser={setUser} />}
+      {showHousingCounselorSection && <HousingCounselorSection user={user} setUser={setUser} />}
     </Card>
   )
 }
