@@ -19,7 +19,7 @@ import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import { AUTH_FLOW, UNLEASH_FLAG } from "../../modules/constants"
 import GetHelp from "./components/GetHelp"
 import VerificationCodeField from "./components/VerificationCodeField"
-import { authenticateHousingCounselor } from "../../api/authApiService"
+import { authorizeHousingCounselor } from "../../api/authApiService"
 
 interface EnterVerificationCodePageProps {
   email: string
@@ -65,7 +65,7 @@ const EnterVerificationCodePage = ({
             setError("code", { message: "invalid" })
             return
           }
-          await authenticateHousingCounselor(housingCounselorToken, sessionToken)
+          await authorizeHousingCounselor(housingCounselorToken, sessionToken)
           // TODO: housing counselor banner and applicant view
           void navigate(getMyAccountPath())
           return

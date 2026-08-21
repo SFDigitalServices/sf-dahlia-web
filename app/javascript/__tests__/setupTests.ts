@@ -71,7 +71,12 @@ jest.mock("@clerk/clerk-react", () => {
 const setDefaultClerkAuth = () => {
   const { useAuth } = jest.requireMock<typeof import("@clerk/clerk-react")>("@clerk/clerk-react")
   if (jest.isMockFunction(useAuth)) {
-    useAuth.mockReturnValue({ isLoaded: true, isSignedIn: false, signOut: jest.fn() })
+    useAuth.mockReturnValue({
+      isLoaded: true,
+      isSignedIn: false,
+      signOut: jest.fn(),
+      getToken: jest.fn().mockResolvedValue("clerk-session-token"),
+    })
   }
 }
 

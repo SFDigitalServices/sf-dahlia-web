@@ -55,5 +55,11 @@ export const setupUserContext = ({
     })
   }
 
+  if (loggedIn) {
+    jest
+      .spyOn(jest.requireActual("../../api/authApiService"), "getProfile")
+      .mockResolvedValue(mockProfile ?? mockProfileStub)
+  }
+
   return mockContextValue
 }

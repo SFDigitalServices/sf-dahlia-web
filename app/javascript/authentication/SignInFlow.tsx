@@ -18,7 +18,7 @@ import {
 } from "../util/routeUtil"
 import { renderInlineMarkup } from "../util/languageUtil"
 import { AUTH_FLOW } from "../modules/constants"
-import { authenticateHousingCounselor } from "../api/authApiService"
+import { authorizeHousingCounselor } from "../api/authApiService"
 import { clearHeaders } from "./token"
 import styles from "./SignInFlow.module.scss"
 
@@ -72,7 +72,7 @@ const SignInFlow = () => {
     try {
       const sessionToken = await getToken()
       if (!sessionToken) return false
-      await authenticateHousingCounselor(token, sessionToken)
+      await authorizeHousingCounselor(token, sessionToken)
       return true
     } catch {
       setShowError(true)
@@ -150,7 +150,7 @@ const SignInFlow = () => {
           setShowError(true)
           return
         }
-        await authenticateHousingCounselor(token, sessionToken)
+        await authorizeHousingCounselor(token, sessionToken)
         void navigate(getMyAccountPath())
       } catch {
         setShowError(true)

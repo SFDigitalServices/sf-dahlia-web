@@ -7,13 +7,15 @@ import {
 } from "../../__util__/renderUtils"
 import SettingsPage from "../../../pages/account/settings"
 import { fireEvent, screen, within, act } from "@testing-library/react"
-import { authenticatedGet, authenticatedPut } from "../../../api/apiService"
+import { authenticatedPut, get, put } from "../../../api/apiService"
 import { mockProfileStub, setupUserContext } from "../../__util__/accountUtils"
 import { useFeatureFlag } from "../../../hooks/useFeatureFlag"
 
 jest.mock("../../../api/apiService", () => ({
   authenticatedPut: jest.fn(),
   authenticatedGet: jest.fn(),
+  get: jest.fn(),
+  put: jest.fn(),
 }))
 
 jest.mock("../../../hooks/useFeatureFlag", () => ({
@@ -35,7 +37,7 @@ describe("<SettingsPage />", () => {
       originalLocation = mockWindowLocation()
       ;(useFeatureFlag as jest.Mock).mockReturnValue({ flagsReady: true, unleashFlag: true })
       setupUserContext({ loggedIn: true })
-      ;(authenticatedGet as jest.Mock).mockResolvedValue({ data: { agencies: [] } })
+      ;(get as jest.Mock).mockResolvedValue({ data: { agencies: [] } })
       promise = Promise.resolve()
       await renderAndLoadAsync(<SettingsPage assetPaths={{}} />)
     })
@@ -719,7 +721,7 @@ describe("<SettingsPage />", () => {
         originalLocation = mockWindowLocation()
         ;(useFeatureFlag as jest.Mock).mockReturnValue({ flagsReady: true, unleashFlag: true })
         mockContext = setupUserContext({ loggedIn: true })
-        ;(authenticatedGet as jest.Mock).mockResolvedValue({ data: { agencies: mockAgencies } })
+        ;(get as jest.Mock).mockResolvedValue({ data: { agencies: mockAgencies } })
         await renderAndLoadAsync(<SettingsPage assetPaths={{}} />)
       })
 
@@ -733,7 +735,7 @@ describe("<SettingsPage />", () => {
       })
 
       it("shares access with a housing counselor agency when the user clicks the share button", async () => {
-        ;(authenticatedPut as jest.Mock).mockResolvedValue({
+        ;(put as jest.Mock).mockResolvedValue({
           data: {
             contact: {
               ...mockProfileStub,
@@ -758,13 +760,14 @@ describe("<SettingsPage />", () => {
             /you shared your account\. we sent a confirmation to your email\./i
           )
         ).toBeInTheDocument()
-        expect(authenticatedPut).toHaveBeenCalledWith(
+        expect(put).toHaveBeenCalledWith(
           "/api/v1/account/update-housing-counselor",
           expect.objectContaining({
             contact: expect.objectContaining({
               housingCounselingAgencyId: "123",
             }),
-          })
+          }),
+          { headers: { Authorization: "Bearer clerk-session-token" } }
         )
         expect(mockContext.saveProfile).toHaveBeenCalledWith(
           expect.objectContaining({
@@ -774,7 +777,7 @@ describe("<SettingsPage />", () => {
       })
 
       it("does not show a success toast when sharing fails", async () => {
-        ;(authenticatedPut as jest.Mock).mockRejectedValue(new Error("Network error"))
+        ;(put as jest.Mock).mockRejectedValue(new Error("Network error"))
 
         const agencySelect = await screen.findByLabelText(/counseling agency/i)
         const agreeCheckbox = screen.getByLabelText(/i agree to share my account with this agency/i)
@@ -805,12 +808,12 @@ describe("<SettingsPage />", () => {
             housingCounselingAgencyId: "123",
           },
         })
-        ;(authenticatedGet as jest.Mock).mockResolvedValue({ data: { agencies: mockAgencies } })
+        ;(get as jest.Mock).mockResolvedValue({ data: { agencies: mockAgencies } })
         await renderAndLoadAsync(<SettingsPage assetPaths={{}} />)
       })
 
       it("revokes housing counselor access when the user clicks the revoke button", async () => {
-        ;(authenticatedPut as jest.Mock).mockResolvedValue({
+        ;(put as jest.Mock).mockResolvedValue({
           data: {
             contact: {
               ...mockProfileStub,
@@ -835,13 +838,14 @@ describe("<SettingsPage />", () => {
             /you stopped sharing your account\. we sent a confirmation to your email\./i
           )
         ).toBeInTheDocument()
-        expect(authenticatedPut).toHaveBeenCalledWith(
+        expect(put).toHaveBeenCalledWith(
           "/api/v1/account/update-housing-counselor",
           expect.objectContaining({
             contact: expect.objectContaining({
               housingCounselingAgencyId: null,
             }),
-          })
+          }),
+          { headers: { Authorization: "Bearer clerk-session-token" } }
         )
         expect(mockContext.saveProfile).toHaveBeenCalledWith(
           expect.objectContaining({
@@ -857,7 +861,7 @@ describe("<SettingsPage />", () => {
         originalLocation = mockWindowLocation()
         ;(useFeatureFlag as jest.Mock).mockReturnValue({ flagsReady: true, unleashFlag: false })
         setupUserContext({ loggedIn: true })
-        ;(authenticatedGet as jest.Mock).mockResolvedValue({ data: { agencies: mockAgencies } })
+        ;(get as jest.Mock).mockResolvedValue({ data: { agencies: mockAgencies } })
         await renderAndLoadAsync(<SettingsPage assetPaths={{}} />)
       })
 

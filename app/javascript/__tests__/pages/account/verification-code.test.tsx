@@ -1,5 +1,5 @@
 import React from "react"
-import { useSignIn, useSignUp } from "@clerk/clerk-react"
+import { useSignIn, useSignUp, useAuth } from "@clerk/clerk-react"
 import { t } from "@bloom-housing/ui-components"
 import { screen, waitFor, cleanup } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
@@ -12,13 +12,18 @@ import {
 } from "../../__util__/renderUtils"
 import { setupUserContext } from "../../__util__/accountUtils"
 import { useFeatureFlag } from "../../../hooks/useFeatureFlag"
+import { authorizeHousingCounselor } from "../../../api/authApiService"
 
 jest.mock("@clerk/clerk-react", () => {
   const Clerk = jest.requireActual("@clerk/clerk-react")
   return {
     ...Clerk,
     ClerkProvider: ({ children }: { children: React.ReactNode }) => children,
-    useAuth: jest.fn(() => ({ isLoaded: true, isSignedIn: false })),
+    useAuth: jest.fn(() => ({
+      isLoaded: true,
+      isSignedIn: false,
+      getToken: jest.fn().mockResolvedValue("clerk-session-token"),
+    })),
     useSignUp: jest.fn(),
     useSignIn: jest.fn(),
   }
@@ -32,6 +37,11 @@ jest.mock("react-router", () => ({
 
 jest.mock("../../../hooks/useFeatureFlag", () => ({
   useFeatureFlag: jest.fn(() => ({ flagsReady: true, unleashFlag: true })),
+}))
+
+jest.mock("../../../api/authApiService", () => ({
+  ...jest.requireActual("../../../api/authApiService"),
+  authorizeHousingCounselor: jest.fn(),
 }))
 
 describe("<EnterVerificationCode />", () => {
@@ -252,6 +262,37 @@ describe("<EnterVerificationCode />", () => {
       redirectUrl: "/account",
     })
     expect(mockAttemptEmailAddressVerification).not.toHaveBeenCalled()
+  })
+
+  it("authenticates a housing counselor with Clerk after verifying the sign-in code", async () => {
+    cleanup()
+    const mockGetToken = jest.fn().mockResolvedValue("clerk-session-token")
+    ;(useAuth as jest.Mock).mockReturnValue({
+      isLoaded: true,
+      isSignedIn: false,
+      getToken: mockGetToken,
+    })
+    ;(useLocation as jest.Mock).mockReturnValue({
+      pathname: "/sign-in/code",
+      state: { email: "test@example.com", housingCounselorToken: "jwt.token" },
+    })
+    mockAttemptFirstFactor.mockResolvedValue({
+      status: "complete",
+      createdSessionId: "session_456",
+    })
+    ;(authorizeHousingCounselor as jest.Mock).mockResolvedValue(undefined)
+    await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
+
+    const user = userEvent.setup()
+    await user.click(screen.getAllByRole("textbox")[0])
+    await user.paste("123456")
+    await user.click(screen.getByRole("button", { name: t("createAccount.confirmCode") }))
+
+    await waitFor(() => {
+      expect(authorizeHousingCounselor).toHaveBeenCalledWith("jwt.token", "clerk-session-token")
+    })
+    expect(mockSetActiveSignIn).toHaveBeenCalledWith({ session: "session_456" })
+    expect(mockNavigate).toHaveBeenCalledWith("/account")
   })
 
   it("resends the code for sign in", async () => {

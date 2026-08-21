@@ -147,7 +147,7 @@ export const getHousingCounselorAgencies = async (
     clerkHeaders(sessionToken)
   ).then(({ data }) => data.agencies)
 
-export const authenticateHousingCounselor = async (
+export const authorizeHousingCounselor = async (
   token: string,
   sessionToken: string
 ): Promise<void> => {
