@@ -2,7 +2,7 @@ import React from "react"
 import { useAuth } from "@clerk/clerk-react"
 import { isTokenValid, parseUrlParams } from "./token"
 import UserContext from "./context/UserContext"
-import { getLocalizedPath, RedirectType } from "../util/routeUtil"
+import { getAddProfilePath, getLocalizedPath, RedirectType } from "../util/routeUtil"
 import { getCurrentLanguage } from "../util/languageUtil"
 import { useGTMDataLayer } from "../hooks/analytics/useGTMDataLayer"
 import { useFeatureFlag } from "../hooks/useFeatureFlag"
@@ -57,14 +57,21 @@ export const withAuthentication = <P extends object>(
 
   const ClerkAuthGate = (props: P) => {
     const { isLoaded, isSignedIn } = useAuth()
+    const { profile, initialStateLoaded } = React.useContext(UserContext)
+    const loading = !isLoaded || (isSignedIn && !profile && !initialStateLoaded)
 
     React.useEffect(() => {
-      if (isLoaded && !isSignedIn) {
+      if (loading) return
+      if (!isSignedIn) {
         window.location.assign(getSignInPath(redirectType))
+        return
       }
-    }, [isLoaded, isSignedIn])
+      if (!profile) {
+        window.location.assign(getAddProfilePath())
+      }
+    }, [loading, isSignedIn, profile])
 
-    if (!isLoaded || !isSignedIn) {
+    if (loading || !isSignedIn || !profile) {
       return null
     }
 
