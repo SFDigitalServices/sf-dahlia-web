@@ -128,13 +128,13 @@ const SignInFlow = () => {
   const onGetCodeSubmit = async ({ email }: SignInFields) => {
     if (signInStatus === "fetching" || !signIn) return
     setShowError(false)
-    const { error } = await signIn.create({ identifier: email })
+    const { error } = await signIn.create({ identifier: email, signUpIfMissing: true })
     if (error) {
       console.error("Sign in code error", error)
       setShowError(true)
       return
     }
-    await signIn.emailCode.sendCode({ emailAddress: email })
+    await signIn.emailCode.sendCode()
     if (signIn.status === "needs_first_factor") {
       void navigate(getSignInCodePath(), { state: { email, housingCounselorToken: getHousingCounselorToken() } })
     } else {
