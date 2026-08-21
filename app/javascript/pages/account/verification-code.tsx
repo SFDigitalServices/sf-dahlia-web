@@ -27,15 +27,20 @@ interface EnterVerificationCodePageProps {
   flow: AUTH_FLOW
 }
 
+// The user can send a new verification code every 30 seconds
+const RESEND_CODE_MS = 30000
+
+const remainingResendSeconds = (expiresAt: number) =>
+  Math.max(0, Math.ceil((expiresAt - Date.now()) / 1000))
+
 const EnterVerificationCodePage = ({ email, flow }: EnterVerificationCodePageProps) => {
   const navigate = useNavigate()
   const { isLoaded: signUpLoaded, signUp, setActive: setActiveSignUp } = useSignUp()
   const { isLoaded: signInLoaded, signIn, setActive: setActiveSignIn } = useSignIn()
   const isSignInFlow = flow === AUTH_FLOW.SIGN_IN
   const isLoaded = isSignInFlow ? signInLoaded : signUpLoaded
-  // The user can send a new verification code every 30 seconds
-  const RESEND_VERIFICATION_CODE_SECONDS = 30
-  const [resendSeconds, setResendSeconds] = useState(RESEND_VERIFICATION_CODE_SECONDS)
+  const [resendExpiresAt, setResendExpiresAt] = useState(() => Date.now() + RESEND_CODE_MS)
+  const [resendSeconds, setResendSeconds] = useState(RESEND_CODE_MS / 1000)
   const [isResending, setIsResending] = useState(false)
   const {
     control,
@@ -50,12 +55,18 @@ const EnterVerificationCodePage = ({ email, flow }: EnterVerificationCodePagePro
 
   // Display a live countdown each second (1000 milliseconds) remaining
   useEffect(() => {
-    if (resendSeconds <= 0) return
-    const timeout = window.setTimeout(() => {
-      setResendSeconds((seconds) => seconds - 1)
-    }, 1000)
-    return () => window.clearTimeout(timeout)
-  }, [resendSeconds])
+    if (remainingResendSeconds(resendExpiresAt) <= 0) return
+    let timeoutId: number
+    const tick = () => {
+      const remaining = remainingResendSeconds(resendExpiresAt)
+      setResendSeconds(remaining)
+      if (remaining > 0) {
+        timeoutId = window.setTimeout(tick, 1000)
+      }
+    }
+    timeoutId = window.setTimeout(tick, 1000)
+    return () => window.clearTimeout(timeoutId)
+  }, [resendExpiresAt])
 
   const editEmailHref = isSignInFlow ? getSignInPath() : getCreateAccountPath()
 
@@ -140,7 +151,10 @@ const EnterVerificationCodePage = ({ email, flow }: EnterVerificationCodePagePro
     setIsResending(true)
     try {
       const sent = await (isSignInFlow ? resendSignInCode() : resendSignUpCode())
-      if (sent) setResendSeconds(RESEND_VERIFICATION_CODE_SECONDS)
+      if (sent) {
+        setResendExpiresAt(Date.now() + RESEND_CODE_MS)
+        setResendSeconds(RESEND_CODE_MS / 1000)
+      }
     } finally {
       setIsResending(false)
     }
