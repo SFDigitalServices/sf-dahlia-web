@@ -11,11 +11,7 @@ module Force
 
       counselor = fetch_housing_counselor(counselor_contact_id)
       unless counselor
-        Rails.logger.info(
-          'HousingCounselorService#authorize_access: counselor not found ' \
-          "applicant_contact_id=#{applicant_contact_id} " \
-          "counselor_contact_id=#{counselor_contact_id}",
-        )
+        log_if_not_housing_counselor(nil, counselor_contact_id)
         return
       end
 
@@ -82,7 +78,15 @@ module Force
     end
 
     def self.log_if_not_housing_counselor(counselor, counselor_contact_id)
-      return if counselor && counselor['isHousingCounselor']
+      if counselor.nil?
+        Rails.logger.error(
+          'Housing counselor contact is not associated with an agency ' \
+          "contact ID=#{counselor_contact_id}",
+        )
+        return
+      end
+
+      return if counselor['isHousingCounselor']
 
       Rails.logger.error(
         'The currently logged in user with contact ' \
