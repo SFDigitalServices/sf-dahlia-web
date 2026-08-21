@@ -19,7 +19,7 @@ import {
   updatePhone,
   getHousingCounselorAgencies,
   updateHousingCounselorAccess,
-  authenticateHousingCounselor,
+  authorizeHousingCounselor,
 } from "../../api/authApiService"
 import { mockProfileStub } from "../__util__/accountUtils"
 
@@ -166,9 +166,9 @@ describe("authApiService", () => {
     })
   })
 
-  describe("authenticateHousingCounselor", () => {
+  describe("authorizeHousingCounselor", () => {
     it("posts the JWT to the housing counselor access endpoint", async () => {
-      await authenticateHousingCounselor("jwt.token")
+      await authorizeHousingCounselor("jwt.token")
       expect(authenticatedPost).toHaveBeenCalledWith("/api/v1/housing-counselor/access", {
         t: "jwt.token",
       })

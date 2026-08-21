@@ -32,7 +32,7 @@ import { AccountAlreadyConfirmedModal } from "./components/AccountAlreadyConfirm
 import { NewAccountNotConfirmedModal } from "./components/NewAccountNotConfirmedModal"
 import { ExpiredUnconfirmedModal } from "./components/ExpiredUnconfirmedModal"
 import { renderInlineMarkup } from "../util/languageUtil"
-import { authenticateHousingCounselor } from "../api/authApiService"
+import { authorizeHousingCounselor } from "../api/authApiService"
 import { clearHeaders, isTokenValid } from "./token"
 import { useGTMDataLayer } from "../hooks/analytics/useGTMDataLayer"
 
@@ -233,7 +233,7 @@ const SignInForm = () => {
     const token = getHousingCounselorToken()
     if (!token) return true
     try {
-      await authenticateHousingCounselor(token)
+      await authorizeHousingCounselor(token)
       console.log(
         "TODO: Housing counselor successfully authenticated, TBD banner and applicant view"
       )
