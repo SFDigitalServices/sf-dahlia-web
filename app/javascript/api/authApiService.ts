@@ -63,8 +63,8 @@ export const createAccount = async (
 export const createProfile = async (
   contact: { firstName: string; middleName?: string; lastName: string; DOB: string },
   sessionToken: string
-): Promise<{ contact: { contactId: string } }> =>
-  post<{ contact: { contactId: string } }>(
+): Promise<{ contact: { contactId: string; email?: string } & Record<string, unknown> }> =>
+  post<{ contact: { contactId: string; email?: string } & Record<string, unknown> }>(
     "/api/v1/account/profile",
     { contact },
     { headers: { Authorization: `Bearer ${sessionToken}` } }
