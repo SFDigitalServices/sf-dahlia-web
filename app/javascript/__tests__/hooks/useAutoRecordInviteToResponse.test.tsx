@@ -1,11 +1,34 @@
 import { renderHook, cleanup } from "@testing-library/react"
 import { useAutoRecordInviteToResponse } from "../../hooks/useAutoRecordInviteToResponse"
-import { recordResponse, logHumanVerifiedClick } from "../../api/inviteToApiService"
+import {
+  recordResponse,
+  logHumanVerifiedClick,
+  beaconHumanVerifiedClick,
+  snapshotBrowser,
+} from "../../api/inviteToApiService"
 
 jest.mock("../../api/inviteToApiService", () => ({
   recordResponse: jest.fn(),
   logHumanVerifiedClick: jest.fn(),
+  beaconHumanVerifiedClick: jest.fn(),
+  snapshotBrowser: jest.fn(),
 }))
+
+const TEST_BROWSER = {
+  webdriver: false,
+  userAgent: "test-ua",
+  maxTouchPoints: 0,
+  coarsePointer: false,
+  cpuCores: 8,
+  deviceMemory: 8,
+  screen: "800x600@1",
+  language: "en",
+  timezone: "UTC",
+}
+
+const firePageHide = () => {
+  window.dispatchEvent(new Event("pagehide"))
+}
 
 const setVisibility = (state: "visible" | "hidden") => {
   Object.defineProperty(document, "visibilityState", {
@@ -38,6 +61,9 @@ describe("useAutoRecordInviteToResponse", () => {
     jest.clearAllMocks()
     setVisibility("visible")
     ;(logHumanVerifiedClick as jest.Mock).mockResolvedValue(undefined)
+    ;(snapshotBrowser as jest.Mock).mockReturnValue(TEST_BROWSER)
+    // Default to the browser accepting the beacon; tests that care override this.
+    ;(beaconHumanVerifiedClick as jest.Mock).mockReturnValue(true)
     jest.spyOn(console, "error").mockImplementation(() => {})
   })
 
@@ -62,7 +88,7 @@ describe("useAutoRecordInviteToResponse", () => {
         deadline: "3000-01-01",
         act: "yes",
         type: "I2A",
-        trigger: "dwell",
+        trigger: "dwellTime",
       })
     )
   })
@@ -193,6 +219,85 @@ describe("useAutoRecordInviteToResponse", () => {
 
     jest.advanceTimersByTime(5000)
     expect(logHumanVerifiedClick).not.toHaveBeenCalled()
+  })
+
+  it("attaches the env snapshot to the logged payload", () => {
+    renderHook(() => useAutoRecordInviteToResponse(baseArgs))
+    flushPaintFrames()
+    jest.advanceTimersByTime(2000)
+
+    expect(logHumanVerifiedClick).toHaveBeenCalledWith(
+      expect.objectContaining({
+        browser: expect.objectContaining({ userAgent: "test-ua", webdriver: false }),
+      })
+    )
+  })
+
+  it("beacons a page-exit signal on pagehide after arming, without a normal log call", () => {
+    renderHook(() => useAutoRecordInviteToResponse(baseArgs))
+    flushPaintFrames() // arms while visible
+
+    firePageHide()
+
+    expect(beaconHumanVerifiedClick).toHaveBeenCalledTimes(1)
+    expect(beaconHumanVerifiedClick).toHaveBeenCalledWith(
+      expect.objectContaining({ trigger: "pageExit", appId: "app-1" })
+    )
+    expect(logHumanVerifiedClick).not.toHaveBeenCalled()
+  })
+
+  it("falls back to the normal request when sendBeacon refuses to queue", () => {
+    ;(beaconHumanVerifiedClick as jest.Mock).mockReturnValue(false)
+
+    renderHook(() => useAutoRecordInviteToResponse(baseArgs))
+    flushPaintFrames()
+    firePageHide()
+
+    expect(beaconHumanVerifiedClick).toHaveBeenCalledTimes(1)
+    expect(logHumanVerifiedClick).toHaveBeenCalledWith(
+      expect.objectContaining({ trigger: "pageExit" })
+    )
+  })
+
+  it("does not double-send when sendBeacon accepts the payload", () => {
+    ;(beaconHumanVerifiedClick as jest.Mock).mockReturnValue(true)
+
+    renderHook(() => useAutoRecordInviteToResponse(baseArgs))
+    flushPaintFrames()
+    firePageHide()
+
+    expect(beaconHumanVerifiedClick).toHaveBeenCalledTimes(1)
+    expect(logHumanVerifiedClick).not.toHaveBeenCalled()
+  })
+
+  it("does not beacon a page-exit signal when the page never armed (hidden the whole time)", () => {
+    setVisibility("hidden")
+    renderHook(() => useAutoRecordInviteToResponse(baseArgs))
+
+    firePageHide()
+
+    expect(beaconHumanVerifiedClick).not.toHaveBeenCalled()
+  })
+
+  it("does not beacon a page-exit signal once the click already fired via dwell time", () => {
+    renderHook(() => useAutoRecordInviteToResponse(baseArgs))
+    flushPaintFrames()
+    jest.advanceTimersByTime(2000)
+    expect(logHumanVerifiedClick).toHaveBeenCalledTimes(1)
+
+    firePageHide()
+    expect(beaconHumanVerifiedClick).not.toHaveBeenCalled()
+  })
+
+  it("does not beacon a page-exit signal after the page was hidden again (disarmed)", () => {
+    renderHook(() => useAutoRecordInviteToResponse(baseArgs))
+    flushPaintFrames() // arms
+
+    setVisibility("hidden")
+    fireVisibilityChange() // disarms
+
+    firePageHide()
+    expect(beaconHumanVerifiedClick).not.toHaveBeenCalled()
   })
 
   it("cleans up on unmount before dwell elapses with no call and no leaked listeners/timers", () => {

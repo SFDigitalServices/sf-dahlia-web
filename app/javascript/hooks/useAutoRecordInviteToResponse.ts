@@ -1,5 +1,11 @@
 import { useEffect } from "react"
-import { logHumanVerifiedClick } from "../api/inviteToApiService"
+import {
+  logHumanVerifiedClick,
+  beaconHumanVerifiedClick,
+  snapshotBrowser,
+  HumanVerifiedTrigger,
+  HumanVerifiedRecord,
+} from "../api/inviteToApiService"
 import { isDeadlinePassed } from "../util/listingUtil"
 
 // `pointerdown`/`pointermove` cover touch input too, so there is no separate `touchstart` here.
@@ -73,6 +79,8 @@ export const useAutoRecordInviteToResponse = ({
     // Set when the fire conditions actually arm (after the first paint, while visible), so
     // elapsedMs reflects visible dwell/interaction time and excludes hidden/background-tab time.
     let armedAt = 0
+    // True once paint + visible are proven. Only then is a page exit worth reporting.
+    let armed = false
     let fired = false
     let dwellTimeoutId: ReturnType<typeof setTimeout> | null = null
     let visibilityRafId1: number | null = null
@@ -107,25 +115,46 @@ export const useAutoRecordInviteToResponse = ({
       clearDwellTimer()
       cancelPendingFrames()
       removeInteractionListeners()
+      // eslint-disable-next-line @typescript-eslint/no-use-before-define -- registered in armFireConditions
+      window.removeEventListener("pagehide", handlePageHide)
       // eslint-disable-next-line @typescript-eslint/no-use-before-define -- registered further down
       document.removeEventListener("visibilitychange", handleVisibilityChange)
     }
 
-    const fire = (trigger: "interaction" | "dwell") => {
+    const buildRecord = (trigger: HumanVerifiedTrigger): HumanVerifiedRecord => ({
+      appId,
+      listingId,
+      deadline,
+      act,
+      type,
+      trigger,
+      elapsedMs: Date.now() - armedAt,
+      browser: snapshotBrowser(),
+    })
+
+    const fire = (trigger: "interaction" | "dwellTime") => {
       if (fired) return
       fired = true
       cleanup()
-      void logHumanVerifiedClick({
-        appId,
-        listingId,
-        deadline,
-        act,
-        type,
-        trigger,
-        elapsedMs: Date.now() - armedAt,
-      }).catch((error) => {
+      void logHumanVerifiedClick(buildRecord(trigger)).catch((error) => {
         console.error("Error logging human-verified invite-to click:", error)
       })
+    }
+
+    // Flush on page exit if we armed but never reached the stronger interaction/dwell gate -
+    // the normal shape of an in-app email webview that closes fast.
+    const handlePageHide = () => {
+      if (fired || !armed) return
+      fired = true
+      cleanup()
+      const record = buildRecord("pageExit")
+      // If the browser won't queue the beacon, still try the normal request: it may not
+      // survive an immediate unload, but a bfcache hide completes fine.
+      if (!beaconHumanVerifiedClick(record)) {
+        void logHumanVerifiedClick(record).catch(() => {
+          // Nothing useful to do as the page goes away; the missing log line is the signal.
+        })
+      }
     }
 
     const handleInteraction = () => {
@@ -133,26 +162,22 @@ export const useAutoRecordInviteToResponse = ({
     }
 
     const armFireConditions = () => {
+      armed = true
       armedAt = Date.now()
       INTERACTION_EVENTS.forEach((eventName) => {
         window.addEventListener(eventName, handleInteraction, { passive: true, once: true })
       })
+      // pagehide, not unload: it fires reliably in mobile webviews where the tab is killed.
+      window.addEventListener("pagehide", handlePageHide, { once: true })
       dwellTimeoutId = setTimeout(() => {
-        fire("dwell")
+        fire("dwellTime")
       }, dwellTimeMs)
     }
 
-    // Waits for evidence that the browser has actually painted this page, which headless and
-    // sandboxed scanners often never do.
-    //
-    // A requestAnimationFrame callback runs *before* the paint of the frame it was scheduled
-    // for, so a single frame proves nothing was drawn yet. Scheduling a second frame from
-    // inside the first means we resume after that first frame was handed off for rendering.
-    // Note this is a heuristic, not a guarantee: the spec's "update the rendering" steps
-    // (https://html.spec.whatwg.org/multipage/webappapis.html#update-the-rendering) don't
-    // promise a commit to the screen between the two callbacks. It's fine that it may be a
-    // frame optimistic - it's one layer of the detection, and the visibility check and the
-    // interaction-or-dwell gate still have to pass before anything is logged.
+    // Waits for evidence the browser actually painted, which headless scanners often never do.
+    // A rAF callback runs *before* the paint of its own frame, so one frame proves nothing;
+    // the nested second frame resumes after the first was handed off for rendering. A
+    // heuristic, not a guarantee - visibility and the interaction/dwell gate still have to pass.
     const afterFirstPaint = () => {
       visibilityRafId1 = requestAnimationFrame(() => {
         visibilityRafId2 = requestAnimationFrame(() => {
@@ -169,7 +194,9 @@ export const useAutoRecordInviteToResponse = ({
         cancelPendingFrames()
         afterFirstPaint()
       } else {
-        // Page hidden again before firing - pause/reset everything.
+        // Hidden before firing - reset, and disarm so a later pagehide reports nothing:
+        // an unload from a hidden page is indistinguishable from a background prefetch.
+        armed = false
         cancelPendingFrames()
         clearDwellTimer()
         removeInteractionListeners()
