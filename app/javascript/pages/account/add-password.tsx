@@ -1,15 +1,16 @@
 /* eslint-disable @typescript-eslint/unbound-method */
-import React, { useEffect } from "react"
+import React, { useContext, useEffect } from "react"
 import { useNavigate } from "react-router"
-import { useUser } from "@clerk/clerk-react"
+import { useAuth, useUser } from "@clerk/clerk-react"
 import { Form, t } from "@bloom-housing/ui-components"
 import { Card, Heading, Button, Message } from "@bloom-housing/ui-seeds"
 import { useForm } from "react-hook-form"
 import withAppSetup from "../../layouts/withAppSetup"
 import AuthLayout from "../../layouts/AuthLayout"
-import { AppPages, getCreateAccountPath } from "../../util/routeUtil"
-import styles from "./add-password.module.scss"
+import UserContext from "../../authentication/context/UserContext"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
+import { AppPages, getAddProfilePath, getMyAccountPath, getSignInPath } from "../../util/routeUtil"
+import styles from "./add-password.module.scss"
 import { AUTH_FLOW, UNLEASH_FLAG } from "../../modules/constants"
 import GetHelp from "./components/GetHelp"
 import PasswordFieldset from "./components/PasswordFieldset"
@@ -19,11 +20,8 @@ interface AddPasswordFormValues {
   password: string
 }
 
-const onSkip = () => {
-  console.log("TODO: skip password")
-}
-
 const AddPasswordPage = () => {
+  const navigate = useNavigate()
   const { isLoaded, user } = useUser()
   const {
     register,
@@ -41,7 +39,7 @@ const AddPasswordPage = () => {
     if (!isLoaded || !user) return
     try {
       await user.updatePassword({ newPassword })
-      console.log("TODO: next step is the profile page")
+      void navigate(getAddProfilePath())
     } catch (error) {
       console.error("Add password error:", error)
       setError("password", { message: "password:server:generic" })
@@ -69,7 +67,14 @@ const AddPasswordPage = () => {
             <Button variant="primary" size="sm" type="submit" disabled={!isLoaded}>
               {t("createAccount.savePassword")}
             </Button>
-            <Button variant="primary-outlined" size="sm" type="button" onClick={onSkip}>
+            <Button
+              variant="primary-outlined"
+              size="sm"
+              type="button"
+              onClick={() => {
+                void navigate(getAddProfilePath())
+              }}
+            >
               {t("createAccount.skipForNow")}
             </Button>
           </div>
@@ -82,16 +87,62 @@ const AddPasswordPage = () => {
 
 const AddPassword = (_props: { assetPaths: unknown }) => {
   const navigate = useNavigate()
-  const { isLoaded, isSignedIn } = useUser()
-  const { unleashFlag: clerkEnabled } = useFeatureFlag(UNLEASH_FLAG.CLERK_AUTH, false)
+  const { isLoaded, isSignedIn } = useAuth()
+  const { isLoaded: userLoaded, user } = useUser()
+  const { profile, initialStateLoaded } = useContext(UserContext)
+  const { unleashFlag: clerkEnabled, flagsReady } = useFeatureFlag(UNLEASH_FLAG.CLERK_AUTH, false)
+  const hasPassword = user?.passwordEnabled
 
+  /**
+   * Add password page redirects
+   * --------------------------------
+   * 1. Once the Unleash flags are ready:
+   * If Clerk is not enabled, redirect to sign-in.
+   * 2. Once Clerk is loaded:
+   * If the user is signed out, redirect to sign in.
+   * 3. Once the profile has loaded:
+   * If the user is signed in with a profile, redirect to my account.
+   * 4. Once the Clerk user has loaded:
+   * If the user already has a password, redirect to the add profile page.
+   */
   useEffect(() => {
-    if (!clerkEnabled || (isLoaded && !isSignedIn)) {
-      void navigate(getCreateAccountPath())
+    if (!flagsReady) return
+    if (!clerkEnabled) {
+      void navigate(getSignInPath())
+      return
     }
-  }, [clerkEnabled, isLoaded, isSignedIn, navigate])
+    if (!isLoaded) return
+    if (!isSignedIn) {
+      void navigate(getSignInPath())
+      return
+    }
+    if (!initialStateLoaded) return
+    if (isSignedIn && profile) void navigate(getMyAccountPath())
+    if (!userLoaded) return
+    if (isSignedIn && !profile && hasPassword) void navigate(getAddProfilePath())
+  }, [
+    flagsReady,
+    clerkEnabled,
+    isLoaded,
+    isSignedIn,
+    initialStateLoaded,
+    profile,
+    userLoaded,
+    hasPassword,
+    navigate,
+  ])
 
-  if (!clerkEnabled) {
+  const ready =
+    flagsReady &&
+    clerkEnabled &&
+    isLoaded &&
+    isSignedIn &&
+    initialStateLoaded &&
+    !profile &&
+    userLoaded &&
+    !hasPassword
+
+  if (!ready) {
     return null
   }
 

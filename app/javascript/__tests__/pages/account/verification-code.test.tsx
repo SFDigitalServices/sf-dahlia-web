@@ -186,25 +186,25 @@ describe("<EnterVerificationCode />", () => {
     })
   })
 
-  it("redirects to create account when clerk is disabled", async () => {
+  it("redirects to sign-in when clerk is disabled", async () => {
     cleanup()
     document.title = "DAHLIA San Francisco Housing Portal"
     ;(useFeatureFlag as jest.Mock).mockReturnValue({ flagsReady: true, unleashFlag: false })
     await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
 
     await waitFor(() => {
-      expect(mockNavigate).toHaveBeenCalledWith("/create-account")
+      expect(mockNavigate).toHaveBeenCalledWith("/sign-in")
     })
   })
 
-  it("redirects to create account when email is missing", async () => {
+  it("redirects to sign-in when email is missing", async () => {
     cleanup()
     document.title = "DAHLIA San Francisco Housing Portal"
     ;(useLocation as jest.Mock).mockReturnValue({ pathname: "/create-account/code", state: null })
     await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
 
     await waitFor(() => {
-      expect(mockNavigate).toHaveBeenCalledWith("/create-account")
+      expect(mockNavigate).toHaveBeenCalledWith("/sign-in")
     })
   })
 
@@ -281,6 +281,35 @@ describe("<EnterVerificationCode />", () => {
 
     await waitFor(() => {
       expect(mockNavigate).toHaveBeenCalledWith("/sign-in")
+    })
+  })
+
+  it("does not redirect a logged-out user who has email from an in-progress flow", () => {
+    expect(mockNavigate).not.toHaveBeenCalled()
+    expect(
+      screen.getByRole("heading", { name: t("createAccount.checkEmail"), level: 1 })
+    ).not.toBeNull()
+  })
+
+  it("redirects to add-profile when the user is signed in without a profile", async () => {
+    cleanup()
+    document.title = "DAHLIA San Francisco Housing Portal"
+    setupUserContext({ loggedIn: true, hasProfile: false })
+    await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
+
+    await waitFor(() => {
+      expect(mockNavigate).toHaveBeenCalledWith("/add-profile")
+    })
+  })
+
+  it("redirects to account when the user has already set up their profile", async () => {
+    cleanup()
+    document.title = "DAHLIA San Francisco Housing Portal"
+    setupUserContext({ loggedIn: true })
+    await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
+
+    await waitFor(() => {
+      expect(mockNavigate).toHaveBeenCalledWith("/account")
     })
   })
 })

@@ -1,6 +1,7 @@
 import { AxiosResponse } from "axios"
 import { Contact, User, UserData } from "../authentication/user"
-import { authenticatedDelete, authenticatedGet, authenticatedPut, post } from "./apiService"
+// authenticatedGet is for Devise, Clerk authenticates its own requests
+import { authenticatedDelete, authenticatedGet, authenticatedPut, get, post } from "./apiService"
 import { AuthHeaders, setAuthHeaders } from "../authentication/token"
 import { Application } from "./types/rails/application/RailsApplication"
 import { getCurrentLanguage, getRoutePrefix, LanguagePrefix } from "../util/languageUtil"
@@ -59,8 +60,22 @@ export const createAccount = async (
     return data.data
   })
 
-export const getProfile = async (): Promise<User> =>
-  authenticatedGet<UserData>("/api/v1/auth/validate_token").then((res) => res.data.data)
+export const createProfile = async (
+  contact: { firstName: string; middleName?: string; lastName: string; DOB: string },
+  sessionToken: string
+): Promise<{ contact: { contactId: string; email?: string } & Record<string, unknown> }> =>
+  post<{ contact: { contactId: string; email?: string } & Record<string, unknown> }>(
+    "/api/v1/account/profile",
+    { contact },
+    { headers: { Authorization: `Bearer ${sessionToken}` } }
+  ).then(({ data }) => data)
+
+export const getProfile = async (sessionToken?: string): Promise<User> =>
+  sessionToken
+    ? get<UserData>("/api/v1/account/profile", {
+        headers: { Authorization: `Bearer ${sessionToken}` },
+      }).then(({ data }: AxiosResponse<UserData>) => data.data)
+    : authenticatedGet<UserData>("/api/v1/auth/validate_token").then((res) => res.data.data)
 
 export const getApplications = async (): Promise<{ applications: Application[] }> =>
   authenticatedGet<{ applications: Application[] }>("/api/v1/account/my-applications").then(

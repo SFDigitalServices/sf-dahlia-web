@@ -38,8 +38,9 @@ describe("<AddPassword />", () => {
 
   beforeEach(async () => {
     document.documentElement.lang = "en"
+    document.title = "DAHLIA San Francisco Housing Portal"
     originalLocation = mockWindowLocation()
-    setupUserContext({ loggedIn: false })
+    setupUserContext({ loggedIn: true, hasProfile: false })
     mockNavigate = jest.fn()
     mockUpdatePassword = jest.fn().mockResolvedValue(undefined)
     ;(useNavigate as jest.Mock).mockReturnValue(mockNavigate)
@@ -47,7 +48,7 @@ describe("<AddPassword />", () => {
     ;(useUser as jest.Mock).mockReturnValue({
       isLoaded: true,
       isSignedIn: true,
-      user: { updatePassword: mockUpdatePassword },
+      user: { updatePassword: mockUpdatePassword, passwordEnabled: false },
     })
     await renderAndLoadAsync(<AddPassword assetPaths={{}} />)
   })
@@ -71,6 +72,7 @@ describe("<AddPassword />", () => {
 
   it("saves a valid password", async () => {
     const user = userEvent.setup()
+    jest.spyOn(console, "error").mockImplementation(() => {})
 
     await user.type(screen.getByTestId("password-field"), "abcd1234")
     await user.click(screen.getByRole("button", { name: /save password/i }))
@@ -78,6 +80,7 @@ describe("<AddPassword />", () => {
     await waitFor(() => {
       expect(mockUpdatePassword).toHaveBeenCalledWith({ newPassword: "abcd1234" })
     })
+    expect(mockNavigate).toHaveBeenCalledWith("/add-profile")
     expect(screen.queryByTestId("error-message")).toBeNull()
   })
 
@@ -101,6 +104,7 @@ describe("<AddPassword />", () => {
     await user.click(screen.getByRole("button", { name: /skip for now/i }))
 
     expect(mockUpdatePassword).not.toHaveBeenCalled()
+    expect(mockNavigate).toHaveBeenCalledWith("/add-profile")
   })
 
   it("shows an error when the password update fails", async () => {
@@ -116,23 +120,63 @@ describe("<AddPassword />", () => {
     })
   })
 
-  it("redirects to create account when clerk is disabled", async () => {
+  it("redirects to sign-in when clerk is disabled", async () => {
     cleanup()
+    document.title = "DAHLIA San Francisco Housing Portal"
     ;(useFeatureFlag as jest.Mock).mockReturnValue({ flagsReady: true, unleashFlag: false })
     await renderAndLoadAsync(<AddPassword assetPaths={{}} />)
 
     await waitFor(() => {
-      expect(mockNavigate).toHaveBeenCalledWith("/create-account")
+      expect(mockNavigate).toHaveBeenCalledWith("/sign-in")
     })
   })
 
-  it("redirects to create account when the user is not signed in", async () => {
+  it("redirects to sign-in when the user is not signed in", async () => {
     cleanup()
+    document.title = "DAHLIA San Francisco Housing Portal"
+    setupUserContext({ loggedIn: false })
     ;(useUser as jest.Mock).mockReturnValue({ isLoaded: true, isSignedIn: false, user: null })
     await renderAndLoadAsync(<AddPassword assetPaths={{}} />)
 
     await waitFor(() => {
-      expect(mockNavigate).toHaveBeenCalledWith("/create-account")
+      expect(mockNavigate).toHaveBeenCalledWith("/sign-in")
+    })
+  })
+
+  it("does not redirect when the user has no password and no profile", () => {
+    expect(mockNavigate).not.toHaveBeenCalled()
+    expect(screen.getByRole("heading", { name: /add a password/i, level: 1 })).not.toBeNull()
+  })
+
+  it("redirects to add-profile when the user already has a password", async () => {
+    cleanup()
+    document.title = "DAHLIA San Francisco Housing Portal"
+    setupUserContext({ loggedIn: true, hasProfile: false })
+    ;(useUser as jest.Mock).mockReturnValue({
+      isLoaded: true,
+      isSignedIn: true,
+      user: { updatePassword: mockUpdatePassword, passwordEnabled: true },
+    })
+    await renderAndLoadAsync(<AddPassword assetPaths={{}} />)
+
+    await waitFor(() => {
+      expect(mockNavigate).toHaveBeenCalledWith("/add-profile")
+    })
+  })
+
+  it("redirects to account when the user has already set up their profile", async () => {
+    cleanup()
+    document.title = "DAHLIA San Francisco Housing Portal"
+    setupUserContext({ loggedIn: true })
+    ;(useUser as jest.Mock).mockReturnValue({
+      isLoaded: true,
+      isSignedIn: true,
+      user: { updatePassword: mockUpdatePassword, passwordEnabled: false },
+    })
+    await renderAndLoadAsync(<AddPassword assetPaths={{}} />)
+
+    await waitFor(() => {
+      expect(mockNavigate).toHaveBeenCalledWith("/account")
     })
   })
 })

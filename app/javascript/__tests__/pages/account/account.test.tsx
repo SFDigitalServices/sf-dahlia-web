@@ -21,11 +21,6 @@ jest.mock("../../../hooks/useFeatureFlag", () => ({
   useFeatureFlag: () => ({ flagsReady: true, unleashFlag: true }),
 }))
 
-jest.mock("react-router", () => ({
-  ...jest.requireActual("react-router"),
-  useLocation: jest.fn(),
-}))
-
 describe("<Account />", () => {
   beforeEach(() => {
     document.documentElement.lang = "en"
