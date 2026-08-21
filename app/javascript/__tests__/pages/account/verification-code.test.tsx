@@ -1,7 +1,7 @@
 import React from "react"
 import { useSignIn, useSignUp } from "@clerk/clerk-react"
 import { t } from "@bloom-housing/ui-components"
-import { screen, waitFor, cleanup } from "@testing-library/react"
+import { act, screen, waitFor, cleanup, fireEvent } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
 import { useLocation, useNavigate } from "react-router"
 import EnterVerificationCode from "../../../pages/account/verification-code"
@@ -34,6 +34,14 @@ jest.mock("../../../hooks/useFeatureFlag", () => ({
   useFeatureFlag: jest.fn(() => ({ flagsReady: true, unleashFlag: true })),
 }))
 
+const expireResendVerificationCode = () => {
+  for (let remaining = 30; remaining > 0; remaining--) {
+    act(() => {
+      jest.advanceTimersByTime(1000)
+    })
+  }
+}
+
 describe("<EnterVerificationCode />", () => {
   let originalLocation: Location
   let mockNavigate: jest.Mock
@@ -56,6 +64,7 @@ describe("<EnterVerificationCode />", () => {
     mockPrepareFirstFactor = jest.fn().mockResolvedValue(undefined)
     mockSetActiveSignUp = jest.fn().mockResolvedValue(undefined)
     mockSetActiveSignIn = jest.fn().mockResolvedValue(undefined)
+    jest.useFakeTimers()
     ;(useNavigate as jest.Mock).mockReturnValue(mockNavigate)
     ;(useLocation as jest.Mock).mockReturnValue({
       pathname: "/create-account/code",
@@ -76,7 +85,7 @@ describe("<EnterVerificationCode />", () => {
       signIn: {
         attemptFirstFactor: mockAttemptFirstFactor,
         prepareFirstFactor: mockPrepareFirstFactor,
-        supportedFirstFactors: [{ strategy: "email_code", emailAddressId: "idn_email" }],
+        supportedFirstFactors: [{ strategy: "email_code", emailAddressId: "test_email" }],
       },
     })
     await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
@@ -85,6 +94,7 @@ describe("<EnterVerificationCode />", () => {
   afterEach(() => {
     restoreWindowLocation(originalLocation)
     cleanup()
+    jest.useRealTimers()
   })
 
   it("shows the enter code page", () => {
@@ -99,7 +109,9 @@ describe("<EnterVerificationCode />", () => {
     expect(screen.getByRole("group", { name: t("createAccount.enterCode") })).not.toBeNull()
     expect(screen.getAllByRole("textbox")).toHaveLength(6)
     expect(screen.getByRole("button", { name: t("createAccount.confirmCode") })).not.toBeNull()
-    expect(screen.getByRole("button", { name: t("createAccount.sendAgain") })).not.toBeNull()
+    expect(screen.getByText(t("createAccount.emailSent"))).not.toBeNull()
+    expect(screen.getByText(t("createAccount.sendAgainIn", { seconds: 30 }))).not.toBeNull()
+    expect(screen.queryByRole("button", { name: t("createAccount.sendAgain") })).toBeNull()
     expect(screen.getByRole("button", { name: t("createAccount.howToUseCode") })).not.toBeNull()
     expect(screen.getByRole("heading", { name: t("createAccount.getHelp") })).not.toBeNull()
     expect(
@@ -110,7 +122,7 @@ describe("<EnterVerificationCode />", () => {
   })
 
   it("shows the validation error for an incomplete code", async () => {
-    const user = userEvent.setup()
+    const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime })
     const digits = screen.getAllByRole("textbox")
 
     await user.click(digits[0])
@@ -127,7 +139,7 @@ describe("<EnterVerificationCode />", () => {
   })
 
   it("does not show an error before submit", async () => {
-    const user = userEvent.setup()
+    const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime })
     const digits = screen.getAllByRole("textbox")
 
     await user.click(digits[0])
@@ -139,7 +151,7 @@ describe("<EnterVerificationCode />", () => {
   })
 
   it("fills all fields when a 6-digit code is pasted", async () => {
-    const user = userEvent.setup()
+    const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime })
     const digits = screen.getAllByRole("textbox")
 
     await user.click(digits[0])
@@ -156,7 +168,7 @@ describe("<EnterVerificationCode />", () => {
   })
 
   it("verifies a valid code for create account", async () => {
-    const user = userEvent.setup()
+    const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime })
     mockAttemptEmailAddressVerification.mockResolvedValue({
       status: "complete",
       createdSessionId: "session_123",
@@ -175,15 +187,34 @@ describe("<EnterVerificationCode />", () => {
   })
 
   it("resends the code", async () => {
-    const user = userEvent.setup()
+    expireResendVerificationCode()
 
-    await user.click(screen.getByRole("button", { name: t("createAccount.sendAgain") }))
-
-    await waitFor(() => {
-      expect(mockPrepareEmailAddressVerification).toHaveBeenCalledWith({
-        strategy: "email_code",
-      })
+    fireEvent.click(screen.getByRole("button", { name: t("createAccount.sendAgain") }))
+    await act(async () => {
+      await Promise.resolve()
     })
+
+    expect(mockPrepareEmailAddressVerification).toHaveBeenCalledWith({
+      strategy: "email_code",
+    })
+    expect(screen.getByText(t("createAccount.emailSent"))).not.toBeNull()
+    expect(screen.getByText(t("createAccount.sendAgainIn", { seconds: 30 }))).not.toBeNull()
+    expect(screen.queryByRole("button", { name: t("createAccount.sendAgain") })).toBeNull()
+  })
+
+  it("restores send again after the resend countdown", () => {
+    expect(screen.getByText(t("createAccount.sendAgainIn", { seconds: 30 }))).not.toBeNull()
+
+    act(() => {
+      jest.advanceTimersByTime(1000)
+    })
+    expect(screen.getByText(t("createAccount.sendAgainIn", { seconds: 29 }))).not.toBeNull()
+
+    expireResendVerificationCode()
+
+    expect(screen.getByRole("button", { name: t("createAccount.sendAgain") })).not.toBeNull()
+    expect(screen.queryByText(t("createAccount.emailSent"))).toBeNull()
+    expect(screen.queryByText(t("createAccount.sendAgainIn", { seconds: 1 }))).toBeNull()
   })
 
   it("redirects to create account when clerk is disabled", async () => {
@@ -236,7 +267,7 @@ describe("<EnterVerificationCode />", () => {
     })
     await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
 
-    const user = userEvent.setup()
+    const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime })
     await user.click(screen.getAllByRole("textbox")[0])
     await user.paste("123456")
     await user.click(screen.getByRole("button", { name: t("createAccount.confirmCode") }))
@@ -262,15 +293,19 @@ describe("<EnterVerificationCode />", () => {
     })
     await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
 
-    const user = userEvent.setup()
-    await user.click(screen.getByRole("button", { name: t("createAccount.sendAgain") }))
-
-    await waitFor(() => {
-      expect(mockPrepareFirstFactor).toHaveBeenCalledWith({
-        strategy: "email_code",
-        emailAddressId: "idn_email",
-      })
+    expireResendVerificationCode()
+    fireEvent.click(screen.getByRole("button", { name: t("createAccount.sendAgain") }))
+    await act(async () => {
+      await Promise.resolve()
     })
+
+    expect(mockPrepareFirstFactor).toHaveBeenCalledWith({
+      strategy: "email_code",
+      emailAddressId: "test_email",
+    })
+    expect(screen.getByText(t("createAccount.emailSent"))).not.toBeNull()
+    expect(screen.getByText(t("createAccount.sendAgainIn", { seconds: 30 }))).not.toBeNull()
+    expect(screen.queryByRole("button", { name: t("createAccount.sendAgain") })).toBeNull()
   })
 
   it("redirects to sign-in when email is missing from the sign-in code page", async () => {
