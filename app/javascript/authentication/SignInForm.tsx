@@ -18,6 +18,7 @@ import {
   getForgotPasswordPath,
   getCreateAccountPath,
   getSignInRedirectUrl,
+  getMyAccountPath,
   mapRedirectParamToEnum,
   AlertReason,
   mapAlertParamToEnum,
@@ -31,7 +32,11 @@ import { AccountAlreadyConfirmedModal } from "./components/AccountAlreadyConfirm
 import { NewAccountNotConfirmedModal } from "./components/NewAccountNotConfirmedModal"
 import { ExpiredUnconfirmedModal } from "./components/ExpiredUnconfirmedModal"
 import { renderInlineMarkup } from "../util/languageUtil"
+import { authorizeHousingCounselor } from "../api/authApiService"
+import { clearHeaders, isTokenValid } from "./token"
 import { useGTMDataLayer } from "../hooks/analytics/useGTMDataLayer"
+
+const getHousingCounselorToken = () => new URLSearchParams(window.location.search).get("t")
 
 const getExpiredConfirmedEmail = () => {
   const urlParams = new URLSearchParams(window.location.search)
@@ -224,11 +229,31 @@ const SignInForm = () => {
     }
   }
 
+  const checkHousingCounselorAccess = async () => {
+    const token = getHousingCounselorToken()
+    if (!token) return true
+    try {
+      await authorizeHousingCounselor(token)
+      console.log(
+        "TODO: Housing counselor successfully authenticated, TBD banner and applicant view"
+      )
+      return true
+    } catch {
+      clearHeaders()
+      setRequestError({
+        message: t("signIn.unknownError"),
+        alertType: "alert",
+      })
+      return false
+    }
+  }
+
   const onSubmit = (data: { email: string; password: string }) => {
     const { email, password } = data
     setRequestError(undefined)
     signIn(email, password, "Sign In Page")
       .then(async () => {
+        if (!(await checkHousingCounselorAccess())) return
         const redirectType = getRedirectTypeFromURL()
         await navigate(getSignInRedirectUrl(redirectType))
         window.scrollTo(0, 0)
@@ -237,6 +262,19 @@ const SignInForm = () => {
         handleRequestError(error)
       })
   }
+
+  // Check if there is already a logged in housing counselor hitting the sign-in page with an access link
+  useEffect(() => {
+    if (!isTokenValid() || !getHousingCounselorToken()) return
+
+    void checkHousingCounselorAccess().then(async (ok) => {
+      if (ok) {
+        console.log("TODO: Housing counselor already signed in, TBD banner and applicant view")
+        await navigate(getMyAccountPath())
+      }
+    })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   useEffect(() => {
     const alertType = getAlertFromURL()

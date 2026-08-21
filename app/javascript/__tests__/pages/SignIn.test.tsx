@@ -5,13 +5,13 @@ import SignIn from "../../pages/sign-in"
 import { renderAndLoadAsync } from "../__util__/renderUtils"
 import { fireEvent, render, screen, waitFor } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
-import { post } from "../../api/apiService"
+import { authenticatedPost, post } from "../../api/apiService"
 import { SiteAlert } from "../../components/SiteAlert"
 import { t } from "@bloom-housing/ui-components"
 import "@testing-library/jest-dom"
 import TagManager from "react-gtm-module"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
-import { isTokenValid } from "../../authentication/token"
+import { clearHeaders, isTokenValid } from "../../authentication/token"
 
 jest.mock("../../hooks/useFeatureFlag", () => ({
   useFeatureFlag: jest.fn((flagName: string) => ({
@@ -23,6 +23,7 @@ jest.mock("../../hooks/useFeatureFlag", () => ({
 jest.mock("../../authentication/token", () => ({
   ...jest.requireActual("../../authentication/token"),
   isTokenValid: jest.fn(() => false),
+  clearHeaders: jest.fn(),
 }))
 
 jest.mock("react-helmet-async", () => {
@@ -34,6 +35,7 @@ jest.mock("react-helmet-async", () => {
 
 jest.mock("../../api/apiService", () => ({
   post: jest.fn(),
+  authenticatedPost: jest.fn(),
 }))
 
 jest.mock("react-gtm-module", () => ({
@@ -56,6 +58,58 @@ jest.mock("@bloom-housing/ui-seeds", () => {
     Dialog: MockDialog,
   }
 })
+
+const setLocationSearch = (search: string) => {
+  Object.defineProperty(window, "location", {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    value: {
+      ...window.location,
+      search,
+      href: `http://dahlia.com/sign-in${search}`,
+    },
+  })
+}
+
+const renderWithAccountRoute = () =>
+  renderAndLoadAsync(<SignIn assetPaths={{}} />, {
+    wrapper: ({ children }: { children: React.ReactNode }) => (
+      <MemoryRouter initialEntries={["/sign-in"]}>
+        <Routes>
+          <Route path="/sign-in" element={children} />
+          <Route path="/account" element={<div>Account page</div>} />
+        </Routes>
+      </MemoryRouter>
+    ),
+  })
+
+const mockSuccessfulSignIn = () => {
+  ;(post as jest.Mock).mockResolvedValue({
+    data: {
+      data: {
+        id: 1,
+        uid: "abc",
+        email: "test@test.com",
+        created_at: new Date(),
+        updated_at: new Date(),
+      },
+    },
+    headers: {
+      expiry: "9999999999",
+      "access-token": "token",
+      client: "client",
+      uid: "abc",
+      "token-type": "Bearer",
+    },
+  })
+}
+
+const submitSignInForm = async () => {
+  await userEvent.type(screen.getByRole("textbox", { name: /email/i }), "test@test.com")
+  await userEvent.type(screen.getByLabelText(/^password$/i), "Password1")
+  await userEvent.click(screen.getByRole("button", { name: /sign in/i }))
+}
 
 describe("<SignIn />", () => {
   beforeEach(() => {
@@ -438,5 +492,84 @@ describe("<SignIn />", () => {
       expect(screen.getByText("Account page")).not.toBeNull()
     })
     expect(screen.queryByRole("textbox", { name: /email/i })).toBeNull()
+  })
+
+  describe("Housing counselor access", () => {
+    beforeEach(() => {
+      setLocationSearch("")
+      window.scrollTo = jest.fn()
+      jest.spyOn(console, "log").mockImplementation(() => {})
+      ;(authenticatedPost as jest.Mock).mockResolvedValue({})
+    })
+
+    afterEach(() => {
+      jest.restoreAllMocks()
+    })
+
+    it("authenticates the housing counselor JWT after a successful sign in and redirects to the account overview page", async () => {
+      setLocationSearch("?t=jwt.token")
+      mockSuccessfulSignIn()
+
+      await renderWithAccountRoute()
+      await submitSignInForm()
+
+      await waitFor(() => {
+        expect(authenticatedPost).toHaveBeenCalledWith("/api/v1/housing-counselor/access", {
+          t: "jwt.token",
+        })
+      })
+      expect(await screen.findByText("Account page")).not.toBeNull()
+    })
+
+    it("shows an error and stays on sign in when housing counselor authentication fails", async () => {
+      setLocationSearch("?t=jwt.token")
+      mockSuccessfulSignIn()
+      ;(authenticatedPost as jest.Mock).mockRejectedValue(new Error("forbidden"))
+
+      await renderWithAccountRoute()
+      await submitSignInForm()
+
+      await waitFor(() => {
+        expect(authenticatedPost).toHaveBeenCalledWith("/api/v1/housing-counselor/access", {
+          t: "jwt.token",
+        })
+      })
+      expect(clearHeaders).toHaveBeenCalled()
+      expect(screen.getByRole("alert")).not.toBeNull()
+      expect(screen.queryByText("Account page")).toBeNull()
+      expect(screen.getByRole("textbox", { name: /email/i })).not.toBeNull()
+    })
+
+    it("authenticates the housing counselor JWT with an already signed in user and redirects to the account overview page", async () => {
+      setLocationSearch("?t=jwt.token")
+      ;(isTokenValid as jest.Mock).mockReturnValue(true)
+
+      await renderWithAccountRoute()
+
+      await waitFor(() => {
+        expect(authenticatedPost).toHaveBeenCalledWith("/api/v1/housing-counselor/access", {
+          t: "jwt.token",
+        })
+      })
+      expect(await screen.findByText("Account page")).not.toBeNull()
+    })
+
+    it("shows an error and stays on sign in when housing counselor authentication fails with an already signed in user", async () => {
+      setLocationSearch("?t=jwt.token")
+      ;(isTokenValid as jest.Mock).mockReturnValue(true)
+      ;(authenticatedPost as jest.Mock).mockRejectedValue(new Error("forbidden"))
+
+      await renderWithAccountRoute()
+
+      await waitFor(() => {
+        expect(authenticatedPost).toHaveBeenCalledWith("/api/v1/housing-counselor/access", {
+          t: "jwt.token",
+        })
+      })
+      expect(clearHeaders).toHaveBeenCalled()
+      expect(screen.getByRole("alert")).not.toBeNull()
+      expect(screen.queryByText("Account page")).toBeNull()
+      expect(screen.getByRole("textbox", { name: /email/i })).not.toBeNull()
+    })
   })
 })
