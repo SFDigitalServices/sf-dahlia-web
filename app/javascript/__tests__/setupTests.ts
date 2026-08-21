@@ -57,6 +57,8 @@ jest.mock("react-helmet-async", () => {
   }
 })
 
+jest.mock("@axe-core/react", () => jest.fn())
+
 jest.mock("@clerk/clerk-react", () => {
   const Clerk = jest.requireActual("@clerk/clerk-react")
   return {
