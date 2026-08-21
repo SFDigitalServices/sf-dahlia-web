@@ -4,12 +4,6 @@ module DahliaBackend
   class MessageService
     ENDPOINTS = {
       application_submission: '/messages/application-submission',
-      invite_to_apply_response: {
-        'yes' => '/messages/invite-to-apply/response/yes',
-        'no' => '/messages/invite-to-apply/response/no',
-        'contact' => '/messages/invite-to-apply/response/contact',
-        'submit' => '/messages/invite-to-apply/response/submit',
-      }.freeze,
       message: '/api/v1/message',
       housing_counselor: '/api/v1/message/housing-counselor',
     }.freeze
@@ -25,10 +19,8 @@ module DahliaBackend
         new.send_application_confirmation(application_params, application_response,
                                           locale)
       end
-      def send_invite_to_response(_deadline, _app_id, _application_number, _response,_action,
-                                        listing_id, _force = nil)
-        new.send_invite_to_response(_deadline, _app_id, _application_number, _response, _action,
-                                          listing_id, nil)
+      def send_invite_to_response(app_id, action)
+        new.send_invite_to_response(app_id, action)
       end
 
       def send_housing_counselor_access(housing_counselor_action:, contact_id:, agency_id:)
@@ -66,43 +58,18 @@ module DahliaBackend
       nil
     end
 
-    # Deprecate I2A pilot in DAH-4045
-    def get_response_endpoint(act, response)
-      if response && act.blank?
-        ENDPOINTS[:invite_to_apply_response][response]
-      elsif act.present?
-        ENDPOINTS[:message]
-      else
-        nil
-      end
-    end
+    def send_invite_to_response(app_id, action)
+      fields = {
+        action: action.upcase,
+        data: {
+          applicationIds: [app_id],
+          isTestEmail: false,
+        },
+      }
 
-    def send_invite_to_response(_deadline, _app_id, _application_number, _response, _action,
-                                      listing_id, _force = nil)
-      # Get contacts from salesforce of the application with appId
-      # TODO: Validate params
-
-      application = Force::ShortFormService.get(_application_number.presence || _app_id)
-
-      listing = fetch_listing(listing_id)
-
-      fields = prepare_submission_fields_invite_to_response(application, listing, _deadline,
-                                                         _application_number, _app_id, _action)
-      return if fields.nil?
-
-      log_info(
-        "Prepared fields for I2X response: action=#{_action.inspect}, " \
-        "listingId=#{(fields[:listingId] || listing_id).inspect}, " \
-        "appId=#{_app_id.inspect}",
-      )
-
-      endpoint = get_response_endpoint(_action, _response)
-      return log_error("Invalid action type: #{_action}", nil) unless endpoint
-
-      send_message(endpoint, fields, {
-                     action: _action,
-                     listingId: fields[:listingId] || listing_id,
-                     appId: _app_id,
+      send_message(ENDPOINTS[:message], fields, {
+                     action: action,
+                     appId: app_id,
                    })
     rescue StandardError => e
       log_error('Error sending I2X response', e)
@@ -161,67 +128,6 @@ module DahliaBackend
           officeHours: listing.Office_Hours.to_s,
         },
         lang: locale,
-      }
-    end
-
-    def prepare_submission_fields_invite_to_response(application, listing, deadline,
-                                                  application_number, app_id, action)
-      return nil unless application && listing
-
-      if action.present?
-        return {
-          action: action.upcase,
-          data: {
-            applicationIds: [app_id],
-            isTestEmail: false,
-          }
-        }
-      end
-
-      # Extract applicant information
-      primary_applicant = {
-        firstName: application.dig('primaryApplicant', 'firstName'),
-        lastName: application.dig('primaryApplicant', 'lastName'),
-        email: application.dig('primaryApplicant', 'email'),
-      }.compact
-
-      # Build applicant data
-      applicant_data = {
-        lotteryNumber: application.dig('lotteryNumber'),
-        appId: app_id,
-        applicationNumber: application_number,
-        primaryContact: primary_applicant,
-        applicationLanguage: application.dig('applicationLanguage'),
-      }
-
-      # Only include alternateContact if it exists in the application
-      if application['alternateContact'].present?
-        alternate_contact = {
-          firstName: application.dig('alternateContact', 'firstName'),
-          email: application.dig('alternateContact', 'email'),
-        }
-        applicant_data[:alternateContact] = alternate_contact
-      end
-
-      leasing_agent = {
-        name: listing.Leasing_Agent_Name.to_s,
-        email: listing.Leasing_Agent_Email.to_s,
-        phone: listing.Leasing_Agent_Phone.to_s,
-        officeHours: listing.Office_Hours.to_s,
-      }
-
-      formatted_date = format_lottery_date(listing.Lottery_Date)
-
-      {
-        applicants: [applicant_data],
-        listingId: listing.dig('Id'),
-        listingName: listing.Name.to_s,
-        buildingName: listing.Building_Name_for_Process.to_s,
-        listingAddress: listing.Address__c.to_s,
-        listingNeighborhood: listing.Neighborhood__c.to_s,
-        leasingAgent: leasing_agent,
-        lotteryDate: formatted_date,
-        deadlineDate: deadline,
       }
     end
 
