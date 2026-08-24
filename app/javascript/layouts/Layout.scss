@@ -43,6 +43,10 @@
   }
 }
 
+.top-message-alert {
+  padding: var(--seeds-spacer-header) 0;
+}
+
 .feedback-link {
   text-align: left;
   @media (min-width: theme("screens.md")) {
