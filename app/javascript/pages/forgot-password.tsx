@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/unbound-method */
 import React from "react"
 import { ForgotPasswordFlow } from "../authentication/ForgotPasswordFlow"
 import { ForgotPasswordForm } from "../authentication/ForgotPasswordForm"
