@@ -1,7 +1,14 @@
 import { AxiosResponse } from "axios"
 import { Contact, User, UserData } from "../authentication/user"
 // authenticatedGet is for Devise, Clerk authenticates its own requests
-import { authenticatedDelete, authenticatedGet, authenticatedPut, get, post } from "./apiService"
+import {
+  authenticatedDelete,
+  authenticatedGet,
+  authenticatedPost,
+  authenticatedPut,
+  get,
+  post,
+} from "./apiService"
 import { AuthHeaders, setAuthHeaders } from "../authentication/token"
 import { Application } from "./types/rails/application/RailsApplication"
 import { getCurrentLanguage, getRoutePrefix, LanguagePrefix } from "../util/languageUtil"
