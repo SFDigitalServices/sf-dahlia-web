@@ -6,6 +6,11 @@ require 'rails/all'
 
 require_relative '../lib/rack_x_robots_tag'
 
+# https://github.com/clerk/clerk-sdk-ruby#rails
+ENV['CLERK_SKIP_RAILTIE'] = 'true'
+require 'clerk'
+require 'clerk/rack_middleware'
+
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
@@ -56,6 +61,19 @@ module SfDahliaWeb
 
     # for serving gzipped assets
     config.middleware.use Rack::Deflater
+
+    # Set up Clerk - authenticate bearer tokens only (not Devise tokens)
+    class ClerkAuth < Clerk::Rack::Middleware
+      BEARER_TOKEN = /\Abearer\s+\S/i
+
+      def call(env)
+        return @app.call(env) unless env['HTTP_AUTHORIZATION'].to_s.match?(BEARER_TOKEN)
+
+        super
+      end
+    end
+
+    config.middleware.use ClerkAuth
 
     # remove trailing slashes
     # https://stackoverflow.com/a/3570233/260495

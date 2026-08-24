@@ -18,19 +18,32 @@
   margin: var(--seeds-spacer-content) 0;
 }
 
-.resendRow {
+.resendSection {
   margin-bottom: var(--seeds-spacer-header);
+}
+
+.resendRow {
+  margin-bottom: 0;
 }
 
 .didntGetEmail {
   font-weight: var(--seeds-font-weight-semibold);
-  color: var(--seeds-color-text-base);
+  color: var(--seeds-color-gray-750);
 }
 
 .sendAgain {
   margin-left: var(--seeds-spacer-text);
   font-weight: 200 !important;
   font-family: inherit !important;
+}
+
+.emailSent {
+  margin-left: var(--seeds-spacer-text);
+  color: var(--seeds-color-success);
+  font-weight: var(--seeds-font-weight-semibold);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--seeds-s1);
 }
 
 .howToUseCode {

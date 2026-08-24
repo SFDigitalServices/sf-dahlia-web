@@ -1,6 +1,14 @@
 import { AxiosResponse } from "axios"
 import { Contact, User, UserData } from "../authentication/user"
-import { authenticatedDelete, authenticatedGet, authenticatedPut, post } from "./apiService"
+// authenticatedGet is for Devise, Clerk authenticates its own requests
+import {
+  authenticatedDelete,
+  authenticatedGet,
+  authenticatedPost,
+  authenticatedPut,
+  get,
+  post,
+} from "./apiService"
 import { AuthHeaders, setAuthHeaders } from "../authentication/token"
 import { Application } from "./types/rails/application/RailsApplication"
 import { getCurrentLanguage, getRoutePrefix, LanguagePrefix } from "../util/languageUtil"
@@ -59,8 +67,22 @@ export const createAccount = async (
     return data.data
   })
 
-export const getProfile = async (): Promise<User> =>
-  authenticatedGet<UserData>("/api/v1/auth/validate_token").then((res) => res.data.data)
+export const createProfile = async (
+  contact: { firstName: string; middleName?: string; lastName: string; DOB: string },
+  sessionToken: string
+): Promise<{ contact: { contactId: string } }> =>
+  post<{ contact: { contactId: string } }>(
+    "/api/v1/account/profile",
+    { contact },
+    { headers: { Authorization: `Bearer ${sessionToken}` } }
+  ).then(({ data }) => data)
+
+export const getProfile = async (sessionToken?: string): Promise<User> =>
+  sessionToken
+    ? get<UserData>("/api/v1/account/profile", {
+        headers: { Authorization: `Bearer ${sessionToken}` },
+      }).then(({ data }: AxiosResponse<UserData>) => data.data)
+    : authenticatedGet<UserData>("/api/v1/auth/validate_token").then((res) => res.data.data)
 
 export const getApplications = async (): Promise<{ applications: Application[] }> =>
   authenticatedGet<{ applications: Application[] }>("/api/v1/account/my-applications").then(
@@ -113,6 +135,10 @@ export const getHousingCounselorAgencies = async (): Promise<HousingCounselorAge
   authenticatedGet<{ agencies: HousingCounselorAgency[] }>(housingCounselorAgencies()).then(
     ({ data }) => data.agencies
   )
+
+export const authorizeHousingCounselor = async (token: string): Promise<void> => {
+  await authenticatedPost("/api/v1/housing-counselor/access", { t: token })
+}
 
 export const resetPassword = async (new_password: string): Promise<string> =>
   authenticatedPut<{ message: string }>("/api/v1/auth/password", {

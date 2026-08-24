@@ -21,11 +21,6 @@ jest.mock("../../../hooks/useFeatureFlag", () => ({
   useFeatureFlag: () => ({ flagsReady: true, unleashFlag: true }),
 }))
 
-jest.mock("react-router", () => ({
-  ...jest.requireActual("react-router"),
-  useLocation: jest.fn(),
-}))
-
 describe("<Account />", () => {
   beforeEach(() => {
     document.documentElement.lang = "en"
@@ -57,7 +52,7 @@ describe("<Account />", () => {
       })
       overviewNav = screen
         .getAllByRole("navigation", { name: "Account" })
-        .find((nav) => within(nav).queryByRole("link", { name: "See applications" }))!
+        .find((nav) => within(nav).queryByRole("link", { name: /See applications/ }))!
     })
 
     afterEach(() => {
@@ -83,6 +78,14 @@ describe("<Account />", () => {
       expect(
         within(listItems[1]).getByRole("heading", { level: 2, name: "Account settings" })
       ).toBeInTheDocument()
+    })
+
+    it("does not nest links inside overview tabs", () => {
+      const anchors = overviewNav.querySelectorAll("a")
+      expect(anchors).toHaveLength(2)
+      anchors.forEach((anchor) => {
+        expect(anchor.querySelector("a")).toBeNull()
+      })
     })
   })
 

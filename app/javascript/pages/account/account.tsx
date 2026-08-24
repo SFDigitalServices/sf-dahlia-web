@@ -1,5 +1,5 @@
-import React, { useContext } from "react"
-import { useNavigate } from "react-router"
+import React, { useContext, useEffect, useState } from "react"
+import { useLocation, useNavigate } from "react-router"
 import { useAuth } from "@clerk/clerk-react"
 import { Button, Heading, Tabs } from "@bloom-housing/ui-seeds"
 import { Icon, t, UniversalIconType } from "@bloom-housing/ui-components"
@@ -24,6 +24,7 @@ import { withAuthentication } from "../../authentication/withAuthentication"
 import { ConfigContext } from "../../lib/ConfigContext"
 
 import ContactCard from "./components/ContactCard"
+import SuccessToast from "./components/SuccessToast"
 import { MyAccount } from "./my-account"
 import styles from "./account.module.scss"
 
@@ -49,7 +50,6 @@ const OverviewSection = ({
   heading,
   text,
   buttonLabel,
-  href,
   isImage,
   getAssetPath,
 }: {
@@ -57,7 +57,6 @@ const OverviewSection = ({
   heading: string
   text: string
   buttonLabel: string
-  href: string
   isImage?: boolean
   getAssetPath?: (path: string) => string
 }) => (
@@ -79,9 +78,14 @@ const OverviewSection = ({
       </Heading>
       <p className={styles.overviewText}>{t(text)}</p>
     </div>
-    <Button className={styles.overviewButton} variant="primary-outlined" size="sm" href={href}>
+    {/* Visual-only button to prevent nested <a> tags */}
+    <span
+      className={`seeds-button ${styles.overviewButton}`}
+      data-variant="primary-outlined"
+      data-size="sm"
+    >
       {t(buttonLabel)}
-    </Button>
+    </span>
     <span className={styles.overviewIcon} aria-hidden>
       <FontAwesomeIcon icon={faAngleRight} />
     </span>
@@ -100,8 +104,8 @@ const AccountOverview = ({ signOut, user }: { signOut: () => void; user?: User }
         navigationLabel={t("accountLayout.nav.title")}
       >
         <Tabs.TabList>
-          {overviewSections.map((section) => (
-            <Tabs.Tab key={section.href} className={styles.overviewSection} href={section.href}>
+          {overviewSections.map(({ href, ...section }) => (
+            <Tabs.Tab key={href} className={styles.overviewSection} href={href}>
               <OverviewSection {...section} getAssetPath={getAssetPath} />
             </Tabs.Tab>
           ))}
@@ -116,6 +120,21 @@ const AccountOverview = ({ signOut, user }: { signOut: () => void; user?: User }
   )
 }
 
+const AccountReadyToast = () => {
+  const { state } = useLocation() as { state?: { accountReady?: boolean } }
+  const [toast, setToast] = useState(false)
+
+  useEffect(() => {
+    if (state?.accountReady) {
+      setToast(true)
+    }
+  }, [state])
+
+  if (!toast) return null
+
+  return <SuccessToast>{t("createAccount.accountReady")}</SuccessToast>
+}
+
 interface AccountProps {
   assetPaths: unknown
 }
@@ -125,6 +144,7 @@ const DeviseAccount = () => {
 
   return (
     <Layout>
+      <AccountReadyToast />
       <AccountLayout>
         <div className={styles.overview}>
           <AccountOverview signOut={() => signOut?.()} user={profile} />
@@ -141,6 +161,7 @@ const ClerkAccount = () => {
 
   return (
     <Layout>
+      <AccountReadyToast />
       <AccountLayout>
         <div className={styles.overview}>
           <AccountOverview
@@ -163,7 +184,12 @@ const Account = ({ assetPaths }: AccountProps) => {
   const { unleashFlag: clerkEnabled, flagsReady } = useFeatureFlag(UNLEASH_FLAG.CLERK_AUTH, false)
 
   if (!accountLayoutEnabled) {
-    return <MyAccount assetPaths={assetPaths} />
+    return (
+      <>
+        <AccountReadyToast />
+        <MyAccount assetPaths={assetPaths} />
+      </>
+    )
   }
 
   if (!flagsReady) {

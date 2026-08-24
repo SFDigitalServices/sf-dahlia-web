@@ -67,9 +67,12 @@ Rails.application.routes.draw do
         put 'update-housing-counselor' => 'account#update_housing_counselor'
         get 'confirm' => 'account#confirm'
         get 'check-account' => 'account#check_account'
+        get 'profile' => 'account#profile'
+        post 'profile' => 'account#create_profile'
       end
       scope '/housing-counselor' do
         get 'agencies' => 'housing_counselor#agencies'
+        post 'access' => 'housing_counselor#access'
       end
     end
   end
@@ -108,6 +111,7 @@ Rails.application.routes.draw do
   get '(:lang)/create-account' => 'auth#create_account', lang: /(en|es|zh|tl)/
   get '(:lang)/create-account/code' => 'auth#enter_verification_code', lang: /(en|es|zh|tl)/
   get '(:lang)/add-password' => 'auth#add_password', lang: /(en|es|zh|tl)/
+  get '(:lang)/add-profile' => 'auth#add_profile', lang: /(en|es|zh|tl)/
   get '(:lang)/forgot-password' => 'auth#forgot_password', lang: /(en|es|zh|tl)/
   get '(:lang)/reset-password' => 'auth#reset_password', lang: /(en|es|zh|tl)/
 
