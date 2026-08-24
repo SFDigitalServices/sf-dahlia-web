@@ -122,7 +122,7 @@ describe("<SignInFlow />", () => {
       screen
         .getByRole("link", { name: /get help creating an account or signing in/i })
         .getAttribute("href")
-    ).toBe("https://www.sf.gov/sign-in-to-your-dahlia-account")
+    ).toBe("https://www.sf.gov/get-help-with-your-dahlia-account")
   })
 
   it("hides the required logins message when the flag is off", async () => {
