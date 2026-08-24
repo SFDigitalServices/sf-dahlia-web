@@ -45,7 +45,6 @@ const WhatToDo = ({
           const token = new URLSearchParams(window.location.search).get("t") ?? ""
 
           await recordResponse(token, {
-            listingId: listing.Id,
             action: I2X_ACTIONS.APPOINTMENT,
           })
         }
@@ -55,7 +54,7 @@ const WhatToDo = ({
         setIsSubmitting(false)
       }
     })()
-  }, [url, appId, isTest, listing.Id])
+  }, [url, appId, isTest])
   return (
     <div className={`${styles.whatToDoList} markdown`}>
       <Heading priority={2} size="2xl">

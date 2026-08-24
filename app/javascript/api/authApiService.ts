@@ -1,6 +1,12 @@
 import { AxiosResponse } from "axios"
 import { Contact, User, UserData } from "../authentication/user"
-import { authenticatedDelete, authenticatedGet, authenticatedPut, post } from "./apiService"
+import {
+  authenticatedDelete,
+  authenticatedGet,
+  authenticatedPost,
+  authenticatedPut,
+  post,
+} from "./apiService"
 import { AuthHeaders, setAuthHeaders } from "../authentication/token"
 import { Application } from "./types/rails/application/RailsApplication"
 import { getCurrentLanguage, getRoutePrefix, LanguagePrefix } from "../util/languageUtil"
@@ -113,6 +119,10 @@ export const getHousingCounselorAgencies = async (): Promise<HousingCounselorAge
   authenticatedGet<{ agencies: HousingCounselorAgency[] }>(housingCounselorAgencies()).then(
     ({ data }) => data.agencies
   )
+
+export const authorizeHousingCounselor = async (token: string): Promise<void> => {
+  await authenticatedPost("/api/v1/housing-counselor/access", { t: token })
+}
 
 export const resetPassword = async (new_password: string): Promise<string> =>
   authenticatedPut<{ message: string }>("/api/v1/auth/password", {
