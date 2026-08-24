@@ -1,8 +1,8 @@
 import React from "react"
-import { useUser } from "@clerk/clerk-react"
+import { useSignIn, useUser } from "@clerk/clerk-react"
 import { screen, waitFor, cleanup } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
-import { useNavigate } from "react-router"
+import { useLocation, useNavigate } from "react-router"
 import AddPassword from "../../../pages/account/add-password"
 import {
   renderAndLoadAsync,
@@ -11,6 +11,7 @@ import {
 } from "../../__util__/renderUtils"
 import { setupUserContext } from "../../__util__/accountUtils"
 import { useFeatureFlag } from "../../../hooks/useFeatureFlag"
+import { AUTH_FLOW } from "../../../modules/constants"
 
 jest.mock("@clerk/clerk-react", () => {
   const Clerk = jest.requireActual("@clerk/clerk-react")
@@ -19,12 +20,14 @@ jest.mock("@clerk/clerk-react", () => {
     ClerkProvider: ({ children }: { children: React.ReactNode }) => children,
     useAuth: jest.fn(),
     useUser: jest.fn(),
+    useSignIn: jest.fn(),
   }
 })
 
 jest.mock("react-router", () => ({
   ...jest.requireActual("react-router"),
   useNavigate: jest.fn(),
+  useLocation: jest.fn(),
 }))
 
 jest.mock("../../../hooks/useFeatureFlag", () => ({
@@ -43,6 +46,14 @@ describe("<AddPassword />", () => {
     mockNavigate = jest.fn()
     mockUpdatePassword = jest.fn().mockResolvedValue(undefined)
     ;(useNavigate as jest.Mock).mockReturnValue(mockNavigate)
+    ;(useLocation as jest.Mock).mockReturnValue({
+      state: { flow: AUTH_FLOW.CREATE_ACCOUNT },
+    })
+    ;(useSignIn as jest.Mock).mockReturnValue({
+      isLoaded: true,
+      signIn: { resetPassword: jest.fn(), status: null },
+      setActive: jest.fn(),
+    })
     ;(useFeatureFlag as jest.Mock).mockReturnValue({ flagsReady: true, unleashFlag: true })
     ;(useUser as jest.Mock).mockReturnValue({
       isLoaded: true,

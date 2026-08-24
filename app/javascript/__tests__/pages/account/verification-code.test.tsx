@@ -12,6 +12,7 @@ import {
 } from "../../__util__/renderUtils"
 import { setupUserContext } from "../../__util__/accountUtils"
 import { useFeatureFlag } from "../../../hooks/useFeatureFlag"
+import { AUTH_FLOW } from "../../../modules/constants"
 
 jest.mock("@clerk/clerk-react", () => {
   const Clerk = jest.requireActual("@clerk/clerk-react")
@@ -59,7 +60,7 @@ describe("<EnterVerificationCode />", () => {
     ;(useNavigate as jest.Mock).mockReturnValue(mockNavigate)
     ;(useLocation as jest.Mock).mockReturnValue({
       pathname: "/create-account/code",
-      state: { email: "test@example.com" },
+      state: { email: "test@example.com", flow: AUTH_FLOW.CREATE_ACCOUNT },
     })
     ;(useFeatureFlag as jest.Mock).mockReturnValue({ flagsReady: true, unleashFlag: true })
     ;(useSignUp as jest.Mock).mockReturnValue({
@@ -200,7 +201,10 @@ describe("<EnterVerificationCode />", () => {
   it("redirects to create account when email is missing", async () => {
     cleanup()
     document.title = "DAHLIA San Francisco Housing Portal"
-    ;(useLocation as jest.Mock).mockReturnValue({ pathname: "/create-account/code", state: null })
+    ;(useLocation as jest.Mock).mockReturnValue({
+      pathname: "/create-account/code",
+      state: { flow: AUTH_FLOW.CREATE_ACCOUNT },
+    })
     await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
 
     await waitFor(() => {
@@ -212,7 +216,7 @@ describe("<EnterVerificationCode />", () => {
     cleanup()
     ;(useLocation as jest.Mock).mockReturnValue({
       pathname: "/sign-in/code",
-      state: { email: "test@example.com" },
+      state: { email: "test@example.com", flow: AUTH_FLOW.SIGN_IN },
     })
     await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
 
@@ -228,7 +232,7 @@ describe("<EnterVerificationCode />", () => {
     cleanup()
     ;(useLocation as jest.Mock).mockReturnValue({
       pathname: "/sign-in/code",
-      state: { email: "test@example.com" },
+      state: { email: "test@example.com", flow: AUTH_FLOW.SIGN_IN },
     })
     mockAttemptFirstFactor.mockResolvedValue({
       status: "complete",
@@ -258,7 +262,7 @@ describe("<EnterVerificationCode />", () => {
     cleanup()
     ;(useLocation as jest.Mock).mockReturnValue({
       pathname: "/sign-in/code",
-      state: { email: "test@example.com" },
+      state: { email: "test@example.com", flow: AUTH_FLOW.SIGN_IN },
     })
     await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
 
@@ -276,7 +280,10 @@ describe("<EnterVerificationCode />", () => {
   it("redirects to sign-in when email is missing from the sign-in code page", async () => {
     cleanup()
     document.title = "DAHLIA San Francisco Housing Portal"
-    ;(useLocation as jest.Mock).mockReturnValue({ pathname: "/sign-in/code", state: null })
+    ;(useLocation as jest.Mock).mockReturnValue({
+      pathname: "/sign-in/code",
+      state: { flow: AUTH_FLOW.SIGN_IN },
+    })
     await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
 
     await waitFor(() => {

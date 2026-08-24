@@ -12,6 +12,7 @@ import {
   getAddPasswordPath,
   getAuthFlowPath,
   getMyAccountPath,
+  getSignInPath,
 } from "../../util/routeUtil"
 import styles from "./verification-code.module.scss"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
@@ -242,11 +243,11 @@ const EnterVerificationCode = (_props: { assetPaths: unknown }) => {
   const { state } = useLocation()
   const email = state?.email
   const flow: AUTH_FLOW = state?.flow
-  const fallbackPath = getAuthFlowPath(flow)
+  const fallbackPath = flow ? getAuthFlowPath(flow) : getSignInPath()
   const { unleashFlag: clerkEnabled } = useFeatureFlag(UNLEASH_FLAG.CLERK_AUTH, false)
   useEffect(() => {
     if (!email || !flow || !clerkEnabled) {
-      void navigate(fallbackPath, { replace: true })
+      void navigate(fallbackPath)
     }
   }, [email, clerkEnabled, fallbackPath, navigate, flow])
 
