@@ -49,7 +49,6 @@ const OverviewSection = ({
   heading,
   text,
   buttonLabel,
-  href,
   isImage,
   getAssetPath,
 }: {
@@ -57,7 +56,6 @@ const OverviewSection = ({
   heading: string
   text: string
   buttonLabel: string
-  href: string
   isImage?: boolean
   getAssetPath?: (path: string) => string
 }) => (
@@ -79,9 +77,14 @@ const OverviewSection = ({
       </Heading>
       <p className={styles.overviewText}>{t(text)}</p>
     </div>
-    <Button className={styles.overviewButton} variant="primary-outlined" size="sm" href={href}>
+    {/* Visual-only button to prevent nested <a> tags */}
+    <span
+      className={`seeds-button ${styles.overviewButton}`}
+      data-variant="primary-outlined"
+      data-size="sm"
+    >
       {t(buttonLabel)}
-    </Button>
+    </span>
     <span className={styles.overviewIcon} aria-hidden>
       <FontAwesomeIcon icon={faAngleRight} />
     </span>
@@ -100,8 +103,8 @@ const AccountOverview = ({ signOut, user }: { signOut: () => void; user?: User }
         navigationLabel={t("accountLayout.nav.title")}
       >
         <Tabs.TabList>
-          {overviewSections.map((section) => (
-            <Tabs.Tab key={section.href} className={styles.overviewSection} href={section.href}>
+          {overviewSections.map(({ href, ...section }) => (
+            <Tabs.Tab key={href} className={styles.overviewSection} href={href}>
               <OverviewSection {...section} getAssetPath={getAssetPath} />
             </Tabs.Tab>
           ))}
