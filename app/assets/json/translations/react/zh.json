@@ -267,7 +267,7 @@
   "createAccount.continueWithApplication": "繼續申請作業",
   "createAccount.createAnAccount": "建立帳戶",
   "createAccount.description": "我們會使用這些資訊來幫助您填寫申請表。您可以隨時更新這些詳細資訊。",
-  "createAccount.dobExample": "例如：1980 年 11 月 20 日的格式為 11-20-1980。",
+  "createAccount.dobExample": "例如：1980 年 4 月 20 日的格式為 04 20 1980。",
   "createAccount.dobNote": "請提供您的出生日期以驗證年齡。您必須年滿 18 歲，才能申請住房。",
   "createAccount.emailConfirmInstructions": "請重新輸入電子郵件地址以便確認。",
   "createAccount.emailNote": "我們只會使用您的電子郵件地址，與您接洽已提交申請表的相關事宜，或協助您重設密碼。",

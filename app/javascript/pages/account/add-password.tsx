@@ -7,7 +7,7 @@ import { Card, Heading, Button, Message } from "@bloom-housing/ui-seeds"
 import { useForm } from "react-hook-form"
 import withAppSetup from "../../layouts/withAppSetup"
 import AuthLayout from "../../layouts/AuthLayout"
-import { AppPages, getCreateAccountPath } from "../../util/routeUtil"
+import { AppPages, getAddProfilePath, getCreateAccountPath } from "../../util/routeUtil"
 import styles from "./add-password.module.scss"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import { AUTH_FLOW, UNLEASH_FLAG } from "../../modules/constants"
@@ -19,11 +19,8 @@ interface AddPasswordFormValues {
   password: string
 }
 
-const onSkip = () => {
-  console.log("TODO: skip password")
-}
-
 const AddPasswordPage = () => {
+  const navigate = useNavigate()
   const { isLoaded, user } = useUser()
   const {
     register,
@@ -41,7 +38,7 @@ const AddPasswordPage = () => {
     if (!isLoaded || !user) return
     try {
       await user.updatePassword({ newPassword })
-      console.log("TODO: next step is the profile page")
+      void navigate(getAddProfilePath())
     } catch (error) {
       console.error("Add password error:", error)
       setError("password", { message: "password:server:generic" })
@@ -69,7 +66,14 @@ const AddPasswordPage = () => {
             <Button variant="primary" size="sm" type="submit" disabled={!isLoaded}>
               {t("createAccount.savePassword")}
             </Button>
-            <Button variant="primary-outlined" size="sm" type="button" onClick={onSkip}>
+            <Button
+              variant="primary-outlined"
+              size="sm"
+              type="button"
+              onClick={() => {
+                void navigate(getAddProfilePath())
+              }}
+            >
               {t("createAccount.skipForNow")}
             </Button>
           </div>
