@@ -2040,6 +2040,7 @@
   "signIn.oneTimeCode": "Get a one-time code to sign in",
   "signIn.oneTimeCodeNote": "One-time codes make signing in easier. We'll send a code to your email. No passwords to remember or reset.",
   "signIn.passwordInstead": "Sign in with a password instead",
+  "signIn.requiredLoginNotice": "On %{date}, you will need to sign in to apply on DAHLIA. <a href='%{url}' target='_blank'>Get help creating an account or signing in.</a>",
   "signIn.resentConfirmationMessage": "Email sent. Please check your inbox.",
   "signIn.signInRequired": "Please sign in to your account to access this page.",
   "signIn.signedOutSuccessfully": "You have successfully logged out of your account.",
