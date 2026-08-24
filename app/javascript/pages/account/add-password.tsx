@@ -34,7 +34,7 @@ const onSkip = () => {
 
 const AddPasswordPage = ({ flow }: AddPasswordPageProps) => {
   const { isLoaded, user } = useUser()
-  const { signIn, setActive } = useSignIn()
+  const { isLoaded: signInLoaded, signIn, setActive } = useSignIn()
   const [isResettingPassword, setIsResettingPassword] = useState(false)
   const isForgotPasswordFlow = flow === AUTH_FLOW.FORGOT_PASSWORD
   const {
@@ -49,7 +49,7 @@ const AddPasswordPage = ({ flow }: AddPasswordPageProps) => {
     shouldFocusError: false,
   })
 
-  if (isForgotPasswordFlow && !isResettingPassword && !signIn?.status) {
+  if (isForgotPasswordFlow && signInLoaded && !isResettingPassword && !signIn?.status) {
     return <Navigate to={getForgotPasswordPath()} />
   }
 
@@ -83,7 +83,9 @@ const AddPasswordPage = ({ flow }: AddPasswordPageProps) => {
     <AuthLayout title={t("createAccount.addPassword")}>
       <Card.Section divider="flush">
         <Heading priority={1} size="2xl">
-          {t("createAccount.addPassword")}
+          {isForgotPasswordFlow
+            ? t("createAccount.createNewPassword")
+            : t("createAccount.addPassword")}
         </Heading>
         {!isForgotPasswordFlow && (
           <Message fullwidth variant="primary" className={styles.skip}>

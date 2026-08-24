@@ -293,6 +293,7 @@
   "createAccount.confirmCode": "Confirm code",
   "createAccount.continueWithApplication": "Continue with Application",
   "createAccount.createAnAccount": "Create an Account",
+  "createAccount.createNewPassword": "Create a new password",
   "createAccount.description": "We use this information to help you fill in your application. You can update these details at any time.",
   "createAccount.didntGetEmail": "Didn't get an email?",
   "createAccount.dobExample": "Example: November 20, 1980 is 11-20-1980.",
