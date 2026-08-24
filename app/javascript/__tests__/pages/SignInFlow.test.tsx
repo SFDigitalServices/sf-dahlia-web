@@ -4,6 +4,7 @@ import { screen, waitFor, within, cleanup } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
 import { useNavigate } from "react-router"
 import SignIn from "../../pages/sign-in"
+import { getSignInCodePath } from "../../util/routeUtil"
 import {
   renderAndLoadAsync,
   mockWindowLocation,
@@ -231,10 +232,13 @@ describe("<SignInFlow />", () => {
     await user.click(screen.getByRole("button", { name: /^get a code$/i }))
 
     await waitFor(() => {
-      expect(mockSignInCreate).toHaveBeenCalledWith({ identifier: "test@test.com" })
+      expect(mockSignInCreate).toHaveBeenCalledWith({
+        identifier: "test@test.com",
+        signUpIfMissing: true,
+      })
     })
-    expect(mockSendEmailCode).toHaveBeenCalledWith({ emailAddress: "test@test.com" })
-    expect(mockNavigate).toHaveBeenCalledWith("/sign-in/code", {
+    expect(mockSendEmailCode).toHaveBeenCalledWith()
+    expect(mockNavigate).toHaveBeenCalledWith(getSignInCodePath(), {
       state: { email: "test@test.com", housingCounselorToken: null },
     })
   })

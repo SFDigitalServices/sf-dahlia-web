@@ -1,9 +1,10 @@
 import React from "react"
-import { useSignUp } from "@clerk/react"
+import { useSignIn, useSignUp } from "@clerk/react"
 import { screen, waitFor, within, cleanup } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
 import { useNavigate } from "react-router"
 import CreateAnAccount from "../../../pages/account/create-an-account"
+import { getSignInCodePath } from "../../../util/routeUtil"
 import {
   renderAndLoadAsync,
   mockWindowLocation,
@@ -17,6 +18,7 @@ jest.mock("@clerk/react", () => {
     ...Clerk,
     ClerkProvider: ({ children }: { children: React.ReactNode }) => children,
     useAuth: jest.fn(() => ({ isLoaded: true, isSignedIn: false })),
+    useSignIn: jest.fn(),
     useSignUp: jest.fn(),
   }
 })
@@ -31,6 +33,13 @@ describe("<CreateAnAccount />", () => {
   let mockNavigate: jest.Mock
   let mockSignUpCreate: jest.Mock
   let mockSendEmailCode: jest.Mock
+  let mockSignInCreate: jest.Mock
+  let mockSignInSendCode: jest.Mock
+  let mockSignInResource: {
+    status: string
+    create: jest.Mock
+    emailCode: { sendCode: jest.Mock }
+  }
 
   beforeEach(async () => {
     document.documentElement.lang = "en"
@@ -40,6 +49,15 @@ describe("<CreateAnAccount />", () => {
     ;(useNavigate as jest.Mock).mockReturnValue(mockNavigate)
     mockSignUpCreate = jest.fn().mockResolvedValue({ error: null })
     mockSendEmailCode = jest.fn().mockResolvedValue(undefined)
+    mockSignInCreate = jest.fn().mockResolvedValue({ error: null })
+    mockSignInSendCode = jest.fn().mockResolvedValue(undefined)
+    mockSignInResource = {
+      status: "needs_first_factor",
+      create: mockSignInCreate,
+      emailCode: {
+        sendCode: mockSignInSendCode,
+      },
+    }
     ;(useSignUp as jest.Mock).mockReturnValue({
       fetchStatus: "idle",
       signUp: {
@@ -48,6 +66,10 @@ describe("<CreateAnAccount />", () => {
           sendEmailCode: mockSendEmailCode,
         },
       },
+    })
+    ;(useSignIn as jest.Mock).mockReturnValue({
+      fetchStatus: "idle",
+      signIn: mockSignInResource,
     })
     await renderAndLoadAsync(<CreateAnAccount assetPaths={{}} />)
   })
@@ -100,5 +122,66 @@ describe("<CreateAnAccount />", () => {
     expect(mockNavigate).toHaveBeenCalledWith("/create-account/code", {
       state: { email: "test@example.com" },
     })
+  })
+
+  it("transfers to sign-in code flow when account already exists", async () => {
+    const user = userEvent.setup()
+    const emailGroup = screen.getByRole("group", { name: /email/i })
+    const emailField = within(emailGroup).getByRole("textbox")
+    mockSignUpCreate.mockResolvedValue({ error: { errors: [{ code: "form_identifier_exists" }] } })
+
+    await user.type(emailField, "test@example.com")
+    await user.click(screen.getByRole("button", { name: /get a code/i }))
+
+    await waitFor(() => {
+      expect(mockSignInCreate).toHaveBeenCalledWith({ identifier: "test@example.com" })
+    })
+    expect(mockSignInSendCode).toHaveBeenCalledWith()
+    expect(mockNavigate).toHaveBeenCalledWith(getSignInCodePath(), {
+      state: { email: "test@example.com" },
+    })
+    expect(mockSendEmailCode).not.toHaveBeenCalled()
+  })
+
+  it("logs transfer error when sign-in creation fails", async () => {
+    const user = userEvent.setup()
+    const emailGroup = screen.getByRole("group", { name: /email/i })
+    const emailField = within(emailGroup).getByRole("textbox")
+    const consoleError = jest.spyOn(console, "error").mockImplementation(() => {})
+    const transferError = { errors: [{ code: "some_signin_create_error" }] }
+    mockSignUpCreate.mockResolvedValue({ error: { errors: [{ code: "form_identifier_exists" }] } })
+    mockSignInCreate.mockResolvedValue({ error: transferError })
+
+    await user.type(emailField, "test@example.com")
+    await user.click(screen.getByRole("button", { name: /get a code/i }))
+
+    await waitFor(() => {
+      expect(mockSignInCreate).toHaveBeenCalledWith({ identifier: "test@example.com" })
+    })
+    expect(consoleError).toHaveBeenCalledWith("Transfer to sign in code error", transferError)
+    expect(mockSignInSendCode).not.toHaveBeenCalled()
+    expect(mockNavigate).not.toHaveBeenCalled()
+
+    consoleError.mockRestore()
+  })
+
+  it("logs transfer error when sign-in is not in first-factor state", async () => {
+    const user = userEvent.setup()
+    const emailGroup = screen.getByRole("group", { name: /email/i })
+    const emailField = within(emailGroup).getByRole("textbox")
+    const consoleError = jest.spyOn(console, "error").mockImplementation(() => {})
+    mockSignUpCreate.mockResolvedValue({ error: { errors: [{ code: "form_identifier_exists" }] } })
+    mockSignInResource.status = "some_unhanclded_status"
+
+    await user.type(emailField, "test@example.com")
+    await user.click(screen.getByRole("button", { name: /get a code/i }))
+
+    await waitFor(() => {
+      expect(mockSignInSendCode).toHaveBeenCalledWith()
+    })
+    expect(consoleError).toHaveBeenCalledWith("Transfer to sign in code error", mockSignInResource)
+    expect(mockNavigate).not.toHaveBeenCalled()
+
+    consoleError.mockRestore()
   })
 })
