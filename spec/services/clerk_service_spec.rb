@@ -4,90 +4,113 @@ require 'rails_helper'
 
 RSpec.describe ClerkService do
   let(:user_id) { 'user_abc123' }
-  let(:sdk) { instance_double(Clerk::SDK, users: users) }
-  let(:users) { instance_double('ClerkUsers') }
+  let(:sdk) { instance_double(Clerk::SDK) }
+  let(:users_api) { instance_double(Clerk::Users) }
 
   before do
     described_class.instance_variable_set(:@sdk, nil)
     allow(Clerk::SDK).to receive(:new).and_return(sdk)
+    allow(sdk).to receive(:users).and_return(users_api)
+    allow(Rails.logger).to receive(:info)
   end
 
-  after { described_class.instance_variable_set(:@sdk, nil) }
+  after do
+    described_class.instance_variable_set(:@sdk, nil)
+  end
 
   describe ClerkService::User do
-    subject(:clerk_user) { described_class.new(user_id) }
+    subject(:user) { described_class.new(user_id) }
+
+    describe '#id' do
+      it 'returns the Clerk user id' do
+        expect(user.id).to eq(user_id)
+      end
+    end
 
     describe '#email' do
-      it 'returns the email from ClerkService' do
-        allow(ClerkService).to receive(:email_address).with(user_id).and_return('a@example.com')
+      it 'returns the email from Clerk and memoizes it' do
+        allow(ClerkService).to receive(:email_address)
+          .with(user_id)
+          .and_return('test@example.com')
 
-        expect(clerk_user.email).to eq('a@example.com')
-        expect(clerk_user.email).to eq('a@example.com')
+        expect(user.email).to eq('test@example.com')
+        expect(user.email).to eq('test@example.com')
         expect(ClerkService).to have_received(:email_address).once
       end
     end
 
     describe '#salesforce_contact_id' do
-      it 'returns the contact id from ClerkService and memoizes it' do
-        allow(ClerkService).to receive(:salesforce_contact_id).with(user_id).and_return('003ABC')
+      it 'returns the Salesforce contact id from Clerk and memoizes it' do
+        allow(ClerkService).to receive(:salesforce_contact_id)
+          .with(user_id)
+          .and_return('003ABC')
 
-        expect(clerk_user.salesforce_contact_id).to eq('003ABC')
-        expect(clerk_user.salesforce_contact_id).to eq('003ABC')
+        expect(user.salesforce_contact_id).to eq('003ABC')
+        expect(user.salesforce_contact_id).to eq('003ABC')
         expect(ClerkService).to have_received(:salesforce_contact_id).once
       end
 
-      it 'returns nil and logs when ClerkService raises' do
+      it 'errors when Clerk has no contact id' do
         allow(ClerkService).to receive(:salesforce_contact_id)
-          .and_raise(StandardError, 'missing contact')
-        allow(Rails.logger).to receive(:info)
+          .and_raise(StandardError, 'User has no Salesforce contact id')
 
-        expect(clerk_user.salesforce_contact_id).to be_nil
+        expect(user.salesforce_contact_id).to be_nil
         expect(Rails.logger).to have_received(:info).with(
-          "Clerk user #{user_id} has no Salesforce contact ID: missing contact",
+          "Clerk user #{user_id} has no Salesforce contact ID: " \
+          'User has no Salesforce contact id',
         )
       end
     end
   end
 
   describe '.email_address' do
-    let(:email) { instance_double('ClerkEmail', email_address: 'a@example.com') }
-    let(:user) { instance_double('ClerkUser', email_addresses: [email]) }
-
-    it 'returns the first email address' do
-      allow(users).to receive(:get).with(user_id: user_id)
-        .and_return(instance_double('GetUserResponse', user: user))
-
-      expect(described_class.email_address(user_id)).to eq('a@example.com')
+    let(:email_record) do
+      instance_double(
+        Clerk::Models::Components::EmailAddress,
+        email_address: 'test@example.com',
+      )
+    end
+    let(:clerk_user) do
+      instance_double(
+        Clerk::Models::Components::User,
+        email_addresses: [email_record],
+      )
+    end
+    let(:get_response) do
+      instance_double(Clerk::Models::Operations::GetUserResponse, user: clerk_user)
     end
 
-    it 'raises when the user is missing' do
-      allow(users).to receive(:get).with(user_id: user_id)
-        .and_return(instance_double('GetUserResponse', user: nil))
+    before do
+      allow(users_api).to receive(:get).with(user_id: user_id).and_return(get_response)
+    end
+
+    it 'returns the email address' do
+      expect(described_class.email_address(user_id)).to eq('test@example.com')
+    end
+
+    it 'errors when the Clerk user is missing' do
+      allow(users_api).to receive(:get).and_return(nil)
 
       expect { described_class.email_address(user_id) }
         .to raise_error(StandardError, "User #{user_id} is missing")
     end
 
-    it 'raises when the Clerk response is missing' do
-      allow(users).to receive(:get).with(user_id: user_id).and_return(nil)
+    it 'errors when the Clerk response has no user' do
+      allow(get_response).to receive(:user).and_return(nil)
 
       expect { described_class.email_address(user_id) }
         .to raise_error(StandardError, "User #{user_id} is missing")
     end
 
-    it 'raises when the user has no email address' do
-      user_without_email = instance_double('ClerkUser', email_addresses: [])
-      allow(users).to receive(:get).with(user_id: user_id)
-        .and_return(instance_double('GetUserResponse', user: user_without_email))
+    it 'errors when the user has no email address' do
+      allow(clerk_user).to receive(:email_addresses).and_return([])
 
       expect { described_class.email_address(user_id) }
         .to raise_error(StandardError, "User #{user_id} has no email address")
     end
 
-    it 'raises when email_addresses is nil' do
-      user_without_email = instance_double('ClerkUser', email_addresses: nil)
-      allow(users).to receive(:get).with(user_id: user_id)
-        .and_return(instance_double('GetUserResponse', user: user_without_email))
+    it 'errors when email_addresses is nil' do
+      allow(clerk_user).to receive(:email_addresses).and_return(nil)
 
       expect { described_class.email_address(user_id) }
         .to raise_error(StandardError, "User #{user_id} has no email address")
@@ -95,55 +118,70 @@ RSpec.describe ClerkService do
   end
 
   describe '.store_salesforce_contact_id' do
-    it 'updates private metadata and logs success' do
-      contact_id = '003XYZ'
-      allow(users).to receive(:update_metadata)
-      allow(Rails.logger).to receive(:info)
+    let(:contact_id) { '003ABC' }
+    let(:expected_body) do
+      Clerk::Models::Operations::UpdateUserMetadataRequestBody.new(
+        private_metadata: { 'salesforce_contact_id' => contact_id },
+      )
+    end
 
+    before do
+      allow(users_api).to receive(:update_metadata)
+    end
+
+    it 'stores the contact id in Clerk private metadata' do
       described_class.store_salesforce_contact_id(user_id, contact_id)
 
-      expect(users).to have_received(:update_metadata) do |args|
-        expect(args[:user_id]).to eq(user_id)
-        expect(args[:body].private_metadata).to eq('salesforce_contact_id' => contact_id)
-      end
-      expect(Rails.logger).to have_received(:info)
-        .with("Salesforce contact id stored for user #{user_id}")
+      expect(users_api).to have_received(:update_metadata).with(
+        user_id: user_id,
+        body: expected_body,
+      )
+    end
+
+    it 'logs that the contact id was stored' do
+      described_class.store_salesforce_contact_id(user_id, contact_id)
+
+      expect(Rails.logger).to have_received(:info).with(
+        "Salesforce contact id stored for user #{user_id}",
+      )
     end
   end
 
   describe '.salesforce_contact_id' do
-    it 'returns the contact id from private metadata' do
-      user = instance_double(
-        'ClerkUser',
+    let(:clerk_user) do
+      instance_double(
+        Clerk::Models::Components::User,
         private_metadata: { 'salesforce_contact_id' => '003ABC' },
       )
-      allow(users).to receive(:get).with(user_id: user_id)
-        .and_return(instance_double('GetUserResponse', user: user))
+    end
+    let(:get_response) do
+      instance_double(Clerk::Models::Operations::GetUserResponse, user: clerk_user)
+    end
 
+    before do
+      allow(users_api).to receive(:get).with(user_id: user_id).and_return(get_response)
+    end
+
+    it 'returns the Salesforce contact id from private metadata' do
       expect(described_class.salesforce_contact_id(user_id)).to eq('003ABC')
     end
 
-    it 'raises when the user is missing' do
-      allow(users).to receive(:get).with(user_id: user_id)
-        .and_return(instance_double('GetUserResponse', user: nil))
+    it 'errors when the Clerk user is missing' do
+      allow(users_api).to receive(:get).and_return(nil)
 
       expect { described_class.salesforce_contact_id(user_id) }
         .to raise_error(StandardError, "User #{user_id} is missing")
     end
 
-    it 'raises when the contact id is blank' do
-      user = instance_double('ClerkUser', private_metadata: {})
-      allow(users).to receive(:get).with(user_id: user_id)
-        .and_return(instance_double('GetUserResponse', user: user))
+    it 'errors when private metadata has no contact id' do
+      allow(clerk_user).to receive(:private_metadata).and_return({})
 
       expect { described_class.salesforce_contact_id(user_id) }
         .to raise_error(StandardError, "User #{user_id} has no Salesforce contact id")
     end
 
-    it 'raises when private metadata is blank' do
-      user = instance_double('ClerkUser', private_metadata: nil)
-      allow(users).to receive(:get).with(user_id: user_id)
-        .and_return(instance_double('GetUserResponse', user: user))
+    it 'errors when private metadata is missing' do
+      allow(clerk_user).to receive(:private_metadata).and_return(nil)
 
       expect { described_class.salesforce_contact_id(user_id) }
         .to raise_error(StandardError, "User #{user_id} has no Salesforce contact id")
