@@ -81,6 +81,8 @@ beforeEach(() => {
   jest.resetAllMocks()
   setDefaultClerkAuth()
   jest.spyOn(console, "log").mockImplementation(() => {})
+  document.documentElement.lang = "en"
+  document.title = "DAHLIA San Francisco Housing Portal"
 })
 
 let previousHeapUsage: number | null = null
@@ -107,6 +109,7 @@ afterEach(() => {
     previousHeapUsage = currentHeapUsage
   }
   cleanup()
+  document.title = "DAHLIA San Francisco Housing Portal"
 
   // fail test if api call has not been mocked up
   expect(spies.delete).not.toHaveBeenCalled()

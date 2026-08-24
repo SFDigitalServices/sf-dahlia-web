@@ -170,7 +170,6 @@ describe("Invite to Interview", () => {
     expect(windowOpenSpy).toHaveBeenCalledWith("test-link", "_blank")
     await waitFor(() => {
       expect(recordResponse).toHaveBeenCalledWith("", {
-        listingId: "listing-id",
         action: "appointment",
       })
     })
@@ -203,7 +202,6 @@ describe("Invite to Interview", () => {
 
     await waitFor(() => {
       expect(recordResponse).toHaveBeenCalledWith("", {
-        listingId: "listing-id",
         action: "appointment",
       })
       expect(windowOpenSpy).toHaveBeenCalledTimes(1)

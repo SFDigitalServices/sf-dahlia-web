@@ -129,6 +129,10 @@ export const getHousingCounselorAgencies = async (): Promise<HousingCounselorAge
     ({ data }) => data.agencies
   )
 
+export const authorizeHousingCounselor = async (token: string): Promise<void> => {
+  await authenticatedPost("/api/v1/housing-counselor/access", { t: token })
+}
+
 export const resetPassword = async (new_password: string): Promise<string> =>
   authenticatedPut<{ message: string }>("/api/v1/auth/password", {
     password: new_password,

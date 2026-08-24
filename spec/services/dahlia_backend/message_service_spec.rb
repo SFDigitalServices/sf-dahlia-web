@@ -5,10 +5,8 @@ RSpec.describe DahliaBackend::MessageService do
   let(:service) { described_class.new(client) }
 
   let(:listing_id) { 'listing123' }
-  let(:application_number) { 'APP123456' }
   let(:application_id) { 'app123' }
   let(:email) { 'test@example.com' }
-  let(:application_language) { 'en' }
 
 
   let(:listing_data) do
@@ -43,27 +41,11 @@ RSpec.describe DahliaBackend::MessageService do
     }
   end
 
-  let(:application_data) do
-    {
-      'primaryApplicant' => {
-        'firstName' => 'John',
-        'email' => 'john@example.com',
-      },
-      'alternateContact' => {
-        'firstName' => 'Jane',
-        'email' => 'jane@example.com',
-      },
-      'lotteryNumber' => '54321',
-      'applicationLanguage' => application_language,
-    }
-  end
-
   before do
     allow(Rails.logger).to receive(:info)
     allow(Rails.logger).to receive(:warn)
     allow(Rails.logger).to receive(:error)
     allow(Force::ListingService).to receive(:listing).and_return(listing_data)
-    allow(Force::ShortFormService).to receive(:get).and_return(application_data)
   end
 
   describe '.send_application_confirmation' do
@@ -79,10 +61,9 @@ RSpec.describe DahliaBackend::MessageService do
   describe '.send_invite_to_response' do
     it 'creates a new instance and calls the instance method' do
       expect_any_instance_of(described_class).to receive(:send_invite_to_response)
-        .with('2024-12-31', application_id, application_number, 'yes', 'yes', listing_id, nil)
+        .with(application_id, 'yes')
 
-      described_class.send_invite_to_response('2024-12-31', application_id, application_number,
-                                                    'yes', 'yes', listing_id)
+      described_class.send_invite_to_response(application_id, 'yes')
     end
   end
 
@@ -231,89 +212,64 @@ RSpec.describe DahliaBackend::MessageService do
   end
 
   describe '#send_invite_to_response' do
-    let(:deadline) { '2024-12-31' }
-
     context 'with valid parameters' do
       before do
         allow(client).to receive(:post).and_return({ success: true })
       end
 
-      it 'sends the invite response for "yes"' do
-        expect(client).to receive(:post).with('/api/v1/message', hash_including(
-                                                                                           {action: "YES", data: {applicationIds: ["app123"], isTestEmail: false}}
-                                                                                        ))
+      it 'sends the invite response for "yes" to /api/v1/message' do
+        expect(client).to receive(:post).with('/api/v1/message', {
+                                                action: 'YES',
+                                                data: { applicationIds: [application_id], isTestEmail: false },
+                                              })
 
-        service.send_invite_to_response(deadline, application_id, application_number, 'yes', 'yes',
-                                              listing_id)
+        service.send_invite_to_response(application_id, 'yes')
       end
 
       it 'sends the invite response for "no"' do
-        expect(client).to receive(:post).with('/api/v1/message', anything)
+        expect(client).to receive(:post).with('/api/v1/message', {
+                                                action: 'NO',
+                                                data: { applicationIds: [application_id], isTestEmail: false },
+                                              })
 
-        service.send_invite_to_response(deadline, application_id, application_number, 'no', 'no',
-                                              listing_id)
+        service.send_invite_to_response(application_id, 'no')
       end
 
       it 'sends the invite response for "contact"' do
-        expect(client).to receive(:post).with(
-          '/api/v1/message', anything
-        )
+        expect(client).to receive(:post).with('/api/v1/message', {
+                                                action: 'CONTACT',
+                                                data: { applicationIds: [application_id], isTestEmail: false },
+                                              })
 
-        service.send_invite_to_response(deadline, application_id, application_number, 'contact', 'contact',
-                                              listing_id)
+        service.send_invite_to_response(application_id, 'contact')
       end
 
       it 'sends the invite response for "submit"' do
-        expect(client).to receive(:post).with(
-          '/api/v1/message', anything
-        )
+        expect(client).to receive(:post).with('/api/v1/message', {
+                                                action: 'SUBMIT',
+                                                data: { applicationIds: [application_id], isTestEmail: false },
+                                              })
 
-        service.send_invite_to_response(deadline, application_id, application_number, 'submit', 'submit',
-                                              listing_id)
-      end
-    end
-
-    context 'with invalid response type' do
-      it 'returns nil for invalid response' do
-        result = service.send_invite_to_response(deadline, application_id, application_number, 'invalid', nil,
-                                                 listing_id)
-        expect(result).to be_nil
-      end
-    end
-
-    context 'when application cannot be fetched' do
-      before do
-        allow(Force::ShortFormService).to receive(:get).and_return(nil)
+        service.send_invite_to_response(application_id, 'submit')
       end
 
-      it 'returns nil' do
-        result = service.send_invite_to_response(deadline, application_id, application_number, 'yes', 'yes',
-                                                 listing_id)
-        expect(result).to be_nil
-      end
-    end
+      it 'sends the invite response for "appointment"' do
+        expect(client).to receive(:post).with('/api/v1/message', {
+                                                action: 'APPOINTMENT',
+                                                data: { applicationIds: [application_id], isTestEmail: false },
+                                              })
 
-    context 'when listing cannot be fetched' do
-      before do
-        allow(Force::ListingService).to receive(:listing).and_return(nil)
-      end
-
-      it 'returns nil' do
-        result = service.send_invite_to_response(deadline, application_id, application_number, 'yes', 'yes',
-                                                 listing_id)
-        expect(result).to be_nil
+        service.send_invite_to_response(application_id, 'appointment')
       end
     end
 
     context 'when an error occurs' do
       before do
-        allow(Force::ShortFormService).to receive(:get).and_raise(StandardError,
-                                                                  'Service Error')
+        allow(client).to receive(:post).and_raise(StandardError, 'Service Error')
       end
 
-      it 'returns nil' do
-        result = service.send_invite_to_response(deadline, application_id, application_number, 'yes', 'yes',
-                                                 listing_id)
+      it 'logs the error and returns nil' do
+        result = service.send_invite_to_response(application_id, 'yes')
         expect(result).to be_nil
       end
     end

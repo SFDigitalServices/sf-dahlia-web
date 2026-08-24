@@ -10,9 +10,7 @@ class InviteToController < ApplicationController
       redirect_to decoded_params
       return
     end
-    # TODO: remove the `params` fallback once we are sure that all links are using the token
 
-    decoded_params ||= params
     @invite_to_props = props(decoded_params)
     # Get URL from application
     if decoded_params['appId'].present? || decoded_params['applicationNumber'].present?
@@ -67,7 +65,7 @@ class InviteToController < ApplicationController
       assetPaths: static_asset_paths,
       urlParams: url_params,
       clientRecordingMode: client_recording_mode,
-      submitPreviewLinkTokenParam: encode_token(url_params.except(:act, :response)),
+      submitPreviewLinkTokenParam: encode_token(url_params.except(:act)),
     }.compact
   end
 
@@ -85,20 +83,16 @@ class InviteToController < ApplicationController
 
   def record_response(decoded_params)
     deadline = decoded_params['deadline']
-    response = decoded_params['response']
-    application_number = decoded_params['applicationNumber']
     invite_action = decoded_params['act']
     app_id = decoded_params['appId']
     is_test = ActiveModel::Type::Boolean.new.cast(decoded_params['isTest']) == true
 
-    if (invite_action.blank? && response.blank?) || (deadline && deadline_has_passed?(deadline)) || language_change? || is_test
+    if invite_action.blank? || (deadline && deadline_has_passed?(deadline)) || language_change? || is_test
       Rails.logger.info(
         'InviteToController#record_response: *NOT* recording ' \
         "deadline=#{deadline}, " \
         "app_id=#{app_id}, " \
-        "application_number=#{application_number}, " \
         "act=#{invite_action.inspect}, " \
-        "response=#{response.inspect}, " \
         "is_test=#{is_test}",
       )
       return
@@ -108,19 +102,13 @@ class InviteToController < ApplicationController
       'InviteToController#record_response: recording ' \
       "deadline=#{deadline}, " \
       "app_id=#{app_id}, " \
-      "application_number=#{application_number}, " \
-      "act=#{invite_action}, " \
-      "response=#{response}, " \
+      "act=#{invite_action.inspect}, " \
       "is_test=#{is_test}",
     )
 
     DahliaBackend::MessageService.send_invite_to_response(
-      deadline,
       app_id,
-      application_number,
-      response,
       invite_action,
-      params['id'], # listing_id
     )
   end
 
@@ -138,7 +126,8 @@ class InviteToController < ApplicationController
     #       "type" => "I2I",
     #       "deadline" => "1999-12-31",
     #       "act" => "yes",
-    #       "appId" => "12345678"
+    #       "appId" => "12345678",
+    #       "isTest" => false
     #     },
     #     "iat" => 946512000
     #    },
