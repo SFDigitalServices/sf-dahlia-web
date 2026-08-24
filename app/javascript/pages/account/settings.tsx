@@ -263,12 +263,12 @@ const HousingCounselorSection = ({ user, setUser }: SectionProps) => {
     setRevokeToast(false)
   }
 
-  const saveHousingCounselorUser = (baseUser: User, contact?: User) => {
+  const saveApplicantContact = (applicant: User, housingCounselor?: User) => {
     const updatedUser: User = {
-      ...baseUser,
-      housingCounselingAgencyId: contact?.housingCounselingAgencyId,
-      housingCounselingAgencyName: contact?.housingCounselingAgencyName,
-      housingCounselingAgencyLastModified: contact?.housingCounselingAgencyLastModified,
+      ...applicant,
+      housingCounselingAgencyId: housingCounselor?.housingCounselingAgencyId,
+      housingCounselingAgencyName: housingCounselor?.housingCounselingAgencyName,
+      housingCounselingAgencyLastModified: housingCounselor?.housingCounselingAgencyLastModified,
     }
     setUser(updatedUser)
     saveProfile(updatedUser)
@@ -277,11 +277,11 @@ const HousingCounselorSection = ({ user, setUser }: SectionProps) => {
   const onShare = (data: { housingCounselingAgencyId?: string }) => {
     setLoading(true)
     clearToasts()
-    const newUser = { ...user, housingCounselingAgencyId: data.housingCounselingAgencyId }
+    const applicant = { ...user, housingCounselingAgencyId: data.housingCounselingAgencyId }
 
-    updateHousingCounselorAccess(newUser)
-      .then((contact) => {
-        saveHousingCounselorUser(newUser, contact)
+    updateHousingCounselorAccess(applicant)
+      .then((housingCounselor) => {
+        saveApplicantContact(applicant, housingCounselor)
         setGrantToast(true)
       })
       .catch(() => {
@@ -295,11 +295,11 @@ const HousingCounselorSection = ({ user, setUser }: SectionProps) => {
   const onRevoke = () => {
     setLoading(true)
     clearToasts()
-    const newUser: User = { ...user, housingCounselingAgencyId: null }
+    const applicant: User = { ...user, housingCounselingAgencyId: null }
 
-    updateHousingCounselorAccess(newUser)
-      .then((contact) => {
-        saveHousingCounselorUser(newUser, contact)
+    updateHousingCounselorAccess(applicant)
+      .then((housingCounselor) => {
+        saveApplicantContact(applicant, housingCounselor)
         setRevokeToast(true)
       })
       .catch(() => {
