@@ -70,6 +70,7 @@ Rails.application.routes.draw do
       end
       scope '/housing-counselor' do
         get 'agencies' => 'housing_counselor#agencies'
+        post 'access' => 'housing_counselor#access'
       end
     end
   end
