@@ -1,13 +1,18 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import React from "react"
 import { useNavigate } from "react-router"
-import { useSignUp } from "@clerk/react"
+import { useSignUp, useSignIn } from "@clerk/react"
 import { Form, t } from "@bloom-housing/ui-components"
 import { Card, Heading, Button } from "@bloom-housing/ui-seeds"
 import { useForm } from "react-hook-form"
 import withAppSetup from "../../layouts/withAppSetup"
 import AuthLayout from "../../layouts/AuthLayout"
-import { AppPages, getVerificationCodePath, getSignInPath } from "../../util/routeUtil"
+import {
+  AppPages,
+  getVerificationCodePath,
+  getSignInPath,
+  getSignInCodePath,
+} from "../../util/routeUtil"
 import { getCurrentLanguage } from "../../util/languageUtil"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import { AUTH_FLOW, UNLEASH_FLAG } from "../../modules/constants"
@@ -25,11 +30,27 @@ interface CreateAnAccountProps {
 const CreateAnAccountPage = () => {
   const navigate = useNavigate()
   const { signUp, fetchStatus: signUpStatus } = useSignUp()
+  const { signIn, fetchStatus: signInStatus } = useSignIn()
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<{ email: string }>({ mode: "onTouched", shouldFocusError: false })
+
+  const transferToSignIn = async (email: string) => {
+    if (signInStatus === "fetching" || !signIn) return
+    const { error } = await signIn.create({ identifier: email })
+    if (error) {
+      console.error("Transfer to sign in code error", error)
+      return
+    }
+    await signIn.emailCode.sendCode()
+    if (signIn.status === "needs_first_factor") {
+      void navigate(getSignInCodePath(), { state: { email } })
+    } else {
+      console.error("Transfer to sign in code error", signIn)
+    }
+  }
 
   const onSubmit = async ({ email }: { email: string }) => {
     if (signUpStatus === "fetching" || !signUp) return
@@ -39,6 +60,10 @@ const CreateAnAccountPage = () => {
       locale,
       unsafeMetadata: { locale }, // Account creation can only update public metadata
     })
+    if (error?.errors?.[0]?.code === "form_identifier_exists") {
+      void transferToSignIn(email)
+      return
+    }
     if (error) {
       console.error("Account creation error", error)
       return
@@ -70,7 +95,7 @@ const CreateAnAccountPage = () => {
             variant="primary"
             size="sm"
             type="submit"
-            disabled={signUpStatus === "fetching"}
+            disabled={signUpStatus === "fetching" || signInStatus === "fetching"}
           >
             {t("createAccount.getCode")}
           </Button>

@@ -114,7 +114,7 @@ const EnterVerificationCodePage = ({
 =======
     const { error } = await signIn.emailCode.verifyCode({ code })
     // user attempted to sign in with an email not linked to an account
-    if (error.errors[0]?.code === "sign_up_if_missing_transfer") {
+    if (error?.errors[0]?.code === "sign_up_if_missing_transfer") {
       void transferToSignUp()
     } else if (error) {
       console.error("Code verification error:", signIn)
