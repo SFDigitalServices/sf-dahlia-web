@@ -44,7 +44,7 @@ const ClerkProfile = ({
 
     void (async () => {
       try {
-        const sessionToken = await getToken()
+        const sessionToken: string | null = await getToken()
         if (!sessionToken) {
           throw new Error("Missing Clerk session token")
         }
