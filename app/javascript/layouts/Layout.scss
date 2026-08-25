@@ -43,6 +43,14 @@
   }
 }
 
+.top-message-alert {
+  padding: var(--seeds-spacer-header) 0;
+
+  .primary-lighter-markup-link a {
+    color: var(--seeds-color-black);
+  }
+}
+
 .feedback-link {
   text-align: left;
   @media (min-width: theme("screens.md")) {

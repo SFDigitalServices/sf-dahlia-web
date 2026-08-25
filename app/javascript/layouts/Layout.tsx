@@ -21,9 +21,11 @@ import {
   getCurrentLanguage,
   getSfGovUrl,
   LANGUAGE_CONFIGS,
+  localizedFormat,
   renderInlineMarkup,
 } from "../util/languageUtil"
 import {
+  getCreateAccountPath,
   getDisclaimerPath,
   getLocalizedPath,
   getPrivacyPolicyPath,
@@ -185,12 +187,19 @@ const LayoutContent = ({
     <>
       {process.env.TOP_MESSAGE && (
         <AlertBox
-          type={asAlertType(process.env.TOP_MESSAGE_TYPE)}
+          type={asAlertType(process.env.TOP_MESSAGE_TYPE || "")}
           inverted={process.env.TOP_MESSAGE_INVERTED === "true"}
-          narrow
           boundToLayoutWidth
+          className="top-message-alert"
         >
-          <Markdown>{process.env.TOP_MESSAGE}</Markdown>
+          {renderInlineMarkup(
+            t(process.env.TOP_MESSAGE, {
+              date: process.env.REQUIRED_LOGINS_DATE
+                ? localizedFormat(process.env.REQUIRED_LOGINS_DATE, "LL")
+                : "",
+              link: getCreateAccountPath(),
+            })
+          )}
         </AlertBox>
       )}
     </>

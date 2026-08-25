@@ -10,6 +10,15 @@ import {
   restoreWindowLocation,
 } from "../__util__/renderUtils"
 import { setupUserContext } from "../__util__/accountUtils"
+import { useFeatureFlag } from "../../hooks/useFeatureFlag"
+import { UNLEASH_FLAG } from "../../modules/constants"
+
+jest.mock("../../hooks/useFeatureFlag", () => ({
+  useFeatureFlag: jest.fn(() => ({
+    flagsReady: true,
+    unleashFlag: true,
+  })),
+}))
 
 jest.mock("@clerk/clerk-react", () => {
   const Clerk = jest.requireActual("@clerk/clerk-react")
@@ -72,6 +81,10 @@ describe("<SignInFlow />", () => {
     })
     ;(useSignUp as jest.Mock).mockReturnValue({ isLoaded: true })
     mockLastAuthenticationStrategy(null)
+    ;(useFeatureFlag as jest.Mock).mockImplementation(() => ({
+      flagsReady: true,
+      unleashFlag: true,
+    }))
   })
 
   afterEach(() => {
@@ -99,6 +112,31 @@ describe("<SignInFlow />", () => {
     expect(
       screen.getByRole("link", { name: /how to sign in or find help/i }).getAttribute("href")
     ).toBe("https://www.sf.gov/sign-in-to-your-dahlia-account")
+  })
+
+  it("shows the required logins message when the flag is on", async () => {
+    await renderAndLoadAsync(<SignIn assetPaths={{}} />)
+
+    expect(screen.getByText(/you need to sign in to apply on DAHLIA/i)).not.toBeNull()
+    expect(
+      screen
+        .getByRole("link", { name: /get help creating an account or signing in/i })
+        .getAttribute("href")
+    ).toBe("https://www.sf.gov/get-help-with-your-dahlia-account")
+  })
+
+  it("hides the required logins message when the flag is off", async () => {
+    ;(useFeatureFlag as jest.Mock).mockImplementation((flagName: string) => ({
+      flagsReady: true,
+      unleashFlag: flagName !== UNLEASH_FLAG.REQUIRED_LOGINS_MESSAGE,
+    }))
+
+    await renderAndLoadAsync(<SignIn assetPaths={{}} />)
+
+    expect(screen.queryByText(/you need to sign in to apply on DAHLIA/i)).toBeNull()
+    expect(
+      screen.queryByRole("link", { name: /get help creating an account or signing in/i })
+    ).toBeNull()
   })
 
   it("shows a loading state until Clerk loads", async () => {
