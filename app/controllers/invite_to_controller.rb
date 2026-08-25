@@ -1,5 +1,7 @@
 # Invite to X controller
 class InviteToController < ApplicationController
+  include InviteToEventLogging
+
   CLIENT_RECORDING_FLAG = 'temp.webapp.inviteToClientRecording'
 
   before_action :ignore_head_requests
@@ -20,11 +22,6 @@ class InviteToController < ApplicationController
         schedulingUrl: application['leaseupAppointmentSchedulingURL'],
       )
     end
-    # Recording always happens server-side on GET for now. When the flag is enabled the
-    # client additionally runs its human-detection in parallel and logs only ('shadow'),
-    # so we can measure bot vs. human clicks against real traffic. Moving the recording
-    # to the client is deferred until
-    # https://github.com/SFDigitalServices/sf-dahlia-web/pull/2993 lands.
     record_response(decoded_params)
     render 'invite_to'
   end
@@ -69,11 +66,8 @@ class InviteToController < ApplicationController
     }.compact
   end
 
-  # Resolves the rollout state of the client-side recording feature from the
-  # 'temp.webapp.inviteToClientRecording' Unleash flag:
-  #   flag disabled -> 'off'    (client hook inert)
-  #   flag enabled  -> 'shadow' (server records on GET; client detects humans, logs only)
-  # There is deliberately no 'on' (client-records) state yet - see PR #2993.
+  # 'off' = client hook inert. 'shadow' = server still records on GET, client only logs its
+  # human-detection result. A client-records 'on' state waits on PR #2993.
   def client_recording_mode
     return @client_recording_mode if defined?(@client_recording_mode)
 
@@ -87,29 +81,53 @@ class InviteToController < ApplicationController
     app_id = decoded_params['appId']
     is_test = ActiveModel::Type::Boolean.new.cast(decoded_params['isTest']) == true
 
-    if invite_action.blank? || (deadline && deadline_has_passed?(deadline)) || language_change? || is_test
-      Rails.logger.info(
-        'InviteToController#record_response: *NOT* recording ' \
-        "deadline=#{deadline}, " \
-        "app_id=#{app_id}, " \
-        "act=#{invite_action.inspect}, " \
-        "is_test=#{is_test}",
+    reason = suppression_reason(invite_action, deadline, is_test)
+    if reason
+      log_invite_event(
+        outcome: 'suppressed',
+        source: 'get',
+        reason: reason,
+        **deadline_terms(deadline, reason),
+        # language_change? can silently eat a legitimate first click, so make it auditable.
+        referrer: (reason == 'language_change' ? scrubbed_referrer : nil),
+        deadline: deadline,
+        app_id: app_id,
+        act: invite_action,
+        is_test: is_test,
       )
       return
     end
 
-    Rails.logger.info(
-      'InviteToController#record_response: recording ' \
-      "deadline=#{deadline}, " \
-      "app_id=#{app_id}, " \
-      "act=#{invite_action.inspect}, " \
-      "is_test=#{is_test}",
-    )
-
-    DahliaBackend::MessageService.send_invite_to_response(
+    # nil on both the invalid-action guard and any rescued error, so ok= below means
+    # "attempted and not swallowed", not a confirmed Salesforce write.
+    result = DahliaBackend::MessageService.send_invite_to_response(
       app_id,
       invite_action,
     )
+
+    log_invite_event(
+      outcome: 'recorded',
+      source: 'get',
+      ok: !result.nil?,
+      deadline: deadline,
+      # Should never be true: a blank deadline means the expiry check was skipped
+      # entirely. Flagged rather than suppressed so a real response is never dropped.
+      deadline_missing: (true if deadline.blank?),
+      app_id: app_id,
+      act: invite_action,
+      is_test: is_test,
+    )
+  end
+
+  # Order matches the original `||` precedence: a preview link (act blank) is `no_action`.
+  def suppression_reason(invite_action, deadline, is_test)
+    if invite_action.blank? then 'no_action'
+    # `.present?` keeps a blank deadline out of deadline_has_passed?, which would report
+    # it as passed. Blank falls through to recording, as it did before.
+    elsif deadline.present? && deadline_has_passed?(deadline) then 'deadline_passed'
+    elsif language_change? then 'language_change'
+    elsif is_test then 'test_link'
+    end
   end
 
   def decode_token(token)
@@ -152,8 +170,15 @@ class InviteToController < ApplicationController
     JsonWebTokenService.encode_token(params)
   end
 
+  # Time.zone.parse returns nil for some malformed input and raises on the rest, either of
+  # which previously 500'd the page. A deadline we cannot verify counts as passed.
   def deadline_has_passed?(deadline)
-    Time.zone.parse(deadline).to_date < Time.zone.today
+    parsed = Time.zone.parse(deadline.to_s)
+    return true if parsed.nil?
+
+    parsed.to_date < Time.zone.today
+  rescue ArgumentError, TypeError
+    true
   end
 
   def language_change?

@@ -1,4 +1,14 @@
 class Api::V1::InviteToResponseController < ApiController
+  include InviteToEventLogging
+
+  # What snapshotBrowser() sends. Allow-listed rather than a free-form hash because this
+  # endpoint is unauthenticated. camelCase because these are wire keys, matching the
+  # appId/listingId/elapsedMs params alongside them.
+  BROWSER_KEYS = %i[
+    webdriver userAgent maxTouchPoints coarsePointer cpuCores deviceMemory screen
+    language timezone
+  ].freeze
+
   before_action :validate_token!, only: :record_response
 
   def record_response
@@ -29,29 +39,28 @@ class Api::V1::InviteToResponseController < ApiController
     render json: { error: 'Submit response error' }, status: :internal_server_error
   end
 
-  # Shadow-mode endpoint: records nothing - it never calls sf-dahlia-backend, so no
-  # Salesforce state changes and no applicant email is sent. It only logs that the
-  # client-side human-detection judged this page view to be a real human, so we can
-  # compare against the server-side GET recording during the shadow rollout.
-  # Safe to call repeatedly.
+  # Shadow-mode endpoint: never calls sf-dahlia-backend, so no Salesforce write and no
+  # applicant email. Logs only that client-side detection judged this a human. Idempotent.
   def log_human_verified
-    params.expect(record: %i[type deadline appId listingId act trigger elapsedMs])
+    record = params.expect(record: [:type, :deadline, :appId, :listingId, :act, :trigger,
+                                    :elapsedMs, { browser: BROWSER_KEYS }])
     type, deadline, application_id, listing_id, act, trigger, elapsed_ms =
-      params[:record].values_at(:type, :deadline, :appId, :listingId, :act, :trigger,
-                                :elapsedMs)
+      record.values_at(:type, :deadline, :appId, :listingId, :act, :trigger, :elapsedMs)
 
-    # Values come from an unauthenticated public endpoint, so .inspect each one to
-    # neutralize newline/control-character log forging and make nil/blank values legible.
-    Rails.logger.info(
-      'InviteToResponseController#log_human_verified: ' \
-      'human-verified click (shadow, not recorded) ' \
-      "type=#{type.inspect}, " \
-      "listingId=#{listing_id.inspect}, " \
-      "deadline=#{deadline.inspect}, " \
-      "appId=#{application_id.inspect}, " \
-      "act=#{act.inspect}, " \
-      "trigger=#{trigger.inspect}, " \
-      "elapsedMs=#{elapsed_ms.inspect}",
+    # Values come from an unauthenticated endpoint; log_invite_event's to_json escapes
+    # control characters, so no per-field .inspect is needed against log forging.
+    log_invite_event(
+      outcome: 'suppressed',
+      source: 'client_shadow',
+      reason: 'shadow_human_verified',
+      type: type,
+      listing_id: listing_id,
+      deadline: deadline,
+      app_id: application_id,
+      act: act,
+      trigger: trigger, # interaction | dwellTime | pageExit
+      elapsed_ms: elapsed_ms,
+      browser: sanitized_browser(record[:browser]),
     )
     render json: { success: true }, status: :ok
   rescue ActionController::ParameterMissing => e
@@ -65,6 +74,17 @@ class Api::V1::InviteToResponseController < ApiController
   end
 
   private
+
+  # Keeps only the known browser keys and drops non-scalar values; log_invite_event
+  # handles truncation. nil when nothing usable is left, so the key drops out of the line.
+  def sanitized_browser(browser)
+    return nil if browser.blank?
+
+    browser.to_unsafe_h
+           .slice(*BROWSER_KEYS.map(&:to_s))
+           .reject { |_key, value| value.is_a?(Array) || value.is_a?(Hash) }
+           .presence
+  end
 
   def validate_token!
     payload = JsonWebTokenService.decode_token(params[:t])
