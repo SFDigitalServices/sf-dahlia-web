@@ -77,6 +77,10 @@ const EnterVerificationCodePage = ({
   const editEmailHref = isSignInFlow ? getSignInPath() : getCreateAccountPath()
 
   const transferToSignUp = async () => {
+    if (signUpStatus === "fetching" || !signUp) {
+      console.error("Sign up not ready")
+      return
+    }
     const { error } = await signUp.create({ transfer: true })
     if (error) {
       console.error("Account creation error", error)

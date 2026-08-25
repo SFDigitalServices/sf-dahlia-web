@@ -269,7 +269,7 @@ describe("<SignInFlow />", () => {
   it("shows one alert and logs the details when sign in fails", async () => {
     const consoleError = jest.spyOn(console, "error").mockImplementation(() => {})
     const clerkError = { errors: [{ code: "form_password_incorrect" }] }
-    mockSignInCreate.mockRejectedValue(clerkError)
+    mockSignInCreate.mockResolvedValue({ error: clerkError })
 
     await renderAndLoadAsync(<SignIn assetPaths={{}} />)
     await submitCredentials("wrongPass1")
@@ -277,7 +277,7 @@ describe("<SignInFlow />", () => {
     await waitFor(() => {
       expect(screen.getAllByText(/email or password is incorrect/i)).toHaveLength(1)
     })
-    expect(consoleError).toHaveBeenCalledWith("Sign in error", clerkError)
+    expect(consoleError).toHaveBeenCalledWith("Sign in failed:", clerkError)
     expect(mockFinalize).not.toHaveBeenCalled()
 
     consoleError.mockRestore()

@@ -171,7 +171,7 @@ describe("<CreateAnAccount />", () => {
     const emailField = within(emailGroup).getByRole("textbox")
     const consoleError = jest.spyOn(console, "error").mockImplementation(() => {})
     mockSignUpCreate.mockResolvedValue({ error: { errors: [{ code: "form_identifier_exists" }] } })
-    mockSignInResource.status = "some_unhanclded_status"
+    mockSignInResource.status = "some_unhandled_status"
 
     await user.type(emailField, "test@example.com")
     await user.click(screen.getByRole("button", { name: /get a code/i }))
