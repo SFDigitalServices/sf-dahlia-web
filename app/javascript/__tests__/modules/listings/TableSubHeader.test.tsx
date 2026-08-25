@@ -66,4 +66,32 @@ describe("TableSubHeader", () => {
     expect(await findByText(t("listings.prioritiesDescriptor.mobilityHearingVision"))).toBeDefined()
     expect(asFragment()).toMatchSnapshot()
   })
+
+  it("renders the priority units for Plus Housing listing", async () => {
+    const testListing = {
+      Custom_Listing_Type: "Plus Housing Program",
+    }
+    const { asFragment, findByText } = render(
+      <TableSubHeader listing={testListing as RailsRentalListing} />
+    )
+    expect(await findByText(t("listings.priorityDescriptor.plus"))).toBeDefined()
+    expect(asFragment()).toMatchSnapshot()
+  })
+
+  it("renders the priority units for Plus Housing listing with other priority units", async () => {
+    const testListing = {
+      Custom_Listing_Type: "Plus Housing Program",
+      prioritiesDescriptor: [
+        {
+          name: "Mobility/Hearing/Vision impairments",
+        },
+      ],
+    }
+    const { asFragment, findByText } = render(
+      <TableSubHeader listing={testListing as RailsRentalListing} />
+    )
+    expect(await findByText(t("listings.priorityDescriptor.plus"))).toBeDefined()
+    expect(await findByText(t("listings.prioritiesDescriptor.mobilityHearingVision"))).toBeDefined()
+    expect(asFragment()).toMatchSnapshot()
+  })
 })
