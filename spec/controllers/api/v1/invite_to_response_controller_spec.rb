@@ -179,9 +179,6 @@ RSpec.describe Api::V1::InviteToResponseController, type: :controller do
         act: 'yes',
         trigger: 'interaction',
         elapsedMs: 1234,
-        browser: {
-          webdriver: false, userAgent: 'Mozilla/5.0 FBAN/FBIOS', coarsePointer: true
-        },
       }
     end
 
@@ -190,103 +187,21 @@ RSpec.describe Api::V1::InviteToResponseController, type: :controller do
       allow(Rails.logger).to receive(:info)
     end
 
-    it 'logs the human-verified click as a structured shadow event and records nothing' do
+    it 'logs the human-verified click and records nothing' do
       post :log_human_verified, params: { record: valid_record }
 
       expect(response).to be_ok
       expect(DahliaBackend::MessageService).not_to have_received(:send_invite_to_response)
       expect(Rails.logger).to have_received(:info).with(
         a_string_including(
-          'invite_to.response',
-          '"event":"invite_to.response"',
-          '"outcome":"suppressed"',
-          '"source":"client_shadow"',
-          '"reason":"shadow_human_verified"',
-          '"app_id":"a0o123"',
-          '"act":"yes"',
-          '"trigger":"interaction"',
+          'InviteToResponseController#log_human_verified:',
+          'human-verified click (shadow, not recorded)',
+          "appId=#{application_id.inspect}",
+          'act="yes"',
+          'trigger="interaction"',
+          'elapsedMs="1234"',
         ),
       )
-    end
-
-    # NOTE: ActionController::Parameters stringifies scalars, so browser booleans
-    # serialize as "false"/"true" rather than JSON booleans. Harmless for querying,
-    # but assert what we actually emit.
-    it 'includes the passive browser snapshot for post-hoc classification' do
-      post :log_human_verified, params: { record: valid_record }
-
-      expect(Rails.logger).to have_received(:info).with(
-        a_string_including('"browser":', '"userAgent":"Mozilla/5.0 FBAN/FBIOS"',
-                           '"webdriver":"false"'),
-      )
-    end
-
-    it 'drops unknown browser keys, nested values, and over-long values' do
-      logged = []
-      allow(Rails.logger).to receive(:info) { |msg| logged << msg.to_s }
-
-      post :log_human_verified, params: {
-        record: valid_record.merge(
-          browser: {
-            userAgent: 'a' * 400,
-            webdriver: false,
-            evil: 'should-not-be-logged',
-            nested: { deep: 'no' },
-          },
-        ),
-      }
-
-      expect(response).to be_ok
-      # Scope to our structured event: Rails' own "Parameters:" line echoes the raw
-      # request body, which the sanitizer does not (and cannot) control.
-      event = logged.find { |msg| msg.start_with?('invite_to.response ') }
-      expect(event).to include('"webdriver":"false"')
-      expect(event).not_to include('should-not-be-logged')
-      expect(event).not_to include('"evil"')
-      expect(event).not_to include('a' * 300)
-    end
-
-    # Unauthenticated endpoint: every logged value is bounded, not just the browser hash.
-    it 'truncates over-long top-level fields' do
-      logged = []
-      allow(Rails.logger).to receive(:info) { |msg| logged << msg.to_s }
-
-      post :log_human_verified, params: {
-        record: valid_record.merge(type: 'T' * 5000, act: 'A' * 5000),
-      }
-
-      expect(response).to be_ok
-      event = logged.find { |msg| msg.start_with?('invite_to.response ') }
-      expect(event).not_to include('T' * 300)
-      expect(event).not_to include('A' * 300)
-      expect(event.length).to be < 3000
-    end
-
-    # to_unsafe_h converts nested ActionController::Parameters to HashWithIndifferentAccess,
-    # so the non-scalar filter catches them - assert that on an allow-listed key.
-    it 'drops a nested structure sent under an allow-listed browser key' do
-      logged = []
-      allow(Rails.logger).to receive(:info) { |msg| logged << msg.to_s }
-
-      post :log_human_verified, params: {
-        record: valid_record.merge(
-          browser: { userAgent: { nested: { deep: 'sneaky-value' } }, timezone: 'UTC' },
-        ),
-      }
-
-      expect(response).to be_ok
-      event = logged.find { |msg| msg.start_with?('invite_to.response ') }
-      expect(event).not_to include('sneaky-value')
-      expect(event).to include('"timezone":"UTC"')
-    end
-
-    it 'omits the browser hash entirely when no recognized keys are supplied' do
-      post :log_human_verified, params: {
-        record: valid_record.merge(browser: { evil: 'nope' }),
-      }
-
-      expect(response).to be_ok
-      expect(Rails.logger).not_to have_received(:info).with(a_string_including('"browser":'))
     end
 
     it 'returns 400 when the record param is missing' do
