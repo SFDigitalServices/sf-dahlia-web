@@ -33,11 +33,12 @@
   --message-border: 2px solid var(--seeds-color-primary-light);
   background: var(--seeds-color-primary-lighter) !important;
   justify-content: flex-start;
+  line-height: var(--seeds-line-height-5);
   margin-bottom: var(--seeds-spacer-header);
   svg {
     color: var(--seeds-color-primary-dark) !important;
   }
   a {
-    color: var(--seeds-color-primary-dark) !important;
+    color: var(--seeds-color-primary-darker) !important;
   }
 }
