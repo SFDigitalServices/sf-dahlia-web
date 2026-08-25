@@ -10,6 +10,7 @@ import {
   restoreWindowLocation,
 } from "../__util__/renderUtils"
 import { setupUserContext } from "../__util__/accountUtils"
+import { AUTH_FLOW } from "../../modules/constants"
 
 jest.mock("@clerk/clerk-react", () => {
   const Clerk = jest.requireActual("@clerk/clerk-react")
@@ -173,7 +174,7 @@ describe("<SignInFlow />", () => {
       emailAddressId: "idn_email",
     })
     expect(mockNavigate).toHaveBeenCalledWith("/sign-in/code", {
-      state: { email: "test@test.com" },
+      state: { email: "test@test.com", flow: AUTH_FLOW.SIGN_IN },
     })
   })
 

@@ -5,6 +5,7 @@ import { renderAndLoadAsync } from "../__util__/renderUtils"
 import { screen } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
 import { post } from "../../api/apiService"
+import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 
 jest.mock("react-helmet-async", () => {
   return {
@@ -13,11 +14,28 @@ jest.mock("react-helmet-async", () => {
   }
 })
 
+jest.mock("@clerk/clerk-react", () => {
+  const Clerk = jest.requireActual("@clerk/clerk-react")
+  return {
+    ...Clerk,
+    ClerkProvider: ({ children }: { children: React.ReactNode }) => children,
+    useClerk: jest.fn(),
+    useAuth: jest.fn(() => ({ isLoaded: true, isSignedIn: false })),
+  }
+})
+
+jest.mock("../../hooks/useFeatureFlag", () => ({
+  useFeatureFlag: jest.fn(() => ({ flagsReady: true, unleashFlag: true })),
+}))
+
 jest.mock("../../api/apiService", () => ({
   post: jest.fn(),
 }))
 
 describe("<ForgotPassword />", () => {
+  beforeEach(() => {
+    ;(useFeatureFlag as jest.Mock).mockReturnValue({ flagsReady: true, unleashFlag: false })
+  })
   it("shows the correct form text", async () => {
     const { getAllByText } = await renderAndLoadAsync(<ForgotPassword assetPaths={{}} />)
     expect(getAllByText("Forgot password")).not.toBeNull()

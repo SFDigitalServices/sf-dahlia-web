@@ -11,6 +11,7 @@ import { setupUserContext } from "../__util__/accountUtils"
 import { screen } from "@testing-library/react"
 import { authenticatedPut } from "../../api/apiService"
 import userEvent from "@testing-library/user-event"
+import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 
 jest.mock("react-helmet-async", () => {
   return {
@@ -23,7 +24,24 @@ jest.mock("../../api/apiService", () => ({
   authenticatedPut: jest.fn(),
 }))
 
+jest.mock("@clerk/clerk-react", () => {
+  const Clerk = jest.requireActual("@clerk/clerk-react")
+  return {
+    ...Clerk,
+    ClerkProvider: ({ children }: { children: React.ReactNode }) => children,
+    useClerk: jest.fn(),
+    useAuth: jest.fn(() => ({ isLoaded: true, isSignedIn: false })),
+  }
+})
+
+jest.mock("../../hooks/useFeatureFlag", () => ({
+  useFeatureFlag: jest.fn(() => ({ flagsReady: true, unleashFlag: true })),
+}))
+
 describe("<ResetPassword />", () => {
+  beforeEach(() => {
+    ;(useFeatureFlag as jest.Mock).mockReturnValue({ flagsReady: true, unleashFlag: false })
+  })
   describe("when the user is not signed in", () => {
     let originalLocation: Location
 
