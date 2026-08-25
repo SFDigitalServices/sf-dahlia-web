@@ -91,10 +91,10 @@ describe("authApiService", () => {
       expect(authenticatedGet).toHaveBeenCalledWith(url)
     })
 
-    it("fetches the profile with the session token", async () => {
-      await getProfile("session-token")
+    it("fetches Clerk profile with the session token", async () => {
+      await getProfile("clerk-session-token")
       expect(get).toHaveBeenCalledWith("/api/v1/account/profile", {
-        headers: { Authorization: "Bearer session-token" },
+        headers: { Authorization: "Bearer clerk-session-token" },
       })
     })
   })

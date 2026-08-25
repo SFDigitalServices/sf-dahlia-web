@@ -776,6 +776,88 @@ describe("<SettingsPage />", () => {
         )
       })
 
+      it("shows an access granted toast", async () => {
+        ;(put as jest.Mock).mockResolvedValue({
+          data: {
+            contact: {
+              ...mockProfileStub,
+              housingCounselingAgencyId: "123",
+            },
+          },
+        })
+
+        const agencySelect = await screen.findByLabelText(/counseling agency/i)
+        const agreeCheckbox = screen.getByLabelText(/i agree to share my account with this agency/i)
+
+        await act(async () => {
+          fireEvent.change(agencySelect, { target: { value: "123" } })
+          fireEvent.click(agreeCheckbox)
+          fireEvent.click(screen.getByRole("button", { name: /share my account/i }))
+          await Promise.resolve()
+        })
+
+        expect(
+          await screen.findByText(
+            /you shared your account\. we sent a confirmation to your email\./i
+          )
+        ).toBeInTheDocument()
+        expect(
+          screen.queryByText(
+            /you stopped sharing your account\. we sent a confirmation to your email\./i
+          )
+        ).toBeNull()
+      })
+
+      it("shows an access revoked toast", async () => {
+        ;(put as jest.Mock)
+          .mockResolvedValueOnce({
+            data: {
+              contact: {
+                ...mockProfileStub,
+                housingCounselingAgencyId: "123",
+              },
+            },
+          })
+          .mockResolvedValueOnce({
+            data: {
+              contact: {
+                ...mockProfileStub,
+                housingCounselingAgencyId: null,
+              },
+            },
+          })
+
+        const agencySelect = await screen.findByLabelText(/counseling agency/i)
+        const agreeCheckbox = screen.getByLabelText(/i agree to share my account with this agency/i)
+
+        await act(async () => {
+          fireEvent.change(agencySelect, { target: { value: "123" } })
+          fireEvent.click(agreeCheckbox)
+          fireEvent.click(screen.getByRole("button", { name: /share my account/i }))
+          await Promise.resolve()
+        })
+
+        expect(
+          await screen.findByText(
+            /you shared your account\. we sent a confirmation to your email\./i
+          )
+        ).toBeInTheDocument()
+
+        await act(async () => {
+          fireEvent.click(screen.getByRole("button", { name: /stop sharing/i }))
+          await Promise.resolve()
+        })
+
+        expect(
+          await screen.findByText(
+            /you stopped sharing your account\. we sent a confirmation to your email\./i
+          )
+        ).toBeInTheDocument()
+        expect(
+          screen.queryByText(/you shared your account\. we sent a confirmation to your email\./i)
+        ).toBeNull()
+      })
+
       it("does not show a success toast when sharing fails", async () => {
         ;(put as jest.Mock).mockRejectedValue(new Error("Network error"))
 
@@ -818,6 +900,8 @@ describe("<SettingsPage />", () => {
             contact: {
               ...mockProfileStub,
               housingCounselingAgencyId: null,
+              housingCounselingAgencyName: null,
+              housingCounselingAgencyLastModified: null,
             },
           },
         })
@@ -850,8 +934,32 @@ describe("<SettingsPage />", () => {
         expect(mockContext.saveProfile).toHaveBeenCalledWith(
           expect.objectContaining({
             housingCounselingAgencyId: null,
+            housingCounselingAgencyName: null,
+            housingCounselingAgencyLastModified: null,
           })
         )
+      })
+
+      it("does not show a success toast when revoking fails", async () => {
+        ;(put as jest.Mock).mockRejectedValue(new Error("Network error"))
+
+        expect(
+          await screen.findByText(/your account is shared with test agency a/i)
+        ).toBeInTheDocument()
+
+        await act(async () => {
+          fireEvent.click(screen.getByRole("button", { name: /stop sharing/i }))
+          await Promise.resolve()
+        })
+
+        expect(
+          screen.queryByText(
+            /you stopped sharing your account\. we sent a confirmation to your email\./i
+          )
+        ).toBeNull()
+        expect(
+          screen.queryByText(/you shared your account\. we sent a confirmation to your email\./i)
+        ).toBeNull()
       })
     })
 

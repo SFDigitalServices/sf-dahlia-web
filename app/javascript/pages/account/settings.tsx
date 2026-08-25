@@ -251,7 +251,8 @@ const HousingCounselorSection = ({ user, setUser }: SectionProps) => {
   const { saveProfile } = useContext(UserContext)
   const { getToken } = useAuth()
   const [loading, setLoading] = useState(false)
-  const [successToast, setSuccessToast] = useState<string | null>(null)
+  const [grantToast, setGrantToast] = useState(false)
+  const [revokeToast, setRevokeToast] = useState(false)
   const {
     register,
     handleSubmit,
@@ -259,51 +260,74 @@ const HousingCounselorSection = ({ user, setUser }: SectionProps) => {
   } = useForm({ mode: "onTouched" })
   const accessShared = !!user?.housingCounselingAgencyId
 
-  const onSubmit = (data: { housingCounselingAgencyId?: string }) => {
-    if (!user) return
+  const clearToasts = () => {
+    setGrantToast(false)
+    setRevokeToast(false)
+  }
 
+  const saveApplicantContact = (applicant: User, housingCounselor?: User) => {
+    const updatedUser: User = {
+      ...applicant,
+      housingCounselingAgencyId: housingCounselor?.housingCounselingAgencyId,
+      housingCounselingAgencyName: housingCounselor?.housingCounselingAgencyName,
+      housingCounselingAgencyLastModified: housingCounselor?.housingCounselingAgencyLastModified,
+    }
+    setUser(updatedUser)
+    saveProfile(updatedUser)
+  }
+
+  const updateAccess = async (applicant: User) => {
+    const sessionToken = await getToken()
+    if (!sessionToken) {
+      throw new Error("Missing Clerk session token")
+    }
+    return updateHousingCounselorAccess(applicant, sessionToken)
+  }
+
+  const onShare = (data: { housingCounselingAgencyId?: string }) => {
     setLoading(true)
-    const toastMessage = accessShared
-      ? "accountSettings.housingCounselor.toastStoppedSharing"
-      : "accountSettings.housingCounselor.toastShared"
+    clearToasts()
+    const applicant = { ...user, housingCounselingAgencyId: data.housingCounselingAgencyId }
 
-    const newUser: User = accessShared
-      ? {
-          ...user,
-          housingCounselingAgencyId: null,
-        }
-      : {
-          ...user,
-          housingCounselingAgencyId: data.housingCounselingAgencyId,
-        }
-
-    void (async () => {
-      try {
-        const sessionToken = await getToken()
-        if (!sessionToken) {
-          throw new Error("Missing Clerk session token")
-        }
-        const contact = await updateHousingCounselorAccess(newUser, sessionToken)
-        const updatedUser: User = {
-          ...newUser,
-          housingCounselingAgencyId: contact?.housingCounselingAgencyId,
-          housingCounselingAgencyName: contact?.housingCounselingAgencyName,
-          housingCounselingAgencyLastModified: contact?.housingCounselingAgencyLastModified,
-        }
-        setUser(updatedUser)
-        saveProfile(updatedUser)
-        setSuccessToast(toastMessage)
-      } catch {
-        setSuccessToast(null)
-      } finally {
+    void updateAccess(applicant)
+      .then((housingCounselor) => {
+        saveApplicantContact(applicant, housingCounselor)
+        setGrantToast(true)
+      })
+      .catch(() => {
+        clearToasts()
+      })
+      .finally(() => {
         setLoading(false)
-      }
-    })()
+      })
+  }
+
+  const onRevoke = () => {
+    setLoading(true)
+    clearToasts()
+    const applicant: User = { ...user, housingCounselingAgencyId: null }
+
+    void updateAccess(applicant)
+      .then((housingCounselor) => {
+        saveApplicantContact(applicant, housingCounselor)
+        setRevokeToast(true)
+      })
+      .catch(() => {
+        clearToasts()
+      })
+      .finally(() => {
+        setLoading(false)
+      })
   }
 
   return (
     <>
-      {successToast && <SuccessToast>{t(successToast)}</SuccessToast>}
+      {grantToast && (
+        <SuccessToast>{t("accountSettings.housingCounselor.toastShared")}</SuccessToast>
+      )}
+      {revokeToast && (
+        <SuccessToast>{t("accountSettings.housingCounselor.toastStoppedSharing")}</SuccessToast>
+      )}
       {!accessShared && (
         <ErrorSummaryBanner
           errors={errors}
@@ -313,7 +337,7 @@ const HousingCounselorSection = ({ user, setUser }: SectionProps) => {
         />
       )}
       <FormSection>
-        <Form className="p-2 md:py-2 md:px-10" onSubmit={handleSubmit(onSubmit)}>
+        <Form className="p-2 md:py-2 md:px-10" onSubmit={handleSubmit(onShare)}>
           <HousingCounselorAccess
             register={register}
             errors={errors}
@@ -322,9 +346,10 @@ const HousingCounselorSection = ({ user, setUser }: SectionProps) => {
           />
           <div className={settingsStyles.settingsButton}>
             <Button
-              type="submit"
+              type={accessShared ? "button" : "submit"}
               variant={accessShared ? "alert-outlined" : "primary-outlined"}
               disabled={loading}
+              onClick={accessShared ? onRevoke : undefined}
             >
               {accessShared
                 ? t("accountSettings.housingCounselor.revokeButton")
@@ -573,7 +598,9 @@ const AccountSettings = ({ profile }: { profile: User }) => {
       <DateOfBirthSection user={user} setUser={setUser} />
       <EmailSection user={user} setUser={setUser} />
       <PasswordSection user={user} setUser={setUser} />
-      {showHousingCounselorSection && <HousingCounselorSection user={user} setUser={setUser} />}
+      {showHousingCounselorSection && user && (
+        <HousingCounselorSection user={user} setUser={setUser} />
+      )}
     </Card>
   )
 }

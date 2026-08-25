@@ -1,5 +1,6 @@
 import { AxiosResponse } from "axios"
 import { Contact, User, UserData } from "../authentication/user"
+// authenticatedGet is for Devise, Clerk authenticates its own requests
 import {
   authenticatedDelete,
   authenticatedGet,
