@@ -13,9 +13,10 @@ interface Contact {
   housingCounselingAgencyId?: string | null
 }
 
+// Clerk users have a string id, Devise users have a number id
 interface User extends Contact {
   uid: string
-  id: number
+  id: number | string
   created_at: Date
   updated_at: Date
   dobObject?: {
