@@ -80,6 +80,24 @@ RSpec.describe Api::V1::AccountController, type: :controller do
       end
     end
 
+    context 'when the user has no Salesforce contact ID' do
+      before do
+        allow(ClerkService).to receive(:salesforce_contact_id)
+          .and_raise(StandardError, 'User has no Salesforce contact id')
+        allow(Force::AccountService).to receive(:get)
+      end
+
+      it 'returns not found' do
+        put :update_housing_counselor, params: { contact: contact_params }
+
+        expect(response).to have_http_status(:not_found)
+        expect(JSON.parse(response.body)).to eq('error' => 'Could not get Salesforce contact ID')
+        expect(Force::AccountService).not_to have_received(:create_or_update)
+        expect(Force::AccountService).not_to have_received(:get)
+        expect(DahliaBackend::MessageService).not_to have_received(:send_housing_counselor_access)
+      end
+    end
+
     it 'grants housing counselor access and sends the messaging service request' do
       put :update_housing_counselor, params: { contact: contact_params }
 
