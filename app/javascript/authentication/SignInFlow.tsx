@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from "react"
 import { Navigate, useNavigate } from "react-router"
 import { useAuth, useClerk, useSignIn } from "@clerk/clerk-react"
 import { Form, t } from "@bloom-housing/ui-components"
-import { Alert, Button, Card, Heading, Link, LoadingState } from "@bloom-housing/ui-seeds"
+import { Alert, Button, Card, Heading, Link, LoadingState, Message } from "@bloom-housing/ui-seeds"
 import { useForm, useWatch } from "react-hook-form"
 import AuthLayout from "../layouts/AuthLayout"
 import EmailFieldset from "../pages/account/components/EmailFieldset"
@@ -16,9 +16,10 @@ import {
   getMyAccountPath,
   getSignInCodePath,
 } from "../util/routeUtil"
-import { renderInlineMarkup } from "../util/languageUtil"
-import { AUTH_FLOW } from "../modules/constants"
 import { authorizeHousingCounselor } from "../api/authApiService"
+import { getSfGovUrl, renderInlineMarkup } from "../util/languageUtil"
+import { AUTH_FLOW, UNLEASH_FLAG } from "../modules/constants"
+import { useFeatureFlag } from "../hooks/useFeatureFlag"
 import { clearHeaders } from "./token"
 import styles from "./SignInFlow.module.scss"
 
@@ -36,6 +37,10 @@ const SignInFlow = () => {
   const { isLoaded: authLoaded, isSignedIn, getToken } = useAuth()
   const { isLoaded, signIn, setActive } = useSignIn()
   const { client } = useClerk()
+  const { unleashFlag: requiredLoginsMessageEnabled } = useFeatureFlag(
+    UNLEASH_FLAG.REQUIRED_LOGINS_MESSAGE,
+    false
+  )
   const [showError, setShowError] = useState(false)
   const [view, setView] = useState<SignInView | null>(null)
   const housingCounselorChecked = useRef(false)
@@ -226,9 +231,16 @@ const SignInFlow = () => {
     </>
   )
 
+  const requiredLoginsHelpUrl = getSfGovUrl("https://www.sf.gov/get-help-with-your-dahlia-account")
+
   return (
     <AuthLayout title={t("pageTitle.signIn")}>
       <Card.Section divider="inset">
+        {requiredLoginsMessageEnabled && (
+          <Message fullwidth variant="primary" className={styles.requiredLoginsMessage}>
+            {renderInlineMarkup(t("signIn.requiredLoginsMessage", { url: requiredLoginsHelpUrl }))}
+          </Message>
+        )}
         <Heading priority={1} size="2xl">
           {t("pageTitle.signIn")}
         </Heading>
