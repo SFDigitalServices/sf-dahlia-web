@@ -88,6 +88,7 @@ export const getAddPasswordPath = localizedPathGetter("/add-password")
 export const getSignInPath = localizedPathGetter("/sign-in")
 export const getSignInCodePath = localizedPathGetter("/sign-in/code")
 export const getForgotPasswordPath = localizedPathGetter("/forgot-password")
+export const getForgotPasswordCodePath = localizedPathGetter("/forgot-password/code")
 export const getResetPasswordPath = localizedPathGetter("/reset-password")
 
 // Accounts after signing in pages

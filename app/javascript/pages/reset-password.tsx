@@ -10,6 +10,9 @@ import { useForm } from "react-hook-form"
 import PasswordFieldset from "./account/components/PasswordFieldset"
 import { resetPassword } from "../api/authApiService"
 import UserContext from "../authentication/context/UserContext"
+import { useFeatureFlag } from "../hooks/useFeatureFlag"
+import { AUTH_FLOW, UNLEASH_FLAG } from "../modules/constants"
+import { AddPasswordPage } from "./account/add-password"
 
 interface ResetPasswordProps {
   assetPaths: unknown
@@ -49,11 +52,15 @@ const FormButtons = () => {
   )
 }
 
-const ResetPassword = (_props: ResetPasswordProps) => {
+const ResetPasswordForm = (_props: ResetPasswordProps) => {
   const [serverError, setServerError] = React.useState<string | null>(null)
   const { profile, loading: authLoading, initialStateLoaded } = React.useContext(UserContext)
   // eslint-disable-next-line @typescript-eslint/unbound-method
   const { register, handleSubmit, errors, watch } = useForm()
+  const { unleashFlag: clerkEnabled } = useFeatureFlag(UNLEASH_FLAG.CLERK_AUTH, false)
+  if (clerkEnabled) {
+    return <AddPasswordPage flow={AUTH_FLOW.FORGOT_PASSWORD} />
+  }
 
   if (!profile && !authLoading && initialStateLoaded) {
     window.location.assign(getSignInPath())
@@ -91,6 +98,16 @@ const ResetPassword = (_props: ResetPasswordProps) => {
       </FormCard>
     </FormLayout>
   )
+}
+
+const ResetPassword = ({ assetPaths }: ResetPasswordProps) => {
+  const { unleashFlag: clerkEnabled } = useFeatureFlag(UNLEASH_FLAG.CLERK_AUTH, false)
+
+  if (!clerkEnabled) {
+    return <ResetPasswordForm assetPaths={assetPaths} />
+  }
+
+  return <AddPasswordPage flow={AUTH_FLOW.FORGOT_PASSWORD} />
 }
 
 export default withAppSetup(ResetPassword, {

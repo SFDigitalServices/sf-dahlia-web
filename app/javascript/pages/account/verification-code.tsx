@@ -14,6 +14,7 @@ import {
   getAddPasswordPath,
   getAuthFlowPath,
   getMyAccountPath,
+  getResetPasswordPath,
   getSignInPath,
 } from "../../util/routeUtil"
 import styles from "./verification-code.module.scss"
@@ -98,6 +99,11 @@ const EnterVerificationCodePage = ({ email, flow }: EnterVerificationCodePagePro
       const completeSignUp = await signUp.attemptEmailAddressVerification({
         code,
       })
+
+      //   if (completeSignUp.status === "missing_requirements") {
+      //     void navigate(getAddPasswordPath(), { state: { email, flow } })
+      //     return
+      //   }
       if (completeSignUp.status === "complete") {
         await setActiveSignUp({ session: completeSignUp.createdSessionId })
         void navigate(getAddPasswordPath())
@@ -120,7 +126,7 @@ const EnterVerificationCodePage = ({ email, flow }: EnterVerificationCodePagePro
       })
 
       if (result.status === "needs_new_password") {
-        void navigate(getAddPasswordPath(), { state: { email, flow, code } })
+        void navigate(getResetPasswordPath(), { state: { email, flow, code } })
         return
       }
     } catch (error) {

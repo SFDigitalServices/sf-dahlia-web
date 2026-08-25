@@ -140,6 +140,8 @@ const AddPassword = (_props: { assetPaths: unknown }) => {
   return <AddPasswordPage flow={flow} />
 }
 
+export { AddPasswordPage }
+
 export default withAppSetup(AddPassword, {
   useFormTimeout: true,
   pageName: AppPages.AddPassword,

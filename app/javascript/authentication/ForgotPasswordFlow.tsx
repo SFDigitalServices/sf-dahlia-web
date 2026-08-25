@@ -9,7 +9,7 @@ import AuthLayout from "../layouts/AuthLayout"
 import { AUTH_FLOW } from "../modules/constants"
 import EmailFieldset from "../pages/account/components/EmailFieldset"
 import GetHelp from "../pages/account/components/GetHelp"
-import { getSignInCodePath } from "../util/routeUtil"
+import { getForgotPasswordCodePath } from "../util/routeUtil"
 import styles from "./ForgotPassword.module.scss"
 
 const ForgotPasswordFlow = () => {
@@ -39,7 +39,7 @@ const ForgotPasswordFlow = () => {
     } catch (error) {
       console.error("Forgot password error", error)
     } finally {
-      void navigate(getSignInCodePath(), {
+      void navigate(getForgotPasswordCodePath(), {
         state: { email, flow: AUTH_FLOW.FORGOT_PASSWORD },
       })
     }

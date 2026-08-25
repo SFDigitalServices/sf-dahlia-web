@@ -68,6 +68,7 @@ const PAGE_ROUTES = [
   [EnterVerificationCode, "/create-account/code"],
   [AddPassword, "/add-password"],
   [ForgotPassword, "/forgot-password"],
+  [EnterVerificationCode, "/forgot-password/code"],
   [ResetPassword, "/reset-password"],
   [HousingCounselors, "/housing-counselors"],
   [GetAssistance, "/get-assistance"],
