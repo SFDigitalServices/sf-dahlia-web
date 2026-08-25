@@ -1,4 +1,5 @@
 import React, { useState } from "react"
+import { useNavigate } from "react-router"
 
 import {
   AppearanceStyleType,
@@ -22,7 +23,7 @@ import {
 } from "../../util/listingUtil"
 import { getSfGovUrl, renderInlineMarkup } from "../../util/languageUtil"
 import "./ListingDetailsApply.scss"
-import { localizedPath } from "../../util/routeUtil"
+import { getSignInPath, localizedPath } from "../../util/routeUtil"
 import { ListingState } from "../listings/ListingState"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import { UNLEASH_FLAG } from "../constants"
@@ -76,7 +77,9 @@ const StandardHowToApply = ({
   isHabitatListing: boolean
   acceptingPaperApps: boolean
 }) => {
+  const navigate = useNavigate()
   const [paperApplicationsOpen, setPaperApplicationsOpen] = useState(false)
+  const { unleashFlag: clerkEnabled } = useFeatureFlag(UNLEASH_FLAG.CLERK_AUTH, false)
   const { unleashFlag: formEngine } = useFeatureFlag(UNLEASH_FLAG.FORM_ENGINE, false)
   const formUrl = localizedPath(
     `listings/${listingId}/${formEngine ? "apply/intro" : "apply-welcome/intro"}`
@@ -101,14 +104,28 @@ const StandardHowToApply = ({
           )}
         </>
       )}
-      <LinkButton
-        styleType={AppearanceStyleType.primary}
-        className={"w-full"}
-        transition={true}
-        href={formUrl}
-      >
-        {t("label.applyOnline")}
-      </LinkButton>
+      {/* For upcoming required logins, redirect user to the sign in page before starting an application */}
+      {clerkEnabled ? (
+        <Button
+          styleType={AppearanceStyleType.primary}
+          className={"w-full"}
+          transition={true}
+          onClick={() => {
+            void navigate(getSignInPath(), { state: { listingId } })
+          }}
+        >
+          {t("label.applyOnline")}
+        </Button>
+      ) : (
+        <LinkButton
+          styleType={AppearanceStyleType.primary}
+          className={"w-full"}
+          transition={true}
+          href={formUrl}
+        >
+          {t("label.applyOnline")}
+        </LinkButton>
+      )}
       {process.env.COVID_UPDATE && (
         <div className={"mt-4"}>
           <Heading priority={2} className={"text-base text-gray-800 font-sans"}>
