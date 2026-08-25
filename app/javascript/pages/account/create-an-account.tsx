@@ -60,6 +60,7 @@ const CreateAnAccountPage = () => {
       locale,
       unsafeMetadata: { locale }, // Account creation can only update public metadata
     })
+    // this condition can be true only if strict enumeration protection is *not* enabled
     if (error?.errors?.[0]?.code === "form_identifier_exists") {
       void transferToSignIn(email)
       return

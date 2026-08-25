@@ -17,11 +17,6 @@ export const useFeatureFlag = (flagName: string, defaultValue: boolean) => {
 
   const allowUrlOverride = urlWhiteList.has(flagName) || process.env.UNLEASH_ENV === "development"
 
-  if (flagName === "temp.webapp.auth.clerk") {
-    // TODO WIP revert debug
-    return { flagsReady: true, unleashFlag: true }
-  }
-
   if (doesURLHaveFlag && allowUrlOverride) {
     if (flagFromUrl === "true") {
       return { flagsReady: true, unleashFlag: true }
