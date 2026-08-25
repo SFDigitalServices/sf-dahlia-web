@@ -12,6 +12,7 @@ interface NameFieldsetProps {
   defaultMiddleName?: string
   defaultLastName?: string
   onChange?: () => void
+  note?: React.ReactNode
 }
 
 export const handleNameServerErrors = (
@@ -63,11 +64,12 @@ const NameFieldset = ({
   defaultFirstName,
   defaultMiddleName,
   defaultLastName,
+  note,
 }: NameFieldsetProps) => {
   const hasError = errors?.firstName || errors?.lastName || errors?.middleName
 
   return (
-    <Fieldset hasError={hasError} label={t("label.name")}>
+    <Fieldset hasError={hasError} label={t("label.name")} note={note}>
       <Field
         className="mt-1 mb-4"
         name="firstName"

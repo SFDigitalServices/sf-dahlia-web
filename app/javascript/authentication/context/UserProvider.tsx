@@ -1,7 +1,9 @@
-import React, { useEffect, useReducer } from "react"
+import React, { useCallback, useEffect, useReducer } from "react"
+import { useAuth } from "@clerk/clerk-react"
 
 import { getProfile, signIn } from "../../api/authApiService"
 import { attemptToSetAuthHeadersFromURL } from "../token"
+import { User } from "../user"
 import {
   saveProfile,
   userSignOut,
@@ -22,6 +24,40 @@ interface UserProviderProps {
   children?: React.ReactNode
 }
 
+const ClerkProfile = ({
+  hasProfile,
+  onLoaded,
+}: {
+  hasProfile: boolean
+  onLoaded: (profile: User | null) => void
+}) => {
+  const { isLoaded, isSignedIn, getToken } = useAuth()
+
+  useEffect(() => {
+    if (!isLoaded || hasProfile) {
+      return
+    }
+    if (!isSignedIn) {
+      onLoaded(null)
+      return
+    }
+
+    void (async () => {
+      try {
+        const sessionToken = await getToken()
+        if (!sessionToken) {
+          throw new Error("Missing Clerk session token")
+        }
+        onLoaded(await getProfile(sessionToken))
+      } catch {
+        onLoaded(null)
+      }
+    })()
+  }, [getToken, hasProfile, isLoaded, isSignedIn, onLoaded])
+
+  return null
+}
+
 const UserProvider = (props: UserProviderProps) => {
   const [state, dispatch] = useReducer(UserReducer, {
     loading: false,
@@ -30,15 +66,12 @@ const UserProvider = (props: UserProviderProps) => {
 
   const { pushToDataLayer } = useGTMDataLayerWithoutUserContext()
   const { unleashFlag: clerkEnabled, flagsReady } = useFeatureFlag(UNLEASH_FLAG.CLERK_AUTH, false)
+
+  const onClerkProfileLoaded = useCallback((profile: User | null) => {
+    dispatch(profile ? saveProfile(profile) : systemSignOut())
+  }, [])
+
   // Load our profile as soon as we have an access token available
-  useEffect(() => {
-    if (!flagsReady || !clerkEnabled) {
-      return
-    }
-    if (state.profile || !state.initialStateLoaded) {
-      dispatch(systemSignOut())
-    }
-  }, [clerkEnabled, flagsReady, state.initialStateLoaded, state.profile])
   useEffect(() => {
     if (!flagsReady || clerkEnabled || state.profile) {
       return
@@ -104,7 +137,14 @@ const UserProvider = (props: UserProviderProps) => {
     },
   }
 
-  return <UserContext.Provider value={contextValues}>{props.children}</UserContext.Provider>
+  return (
+    <UserContext.Provider value={contextValues}>
+      {flagsReady && clerkEnabled && (
+        <ClerkProfile hasProfile={!!state.profile} onLoaded={onClerkProfileLoaded} />
+      )}
+      {props.children}
+    </UserContext.Provider>
+  )
 }
 
 export default UserProvider
