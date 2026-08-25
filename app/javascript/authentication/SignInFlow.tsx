@@ -15,7 +15,6 @@ import {
   getForgotPasswordPath,
   getMyAccountPath,
   getSignInCodePath,
-  localizedPath,
 } from "../util/routeUtil"
 import { getSfGovUrl, localizedFormat, renderInlineMarkup } from "../util/languageUtil"
 import { AUTH_FLOW } from "../modules/constants"
@@ -31,11 +30,9 @@ type SignInView = "verificationCode" | "password"
 
 const SignInFlow = () => {
   const navigate = useNavigate()
-  const { state } = useLocation() as { state?: { listingId?: string } }
-  const applyIntroPath = state?.listingId
-    ? localizedPath(`listings/${state.listingId}/apply-welcome/intro`)
-    : null
-  const postSignInRedirectUrl = applyIntroPath ?? getMyAccountPath()
+  const { state } = useLocation() as { state?: { redirectUrl?: string } }
+  const redirectUrl = state?.redirectUrl
+  const postSignInRedirectUrl = redirectUrl ?? getMyAccountPath()
   const requiredLoginsDate = localizedFormat(process.env.REQUIRED_LOGINS_DATE ?? "", "LL")
   const { isLoaded: authLoaded, isSignedIn } = useAuth()
   const { isLoaded, signIn, setActive } = useSignIn()
@@ -110,7 +107,7 @@ const SignInFlow = () => {
         emailAddressId: emailCodeFactor.emailAddressId,
       })
       void navigate(getSignInCodePath(), {
-        state: { email, ...(applyIntroPath && { redirectUrl: applyIntroPath }) },
+        state: { email, ...(redirectUrl && { redirectUrl }) },
       })
     } catch (error) {
       console.error("Sign in code error", error)
@@ -189,12 +186,12 @@ const SignInFlow = () => {
         <Heading priority={1} size="2xl">
           {t("pageTitle.signIn")}
         </Heading>
-        {applyIntroPath && requiredLoginsDate && (
+        {redirectUrl && requiredLoginsDate && (
           <Message variant="primary" fullwidth className={styles.requiredLoginNotice}>
             {renderInlineMarkup(
               t("signIn.requiredLoginNotice", {
                 date: requiredLoginsDate,
-                url: getSfGovUrl("https://www.sf.gov/sign-in-to-your-dahlia-account"),
+                url: getSfGovUrl("https://www.sf.gov/get-help-with-your-dahlia-account"),
               })
             )}
           </Message>
@@ -220,8 +217,8 @@ const SignInFlow = () => {
         <Button variant="primary-outlined" size="sm" href={getCreateAccountPath()}>
           {t("signIn.createAccount")}
         </Button>
-        {applyIntroPath && (
-          <Link href={applyIntroPath} className={styles.continueWithoutSigningIn}>
+        {redirectUrl && (
+          <Link href={redirectUrl} className={styles.continueWithoutSigningIn}>
             {t("b1aWelcomeBack.continueWithoutSigningIn")}
           </Link>
         )}

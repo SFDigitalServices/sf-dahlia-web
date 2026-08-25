@@ -28,17 +28,17 @@ interface EnterVerificationCodePageProps {
   redirectUrl?: string
 }
 
-const EnterVerificationCodePage = ({
-  email,
-  flow,
-  redirectUrl = getMyAccountPath(),
-}: EnterVerificationCodePageProps) => {
 // The user can send a new verification code every 30 seconds
 const RESEND_CODE_MS = 30000
 
 const remainingResendSeconds = (expiresAt: number) =>
   Math.max(0, Math.ceil((expiresAt - Date.now()) / 1000))
 
+const EnterVerificationCodePage = ({
+  email,
+  flow,
+  redirectUrl = getMyAccountPath(),
+}: EnterVerificationCodePageProps) => {
   const navigate = useNavigate()
   const { isLoaded: signUpLoaded, signUp, setActive: setActiveSignUp } = useSignUp()
   const { isLoaded: signInLoaded, signIn, setActive: setActiveSignIn } = useSignIn()

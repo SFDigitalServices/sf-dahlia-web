@@ -111,7 +111,7 @@ const StandardHowToApply = ({
           className={"w-full"}
           transition={true}
           onClick={() => {
-            void navigate(getSignInPath(), { state: { listingId } })
+            void navigate(getSignInPath(), { state: { redirectUrl: formUrl } })
           }}
         >
           {t("label.applyOnline")}
