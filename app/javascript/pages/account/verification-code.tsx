@@ -23,9 +23,14 @@ import VerificationCodeField from "./components/VerificationCodeField"
 interface EnterVerificationCodePageProps {
   email: string
   flow: AUTH_FLOW
+  redirectUrl?: string
 }
 
-const EnterVerificationCodePage = ({ email, flow }: EnterVerificationCodePageProps) => {
+const EnterVerificationCodePage = ({
+  email,
+  flow,
+  redirectUrl = getMyAccountPath(),
+}: EnterVerificationCodePageProps) => {
   const navigate = useNavigate()
   const { isLoaded: signUpLoaded, signUp, setActive: setActiveSignUp } = useSignUp()
   const { isLoaded: signInLoaded, signIn, setActive: setActiveSignIn } = useSignIn()
@@ -54,7 +59,7 @@ const EnterVerificationCodePage = ({ email, flow }: EnterVerificationCodePagePro
       if (completeSignIn.status === "complete") {
         await setActiveSignIn({
           session: completeSignIn.createdSessionId,
-          redirectUrl: getMyAccountPath(),
+          redirectUrl,
         })
       } else {
         console.error("Sign in failed:", completeSignIn)
@@ -207,7 +212,7 @@ const EnterVerificationCode = (_props: { assetPaths: unknown }) => {
     return null
   }
 
-  return <EnterVerificationCodePage email={email} flow={flow} />
+  return <EnterVerificationCodePage email={email} flow={flow} redirectUrl={state?.redirectUrl} />
 }
 
 export default withAppSetup(EnterVerificationCode, {

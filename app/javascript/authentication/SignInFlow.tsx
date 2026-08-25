@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import React, { useEffect, useRef, useState } from "react"
-import { Navigate, useNavigate } from "react-router"
+import { Navigate, useLocation, useNavigate } from "react-router"
 import { useAuth, useClerk, useSignIn } from "@clerk/clerk-react"
 import { Form, t } from "@bloom-housing/ui-components"
-import { Alert, Button, Card, Heading, Link, LoadingState } from "@bloom-housing/ui-seeds"
+import { Alert, Button, Card, Heading, Link, LoadingState, Message } from "@bloom-housing/ui-seeds"
 import { useForm, useWatch } from "react-hook-form"
 import AuthLayout from "../layouts/AuthLayout"
 import EmailFieldset from "../pages/account/components/EmailFieldset"
@@ -15,8 +15,9 @@ import {
   getForgotPasswordPath,
   getMyAccountPath,
   getSignInCodePath,
+  localizedPath,
 } from "../util/routeUtil"
-import { renderInlineMarkup } from "../util/languageUtil"
+import { getSfGovUrl, localizedFormat, renderInlineMarkup } from "../util/languageUtil"
 import { AUTH_FLOW } from "../modules/constants"
 import { clearHeaders } from "./token"
 import styles from "./SignInFlow.module.scss"
@@ -30,6 +31,12 @@ type SignInView = "verificationCode" | "password"
 
 const SignInFlow = () => {
   const navigate = useNavigate()
+  const { state } = useLocation() as { state?: { listingId?: string } }
+  const applyIntroPath = state?.listingId
+    ? localizedPath(`listings/${state.listingId}/apply-welcome/intro`)
+    : null
+  const postSignInRedirectUrl = applyIntroPath ?? getMyAccountPath()
+  const requiredLoginsDate = localizedFormat(process.env.REQUIRED_LOGINS_DATE ?? "", "LL")
   const { isLoaded: authLoaded, isSignedIn } = useAuth()
   const { isLoaded, signIn, setActive } = useSignIn()
   const { client } = useClerk()
@@ -73,8 +80,8 @@ const SignInFlow = () => {
         return
       }
       clearHeaders() // Clear headers in case of existing Devise session (while testing)
-      // TODO: if user has not completed their profile, redirect to profile page
-      await setActive({ session: createdSessionId, redirectUrl: getMyAccountPath() })
+      // If the user came from the listing detail apply button, redirect to the application intro page
+      await setActive({ session: createdSessionId, redirectUrl: postSignInRedirectUrl })
     } catch (error) {
       console.error("Sign in error", error)
       setShowError(true)
@@ -102,7 +109,9 @@ const SignInFlow = () => {
         strategy: "email_code",
         emailAddressId: emailCodeFactor.emailAddressId,
       })
-      void navigate(getSignInCodePath(), { state: { email } })
+      void navigate(getSignInCodePath(), {
+        state: { email, ...(applyIntroPath && { redirectUrl: applyIntroPath }) },
+      })
     } catch (error) {
       console.error("Sign in code error", error)
       setShowError(true)
@@ -110,7 +119,7 @@ const SignInFlow = () => {
   }
 
   if (authLoaded && isSignedIn) {
-    return <Navigate to={getMyAccountPath()} replace />
+    return <Navigate to={postSignInRedirectUrl} replace />
   }
 
   const forgotPasswordPath = createPath(getForgotPasswordPath(), { email: emailField })
@@ -180,6 +189,16 @@ const SignInFlow = () => {
         <Heading priority={1} size="2xl">
           {t("pageTitle.signIn")}
         </Heading>
+        {applyIntroPath && requiredLoginsDate && (
+          <Message variant="primary" fullwidth className={styles.requiredLoginNotice}>
+            {renderInlineMarkup(
+              t("signIn.requiredLoginNotice", {
+                date: requiredLoginsDate,
+                url: getSfGovUrl("https://www.sf.gov/sign-in-to-your-dahlia-account"),
+              })
+            )}
+          </Message>
+        )}
         {showError && (
           <div ref={alertRef} tabIndex={-1} className={styles.errorAlert}>
             <Alert fullwidth variant="alert" onClose={() => setShowError(false)}>
@@ -201,6 +220,11 @@ const SignInFlow = () => {
         <Button variant="primary-outlined" size="sm" href={getCreateAccountPath()}>
           {t("signIn.createAccount")}
         </Button>
+        {applyIntroPath && (
+          <Link href={applyIntroPath} className={styles.continueWithoutSigningIn}>
+            {t("b1aWelcomeBack.continueWithoutSigningIn")}
+          </Link>
+        )}
       </Card.Section>
       <GetHelp flow={AUTH_FLOW.SIGN_IN} />
     </AuthLayout>
