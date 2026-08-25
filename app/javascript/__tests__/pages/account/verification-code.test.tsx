@@ -332,4 +332,97 @@ describe("<EnterVerificationCode />", () => {
       expect(mockNavigate).toHaveBeenCalledWith("/sign-in")
     })
   })
+  it("verifies a valid code for forgot password", async () => {
+    cleanup()
+    ;(useLocation as jest.Mock).mockReturnValue({
+      pathname: "/forgot-password/code",
+      state: { email: "test@example.com", flow: AUTH_FLOW.FORGOT_PASSWORD },
+    })
+    mockAttemptFirstFactor.mockResolvedValue({ status: "needs_new_password" })
+    await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
+
+    const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime })
+    await user.click(screen.getAllByRole("textbox")[0])
+    await user.paste("123456")
+    await user.click(screen.getByRole("button", { name: t("createAccount.confirmCode") }))
+
+    await waitFor(() => {
+      expect(mockAttemptFirstFactor).toHaveBeenCalledWith({
+        strategy: "reset_password_email_code",
+        code: "123456",
+      })
+    })
+    expect(mockNavigate).toHaveBeenCalledWith("/reset-password", {
+      state: { email: "test@example.com", flow: AUTH_FLOW.FORGOT_PASSWORD, code: "123456" },
+    })
+    expect(mockSetActiveSignIn).not.toHaveBeenCalled()
+  })
+
+  it("shows an error when the forgot password code is invalid", async () => {
+    cleanup()
+    jest.spyOn(console, "error").mockImplementation(() => {})
+    ;(useLocation as jest.Mock).mockReturnValue({
+      pathname: "/forgot-password/code",
+      state: { email: "test@example.com", flow: AUTH_FLOW.FORGOT_PASSWORD },
+    })
+    ;(useSignIn as jest.Mock).mockReturnValue({
+      isLoaded: true,
+      setActive: mockSetActiveSignIn,
+      signIn: {
+        attemptFirstFactor: mockAttemptFirstFactor,
+        prepareFirstFactor: mockPrepareFirstFactor,
+        supportedFirstFactors: [
+          { strategy: "reset_password_email_code", emailAddressId: "test_email" },
+        ],
+      },
+    })
+    mockAttemptFirstFactor.mockRejectedValue(new Error("bad code"))
+    await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
+
+    const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime })
+    await user.click(screen.getAllByRole("textbox")[0])
+    await user.paste("123456")
+    await user.click(screen.getByRole("button", { name: t("createAccount.confirmCode") }))
+
+    await act(async () => {
+      await Promise.resolve()
+    })
+
+    expect(mockAttemptFirstFactor).toHaveBeenCalledWith({
+      strategy: "reset_password_email_code",
+      code: "123456",
+    })
+    expect(mockNavigate).not.toHaveBeenCalled()
+  })
+
+  it("resend forgot password code", async () => {
+    cleanup()
+    ;(useLocation as jest.Mock).mockReturnValue({
+      pathname: "/forgot-password/code",
+      state: { email: "test@example.com", flow: AUTH_FLOW.FORGOT_PASSWORD },
+    })
+    ;(useSignIn as jest.Mock).mockReturnValue({
+      isLoaded: true,
+      setActive: mockSetActiveSignIn,
+      signIn: {
+        attemptFirstFactor: mockAttemptFirstFactor,
+        prepareFirstFactor: mockPrepareFirstFactor,
+        supportedFirstFactors: [
+          { strategy: "reset_password_email_code", emailAddressId: "test_email" },
+        ],
+      },
+    })
+    await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
+
+    expireResendVerificationCode()
+    fireEvent.click(screen.getByRole("button", { name: t("createAccount.sendAgain") }))
+    await act(async () => {
+      await Promise.resolve()
+    })
+
+    expect(mockPrepareFirstFactor).toHaveBeenCalledWith({
+      strategy: "reset_password_email_code",
+      emailAddressId: "test_email",
+    })
+  })
 })

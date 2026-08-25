@@ -6,6 +6,7 @@ import { screen } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
 import { post } from "../../api/apiService"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
+import { useSignIn } from "@clerk/clerk-react"
 
 jest.mock("react-helmet-async", () => {
   return {
@@ -21,6 +22,7 @@ jest.mock("@clerk/clerk-react", () => {
     ClerkProvider: ({ children }: { children: React.ReactNode }) => children,
     useClerk: jest.fn(),
     useAuth: jest.fn(() => ({ isLoaded: true, isSignedIn: false })),
+    useSignIn: jest.fn(),
   }
 })
 
@@ -134,5 +136,14 @@ describe("<ForgotPassword />", () => {
         "If there is an account with that email address, you will get an email with a link to reset your password."
       )
     ).not.toBeNull()
+  })
+
+  it("renders the clerk flow when the flag is enabled", async () => {
+    ;(useFeatureFlag as jest.Mock).mockReturnValue({ flagsReady: true, unleashFlag: true })
+    ;(useSignIn as jest.Mock).mockReturnValue({ isLoaded: true, signIn: {} })
+
+    await renderAndLoadAsync(<ForgotPassword assetPaths={{}} />)
+
+    expect(screen.getByRole("button", { name: /get a code/i })).not.toBeNull()
   })
 })

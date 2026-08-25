@@ -57,10 +57,6 @@ const ResetPasswordForm = (_props: ResetPasswordProps) => {
   const { profile, loading: authLoading, initialStateLoaded } = React.useContext(UserContext)
   // eslint-disable-next-line @typescript-eslint/unbound-method
   const { register, handleSubmit, errors, watch } = useForm()
-  const { unleashFlag: clerkEnabled } = useFeatureFlag(UNLEASH_FLAG.CLERK_AUTH, false)
-  if (clerkEnabled) {
-    return <AddPasswordPage flow={AUTH_FLOW.FORGOT_PASSWORD} />
-  }
 
   if (!profile && !authLoading && initialStateLoaded) {
     window.location.assign(getSignInPath())

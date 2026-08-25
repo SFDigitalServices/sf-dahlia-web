@@ -148,4 +148,59 @@ describe("<AddPassword />", () => {
       expect(mockNavigate).toHaveBeenCalledWith("/create-account")
     })
   })
+  describe("Reset password flow", () => {
+    let mockResetPassword: jest.Mock
+    let mockSetActive: jest.Mock
+
+    const renderWithStatus = async (status: string | null) => {
+      cleanup()
+      mockResetPassword = jest.fn()
+      mockSetActive = jest.fn().mockResolvedValue(undefined)
+      ;(useLocation as jest.Mock).mockReturnValue({
+        state: { flow: AUTH_FLOW.FORGOT_PASSWORD },
+      })
+      ;(useSignIn as jest.Mock).mockReturnValue({
+        isLoaded: true,
+        signIn: { resetPassword: mockResetPassword, status },
+        setActive: mockSetActive,
+      })
+      await renderAndLoadAsync(<AddPassword assetPaths={{}} />)
+    }
+
+    it("redirects to forgot password page if reset status is stale", async () => {
+      await renderWithStatus(null)
+      expect(screen.queryByRole("button", { name: /save password/i })).toBeNull()
+    })
+
+    it("resets the password, logs user in, and redirects to account page", async () => {
+      await renderWithStatus("needs_new_password")
+      mockResetPassword.mockResolvedValue({ status: "complete", createdSessionId: "session_789" })
+
+      const user = userEvent.setup()
+      await user.type(screen.getByTestId("password-field"), "abcd1234")
+      await user.click(screen.getByRole("button", { name: /save password/i }))
+
+      await waitFor(() => {
+        expect(mockResetPassword).toHaveBeenCalledWith({ password: "abcd1234" })
+      })
+      expect(mockSetActive).toHaveBeenCalledWith({
+        session: "session_789",
+        redirectUrl: "/account",
+      })
+    })
+
+    it("shows an console error when the reset does not complete", async () => {
+      await renderWithStatus("needs_new_password")
+      jest.spyOn(console, "error").mockImplementation(() => {})
+      mockResetPassword.mockResolvedValue({ status: "needs_second_factor" })
+
+      const user = userEvent.setup()
+      await user.type(screen.getByTestId("password-field"), "abcd1234")
+      await user.click(screen.getByRole("button", { name: /save password/i }))
+
+      await waitFor(() => {
+        expect(screen.getByTestId("error-message")).not.toBeNull()
+      })
+    })
+  })
 })

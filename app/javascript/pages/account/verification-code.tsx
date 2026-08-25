@@ -39,7 +39,7 @@ const EnterVerificationCodePage = ({ email, flow }: EnterVerificationCodePagePro
   const { isLoaded: signUpLoaded, signUp, setActive: setActiveSignUp } = useSignUp()
   const { isLoaded: signInLoaded, signIn, setActive: setActiveSignIn } = useSignIn()
   const isForgotPasswordFlow = flow === AUTH_FLOW.FORGOT_PASSWORD
-  const isLoaded = flow === AUTH_FLOW.SIGN_IN ? signInLoaded : signUpLoaded
+  const isLoaded = flow === AUTH_FLOW.CREATE_ACCOUNT ? signUpLoaded : signInLoaded
   const [resendExpiresAt, setResendExpiresAt] = useState(() => Date.now() + RESEND_CODE_MS)
   const [resendSeconds, setResendSeconds] = useState(RESEND_CODE_MS / 1000)
   const [isResending, setIsResending] = useState(false)

@@ -57,7 +57,7 @@ const AddPasswordPage = ({ flow }: AddPasswordPageProps) => {
     if (result.status === "complete") {
       await setActive({ session: result.createdSessionId, redirectUrl: getMyAccountPath() })
     } else {
-      console.error("Reset failed:", result)
+      console.error("Reset password error:", result)
       setError("password", { message: "password:server:generic" })
     }
     return
