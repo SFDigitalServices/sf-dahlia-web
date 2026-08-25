@@ -4,7 +4,7 @@ import { screen, waitFor, within, cleanup } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
 import { useNavigate } from "react-router"
 import CreateAnAccount from "../../../pages/account/create-an-account"
-import { getSignInCodePath } from "../../../util/routeUtil"
+import { getSignInCodePath, getVerificationCodePath } from "../../../util/routeUtil"
 import {
   renderAndLoadAsync,
   mockWindowLocation,
@@ -35,6 +35,13 @@ describe("<CreateAnAccount />", () => {
   let mockSendEmailCode: jest.Mock
   let mockSignInCreate: jest.Mock
   let mockSignInSendCode: jest.Mock
+  let mockSignUpResource: {
+    status: string
+    unverifiedFields: string[]
+    missingFields: string[]
+    create: jest.Mock
+    verifications: { sendEmailCode: jest.Mock }
+  }
   let mockSignInResource: {
     status: string
     create: jest.Mock
@@ -51,6 +58,15 @@ describe("<CreateAnAccount />", () => {
     mockSendEmailCode = jest.fn().mockResolvedValue(undefined)
     mockSignInCreate = jest.fn().mockResolvedValue({ error: null })
     mockSignInSendCode = jest.fn().mockResolvedValue(undefined)
+    mockSignUpResource = {
+      status: "missing_requirements",
+      unverifiedFields: ["email_address"],
+      missingFields: [],
+      create: mockSignUpCreate,
+      verifications: {
+        sendEmailCode: mockSendEmailCode,
+      },
+    }
     mockSignInResource = {
       status: "needs_first_factor",
       create: mockSignInCreate,
@@ -60,12 +76,7 @@ describe("<CreateAnAccount />", () => {
     }
     ;(useSignUp as jest.Mock).mockReturnValue({
       fetchStatus: "idle",
-      signUp: {
-        create: mockSignUpCreate,
-        verifications: {
-          sendEmailCode: mockSendEmailCode,
-        },
-      },
+      signUp: mockSignUpResource,
     })
     ;(useSignIn as jest.Mock).mockReturnValue({
       fetchStatus: "idle",
@@ -119,7 +130,7 @@ describe("<CreateAnAccount />", () => {
     })
 
     expect(mockSendEmailCode).toHaveBeenCalledWith()
-    expect(mockNavigate).toHaveBeenCalledWith("/create-account/code", {
+    expect(mockNavigate).toHaveBeenCalledWith(getVerificationCodePath(), {
       state: { email: "test@example.com" },
     })
   })

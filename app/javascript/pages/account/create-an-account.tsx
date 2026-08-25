@@ -71,8 +71,8 @@ const CreateAnAccountPage = () => {
     }
     await signUp.verifications.sendEmailCode()
     if (
-      signUp.status === 'missing_requirements' &&
-      signUp.unverifiedFields.includes('email_address') &&
+      signUp.status === "missing_requirements" &&
+      signUp.unverifiedFields.includes("email_address") &&
       signUp.missingFields.length === 0
     ) {
       void navigate(getVerificationCodePath(), { state: { email } })

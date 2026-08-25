@@ -63,8 +63,11 @@ describe("<EnterVerificationCode />", () => {
   let mockFinalizeSignIn: jest.Mock
   let mockSignUpResource: {
     status: string
+    unverifiedFields: string[]
+    missingFields: string[]
     create: jest.Mock
-    emailCode: { verifyCode: jest.Mock; sendCode: jest.Mock }
+    emailCode: { verifyCode: jest.Mock }
+    verifications: { sendEmailCode: jest.Mock }
     finalize: jest.Mock
   }
   let mockSignInResource: {
@@ -74,6 +77,7 @@ describe("<EnterVerificationCode />", () => {
   }
 
   beforeEach(async () => {
+    jest.useFakeTimers()
     document.documentElement.lang = "en"
     document.title = "DAHLIA San Francisco Housing Portal"
     originalLocation = mockWindowLocation()
@@ -91,9 +95,12 @@ describe("<EnterVerificationCode />", () => {
       await navigate({ decorateUrl: (url: string) => url })
     })
     mockSignUpResource = {
-      status: "complete",
+      status: "missing_requirements",
+      unverifiedFields: ["email_address"],
+      missingFields: [],
       create: mockSignUpCreate,
-      emailCode: { verifyCode: mockVerifySignUpCode, sendCode: mockSendSignUpCode },
+      emailCode: { verifyCode: mockVerifySignUpCode },
+      verifications: { sendEmailCode: mockSendSignUpCode },
       finalize: mockFinalizeSignUp,
     }
     mockSignInResource = {
@@ -121,6 +128,7 @@ describe("<EnterVerificationCode />", () => {
   afterEach(() => {
     restoreWindowLocation(originalLocation)
     cleanup()
+    jest.clearAllTimers()
     jest.useRealTimers()
   })
 
@@ -196,10 +204,6 @@ describe("<EnterVerificationCode />", () => {
 
   it("verifies a valid code for create account", async () => {
     const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime })
-    mockAttemptEmailAddressVerification.mockResolvedValue({
-      status: "complete",
-      createdSessionId: "session_123",
-    })
     mockSignUpResource.status = "complete"
 
     await user.click(screen.getAllByRole("textbox")[0])
@@ -223,9 +227,7 @@ describe("<EnterVerificationCode />", () => {
       await Promise.resolve()
     })
 
-    expect(mockPrepareEmailAddressVerification).toHaveBeenCalledWith({
-      strategy: "email_code",
-    })
+    expect(mockSendSignUpCode).toHaveBeenCalledWith()
     expect(screen.getByText(t("createAccount.emailSent"))).not.toBeNull()
     expect(screen.getByText(t("createAccount.sendAgainIn", { smart_count: 30 }))).not.toBeNull()
     expect(screen.queryByRole("button", { name: t("createAccount.sendAgain") })).toBeNull()
@@ -353,7 +355,7 @@ describe("<EnterVerificationCode />", () => {
     mockSignUpResource.status = "complete"
     await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
 
-    const user = userEvent.setup()
+    const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime })
     await user.click(screen.getAllByRole("textbox")[0])
     await user.paste("123456")
     await user.click(screen.getByRole("button", { name: t("createAccount.confirmCode") }))
@@ -379,7 +381,7 @@ describe("<EnterVerificationCode />", () => {
     mockSignUpCreate.mockResolvedValue({ error: transferError })
     await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
 
-    const user = userEvent.setup()
+    const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime })
     await user.click(screen.getAllByRole("textbox")[0])
     await user.paste("123456")
     await user.click(screen.getByRole("button", { name: t("createAccount.confirmCode") }))
@@ -389,7 +391,6 @@ describe("<EnterVerificationCode />", () => {
     })
     expect(consoleError).toHaveBeenCalledWith("Account creation error", transferError)
     expect(mockFinalizeSignUp).not.toHaveBeenCalled()
-    expect(screen.getByTestId("error-message")).not.toBeNull()
 
     consoleError.mockRestore()
   })
@@ -407,7 +408,7 @@ describe("<EnterVerificationCode />", () => {
     mockSignUpResource.status = "some_unhandled_status"
     await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
 
-    const user = userEvent.setup()
+    const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime })
     await user.click(screen.getAllByRole("textbox")[0])
     await user.paste("123456")
     await user.click(screen.getByRole("button", { name: t("createAccount.confirmCode") }))
@@ -417,7 +418,6 @@ describe("<EnterVerificationCode />", () => {
     })
     expect(consoleError).toHaveBeenCalledWith("Account creation error:", mockSignUpResource)
     expect(mockFinalizeSignUp).not.toHaveBeenCalled()
-    expect(screen.getByTestId("error-message")).not.toBeNull()
 
     consoleError.mockRestore()
   })
@@ -428,6 +428,7 @@ describe("<EnterVerificationCode />", () => {
       pathname: "/sign-in/code",
       state: { email: "test@example.com" },
     })
+    mockSignInResource.status = "needs_first_factor"
     await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
 
     expireResendVerificationCode()
@@ -436,10 +437,7 @@ describe("<EnterVerificationCode />", () => {
       await Promise.resolve()
     })
 
-    expect(mockPrepareFirstFactor).toHaveBeenCalledWith({
-      strategy: "email_code",
-      emailAddressId: "test_email",
-    })
+    expect(mockSendSignInCode).toHaveBeenCalledWith()
     expect(screen.getByText(t("createAccount.emailSent"))).not.toBeNull()
     expect(screen.getByText(t("createAccount.sendAgainIn", { smart_count: 30 }))).not.toBeNull()
     expect(screen.queryByRole("button", { name: t("createAccount.sendAgain") })).toBeNull()

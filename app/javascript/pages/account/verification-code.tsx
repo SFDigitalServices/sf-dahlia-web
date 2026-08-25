@@ -171,8 +171,8 @@ const EnterVerificationCodePage = ({
     if (signUpStatus === "fetching" || !signUp) return false
     await signUp.verifications.sendEmailCode()
     if (
-      signUp.status === 'missing_requirements' &&
-      signUp.unverifiedFields.includes('email_address') &&
+      signUp.status === "missing_requirements" &&
+      signUp.unverifiedFields.includes("email_address") &&
       signUp.missingFields.length === 0
     ) {
       return true
