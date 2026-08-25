@@ -34,7 +34,10 @@ const ShareAccess = ({
   useEffect(() => {
     void (async () => {
       const sessionToken = await getToken()
-      if (!sessionToken) return
+      if (!sessionToken) {
+        setAgencies([])
+        return
+      }
       setAgencies((await getHousingCounselorAgencies(sessionToken)) ?? [])
     })()
   }, [getToken])
