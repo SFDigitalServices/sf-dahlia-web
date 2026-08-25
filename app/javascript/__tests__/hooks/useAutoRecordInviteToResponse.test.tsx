@@ -4,13 +4,16 @@ import {
   recordResponse,
   logHumanVerifiedClick,
   beaconHumanVerifiedClick,
-  snapshotBrowser,
 } from "../../api/inviteToApiService"
+import { snapshotBrowser } from "../../util/browserSnapshotUtil"
 
 jest.mock("../../api/inviteToApiService", () => ({
   recordResponse: jest.fn(),
   logHumanVerifiedClick: jest.fn(),
   beaconHumanVerifiedClick: jest.fn(),
+}))
+
+jest.mock("../../util/browserSnapshotUtil", () => ({
   snapshotBrowser: jest.fn(),
 }))
 

@@ -2,10 +2,10 @@ import { useEffect } from "react"
 import {
   logHumanVerifiedClick,
   beaconHumanVerifiedClick,
-  snapshotBrowser,
   HumanVerifiedTrigger,
   HumanVerifiedRecord,
 } from "../api/inviteToApiService"
+import { snapshotBrowser } from "../util/browserSnapshotUtil"
 import { isDeadlinePassed } from "../util/listingUtil"
 
 // `pointerdown`/`pointermove` cover touch input too, so there is no separate `touchstart` here.
