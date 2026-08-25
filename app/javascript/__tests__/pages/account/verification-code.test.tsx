@@ -425,4 +425,63 @@ describe("<EnterVerificationCode />", () => {
       emailAddressId: "test_email",
     })
   })
+  it("does not resend the forgot password code if reset factor is expired/invalid", async () => {
+    cleanup()
+    jest.spyOn(console, "error").mockImplementation(() => {})
+    ;(useLocation as jest.Mock).mockReturnValue({
+      pathname: "/forgot-password/code",
+      state: { email: "test@example.com", flow: AUTH_FLOW.FORGOT_PASSWORD },
+    })
+    ;(useSignIn as jest.Mock).mockReturnValue({
+      isLoaded: true,
+      setActive: mockSetActiveSignIn,
+      signIn: {
+        attemptFirstFactor: mockAttemptFirstFactor,
+        prepareFirstFactor: mockPrepareFirstFactor,
+        supportedFirstFactors: [{ strategy: "password" }],
+      },
+    })
+    await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
+
+    expireResendVerificationCode()
+    fireEvent.click(screen.getByRole("button", { name: t("createAccount.sendAgain") }))
+    await act(async () => {
+      await Promise.resolve()
+    })
+
+    expect(mockPrepareFirstFactor).not.toHaveBeenCalled()
+  })
+
+  it("does not resend the forgot password code if there is a request error", async () => {
+    cleanup()
+    jest.spyOn(console, "error").mockImplementation(() => {})
+    ;(useLocation as jest.Mock).mockReturnValue({
+      pathname: "/forgot-password/code",
+      state: { email: "test@example.com", flow: AUTH_FLOW.FORGOT_PASSWORD },
+    })
+    mockPrepareFirstFactor.mockRejectedValue(new Error("resend failed"))
+    ;(useSignIn as jest.Mock).mockReturnValue({
+      isLoaded: true,
+      setActive: mockSetActiveSignIn,
+      signIn: {
+        attemptFirstFactor: mockAttemptFirstFactor,
+        prepareFirstFactor: mockPrepareFirstFactor,
+        supportedFirstFactors: [
+          { strategy: "reset_password_email_code", emailAddressId: "test_email" },
+        ],
+      },
+    })
+    await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
+
+    expireResendVerificationCode()
+    fireEvent.click(screen.getByRole("button", { name: t("createAccount.sendAgain") }))
+    await act(async () => {
+      await Promise.resolve()
+    })
+
+    expect(mockPrepareFirstFactor).toHaveBeenCalledWith({
+      strategy: "reset_password_email_code",
+      emailAddressId: "test_email",
+    })
+  })
 })

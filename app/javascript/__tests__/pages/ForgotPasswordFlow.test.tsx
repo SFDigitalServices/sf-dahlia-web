@@ -98,4 +98,17 @@ describe("<ForgotPasswordFlow />", () => {
     })
     expect(mockPrepareFirstFactor).not.toHaveBeenCalled()
   })
+
+  it("throws error with missing reset password factor", async () => {
+    jest.spyOn(console, "error").mockImplementation(() => {})
+    mockSignInCreate.mockResolvedValue({
+      supportedFirstFactors: [{ strategy: "password" }],
+    })
+
+    await submit()
+
+    await waitFor(() => {
+      expect(mockPrepareFirstFactor).not.toHaveBeenCalled()
+    })
+  })
 })
