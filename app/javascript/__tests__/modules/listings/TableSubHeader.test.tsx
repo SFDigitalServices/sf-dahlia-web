@@ -74,7 +74,7 @@ describe("TableSubHeader", () => {
     const { asFragment, findByText } = render(
       <TableSubHeader listing={testListing as RailsRentalListing} />
     )
-    expect(await findByText(t("listings.priorityDescriptor.plus"))).toBeDefined()
+    expect(await findByText(t("listings.prioritiesDescriptor.plus"))).toBeDefined()
     expect(asFragment()).toMatchSnapshot()
   })
 
@@ -90,7 +90,7 @@ describe("TableSubHeader", () => {
     const { asFragment, findByText } = render(
       <TableSubHeader listing={testListing as RailsRentalListing} />
     )
-    expect(await findByText(t("listings.priorityDescriptor.plus"))).toBeDefined()
+    expect(await findByText(t("listings.prioritiesDescriptor.plus"))).toBeDefined()
     expect(await findByText(t("listings.prioritiesDescriptor.mobilityHearingVision"))).toBeDefined()
     expect(asFragment()).toMatchSnapshot()
   })
