@@ -71,7 +71,10 @@ const SignInFlow = () => {
     if (!token) return true
     try {
       const sessionToken = await getToken()
-      if (!sessionToken) return false
+      if (!sessionToken) {
+        setShowError(true)
+        return false
+      }
       await authorizeHousingCounselor(token, sessionToken)
       return true
     } catch {
