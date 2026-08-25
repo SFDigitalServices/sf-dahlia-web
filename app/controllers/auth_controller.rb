@@ -19,6 +19,11 @@ class AuthController < ApplicationController
     render 'add_password'
   end
 
+  def add_profile
+    @add_profile_props = react_app_props
+    render 'add_profile'
+  end
+
   def forgot_password
     @forgot_password_props = react_app_props
     render 'forgot_password'
