@@ -29,7 +29,6 @@ jest.mock("../../api/apiService", () => ({
   authenticatedGet: jest.fn(),
   authenticatedDelete: jest.fn(),
   authenticatedPut: jest.fn(),
-  authenticatedPost: jest.fn(),
   get: jest.fn(),
   post: jest.fn(),
   put: jest.fn(),
@@ -40,7 +39,6 @@ describe("authApiService", () => {
     ;(authenticatedGet as jest.Mock).mockResolvedValue({ data: { data: "test-data" } })
     ;(authenticatedDelete as jest.Mock).mockResolvedValue({ data: { data: "test-data" } })
     ;(authenticatedPut as jest.Mock).mockResolvedValue({ data: { data: "test-data" } })
-    ;(authenticatedPost as jest.Mock).mockResolvedValue({ data: { success: true } })
     ;(get as jest.Mock).mockResolvedValue({ data: { data: "test-data" } })
     ;(post as jest.Mock).mockResolvedValue({ data: "test-data", headers: "test-headers" })
     ;(put as jest.Mock).mockResolvedValue({ data: { message: "test-message" } })
