@@ -92,7 +92,9 @@ const EnterVerificationCodePage = ({
             return
           }
           await authorizeHousingCounselor(housingCounselorToken, sessionToken)
-          // TODO: housing counselor banner and applicant view
+          console.log(
+            "TODO: Housing counselor successfully authenticated, TBD banner and applicant view"
+          )
           void navigate(getMyAccountPath())
           return
         }

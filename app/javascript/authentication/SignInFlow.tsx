@@ -81,6 +81,9 @@ const SignInFlow = () => {
         return false
       }
       await authorizeHousingCounselor(token, sessionToken)
+      console.log(
+        "TODO: Housing counselor successfully authenticated, TBD banner and applicant view"
+      )
       return true
     } catch {
       setShowError(true)
@@ -159,6 +162,7 @@ const SignInFlow = () => {
           return
         }
         await authorizeHousingCounselor(token, sessionToken)
+        console.log("TODO: Housing counselor already signed in, TBD banner and applicant view")
         void navigate(getMyAccountPath())
       } catch {
         setShowError(true)
