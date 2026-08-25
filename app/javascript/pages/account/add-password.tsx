@@ -50,7 +50,7 @@ const AddPasswordPage = ({ flow }: AddPasswordPageProps) => {
   })
 
   if (isForgotPasswordFlow && signInLoaded && !isResettingPassword && !signIn?.status) {
-    return <Navigate to={getForgotPasswordPath()} />
+    return <Navigate to={getForgotPasswordPath()} replace />
   }
 
   const resetPassword = async (newPassword: string) => {

@@ -111,7 +111,7 @@ const SignInFlow = () => {
   }
 
   if (authLoaded && isSignedIn) {
-    return <Navigate to={getMyAccountPath()} />
+    return <Navigate to={getMyAccountPath()} replace />
   }
 
   const forgotPasswordPath = createPath(getForgotPasswordPath(), {

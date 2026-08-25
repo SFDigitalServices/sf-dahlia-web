@@ -99,11 +99,6 @@ const EnterVerificationCodePage = ({ email, flow }: EnterVerificationCodePagePro
       const completeSignUp = await signUp.attemptEmailAddressVerification({
         code,
       })
-
-      //   if (completeSignUp.status === "missing_requirements") {
-      //     void navigate(getAddPasswordPath(), { state: { email, flow } })
-      //     return
-      //   }
       if (completeSignUp.status === "complete") {
         await setActiveSignUp({ session: completeSignUp.createdSessionId })
         void navigate(getAddPasswordPath())

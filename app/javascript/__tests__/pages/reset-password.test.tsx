@@ -24,16 +24,6 @@ jest.mock("../../api/apiService", () => ({
   authenticatedPut: jest.fn(),
 }))
 
-jest.mock("@clerk/clerk-react", () => {
-  const Clerk = jest.requireActual("@clerk/clerk-react")
-  return {
-    ...Clerk,
-    ClerkProvider: ({ children }: { children: React.ReactNode }) => children,
-    useClerk: jest.fn(),
-    useAuth: jest.fn(() => ({ isLoaded: true, isSignedIn: false })),
-  }
-})
-
 jest.mock("../../hooks/useFeatureFlag", () => ({
   useFeatureFlag: jest.fn(() => ({ flagsReady: true, unleashFlag: true })),
 }))
