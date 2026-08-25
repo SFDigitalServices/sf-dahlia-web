@@ -89,6 +89,7 @@ describe("<AddPassword />", () => {
     await waitFor(() => {
       expect(mockUpdatePassword).toHaveBeenCalledWith({ newPassword: "abcd1234" })
     })
+    expect(mockNavigate).toHaveBeenCalledWith("/add-profile")
     expect(screen.queryByTestId("error-message")).toBeNull()
   })
 
@@ -112,6 +113,7 @@ describe("<AddPassword />", () => {
     await user.click(screen.getByRole("button", { name: /skip for now/i }))
 
     expect(mockUpdatePassword).not.toHaveBeenCalled()
+    expect(mockNavigate).toHaveBeenCalledWith("/add-profile")
   })
 
   it("shows an error when the password update fails", async () => {

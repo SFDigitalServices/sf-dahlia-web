@@ -12,6 +12,7 @@ import {
   getCreateAccountPath,
   getForgotPasswordPath,
   getMyAccountPath,
+  getAddProfilePath,
 } from "../../util/routeUtil"
 import styles from "./add-password.module.scss"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
@@ -28,11 +29,8 @@ interface AddPasswordFormValues {
   password: string
 }
 
-const onSkip = () => {
-  console.log("TODO: skip password")
-}
-
 const AddPasswordPage = ({ flow }: AddPasswordPageProps) => {
+  const navigate = useNavigate()
   const { isLoaded, user } = useUser()
   const { isLoaded: signInLoaded, signIn, setActive } = useSignIn()
   const [isResettingPassword, setIsResettingPassword] = useState(false)
@@ -72,7 +70,7 @@ const AddPasswordPage = ({ flow }: AddPasswordPageProps) => {
       if (isForgotPasswordFlow) return await resetPassword(newPassword)
       if (!user) return
       await user.updatePassword({ newPassword })
-      console.log("TODO: next step is the profile page")
+      void navigate(getAddProfilePath())
     } catch (error) {
       console.error("Add password error:", error)
       setError("password", { message: "password:server:generic" })
@@ -107,7 +105,14 @@ const AddPasswordPage = ({ flow }: AddPasswordPageProps) => {
               {t("createAccount.savePassword")}
             </Button>
             {!isForgotPasswordFlow && (
-              <Button variant="primary-outlined" size="sm" type="button" onClick={onSkip}>
+              <Button
+                variant="primary-outlined"
+                size="sm"
+                type="button"
+                onClick={() => {
+                  void navigate(getAddProfilePath())
+                }}
+              >
                 {t("createAccount.skipForNow")}
               </Button>
             )}
