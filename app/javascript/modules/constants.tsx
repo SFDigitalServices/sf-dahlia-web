@@ -113,6 +113,7 @@ export const SFGOV_LINKS = [
   "https://www.sf.gov/get-priority-housing-lottery",
   "https://www.sf.gov/learn-about-displaced-tenant-housing-preference-dthp",
   "https://www.sf.gov/get-priority-housing-lottery",
+  "https://www.sf.gov/get-help-with-your-dahlia-account",
 ]
 
 export const HOME_SF_PHONE = "415-202-5464"
@@ -167,6 +168,7 @@ export const UNLEASH_FLAG = {
   FORM_ENGINE: "perm.webapp.formEngine",
   FORM_ENGINE_DEBUG: "perm.webapp.formEngine.debug",
   HOUSING_COUNSELOR_ACCESS: "temp.all.housingCounselorAccess",
+  REQUIRED_LOGINS_MESSAGE: "temp.webapp.requiredLoginsMessage",
 }
 
 export enum AUTH_FLOW {
