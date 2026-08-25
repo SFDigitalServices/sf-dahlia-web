@@ -137,6 +137,14 @@ export const isEducatorBrightwell = (listing: RailsRentalListing | RailsSaleList
   listing.Custom_Listing_Type === CUSTOM_LISTING_TYPES.EDUCATOR_BRIGHTWELL
 
 /**
+ * Check if a listing is a Plus Housing listing
+ * @param {RailsRentalListing | RailsSaleListing} listing
+ * @returns {boolean} returns true if the listing is a Plus Housing listing, false otherwise
+ */
+export const isPlusHousing = (listing: RailsRentalListing | RailsSaleListing) =>
+  listing.Custom_Listing_Type === CUSTOM_LISTING_TYPES.PLUS_HOUSING
+
+/**
  * Check if a listing is a rental
  * @param {RailsRentalListing | RailsRentalListing} listing
  * @returns {boolean} returns true if the listing is a rental, false otherwise

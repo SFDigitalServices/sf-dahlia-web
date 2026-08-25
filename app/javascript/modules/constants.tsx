@@ -67,6 +67,7 @@ export const CUSTOM_LISTING_TYPES = {
   EDUCATOR_THREE: "Educator 3: Waitlist - SFUSD employees & public",
   EDUCATOR_BRIGHTWELL: "Brightwell West educator building",
   DALP: "Downpayment Assistance Loan Program",
+  PLUS_HOUSING: "Plus Housing Program",
 }
 
 export const LISTING_TYPE_FIRST_COME_FIRST_SERVED = "First Come, First Served"
