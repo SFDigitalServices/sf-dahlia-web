@@ -15,6 +15,10 @@ jest.mock("react-gtm-module", () => ({
   dataLayer: jest.fn(),
 }))
 
+jest.mock("../../../hooks/useFeatureFlag", () => ({
+  useFeatureFlag: () => ({ flagsReady: true, unleashFlag: true }),
+}))
+
 describe("<MyAccount />", () => {
   beforeEach(() => {
     // The below line prevents @axe-core from throwing an error
