@@ -169,14 +169,33 @@ export const isCSLP = (listing: RailsRentalListing | RailsSaleListing) =>
   listing.Program_Type === "CSLP"
 
 /**
+ * Collect every unit summary on a listing, across both the general and reserved buckets.
+ *
+ * Salesforce splits unit summaries into `general` and `reserved`, and a listing can populate
+ * either or both. Reserved-community listings (senior, veteran, etc.) put all of their summaries
+ * in `reserved` and leave `general` null, so anything reading only `general` silently sees no
+ * units at all. Callers that care about unit types or occupancy should use this instead.
+ *
+ * @param {RailsRentalListing | RailsSaleListing} listing
+ * @returns the combined general and reserved unit summaries, empty when the listing has neither
+ */
+export const getAllUnitSummaries = (listing: RailsRentalListing | RailsSaleListing) => [
+  ...(listing.unitSummaries?.general ?? []),
+  ...(listing.unitSummaries?.reserved ?? []),
+]
+
+const isSROUnitType = (unitType: string) => unitType === "SRO" || unitType === "Room"
+
+/**
  * Check if a listing has only SRO units
  * @param {RailsRentalListing | RailsRentalListing} listing
  * @returns {boolean} returns true if the listing has all SRO unit types, false otherwise
  */
-export const listingHasOnlySROUnits = (listing: RailsRentalListing | RailsSaleListing) =>
-  listing.unitSummaries.general?.every(
-    (unit) => unit.unitType === "SRO" || unit.unitType === "Room"
-  )
+export const listingHasOnlySROUnits = (listing: RailsRentalListing | RailsSaleListing) => {
+  const unitSummaries = getAllUnitSummaries(listing)
+
+  return unitSummaries.length > 0 && unitSummaries.every((unit) => isSROUnitType(unit.unitType))
+}
 
 /**
  * Check if a listing has at least one SRO unit
@@ -184,7 +203,7 @@ export const listingHasOnlySROUnits = (listing: RailsRentalListing | RailsSaleLi
  * @returns {boolean} returns true if the listing has at least one SRO unit type, false otherwise
  */
 export const listingHasSROUnits = (listing: RailsRentalListing | RailsSaleListing) =>
-  listing.unitSummaries.general?.some((unit) => unit.unitType === "SRO" || unit.unitType === "Room")
+  getAllUnitSummaries(listing).some((unit) => isSROUnitType(unit.unitType))
 /**
  * Check if a listing is multi-occupancy SRO
  * @param {string} name
@@ -193,8 +212,8 @@ export const listingHasSROUnits = (listing: RailsRentalListing | RailsSaleListin
  * permit multiple occupancy, false otherwise
  */
 export const isPluralSRO = (listing: RailsRentalListing | RailsSaleListing): boolean => {
-  return listing.unitSummaries.general?.some(
-    (unit) => (unit.unitType === "SRO" || unit.unitType === "Room") && unit.maxOccupancy > 1
+  return getAllUnitSummaries(listing).some(
+    (unit) => isSROUnitType(unit.unitType) && unit.maxOccupancy > 1
   )
 }
 /**

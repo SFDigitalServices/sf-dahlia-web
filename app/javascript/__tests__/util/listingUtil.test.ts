@@ -28,6 +28,7 @@ import {
   preferenceNameHasVeteran,
   isFcfsSalesListing,
   isDeadlinePassed,
+  getAllUnitSummaries,
 } from "../../util/listingUtil"
 
 // Configure dayjs with required plugins
@@ -44,6 +45,7 @@ import { habitatListing } from "../data/RailsSaleListing/listing-sale-habitat"
 import {
   sroRentalListing,
   pluralSroRentalListing,
+  reservedSroRentalListing,
 } from "../data/RailsRentalListing/listing-rental-sro"
 import { unitsWithOccupancyAndMaxIncome, units } from "../data/RailsListingUnits/listing-units"
 import { amiCharts } from "../data/RailsAmiCharts/ami-charts"
@@ -129,6 +131,10 @@ describe("listingUtil", () => {
     it("should return true when all units are SRO", () => {
       expect(listingHasOnlySROUnits(sroRentalListing)).toBe(true)
     })
+
+    it("should return true when all SRO units are in the reserved summaries", () => {
+      expect(listingHasOnlySROUnits(reservedSroRentalListing)).toBe(true)
+    })
   })
 
   describe("listingHasSROUnits", () => {
@@ -139,6 +145,10 @@ describe("listingUtil", () => {
     it("should return true when listing has SRO units", () => {
       expect(listingHasSROUnits(sroRentalListing)).toBe(true)
     })
+
+    it("should return true when the SRO units are in the reserved summaries", () => {
+      expect(listingHasSROUnits(reservedSroRentalListing)).toBe(true)
+    })
   })
 
   describe("isPluralSRO", () => {
@@ -148,6 +158,46 @@ describe("listingUtil", () => {
 
     it("should return true for a plural SROs", () => {
       expect(isPluralSRO(pluralSroRentalListing)).toBe(true)
+    })
+
+    it("should return true for plural SROs in the reserved summaries", () => {
+      expect(isPluralSRO(reservedSroRentalListing)).toBe(true)
+    })
+  })
+
+  describe("getAllUnitSummaries", () => {
+    it("should return the general summaries when only general is populated", () => {
+      expect(getAllUnitSummaries(sroRentalListing)).toEqual(sroRentalListing.unitSummaries.general)
+    })
+
+    it("should return the reserved summaries when only reserved is populated", () => {
+      expect(getAllUnitSummaries(reservedSroRentalListing)).toEqual(
+        reservedSroRentalListing.unitSummaries.reserved
+      )
+    })
+
+    it("should combine both buckets when general and reserved are populated", () => {
+      const mixedBucketListing = {
+        ...sroRentalListing,
+        unitSummaries: {
+          general: sroRentalListing.unitSummaries.general,
+          reserved: reservedSroRentalListing.unitSummaries.reserved,
+        },
+      }
+
+      expect(getAllUnitSummaries(mixedBucketListing)).toEqual([
+        ...sroRentalListing.unitSummaries.general,
+        ...reservedSroRentalListing.unitSummaries.reserved,
+      ])
+    })
+
+    it("should return an empty array when neither bucket is populated", () => {
+      expect(
+        getAllUnitSummaries({
+          ...sroRentalListing,
+          unitSummaries: { general: null, reserved: null },
+        })
+      ).toEqual([])
     })
   })
 
