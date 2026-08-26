@@ -398,7 +398,7 @@ describe("<EnterVerificationCode />", () => {
     await waitFor(() => {
       expect(mockVerifySignInCode).toHaveBeenCalledWith({ code: "123456" })
     })
-    expect(consoleError).toHaveBeenCalledWith("Code verification error:", mockSignInResource)
+    expect(consoleError).toHaveBeenCalledWith("Sign in error:", mockSignInResource)
     expect(mockFinalizeSignIn).not.toHaveBeenCalled()
     expect(mockSignUpCreate).not.toHaveBeenCalled()
 

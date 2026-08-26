@@ -75,7 +75,7 @@ const SignInFlow = () => {
     const token = getHousingCounselorToken()
     if (!token) return true
     try {
-      const sessionToken = await getToken()
+      const sessionToken: string | null = await getToken()
       if (!sessionToken) {
         setShowError(true)
         return false
@@ -96,20 +96,22 @@ const SignInFlow = () => {
     setShowError(false)
     const { error } = await signIn.create({ identifier: email, password })
     if (error) {
-      console.error('Sign in failed:', error)
+      console.error("Sign in failed:", error)
       setShowError(true)
       return
     }
-    if (signIn !== "complete") {
-      console.error('Sign in error:', signIn)
+    if (signIn.status !== "complete") {
+      console.error("Sign in error:", signIn)
       setShowError(true)
       return
     }
     clearHeaders() // Clear headers in case of existing Devise session (while testing)
     const housingCounselorToken = getHousingCounselorToken()
+
     if (housingCounselorToken) {
-      housingCounselorChecked.current = true
-      if (!(await checkHousingCounselorAccess())) return
+      // housingCounselorChecked.current = true // not needed because we assign it in useEffect, it also violates linter rules
+      const housingCounselorAccess = await checkHousingCounselorAccess()
+      if (!housingCounselorAccess) return
     }
     // TODO: if user has not completed their profile, redirect to profile page
     await signIn.finalize({
@@ -136,7 +138,9 @@ const SignInFlow = () => {
     }
     await signIn.emailCode.sendCode()
     if (signIn.status === "needs_first_factor") {
-      void navigate(getSignInCodePath(), { state: { email, housingCounselorToken: getHousingCounselorToken() } })
+      void navigate(getSignInCodePath(), {
+        state: { email, housingCounselorToken: getHousingCounselorToken() },
+      })
     } else {
       console.error("Sign in code error", signIn)
       setShowError(true)
@@ -151,7 +155,7 @@ const SignInFlow = () => {
     housingCounselorChecked.current = true
     void (async () => {
       try {
-        const sessionToken = await getToken()
+        const sessionToken: string | null = await getToken()
         if (!sessionToken) {
           setShowError(true)
           return

@@ -341,9 +341,7 @@ describe("<SignInFlow />", () => {
       await renderAndLoadAsync(<SignIn assetPaths={{}} />)
       await submitCredentials()
 
-      await waitFor(() => {
-        expect(mockSetActive).toHaveBeenCalledWith({ session: "session-id" })
-      })
+      expect(mockFinalize).toHaveBeenCalled()
       expect(authorizeHousingCounselor).toHaveBeenCalledWith("jwt.token", "clerk-session-token")
       expect(mockNavigate).toHaveBeenCalledWith("/account")
     })

@@ -101,11 +101,16 @@ const EnterVerificationCodePage = ({
 
   const verifySignInCode = async (code: string) => {
     if (signInStatus === "fetching" || !signIn) return
-<<<<<<< HEAD
-    await signIn.emailCode.verifyCode({ code })
-    if (signIn.status === "complete") {
+    const { error } = await signIn.emailCode.verifyCode({ code })
+    // user attempted to sign in with an email not linked to an account
+    if (error?.errors[0]?.code === "sign_up_if_missing_transfer") {
+      void transferToSignUp()
+    } else if (error) {
+      console.error("Code verification error:", signIn)
+      setError("code", { message: "invalid" })
+    } else if (signIn.status === "complete") {
       if (housingCounselorToken) {
-        const sessionToken = await getToken()
+        const sessionToken: string | null = await getToken()
         if (!sessionToken) {
           setError("code", { message: "invalid" })
           return
@@ -115,16 +120,6 @@ const EnterVerificationCodePage = ({
           "TODO: Housing counselor successfully authenticated, TBD banner and applicant view"
         )
       }
-=======
-    const { error } = await signIn.emailCode.verifyCode({ code })
-    // user attempted to sign in with an email not linked to an account
-    if (error?.errors[0]?.code === "sign_up_if_missing_transfer") {
-      void transferToSignUp()
-    } else if (error) {
-      console.error("Code verification error:", signIn)
-      setError("code", { message: "invalid" })
-    } else if (signIn.status === "complete") {
->>>>>>> 58505285d (feat: sign up if sign in account is missing)
       await signIn.finalize({
         navigate: ({ decorateUrl }: { decorateUrl: (url: string) => string }) => {
           void navigate(decorateUrl(getMyAccountPath()))
