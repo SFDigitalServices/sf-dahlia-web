@@ -1,8 +1,10 @@
 .helpFooter {
   background: var(--seeds-color-primary-lighter);
+  padding-bottom: var(--seeds-spacer-section) !important;
 }
 
 .helpLink {
   color: var(--seeds-color-primary-darker);
   font-size: var(--seeds-font-size-sm);
+  padding-top: var(--seeds-spacer-text);
 }
