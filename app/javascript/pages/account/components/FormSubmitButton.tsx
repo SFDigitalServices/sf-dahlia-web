@@ -8,7 +8,7 @@ interface FormSubmitButtonProps {
 
 const FormSubmitButton = ({ loading, label }: FormSubmitButtonProps) => {
   return (
-    <div className="flex justify-center pt-2">
+    <div className="flex justify-center pt-6">
       <Button loadingMessage={loading ? label : undefined} type="submit" variant="primary-outlined">
         {label}
       </Button>
