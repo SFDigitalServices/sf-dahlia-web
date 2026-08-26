@@ -5,15 +5,16 @@ interface FieldsetProps {
   hasError?: boolean
   children: React.ReactNode
   note?: React.ReactNode
+  className?: string
 }
 
-const Fieldset = ({ hasError, label, children, note }: FieldsetProps) => {
+const Fieldset = ({ hasError, label, children, note, className }: FieldsetProps) => {
   return (
-    <fieldset className="form-fieldset w-full">
+    <fieldset className={`form-fieldset w-full ${className || ""}`}>
       <legend className={hasError ? "fieldset-legend text-alert" : "fieldset-legend"}>
         {label}
       </legend>
-      {note && <div className="pb-2 field-note">{note}</div>}
+      {note && <div className="pb-4 field-note">{note}</div>}
       {children}
     </fieldset>
   )
