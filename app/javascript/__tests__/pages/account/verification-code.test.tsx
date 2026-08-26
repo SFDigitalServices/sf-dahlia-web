@@ -315,7 +315,11 @@ describe("<EnterVerificationCode />", () => {
     })
     ;(useLocation as jest.Mock).mockReturnValue({
       pathname: "/sign-in/code",
-      state: { email: "test@example.com", housingCounselorToken: "jwt.token" },
+      state: {
+        email: "test@example.com",
+        housingCounselorToken: "jwt.token",
+        flow: AUTH_FLOW.SIGN_IN,
+      },
     })
     mockAttemptFirstFactor.mockResolvedValue({
       status: "complete",
