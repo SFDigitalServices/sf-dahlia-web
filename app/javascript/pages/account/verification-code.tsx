@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import React, { useEffect, useState } from "react"
 import { useLocation, useNavigate } from "react-router"
-import { useSignIn, useSignUp } from "@clerk/clerk-react"
+import { useSignIn, useSignUp, useAuth } from "@clerk/clerk-react"
 import { ExpandableContent, Form, Order, t } from "@bloom-housing/ui-components"
 import { Card, Heading, Link, Button } from "@bloom-housing/ui-seeds"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
@@ -21,6 +21,7 @@ import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import { AUTH_FLOW, UNLEASH_FLAG } from "../../modules/constants"
 import GetHelp from "./components/GetHelp"
 import VerificationCodeField from "./components/VerificationCodeField"
+import { authorizeHousingCounselor } from "../../api/authApiService"
 
 interface EnterVerificationCodePageProps {
   email: string
@@ -33,10 +34,15 @@ const RESEND_CODE_MS = 30000
 const remainingResendSeconds = (expiresAt: number) =>
   Math.max(0, Math.ceil((expiresAt - Date.now()) / 1000))
 
-const EnterVerificationCodePage = ({ email, flow }: EnterVerificationCodePageProps) => {
+const EnterVerificationCodePage = ({
+  email,
+  flow,
+  housingCounselorToken,
+}: EnterVerificationCodePageProps & { housingCounselorToken?: string | null }) => {
   const navigate = useNavigate()
   const { isLoaded: signUpLoaded, signUp, setActive: setActiveSignUp } = useSignUp()
   const { isLoaded: signInLoaded, signIn, setActive: setActiveSignIn } = useSignIn()
+  const { getToken } = useAuth()
   const isSignInFlow = flow === AUTH_FLOW.SIGN_IN
   const isLoaded = isSignInFlow ? signInLoaded : signUpLoaded
   const [resendExpiresAt, setResendExpiresAt] = useState(() => Date.now() + RESEND_CODE_MS)
@@ -78,6 +84,20 @@ const EnterVerificationCodePage = ({ email, flow }: EnterVerificationCodePagePro
         code,
       })
       if (completeSignIn.status === "complete") {
+        if (housingCounselorToken) {
+          await setActiveSignIn({ session: completeSignIn.createdSessionId })
+          const sessionToken = await getToken()
+          if (!sessionToken) {
+            setError("code", { message: "invalid" })
+            return
+          }
+          await authorizeHousingCounselor(housingCounselorToken, sessionToken)
+          console.log(
+            "TODO: Housing counselor successfully authenticated, TBD banner and applicant view"
+          )
+          void navigate(getMyAccountPath())
+          return
+        }
         await setActiveSignIn({
           session: completeSignIn.createdSessionId,
           redirectUrl: getMyAccountPath(),
@@ -267,7 +287,13 @@ const EnterVerificationCode = (_props: { assetPaths: unknown }) => {
     return null
   }
 
-  return <EnterVerificationCodePage email={email} flow={flow} />
+  return (
+    <EnterVerificationCodePage
+      email={email}
+      flow={flow}
+      housingCounselorToken={state?.housingCounselorToken}
+    />
+  )
 }
 
 export default withAppSetup(EnterVerificationCode, {

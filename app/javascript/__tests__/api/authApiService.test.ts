@@ -5,7 +5,6 @@ import {
   post,
   put,
   authenticatedPut,
-  authenticatedPost,
 } from "../../api/apiService"
 
 import {
@@ -30,7 +29,6 @@ jest.mock("../../api/apiService", () => ({
   authenticatedGet: jest.fn(),
   authenticatedDelete: jest.fn(),
   authenticatedPut: jest.fn(),
-  authenticatedPost: jest.fn(),
   get: jest.fn(),
   post: jest.fn(),
   put: jest.fn(),
@@ -41,7 +39,6 @@ describe("authApiService", () => {
     ;(authenticatedGet as jest.Mock).mockResolvedValue({ data: { data: "test-data" } })
     ;(authenticatedDelete as jest.Mock).mockResolvedValue({ data: { data: "test-data" } })
     ;(authenticatedPut as jest.Mock).mockResolvedValue({ data: { data: "test-data" } })
-    ;(authenticatedPost as jest.Mock).mockResolvedValue({ data: { success: true } })
     ;(get as jest.Mock).mockResolvedValue({ data: { data: "test-data" } })
     ;(post as jest.Mock).mockResolvedValue({ data: "test-data", headers: "test-headers" })
     ;(put as jest.Mock).mockResolvedValue({ data: { message: "test-message" } })
@@ -177,44 +174,52 @@ describe("authApiService", () => {
   })
 
   describe("authorizeHousingCounselor", () => {
-    it("posts the JWT to the housing counselor access endpoint", async () => {
-      await authorizeHousingCounselor("jwt.token")
-      expect(authenticatedPost).toHaveBeenCalledWith("/api/v1/housing-counselor/access", {
-        t: "jwt.token",
-      })
+    it("posts the JWT with a session token", async () => {
+      await authorizeHousingCounselor("jwt.token", "session-token")
+      expect(post).toHaveBeenCalledWith(
+        "/api/v1/housing-counselor/access",
+        { t: "jwt.token" },
+        { headers: { Authorization: "Bearer session-token" } }
+      )
     })
   })
 
   describe("getHousingCounselorAgencies", () => {
-    it("calls apiService authenticatedGet and returns agencies", async () => {
+    it("calls apiService get with a session token and returns agencies", async () => {
       const agencies = [
         { id: "123", name: "Test Agency A", shortName: "A" },
         { id: "456", name: "Test Agency B", shortName: "B" },
       ]
-      ;(authenticatedGet as jest.Mock).mockResolvedValue({ data: { agencies } })
-      const result = await getHousingCounselorAgencies()
-      expect(authenticatedGet).toHaveBeenCalledWith("/api/v1/housing-counselor/agencies")
+      ;(get as jest.Mock).mockResolvedValue({ data: { agencies } })
+      const result = await getHousingCounselorAgencies("session-token")
+      expect(get).toHaveBeenCalledWith("/api/v1/housing-counselor/agencies", {
+        headers: { Authorization: "Bearer session-token" },
+      })
       expect(result).toEqual(agencies)
     })
   })
 
   describe("updateHousingCounselorAccess", () => {
-    it("calls apiService authenticatedPut with the contact and agency id", async () => {
-      await updateHousingCounselorAccess(mockProfileStub)
-      expect(authenticatedPut).toHaveBeenCalledWith("/api/v1/account/update-housing-counselor", {
-        contact: {
-          email: mockProfileStub.email,
-          firstName: mockProfileStub.firstName,
-          middleName: mockProfileStub.middleName,
-          lastName: mockProfileStub.lastName,
-          DOB: mockProfileStub.DOB,
-          phone: mockProfileStub.phone,
-          phoneType: mockProfileStub.phoneType,
-          alternatePhone: mockProfileStub.alternatePhone,
-          alternatePhoneType: mockProfileStub.alternatePhoneType,
-          housingCounselingAgencyId: mockProfileStub.housingCounselingAgencyId,
+    it("calls apiService put with the contact, agency id, and session token", async () => {
+      await updateHousingCounselorAccess(mockProfileStub, "session-token")
+      expect(put).toHaveBeenCalledWith(
+        "/api/v1/account/update-housing-counselor",
+        {
+          contact: {
+            email: mockProfileStub.email,
+            firstName: mockProfileStub.firstName,
+            middleName: mockProfileStub.middleName,
+            lastName: mockProfileStub.lastName,
+            DOB: mockProfileStub.DOB,
+            phone: mockProfileStub.phone,
+            phoneType: mockProfileStub.phoneType,
+            alternatePhone: mockProfileStub.alternatePhone,
+            alternatePhoneType: mockProfileStub.alternatePhoneType,
+            housingCounselingAgencyId: mockProfileStub.housingCounselingAgencyId,
+          },
         },
-      })
+        { headers: { Authorization: "Bearer session-token" } }
+      )
     })
 
     it("calls update-housing-counselor to clear housingCounselingAgencyId", async () => {
@@ -222,17 +227,18 @@ describe("authApiService", () => {
         ...mockProfileStub,
         housingCounselingAgencyId: null,
       }
-      ;(authenticatedPut as jest.Mock).mockResolvedValue({ data: { contact: user } })
+      ;(put as jest.Mock).mockResolvedValue({ data: { contact: user } })
 
-      await updateHousingCounselorAccess(user)
+      await updateHousingCounselorAccess(user, "session-token")
 
-      expect(authenticatedPut).toHaveBeenCalledWith(
+      expect(put).toHaveBeenCalledWith(
         "/api/v1/account/update-housing-counselor",
         expect.objectContaining({
           contact: expect.objectContaining({
             housingCounselingAgencyId: null,
           }),
-        })
+        }),
+        { headers: { Authorization: "Bearer session-token" } }
       )
     })
   })
