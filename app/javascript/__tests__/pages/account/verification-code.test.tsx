@@ -219,6 +219,24 @@ describe("<EnterVerificationCode />", () => {
     expect(screen.queryByTestId("error-message")).toBeNull()
   })
 
+  it("shows an error when sign-up verification does not result in complete status", async () => {
+    const consoleError = jest.spyOn(console, "error").mockImplementation(() => {})
+    const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime })
+    mockSignUpResource.status = "some_unhandled_status"
+
+    await user.click(screen.getAllByRole("textbox")[0])
+    await user.paste("123456")
+    await user.click(screen.getByRole("button", { name: t("createAccount.confirmCode") }))
+
+    await waitFor(() => {
+      expect(mockVerifySignUpCode).toHaveBeenCalledWith({ code: "123456" })
+    })
+    expect(consoleError).toHaveBeenCalledWith("Code verification error:", mockSignUpResource)
+    expect(mockFinalizeSignUp).not.toHaveBeenCalled()
+
+    consoleError.mockRestore()
+  })
+
   it("resends the code", async () => {
     expireResendVerificationCode()
 
@@ -231,6 +249,24 @@ describe("<EnterVerificationCode />", () => {
     expect(screen.getByText(t("createAccount.emailSent"))).not.toBeNull()
     expect(screen.getByText(t("createAccount.sendAgainIn", { smart_count: 30 }))).not.toBeNull()
     expect(screen.queryByRole("button", { name: t("createAccount.sendAgain") })).toBeNull()
+  })
+
+  it("logs an error when sign-up resend-code does not return missing requirements status", async () => {
+    const consoleError = jest.spyOn(console, "error").mockImplementation(() => {})
+    mockSignUpResource.status = "some_unhandled_status"
+
+    expireResendVerificationCode()
+    fireEvent.click(screen.getByRole("button", { name: t("createAccount.sendAgain") }))
+    await act(async () => {
+      await Promise.resolve()
+    })
+
+    expect(mockSendSignUpCode).toHaveBeenCalledWith()
+    expect(consoleError).toHaveBeenCalledWith("Sign up code error", mockSignUpResource)
+    expect(screen.getByRole("button", { name: t("createAccount.sendAgain") })).not.toBeNull()
+    expect(screen.queryByText(t("createAccount.emailSent"))).toBeNull()
+
+    consoleError.mockRestore()
   })
 
   it("restores send again after the resend countdown", () => {
@@ -343,6 +379,59 @@ describe("<EnterVerificationCode />", () => {
     expect(mockNavigate).toHaveBeenCalledWith("/account")
   })
 
+  it("shows an error when sign-in verification does not result in the correct status", async () => {
+    cleanup()
+    ;(useLocation as jest.Mock).mockReturnValue({
+      pathname: "/sign-in/code",
+      state: { email: "test@example.com" },
+    })
+    const consoleError = jest.spyOn(console, "error").mockImplementation(() => {})
+    mockSignInResource.status = "some_unhandled_status"
+    mockVerifySignInCode.mockResolvedValue({ error: null })
+    await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
+
+    const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime })
+    await user.click(screen.getAllByRole("textbox")[0])
+    await user.paste("123456")
+    await user.click(screen.getByRole("button", { name: t("createAccount.confirmCode") }))
+
+    await waitFor(() => {
+      expect(mockVerifySignInCode).toHaveBeenCalledWith({ code: "123456" })
+    })
+    expect(consoleError).toHaveBeenCalledWith("Code verification error:", mockSignInResource)
+    expect(mockFinalizeSignIn).not.toHaveBeenCalled()
+    expect(mockSignUpCreate).not.toHaveBeenCalled()
+
+    consoleError.mockRestore()
+  })
+
+  it("shows an error when sign-in code verification fails", async () => {
+    cleanup()
+    ;(useLocation as jest.Mock).mockReturnValue({
+      pathname: "/sign-in/code",
+      state: { email: "test@example.com" },
+    })
+    const consoleError = jest.spyOn(console, "error").mockImplementation(() => {})
+    mockVerifySignInCode.mockResolvedValue({
+      error: { errors: [{ code: "some_non_transfer_error" }] },
+    })
+    await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
+
+    const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime })
+    await user.click(screen.getAllByRole("textbox")[0])
+    await user.paste("123456")
+    await user.click(screen.getByRole("button", { name: t("createAccount.confirmCode") }))
+
+    await waitFor(() => {
+      expect(mockVerifySignInCode).toHaveBeenCalledWith({ code: "123456" })
+    })
+    expect(consoleError).toHaveBeenCalledWith("Code verification error:", mockSignInResource)
+    expect(mockFinalizeSignIn).not.toHaveBeenCalled()
+    expect(mockSignUpCreate).not.toHaveBeenCalled()
+
+    consoleError.mockRestore()
+  })
+
   it("transfers sign-in to sign-up and navigates to add password", async () => {
     cleanup()
     ;(useLocation as jest.Mock).mockReturnValue({
@@ -365,6 +454,36 @@ describe("<EnterVerificationCode />", () => {
     })
     expect(mockFinalizeSignUp).toHaveBeenCalled()
     expect(mockNavigate).toHaveBeenCalledWith("/add-password")
+  })
+
+  it("logs when transfer to sign-up is not ready", async () => {
+    cleanup()
+    ;(useLocation as jest.Mock).mockReturnValue({
+      pathname: "/sign-in/code",
+      state: { email: "test@example.com" },
+    })
+    ;(useSignUp as jest.Mock).mockReturnValue({
+      fetchStatus: "fetching",
+      signUp: null,
+    })
+    mockVerifySignInCode.mockResolvedValue({
+      error: { errors: [{ code: "sign_up_if_missing_transfer" }] },
+    })
+    const consoleError = jest.spyOn(console, "error").mockImplementation(() => {})
+    await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
+
+    const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime })
+    await user.click(screen.getAllByRole("textbox")[0])
+    await user.paste("123456")
+    await user.click(screen.getByRole("button", { name: t("createAccount.confirmCode") }))
+
+    await waitFor(() => {
+      expect(consoleError).toHaveBeenCalledWith("Sign up not ready")
+    })
+    expect(mockSignUpCreate).not.toHaveBeenCalled()
+    expect(mockFinalizeSignUp).not.toHaveBeenCalled()
+
+    consoleError.mockRestore()
   })
 
   it("shows an error when transfer to sign-up returns an error", async () => {
@@ -441,6 +560,30 @@ describe("<EnterVerificationCode />", () => {
     expect(screen.getByText(t("createAccount.emailSent"))).not.toBeNull()
     expect(screen.getByText(t("createAccount.sendAgainIn", { smart_count: 30 }))).not.toBeNull()
     expect(screen.queryByRole("button", { name: t("createAccount.sendAgain") })).toBeNull()
+  })
+
+  it("logs an error when sign-in resend does not result in the correct signIn status", async () => {
+    cleanup()
+    ;(useLocation as jest.Mock).mockReturnValue({
+      pathname: "/sign-in/code",
+      state: { email: "test@example.com" },
+    })
+    mockSignInResource.status = "some_unhandled_status"
+    const consoleError = jest.spyOn(console, "error").mockImplementation(() => {})
+    await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
+
+    expireResendVerificationCode()
+    fireEvent.click(screen.getByRole("button", { name: t("createAccount.sendAgain") }))
+    await act(async () => {
+      await Promise.resolve()
+    })
+
+    expect(mockSendSignInCode).toHaveBeenCalledWith()
+    expect(consoleError).toHaveBeenCalledWith("Sign in code error", mockSignInResource)
+    expect(screen.getByRole("button", { name: t("createAccount.sendAgain") })).not.toBeNull()
+    expect(screen.queryByText(t("createAccount.emailSent"))).toBeNull()
+
+    consoleError.mockRestore()
   })
 
   it("redirects to sign-in when email is missing from the sign-in code page", async () => {

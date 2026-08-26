@@ -243,6 +243,53 @@ describe("<SignInFlow />", () => {
     })
   })
 
+  it("shows an error and stops when requesting a code fails", async () => {
+    const consoleError = jest.spyOn(console, "error").mockImplementation(() => {})
+    const codeError = { errors: [{ code: "some_sign_in_code_error" }] }
+    mockSignInCreate.mockResolvedValue({ error: codeError })
+    await renderAndLoadAsync(<SignIn assetPaths={{}} />)
+    const user = await switchToVerificationCodeView()
+    const emailGroup = screen.getByRole("group", { name: /email/i })
+    await user.type(within(emailGroup).getByRole("textbox"), "test@test.com")
+    await user.click(screen.getByRole("button", { name: /^get a code$/i }))
+
+    await waitFor(() => {
+      expect(mockSignInCreate).toHaveBeenCalledWith({
+        identifier: "test@test.com",
+        signUpIfMissing: true,
+      })
+    })
+    expect(consoleError).toHaveBeenCalledWith("Sign in code error", codeError)
+    expect(mockSendEmailCode).not.toHaveBeenCalled()
+    expect(mockNavigate).not.toHaveBeenCalled()
+    expect(screen.getAllByText(/email or password is incorrect/i)).toHaveLength(1)
+
+    consoleError.mockRestore()
+  })
+
+  it("shows an error when code request does not result in the correct signIn status", async () => {
+    const consoleError = jest.spyOn(console, "error").mockImplementation(() => {})
+    mockSignInResource.status = "complete"
+    await renderAndLoadAsync(<SignIn assetPaths={{}} />)
+    const user = await switchToVerificationCodeView()
+    const emailGroup = screen.getByRole("group", { name: /email/i })
+    await user.type(within(emailGroup).getByRole("textbox"), "test@test.com")
+    await user.click(screen.getByRole("button", { name: /^get a code$/i }))
+
+    await waitFor(() => {
+      expect(mockSignInCreate).toHaveBeenCalledWith({
+        identifier: "test@test.com",
+        signUpIfMissing: true,
+      })
+    })
+    expect(mockSendEmailCode).toHaveBeenCalledWith()
+    expect(consoleError).toHaveBeenCalledWith("Sign in code error", mockSignInResource)
+    expect(mockNavigate).not.toHaveBeenCalled()
+    expect(screen.getAllByText(/email or password is incorrect/i)).toHaveLength(1)
+
+    consoleError.mockRestore()
+  })
+
   it("redirects to the account overview when already signed in", async () => {
     ;(useAuth as jest.Mock).mockReturnValue({ isLoaded: true, isSignedIn: true })
 

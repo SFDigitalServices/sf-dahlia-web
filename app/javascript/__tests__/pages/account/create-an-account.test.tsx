@@ -154,6 +154,52 @@ describe("<CreateAnAccount />", () => {
     expect(mockSendEmailCode).not.toHaveBeenCalled()
   })
 
+  it("logs account creation error for non-transfer sign-up errors", async () => {
+    const user = userEvent.setup()
+    const emailGroup = screen.getByRole("group", { name: /email/i })
+    const emailField = within(emailGroup).getByRole("textbox")
+    const consoleError = jest.spyOn(console, "error").mockImplementation(() => {})
+    const signUpError = { errors: [{ code: "some_signup_create_error" }] }
+    mockSignUpCreate.mockResolvedValue({ error: signUpError })
+
+    await user.type(emailField, "test@example.com")
+    await user.click(screen.getByRole("button", { name: /get a code/i }))
+
+    await waitFor(() => {
+      expect(mockSignUpCreate).toHaveBeenCalledWith({
+        emailAddress: "test@example.com",
+        locale: "en",
+        unsafeMetadata: { locale: "en" },
+      })
+    })
+    expect(consoleError).toHaveBeenCalledWith("Account creation error", signUpError)
+    expect(mockSignInCreate).not.toHaveBeenCalled()
+    expect(mockSendEmailCode).not.toHaveBeenCalled()
+    expect(mockNavigate).not.toHaveBeenCalled()
+
+    consoleError.mockRestore()
+  })
+
+  it("logs account creation error when sign-up verification state is invalid", async () => {
+    const user = userEvent.setup()
+    const emailGroup = screen.getByRole("group", { name: /email/i })
+    const emailField = within(emailGroup).getByRole("textbox")
+    const consoleError = jest.spyOn(console, "error").mockImplementation(() => {})
+    mockSignUpResource.unverifiedFields = []
+
+    await user.type(emailField, "test@example.com")
+    await user.click(screen.getByRole("button", { name: /get a code/i }))
+
+    await waitFor(() => {
+      expect(mockSendEmailCode).toHaveBeenCalledWith()
+    })
+    expect(consoleError).toHaveBeenCalledWith("Account creation error", mockSignUpResource)
+    expect(mockNavigate).not.toHaveBeenCalled()
+    expect(mockSignInCreate).not.toHaveBeenCalled()
+
+    consoleError.mockRestore()
+  })
+
   it("logs transfer error when sign-in creation fails", async () => {
     const user = userEvent.setup()
     const emailGroup = screen.getByRole("group", { name: /email/i })
