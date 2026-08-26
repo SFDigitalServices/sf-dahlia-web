@@ -15,6 +15,7 @@ jest.mock("../../api/listingApiService")
 jest.mock("../../api/inviteToApiService", () => ({
   recordResponse: jest.fn(),
   logHumanVerifiedClick: jest.fn(),
+  beaconHumanVerifiedClick: jest.fn(),
 }))
 jest.mock("../../hooks/useFeatureFlag", () => ({
   useFeatureFlag: () => ({

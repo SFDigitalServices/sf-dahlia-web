@@ -254,6 +254,202 @@ RSpec.describe InviteToController do
     end
   end
 
+  describe 'structured record_response logging' do
+    before do
+      allow(Force::ShortFormService).to receive(:get).with(application_number).and_return(
+        { 'uploadURL' => 'test-upload-url',
+          'leaseupAppointmentSchedulingURL' => 'test-scheduling-url' },
+      )
+    end
+
+    def request_with(payload)
+      allow(JsonWebTokenService).to receive(:decode_token).with('custom_token').and_return(payload)
+      get :index, params: { id: listing_id, t: 'custom_token' }
+    end
+
+    it 'logs a recorded event with ok:true when the send returns a result' do
+      allow(DahliaBackend::MessageService).to receive(:send_invite_to_response).and_return(true)
+      request_with(decoded_payload)
+
+      expect(Rails.logger).to have_received(:info).with(
+        a_string_including(
+          'invite_to.response',
+          '"outcome":"recorded"',
+          '"source":"get"',
+          '"ok":true',
+          '"act":"yes"',
+        ),
+      )
+    end
+
+    it 'logs ok:false when the send is swallowed (nil return)' do
+      allow(DahliaBackend::MessageService).to receive(:send_invite_to_response).and_return(nil)
+      request_with(decoded_payload)
+
+      expect(Rails.logger).to have_received(:info).with(
+        a_string_including('"outcome":"recorded"', '"ok":false'),
+      )
+    end
+
+    it 'names no_action when neither act nor response is present (e.g. a preview link)' do
+      request_with(decoded_payload.merge('act' => nil))
+
+      expect(DahliaBackend::MessageService).not_to have_received(:send_invite_to_response)
+      expect(Rails.logger).to have_received(:info).with(
+        a_string_including('"outcome":"suppressed"', '"reason":"no_action"'),
+      )
+    end
+
+    it 'names deadline_passed with resolved local comparison terms and a late_by delta' do
+      request_with(decoded_payload.merge('deadline' => '2020-01-01'))
+
+      expect(DahliaBackend::MessageService).not_to have_received(:send_invite_to_response)
+      expect(Rails.logger).to have_received(:info).with(
+        a_string_including(
+          '"reason":"deadline_passed"',
+          '"deadline_date":"2020-01-01"',
+          '"today":',
+          '"late_by":',
+        ),
+      )
+    end
+
+    it 'does not crash on an unparseable deadline and logs the raw value' do
+      request_with(decoded_payload.merge('deadline' => 'not-a-date'))
+
+      expect(response).to be_ok
+      expect(DahliaBackend::MessageService).not_to have_received(:send_invite_to_response)
+      expect(Rails.logger).to have_received(:info).with(
+        a_string_including(
+          '"reason":"deadline_passed"',
+          '"deadline_raw":"not-a-date"',
+        ),
+      )
+    end
+
+    it 'reports late_by as a day-scale delta for a recently passed deadline' do
+      request_with(decoded_payload.merge('deadline' => 3.days.ago.to_date.to_s))
+
+      expect(Rails.logger).to have_received(:info).with(
+        a_string_including('"reason":"deadline_passed"', '"late_by":"3d"'),
+      )
+    end
+
+    # format_duration picks a unit by magnitude; exercised directly so each branch is
+    # covered without depending on wall-clock timing in a request spec.
+    describe 'late_by formatting' do
+      {
+        30 => '30s',
+        120 => '2m',
+        7_200 => '2h',
+        172_800 => '2d',
+      }.each do |seconds, expected|
+        it "renders #{seconds}s as #{expected}" do
+          expect(controller.send(:format_duration, seconds)).to eq(expected)
+        end
+      end
+
+      it 'treats a negative delta as its magnitude' do
+        expect(controller.send(:format_duration, -90)).to eq('1m')
+      end
+    end
+
+    it 'returns the raw deadline when Time.zone.parse raises' do
+      allow(Time.zone).to receive(:parse).and_raise(ArgumentError)
+      expect(controller.send(:deadline_terms, 'whatever', 'deadline_passed'))
+        .to eq({ deadline_raw: 'whatever' })
+    end
+
+    it 'treats a deadline that raises on parse as passed' do
+      allow(Time.zone).to receive(:parse).and_raise(ArgumentError)
+      expect(controller.send(:deadline_has_passed?, 'whatever')).to be(true)
+    end
+
+    it 'returns no deadline terms when the reason is not deadline_passed' do
+      expect(controller.send(:deadline_terms, '2020-01-01', 'language_change')).to eq({})
+    end
+
+    # A blank deadline must not be reported as an expired one: deadline_has_passed?
+    # treats unparseable input as passed, so truthiness alone would misclassify "".
+    it 'does not classify a blank deadline as deadline_passed' do
+      request_with(decoded_payload.merge('deadline' => ''))
+
+      expect(response).to be_ok
+      expect(Rails.logger).not_to have_received(:info).with(
+        a_string_including('"reason":"deadline_passed"'),
+      )
+    end
+
+    # A missing deadline means the expiry check was skipped entirely and nothing
+    # downstream re-checks it, so it must stay countable even though we still record.
+    [['blank', ''], ['nil', nil]].each do |label, value|
+      it "still records but flags deadline_missing for a #{label} deadline" do
+        request_with(decoded_payload.merge('deadline' => value))
+
+        expect(DahliaBackend::MessageService).to have_received(:send_invite_to_response)
+        expect(Rails.logger).to have_received(:info).with(
+          a_string_including('"outcome":"recorded"', '"deadline_missing":true'),
+        )
+      end
+    end
+
+    it 'omits deadline_missing entirely when a deadline is present' do
+      request_with(decoded_payload)
+
+      expect(Rails.logger).not_to have_received(:info).with(
+        a_string_including('"deadline_missing"'),
+      )
+    end
+
+    it 'names test_link for a preview/test token' do
+      request_with(decoded_payload.merge('isTest' => 'true'))
+
+      expect(DahliaBackend::MessageService).not_to have_received(:send_invite_to_response)
+      expect(Rails.logger).to have_received(:info).with(
+        a_string_including('"reason":"test_link"'),
+      )
+    end
+
+    it 'names language_change and captures the referrer that triggered it' do
+      request.headers['Referer'] = "http://test.host/es/listings/#{listing_id}/next-steps"
+      request_with(decoded_payload)
+
+      expect(DahliaBackend::MessageService).not_to have_received(:send_invite_to_response)
+      expect(Rails.logger).to have_received(:info).with(
+        a_string_including('"reason":"language_change"', '"referrer":'),
+      )
+    end
+
+    # The referrer that triggers language_change? is itself a next-steps URL, so it
+    # carries the invite JWT. It must never reach the logs.
+    it 'strips the query string from the logged referrer so the invite JWT is not logged' do
+      logged = []
+      allow(Rails.logger).to receive(:info) { |msg| logged << msg.to_s }
+      request.headers['Referer'] =
+        "http://test.host/es/listings/#{listing_id}/next-steps?t=SECRET.JWT.VALUE&act=yes"
+      request_with(decoded_payload)
+
+      event = logged.find { |msg| msg.start_with?('invite_to.response ') }
+      expect(event).to include('"reason":"language_change"')
+      expect(event).to include("\"referrer\":\"http://test.host/es/listings/#{listing_id}/next-steps\"")
+      expect(event).not_to include('SECRET.JWT.VALUE')
+      expect(event).not_to include('t=')
+    end
+
+    it 'marks an unparseable referrer rather than raising' do
+      # A real malformed referrer (invalid percent-escape) rather than stubbing
+      # URI.parse, which Rails itself calls during the request.
+      request.headers['Referer'] =
+        "http://test.host/es/listings/#{listing_id}/next-steps?t=%zz"
+      request_with(decoded_payload)
+
+      expect(response).to be_ok
+      expect(Rails.logger).to have_received(:info).with(
+        a_string_including('"referrer":"[unparseable]"'),
+      )
+    end
+  end
+
   describe '#documents' do
     before do
       get :documents, params: {

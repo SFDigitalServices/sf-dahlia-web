@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from "react"
 import { Navigate, useNavigate } from "react-router"
 import { useAuth, useClerk, useSignIn } from "@clerk/clerk-react"
 import { Form, t } from "@bloom-housing/ui-components"
-import { Alert, Button, Card, Heading, Link, LoadingState } from "@bloom-housing/ui-seeds"
+import { Alert, Button, Card, Heading, Link, LoadingState, Message } from "@bloom-housing/ui-seeds"
 import { useForm, useWatch } from "react-hook-form"
 import AuthLayout from "../layouts/AuthLayout"
 import EmailFieldset from "../pages/account/components/EmailFieldset"
@@ -16,8 +16,10 @@ import {
   getMyAccountPath,
   getSignInCodePath,
 } from "../util/routeUtil"
-import { renderInlineMarkup } from "../util/languageUtil"
-import { AUTH_FLOW } from "../modules/constants"
+import { authorizeHousingCounselor } from "../api/authApiService"
+import { getSfGovUrl, renderInlineMarkup } from "../util/languageUtil"
+import { AUTH_FLOW, UNLEASH_FLAG } from "../modules/constants"
+import { useFeatureFlag } from "../hooks/useFeatureFlag"
 import { clearHeaders } from "./token"
 import styles from "./SignInFlow.module.scss"
 import { emailRegex } from "../util/accountUtil"
@@ -29,13 +31,20 @@ interface SignInFields {
 
 type SignInView = "verificationCode" | "password"
 
+const getHousingCounselorToken = () => new URLSearchParams(window.location.search).get("t")
+
 const SignInFlow = () => {
   const navigate = useNavigate()
-  const { isLoaded: authLoaded, isSignedIn } = useAuth()
+  const { isLoaded: authLoaded, isSignedIn, getToken } = useAuth()
   const { isLoaded, signIn, setActive } = useSignIn()
   const { client } = useClerk()
+  const { unleashFlag: requiredLoginsMessageEnabled } = useFeatureFlag(
+    UNLEASH_FLAG.REQUIRED_LOGINS_MESSAGE,
+    false
+  )
   const [showError, setShowError] = useState(false)
   const [view, setView] = useState<SignInView | null>(null)
+  const housingCounselorChecked = useRef(false)
   // Default to password sign-in, but prefer the code flow if the user last signed in via email code.
   useEffect(() => {
     if (!isLoaded || view !== null) return
@@ -63,6 +72,26 @@ const SignInFlow = () => {
     }
   }, [showError])
 
+  const checkHousingCounselorAccess = async () => {
+    const token = getHousingCounselorToken()
+    if (!token) return true
+    try {
+      const sessionToken = await getToken()
+      if (!sessionToken) {
+        setShowError(true)
+        return false
+      }
+      await authorizeHousingCounselor(token, sessionToken)
+      console.log(
+        "TODO: Housing counselor successfully authenticated, TBD banner and applicant view"
+      )
+      return true
+    } catch {
+      setShowError(true)
+      return false
+    }
+  }
+
   const onSubmit = async ({ email, password }: SignInFields) => {
     if (!isLoaded || !signIn) return
     setShowError(false)
@@ -74,6 +103,14 @@ const SignInFlow = () => {
         return
       }
       clearHeaders() // Clear headers in case of existing Devise session (while testing)
+      const housingCounselorToken = getHousingCounselorToken()
+      if (housingCounselorToken) {
+        housingCounselorChecked.current = true
+        await setActive({ session: createdSessionId })
+        if (!(await checkHousingCounselorAccess())) return
+        void navigate(getMyAccountPath())
+        return
+      }
       // TODO: if user has not completed their profile, redirect to profile page
       await setActive({ session: createdSessionId, redirectUrl: getMyAccountPath() })
     } catch (error) {
@@ -103,14 +140,42 @@ const SignInFlow = () => {
         strategy: "email_code",
         emailAddressId: emailCodeFactor.emailAddressId,
       })
-      void navigate(getSignInCodePath(), { state: { email, flow: AUTH_FLOW.SIGN_IN } })
+      void navigate(getSignInCodePath(), {
+        state: {
+          email,
+          housingCounselorToken: getHousingCounselorToken(),
+          flow: AUTH_FLOW.SIGN_IN,
+        },
+      })
     } catch (error) {
       console.error("Sign in code error", error)
       setShowError(true)
     }
   }
 
-  if (authLoaded && isSignedIn) {
+  useEffect(() => {
+    if (!authLoaded || !isSignedIn || housingCounselorChecked.current) return
+    const token = getHousingCounselorToken()
+    if (!token) return
+
+    housingCounselorChecked.current = true
+    void (async () => {
+      try {
+        const sessionToken = await getToken()
+        if (!sessionToken) {
+          setShowError(true)
+          return
+        }
+        await authorizeHousingCounselor(token, sessionToken)
+        console.log("TODO: Housing counselor already signed in, TBD banner and applicant view")
+        void navigate(getMyAccountPath())
+      } catch {
+        setShowError(true)
+      }
+    })()
+  }, [authLoaded, getToken, isSignedIn, navigate])
+
+  if (authLoaded && isSignedIn && !getHousingCounselorToken()) {
     return <Navigate to={getMyAccountPath()} replace />
   }
 
@@ -177,9 +242,16 @@ const SignInFlow = () => {
     </>
   )
 
+  const requiredLoginsHelpUrl = getSfGovUrl("https://www.sf.gov/get-help-with-your-dahlia-account")
+
   return (
     <AuthLayout title={t("pageTitle.signIn")}>
       <Card.Section divider="inset">
+        {requiredLoginsMessageEnabled && (
+          <Message fullwidth variant="primary" className={styles.requiredLoginsMessage}>
+            {renderInlineMarkup(t("signIn.requiredLoginsMessage", { url: requiredLoginsHelpUrl }))}
+          </Message>
+        )}
         <Heading priority={1} size="2xl">
           {t("pageTitle.signIn")}
         </Heading>

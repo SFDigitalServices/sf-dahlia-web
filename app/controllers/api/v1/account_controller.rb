@@ -122,12 +122,17 @@ class Api::V1::AccountController < ApiController
   end
 
   def authenticate_user!(*args)
-    return super unless %w[profile create_profile].include?(action_name)
+    return super unless %w[profile create_profile update_housing_counselor].include?(action_name)
 
     @clerk_user_id = clerk&.user_id
-    return if @clerk_user_id.present?
+    if @clerk_user_id.blank?
+      render json: { error: 'Invalid Clerk session' }, status: :unauthorized
+      return
+    end
 
-    render json: { error: 'Invalid Clerk session' }, status: :unauthorized
+    if action_name == 'update_housing_counselor' && current_user.salesforce_contact_id.blank?
+      render json: { error: 'Could not get Salesforce contact ID' }, status: :not_found
+    end
   end
 
   def current_user
