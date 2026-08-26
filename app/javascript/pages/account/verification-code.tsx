@@ -196,7 +196,7 @@ const EnterVerificationCodePage = ({ email, flow }: EnterVerificationCodePagePro
         </Form>
         <div className={styles.resendSection}>
           <p className={styles.resendRow}>
-            <span className={styles.didntGetEmail}>{t("createAccount.didntGetEmail")}</span>
+            <span>{t("createAccount.didntGetEmail")}</span>
             <span aria-live="polite">
               {resendSeconds > 0 ? (
                 <span className={styles.emailSent}>
@@ -207,7 +207,7 @@ const EnterVerificationCodePage = ({ email, flow }: EnterVerificationCodePagePro
                 <Button
                   className={styles.sendAgain}
                   variant="text"
-                  size="md"
+                  size="sm"
                   disabled={isResending}
                   onClick={() => {
                     void onResend()
@@ -219,7 +219,7 @@ const EnterVerificationCodePage = ({ email, flow }: EnterVerificationCodePagePro
             </span>
           </p>
           {resendSeconds > 0 && (
-            <p className="field-note">
+            <p className={styles.resendNote}>
               {t("createAccount.sendAgainIn", { smart_count: resendSeconds })}
             </p>
           )}
@@ -232,7 +232,7 @@ const EnterVerificationCodePage = ({ email, flow }: EnterVerificationCodePagePro
             readLess: t("createAccount.howToUseCode"),
           }}
         >
-          <div className="field-note">
+          <span className={styles.howToContent}>
             <ol className={styles.howToList}>
               <li>{t("createAccount.howTo.p1")}</li>
               <li>{t("createAccount.howTo.p2")}</li>
@@ -240,7 +240,7 @@ const EnterVerificationCodePage = ({ email, flow }: EnterVerificationCodePagePro
               <li>{t("createAccount.howTo.p4")}</li>
             </ol>
             <p>{t("createAccount.howTo.p5")}</p>
-          </div>
+          </span>
         </ExpandableContent>
       </Card.Section>
       <GetHelp flow={flow} />

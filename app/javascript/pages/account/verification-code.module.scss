@@ -1,5 +1,6 @@
 .sentTo {
-  margin-bottom: var(--seeds-spacer-header);
+  font-size: var(--seeds-font-size-sm);
+  margin-bottom: var(--seeds-spacer-content);
 }
 
 .email {
@@ -19,22 +20,20 @@
 }
 
 .resendSection {
-  margin-bottom: var(--seeds-spacer-header);
+  font-family: var(--seeds-font-alt-sans);
+  margin-bottom: var(--seeds-spacer-content);
 }
 
 .resendRow {
   margin-bottom: 0;
-}
-
-.didntGetEmail {
-  font-weight: var(--seeds-font-weight-semibold);
-  color: var(--seeds-color-gray-750);
+  font-family: var(--seeds-font-alt-sans);
+  font-size: var(--seeds-font-size-sm);
+  font-weight: var(--seeds-font-weight-regular);
 }
 
 .sendAgain {
   margin-left: var(--seeds-spacer-text);
-  font-weight: 200 !important;
-  font-family: inherit !important;
+  font-family: var(--seeds-font-sans) !important;
 }
 
 .emailSent {
@@ -49,8 +48,17 @@
 .howToUseCode {
   button {
     font-weight: var(--seeds-font-weight-semibold) !important;
-    font-size: var(--seeds-font-size-base) !important;
   }
+}
+
+.resendNote {
+  font-size: var(--seeds-font-size-sm);
+  color: var(--seeds-color-on-disabled);
+}
+
+.howToContent {
+  font-size: var(--seeds-font-size-sm);
+  color: var(--seeds-color-gray-750);
 }
 
 .howToList {

@@ -91,7 +91,7 @@ const UpdateForm = ({
 }) => {
   return (
     <FormSection>
-      <Form className="p-2 md:py-2 md:px-10" data-testid="update-form" onSubmit={onSubmit}>
+      <Form data-testid="update-form" onSubmit={onSubmit}>
         {children}
         <FormSubmitButton loading={loading} label={submitLabel} />
       </Form>
@@ -327,7 +327,7 @@ const HousingCounselorSection = ({ user, setUser }: SectionProps) => {
         />
       )}
       <FormSection>
-        <Form className="p-2 md:py-2 md:px-10" onSubmit={handleSubmit(onShare)}>
+        <Form onSubmit={handleSubmit(onShare)}>
           <HousingCounselorAccess
             register={register}
             errors={errors}
