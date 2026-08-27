@@ -5,7 +5,8 @@ import { mockWindowLocation, restoreWindowLocation } from "../__util__/renderUti
 import { withAuthentication } from "../../authentication/withAuthentication"
 import UserContext, { ContextProps } from "../../authentication/context/UserContext"
 import { isTokenValid, parseUrlParams } from "../../authentication/token"
-import { getLocalizedPath, RedirectType } from "../../util/routeUtil"
+import { useAuth } from "@clerk/clerk-react"
+import { getLocalizedPath, getAddProfilePath, RedirectType } from "../../util/routeUtil"
 import { getCurrentLanguage } from "../../util/languageUtil"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import TagManager from "react-gtm-module"
@@ -30,6 +31,7 @@ jest.mock("../../util/languageUtil", () => ({
 
 jest.mock("../../util/routeUtil", () => ({
   getLocalizedPath: jest.fn((path) => path),
+  getAddProfilePath: jest.fn(() => "/add-profile"),
 }))
 
 jest.mock("../../hooks/useFeatureFlag", () => ({
@@ -206,5 +208,50 @@ describe("withAuthentication", () => {
 
     // Restore original replaceState
     window.history.replaceState = originalReplaceState
+  })
+
+  describe("when Clerk auth is enabled", () => {
+    beforeEach(() => {
+      ;(useFeatureFlag as jest.Mock).mockReturnValue({ flagsReady: true, unleashFlag: true })
+    })
+
+    it("renders the wrapped component when signed in with a profile", () => {
+      ;(useAuth as jest.Mock).mockReturnValue({ isLoaded: true, isSignedIn: true })
+
+      const { getByText } = render(
+        <UserContext.Provider value={mockContextValue}>
+          <WrappedComponent />
+        </UserContext.Provider>
+      )
+
+      expect(getByText("Protected Component")).toBeInTheDocument()
+    })
+
+    it("redirects to sign-in when the user is not signed in", () => {
+      ;(useAuth as jest.Mock).mockReturnValue({ isLoaded: true, isSignedIn: false })
+      ;(getLocalizedPath as jest.Mock).mockReturnValue("/sign-in")
+
+      render(
+        <UserContext.Provider value={mockContextValue}>
+          <WrappedComponent />
+        </UserContext.Provider>
+      )
+
+      expect(window.location.assign).toHaveBeenCalledWith("/sign-in")
+    })
+
+    it("redirects to add-profile when the user is signed in without a profile", () => {
+      ;(useAuth as jest.Mock).mockReturnValue({ isLoaded: true, isSignedIn: true })
+      ;(getAddProfilePath as jest.Mock).mockReturnValue("/add-profile")
+      mockContextValue.profile = undefined
+
+      render(
+        <UserContext.Provider value={mockContextValue}>
+          <WrappedComponent />
+        </UserContext.Provider>
+      )
+
+      expect(window.location.assign).toHaveBeenCalledWith("/add-profile")
+    })
   })
 })

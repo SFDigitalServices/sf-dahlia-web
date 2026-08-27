@@ -2,6 +2,7 @@ import React from "react"
 import { useAuth } from "@clerk/clerk-react"
 import UserContext, { ContextProps } from "../../authentication/context/UserContext"
 import { User } from "../../authentication/user"
+import * as authApiService from "../../api/authApiService"
 
 export const mockProfileStub: User = {
   uid: "abc123",
@@ -23,12 +24,14 @@ export const mockProfileStub: User = {
 export const setupUserContext = ({
   loggedIn,
   mockProfile = mockProfileStub,
+  hasProfile = loggedIn,
 }: {
   loggedIn: boolean
   mockProfile?: ContextProps["profile"]
+  hasProfile?: boolean
 }): ContextProps => {
   const mockContextValue: ContextProps = {
-    profile: loggedIn ? mockProfile : undefined,
+    profile: hasProfile ? mockProfile : undefined,
     signIn: jest.fn(),
     signOut: jest.fn(),
     timeOut: jest.fn(),
@@ -47,7 +50,20 @@ export const setupUserContext = ({
   })
 
   if (jest.isMockFunction(useAuth)) {
-    useAuth.mockReturnValue({ isLoaded: true, isSignedIn: loggedIn, signOut: jest.fn() })
+    useAuth.mockReturnValue({
+      isLoaded: true,
+      isSignedIn: loggedIn,
+      signOut: jest.fn(),
+      getToken: jest.fn().mockResolvedValue("clerk-session-token"),
+    })
+  }
+
+  if (loggedIn) {
+    if (jest.isMockFunction(authApiService.getProfile)) {
+      authApiService.getProfile.mockResolvedValue(mockProfile ?? mockProfileStub)
+    } else {
+      jest.spyOn(authApiService, "getProfile").mockResolvedValue(mockProfile ?? mockProfileStub)
+    }
   }
 
   return mockContextValue

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/unbound-method */
-import React, { useEffect, useState } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import { useLocation, useNavigate } from "react-router"
-import { useSignIn, useSignUp } from "@clerk/clerk-react"
+import { useAuth, useSignIn, useSignUp } from "@clerk/clerk-react"
 import { ExpandableContent, Form, Order, t } from "@bloom-housing/ui-components"
 import { Card, Heading, Link, Button } from "@bloom-housing/ui-seeds"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
@@ -9,18 +9,21 @@ import { faCheck } from "@fortawesome/free-solid-svg-icons"
 import { Controller, useForm } from "react-hook-form"
 import withAppSetup from "../../layouts/withAppSetup"
 import AuthLayout from "../../layouts/AuthLayout"
+import UserContext from "../../authentication/context/UserContext"
+import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import {
   AppPages,
   getAddPasswordPath,
+  getAddProfilePath,
   getCreateAccountPath,
   getMyAccountPath,
   getSignInPath,
 } from "../../util/routeUtil"
 import styles from "./verification-code.module.scss"
-import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import { AUTH_FLOW, UNLEASH_FLAG } from "../../modules/constants"
 import GetHelp from "./components/GetHelp"
 import VerificationCodeField from "./components/VerificationCodeField"
+import { authorizeHousingCounselor } from "../../api/authApiService"
 
 interface EnterVerificationCodePageProps {
   email: string
@@ -33,10 +36,15 @@ const RESEND_CODE_MS = 30000
 const remainingResendSeconds = (expiresAt: number) =>
   Math.max(0, Math.ceil((expiresAt - Date.now()) / 1000))
 
-const EnterVerificationCodePage = ({ email, flow }: EnterVerificationCodePageProps) => {
+const EnterVerificationCodePage = ({
+  email,
+  flow,
+  housingCounselorToken,
+}: EnterVerificationCodePageProps & { housingCounselorToken?: string | null }) => {
   const navigate = useNavigate()
   const { isLoaded: signUpLoaded, signUp, setActive: setActiveSignUp } = useSignUp()
   const { isLoaded: signInLoaded, signIn, setActive: setActiveSignIn } = useSignIn()
+  const { getToken } = useAuth()
   const isSignInFlow = flow === AUTH_FLOW.SIGN_IN
   const isLoaded = isSignInFlow ? signInLoaded : signUpLoaded
   const [resendExpiresAt, setResendExpiresAt] = useState(() => Date.now() + RESEND_CODE_MS)
@@ -78,6 +86,20 @@ const EnterVerificationCodePage = ({ email, flow }: EnterVerificationCodePagePro
         code,
       })
       if (completeSignIn.status === "complete") {
+        if (housingCounselorToken) {
+          await setActiveSignIn({ session: completeSignIn.createdSessionId })
+          const sessionToken = await getToken()
+          if (!sessionToken) {
+            setError("code", { message: "invalid" })
+            return
+          }
+          await authorizeHousingCounselor(housingCounselorToken, sessionToken)
+          console.log(
+            "TODO: Housing counselor successfully authenticated, TBD banner and applicant view"
+          )
+          void navigate(getMyAccountPath())
+          return
+        }
         await setActiveSignIn({
           session: completeSignIn.createdSessionId,
           redirectUrl: getMyAccountPath(),
@@ -196,7 +218,7 @@ const EnterVerificationCodePage = ({ email, flow }: EnterVerificationCodePagePro
         </Form>
         <div className={styles.resendSection}>
           <p className={styles.resendRow}>
-            <span className={styles.didntGetEmail}>{t("createAccount.didntGetEmail")}</span>
+            <span>{t("createAccount.didntGetEmail")}</span>
             <span aria-live="polite">
               {resendSeconds > 0 ? (
                 <span className={styles.emailSent}>
@@ -207,7 +229,7 @@ const EnterVerificationCodePage = ({ email, flow }: EnterVerificationCodePagePro
                 <Button
                   className={styles.sendAgain}
                   variant="text"
-                  size="md"
+                  size="sm"
                   disabled={isResending}
                   onClick={() => {
                     void onResend()
@@ -219,7 +241,7 @@ const EnterVerificationCodePage = ({ email, flow }: EnterVerificationCodePagePro
             </span>
           </p>
           {resendSeconds > 0 && (
-            <p className="field-note">
+            <p className={styles.resendNote}>
               {t("createAccount.sendAgainIn", { smart_count: resendSeconds })}
             </p>
           )}
@@ -232,7 +254,7 @@ const EnterVerificationCodePage = ({ email, flow }: EnterVerificationCodePagePro
             readLess: t("createAccount.howToUseCode"),
           }}
         >
-          <div className="field-note">
+          <span className={styles.howToContent}>
             <ol className={styles.howToList}>
               <li>{t("createAccount.howTo.p1")}</li>
               <li>{t("createAccount.howTo.p2")}</li>
@@ -240,7 +262,7 @@ const EnterVerificationCodePage = ({ email, flow }: EnterVerificationCodePagePro
               <li>{t("createAccount.howTo.p4")}</li>
             </ol>
             <p>{t("createAccount.howTo.p5")}</p>
-          </div>
+          </span>
         </ExpandableContent>
       </Card.Section>
       <GetHelp flow={flow} />
@@ -252,22 +274,52 @@ const EnterVerificationCode = (_props: { assetPaths: unknown }) => {
   const navigate = useNavigate()
   const { pathname, state } = useLocation()
   const email = state?.email
+  const { isLoaded, isSignedIn } = useAuth()
+  const { profile, initialStateLoaded } = useContext(UserContext)
+  const { unleashFlag: clerkEnabled, flagsReady } = useFeatureFlag(UNLEASH_FLAG.CLERK_AUTH, false)
   const flow: AUTH_FLOW = pathname.includes("/sign-in/code")
     ? AUTH_FLOW.SIGN_IN
     : AUTH_FLOW.CREATE_ACCOUNT
-  const fallbackPath = flow === AUTH_FLOW.SIGN_IN ? getSignInPath() : getCreateAccountPath()
-  const { unleashFlag: clerkEnabled } = useFeatureFlag(UNLEASH_FLAG.CLERK_AUTH, false)
+  /**
+   * Verification code page redirects
+   * --------------------------------
+   * 1. Once the Unleash flags are ready:
+   * If Clerk is not enabled, redirect to sign-in.
+   * 2. Once Clerk is loaded:
+   * If the user is signed out without an email, redirect to sign in.
+   * 3. Once the profile has loaded:
+   * If the user is signed in with a profile, redirect to my account.
+   * If the user is signed in without a profile, redirect to the add profile page.
+   */
   useEffect(() => {
-    if (!email || !clerkEnabled) {
-      void navigate(fallbackPath)
+    if (!flagsReady) return
+    if (!clerkEnabled) {
+      void navigate(getSignInPath())
+      return
     }
-  }, [email, clerkEnabled, fallbackPath, navigate])
+    if (!isLoaded) return
+    if (!isSignedIn && !email) {
+      void navigate(getSignInPath())
+      return
+    }
+    if (!initialStateLoaded) return
+    if (isSignedIn && profile) void navigate(getMyAccountPath())
+    if (isSignedIn && !profile) void navigate(getAddProfilePath())
+  }, [flagsReady, clerkEnabled, isLoaded, isSignedIn, email, initialStateLoaded, profile, navigate])
 
-  if (!email || !clerkEnabled) {
+  const ready = flagsReady && clerkEnabled && isLoaded && !isSignedIn && !!email
+
+  if (!ready) {
     return null
   }
 
-  return <EnterVerificationCodePage email={email} flow={flow} />
+  return (
+    <EnterVerificationCodePage
+      email={email}
+      flow={flow}
+      housingCounselorToken={state?.housingCounselorToken}
+    />
+  )
 }
 
 export default withAppSetup(EnterVerificationCode, {
