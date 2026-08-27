@@ -1,9 +1,10 @@
 import React from "react"
-import { useSignUp } from "@clerk/clerk-react"
+import { useSignIn, useSignUp } from "@clerk/react"
 import { screen, waitFor, within, cleanup } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
 import { useNavigate } from "react-router"
 import CreateAnAccount from "../../../pages/account/create-an-account"
+import { getSignInCodePath, getVerificationCodePath } from "../../../util/routeUtil"
 import {
   renderAndLoadAsync,
   mockWindowLocation,
@@ -11,12 +12,13 @@ import {
 } from "../../__util__/renderUtils"
 import { setupUserContext } from "../../__util__/accountUtils"
 
-jest.mock("@clerk/clerk-react", () => {
-  const Clerk = jest.requireActual("@clerk/clerk-react")
+jest.mock("@clerk/react", () => {
+  const Clerk = jest.requireActual("@clerk/react")
   return {
     ...Clerk,
     ClerkProvider: ({ children }: { children: React.ReactNode }) => children,
     useAuth: jest.fn(() => ({ isLoaded: true, isSignedIn: false })),
+    useSignIn: jest.fn(),
     useSignUp: jest.fn(),
   }
 })
@@ -30,7 +32,21 @@ describe("<CreateAnAccount />", () => {
   let originalLocation: Location
   let mockNavigate: jest.Mock
   let mockSignUpCreate: jest.Mock
-  let mockPrepareEmailAddressVerification: jest.Mock
+  let mockSendEmailCode: jest.Mock
+  let mockSignInCreate: jest.Mock
+  let mockSignInSendCode: jest.Mock
+  let mockSignUpResource: {
+    status: string
+    unverifiedFields: string[]
+    missingFields: string[]
+    create: jest.Mock
+    verifications: { sendEmailCode: jest.Mock }
+  }
+  let mockSignInResource: {
+    status: string
+    create: jest.Mock
+    emailCode: { sendCode: jest.Mock }
+  }
 
   beforeEach(async () => {
     document.documentElement.lang = "en"
@@ -38,14 +54,33 @@ describe("<CreateAnAccount />", () => {
     setupUserContext({ loggedIn: false })
     mockNavigate = jest.fn()
     ;(useNavigate as jest.Mock).mockReturnValue(mockNavigate)
-    mockSignUpCreate = jest.fn().mockResolvedValue(undefined)
-    mockPrepareEmailAddressVerification = jest.fn().mockResolvedValue(undefined)
-    ;(useSignUp as jest.Mock).mockReturnValue({
-      isLoaded: true,
-      signUp: {
-        create: mockSignUpCreate,
-        prepareEmailAddressVerification: mockPrepareEmailAddressVerification,
+    mockSignUpCreate = jest.fn().mockResolvedValue({ error: null })
+    mockSendEmailCode = jest.fn().mockResolvedValue(undefined)
+    mockSignInCreate = jest.fn().mockResolvedValue({ error: null })
+    mockSignInSendCode = jest.fn().mockResolvedValue(undefined)
+    mockSignUpResource = {
+      status: "missing_requirements",
+      unverifiedFields: ["email_address"],
+      missingFields: [],
+      create: mockSignUpCreate,
+      verifications: {
+        sendEmailCode: mockSendEmailCode,
       },
+    }
+    mockSignInResource = {
+      status: "needs_first_factor",
+      create: mockSignInCreate,
+      emailCode: {
+        sendCode: mockSignInSendCode,
+      },
+    }
+    ;(useSignUp as jest.Mock).mockReturnValue({
+      fetchStatus: "idle",
+      signUp: mockSignUpResource,
+    })
+    ;(useSignIn as jest.Mock).mockReturnValue({
+      fetchStatus: "idle",
+      signIn: mockSignInResource,
     })
     await renderAndLoadAsync(<CreateAnAccount assetPaths={{}} />)
   })
@@ -94,11 +129,116 @@ describe("<CreateAnAccount />", () => {
       })
     })
 
-    expect(mockPrepareEmailAddressVerification).toHaveBeenCalledWith({
-      strategy: "email_code",
-    })
-    expect(mockNavigate).toHaveBeenCalledWith("/create-account/code", {
+    expect(mockSendEmailCode).toHaveBeenCalledWith()
+    expect(mockNavigate).toHaveBeenCalledWith(getVerificationCodePath(), {
       state: { email: "test@example.com" },
     })
+  })
+
+  it("transfers to sign-in code flow when account already exists", async () => {
+    const user = userEvent.setup()
+    const emailGroup = screen.getByRole("group", { name: /email/i })
+    const emailField = within(emailGroup).getByRole("textbox")
+    mockSignUpCreate.mockResolvedValue({ error: { errors: [{ code: "form_identifier_exists" }] } })
+
+    await user.type(emailField, "test@example.com")
+    await user.click(screen.getByRole("button", { name: /get a code/i }))
+
+    await waitFor(() => {
+      expect(mockSignInCreate).toHaveBeenCalledWith({ identifier: "test@example.com" })
+    })
+    expect(mockSignInSendCode).toHaveBeenCalledWith()
+    expect(mockNavigate).toHaveBeenCalledWith(getSignInCodePath(), {
+      state: { email: "test@example.com" },
+    })
+    expect(mockSendEmailCode).not.toHaveBeenCalled()
+  })
+
+  it("logs account creation error for non-transfer sign-up errors", async () => {
+    const user = userEvent.setup()
+    const emailGroup = screen.getByRole("group", { name: /email/i })
+    const emailField = within(emailGroup).getByRole("textbox")
+    const consoleError = jest.spyOn(console, "error").mockImplementation(() => {})
+    const signUpError = { errors: [{ code: "some_signup_create_error" }] }
+    mockSignUpCreate.mockResolvedValue({ error: signUpError })
+
+    await user.type(emailField, "test@example.com")
+    await user.click(screen.getByRole("button", { name: /get a code/i }))
+
+    await waitFor(() => {
+      expect(mockSignUpCreate).toHaveBeenCalledWith({
+        emailAddress: "test@example.com",
+        locale: "en",
+        unsafeMetadata: { locale: "en" },
+      })
+    })
+    expect(consoleError).toHaveBeenCalledWith("Account creation error", signUpError)
+    expect(mockSignInCreate).not.toHaveBeenCalled()
+    expect(mockSendEmailCode).not.toHaveBeenCalled()
+    expect(mockNavigate).not.toHaveBeenCalled()
+
+    consoleError.mockRestore()
+  })
+
+  it("logs account creation error when sign-up verification state is invalid", async () => {
+    const user = userEvent.setup()
+    const emailGroup = screen.getByRole("group", { name: /email/i })
+    const emailField = within(emailGroup).getByRole("textbox")
+    const consoleError = jest.spyOn(console, "error").mockImplementation(() => {})
+    mockSignUpResource.unverifiedFields = []
+
+    await user.type(emailField, "test@example.com")
+    await user.click(screen.getByRole("button", { name: /get a code/i }))
+
+    await waitFor(() => {
+      expect(mockSendEmailCode).toHaveBeenCalledWith()
+    })
+    expect(consoleError).toHaveBeenCalledWith("Account creation error", mockSignUpResource)
+    expect(mockNavigate).not.toHaveBeenCalled()
+    expect(mockSignInCreate).not.toHaveBeenCalled()
+
+    consoleError.mockRestore()
+  })
+
+  it("logs transfer error when sign-in creation fails", async () => {
+    const user = userEvent.setup()
+    const emailGroup = screen.getByRole("group", { name: /email/i })
+    const emailField = within(emailGroup).getByRole("textbox")
+    const consoleError = jest.spyOn(console, "error").mockImplementation(() => {})
+    const transferError = { errors: [{ code: "some_signin_create_error" }] }
+    mockSignUpCreate.mockResolvedValue({ error: { errors: [{ code: "form_identifier_exists" }] } })
+    mockSignInCreate.mockResolvedValue({ error: transferError })
+
+    await user.type(emailField, "test@example.com")
+    await user.click(screen.getByRole("button", { name: /get a code/i }))
+
+    await waitFor(() => {
+      expect(mockSignInCreate).toHaveBeenCalledWith({ identifier: "test@example.com" })
+    })
+    expect(consoleError).toHaveBeenCalledWith("Transfer to sign in code error", transferError)
+    expect(mockSignInSendCode).not.toHaveBeenCalled()
+    expect(mockNavigate).not.toHaveBeenCalled()
+
+    consoleError.mockRestore()
+  })
+
+  it("logs transfer error when sign-in is not in first-factor state", async () => {
+    const user = userEvent.setup()
+    const emailGroup = screen.getByRole("group", { name: /email/i })
+    const emailField = within(emailGroup).getByRole("textbox")
+    const consoleError = jest.spyOn(console, "error").mockImplementation(() => {})
+    mockSignUpCreate.mockResolvedValue({ error: { errors: [{ code: "form_identifier_exists" }] } })
+    mockSignInResource.status = "some_unhandled_status"
+
+    await user.type(emailField, "test@example.com")
+    await user.click(screen.getByRole("button", { name: /get a code/i }))
+
+    await waitFor(() => {
+      expect(mockSignInSendCode).toHaveBeenCalledWith()
+    })
+    expect(consoleError).toHaveBeenCalledWith("Transfer to sign in code error", mockSignInResource)
+    expect(mockNavigate).not.toHaveBeenCalled()
+
+    consoleError.mockRestore()
   })
 })

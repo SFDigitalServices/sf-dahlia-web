@@ -1,13 +1,18 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import React from "react"
 import { useNavigate } from "react-router"
-import { useSignUp } from "@clerk/clerk-react"
+import { useSignUp, useSignIn } from "@clerk/react"
 import { Form, t } from "@bloom-housing/ui-components"
 import { Card, Heading, Button } from "@bloom-housing/ui-seeds"
 import { useForm } from "react-hook-form"
 import withAppSetup from "../../layouts/withAppSetup"
 import AuthLayout from "../../layouts/AuthLayout"
-import { AppPages, getVerificationCodePath, getSignInPath } from "../../util/routeUtil"
+import {
+  AppPages,
+  getVerificationCodePath,
+  getSignInPath,
+  getSignInCodePath,
+} from "../../util/routeUtil"
 import { getCurrentLanguage } from "../../util/languageUtil"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import { AUTH_FLOW, UNLEASH_FLAG } from "../../modules/constants"
@@ -24,25 +29,56 @@ interface CreateAnAccountProps {
 
 const CreateAnAccountPage = () => {
   const navigate = useNavigate()
-  const { isLoaded, signUp } = useSignUp()
+  const { signUp, fetchStatus: signUpStatus } = useSignUp()
+  const { signIn, fetchStatus: signInStatus } = useSignIn()
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<{ email: string }>({ mode: "onTouched", shouldFocusError: false })
+
+  const transferToSignIn = async (email: string) => {
+    if (signInStatus === "fetching" || !signIn) return
+    const { error } = await signIn.create({ identifier: email })
+    if (error) {
+      console.error("Transfer to sign in code error", error)
+      return
+    }
+    await signIn.emailCode.sendCode()
+    if (signIn.status === "needs_first_factor") {
+      void navigate(getSignInCodePath(), { state: { email } })
+    } else {
+      console.error("Transfer to sign in code error", signIn)
+    }
+  }
+
   const onSubmit = async ({ email }: { email: string }) => {
-    if (!isLoaded || !signUp) return
+    if (signUpStatus === "fetching" || !signUp) return
     const locale = getCurrentLanguage()
-    try {
-      await signUp.create({
-        emailAddress: email,
-        locale,
-        unsafeMetadata: { locale }, // Account creation can only update public metadata
-      })
-      await signUp.prepareEmailAddressVerification({ strategy: "email_code" })
-      void navigate(getVerificationCodePath(), { state: { email } })
-    } catch (error) {
+    const { error } = await signUp.create({
+      emailAddress: email,
+      locale,
+      unsafeMetadata: { locale }, // Account creation can only update public metadata
+    })
+    // this condition can be true only if strict enumeration protection is *not* enabled
+    if (error?.errors?.[0]?.code === "form_identifier_exists") {
+      void transferToSignIn(email)
+      return
+    }
+    if (error) {
       console.error("Account creation error", error)
+      return
+    }
+    await signUp.verifications.sendEmailCode()
+    if (
+      signUp.status === "missing_requirements" &&
+      signUp.unverifiedFields.includes("email_address") &&
+      signUp.missingFields.length === 0
+    ) {
+      void navigate(getVerificationCodePath(), { state: { email } })
+    } else {
+      console.error("Account creation error", signUp)
+      return
     }
   }
 
@@ -63,7 +99,7 @@ const CreateAnAccountPage = () => {
             variant="primary"
             size="sm"
             type="submit"
-            disabled={!isLoaded}
+            disabled={signUpStatus === "fetching" || signInStatus === "fetching"}
           >
             {t("createAccount.getCode")}
           </Button>

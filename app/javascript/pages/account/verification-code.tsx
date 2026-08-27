@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import React, { useEffect, useState } from "react"
 import { useLocation, useNavigate } from "react-router"
-import { useSignIn, useSignUp, useAuth } from "@clerk/clerk-react"
+import { useSignIn, useSignUp, useAuth } from "@clerk/react"
 import { ExpandableContent, Form, Order, t } from "@bloom-housing/ui-components"
 import { Card, Heading, Link, Button } from "@bloom-housing/ui-seeds"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
@@ -40,11 +40,11 @@ const EnterVerificationCodePage = ({
   housingCounselorToken,
 }: EnterVerificationCodePageProps & { housingCounselorToken?: string | null }) => {
   const navigate = useNavigate()
-  const { isLoaded: signUpLoaded, signUp, setActive: setActiveSignUp } = useSignUp()
-  const { isLoaded: signInLoaded, signIn, setActive: setActiveSignIn } = useSignIn()
+  const { signUp, fetchStatus: signUpStatus } = useSignUp()
+  const { signIn, fetchStatus: signInStatus } = useSignIn()
   const { getToken } = useAuth()
   const isSignInFlow = flow === AUTH_FLOW.SIGN_IN
-  const isLoaded = isSignInFlow ? signInLoaded : signUpLoaded
+  const isLoaded = isSignInFlow ? signInStatus !== "fetching" : signUpStatus !== "fetching"
   const [resendExpiresAt, setResendExpiresAt] = useState(() => Date.now() + RESEND_CODE_MS)
   const [resendSeconds, setResendSeconds] = useState(RESEND_CODE_MS / 1000)
   const [isResending, setIsResending] = useState(false)
@@ -76,57 +76,74 @@ const EnterVerificationCodePage = ({
 
   const editEmailHref = isSignInFlow ? getSignInPath() : getCreateAccountPath()
 
-  const verifySignInCode = async (code: string) => {
-    if (!signInLoaded || !signIn) return
-    try {
-      const completeSignIn = await signIn.attemptFirstFactor({
-        strategy: "email_code",
-        code,
+  const transferToSignUp = async () => {
+    if (signUpStatus === "fetching" || !signUp) {
+      console.error("Sign up not ready")
+      return
+    }
+    const { error } = await signUp.create({ transfer: true })
+    if (error) {
+      console.error("Account creation error", error)
+      setError("code", { message: "invalid" })
+      return
+    }
+    if (signUp.status === "complete") {
+      await signUp.finalize({
+        navigate: ({ decorateUrl }: { decorateUrl: (url: string) => string }) => {
+          void navigate(decorateUrl(getAddPasswordPath()))
+        },
       })
-      if (completeSignIn.status === "complete") {
-        if (housingCounselorToken) {
-          await setActiveSignIn({ session: completeSignIn.createdSessionId })
-          const sessionToken = await getToken()
-          if (!sessionToken) {
-            setError("code", { message: "invalid" })
-            return
-          }
-          await authorizeHousingCounselor(housingCounselorToken, sessionToken)
-          console.log(
-            "TODO: Housing counselor successfully authenticated, TBD banner and applicant view"
-          )
-          void navigate(getMyAccountPath())
+    } else {
+      console.error("Account creation error:", signUp)
+      setError("code", { message: "invalid" })
+    }
+  }
+
+  const verifySignInCode = async (code: string) => {
+    if (signInStatus === "fetching" || !signIn) return
+    const { error } = await signIn.emailCode.verifyCode({ code })
+    // user attempted to sign in with an email not linked to an account
+    if (error?.errors[0]?.code === "sign_up_if_missing_transfer") {
+      void transferToSignUp()
+    } else if (error) {
+      console.error("Code verification error:", signIn)
+      setError("code", { message: "invalid" })
+    } else if (signIn.status === "complete") {
+      if (housingCounselorToken) {
+        const sessionToken: string | null = await getToken()
+        if (!sessionToken) {
+          setError("code", { message: "invalid" })
           return
         }
-        await setActiveSignIn({
-          session: completeSignIn.createdSessionId,
-          redirectUrl: getMyAccountPath(),
-        })
-      } else {
-        console.error("Sign in failed:", completeSignIn)
-        setError("code", { message: "invalid" })
+        await authorizeHousingCounselor(housingCounselorToken, sessionToken)
+        console.log(
+          "TODO: Housing counselor successfully authenticated, TBD banner and applicant view"
+        )
       }
-    } catch (error) {
-      console.error("Code verification error:", error)
+      await signIn.finalize({
+        navigate: ({ decorateUrl }: { decorateUrl: (url: string) => string }) => {
+          void navigate(decorateUrl(getMyAccountPath()))
+        },
+      })
+    } else {
+      // Check why the sign-in is not complete
+      console.error("Sign in error:", signIn)
       setError("code", { message: "invalid" })
     }
   }
 
   const verifySignUpCode = async (code: string) => {
-    if (!signUpLoaded || !signUp) return
-    try {
-      const completeSignUp = await signUp.attemptEmailAddressVerification({
-        code,
+    if (signUpStatus === "fetching" || !signUp) return
+    await signUp.emailCode.verifyCode({ code })
+    if (signUp.status === "complete") {
+      await signUp.finalize({
+        navigate: ({ decorateUrl }: { decorateUrl: (url: string) => string }) => {
+          void navigate(decorateUrl(getAddPasswordPath()))
+        },
       })
-      if (completeSignUp.status === "complete") {
-        await setActiveSignUp({ session: completeSignUp.createdSessionId })
-        void navigate(getAddPasswordPath())
-      } else {
-        console.error("Account creation failed:", completeSignUp)
-        setError("code", { message: "invalid" })
-      }
-    } catch (error) {
-      console.error("Code verification error:", error)
+    } else {
+      // Check why the sign-up is not complete
+      console.error("Code verification error:", signUp)
       setError("code", { message: "invalid" })
     }
   }
@@ -134,34 +151,28 @@ const EnterVerificationCodePage = ({
   const onSubmit = async ({ code }: { code: string }) =>
     isSignInFlow ? verifySignInCode(code) : verifySignUpCode(code)
 
-  const resendSignInCode = async (): Promise<boolean> => {
-    if (!signInLoaded || !signIn) return false
-    try {
-      const emailCodeFactor = signIn.supportedFirstFactors?.find(
-        (factor) => factor.strategy === "email_code"
-      )
-      if (emailCodeFactor?.strategy !== "email_code") {
-        console.error("Sign in email code factor missing")
-        return false
-      }
-      await signIn.prepareFirstFactor({
-        strategy: "email_code",
-        emailAddressId: emailCodeFactor.emailAddressId,
-      })
+  const resendSignInCode = async () => {
+    if (signInStatus === "fetching" || !signIn) return false
+    await signIn.emailCode.sendCode()
+    if (signIn.status === "needs_first_factor") {
       return true
-    } catch (error) {
-      console.error("Sign in code resend error", error)
+    } else {
+      console.error("Sign in code error", signIn)
       return false
     }
   }
 
-  const resendSignUpCode = async (): Promise<boolean> => {
-    if (!signUpLoaded || !signUp) return false
-    try {
-      await signUp.prepareEmailAddressVerification({ strategy: "email_code" })
+  const resendSignUpCode = async () => {
+    if (signUpStatus === "fetching" || !signUp) return false
+    await signUp.verifications.sendEmailCode()
+    if (
+      signUp.status === "missing_requirements" &&
+      signUp.unverifiedFields.includes("email_address") &&
+      signUp.missingFields.length === 0
+    ) {
       return true
-    } catch (error) {
-      console.error("Sign up code resend error", error)
+    } else {
+      console.error("Sign up code error", signUp)
       return false
     }
   }
