@@ -186,6 +186,41 @@ export const getAllUnitSummaries = (listing: RailsRentalListing | RailsSaleListi
 
 const isSROUnitType = (unitType: string) => unitType === "SRO" || unitType === "Room"
 
+const lowerBound = (a: number, b: number) => (a == null ? b : (b == null ? a : Math.min(a, b)))
+const upperBound = (a: number, b: number) => (a == null ? b : (b == null ? a : Math.max(a, b)))
+
+/**
+ * Collapse a listing's unit summaries into one occupancy range per unit type.
+ *
+ * A unit type can appear in both the general and reserved buckets (e.g. a building with one
+ * senior-reserved 1 BR alongside a general 1 BR), which would otherwise produce duplicate rows
+ * in the occupancy table. Occupancy bounds are merged so the range still covers every unit of
+ * that type.
+ *
+ * @param {RailsRentalListing | RailsSaleListing} listing
+ * @returns one entry per unit type, in the order the unit types are first encountered
+ */
+export const getOccupancyRangeByUnitType = (listing: RailsRentalListing | RailsSaleListing) => {
+  const rangesByUnitType = new Map<
+    string,
+    { unitType: string; minOccupancy: number; maxOccupancy: number }
+  >()
+
+  getAllUnitSummaries(listing).forEach(({ unitType, minOccupancy, maxOccupancy }) => {
+    const existingRange = rangesByUnitType.get(unitType)
+
+    if (!existingRange) {
+      rangesByUnitType.set(unitType, { unitType, minOccupancy, maxOccupancy })
+      return
+    }
+
+    existingRange.minOccupancy = lowerBound(existingRange.minOccupancy, minOccupancy)
+    existingRange.maxOccupancy = upperBound(existingRange.maxOccupancy, maxOccupancy)
+  })
+
+  return [...rangesByUnitType.values()]
+}
+
 /**
  * Check if a listing has only SRO units
  * @param {RailsRentalListing | RailsRentalListing} listing
