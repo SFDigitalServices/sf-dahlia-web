@@ -1,5 +1,6 @@
 import React, { useContext } from "react"
 import { useAuth } from "@clerk/clerk-react"
+import { useLocation } from "react-router"
 
 import {
   AlertBox,
@@ -30,6 +31,7 @@ import {
   getLocalizedPath,
   getPrivacyPolicyPath,
   getSignInPath,
+  isSignInOrCreateAccountFlow,
   localizedPath,
 } from "../util/routeUtil"
 import MetaTags from "./MetaTags"
@@ -81,7 +83,8 @@ const getMenuLinks = (
   signedIn: boolean,
   signOut: () => void | Promise<void>,
   accountLayoutEnabled: boolean,
-  getAssetPath: (path: string) => string
+  getAssetPath: (path: string) => string,
+  hideSignInAndAccount: boolean
 ) => {
   const menuLinks: MenuLink[] = [
     {
@@ -97,6 +100,10 @@ const getMenuLinks = (
       href: localizedPath("/get-assistance"),
     },
   ]
+
+  if (hideSignInAndAccount) {
+    return menuLinks
+  }
 
   if (signedIn) {
     menuLinks.push({
@@ -166,6 +173,7 @@ const LayoutContent = ({
   image,
 }: LayoutProps & { signedIn: boolean; signOut: () => void | Promise<void> }) => {
   const { getAssetPath } = useContext(ConfigContext)
+  const { pathname } = useLocation()
   const { unleashFlag: accountLayoutEnabled } = useFeatureFlag(UNLEASH_FLAG.ACCOUNTS_LAYOUT, false)
 
   if (window.document["documentMode"]) {
@@ -225,7 +233,13 @@ const LayoutContent = ({
             mobileText={true}
             logoWidth={"medium"}
             logoClass="translate"
-            menuLinks={getMenuLinks(signedIn, signOut, accountLayoutEnabled, getAssetPath)}
+            menuLinks={getMenuLinks(
+              signedIn,
+              signOut,
+              accountLayoutEnabled,
+              getAssetPath,
+              isSignInOrCreateAccountFlow(pathname)
+            )}
             strings={{
               skipToMainContent: t("t.skipToMainContent"),
               logoAriaLable: t("t.dahliaSanFranciscoHousingPortal"),

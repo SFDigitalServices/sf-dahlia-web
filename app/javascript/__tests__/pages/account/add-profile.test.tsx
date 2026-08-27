@@ -99,8 +99,9 @@ describe("<AddProfile />", () => {
 
   beforeEach(async () => {
     document.documentElement.lang = "en"
+    document.title = "DAHLIA San Francisco Housing Portal"
     originalLocation = mockWindowLocation()
-    const mockContext = setupUserContext({ loggedIn: true })
+    const mockContext = setupUserContext({ loggedIn: true, hasProfile: false })
     saveProfile = mockContext.saveProfile as jest.Mock
     mockNavigate = jest.fn()
     mockGetToken = jest.fn().mockResolvedValue("clerk-session-token")
@@ -138,6 +139,7 @@ describe("<AddProfile />", () => {
 
   it("creates a profile and redirects to the account overview page", async () => {
     const user = userEvent.setup()
+    jest.spyOn(console, "error").mockImplementation(() => {})
 
     await fillAddProfileForm(defaultFormValues)
     await user.click(screen.getByRole("button", { name: /finish/i }))
@@ -244,5 +246,55 @@ describe("<AddProfile />", () => {
     })
     expect(createProfile).not.toHaveBeenCalled()
     expect(saveProfile).not.toHaveBeenCalled()
+  })
+
+  it("redirects to sign-in when clerk is disabled", async () => {
+    cleanup()
+    document.title = "DAHLIA San Francisco Housing Portal"
+    ;(useFeatureFlag as jest.Mock).mockReturnValue({ flagsReady: true, unleashFlag: false })
+    await renderAndLoadAsync(<AddProfile assetPaths={{}} />)
+
+    await waitFor(() => {
+      expect(mockNavigate).toHaveBeenCalledWith("/sign-in")
+    })
+  })
+
+  it("redirects to sign-in when the user is not signed in", async () => {
+    cleanup()
+    document.title = "DAHLIA San Francisco Housing Portal"
+    setupUserContext({ loggedIn: false })
+    ;(useAuth as jest.Mock).mockReturnValue({
+      isLoaded: true,
+      isSignedIn: false,
+      getToken: mockGetToken,
+    })
+    await renderAndLoadAsync(<AddProfile assetPaths={{}} />)
+
+    await waitFor(() => {
+      expect(mockNavigate).toHaveBeenCalledWith("/sign-in")
+    })
+  })
+
+  it("does not redirect when the user is signed in without a profile", () => {
+    expect(mockNavigate).not.toHaveBeenCalled()
+    expect(
+      screen.getByRole("heading", { name: /finish setting up your account/i, level: 1 })
+    ).not.toBeNull()
+  })
+
+  it("redirects to account when the user has already set up their profile", async () => {
+    cleanup()
+    document.title = "DAHLIA San Francisco Housing Portal"
+    setupUserContext({ loggedIn: true })
+    ;(useAuth as jest.Mock).mockReturnValue({
+      isLoaded: true,
+      isSignedIn: true,
+      getToken: mockGetToken,
+    })
+    await renderAndLoadAsync(<AddProfile assetPaths={{}} />)
+
+    await waitFor(() => {
+      expect(mockNavigate).toHaveBeenCalledWith("/account")
+    })
   })
 })

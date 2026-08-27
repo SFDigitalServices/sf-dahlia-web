@@ -1,9 +1,11 @@
 import React from "react"
-import { render } from "@testing-library/react"
+import { render, screen } from "@testing-library/react"
 import { ListingDetailsApply } from "../../../modules/listingDetailsAside/ListingDetailsApply"
 import { openSaleListing } from "../../data/RailsSaleListing/listing-sale-open"
 import { closedRentalListing } from "../../data/RailsRentalListing/listing-rental-closed"
 import { habitatListing } from "../../data/RailsSaleListing/listing-sale-habitat"
+import { setupUserContext } from "../../__util__/accountUtils"
+import { getAddProfilePath } from "../../../util/routeUtil"
 
 describe("ListingDetailsApply", () => {
   it("does not render if listing is closed", () => {
@@ -31,4 +33,15 @@ describe("ListingDetailsApply", () => {
       expect(asFragment()).toMatchSnapshot()
     }
   )
+
+  it("redirects signed in users without a completed profile to the add profile page", () => {
+    setupUserContext({ loggedIn: true, hasProfile: false })
+
+    render(<ListingDetailsApply listing={openSaleListing} />)
+
+    expect(screen.getByRole("link", { name: /apply online/i })).toHaveAttribute(
+      "href",
+      getAddProfilePath()
+    )
+  })
 })
