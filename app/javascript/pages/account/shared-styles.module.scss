@@ -1,5 +1,9 @@
 .card {
   max-width: var(--seeds-width-2xl);
+  --card-content-padding-inline: var(--seeds-spacer-container);
+  --card-header-padding-inline: var(--seeds-spacer-container);
+  --card-content-padding-block: var(--seeds-spacer-section);
+  --card-header-padding-block: var(--seeds-spacer-section);
 
   @media (max-width: theme("screens.md")) {
     max-width: none;
@@ -10,6 +14,16 @@
     border-left: none;
     border-right: none;
   }
+
+  :global(.seeds-card-header):first-child,
+  :global(.seeds-card-section):first-child {
+    padding-block-start: var(--seeds-spacer-container);
+  }
+
+  :global(.seeds-card-section):last-child,
+  :global(.seeds-card-footer):last-child {
+    padding-block-end: var(--seeds-spacer-container);
+  }
 }
 
 .header {
@@ -17,11 +31,11 @@
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  padding: var(--seeds-spacer-content) var(--seeds-s16) !important;
 }
 
 .heading {
-  margin: var(--seeds-spacer-header) 0;
+  margin-top: var(--seeds-spacer-header);
+  padding-bottom: var(--seeds-spacer-section);
 }
 
 .iconBackground {

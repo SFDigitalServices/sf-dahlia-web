@@ -90,7 +90,7 @@ const AddProfilePage = () => {
 
   return (
     <AuthLayout title={t("createAccount.finishSettingUp")}>
-      <Card.Section divider="flush" className={sharedStyles.header}>
+      <Card.Section divider="inset" className={sharedStyles.header}>
         <div className={sharedStyles.iconBackground}>
           <Icon size="2xl" symbol="profile" />
         </div>
@@ -121,7 +121,7 @@ const AddProfilePage = () => {
         <Card.Section divider="inset">
           <NameFieldset register={register} errors={errors} note={t("createAccount.legalName")} />
         </Card.Section>
-        <Card.Section divider="inset">
+        <Card.Section divider="flush">
           <DOBFieldset
             required
             register={register}
@@ -135,7 +135,6 @@ const AddProfilePage = () => {
           </Button>
         </Card.Section>
       </Form>
-      <hr />
       <GetHelp flow={AUTH_FLOW.CREATE_ACCOUNT} />
     </AuthLayout>
   )
