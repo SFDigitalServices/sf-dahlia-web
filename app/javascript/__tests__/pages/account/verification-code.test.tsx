@@ -12,7 +12,7 @@ import {
 } from "../../__util__/renderUtils"
 import { setupUserContext } from "../../__util__/accountUtils"
 import { useFeatureFlag } from "../../../hooks/useFeatureFlag"
-import { authorizeHousingCounselor } from "../../../api/authApiService"
+import { authorizeHousingCounselor, getProfile } from "../../../api/authApiService"
 
 jest.mock("@clerk/clerk-react", () => {
   const Clerk = jest.requireActual("@clerk/clerk-react")
@@ -42,6 +42,7 @@ jest.mock("../../../hooks/useFeatureFlag", () => ({
 jest.mock("../../../api/authApiService", () => ({
   ...jest.requireActual("../../../api/authApiService"),
   authorizeHousingCounselor: jest.fn(),
+  getProfile: jest.fn(),
 }))
 const expireResendVerificationCode = () => {
   for (let remaining = 30; remaining > 0; remaining--) {
@@ -97,6 +98,7 @@ describe("<EnterVerificationCode />", () => {
         supportedFirstFactors: [{ strategy: "email_code", emailAddressId: "test_email" }],
       },
     })
+    ;(getProfile as jest.Mock).mockResolvedValue(undefined)
     await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
   })
 
