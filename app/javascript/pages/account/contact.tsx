@@ -140,8 +140,10 @@ const Contact = () => {
             </Heading>
             <p className="field-note text-base">{t("accountLayout.contact.subtitle")}</p>
           </Card.Header>
-          <Message>{t("accountLayout.contact.changeInfo")}</Message>
-          <Card.Section divider="inset" className={styles.contactSection}>
+          <Message className={styles.contactSection}>
+            {t("accountLayout.contact.changeInfo")}
+          </Message>
+          <Card.Section divider="inset">
             <p className={styles.contactFieldLabel}>{t("label.emailAddress")}</p>
             <p className={styles.email}>{profile?.email}</p>
             <p className={styles.changeEmail}>
