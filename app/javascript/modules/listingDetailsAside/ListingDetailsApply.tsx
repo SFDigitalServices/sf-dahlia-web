@@ -67,6 +67,26 @@ const ordinalHeader = (ordinal: number, title: string) => {
   )
 }
 
+const ApplyButton = ({ href }: { href: string }) => (
+  <LinkButton
+    styleType={AppearanceStyleType.primary}
+    className={"w-full"}
+    transition={true}
+    href={href}
+  >
+    {t("label.applyOnline")}
+  </LinkButton>
+)
+
+const ClerkApplyOnlineButton = ({ applyLink }: { applyLink: string }) => {
+  const { isLoaded, isSignedIn } = useAuth()
+  const { profile, initialStateLoaded } = useContext(UserContext)
+  const href =
+    isLoaded && isSignedIn && initialStateLoaded && !profile ? getAddProfilePath() : applyLink
+
+  return <ApplyButton href={href} />
+}
+
 /**
  * If the React form engine is enabled, link to the React application.
  * If Clerk is enabled and the user has an incomplete profile, redirect to the add profile page.
@@ -75,26 +95,16 @@ const ordinalHeader = (ordinal: number, title: string) => {
 const ApplyOnlineButton = ({ listingId }: { listingId: string }) => {
   const { unleashFlag: clerkEnabled, flagsReady } = useFeatureFlag(UNLEASH_FLAG.CLERK_AUTH, false)
   const { unleashFlag: formEngine } = useFeatureFlag(UNLEASH_FLAG.FORM_ENGINE, false)
-  const { isLoaded, isSignedIn } = useAuth()
-  const { profile, initialStateLoaded } = useContext(UserContext)
   let applyLink = localizedPath(`listings/${listingId}/apply-welcome/intro`)
   if (formEngine) {
     applyLink = localizedPath(`listings/${listingId}/apply/intro`)
   }
-  if (flagsReady && clerkEnabled && isLoaded && isSignedIn && initialStateLoaded && !profile) {
-    applyLink = getAddProfilePath()
+
+  if (flagsReady && clerkEnabled) {
+    return <ClerkApplyOnlineButton applyLink={applyLink} />
   }
 
-  return (
-    <LinkButton
-      styleType={AppearanceStyleType.primary}
-      className={"w-full"}
-      transition={true}
-      href={applyLink}
-    >
-      {t("label.applyOnline")}
-    </LinkButton>
-  )
+  return <ApplyButton href={applyLink} />
 }
 
 const StandardHowToApply = ({
