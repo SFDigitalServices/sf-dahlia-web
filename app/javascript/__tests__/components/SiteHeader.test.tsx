@@ -31,4 +31,11 @@ describe("SiteHeader", () => {
     renderSiteHeader()
     expect(screen.getByText("FL")).not.toBeNull()
   })
+
+  it("does not render the account avatar when there is no profile", () => {
+    setupUserContext({ loggedIn: true, hasProfile: false })
+    const { container } = renderSiteHeader()
+    expect(container.querySelector("[class*='account-avatar']")).toBeNull()
+    expect(screen.getByTestId("My Account-0")).not.toBeNull()
+  })
 })
