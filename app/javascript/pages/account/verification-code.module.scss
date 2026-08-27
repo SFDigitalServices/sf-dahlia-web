@@ -33,12 +33,12 @@
 
 .sendAgain {
   margin-left: var(--seeds-spacer-text);
-  font-family: var(--seeds-font-sans) !important;
 }
 
 .emailSent {
   margin-left: var(--seeds-spacer-text);
   color: var(--seeds-color-success);
+  font-family: var(--seeds-font-sans);
   font-weight: var(--seeds-font-weight-semibold);
   display: inline-flex;
   align-items: center;
