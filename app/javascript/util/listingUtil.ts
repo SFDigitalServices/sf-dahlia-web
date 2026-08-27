@@ -186,8 +186,19 @@ export const getAllUnitSummaries = (listing: RailsRentalListing | RailsSaleListi
 
 const isSROUnitType = (unitType: string) => unitType === "SRO" || unitType === "Room"
 
-const lowerBound = (a: number, b: number) => (a == null ? b : (b == null ? a : Math.min(a, b)))
-const upperBound = (a: number, b: number) => (a == null ? b : (b == null ? a : Math.max(a, b)))
+const definedBounds = (a: number, b: number) => [a, b].filter((bound) => bound != null)
+
+const lowerBound = (a: number, b: number) => {
+  const bounds = definedBounds(a, b)
+
+  return bounds.length > 0 ? Math.min(...bounds) : null
+}
+
+const upperBound = (a: number, b: number) => {
+  const bounds = definedBounds(a, b)
+
+  return bounds.length > 0 ? Math.max(...bounds) : null
+}
 
 /**
  * Collapse a listing's unit summaries into one occupancy range per unit type.
