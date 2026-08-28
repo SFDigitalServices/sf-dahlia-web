@@ -91,6 +91,21 @@ export const getSignInCodePath = localizedPathGetter("/sign-in/code")
 export const getForgotPasswordPath = localizedPathGetter("/forgot-password")
 export const getResetPasswordPath = localizedPathGetter("/reset-password")
 
+// Auth pages besides the forgot password flow (sign in or create account)
+export const isSignInOrCreateAccountFlow = (
+  currentPath: string = window.location.pathname
+): boolean => {
+  const path = getPathWithoutLanguagePrefix(currentPath)
+  return (
+    path === "/sign-in" ||
+    path === "/sign-in/code" ||
+    path === "/create-account" ||
+    path === "/create-account/code" ||
+    path === "/add-password" ||
+    path === "/add-profile"
+  )
+}
+
 // Accounts after signing in pages
 export const getMyAccountPath = localizedPathGetter("/account")
 export const getMyAccountApplicationsPath = localizedPathGetter("/account/applications")

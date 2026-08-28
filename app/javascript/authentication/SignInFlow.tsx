@@ -16,8 +16,10 @@ import {
   getMyAccountPath,
   getSignInCodePath,
 } from "../util/routeUtil"
+import { authorizeHousingCounselor } from "../api/authApiService"
 import { getSfGovUrl, localizedFormat, renderInlineMarkup } from "../util/languageUtil"
-import { AUTH_FLOW } from "../modules/constants"
+import { AUTH_FLOW, UNLEASH_FLAG } from "../modules/constants"
+import { useFeatureFlag } from "../hooks/useFeatureFlag"
 import { clearHeaders } from "./token"
 import styles from "./SignInFlow.module.scss"
 
@@ -28,17 +30,24 @@ interface SignInFields {
 
 type SignInView = "verificationCode" | "password"
 
+const getHousingCounselorToken = () => new URLSearchParams(window.location.search).get("t")
+
 const SignInFlow = () => {
   const navigate = useNavigate()
   const { state } = useLocation() as { state?: { redirectUrl?: string } }
   const redirectUrl = state?.redirectUrl
   const postSignInRedirectUrl = redirectUrl ?? getMyAccountPath()
   const requiredLoginsDate = localizedFormat(process.env.REQUIRED_LOGINS_DATE ?? "", "LL")
-  const { isLoaded: authLoaded, isSignedIn } = useAuth()
+  const { isLoaded: authLoaded, isSignedIn, getToken } = useAuth()
   const { isLoaded, signIn, setActive } = useSignIn()
   const { client } = useClerk()
+  const { unleashFlag: requiredLoginsMessageEnabled } = useFeatureFlag(
+    UNLEASH_FLAG.REQUIRED_LOGINS_MESSAGE,
+    false
+  )
   const [showError, setShowError] = useState(false)
   const [view, setView] = useState<SignInView | null>(null)
+  const housingCounselorChecked = useRef(false)
   // Default to password sign-in, but prefer the code flow if the user last signed in via email code.
   useEffect(() => {
     if (!isLoaded || view !== null) return
@@ -66,6 +75,26 @@ const SignInFlow = () => {
     }
   }, [showError])
 
+  const checkHousingCounselorAccess = async () => {
+    const token = getHousingCounselorToken()
+    if (!token) return true
+    try {
+      const sessionToken = await getToken()
+      if (!sessionToken) {
+        setShowError(true)
+        return false
+      }
+      await authorizeHousingCounselor(token, sessionToken)
+      console.log(
+        "TODO: Housing counselor successfully authenticated, TBD banner and applicant view"
+      )
+      return true
+    } catch {
+      setShowError(true)
+      return false
+    }
+  }
+
   const onSubmit = async ({ email, password }: SignInFields) => {
     if (!isLoaded || !signIn) return
     setShowError(false)
@@ -77,6 +106,18 @@ const SignInFlow = () => {
         return
       }
       clearHeaders() // Clear headers in case of existing Devise session (while testing)
+
+      const housingCounselorToken = getHousingCounselorToken()
+      if (housingCounselorToken) {
+        housingCounselorChecked.current = true
+        await setActive({ session: createdSessionId })
+        if (!(await checkHousingCounselorAccess())) return
+        void navigate(postSignInRedirectUrl)
+        return
+      }
+      // TODO: instead of relying on postSignInRedirectUrl, this component should take care handling
+      // incomplete profiles and redirecting to the add-profile page
+
       // If the user came from the listing detail apply button, redirect to the application intro page
       await setActive({ session: createdSessionId, redirectUrl: postSignInRedirectUrl })
     } catch (error) {
@@ -107,7 +148,11 @@ const SignInFlow = () => {
         emailAddressId: emailCodeFactor.emailAddressId,
       })
       void navigate(getSignInCodePath(), {
-        state: { email, ...(redirectUrl && { redirectUrl }) },
+        state: {
+          email,
+          housingCounselorToken: getHousingCounselorToken(),
+          ...(redirectUrl && { redirectUrl })
+        },
       })
     } catch (error) {
       console.error("Sign in code error", error)
@@ -115,7 +160,31 @@ const SignInFlow = () => {
     }
   }
 
-  if (authLoaded && isSignedIn) {
+  useEffect(() => {
+    if (!authLoaded || !isSignedIn || housingCounselorChecked.current) return
+    const token = getHousingCounselorToken()
+    if (!token) return
+
+    housingCounselorChecked.current = true
+    void (async () => {
+      try {
+        const sessionToken = await getToken()
+        if (!sessionToken) {
+          setShowError(true)
+          return
+        }
+        await authorizeHousingCounselor(token, sessionToken)
+        console.log("TODO: Housing counselor already signed in, TBD banner and applicant view")
+        void navigate(getMyAccountPath())
+      } catch {
+        setShowError(true)
+      }
+    })()
+  }, [authLoaded, getToken, isSignedIn, navigate])
+
+  // TODO: instead of relying on postSignInRedirectUrl, this component should take care handling
+  // incomplete profiles and redirecting to the add-profile page
+  if (authLoaded && isSignedIn && !getHousingCounselorToken()) {
     return <Navigate to={postSignInRedirectUrl} replace />
   }
 
@@ -123,9 +192,8 @@ const SignInFlow = () => {
 
   const verificationCodeSection = (
     <>
-      <p className="field-note">{t("signIn.codeDescription")}</p>
       <Form onSubmit={handleSubmit(onGetCodeSubmit)}>
-        <EmailFieldset register={register} errors={errors} />
+        <EmailFieldset register={register} errors={errors} note={t("signIn.codeDescription")} />
         <Button
           className={styles.getCodeButton}
           variant="primary"
@@ -166,7 +234,6 @@ const SignInFlow = () => {
         </Button>
       </Form>
       <Button
-        className={styles.oneTimeCodeLink}
         variant="text"
         size="md"
         onClick={() => {
@@ -180,9 +247,16 @@ const SignInFlow = () => {
     </>
   )
 
+  const requiredLoginsHelpUrl = getSfGovUrl("https://www.sf.gov/get-help-with-your-dahlia-account")
+
   return (
     <AuthLayout title={t("pageTitle.signIn")}>
       <Card.Section divider="inset">
+        {requiredLoginsMessageEnabled && (
+          <Message fullwidth variant="primary" className={styles.requiredLoginsMessage}>
+            {renderInlineMarkup(t("signIn.requiredLoginsMessage", { url: requiredLoginsHelpUrl }))}
+          </Message>
+        )}
         <Heading priority={1} size="2xl">
           {t("pageTitle.signIn")}
         </Heading>
@@ -210,7 +284,7 @@ const SignInFlow = () => {
         </LoadingState>
       </Card.Section>
       <Card.Section divider="flush">
-        <Heading priority={2} size="lg">
+        <Heading priority={2} size="lg" className={styles.createAccountHeading}>
           {t("signIn.dontHaveAccount")}
         </Heading>
         <p className={styles.createAccountDescription}>{t("signIn.createAccountDescription")}</p>
