@@ -115,6 +115,7 @@ export const SFGOV_LINKS = [
   "https://www.sf.gov/learn-about-displaced-tenant-housing-preference-dthp",
   "https://www.sf.gov/get-priority-housing-lottery",
   "https://www.sf.gov/get-help-with-your-dahlia-account",
+  "https://www.sf.gov/reports--february-2024--plus-housing-waitlist",
 ]
 
 export const HOME_SF_PHONE = "415-202-5464"

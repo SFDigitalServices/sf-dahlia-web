@@ -30,6 +30,7 @@ import {
   isDeadlinePassed,
   getAllUnitSummaries,
   getOccupancyRangeByUnitType,
+  isPlusHousing,
 } from "../../util/listingUtil"
 
 // Configure dayjs with required plugins
@@ -58,6 +59,7 @@ import RailsUnit, {
 } from "../../api/types/rails/listings/RailsUnit"
 import { fcfsSaleListing } from "../data/RailsSaleListing/listing-sale-fcfs"
 import { openRentalFcfsListing } from "../data/RailsRentalListing/listing-rental-fcfs"
+import { CUSTOM_LISTING_TYPES } from "../../modules/constants"
 
 describe("listingUtil", () => {
   const OLD_ENV = process.env
@@ -286,6 +288,21 @@ describe("listingUtil", () => {
 
     it("should return true when listing is a habitat listing", () => {
       expect(isHabitatListing(habitatListing)).toBe(true)
+    })
+  })
+
+  describe("isPlusHousing", () => {
+    it("should return false when listing is not a Plus Housing listing", () => {
+      expect(isPlusHousing(closedRentalListing)).toBe(false)
+    })
+
+    it("should return true when listing is a Plus Housing listing", () => {
+      expect(
+        isPlusHousing({
+          ...closedRentalListing,
+          Custom_Listing_Type: CUSTOM_LISTING_TYPES.PLUS_HOUSING,
+        })
+      ).toBe(true)
     })
   })
 
