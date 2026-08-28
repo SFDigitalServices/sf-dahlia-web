@@ -59,8 +59,8 @@ jest.mock("react-helmet-async", () => {
 
 jest.mock("@axe-core/react", () => jest.fn())
 
-jest.mock("@clerk/clerk-react", () => {
-  const Clerk = jest.requireActual("@clerk/clerk-react")
+jest.mock("@clerk/react", () => {
+  const Clerk = jest.requireActual("@clerk/react")
   return {
     ...Clerk,
     ClerkProvider: ({ children }: { children: React.ReactNode }) => children,
@@ -69,7 +69,7 @@ jest.mock("@clerk/clerk-react", () => {
 })
 
 const setDefaultClerkAuth = () => {
-  const { useAuth } = jest.requireMock<typeof import("@clerk/clerk-react")>("@clerk/clerk-react")
+  const { useAuth } = jest.requireMock<typeof import("@clerk/react")>("@clerk/react")
   if (jest.isMockFunction(useAuth)) {
     useAuth.mockReturnValue({
       isLoaded: true,

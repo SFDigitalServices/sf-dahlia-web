@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import React, { useContext, useEffect } from "react"
 import { useNavigate } from "react-router"
-import { useAuth, useUser } from "@clerk/clerk-react"
+import { useAuth, useUser } from "@clerk/react"
 import { Form, t } from "@bloom-housing/ui-components"
 import { Card, Heading, Button, Message } from "@bloom-housing/ui-seeds"
 import { useForm } from "react-hook-form"

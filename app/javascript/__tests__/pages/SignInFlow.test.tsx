@@ -1,5 +1,5 @@
 import React from "react"
-import { useAuth, useClerk, useSignIn, useSignUp } from "@clerk/clerk-react"
+import { useAuth, useClerk, useSignIn, useSignUp } from "@clerk/react"
 import { screen, waitFor, within, cleanup } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
 import { useNavigate } from "react-router"
@@ -21,8 +21,8 @@ jest.mock("../../hooks/useFeatureFlag", () => ({
   })),
 }))
 
-jest.mock("@clerk/clerk-react", () => {
-  const Clerk = jest.requireActual("@clerk/clerk-react")
+jest.mock("@clerk/react", () => {
+  const Clerk = jest.requireActual("@clerk/react")
   return {
     ...Clerk,
     ClerkProvider: ({ children }: { children: React.ReactNode }) => children,

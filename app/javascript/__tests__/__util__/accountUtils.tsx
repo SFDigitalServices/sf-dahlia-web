@@ -1,5 +1,5 @@
 import React from "react"
-import { useAuth } from "@clerk/clerk-react"
+import { useAuth } from "@clerk/react"
 import UserContext, { ContextProps } from "../../authentication/context/UserContext"
 import { User } from "../../authentication/user"
 import * as authApiService from "../../api/authApiService"
