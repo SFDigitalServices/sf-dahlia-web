@@ -11,6 +11,7 @@ import {
   restoreWindowLocation,
 } from "../../__util__/renderUtils"
 import { setupUserContext } from "../../__util__/accountUtils"
+import { AUTH_FLOW } from "../../../modules/constants"
 
 jest.mock("@clerk/react", () => {
   const Clerk = jest.requireActual("@clerk/react")
@@ -129,7 +130,7 @@ describe("<CreateAnAccount />", () => {
 
     expect(mockSendEmailCode).toHaveBeenCalledWith()
     expect(mockNavigate).toHaveBeenCalledWith(getVerificationCodePath(), {
-      state: { email: "test@example.com" },
+      state: { email: "test@example.com", flow: AUTH_FLOW.CREATE_ACCOUNT },
     })
   })
 
@@ -191,7 +192,7 @@ describe("<CreateAnAccount />", () => {
     })
     expect(mockSignInSendCode).toHaveBeenCalledWith()
     expect(mockNavigate).toHaveBeenCalledWith(getSignInCodePath(), {
-      state: { email: "test@example.com" },
+      state: { email: "test@example.com", flow: AUTH_FLOW.SIGN_IN },
     })
     expect(mockSendEmailCode).not.toHaveBeenCalled()
   })

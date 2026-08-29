@@ -48,7 +48,7 @@ const CreateAnAccountPage = () => {
     }
     await signIn.emailCode.sendCode()
     if (signIn.status === "needs_first_factor") {
-      void navigate(getSignInCodePath(), { state: { email } })
+      void navigate(getSignInCodePath(), { state: { email, flow: AUTH_FLOW.SIGN_IN } })
     } else {
       console.error("Transfer to sign in code error", signIn)
     }
@@ -77,7 +77,7 @@ const CreateAnAccountPage = () => {
       signUp.unverifiedFields.includes("email_address") &&
       signUp.missingFields.length === 0
     ) {
-      void navigate(getVerificationCodePath(), { state: { email } })
+      void navigate(getVerificationCodePath(), { state: { email, flow: AUTH_FLOW.CREATE_ACCOUNT } })
     } else {
       console.error("Account creation error", signUp)
     }

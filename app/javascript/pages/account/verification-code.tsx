@@ -16,8 +16,9 @@ import {
   AppPages,
   getAddPasswordPath,
   getAddProfilePath,
-  getCreateAccountPath,
+  getAuthFlowPath,
   getMyAccountPath,
+  getResetPasswordPath,
   getSignInPath,
 } from "../../util/routeUtil"
 import styles from "./verification-code.module.scss"
@@ -47,9 +48,10 @@ const EnterVerificationCodePage = ({
   const navigate = useNavigate()
   const { signUp, fetchStatus: signUpStatus } = useSignUp()
   const { signIn, fetchStatus: signInStatus } = useSignIn()
+  const isForgotPasswordFlow = flow === AUTH_FLOW.FORGOT_PASSWORD
   const { getToken } = useAuth()
-  const isSignInFlow = flow === AUTH_FLOW.SIGN_IN
-  const isLoaded = isSignInFlow ? signInStatus !== "fetching" : signUpStatus !== "fetching"
+  const isLoaded =
+    flow === AUTH_FLOW.CREATE_ACCOUNT ? signUpStatus !== "fetching" : signInStatus !== "fetching"
   const [resendExpiresAt, setResendExpiresAt] = useState(() => Date.now() + RESEND_CODE_MS)
   const [resendSeconds, setResendSeconds] = useState(RESEND_CODE_MS / 1000)
   const [isResending, setIsResending] = useState(false)
@@ -79,7 +81,7 @@ const EnterVerificationCodePage = ({
     return () => window.clearTimeout(timeoutId)
   }, [resendExpiresAt])
 
-  const editEmailHref = isSignInFlow ? getSignInPath() : getCreateAccountPath()
+  const editEmailHref = getAuthFlowPath(flow)
 
   // Reached when signIn.create({ signUpIfMissing: true }) matched no account:
   // Clerk verified the code against a pending sign-up, so complete it as one.
@@ -167,9 +169,29 @@ const EnterVerificationCodePage = ({
     }
   }
 
-  const onSubmit = async ({ code }: { code: string }) =>
-    isSignInFlow ? verifySignInCode(code) : verifySignUpCode(code)
+  const verifyForgotPasswordCode = async (code: string) => {
+    if (signInStatus === "fetching" || !signIn) return
+    const { error } = await signIn.resetPasswordEmailCode.verifyCode({ code })
+    if (error) {
+      console.error("Reset Password code verification error:", error)
+      setError("code", { message: "invalid" })
+      return
+    }
+    if (signIn.status === "needs_new_password") {
+      void navigate(getResetPasswordPath(), { state: { email, flow, code } })
+    } else {
+      console.error("Reset Password code verification error:", signIn)
+      setError("code", { message: "invalid" })
+    }
+  }
 
+  const verifyAuthCodeByFlow: Record<AUTH_FLOW, (code: string) => Promise<void>> = {
+    [AUTH_FLOW.SIGN_IN]: verifySignInCode,
+    [AUTH_FLOW.CREATE_ACCOUNT]: verifySignUpCode,
+    [AUTH_FLOW.FORGOT_PASSWORD]: verifyForgotPasswordCode,
+  }
+
+  const onSubmit = async ({ code }: { code: string }) => verifyAuthCodeByFlow[flow](code)
   const resendSignInCode = async (): Promise<boolean> => {
     if (signInStatus === "fetching" || !signIn) return false
     const { error } = await signIn.emailCode.sendCode()
@@ -202,11 +224,26 @@ const EnterVerificationCodePage = ({
     return false
   }
 
+  const resendForgotPasswordCode = async (): Promise<boolean> => {
+    if (signInStatus === "fetching" || !signIn) return false
+    const { error } = await signIn.resetPasswordEmailCode.sendCode()
+    if (error) {
+      console.error("Reset password code resend error", error)
+      return false
+    }
+    return true
+  }
+  const resendCodeByFlow: Record<AUTH_FLOW, () => Promise<boolean>> = {
+    [AUTH_FLOW.SIGN_IN]: resendSignInCode,
+    [AUTH_FLOW.CREATE_ACCOUNT]: resendSignUpCode,
+    [AUTH_FLOW.FORGOT_PASSWORD]: resendForgotPasswordCode,
+  }
+
   const onResend = async () => {
     if (isResending || resendSeconds > 0) return
     setIsResending(true)
     try {
-      const sent = await (isSignInFlow ? resendSignInCode() : resendSignUpCode())
+      const sent = await resendCodeByFlow[flow]()
       if (sent) {
         setResendExpiresAt(Date.now() + RESEND_CODE_MS)
         setResendSeconds(RESEND_CODE_MS / 1000)
@@ -230,6 +267,9 @@ const EnterVerificationCodePage = ({
             {t("createAccount.editEmail")}
           </Link>
         </p>
+        {isForgotPasswordFlow && (
+          <p className={styles["forgotPasswordDescription"]}>{t("signIn.forgotPasswordCode")}</p>
+        )}
         <Form onSubmit={handleSubmit(onSubmit)}>
           <Controller
             name="code"
@@ -306,21 +346,23 @@ const EnterVerificationCodePage = ({
 
 const EnterVerificationCode = (_props: { assetPaths: unknown }) => {
   const navigate = useNavigate()
-  const { pathname, state } = useLocation()
+  const { state } = useLocation()
   const email = state?.email
   const { isLoaded, isSignedIn } = useAuth()
   const { profile, initialStateLoaded } = useContext(UserContext)
   const { unleashFlag: clerkEnabled, flagsReady } = useFeatureFlag(UNLEASH_FLAG.CLERK_AUTH, false)
-  const flow: AUTH_FLOW = pathname.includes("/sign-in/code")
-    ? AUTH_FLOW.SIGN_IN
-    : AUTH_FLOW.CREATE_ACCOUNT
+  // The flow now comes from navigation state rather than the path, because the
+  // forgot-password flow shares this page and cannot be told apart by pathname.
+  const flow: AUTH_FLOW = state?.flow
+  const fallbackPath = flow ? getAuthFlowPath(flow) : getSignInPath()
   /**
    * Verification code page redirects
    * --------------------------------
    * 1. Once the Unleash flags are ready:
-   * If Clerk is not enabled, redirect to sign-in.
+   * If Clerk is not enabled, redirect to the flow's start page.
    * 2. Once Clerk is loaded:
-   * If the user is signed out without an email, redirect to sign in.
+   * If the user is signed out without an email, or arrived without a flow,
+   * redirect to the flow's start page.
    * 3. Once the profile has loaded:
    * If the user is signed in with a profile, redirect to my account.
    * If the user is signed in without a profile, redirect to the add profile page.
@@ -328,20 +370,31 @@ const EnterVerificationCode = (_props: { assetPaths: unknown }) => {
   useEffect(() => {
     if (!flagsReady) return
     if (!clerkEnabled) {
-      void navigate(getSignInPath())
+      void navigate(fallbackPath)
       return
     }
     if (!isLoaded) return
-    if (!isSignedIn && !email) {
-      void navigate(getSignInPath())
+    if ((!isSignedIn && !email) || !flow) {
+      void navigate(fallbackPath)
       return
     }
     if (!initialStateLoaded) return
     if (isSignedIn && profile) void navigate(getMyAccountPath())
     if (isSignedIn && !profile) void navigate(getAddProfilePath())
-  }, [flagsReady, clerkEnabled, isLoaded, isSignedIn, email, initialStateLoaded, profile, navigate])
+  }, [
+    flagsReady,
+    clerkEnabled,
+    isLoaded,
+    isSignedIn,
+    email,
+    flow,
+    fallbackPath,
+    initialStateLoaded,
+    profile,
+    navigate,
+  ])
 
-  const ready = flagsReady && clerkEnabled && isLoaded && !isSignedIn && !!email
+  const ready = flagsReady && clerkEnabled && isLoaded && !isSignedIn && !!email && !!flow
 
   if (!ready) {
     return null

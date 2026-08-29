@@ -11,9 +11,9 @@ import {
   restoreWindowLocation,
 } from "../__util__/renderUtils"
 import { setupUserContext } from "../__util__/accountUtils"
+import { AUTH_FLOW, UNLEASH_FLAG } from "../../modules/constants"
 import { authorizeHousingCounselor, getProfile } from "../../api/authApiService"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
-import { UNLEASH_FLAG } from "../../modules/constants"
 
 jest.mock("../../hooks/useFeatureFlag", () => ({
   useFeatureFlag: jest.fn(() => ({
@@ -247,7 +247,7 @@ describe("<SignInFlow />", () => {
     })
     expect(mockSendEmailCode).toHaveBeenCalledWith()
     expect(mockNavigate).toHaveBeenCalledWith(getSignInCodePath(), {
-      state: { email: "test@test.com", housingCounselorToken: null },
+      state: { email: "test@test.com", housingCounselorToken: null, flow: AUTH_FLOW.SIGN_IN },
     })
   })
 
