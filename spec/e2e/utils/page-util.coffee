@@ -24,7 +24,20 @@ PageUtil = {
       elem.isDisplayed()
     ).first()
   goTo: (url) ->
+    # Pages are a mix of AngularJS and React. Protractor syncs with Angular before
+    # every command and hangs on a React page, so navigate with sync off and turn it
+    # back on only if what loaded is actually an Angular page.
+    browser.ignoreSynchronization = true
     browser.get(url)
+    PageUtil.syncWithCurrentPage()
+  syncWithCurrentPage: ->
+    # ng-app is rendered by the application-angular layout, so it is on the document
+    # as soon as the page loads rather than after Angular bootstraps.
+    browser.executeScript('return !!document.querySelector("html[ng-app]")')
+      .then (isAngular) ->
+        browser.ignoreSynchronization = !isAngular
+        browser.waitForAngular() if isAngular
+        isAngular
   httpGet: (siteUrl) ->
     http.get(siteUrl, (response) ->
       bodyString = ''

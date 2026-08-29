@@ -1,28 +1,33 @@
+PageUtil = require('../../utils/page-util')
 EC = protractor.ExpectedConditions
 
-# The standalone /sign-in and /create-account routes are served by React now, so
-# protractor's Angular sync hangs on them and the old ng-model locators are gone.
-# Sync has to stay off for the whole interaction and is restored once the click
-# lands us back on an Angular page.
+# /sign-in is served by React now, so the old ng-model locators are gone and Angular
+# sync has to stay off while we are on the page. Sign-in lands on /account, which is
+# also React, so control goes back to PageUtil to decide the mode for whatever loaded
+# rather than assuming we are back on an Angular page.
 class ReactSignInPage
   constructor: ->
     @email = element(By.css('input[name="email"]'))
     @password = element(By.css('input[name="password"]'))
-    @submitButton = element(By.css('form button[type="submit"]'))
+    # #sign-in-button is the devise form; the Clerk flow renders an unidentified
+    # submit button inside the same form.
+    @submitButton = element(By.css('#sign-in-button, form button[type="submit"]'))
 
   goTo: ->
+    PageUtil.goTo('/sign-in')
+    @waitUntilReady()
+
+  waitUntilReady: ->
     browser.ignoreSynchronization = true
-    browser.get('/sign-in')
-    browser.wait(EC.presenceOf(@password), 20000)
+    browser.wait(EC.presenceOf(@password), 30000)
+    browser.wait(EC.elementToBeClickable(@submitButton), 30000)
 
   signIn: (email, password) ->
+    @waitUntilReady()
     @email.clear().sendKeys(email)
     @password.clear().sendKeys(password)
     @submitButton.click()
-    # Signing in leaves React for an Angular page, so wait for the URL to change
-    # before handing control back to protractor's synchronized mode.
-    browser.wait(EC.not(EC.urlContains('/sign-in')), 20000)
-    browser.ignoreSynchronization = false
-    browser.waitForAngular()
+    browser.wait(EC.not(EC.urlContains('/sign-in')), 30000)
+    PageUtil.syncWithCurrentPage()
 
 module.exports = new ReactSignInPage

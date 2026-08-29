@@ -14,10 +14,7 @@ toApiDob = (birthDate) ->
 Account = {
   confirm: (email) ->
     # confirm the account
-    browser.ignoreSynchronization = true
-    url = "/api/v1/account/confirm/?email=#{email}"
-    PageUtil.goTo(url)
-    browser.ignoreSynchronization = false
+    PageUtil.goTo("/api/v1/account/confirm/?email=#{email}")
   # The account pages are served by React now, so their AngularJS ng-model locators are
   # gone and protractor's Angular sync hangs on them. Register through the API instead --
   # these accounts are test setup, not the thing under test.
@@ -40,7 +37,6 @@ Account = {
       config_name: 'default'
     }
 
-    browser.ignoreSynchronization = true
     # Must be on the app origin for the request to be same-origin.
     PageUtil.goTo('/')
     browser.executeAsyncScript((body, done) ->
@@ -53,7 +49,6 @@ Account = {
         .catch((err) -> done({ status: 0, body: String(err) }))
       return
     , payload).then (result) ->
-      browser.ignoreSynchronization = false
       if result.status >= 400
         throw new Error("Account registration failed (#{result.status}): #{result.body}")
       result
