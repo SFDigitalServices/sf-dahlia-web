@@ -448,10 +448,6 @@ describe("<EnterVerificationCode />", () => {
     consoleError.mockRestore()
   })
 
-
-
-
-
   it("resends the code for sign in", async () => {
     cleanup()
     ;(useLocation as jest.Mock).mockReturnValue({
@@ -535,5 +531,86 @@ describe("<EnterVerificationCode />", () => {
     await waitFor(() => {
       expect(mockNavigate).toHaveBeenCalledWith("/account")
     })
+  })
+
+  const submitTransferCode = async () => {
+    cleanup()
+    ;(useLocation as jest.Mock).mockReturnValue({
+      pathname: "/sign-in/code",
+      state: { email: "test@example.com" },
+    })
+    mockVerifySignInCode.mockResolvedValue({
+      error: { errors: [{ code: "sign_up_if_missing_transfer" }] },
+    })
+    await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
+
+    const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime })
+    await user.click(screen.getAllByRole("textbox")[0])
+    await user.paste("123456")
+    await user.click(screen.getByRole("button", { name: t("createAccount.confirmCode") }))
+  }
+
+  it("transfers sign-in to sign-up and navigates to add password", async () => {
+    mockSignUpResource.status = "complete"
+
+    await submitTransferCode()
+
+    await waitFor(() => {
+      expect(mockSignUpCreate).toHaveBeenCalledWith({ transfer: true })
+    })
+    expect(mockFinalizeSignUp).toHaveBeenCalled()
+    expect(mockNavigate).toHaveBeenCalledWith("/add-password")
+    expect(mockFinalizeSignIn).not.toHaveBeenCalled()
+  })
+
+  it("shows an error when transfer to sign-up returns an error", async () => {
+    const consoleError = jest.spyOn(console, "error").mockImplementation(() => {})
+    const transferError = { errors: [{ code: "some_transfer_error" }] }
+    mockSignUpCreate.mockResolvedValue({ error: transferError })
+
+    await submitTransferCode()
+
+    await waitFor(() => {
+      expect(mockSignUpCreate).toHaveBeenCalledWith({ transfer: true })
+    })
+    expect(consoleError).toHaveBeenCalledWith("Account creation error", transferError)
+    expect(mockFinalizeSignUp).not.toHaveBeenCalled()
+    expect(mockNavigate).not.toHaveBeenCalled()
+
+    consoleError.mockRestore()
+  })
+
+  it("shows an error when transfer to sign-up is not complete", async () => {
+    const consoleError = jest.spyOn(console, "error").mockImplementation(() => {})
+    mockSignUpResource.status = "missing_requirements"
+
+    await submitTransferCode()
+
+    await waitFor(() => {
+      expect(mockSignUpCreate).toHaveBeenCalledWith({ transfer: true })
+    })
+    expect(consoleError).toHaveBeenCalledWith("Account creation error:", mockSignUpResource)
+    expect(mockFinalizeSignUp).not.toHaveBeenCalled()
+    expect(mockNavigate).not.toHaveBeenCalled()
+
+    consoleError.mockRestore()
+  })
+
+  it("logs when transfer to sign-up is not ready", async () => {
+    const consoleError = jest.spyOn(console, "error").mockImplementation(() => {})
+    ;(useSignUp as jest.Mock).mockReturnValue({
+      fetchStatus: "fetching",
+      signUp: mockSignUpResource,
+    })
+
+    await submitTransferCode()
+
+    await waitFor(() => {
+      expect(consoleError).toHaveBeenCalledWith("Sign up not ready")
+    })
+    expect(mockSignUpCreate).not.toHaveBeenCalled()
+    expect(mockNavigate).not.toHaveBeenCalled()
+
+    consoleError.mockRestore()
   })
 })

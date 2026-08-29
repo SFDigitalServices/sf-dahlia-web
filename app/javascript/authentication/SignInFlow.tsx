@@ -135,7 +135,7 @@ const SignInFlow = () => {
   const onGetCodeSubmit = async ({ email }: SignInFields) => {
     if (signInStatus === "fetching" || !signIn) return
     setShowError(false)
-    const { error } = await signIn.create({ identifier: email })
+    const { error } = await signIn.create({ identifier: email, signUpIfMissing: true })
     if (error) {
       console.error("Sign in code error", error)
       setShowError(true)

@@ -240,7 +240,10 @@ describe("<SignInFlow />", () => {
     await user.click(screen.getByRole("button", { name: /^get a code$/i }))
 
     await waitFor(() => {
-      expect(mockSignInCreate).toHaveBeenCalledWith({ identifier: "test@test.com" })
+      expect(mockSignInCreate).toHaveBeenCalledWith({
+        identifier: "test@test.com",
+        signUpIfMissing: true,
+      })
     })
     expect(mockSendEmailCode).toHaveBeenCalledWith()
     expect(mockNavigate).toHaveBeenCalledWith(getSignInCodePath(), {
@@ -259,7 +262,10 @@ describe("<SignInFlow />", () => {
     await user.click(screen.getByRole("button", { name: /^get a code$/i }))
 
     await waitFor(() => {
-      expect(mockSignInCreate).toHaveBeenCalledWith({ identifier: "test@test.com" })
+      expect(mockSignInCreate).toHaveBeenCalledWith({
+        identifier: "test@test.com",
+        signUpIfMissing: true,
+      })
     })
     expect(consoleError).toHaveBeenCalledWith("Sign in code error", codeError)
     expect(mockSendEmailCode).not.toHaveBeenCalled()
@@ -279,7 +285,10 @@ describe("<SignInFlow />", () => {
     await user.click(screen.getByRole("button", { name: /^get a code$/i }))
 
     await waitFor(() => {
-      expect(mockSignInCreate).toHaveBeenCalledWith({ identifier: "test@test.com" })
+      expect(mockSignInCreate).toHaveBeenCalledWith({
+        identifier: "test@test.com",
+        signUpIfMissing: true,
+      })
     })
     expect(mockSendEmailCode).toHaveBeenCalledWith()
     expect(consoleError).toHaveBeenCalledWith("Sign in code error", mockSignInResource)

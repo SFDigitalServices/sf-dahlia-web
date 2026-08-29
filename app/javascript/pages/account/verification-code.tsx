@@ -10,6 +10,7 @@ import { Controller, useForm } from "react-hook-form"
 import withAppSetup from "../../layouts/withAppSetup"
 import AuthLayout from "../../layouts/AuthLayout"
 import UserContext from "../../authentication/context/UserContext"
+import { getClerkErrorCode } from "../../authentication/clerkErrors"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import {
   AppPages,
@@ -78,9 +79,39 @@ const EnterVerificationCodePage = ({
 
   const editEmailHref = isSignInFlow ? getSignInPath() : getCreateAccountPath()
 
+  // Reached when signIn.create({ signUpIfMissing: true }) matched no account:
+  // Clerk verified the code against a pending sign-up, so complete it as one.
+  const transferToSignUp = async () => {
+    if (signUpStatus === "fetching" || !signUp) {
+      console.error("Sign up not ready")
+      setError("code", { message: "invalid" })
+      return
+    }
+    const { error } = await signUp.create({ transfer: true })
+    if (error) {
+      console.error("Account creation error", error)
+      setError("code", { message: "invalid" })
+      return
+    }
+    if (signUp.status === "complete") {
+      await signUp.finalize({
+        navigate: ({ decorateUrl }: { decorateUrl: (url: string) => string }) => {
+          void navigate(decorateUrl(getAddPasswordPath()))
+        },
+      })
+    } else {
+      console.error("Account creation error:", signUp)
+      setError("code", { message: "invalid" })
+    }
+  }
+
   const verifySignInCode = async (code: string) => {
     if (signInStatus === "fetching" || !signIn) return
     const { error } = await signIn.emailCode.verifyCode({ code })
+    if (getClerkErrorCode(error) === "sign_up_if_missing_transfer") {
+      await transferToSignUp()
+      return
+    }
     if (error) {
       console.error("Code verification error:", error)
       setError("code", { message: "invalid" })
