@@ -33,7 +33,7 @@ const ShareAccess = ({
 
   useEffect(() => {
     void (async () => {
-      const sessionToken = await getToken()
+      const sessionToken: string | null = await getToken()
       if (!sessionToken) {
         setAgencies([])
         return
@@ -113,7 +113,7 @@ const RevokeAccess = ({
 
   useEffect(() => {
     void (async () => {
-      const sessionToken = await getToken()
+      const sessionToken: string | null = await getToken()
       if (!sessionToken) return
       setAgencies(await getHousingCounselorAgencies(sessionToken))
     })()
