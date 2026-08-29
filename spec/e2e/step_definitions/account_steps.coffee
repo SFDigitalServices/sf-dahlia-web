@@ -8,18 +8,7 @@ Given /^I have confirmed the account for "([^"]*)"$/, (fullName) ->
 
 Given /^I have a confirmed account for "([^"]*)" with birth date "([^"]*)"$/,
   (fullName, birthDate) ->
-    account = Utils.Account.create(fullName, birthDate)
-
-    Utils.Page.goTo('/create-account')
-
-    AccountPages.Create.fill {
-      fullName: account.fullName
-      birthDate: account.birthDate
-      email: account.email
-      password: account.password
-    }
-    browser.waitForAngular()
-    Utils.Account.confirm(account.email)
+    Utils.Account.createConfirmed(fullName, birthDate)
 
 When /^I create an account for "([^"]*)"$/, (fullName) ->
   existingAccount = Utils.Account.get(fullName)
@@ -54,12 +43,11 @@ When 'I click the Sign In button', ->
     signIn.click()
 
 When 'I go to the Sign In page', ->
-  signInUrl = "/sign-in"
-  Utils.Page.goTo(signInUrl)
+  AccountPages.ReactSignIn.goTo()
 
 When /^I sign in as "([^"]*)"$/, (fullName) ->
   account = Utils.Account.get(fullName)
-  AccountPages.SignIn.signIn(account.email, account.password)
+  AccountPages.ReactSignIn.signIn(account.email, account.password)
 
 When /^I sign in as "([^"]*)" with my email pre-filled$/, (fullName) ->
   account = Utils.Account.get(fullName)
