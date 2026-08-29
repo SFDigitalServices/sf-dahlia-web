@@ -364,6 +364,28 @@ describe("<EnterVerificationCode />", () => {
     expect(mockVerifySignUpCode).not.toHaveBeenCalled()
   })
 
+  it("redirects to the apply intro after sign in when a redirect url is present", async () => {
+    cleanup()
+    const redirectUrl = "/listings/a0W0P00000GlKfBUAV/apply-welcome/intro"
+    ;(useLocation as jest.Mock).mockReturnValue({
+      pathname: "/sign-in/code",
+      state: { email: "test@example.com", redirectUrl },
+    })
+    mockSignInResource.status = "complete"
+    await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
+
+    const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime })
+    await user.click(screen.getAllByRole("textbox")[0])
+    await user.paste("123456")
+    await user.click(screen.getByRole("button", { name: t("createAccount.confirmCode") }))
+
+    await waitFor(() => {
+      expect(mockFinalizeSignIn).toHaveBeenCalled()
+    })
+    expect(mockNavigate).toHaveBeenCalledWith(redirectUrl)
+    expect(mockVerifySignUpCode).not.toHaveBeenCalled()
+  })
+
   it("authenticates a housing counselor with Clerk after verifying the sign-in code", async () => {
     cleanup()
     const mockGetToken = jest.fn().mockResolvedValue("clerk-session-token")

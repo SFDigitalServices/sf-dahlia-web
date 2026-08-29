@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react"
+import { useNavigate } from "react-router"
 import { useAuth } from "@clerk/react"
 
 import {
@@ -23,7 +24,7 @@ import {
 } from "../../util/listingUtil"
 import { getSfGovUrl, renderInlineMarkup } from "../../util/languageUtil"
 import "./ListingDetailsApply.scss"
-import { getAddProfilePath, localizedPath } from "../../util/routeUtil"
+import { getAddProfilePath, getSignInPath, localizedPath } from "../../util/routeUtil"
 import { ListingState } from "../listings/ListingState"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import { UNLEASH_FLAG } from "../constants"
@@ -79,12 +80,24 @@ const ApplyButton = ({ href }: { href: string }) => (
 )
 
 const ClerkApplyOnlineButton = ({ applyLink }: { applyLink: string }) => {
+  const navigate = useNavigate()
   const { isLoaded, isSignedIn } = useAuth()
   const { profile, initialStateLoaded } = useContext(UserContext)
-  const href =
+  const redirectUrl =
     isLoaded && isSignedIn && initialStateLoaded && !profile ? getAddProfilePath() : applyLink
 
-  return <ApplyButton href={href} />
+  return (
+    <Button
+      styleType={AppearanceStyleType.primary}
+      className={"w-full"}
+      transition={true}
+      onClick={() => {
+        void navigate(getSignInPath(), { state: { redirectUrl } })
+      }}
+    >
+      {t("label.applyOnline")}
+    </Button>
+  )
 }
 
 /**
@@ -119,6 +132,7 @@ const StandardHowToApply = ({
   acceptingPaperApps: boolean
 }) => {
   const [paperApplicationsOpen, setPaperApplicationsOpen] = useState(false)
+
   return (
     <SidebarBlock title={t("listings.apply.howToApply")} priority={2}>
       {!isListingRental && (

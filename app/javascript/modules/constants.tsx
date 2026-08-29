@@ -109,6 +109,7 @@ export const SFGOV_LINKS = [
   "https://www.sf.gov/step-by-step--buy-home-without-entering-lottery",
   "https://www.sf.gov/resource/2022/homebuyer-program-counseling-agencies",
   "https://www.sf.gov/dalp-lottery-results",
+  "https://www.sf.gov/get-help-with-your-dahlia-account",
   // Salesforce links that redirect to sf.gov pages
   "https://www.sf.gov/learn-about-certificate-preference-cop",
   "https://www.sf.gov/get-priority-housing-lottery",
