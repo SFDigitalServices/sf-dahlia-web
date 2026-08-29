@@ -448,10 +448,6 @@ describe("<EnterVerificationCode />", () => {
     consoleError.mockRestore()
   })
 
-
-
-
-
   it("resends the code for sign in", async () => {
     cleanup()
     ;(useLocation as jest.Mock).mockReturnValue({

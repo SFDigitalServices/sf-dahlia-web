@@ -114,7 +114,6 @@ describe("<CreateAnAccount />", () => {
     })
   })
 
-
   it("logs account creation error when sign-up creation fails", async () => {
     const user = userEvent.setup()
     const emailGroup = screen.getByRole("group", { name: /email/i })
@@ -158,6 +157,4 @@ describe("<CreateAnAccount />", () => {
 
     consoleError.mockRestore()
   })
-
-
 })
