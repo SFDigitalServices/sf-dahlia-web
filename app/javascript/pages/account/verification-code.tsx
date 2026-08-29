@@ -42,11 +42,11 @@ const EnterVerificationCodePage = ({
   housingCounselorToken,
 }: EnterVerificationCodePageProps & { housingCounselorToken?: string | null }) => {
   const navigate = useNavigate()
-  const { isLoaded: signUpLoaded, signUp, setActive: setActiveSignUp } = useSignUp()
-  const { isLoaded: signInLoaded, signIn, setActive: setActiveSignIn } = useSignIn()
+  const { signUp, fetchStatus: signUpStatus } = useSignUp()
+  const { signIn, fetchStatus: signInStatus } = useSignIn()
   const { getToken } = useAuth()
   const isSignInFlow = flow === AUTH_FLOW.SIGN_IN
-  const isLoaded = isSignInFlow ? signInLoaded : signUpLoaded
+  const isLoaded = isSignInFlow ? signInStatus !== "fetching" : signUpStatus !== "fetching"
   const [resendExpiresAt, setResendExpiresAt] = useState(() => Date.now() + RESEND_CODE_MS)
   const [resendSeconds, setResendSeconds] = useState(RESEND_CODE_MS / 1000)
   const [isResending, setIsResending] = useState(false)
@@ -79,56 +79,57 @@ const EnterVerificationCodePage = ({
   const editEmailHref = isSignInFlow ? getSignInPath() : getCreateAccountPath()
 
   const verifySignInCode = async (code: string) => {
-    if (!signInLoaded || !signIn) return
-    try {
-      const completeSignIn = await signIn.attemptFirstFactor({
-        strategy: "email_code",
-        code,
-      })
-      if (completeSignIn.status === "complete") {
-        if (housingCounselorToken) {
-          await setActiveSignIn({ session: completeSignIn.createdSessionId })
-          const sessionToken = await getToken()
-          if (!sessionToken) {
-            setError("code", { message: "invalid" })
-            return
-          }
-          await authorizeHousingCounselor(housingCounselorToken, sessionToken)
-          console.log(
-            "TODO: Housing counselor successfully authenticated, TBD banner and applicant view"
-          )
-          void navigate(getMyAccountPath())
+    if (signInStatus === "fetching" || !signIn) return
+    const { error } = await signIn.emailCode.verifyCode({ code })
+    if (error) {
+      console.error("Code verification error:", error)
+      setError("code", { message: "invalid" })
+      return
+    }
+    if (signIn.status === "complete") {
+      if (housingCounselorToken) {
+        // v6 equivalent of v5's setActive({ session }): activate the session
+        // without navigating so the getToken() call below resolves.
+        await signIn.finalize()
+        const sessionToken: string | null = await getToken()
+        if (!sessionToken) {
+          setError("code", { message: "invalid" })
           return
         }
-        await setActiveSignIn({
-          session: completeSignIn.createdSessionId,
-          redirectUrl: getMyAccountPath(),
-        })
-      } else {
-        console.error("Sign in failed:", completeSignIn)
-        setError("code", { message: "invalid" })
+        await authorizeHousingCounselor(housingCounselorToken, sessionToken)
+        console.log(
+          "TODO: Housing counselor successfully authenticated, TBD banner and applicant view"
+        )
+        void navigate(getMyAccountPath())
+        return
       }
-    } catch (error) {
-      console.error("Code verification error:", error)
+      await signIn.finalize({
+        navigate: ({ decorateUrl }: { decorateUrl: (url: string) => string }) => {
+          void navigate(decorateUrl(getMyAccountPath()))
+        },
+      })
+    } else {
+      console.error("Sign in failed:", signIn)
       setError("code", { message: "invalid" })
     }
   }
 
   const verifySignUpCode = async (code: string) => {
-    if (!signUpLoaded || !signUp) return
-    try {
-      const completeSignUp = await signUp.attemptEmailAddressVerification({
-        code,
-      })
-      if (completeSignUp.status === "complete") {
-        await setActiveSignUp({ session: completeSignUp.createdSessionId })
-        void navigate(getAddPasswordPath())
-      } else {
-        console.error("Account creation failed:", completeSignUp)
-        setError("code", { message: "invalid" })
-      }
-    } catch (error) {
+    if (signUpStatus === "fetching" || !signUp) return
+    const { error } = await signUp.verifications.verifyEmailCode({ code })
+    if (error) {
       console.error("Code verification error:", error)
+      setError("code", { message: "invalid" })
+      return
+    }
+    if (signUp.status === "complete") {
+      await signUp.finalize({
+        navigate: ({ decorateUrl }: { decorateUrl: (url: string) => string }) => {
+          void navigate(decorateUrl(getAddPasswordPath()))
+        },
+      })
+    } else {
+      console.error("Account creation failed:", signUp)
       setError("code", { message: "invalid" })
     }
   }
@@ -137,35 +138,35 @@ const EnterVerificationCodePage = ({
     isSignInFlow ? verifySignInCode(code) : verifySignUpCode(code)
 
   const resendSignInCode = async (): Promise<boolean> => {
-    if (!signInLoaded || !signIn) return false
-    try {
-      const emailCodeFactor = signIn.supportedFirstFactors?.find(
-        (factor) => factor.strategy === "email_code"
-      )
-      if (emailCodeFactor?.strategy !== "email_code") {
-        console.error("Sign in email code factor missing")
-        return false
-      }
-      await signIn.prepareFirstFactor({
-        strategy: "email_code",
-        emailAddressId: emailCodeFactor.emailAddressId,
-      })
-      return true
-    } catch (error) {
+    if (signInStatus === "fetching" || !signIn) return false
+    const { error } = await signIn.emailCode.sendCode()
+    if (error) {
       console.error("Sign in code resend error", error)
       return false
     }
+    if (signIn.status === "needs_first_factor") {
+      return true
+    }
+    console.error("Sign in code resend error", signIn)
+    return false
   }
 
   const resendSignUpCode = async (): Promise<boolean> => {
-    if (!signUpLoaded || !signUp) return false
-    try {
-      await signUp.prepareEmailAddressVerification({ strategy: "email_code" })
-      return true
-    } catch (error) {
+    if (signUpStatus === "fetching" || !signUp) return false
+    const { error } = await signUp.verifications.sendEmailCode()
+    if (error) {
       console.error("Sign up code resend error", error)
       return false
     }
+    if (
+      signUp.status === "missing_requirements" &&
+      signUp.unverifiedFields.includes("email_address") &&
+      signUp.missingFields.length === 0
+    ) {
+      return true
+    }
+    console.error("Sign up code resend error", signUp)
+    return false
   }
 
   const onResend = async () => {

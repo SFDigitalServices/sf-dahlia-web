@@ -24,25 +24,33 @@ interface CreateAnAccountProps {
 
 const CreateAnAccountPage = () => {
   const navigate = useNavigate()
-  const { isLoaded, signUp } = useSignUp()
+  const { signUp, fetchStatus: signUpStatus } = useSignUp()
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<{ email: string }>({ mode: "onTouched", shouldFocusError: false })
   const onSubmit = async ({ email }: { email: string }) => {
-    if (!isLoaded || !signUp) return
+    if (signUpStatus === "fetching" || !signUp) return
     const locale = getCurrentLanguage()
-    try {
-      await signUp.create({
-        emailAddress: email,
-        locale,
-        unsafeMetadata: { locale }, // Account creation can only update public metadata
-      })
-      await signUp.prepareEmailAddressVerification({ strategy: "email_code" })
-      void navigate(getVerificationCodePath(), { state: { email } })
-    } catch (error) {
+    const { error } = await signUp.create({
+      emailAddress: email,
+      locale,
+      unsafeMetadata: { locale }, // Account creation can only update public metadata
+    })
+    if (error) {
       console.error("Account creation error", error)
+      return
+    }
+    await signUp.verifications.sendEmailCode()
+    if (
+      signUp.status === "missing_requirements" &&
+      signUp.unverifiedFields.includes("email_address") &&
+      signUp.missingFields.length === 0
+    ) {
+      void navigate(getVerificationCodePath(), { state: { email } })
+    } else {
+      console.error("Account creation error", signUp)
     }
   }
 
@@ -63,7 +71,7 @@ const CreateAnAccountPage = () => {
             variant="primary"
             size="sm"
             type="submit"
-            disabled={!isLoaded}
+            disabled={signUpStatus === "fetching"}
           >
             {t("createAccount.getCode")}
           </Button>

@@ -35,7 +35,7 @@ const getHousingCounselorToken = () => new URLSearchParams(window.location.searc
 const SignInFlow = () => {
   const navigate = useNavigate()
   const { isLoaded: authLoaded, isSignedIn, getToken } = useAuth()
-  const { isLoaded, signIn, setActive } = useSignIn()
+  const { signIn, fetchStatus: signInStatus } = useSignIn()
   const { client } = useClerk()
   const { unleashFlag: requiredLoginsMessageEnabled } = useFeatureFlag(
     UNLEASH_FLAG.REQUIRED_LOGINS_MESSAGE,
@@ -46,13 +46,13 @@ const SignInFlow = () => {
   const housingCounselorChecked = useRef(false)
   // Default to password sign-in, but prefer the code flow if the user last signed in via email code.
   useEffect(() => {
-    if (!isLoaded || view !== null) return
+    if (signInStatus === "fetching" || view !== null) return
     if (client?.lastAuthenticationStrategy === "email_code") {
       setView("verificationCode")
     } else {
       setView("password")
     }
-  }, [isLoaded, client?.lastAuthenticationStrategy, view])
+  }, [signInStatus, client?.lastAuthenticationStrategy, view])
   const alertRef = useRef<HTMLDivElement>(null)
   const {
     register,
@@ -75,7 +75,7 @@ const SignInFlow = () => {
     const token = getHousingCounselorToken()
     if (!token) return true
     try {
-      const sessionToken = await getToken()
+      const sessionToken: string | null = await getToken()
       if (!sessionToken) {
         setShowError(true)
         return false
@@ -92,30 +92,38 @@ const SignInFlow = () => {
   }
 
   const onSubmit = async ({ email, password }: SignInFields) => {
-    if (!isLoaded || !signIn) return
+    if (signInStatus === "fetching" || !signIn) return
     setShowError(false)
-    try {
-      const { status, createdSessionId } = await signIn.create({ identifier: email, password })
-      if (status !== "complete") {
-        console.error(`Sign in failed: ${status}`)
-        setShowError(true)
-        return
-      }
-      clearHeaders() // Clear headers in case of existing Devise session (while testing)
-      const housingCounselorToken = getHousingCounselorToken()
-      if (housingCounselorToken) {
-        housingCounselorChecked.current = true
-        await setActive({ session: createdSessionId })
-        if (!(await checkHousingCounselorAccess())) return
-        void navigate(getMyAccountPath())
-        return
-      }
-      // TODO: if user has not completed their profile, redirect to profile page
-      await setActive({ session: createdSessionId, redirectUrl: getMyAccountPath() })
-    } catch (error) {
-      console.error("Sign in error", error)
+    const { error } = await signIn.create({ identifier: email, password })
+    if (error) {
+      console.error("Sign in failed:", error)
       setShowError(true)
+      return
     }
+    if (signIn.status !== "complete") {
+      console.error("Sign in error:", signIn)
+      setShowError(true)
+      return
+    }
+    clearHeaders() // Clear headers in case of existing Devise session (while testing)
+    const housingCounselorToken = getHousingCounselorToken()
+    if (housingCounselorToken) {
+      // Guards the useEffect below: finalize() flips isSignedIn, which would otherwise
+      // fire the already-signed-in counselor path and authorize a second time.
+      housingCounselorChecked.current = true
+      // v6 equivalent of v5's setActive({ session }): activate the session without
+      // navigating, so the getToken() call inside checkHousingCounselorAccess resolves.
+      await signIn.finalize()
+      if (!(await checkHousingCounselorAccess())) return
+      void navigate(getMyAccountPath())
+      return
+    }
+    // TODO: if user has not completed their profile, redirect to profile page
+    await signIn.finalize({
+      navigate: ({ decorateUrl }: { decorateUrl: (url: string) => string }) => {
+        void navigate(decorateUrl(getMyAccountPath()))
+      },
+    })
   }
 
   const onError = (submitErrors: { email?: unknown; password?: unknown }) => {
@@ -125,25 +133,21 @@ const SignInFlow = () => {
   }
 
   const onGetCodeSubmit = async ({ email }: SignInFields) => {
-    if (!isLoaded || !signIn) return
+    if (signInStatus === "fetching" || !signIn) return
     setShowError(false)
-    try {
-      const { supportedFirstFactors } = await signIn.create({ identifier: email })
-      const emailCodeFactor = (supportedFirstFactors ?? []).find(
-        (factor) => factor.strategy === "email_code"
-      )
-      if (emailCodeFactor?.strategy !== "email_code") {
-        throw new Error("Email code factor missing")
-      }
-      await signIn.prepareFirstFactor({
-        strategy: "email_code",
-        emailAddressId: emailCodeFactor.emailAddressId,
-      })
+    const { error } = await signIn.create({ identifier: email })
+    if (error) {
+      console.error("Sign in code error", error)
+      setShowError(true)
+      return
+    }
+    await signIn.emailCode.sendCode()
+    if (signIn.status === "needs_first_factor") {
       void navigate(getSignInCodePath(), {
         state: { email, housingCounselorToken: getHousingCounselorToken() },
       })
-    } catch (error) {
-      console.error("Sign in code error", error)
+    } else {
+      console.error("Sign in code error", signIn)
       setShowError(true)
     }
   }
@@ -156,7 +160,7 @@ const SignInFlow = () => {
     housingCounselorChecked.current = true
     void (async () => {
       try {
-        const sessionToken = await getToken()
+        const sessionToken: string | null = await getToken()
         if (!sessionToken) {
           setShowError(true)
           return
@@ -185,7 +189,7 @@ const SignInFlow = () => {
           variant="primary"
           size="sm"
           type="submit"
-          disabled={!isLoaded}
+          disabled={signInStatus === "fetching"}
         >
           {t("createAccount.getCode")}
         </Button>
@@ -198,6 +202,9 @@ const SignInFlow = () => {
 
   const passwordSection = (
     <>
+      {/* onSubmit writes housingCounselorChecked.current; handleSubmit only wraps it
+          into a submit handler and never invokes it during render. */}
+      {/* eslint-disable-next-line react-hooks/refs */}
       <Form className={styles.form} onSubmit={handleSubmit(onSubmit, onError)}>
         <EmailFieldset register={register} />
         <span className={styles.forgotPassword}>
@@ -214,7 +221,7 @@ const SignInFlow = () => {
           variant="primary"
           size="sm"
           type="submit"
-          disabled={!isLoaded}
+          disabled={signInStatus === "fetching"}
         >
           {t("pageTitle.signIn")}
         </Button>
