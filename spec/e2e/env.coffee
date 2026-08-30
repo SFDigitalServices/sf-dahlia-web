@@ -9,8 +9,11 @@ lastFeatureUri = null
 # leave a session behind and take the following features down with it. Scenarios
 # within a feature do share a session on purpose -- autofill signs in and then relies
 # on that session -- so this resets between features, not between scenarios.
-Before (scenario) ->
-  uri = try scenario?.getUri?() catch e then null
+#
+# cucumber 2 hands hooks a ScenarioResult, and its Scenario exposes uri as a plain
+# property rather than a getUri() method.
+Before (scenarioResult) ->
+  uri = scenarioResult?.scenario?.uri
   return if uri and uri is lastFeatureUri
   lastFeatureUri = uri
 
@@ -26,4 +29,7 @@ Before (scenario) ->
   ).then(->
     # Reload so the app picks up the cleared session rather than keeping it in memory.
     PageUtil.goTo('/')
-  )
+  ).catch (err) ->
+    # A reset that fails should not fail the scenario it is preparing.
+    console.log("Session reset failed: #{err}")
+    null
