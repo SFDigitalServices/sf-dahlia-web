@@ -1,4 +1,9 @@
+import { interceptUnleashFlags } from "../support/util"
+
 describe("Forgot Password Page", () => {
+  beforeEach(() => {
+    interceptUnleashFlags()
+  })
   it("should request password reset successfully", () => {
     cy.intercept("POST", "/api/v1/auth/password", {
       statusCode: 200,

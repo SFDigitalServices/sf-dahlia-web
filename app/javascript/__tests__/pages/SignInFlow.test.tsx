@@ -10,6 +10,7 @@ import {
   restoreWindowLocation,
 } from "../__util__/renderUtils"
 import { setupUserContext } from "../__util__/accountUtils"
+import { AUTH_FLOW } from "../../modules/constants"
 import { authorizeHousingCounselor, getProfile } from "../../api/authApiService"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import { UNLEASH_FLAG } from "../../modules/constants"
@@ -226,7 +227,7 @@ describe("<SignInFlow />", () => {
       emailAddressId: "idn_email",
     })
     expect(mockNavigate).toHaveBeenCalledWith("/sign-in/code", {
-      state: { email: "test@test.com", housingCounselorToken: null },
+      state: { email: "test@test.com", housingCounselorToken: null, flow: AUTH_FLOW.SIGN_IN },
     })
   })
 

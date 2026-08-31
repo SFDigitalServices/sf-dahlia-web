@@ -1,8 +1,8 @@
 import React from "react"
-import { useUser } from "@clerk/clerk-react"
+import { useSignIn, useUser } from "@clerk/clerk-react"
 import { screen, waitFor, cleanup } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
-import { useNavigate } from "react-router"
+import { useLocation, useNavigate } from "react-router"
 import AddPassword from "../../../pages/account/add-password"
 import {
   renderAndLoadAsync,
@@ -11,6 +11,7 @@ import {
 } from "../../__util__/renderUtils"
 import { setupUserContext } from "../../__util__/accountUtils"
 import { useFeatureFlag } from "../../../hooks/useFeatureFlag"
+import { AUTH_FLOW } from "../../../modules/constants"
 
 jest.mock("@clerk/clerk-react", () => {
   const Clerk = jest.requireActual("@clerk/clerk-react")
@@ -19,12 +20,14 @@ jest.mock("@clerk/clerk-react", () => {
     ClerkProvider: ({ children }: { children: React.ReactNode }) => children,
     useAuth: jest.fn(),
     useUser: jest.fn(),
+    useSignIn: jest.fn(),
   }
 })
 
 jest.mock("react-router", () => ({
   ...jest.requireActual("react-router"),
   useNavigate: jest.fn(),
+  useLocation: jest.fn(),
 }))
 
 jest.mock("../../../hooks/useFeatureFlag", () => ({
@@ -44,6 +47,14 @@ describe("<AddPassword />", () => {
     mockNavigate = jest.fn()
     mockUpdatePassword = jest.fn().mockResolvedValue(undefined)
     ;(useNavigate as jest.Mock).mockReturnValue(mockNavigate)
+    ;(useLocation as jest.Mock).mockReturnValue({
+      state: { flow: AUTH_FLOW.CREATE_ACCOUNT },
+    })
+    ;(useSignIn as jest.Mock).mockReturnValue({
+      isLoaded: true,
+      signIn: { resetPassword: jest.fn(), status: null },
+      setActive: jest.fn(),
+    })
     ;(useFeatureFlag as jest.Mock).mockReturnValue({ flagsReady: true, unleashFlag: true })
     ;(useUser as jest.Mock).mockReturnValue({
       isLoaded: true,
@@ -177,6 +188,61 @@ describe("<AddPassword />", () => {
 
     await waitFor(() => {
       expect(mockNavigate).toHaveBeenCalledWith("/account")
+    })
+  })
+  describe("Reset password flow", () => {
+    let mockResetPassword: jest.Mock
+    let mockSetActive: jest.Mock
+
+    const renderWithStatus = async (status: string | null) => {
+      cleanup()
+      mockResetPassword = jest.fn()
+      mockSetActive = jest.fn().mockResolvedValue(undefined)
+      ;(useLocation as jest.Mock).mockReturnValue({
+        state: { flow: AUTH_FLOW.FORGOT_PASSWORD },
+      })
+      ;(useSignIn as jest.Mock).mockReturnValue({
+        isLoaded: true,
+        signIn: { resetPassword: mockResetPassword, status },
+        setActive: mockSetActive,
+      })
+      await renderAndLoadAsync(<AddPassword assetPaths={{}} />)
+    }
+
+    it("redirects to forgot password page if reset status is stale", async () => {
+      await renderWithStatus(null)
+      expect(screen.queryByRole("button", { name: /save password/i })).toBeNull()
+    })
+
+    it("resets the password, logs user in, and redirects to account page", async () => {
+      await renderWithStatus("needs_new_password")
+      mockResetPassword.mockResolvedValue({ status: "complete", createdSessionId: "session_789" })
+
+      const user = userEvent.setup()
+      await user.type(screen.getByTestId("password-field"), "abcd1234")
+      await user.click(screen.getByRole("button", { name: /save password/i }))
+
+      await waitFor(() => {
+        expect(mockResetPassword).toHaveBeenCalledWith({ password: "abcd1234" })
+      })
+      expect(mockSetActive).toHaveBeenCalledWith({
+        session: "session_789",
+        redirectUrl: "/account",
+      })
+    })
+
+    it("shows an console error when the reset does not complete", async () => {
+      await renderWithStatus("needs_new_password")
+      jest.spyOn(console, "error").mockImplementation(() => {})
+      mockResetPassword.mockResolvedValue({ status: "needs_second_factor" })
+
+      const user = userEvent.setup()
+      await user.type(screen.getByTestId("password-field"), "abcd1234")
+      await user.click(screen.getByRole("button", { name: /save password/i }))
+
+      await waitFor(() => {
+        expect(screen.getByTestId("error-message")).not.toBeNull()
+      })
     })
   })
 })

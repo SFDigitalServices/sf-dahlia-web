@@ -22,6 +22,7 @@ import { AUTH_FLOW, UNLEASH_FLAG } from "../modules/constants"
 import { useFeatureFlag } from "../hooks/useFeatureFlag"
 import { clearHeaders } from "./token"
 import styles from "./SignInFlow.module.scss"
+import { emailRegex } from "../util/accountUtil"
 
 interface SignInFields {
   email: string
@@ -151,6 +152,7 @@ const SignInFlow = () => {
         state: {
           email,
           housingCounselorToken: getHousingCounselorToken(),
+          flow: AUTH_FLOW.SIGN_IN,
           ...(redirectUrl && { redirectUrl }),
         },
       })
@@ -188,7 +190,9 @@ const SignInFlow = () => {
     return <Navigate to={postSignInRedirectUrl} replace />
   }
 
-  const forgotPasswordPath = createPath(getForgotPasswordPath(), { email: emailField })
+  const forgotPasswordPath = createPath(getForgotPasswordPath(), {
+    email: emailField && emailRegex.test(emailField) ? emailField : "",
+  })
 
   const verificationCodeSection = (
     <>

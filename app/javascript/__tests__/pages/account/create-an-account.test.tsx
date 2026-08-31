@@ -10,6 +10,7 @@ import {
   restoreWindowLocation,
 } from "../../__util__/renderUtils"
 import { setupUserContext } from "../../__util__/accountUtils"
+import { AUTH_FLOW } from "../../../modules/constants"
 
 jest.mock("@clerk/clerk-react", () => {
   const Clerk = jest.requireActual("@clerk/clerk-react")
@@ -98,7 +99,7 @@ describe("<CreateAnAccount />", () => {
       strategy: "email_code",
     })
     expect(mockNavigate).toHaveBeenCalledWith("/create-account/code", {
-      state: { email: "test@example.com" },
+      state: { email: "test@example.com", flow: AUTH_FLOW.CREATE_ACCOUNT },
     })
   })
 })
