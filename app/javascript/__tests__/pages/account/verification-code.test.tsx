@@ -312,7 +312,7 @@ describe("<EnterVerificationCode />", () => {
     const redirectUrl = "/listings/a0W0P00000GlKfBUAV/apply-welcome/intro"
     ;(useLocation as jest.Mock).mockReturnValue({
       pathname: "/sign-in/code",
-      state: { email: "test@example.com", redirectUrl },
+      state: { email: "test@example.com", flow: AUTH_FLOW.SIGN_IN, redirectUrl },
     })
     mockAttemptFirstFactor.mockResolvedValue({
       status: "complete",
