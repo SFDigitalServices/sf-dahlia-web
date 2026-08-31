@@ -13,7 +13,6 @@ import { AUTH_FLOW, UNLEASH_FLAG } from "../../modules/constants"
 import {
   AppPages,
   getAddProfilePath,
-  getCreateAccountPath,
   getForgotPasswordPath,
   getMyAccountPath,
   getSignInPath,
@@ -153,10 +152,6 @@ const AddPassword = (_props: { assetPaths: unknown }) => {
     if (!flagsReady) return
     if (!clerkEnabled) {
       void navigate(getSignInPath())
-      return
-    }
-    if (isLoaded && !isSignedIn && !isForgotPasswordFlow) {
-      void navigate(getCreateAccountPath())
       return
     }
     if (!isLoaded) return

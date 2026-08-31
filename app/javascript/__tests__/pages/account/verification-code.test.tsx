@@ -529,33 +529,34 @@ describe("<EnterVerificationCode />", () => {
       strategy: "reset_password_email_code",
       emailAddressId: "test_email",
     })
-    it("does not redirect a logged-out user who has email from an in-progress flow", () => {
-      expect(mockNavigate).not.toHaveBeenCalled()
-      expect(
-        screen.getByRole("heading", { name: t("createAccount.checkEmail"), level: 1 })
-      ).not.toBeNull()
+  })
+
+  it("does not redirect a logged-out user who has email from an in-progress flow", () => {
+    expect(mockNavigate).not.toHaveBeenCalled()
+    expect(
+      screen.getByRole("heading", { name: t("createAccount.checkEmail"), level: 1 })
+    ).not.toBeNull()
+  })
+
+  it("redirects to add-profile when the user is signed in without a profile", async () => {
+    cleanup()
+    document.title = "DAHLIA San Francisco Housing Portal"
+    setupUserContext({ loggedIn: true, hasProfile: false })
+    await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
+
+    await waitFor(() => {
+      expect(mockNavigate).toHaveBeenCalledWith("/add-profile")
     })
+  })
 
-    it("redirects to add-profile when the user is signed in without a profile", async () => {
-      cleanup()
-      document.title = "DAHLIA San Francisco Housing Portal"
-      setupUserContext({ loggedIn: true, hasProfile: false })
-      await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
+  it("redirects to account when the user has already set up their profile", async () => {
+    cleanup()
+    document.title = "DAHLIA San Francisco Housing Portal"
+    setupUserContext({ loggedIn: true })
+    await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
 
-      await waitFor(() => {
-        expect(mockNavigate).toHaveBeenCalledWith("/add-profile")
-      })
-    })
-
-    it("redirects to account when the user has already set up their profile", async () => {
-      cleanup()
-      document.title = "DAHLIA San Francisco Housing Portal"
-      setupUserContext({ loggedIn: true })
-      await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
-
-      await waitFor(() => {
-        expect(mockNavigate).toHaveBeenCalledWith("/account")
-      })
+    await waitFor(() => {
+      expect(mockNavigate).toHaveBeenCalledWith("/account")
     })
   })
 })
