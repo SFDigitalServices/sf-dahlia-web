@@ -185,9 +185,8 @@ const SignInFlow = () => {
 
   const verificationCodeSection = (
     <>
-      <p className="field-note">{t("signIn.codeDescription")}</p>
       <Form onSubmit={handleSubmit(onGetCodeSubmit)}>
-        <EmailFieldset register={register} errors={errors} />
+        <EmailFieldset register={register} errors={errors} note={t("signIn.codeDescription")} />
         <Button
           className={styles.getCodeButton}
           variant="primary"
@@ -228,7 +227,6 @@ const SignInFlow = () => {
         </Button>
       </Form>
       <Button
-        className={styles.oneTimeCodeLink}
         variant="text"
         size="md"
         onClick={() => {
@@ -269,7 +267,7 @@ const SignInFlow = () => {
         </LoadingState>
       </Card.Section>
       <Card.Section divider="flush">
-        <Heading priority={2} size="lg">
+        <Heading priority={2} size="lg" className={styles.createAccountHeading}>
           {t("signIn.dontHaveAccount")}
         </Heading>
         <p className={styles.createAccountDescription}>{t("signIn.createAccountDescription")}</p>

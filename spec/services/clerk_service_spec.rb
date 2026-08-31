@@ -28,25 +28,26 @@ RSpec.describe ClerkService do
     end
 
     describe '#email' do
-      before do
+      it 'returns the email from Clerk and memoizes it' do
         allow(ClerkService).to receive(:email_address)
           .with(user_id)
           .and_return('test@example.com')
-      end
 
-      it 'returns the email from Clerk' do
         expect(user.email).to eq('test@example.com')
+        expect(user.email).to eq('test@example.com')
+        expect(ClerkService).to have_received(:email_address).once
       end
-
     end
 
     describe '#salesforce_contact_id' do
-      it 'returns the Salesforce contact id from Clerk' do
+      it 'returns the Salesforce contact id from Clerk and memoizes it' do
         allow(ClerkService).to receive(:salesforce_contact_id)
           .with(user_id)
           .and_return('003ABC')
 
         expect(user.salesforce_contact_id).to eq('003ABC')
+        expect(user.salesforce_contact_id).to eq('003ABC')
+        expect(ClerkService).to have_received(:salesforce_contact_id).once
       end
 
       it 'errors when Clerk has no contact id' do
@@ -59,7 +60,6 @@ RSpec.describe ClerkService do
           'User has no Salesforce contact id',
         )
       end
-
     end
   end
 
@@ -104,6 +104,13 @@ RSpec.describe ClerkService do
 
     it 'errors when the user has no email address' do
       allow(clerk_user).to receive(:email_addresses).and_return([])
+
+      expect { described_class.email_address(user_id) }
+        .to raise_error(StandardError, "User #{user_id} has no email address")
+    end
+
+    it 'errors when email_addresses is nil' do
+      allow(clerk_user).to receive(:email_addresses).and_return(nil)
 
       expect { described_class.email_address(user_id) }
         .to raise_error(StandardError, "User #{user_id} has no email address")

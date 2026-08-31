@@ -13,7 +13,7 @@ import {
 import { setupUserContext } from "../../__util__/accountUtils"
 import { useFeatureFlag } from "../../../hooks/useFeatureFlag"
 import { AUTH_FLOW } from "../../../modules/constants"
-import { authorizeHousingCounselor } from "../../../api/authApiService"
+import { authorizeHousingCounselor, getProfile } from "../../../api/authApiService"
 
 jest.mock("@clerk/clerk-react", () => {
   const Clerk = jest.requireActual("@clerk/clerk-react")
@@ -43,6 +43,7 @@ jest.mock("../../../hooks/useFeatureFlag", () => ({
 jest.mock("../../../api/authApiService", () => ({
   ...jest.requireActual("../../../api/authApiService"),
   authorizeHousingCounselor: jest.fn(),
+  getProfile: jest.fn(),
 }))
 const expireResendVerificationCode = () => {
   for (let remaining = 30; remaining > 0; remaining--) {
@@ -98,6 +99,7 @@ describe("<EnterVerificationCode />", () => {
         supportedFirstFactors: [{ strategy: "email_code", emailAddressId: "test_email" }],
       },
     })
+    ;(getProfile as jest.Mock).mockResolvedValue(undefined)
     await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
   })
 
@@ -234,18 +236,18 @@ describe("<EnterVerificationCode />", () => {
     expect(screen.queryByText(t("createAccount.sendAgainIn", { smart_count: 1 }))).toBeNull()
   })
 
-  it("redirects to create account when clerk is disabled", async () => {
+  it("redirects to sign-in when clerk is disabled", async () => {
     cleanup()
     document.title = "DAHLIA San Francisco Housing Portal"
     ;(useFeatureFlag as jest.Mock).mockReturnValue({ flagsReady: true, unleashFlag: false })
     await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
 
     await waitFor(() => {
-      expect(mockNavigate).toHaveBeenCalledWith("/create-account")
+      expect(mockNavigate).toHaveBeenCalledWith("/sign-in")
     })
   })
 
-  it("redirects to create account when email is missing", async () => {
+  it("redirects to sign-in when email is missing", async () => {
     cleanup()
     document.title = "DAHLIA San Francisco Housing Portal"
     ;(useLocation as jest.Mock).mockReturnValue({
@@ -255,7 +257,7 @@ describe("<EnterVerificationCode />", () => {
     await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
 
     await waitFor(() => {
-      expect(mockNavigate).toHaveBeenCalledWith("/create-account")
+      expect(mockNavigate).toHaveBeenCalledWith("/sign-in")
     })
   })
 
@@ -526,6 +528,34 @@ describe("<EnterVerificationCode />", () => {
     expect(mockPrepareFirstFactor).toHaveBeenCalledWith({
       strategy: "reset_password_email_code",
       emailAddressId: "test_email",
+    })
+    it("does not redirect a logged-out user who has email from an in-progress flow", () => {
+      expect(mockNavigate).not.toHaveBeenCalled()
+      expect(
+        screen.getByRole("heading", { name: t("createAccount.checkEmail"), level: 1 })
+      ).not.toBeNull()
+    })
+
+    it("redirects to add-profile when the user is signed in without a profile", async () => {
+      cleanup()
+      document.title = "DAHLIA San Francisco Housing Portal"
+      setupUserContext({ loggedIn: true, hasProfile: false })
+      await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
+
+      await waitFor(() => {
+        expect(mockNavigate).toHaveBeenCalledWith("/add-profile")
+      })
+    })
+
+    it("redirects to account when the user has already set up their profile", async () => {
+      cleanup()
+      document.title = "DAHLIA San Francisco Housing Portal"
+      setupUserContext({ loggedIn: true })
+      await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
+
+      await waitFor(() => {
+        expect(mockNavigate).toHaveBeenCalledWith("/account")
+      })
     })
   })
 })

@@ -1,6 +1,7 @@
 import React from "react"
 import { Card } from "@bloom-housing/ui-seeds"
 import Layout from "./Layout"
+import sharedStyles from "../pages/account/shared-styles.module.scss"
 import styles from "./AuthLayout.module.scss"
 
 export interface AuthLayoutProps {
@@ -12,7 +13,7 @@ const AuthLayout = ({ children, title }: AuthLayoutProps) => (
   <Layout title={title}>
     <section className={styles.authLayoutBackground}>
       <div className={styles.authLayoutContent}>
-        <Card className={styles.card}>{children}</Card>
+        <Card className={`${sharedStyles.card} ${styles.card}`}>{children}</Card>
       </div>
     </section>
   </Layout>

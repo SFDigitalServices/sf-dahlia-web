@@ -2,6 +2,7 @@ import React from "react"
 import { useAuth } from "@clerk/clerk-react"
 import UserContext, { ContextProps } from "../../authentication/context/UserContext"
 import { User } from "../../authentication/user"
+import * as authApiService from "../../api/authApiService"
 
 export const mockProfileStub: User = {
   uid: "abc123",
@@ -23,12 +24,14 @@ export const mockProfileStub: User = {
 export const setupUserContext = ({
   loggedIn,
   mockProfile = mockProfileStub,
+  hasProfile = loggedIn,
 }: {
   loggedIn: boolean
   mockProfile?: ContextProps["profile"]
+  hasProfile?: boolean
 }): ContextProps => {
   const mockContextValue: ContextProps = {
-    profile: loggedIn ? mockProfile : undefined,
+    profile: hasProfile ? mockProfile : undefined,
     signIn: jest.fn(),
     signOut: jest.fn(),
     timeOut: jest.fn(),
@@ -56,9 +59,11 @@ export const setupUserContext = ({
   }
 
   if (loggedIn) {
-    jest
-      .spyOn(jest.requireActual("../../api/authApiService"), "getProfile")
-      .mockResolvedValue(mockProfile ?? mockProfileStub)
+    if (jest.isMockFunction(authApiService.getProfile)) {
+      authApiService.getProfile.mockResolvedValue(mockProfile ?? mockProfileStub)
+    } else {
+      jest.spyOn(authApiService, "getProfile").mockResolvedValue(mockProfile ?? mockProfileStub)
+    }
   }
 
   return mockContextValue

@@ -52,9 +52,12 @@ const CreateAnAccountPage = () => {
         <Heading priority={1} size="2xl">
           {t("createAccount.title.sentenceCase")}
         </Heading>
-        <p className="field-note">{t("createAccount.codeDescription")}</p>
         <Form onSubmit={handleSubmit(onSubmit)}>
-          <EmailFieldset register={register} errors={errors} />
+          <EmailFieldset
+            register={register}
+            errors={errors}
+            note={t("createAccount.codeDescription")}
+          />
           <Button
             className={styles.getCodeButton}
             variant="primary"
@@ -67,7 +70,7 @@ const CreateAnAccountPage = () => {
         </Form>
       </Card.Section>
       <Card.Section divider="flush">
-        <Heading priority={2} size="lg">
+        <Heading priority={2} size="lg" className={styles.alreadyHaveAccount}>
           {t("createAccount.alreadyHaveAccount")}
         </Heading>
         <Button variant="primary-outlined" size="sm" href={getSignInPath()}>

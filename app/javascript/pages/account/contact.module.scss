@@ -3,7 +3,7 @@
 }
 
 .contactSection {
-  padding: var(--seeds-spacer-section) !important;
+  margin-top: var(--seeds-spacer-content);
 }
 
 .icon {
@@ -15,7 +15,7 @@
 .footer {
   display: flex;
   justify-content: center;
-  padding: var(--seeds-spacer-section);
+  padding: var(--seeds-spacer-container);
   background: var(--seeds-color-blue-100);
 }
 
@@ -41,8 +41,6 @@
 }
 
 .phoneSection {
-  padding-inline: var(--seeds-spacer-container);
-
   :global(.fieldset-legend) {
     font-size: var(--seeds-font-size-sm);
     font-weight: var(--seeds-font-weight-semibold);

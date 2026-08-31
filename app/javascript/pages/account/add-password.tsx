@@ -1,22 +1,24 @@
 /* eslint-disable @typescript-eslint/unbound-method */
-import React, { useEffect, useState } from "react"
-import { Navigate, useLocation, useNavigate } from "react-router"
-import { useSignIn, useUser } from "@clerk/clerk-react"
 import { Form, t } from "@bloom-housing/ui-components"
-import { Card, Heading, Button, Message } from "@bloom-housing/ui-seeds"
+import { Button, Card, Heading, Message } from "@bloom-housing/ui-seeds"
+import { useAuth, useSignIn, useUser } from "@clerk/clerk-react"
+import React, { useContext, useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
-import withAppSetup from "../../layouts/withAppSetup"
+import { Navigate, useLocation, useNavigate } from "react-router"
+import UserContext from "../../authentication/context/UserContext"
+import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import AuthLayout from "../../layouts/AuthLayout"
+import withAppSetup from "../../layouts/withAppSetup"
+import { AUTH_FLOW, UNLEASH_FLAG } from "../../modules/constants"
 import {
   AppPages,
+  getAddProfilePath,
   getCreateAccountPath,
   getForgotPasswordPath,
   getMyAccountPath,
-  getAddProfilePath,
+  getSignInPath,
 } from "../../util/routeUtil"
 import styles from "./add-password.module.scss"
-import { useFeatureFlag } from "../../hooks/useFeatureFlag"
-import { AUTH_FLOW, UNLEASH_FLAG } from "../../modules/constants"
 import GetHelp from "./components/GetHelp"
 import PasswordFieldset from "./components/PasswordFieldset"
 import "./styles/account.scss"
@@ -128,17 +130,68 @@ const AddPassword = (_props: { assetPaths: unknown }) => {
   const navigate = useNavigate()
   const { state } = useLocation()
   const flow: AUTH_FLOW = state?.flow
-  const { isLoaded, isSignedIn } = useUser()
-  const { unleashFlag: clerkEnabled } = useFeatureFlag(UNLEASH_FLAG.CLERK_AUTH, false)
   const isForgotPasswordFlow = flow === AUTH_FLOW.FORGOT_PASSWORD
+  const { isLoaded, isSignedIn } = useAuth()
+  const { isLoaded: userLoaded, user } = useUser()
+  const { profile, initialStateLoaded } = useContext(UserContext)
+  const { unleashFlag: clerkEnabled, flagsReady } = useFeatureFlag(UNLEASH_FLAG.CLERK_AUTH, false)
+  const hasPassword = user?.passwordEnabled
 
+  /**
+   * Add password page redirects
+   * --------------------------------
+   * 1. Once the Unleash flags are ready:
+   * If Clerk is not enabled, redirect to sign-in.
+   * 2. Once Clerk is loaded:
+   * If the user is signed out, redirect to sign in.
+   * 3. Once the profile has loaded:
+   * If the user is signed in with a profile, redirect to my account.
+   * 4. Once the Clerk user has loaded:
+   * If the user already has a password, redirect to the add profile page.
+   */
   useEffect(() => {
-    if (!clerkEnabled || (isLoaded && !isSignedIn && !isForgotPasswordFlow)) {
-      void navigate(getCreateAccountPath())
+    if (!flagsReady) return
+    if (!clerkEnabled) {
+      void navigate(getSignInPath())
+      return
     }
-  }, [clerkEnabled, isForgotPasswordFlow, isLoaded, isSignedIn, navigate])
+    if (isLoaded && !isSignedIn && !isForgotPasswordFlow) {
+      void navigate(getCreateAccountPath())
+      return
+    }
+    if (!isLoaded) return
+    if (!isSignedIn) {
+      void navigate(getSignInPath())
+      return
+    }
+    if (!initialStateLoaded) return
+    if (isSignedIn && profile) void navigate(getMyAccountPath())
+    if (!userLoaded) return
+    if (isSignedIn && !profile && hasPassword) void navigate(getAddProfilePath())
+  }, [
+    flagsReady,
+    clerkEnabled,
+    isLoaded,
+    isSignedIn,
+    initialStateLoaded,
+    profile,
+    userLoaded,
+    hasPassword,
+    navigate,
+    isForgotPasswordFlow,
+  ])
 
-  if (!clerkEnabled) {
+  const ready =
+    flagsReady &&
+    clerkEnabled &&
+    isLoaded &&
+    isSignedIn &&
+    initialStateLoaded &&
+    !profile &&
+    userLoaded &&
+    !hasPassword
+
+  if (!ready) {
     return null
   }
 

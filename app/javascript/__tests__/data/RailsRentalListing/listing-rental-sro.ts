@@ -692,3 +692,53 @@ export const sroMixedRentalListing: RailsRentalListing = {
     ],
   },
 }
+
+/**
+ * A reserved-community (senior) SRO listing, modeled on listing a0W7y00000J1wlNEAR.
+ * Salesforce puts the unit summaries of reserved-community listings in `reserved` and leaves
+ * `general` null, so SRO helpers have to read both buckets to see these units at all.
+ */
+export const reservedSroRentalListing: RailsRentalListing = {
+  ...sroRentalListing,
+  Reserved_community_type: "Senior",
+  Reserved_community_minimum_age: 62,
+  reservedDescriptor: [
+    {
+      shortDescription: null,
+      numberOfUnits: 20,
+      name: "Senior",
+      listingId: "a0W4U00000HnVLJUA3",
+    },
+  ],
+  unitSummaries: {
+    general: null,
+    reserved: [
+      {
+        unitType: "SRO",
+        totalUnits: 20,
+        minSquareFt: 158,
+        minRentalMinIncome: 1300,
+        minPriceWithParking: null,
+        minPriceWithoutParking: null,
+        minPercentIncome: null,
+        minOccupancy: 1,
+        minMonthlyRent: 650,
+        minHoaDuesWithParking: null,
+        minHoaDuesWithoutParking: null,
+        maxSquareFt: 259,
+        maxRentalMinIncome: 1500,
+        maxPriceWithParking: null,
+        maxPriceWithoutParking: null,
+        maxPercentIncome: null,
+        maxOccupancy: 2,
+        maxMonthlyRent: 750,
+        maxHoaDuesWithParking: null,
+        maxHoaDuesWithoutParking: null,
+        listingID: "a0W4U00000HnVLJUA3",
+        availability: 15,
+        absoluteMinIncome: 1300,
+        absoluteMaxIncome: 5620,
+      },
+    ],
+  },
+}

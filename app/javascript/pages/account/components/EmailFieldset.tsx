@@ -6,6 +6,7 @@ import { emailRegex } from "../../../util/accountUtil"
 import { ErrorMessages } from "./ErrorSummaryBanner"
 import { ExpandedAccountAxiosError, getErrorMessage, SetErrorArgs } from "./util"
 import { renderInlineMarkup } from "../../../util/languageUtil"
+import styles from "./EmailFieldset.module.scss"
 
 const validateEmail = (email: string) => {
   return emailRegex.test(email)
@@ -81,7 +82,12 @@ interface EmailFieldProps {
 
 const EmailFieldset = ({ register, errors, defaultEmail, onChange, note }: EmailFieldProps) => {
   return (
-    <Fieldset hasError={errors?.email} label={t("label.emailAddress")} note={note}>
+    <Fieldset
+      hasError={errors?.email}
+      label={t("label.emailAddress")}
+      note={note}
+      className={styles.emailFieldset}
+    >
       <Field
         dataTestId="email-field"
         className="pb-4"
