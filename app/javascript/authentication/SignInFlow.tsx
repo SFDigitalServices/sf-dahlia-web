@@ -151,7 +151,7 @@ const SignInFlow = () => {
         state: {
           email,
           housingCounselorToken: getHousingCounselorToken(),
-          ...(redirectUrl && { redirectUrl })
+          ...(redirectUrl && { redirectUrl }),
         },
       })
     } catch (error) {

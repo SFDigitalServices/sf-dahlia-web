@@ -60,14 +60,23 @@ describe("ListingDetailsApply", () => {
     }
   )
 
-  it("redirects signed in users without a completed profile to the add profile page", () => {
-    setupUserContext({ loggedIn: true, hasProfile: false })
+  describe("when Clerk auth is enabled", () => {
+    beforeEach(() => {
+      ;(useFeatureFlag as jest.Mock).mockImplementation((flagName: string) => ({
+        flagsReady: true,
+        unleashFlag: flagName === UNLEASH_FLAG.CLERK_AUTH,
+      }))
+    })
 
-    render(<ListingDetailsApply listing={openSaleListing} />)
+    it("redirects signed in users without a completed profile to the add profile page", () => {
+      setupUserContext({ loggedIn: true, hasProfile: false })
 
-    expect(screen.getByRole("link", { name: /apply online/i })).toHaveAttribute(
-      "href",
-      getAddProfilePath()
-    )
+      render(<ListingDetailsApply listing={openSaleListing} />)
+
+      expect(screen.getByRole("link", { name: /apply online/i })).toHaveAttribute(
+        "href",
+        getAddProfilePath()
+      )
+    })
   })
 })

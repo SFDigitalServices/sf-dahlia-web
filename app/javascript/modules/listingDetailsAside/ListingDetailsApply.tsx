@@ -1,5 +1,4 @@
 import React, { useContext, useState } from "react"
-import { useNavigate } from "react-router"
 import { useAuth } from "@clerk/clerk-react"
 
 import {
@@ -82,21 +81,16 @@ const ApplyButton = ({ href }: { href: string }) => (
 const ClerkApplyOnlineButton = ({ applyLink }: { applyLink: string }) => {
   const { isLoaded, isSignedIn } = useAuth()
   const { profile, initialStateLoaded } = useContext(UserContext)
-  const redirectUrl =
-    isLoaded && isSignedIn && initialStateLoaded && !profile ? getAddProfilePath() : applyLink
+  let redirectOrApplyUrl = ""
+  if (isLoaded && isSignedIn && initialStateLoaded && profile) {
+    redirectOrApplyUrl = applyLink
+  } else if (isLoaded && !isSignedIn) {
+    redirectOrApplyUrl = getSignInPath()
+  } else if (isLoaded && isSignedIn && initialStateLoaded && !profile) {
+    redirectOrApplyUrl = getAddProfilePath()
+  }
 
-  return (
-    <Button
-      styleType={AppearanceStyleType.primary}
-      className={"w-full"}
-      transition={true}
-      onClick={() => {
-        void navigate(getSignInPath(), { state: { redirectUrl } })
-       }}
-     >
-       {t("label.applyOnline")}
-    </Button>  
-  )
+  return <ApplyButton href={redirectOrApplyUrl} />
 }
 
 /**
@@ -130,12 +124,7 @@ const StandardHowToApply = ({
   isHabitatListing: boolean
   acceptingPaperApps: boolean
 }) => {
-  const navigate = useNavigate()
   const [paperApplicationsOpen, setPaperApplicationsOpen] = useState(false)
-  const { unleashFlag: formEngine } = useFeatureFlag(UNLEASH_FLAG.FORM_ENGINE, false)
-  const formUrl = localizedPath(
-    `listings/${listingId}/${formEngine ? "apply/intro" : "apply-welcome/intro"}`
-  )
 
   return (
     <SidebarBlock title={t("listings.apply.howToApply")} priority={2}>

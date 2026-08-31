@@ -303,7 +303,7 @@ describe("<EnterVerificationCode />", () => {
     expect(mockAttemptEmailAddressVerification).not.toHaveBeenCalled()
   })
 
-   it("redirects to the apply intro after sign in when a redirect url is present", async () => {
+  it("redirects to the apply intro after sign in when a redirect url is present", async () => {
     cleanup()
     const redirectUrl = "/listings/a0W0P00000GlKfBUAV/apply-welcome/intro"
     ;(useLocation as jest.Mock).mockReturnValue({
@@ -329,7 +329,7 @@ describe("<EnterVerificationCode />", () => {
     })
     expect(mockAttemptEmailAddressVerification).not.toHaveBeenCalled()
   })
-  
+
   it("authenticates a housing counselor with Clerk after verifying the sign-in code", async () => {
     cleanup()
     const mockGetToken = jest.fn().mockResolvedValue("clerk-session-token")
