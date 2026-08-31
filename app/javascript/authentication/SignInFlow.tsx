@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import React, { useEffect, useRef, useState } from "react"
-import { Navigate, useNavigate } from "react-router"
+import { Navigate, useLocation, useNavigate } from "react-router"
 import { useAuth, useClerk, useSignIn } from "@clerk/clerk-react"
 import { Form, t } from "@bloom-housing/ui-components"
 import { Alert, Button, Card, Heading, Link, LoadingState, Message } from "@bloom-housing/ui-seeds"
@@ -17,7 +17,7 @@ import {
   getSignInCodePath,
 } from "../util/routeUtil"
 import { authorizeHousingCounselor } from "../api/authApiService"
-import { getSfGovUrl, renderInlineMarkup } from "../util/languageUtil"
+import { getSfGovUrl, localizedFormat, renderInlineMarkup } from "../util/languageUtil"
 import { AUTH_FLOW, UNLEASH_FLAG } from "../modules/constants"
 import { useFeatureFlag } from "../hooks/useFeatureFlag"
 import { clearHeaders } from "./token"
@@ -35,6 +35,10 @@ const getHousingCounselorToken = () => new URLSearchParams(window.location.searc
 
 const SignInFlow = () => {
   const navigate = useNavigate()
+  const { state } = useLocation() as { state?: { redirectUrl?: string } }
+  const redirectUrl = state?.redirectUrl
+  const postSignInRedirectUrl = redirectUrl ?? getMyAccountPath()
+  const requiredLoginsDate = localizedFormat(process.env.REQUIRED_LOGINS_DATE ?? "", "LL")
   const { isLoaded: authLoaded, isSignedIn, getToken } = useAuth()
   const { isLoaded, signIn, setActive } = useSignIn()
   const { client } = useClerk()
@@ -103,16 +107,20 @@ const SignInFlow = () => {
         return
       }
       clearHeaders() // Clear headers in case of existing Devise session (while testing)
+
       const housingCounselorToken = getHousingCounselorToken()
       if (housingCounselorToken) {
         housingCounselorChecked.current = true
         await setActive({ session: createdSessionId })
         if (!(await checkHousingCounselorAccess())) return
-        void navigate(getMyAccountPath())
+        void navigate(postSignInRedirectUrl)
         return
       }
-      // TODO: if user has not completed their profile, redirect to profile page
-      await setActive({ session: createdSessionId, redirectUrl: getMyAccountPath() })
+      // TODO: instead of relying on postSignInRedirectUrl, this component should take care handling
+      // incomplete profiles and redirecting to the add-profile page
+
+      // If the user came from the listing detail apply button, redirect to the application intro page
+      await setActive({ session: createdSessionId, redirectUrl: postSignInRedirectUrl })
     } catch (error) {
       console.error("Sign in error", error)
       setShowError(true)
@@ -145,6 +153,7 @@ const SignInFlow = () => {
           email,
           housingCounselorToken: getHousingCounselorToken(),
           flow: AUTH_FLOW.SIGN_IN,
+          ...(redirectUrl && { redirectUrl }),
         },
       })
     } catch (error) {
@@ -175,8 +184,10 @@ const SignInFlow = () => {
     })()
   }, [authLoaded, getToken, isSignedIn, navigate])
 
+  // TODO: instead of relying on postSignInRedirectUrl, this component should take care handling
+  // incomplete profiles and redirecting to the add-profile page
   if (authLoaded && isSignedIn && !getHousingCounselorToken()) {
-    return <Navigate to={getMyAccountPath()} replace />
+    return <Navigate to={postSignInRedirectUrl} replace />
   }
 
   const forgotPasswordPath = createPath(getForgotPasswordPath(), {
@@ -253,6 +264,16 @@ const SignInFlow = () => {
         <Heading priority={1} size="2xl">
           {t("pageTitle.signIn")}
         </Heading>
+        {redirectUrl && requiredLoginsDate && (
+          <Message variant="primary" fullwidth className={styles.requiredLoginNotice}>
+            {renderInlineMarkup(
+              t("signIn.requiredLoginNotice", {
+                date: requiredLoginsDate,
+                url: getSfGovUrl("https://www.sf.gov/get-help-with-your-dahlia-account"),
+              })
+            )}
+          </Message>
+        )}
         {showError && (
           <div ref={alertRef} tabIndex={-1} className={styles.errorAlert}>
             <Alert fullwidth variant="alert" onClose={() => setShowError(false)}>
@@ -274,6 +295,11 @@ const SignInFlow = () => {
         <Button variant="primary-outlined" size="sm" href={getCreateAccountPath()}>
           {t("signIn.createAccount")}
         </Button>
+        {redirectUrl && (
+          <Link href={redirectUrl} className={styles.continueWithoutSigningIn}>
+            {t("b1aWelcomeBack.continueWithoutSigningIn")}
+          </Link>
+        )}
       </Card.Section>
       <GetHelp flow={AUTH_FLOW.SIGN_IN} />
     </AuthLayout>

@@ -23,7 +23,7 @@ import {
 } from "../../util/listingUtil"
 import { getSfGovUrl, renderInlineMarkup } from "../../util/languageUtil"
 import "./ListingDetailsApply.scss"
-import { getAddProfilePath, localizedPath } from "../../util/routeUtil"
+import { getAddProfilePath, getSignInPath, localizedPath } from "../../util/routeUtil"
 import { ListingState } from "../listings/ListingState"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import { UNLEASH_FLAG } from "../constants"
@@ -81,10 +81,16 @@ const ApplyButton = ({ href }: { href: string }) => (
 const ClerkApplyOnlineButton = ({ applyLink }: { applyLink: string }) => {
   const { isLoaded, isSignedIn } = useAuth()
   const { profile, initialStateLoaded } = useContext(UserContext)
-  const href =
-    isLoaded && isSignedIn && initialStateLoaded && !profile ? getAddProfilePath() : applyLink
+  let redirectOrApplyUrl = ""
+  if (isLoaded && isSignedIn && initialStateLoaded && profile) {
+    redirectOrApplyUrl = applyLink
+  } else if (isLoaded && !isSignedIn) {
+    redirectOrApplyUrl = getSignInPath()
+  } else if (isLoaded && isSignedIn && initialStateLoaded && !profile) {
+    redirectOrApplyUrl = getAddProfilePath()
+  }
 
-  return <ApplyButton href={href} />
+  return <ApplyButton href={redirectOrApplyUrl} />
 }
 
 /**
@@ -119,6 +125,7 @@ const StandardHowToApply = ({
   acceptingPaperApps: boolean
 }) => {
   const [paperApplicationsOpen, setPaperApplicationsOpen] = useState(false)
+
   return (
     <SidebarBlock title={t("listings.apply.howToApply")} priority={2}>
       {!isListingRental && (

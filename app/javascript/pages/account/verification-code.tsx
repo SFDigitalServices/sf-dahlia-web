@@ -29,6 +29,7 @@ import { authorizeHousingCounselor } from "../../api/authApiService"
 interface EnterVerificationCodePageProps {
   email: string
   flow: AUTH_FLOW
+  redirectUrl?: string
 }
 
 // The user can send a new verification code every 30 seconds
@@ -41,6 +42,7 @@ const EnterVerificationCodePage = ({
   email,
   flow,
   housingCounselorToken,
+  redirectUrl = getMyAccountPath(),
 }: EnterVerificationCodePageProps & { housingCounselorToken?: string | null }) => {
   const navigate = useNavigate()
   const { isLoaded: signUpLoaded, signUp, setActive: setActiveSignUp } = useSignUp()
@@ -103,7 +105,7 @@ const EnterVerificationCodePage = ({
         }
         await setActiveSignIn({
           session: completeSignIn.createdSessionId,
-          redirectUrl: getMyAccountPath(),
+          redirectUrl,
         })
       } else {
         console.error("Sign in failed:", completeSignIn)
@@ -384,6 +386,7 @@ const EnterVerificationCode = (_props: { assetPaths: unknown }) => {
       email={email}
       flow={flow}
       housingCounselorToken={state?.housingCounselorToken}
+      redirectUrl={state?.redirectUrl}
     />
   )
 }
