@@ -1,21 +1,43 @@
 import React from "react"
 import { render, screen } from "@testing-library/react"
+import { MemoryRouter } from "react-router"
 import { ListingDetailsApply } from "../../../modules/listingDetailsAside/ListingDetailsApply"
 import { openSaleListing } from "../../data/RailsSaleListing/listing-sale-open"
 import { closedRentalListing } from "../../data/RailsRentalListing/listing-rental-closed"
 import { habitatListing } from "../../data/RailsSaleListing/listing-sale-habitat"
 import { setupUserContext } from "../../__util__/accountUtils"
 import { getAddProfilePath } from "../../../util/routeUtil"
+import { useFeatureFlag } from "../../../hooks/useFeatureFlag"
+import { UNLEASH_FLAG } from "../../../modules/constants"
+
+jest.mock("../../../hooks/useFeatureFlag", () => ({
+  useFeatureFlag: jest.fn(),
+}))
 
 describe("ListingDetailsApply", () => {
+  beforeEach(() => {
+    ;(useFeatureFlag as jest.Mock).mockImplementation((flagName: string) => ({
+      flagsReady: true,
+      unleashFlag: flagName === UNLEASH_FLAG.FORM_ENGINE,
+    }))
+  })
+
   it("does not render if listing is closed", () => {
-    const { asFragment } = render(<ListingDetailsApply listing={closedRentalListing} />)
+    const { asFragment } = render(
+      <MemoryRouter>
+        <ListingDetailsApply listing={closedRentalListing} />
+      </MemoryRouter>
+    )
 
     expect(asFragment()).toMatchSnapshot()
   })
 
   it("renders if listing is open", () => {
-    const { asFragment } = render(<ListingDetailsApply listing={openSaleListing} />)
+    const { asFragment } = render(
+      <MemoryRouter>
+        <ListingDetailsApply listing={openSaleListing} />
+      </MemoryRouter>
+    )
 
     expect(asFragment()).toMatchSnapshot()
   })
@@ -28,20 +50,33 @@ describe("ListingDetailsApply", () => {
         Application_Due_Date: "2032-12-02T01:00:00.000+0000",
       }
 
-      const { asFragment } = render(<ListingDetailsApply listing={openHabitatListing} />)
+      const { asFragment } = render(
+        <MemoryRouter>
+          <ListingDetailsApply listing={openHabitatListing} />
+        </MemoryRouter>
+      )
 
       expect(asFragment()).toMatchSnapshot()
     }
   )
 
-  it("redirects signed in users without a completed profile to the add profile page", () => {
-    setupUserContext({ loggedIn: true, hasProfile: false })
+  describe("when Clerk auth is enabled", () => {
+    beforeEach(() => {
+      ;(useFeatureFlag as jest.Mock).mockImplementation((flagName: string) => ({
+        flagsReady: true,
+        unleashFlag: flagName === UNLEASH_FLAG.CLERK_AUTH,
+      }))
+    })
 
-    render(<ListingDetailsApply listing={openSaleListing} />)
+    it("redirects signed in users without a completed profile to the add profile page", () => {
+      setupUserContext({ loggedIn: true, hasProfile: false })
 
-    expect(screen.getByRole("link", { name: /apply online/i })).toHaveAttribute(
-      "href",
-      getAddProfilePath()
-    )
+      render(<ListingDetailsApply listing={openSaleListing} />)
+
+      expect(screen.getByRole("link", { name: /apply online/i })).toHaveAttribute(
+        "href",
+        getAddProfilePath()
+      )
+    })
   })
 })
