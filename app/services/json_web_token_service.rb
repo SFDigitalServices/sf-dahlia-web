@@ -5,10 +5,12 @@ class JsonWebTokenService
   ALGORITHM = ENV.fetch('JWT_ALGORITHM', nil)
   ALLOWED_ALGORITHMS = [ALGORITHM].compact.freeze
 
-  def self.encode_token(params)
+  def self.encode_token(params, exp: nil)
     raise InvalidTokenError, 'JWT is not configured' if SECRET_KEY.blank? || ALGORITHM.blank?
 
-    JWT.encode({ data: params }, SECRET_KEY, ALGORITHM)
+    payload = { data: params }
+    payload[:exp] = exp.to_i if exp
+    JWT.encode(payload, SECRET_KEY, ALGORITHM)
   end
 
   def self.decode_token(token)

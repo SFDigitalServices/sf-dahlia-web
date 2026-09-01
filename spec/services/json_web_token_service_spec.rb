@@ -17,6 +17,24 @@ RSpec.describe JsonWebTokenService do
 
       expect(decoded).to include('appId' => 'a0o123')
     end
+
+    it 'omits the exp claim when not given' do
+      token = described_class.encode_token({ 'appId' => 'a0o123' })
+      payload, = JWT.decode(token, described_class::SECRET_KEY, true,
+                            algorithms: described_class::ALLOWED_ALGORITHMS)
+
+      expect(payload).not_to have_key('exp')
+    end
+
+    it 'includes a top-level exp claim when given' do
+      exp = 1.hour.from_now
+      token = described_class.encode_token({ 'appId' => 'a0o123' }, exp:)
+      payload, = JWT.decode(token, described_class::SECRET_KEY, true,
+                            algorithms: described_class::ALLOWED_ALGORITHMS)
+
+      expect(payload['exp']).to eq(exp.to_i)
+      expect(described_class.decode_token(token)).to include('appId' => 'a0o123')
+    end
   end
 
   describe '.decode_token' do
