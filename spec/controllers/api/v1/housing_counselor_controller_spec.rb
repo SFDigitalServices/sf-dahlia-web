@@ -67,6 +67,27 @@ RSpec.describe Api::V1::HousingCounselorController, type: :controller do
       )
     end
 
+    it 'sets an httponly hc_session cookie with the hc and applicant contact IDs' do
+      # Outer `before` stubs decode_token for the inbound delegate-link token only;
+      # re-stub so the cookie's own JWT still round-trips through the real service.
+      allow(JsonWebTokenService).to receive(:decode_token).and_call_original
+      allow(JsonWebTokenService).to receive(:decode_token)
+        .with(token).and_return('contactId' => applicant_contact_id)
+      allow(Force::HousingCounselorService).to receive(:authorize_access).and_return(
+        {
+          applicant_contact_id:,
+          counselor_contact_id: contact_id,
+        },
+      )
+
+      post :access, params: { t: token }
+
+      expect(cookies[:hc_session]).to be_present
+      decoded = JsonWebTokenService.decode_token(cookies[:hc_session])
+      expect(decoded).to eq('hcId' => contact_id, 'appId' => applicant_contact_id)
+      expect(response.headers['Set-Cookie']).to include('HttpOnly')
+    end
+
     it 'returns unauthorized when the JWT is missing contactId' do
       allow(JsonWebTokenService).to receive(:decode_token)
         .with(token).and_return('contactId' => nil)
@@ -75,6 +96,7 @@ RSpec.describe Api::V1::HousingCounselorController, type: :controller do
 
       expect(response).to have_http_status(:unauthorized)
       expect(JSON.parse(response.body)).to eq('error' => 'unauthorized')
+      expect(cookies[:hc_session]).to be_nil
     end
 
     it 'returns unauthorized when the JWT is invalid' do
@@ -85,6 +107,7 @@ RSpec.describe Api::V1::HousingCounselorController, type: :controller do
 
       expect(response).to have_http_status(:unauthorized)
       expect(JSON.parse(response.body)).to eq('error' => 'unauthorized')
+      expect(cookies[:hc_session]).to be_nil
     end
 
     it 'returns forbidden when the housing counselor does not have access' do
@@ -94,6 +117,7 @@ RSpec.describe Api::V1::HousingCounselorController, type: :controller do
 
       expect(response).to have_http_status(:forbidden)
       expect(JSON.parse(response.body)).to eq('error' => 'forbidden')
+      expect(cookies[:hc_session]).to be_nil
     end
   end
 end

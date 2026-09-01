@@ -2,7 +2,12 @@
 
 class Api::V1::HousingCounselorController < ApiController
   include Clerk::Authenticatable
+  include ActionController::Cookies
+
   before_action :authenticate_clerk_user!
+
+  HC_SESSION_COOKIE_NAME = :hc_session
+  HC_SESSION_DURATION = 2.hours
 
   def agencies
     render json: { agencies: Force::HousingCounselorService.agencies }
@@ -38,6 +43,7 @@ class Api::V1::HousingCounselorController < ApiController
       "Access granted for applicant contact ID=#{result[:applicant_contact_id]} " \
       "and housing counselor contact ID=#{result[:counselor_contact_id]}",
     )
+    write_hc_session_cookie(result)
     render json: { success: true }
   rescue JsonWebTokenService::InvalidTokenError => e
     Rails.logger.info(
@@ -48,6 +54,23 @@ class Api::V1::HousingCounselorController < ApiController
   end
 
   private
+
+  def write_hc_session_cookie(result)
+    token = JsonWebTokenService.encode_token(
+      {
+        'hcId' => result[:counselor_contact_id],
+        'appId' => result[:applicant_contact_id],
+      },
+      exp: HC_SESSION_DURATION.from_now,
+    )
+    cookies[HC_SESSION_COOKIE_NAME] = {
+      value: token,
+      httponly: true,
+      secure: Rails.env.production?,
+      same_site: :lax,
+      expires: HC_SESSION_DURATION.from_now,
+    }
+  end
 
   def authenticate_clerk_user!
     @clerk_user_id = clerk&.user_id
