@@ -31,7 +31,9 @@ const TableSubHeader = ({ listing }: TableSubHeaderProps) => {
               <li>{t("listings.customListingType.educator.priorityUnits")}</li>
             </>
           )}
-          {isPlusHousing(listing) && <li>{t("listings.prioritiesDescriptor.plus")}</li>}
+          {isPlusHousing(listing) && (
+            <li>{t("listings.customListingType.plusHousing.priorityUnits.directory")}</li>
+          )}
           {priorityTypes && priorityTypes.map((name) => <li key={name}>{name}</li>)}
         </ul>
       </div>

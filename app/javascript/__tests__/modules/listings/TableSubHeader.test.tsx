@@ -4,6 +4,7 @@ import TableSubHeader from "../../../modules/listings/TableSubHeader"
 import { t } from "@bloom-housing/ui-components"
 import { rentalEducatorListing2 } from "../../data/RailsRentalListing/listing-rental-educator"
 import RailsRentalListing from "../../../api/types/rails/listings/RailsRentalListing"
+import { CUSTOM_LISTING_TYPES } from "../../../modules/constants"
 
 describe("TableSubHeader", () => {
   it("renders the priority units for Shirley Chisholm listing 2", async () => {
@@ -69,18 +70,20 @@ describe("TableSubHeader", () => {
 
   it("renders the priority units for Plus Housing listing", async () => {
     const testListing = {
-      Custom_Listing_Type: "Plus Housing Program",
+      Custom_Listing_Type: CUSTOM_LISTING_TYPES.PLUS_HOUSING,
     }
     const { asFragment, findByText } = render(
       <TableSubHeader listing={testListing as RailsRentalListing} />
     )
-    expect(await findByText(t("listings.prioritiesDescriptor.plus"))).toBeDefined()
+    expect(
+      await findByText(t("listings.customListingType.plusHousing.priorityUnits.directory"))
+    ).toBeDefined()
     expect(asFragment()).toMatchSnapshot()
   })
 
   it("renders the priority units for Plus Housing listing with other priority units", async () => {
     const testListing = {
-      Custom_Listing_Type: "Plus Housing Program",
+      Custom_Listing_Type: CUSTOM_LISTING_TYPES.PLUS_HOUSING,
       prioritiesDescriptor: [
         {
           name: "Mobility/Hearing/Vision impairments",
@@ -90,7 +93,9 @@ describe("TableSubHeader", () => {
     const { asFragment, findByText } = render(
       <TableSubHeader listing={testListing as RailsRentalListing} />
     )
-    expect(await findByText(t("listings.prioritiesDescriptor.plus"))).toBeDefined()
+    expect(
+      await findByText(t("listings.customListingType.plusHousing.priorityUnits.directory"))
+    ).toBeDefined()
     expect(await findByText(t("listings.prioritiesDescriptor.mobilityHearingVision"))).toBeDefined()
     expect(asFragment()).toMatchSnapshot()
   })
