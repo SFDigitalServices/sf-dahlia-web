@@ -74,5 +74,33 @@ RSpec.describe JsonWebTokenService do
         hash_including(algorithms: described_class::ALLOWED_ALGORITHMS),
       )
     end
+
+    context 'expiration handling' do
+      let(:expired_token) do
+        described_class.encode_token({ 'appId' => 'a0o123' }, exp: 1.hour.ago)
+      end
+      let(:live_token) do
+        described_class.encode_token({ 'appId' => 'a0o123' }, exp: 1.hour.from_now)
+      end
+
+      it 'defaults to not verifying expiration, so an expired token still decodes' do
+        expect(described_class.decode_token(expired_token)).to eq('appId' => 'a0o123')
+      end
+
+      it 'raises ExpiredTokenError for an expired token when verify_expiration: true' do
+        expect { described_class.decode_token(expired_token, verify_expiration: true) }
+          .to raise_error(JsonWebTokenService::ExpiredTokenError, 'Expired JWT')
+      end
+
+      it 'decodes normally for a live token when verify_expiration: true' do
+        expect(described_class.decode_token(live_token, verify_expiration: true))
+          .to eq('appId' => 'a0o123')
+      end
+
+      it 'ExpiredTokenError is a kind of InvalidTokenError' do
+        expect(JsonWebTokenService::ExpiredTokenError.ancestors)
+          .to include(JsonWebTokenService::InvalidTokenError)
+      end
+    end
   end
 end
