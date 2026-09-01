@@ -8,8 +8,8 @@ import { DeepMap, FieldError, FieldValues, useForm } from "react-hook-form"
 import withAppSetup from "../../layouts/withAppSetup"
 import AuthLayout from "../../layouts/AuthLayout"
 import UserContext from "../../authentication/context/UserContext"
-import { AppPages, getCreateAccountPath, getMyAccountPath } from "../../util/routeUtil"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
+import { AppPages, getMyAccountPath, getSignInPath } from "../../util/routeUtil"
 import { AUTH_FLOW, UNLEASH_FLAG } from "../../modules/constants"
 import NameFieldset, { nameSortOrder } from "./components/NameFieldset"
 import DOBFieldset, {
@@ -90,7 +90,7 @@ const AddProfilePage = () => {
 
   return (
     <AuthLayout title={t("createAccount.finishSettingUp")}>
-      <Card.Section divider="flush" className={sharedStyles.header}>
+      <Card.Section divider="inset" className={sharedStyles.header}>
         <div className={sharedStyles.iconBackground}>
           <Icon size="2xl" symbol="profile" />
         </div>
@@ -121,7 +121,7 @@ const AddProfilePage = () => {
         <Card.Section divider="inset">
           <NameFieldset register={register} errors={errors} note={t("createAccount.legalName")} />
         </Card.Section>
-        <Card.Section divider="inset">
+        <Card.Section divider="flush">
           <DOBFieldset
             required
             register={register}
@@ -135,7 +135,6 @@ const AddProfilePage = () => {
           </Button>
         </Card.Section>
       </Form>
-      <hr />
       <GetHelp flow={AUTH_FLOW.CREATE_ACCOUNT} />
     </AuthLayout>
   )
@@ -144,15 +143,38 @@ const AddProfilePage = () => {
 const AddProfile = (_props: { assetPaths: unknown }) => {
   const navigate = useNavigate()
   const { isLoaded, isSignedIn } = useAuth()
-  const { unleashFlag: clerkEnabled } = useFeatureFlag(UNLEASH_FLAG.CLERK_AUTH, false)
+  const { profile, initialStateLoaded } = useContext(UserContext)
+  const { unleashFlag: clerkEnabled, flagsReady } = useFeatureFlag(UNLEASH_FLAG.CLERK_AUTH, false)
 
+  /**
+   * Add profile page redirects
+   * --------------------------------
+   * 1. Once the Unleash flags are ready:
+   * If Clerk is not enabled, redirect to sign-in.
+   * 2. Once Clerk is loaded:
+   * If the user is signed out, redirect to sign in.
+   * 3. Once the profile has loaded:
+   * If the user is signed in with a profile, redirect to my account.
+   */
   useEffect(() => {
-    if (!clerkEnabled || (isLoaded && !isSignedIn)) {
-      void navigate(getCreateAccountPath())
+    if (!flagsReady) return
+    if (!clerkEnabled) {
+      void navigate(getSignInPath())
+      return
     }
-  }, [clerkEnabled, isLoaded, isSignedIn, navigate])
+    if (!isLoaded) return
+    if (!isSignedIn) {
+      void navigate(getSignInPath())
+      return
+    }
+    if (!initialStateLoaded) return
+    if (isSignedIn && profile) void navigate(getMyAccountPath())
+  }, [flagsReady, clerkEnabled, isLoaded, isSignedIn, initialStateLoaded, profile, navigate])
 
-  if (!clerkEnabled) {
+  const ready =
+    flagsReady && clerkEnabled && isLoaded && isSignedIn && initialStateLoaded && !profile
+
+  if (!ready) {
     return null
   }
 

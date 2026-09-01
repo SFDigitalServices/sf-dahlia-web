@@ -3,7 +3,10 @@ import { cleanup, waitFor } from "@testing-library/react"
 import ListingDetail from "../../../../javascript/pages/listings/listing-detail"
 import { openRentalListing } from "../../data/RailsRentalListing/listing-rental-open"
 import { habitatListing } from "../../data/RailsSaleListing/listing-sale-habitat"
-import { sroRentalListing } from "../../data/RailsRentalListing/listing-rental-sro"
+import {
+  reservedSroRentalListing,
+  sroRentalListing,
+} from "../../data/RailsRentalListing/listing-rental-sro"
 import { renderAndLoadAsync } from "../../__util__/renderUtils"
 import { resetAccordionUuid } from "@bloom-housing/ui-components"
 import TagManager from "react-gtm-module"
@@ -78,6 +81,26 @@ describe("Listing Detail", () => {
 
     expect(await findAllByText(sroRentalListing.Name)).toBeDefined()
     expect(asFragment()).toMatchSnapshot()
+  })
+
+  it("renders the SRO info card when the sro units are in the reserved unit summaries", async () => {
+    axios.get.mockResolvedValue({
+      data: {
+        listing: reservedSroRentalListing,
+        units: reservedSroRentalListing.Units,
+        ami: [],
+      },
+    })
+    const { findAllByText, findByText } = await renderAndLoadAsync(<ListingDetail assetPaths="/" />)
+
+    expect(await findAllByText(reservedSroRentalListing.Name)).toBeDefined()
+    expect(await findByText("Single Room Occupancy")).toBeDefined()
+    // maxOccupancy is 2, so the multiple occupancy description applies
+    expect(
+      await findByText(
+        "This property offers single rooms for up to 2 people only. Tenants may share bathrooms, and sometimes kitchen facilities."
+      )
+    ).toBeDefined()
   })
 
   it("initializes Google Tag Manager for a sales listing", async () => {

@@ -70,6 +70,7 @@ const PAGE_ROUTES = [
   [AddPassword, "/add-password"],
   [AddProfile, "/add-profile"],
   [ForgotPassword, "/forgot-password"],
+  [EnterVerificationCode, "/forgot-password/code"],
   [ResetPassword, "/reset-password"],
   [HousingCounselors, "/housing-counselors"],
   [GetAssistance, "/get-assistance"],

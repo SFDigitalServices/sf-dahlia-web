@@ -35,6 +35,7 @@ generatedWebpackConfig.plugins.unshift(
       TOP_MESSAGE: JSON.stringify(process.env.TOP_MESSAGE),
       TOP_MESSAGE_TYPE: JSON.stringify(process.env.TOP_MESSAGE_TYPE),
       TOP_MESSAGE_INVERTED: JSON.stringify(process.env.TOP_MESSAGE_INVERTED),
+      REQUIRED_LOGINS_DATE: JSON.stringify(process.env.REQUIRED_LOGINS_DATE),
       GOOGLE_TAG_MANAGER_KEY: JSON.stringify(process.env.GOOGLE_TAG_MANAGER_KEY),
       UNLEASH_URL: JSON.stringify(process.env.UNLEASH_URL),
       UNLEASH_TOKEN: JSON.stringify(process.env.UNLEASH_TOKEN),
@@ -44,6 +45,7 @@ generatedWebpackConfig.plugins.unshift(
       FCFS_FORMASSEMBLY_URL_ZH: JSON.stringify(process.env.FCFS_FORMASSEMBLY_URL_ZH),
       FCFS_FORMASSEMBLY_URL_TL: JSON.stringify(process.env.FCFS_FORMASSEMBLY_URL_TL),
       CLERK_PUBLISHABLE_KEY: JSON.stringify(process.env.CLERK_PUBLISHABLE_KEY),
+      REQUIRED_LOGINS_DATE: JSON.stringify(process.env.REQUIRED_LOGINS_DATE),
     },
   })
 )

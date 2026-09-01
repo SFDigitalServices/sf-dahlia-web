@@ -195,19 +195,21 @@ const DahliaSiteHeader = (props: SiteHeaderProps) => {
     return (
       <span
         className={`site-header__dropdown-title-content${
-          showTitle ? ` ${styles["dropdown-title-content-spaced"]}` : ""
+          showTitle && Boolean(profile) ? ` ${styles["dropdown-title-content-spaced"]}` : ""
         }`}
       >
-        <span
-          className={`${styles["account-avatar"]} ${
-            showTitle ? styles["account-avatar-with-title"] : styles["account-avatar-mobile"]
-          }`}
-        >
-          {profile?.firstName?.[0] ?? ""}
-          {profile?.lastName?.[0] ?? ""}
-        </span>
+        {Boolean(profile) && (
+          <span
+            className={`${styles["account-avatar"]} ${
+              showTitle ? styles["account-avatar-with-title"] : styles["account-avatar-mobile"]
+            }`}
+          >
+            {profile?.firstName?.[0] ?? ""}
+            {profile?.lastName?.[0] ?? ""}
+          </span>
+        )}
         <span className="site-header__dropdown-title-with-icon">
-          {showTitle && (
+          {(showTitle || !profile) && (
             <>
               {lastSpace !== -1 && (
                 <span className="site-header__dropdown-title-split">

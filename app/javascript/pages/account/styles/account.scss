@@ -29,9 +29,9 @@
   font-size: 8px;
 }
 
-// note for choosing a new password
 .form-fieldset > .field-note {
-  font-size: 13px;
+  font-family: var(--seeds-font-alt-sans);
+  color: var(--seeds-text-color);
 }
 
 // forgot password link

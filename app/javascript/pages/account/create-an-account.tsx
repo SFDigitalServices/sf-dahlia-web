@@ -40,7 +40,7 @@ const CreateAnAccountPage = () => {
         unsafeMetadata: { locale }, // Account creation can only update public metadata
       })
       await signUp.prepareEmailAddressVerification({ strategy: "email_code" })
-      void navigate(getVerificationCodePath(), { state: { email } })
+      void navigate(getVerificationCodePath(), { state: { email, flow: AUTH_FLOW.CREATE_ACCOUNT } })
     } catch (error) {
       console.error("Account creation error", error)
     }
@@ -52,9 +52,12 @@ const CreateAnAccountPage = () => {
         <Heading priority={1} size="2xl">
           {t("createAccount.title.sentenceCase")}
         </Heading>
-        <p className="field-note">{t("createAccount.codeDescription")}</p>
         <Form onSubmit={handleSubmit(onSubmit)}>
-          <EmailFieldset register={register} errors={errors} />
+          <EmailFieldset
+            register={register}
+            errors={errors}
+            note={t("createAccount.codeDescription")}
+          />
           <Button
             className={styles.getCodeButton}
             variant="primary"
@@ -67,7 +70,7 @@ const CreateAnAccountPage = () => {
         </Form>
       </Card.Section>
       <Card.Section divider="flush">
-        <Heading priority={2} size="lg">
+        <Heading priority={2} size="lg" className={styles.alreadyHaveAccount}>
           {t("createAccount.alreadyHaveAccount")}
         </Heading>
         <Button variant="primary-outlined" size="sm" href={getSignInPath()}>
