@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import React, { useEffect, useRef, useState } from "react"
-import { Navigate, useNavigate } from "react-router"
+import { Navigate, useLocation, useNavigate } from "react-router"
 import { useAuth, useClerk, useSignIn } from "@clerk/clerk-react"
 import { Form, t } from "@bloom-housing/ui-components"
 import { Alert, Button, Card, Heading, Link, LoadingState, Message } from "@bloom-housing/ui-seeds"
@@ -16,11 +16,13 @@ import {
   getMyAccountPath,
   getSignInCodePath,
 } from "../util/routeUtil"
-import { getSfGovUrl, renderInlineMarkup } from "../util/languageUtil"
+import { authorizeHousingCounselor } from "../api/authApiService"
+import { getSfGovUrl, localizedFormat, renderInlineMarkup } from "../util/languageUtil"
 import { AUTH_FLOW, UNLEASH_FLAG } from "../modules/constants"
 import { useFeatureFlag } from "../hooks/useFeatureFlag"
 import { clearHeaders } from "./token"
 import styles from "./SignInFlow.module.scss"
+import { emailRegex } from "../util/accountUtil"
 
 interface SignInFields {
   email: string
@@ -29,9 +31,15 @@ interface SignInFields {
 
 type SignInView = "verificationCode" | "password"
 
+const getHousingCounselorToken = () => new URLSearchParams(window.location.search).get("t")
+
 const SignInFlow = () => {
   const navigate = useNavigate()
-  const { isLoaded: authLoaded, isSignedIn } = useAuth()
+  const { state } = useLocation() as { state?: { redirectUrl?: string } }
+  const redirectUrl = state?.redirectUrl
+  const postSignInRedirectUrl = redirectUrl ?? getMyAccountPath()
+  const requiredLoginsDate = localizedFormat(process.env.REQUIRED_LOGINS_DATE ?? "", "LL")
+  const { isLoaded: authLoaded, isSignedIn, getToken } = useAuth()
   const { isLoaded, signIn, setActive } = useSignIn()
   const { client } = useClerk()
   const { unleashFlag: requiredLoginsMessageEnabled } = useFeatureFlag(
@@ -40,6 +48,7 @@ const SignInFlow = () => {
   )
   const [showError, setShowError] = useState(false)
   const [view, setView] = useState<SignInView | null>(null)
+  const housingCounselorChecked = useRef(false)
   // Default to password sign-in, but prefer the code flow if the user last signed in via email code.
   useEffect(() => {
     if (!isLoaded || view !== null) return
@@ -67,6 +76,26 @@ const SignInFlow = () => {
     }
   }, [showError])
 
+  const checkHousingCounselorAccess = async () => {
+    const token = getHousingCounselorToken()
+    if (!token) return true
+    try {
+      const sessionToken = await getToken()
+      if (!sessionToken) {
+        setShowError(true)
+        return false
+      }
+      await authorizeHousingCounselor(token, sessionToken)
+      console.log(
+        "TODO: Housing counselor successfully authenticated, TBD banner and applicant view"
+      )
+      return true
+    } catch {
+      setShowError(true)
+      return false
+    }
+  }
+
   const onSubmit = async ({ email, password }: SignInFields) => {
     if (!isLoaded || !signIn) return
     setShowError(false)
@@ -78,8 +107,20 @@ const SignInFlow = () => {
         return
       }
       clearHeaders() // Clear headers in case of existing Devise session (while testing)
-      // TODO: if user has not completed their profile, redirect to profile page
-      await setActive({ session: createdSessionId, redirectUrl: getMyAccountPath() })
+
+      const housingCounselorToken = getHousingCounselorToken()
+      if (housingCounselorToken) {
+        housingCounselorChecked.current = true
+        await setActive({ session: createdSessionId })
+        if (!(await checkHousingCounselorAccess())) return
+        void navigate(postSignInRedirectUrl)
+        return
+      }
+      // TODO: instead of relying on postSignInRedirectUrl, this component should take care handling
+      // incomplete profiles and redirecting to the add-profile page
+
+      // If the user came from the listing detail apply button, redirect to the application intro page
+      await setActive({ session: createdSessionId, redirectUrl: postSignInRedirectUrl })
     } catch (error) {
       console.error("Sign in error", error)
       setShowError(true)
@@ -107,24 +148,56 @@ const SignInFlow = () => {
         strategy: "email_code",
         emailAddressId: emailCodeFactor.emailAddressId,
       })
-      void navigate(getSignInCodePath(), { state: { email } })
+      void navigate(getSignInCodePath(), {
+        state: {
+          email,
+          housingCounselorToken: getHousingCounselorToken(),
+          flow: AUTH_FLOW.SIGN_IN,
+          ...(redirectUrl && { redirectUrl }),
+        },
+      })
     } catch (error) {
       console.error("Sign in code error", error)
       setShowError(true)
     }
   }
 
-  if (authLoaded && isSignedIn) {
-    return <Navigate to={getMyAccountPath()} replace />
+  useEffect(() => {
+    if (!authLoaded || !isSignedIn || housingCounselorChecked.current) return
+    const token = getHousingCounselorToken()
+    if (!token) return
+
+    housingCounselorChecked.current = true
+    void (async () => {
+      try {
+        const sessionToken = await getToken()
+        if (!sessionToken) {
+          setShowError(true)
+          return
+        }
+        await authorizeHousingCounselor(token, sessionToken)
+        console.log("TODO: Housing counselor already signed in, TBD banner and applicant view")
+        void navigate(getMyAccountPath())
+      } catch {
+        setShowError(true)
+      }
+    })()
+  }, [authLoaded, getToken, isSignedIn, navigate])
+
+  // TODO: instead of relying on postSignInRedirectUrl, this component should take care handling
+  // incomplete profiles and redirecting to the add-profile page
+  if (authLoaded && isSignedIn && !getHousingCounselorToken()) {
+    return <Navigate to={postSignInRedirectUrl} replace />
   }
 
-  const forgotPasswordPath = createPath(getForgotPasswordPath(), { email: emailField })
+  const forgotPasswordPath = createPath(getForgotPasswordPath(), {
+    email: emailField && emailRegex.test(emailField) ? emailField : "",
+  })
 
   const verificationCodeSection = (
     <>
-      <p className="field-note">{t("signIn.codeDescription")}</p>
       <Form onSubmit={handleSubmit(onGetCodeSubmit)}>
-        <EmailFieldset register={register} errors={errors} />
+        <EmailFieldset register={register} errors={errors} note={t("signIn.codeDescription")} />
         <Button
           className={styles.getCodeButton}
           variant="primary"
@@ -165,7 +238,6 @@ const SignInFlow = () => {
         </Button>
       </Form>
       <Button
-        className={styles.oneTimeCodeLink}
         variant="text"
         size="md"
         onClick={() => {
@@ -192,6 +264,16 @@ const SignInFlow = () => {
         <Heading priority={1} size="2xl">
           {t("pageTitle.signIn")}
         </Heading>
+        {redirectUrl && requiredLoginsDate && (
+          <Message variant="primary" fullwidth className={styles.requiredLoginNotice}>
+            {renderInlineMarkup(
+              t("signIn.requiredLoginNotice", {
+                date: requiredLoginsDate,
+                url: getSfGovUrl("https://www.sf.gov/get-help-with-your-dahlia-account"),
+              })
+            )}
+          </Message>
+        )}
         {showError && (
           <div ref={alertRef} tabIndex={-1} className={styles.errorAlert}>
             <Alert fullwidth variant="alert" onClose={() => setShowError(false)}>
@@ -206,13 +288,18 @@ const SignInFlow = () => {
         </LoadingState>
       </Card.Section>
       <Card.Section divider="flush">
-        <Heading priority={2} size="lg">
+        <Heading priority={2} size="lg" className={styles.createAccountHeading}>
           {t("signIn.dontHaveAccount")}
         </Heading>
         <p className={styles.createAccountDescription}>{t("signIn.createAccountDescription")}</p>
         <Button variant="primary-outlined" size="sm" href={getCreateAccountPath()}>
           {t("signIn.createAccount")}
         </Button>
+        {redirectUrl && (
+          <Link href={redirectUrl} className={styles.continueWithoutSigningIn}>
+            {t("b1aWelcomeBack.continueWithoutSigningIn")}
+          </Link>
+        )}
       </Card.Section>
       <GetHelp flow={AUTH_FLOW.SIGN_IN} />
     </AuthLayout>

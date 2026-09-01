@@ -1,4 +1,4 @@
-import { INVITE_TO_X } from "../modules/constants"
+import { AUTH_FLOW, INVITE_TO_X } from "../modules/constants"
 import {
   getCurrentLanguage,
   getPathWithoutLanguagePrefix,
@@ -89,7 +89,23 @@ export const getAddProfilePath = localizedPathGetter("/add-profile")
 export const getSignInPath = localizedPathGetter("/sign-in")
 export const getSignInCodePath = localizedPathGetter("/sign-in/code")
 export const getForgotPasswordPath = localizedPathGetter("/forgot-password")
+export const getForgotPasswordCodePath = localizedPathGetter("/forgot-password/code")
 export const getResetPasswordPath = localizedPathGetter("/reset-password")
+
+// Auth pages besides the forgot password flow (sign in or create account)
+export const isSignInOrCreateAccountFlow = (
+  currentPath: string = window.location.pathname
+): boolean => {
+  const path = getPathWithoutLanguagePrefix(currentPath)
+  return (
+    path === "/sign-in" ||
+    path === "/sign-in/code" ||
+    path === "/create-account" ||
+    path === "/create-account/code" ||
+    path === "/add-password" ||
+    path === "/add-profile"
+  )
+}
 
 // Accounts after signing in pages
 export const getMyAccountPath = localizedPathGetter("/account")
@@ -163,6 +179,14 @@ const getRedirectUrl = (key: RedirectType): string => {
 export const getSignInRedirectUrl = (redirect: RedirectType) => {
   return getRedirectUrl(redirect || RedirectType.Account)
 }
+
+export const AUTH_FLOW_PATH: Record<AUTH_FLOW, string> = {
+  [AUTH_FLOW.SIGN_IN]: getSignInPath(),
+  [AUTH_FLOW.CREATE_ACCOUNT]: getCreateAccountPath(),
+  [AUTH_FLOW.FORGOT_PASSWORD]: getForgotPasswordPath(),
+}
+
+export const getAuthFlowPath = (flow: AUTH_FLOW) => AUTH_FLOW_PATH[flow]
 
 export const generateSubmitLink = (
   appId: string,

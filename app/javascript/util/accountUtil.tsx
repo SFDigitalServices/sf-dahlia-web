@@ -33,7 +33,7 @@ export const FormHeader = ({
   }
 
   return (
-    <Card.Header divider="flush" className={classNames.join(" ")}>
+    <Card.Header divider="inset" className={classNames.join(" ")}>
       <div className={sharedStyles.iconBackground}>
         <Icon size="xlarge" className="md:hidden block" symbol={iconSymbol} />
         <Icon size="2xl" className="md:block hidden" symbol={iconSymbol} />

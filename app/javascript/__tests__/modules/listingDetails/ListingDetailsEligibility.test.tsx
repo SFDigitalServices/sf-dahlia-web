@@ -448,7 +448,7 @@ describe("ListingDetailsEligibility", () => {
     expect(asFragment()).toMatchSnapshot()
   })
 
-  it("displays Plus Housing Program card above other priority unit cards", async () => {
+  it("displays Plus Housing Program card with other priority unit cards", async () => {
     axios.get.mockResolvedValue({ data: { preferences: defaultPreferences } })
 
     const plusHousingListing = {

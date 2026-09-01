@@ -15,6 +15,7 @@ import {
   isEducatorOne,
   isEducatorBrightwell,
   isFcfsSalesListing,
+  getOccupancyRangeByUnitType,
   isHabitatListing,
   isPluralSRO,
   isPlusHousing,
@@ -96,7 +97,7 @@ export const ListingDetailsEligibility = ({
     occupancy: "t.occupancy",
   }
 
-  const occupancyTableData = listing.unitSummaries.general?.map((unit) => {
+  const occupancyTableData = getOccupancyRangeByUnitType(listing).map((unit) => {
     let occupancyLabel = ""
     if (unit.maxOccupancy === 1) {
       occupancyLabel = t("listings.onePerson")

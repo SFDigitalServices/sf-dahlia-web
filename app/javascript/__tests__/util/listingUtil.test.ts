@@ -29,6 +29,8 @@ import {
   isFcfsSalesListing,
   isDeadlinePassed,
   isPlusHousing,
+  getAllUnitSummaries,
+  getOccupancyRangeByUnitType,
 } from "../../util/listingUtil"
 
 // Configure dayjs with required plugins
@@ -45,6 +47,8 @@ import { habitatListing } from "../data/RailsSaleListing/listing-sale-habitat"
 import {
   sroRentalListing,
   pluralSroRentalListing,
+  reservedSroRentalListing,
+  sroMixedRentalListing,
 } from "../data/RailsRentalListing/listing-rental-sro"
 import { unitsWithOccupancyAndMaxIncome, units } from "../data/RailsListingUnits/listing-units"
 import { amiCharts } from "../data/RailsAmiCharts/ami-charts"
@@ -131,6 +135,10 @@ describe("listingUtil", () => {
     it("should return true when all units are SRO", () => {
       expect(listingHasOnlySROUnits(sroRentalListing)).toBe(true)
     })
+
+    it("should return true when all SRO units are in the reserved summaries", () => {
+      expect(listingHasOnlySROUnits(reservedSroRentalListing)).toBe(true)
+    })
   })
 
   describe("listingHasSROUnits", () => {
@@ -141,6 +149,10 @@ describe("listingUtil", () => {
     it("should return true when listing has SRO units", () => {
       expect(listingHasSROUnits(sroRentalListing)).toBe(true)
     })
+
+    it("should return true when the SRO units are in the reserved summaries", () => {
+      expect(listingHasSROUnits(reservedSroRentalListing)).toBe(true)
+    })
   })
 
   describe("isPluralSRO", () => {
@@ -150,6 +162,107 @@ describe("listingUtil", () => {
 
     it("should return true for a plural SROs", () => {
       expect(isPluralSRO(pluralSroRentalListing)).toBe(true)
+    })
+
+    it("should return true for plural SROs in the reserved summaries", () => {
+      expect(isPluralSRO(reservedSroRentalListing)).toBe(true)
+    })
+  })
+
+  describe("getOccupancyRangeByUnitType", () => {
+    it("should return one entry per unit summary when unit types are distinct", () => {
+      expect(getOccupancyRangeByUnitType(sroMixedRentalListing)).toEqual([
+        { unitType: "SRO", minOccupancy: 1, maxOccupancy: 1 },
+        { unitType: "1 BR", minOccupancy: 1, maxOccupancy: 3 },
+      ])
+    })
+
+    it("should collapse a unit type that appears in both buckets into a single entry", () => {
+      // Mirrors listing a0W7y000004QCMbEAO, which has a general 1 BR and a senior-reserved 1 BR
+      const [studio, oneBed] = sroMixedRentalListing.unitSummaries.general
+
+      expect(
+        getOccupancyRangeByUnitType({
+          ...sroMixedRentalListing,
+          unitSummaries: { general: [studio, oneBed], reserved: [oneBed] },
+        })
+      ).toEqual([
+        { unitType: "SRO", minOccupancy: 1, maxOccupancy: 1 },
+        { unitType: "1 BR", minOccupancy: 1, maxOccupancy: 3 },
+      ])
+    })
+
+    it("should merge occupancy bounds when the same unit type has different ranges", () => {
+      const [, oneBed] = sroMixedRentalListing.unitSummaries.general
+
+      expect(
+        getOccupancyRangeByUnitType({
+          ...sroMixedRentalListing,
+          unitSummaries: {
+            general: [{ ...oneBed, minOccupancy: 2, maxOccupancy: 3 }],
+            reserved: [{ ...oneBed, minOccupancy: 1, maxOccupancy: 5 }],
+          },
+        })
+      ).toEqual([{ unitType: "1 BR", minOccupancy: 1, maxOccupancy: 5 }])
+    })
+
+    it("should keep a defined bound when the matching summary has a null bound", () => {
+      const [, oneBed] = sroMixedRentalListing.unitSummaries.general
+
+      expect(
+        getOccupancyRangeByUnitType({
+          ...sroMixedRentalListing,
+          unitSummaries: {
+            general: [{ ...oneBed, minOccupancy: 1, maxOccupancy: null }],
+            reserved: [{ ...oneBed, minOccupancy: null, maxOccupancy: 4 }],
+          },
+        })
+      ).toEqual([{ unitType: "1 BR", minOccupancy: 1, maxOccupancy: 4 }])
+    })
+
+    it("should return an empty array when the listing has no unit summaries", () => {
+      expect(
+        getOccupancyRangeByUnitType({
+          ...sroRentalListing,
+          unitSummaries: { general: null, reserved: null },
+        })
+      ).toEqual([])
+    })
+  })
+
+  describe("getAllUnitSummaries", () => {
+    it("should return the general summaries when only general is populated", () => {
+      expect(getAllUnitSummaries(sroRentalListing)).toEqual(sroRentalListing.unitSummaries.general)
+    })
+
+    it("should return the reserved summaries when only reserved is populated", () => {
+      expect(getAllUnitSummaries(reservedSroRentalListing)).toEqual(
+        reservedSroRentalListing.unitSummaries.reserved
+      )
+    })
+
+    it("should combine both buckets when general and reserved are populated", () => {
+      const mixedBucketListing = {
+        ...sroRentalListing,
+        unitSummaries: {
+          general: sroRentalListing.unitSummaries.general,
+          reserved: reservedSroRentalListing.unitSummaries.reserved,
+        },
+      }
+
+      expect(getAllUnitSummaries(mixedBucketListing)).toEqual([
+        ...sroRentalListing.unitSummaries.general,
+        ...reservedSroRentalListing.unitSummaries.reserved,
+      ])
+    })
+
+    it("should return an empty array when neither bucket is populated", () => {
+      expect(
+        getAllUnitSummaries({
+          ...sroRentalListing,
+          unitSummaries: { general: null, reserved: null },
+        })
+      ).toEqual([])
     })
   })
 

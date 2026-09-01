@@ -8,24 +8,36 @@
   font-size: var(--seeds-font-size-sm);
 }
 
-.signInButton {
-  margin: var(--seeds-spacer-text) 0 var(--seeds-spacer-content) 0;
-}
-
+.signInButton,
 .getCodeButton {
-  margin: var(--seeds-spacer-text) 0 var(--seeds-spacer-content) 0;
+  margin: var(--seeds-spacer-content) 0;
 }
 
 .oneTimeCodeNote {
   padding-top: var(--seeds-spacer-text);
+  font-family: var(--seeds-font-sans);
+  font-size: var(--seeds-font-size-xs);
+  color: var(--seeds-color-gray-750);
 }
 
-.createAccountDescription {
+.createAccountHeading {
   padding-bottom: var(--seeds-spacer-header);
 }
 
-.errorAlert {
-  margin-bottom: var(--seeds-spacer-header);
+.requiredLoginNotice {
+  --message-border-radius: var(--seeds-rounded);
+  --message-border: 2px solid var(--seeds-color-primary-light);
+  background: var(--seeds-color-primary-lighter) !important;
+  margin: var(--seeds-spacer-header) 0;
+}
+
+.createAccountDescription {
+  padding-bottom: var(--seeds-spacer-content);
+}
+
+.errorAlert,
+.requiredLoginsMessage {
+  margin-bottom: var(--seeds-spacer-section);
 }
 
 .requiredLoginsMessage {
@@ -34,11 +46,19 @@
   background: var(--seeds-color-primary-lighter) !important;
   justify-content: flex-start;
   line-height: var(--seeds-line-height-5);
-  margin-bottom: var(--seeds-spacer-header);
   svg {
     color: var(--seeds-color-primary-dark) !important;
   }
   a {
     color: var(--seeds-color-primary-darker) !important;
   }
+}
+
+.continueWithoutSigningIn {
+  display: block;
+  margin-top: var(--seeds-spacer-content);
+}
+
+.errorAlert {
+  margin-bottom: var(--seeds-spacer-header);
 }

@@ -653,7 +653,7 @@ exports[`ListingDetailsEligibility displays ListingDetailsChisholmPreferences fo
 </DocumentFragment>
 `;
 
-exports[`ListingDetailsEligibility displays Plus Housing Program card above other priority unit cards 1`] = `
+exports[`ListingDetailsEligibility displays Plus Housing Program card with other priority unit cards 1`] = `
 <DocumentFragment>
   <li
     class="responsive-content-item bg-primary-lighter"

@@ -1,3 +1,7 @@
 .getCodeButton {
-  margin: var(--seeds-spacer-header) 0 var(--seeds-spacer-text) 0;
+  margin-top: var(--seeds-spacer-text);
+}
+
+.alreadyHaveAccount {
+  padding-bottom: var(--seeds-spacer-content);
 }

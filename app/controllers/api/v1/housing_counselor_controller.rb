@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 class Api::V1::HousingCounselorController < ApiController
-  before_action :authenticate_user!
+  include Clerk::Authenticatable
+  before_action :authenticate_clerk_user!
 
   def agencies
     render json: { agencies: Force::HousingCounselorService.agencies }
@@ -44,5 +45,18 @@ class Api::V1::HousingCounselorController < ApiController
       "invalid JWT: #{e.message}",
     )
     render json: { error: 'unauthorized' }, status: :unauthorized
+  end
+
+  private
+
+  def authenticate_clerk_user!
+    @clerk_user_id = clerk&.user_id
+    return if @clerk_user_id.present?
+
+    render json: { error: 'Missing Clerk user ID' }, status: :unauthorized
+  end
+
+  def current_user
+    @current_user ||= ClerkService::User.new(@clerk_user_id)
   end
 end
