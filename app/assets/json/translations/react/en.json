@@ -64,6 +64,7 @@
   "accountSettings.accountChangesSaved": "Your changes have been saved.",
   "accountSettings.accountSettings": "Account Settings",
   "accountSettings.checkYourEmail": "We sent you an email. Check your email and follow the link to finish changing your information.",
+  "accountSettings.changePassword": "Change password",
   "accountSettings.contactInformationUpdated": "Contact Information Updated",
   "accountSettings.contactInformationUpdatedMessage": "Some of the primary contact information on your application was updated to match your account settings.",
   "accountSettings.deleteAria": "Delete application to %{listing}",

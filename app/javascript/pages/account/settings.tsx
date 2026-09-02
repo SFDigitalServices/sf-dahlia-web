@@ -7,7 +7,7 @@ import UserContext from "../../authentication/context/UserContext"
 import { Form, DOBFieldValues, t } from "@bloom-housing/ui-components"
 import { DeepMap, FieldError, useForm } from "react-hook-form"
 import { Card, Alert, Button } from "@bloom-housing/ui-seeds"
-import { AppPages, RedirectType } from "../../util/routeUtil"
+import { AppPages, getChangePasswordPath, RedirectType } from "../../util/routeUtil"
 import { User } from "../../authentication/user"
 import Layout from "../../layouts/Layout"
 import AccountLayout from "../../layouts/AccountLayout"
@@ -17,11 +17,6 @@ import EmailFieldset, {
   handleEmailServerErrors,
 } from "./components/EmailFieldset"
 import FormSubmitButton from "./components/FormSubmitButton"
-import PasswordFieldset, {
-  handlePasswordServerErrors,
-  passwordFieldsetErrors,
-  passwordSortOrder,
-} from "./components/PasswordFieldset"
 import NameFieldset, {
   handleNameServerErrors,
   nameFieldsetErrors,
@@ -42,7 +37,6 @@ import sharedStyles from "./shared-styles.module.scss"
 import {
   updateNameOrDOB as apiUpdateNameOrDOB,
   updateEmail,
-  updatePassword,
   updateHousingCounselorAccess,
 } from "../../api/authApiService"
 import { FormHeader, FormSection, getDobStringFromDobObject } from "../../util/accountUtil"
@@ -54,8 +48,9 @@ import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import { UNLEASH_FLAG } from "../../modules/constants"
 import { AccountSettingsPage as MyAccountSettingsPage } from "./account-settings"
 import settingsStyles from "./settings.module.scss"
+import { useNavigate } from "react-router"
 
-const Banner = ({
+export const Banner = ({
   showBanner,
   className,
   message,
@@ -79,7 +74,7 @@ const Banner = ({
   )
 }
 
-const UpdateForm = ({
+export const UpdateForm = ({
   children,
   loading,
   onSubmit,
@@ -182,66 +177,86 @@ const EmailSection = ({ user, setUser }: SectionProps) => {
   )
 }
 
-const PasswordSection = ({ user, setUser }: SectionProps) => {
-  const [loading, setLoading] = useState(false)
-  const [passwordBanner, setPasswordBanner] = useState(false)
+// const PasswordSection2 = ({ user, setUser }: SectionProps) => {
+//   const [loading, setLoading] = useState(false)
+//   const [passwordBanner, setPasswordBanner] = useState(false)
 
-  const {
-    register,
-    formState: { errors },
-    handleSubmit,
-    reset,
-    watch,
-    setError,
-  } = useForm({ mode: "onTouched" })
+//   const {
+//     register,
+//     formState: { errors },
+//     handleSubmit,
+//     reset,
+//     watch,
+//     setError,
+//   } = useForm({ mode: "onTouched" })
 
-  const onSubmit = (data: { password: string; currentPassword: string }) => {
-    setLoading(true)
-    const { password, currentPassword } = data
-    if (password === "") {
-      setLoading(false)
-      return
-    }
+//   const onSubmit = (data: { password: string; currentPassword: string }) => {
+//     setLoading(true)
+//     const { password, currentPassword } = data
+//     if (password === "") {
+//       setLoading(false)
+//       return
+//     }
 
-    updatePassword(password, currentPassword)
-      .then(() => {
-        const newUser = { ...user, password, currentPassword }
-        setUser(newUser)
-        setPasswordBanner(true)
-      })
-      .catch((error: ExpandedAccountAxiosError) => setError(...handlePasswordServerErrors(error)))
-      .finally(() => {
-        reset({}, { errors: true })
-        setLoading(false)
-      })
-  }
+//     updatePassword(password, currentPassword)
+//       .then(() => {
+//         const newUser = { ...user, password, currentPassword }
+//         setUser(newUser)
+//         setPasswordBanner(true)
+//       })
+//       .catch((error: ExpandedAccountAxiosError) => setError(...handlePasswordServerErrors(error)))
+//       .finally(() => {
+//         reset({}, { errors: true })
+//         setLoading(false)
+//       })
+//   }
+
+//   return (
+//     <>
+//       <Banner
+//         showBanner={passwordBanner}
+//         className="mt-8"
+//         message={t("accountSettings.accountChangesSaved")}
+//         onClose={() => setPasswordBanner(false)}
+//       />
+//       <ErrorSummaryBanner
+//         errors={errors}
+//         sortOrder={passwordSortOrder}
+//         messageMap={(messageKey) => getErrorMessage(messageKey, passwordFieldsetErrors, true)}
+//       />
+//       <UpdateForm
+//         onSubmit={handleSubmit(onSubmit)}
+//         loading={loading}
+//         submitLabel={t("accountSettings.savePassword")}
+//       >
+//         <PasswordFieldset
+//           register={register}
+//           errors={errors}
+//           watch={watch}
+//           email={user?.email}
+//           labelText={t("label.password")}
+//           passwordType="accountSettings"
+//         />
+//       </UpdateForm>
+//     </>
+//   )
+// }
+
+const PasswordSection = () => {
+  const [loading, _setLoading] = useState(false)
+  const navigate = useNavigate()
 
   return (
     <>
-      <Banner
-        showBanner={passwordBanner}
-        className="mt-8"
-        message={t("accountSettings.accountChangesSaved")}
-        onClose={() => setPasswordBanner(false)}
-      />
-      <ErrorSummaryBanner
-        errors={errors}
-        sortOrder={passwordSortOrder}
-        messageMap={(messageKey) => getErrorMessage(messageKey, passwordFieldsetErrors, true)}
-      />
       <UpdateForm
-        onSubmit={handleSubmit(onSubmit)}
+        onSubmit={() => {
+          void navigate(getChangePasswordPath())
+        }}
         loading={loading}
-        submitLabel={t("accountSettings.savePassword")}
+        submitLabel={t("accountSettings.changePassword")}
       >
-        <PasswordFieldset
-          register={register}
-          errors={errors}
-          watch={watch}
-          email={user?.email}
-          labelText={t("label.password")}
-          passwordType="accountSettings"
-        />
+        <legend className={"fieldset-legend"}>{t("label.password")}</legend>
+        <span>••••</span>
       </UpdateForm>
     </>
   )
@@ -597,7 +612,7 @@ const AccountSettings = ({ profile }: { profile: User }) => {
       <NameSection user={user} setUser={setUser} handleBanners={handleBanners} />
       <DateOfBirthSection user={user} setUser={setUser} />
       <EmailSection user={user} setUser={setUser} />
-      <PasswordSection user={user} setUser={setUser} />
+      <PasswordSection />
       {showHousingCounselorSection && user && (
         <HousingCounselorSection user={user} setUser={setUser} />
       )}
