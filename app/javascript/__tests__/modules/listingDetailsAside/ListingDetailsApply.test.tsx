@@ -1,12 +1,13 @@
 import React from "react"
 import { render, screen } from "@testing-library/react"
 import { MemoryRouter } from "react-router"
+import { useAuth } from "@clerk/clerk-react"
 import { ListingDetailsApply } from "../../../modules/listingDetailsAside/ListingDetailsApply"
 import { openSaleListing } from "../../data/RailsSaleListing/listing-sale-open"
 import { closedRentalListing } from "../../data/RailsRentalListing/listing-rental-closed"
 import { habitatListing } from "../../data/RailsSaleListing/listing-sale-habitat"
 import { setupUserContext } from "../../__util__/accountUtils"
-import { getAddProfilePath } from "../../../util/routeUtil"
+import { getAddProfilePath, getSignInPath } from "../../../util/routeUtil"
 import { useFeatureFlag } from "../../../hooks/useFeatureFlag"
 import { UNLEASH_FLAG } from "../../../modules/constants"
 
@@ -68,6 +69,17 @@ describe("ListingDetailsApply", () => {
       }))
     })
 
+    it("redirects signed out users to sign in", () => {
+      setupUserContext({ loggedIn: false })
+
+      render(<ListingDetailsApply listing={openSaleListing} />)
+
+      expect(screen.getByRole("link", { name: /apply online/i })).toHaveAttribute(
+        "href",
+        getSignInPath()
+      )
+    })
+
     it("redirects signed in users without a completed profile to the add profile page", () => {
       setupUserContext({ loggedIn: true, hasProfile: false })
 
@@ -77,6 +89,45 @@ describe("ListingDetailsApply", () => {
         "href",
         getAddProfilePath()
       )
+    })
+
+    it("does not render apply online while signed-in profile state is still loading", () => {
+      const context = setupUserContext({ loggedIn: true, hasProfile: false })
+      context.initialStateLoaded = false
+      ;(useAuth as jest.Mock).mockReturnValue({
+        isLoaded: true,
+        isSignedIn: true,
+      })
+
+      render(<ListingDetailsApply listing={openSaleListing} />)
+
+      expect(screen.queryByRole("link", { name: /apply online/i })).toBeNull()
+    })
+
+    it("uses the listing application link for signed in users with a profile", () => {
+      setupUserContext({ loggedIn: true, hasProfile: true })
+      ;(useAuth as jest.Mock).mockReturnValue({
+        isLoaded: true,
+        isSignedIn: true,
+      })
+
+      render(<ListingDetailsApply listing={openSaleListing} />)
+
+      expect(screen.getByRole("link", { name: /apply online/i }).getAttribute("href")).toBe(
+        `/listings/${openSaleListing.listingID}/apply-welcome/intro`
+      )
+    })
+
+    it("does not render apply online while Clerk auth is loading", () => {
+      setupUserContext({ loggedIn: false })
+      ;(useAuth as jest.Mock).mockReturnValue({
+        isLoaded: false,
+        isSignedIn: false,
+      })
+
+      render(<ListingDetailsApply listing={openSaleListing} />)
+
+      expect(screen.queryByRole("link", { name: /apply online/i })).toBeNull()
     })
   })
 })

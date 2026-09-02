@@ -10,10 +10,9 @@ import {
   restoreWindowLocation,
 } from "../__util__/renderUtils"
 import { setupUserContext } from "../__util__/accountUtils"
-import { AUTH_FLOW } from "../../modules/constants"
+import { AUTH_FLOW, UNLEASH_FLAG } from "../../modules/constants"
 import { authorizeHousingCounselor, getProfile } from "../../api/authApiService"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
-import { UNLEASH_FLAG } from "../../modules/constants"
 
 jest.mock("../../hooks/useFeatureFlag", () => ({
   useFeatureFlag: jest.fn(() => ({
