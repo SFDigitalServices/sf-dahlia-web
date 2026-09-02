@@ -417,6 +417,7 @@ class Api::V1::ShortFormController < ApiController
                 hasLoanPreapproval
                 isSFUSDEmployee
                 jobClassification
+                isPlusHousingProgramParticipant
               ],
             },
             {
@@ -501,6 +502,7 @@ class Api::V1::ShortFormController < ApiController
             :lendingAgent,
             :homebuyerEducationAgency,
             :isNonPrimaryMemberVeteran,
+            :plusHousingProgramNumber,
           )
           .to_h
   end
