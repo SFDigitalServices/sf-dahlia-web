@@ -417,6 +417,8 @@ class Api::V1::ShortFormController < ApiController
                 hasLoanPreapproval
                 isSFUSDEmployee
                 jobClassification
+                isPlusHousingProgramParticipant
+                plusHousingProgramNumber
               ],
             },
             {

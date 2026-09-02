@@ -898,6 +898,12 @@
         'container':
           templateUrl: 'short-form/templates/c8-home-and-community-based-services.html'
     })
+    .state('dahlia.short-form-application.plus-housing-program', {
+      url: '/plus-housing-program'
+      views:
+        'container':
+          templateUrl: 'short-form/templates/c9-plus-housing-program.html'
+    })
     # Short form: "Income" section
     .state('dahlia.short-form-application.income-vouchers', {
       url: '/income-vouchers'

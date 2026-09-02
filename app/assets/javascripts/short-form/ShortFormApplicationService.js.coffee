@@ -98,6 +98,8 @@ ShortFormApplicationService = (
     customEducatorJobClassificationNumber: null
     isAnyoneAVeteran: null
     hasHomeAndCommunityBasedServices: null
+    plusHousingProgramParticipantAnswer: null
+    plusHousingProgramNumber: null
     dalpEducator: null
     dalpFirstResponder: null
     dalpNotEducatorOrFirstResponder: null
@@ -1168,6 +1170,9 @@ ShortFormApplicationService = (
 
   Service.listingHasHomeAndCommunityBasedServicesUnits = (listing) ->
     listing.Custom_Listing_Type == ListingConstantsService.HCBS_PRIORITY_NAME
+
+  Service.listingHasPlusHousingProgramUnits = (listing) ->
+    listing.Custom_Listing_Type == 'Plus Housing Program'
 
   Service.getProjectIdForBoundaryMatching = ->
     ListingDataService.getProjectIdForBoundaryMatching(Service.listing)

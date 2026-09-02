@@ -156,6 +156,14 @@ div ng-if="::$ctrl.showHouseholdDetails()"
         br
       span ng-if="::$ctrl.application.hasHomeAndCommunityBasedServices == 'No'"
         | {{'t.no' | translate}}
+    review-summary-item label="{{'c9_plus_housing_program.part_of_plus_housing_program' | translate}}" identifier="plus-housing-program-participant" ng-if="::$ctrl.listingHasPlusHousingProgramUnits"
+      span ng-if="::$ctrl.application.plusHousingProgramParticipantAnswer == 'Yes'"
+        | {{'t.yes' | translate}}
+        br
+      span ng-if="::$ctrl.application.plusHousingProgramParticipantAnswer == 'No'"
+        | {{'t.no' | translate}}
+    review-summary-item label="{{'c9_plus_housing_program.plus_housing_program_number' | translate}}" identifier="plus-housing-program-number" ng-if="::$ctrl.application.plusHousingProgramParticipantAnswer == 'Yes'"
+      | {{::$ctrl.application.plusHousingProgramNumber}}
 
 
 / Income

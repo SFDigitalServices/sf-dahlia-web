@@ -16,6 +16,7 @@ do ->
         householdMembers: []
       listingHasReservedUnitType: jasmine.createSpy()
       listingHasHomeAndCommunityBasedServicesUnits: jasmine.createSpy()
+      listingHasPlusHousingProgramUnits: jasmine.createSpy()
       RESERVED_TYPES:
         VETERAN: 'Veteran'
         DISABLED: 'Developmental disabilities'

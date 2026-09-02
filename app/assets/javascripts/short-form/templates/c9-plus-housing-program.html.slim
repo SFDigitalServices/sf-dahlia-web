@@ -1,0 +1,37 @@
+section.app-container.focus-container
+  .row.collapse
+    .medium-6.medium-centered.columns.fixed-width
+      short-form-nav
+      .app-card.form-card
+        short-form-header
+          h2.app-card_question
+            | {{ 'c9_plus_housing_program.title' | translate }}
+          p.form-note.margin-bottom.text-center translate="c9_plus_housing_program.subtitle" translate-value-plus-housing-program-url="https://www.sf.gov/reports--february-2024--plus-housing-waitlist/"
+
+        .app-inner.inset
+          .form-group
+            p.form-note.margin-bottom translate="label.please_select_one"
+            .radio-group.padding-top--half role="radiogroup" aria-label="{{ 'c9_plus_housing_program.title' | translate }}"
+
+              radio-block-item value='Yes' user='application' name='plusHousingProgramParticipantAnswer' ng-required='true'
+                | {{ 't.yes' | translate }}
+              div.form-group.margin-left--2x ng-if="isPlusHousingProgramParticipant()"
+                // Plus Housing Program Number text field
+                label.form-label for="plusHousingProgramNumber"
+                  | {{ 'c9_plus_housing_program.enter_your_plus_housing_program_number' | translate }}
+                p.form-note.margin-bottom--half translate="c9_plus_housing_program.look_for_your_program_number" translate-value-email-link='<a href="mailto:plushousing@sfgov.org">plushousing@sfgov.org</a>'
+                input(
+                  ng-model="application.plusHousingProgramNumber"
+                  ng-required="true"
+                  name="plusHousingProgramNumber"
+                  type="text"
+                  autocomplete="off"
+                  style="margin-bottom:0;"
+                )
+
+              radio-block-item value='No' user='application' name='plusHousingProgramParticipantAnswer' ng-required='true'
+                | {{ 't.no' | translate }}
+
+        .button-pager
+          .button-pager_row.primary.text-center
+            input#submit.button.primary.radius type="submit" value="{{'t.next' | translate}}" ng-disabled="eligibilityErrors.length > 0"

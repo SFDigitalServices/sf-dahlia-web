@@ -12,6 +12,7 @@ angular.module('dahlia.components')
     isCustomEducatorListing: '<'
     isCustomEducatorBrightwellListing: '<'
     listingHasHomeAndCommunityBasedServicesUnits: '<'
+    listingHasPlusHousingProgramUnits: '<'
     listing: '<'
     preferences: '<'
     showVeteransApplicationQuestion: '<'
@@ -58,6 +59,7 @@ angular.module('dahlia.components')
           ctrl.application.hasMilitaryService, # this doesn't appear to be populated
           ctrl.application.hasDevelopmentalDisability, # this doesn't appear to be populated,
           ctrl.listingHasHomeAndCommunityBasedServicesUnits
+          ctrl.listingHasPlusHousingProgramUnits
         ])
 
       ctrl.applicationVouchersSubsidies = ->
