@@ -1,58 +1,71 @@
 /* eslint-disable @typescript-eslint/unbound-method */
+import { t } from "@bloom-housing/ui-components"
+import { Heading } from "@bloom-housing/ui-seeds"
+import { useAuth, useSession, useUser } from "@clerk/clerk-react"
 import React, { useContext, useEffect, useState } from "react"
+import { useForm } from "react-hook-form"
 import { useNavigate } from "react-router"
-import { useAuth } from "@clerk/clerk-react"
-import withAppSetup from "../../layouts/withAppSetup"
-import AuthLayout from "../../layouts/AuthLayout"
 import UserContext from "../../authentication/context/UserContext"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
-import { AppPages, getMyAccountSettingsPath, getSignInPath } from "../../util/routeUtil"
+import AuthLayout from "../../layouts/AuthLayout"
+import withAppSetup from "../../layouts/withAppSetup"
 import { UNLEASH_FLAG } from "../../modules/constants"
+import { AppPages, getMyAccountSettingsPath, getSignInPath } from "../../util/routeUtil"
 import { ErrorSummaryBanner } from "./components/ErrorSummaryBanner"
-import { ExpandedAccountAxiosError, getErrorMessage } from "./components/util"
-import { Banner, UpdateForm } from "./settings"
-import { useForm } from "react-hook-form"
-import "./styles/account.scss"
-import { updatePassword } from "../../api/authApiService"
 import PasswordFieldset, {
-  handlePasswordServerErrors,
   passwordFieldsetErrors,
   passwordSortOrder,
+  handleClerkPasswordErrors,
 } from "./components/PasswordFieldset"
-import { t } from "@bloom-housing/ui-components"
+import { getErrorMessage } from "./components/util"
+import { Banner, UpdateForm } from "./settings"
+import "./styles/account.scss"
 
 const ChangePasswordPage = () => {
   const [loading, setLoading] = useState(false)
   const [passwordBanner, setPasswordBanner] = useState(false)
   const { profile } = useContext(UserContext)
+  const { user } = useUser()
+  const { session } = useSession()
+
   const navigate = useNavigate()
   const {
     register,
     formState: { errors },
     handleSubmit,
-    reset,
     watch,
     setError,
   } = useForm({ mode: "onTouched" })
 
-  const onSubmit = (data: { password: string; currentPassword: string }) => {
+  const onSubmit = async (data: { password: string; currentPassword: string }) => {
     setLoading(true)
     const { password, currentPassword } = data
-    if (password === "") {
+
+    if (password === "" || !user || !session) {
       setLoading(false)
       return
     }
 
-    updatePassword(password, currentPassword)
-      .then(() => setPasswordBanner(true))
-      .catch((error: ExpandedAccountAxiosError) => setError(...handlePasswordServerErrors(error)))
-      .finally(() => {
-        reset({}, { errors: true })
-        setLoading(false)
-        void navigate(getMyAccountSettingsPath())
+    try {
+      await session.startVerification({ level: "first_factor" })
+      await session.attemptFirstFactorVerification({
+        strategy: "password",
+        password: currentPassword,
       })
-  }
 
+      await user.updatePassword({
+        currentPassword,
+        newPassword: password,
+        signOutOfOtherSessions: true,
+      })
+      setPasswordBanner(true)
+      void navigate(getMyAccountSettingsPath())
+    } catch (error) {
+      setError(...handleClerkPasswordErrors(error))
+    } finally {
+      setLoading(false)
+    }
+  }
   return (
     <AuthLayout title={t("accountSettings.changePassword")}>
       <Banner
@@ -71,6 +84,9 @@ const ChangePasswordPage = () => {
         loading={loading}
         submitLabel={t("accountSettings.savePassword")}
       >
+        <Heading priority={1} size="2xl">
+          {t("accountSettings.changePassword")}
+        </Heading>
         <PasswordFieldset
           register={register}
           errors={errors}

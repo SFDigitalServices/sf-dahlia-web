@@ -177,88 +177,27 @@ const EmailSection = ({ user, setUser }: SectionProps) => {
   )
 }
 
-// const PasswordSection2 = ({ user, setUser }: SectionProps) => {
-//   const [loading, setLoading] = useState(false)
-//   const [passwordBanner, setPasswordBanner] = useState(false)
-
-//   const {
-//     register,
-//     formState: { errors },
-//     handleSubmit,
-//     reset,
-//     watch,
-//     setError,
-//   } = useForm({ mode: "onTouched" })
-
-//   const onSubmit = (data: { password: string; currentPassword: string }) => {
-//     setLoading(true)
-//     const { password, currentPassword } = data
-//     if (password === "") {
-//       setLoading(false)
-//       return
-//     }
-
-//     updatePassword(password, currentPassword)
-//       .then(() => {
-//         const newUser = { ...user, password, currentPassword }
-//         setUser(newUser)
-//         setPasswordBanner(true)
-//       })
-//       .catch((error: ExpandedAccountAxiosError) => setError(...handlePasswordServerErrors(error)))
-//       .finally(() => {
-//         reset({}, { errors: true })
-//         setLoading(false)
-//       })
-//   }
-
-//   return (
-//     <>
-//       <Banner
-//         showBanner={passwordBanner}
-//         className="mt-8"
-//         message={t("accountSettings.accountChangesSaved")}
-//         onClose={() => setPasswordBanner(false)}
-//       />
-//       <ErrorSummaryBanner
-//         errors={errors}
-//         sortOrder={passwordSortOrder}
-//         messageMap={(messageKey) => getErrorMessage(messageKey, passwordFieldsetErrors, true)}
-//       />
-//       <UpdateForm
-//         onSubmit={handleSubmit(onSubmit)}
-//         loading={loading}
-//         submitLabel={t("accountSettings.savePassword")}
-//       >
-//         <PasswordFieldset
-//           register={register}
-//           errors={errors}
-//           watch={watch}
-//           email={user?.email}
-//           labelText={t("label.password")}
-//           passwordType="accountSettings"
-//         />
-//       </UpdateForm>
-//     </>
-//   )
-// }
-
 const PasswordSection = () => {
   const [loading, _setLoading] = useState(false)
   const navigate = useNavigate()
 
   return (
-    <>
-      <UpdateForm
-        onSubmit={() => {
-          void navigate(getChangePasswordPath())
-        }}
-        loading={loading}
-        submitLabel={t("accountSettings.changePassword")}
-      >
-        <legend className={"fieldset-legend"}>{t("label.password")}</legend>
-        <span>••••</span>
-      </UpdateForm>
-    </>
+    <FormSection>
+      <legend className={"fieldset-legend"}>{t("label.password")}</legend>
+      <span>••••</span>{" "}
+      <div className="flex justify-center pt-6">
+        <Button
+          loadingMessage={loading ? t("accountSettings.changePassword") : undefined}
+          type="submit"
+          variant="primary-outlined"
+          onClick={() => {
+            void navigate(getChangePasswordPath())
+          }}
+        >
+          {t("accountSettings.changePassword")}
+        </Button>
+      </div>
+    </FormSection>
   )
 }
 
