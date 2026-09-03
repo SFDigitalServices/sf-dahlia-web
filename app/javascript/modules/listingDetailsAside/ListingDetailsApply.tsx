@@ -1,5 +1,4 @@
-import React, { useContext, useState } from "react"
-import { useAuth } from "@clerk/clerk-react"
+import React, { useState } from "react"
 
 import {
   AppearanceStyleType,
@@ -27,7 +26,11 @@ import { getAddProfilePath, getSignInPath, localizedPath } from "../../util/rout
 import { ListingState } from "../listings/ListingState"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import { UNLEASH_FLAG } from "../constants"
-import UserContext from "../../authentication/context/UserContext"
+import {
+  SessionProviderKind,
+  SessionStatus,
+  useSession,
+} from "../../authentication/session"
 
 export interface ListingDetailsApplyProps {
   listing: RailsListing
@@ -78,36 +81,53 @@ const ApplyButton = ({ href }: { href: string }) => (
   </LinkButton>
 )
 
-const ClerkApplyOnlineButton = ({ applyLink }: { applyLink: string }) => {
-  const { isLoaded, isSignedIn } = useAuth()
-  const { profile, initialStateLoaded } = useContext(UserContext)
-  let redirectOrApplyUrl = ""
-  if (isLoaded && isSignedIn && initialStateLoaded && profile) {
-    redirectOrApplyUrl = applyLink
-  } else if (isLoaded && !isSignedIn) {
-    redirectOrApplyUrl = getSignInPath()
-  } else if (isLoaded && isSignedIn && initialStateLoaded && !profile) {
-    redirectOrApplyUrl = getAddProfilePath()
-  }
+/**
+ * Where the apply button should send someone, given who they are.
+ *
+ * Every state of the session union is handled, so there is no path that leaves
+ * the button with an empty href. While we are still resolving the session the
+ * button is disabled rather than pointing at nothing.
+ */
+const GatedApplyOnlineButton = ({ applyLink }: { applyLink: string }) => {
+  const { session } = useSession()
 
-  return <ApplyButton href={redirectOrApplyUrl} />
+  switch (session.status) {
+    case SessionStatus.Loading:
+      return (
+        <Button styleType={AppearanceStyleType.primary} className={"w-full"} disabled={true}>
+          {t("label.applyOnline")}
+        </Button>
+      )
+    case SessionStatus.SignedOut:
+      return <ApplyButton href={getSignInPath()} />
+    case SessionStatus.SignedInWithoutProfile:
+      return <ApplyButton href={getAddProfilePath()} />
+    case SessionStatus.SignedIn:
+      return <ApplyButton href={applyLink} />
+  }
 }
 
 /**
  * If the React form engine is enabled, link to the React application.
- * If Clerk is enabled and the user has an incomplete profile, redirect to the add profile page.
  * Otherwise, link to the Angular application.
+ *
+ * Under Clerk, applying requires an account with a profile, so the button
+ * routes signed-out and profile-less users to finish that first. Under Devise
+ * the Angular flow still accepts anonymous applications, so the button links
+ * straight to the form regardless of session. That difference is product
+ * behaviour, not plumbing, which is why this is one of the few places that
+ * legitimately asks which provider is active.
  */
 const ApplyOnlineButton = ({ listingId }: { listingId: string }) => {
-  const { unleashFlag: clerkEnabled, flagsReady } = useFeatureFlag(UNLEASH_FLAG.CLERK_AUTH, false)
+  const { provider } = useSession()
   const { unleashFlag: formEngine } = useFeatureFlag(UNLEASH_FLAG.FORM_ENGINE, false)
   let applyLink = localizedPath(`listings/${listingId}/apply-welcome/intro`)
   if (formEngine) {
     applyLink = localizedPath(`listings/${listingId}/apply/intro`)
   }
 
-  if (flagsReady && clerkEnabled) {
-    return <ClerkApplyOnlineButton applyLink={applyLink} />
+  if (provider === SessionProviderKind.Clerk) {
+    return <GatedApplyOnlineButton applyLink={applyLink} />
   }
 
   return <ApplyButton href={applyLink} />

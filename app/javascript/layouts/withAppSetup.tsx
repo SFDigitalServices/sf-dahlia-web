@@ -7,6 +7,7 @@ import { ClerkProvider } from "@clerk/clerk-react"
 import { useFeatureFlag } from "../hooks/useFeatureFlag"
 import IdleTimeout from "../authentication/components/IdleTimeout"
 import UserProvider from "../authentication/context/UserProvider"
+import { SessionProvider } from "../authentication/session"
 import ListingDetailsProvider from "../contexts/listingDetails/listingDetailsProvider"
 import { ConfigProvider } from "../lib/ConfigContext"
 import ErrorBoundary, { BoundaryScope } from "../components/ErrorBoundary"
@@ -56,12 +57,14 @@ const withAppSetup =
             {/* eslint-disable react/prop-types */}
             <ConfigProvider assetPaths={props.assetPaths}>
               <UserProvider>
-                <IdleTimeout
-                  onTimeout={() => console.log("Logout")}
-                  useFormTimeout={configuration?.useFormTimeout}
-                  pageName={configuration?.pageName}
-                />
-                <Component {...props} />
+                <SessionProvider>
+                  <IdleTimeout
+                    onTimeout={() => console.log("Logout")}
+                    useFormTimeout={configuration?.useFormTimeout}
+                    pageName={configuration?.pageName}
+                  />
+                  <Component {...props} />
+                </SessionProvider>
               </UserProvider>
             </ConfigProvider>
           </ListingDetailsProvider>

@@ -4,6 +4,7 @@ import { render } from "@testing-library/react"
 import { mockWindowLocation, restoreWindowLocation } from "../__util__/renderUtils"
 import { withAuthentication } from "../../authentication/withAuthentication"
 import UserContext, { ContextProps } from "../../authentication/context/UserContext"
+import { SessionProvider } from "../../authentication/session"
 import { isTokenValid, parseUrlParams } from "../../authentication/token"
 import { useAuth } from "@clerk/clerk-react"
 import { getLocalizedPath, getAddProfilePath, RedirectType } from "../../util/routeUtil"
@@ -84,7 +85,9 @@ describe("withAuthentication", () => {
 
     const { getByText } = render(
       <UserContext.Provider value={mockContextValue}>
-        <WrappedComponent />
+        <SessionProvider>
+          <WrappedComponent />
+        </SessionProvider>
       </UserContext.Provider>
     )
 
@@ -97,7 +100,9 @@ describe("withAuthentication", () => {
 
     render(
       <UserContext.Provider value={mockContextValue}>
-        <WrappedComponent />
+        <SessionProvider>
+          <WrappedComponent />
+        </SessionProvider>
       </UserContext.Provider>
     )
 
@@ -114,7 +119,9 @@ describe("withAuthentication", () => {
 
     render(
       <UserContext.Provider value={mockContextValue}>
-        <WrappedWithRedirect />
+        <SessionProvider>
+          <WrappedWithRedirect />
+        </SessionProvider>
       </UserContext.Provider>
     )
 
@@ -128,7 +135,9 @@ describe("withAuthentication", () => {
 
     const { container } = render(
       <UserContext.Provider value={mockContextValue}>
-        <WrappedComponent />
+        <SessionProvider>
+          <WrappedComponent />
+        </SessionProvider>
       </UserContext.Provider>
     )
 
@@ -141,7 +150,9 @@ describe("withAuthentication", () => {
 
     const { container } = render(
       <UserContext.Provider value={mockContextValue}>
-        <WrappedComponent />
+        <SessionProvider>
+          <WrappedComponent />
+        </SessionProvider>
       </UserContext.Provider>
     )
 
@@ -185,7 +196,9 @@ describe("withAuthentication", () => {
 
     render(
       <UserContext.Provider value={mockContextValue}>
-        <WrappedComponent />
+        <SessionProvider>
+          <WrappedComponent />
+        </SessionProvider>
       </UserContext.Provider>
     )
 
@@ -220,7 +233,9 @@ describe("withAuthentication", () => {
 
       const { getByText } = render(
         <UserContext.Provider value={mockContextValue}>
-          <WrappedComponent />
+          <SessionProvider>
+            <WrappedComponent />
+          </SessionProvider>
         </UserContext.Provider>
       )
 
@@ -233,7 +248,9 @@ describe("withAuthentication", () => {
 
       render(
         <UserContext.Provider value={mockContextValue}>
-          <WrappedComponent />
+          <SessionProvider>
+            <WrappedComponent />
+          </SessionProvider>
         </UserContext.Provider>
       )
 
@@ -247,7 +264,9 @@ describe("withAuthentication", () => {
 
       render(
         <UserContext.Provider value={mockContextValue}>
-          <WrappedComponent />
+          <SessionProvider>
+            <WrappedComponent />
+          </SessionProvider>
         </UserContext.Provider>
       )
 
