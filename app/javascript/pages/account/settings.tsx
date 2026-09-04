@@ -3,7 +3,6 @@ import React, { useContext, useEffect, useState } from "react"
 import { useAuth } from "@clerk/clerk-react"
 import withAppSetup from "../../layouts/withAppSetup"
 import UserContext from "../../authentication/context/UserContext"
-
 import { Form, DOBFieldValues, t } from "@bloom-housing/ui-components"
 import { DeepMap, FieldError, useForm } from "react-hook-form"
 import { Card, Alert, Button } from "@bloom-housing/ui-seeds"
@@ -48,27 +47,30 @@ import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import { UNLEASH_FLAG } from "../../modules/constants"
 import { AccountSettingsPage as MyAccountSettingsPage } from "./account-settings"
 import settingsStyles from "./settings.module.scss"
-import { useNavigate } from "react-router"
+import { useLocation, useNavigate } from "react-router"
+import { CommonMessageVariant } from "@bloom-housing/ui-seeds/src/blocks/shared/CommonMessage"
 
 export const Banner = ({
   showBanner,
   className,
   message,
   onClose,
+  variant,
+  fullWidth,
 }: {
   showBanner: boolean
   className?: string
   message: string
   onClose?: () => void
+  variant?: CommonMessageVariant
+  fullWidth?: boolean
 }) => {
   return (
     <>
       {showBanner && (
-        <span className={className}>
-          <Alert fullwidth className="account-settings-banner" onClose={onClose}>
-            {message}
-          </Alert>
-        </span>
+        <Alert variant={variant} fullwidth={fullWidth} className={className} onClose={onClose}>
+          {message}
+        </Alert>
       )}
     </>
   )
@@ -494,6 +496,11 @@ const AccountSettings = ({ profile }: { profile: User }) => {
   const [user, setUser] = useState(null)
   const [nameUpdateBanner, setNameUpdateBanner] = useState(false)
   const [nameSavedBanner, setNameSavedBanner] = useState(false)
+  const location = useLocation()
+  const passwordChangedNavState = location.state as { passwordChanged?: boolean } | null
+  const [passwordBanner, setPasswordBanner] = useState(
+    passwordChangedNavState?.passwordChanged === true
+  )
 
   const handleBanners = (banner: string) => {
     switch (banner) {
@@ -523,6 +530,13 @@ const AccountSettings = ({ profile }: { profile: User }) => {
 
   return (
     <Card className={sharedStyles.card}>
+      <Banner
+        showBanner={passwordBanner}
+        className={settingsStyles["settingsConfirmationAlert"]}
+        variant="success"
+        message={t("accountSettings.changePasswordBanner")}
+        onClose={() => setPasswordBanner(false)}
+      />
       {nameUpdateBanner || nameSavedBanner ? (
         <FormHeader
           className={"border-none"}
@@ -540,12 +554,14 @@ const AccountSettings = ({ profile }: { profile: User }) => {
       <Banner
         showBanner={nameUpdateBanner}
         message={t("accountSettings.update")}
+        fullWidth
         onClose={() => setNameUpdateBanner(false)}
       />
       <Banner
         showBanner={nameSavedBanner}
         className="mt-8"
         message={t("accountSettings.accountChangesSaved")}
+        fullWidth
         onClose={() => setNameSavedBanner(false)}
       />
       <NameSection user={user} setUser={setUser} handleBanners={handleBanners} />

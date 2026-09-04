@@ -18,12 +18,11 @@ import PasswordFieldset, {
   handleClerkPasswordErrors,
 } from "./components/PasswordFieldset"
 import { getErrorMessage } from "./components/util"
-import { Banner, UpdateForm } from "./settings"
+import { UpdateForm } from "./settings"
 import "./styles/account.scss"
 
 const ChangePasswordPage = () => {
   const [loading, setLoading] = useState(false)
-  const [passwordBanner, setPasswordBanner] = useState(false)
   const { profile } = useContext(UserContext)
   const { user } = useUser()
   const { session } = useSession()
@@ -58,8 +57,7 @@ const ChangePasswordPage = () => {
         newPassword: password,
         signOutOfOtherSessions: true,
       })
-      setPasswordBanner(true)
-      void navigate(getMyAccountSettingsPath())
+      void navigate(getMyAccountSettingsPath(), { state: { passwordChanged: true } })
     } catch (error) {
       setError(...handleClerkPasswordErrors(error))
     } finally {
@@ -68,12 +66,6 @@ const ChangePasswordPage = () => {
   }
   return (
     <AuthLayout title={t("accountSettings.changePassword")}>
-      <Banner
-        showBanner={passwordBanner}
-        className="mt-8"
-        message={t("accountSettings.accountChangesSaved")}
-        onClose={() => setPasswordBanner(false)}
-      />
       <ErrorSummaryBanner
         errors={errors}
         sortOrder={passwordSortOrder}
