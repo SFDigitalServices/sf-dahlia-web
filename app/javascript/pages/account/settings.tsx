@@ -1,13 +1,17 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import React, { useContext, useEffect, useState } from "react"
-import { useAuth } from "@clerk/clerk-react"
+import { useAuth, useUser } from "@clerk/clerk-react"
 import withAppSetup from "../../layouts/withAppSetup"
 import UserContext from "../../authentication/context/UserContext"
-
 import { Form, DOBFieldValues, t } from "@bloom-housing/ui-components"
 import { DeepMap, FieldError, useForm } from "react-hook-form"
 import { Card, Alert, Button } from "@bloom-housing/ui-seeds"
-import { AppPages, RedirectType } from "../../util/routeUtil"
+import {
+  AppPages,
+  getAddPasswordPath,
+  getChangePasswordPath,
+  RedirectType,
+} from "../../util/routeUtil"
 import { User } from "../../authentication/user"
 import Layout from "../../layouts/Layout"
 import AccountLayout from "../../layouts/AccountLayout"
@@ -17,11 +21,6 @@ import EmailFieldset, {
   handleEmailServerErrors,
 } from "./components/EmailFieldset"
 import FormSubmitButton from "./components/FormSubmitButton"
-import PasswordFieldset, {
-  handlePasswordServerErrors,
-  passwordFieldsetErrors,
-  passwordSortOrder,
-} from "./components/PasswordFieldset"
 import NameFieldset, {
   handleNameServerErrors,
   nameFieldsetErrors,
@@ -42,7 +41,6 @@ import sharedStyles from "./shared-styles.module.scss"
 import {
   updateNameOrDOB as apiUpdateNameOrDOB,
   updateEmail,
-  updatePassword,
   updateHousingCounselorAccess,
 } from "../../api/authApiService"
 import { FormHeader, FormSection, getDobStringFromDobObject } from "../../util/accountUtil"
@@ -54,32 +52,36 @@ import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import { UNLEASH_FLAG } from "../../modules/constants"
 import { AccountSettingsPage as MyAccountSettingsPage } from "./account-settings"
 import settingsStyles from "./settings.module.scss"
+import { useLocation, useNavigate } from "react-router"
+import { CommonMessageVariant } from "@bloom-housing/ui-seeds/src/blocks/shared/CommonMessage"
 
-const Banner = ({
+export const Banner = ({
   showBanner,
   className,
   message,
   onClose,
+  variant,
+  fullWidth,
 }: {
   showBanner: boolean
   className?: string
   message: string
   onClose?: () => void
+  variant?: CommonMessageVariant
+  fullWidth?: boolean
 }) => {
   return (
     <>
       {showBanner && (
-        <span className={className}>
-          <Alert fullwidth className="account-settings-banner" onClose={onClose}>
-            {message}
-          </Alert>
-        </span>
+        <Alert variant={variant} fullwidth={fullWidth} className={className} onClose={onClose}>
+          {message}
+        </Alert>
       )}
     </>
   )
 }
 
-const UpdateForm = ({
+export const UpdateForm = ({
   children,
   loading,
   onSubmit,
@@ -182,68 +184,33 @@ const EmailSection = ({ user, setUser }: SectionProps) => {
   )
 }
 
-const PasswordSection = ({ user, setUser }: SectionProps) => {
-  const [loading, setLoading] = useState(false)
-  const [passwordBanner, setPasswordBanner] = useState(false)
-
-  const {
-    register,
-    formState: { errors },
-    handleSubmit,
-    reset,
-    watch,
-    setError,
-  } = useForm({ mode: "onTouched" })
-
-  const onSubmit = (data: { password: string; currentPassword: string }) => {
-    setLoading(true)
-    const { password, currentPassword } = data
-    if (password === "") {
-      setLoading(false)
-      return
-    }
-
-    updatePassword(password, currentPassword)
-      .then(() => {
-        const newUser = { ...user, password, currentPassword }
-        setUser(newUser)
-        setPasswordBanner(true)
-      })
-      .catch((error: ExpandedAccountAxiosError) => setError(...handlePasswordServerErrors(error)))
-      .finally(() => {
-        reset({}, { errors: true })
-        setLoading(false)
-      })
-  }
+const PasswordSection = () => {
+  const navigate = useNavigate()
+  const { user: clerkUser } = useUser()
+  const userHasPassword = clerkUser?.passwordEnabled
 
   return (
-    <>
-      <Banner
-        showBanner={passwordBanner}
-        className="mt-8"
-        message={t("accountSettings.accountChangesSaved")}
-        onClose={() => setPasswordBanner(false)}
-      />
-      <ErrorSummaryBanner
-        errors={errors}
-        sortOrder={passwordSortOrder}
-        messageMap={(messageKey) => getErrorMessage(messageKey, passwordFieldsetErrors, true)}
-      />
-      <UpdateForm
-        onSubmit={handleSubmit(onSubmit)}
-        loading={loading}
-        submitLabel={t("accountSettings.savePassword")}
-      >
-        <PasswordFieldset
-          register={register}
-          errors={errors}
-          watch={watch}
-          email={user?.email}
-          labelText={t("label.password")}
-          passwordType="accountSettings"
-        />
-      </UpdateForm>
-    </>
+    <FormSection>
+      <legend className={"fieldset-legend"}>{t("label.password")}</legend>
+      {userHasPassword ? (
+        <span>••••</span>
+      ) : (
+        <p className="field-note">{t("accountSettings.addPasswordDescription")}</p>
+      )}
+      <div className="flex justify-center pt-6">
+        <Button
+          type="button"
+          variant="primary-outlined"
+          onClick={() => {
+            void navigate(userHasPassword ? getChangePasswordPath() : getAddPasswordPath(), {
+              state: { accountSettingsFlow: true },
+            })
+          }}
+        >
+          {userHasPassword ? t("accountSettings.changePassword") : t("accountSettings.addPassword")}
+        </Button>
+      </div>
+    </FormSection>
   )
 }
 
@@ -540,6 +507,12 @@ const AccountSettings = ({ profile }: { profile: User }) => {
   const [user, setUser] = useState(null)
   const [nameUpdateBanner, setNameUpdateBanner] = useState(false)
   const [nameSavedBanner, setNameSavedBanner] = useState(false)
+  const location = useLocation()
+  const navigate = useNavigate()
+  const passwordChangedNavState = location.state as { passwordChanged?: boolean } | null
+  const [passwordBanner, setPasswordBanner] = useState(
+    passwordChangedNavState?.passwordChanged === true
+  )
 
   const handleBanners = (banner: string) => {
     switch (banner) {
@@ -552,6 +525,14 @@ const AccountSettings = ({ profile }: { profile: User }) => {
         break
     }
   }
+
+  useEffect(() => {
+    // resets success confirmation banner when page is refreshed
+    if (location.state) {
+      void navigate(location.pathname, { replace: true, state: null })
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   useEffect(() => {
     // salesforce stores the date of birth as a string YYYY-MM-DD,
@@ -569,6 +550,13 @@ const AccountSettings = ({ profile }: { profile: User }) => {
 
   return (
     <Card className={sharedStyles.card}>
+      <Banner
+        showBanner={passwordBanner}
+        className={settingsStyles["settingsConfirmationAlert"]}
+        variant="success"
+        message={t("accountSettings.changePasswordBanner")}
+        onClose={() => setPasswordBanner(false)}
+      />
       {nameUpdateBanner || nameSavedBanner ? (
         <FormHeader
           className={"border-none"}
@@ -586,18 +574,20 @@ const AccountSettings = ({ profile }: { profile: User }) => {
       <Banner
         showBanner={nameUpdateBanner}
         message={t("accountSettings.update")}
+        fullWidth
         onClose={() => setNameUpdateBanner(false)}
       />
       <Banner
         showBanner={nameSavedBanner}
         className="mt-8"
         message={t("accountSettings.accountChangesSaved")}
+        fullWidth
         onClose={() => setNameSavedBanner(false)}
       />
       <NameSection user={user} setUser={setUser} handleBanners={handleBanners} />
       <DateOfBirthSection user={user} setUser={setUser} />
       <EmailSection user={user} setUser={setUser} />
-      <PasswordSection user={user} setUser={setUser} />
+      <PasswordSection />
       {showHousingCounselorSection && user && (
         <HousingCounselorSection user={user} setUser={setUser} />
       )}
