@@ -3,6 +3,13 @@ import { useAuth } from "@clerk/clerk-react"
 import UserContext, { ContextProps } from "../../authentication/context/UserContext"
 import { User } from "../../authentication/user"
 import * as authApiService from "../../api/authApiService"
+import {
+  Session,
+  SessionContext,
+  SessionContextValue,
+  SessionProviderKind,
+  SessionStatus,
+} from "../../authentication/session"
 
 export const mockProfileStub: User = {
   uid: "abc123",
@@ -21,14 +28,32 @@ export const mockProfileStub: User = {
   housingCounselingAgencyId: null,
 }
 
+const buildSession = (loggedIn: boolean, profile: ContextProps["profile"]): Session => {
+  if (!loggedIn) {
+    return { status: SessionStatus.SignedOut }
+  }
+  if (!profile) {
+    // Only reachable under Clerk, but tests drive it directly via hasProfile.
+    return { status: SessionStatus.SignedInWithoutProfile, userId: "clerk-user-id" }
+  }
+  return { status: SessionStatus.SignedIn, userId: String(profile.id), profile }
+}
+
 export const setupUserContext = ({
   loggedIn,
   mockProfile = mockProfileStub,
   hasProfile = loggedIn,
+  clerkEnabled = true,
 }: {
   loggedIn: boolean
   mockProfile?: ContextProps["profile"]
   hasProfile?: boolean
+  /**
+   * Which backend the stubbed session facade reports. Defaults to Clerk,
+   * matching the suites that reach for this helper: they mock the Clerk flag on.
+   * Pass false to exercise a Devise-only branch.
+   */
+  clerkEnabled?: boolean
 }): ContextProps => {
   const mockContextValue: ContextProps = {
     profile: hasProfile ? mockProfile : undefined,
@@ -42,9 +67,23 @@ export const setupUserContext = ({
 
   const originalUseContext = React.useContext
 
+  const mockSessionValue = (): SessionContextValue => ({
+    session: buildSession(loggedIn, mockContextValue.profile),
+    provider: clerkEnabled ? SessionProviderKind.Clerk : SessionProviderKind.Devise,
+    hasCredentials: loggedIn,
+    signOut: mockContextValue.signOut as () => Promise<void>,
+    timeOut: mockContextValue.timeOut as () => Promise<void>,
+    getToken: () => Promise.resolve("clerk-session-token"),
+  })
+
   jest.spyOn(React, "useContext").mockImplementation((context) => {
     if (context === UserContext) {
       return mockContextValue
+    }
+    // Components ask the session facade rather than UserContext directly, so it
+    // has to be stubbed here too or they see the default Loading session.
+    if (context === SessionContext) {
+      return mockSessionValue()
     }
     return originalUseContext(context)
   })

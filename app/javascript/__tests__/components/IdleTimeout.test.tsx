@@ -1,7 +1,9 @@
 import React from "react"
 import { act, render, screen, waitFor, fireEvent } from "@testing-library/react"
+import { useAuth } from "@clerk/clerk-react"
 import IdleTimeout from "../../authentication/components/IdleTimeout"
 import UserContext from "../../authentication/context/UserContext"
+import { SessionProvider } from "../../authentication/session"
 import { mockProfileStub } from "../__util__/accountUtils"
 import { renderAndLoadAsync } from "../__util__/renderUtils"
 import TagManager from "react-gtm-module"
@@ -58,9 +60,18 @@ describe("IdleTimeout", () => {
 
   it("triggers auto timeout when user is logged in", async () => {
     const timeOutMock = jest.fn()
+    const clerkSignOut = jest.fn()
+    ;(useAuth as jest.Mock).mockReturnValue({
+      isLoaded: true,
+      isSignedIn: true,
+      signOut: clerkSignOut,
+      getToken: jest.fn().mockResolvedValue("clerk-session-token"),
+    })
     const utils = await renderAndLoadAsync(
       <UserContext.Provider value={{ profile: mockProfileStub, timeOut: timeOutMock }}>
-        <IdleTimeout pageName="testPage" />
+        <SessionProvider>
+          <IdleTimeout pageName="testPage" />
+        </SessionProvider>
       </UserContext.Provider>
     )
 
@@ -95,7 +106,11 @@ describe("IdleTimeout", () => {
         }),
       })
     )
-    expect(timeOutMock).toHaveBeenCalled()
+    // Under Clerk the session has to be ended with Clerk, not with Devise's
+    // timeOut. Before the session facade this only called timeOut, so the user
+    // was redirected to the sign-in page still signed in.
+    await waitFor(() => expect(clerkSignOut).toHaveBeenCalled())
+    expect(timeOutMock).not.toHaveBeenCalled()
 
     act(() => {
       utils.unmount()
@@ -151,9 +166,17 @@ describe("IdleTimeout", () => {
 
   it("handles cancel action in prompt", async () => {
     const timeOutMock = jest.fn()
+    ;(useAuth as jest.Mock).mockReturnValue({
+      isLoaded: true,
+      isSignedIn: true,
+      signOut: jest.fn(),
+      getToken: jest.fn().mockResolvedValue("clerk-session-token"),
+    })
     const utils = await renderAndLoadAsync(
       <UserContext.Provider value={{ profile: mockProfileStub, timeOut: timeOutMock }}>
-        <IdleTimeout pageName="testPage" />
+        <SessionProvider>
+          <IdleTimeout pageName="testPage" />
+        </SessionProvider>
       </UserContext.Provider>
     )
 

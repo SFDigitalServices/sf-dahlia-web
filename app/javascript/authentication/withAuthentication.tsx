@@ -1,12 +1,9 @@
 import React from "react"
-import { useAuth } from "@clerk/clerk-react"
-import { isTokenValid, parseUrlParams } from "./token"
-import UserContext from "./context/UserContext"
+import { parseUrlParams } from "./token"
 import { getAddProfilePath, getLocalizedPath, RedirectType } from "../util/routeUtil"
 import { getCurrentLanguage } from "../util/languageUtil"
 import { useGTMDataLayer } from "../hooks/analytics/useGTMDataLayer"
-import { useFeatureFlag } from "../hooks/useFeatureFlag"
-import { UNLEASH_FLAG } from "../modules/constants"
+import { SessionProviderKind, SessionStatus, useSession } from "./session"
 
 interface WithAuthenticationProps {
   redirectType?: RedirectType
@@ -18,74 +15,62 @@ const getSignInPath = (redirectType?: RedirectType) => {
 }
 
 /**
- * Higher-order component that handles authentication for protected routes.
- * When the Clerk flag is on, it checks the Clerk session; otherwise it uses
- * the Devise token / UserContext profile.
+ * Higher-order component that gates a route on having a usable session.
+ *
+ * It does not know which auth backend is in play: it asks the session facade
+ * and handles every state of the union, so a new state cannot be silently
+ * ignored here.
  */
 export const withAuthentication = <P extends object>(
   WrappedComponent: React.ComponentType<P>,
   { redirectType }: WithAuthenticationProps = {}
 ) => {
-  const DeviseAuthGate = (props: P) => {
-    const { profile, loading, initialStateLoaded } = React.useContext(UserContext)
+  const WithAuthenticationComponent = (props: P) => {
+    const { session, provider } = useSession()
     const { pushToDataLayer } = useGTMDataLayer()
 
     React.useEffect(() => {
-      const params = parseUrlParams(window.location.href)
+      switch (session.status) {
+        case SessionStatus.Loading:
+          return
+        case SessionStatus.SignedOut:
+          window.location.assign(getSignInPath(redirectType))
+          return
+        case SessionStatus.SignedInWithoutProfile:
+          window.location.assign(getAddProfilePath())
+          return
+        case SessionStatus.SignedIn:
+          return
+      }
+    }, [session.status])
 
-      if (!isTokenValid() && !loading && initialStateLoaded) {
-        window.location.assign(getSignInPath(redirectType))
-      } else if (
-        profile &&
+    // Devise sent the user back here from the email confirmation link with
+    // their credentials in the query string. Report the conversion once, then
+    // strip the params so a refresh does not report it again.
+    React.useEffect(() => {
+      if (provider !== SessionProviderKind.Devise || session.status !== SessionStatus.SignedIn) {
+        return
+      }
+      const params = parseUrlParams(window.location.href)
+      if (
         params.get("access-token") &&
         params.get("accountConfirmed") === "true" &&
         params.get("account_confirmation_success") === "true"
       ) {
-        pushToDataLayer("account_create_completed", { user_id: profile.id })
-        // We want to remove the query params from the URL so that the user can refresh the page without retriggering the analytics event
-        const url = window.location.origin + window.location.pathname
-        window.history.replaceState({}, document.title, url)
+        pushToDataLayer("account_create_completed", { user_id: session.profile.id })
+        window.history.replaceState(
+          {},
+          document.title,
+          window.location.origin + window.location.pathname
+        )
       }
-    }, [profile, pushToDataLayer, loading, initialStateLoaded])
+    }, [provider, session, pushToDataLayer])
 
-    if (loading || !profile) {
+    if (session.status !== SessionStatus.SignedIn) {
       return null
     }
 
     return <WrappedComponent {...props} />
-  }
-
-  const ClerkAuthGate = (props: P) => {
-    const { isLoaded, isSignedIn } = useAuth()
-    const { profile, initialStateLoaded } = React.useContext(UserContext)
-    const loading = !isLoaded || (isSignedIn && !profile && !initialStateLoaded)
-
-    React.useEffect(() => {
-      if (loading) return
-      if (!isSignedIn) {
-        window.location.assign(getSignInPath(redirectType))
-        return
-      }
-      if (!profile) {
-        window.location.assign(getAddProfilePath())
-      }
-    }, [loading, isSignedIn, profile])
-
-    if (loading || !isSignedIn || !profile) {
-      return null
-    }
-
-    return <WrappedComponent {...props} />
-  }
-
-  const WithAuthenticationComponent = (props: P) => {
-    const { unleashFlag: clerkEnabled, flagsReady } = useFeatureFlag(UNLEASH_FLAG.CLERK_AUTH, false)
-
-    if (!flagsReady) {
-      return null
-    }
-
-    return clerkEnabled ? <ClerkAuthGate {...props} /> : <DeviseAuthGate {...props} />
   }
 
   // Set display name for easier debugging

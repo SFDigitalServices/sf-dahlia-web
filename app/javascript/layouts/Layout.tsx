@@ -1,5 +1,4 @@
 import React, { useContext } from "react"
-import { useAuth } from "@clerk/clerk-react"
 import { useLocation } from "react-router"
 
 import {
@@ -14,8 +13,7 @@ import {
 } from "@bloom-housing/ui-components"
 import { SiteHeader, MenuLink } from "../components/SiteHeader/SiteHeader"
 import Markdown from "markdown-to-jsx"
-import UserContext from "../authentication/context/UserContext"
-import { clearHeaders, isTokenValid } from "../authentication/token"
+import { useSession } from "../authentication/session"
 import { ConfigContext } from "../lib/ConfigContext"
 import { Link } from "@bloom-housing/ui-seeds"
 import {
@@ -309,34 +307,20 @@ const LayoutContent = ({
   )
 }
 
-const DeviseLayout = (props: LayoutProps) => {
-  const { signOut } = useContext(UserContext)
-  return <LayoutContent {...props} signedIn={isTokenValid()} signOut={() => signOut?.()} />
-}
+const Layout = (props: LayoutProps) => {
+  const { hasCredentials, signOut } = useSession()
 
-const ClerkLayout = (props: LayoutProps) => {
-  const { isSignedIn, signOut } = useAuth()
+  // hasCredentials rather than the session status, so a returning user's header
+  // does not start on "Sign in" and flip once the profile request lands.
   return (
     <LayoutContent
       {...props}
-      signedIn={Boolean(isSignedIn)}
-      signOut={async () => {
-        // Log out Devise user
-        clearHeaders()
-        await signOut()
+      signedIn={hasCredentials}
+      signOut={() => {
+        void signOut()
       }}
     />
   )
-}
-
-const Layout = (props: LayoutProps) => {
-  const { unleashFlag: clerkEnabled, flagsReady } = useFeatureFlag(UNLEASH_FLAG.CLERK_AUTH, false)
-
-  if (!flagsReady) {
-    return null
-  }
-
-  return clerkEnabled ? <ClerkLayout {...props} /> : <DeviseLayout {...props} />
 }
 
 export default Layout
