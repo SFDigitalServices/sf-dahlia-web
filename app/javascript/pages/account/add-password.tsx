@@ -24,13 +24,14 @@ import "./styles/account.scss"
 
 interface AddPasswordPageProps {
   flow: AUTH_FLOW
+  isAccountSettingsFlow?: boolean
 }
 
 interface AddPasswordFormValues {
   password: string
 }
 
-const AddPasswordPage = ({ flow }: AddPasswordPageProps) => {
+const AddPasswordPage = ({ flow, isAccountSettingsFlow }: AddPasswordPageProps) => {
   const navigate = useNavigate()
   const { isLoaded, user } = useUser()
   const { isLoaded: signInLoaded, signIn, setActive } = useSignIn()
@@ -120,7 +121,7 @@ const AddPasswordPage = ({ flow }: AddPasswordPageProps) => {
           </div>
         </Form>
       </Card.Section>
-      <GetHelp flow={flow} />
+      {!isAccountSettingsFlow && <GetHelp flow={flow} />}
     </AuthLayout>
   )
 }
@@ -128,7 +129,8 @@ const AddPasswordPage = ({ flow }: AddPasswordPageProps) => {
 const AddPassword = (_props: { assetPaths: unknown }) => {
   const navigate = useNavigate()
   const { state } = useLocation()
-  const flow: AUTH_FLOW = state?.flow
+  const flow = state?.flow
+  const isAccountSettingsFlow = state?.accountSettingsFlow === true
   const isForgotPasswordFlow = flow === AUTH_FLOW.FORGOT_PASSWORD
   const { isLoaded, isSignedIn } = useAuth()
   const { isLoaded: userLoaded, user } = useUser()
@@ -160,6 +162,7 @@ const AddPassword = (_props: { assetPaths: unknown }) => {
       return
     }
     if (!initialStateLoaded) return
+    if (isAccountSettingsFlow) return
     if (isSignedIn && profile) void navigate(getMyAccountPath())
     if (!userLoaded) return
     if (isSignedIn && !profile && hasPassword) void navigate(getAddProfilePath())
@@ -174,6 +177,7 @@ const AddPassword = (_props: { assetPaths: unknown }) => {
     hasPassword,
     navigate,
     isForgotPasswordFlow,
+    isAccountSettingsFlow,
   ])
 
   const ready =
@@ -182,15 +186,15 @@ const AddPassword = (_props: { assetPaths: unknown }) => {
     isLoaded &&
     isSignedIn &&
     initialStateLoaded &&
-    !profile &&
     userLoaded &&
-    !hasPassword
+    !hasPassword &&
+    (isAccountSettingsFlow || !profile)
 
   if (!ready) {
     return null
   }
 
-  return <AddPasswordPage flow={flow} />
+  return <AddPasswordPage flow={flow} isAccountSettingsFlow={isAccountSettingsFlow} />
 }
 
 export { AddPasswordPage }

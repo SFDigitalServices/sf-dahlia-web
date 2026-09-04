@@ -1,12 +1,17 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import React, { useContext, useEffect, useState } from "react"
-import { useAuth } from "@clerk/clerk-react"
+import { useAuth, useUser } from "@clerk/clerk-react"
 import withAppSetup from "../../layouts/withAppSetup"
 import UserContext from "../../authentication/context/UserContext"
 import { Form, DOBFieldValues, t } from "@bloom-housing/ui-components"
 import { DeepMap, FieldError, useForm } from "react-hook-form"
 import { Card, Alert, Button } from "@bloom-housing/ui-seeds"
-import { AppPages, getChangePasswordPath, RedirectType } from "../../util/routeUtil"
+import {
+  AppPages,
+  getAddPasswordPath,
+  getChangePasswordPath,
+  RedirectType,
+} from "../../util/routeUtil"
 import { User } from "../../authentication/user"
 import Layout from "../../layouts/Layout"
 import AccountLayout from "../../layouts/AccountLayout"
@@ -180,23 +185,29 @@ const EmailSection = ({ user, setUser }: SectionProps) => {
 }
 
 const PasswordSection = () => {
-  const [loading, _setLoading] = useState(false)
   const navigate = useNavigate()
+  const { user: clerkUser } = useUser()
+  const userHasPassword = clerkUser?.passwordEnabled
 
   return (
     <FormSection>
       <legend className={"fieldset-legend"}>{t("label.password")}</legend>
-      <span>••••</span>{" "}
+      {userHasPassword ? (
+        <span>••••</span>
+      ) : (
+        <p className="field-note">{t("accountSettings.addPasswordDescription")}</p>
+      )}
       <div className="flex justify-center pt-6">
         <Button
-          loadingMessage={loading ? t("accountSettings.changePassword") : undefined}
-          type="submit"
+          type="button"
           variant="primary-outlined"
           onClick={() => {
-            void navigate(getChangePasswordPath())
+            void navigate(userHasPassword ? getChangePasswordPath() : getAddPasswordPath(), {
+              state: { accountSettingsFlow: true },
+            })
           }}
         >
-          {t("accountSettings.changePassword")}
+          {userHasPassword ? t("accountSettings.changePassword") : t("accountSettings.addPassword")}
         </Button>
       </div>
     </FormSection>
@@ -497,6 +508,7 @@ const AccountSettings = ({ profile }: { profile: User }) => {
   const [nameUpdateBanner, setNameUpdateBanner] = useState(false)
   const [nameSavedBanner, setNameSavedBanner] = useState(false)
   const location = useLocation()
+  const navigate = useNavigate()
   const passwordChangedNavState = location.state as { passwordChanged?: boolean } | null
   const [passwordBanner, setPasswordBanner] = useState(
     passwordChangedNavState?.passwordChanged === true
@@ -513,6 +525,14 @@ const AccountSettings = ({ profile }: { profile: User }) => {
         break
     }
   }
+
+  useEffect(() => {
+    // resets success confirmation banner when page is refreshed
+    if (location.state) {
+      void navigate(location.pathname, { replace: true, state: null })
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   useEffect(() => {
     // salesforce stores the date of birth as a string YYYY-MM-DD,
