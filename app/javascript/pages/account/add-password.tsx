@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import { Form, t } from "@bloom-housing/ui-components"
 import { Button, Card, Heading, Message } from "@bloom-housing/ui-seeds"
-import { useAuth, useSignIn, useUser } from "@clerk/clerk-react"
+import { useAuth, useSignIn, useUser } from "@clerk/react"
 import React, { useContext, useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { Navigate, useLocation, useNavigate } from "react-router"
@@ -33,7 +33,7 @@ interface AddPasswordFormValues {
 const AddPasswordPage = ({ flow }: AddPasswordPageProps) => {
   const navigate = useNavigate()
   const { isLoaded, user } = useUser()
-  const { isLoaded: signInLoaded, signIn, setActive } = useSignIn()
+  const { signIn, fetchStatus: signInFetchStatus } = useSignIn()
   const [isResettingPassword, setIsResettingPassword] = useState(false)
   const isForgotPasswordFlow = flow === AUTH_FLOW.FORGOT_PASSWORD
   const {
@@ -48,27 +48,59 @@ const AddPasswordPage = ({ flow }: AddPasswordPageProps) => {
     shouldFocusError: false,
   })
 
-  if (isForgotPasswordFlow && signInLoaded && !isResettingPassword && !signIn?.status) {
+  if (
+    isForgotPasswordFlow &&
+    signInFetchStatus !== "fetching" &&
+    !isResettingPassword &&
+    !signIn?.status
+  ) {
     return <Navigate to={getForgotPasswordPath()} replace />
   }
 
   const resetPassword = async (newPassword: string) => {
-    if (!signIn || !setActive) return
-    const result = await signIn.resetPassword({ password: newPassword })
-    if (result.status === "complete") {
-      await setActive({ session: result.createdSessionId, redirectUrl: getMyAccountPath() })
-    } else {
-      console.error("Reset password error:", result)
-      setError("password", { message: "password:server:generic" })
+    if (!signIn) return
+    const { resetPasswordError } = await signIn.resetPasswordEmailCode.submitPassword({
+      password: newPassword,
+      signOutOfOtherSessions: true,
+    })
+    if (resetPasswordError) {
+      console.error("Reset password error:", resetPasswordError)
+      return
     }
-    return
+    if (signIn.status !== "complete") {
+      console.error("Reset password status error:", signIn.status)
+      return
+    }
+
+    const { signInFinalizeError } = await signIn.finalize({
+      navigate: ({ decorateUrl }: { decorateUrl: (url: string) => string }) => {
+        void navigate(decorateUrl(getMyAccountPath()))
+      },
+    })
+    if (signInFinalizeError) {
+      console.error("Reset password error:", signInFinalizeError)
+      return
+    }
+
+    // const result = await signIn.resetPassword({ password: newPassword })
+    // if (result.status === "complete") {
+    //   await setActive({ session: result.createdSessionId, redirectUrl: getMyAccountPath() })
+    // } else {
+    //   console.error("Reset password error:", result)
+    //   setError("password", { message: "password:server:generic" })
+    // }
+    // return
   }
 
   const onSubmit = async ({ password: newPassword }: AddPasswordFormValues) => {
     setIsResettingPassword(true)
     if (!isLoaded) return
+    if (isForgotPasswordFlow) {
+      void resetPassword(newPassword)
+      return
+    }
+
     try {
-      if (isForgotPasswordFlow) return await resetPassword(newPassword)
       if (!user) return
       await user.updatePassword({ newPassword })
       void navigate(getAddProfilePath())
@@ -136,6 +168,7 @@ const AddPassword = (_props: { assetPaths: unknown }) => {
   const { unleashFlag: clerkEnabled, flagsReady } = useFeatureFlag(UNLEASH_FLAG.CLERK_AUTH, false)
   const hasPassword = user?.passwordEnabled
 
+  // TODO: simplify and centralize auth redirects
   /**
    * Add password page redirects
    * --------------------------------

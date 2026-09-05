@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import { Form, t } from "@bloom-housing/ui-components"
 import { Button, Card, Heading } from "@bloom-housing/ui-seeds"
-import { useSignIn } from "@clerk/clerk-react"
+import { useSignIn } from "@clerk/react"
 import React from "react"
 import { useForm } from "react-hook-form"
 import { useNavigate } from "react-router"
@@ -18,31 +18,31 @@ const ForgotPasswordFlow = () => {
     handleSubmit,
     formState: { errors },
   } = useForm()
-  const { isLoaded, signIn } = useSignIn()
+  const { signIn, fetchStatus: signInFetchStatus } = useSignIn()
+
   const navigate = useNavigate()
   const prefilledEmailParam = new URLSearchParams(window.location.search).get("email") ?? ""
 
   const onGetCodeSubmit = async ({ email }: { email: string }) => {
-    if (!isLoaded || !signIn) return
-    try {
-      const { supportedFirstFactors } = await signIn.create({ identifier: email })
-      const resetFactor = (supportedFirstFactors ?? []).find(
-        (factor) => factor.strategy === "reset_password_email_code"
-      )
-      if (resetFactor?.strategy !== "reset_password_email_code") {
-        throw new Error("Reset password email code factor missing")
-      }
-      await signIn.prepareFirstFactor({
-        strategy: "reset_password_email_code",
-        emailAddressId: resetFactor.emailAddressId,
-      })
-    } catch (error) {
-      console.error("Forgot password error", error)
-    } finally {
-      void navigate(getForgotPasswordCodePath(), {
-        state: { email, flow: AUTH_FLOW.FORGOT_PASSWORD },
-      })
+    if (signInFetchStatus === "fetching" || !signIn) return
+
+    const { error: createError } = await signIn.create({
+      identifier: email,
+    })
+    if (createError) {
+      console.error("Forgot password error:", createError)
+      return
     }
+
+    const { error: sendCodeError } = await signIn.resetPasswordEmailCode.sendCode()
+    if (createError) {
+      console.error("Forgot password send code error:", sendCodeError)
+      return
+    }
+
+    void navigate(getForgotPasswordCodePath(), {
+      state: { email, flow: AUTH_FLOW.FORGOT_PASSWORD },
+    })
   }
 
   return (
@@ -54,7 +54,12 @@ const ForgotPasswordFlow = () => {
         <p className="field-note">{t("signIn.forgotPasswordDescription")}</p>
         <Form className={styles.form} onSubmit={handleSubmit(onGetCodeSubmit)}>
           <EmailFieldset register={register} errors={errors} defaultEmail={prefilledEmailParam} />
-          <Button variant="primary" size="sm" type="submit" disabled={!isLoaded}>
+          <Button
+            variant="primary"
+            size="sm"
+            type="submit"
+            disabled={signInFetchStatus === "fetching"}
+          >
             {t("createAccount.getCode")}
           </Button>
         </Form>
