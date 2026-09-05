@@ -1,5 +1,5 @@
 import React, { useContext } from "react"
-import { useAuth } from "@clerk/clerk-react"
+import { useAuth } from "@clerk/react"
 import { t, Icon } from "@bloom-housing/ui-components"
 import { Heading, Tabs } from "@bloom-housing/ui-seeds"
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons"

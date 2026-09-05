@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import React, { useContext, useEffect, useState } from "react"
 import { useNavigate } from "react-router"
-import { useAuth } from "@clerk/clerk-react"
+import { useAuth } from "@clerk/react"
 import { Form, Icon, t } from "@bloom-housing/ui-components"
 import { Button, Card, Heading } from "@bloom-housing/ui-seeds"
 import { DeepMap, FieldError, FieldValues, useForm } from "react-hook-form"
@@ -146,6 +146,7 @@ const AddProfile = (_props: { assetPaths: unknown }) => {
   const { profile, initialStateLoaded } = useContext(UserContext)
   const { unleashFlag: clerkEnabled, flagsReady } = useFeatureFlag(UNLEASH_FLAG.CLERK_AUTH, false)
 
+  // TODO: simplify and centralize auth redirects
   /**
    * Add profile page redirects
    * --------------------------------

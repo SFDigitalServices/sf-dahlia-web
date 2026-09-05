@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import { Form, t } from "@bloom-housing/ui-components"
 import { Button, Card, Heading, Message } from "@bloom-housing/ui-seeds"
-import { useAuth, useSignIn, useUser } from "@clerk/clerk-react"
+import { useAuth, useSignIn, useUser } from "@clerk/react"
 import React, { useContext, useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { Navigate, useLocation, useNavigate } from "react-router"
@@ -136,6 +136,7 @@ const AddPassword = (_props: { assetPaths: unknown }) => {
   const { unleashFlag: clerkEnabled, flagsReady } = useFeatureFlag(UNLEASH_FLAG.CLERK_AUTH, false)
   const hasPassword = user?.passwordEnabled
 
+  // TODO: simplify and centralize auth redirects
   /**
    * Add password page redirects
    * --------------------------------

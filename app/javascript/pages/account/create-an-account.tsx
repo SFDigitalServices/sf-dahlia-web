@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import React from "react"
 import { useNavigate } from "react-router"
-import { useSignUp } from "@clerk/clerk-react"
+import { useSignUp } from "@clerk/react"
 import { Form, t } from "@bloom-housing/ui-components"
 import { Card, Heading, Button } from "@bloom-housing/ui-seeds"
 import { useForm } from "react-hook-form"
@@ -24,25 +24,37 @@ interface CreateAnAccountProps {
 
 const CreateAnAccountPage = () => {
   const navigate = useNavigate()
-  const { isLoaded, signUp } = useSignUp()
+  const { signUp, fetchStatus: signUpFetchStatus } = useSignUp()
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<{ email: string }>({ mode: "onTouched", shouldFocusError: false })
+
   const onSubmit = async ({ email }: { email: string }) => {
-    if (!isLoaded || !signUp) return
+    if (signUpFetchStatus === "fetching" || !signUp) return
+
     const locale = getCurrentLanguage()
-    try {
-      await signUp.create({
-        emailAddress: email,
-        locale,
-        unsafeMetadata: { locale }, // Account creation can only update public metadata
-      })
-      await signUp.prepareEmailAddressVerification({ strategy: "email_code" })
-      void navigate(getVerificationCodePath(), { state: { email, flow: AUTH_FLOW.CREATE_ACCOUNT } })
-    } catch (error) {
+    const { error } = await signUp.create({
+      emailAddress: email,
+      locale,
+      unsafeMetadata: { locale }, // Account creation can only update public metadata
+    })
+    if (error) {
       console.error("Account creation error", error)
+      return
+    }
+
+    await signUp.verifications.sendEmailCode()
+    if (
+      signUp.status === "missing_requirements" &&
+      signUp.unverifiedFields.includes("email_address") &&
+      signUp.missingFields.length === 0
+    ) {
+      void navigate(getVerificationCodePath(), { state: { email, flow: AUTH_FLOW.CREATE_ACCOUNT } })
+    } else {
+      console.error("Account creation error:", signUp)
+      return
     }
   }
 
@@ -63,7 +75,7 @@ const CreateAnAccountPage = () => {
             variant="primary"
             size="sm"
             type="submit"
-            disabled={!isLoaded}
+            disabled={signUpFetchStatus === "fetching"}
           >
             {t("createAccount.getCode")}
           </Button>

@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useReducer } from "react"
-import { useAuth } from "@clerk/clerk-react"
+import { useAuth } from "@clerk/react"
 
 import { getProfile, signIn } from "../../api/authApiService"
 import { attemptToSetAuthHeadersFromURL } from "../token"

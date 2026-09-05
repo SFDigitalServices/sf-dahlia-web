@@ -1,5 +1,5 @@
 import React from "react"
-import { useAuth } from "@clerk/clerk-react"
+import { useAuth } from "@clerk/react"
 import { isTokenValid, parseUrlParams } from "./token"
 import UserContext from "./context/UserContext"
 import { getAddProfilePath, getLocalizedPath, RedirectType } from "../util/routeUtil"
@@ -60,6 +60,7 @@ export const withAuthentication = <P extends object>(
     const { profile, initialStateLoaded } = React.useContext(UserContext)
     const loading = !isLoaded || (isSignedIn && !profile && !initialStateLoaded)
 
+    // TODO: simplify and centralize auth redirects
     React.useEffect(() => {
       if (loading) return
       if (!isSignedIn) {

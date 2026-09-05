@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import React, { useContext, useEffect, useState } from "react"
-import { useAuth } from "@clerk/clerk-react"
+import { useAuth } from "@clerk/react"
 import withAppSetup from "../../layouts/withAppSetup"
 import UserContext from "../../authentication/context/UserContext"
 
