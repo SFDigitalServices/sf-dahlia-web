@@ -6,7 +6,7 @@ import { screen } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
 import { post } from "../../api/apiService"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
-import { useSignIn } from "@clerk/clerk-react"
+import { useSignIn } from "@clerk/react"
 
 jest.mock("react-helmet-async", () => {
   return {
@@ -15,8 +15,8 @@ jest.mock("react-helmet-async", () => {
   }
 })
 
-jest.mock("@clerk/clerk-react", () => {
-  const Clerk = jest.requireActual("@clerk/clerk-react")
+jest.mock("@clerk/react", () => {
+  const Clerk = jest.requireActual("@clerk/react")
   return {
     ...Clerk,
     ClerkProvider: ({ children }: { children: React.ReactNode }) => children,
