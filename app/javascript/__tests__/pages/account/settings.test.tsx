@@ -11,7 +11,7 @@ import { authenticatedPut, get, put } from "../../../api/apiService"
 import { mockProfileStub, setupUserContext } from "../../__util__/accountUtils"
 import { useFeatureFlag } from "../../../hooks/useFeatureFlag"
 import { useUser } from "@clerk/clerk-react"
-import { useNavigate } from "react-router"
+import { useLocation, useNavigate } from "react-router"
 
 jest.mock("../../../api/apiService", () => ({
   authenticatedPut: jest.fn(),
@@ -23,6 +23,7 @@ jest.mock("../../../api/apiService", () => ({
 jest.mock("react-router", () => ({
   ...jest.requireActual("react-router"),
   useNavigate: jest.fn(),
+  useLocation: jest.fn(),
 }))
 
 jest.mock("../../../hooks/useFeatureFlag", () => ({
@@ -63,6 +64,10 @@ describe("<SettingsPage />", () => {
       })
       mockNavigate = jest.fn()
       ;(useNavigate as jest.Mock).mockReturnValue(mockNavigate)
+      ;(useLocation as jest.Mock).mockReturnValue({
+        pathname: "/account/settings",
+        state: null,
+      })
       promise = Promise.resolve()
       await renderAndLoadAsync(<SettingsPage assetPaths={{}} />)
     })
@@ -596,6 +601,10 @@ describe("<SettingsPage />", () => {
       })
       mockNavigate = jest.fn()
       ;(useNavigate as jest.Mock).mockReturnValue(mockNavigate)
+      ;(useLocation as jest.Mock).mockReturnValue({
+        pathname: "/account/settings",
+        state: null,
+      })
       await renderAndLoadAsync(<SettingsPage assetPaths={{}} />)
     })
 
@@ -622,6 +631,53 @@ describe("<SettingsPage />", () => {
     })
   })
 
+  describe("when arriving after a password change", () => {
+    let originalLocation: Location
+    let mockNavigate: jest.Mock
+
+    beforeEach(async () => {
+      document.documentElement.lang = "en"
+      originalLocation = mockWindowLocation()
+      ;(useFeatureFlag as jest.Mock).mockReturnValue({ flagsReady: true, unleashFlag: true })
+      setupUserContext({ loggedIn: true })
+      ;(get as jest.Mock).mockResolvedValue({ data: { agencies: [] } })
+      ;(useUser as jest.Mock).mockReturnValue({
+        isLoaded: true,
+        isSignedIn: true,
+        user: { passwordEnabled: true },
+      })
+      mockNavigate = jest.fn()
+      ;(useNavigate as jest.Mock).mockReturnValue(mockNavigate)
+      ;(useLocation as jest.Mock).mockReturnValue({
+        pathname: "/account/settings",
+        state: { passwordChanged: true },
+      })
+      await renderAndLoadAsync(<SettingsPage assetPaths={{}} />)
+    })
+
+    afterEach(() => {
+      jest.restoreAllMocks()
+      restoreWindowLocation(originalLocation)
+    })
+
+    it("shows the confirmation banner and clears the navigation state", () => {
+      expect(screen.getByText("New password saved.")).not.toBeNull()
+      expect(mockNavigate).toHaveBeenCalledWith("/account/settings", {
+        replace: true,
+        state: null,
+      })
+    })
+
+    it("dismisses the banner", async () => {
+      await act(async () => {
+        fireEvent.click(screen.getByLabelText("Close"))
+        await Promise.resolve()
+      })
+
+      expect(screen.queryByText("New password saved.")).toBeNull()
+    })
+  })
+
   describe("when the user grants their housing counselor agency access", () => {
     let originalLocation: Location
     let mockContext: ReturnType<typeof setupUserContext>
@@ -636,6 +692,10 @@ describe("<SettingsPage />", () => {
         document.documentElement.lang = "en"
         originalLocation = mockWindowLocation()
         ;(useFeatureFlag as jest.Mock).mockReturnValue({ flagsReady: true, unleashFlag: true })
+        ;(useLocation as jest.Mock).mockReturnValue({
+          pathname: "/account/settings",
+          state: null,
+        })
         mockContext = setupUserContext({ loggedIn: true })
         ;(get as jest.Mock).mockResolvedValue({ data: { agencies: mockAgencies } })
         await renderAndLoadAsync(<SettingsPage assetPaths={{}} />)
@@ -799,6 +859,10 @@ describe("<SettingsPage />", () => {
         document.documentElement.lang = "en"
         originalLocation = mockWindowLocation()
         ;(useFeatureFlag as jest.Mock).mockReturnValue({ flagsReady: true, unleashFlag: true })
+        ;(useLocation as jest.Mock).mockReturnValue({
+          pathname: "/account/settings",
+          state: null,
+        })
         mockContext = setupUserContext({
           loggedIn: true,
           mockProfile: {
@@ -884,6 +948,10 @@ describe("<SettingsPage />", () => {
         document.documentElement.lang = "en"
         originalLocation = mockWindowLocation()
         ;(useFeatureFlag as jest.Mock).mockReturnValue({ flagsReady: true, unleashFlag: false })
+        ;(useLocation as jest.Mock).mockReturnValue({
+          pathname: "/account/settings",
+          state: null,
+        })
         setupUserContext({ loggedIn: true })
         ;(get as jest.Mock).mockResolvedValue({ data: { agencies: mockAgencies } })
         await renderAndLoadAsync(<SettingsPage assetPaths={{}} />)
@@ -906,6 +974,10 @@ describe("<SettingsPage />", () => {
     beforeEach(async () => {
       originalLocation = mockWindowLocation()
       ;(useFeatureFlag as jest.Mock).mockReturnValue({ flagsReady: true, unleashFlag: true })
+      ;(useLocation as jest.Mock).mockReturnValue({
+        pathname: "/account/settings",
+        state: null,
+      })
       setupUserContext({ loggedIn: false })
 
       await renderAndLoadAsync(<SettingsPage assetPaths={{}} />)

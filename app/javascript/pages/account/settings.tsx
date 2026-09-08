@@ -61,7 +61,7 @@ export const Banner = ({
   message,
   onClose,
   variant,
-  fullWidth,
+  fullWidth = true,
 }: {
   showBanner: boolean
   className?: string
@@ -193,7 +193,7 @@ const PasswordSection = () => {
     <FormSection>
       <legend className={"fieldset-legend"}>{t("label.password")}</legend>
       {userHasPassword ? (
-        <span>••••</span>
+        <span aria-hidden="true">••••</span>
       ) : (
         <p className="field-note">{t("accountSettings.addPasswordDescription")}</p>
       )}
