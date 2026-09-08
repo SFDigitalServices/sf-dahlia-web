@@ -15,6 +15,7 @@ import {
   getAddProfilePath,
   getForgotPasswordPath,
   getMyAccountPath,
+  getMyAccountSettingsPath,
   getSignInPath,
 } from "../../util/routeUtil"
 import styles from "./add-password.module.scss"
@@ -72,7 +73,11 @@ const AddPasswordPage = ({ flow, isAccountSettingsFlow }: AddPasswordPageProps) 
       if (isForgotPasswordFlow) return await resetPassword(newPassword)
       if (!user) return
       await user.updatePassword({ newPassword })
-      void navigate(getAddProfilePath())
+      if (isAccountSettingsFlow) {
+        void navigate(getMyAccountSettingsPath(), { state: { passwordChanged: true } })
+      } else {
+        void navigate(getAddProfilePath())
+      }
     } catch (error) {
       console.error("Add password error:", error)
       setError("password", { message: "password:server:generic" })
@@ -87,7 +92,7 @@ const AddPasswordPage = ({ flow, isAccountSettingsFlow }: AddPasswordPageProps) 
             ? t("createAccount.createNewPassword")
             : t("createAccount.addPassword")}
         </Heading>
-        {!isForgotPasswordFlow && (
+        {!isForgotPasswordFlow && !isAccountSettingsFlow && (
           <Message fullwidth variant="primary" className={styles.skip}>
             {t("createAccount.okayToSkipPassword")}
           </Message>
@@ -106,7 +111,7 @@ const AddPasswordPage = ({ flow, isAccountSettingsFlow }: AddPasswordPageProps) 
             <Button variant="primary" size="sm" type="submit" disabled={!isLoaded}>
               {t("createAccount.savePassword")}
             </Button>
-            {!isForgotPasswordFlow && (
+            {!isForgotPasswordFlow && !isAccountSettingsFlow && (
               <Button
                 variant="primary-outlined"
                 size="sm"
@@ -116,6 +121,18 @@ const AddPasswordPage = ({ flow, isAccountSettingsFlow }: AddPasswordPageProps) 
                 }}
               >
                 {t("createAccount.skipForNow")}
+              </Button>
+            )}
+            {isAccountSettingsFlow && (
+              <Button
+                size="sm"
+                variant="text"
+                className={styles.cancelButton}
+                onClick={() => {
+                  void navigate(getMyAccountSettingsPath())
+                }}
+              >
+                {t("label.cancel")}
               </Button>
             )}
           </div>
@@ -161,8 +178,8 @@ const AddPassword = (_props: { assetPaths: unknown }) => {
       void navigate(getSignInPath())
       return
     }
-    if (!initialStateLoaded) return
     if (isAccountSettingsFlow) return
+    if (!initialStateLoaded) return
     if (isSignedIn && profile) void navigate(getMyAccountPath())
     if (!userLoaded) return
     if (isSignedIn && !profile && hasPassword) void navigate(getAddProfilePath())
@@ -185,10 +202,9 @@ const AddPassword = (_props: { assetPaths: unknown }) => {
     clerkEnabled &&
     isLoaded &&
     isSignedIn &&
-    initialStateLoaded &&
     userLoaded &&
     !hasPassword &&
-    (isAccountSettingsFlow || !profile)
+    (isAccountSettingsFlow || (initialStateLoaded && !profile))
 
   if (!ready) {
     return null
