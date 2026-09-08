@@ -587,7 +587,7 @@ const AccountSettings = ({ profile }: { profile: User }) => {
       <NameSection user={user} setUser={setUser} handleBanners={handleBanners} />
       <DateOfBirthSection user={user} setUser={setUser} />
       <EmailSection user={user} setUser={setUser} />
-      <PasswordSection />
+      {clerkEnabled && <PasswordSection />}
       {showHousingCounselorSection && user && (
         <HousingCounselorSection user={user} setUser={setUser} />
       )}

@@ -19,7 +19,7 @@ describe("Account Settings", () => {
   it("runs through the account settings page", () => {
     interceptUnleashFlags()
     cy.signIn()
-
+    cy.url().should("include", "/account")
     cy.visit("/account/settings")
     cy.contains("We use this information to help you fill in your application.")
 
