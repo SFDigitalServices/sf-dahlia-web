@@ -161,4 +161,21 @@ describe("<ChangePassword />", () => {
       expect(mockNavigate).toHaveBeenCalledWith("/sign-in")
     })
   })
+
+  it("does not submit when the clerk user is not verified", async () => {
+    cleanup()
+    ;(useSession as jest.Mock).mockReturnValue({ session: null })
+    await renderAndLoadAsync(<ChangePassword assetPaths={{}} />)
+
+    const user = userEvent.setup()
+    await user.type(screen.getByLabelText(/current password/i), "abcd1234")
+    await user.type(screen.getByLabelText(/choose a new password/i), "abcd12345")
+    await user.click(screen.getByRole("button", { name: /save password/i }))
+
+    await waitFor(() => {
+      expect(mockStartVerification).not.toHaveBeenCalled()
+    })
+    expect(mockUpdatePassword).not.toHaveBeenCalled()
+    expect(mockNavigate).not.toHaveBeenCalled()
+  })
 })
