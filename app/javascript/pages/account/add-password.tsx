@@ -59,37 +59,31 @@ const AddPasswordPage = ({ flow }: AddPasswordPageProps) => {
 
   const resetPassword = async (newPassword: string) => {
     if (!signIn) return
-    const { resetPasswordError } = await signIn.resetPasswordEmailCode.submitPassword({
+    const { error: resetPasswordError } = await signIn.resetPasswordEmailCode.submitPassword({
       password: newPassword,
       signOutOfOtherSessions: true,
     })
     if (resetPasswordError) {
       console.error("Reset password error:", resetPasswordError)
+      setError("password", { message: "password:server:generic" })
       return
     }
     if (signIn.status !== "complete") {
       console.error("Reset password status error:", signIn.status)
+      setError("password", { message: "password:server:generic" })
       return
     }
 
-    const { signInFinalizeError } = await signIn.finalize({
+    const { error: signInFinalizeError } = await signIn.finalize({
       navigate: ({ decorateUrl }: { decorateUrl: (url: string) => string }) => {
         void navigate(decorateUrl(getMyAccountPath()))
       },
     })
     if (signInFinalizeError) {
       console.error("Reset password error:", signInFinalizeError)
+      setError("password", { message: "password:server:generic" })
       return
     }
-
-    // const result = await signIn.resetPassword({ password: newPassword })
-    // if (result.status === "complete") {
-    //   await setActive({ session: result.createdSessionId, redirectUrl: getMyAccountPath() })
-    // } else {
-    //   console.error("Reset password error:", result)
-    //   setError("password", { message: "password:server:generic" })
-    // }
-    // return
   }
 
   const onSubmit = async ({ password: newPassword }: AddPasswordFormValues) => {

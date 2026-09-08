@@ -154,6 +154,7 @@ const SignInFlow = () => {
           email,
           housingCounselorToken: getHousingCounselorToken(),
           flow: AUTH_FLOW.SIGN_IN,
+          ...(redirectUrl && { redirectUrl }),
         },
       })
     } else {

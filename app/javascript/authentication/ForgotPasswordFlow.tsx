@@ -23,6 +23,7 @@ const ForgotPasswordFlow = () => {
   const navigate = useNavigate()
   const prefilledEmailParam = new URLSearchParams(window.location.search).get("email") ?? ""
 
+  // TODO: show error messages
   const onGetCodeSubmit = async ({ email }: { email: string }) => {
     if (signInFetchStatus === "fetching" || !signIn) return
 
@@ -35,7 +36,7 @@ const ForgotPasswordFlow = () => {
     }
 
     const { error: sendCodeError } = await signIn.resetPasswordEmailCode.sendCode()
-    if (createError) {
+    if (sendCodeError) {
       console.error("Forgot password send code error:", sendCodeError)
       return
     }
