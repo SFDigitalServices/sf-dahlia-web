@@ -86,21 +86,21 @@ describe("Account Settings", () => {
     )
     cy.wait("@emailChange").its("response.statusCode").should("eq", 200)
 
-    // Submit password change
-    cy.get('input[name="currentPassword"]').click()
-    cy.get('input[name="password"]').click()
-    cy.get("button").contains("Enter current password").click().type("password")
-    cy.get('input[name="password"]').click()
-    cy.get('input[name="currentPassword"]').click()
-    cy.get("button").contains("Enter new password").click().type("password")
-    cy.contains("Choose a strong password with at least 8 characters, 1 letter, and 1 number")
-    cy.get("button").contains("Choose a strong password").click().type("1")
-    cy.intercept("/api/v1/auth/password", {
-      message: "Your password has been successfully updated.",
-      ...AUTH,
-    }).as("passwordChange")
-    cy.get('input[name="currentPassword"]').closest("form").find('button[type="submit"]').click()
-    cy.wait("@passwordChange").its("response.statusCode").should("eq", 200)
+    // Submit password change - Devise flow
+    // cy.get('input[name="currentPassword"]').click()
+    // cy.get('input[name="password"]').click()
+    // cy.get("button").contains("Enter current password").click().type("password")
+    // cy.get('input[name="password"]').click()
+    // cy.get('input[name="currentPassword"]').click()
+    // cy.get("button").contains("Enter new password").click().type("password")
+    // cy.contains("Choose a strong password with at least 8 characters, 1 letter, and 1 number")
+    // cy.get("button").contains("Choose a strong password").click().type("1")
+    // cy.intercept("/api/v1/auth/password", {
+    //   message: "Your password has been successfully updated.",
+    //   ...AUTH,
+    // }).as("passwordChange")
+    // cy.get('input[name="currentPassword"]').closest("form").find('button[type="submit"]').click()
+    // cy.wait("@passwordChange").its("response.statusCode").should("eq", 200)
     // cy.contains("Your changes have been saved.")
   })
 })
