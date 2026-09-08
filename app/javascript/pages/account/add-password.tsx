@@ -109,7 +109,9 @@ const AddPasswordPage = ({ flow, isAccountSettingsFlow }: AddPasswordPageProps) 
           />
           <div className={styles.actions}>
             <Button variant="primary" size="sm" type="submit" disabled={!isLoaded}>
-              {t("createAccount.savePassword")}
+              {isAccountSettingsFlow
+                ? t("accountSettings.addPassword")
+                : t("createAccount.savePassword")}
             </Button>
             {!isForgotPasswordFlow && !isAccountSettingsFlow && (
               <Button
