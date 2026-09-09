@@ -43,12 +43,13 @@ RSpec.describe HousingCounselorSession, type: :controller do
       expect(response.headers['Set-Cookie']).to include('HttpOnly')
     end
 
-    it 'does not set an Expires or Max-Age attribute, keeping it a session cookie' do
+    it 'sets a cookie expiry later than the JWT exp, so the browser still sends an ' \
+       'expired-but-present cookie back for transparent re-authorization' do
       post :write, params: { hc_id:, app_id: }
 
-      set_cookie = response.headers['Set-Cookie']
-      expect(set_cookie).not_to match(/expires=/i)
-      expect(set_cookie).not_to match(/max-age=/i)
+      expires_match = response.headers['Set-Cookie'].match(/expires=([^;]+)/i)
+      expect(expires_match).to be_present
+      expect(Time.zone.parse(expires_match[1])).to be > HousingCounselorSession::HC_SESSION_DURATION.from_now
     end
   end
 

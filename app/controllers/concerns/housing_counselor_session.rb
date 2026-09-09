@@ -6,11 +6,12 @@
 # Include this in any controller that authenticates the current user via
 # Clerk (it expects #current_user to respond to salesforce_contact_id).
 #
-# The cookie itself is a browser session cookie with no expiry of its own;
-# staleness is governed entirely by the JWT's own exp claim (see
-# HC_SESSION_DURATION below) so that an expired-but-still-present cookie is
-# sent back to the server and can be transparently re-checked, rather than
-# the browser discarding it before that re-check ever gets a chance to run.
+# The cookie's own browser expiry (HC_SESSION_COOKIE_DURATION) is
+# deliberately longer than the JWT's exp claim (HC_SESSION_DURATION), so
+# staleness is governed entirely by the JWT's own exp claim: an
+# expired-but-still-present cookie is sent back to the server and can be
+# transparently re-checked, rather than the browser discarding it before
+# that re-check ever gets a chance to run.
 module HousingCounselorSession
   extend ActiveSupport::Concern
 
@@ -20,6 +21,11 @@ module HousingCounselorSession
 
   HC_SESSION_COOKIE_NAME = :hc_session
   HC_SESSION_DURATION = 2.hours
+  # Deliberately longer than HC_SESSION_DURATION so the browser keeps
+  # sending the cookie back after the JWT's own exp has passed, letting an
+  # expired-but-present cookie reach the transparent Salesforce re-check
+  # instead of the browser silently dropping it first.
+  HC_SESSION_COOKIE_DURATION = 7.days
 
   # { hc_id:, app_id: } for the current, Salesforce-authorized housing
   # counselor session, or nil if there is none. An expired cookie is
@@ -47,7 +53,7 @@ module HousingCounselorSession
       httponly: true,
       secure: Rails.env.production?,
       same_site: :lax,
-      expires: 7.days,
+      expires: HC_SESSION_COOKIE_DURATION,
     }
   end
 
