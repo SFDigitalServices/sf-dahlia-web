@@ -19,6 +19,12 @@ module HousingCounselorSession
     include ActionController::Cookies
   end
 
+  # Raised by callers (see AccountController#effective_contact_id) that must
+  # not silently treat "Salesforce couldn't be reached to re-verify an
+  # expired hc_session cookie" the same as "there is no delegated session" -
+  # the two require different responses (fail closed vs. fall back).
+  class VerificationUnavailableError < StandardError; end
+
   HC_SESSION_COOKIE_NAME = :hc_session
   HC_SESSION_DURATION = 2.hours
   # Deliberately longer than HC_SESSION_DURATION so the browser keeps
@@ -33,14 +39,33 @@ module HousingCounselorSession
   # granted, replaced with a fresh cookie; a cookie whose hcId does not match
   # the signed-in Clerk user is rejected and discarded rather than trusted.
   #
-  # expected_app_id, when given, scopes an expired-cookie refresh to a stale
-  # cookie whose own appId matches it. Without this, refreshing a cookie left
-  # over from a different applicant would re-check Salesforce for the wrong
-  # applicant on every request until it naturally falls out of scope.
+  # expected_app_id, when given, scopes the lookup to a cookie whose own
+  # appId matches it - both for a still-valid cookie and for a stale one
+  # being refreshed. Without this, a cookie left over from a different
+  # applicant would be returned (or re-checked against Salesforce) for the
+  # wrong applicant.
+  #
+  # Deliberately not memoized: there is only ever one hc_session cookie, so
+  # re-decoding it on a second call is cheap local HMAC verification, not
+  # I/O, and it stays correct if a later call in the same request passes a
+  # different expected_app_id. It also can't trigger a second Salesforce
+  # call - after a successful refresh, write_hc_session_cookie's write is
+  # visible to this same request's cookie jar, so the next call sees an
+  # already-fresh, non-expired token and skips the refresh path entirely;
+  # after a failed refresh, the cookie is discarded, so the next call just
+  # sees no cookie.
   def current_hc_session(expected_app_id: nil)
-    return @current_hc_session if defined?(@current_hc_session)
+    resolve_hc_session(expected_app_id)
+  end
 
-    @current_hc_session = resolve_hc_session(expected_app_id)
+  # True once a Salesforce/Faraday error has prevented re-verifying an
+  # expired hc_session cookie during the current request. Distinct from
+  # current_hc_session returning nil for a legitimate reason (no cookie, or
+  # one that doesn't belong to the signed-in user) - callers that need to
+  # tell "couldn't confirm" apart from "no session" (see
+  # AccountController#effective_contact_id) should check this too.
+  def hc_session_verification_failed?
+    @hc_session_verification_failed || false
   end
 
   def write_hc_session_cookie(hc_id:, app_id:)
@@ -64,6 +89,8 @@ module HousingCounselorSession
     return nil if token.blank?
 
     data = JsonWebTokenService.decode_token(token, verify_expiration: true)
+    return nil if expected_app_id && data['appId'] != expected_app_id
+
     session_if_current_user_matches(data)
   rescue JsonWebTokenService::ExpiredTokenError
     refresh_hc_session(token, expected_app_id)
@@ -107,6 +134,7 @@ module HousingCounselorSession
       'HousingCounselorSession: Salesforce re-check failed, discarding hc_session ' \
       "cookie: #{e.message}",
     )
+    @hc_session_verification_failed = true
     discard_hc_session_cookie
     nil
   end

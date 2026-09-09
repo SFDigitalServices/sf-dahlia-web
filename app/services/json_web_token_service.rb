@@ -12,7 +12,7 @@ class JsonWebTokenService
     raise InvalidTokenError, 'JWT is not configured' if SECRET_KEY.blank? || ALGORITHM.blank?
 
     payload = { data: params }
-    payload[:exp] = exp.to_i if exp
+    payload[:exp] = exp.to_i unless exp.nil?
     JWT.encode(payload, SECRET_KEY, ALGORITHM)
   end
 

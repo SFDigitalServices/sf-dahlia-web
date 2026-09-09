@@ -13,6 +13,22 @@ RSpec.describe HousingCounselorSession, type: :controller do
       head :ok
     end
 
+    # Exercises current_hc_session twice in a single request with two
+    # different expected_app_id values, to prove the second call is
+    # re-evaluated rather than returning a memoized answer from the first.
+    def show_twice
+      first = current_hc_session(expected_app_id: params[:first_expected_app_id])
+      second = current_hc_session(expected_app_id: params[:second_expected_app_id])
+      render json: { first:, second: }
+    end
+
+    def show_with_verification_status
+      render json: {
+        session: current_hc_session(expected_app_id: params[:expected_app_id]),
+        verification_failed: hc_session_verification_failed?,
+      }
+    end
+
     def current_user
       @current_user ||= Struct.new(:salesforce_contact_id).new(params[:signed_in_as])
     end
@@ -21,6 +37,8 @@ RSpec.describe HousingCounselorSession, type: :controller do
   before do
     routes.draw do
       get 'show' => 'api#show'
+      get 'show_twice' => 'api#show_twice'
+      get 'show_with_verification_status' => 'api#show_with_verification_status'
       post 'write' => 'api#write'
     end
   end
@@ -89,6 +107,24 @@ RSpec.describe HousingCounselorSession, type: :controller do
 
         expect(JSON.parse(response.body)).to eq('session' => nil)
         expect(cookies[:hc_session]).to be_blank
+      end
+
+      # Regression coverage: expected_app_id used to only be checked on the
+      # expired-cookie refresh path, so a still-valid cookie for a different
+      # applicant than expected_app_id was returned as-is.
+      it 'returns nil without discarding the cookie when expected_app_id does not ' \
+         'match the cookie' do
+        get :show, params: { signed_in_as: hc_id, expected_app_id: 'some_other_app_id' }
+
+        expect(JSON.parse(response.body)).to eq('session' => nil)
+        expect(cookies[:hc_session]).to be_present
+      end
+
+      it 'returns the session when expected_app_id matches the cookie' do
+        get :show, params: { signed_in_as: hc_id, expected_app_id: app_id }
+
+        expect(JSON.parse(response.body)).to eq('session' => { 'hc_id' => hc_id,
+                                                               'app_id' => app_id })
       end
     end
 
@@ -192,6 +228,112 @@ RSpec.describe HousingCounselorSession, type: :controller do
           expect(JSON.parse(response.body)).to eq('session' => nil)
           expect(cookies[:hc_session]).to be_blank
         end
+      end
+    end
+  end
+
+  describe '#hc_session_verification_failed?' do
+    context 'when there is no cookie' do
+      it 'is false' do
+        get :show_with_verification_status, params: { signed_in_as: hc_id }
+
+        expect(JSON.parse(response.body))
+          .to eq('session' => nil, 'verification_failed' => false)
+      end
+    end
+
+    context 'when the cookie is valid and not expired' do
+      before { set_hc_session_cookie(hc_id:, app_id:) }
+
+      it 'is false' do
+        get :show_with_verification_status, params: { signed_in_as: hc_id }
+
+        expect(JSON.parse(response.body)['verification_failed']).to eq(false)
+      end
+    end
+
+    context 'when the cookie has expired' do
+      before { set_hc_session_cookie(hc_id:, app_id:, exp: 1.hour.ago) }
+
+      it 'is false when Salesforce still grants access' do
+        allow(Force::HousingCounselorService).to receive(:authorize_access).and_return(
+          { applicant_contact_id: app_id, counselor_contact_id: hc_id },
+        )
+
+        get :show_with_verification_status, params: { signed_in_as: hc_id }
+
+        expect(JSON.parse(response.body)['verification_failed']).to eq(false)
+      end
+
+      it 'is false when Salesforce explicitly denies access (not a service failure)' do
+        allow(Force::HousingCounselorService).to receive(:authorize_access)
+          .and_return(nil)
+
+        get :show_with_verification_status, params: { signed_in_as: hc_id }
+
+        expect(JSON.parse(response.body))
+          .to eq('session' => nil, 'verification_failed' => false)
+      end
+
+      # This is the core regression this flag exists to prevent: a service
+      # failure must be distinguishable from "no session," since callers
+      # like AccountController#effective_contact_id must not silently treat
+      # them the same way (see account_controller.rb specs).
+      it 'is true when the Salesforce re-check raises a transient error' do
+        allow(Force::HousingCounselorService).to receive(:authorize_access)
+          .and_raise(Faraday::TimeoutError, 'timed out')
+
+        get :show_with_verification_status, params: { signed_in_as: hc_id }
+
+        expect(JSON.parse(response.body))
+          .to eq('session' => nil, 'verification_failed' => true)
+        expect(cookies[:hc_session]).to be_blank
+      end
+    end
+  end
+
+  describe 'calling current_hc_session more than once in a request with different ' \
+           'expected_app_id values' do
+    let(:other_app_id) { '003OTHER' }
+
+    # Regression coverage: current_hc_session used to memoize its result on
+    # the first call regardless of expected_app_id, so a second call with a
+    # different expected_app_id silently returned the first call's answer.
+    context 'when the cookie is valid and matches only the first expected_app_id' do
+      before { set_hc_session_cookie(hc_id:, app_id:) }
+
+      it 'evaluates each call independently instead of returning a memoized answer' do
+        get :show_twice, params: {
+          signed_in_as: hc_id,
+          first_expected_app_id: app_id,
+          second_expected_app_id: other_app_id,
+        }
+
+        body = JSON.parse(response.body)
+        expect(body['first']).to eq('hc_id' => hc_id, 'app_id' => app_id)
+        expect(body['second']).to be_nil
+      end
+    end
+
+    context 'when the cookie is expired and Salesforce still grants access' do
+      before { set_hc_session_cookie(hc_id:, app_id:, exp: 1.hour.ago) }
+
+      it 'only re-checks Salesforce once, since the first call already refreshed ' \
+         'the cookie' do
+        allow(Force::HousingCounselorService).to receive(:authorize_access).and_return(
+          { applicant_contact_id: app_id, counselor_contact_id: hc_id },
+        )
+
+        get :show_twice, params: {
+          signed_in_as: hc_id,
+          first_expected_app_id: app_id,
+          second_expected_app_id: app_id,
+        }
+
+        body = JSON.parse(response.body)
+        expect(body['first']).to eq('hc_id' => hc_id, 'app_id' => app_id)
+        expect(body['second']).to eq('hc_id' => hc_id, 'app_id' => app_id)
+        expect(Force::HousingCounselorService).to have_received(:authorize_access).once
       end
     end
   end
