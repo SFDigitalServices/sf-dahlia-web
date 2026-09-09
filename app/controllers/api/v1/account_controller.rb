@@ -125,8 +125,12 @@ class Api::V1::AccountController < ApiController
 
   private
 
+  # Authentication for #my_applications stays whatever it already is
+  # (Devise, unchanged) - this only adds "and if that signed-in user is
+  # also a housing counselor per their hc_session cookie, use the
+  # delegated applicant's contact instead of their own."
   def current_user_applications
-    Force::ShortFormService.get_for_user(current_user.salesforce_contact_id)
+    Force::ShortFormService.get_for_user(effective_contact_id)
   end
 
   # The applicant contact ID a housing counselor is currently delegated

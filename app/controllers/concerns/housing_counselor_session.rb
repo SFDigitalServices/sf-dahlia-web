@@ -3,8 +3,11 @@
 # Reads and refreshes the hc_session cookie so a controller can know,
 # without calling Salesforce on every request, whether the current housing
 # counselor is still authorized to act on behalf of a given applicant.
-# Include this in any controller that authenticates the current user via
-# Clerk (it expects #current_user to respond to salesforce_contact_id).
+# Include this in any controller whose #current_user responds to
+# salesforce_contact_id - the hc_session cookie's own hcId is checked
+# against whatever that returns, so this works whether current_user comes
+# from Clerk or from Devise (the auth mechanism itself is unrelated to
+# whether the signed-in user happens to also be a housing counselor).
 #
 # The cookie's own browser expiry (HC_SESSION_COOKIE_DURATION) is
 # deliberately longer than the JWT's exp claim (HC_SESSION_DURATION), so
