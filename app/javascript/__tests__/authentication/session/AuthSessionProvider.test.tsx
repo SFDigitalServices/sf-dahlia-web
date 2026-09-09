@@ -1,6 +1,6 @@
 import React from "react"
 import { act, render, screen, waitFor } from "@testing-library/react"
-import { useAuth } from "@clerk/react"
+import { ClerkProvider, useAuth } from "@clerk/react"
 
 import {
   AuthSessionProvider,
@@ -10,7 +10,7 @@ import { useFeatureFlag } from "../../../hooks/useFeatureFlag"
 
 jest.mock("@clerk/react", () => ({
   useAuth: jest.fn(),
-  ClerkProvider: ({ children }: { children: React.ReactNode }) => <>{children}</>,
+  ClerkProvider: jest.fn(({ children }: { children: React.ReactNode }) => <>{children}</>),
 }))
 
 jest.mock("../../../hooks/useFeatureFlag", () => ({
@@ -61,6 +61,11 @@ const renderProbe = async () => {
 describe("AuthSessionProvider", () => {
   beforeEach(() => {
     jest.clearAllMocks()
+    // setupTests resets all mocks between tests, which strips the passthrough
+    // implementation off the ClerkProvider spy.
+    ;(ClerkProvider as unknown as jest.Mock).mockImplementation(
+      ({ children }: { children: React.ReactNode }) => <>{children}</>
+    )
   })
 
   // withAppSetup rendered nothing until the flag resolved, and this provider
@@ -125,5 +130,58 @@ describe("AuthSessionProvider", () => {
     await renderProbe()
 
     expect(screen.getByTestId("status").textContent).toBe("signedOut")
+  })
+
+  // getToken() rejects when a refresh fails rather than returning null, and the
+  // signature promises a credential. A caller that copied the happy path would
+  // otherwise get an unhandled rejection.
+  it("reports no credentials when Clerk fails to issue a token", async () => {
+    mockFlag(true)
+    ;(useAuth as jest.Mock).mockReturnValue({
+      isLoaded: true,
+      isSignedIn: true,
+      getToken: jest.fn().mockRejectedValue(new Error("network")),
+    })
+
+    await renderProbe()
+
+    await waitFor(() =>
+      expect(screen.getByTestId("credentials").textContent).toBe(`{"kind":"none"}`)
+    )
+  })
+
+  // Page tests render withAppSetup exports, which mount their own provider, and
+  // then wrap them again. Two ClerkProviders means two Clerk instances with
+  // separate token caches; the stubbed ClerkProvider in setupTests hides it.
+  it("does not mount a second provider when nested", async () => {
+    mockFlag(true)
+    mockClerk("clerk-session-token")
+
+    // eslint-disable-next-line @typescript-eslint/require-await
+    await act(async () => {
+      render(
+        <AuthSessionProvider>
+          <AuthSessionProvider>
+            <Probe />
+          </AuthSessionProvider>
+        </AuthSessionProvider>
+      )
+    })
+
+    expect(ClerkProvider).toHaveBeenCalledTimes(1)
+    expect(screen.getByTestId("status").textContent).toBe("signedIn")
+  })
+
+  it("warns when a consumer has no provider above it", async () => {
+    const consoleError = jest.spyOn(console, "error").mockImplementation(() => {})
+
+    // eslint-disable-next-line @typescript-eslint/require-await
+    await act(async () => {
+      render(<Probe />)
+    })
+
+    expect(consoleError).toHaveBeenCalledWith(expect.stringContaining("no AuthSessionProvider"))
+    expect(screen.getByTestId("status").textContent).toBe("initializing")
+    consoleError.mockRestore()
   })
 })
