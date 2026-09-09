@@ -3,6 +3,7 @@ import React from "react"
 import { act, render, RenderOptions, RenderResult } from "@testing-library/react"
 import { t } from "@bloom-housing/ui-components"
 import { MemoryRouter, type InitialEntry } from "react-router"
+import { AuthSessionProvider } from "../../authentication/session/AuthSessionProvider"
 import crypto from "crypto"
 import { useForm, FormProvider } from "react-hook-form"
 import { FormEngineProvider } from "../../formEngine/formEngineContext"
@@ -16,6 +17,9 @@ export const mockWindowLocation = (): typeof window.location => {
   window.location = {
     ...originalLocation,
     assign: jest.fn(),
+    // ErrorBoundary sends the browser to /500.html via replace(), so any test
+    // whose tree throws hits this before its own assertions.
+    replace: jest.fn(),
   } as any
   return originalLocation
 }
@@ -35,6 +39,16 @@ export const restoreWindowLocation = (originalLocation: typeof window.location):
  *
  * By default the MemoryRouter starts at "/" - pass `initialEntries` to render
  * under a specific path (e.g. for components that parse an id out of the URL).
+ *
+ * AuthSessionProvider is included because withAppSetup mounts it above every
+ * page in the app, so anything reading useAuthSession has it in production.
+ * Which provider it picks follows the mocked Clerk flag, and the session it
+ * reports follows the mocked useAuth - see setupUserContext.
+ *
+ * Note that AuthSessionProvider renders nothing until flags resolve, so a test
+ * mocking useFeatureFlag to return `flagsReady: false` renders an empty tree
+ * rather than failing loudly. Outside a FlagProvider the real hook reports
+ * ready, which is why tests that mock nothing still render.
  */
 export const renderAndLoadAsync = async (
   ui: React.ReactElement,
@@ -42,13 +56,24 @@ export const renderAndLoadAsync = async (
   initialEntries: InitialEntry[] = ["/"]
 ): Promise<RenderResult> => {
   let renderResponse: RenderResult = {} as RenderResult
+
+  const OuterWrapper =
+    options?.wrapper ??
+    (({ children }: { children: React.ReactNode }) => (
+      <MemoryRouter initialEntries={initialEntries}>{children}</MemoryRouter>
+    ))
+
   // eslint-disable-next-line @typescript-eslint/require-await
   await act(async () => {
     renderResponse = render(ui, {
-      wrapper: ({ children }: { children: React.ReactNode }) => (
-        <MemoryRouter initialEntries={initialEntries}>{children}</MemoryRouter>
-      ),
       ...options,
+      // Applied even when the caller brings its own wrapper, since a caller
+      // supplies one to control the router, not to opt out of the session.
+      wrapper: ({ children }: { children: React.ReactNode }) => (
+        <OuterWrapper>
+          <AuthSessionProvider>{children}</AuthSessionProvider>
+        </OuterWrapper>
+      ),
     }) as RenderResult
   })
 
