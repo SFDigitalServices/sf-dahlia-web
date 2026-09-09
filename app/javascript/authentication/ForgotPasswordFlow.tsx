@@ -23,7 +23,7 @@ const ForgotPasswordFlow = () => {
   const navigate = useNavigate()
   const prefilledEmailParam = new URLSearchParams(window.location.search).get("email") ?? ""
 
-  // TODO: show error messages
+  // TODO: DAH-4352 show proper error message in addition to logging to the console
   const onGetCodeSubmit = async ({ email }: { email: string }) => {
     if (signInFetchStatus === "fetching" || !signIn) return
 

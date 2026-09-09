@@ -357,9 +357,9 @@ const EnterVerificationCode = (_props: { assetPaths: unknown }) => {
    * If the user is signed in with a profile, redirect to my account.
    * If the user is signed in without a profile, redirect to the add profile page.
    */
-  const hasRun = useRef(false) // only redirect when first visiting this page, otherwise it overrides navigate() calls from code submission
+  const redirectCheckHasRunOnce = useRef(false) // only redirect when first visiting this page, otherwise it overrides navigate() calls from code submission
   useEffect(() => {
-    if (hasRun.current) return
+    if (redirectCheckHasRunOnce.current) return
 
     if (!flagsReady) return
     if (!clerkEnabled) {
@@ -377,7 +377,7 @@ const EnterVerificationCode = (_props: { assetPaths: unknown }) => {
     if (!initialStateLoaded) return
     if (isSignedIn && profile) void navigate(getMyAccountPath())
     if (isSignedIn && !profile) void navigate(getAddProfilePath())
-    hasRun.current = true
+    redirectCheckHasRunOnce.current = true
   }, [
     flagsReady,
     clerkEnabled,
