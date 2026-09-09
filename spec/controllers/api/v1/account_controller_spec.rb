@@ -222,6 +222,46 @@ RSpec.describe Api::V1::AccountController, type: :controller do
         expect(JSON.parse(response.body)).to eq('error' => 'Could not get Salesforce contact ID')
       end
     end
+
+    context 'when signed in as a housing counselor with a valid hc_session cookie' do
+      let(:hc_contact_id) { contact_id }
+      let(:applicant_contact_id) { '003XYZ' }
+
+      def set_hc_session_cookie(hc_id:, app_id:, exp: 2.hours.from_now)
+        request.cookies['hc_session'] =
+          JsonWebTokenService.encode_token({ 'hcId' => hc_id, 'appId' => app_id }, exp:)
+      end
+
+      it 'returns the delegated applicant profile rather than the housing counselor\'s own' do
+        set_hc_session_cookie(hc_id: hc_contact_id, app_id: applicant_contact_id)
+
+        get :profile
+
+        expect(response).to have_http_status(:ok)
+        expect(Force::AccountService).to have_received(:get).with(
+          applicant_contact_id,
+          { user_token_validation: true },
+        )
+      end
+
+      context 'and the cookie has expired but Salesforce still grants access' do
+        it 'refreshes the cookie via Salesforce and still returns the applicant profile' do
+          set_hc_session_cookie(hc_id: hc_contact_id, app_id: applicant_contact_id, exp: 1.hour.ago)
+          allow(Force::HousingCounselorService).to receive(:authorize_access).and_return(
+            { applicant_contact_id:, counselor_contact_id: hc_contact_id },
+          )
+
+          get :profile
+
+          expect(response).to have_http_status(:ok)
+          expect(Force::AccountService).to have_received(:get).with(
+            applicant_contact_id,
+            { user_token_validation: true },
+          )
+          expect(cookies[:hc_session]).to be_present
+        end
+      end
+    end
   end
 
   describe 'POST #create_profile' do

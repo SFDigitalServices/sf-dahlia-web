@@ -3,6 +3,7 @@
 # RESTful JSON API to retrieve data for My Account
 class Api::V1::AccountController < ApiController
   include Clerk::Authenticatable
+  include HousingCounselorSession
   before_action :authenticate_user!, except: %i[confirm check_account]
 
   def my_applications
@@ -26,7 +27,7 @@ class Api::V1::AccountController < ApiController
   end
 
   def profile
-    contact_id = current_user.salesforce_contact_id.presence
+    contact_id = effective_contact_id.presence
     contact = contact_id &&
               Force::AccountService.get(contact_id, { user_token_validation: true })
     if contact.blank?
@@ -119,6 +120,13 @@ class Api::V1::AccountController < ApiController
 
   def current_user_applications
     Force::ShortFormService.get_for_user(current_user.salesforce_contact_id)
+  end
+
+  # The applicant contact ID a housing counselor is currently delegated
+  # access to, per their hc_session cookie, or the signed-in user's own
+  # contact ID otherwise.
+  def effective_contact_id
+    current_hc_session&.dig(:app_id) || current_user.salesforce_contact_id
   end
 
   def authenticate_user!(*args)
