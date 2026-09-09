@@ -1,11 +1,16 @@
 # frozen_string_literal: true
 
-# Reads and refreshes the short-lived hc_session cookie so a controller can
-# know, without calling Salesforce on every request, whether the current
-# housing counselor is still authorized to act on behalf of a given
-# applicant. Include this in any controller that authenticates the current
-# user via Clerk (it expects #current_user to respond to
-# salesforce_contact_id).
+# Reads and refreshes the hc_session cookie so a controller can know,
+# without calling Salesforce on every request, whether the current housing
+# counselor is still authorized to act on behalf of a given applicant.
+# Include this in any controller that authenticates the current user via
+# Clerk (it expects #current_user to respond to salesforce_contact_id).
+#
+# The cookie itself is a browser session cookie with no expiry of its own;
+# staleness is governed entirely by the JWT's own exp claim (see
+# HC_SESSION_DURATION below) so that an expired-but-still-present cookie is
+# sent back to the server and can be transparently re-checked, rather than
+# the browser discarding it before that re-check ever gets a chance to run.
 module HousingCounselorSession
   extend ActiveSupport::Concern
 
@@ -21,10 +26,15 @@ module HousingCounselorSession
   # transparently re-checked against Salesforce and, if access is still
   # granted, replaced with a fresh cookie; a cookie whose hcId does not match
   # the signed-in Clerk user is rejected and discarded rather than trusted.
-  def current_hc_session
+  #
+  # expected_app_id, when given, scopes an expired-cookie refresh to a stale
+  # cookie whose own appId matches it. Without this, refreshing a cookie left
+  # over from a different applicant would re-check Salesforce for the wrong
+  # applicant on every request until it naturally falls out of scope.
+  def current_hc_session(expected_app_id: nil)
     return @current_hc_session if defined?(@current_hc_session)
 
-    @current_hc_session = resolve_hc_session
+    @current_hc_session = resolve_hc_session(expected_app_id)
   end
 
   def write_hc_session_cookie(hc_id:, app_id:)
@@ -37,20 +47,20 @@ module HousingCounselorSession
       httponly: true,
       secure: Rails.env.production?,
       same_site: :lax,
-      expires: HC_SESSION_DURATION.from_now,
+      expires: 7.days,
     }
   end
 
   private
 
-  def resolve_hc_session
+  def resolve_hc_session(expected_app_id)
     token = cookies[HC_SESSION_COOKIE_NAME]
     return nil if token.blank?
 
     data = JsonWebTokenService.decode_token(token, verify_expiration: true)
     session_if_current_user_matches(data)
   rescue JsonWebTokenService::ExpiredTokenError
-    refresh_hc_session(token)
+    refresh_hc_session(token, expected_app_id)
   rescue JsonWebTokenService::InvalidTokenError => e
     Rails.logger.warn("HousingCounselorSession: rejecting invalid hc_session cookie: #{e.message}")
     discard_hc_session_cookie
@@ -61,8 +71,9 @@ module HousingCounselorSession
   # still verified by decode_token, so hcId/appId here can be trusted as
   # "once true" - what's no longer trusted is "still true", which is exactly
   # what authorize_access re-establishes.
-  def refresh_hc_session(token)
+  def refresh_hc_session(token, expected_app_id)
     stale = JsonWebTokenService.decode_token(token, verify_expiration: false)
+    return nil if expected_app_id && stale['appId'] != expected_app_id
     return nil unless hc_id_matches_current_user?(stale['hcId'])
 
     result = Force::HousingCounselorService.authorize_access(
@@ -78,10 +89,18 @@ module HousingCounselorSession
       return nil
     end
 
-    write_hc_session_cookie(hc_id: result[:counselor_contact_id], app_id: result[:applicant_contact_id])
+    write_hc_session_cookie(hc_id: result[:counselor_contact_id],
+                            app_id: result[:applicant_contact_id])
     { hc_id: result[:counselor_contact_id], app_id: result[:applicant_contact_id] }
   rescue JsonWebTokenService::InvalidTokenError => e
     Rails.logger.warn("HousingCounselorSession: rejecting invalid hc_session cookie: #{e.message}")
+    discard_hc_session_cookie
+    nil
+  rescue Faraday::Error, Restforce::Error => e
+    Rails.logger.warn(
+      'HousingCounselorSession: Salesforce re-check failed, discarding hc_session ' \
+      "cookie: #{e.message}",
+    )
     discard_hc_session_cookie
     nil
   end

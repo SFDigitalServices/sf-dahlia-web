@@ -5,7 +5,7 @@ RSpec.describe HousingCounselorSession, type: :controller do
     include HousingCounselorSession
 
     def show
-      render json: { session: current_hc_session }
+      render json: { session: current_hc_session(expected_app_id: params[:expected_app_id]) }
     end
 
     def write
@@ -41,6 +41,14 @@ RSpec.describe HousingCounselorSession, type: :controller do
       decoded = JsonWebTokenService.decode_token(cookies[:hc_session])
       expect(decoded).to eq('hcId' => hc_id, 'appId' => app_id)
       expect(response.headers['Set-Cookie']).to include('HttpOnly')
+    end
+
+    it 'does not set an Expires or Max-Age attribute, keeping it a session cookie' do
+      post :write, params: { hc_id:, app_id: }
+
+      set_cookie = response.headers['Set-Cookie']
+      expect(set_cookie).not_to match(/expires=/i)
+      expect(set_cookie).not_to match(/max-age=/i)
     end
   end
 
@@ -99,6 +107,17 @@ RSpec.describe HousingCounselorSession, type: :controller do
 
     context 'when the cookie has expired' do
       before { set_hc_session_cookie(hc_id:, app_id:, exp: 1.hour.ago) }
+
+      context 'and expected_app_id does not match the stale cookie appId' do
+        it 'returns nil and never calls Salesforce' do
+          allow(Force::HousingCounselorService).to receive(:authorize_access)
+
+          get :show, params: { signed_in_as: hc_id, expected_app_id: 'some_other_app_id' }
+
+          expect(JSON.parse(response.body)).to eq('session' => nil)
+          expect(Force::HousingCounselorService).not_to have_received(:authorize_access)
+        end
+      end
 
       context 'and the stale cookie hcId does not match the signed-in user' do
         it 'returns nil, discards the cookie, and never calls Salesforce' do
@@ -162,21 +181,15 @@ RSpec.describe HousingCounselorSession, type: :controller do
           end
         end
 
-        # Regression coverage for a confirmed code-review finding: refresh_hc_session
-        # only rescues JsonWebTokenService::InvalidTokenError around the Salesforce
-        # re-check. Force::HousingCounselorService#authorize_access itself only
-        # rescues Restforce::NotFoundError, so any other error (timeout, other
-        # Restforce/Faraday error) is not handled here and propagates out of
-        # current_hc_session. In the real HousingCounselorController this reaches
-        # ApiController's catch-all rescue_from StandardError, turning what should
-        # be a transparent Salesforce re-check into a 500/504 response.
-        it 'does not rescue a non-NotFoundError from the Salesforce re-check' do
+        it 'rescues a non-NotFoundError from the Salesforce re-check and discards the cookie' do
           allow(Force::HousingCounselorService).to receive(:authorize_access)
             .and_raise(Faraday::TimeoutError, 'timed out')
 
           get :show, params: { signed_in_as: hc_id }
 
-          expect(response).to have_http_status(:gateway_timeout)
+          expect(response).to have_http_status(:ok)
+          expect(JSON.parse(response.body)).to eq('session' => nil)
+          expect(cookies[:hc_session]).to be_blank
         end
       end
     end

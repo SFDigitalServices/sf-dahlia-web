@@ -27,7 +27,8 @@ class Api::V1::HousingCounselorController < ApiController
       return
     end
 
-    if current_hc_session&.dig(:app_id) == applicant_contact_id
+    hc_session = current_hc_session(expected_app_id: applicant_contact_id)
+    if hc_session&.dig(:app_id) == applicant_contact_id
       Rails.logger.info(
         'HousingCounselorController#access: ' \
         "reusing valid hc_session for applicant contact ID=#{applicant_contact_id}",
