@@ -415,6 +415,11 @@ describe("ListingDetailsEligibility", () => {
     const plusHousingListing = {
       ...closedRentalListing,
       Custom_Listing_Type: CUSTOM_LISTING_TYPES.PLUS_HOUSING,
+      Units: [
+        { ...unitsWithOneAmi[0], Reserved_Type: "Plus Housing" },
+        { ...unitsWithOneAmi[1], Reserved_Type: "Other priority" },
+        { ...unitsWithOneAmi[0], Reserved_Type: "Plus Housing" },
+      ],
     }
 
     const { asFragment, findByText, findByRole } = render(
@@ -444,7 +449,7 @@ describe("ListingDetailsEligibility", () => {
     expect(
       await findByRole("link", { name: "Learn about the Plus Housing program" })
     ).toHaveAttribute("href", "https://www.sf.gov/reports--february-2024--plus-housing-waitlist")
-    expect(await findByText("5 Units")).toBeDefined()
+    expect(await findByText("2 Units")).toBeDefined()
     expect(asFragment()).toMatchSnapshot()
   })
 
