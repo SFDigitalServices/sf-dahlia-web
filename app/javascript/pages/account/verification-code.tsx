@@ -121,10 +121,17 @@ const EnterVerificationCodePage = ({
   const verifySignUpCode = async (code: string) => {
     if (signUpFetchStatus === "fetching" || !signUp) return
 
-    await signUp.verifications.verifyEmailCode({ code })
+    const { error } = await signUp.verifications.verifyEmailCode({ code })
+    if (error) {
+      console.error("Code verification error:", error)
+      setError("code", { message: "invalid" })
+      return
+    }
+
     if (signUp.status !== "complete") {
       console.error("Code verification not complete:", signUp.status)
       setError("code", { message: "invalid" })
+      return
     }
 
     await signUp.finalize({
@@ -162,11 +169,6 @@ const EnterVerificationCodePage = ({
   const resendSignInCode = async (): Promise<boolean> => {
     if (signInFetchStatus === "fetching" || !signIn) return false
 
-    if (!signIn.emailAddress) {
-      console.error("Missing email address error:", signIn)
-      return false
-    }
-
     const { error } = await signIn.emailCode.sendCode()
     if (error) {
       console.error("Resend sign in code error:", error)
@@ -183,11 +185,6 @@ const EnterVerificationCodePage = ({
 
   const resendSignUpCode = async (): Promise<boolean> => {
     if (signUpFetchStatus === "fetching" || !signUp) return false
-
-    if (!signUp.emailAddress) {
-      console.error("Missing email address error:", signUp)
-      return false
-    }
 
     const { error } = await signUp.verifications.sendEmailCode()
     if (error) {
@@ -209,11 +206,6 @@ const EnterVerificationCodePage = ({
 
   const resendForgotPasswordCode = async (): Promise<boolean> => {
     if (signInFetchStatus === "fetching" || !signIn) return false
-
-    if (!signIn.emailAddress) {
-      console.error("Missing email address error:", signIn)
-      return false
-    }
 
     const { error } = await signIn.resetPasswordEmailCode.sendCode()
     if (error) {

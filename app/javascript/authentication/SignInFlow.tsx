@@ -39,7 +39,7 @@ const SignInFlow = () => {
   const redirectUrl = state?.redirectUrl
   const postSignInRedirectUrl = redirectUrl ?? getMyAccountPath()
   const requiredLoginsDate = localizedFormat(process.env.REQUIRED_LOGINS_DATE ?? "", "LL")
-  const { isLoaded: authLoaded, isSignedIn, getToken } = useAuth()
+  const { isLoaded: authLoaded, isSignedIn, getToken, signOut } = useAuth()
   const { signIn, fetchStatus: signInFetchStatus } = useSignIn()
   const { client } = useClerk()
   const { unleashFlag: requiredLoginsMessageEnabled } = useFeatureFlag(
@@ -117,18 +117,22 @@ const SignInFlow = () => {
     }
     clearHeaders() // Clear headers in case of existing Devise session (while testing)
 
+    // we need to set the session token and *not* navigate away, so we have it for `checkHousingCounselorAccess()`
+    // but that means we lose access to the `decorateUrl` utility function.
+    // https://clerk.com/docs/react/reference/objects/clerk#using-the-navigate-parameter
+    await signIn.finalize()
+
     const housingCounselorToken = getHousingCounselorToken()
     if (housingCounselorToken) {
       // housingCounselorChecked.current = true // not needed because we assign it in useEffect, it also violates linter rules
       const housingCounselorAccess = await checkHousingCounselorAccess()
-      if (!housingCounselorAccess) return
+      if (!housingCounselorAccess) {
+        signOut()
+        return
+      }
     }
 
-    await signIn.finalize({
-      navigate: ({ decorateUrl }: { decorateUrl: (url: string) => string }) => {
-        void navigate(decorateUrl(postSignInRedirectUrl))
-      },
-    })
+    void navigate(postSignInRedirectUrl)
   }
 
   const onError = (submitErrors: { email?: unknown; password?: unknown }) => {

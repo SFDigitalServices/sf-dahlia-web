@@ -96,7 +96,7 @@ describe("<EnterVerificationCode />", () => {
     window.location.replace = jest.fn()
     setupUserContext({ loggedIn: false })
     mockNavigate = jest.fn()
-    mockSignUpVerifyEmailCode = jest.fn().mockResolvedValue(undefined)
+    mockSignUpVerifyEmailCode = jest.fn().mockResolvedValue({ error: undefined })
     mockSignUpSendEmailCode = jest.fn().mockResolvedValue({ error: undefined })
     mockSignUpFinalize = jest.fn().mockImplementation(async ({ navigate }) => {
       await navigate({ decorateUrl: (url: string) => url })
@@ -497,9 +497,8 @@ describe("<EnterVerificationCode />", () => {
 
     expect(mockResetPasswordSendCode).toHaveBeenCalledTimes(1)
   })
-  it("does not resend the forgot password code if email address is missing", async () => {
+  it("resends the forgot password code even if email address is missing", async () => {
     cleanup()
-    jest.spyOn(console, "error").mockImplementation(() => {})
     mockSignInResource.emailAddress = ""
     ;(useLocation as jest.Mock).mockReturnValue({
       pathname: "/forgot-password/code",
@@ -513,7 +512,7 @@ describe("<EnterVerificationCode />", () => {
       await Promise.resolve()
     })
 
-    expect(mockResetPasswordSendCode).not.toHaveBeenCalled()
+    expect(mockResetPasswordSendCode).toHaveBeenCalledTimes(1)
   })
 
   it("does not resend the forgot password code if there is a request error", async () => {

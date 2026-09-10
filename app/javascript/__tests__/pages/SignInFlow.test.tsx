@@ -32,6 +32,7 @@ jest.mock("@clerk/react", () => {
       isLoaded: true,
       isSignedIn: false,
       getToken: jest.fn().mockResolvedValue("clerk-session-token"),
+      signOut: jest.fn(),
     })),
   }
 })
@@ -71,6 +72,7 @@ describe("<SignInFlow />", () => {
   let mockSendCode: jest.Mock
   let mockFinalize: jest.Mock
   let mockNavigate: jest.Mock
+  let mockSignOut: jest.Mock
   let mockSignInResource: {
     status: string
     create: jest.Mock
@@ -83,12 +85,10 @@ describe("<SignInFlow />", () => {
     originalLocation = mockWindowLocation()
     setupUserContext({ loggedIn: false })
     mockNavigate = jest.fn()
+    mockSignOut = jest.fn()
     mockSignInCreate = jest.fn().mockResolvedValue({ error: null })
     mockSendCode = jest.fn().mockResolvedValue(undefined)
-    mockFinalize = jest.fn().mockImplementation(async ({ navigate }) => {
-      await navigate({ decorateUrl: (url: string) => url })
-      return { error: null }
-    })
+    mockFinalize = jest.fn().mockResolvedValue({ error: null })
     mockSignInResource = {
       status: "complete",
       create: mockSignInCreate,
@@ -100,6 +100,7 @@ describe("<SignInFlow />", () => {
       isLoaded: true,
       isSignedIn: false,
       getToken: jest.fn().mockResolvedValue("clerk-session-token"),
+      signOut: mockSignOut,
     })
     ;(useSignIn as jest.Mock).mockReturnValue({
       fetchStatus: "idle",
@@ -304,7 +305,8 @@ describe("<SignInFlow />", () => {
       await waitFor(() => {
         expect(authorizeHousingCounselor).toHaveBeenCalledWith("jwt.token", "clerk-session-token")
       })
-      expect(mockFinalize).not.toHaveBeenCalled()
+      expect(mockFinalize).toHaveBeenCalled()
+      expect(mockSignOut).toHaveBeenCalled()
       expect(mockNavigate).not.toHaveBeenCalledWith("/account")
       expect(screen.getByRole("heading", { name: /^sign in$/i, level: 1 })).not.toBeNull()
     })
@@ -314,6 +316,7 @@ describe("<SignInFlow />", () => {
         isLoaded: true,
         isSignedIn: true,
         getToken: jest.fn().mockResolvedValue("clerk-session-token"),
+        signOut: mockSignOut,
       })
 
       await renderAndLoadAsync(<SignIn assetPaths={{}} />)
