@@ -40,9 +40,7 @@ export const setupUserContext = ({
     initialStateLoaded: true,
   }
 
-  // Calling this helper twice in one test would otherwise capture the previous
-  // spy as `originalUseContext` and make the passthrough below recurse into
-  // itself. Restore first so we always wrap the real useContext.
+  // Restore an earlier spy so a second call doesn't wrap itself and recurse.
   if (jest.isMockFunction(React.useContext)) {
     ;(React.useContext as unknown as jest.SpyInstance).mockRestore()
   }

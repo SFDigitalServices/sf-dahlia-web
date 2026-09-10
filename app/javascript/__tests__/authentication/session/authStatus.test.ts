@@ -26,8 +26,7 @@ describe("deriveClerkStatus", () => {
   })
 
   it("does not wait on the DAHLIA profile", () => {
-    // A signed-in user with no profile yet is on their way to add-profile, and
-    // is signed in while they get there.
+    // e.g. a signed-in user on their way to add-profile.
     expect(deriveClerkStatus({ isLoaded: true, isSignedIn: true })).toBe(SIGNED_IN)
   })
 })

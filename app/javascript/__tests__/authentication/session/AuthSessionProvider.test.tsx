@@ -43,8 +43,7 @@ const Probe = () => {
   )
 }
 
-// The probe resolves credentials in an effect, so the render has to settle
-// inside act() or React warns and jest-fail-on-console turns that into an error.
+// Settle the credentials effect inside act() to avoid act() warnings.
 const renderProbe = async () => {
   let result: ReturnType<typeof render>
   // eslint-disable-next-line @typescript-eslint/require-await
@@ -61,16 +60,12 @@ const renderProbe = async () => {
 describe("AuthSessionProvider", () => {
   beforeEach(() => {
     jest.clearAllMocks()
-    // setupTests resets all mocks between tests, which strips the passthrough
-    // implementation off the ClerkProvider spy.
+    // setupTests resets mocks, which strips this passthrough.
     ;(ClerkProvider as unknown as jest.Mock).mockImplementation(
       ({ children }: { children: React.ReactNode }) => <>{children}</>
     )
   })
 
-  // withAppSetup rendered nothing until the flag resolved, and this provider
-  // took that over. Rendering children here instead would expose every consumer
-  // to a state where auth is not yet knowable.
   it("renders nothing until the flag resolves", async () => {
     mockFlag(false, false)
     mockClerk("token")
@@ -87,7 +82,6 @@ describe("AuthSessionProvider", () => {
 
     await renderProbe()
 
-    // Children render, but nothing behind them claims a session.
     expect(screen.getByTestId("status").textContent).toBe("initializing")
     await waitFor(() =>
       expect(screen.getByTestId("credentials").textContent).toBe(`{"kind":"none"}`)
@@ -108,9 +102,7 @@ describe("AuthSessionProvider", () => {
     )
   })
 
-  // A signed-in user Clerk will not issue a token for has no usable session.
-  // Callers treat this as an error rather than sending an unauthenticated
-  // request, so the distinction has to survive the adapter.
+  // Signed in without a token still means no usable session.
   it("reports no credentials when Clerk issues no token", async () => {
     mockFlag(true)
     mockClerk(null)
@@ -132,9 +124,7 @@ describe("AuthSessionProvider", () => {
     expect(screen.getByTestId("status").textContent).toBe("signedOut")
   })
 
-  // getToken() rejects when a refresh fails rather than returning null, and the
-  // signature promises a credential. A caller that copied the happy path would
-  // otherwise get an unhandled rejection.
+  // getToken() rejects when a refresh fails; getCredentials must not.
   it("reports no credentials when Clerk fails to issue a token", async () => {
     mockFlag(true)
     ;(useAuth as jest.Mock).mockReturnValue({

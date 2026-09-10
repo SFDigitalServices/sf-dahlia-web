@@ -16,8 +16,7 @@ export const mockWindowLocation = (): typeof window.location => {
   window.location = {
     ...originalLocation,
     assign: jest.fn(),
-    // ErrorBoundary sends the browser to /500.html via replace(), so any test
-    // whose tree throws hits this before its own assertions.
+    // ErrorBoundary redirects to /500.html via replace().
     replace: jest.fn(),
   } as any
   return originalLocation
@@ -39,8 +38,7 @@ export const restoreWindowLocation = (originalLocation: typeof window.location):
  * By default the MemoryRouter starts at "/" - pass `initialEntries` to render
  * under a specific path (e.g. for components that parse an id out of the URL).
  *
- * Page exports already include AuthSessionProvider through withAppSetup.
- * Standalone components that need a session should supply their own provider.
+ * Doesn't add AuthSessionProvider; wrap standalone components that need one.
  */
 export const renderAndLoadAsync = async (
   ui: React.ReactElement,
