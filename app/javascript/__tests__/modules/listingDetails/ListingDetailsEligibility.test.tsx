@@ -415,17 +415,17 @@ describe("ListingDetailsEligibility", () => {
     const plusHousingListing = {
       ...closedRentalListing,
       Custom_Listing_Type: CUSTOM_LISTING_TYPES.PLUS_HOUSING,
-      Units: [
-        { ...unitsWithOneAmi[0], Reserved_Type: "Plus Housing" },
-        { ...unitsWithOneAmi[1], Reserved_Type: "Other priority" },
-        { ...unitsWithOneAmi[0], Reserved_Type: "Plus Housing" },
-      ],
     }
+    const unitsWithPlusHousing: RailsUnit[] = [
+      { ...unitsWithOneAmi[0], Reserved_Type: "Plus Housing" },
+      { ...unitsWithOneAmi[1], Reserved_Type: "Other priority" },
+      { ...unitsWithOneAmi[0], Reserved_Type: "Plus Housing" },
+    ]
 
     const { asFragment, findByText, findByRole } = render(
       <ListingDetailsContext.Provider
         value={{
-          units: unitsWithOneAmi,
+          units: unitsWithPlusHousing,
           amiCharts: amiChartsWithOneAmi,
           fetchingUnits: false,
           fetchedUnits: true,

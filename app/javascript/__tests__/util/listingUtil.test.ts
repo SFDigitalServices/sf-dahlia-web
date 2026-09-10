@@ -310,19 +310,16 @@ describe("listingUtil", () => {
   describe("plusHousingUnitsCount", () => {
     it("should count only units reserved for Plus Housing", () => {
       expect(
-        plusHousingUnitsCount({
-          ...closedRentalListing,
-          Units: [
-            { ...units[0], Reserved_Type: "Plus Housing" },
-            { ...units[1], Reserved_Type: "Other priority" },
-            { ...units[2], Reserved_Type: "Plus Housing" },
-          ],
-        })
+        plusHousingUnitsCount([
+          { ...units[0], Reserved_Type: "Plus Housing" },
+          { ...units[1], Reserved_Type: "Other priority" },
+          { ...units[2], Reserved_Type: "Plus Housing" },
+        ])
       ).toBe(2)
     })
 
-    it("should return zero when a listing has no units", () => {
-      expect(plusHousingUnitsCount({ ...closedRentalListing, Units: undefined })).toBe(0)
+    it("should return zero when units are unavailable", () => {
+      expect(plusHousingUnitsCount()).toBe(0)
     })
   })
 

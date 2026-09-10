@@ -348,7 +348,7 @@ export const ListingDetailsEligibility = ({
             {isPlusHousing(listing) && (
               <InfoCard
                 title={t("listings.customListingType.plusHousing.priorityUnits.title")}
-                subtitle={`${plusHousingUnitsCount(listing)} ${t("t.units")}`}
+                subtitle={`${plusHousingUnitsCount(units)} ${t("t.units")}`}
               >
                 <p className="text-sm text-gray-700">
                   {renderInlineMarkup(

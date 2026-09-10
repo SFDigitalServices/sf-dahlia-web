@@ -178,12 +178,12 @@ export const isCSLP = (listing: RailsRentalListing | RailsSaleListing) =>
   listing.Program_Type === "CSLP"
 
 /**
- * Counts the number of PLUS Housing units in a listing
- * @param {RailsRentalListing | RailsSaleListing} listing
- * @returns {number} the number of PLUS Housing units in the listing
+ * Counts the number of PLUS Housing units.
+ * @param {RailsUnit[]} units
+ * @returns {number} the number of PLUS Housing units
  */
-export const plusHousingUnitsCount = (listing: RailsRentalListing | RailsSaleListing) =>
-  listing.Units?.filter((unit) => unit.Reserved_Type === PLUS_HOUSING_RESERVED_TYPE).length ?? 0
+export const plusHousingUnitsCount = (units?: RailsUnit[]) =>
+  units?.filter((unit) => unit.Reserved_Type === PLUS_HOUSING_RESERVED_TYPE).length ?? 0
 
 /**
  * Collect every unit summary on a listing, across both the general and reserved buckets.
