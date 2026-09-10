@@ -45,7 +45,7 @@ const Probe = () => {
 
 // Settle the credentials effect inside act() to avoid act() warnings.
 const renderProbe = async () => {
-  let result: ReturnType<typeof render>
+  let result!: ReturnType<typeof render>
   // eslint-disable-next-line @typescript-eslint/require-await
   await act(async () => {
     result = render(
