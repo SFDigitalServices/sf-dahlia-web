@@ -1,7 +1,7 @@
 import React from "react"
 import { render, screen } from "@testing-library/react"
 import { MemoryRouter } from "react-router"
-import { useAuth } from "@clerk/clerk-react"
+import { useAuth } from "@clerk/react"
 import { ListingDetailsApply } from "../../../modules/listingDetailsAside/ListingDetailsApply"
 import { openSaleListing } from "../../data/RailsSaleListing/listing-sale-open"
 import { closedRentalListing } from "../../data/RailsRentalListing/listing-rental-closed"
