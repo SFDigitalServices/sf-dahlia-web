@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react"
 import { useAuth } from "@clerk/react"
+import { useNavigate } from "react-router"
 
 import {
   AppearanceStyleType,
@@ -78,12 +79,38 @@ const ApplyButton = ({ href }: { href: string }) => (
   </LinkButton>
 )
 
+const ApplyButtonWithLocationState = ({
+  href,
+  state,
+}: {
+  href: string
+  state: Record<string, unknown>
+}) => {
+  const navigate = useNavigate()
+
+  return (
+    <Button
+      styleType={AppearanceStyleType.primary}
+      className={"w-full"}
+      transition={true}
+      onClick={() => {
+        void navigate(href, { state })
+      }}
+    >
+      {t("label.applyOnline")}
+    </Button>
+  )
+}
+
 const ClerkApplyOnlineButton = ({ applyLink }: { applyLink: string }) => {
   const { isLoaded, isSignedIn } = useAuth()
   const { profile, initialStateLoaded } = useContext(UserContext)
 
   if (isLoaded && isSignedIn && profile) return <ApplyButton href={applyLink} />
-  if (isLoaded && !isSignedIn) return <ApplyButton href={getSignInPath()} />
+  if (isLoaded && !isSignedIn)
+    return (
+      <ApplyButtonWithLocationState href={getSignInPath()} state={{ redirectUrl: applyLink }} />
+    )
   if (isLoaded && isSignedIn && initialStateLoaded && !profile)
     return <ApplyButton href={getAddProfilePath()} />
 
