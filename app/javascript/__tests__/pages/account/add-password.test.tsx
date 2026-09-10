@@ -1,5 +1,5 @@
 import React from "react"
-import { useSignIn, useUser } from "@clerk/clerk-react"
+import { useSignIn, useUser } from "@clerk/react"
 import { screen, waitFor, cleanup } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
 import { useLocation, useNavigate } from "react-router"
@@ -13,8 +13,8 @@ import { setupUserContext } from "../../__util__/accountUtils"
 import { useFeatureFlag } from "../../../hooks/useFeatureFlag"
 import { AUTH_FLOW } from "../../../modules/constants"
 
-jest.mock("@clerk/clerk-react", () => {
-  const Clerk = jest.requireActual("@clerk/clerk-react")
+jest.mock("@clerk/react", () => {
+  const Clerk = jest.requireActual("@clerk/react")
   return {
     ...Clerk,
     ClerkProvider: ({ children }: { children: React.ReactNode }) => children,
@@ -191,20 +191,32 @@ describe("<AddPassword />", () => {
     })
   })
   describe("Reset password flow", () => {
-    let mockResetPassword: jest.Mock
-    let mockSetActive: jest.Mock
+    let mockSubmitPassword: jest.Mock
+    let mockFinalize: jest.Mock
+    let mockSignInResource: {
+      status: string | null
+      resetPasswordEmailCode: { submitPassword: jest.Mock }
+      finalize: jest.Mock
+    }
 
     const renderWithStatus = async (status: string | null) => {
       cleanup()
-      mockResetPassword = jest.fn()
-      mockSetActive = jest.fn().mockResolvedValue(undefined)
+      mockSubmitPassword = jest.fn().mockResolvedValue({ resetPasswordError: null })
+      mockFinalize = jest.fn().mockImplementation(async ({ navigate }) => {
+        await navigate({ decorateUrl: (url: string) => url })
+        return { signInFinalizeError: null }
+      })
+      mockSignInResource = {
+        status,
+        resetPasswordEmailCode: { submitPassword: mockSubmitPassword },
+        finalize: mockFinalize,
+      }
       ;(useLocation as jest.Mock).mockReturnValue({
         state: { flow: AUTH_FLOW.FORGOT_PASSWORD },
       })
       ;(useSignIn as jest.Mock).mockReturnValue({
-        isLoaded: true,
-        signIn: { resetPassword: mockResetPassword, status },
-        setActive: mockSetActive,
+        fetchStatus: "idle",
+        signIn: mockSignInResource,
       })
       await renderAndLoadAsync(<AddPassword assetPaths={{}} />)
     }
@@ -214,35 +226,50 @@ describe("<AddPassword />", () => {
       expect(screen.queryByRole("button", { name: /save password/i })).toBeNull()
     })
 
-    it("resets the password, logs user in, and redirects to account page", async () => {
+    it("resets the password and redirects to account page", async () => {
       await renderWithStatus("needs_new_password")
-      mockResetPassword.mockResolvedValue({ status: "complete", createdSessionId: "session_789" })
+      mockSubmitPassword.mockImplementation(() => {
+        mockSignInResource.status = "complete"
+        return Promise.resolve({ resetPasswordError: null })
+      })
 
       const user = userEvent.setup()
       await user.type(screen.getByTestId("password-field"), "abcd1234")
       await user.click(screen.getByRole("button", { name: /save password/i }))
 
       await waitFor(() => {
-        expect(mockResetPassword).toHaveBeenCalledWith({ password: "abcd1234" })
+        expect(mockSubmitPassword).toHaveBeenCalledWith({
+          password: "abcd1234",
+          signOutOfOtherSessions: true,
+        })
       })
-      expect(mockSetActive).toHaveBeenCalledWith({
-        session: "session_789",
-        redirectUrl: "/account",
-      })
+      expect(mockFinalize).toHaveBeenCalled()
+      expect(mockNavigate).toHaveBeenCalledWith("/account")
     })
 
-    it("shows an console error when the reset does not complete", async () => {
+    it("logs an error when the reset does not complete", async () => {
       await renderWithStatus("needs_new_password")
-      jest.spyOn(console, "error").mockImplementation(() => {})
-      mockResetPassword.mockResolvedValue({ status: "needs_second_factor" })
+      const consoleError = jest.spyOn(console, "error").mockImplementation(() => {})
+      mockSubmitPassword.mockResolvedValue({ resetPasswordError: null })
 
       const user = userEvent.setup()
       await user.type(screen.getByTestId("password-field"), "abcd1234")
       await user.click(screen.getByRole("button", { name: /save password/i }))
 
       await waitFor(() => {
-        expect(screen.getByTestId("error-message")).not.toBeNull()
+        expect(mockSubmitPassword).toHaveBeenCalledWith({
+          password: "abcd1234",
+          signOutOfOtherSessions: true,
+        })
       })
+      expect(consoleError).toHaveBeenCalledWith(
+        "Reset password status error:",
+        "needs_new_password"
+      )
+      expect(mockFinalize).not.toHaveBeenCalled()
+      expect(mockNavigate).not.toHaveBeenCalledWith("/account")
+
+      consoleError.mockRestore()
     })
   })
 

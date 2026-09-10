@@ -1,5 +1,5 @@
 import React from "react"
-import { useSignIn } from "@clerk/clerk-react"
+import { useSignIn } from "@clerk/react"
 import { screen, waitFor, within, cleanup } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
 import { useNavigate } from "react-router"
@@ -12,8 +12,8 @@ import {
 import { setupUserContext } from "../__util__/accountUtils"
 import { AUTH_FLOW } from "../../modules/constants"
 
-jest.mock("@clerk/clerk-react", () => {
-  const Clerk = jest.requireActual("@clerk/clerk-react")
+jest.mock("@clerk/react", () => {
+  const Clerk = jest.requireActual("@clerk/react")
   return {
     ...Clerk,
     ClerkProvider: ({ children }: { children: React.ReactNode }) => children,
@@ -37,23 +37,22 @@ describe("<ForgotPasswordFlow />", () => {
   let originalLocation: Location
   let mockNavigate: jest.Mock
   let mockSignInCreate: jest.Mock
-  let mockPrepareFirstFactor: jest.Mock
+  let mockSendResetCode: jest.Mock
 
   beforeEach(async () => {
     document.documentElement.lang = "en"
     originalLocation = mockWindowLocation()
     setupUserContext({ loggedIn: false })
     mockNavigate = jest.fn()
-    mockSignInCreate = jest.fn().mockResolvedValue({
-      supportedFirstFactors: [
-        { strategy: "reset_password_email_code", emailAddressId: "idn_email" },
-      ],
-    })
-    mockPrepareFirstFactor = jest.fn().mockResolvedValue(undefined)
+    mockSignInCreate = jest.fn().mockResolvedValue({ error: null })
+    mockSendResetCode = jest.fn().mockResolvedValue({ error: null })
     ;(useNavigate as jest.Mock).mockReturnValue(mockNavigate)
     ;(useSignIn as jest.Mock).mockReturnValue({
-      isLoaded: true,
-      signIn: { create: mockSignInCreate, prepareFirstFactor: mockPrepareFirstFactor },
+      fetchStatus: "idle",
+      signIn: {
+        create: mockSignInCreate,
+        resetPasswordEmailCode: { sendCode: mockSendResetCode },
+      },
     })
     await renderAndLoadAsync(<ForgotPasswordFlow />)
   })
@@ -76,39 +75,42 @@ describe("<ForgotPasswordFlow />", () => {
     await waitFor(() => {
       expect(mockSignInCreate).toHaveBeenCalledWith({ identifier: "test@example.com" })
     })
-    expect(mockPrepareFirstFactor).toHaveBeenCalledWith({
-      strategy: "reset_password_email_code",
-      emailAddressId: "idn_email",
-    })
+    expect(mockSendResetCode).toHaveBeenCalledWith()
     expect(mockNavigate).toHaveBeenCalledWith("/forgot-password/code", {
       state: { email: "test@example.com", flow: AUTH_FLOW.FORGOT_PASSWORD },
     })
   })
 
-  it("routes to verification code page whether user exists or not", async () => {
+  it("shows an error and does not route when requesting forgot password fails", async () => {
+    const createError = { errors: [{ code: "resource_not_found" }] }
     jest.spyOn(console, "error").mockImplementation(() => {})
-    mockSignInCreate.mockRejectedValue(new Error("error"))
+    mockSignInCreate.mockResolvedValue({ error: createError })
 
     await submit()
 
     await waitFor(() => {
-      expect(mockNavigate).toHaveBeenCalledWith("/forgot-password/code", {
-        state: { email: "test@example.com", flow: AUTH_FLOW.FORGOT_PASSWORD },
-      })
+      expect(mockSignInCreate).toHaveBeenCalledWith({ identifier: "test@example.com" })
     })
-    expect(mockPrepareFirstFactor).not.toHaveBeenCalled()
+    expect(console.error).toHaveBeenCalledWith("Forgot password error:", createError)
+    expect(mockSendResetCode).not.toHaveBeenCalled()
+    expect(mockNavigate).not.toHaveBeenCalled()
   })
 
-  it("throws error with missing reset password factor", async () => {
-    jest.spyOn(console, "error").mockImplementation(() => {})
-    mockSignInCreate.mockResolvedValue({
-      supportedFirstFactors: [{ strategy: "password" }],
+  it("does not submit when sign-in is currently fetching", async () => {
+    cleanup()
+    ;(useSignIn as jest.Mock).mockReturnValue({
+      fetchStatus: "fetching",
+      signIn: {
+        create: mockSignInCreate,
+        resetPasswordEmailCode: { sendCode: mockSendResetCode },
+      },
     })
+    await renderAndLoadAsync(<ForgotPasswordFlow />)
 
     await submit()
 
-    await waitFor(() => {
-      expect(mockPrepareFirstFactor).not.toHaveBeenCalled()
-    })
+    expect(mockSignInCreate).not.toHaveBeenCalled()
+    expect(mockSendResetCode).not.toHaveBeenCalled()
+    expect(mockNavigate).not.toHaveBeenCalled()
   })
 })
