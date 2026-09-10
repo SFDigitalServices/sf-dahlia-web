@@ -1,5 +1,5 @@
 import React from "react"
-import { useSignUp } from "@clerk/clerk-react"
+import { useSignUp } from "@clerk/react"
 import { screen, waitFor, within, cleanup } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
 import { useNavigate } from "react-router"
@@ -12,8 +12,8 @@ import {
 import { setupUserContext } from "../../__util__/accountUtils"
 import { AUTH_FLOW } from "../../../modules/constants"
 
-jest.mock("@clerk/clerk-react", () => {
-  const Clerk = jest.requireActual("@clerk/clerk-react")
+jest.mock("@clerk/react", () => {
+  const Clerk = jest.requireActual("@clerk/react")
   return {
     ...Clerk,
     ClerkProvider: ({ children }: { children: React.ReactNode }) => children,
@@ -31,7 +31,7 @@ describe("<CreateAnAccount />", () => {
   let originalLocation: Location
   let mockNavigate: jest.Mock
   let mockSignUpCreate: jest.Mock
-  let mockPrepareEmailAddressVerification: jest.Mock
+  let mockSendEmailCode: jest.Mock
 
   beforeEach(async () => {
     document.documentElement.lang = "en"
@@ -39,13 +39,18 @@ describe("<CreateAnAccount />", () => {
     setupUserContext({ loggedIn: false })
     mockNavigate = jest.fn()
     ;(useNavigate as jest.Mock).mockReturnValue(mockNavigate)
-    mockSignUpCreate = jest.fn().mockResolvedValue(undefined)
-    mockPrepareEmailAddressVerification = jest.fn().mockResolvedValue(undefined)
+    mockSignUpCreate = jest.fn().mockResolvedValue({ error: undefined })
+    mockSendEmailCode = jest.fn().mockResolvedValue(undefined)
     ;(useSignUp as jest.Mock).mockReturnValue({
-      isLoaded: true,
+      fetchStatus: "idle",
       signUp: {
         create: mockSignUpCreate,
-        prepareEmailAddressVerification: mockPrepareEmailAddressVerification,
+        status: "missing_requirements",
+        unverifiedFields: ["email_address"],
+        missingFields: [],
+        verifications: {
+          sendEmailCode: mockSendEmailCode,
+        },
       },
     })
     await renderAndLoadAsync(<CreateAnAccount assetPaths={{}} />)
@@ -95,9 +100,7 @@ describe("<CreateAnAccount />", () => {
       })
     })
 
-    expect(mockPrepareEmailAddressVerification).toHaveBeenCalledWith({
-      strategy: "email_code",
-    })
+    expect(mockSendEmailCode).toHaveBeenCalledTimes(1)
     expect(mockNavigate).toHaveBeenCalledWith("/create-account/code", {
       state: { email: "test@example.com", flow: AUTH_FLOW.CREATE_ACCOUNT },
     })

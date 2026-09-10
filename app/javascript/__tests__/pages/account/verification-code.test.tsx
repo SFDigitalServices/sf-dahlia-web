@@ -1,5 +1,5 @@
 import React from "react"
-import { useSignIn, useSignUp, useAuth } from "@clerk/clerk-react"
+import { useSignIn, useSignUp, useAuth } from "@clerk/react"
 import { t } from "@bloom-housing/ui-components"
 import { act, screen, waitFor, cleanup, fireEvent } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
@@ -15,8 +15,8 @@ import { useFeatureFlag } from "../../../hooks/useFeatureFlag"
 import { AUTH_FLOW } from "../../../modules/constants"
 import { authorizeHousingCounselor, getProfile } from "../../../api/authApiService"
 
-jest.mock("@clerk/clerk-react", () => {
-  const Clerk = jest.requireActual("@clerk/clerk-react")
+jest.mock("@clerk/react", () => {
+  const Clerk = jest.requireActual("@clerk/react")
   return {
     ...Clerk,
     ClerkProvider: ({ children }: { children: React.ReactNode }) => children,
@@ -43,7 +43,7 @@ jest.mock("../../../hooks/useFeatureFlag", () => ({
 jest.mock("../../../api/authApiService", () => ({
   ...jest.requireActual("../../../api/authApiService"),
   authorizeHousingCounselor: jest.fn(),
-  getProfile: jest.fn(),
+  getProfile: jest.fn().mockResolvedValue(undefined),
 }))
 const expireResendVerificationCode = () => {
   for (let remaining = 30; remaining > 0; remaining--) {
@@ -56,25 +56,84 @@ const expireResendVerificationCode = () => {
 describe("<EnterVerificationCode />", () => {
   let originalLocation: Location
   let mockNavigate: jest.Mock
-  let mockAttemptEmailAddressVerification: jest.Mock
-  let mockPrepareEmailAddressVerification: jest.Mock
-  let mockAttemptFirstFactor: jest.Mock
-  let mockPrepareFirstFactor: jest.Mock
-  let mockSetActiveSignUp: jest.Mock
-  let mockSetActiveSignIn: jest.Mock
+  let mockSignUpVerifyEmailCode: jest.Mock
+  let mockSignUpSendEmailCode: jest.Mock
+  let mockSignUpFinalize: jest.Mock
+  let mockSignInVerifyCode: jest.Mock
+  let mockSignInSendCode: jest.Mock
+  let mockSignInFinalize: jest.Mock
+  let mockResetPasswordVerifyCode: jest.Mock
+  let mockResetPasswordSendCode: jest.Mock
+  let mockSignUpResource: {
+    status: string
+    emailAddress: string
+    unverifiedFields: string[]
+    missingFields: string[]
+    verifications: {
+      verifyEmailCode: jest.Mock
+      sendEmailCode: jest.Mock
+    }
+    finalize: jest.Mock
+  }
+  let mockSignInResource: {
+    status: string
+    emailAddress: string
+    emailCode: {
+      verifyCode: jest.Mock
+      sendCode: jest.Mock
+    }
+    resetPasswordEmailCode: {
+      verifyCode: jest.Mock
+      sendCode: jest.Mock
+    }
+    finalize: jest.Mock
+  }
 
   beforeEach(async () => {
     document.documentElement.lang = "en"
     document.title = "DAHLIA San Francisco Housing Portal"
     originalLocation = mockWindowLocation()
+    window.location.replace = jest.fn()
     setupUserContext({ loggedIn: false })
     mockNavigate = jest.fn()
-    mockAttemptEmailAddressVerification = jest.fn()
-    mockPrepareEmailAddressVerification = jest.fn().mockResolvedValue(undefined)
-    mockAttemptFirstFactor = jest.fn()
-    mockPrepareFirstFactor = jest.fn().mockResolvedValue(undefined)
-    mockSetActiveSignUp = jest.fn().mockResolvedValue(undefined)
-    mockSetActiveSignIn = jest.fn().mockResolvedValue(undefined)
+    mockSignUpVerifyEmailCode = jest.fn().mockResolvedValue({ error: undefined })
+    mockSignUpSendEmailCode = jest.fn().mockResolvedValue({ error: undefined })
+    mockSignUpFinalize = jest.fn().mockImplementation(async ({ navigate }) => {
+      await navigate({ decorateUrl: (url: string) => url })
+      return { error: undefined }
+    })
+    mockSignInVerifyCode = jest.fn().mockResolvedValue({ error: undefined })
+    mockSignInSendCode = jest.fn().mockResolvedValue({ error: undefined })
+    mockSignInFinalize = jest.fn().mockImplementation(async ({ navigate }) => {
+      await navigate({ decorateUrl: (url: string) => url })
+      return { error: undefined }
+    })
+    mockResetPasswordVerifyCode = jest.fn().mockResolvedValue({ error: undefined })
+    mockResetPasswordSendCode = jest.fn().mockResolvedValue({ error: undefined })
+    mockSignUpResource = {
+      status: "missing_requirements",
+      emailAddress: "test@example.com",
+      unverifiedFields: ["email_address"],
+      missingFields: [],
+      verifications: {
+        verifyEmailCode: mockSignUpVerifyEmailCode,
+        sendEmailCode: mockSignUpSendEmailCode,
+      },
+      finalize: mockSignUpFinalize,
+    }
+    mockSignInResource = {
+      status: "needs_first_factor",
+      emailAddress: "test@example.com",
+      emailCode: {
+        verifyCode: mockSignInVerifyCode,
+        sendCode: mockSignInSendCode,
+      },
+      resetPasswordEmailCode: {
+        verifyCode: mockResetPasswordVerifyCode,
+        sendCode: mockResetPasswordSendCode,
+      },
+      finalize: mockSignInFinalize,
+    }
     jest.useFakeTimers()
     ;(useNavigate as jest.Mock).mockReturnValue(mockNavigate)
     ;(useLocation as jest.Mock).mockReturnValue({
@@ -83,21 +142,12 @@ describe("<EnterVerificationCode />", () => {
     })
     ;(useFeatureFlag as jest.Mock).mockReturnValue({ flagsReady: true, unleashFlag: true })
     ;(useSignUp as jest.Mock).mockReturnValue({
-      isLoaded: true,
-      setActive: mockSetActiveSignUp,
-      signUp: {
-        attemptEmailAddressVerification: mockAttemptEmailAddressVerification,
-        prepareEmailAddressVerification: mockPrepareEmailAddressVerification,
-      },
+      fetchStatus: "idle",
+      signUp: mockSignUpResource,
     })
     ;(useSignIn as jest.Mock).mockReturnValue({
-      isLoaded: true,
-      setActive: mockSetActiveSignIn,
-      signIn: {
-        attemptFirstFactor: mockAttemptFirstFactor,
-        prepareFirstFactor: mockPrepareFirstFactor,
-        supportedFirstFactors: [{ strategy: "email_code", emailAddressId: "test_email" }],
-      },
+      fetchStatus: "idle",
+      signIn: mockSignInResource,
     })
     ;(getProfile as jest.Mock).mockResolvedValue(undefined)
     await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
@@ -147,7 +197,7 @@ describe("<EnterVerificationCode />", () => {
       expect(error).toHaveTextContent(t("createAccount.codeInvalid.p2"))
     })
     digits.forEach((digit) => expect(digit).toBeInvalid())
-    expect(mockAttemptEmailAddressVerification).not.toHaveBeenCalled()
+    expect(mockSignUpVerifyEmailCode).not.toHaveBeenCalled()
   })
 
   it("does not show an error before submit", async () => {
@@ -181,20 +231,20 @@ describe("<EnterVerificationCode />", () => {
 
   it("verifies a valid code for create account", async () => {
     const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime })
-    mockAttemptEmailAddressVerification.mockResolvedValue({
-      status: "complete",
-      createdSessionId: "session_123",
-    })
+    mockSignUpResource.status = "complete"
 
     await user.click(screen.getAllByRole("textbox")[0])
     await user.paste("123456")
     await user.click(screen.getByRole("button", { name: t("createAccount.confirmCode") }))
 
     await waitFor(() => {
-      expect(mockAttemptEmailAddressVerification).toHaveBeenCalledWith({ code: "123456" })
+      expect(mockSignUpVerifyEmailCode).toHaveBeenCalledWith({ code: "123456" })
     })
-    expect(mockSetActiveSignUp).toHaveBeenCalledWith({ session: "session_123" })
-    expect(mockAttemptFirstFactor).not.toHaveBeenCalled()
+    expect(mockSignUpFinalize).toHaveBeenCalledTimes(1)
+    expect(mockSignInVerifyCode).not.toHaveBeenCalled()
+    expect(mockNavigate).toHaveBeenCalledWith("/add-password", {
+      state: { flow: AUTH_FLOW.CREATE_ACCOUNT },
+    })
     expect(screen.queryByTestId("error-message")).toBeNull()
   })
 
@@ -206,9 +256,7 @@ describe("<EnterVerificationCode />", () => {
       await Promise.resolve()
     })
 
-    expect(mockPrepareEmailAddressVerification).toHaveBeenCalledWith({
-      strategy: "email_code",
-    })
+    expect(mockSignUpSendEmailCode).toHaveBeenCalledTimes(1)
     expect(screen.getByText(t("createAccount.emailSent"))).not.toBeNull()
     expect(screen.getByText(t("createAccount.sendAgainIn", { smart_count: 30 }))).not.toBeNull()
     expect(screen.queryByRole("button", { name: t("createAccount.sendAgain") })).toBeNull()
@@ -283,10 +331,7 @@ describe("<EnterVerificationCode />", () => {
       pathname: "/sign-in/code",
       state: { email: "test@example.com", flow: AUTH_FLOW.SIGN_IN },
     })
-    mockAttemptFirstFactor.mockResolvedValue({
-      status: "complete",
-      createdSessionId: "session_456",
-    })
+    mockSignInResource.status = "complete"
     await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
 
     const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime })
@@ -295,16 +340,11 @@ describe("<EnterVerificationCode />", () => {
     await user.click(screen.getByRole("button", { name: t("createAccount.confirmCode") }))
 
     await waitFor(() => {
-      expect(mockAttemptFirstFactor).toHaveBeenCalledWith({
-        strategy: "email_code",
-        code: "123456",
-      })
+      expect(mockSignInVerifyCode).toHaveBeenCalledWith({ code: "123456" })
     })
-    expect(mockSetActiveSignIn).toHaveBeenCalledWith({
-      session: "session_456",
-      redirectUrl: "/account",
-    })
-    expect(mockAttemptEmailAddressVerification).not.toHaveBeenCalled()
+    expect(mockSignInFinalize).toHaveBeenCalledTimes(1)
+    expect(mockSignUpVerifyEmailCode).not.toHaveBeenCalled()
+    expect(mockNavigate).toHaveBeenCalledWith("/account")
   })
 
   it("redirects to the apply intro after sign in when a redirect url is present", async () => {
@@ -314,10 +354,7 @@ describe("<EnterVerificationCode />", () => {
       pathname: "/sign-in/code",
       state: { email: "test@example.com", flow: AUTH_FLOW.SIGN_IN, redirectUrl },
     })
-    mockAttemptFirstFactor.mockResolvedValue({
-      status: "complete",
-      createdSessionId: "session_456",
-    })
+    mockSignInResource.status = "complete"
     await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
 
     const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime })
@@ -326,12 +363,11 @@ describe("<EnterVerificationCode />", () => {
     await user.click(screen.getByRole("button", { name: t("createAccount.confirmCode") }))
 
     await waitFor(() => {
-      expect(mockSetActiveSignIn).toHaveBeenCalledWith({
-        session: "session_456",
-        redirectUrl,
-      })
+      expect(mockSignInVerifyCode).toHaveBeenCalledWith({ code: "123456" })
     })
-    expect(mockAttemptEmailAddressVerification).not.toHaveBeenCalled()
+    expect(mockSignInFinalize).toHaveBeenCalledTimes(1)
+    expect(mockSignUpVerifyEmailCode).not.toHaveBeenCalled()
+    expect(mockNavigate).toHaveBeenCalledWith(redirectUrl)
   })
 
   it("authenticates a housing counselor with Clerk after verifying the sign-in code", async () => {
@@ -350,10 +386,7 @@ describe("<EnterVerificationCode />", () => {
         flow: AUTH_FLOW.SIGN_IN,
       },
     })
-    mockAttemptFirstFactor.mockResolvedValue({
-      status: "complete",
-      createdSessionId: "session_456",
-    })
+    mockSignInResource.status = "complete"
     ;(authorizeHousingCounselor as jest.Mock).mockResolvedValue(undefined)
     await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
 
@@ -365,7 +398,7 @@ describe("<EnterVerificationCode />", () => {
     await waitFor(() => {
       expect(authorizeHousingCounselor).toHaveBeenCalledWith("jwt.token", "clerk-session-token")
     })
-    expect(mockSetActiveSignIn).toHaveBeenCalledWith({ session: "session_456" })
+    expect(mockSignInFinalize).toHaveBeenCalledTimes(1)
     expect(mockNavigate).toHaveBeenCalledWith("/account")
   })
 
@@ -383,10 +416,7 @@ describe("<EnterVerificationCode />", () => {
       await Promise.resolve()
     })
 
-    expect(mockPrepareFirstFactor).toHaveBeenCalledWith({
-      strategy: "email_code",
-      emailAddressId: "test_email",
-    })
+    expect(mockSignInSendCode).toHaveBeenCalledTimes(1)
     expect(screen.getByText(t("createAccount.emailSent"))).not.toBeNull()
     expect(screen.getByText(t("createAccount.sendAgainIn", { smart_count: 30 }))).not.toBeNull()
     expect(screen.queryByRole("button", { name: t("createAccount.sendAgain") })).toBeNull()
@@ -411,7 +441,7 @@ describe("<EnterVerificationCode />", () => {
       pathname: "/forgot-password/code",
       state: { email: "test@example.com", flow: AUTH_FLOW.FORGOT_PASSWORD },
     })
-    mockAttemptFirstFactor.mockResolvedValue({ status: "needs_new_password" })
+    mockSignInResource.status = "needs_new_password"
     await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
 
     const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime })
@@ -420,15 +450,12 @@ describe("<EnterVerificationCode />", () => {
     await user.click(screen.getByRole("button", { name: t("createAccount.confirmCode") }))
 
     await waitFor(() => {
-      expect(mockAttemptFirstFactor).toHaveBeenCalledWith({
-        strategy: "reset_password_email_code",
-        code: "123456",
-      })
+      expect(mockResetPasswordVerifyCode).toHaveBeenCalledWith({ code: "123456" })
     })
     expect(mockNavigate).toHaveBeenCalledWith("/reset-password", {
       state: { email: "test@example.com", flow: AUTH_FLOW.FORGOT_PASSWORD, code: "123456" },
     })
-    expect(mockSetActiveSignIn).not.toHaveBeenCalled()
+    expect(mockSignInFinalize).not.toHaveBeenCalled()
   })
 
   it("shows an error when the forgot password code is invalid", async () => {
@@ -438,18 +465,7 @@ describe("<EnterVerificationCode />", () => {
       pathname: "/forgot-password/code",
       state: { email: "test@example.com", flow: AUTH_FLOW.FORGOT_PASSWORD },
     })
-    ;(useSignIn as jest.Mock).mockReturnValue({
-      isLoaded: true,
-      setActive: mockSetActiveSignIn,
-      signIn: {
-        attemptFirstFactor: mockAttemptFirstFactor,
-        prepareFirstFactor: mockPrepareFirstFactor,
-        supportedFirstFactors: [
-          { strategy: "reset_password_email_code", emailAddressId: "test_email" },
-        ],
-      },
-    })
-    mockAttemptFirstFactor.mockRejectedValue(new Error("bad code"))
+    mockResetPasswordVerifyCode.mockResolvedValue({ error: new Error("bad code") })
     await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
 
     const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime })
@@ -461,10 +477,7 @@ describe("<EnterVerificationCode />", () => {
       await Promise.resolve()
     })
 
-    expect(mockAttemptFirstFactor).toHaveBeenCalledWith({
-      strategy: "reset_password_email_code",
-      code: "123456",
-    })
+    expect(mockResetPasswordVerifyCode).toHaveBeenCalledWith({ code: "123456" })
     expect(mockNavigate).not.toHaveBeenCalled()
   })
 
@@ -474,17 +487,6 @@ describe("<EnterVerificationCode />", () => {
       pathname: "/forgot-password/code",
       state: { email: "test@example.com", flow: AUTH_FLOW.FORGOT_PASSWORD },
     })
-    ;(useSignIn as jest.Mock).mockReturnValue({
-      isLoaded: true,
-      setActive: mockSetActiveSignIn,
-      signIn: {
-        attemptFirstFactor: mockAttemptFirstFactor,
-        prepareFirstFactor: mockPrepareFirstFactor,
-        supportedFirstFactors: [
-          { strategy: "reset_password_email_code", emailAddressId: "test_email" },
-        ],
-      },
-    })
     await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
 
     expireResendVerificationCode()
@@ -493,27 +495,15 @@ describe("<EnterVerificationCode />", () => {
       await Promise.resolve()
     })
 
-    expect(mockPrepareFirstFactor).toHaveBeenCalledWith({
-      strategy: "reset_password_email_code",
-      emailAddressId: "test_email",
-    })
+    expect(mockResetPasswordSendCode).toHaveBeenCalledTimes(1)
   })
-  it("does not resend the forgot password code if reset factor is expired/invalid", async () => {
+  it("resends the forgot password code even if email address is missing", async () => {
     cleanup()
-    jest.spyOn(console, "error").mockImplementation(() => {})
+    mockSignInResource.emailAddress = ""
     ;(useLocation as jest.Mock).mockReturnValue({
       pathname: "/forgot-password/code",
       state: { email: "test@example.com", flow: AUTH_FLOW.FORGOT_PASSWORD },
     })
-    ;(useSignIn as jest.Mock).mockReturnValue({
-      isLoaded: true,
-      setActive: mockSetActiveSignIn,
-      signIn: {
-        attemptFirstFactor: mockAttemptFirstFactor,
-        prepareFirstFactor: mockPrepareFirstFactor,
-        supportedFirstFactors: [{ strategy: "password" }],
-      },
-    })
     await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
 
     expireResendVerificationCode()
@@ -522,7 +512,7 @@ describe("<EnterVerificationCode />", () => {
       await Promise.resolve()
     })
 
-    expect(mockPrepareFirstFactor).not.toHaveBeenCalled()
+    expect(mockResetPasswordSendCode).toHaveBeenCalledTimes(1)
   })
 
   it("does not resend the forgot password code if there is a request error", async () => {
@@ -532,18 +522,7 @@ describe("<EnterVerificationCode />", () => {
       pathname: "/forgot-password/code",
       state: { email: "test@example.com", flow: AUTH_FLOW.FORGOT_PASSWORD },
     })
-    mockPrepareFirstFactor.mockRejectedValue(new Error("resend failed"))
-    ;(useSignIn as jest.Mock).mockReturnValue({
-      isLoaded: true,
-      setActive: mockSetActiveSignIn,
-      signIn: {
-        attemptFirstFactor: mockAttemptFirstFactor,
-        prepareFirstFactor: mockPrepareFirstFactor,
-        supportedFirstFactors: [
-          { strategy: "reset_password_email_code", emailAddressId: "test_email" },
-        ],
-      },
-    })
+    mockResetPasswordSendCode.mockResolvedValue({ error: new Error("resend failed") })
     await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
 
     expireResendVerificationCode()
@@ -552,10 +531,7 @@ describe("<EnterVerificationCode />", () => {
       await Promise.resolve()
     })
 
-    expect(mockPrepareFirstFactor).toHaveBeenCalledWith({
-      strategy: "reset_password_email_code",
-      emailAddressId: "test_email",
-    })
+    expect(mockResetPasswordSendCode).toHaveBeenCalledTimes(1)
   })
 
   it("does not redirect a logged-out user who has email from an in-progress flow", () => {
