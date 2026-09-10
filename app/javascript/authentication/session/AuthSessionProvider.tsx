@@ -8,10 +8,6 @@ import { useClerkAuthSession } from "./adapters/clerk/useClerkAuthSession"
 
 export type { AuthSession } from "./authStatus"
 
-/**
- * The session for a tree with the flag off. Stays in `initializing`, so a
- * consumer that lands here waits rather than acting on an answer nothing gave it.
- */
 const noSession: AuthSession = {
   status: INITIALIZING,
   getCredentials: () => Promise.resolve(NO_CREDENTIALS),
@@ -43,8 +39,6 @@ const ClerkAuthSession = ({ children }: { children: React.ReactNode }) => {
 }
 
 /**
- * Chooses the auth provider for the tree, once.
- *
  * Clerk is deliberately the only implementation. Components not yet on it keep
  * the code path they have always had, so nothing is re-expressed here and
  * nothing can drift.
@@ -52,9 +46,9 @@ const ClerkAuthSession = ({ children }: { children: React.ReactNode }) => {
 export const AuthSessionProvider = ({ children }: { children: React.ReactNode }) => {
   const { unleashFlag: clerkEnabled, flagsReady } = useFeatureFlag(UNLEASH_FLAG.CLERK_AUTH, false)
 
-  // Nothing renders until the flag resolves, so the whole page waits on an
-  // Unleash call. Providing an "initializing" session instead would let the tree
+  // Providing an initializing session instead would let the tree
   // mount immediately, at the cost of every consumer handling that state.
+  // Probably a good TODO, but an improvement out of scope of creating this provider.
   if (!flagsReady) {
     return null
   }
