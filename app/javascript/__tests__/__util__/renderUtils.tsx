@@ -16,8 +16,6 @@ export const mockWindowLocation = (): typeof window.location => {
   window.location = {
     ...originalLocation,
     assign: jest.fn(),
-    // ErrorBoundary redirects to /500.html via replace().
-    replace: jest.fn(),
   } as any
   return originalLocation
 }
@@ -37,8 +35,6 @@ export const restoreWindowLocation = (originalLocation: typeof window.location):
  *
  * By default the MemoryRouter starts at "/" - pass `initialEntries` to render
  * under a specific path (e.g. for components that parse an id out of the URL).
- *
- * Doesn't add AuthSessionProvider; wrap standalone components that need one.
  */
 export const renderAndLoadAsync = async (
   ui: React.ReactElement,
@@ -46,18 +42,13 @@ export const renderAndLoadAsync = async (
   initialEntries: InitialEntry[] = ["/"]
 ): Promise<RenderResult> => {
   let renderResponse: RenderResult = {} as RenderResult
-
-  const OuterWrapper =
-    options?.wrapper ??
-    (({ children }: { children: React.ReactNode }) => (
-      <MemoryRouter initialEntries={initialEntries}>{children}</MemoryRouter>
-    ))
-
   // eslint-disable-next-line @typescript-eslint/require-await
   await act(async () => {
     renderResponse = render(ui, {
+      wrapper: ({ children }: { children: React.ReactNode }) => (
+        <MemoryRouter initialEntries={initialEntries}>{children}</MemoryRouter>
+      ),
       ...options,
-      wrapper: OuterWrapper,
     }) as RenderResult
   })
 
