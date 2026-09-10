@@ -12,7 +12,7 @@ import { screen } from "@testing-library/react"
 import { authenticatedPut } from "../../api/apiService"
 import userEvent from "@testing-library/user-event"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
-import { useSignIn, useUser } from "@clerk/clerk-react"
+import { useSignIn, useUser } from "@clerk/react"
 
 jest.mock("react-helmet-async", () => {
   return {
@@ -29,8 +29,8 @@ jest.mock("../../hooks/useFeatureFlag", () => ({
   useFeatureFlag: jest.fn(() => ({ flagsReady: true, unleashFlag: true })),
 }))
 
-jest.mock("@clerk/clerk-react", () => {
-  const Clerk = jest.requireActual("@clerk/clerk-react")
+jest.mock("@clerk/react", () => {
+  const Clerk = jest.requireActual("@clerk/react")
   return {
     ...Clerk,
     ClerkProvider: ({ children }: { children: React.ReactNode }) => children,

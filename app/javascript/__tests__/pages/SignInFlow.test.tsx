@@ -1,5 +1,5 @@
 import React from "react"
-import { useAuth, useClerk, useSignIn, useSignUp } from "@clerk/clerk-react"
+import { useAuth, useClerk, useSignIn } from "@clerk/react"
 import { screen, waitFor, within, cleanup } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
 import { useNavigate } from "react-router"
@@ -21,18 +21,18 @@ jest.mock("../../hooks/useFeatureFlag", () => ({
   })),
 }))
 
-jest.mock("@clerk/clerk-react", () => {
-  const Clerk = jest.requireActual("@clerk/clerk-react")
+jest.mock("@clerk/react", () => {
+  const Clerk = jest.requireActual("@clerk/react")
   return {
     ...Clerk,
     ClerkProvider: ({ children }: { children: React.ReactNode }) => children,
     useSignIn: jest.fn(),
-    useSignUp: jest.fn(),
     useClerk: jest.fn(),
     useAuth: jest.fn(() => ({
       isLoaded: true,
       isSignedIn: false,
       getToken: jest.fn().mockResolvedValue("clerk-session-token"),
+      signOut: jest.fn(),
     })),
   }
 })
@@ -69,32 +69,43 @@ const submitCredentials = async (password = "abcd1234") => {
 describe("<SignInFlow />", () => {
   let originalLocation: Location
   let mockSignInCreate: jest.Mock
-  let mockPrepareFirstFactor: jest.Mock
-  let mockSetActive: jest.Mock
+  let mockSendCode: jest.Mock
+  let mockFinalize: jest.Mock
   let mockNavigate: jest.Mock
+  let mockSignOut: jest.Mock
+  let mockSignInResource: {
+    status: string
+    create: jest.Mock
+    emailCode: { sendCode: jest.Mock }
+    finalize: jest.Mock
+  }
 
   beforeEach(() => {
     document.documentElement.lang = "en"
     originalLocation = mockWindowLocation()
     setupUserContext({ loggedIn: false })
     mockNavigate = jest.fn()
-    mockPrepareFirstFactor = jest.fn().mockResolvedValue(undefined)
-    mockSignInCreate = jest
-      .fn()
-      .mockResolvedValue({ status: "complete", createdSessionId: "session-id" })
-    mockSetActive = jest.fn().mockResolvedValue(undefined)
+    mockSignOut = jest.fn()
+    mockSignInCreate = jest.fn().mockResolvedValue({ error: null })
+    mockSendCode = jest.fn().mockResolvedValue(undefined)
+    mockFinalize = jest.fn().mockResolvedValue({ error: null })
+    mockSignInResource = {
+      status: "complete",
+      create: mockSignInCreate,
+      emailCode: { sendCode: mockSendCode },
+      finalize: mockFinalize,
+    }
     ;(useNavigate as jest.Mock).mockReturnValue(mockNavigate)
     ;(useAuth as jest.Mock).mockReturnValue({
       isLoaded: true,
       isSignedIn: false,
       getToken: jest.fn().mockResolvedValue("clerk-session-token"),
+      signOut: mockSignOut,
     })
     ;(useSignIn as jest.Mock).mockReturnValue({
-      isLoaded: true,
-      signIn: { create: mockSignInCreate, prepareFirstFactor: mockPrepareFirstFactor },
-      setActive: mockSetActive,
+      fetchStatus: "idle",
+      signIn: mockSignInResource,
     })
-    ;(useSignUp as jest.Mock).mockReturnValue({ isLoaded: true })
     mockLastAuthenticationStrategy(null)
     ;(useFeatureFlag as jest.Mock).mockImplementation(() => ({
       flagsReady: true,
@@ -155,7 +166,10 @@ describe("<SignInFlow />", () => {
   })
 
   it("shows a loading state until Clerk loads", async () => {
-    ;(useSignIn as jest.Mock).mockReturnValue({ isLoaded: false })
+    ;(useSignIn as jest.Mock).mockReturnValue({
+      fetchStatus: "fetching",
+      signIn: null,
+    })
 
     const { container } = await renderAndLoadAsync(<SignIn assetPaths={{}} />)
 
@@ -209,9 +223,7 @@ describe("<SignInFlow />", () => {
   })
 
   it("navigates to the sign-in code page when requesting a code", async () => {
-    mockSignInCreate.mockResolvedValue({
-      supportedFirstFactors: [{ strategy: "email_code", emailAddressId: "idn_email" }],
-    })
+    mockSignInResource.status = "needs_first_factor"
     await renderAndLoadAsync(<SignIn assetPaths={{}} />)
     const user = await switchToVerificationCodeView()
     const emailGroup = screen.getByRole("group", { name: /email/i })
@@ -221,10 +233,7 @@ describe("<SignInFlow />", () => {
     await waitFor(() => {
       expect(mockSignInCreate).toHaveBeenCalledWith({ identifier: "test@test.com" })
     })
-    expect(mockPrepareFirstFactor).toHaveBeenCalledWith({
-      strategy: "email_code",
-      emailAddressId: "idn_email",
-    })
+    expect(mockSendCode).toHaveBeenCalledWith()
     expect(mockNavigate).toHaveBeenCalledWith("/sign-in/code", {
       state: { email: "test@test.com", housingCounselorToken: null, flow: AUTH_FLOW.SIGN_IN },
     })
@@ -248,16 +257,14 @@ describe("<SignInFlow />", () => {
         password: "abcd1234",
       })
     })
-    expect(mockSetActive).toHaveBeenCalledWith({
-      session: "session-id",
-      redirectUrl: "/account",
-    })
+    expect(mockFinalize).toHaveBeenCalled()
+    expect(mockNavigate).toHaveBeenCalledWith("/account")
   })
 
   it("shows one alert and logs the details when sign in fails", async () => {
     const consoleError = jest.spyOn(console, "error").mockImplementation(() => {})
     const clerkError = { errors: [{ code: "form_password_incorrect" }] }
-    mockSignInCreate.mockRejectedValue(clerkError)
+    mockSignInCreate.mockResolvedValue({ error: clerkError })
 
     await renderAndLoadAsync(<SignIn assetPaths={{}} />)
     await submitCredentials("wrongPass1")
@@ -265,8 +272,8 @@ describe("<SignInFlow />", () => {
     await waitFor(() => {
       expect(screen.getAllByText(/email or password is incorrect/i)).toHaveLength(1)
     })
-    expect(consoleError).toHaveBeenCalledWith("Sign in error", clerkError)
-    expect(mockSetActive).not.toHaveBeenCalled()
+    expect(consoleError).toHaveBeenCalledWith("Sign in error:", clerkError)
+    expect(mockFinalize).not.toHaveBeenCalled()
 
     consoleError.mockRestore()
   })
@@ -283,9 +290,9 @@ describe("<SignInFlow />", () => {
       await submitCredentials()
 
       await waitFor(() => {
-        expect(mockSetActive).toHaveBeenCalledWith({ session: "session-id" })
+        expect(authorizeHousingCounselor).toHaveBeenCalledWith("jwt.token", "clerk-session-token")
       })
-      expect(authorizeHousingCounselor).toHaveBeenCalledWith("jwt.token", "clerk-session-token")
+      expect(mockFinalize).toHaveBeenCalled()
       expect(mockNavigate).toHaveBeenCalledWith("/account")
     })
 
@@ -298,6 +305,8 @@ describe("<SignInFlow />", () => {
       await waitFor(() => {
         expect(authorizeHousingCounselor).toHaveBeenCalledWith("jwt.token", "clerk-session-token")
       })
+      expect(mockFinalize).toHaveBeenCalled()
+      expect(mockSignOut).toHaveBeenCalled()
       expect(mockNavigate).not.toHaveBeenCalledWith("/account")
       expect(screen.getByRole("heading", { name: /^sign in$/i, level: 1 })).not.toBeNull()
     })
@@ -307,6 +316,7 @@ describe("<SignInFlow />", () => {
         isLoaded: true,
         isSignedIn: true,
         getToken: jest.fn().mockResolvedValue("clerk-session-token"),
+        signOut: mockSignOut,
       })
 
       await renderAndLoadAsync(<SignIn assetPaths={{}} />)
