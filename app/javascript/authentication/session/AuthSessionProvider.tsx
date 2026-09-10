@@ -51,15 +51,6 @@ const ClerkAuthSession = ({ children }: { children: React.ReactNode }) => {
  */
 export const AuthSessionProvider = ({ children }: { children: React.ReactNode }) => {
   const { unleashFlag: clerkEnabled, flagsReady } = useFeatureFlag(UNLEASH_FLAG.CLERK_AUTH, false)
-  const parentSession = useContext(AuthSessionContext)
-
-  // Nesting is a no-op rather than a second provider: mounting ClerkProvider
-  // twice gives the tree two Clerk instances with separate token caches. Test
-  // helpers wrap trees that already carry their own provider from withAppSetup,
-  // and this keeps that from silently building the wrong shape.
-  if (parentSession) {
-    return <>{children}</>
-  }
 
   // Nothing renders until the flag resolves, so the whole page waits on an
   // Unleash call. Providing an "initializing" session instead would let the tree

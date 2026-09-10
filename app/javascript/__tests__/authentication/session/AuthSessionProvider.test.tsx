@@ -150,28 +150,6 @@ describe("AuthSessionProvider", () => {
     )
   })
 
-  // Page tests render withAppSetup exports, which mount their own provider, and
-  // then wrap them again. Two ClerkProviders means two Clerk instances with
-  // separate token caches; the stubbed ClerkProvider in setupTests hides it.
-  it("does not mount a second provider when nested", async () => {
-    mockFlag(true)
-    mockClerk("clerk-session-token")
-
-    // eslint-disable-next-line @typescript-eslint/require-await
-    await act(async () => {
-      render(
-        <AuthSessionProvider>
-          <AuthSessionProvider>
-            <Probe />
-          </AuthSessionProvider>
-        </AuthSessionProvider>
-      )
-    })
-
-    expect(ClerkProvider).toHaveBeenCalledTimes(1)
-    expect(screen.getByTestId("status").textContent).toBe("signedIn")
-  })
-
   it("warns when a consumer has no provider above it", async () => {
     const consoleError = jest.spyOn(console, "error").mockImplementation(() => {})
 

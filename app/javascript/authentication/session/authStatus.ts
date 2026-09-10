@@ -18,8 +18,7 @@ export const isAuthInitialized = (status: AuthStatus): boolean => status.kind !=
 /** What a request needs to authenticate itself, without naming a provider. */
 export type AuthCredentials =
   /** No usable session. A request made with these will not authenticate. */
-  | { kind: "none" }
-  | { kind: "bearerToken"; token: string }
+  { kind: "none" } | { kind: "bearerToken"; token: string }
 
 export const NO_CREDENTIALS: AuthCredentials = { kind: "none" }
 
