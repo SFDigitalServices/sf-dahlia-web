@@ -14,8 +14,7 @@ export const SIGNED_IN: AuthStatus = { kind: "signedIn" }
 
 export const isAuthInitialized = (status: AuthStatus): boolean => status.kind !== "initializing"
 
-export type AuthCredentials =
-  { kind: "none" } | { kind: "bearerToken"; token: string }
+export type AuthCredentials = { kind: "none" } | { kind: "bearerToken"; token: string }
 
 export const NO_CREDENTIALS: AuthCredentials = { kind: "none" }
 
