@@ -21,6 +21,8 @@ import {
 import { t } from "@bloom-housing/ui-components"
 import { renderAndLoadAsync } from "../../__util__/renderUtils"
 import { fcfsSaleListing } from "../../data/RailsSaleListing/listing-sale-fcfs"
+import { CUSTOM_LISTING_TYPES } from "../../../modules/constants"
+import type RailsUnit from "../../../api/types/rails/listings/RailsUnit"
 
 const axios = require("axios")
 
@@ -404,6 +406,84 @@ describe("ListingDetailsEligibility", () => {
         <ListingDetailsEligibility listing={fcfsSaleListing} imageSrc={"listing-eligibility.svg"} />
       </ListingDetailsContext.Provider>
     )
+    expect(asFragment()).toMatchSnapshot()
+  })
+
+  it("displays Plus Housing Program card in Priority Units when listing has Plus Housing custom type", async () => {
+    axios.get.mockResolvedValue({ data: { preferences: defaultPreferences } })
+
+    const plusHousingListing = {
+      ...closedRentalListing,
+      Custom_Listing_Type: CUSTOM_LISTING_TYPES.PLUS_HOUSING,
+    }
+
+    const { asFragment, findByText, findByRole } = render(
+      <ListingDetailsContext.Provider
+        value={{
+          units: unitsWithOneAmi,
+          amiCharts: amiChartsWithOneAmi,
+          fetchingUnits: false,
+          fetchedUnits: true,
+          fetchingAmiCharts: false,
+          fetchedAmiCharts: true,
+          fetchingAmiChartsError: undefined,
+          fetchingUnitsError: undefined,
+        }}
+      >
+        <ListingDetailsEligibility
+          listing={plusHousingListing}
+          imageSrc={"listing-eligibility.svg"}
+        />
+      </ListingDetailsContext.Provider>
+    )
+
+    expect(
+      await findByText(t("listings.customListingType.plusHousing.priorityUnits.title"))
+    ).toBeDefined()
+    expect(await findByText(/Units for participants of the Plus Housing program/)).toBeDefined()
+    expect(
+      await findByRole("link", { name: "Learn about the Plus Housing program" })
+    ).toHaveAttribute("href", "https://www.sf.gov/reports--february-2024--plus-housing-waitlist")
+    expect(await findByText("5 Units")).toBeDefined()
+    expect(asFragment()).toMatchSnapshot()
+  })
+
+  it("displays Plus Housing Program card with other priority unit cards", async () => {
+    axios.get.mockResolvedValue({ data: { preferences: defaultPreferences } })
+
+    const plusHousingListing = {
+      ...closedRentalListing,
+      Custom_Listing_Type: CUSTOM_LISTING_TYPES.PLUS_HOUSING,
+    }
+    const unitsWithMobility: RailsUnit[] = [
+      { ...unitsWithOneAmi[0], Priority_Type: "Mobility impairments" },
+      unitsWithOneAmi[1],
+    ]
+
+    const { asFragment, findByText } = render(
+      <ListingDetailsContext.Provider
+        value={{
+          units: unitsWithMobility,
+          amiCharts: amiChartsWithOneAmi,
+          fetchingUnits: false,
+          fetchedUnits: true,
+          fetchingAmiCharts: false,
+          fetchedAmiCharts: true,
+          fetchingAmiChartsError: undefined,
+          fetchingUnitsError: undefined,
+        }}
+      >
+        <ListingDetailsEligibility
+          listing={plusHousingListing}
+          imageSrc={"listing-eligibility.svg"}
+        />
+      </ListingDetailsContext.Provider>
+    )
+
+    expect(
+      await findByText(t("listings.customListingType.plusHousing.priorityUnits.title"))
+    ).toBeDefined()
+    expect(await findByText(t("listings.Mobility impairments.title"))).toBeDefined()
     expect(asFragment()).toMatchSnapshot()
   })
 })

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import React, { useContext, useEffect, useState } from "react"
-import { useAuth } from "@clerk/clerk-react"
+import { useAuth } from "@clerk/react"
 import withAppSetup from "../../layouts/withAppSetup"
 import UserContext from "../../authentication/context/UserContext"
 
@@ -277,7 +277,7 @@ const HousingCounselorSection = ({ user, setUser }: SectionProps) => {
   }
 
   const updateAccess = async (applicant: User) => {
-    const sessionToken = await getToken()
+    const sessionToken: string | null = await getToken()
     if (!sessionToken) {
       throw new Error("Missing Clerk session token")
     }
