@@ -24,6 +24,7 @@ import {
   listingHasOnlySROUnits,
   listingHasSROUnits,
   listingHasVeteransPreference,
+  plusHousingUnitsCount,
 } from "../../util/listingUtil"
 import {
   defaultIfNotTranslated,
@@ -347,7 +348,15 @@ export const ListingDetailsEligibility = ({
             {isPlusHousing(listing) && (
               <InfoCard
                 title={t("listings.customListingType.plusHousing.priorityUnits.title")}
-                subtitle={`5 ${t("t.units")}`}
+                subtitle={(() => {
+                  const plusHousingCount = plusHousingUnitsCount(units)
+                  return plusHousingCount === 1
+                    ? `${plusHousingCount} ${defaultIfNotTranslated(
+                        "listings.features.unit",
+                        "Unit"
+                      )}`
+                    : `${plusHousingCount} ${defaultIfNotTranslated("t.units", "Units")}`
+                })()}
               >
                 <p className="text-sm text-gray-700">
                   {renderInlineMarkup(
