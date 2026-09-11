@@ -1,7 +1,7 @@
 import { Field, Select, t } from "@bloom-housing/ui-components"
 import { LoadingState } from "@bloom-housing/ui-seeds"
 import React, { useEffect, useState } from "react"
-import { useAuth } from "@clerk/clerk-react"
+import { useAuth } from "@clerk/react"
 import { UseFormMethods } from "react-hook-form"
 import Fieldset from "./Fieldset"
 import { ErrorMessages } from "./ErrorSummaryBanner"
@@ -33,7 +33,7 @@ const ShareAccess = ({
 
   useEffect(() => {
     void (async () => {
-      const sessionToken = await getToken()
+      const sessionToken: string | null = await getToken()
       if (!sessionToken) {
         setAgencies([])
         return
@@ -113,7 +113,7 @@ const RevokeAccess = ({
 
   useEffect(() => {
     void (async () => {
-      const sessionToken = await getToken()
+      const sessionToken: string | null = await getToken()
       if (!sessionToken) return
       setAgencies(await getHousingCounselorAgencies(sessionToken))
     })()

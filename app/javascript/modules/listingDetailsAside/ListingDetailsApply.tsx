@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react"
-import { useAuth } from "@clerk/clerk-react"
+import { useAuth } from "@clerk/react"
 
 import {
   AppearanceStyleType,
@@ -81,16 +81,13 @@ const ApplyButton = ({ href }: { href: string }) => (
 const ClerkApplyOnlineButton = ({ applyLink }: { applyLink: string }) => {
   const { isLoaded, isSignedIn } = useAuth()
   const { profile, initialStateLoaded } = useContext(UserContext)
-  let redirectOrApplyUrl = ""
-  if (isLoaded && isSignedIn && initialStateLoaded && profile) {
-    redirectOrApplyUrl = applyLink
-  } else if (isLoaded && !isSignedIn) {
-    redirectOrApplyUrl = getSignInPath()
-  } else if (isLoaded && isSignedIn && initialStateLoaded && !profile) {
-    redirectOrApplyUrl = getAddProfilePath()
-  }
 
-  return <ApplyButton href={redirectOrApplyUrl} />
+  if (isLoaded && isSignedIn && profile) return <ApplyButton href={applyLink} />
+  if (isLoaded && !isSignedIn) return <ApplyButton href={getSignInPath()} />
+  if (isLoaded && isSignedIn && initialStateLoaded && !profile)
+    return <ApplyButton href={getAddProfilePath()} />
+
+  return null
 }
 
 /**
