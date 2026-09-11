@@ -1,6 +1,7 @@
 import React from "react"
 import { within } from "@testing-library/react"
 import Layout from "../../layouts/Layout"
+import { AuthSessionProvider } from "../../authentication/session/AuthSessionProvider"
 import { renderAndLoadAsync } from "../__util__/renderUtils"
 import { setupUserContext } from "../__util__/accountUtils"
 
@@ -19,9 +20,11 @@ describe("<Layout />", () => {
 
   it("hides the sign in navigation header during the sign in flow", async () => {
     const { container } = await renderAndLoadAsync(
-      <Layout>
-        <div>content</div>
-      </Layout>,
+      <AuthSessionProvider>
+        <Layout>
+          <div>content</div>
+        </Layout>
+      </AuthSessionProvider>,
       undefined,
       ["/sign-in"]
     )
@@ -33,9 +36,11 @@ describe("<Layout />", () => {
 
   it("hides the sign in navigation header during the create account flow", async () => {
     const { container } = await renderAndLoadAsync(
-      <Layout>
-        <div>content</div>
-      </Layout>,
+      <AuthSessionProvider>
+        <Layout>
+          <div>content</div>
+        </Layout>
+      </AuthSessionProvider>,
       undefined,
       ["/create-account"]
     )
@@ -48,9 +53,11 @@ describe("<Layout />", () => {
   it("shows the account navigation header without the avatar when signed in without a profile", async () => {
     setupUserContext({ loggedIn: true, hasProfile: false })
     const { container } = await renderAndLoadAsync(
-      <Layout>
-        <div>content</div>
-      </Layout>,
+      <AuthSessionProvider>
+        <Layout>
+          <div>content</div>
+        </Layout>
+      </AuthSessionProvider>,
       undefined,
       ["/listings/for-rent"]
     )
@@ -63,9 +70,11 @@ describe("<Layout />", () => {
   it("hides the account navigation header on add profile until the user finishes their profile", async () => {
     setupUserContext({ loggedIn: true, hasProfile: false })
     const { container } = await renderAndLoadAsync(
-      <Layout>
-        <div>content</div>
-      </Layout>,
+      <AuthSessionProvider>
+        <Layout>
+          <div>content</div>
+        </Layout>
+      </AuthSessionProvider>,
       undefined,
       ["/add-profile"]
     )
@@ -78,9 +87,11 @@ describe("<Layout />", () => {
 
   it("shows the sign in navigation header after leaving the sign in flow", async () => {
     const { container } = await renderAndLoadAsync(
-      <Layout>
-        <div>content</div>
-      </Layout>,
+      <AuthSessionProvider>
+        <Layout>
+          <div>content</div>
+        </Layout>
+      </AuthSessionProvider>,
       undefined,
       ["/listings/for-rent"]
     )
@@ -92,9 +103,11 @@ describe("<Layout />", () => {
   it("shows the account navigation header after the user has signed in", async () => {
     setupUserContext({ loggedIn: true })
     const { container } = await renderAndLoadAsync(
-      <Layout>
-        <div>content</div>
-      </Layout>,
+      <AuthSessionProvider>
+        <Layout>
+          <div>content</div>
+        </Layout>
+      </AuthSessionProvider>,
       undefined,
       ["/account"]
     )

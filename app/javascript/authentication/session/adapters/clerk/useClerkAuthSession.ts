@@ -1,11 +1,12 @@
 import { useCallback, useMemo } from "react"
 import { useAuth } from "@clerk/react"
 
+import { clearHeaders } from "../../../token"
 import { AuthCredentials, AuthSession, deriveClerkStatus, NO_CREDENTIALS } from "../../authStatus"
 
 /** Clerk's session, behind the neutral interface. No effects, no state. */
 export const useClerkAuthSession = (): AuthSession => {
-  const { isLoaded, isSignedIn, getToken } = useAuth()
+  const { isLoaded, isSignedIn, getToken, signOut: clerkSignOut } = useAuth()
 
   const getCredentials = useCallback(async (): Promise<AuthCredentials> => {
     try {
@@ -21,11 +22,20 @@ export const useClerkAuthSession = (): AuthSession => {
     }
   }, [getToken])
 
+  const signOut = useCallback(async (): Promise<void> => {
+    // TODO: CLERK MIGRATION - DEVISE TECH DEBT TO REMOVE
+    // apiService attaches stored Devise headers to every request, so a user who
+    // last signed in with Devise would keep sending them.
+    clearHeaders()
+    await clerkSignOut()
+  }, [clerkSignOut])
+
   return useMemo(
     (): AuthSession => ({
       status: deriveClerkStatus({ isLoaded, isSignedIn: Boolean(isSignedIn) }),
       getCredentials,
+      signOut,
     }),
-    [isLoaded, isSignedIn, getCredentials]
+    [isLoaded, isSignedIn, getCredentials, signOut]
   )
 }
