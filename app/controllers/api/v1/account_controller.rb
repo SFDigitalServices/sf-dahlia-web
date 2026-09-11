@@ -3,7 +3,18 @@
 # RESTful JSON API to retrieve data for My Account
 class Api::V1::AccountController < ApiController
   include Clerk::Authenticatable
+  include HousingCounselorSession
+
+  rescue_from HousingCounselorSession::VerificationUnavailableError do
+    render json: { error: 'unauthorized' }, status: :unauthorized
+  end
+  rescue_from HousingCounselorSession::AccessDeniedError do
+    render json: { error: 'forbidden' }, status: :forbidden
+  end
+
   before_action :authenticate_user!, except: %i[confirm check_account]
+  before_action :reject_write_while_delegated,
+                only: %i[update create_profile update_housing_counselor]
 
   def my_applications
     applications = map_listings_to_applications(current_user_applications)
@@ -26,7 +37,7 @@ class Api::V1::AccountController < ApiController
   end
 
   def profile
-    contact_id = current_user.salesforce_contact_id.presence
+    contact_id = effective_contact_id.presence
     contact = contact_id &&
               Force::AccountService.get(contact_id, { user_token_validation: true })
     if contact.blank?
@@ -117,8 +128,40 @@ class Api::V1::AccountController < ApiController
 
   private
 
+  # Authentication for #my_applications stays whatever it already is
+  # (Devise, unchanged) - this only adds "and if that signed-in user is
+  # also a housing counselor per their hc_session cookie, use the
+  # delegated applicant's contact instead of their own."
   def current_user_applications
-    Force::ShortFormService.get_for_user(current_user.salesforce_contact_id)
+    Force::ShortFormService.get_for_user(effective_contact_id)
+  end
+
+  # The applicant contact ID a housing counselor is currently delegated
+  # access to, per their hc_session cookie, or the signed-in user's own
+  # contact ID otherwise. Raises rather than silently falling back to the
+  # signed-in user's own contact ID when an hc_session cookie exists but
+  # access could not be confirmed - either because Salesforce couldn't be
+  # reached, or because Salesforce explicitly denied access. Neither case
+  # should be treated the same as "no delegated session."
+  def effective_contact_id
+    session = current_hc_session
+    if hc_session_verification_failed?
+      raise HousingCounselorSession::VerificationUnavailableError
+    end
+    raise HousingCounselorSession::AccessDeniedError if hc_session_access_denied?
+
+    session&.dig(:app_id) || current_user.salesforce_contact_id
+  end
+
+  # HC delegate access only ever grants read access to the applicant's data
+  # (see #profile). Write actions must stay blocked while delegated: the
+  # account-settings form is hydrated from #profile, so submitting it while
+  # an hc_session is active would silently overwrite the housing
+  # counselor's own Salesforce contact with the applicant's data.
+  def reject_write_while_delegated
+    return unless current_hc_session
+
+    render json: { error: 'forbidden' }, status: :forbidden
   end
 
   def authenticate_user!(*args)

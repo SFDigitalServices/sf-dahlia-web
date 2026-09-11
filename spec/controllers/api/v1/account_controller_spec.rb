@@ -9,6 +9,121 @@ RSpec.describe Api::V1::AccountController, type: :controller do
     allow(DahliaBackend::MessageService).to receive(:send_housing_counselor_access)
   end
 
+  describe 'GET #my_applications' do
+    let(:contact_id) { user.salesforce_contact_id }
+    let(:applications) { [{ 'listingID' => 'L1', 'status' => 'submitted' }] }
+    let(:listings) { [{ 'listingID' => 'L1', 'name' => 'Listing One' }] }
+
+    before do
+      allow(controller).to receive(:current_user).and_return(user)
+      allow(Force::ShortFormService).to receive(:get_for_user).and_return(applications)
+      allow(Force::ListingService).to receive(:listings).and_return(listings)
+    end
+
+    it "returns the signed-in user's own applications when there is no hc_session " \
+       'cookie' do
+      get :my_applications
+
+      expect(response).to have_http_status(:ok)
+      expect(Force::ShortFormService).to have_received(:get_for_user).with(contact_id)
+    end
+
+    # Regression coverage: authentication for #my_applications stays Devise,
+    # unchanged - this only adds "and if that signed-in user is also a
+    # housing counselor per their hc_session cookie, use the delegated
+    # applicant's contact instead of their own."
+    context 'when signed in as a housing counselor with a valid hc_session cookie' do
+      let(:applicant_contact_id) { '003XYZ' }
+
+      before do
+        request.cookies['hc_session'] = JsonWebTokenService.encode_token(
+          { 'hcId' => contact_id, 'appId' => applicant_contact_id },
+          exp: 2.hours.from_now,
+        )
+      end
+
+      it "returns the delegated applicant's applications rather than the " \
+         "counselor's own" do
+        get :my_applications
+
+        expect(response).to have_http_status(:ok)
+        expect(Force::ShortFormService)
+          .to have_received(:get_for_user).with(applicant_contact_id)
+      end
+    end
+
+    context 'when the hc_session cookie belongs to a different signed-in user' do
+      before do
+        request.cookies['hc_session'] = JsonWebTokenService.encode_token(
+          { 'hcId' => 'someone_elses_contact_id', 'appId' => '003XYZ' },
+          exp: 2.hours.from_now,
+        )
+      end
+
+      it "ignores and discards the foreign cookie, returning the signed-in user's " \
+         'own applications' do
+        get :my_applications
+
+        expect(response).to have_http_status(:ok)
+        expect(Force::ShortFormService).to have_received(:get_for_user).with(contact_id)
+        expect(cookies[:hc_session]).to be_blank
+      end
+    end
+
+    context 'when the hc_session cookie has expired and access has since been ' \
+            'legitimately revoked' do
+      let(:applicant_contact_id) { '003XYZ' }
+
+      before do
+        request.cookies['hc_session'] = JsonWebTokenService.encode_token(
+          { 'hcId' => contact_id, 'appId' => applicant_contact_id },
+          exp: 1.hour.ago,
+        )
+        allow(Force::HousingCounselorService).to receive(:authorize_access)
+          .and_return(nil)
+      end
+
+      it "returns forbidden rather than falling back to the counselor's own " \
+         'applications' do
+        get :my_applications
+
+        expect(response).to have_http_status(:forbidden)
+        expect(JSON.parse(response.body)).to eq('error' => 'forbidden')
+        expect(Force::ShortFormService).not_to have_received(:get_for_user)
+        expect(cookies[:hc_session]).to be_blank
+      end
+    end
+
+    # Regression coverage for a confirmed code-review finding: a transient
+    # Salesforce failure while refreshing an expired hc_session cookie used
+    # to be silently treated the same as "no hc_session," so this fell back
+    # to showing the housing counselor their own applications instead of
+    # erroring - a silent identity mix-up. It must return unauthorized
+    # instead of ever falling back in this case.
+    context 'when the hc_session cookie has expired and Salesforce raises a ' \
+            'transient error during the re-check' do
+      let(:applicant_contact_id) { '003XYZ' }
+
+      before do
+        request.cookies['hc_session'] = JsonWebTokenService.encode_token(
+          { 'hcId' => contact_id, 'appId' => applicant_contact_id },
+          exp: 1.hour.ago,
+        )
+        allow(Force::HousingCounselorService).to receive(:authorize_access)
+          .and_raise(Faraday::TimeoutError, 'timed out')
+      end
+
+      it 'returns unauthorized rather than silently falling back to the ' \
+         "counselor's own applications" do
+        get :my_applications
+
+        expect(response).to have_http_status(:unauthorized)
+        expect(JSON.parse(response.body)).to eq('error' => 'unauthorized')
+        expect(Force::ShortFormService).not_to have_received(:get_for_user)
+      end
+    end
+  end
+
   describe 'PUT #update' do
     let(:contact_params) { { DOB: '2000-01-01' } }
 
@@ -35,6 +150,30 @@ RSpec.describe Api::V1::AccountController, type: :controller do
 
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.body).to match(/Invalid DOB/)
+        expect(Force::AccountService).not_to have_received(:create_or_update)
+        expect(Emailer).not_to have_received(:account_update)
+      end
+    end
+
+    # Regression coverage for a confirmed code-review finding: #update always
+    # writes to current_user's own Salesforce contact, but the account
+    # settings form is hydrated from #profile, which returns the delegated
+    # applicant's data during an hc_session. Without this guard, an HC
+    # submitting that form would silently overwrite their own Salesforce
+    # contact with the applicant's data.
+    context 'when signed in as an HC with an active hc_session cookie' do
+      before do
+        request.cookies['hc_session'] = JsonWebTokenService.encode_token(
+          { 'hcId' => user.salesforce_contact_id, 'appId' => '003XYZ' },
+          exp: 2.hours.from_now,
+        )
+      end
+
+      it 'returns forbidden and does not perform the update' do
+        put :update, params: { contact: contact_params }
+
+        expect(response).to have_http_status(:forbidden)
+        expect(JSON.parse(response.body)).to eq('error' => 'forbidden')
         expect(Force::AccountService).not_to have_received(:create_or_update)
         expect(Emailer).not_to have_received(:account_update)
       end
@@ -145,6 +284,25 @@ RSpec.describe Api::V1::AccountController, type: :controller do
       )
       expect(Emailer).not_to have_received(:account_update)
     end
+
+    context 'when signed in as an HC with an active hc_session cookie' do
+      before do
+        request.cookies['hc_session'] = JsonWebTokenService.encode_token(
+          { 'hcId' => contact_id, 'appId' => '003XYZ' },
+          exp: 2.hours.from_now,
+        )
+      end
+
+      it 'returns forbidden and does not update Salesforce' do
+        put :update_housing_counselor, params: { contact: contact_params }
+
+        expect(response).to have_http_status(:forbidden)
+        expect(JSON.parse(response.body)).to eq('error' => 'forbidden')
+        expect(Force::AccountService).not_to have_received(:create_or_update)
+        expect(DahliaBackend::MessageService)
+          .not_to have_received(:send_housing_counselor_access)
+      end
+    end
   end
 
   describe 'GET #profile' do
@@ -222,6 +380,94 @@ RSpec.describe Api::V1::AccountController, type: :controller do
         expect(JSON.parse(response.body)).to eq('error' => 'Could not get Salesforce contact ID')
       end
     end
+
+    context 'when signed in as a housing counselor with a valid hc_session cookie' do
+      let(:hc_contact_id) { contact_id }
+      let(:applicant_contact_id) { '003XYZ' }
+
+      def set_hc_session_cookie(hc_id:, app_id:, exp: 2.hours.from_now)
+        request.cookies['hc_session'] =
+          JsonWebTokenService.encode_token({ 'hcId' => hc_id, 'appId' => app_id }, exp:)
+      end
+
+      it 'returns the delegated applicant profile rather than the housing ' \
+         "counselor's own" do
+        set_hc_session_cookie(hc_id: hc_contact_id, app_id: applicant_contact_id)
+
+        get :profile
+
+        expect(response).to have_http_status(:ok)
+        expect(Force::AccountService).to have_received(:get).with(
+          applicant_contact_id,
+          { user_token_validation: true },
+        )
+      end
+
+      context 'and the cookie has expired but Salesforce still grants access' do
+        it 'refreshes the cookie via Salesforce and still returns the applicant ' \
+           'profile' do
+          set_hc_session_cookie(
+            hc_id: hc_contact_id, app_id: applicant_contact_id, exp: 1.hour.ago,
+          )
+          allow(Force::HousingCounselorService).to receive(:authorize_access).and_return(
+            { applicant_contact_id:, counselor_contact_id: hc_contact_id },
+          )
+
+          get :profile
+
+          expect(response).to have_http_status(:ok)
+          expect(Force::AccountService).to have_received(:get).with(
+            applicant_contact_id,
+            { user_token_validation: true },
+          )
+          expect(cookies[:hc_session]).to be_present
+        end
+      end
+
+      context 'and the cookie has expired and access has since been legitimately ' \
+              'revoked' do
+        it "returns forbidden rather than falling back to the counselor's own " \
+           'profile' do
+          set_hc_session_cookie(
+            hc_id: hc_contact_id, app_id: applicant_contact_id, exp: 1.hour.ago,
+          )
+          allow(Force::HousingCounselorService).to receive(:authorize_access)
+            .and_return(nil)
+
+          get :profile
+
+          expect(response).to have_http_status(:forbidden)
+          expect(JSON.parse(response.body)).to eq('error' => 'forbidden')
+          expect(Force::AccountService).not_to have_received(:get)
+          expect(cookies[:hc_session]).to be_blank
+        end
+      end
+
+      # Regression coverage for a confirmed code-review finding: a transient
+      # Salesforce failure while refreshing an expired hc_session cookie used
+      # to be silently treated the same as "no hc_session," so profile fell
+      # back to showing the housing counselor their own Salesforce contact
+      # instead of erroring - a silent identity mix-up. It must now render
+      # unauthorized instead of ever falling back in this case.
+      context 'and the cookie has expired and Salesforce raises a transient error ' \
+              'during the re-check' do
+        it 'returns unauthorized rather than silently falling back to the ' \
+           "counselor's own profile" do
+          set_hc_session_cookie(
+            hc_id: hc_contact_id, app_id: applicant_contact_id, exp: 1.hour.ago,
+          )
+          allow(Force::HousingCounselorService).to receive(:authorize_access)
+            .and_raise(Faraday::TimeoutError, 'timed out')
+
+          get :profile
+
+          expect(response).to have_http_status(:unauthorized)
+          expect(JSON.parse(response.body)).to eq('error' => 'unauthorized')
+          expect(Force::AccountService).not_to have_received(:get)
+          expect(cookies[:hc_session]).to be_blank
+        end
+      end
+    end
   end
 
   describe 'POST #create_profile' do
@@ -234,7 +480,9 @@ RSpec.describe Api::V1::AccountController, type: :controller do
         DOB: '2000-01-01',
       }
     end
-    let(:salesforce_contact) { { 'contactId' => '003ABC', 'email' => 'test@example.com' } }
+    let(:salesforce_contact) do
+      { 'contactId' => '003ABC', 'email' => 'test@example.com' }
+    end
 
     before do
       allow(controller).to receive(:clerk).and_return(double(user_id: clerk_user_id))
@@ -317,6 +565,29 @@ RSpec.describe Api::V1::AccountController, type: :controller do
         expect(JSON.parse(response.body)).to eq(
           'error' => 'User has missing Salesforce contact ID',
         )
+        expect(ClerkService).not_to have_received(:store_salesforce_contact_id)
+      end
+    end
+
+    context 'when signed in as an HC with an active hc_session cookie' do
+      let(:hc_contact_id) { '003HC' }
+
+      before do
+        allow(ClerkService).to receive(:salesforce_contact_id)
+          .with(clerk_user_id)
+          .and_return(hc_contact_id)
+        request.cookies['hc_session'] = JsonWebTokenService.encode_token(
+          { 'hcId' => hc_contact_id, 'appId' => '003XYZ' },
+          exp: 2.hours.from_now,
+        )
+      end
+
+      it 'returns forbidden and does not create the profile' do
+        post :create_profile, params: { contact: contact_params }
+
+        expect(response).to have_http_status(:forbidden)
+        expect(JSON.parse(response.body)).to eq('error' => 'forbidden')
+        expect(Force::AccountService).not_to have_received(:create_or_update)
         expect(ClerkService).not_to have_received(:store_salesforce_contact_id)
       end
     end
