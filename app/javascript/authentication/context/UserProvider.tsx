@@ -1,7 +1,8 @@
 import React, { useCallback, useEffect, useReducer } from "react"
-import { useAuth } from "@clerk/react"
 
 import { getProfile, signIn } from "../../api/authApiService"
+import { useAuthSession } from "../session/AuthSessionProvider"
+import { bearerToken, isAuthInitialized } from "../session/authStatus"
 import { attemptToSetAuthHeadersFromURL } from "../token"
 import { User } from "../user"
 import {
@@ -31,20 +32,20 @@ const ClerkProfile = ({
   hasProfile: boolean
   onLoaded: (profile: User | null) => void
 }) => {
-  const { isLoaded, isSignedIn, getToken } = useAuth()
+  const { status, getCredentials } = useAuthSession()
 
   useEffect(() => {
-    if (!isLoaded || hasProfile) {
+    if (!isAuthInitialized(status) || hasProfile) {
       return
     }
-    if (!isSignedIn) {
+    if (status.kind === "signedOut") {
       onLoaded(null)
       return
     }
 
     void (async () => {
       try {
-        const sessionToken: string | null = await getToken()
+        const sessionToken = bearerToken(await getCredentials())
         if (!sessionToken) {
           throw new Error("Missing Clerk session token")
         }
@@ -53,11 +54,16 @@ const ClerkProfile = ({
         onLoaded(null)
       }
     })()
-  }, [getToken, hasProfile, isLoaded, isSignedIn, onLoaded])
+  }, [getCredentials, hasProfile, status, onLoaded])
 
   return null
 }
 
+/**
+ * Everything tagged DEVISE TECH DEBT goes when Devise does, leaving the reducer
+ * and ClerkProfile — a profile store and nothing else. Worth renaming to
+ * ProfileProvider then; deferred now because UserContext has ~20 consumers.
+ */
 const UserProvider = (props: UserProviderProps) => {
   const [state, dispatch] = useReducer(UserReducer, {
     loading: false,
@@ -71,6 +77,10 @@ const UserProvider = (props: UserProviderProps) => {
     dispatch(profile ? saveProfile(profile) : systemSignOut())
   }, [])
 
+  // TODO: CLERK MIGRATION - DEVISE TECH DEBT TO REMOVE
+  // Devise's profile fetch; ClerkProfile above is the replacement. Deleting it
+  // takes the flag read and the mount condition below with it.
+  //
   // Load our profile as soon as we have an access token available
   useEffect(() => {
     if (!flagsReady || clerkEnabled || state.profile) {
@@ -108,6 +118,9 @@ const UserProvider = (props: UserProviderProps) => {
     profile: state.profile,
     initialStateLoaded: state.initialStateLoaded,
     saveProfile: (profile) => dispatch(saveProfile(profile)),
+    // TODO: CLERK MIGRATION - DEVISE TECH DEBT TO REMOVE
+    // Posts to /api/v1/auth/sign_in and stores Devise headers. Only reached
+    // from SignInForm, which only renders on the Devise branch of sign-in.tsx.
     signIn: async (email, password, origin) => {
       dispatch(systemSignOut())
       dispatch(startLoading())
@@ -127,10 +140,18 @@ const UserProvider = (props: UserProviderProps) => {
         })
         .finally(() => dispatch(stopLoading()))
     },
+    // TODO: CLERK MIGRATION - DEVISE TECH DEBT TO REMOVE
+    // Clears Devise headers; ends no Clerk session. Layout, AccountNav and
+    // account.tsx branch to useAuth().signOut. A replacement must carry the
+    // GTM push with it.
     signOut: () => {
       pushToDataLayer("logout", { user_id: state.profile.id, reason: "User clicked logout" })
       dispatch(userSignOut())
     },
+    // TODO: CLERK MIGRATION - DEVISE TECH DEBT TO REMOVE
+    // IdleTimeout does not branch on the flag, so under Clerk a timeout clears
+    // Devise headers and redirects while the Clerk session stays live.
+    // Pre-existing; needs its own ticket.
     timeOut: () => {
       pushToDataLayer("logout", { user_id: state.profile.id, reason: "Timed out" })
       dispatch(timeOut())
