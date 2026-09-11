@@ -24,6 +24,8 @@ export const useFeatureFlag = (flagName: string, defaultValue: boolean) => {
     }
   }
 
+  if (flagName === "temp.webapp.auth.clerk") return { flagsReady: true, unleashFlag: true } // TODO WIP: remove debug
+
   if (flagsError || unleashFlag === undefined) {
     console.error(flagsError)
     return { flagsReady, unleashFlag: defaultValue }
