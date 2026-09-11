@@ -1,5 +1,5 @@
 import React from "react"
-import { useAuth } from "@clerk/react"
+import { useAuth, useUser } from "@clerk/react"
 import UserContext, { ContextProps } from "../../authentication/context/UserContext"
 import { User } from "../../authentication/user"
 import * as authApiService from "../../api/authApiService"
@@ -25,10 +25,12 @@ export const setupUserContext = ({
   loggedIn,
   mockProfile = mockProfileStub,
   hasProfile = loggedIn,
+  hasPassword = true,
 }: {
   loggedIn: boolean
   mockProfile?: ContextProps["profile"]
   hasProfile?: boolean
+  hasPassword?: boolean
 }): ContextProps => {
   const mockContextValue: ContextProps = {
     profile: hasProfile ? mockProfile : undefined,
@@ -57,7 +59,13 @@ export const setupUserContext = ({
       getToken: jest.fn().mockResolvedValue("clerk-session-token"),
     })
   }
-
+  if (jest.isMockFunction(useUser)) {
+    useUser.mockReturnValue({
+      isLoaded: true,
+      isSignedIn: loggedIn,
+      user: loggedIn ? { passwordEnabled: hasPassword } : null,
+    })
+  }
   if (loggedIn) {
     if (jest.isMockFunction(authApiService.getProfile)) {
       authApiService.getProfile.mockResolvedValue(mockProfile ?? mockProfileStub)

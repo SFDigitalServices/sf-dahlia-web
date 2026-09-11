@@ -29,6 +29,11 @@ class AuthController < ApplicationController
     render 'forgot_password'
   end
 
+  def change_password
+    @change_password_props = react_app_props
+    render 'change_password'
+  end
+
   def reset_password
     @reset_password_props = react_app_props
     render 'reset_password'

@@ -85,6 +85,7 @@ export const getListingDetailPath = localizedPathGetter("/listings")
 export const getCreateAccountPath = localizedPathGetter("/create-account")
 export const getVerificationCodePath = localizedPathGetter("/create-account/code")
 export const getAddPasswordPath = localizedPathGetter("/add-password")
+export const getChangePasswordPath = localizedPathGetter("/change-password")
 export const getAddProfilePath = localizedPathGetter("/add-profile")
 export const getSignInPath = localizedPathGetter("/sign-in")
 export const getSignInCodePath = localizedPathGetter("/sign-in/code")
@@ -211,6 +212,7 @@ export enum AppPages {
   EnterVerificationCode = "enter verification code",
   AddPassword = "add password",
   AddProfile = "add profile",
+  ChangePassword = "change password",
   ForgotPassword = "forgot password",
   ResetPassword = "reset password",
   MyAccount = "my account",

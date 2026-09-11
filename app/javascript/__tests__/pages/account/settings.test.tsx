@@ -10,6 +10,8 @@ import { fireEvent, screen, within, act } from "@testing-library/react"
 import { authenticatedPut, get, put } from "../../../api/apiService"
 import { mockProfileStub, setupUserContext } from "../../__util__/accountUtils"
 import { useFeatureFlag } from "../../../hooks/useFeatureFlag"
+import { useUser } from "@clerk/clerk-react"
+import { useLocation, useNavigate } from "react-router"
 
 jest.mock("../../../api/apiService", () => ({
   authenticatedPut: jest.fn(),
@@ -18,9 +20,25 @@ jest.mock("../../../api/apiService", () => ({
   put: jest.fn(),
 }))
 
+jest.mock("react-router", () => ({
+  ...jest.requireActual("react-router"),
+  useNavigate: jest.fn(),
+  useLocation: jest.fn(),
+}))
+
 jest.mock("../../../hooks/useFeatureFlag", () => ({
   useFeatureFlag: jest.fn(() => ({ flagsReady: true, unleashFlag: true })),
 }))
+
+jest.mock("@clerk/clerk-react", () => {
+  const Clerk = jest.requireActual("@clerk/clerk-react")
+  return {
+    ...Clerk,
+    ClerkProvider: ({ children }: { children: React.ReactNode }) => children,
+    useAuth: jest.fn(),
+    useUser: jest.fn(),
+  }
+})
 
 const mockAgencies = [
   { id: "123", name: "Test Agency A", shortName: "A" },
@@ -31,6 +49,7 @@ describe("<SettingsPage />", () => {
   describe("when the user is signed in", () => {
     let promise
     let originalLocation: Location
+    let mockNavigate: jest.Mock
 
     beforeEach(async () => {
       document.documentElement.lang = "en"
@@ -38,6 +57,17 @@ describe("<SettingsPage />", () => {
       ;(useFeatureFlag as jest.Mock).mockReturnValue({ flagsReady: true, unleashFlag: true })
       setupUserContext({ loggedIn: true })
       ;(get as jest.Mock).mockResolvedValue({ data: { agencies: [] } })
+      ;(useUser as jest.Mock).mockReturnValue({
+        isLoaded: true,
+        isSignedIn: true,
+        user: { passwordEnabled: true },
+      })
+      mockNavigate = jest.fn()
+      ;(useNavigate as jest.Mock).mockReturnValue(mockNavigate)
+      ;(useLocation as jest.Mock).mockReturnValue({
+        pathname: "/account/settings",
+        state: null,
+      })
       promise = Promise.resolve()
       await renderAndLoadAsync(<SettingsPage assetPaths={{}} />)
     })
@@ -231,12 +261,6 @@ describe("<SettingsPage />", () => {
           name: /email/i,
         })
 
-        expect(
-          screen.getByRole("link", {
-            name: /forgot password\?/i,
-          })
-        ).toHaveAttribute("href", "/forgot-password?email=email@email.com")
-
         const emailField = within(group).getByRole("textbox")
 
         await act(async () => {
@@ -279,12 +303,6 @@ describe("<SettingsPage />", () => {
             }),
           })
         )
-
-        expect(
-          screen.getByRole("link", {
-            name: /forgot password\?/i,
-          })
-        ).toHaveAttribute("href", "/forgot-password?email=test@test.com")
       })
 
       it("does not update with malformed emails", async () => {
@@ -311,92 +329,24 @@ describe("<SettingsPage />", () => {
       })
     })
 
-    describe("when the user updates their password", () => {
-      it("does not update when only one field is filled out", async () => {
-        ;(authenticatedPut as jest.Mock).mockResolvedValue({
-          data: {
-            status: "success",
-          },
-        })
-
-        const passwordUpdateButton = screen.getByRole("button", { name: "Save password" })
-        const currentPasswordField = screen.getByLabelText(/current password/i)
-
-        await act(async () => {
-          fireEvent.change(currentPasswordField, { target: { value: "abcd1234" } })
-          passwordUpdateButton.dispatchEvent(new MouseEvent("click"))
-          await promise
-        })
-
-        expect(authenticatedPut).not.toHaveBeenCalled()
+    describe("the password section", () => {
+      it("shows a change password button when the user has a password", () => {
+        expect(screen.getByRole("button", { name: "Change password" })).not.toBeNull()
+        expect(screen.getByText("••••")).not.toBeNull()
+        expect(screen.queryByRole("button", { name: "Add password" })).toBeNull()
       })
 
-      it("does not update when the new password field is insufficiently complex", async () => {
-        ;(authenticatedPut as jest.Mock).mockResolvedValue({
-          data: {
-            status: "success",
-          },
-        })
-
-        const passwordUpdateButton = screen.getByRole("button", { name: "Save password" })
-
-        const currentPasswordField = screen.getByLabelText(/current password/i)
-        const newPasswordField = screen.getByLabelText(/choose a new password/i)
-
+      it("navigates to the change password page", async () => {
         await act(async () => {
-          fireEvent.change(currentPasswordField, { target: { value: "abcd1234" } })
-          fireEvent.change(newPasswordField, { target: { value: "password" } })
-          passwordUpdateButton.dispatchEvent(new MouseEvent("click"))
+          fireEvent.click(screen.getByRole("button", { name: "Change password" }))
           await promise
         })
 
-        expect(authenticatedPut).not.toHaveBeenCalled()
-      })
-
-      it("updates the password field", async () => {
-        ;(authenticatedPut as jest.Mock).mockResolvedValue({
-          data: {
-            status: "success",
-          },
+        expect(mockNavigate).toHaveBeenCalledWith("/change-password", {
+          state: { accountSettingsFlow: true },
         })
-
-        const passwordUpdateButton = screen.getByRole("button", { name: "Save password" })
-
-        const currentPasswordField = screen.getByLabelText(/current password/i)
-        const newPasswordField = screen.getByLabelText(/choose a new password/i)
-
-        await act(async () => {
-          fireEvent.change(currentPasswordField, { target: { value: "abcd1234" } })
-          fireEvent.change(newPasswordField, { target: { value: "abcd1234!" } })
-          passwordUpdateButton.dispatchEvent(new MouseEvent("click"))
-          await promise
-        })
-
-        expect(screen.getByText("Your changes have been saved.")).not.toBeNull()
-
-        await act(async () => {
-          const closeButton = screen.getByLabelText("Close")
-          fireEvent.click(closeButton)
-          await promise
-        })
-
-        expect(screen.queryByText("Your changes have been saved.")).toBeNull()
-
-        expect(authenticatedPut).toHaveBeenCalledWith(
-          "/api/v1/auth/password",
-          expect.objectContaining({
-            current_password: "abcd1234",
-            password: "abcd1234!",
-            password_confirmation: "abcd1234!",
-          })
-        )
-
-        // React 19 omits the empty `value` attribute; assert on the value property instead.
-        expect(newPasswordField).toHaveValue("")
-        expect(currentPasswordField).toHaveValue("")
       })
     })
-
     describe("renders the correct errors", () => {
       it("name Errors", async () => {
         ;(authenticatedPut as jest.Mock).mockRejectedValue({
@@ -628,81 +578,103 @@ describe("<SettingsPage />", () => {
           screen.getByText(/something went wrong\. try again or check back later/i)
         ).not.toBeNull()
       })
-      it("password Errors", async () => {
-        const passwordButton = screen.getByRole("button", { name: "Save password" })
-        const currentPasswordField = screen.getByLabelText(/current password/i)
-        const newPasswordField = screen.getByLabelText(/choose a new password/i)
+    })
+  })
 
-        await act(async () => {
-          fireEvent.change(currentPasswordField, { target: { value: "abcd1234" } })
-          fireEvent.change(newPasswordField, { target: { value: "password" } })
-          fireEvent.click(passwordButton)
-          await promise
-        })
-        expect(
-          screen.getByText(
-            /choose a strong password with at least 8 characters, 1 letter, and 1 number/i
-          )
-        ).not.toBeNull()
-        expect(
-          screen.getByRole("button", {
-            name: /choose a strong password/i,
-          })
-        ).not.toBeNull()
+  describe("when the user has no password", () => {
+    let originalLocation: Location
+    let mockNavigate: jest.Mock
 
-        await act(async () => {
-          fireEvent.change(currentPasswordField, { target: { value: "" } })
-          fireEvent.change(newPasswordField, { target: { value: "" } })
-          fireEvent.click(passwordButton)
-          await promise
-        })
-        expect(
-          screen.getByRole("button", {
-            name: /enter current password/i,
-          })
-        ).not.toBeNull()
-        expect(
-          screen.getByRole("button", {
-            name: /enter new password/i,
-          })
-        ).not.toBeNull()
-        ;(authenticatedPut as jest.Mock).mockRejectedValueOnce({
-          response: {
-            status: 500, // General server error
-          },
-        })
-
-        await act(async () => {
-          fireEvent.change(currentPasswordField, { target: { value: "abcd1234" } })
-          fireEvent.change(newPasswordField, { target: { value: "password1" } })
-          fireEvent.click(passwordButton)
-          await promise
-        })
-        expect(
-          screen.getByText(/something went wrong\. try again or check back later/i)
-        ).not.toBeNull()
-        ;(authenticatedPut as jest.Mock).mockRejectedValueOnce({
-          response: {
-            status: 422,
-            data: {
-              errors: {
-                full_messages: ["Current password is invalid"],
-              },
-            },
-          },
-        })
-        await act(async () => {
-          fireEvent.change(currentPasswordField, { target: { value: "abcd1234" } })
-          fireEvent.change(newPasswordField, { target: { value: "password1" } })
-          fireEvent.click(passwordButton)
-          await promise
-        })
-        expect(
-          screen.getByRole("button", {
-            name: /current password is incorrect/i,
-          })
-        ).not.toBeNull()
+    beforeEach(async () => {
+      document.documentElement.lang = "en"
+      originalLocation = mockWindowLocation()
+      ;(useFeatureFlag as jest.Mock).mockReturnValue({
+        flagsReady: true,
+        unleashFlag: true,
       })
+      setupUserContext({ loggedIn: true })
+      ;(get as jest.Mock).mockResolvedValue({ data: { agencies: [] } })
+      ;(useUser as jest.Mock).mockReturnValue({
+        isLoaded: true,
+        isSignedIn: true,
+        user: { passwordEnabled: false },
+      })
+      mockNavigate = jest.fn()
+      ;(useNavigate as jest.Mock).mockReturnValue(mockNavigate)
+      ;(useLocation as jest.Mock).mockReturnValue({
+        pathname: "/account/settings",
+        state: null,
+      })
+      await renderAndLoadAsync(<SettingsPage assetPaths={{}} />)
+    })
+
+    afterEach(() => {
+      jest.restoreAllMocks()
+      restoreWindowLocation(originalLocation)
+    })
+
+    it("shows an add password button", () => {
+      expect(screen.getByRole("button", { name: "Add password" })).not.toBeNull()
+      expect(screen.queryByRole("button", { name: "Change password" })).toBeNull()
+      expect(screen.queryByText("••••")).toBeNull()
+    })
+
+    it("navigates to the add password page with the account settings flow state", async () => {
+      await act(async () => {
+        fireEvent.click(screen.getByRole("button", { name: "Add password" }))
+        await Promise.resolve()
+      })
+
+      expect(mockNavigate).toHaveBeenCalledWith("/add-password", {
+        state: { accountSettingsFlow: true },
+      })
+    })
+  })
+
+  describe("when arriving after a password change", () => {
+    let originalLocation: Location
+    let mockNavigate: jest.Mock
+
+    beforeEach(async () => {
+      document.documentElement.lang = "en"
+      originalLocation = mockWindowLocation()
+      ;(useFeatureFlag as jest.Mock).mockReturnValue({ flagsReady: true, unleashFlag: true })
+      setupUserContext({ loggedIn: true })
+      ;(get as jest.Mock).mockResolvedValue({ data: { agencies: [] } })
+      ;(useUser as jest.Mock).mockReturnValue({
+        isLoaded: true,
+        isSignedIn: true,
+        user: { passwordEnabled: true },
+      })
+      mockNavigate = jest.fn()
+      ;(useNavigate as jest.Mock).mockReturnValue(mockNavigate)
+      ;(useLocation as jest.Mock).mockReturnValue({
+        pathname: "/account/settings",
+        state: { passwordChanged: true },
+      })
+      await renderAndLoadAsync(<SettingsPage assetPaths={{}} />)
+    })
+
+    afterEach(() => {
+      jest.restoreAllMocks()
+      restoreWindowLocation(originalLocation)
+    })
+
+    it("shows the confirmation banner and clears the navigation state", () => {
+      expect(screen.getByText("New password saved.")).not.toBeNull()
+      expect(mockNavigate).toHaveBeenCalledWith("/account/settings", {
+        replace: true,
+        state: null,
+      })
+    })
+
+    it("dismisses the banner", async () => {
+      await act(async () => {
+        fireEvent.click(screen.getByLabelText("Close"))
+        await Promise.resolve()
+      })
+
+      expect(screen.queryByText("New password saved.")).toBeNull()
     })
   })
 
@@ -720,6 +692,10 @@ describe("<SettingsPage />", () => {
         document.documentElement.lang = "en"
         originalLocation = mockWindowLocation()
         ;(useFeatureFlag as jest.Mock).mockReturnValue({ flagsReady: true, unleashFlag: true })
+        ;(useLocation as jest.Mock).mockReturnValue({
+          pathname: "/account/settings",
+          state: null,
+        })
         mockContext = setupUserContext({ loggedIn: true })
         ;(get as jest.Mock).mockResolvedValue({ data: { agencies: mockAgencies } })
         await renderAndLoadAsync(<SettingsPage assetPaths={{}} />)
@@ -883,6 +859,10 @@ describe("<SettingsPage />", () => {
         document.documentElement.lang = "en"
         originalLocation = mockWindowLocation()
         ;(useFeatureFlag as jest.Mock).mockReturnValue({ flagsReady: true, unleashFlag: true })
+        ;(useLocation as jest.Mock).mockReturnValue({
+          pathname: "/account/settings",
+          state: null,
+        })
         mockContext = setupUserContext({
           loggedIn: true,
           mockProfile: {
@@ -968,6 +948,10 @@ describe("<SettingsPage />", () => {
         document.documentElement.lang = "en"
         originalLocation = mockWindowLocation()
         ;(useFeatureFlag as jest.Mock).mockReturnValue({ flagsReady: true, unleashFlag: false })
+        ;(useLocation as jest.Mock).mockReturnValue({
+          pathname: "/account/settings",
+          state: null,
+        })
         setupUserContext({ loggedIn: true })
         ;(get as jest.Mock).mockResolvedValue({ data: { agencies: mockAgencies } })
         await renderAndLoadAsync(<SettingsPage assetPaths={{}} />)
@@ -990,6 +974,10 @@ describe("<SettingsPage />", () => {
     beforeEach(async () => {
       originalLocation = mockWindowLocation()
       ;(useFeatureFlag as jest.Mock).mockReturnValue({ flagsReady: true, unleashFlag: true })
+      ;(useLocation as jest.Mock).mockReturnValue({
+        pathname: "/account/settings",
+        state: null,
+      })
       setupUserContext({ loggedIn: false })
 
       await renderAndLoadAsync(<SettingsPage assetPaths={{}} />)

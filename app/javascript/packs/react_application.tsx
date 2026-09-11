@@ -29,6 +29,7 @@ import CreateAnAccount from "../pages/account/create-an-account"
 import EnterVerificationCode from "../pages/account/verification-code"
 import AddPassword from "../pages/account/add-password"
 import AddProfile from "../pages/account/add-profile"
+import ChangePassword from "../pages/account/change-password"
 import ForgotPassword from "../pages/forgot-password"
 import ResetPassword from "../pages/reset-password"
 import ListingApplyForm from "../pages/form/listing-apply-form"
@@ -71,6 +72,7 @@ const PAGE_ROUTES = [
   [AddProfile, "/add-profile"],
   [ForgotPassword, "/forgot-password"],
   [EnterVerificationCode, "/forgot-password/code"],
+  [ChangePassword, "/change-password"],
   [ResetPassword, "/reset-password"],
   [HousingCounselors, "/housing-counselors"],
   [GetAssistance, "/get-assistance"],
