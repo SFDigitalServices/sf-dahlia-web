@@ -1,12 +1,13 @@
 import { Field, Select, t } from "@bloom-housing/ui-components"
 import { LoadingState } from "@bloom-housing/ui-seeds"
 import React, { useEffect, useState } from "react"
-import { useAuth } from "@clerk/react"
 import { UseFormMethods } from "react-hook-form"
 import Fieldset from "./Fieldset"
 import { ErrorMessages } from "./ErrorSummaryBanner"
 import { getErrorMessage } from "./util"
 import { getHousingCounselorAgencies, HousingCounselorAgency } from "../../../api/authApiService"
+import { useAuthSession } from "../../../authentication/session/AuthSessionProvider"
+import { bearerToken } from "../../../authentication/session/authStatus"
 import { formatTimeOfDay, localizedFormat } from "../../../util/languageUtil"
 import styles from "./HousingCounselorAccess.module.scss"
 
@@ -29,18 +30,18 @@ const ShareAccess = ({
   errors?: UseFormMethods["errors"]
 }) => {
   const [agencies, setAgencies] = useState<HousingCounselorAgency[]>(null)
-  const { getToken } = useAuth()
+  const { getCredentials } = useAuthSession()
 
   useEffect(() => {
     void (async () => {
-      const sessionToken: string | null = await getToken()
+      const sessionToken = bearerToken(await getCredentials())
       if (!sessionToken) {
         setAgencies([])
         return
       }
       setAgencies((await getHousingCounselorAgencies(sessionToken)) ?? [])
     })()
-  }, [getToken])
+  }, [getCredentials])
 
   return (
     <LoadingState loading={!agencies}>
@@ -109,15 +110,15 @@ const RevokeAccess = ({
   lastModified?: string
 }) => {
   const [agencies, setAgencies] = useState<HousingCounselorAgency[]>(null)
-  const { getToken } = useAuth()
+  const { getCredentials } = useAuthSession()
 
   useEffect(() => {
     void (async () => {
-      const sessionToken: string | null = await getToken()
+      const sessionToken = bearerToken(await getCredentials())
       if (!sessionToken) return
       setAgencies(await getHousingCounselorAgencies(sessionToken))
     })()
-  }, [getToken])
+  }, [getCredentials])
 
   const agency = agencies?.find(({ id }) => id === housingCounselorAgencyId)
 

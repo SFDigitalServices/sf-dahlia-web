@@ -8,6 +8,8 @@ import { DeepMap, FieldError, FieldValues, useForm } from "react-hook-form"
 import withAppSetup from "../../layouts/withAppSetup"
 import AuthLayout from "../../layouts/AuthLayout"
 import UserContext from "../../authentication/context/UserContext"
+import { useAuthSession } from "../../authentication/session/AuthSessionProvider"
+import { bearerToken } from "../../authentication/session/authStatus"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import { AppPages, getMyAccountPath, getSignInPath } from "../../util/routeUtil"
 import { AUTH_FLOW, UNLEASH_FLAG } from "../../modules/constants"
@@ -43,7 +45,7 @@ const modifyErrors = (errors: DeepMap<FieldValues, FieldError>) => {
 
 const AddProfilePage = () => {
   const navigate = useNavigate()
-  const { getToken } = useAuth()
+  const { getCredentials } = useAuthSession()
   const { saveProfile } = useContext(UserContext)
   const [submitting, setSubmitting] = useState(false)
   const errorBannerRef = React.useRef<HTMLSpanElement>(null)
@@ -71,7 +73,7 @@ const AddProfilePage = () => {
 
     void (async () => {
       try {
-        const sessionToken: string | null = await getToken()
+        const sessionToken = bearerToken(await getCredentials())
         if (!sessionToken) {
           throw new Error("Missing Clerk session token")
         }
