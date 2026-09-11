@@ -8,6 +8,9 @@ class Api::V1::AccountController < ApiController
   rescue_from HousingCounselorSession::VerificationUnavailableError do
     render json: { error: 'unauthorized' }, status: :unauthorized
   end
+  rescue_from HousingCounselorSession::AccessDeniedError do
+    render json: { error: 'forbidden' }, status: :forbidden
+  end
 
   before_action :authenticate_user!, except: %i[confirm check_account]
   before_action :reject_write_while_delegated,
@@ -137,13 +140,15 @@ class Api::V1::AccountController < ApiController
   # access to, per their hc_session cookie, or the signed-in user's own
   # contact ID otherwise. Raises rather than silently falling back to the
   # signed-in user's own contact ID when an hc_session cookie exists but
-  # Salesforce couldn't be reached to re-verify it - callers must not treat
-  # "couldn't confirm" the same as "no delegated session."
+  # access could not be confirmed - either because Salesforce couldn't be
+  # reached, or because Salesforce explicitly denied access. Neither case
+  # should be treated the same as "no delegated session."
   def effective_contact_id
     session = current_hc_session
     if hc_session_verification_failed?
       raise HousingCounselorSession::VerificationUnavailableError
     end
+    raise HousingCounselorSession::AccessDeniedError if hc_session_access_denied?
 
     session&.dig(:app_id) || current_user.salesforce_contact_id
   end

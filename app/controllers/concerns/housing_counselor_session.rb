@@ -28,6 +28,15 @@ module HousingCounselorSession
   # the two require different responses (fail closed vs. fall back).
   class VerificationUnavailableError < StandardError; end
 
+  # Raised when Salesforce was reachable and explicitly said the housing
+  # counselor no longer has access (not a housing counselor, inactive,
+  # applicant revoked/never granted access to that agency, or counselor
+  # belongs to a different agency). Distinct from VerificationUnavailableError
+  # - this is a confirmed "no", not "couldn't tell" - callers must fail
+  # explicitly rather than silently falling back to the signed-in user's own
+  # data.
+  class AccessDeniedError < StandardError; end
+
   HC_SESSION_COOKIE_NAME = :hc_session
   HC_SESSION_DURATION = 2.hours
   # Deliberately longer than HC_SESSION_DURATION so the browser keeps
@@ -69,6 +78,12 @@ module HousingCounselorSession
   # AccountController#effective_contact_id) should check this too.
   def hc_session_verification_failed?
     @hc_session_verification_failed || false
+  end
+
+  # True once Salesforce has explicitly denied a housing counselor's access
+  # while refreshing an expired hc_session cookie - see AccessDeniedError.
+  def hc_session_access_denied?
+    @hc_session_access_denied || false
   end
 
   def write_hc_session_cookie(hc_id:, app_id:)
@@ -121,6 +136,7 @@ module HousingCounselorSession
         'HousingCounselorSession: access no longer granted for applicant ' \
         "contact ID=#{stale['appId']} and housing counselor contact ID=#{stale['hcId']}",
       )
+      @hc_session_access_denied = true
       discard_hc_session_cookie
       return nil
     end

@@ -26,6 +26,7 @@ RSpec.describe HousingCounselorSession, type: :controller do
       render json: {
         session: current_hc_session(expected_app_id: params[:expected_app_id]),
         verification_failed: hc_session_verification_failed?,
+        access_denied: hc_session_access_denied?,
       }
     end
 
@@ -237,8 +238,9 @@ RSpec.describe HousingCounselorSession, type: :controller do
       it 'is false' do
         get :show_with_verification_status, params: { signed_in_as: hc_id }
 
-        expect(JSON.parse(response.body))
-          .to eq('session' => nil, 'verification_failed' => false)
+        expect(JSON.parse(response.body)).to eq(
+          'session' => nil, 'verification_failed' => false, 'access_denied' => false,
+        )
       end
     end
 
@@ -265,14 +267,16 @@ RSpec.describe HousingCounselorSession, type: :controller do
         expect(JSON.parse(response.body)['verification_failed']).to eq(false)
       end
 
-      it 'is false when Salesforce explicitly denies access (not a service failure)' do
+      it 'is false when Salesforce explicitly denies access (that is ' \
+         'access_denied, not a verification failure)' do
         allow(Force::HousingCounselorService).to receive(:authorize_access)
           .and_return(nil)
 
         get :show_with_verification_status, params: { signed_in_as: hc_id }
 
-        expect(JSON.parse(response.body))
-          .to eq('session' => nil, 'verification_failed' => false)
+        body = JSON.parse(response.body)
+        expect(body['verification_failed']).to eq(false)
+        expect(body['access_denied']).to eq(true)
       end
 
       # This is the core regression this flag exists to prevent: a service
@@ -285,8 +289,53 @@ RSpec.describe HousingCounselorSession, type: :controller do
 
         get :show_with_verification_status, params: { signed_in_as: hc_id }
 
-        expect(JSON.parse(response.body))
-          .to eq('session' => nil, 'verification_failed' => true)
+        expect(JSON.parse(response.body)).to eq(
+          'session' => nil, 'verification_failed' => true, 'access_denied' => false,
+        )
+        expect(cookies[:hc_session]).to be_blank
+      end
+    end
+  end
+
+  describe '#hc_session_access_denied?' do
+    context 'when there is no cookie' do
+      it 'is false' do
+        get :show_with_verification_status, params: { signed_in_as: hc_id }
+
+        expect(JSON.parse(response.body)['access_denied']).to eq(false)
+      end
+    end
+
+    context 'when the cookie is valid and not expired' do
+      before { set_hc_session_cookie(hc_id:, app_id:) }
+
+      it 'is false' do
+        get :show_with_verification_status, params: { signed_in_as: hc_id }
+
+        expect(JSON.parse(response.body)['access_denied']).to eq(false)
+      end
+    end
+
+    context 'when the cookie has expired' do
+      before { set_hc_session_cookie(hc_id:, app_id:, exp: 1.hour.ago) }
+
+      it 'is false when Salesforce still grants access' do
+        allow(Force::HousingCounselorService).to receive(:authorize_access).and_return(
+          { applicant_contact_id: app_id, counselor_contact_id: hc_id },
+        )
+
+        get :show_with_verification_status, params: { signed_in_as: hc_id }
+
+        expect(JSON.parse(response.body)['access_denied']).to eq(false)
+      end
+
+      it 'is true when Salesforce explicitly denies access' do
+        allow(Force::HousingCounselorService).to receive(:authorize_access)
+          .and_return(nil)
+
+        get :show_with_verification_status, params: { signed_in_as: hc_id }
+
+        expect(JSON.parse(response.body)['access_denied']).to eq(true)
         expect(cookies[:hc_session]).to be_blank
       end
     end

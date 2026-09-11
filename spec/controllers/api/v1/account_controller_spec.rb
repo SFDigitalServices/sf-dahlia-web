@@ -70,6 +70,30 @@ RSpec.describe Api::V1::AccountController, type: :controller do
       end
     end
 
+    context 'when the hc_session cookie has expired and access has since been ' \
+            'legitimately revoked' do
+      let(:applicant_contact_id) { '003XYZ' }
+
+      before do
+        request.cookies['hc_session'] = JsonWebTokenService.encode_token(
+          { 'hcId' => contact_id, 'appId' => applicant_contact_id },
+          exp: 1.hour.ago,
+        )
+        allow(Force::HousingCounselorService).to receive(:authorize_access)
+          .and_return(nil)
+      end
+
+      it "returns forbidden rather than falling back to the counselor's own " \
+         'applications' do
+        get :my_applications
+
+        expect(response).to have_http_status(:forbidden)
+        expect(JSON.parse(response.body)).to eq('error' => 'forbidden')
+        expect(Force::ShortFormService).not_to have_received(:get_for_user)
+        expect(cookies[:hc_session]).to be_blank
+      end
+    end
+
     # Regression coverage for a confirmed code-review finding: a transient
     # Salesforce failure while refreshing an expired hc_session cookie used
     # to be silently treated the same as "no hc_session," so this fell back
@@ -402,7 +426,8 @@ RSpec.describe Api::V1::AccountController, type: :controller do
 
       context 'and the cookie has expired and access has since been legitimately ' \
               'revoked' do
-        it "falls back to the counselor's own profile" do
+        it "returns forbidden rather than falling back to the counselor's own " \
+           'profile' do
           set_hc_session_cookie(
             hc_id: hc_contact_id, app_id: applicant_contact_id, exp: 1.hour.ago,
           )
@@ -411,11 +436,9 @@ RSpec.describe Api::V1::AccountController, type: :controller do
 
           get :profile
 
-          expect(response).to have_http_status(:ok)
-          expect(Force::AccountService).to have_received(:get).with(
-            hc_contact_id,
-            { user_token_validation: true },
-          )
+          expect(response).to have_http_status(:forbidden)
+          expect(JSON.parse(response.body)).to eq('error' => 'forbidden')
+          expect(Force::AccountService).not_to have_received(:get)
           expect(cookies[:hc_session]).to be_blank
         end
       end
@@ -457,7 +480,9 @@ RSpec.describe Api::V1::AccountController, type: :controller do
         DOB: '2000-01-01',
       }
     end
-    let(:salesforce_contact) { { 'contactId' => '003ABC', 'email' => 'test@example.com' } }
+    let(:salesforce_contact) do
+      { 'contactId' => '003ABC', 'email' => 'test@example.com' }
+    end
 
     before do
       allow(controller).to receive(:clerk).and_return(double(user_id: clerk_user_id))
