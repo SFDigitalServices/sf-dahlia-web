@@ -1,11 +1,12 @@
 import React from "react"
-import { act, render, screen, waitFor } from "@testing-library/react"
+import { act, fireEvent, render, screen, waitFor } from "@testing-library/react"
 import { ClerkProvider, useAuth } from "@clerk/react"
 
 import {
   AuthSessionProvider,
   useAuthSession,
 } from "../../../authentication/session/AuthSessionProvider"
+import { clearHeaders } from "../../../authentication/token"
 import { useFeatureFlag } from "../../../hooks/useFeatureFlag"
 
 jest.mock("@clerk/react", () => ({
@@ -15,6 +16,11 @@ jest.mock("@clerk/react", () => ({
 
 jest.mock("../../../hooks/useFeatureFlag", () => ({
   useFeatureFlag: jest.fn(),
+}))
+
+jest.mock("../../../authentication/token", () => ({
+  ...jest.requireActual("../../../authentication/token"),
+  clearHeaders: jest.fn(),
 }))
 
 const mockFlag = (unleashFlag: boolean, flagsReady = true) =>
@@ -138,6 +144,46 @@ describe("AuthSessionProvider", () => {
     await waitFor(() =>
       expect(screen.getByTestId("credentials").textContent).toBe(`{"kind":"none"}`)
     )
+  })
+
+  // Stored Devise headers ride along on every request, so they must go first.
+  it("clears Devise headers, then ends the Clerk session, on sign out", async () => {
+    mockFlag(true)
+    const calls: string[] = []
+    ;(clearHeaders as jest.Mock).mockImplementation(() => calls.push("clearHeaders"))
+    ;(useAuth as jest.Mock).mockReturnValue({
+      isLoaded: true,
+      isSignedIn: true,
+      getToken: jest.fn().mockResolvedValue("token"),
+      signOut: jest.fn(() => {
+        calls.push("clerkSignOut")
+        return Promise.resolve()
+      }),
+    })
+
+    const SignOutButton = () => {
+      const { signOut } = useAuthSession()
+      return (
+        <button
+          onClick={() => {
+            void signOut()
+          }}
+        >
+          Sign out
+        </button>
+      )
+    }
+    // eslint-disable-next-line @typescript-eslint/require-await
+    await act(async () => {
+      render(
+        <AuthSessionProvider>
+          <SignOutButton />
+        </AuthSessionProvider>
+      )
+    })
+    fireEvent.click(screen.getByRole("button", { name: "Sign out" }))
+
+    await waitFor(() => expect(calls).toEqual(["clearHeaders", "clerkSignOut"]))
   })
 
   it("warns when a consumer has no provider above it", async () => {

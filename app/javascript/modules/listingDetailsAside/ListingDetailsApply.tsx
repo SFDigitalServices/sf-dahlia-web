@@ -1,5 +1,4 @@
 import React, { useContext, useState } from "react"
-import { useAuth } from "@clerk/react"
 
 import {
   AppearanceStyleType,
@@ -28,6 +27,7 @@ import { ListingState } from "../listings/ListingState"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import { UNLEASH_FLAG } from "../constants"
 import UserContext from "../../authentication/context/UserContext"
+import { useAuthSession } from "../../authentication/session/AuthSessionProvider"
 
 export interface ListingDetailsApplyProps {
   listing: RailsListing
@@ -79,12 +79,13 @@ const ApplyButton = ({ href }: { href: string }) => (
 )
 
 const ClerkApplyOnlineButton = ({ applyLink }: { applyLink: string }) => {
-  const { isLoaded, isSignedIn } = useAuth()
+  const { status } = useAuthSession()
   const { profile, initialStateLoaded } = useContext(UserContext)
+  const isSignedIn = status.kind === "signedIn"
 
-  if (isLoaded && isSignedIn && profile) return <ApplyButton href={applyLink} />
-  if (isLoaded && !isSignedIn) return <ApplyButton href={getSignInPath()} />
-  if (isLoaded && isSignedIn && initialStateLoaded && !profile)
+  if (isSignedIn && profile) return <ApplyButton href={applyLink} />
+  if (status.kind === "signedOut") return <ApplyButton href={getSignInPath()} />
+  if (isSignedIn && initialStateLoaded && !profile)
     return <ApplyButton href={getAddProfilePath()} />
 
   return null

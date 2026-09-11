@@ -4,6 +4,7 @@ import { screen, waitFor, within, cleanup } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
 import { useNavigate } from "react-router"
 import { ForgotPasswordFlow } from "../../authentication/ForgotPasswordFlow"
+import { AuthSessionProvider } from "../../authentication/session/AuthSessionProvider"
 import {
   renderAndLoadAsync,
   mockWindowLocation,
@@ -54,7 +55,11 @@ describe("<ForgotPasswordFlow />", () => {
         resetPasswordEmailCode: { sendCode: mockSendResetCode },
       },
     })
-    await renderAndLoadAsync(<ForgotPasswordFlow />)
+    await renderAndLoadAsync(
+      <AuthSessionProvider>
+        <ForgotPasswordFlow />
+      </AuthSessionProvider>
+    )
   })
 
   afterEach(() => {
@@ -105,7 +110,11 @@ describe("<ForgotPasswordFlow />", () => {
         resetPasswordEmailCode: { sendCode: mockSendResetCode },
       },
     })
-    await renderAndLoadAsync(<ForgotPasswordFlow />)
+    await renderAndLoadAsync(
+      <AuthSessionProvider>
+        <ForgotPasswordFlow />
+      </AuthSessionProvider>
+    )
 
     await submit()
 

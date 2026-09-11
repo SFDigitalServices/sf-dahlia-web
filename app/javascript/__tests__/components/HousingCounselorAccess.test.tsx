@@ -10,6 +10,7 @@ import HousingCounselorAccess, {
 import { getErrorMessage } from "../../pages/account/components/util"
 import { localizedFormat, formatTimeOfDay } from "../../util/languageUtil"
 import { getHousingCounselorAgencies } from "../../api/authApiService"
+import { AuthSessionProvider } from "../../authentication/session/AuthSessionProvider"
 
 jest.mock("../../util/languageUtil", () => ({
   ...jest.requireActual("../../util/languageUtil"),
@@ -53,7 +54,7 @@ describe("HousingCounselorAccess", () => {
 
   describe("Share HC access", () => {
     it("renders the content to share access with an HC agency", async () => {
-      render(<ShareAccessWrapper />)
+      render(<ShareAccessWrapper />, { wrapper: AuthSessionProvider })
 
       expect(
         await screen.findByText(t("accountSettings.housingCounselor.description"))
@@ -71,7 +72,7 @@ describe("HousingCounselorAccess", () => {
     })
 
     it("populates the agency select with agencies from the API", async () => {
-      render(<ShareAccessWrapper />)
+      render(<ShareAccessWrapper />, { wrapper: AuthSessionProvider })
 
       const agencySelect = await screen.findByLabelText(t("accountSettings.housingCounselor.label"))
       expect(agencySelect).toContainHTML("Test Agency A")
@@ -80,7 +81,7 @@ describe("HousingCounselorAccess", () => {
 
     it("renders validation errors when required fields are missing", async () => {
       const user = userEvent.setup()
-      render(<ShareAccessWrapper />)
+      render(<ShareAccessWrapper />, { wrapper: AuthSessionProvider })
 
       await waitFor(() => {
         expect(
@@ -106,7 +107,8 @@ describe("HousingCounselorAccess", () => {
           register={jest.fn()}
           housingCounselorAgencyId="123"
           lastModified="2020-01-01T00:00:00Z"
-        />
+        />,
+        { wrapper: AuthSessionProvider }
       )
 
       await waitFor(() => {
@@ -136,7 +138,9 @@ describe("HousingCounselorAccess", () => {
         { id: "123", name: "Test Agency A", shortName: null },
       ])
 
-      render(<HousingCounselorAccess register={jest.fn()} housingCounselorAgencyId="123" />)
+      render(<HousingCounselorAccess register={jest.fn()} housingCounselorAgencyId="123" />, {
+        wrapper: AuthSessionProvider,
+      })
 
       await waitFor(() => {
         expect(

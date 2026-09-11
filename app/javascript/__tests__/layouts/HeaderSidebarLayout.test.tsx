@@ -1,6 +1,7 @@
 import React from "react"
 import { within } from "@testing-library/react"
 import AssistanceLayout from "../../layouts/HeaderSidebarLayout"
+import { AuthSessionProvider } from "../../authentication/session/AuthSessionProvider"
 import { renderAndLoadAsync } from "../__util__/renderUtils"
 
 const CHILD_CONTENT = "Content!"
@@ -15,9 +16,11 @@ jest.mock("react-helmet-async", () => {
 describe("<HeaderSidebarLayout />", () => {
   it("renders children", async () => {
     const { getByTestId } = await renderAndLoadAsync(
-      <AssistanceLayout title="Title Text" subtitle="Subtitle Text">
-        <h1>{CHILD_CONTENT}</h1>
-      </AssistanceLayout>
+      <AuthSessionProvider>
+        <AssistanceLayout title="Title Text" subtitle="Subtitle Text">
+          <h1>{CHILD_CONTENT}</h1>
+        </AssistanceLayout>
+      </AuthSessionProvider>
     )
     const mainContent = getByTestId("info-main-content")
 
@@ -28,9 +31,11 @@ describe("<HeaderSidebarLayout />", () => {
     const TitleText = "Title Text"
     const SubtitleText = "SubTitle Text"
     const { getAllByText } = await renderAndLoadAsync(
-      <AssistanceLayout title={TitleText} subtitle={SubtitleText}>
-        <h1>{CHILD_CONTENT}</h1>
-      </AssistanceLayout>
+      <AuthSessionProvider>
+        <AssistanceLayout title={TitleText} subtitle={SubtitleText}>
+          <h1>{CHILD_CONTENT}</h1>
+        </AssistanceLayout>
+      </AuthSessionProvider>
     )
 
     expect(getAllByText(TitleText).length).not.toBeNull()
@@ -40,9 +45,11 @@ describe("<HeaderSidebarLayout />", () => {
   describe("Contact Bar", () => {
     it("renders Contact Information", async () => {
       const { asFragment } = await renderAndLoadAsync(
-        <AssistanceLayout title="Title Text" subtitle="Subtitle Text">
-          <h1>{CHILD_CONTENT}</h1>
-        </AssistanceLayout>
+        <AuthSessionProvider>
+          <AssistanceLayout title="Title Text" subtitle="Subtitle Text">
+            <h1>{CHILD_CONTENT}</h1>
+          </AssistanceLayout>
+        </AuthSessionProvider>
       )
 
       expect(asFragment()).toMatchSnapshot()
