@@ -453,6 +453,41 @@ describe("ListingDetailsEligibility", () => {
     expect(asFragment()).toMatchSnapshot()
   })
 
+  it("displays a singular unit label when there is one Plus Housing unit", async () => {
+    axios.get.mockResolvedValue({ data: { preferences: defaultPreferences } })
+
+    const plusHousingListing = {
+      ...closedRentalListing,
+      Custom_Listing_Type: CUSTOM_LISTING_TYPES.PLUS_HOUSING,
+    }
+    const unitWithPlusHousing: RailsUnit[] = [
+      { ...unitsWithOneAmi[0], Reserved_Type: "Plus Housing" },
+      { ...unitsWithOneAmi[1], Reserved_Type: "Other priority" },
+    ]
+
+    const { findByText } = render(
+      <ListingDetailsContext.Provider
+        value={{
+          units: unitWithPlusHousing,
+          amiCharts: amiChartsWithOneAmi,
+          fetchingUnits: false,
+          fetchedUnits: true,
+          fetchingAmiCharts: false,
+          fetchedAmiCharts: true,
+          fetchingAmiChartsError: undefined,
+          fetchingUnitsError: undefined,
+        }}
+      >
+        <ListingDetailsEligibility
+          listing={plusHousingListing}
+          imageSrc={"listing-eligibility.svg"}
+        />
+      </ListingDetailsContext.Provider>
+    )
+
+    expect(await findByText("1 Unit")).toBeDefined()
+  })
+
   it("displays Plus Housing Program card with other priority unit cards", async () => {
     axios.get.mockResolvedValue({ data: { preferences: defaultPreferences } })
 
