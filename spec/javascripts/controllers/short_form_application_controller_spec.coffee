@@ -142,8 +142,6 @@ do ->
     fakeRentBurdenFileService =
       deleteRentBurdenPreferenceFiles: ->
     fakeSharedService = {}
-    fakeEvent =
-      preventDefault: ->
     fakeHHOpts = {}
     fakeIncomeOpts = {}
     fakeListingIdentityService =
@@ -607,25 +605,6 @@ do ->
           scope.checkAfterLiveWork()
           path = 'dahlia.short-form-application.preferences-programs'
           expect(fakeShortFormNavigationService.goToApplicationPage).toHaveBeenCalledWith(path)
-
-    describe 'saveAndFinishLater', ->
-      describe 'logged in', ->
-        beforeEach ->
-          spyOn(fakeAccountService, 'loggedIn').and.returnValue(true)
-          scope.saveAndFinishLater(fakeEvent)
-          $rootScope.$apply()
-
-        it 'submits application as a draft', ->
-          expect(fakeShortFormApplicationService.submitApplication).toHaveBeenCalled()
-
-        it 'routes user to my applications', ->
-          expect(state.go).toHaveBeenCalledWith('dahlia.my-applications', {skipConfirm: true})
-
-      describe 'not logged in', ->
-        it 'routes directly to create account', ->
-          spyOn(fakeAccountService, 'loggedIn').and.returnValue(false)
-          scope.saveAndFinishLater(fakeEvent)
-          expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.create-account')
 
     describe 'showPreference', ->
       it 'calls function on ShortFormApplicationService', ->

@@ -969,31 +969,6 @@ ShortFormApplicationController = (
         ShortFormNavigationService.isLoading(false)
       )
 
-  ## Save and finish later
-  $scope.saveAndFinishLater = (ev) ->
-    # prevent normal short form page submit
-    ev.preventDefault()
-    ShortFormNavigationService.isLoading(true)
-    if AccountService.loggedIn()
-      ShortFormApplicationService.submitApplication().then((response) ->
-        # if redirecting to the React my-applications page, disable the "Leave site?" popup
-        if $window.ACCOUNT_INFORMATION_PAGES_REACT is "true"
-          $window.removeEventListener('beforeunload', ShortFormApplicationService.onExit)
-          $window.removeEventListener('unload', $scope.onUnload)
-        # user id should always be present, but we are being cautious
-        AnalyticsService.trackApplicationAbandon($scope.listing.Id, AccountService.loggedInUser?.id, 'Logged In Save and Finish Later')
-        # ShortFormNavigationService.isLoading(false) will happen after My Apps are loaded
-        # go to my applications without tracking Form Success
-        $scope.go('dahlia.my-applications', {skipConfirm: true})
-      ).catch( ->
-        ShortFormNavigationService.isLoading(false)
-      )
-    else
-      ShortFormNavigationService.isLoading(false)
-      AnalyticsService.trackApplicationAbandon($scope.listing.Id, null, 'Logged Out Save and Finish Later')
-      # go to Create Account without tracking Form Success
-      $scope.go('dahlia.short-form-application.create-account')
-
   # used for the welcome-back sign in
   $scope.signIn = ->
     form = $scope.form.signIn
