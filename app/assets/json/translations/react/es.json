@@ -629,6 +629,8 @@
   "g1Confirmation.title": "Gracias. Hemos recibido su solicitud para",
   "g1Confirmation.viewAndPrintACopy": "Ver la solicitud presentada e imprimir una copia",
   "hello": "Hola, %{name}",
+  "home.findOutAboutNewListings": "Infórmese sobre nuevos anuncios",
+  "home.getEmailAlerts": "Reciba alertas por correo electrónico",
   "housingCounselor.findAHousingCounselor": "Encuentre un consejero de vivienda",
   "housingCounselor.header": "Para obtener más ayuda, le sugerimos que hable con un consejero de vivienda para explorar sus opciones.",
   "howToApplyPage.beforeYouStartSection.eligibilityList.listItem1": "No haber sido propietario de una propiedad residencial en los últimos 3 años",
