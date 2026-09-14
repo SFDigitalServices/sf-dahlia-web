@@ -140,16 +140,12 @@ describe("AuthSessionProvider", () => {
     )
   })
 
-  it("warns when a consumer has no provider above it", async () => {
+  it("throws when a consumer has no provider above it", () => {
+    // React logs the caught error to console.error; silence it so the run stays readable.
     const consoleError = jest.spyOn(console, "error").mockImplementation(() => {})
 
-    // eslint-disable-next-line @typescript-eslint/require-await
-    await act(async () => {
-      render(<Probe />)
-    })
+    expect(() => render(<Probe />)).toThrow(/must be used within an AuthSessionProvider/)
 
-    expect(consoleError).toHaveBeenCalledWith(expect.stringContaining("no AuthSessionProvider"))
-    expect(screen.getByTestId("status").textContent).toBe("initializing")
     consoleError.mockRestore()
   })
 })

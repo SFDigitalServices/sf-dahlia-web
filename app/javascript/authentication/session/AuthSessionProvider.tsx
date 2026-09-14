@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect } from "react"
+import React, { createContext, useContext } from "react"
 import { ClerkProvider } from "@clerk/react"
 
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
@@ -13,24 +13,18 @@ const noSession: AuthSession = {
   getCredentials: () => Promise.resolve(NO_CREDENTIALS),
 }
 
-// `null` rather than `noSession` so "no provider above me" is distinguishable
-// from "a provider chose not to supply a session". Both hand back noSession, but
-// only the first is a bug worth saying out loud.
 const AuthSessionContext = createContext<AuthSession | null>(null)
 
 export const useAuthSession = (): AuthSession => {
   const session = useContext(AuthSessionContext)
 
-  // Without this the component sits in `initializing` forever and the page
-  // spins with nothing in the console. useAuth() used to throw here.
-  useEffect(() => {
-    if (session || process.env.NODE_ENV === "production") return
-    console.error(
-      "useAuthSession called with no AuthSessionProvider above it. The session will stay in `initializing` and never resolve. Mount AuthSessionProvider (withAppSetup does) or render this component under one."
+  if (!session) {
+    throw new Error(
+      "useAuthSession must be used within an AuthSessionProvider (withAppSetup mounts one)."
     )
-  }, [session])
+  }
 
-  return session ?? noSession
+  return session
 }
 
 const ClerkAuthSession = ({ children }: { children: React.ReactNode }) => {
