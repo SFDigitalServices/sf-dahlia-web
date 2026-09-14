@@ -1,5 +1,6 @@
 import React, { useContext } from "react"
 import { act, render, screen, waitFor } from "@testing-library/react"
+import { AuthSessionProvider } from "../../../authentication/session/AuthSessionProvider"
 import UserProvider from "../../../authentication/context/UserProvider"
 import UserContext, { ContextProps } from "../../../authentication/context/UserContext"
 import { getProfile, signIn } from "../../../api/authApiService"
@@ -71,9 +72,11 @@ describe("UserProvider", () => {
     ;(isTokenValid as jest.Mock).mockReturnValue(true)
 
     render(
-      <UserProvider>
-        <TestComponent />
-      </UserProvider>
+      <AuthSessionProvider>
+        <UserProvider>
+          <TestComponent />
+        </UserProvider>
+      </AuthSessionProvider>
     )
 
     await waitFor(() => expect(screen.getByText("Signed in as abc123")).not.toBeNull())
@@ -85,9 +88,11 @@ describe("UserProvider", () => {
     ;(isTokenValid as jest.Mock).mockReturnValueOnce(false).mockReturnValueOnce(true)
 
     await renderAndLoadAsync(
-      <UserProvider>
-        <TestComponent />
-      </UserProvider>
+      <AuthSessionProvider>
+        <UserProvider>
+          <TestComponent />
+        </UserProvider>
+      </AuthSessionProvider>
     )
 
     act(() => {
@@ -108,9 +113,11 @@ describe("UserProvider", () => {
     ;(getProfile as jest.Mock).mockRejectedValueOnce(new Error("Token expired"))
 
     await renderAndLoadAsync(
-      <UserProvider>
-        <TestComponent />
-      </UserProvider>
+      <AuthSessionProvider>
+        <UserProvider>
+          <TestComponent />
+        </UserProvider>
+      </AuthSessionProvider>
     )
 
     await waitFor(() => expect(screen.getByText("Initial state loaded")).not.toBeNull())
@@ -127,9 +134,11 @@ describe("UserProvider", () => {
     ;(getProfile as jest.Mock).mockResolvedValue(mockProfileStub)
 
     await renderAndLoadAsync(
-      <UserProvider>
-        <TestComponent />
-      </UserProvider>
+      <AuthSessionProvider>
+        <UserProvider>
+          <TestComponent />
+        </UserProvider>
+      </AuthSessionProvider>
     )
 
     await waitFor(() => expect(screen.getByText("Signed in as abc123")).not.toBeNull())
