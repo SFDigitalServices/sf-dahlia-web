@@ -62,3 +62,5 @@ export const AuthSessionProvider = ({ children }: { children: React.ReactNode })
     </ClerkProvider>
   )
 }
+
+export default AuthSessionContext
