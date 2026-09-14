@@ -178,6 +178,48 @@ RSpec.describe Api::V1::AccountController, type: :controller do
         expect(Emailer).not_to have_received(:account_update)
       end
     end
+
+    context 'when the hc_session cookie has expired and access has since been ' \
+            'legitimately revoked' do
+      before do
+        request.cookies['hc_session'] = JsonWebTokenService.encode_token(
+          { 'hcId' => user.salesforce_contact_id, 'appId' => '003XYZ' },
+          exp: 1.hour.ago,
+        )
+        allow(Force::HousingCounselorService).to receive(:authorize_access)
+          .and_return(nil)
+      end
+
+      it 'returns forbidden and does not perform the update' do
+        put :update, params: { contact: contact_params }
+
+        expect(response).to have_http_status(:forbidden)
+        expect(JSON.parse(response.body)).to eq('error' => 'forbidden')
+        expect(Force::AccountService).not_to have_received(:create_or_update)
+        expect(Emailer).not_to have_received(:account_update)
+      end
+    end
+
+    context 'when the hc_session cookie has expired and Salesforce raises a ' \
+            'transient error during the re-check' do
+      before do
+        request.cookies['hc_session'] = JsonWebTokenService.encode_token(
+          { 'hcId' => user.salesforce_contact_id, 'appId' => '003XYZ' },
+          exp: 1.hour.ago,
+        )
+        allow(Force::HousingCounselorService).to receive(:authorize_access)
+          .and_raise(Faraday::TimeoutError, 'timed out')
+      end
+
+      it 'returns unauthorized and does not perform the update' do
+        put :update, params: { contact: contact_params }
+
+        expect(response).to have_http_status(:unauthorized)
+        expect(JSON.parse(response.body)).to eq('error' => 'unauthorized')
+        expect(Force::AccountService).not_to have_received(:create_or_update)
+        expect(Emailer).not_to have_received(:account_update)
+      end
+    end
   end
 
   describe 'PUT #update_housing_counselor' do
@@ -298,6 +340,50 @@ RSpec.describe Api::V1::AccountController, type: :controller do
 
         expect(response).to have_http_status(:forbidden)
         expect(JSON.parse(response.body)).to eq('error' => 'forbidden')
+        expect(Force::AccountService).not_to have_received(:create_or_update)
+        expect(DahliaBackend::MessageService)
+          .not_to have_received(:send_housing_counselor_access)
+      end
+    end
+
+    context 'when the hc_session cookie has expired and access has since been ' \
+            'legitimately revoked' do
+      before do
+        request.cookies['hc_session'] = JsonWebTokenService.encode_token(
+          { 'hcId' => contact_id, 'appId' => '003XYZ' },
+          exp: 1.hour.ago,
+        )
+        allow(Force::HousingCounselorService).to receive(:authorize_access)
+          .and_return(nil)
+      end
+
+      it 'returns forbidden and does not update Salesforce' do
+        put :update_housing_counselor, params: { contact: contact_params }
+
+        expect(response).to have_http_status(:forbidden)
+        expect(JSON.parse(response.body)).to eq('error' => 'forbidden')
+        expect(Force::AccountService).not_to have_received(:create_or_update)
+        expect(DahliaBackend::MessageService)
+          .not_to have_received(:send_housing_counselor_access)
+      end
+    end
+
+    context 'when the hc_session cookie has expired and Salesforce raises a ' \
+            'transient error during the re-check' do
+      before do
+        request.cookies['hc_session'] = JsonWebTokenService.encode_token(
+          { 'hcId' => contact_id, 'appId' => '003XYZ' },
+          exp: 1.hour.ago,
+        )
+        allow(Force::HousingCounselorService).to receive(:authorize_access)
+          .and_raise(Faraday::TimeoutError, 'timed out')
+      end
+
+      it 'returns unauthorized and does not update Salesforce' do
+        put :update_housing_counselor, params: { contact: contact_params }
+
+        expect(response).to have_http_status(:unauthorized)
+        expect(JSON.parse(response.body)).to eq('error' => 'unauthorized')
         expect(Force::AccountService).not_to have_received(:create_or_update)
         expect(DahliaBackend::MessageService)
           .not_to have_received(:send_housing_counselor_access)
@@ -587,6 +673,58 @@ RSpec.describe Api::V1::AccountController, type: :controller do
 
         expect(response).to have_http_status(:forbidden)
         expect(JSON.parse(response.body)).to eq('error' => 'forbidden')
+        expect(Force::AccountService).not_to have_received(:create_or_update)
+        expect(ClerkService).not_to have_received(:store_salesforce_contact_id)
+      end
+    end
+
+    context 'when the hc_session cookie has expired and access has since been ' \
+            'legitimately revoked' do
+      let(:hc_contact_id) { '003HC' }
+
+      before do
+        allow(ClerkService).to receive(:salesforce_contact_id)
+          .with(clerk_user_id)
+          .and_return(hc_contact_id)
+        request.cookies['hc_session'] = JsonWebTokenService.encode_token(
+          { 'hcId' => hc_contact_id, 'appId' => '003XYZ' },
+          exp: 1.hour.ago,
+        )
+        allow(Force::HousingCounselorService).to receive(:authorize_access)
+          .and_return(nil)
+      end
+
+      it 'returns forbidden and does not create the profile' do
+        post :create_profile, params: { contact: contact_params }
+
+        expect(response).to have_http_status(:forbidden)
+        expect(JSON.parse(response.body)).to eq('error' => 'forbidden')
+        expect(Force::AccountService).not_to have_received(:create_or_update)
+        expect(ClerkService).not_to have_received(:store_salesforce_contact_id)
+      end
+    end
+
+    context 'when the hc_session cookie has expired and Salesforce raises a ' \
+            'transient error during the re-check' do
+      let(:hc_contact_id) { '003HC' }
+
+      before do
+        allow(ClerkService).to receive(:salesforce_contact_id)
+          .with(clerk_user_id)
+          .and_return(hc_contact_id)
+        request.cookies['hc_session'] = JsonWebTokenService.encode_token(
+          { 'hcId' => hc_contact_id, 'appId' => '003XYZ' },
+          exp: 1.hour.ago,
+        )
+        allow(Force::HousingCounselorService).to receive(:authorize_access)
+          .and_raise(Faraday::TimeoutError, 'timed out')
+      end
+
+      it 'returns unauthorized and does not create the profile' do
+        post :create_profile, params: { contact: contact_params }
+
+        expect(response).to have_http_status(:unauthorized)
+        expect(JSON.parse(response.body)).to eq('error' => 'unauthorized')
         expect(Force::AccountService).not_to have_received(:create_or_update)
         expect(ClerkService).not_to have_received(:store_salesforce_contact_id)
       end

@@ -24,7 +24,7 @@ class Api::V1::AccountController < ApiController
   def update
     contact = account_params
 
-    if !AccountValidationService.valid_dob?(account_params[:DOB])
+    unless AccountValidationService.valid_dob?(account_params[:DOB])
       render json: { error: 'Invalid DOB' }, status: :unprocessable_entity
       return
     end
@@ -72,7 +72,8 @@ class Api::V1::AccountController < ApiController
     salesforce_contact = Force::AccountService.create_or_update(contact)
     contact_id = salesforce_contact.present? ? salesforce_contact['contactId'] : nil
     if contact_id.blank?
-      render json: { error: 'User has missing Salesforce contact ID' }, status: :bad_gateway
+      render json: { error: 'User has missing Salesforce contact ID' },
+             status: :bad_gateway
       return
     end
 
@@ -155,17 +156,21 @@ class Api::V1::AccountController < ApiController
 
   # HC delegate access only ever grants read access to the applicant's data
   # (see #profile). Write actions must stay blocked while delegated: the
-  # account-settings form is hydrated from #profile, so submitting it while
-  # an hc_session is active would silently overwrite the housing
-  # counselor's own Salesforce contact with the applicant's data.
+  # account-settings form is hydrated from #profile
   def reject_write_while_delegated
-    return unless current_hc_session
+    session = current_hc_session
+    if hc_session_verification_failed?
+      raise HousingCounselorSession::VerificationUnavailableError
+    end
+    raise HousingCounselorSession::AccessDeniedError if hc_session_access_denied?
+    return unless session
 
     render json: { error: 'forbidden' }, status: :forbidden
   end
 
   def authenticate_user!(*args)
-    return super unless %w[profile create_profile update_housing_counselor].include?(action_name)
+    return super unless %w[profile create_profile
+                           update_housing_counselor].include?(action_name)
 
     @clerk_user_id = clerk&.user_id
     if @clerk_user_id.blank?
