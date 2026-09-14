@@ -23,7 +23,7 @@ export const useClerkAuthSession = (): AuthSession => {
   }, [getToken])
 
   const signOut = useCallback(async (): Promise<void> => {
-    // TODO: CLERK MIGRATION - DEVISE TECH DEBT TO REMOVE
+    // TODO(DAH-4366): CLERK MIGRATION - DEVISE TECH DEBT TO REMOVE
     // apiService attaches stored Devise headers to every request, so a user who
     // last signed in with Devise would keep sending them.
     clearHeaders()

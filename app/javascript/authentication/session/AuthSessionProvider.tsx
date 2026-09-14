@@ -6,6 +6,8 @@ import { UNLEASH_FLAG } from "../../modules/constants"
 import { AuthSession, INITIALIZING, NO_CREDENTIALS } from "./authStatus"
 import { useClerkAuthSession } from "./adapters/clerk/useClerkAuthSession"
 
+export type { AuthSession } from "./authStatus"
+
 const noSession: AuthSession = {
   status: INITIALIZING,
   getCredentials: () => Promise.resolve(NO_CREDENTIALS),
@@ -60,5 +62,3 @@ export const AuthSessionProvider = ({ children }: { children: React.ReactNode })
     </ClerkProvider>
   )
 }
-
-export default AuthSessionContext
