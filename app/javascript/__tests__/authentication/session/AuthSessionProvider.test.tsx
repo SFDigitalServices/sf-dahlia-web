@@ -1,5 +1,5 @@
 import React from "react"
-import { act, fireEvent, render, screen, waitFor } from "@testing-library/react"
+import { act, fireEvent, render, renderHook, screen, waitFor } from "@testing-library/react"
 import { ClerkProvider, useAuth } from "@clerk/react"
 
 import {
@@ -92,6 +92,19 @@ describe("AuthSessionProvider", () => {
     await waitFor(() =>
       expect(screen.getByTestId("credentials").textContent).toBe(`{"kind":"none"}`)
     )
+  })
+
+  // TODO(DAH-4366): CLERK MIGRATION - DEVISE TECH DEBT TO REMOVE
+  it("signs out as a no-op when the flag is off, leaving Devise headers alone", async () => {
+    mockFlag(false)
+    mockClerk("token")
+
+    const { result } = renderHook(() => useAuthSession(), { wrapper: AuthSessionProvider })
+
+    await expect(result.current.signOut()).resolves.toBeUndefined()
+    // Devise still owns the session while the flag is off, so clearing its
+    // headers here would sign the user out from under themselves.
+    expect(clearHeaders).not.toHaveBeenCalled()
   })
 
   it("provides Clerk's session when the flag is on", async () => {
