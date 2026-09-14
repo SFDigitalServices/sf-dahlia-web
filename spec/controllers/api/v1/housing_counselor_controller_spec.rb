@@ -226,6 +226,56 @@ RSpec.describe Api::V1::HousingCounselorController, type: :controller do
         end
       end
 
+      # Regression coverage: when a `t` delegate-link param is also present
+      # (so #requested_applicant_contact_id doesn't itself consume the only
+      # current_hc_session call), an expired cookie matching that same
+      # applicant used to be re-checked once by current_hc_session's own
+      # refresh, only for #access to fall through and make an identical,
+      # redundant authorize_access call of its own - wasting a Salesforce
+      # call, and, on a transient error, risking an uncaught exception since
+      # that second call isn't wrapped by the concern's own rescue.
+      context 'when a JWT param is present and the cookie has expired and access has ' \
+              'since been revoked' do
+        before do
+          set_hc_session_cookie(hc_id: contact_id, app_id: applicant_contact_id, exp: 1.hour.ago)
+          allow(Force::HousingCounselorService).to receive(:authorize_access).and_return(nil)
+        end
+
+        it 'returns forbidden after a single Salesforce re-check' do
+          post :access, params: { t: token }
+
+          expect(response).to have_http_status(:forbidden)
+          expect(JSON.parse(response.body)).to eq('error' => 'forbidden')
+          expect(Force::HousingCounselorService).to have_received(:authorize_access).once.with(
+            applicant_contact_id:,
+            counselor_contact_id: contact_id,
+          )
+          expect(cookies[:hc_session]).to be_blank
+        end
+      end
+
+      context 'when a JWT param is present and the cookie has expired and Salesforce ' \
+              'raises a transient error during the re-check' do
+        before do
+          set_hc_session_cookie(hc_id: contact_id, app_id: applicant_contact_id, exp: 1.hour.ago)
+          allow(Force::HousingCounselorService).to receive(:authorize_access)
+            .and_raise(Faraday::TimeoutError, 'timed out')
+        end
+
+        it 'returns unauthorized after a single Salesforce re-check, without letting ' \
+           'the error escape from a second, unrescued call' do
+          post :access, params: { t: token }
+
+          expect(response).to have_http_status(:unauthorized)
+          expect(JSON.parse(response.body)).to eq('error' => 'unauthorized')
+          expect(Force::HousingCounselorService).to have_received(:authorize_access).once.with(
+            applicant_contact_id:,
+            counselor_contact_id: contact_id,
+          )
+          expect(cookies[:hc_session]).to be_blank
+        end
+      end
+
       context 'when the cookie belongs to a different signed-in user' do
         before do
           set_hc_session_cookie(hc_id: 'someone_elses_contact_id', app_id: applicant_contact_id)

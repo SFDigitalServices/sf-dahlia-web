@@ -37,6 +37,8 @@ class Api::V1::HousingCounselorController < ApiController
       return
     end
 
+    return if render_hc_session_refresh_failure?(applicant_contact_id)
+
     result = Force::HousingCounselorService.authorize_access(
       applicant_contact_id:,
       counselor_contact_id: current_user.salesforce_contact_id,
@@ -67,6 +69,35 @@ class Api::V1::HousingCounselorController < ApiController
   end
 
   private
+
+  # current_hc_session (called from #access, above) already made a Salesforce
+  # call if it found a matching-but-expired cookie to refresh - if that call
+  # denied access or failed, render the appropriate response instead of
+  # letting #access fall through to an identical authorize_access call, which
+  # would just repeat the same check (and, on a transient failure, risk an
+  # uncaught error escaping #access instead of the clean response the first
+  # call's rescue already produced). Returns true if it rendered a response.
+  def render_hc_session_refresh_failure?(applicant_contact_id)
+    if hc_session_access_denied?
+      Rails.logger.info(
+        'HousingCounselorController#access: access denied on hc_session refresh ' \
+        "for applicant contact ID=#{applicant_contact_id}",
+      )
+      render json: { error: 'forbidden' }, status: :forbidden
+      return true
+    end
+
+    if hc_session_verification_failed?
+      Rails.logger.info(
+        'HousingCounselorController#access: hc_session refresh failed for ' \
+        "applicant contact ID=#{applicant_contact_id}",
+      )
+      render json: { error: 'unauthorized' }, status: :unauthorized
+      return true
+    end
+
+    false
+  end
 
   def requested_applicant_contact_id
     return JsonWebTokenService.decode_token(params[:t])['contactId'] if params[:t].present?
