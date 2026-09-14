@@ -11,6 +11,10 @@ RSpec.describe Api::V1::HousingCounselorController, type: :controller do
   end
 
   before do
+    stub_const('JsonWebTokenService::SECRET_KEY', 'test_secret')
+    stub_const('JsonWebTokenService::ALGORITHM', 'HS256')
+    stub_const('JsonWebTokenService::ALLOWED_ALGORITHMS', ['HS256'])
+
     allow(controller).to receive(:clerk).and_return(double(user_id: clerk_user_id))
     allow(ClerkService).to receive(:salesforce_contact_id)
       .with(clerk_user_id)

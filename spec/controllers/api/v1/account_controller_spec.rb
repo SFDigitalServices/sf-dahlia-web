@@ -4,6 +4,10 @@ RSpec.describe Api::V1::AccountController, type: :controller do
   let(:user) { create(:user) }
 
   before do
+    stub_const('JsonWebTokenService::SECRET_KEY', 'test_secret')
+    stub_const('JsonWebTokenService::ALGORITHM', 'HS256')
+    stub_const('JsonWebTokenService::ALLOWED_ALGORITHMS', ['HS256'])
+
     allow(Force::AccountService).to receive(:create_or_update)
     allow(Emailer).to receive_message_chain(:account_update, :deliver_later)
     allow(DahliaBackend::MessageService).to receive(:send_housing_counselor_access)

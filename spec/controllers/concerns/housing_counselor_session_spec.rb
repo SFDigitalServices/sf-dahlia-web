@@ -36,6 +36,10 @@ RSpec.describe HousingCounselorSession, type: :controller do
   end
 
   before do
+    stub_const('JsonWebTokenService::SECRET_KEY', 'test_secret')
+    stub_const('JsonWebTokenService::ALGORITHM', 'HS256')
+    stub_const('JsonWebTokenService::ALLOWED_ALGORITHMS', ['HS256'])
+
     routes.draw do
       get 'show' => 'api#show'
       get 'show_twice' => 'api#show_twice'
