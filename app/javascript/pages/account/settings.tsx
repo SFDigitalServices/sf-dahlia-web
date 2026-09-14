@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import React, { useContext, useEffect, useState } from "react"
-import { useAuth } from "@clerk/react"
 import withAppSetup from "../../layouts/withAppSetup"
 import UserContext from "../../authentication/context/UserContext"
+import { useAuthSession } from "../../authentication/session/AuthSessionProvider"
+import { bearerToken } from "../../authentication/session/authStatus"
 
 import { Form, DOBFieldValues, t } from "@bloom-housing/ui-components"
 import { DeepMap, FieldError, useForm } from "react-hook-form"
@@ -249,7 +250,7 @@ const PasswordSection = ({ user, setUser }: SectionProps) => {
 
 const HousingCounselorSection = ({ user, setUser }: SectionProps) => {
   const { saveProfile } = useContext(UserContext)
-  const { getToken } = useAuth()
+  const { getCredentials } = useAuthSession()
   const [loading, setLoading] = useState(false)
   const [grantToast, setGrantToast] = useState(false)
   const [revokeToast, setRevokeToast] = useState(false)
@@ -277,7 +278,7 @@ const HousingCounselorSection = ({ user, setUser }: SectionProps) => {
   }
 
   const updateAccess = async (applicant: User) => {
-    const sessionToken: string | null = await getToken()
+    const sessionToken = bearerToken(await getCredentials())
     if (!sessionToken) {
       throw new Error("Missing Clerk session token")
     }
