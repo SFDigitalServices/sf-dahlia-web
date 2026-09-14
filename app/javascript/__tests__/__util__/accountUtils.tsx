@@ -4,6 +4,9 @@ import UserContext, { ContextProps } from "../../authentication/context/UserCont
 import { User } from "../../authentication/user"
 import * as authApiService from "../../api/authApiService"
 
+// Saved before any spy replaces it, so the spy never calls itself.
+const realUseContext = React.useContext
+
 export const mockProfileStub: User = {
   uid: "abc123",
   id: 20,
@@ -40,13 +43,11 @@ export const setupUserContext = ({
     initialStateLoaded: true,
   }
 
-  const originalUseContext = React.useContext
-
   jest.spyOn(React, "useContext").mockImplementation((context) => {
     if (context === UserContext) {
       return mockContextValue
     }
-    return originalUseContext(context)
+    return realUseContext(context)
   })
 
   if (jest.isMockFunction(useAuth)) {
