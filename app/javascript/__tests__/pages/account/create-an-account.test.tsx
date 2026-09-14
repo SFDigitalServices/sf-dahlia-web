@@ -1,5 +1,5 @@
 import React from "react"
-import { useSignUp } from "@clerk/react"
+import { useSignIn, useSignUp } from "@clerk/react"
 import { screen, waitFor, within, cleanup } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
 import { useNavigate } from "react-router"
@@ -19,6 +19,7 @@ jest.mock("@clerk/react", () => {
     ClerkProvider: ({ children }: { children: React.ReactNode }) => children,
     useAuth: jest.fn(() => ({ isLoaded: true, isSignedIn: false })),
     useSignUp: jest.fn(),
+    useSignIn: jest.fn(),
   }
 })
 
@@ -32,6 +33,8 @@ describe("<CreateAnAccount />", () => {
   let mockNavigate: jest.Mock
   let mockSignUpCreate: jest.Mock
   let mockSendEmailCode: jest.Mock
+  let mockSignInCreate: jest.Mock
+  let mockSignInSendCode: jest.Mock
 
   beforeEach(async () => {
     document.documentElement.lang = "en"
@@ -41,6 +44,8 @@ describe("<CreateAnAccount />", () => {
     ;(useNavigate as jest.Mock).mockReturnValue(mockNavigate)
     mockSignUpCreate = jest.fn().mockResolvedValue({ error: undefined })
     mockSendEmailCode = jest.fn().mockResolvedValue(undefined)
+    mockSignInCreate = jest.fn().mockResolvedValue({ error: undefined })
+    mockSignInSendCode = jest.fn().mockResolvedValue(undefined)
     ;(useSignUp as jest.Mock).mockReturnValue({
       fetchStatus: "idle",
       signUp: {
@@ -50,6 +55,16 @@ describe("<CreateAnAccount />", () => {
         missingFields: [],
         verifications: {
           sendEmailCode: mockSendEmailCode,
+        },
+      },
+    })
+    ;(useSignIn as jest.Mock).mockReturnValue({
+      fetchStatus: "idle",
+      signIn: {
+        create: mockSignInCreate,
+        status: "needs_first_factor",
+        emailCode: {
+          sendCode: mockSignInSendCode,
         },
       },
     })
