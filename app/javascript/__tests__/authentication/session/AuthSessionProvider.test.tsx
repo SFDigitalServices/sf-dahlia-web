@@ -108,7 +108,6 @@ describe("AuthSessionProvider", () => {
     )
   })
 
-  // Signed in without a token still means no usable session.
   it("reports no credentials when Clerk issues no token", async () => {
     mockFlag(true)
     mockClerk(null)
@@ -130,7 +129,6 @@ describe("AuthSessionProvider", () => {
     expect(screen.getByTestId("status").textContent).toBe("signedOut")
   })
 
-  // getToken() rejects when a refresh fails; getCredentials must not.
   it("reports no credentials when Clerk fails to issue a token", async () => {
     mockFlag(true)
     ;(useAuth as jest.Mock).mockReturnValue({
@@ -146,7 +144,6 @@ describe("AuthSessionProvider", () => {
     )
   })
 
-  // Stored Devise headers ride along on every request, so they must go first.
   it("clears Devise headers, then ends the Clerk session, on sign out", async () => {
     mockFlag(true)
     const calls: string[] = []
