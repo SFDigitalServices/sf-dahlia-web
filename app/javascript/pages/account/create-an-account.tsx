@@ -39,16 +39,20 @@ const CreateAnAccountPage = () => {
 
   const transferToSignIn = async (email: string) => {
     if (signInFetchStatus === "fetching" || !signIn) return
-    const { error } = await signIn.create({ identifier: email })
-    if (error) {
-      console.error("Transfer to sign in code error", error)
+    const { error: signInCreateError } = await signIn.create({ identifier: email })
+    if (signInCreateError) {
+      console.error("Transfer to sign in create error:", signInCreateError)
       return
     }
-    await signIn.emailCode.sendCode()
+    const { error: sendCodeError } = await signIn.emailCode.sendCode()
+    if (sendCodeError) {
+      console.error("Transfer to sign in send code error:", sendCodeError)
+      return
+    }
     if (signIn.status === "needs_first_factor") {
       void navigate(getSignInCodePath(), { state: { email, flow: AUTH_FLOW.SIGN_IN } })
     } else {
-      console.error("Transfer to sign in code error", signIn)
+      console.error("Transfer to sign in status error:", signIn.status)
     }
   }
 
