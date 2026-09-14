@@ -10,7 +10,7 @@ import { fireEvent, screen, within, act } from "@testing-library/react"
 import { authenticatedPut, get, put } from "../../../api/apiService"
 import { mockProfileStub, setupUserContext } from "../../__util__/accountUtils"
 import { useFeatureFlag } from "../../../hooks/useFeatureFlag"
-import { useUser } from "@clerk/clerk-react"
+import { useUser } from "@clerk/react"
 import { useLocation, useNavigate } from "react-router"
 
 jest.mock("../../../api/apiService", () => ({
@@ -30,8 +30,8 @@ jest.mock("../../../hooks/useFeatureFlag", () => ({
   useFeatureFlag: jest.fn(() => ({ flagsReady: true, unleashFlag: true })),
 }))
 
-jest.mock("@clerk/clerk-react", () => {
-  const Clerk = jest.requireActual("@clerk/clerk-react")
+jest.mock("@clerk/react", () => {
+  const Clerk = jest.requireActual("@clerk/react")
   return {
     ...Clerk,
     ClerkProvider: ({ children }: { children: React.ReactNode }) => children,

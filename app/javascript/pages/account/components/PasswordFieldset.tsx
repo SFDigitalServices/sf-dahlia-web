@@ -8,7 +8,7 @@ import { faCheck, faXmark } from "@fortawesome/free-solid-svg-icons"
 import { ErrorMessages } from "./ErrorSummaryBanner"
 import { ExpandedAccountAxiosError, getErrorMessage, SetErrorArgs } from "./util"
 import { getForgotPasswordPath } from "../../../util/routeUtil"
-import { isClerkAPIResponseError } from "@clerk/clerk-react/errors"
+import { ClerkAPIResponseError, isClerkAPIResponseError } from "@clerk/react/errors"
 
 const PASSWORD_VALIDATION_ERRORS = new Set([
   "Password is too short (minimum is 8 characters)",
@@ -76,7 +76,7 @@ export const passwordFieldsetErrors: ErrorMessages = {
 
 export const passwordSortOrder = ["currentPassword", "password"]
 
-export const handleClerkPasswordErrors = (error: unknown): SetErrorArgs => {
+export const handleClerkPasswordErrors = (error: ClerkAPIResponseError): SetErrorArgs => {
   if (isClerkAPIResponseError(error)) {
     const code = error.errors?.[0]?.code
     if (code === "form_password_incorrect") {

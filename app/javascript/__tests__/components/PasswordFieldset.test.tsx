@@ -29,7 +29,7 @@ const WrappedPasswordFieldset = () => {
   )
 }
 
-jest.mock("@clerk/clerk-react/errors", () => ({
+jest.mock("@clerk/react/errors", () => ({
   isClerkAPIResponseError: (error: unknown) =>
     Array.isArray((error as { errors?: unknown })?.errors),
 }))
