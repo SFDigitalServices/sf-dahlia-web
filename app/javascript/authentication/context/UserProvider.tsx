@@ -77,7 +77,7 @@ const UserProvider = (props: UserProviderProps) => {
     dispatch(profile ? saveProfile(profile) : systemSignOut())
   }, [])
 
-  // TODO: CLERK MIGRATION - DEVISE TECH DEBT TO REMOVE
+  // TODO(DAH-4366): CLERK MIGRATION - DEVISE TECH DEBT TO REMOVE
   // Devise's profile fetch; ClerkProfile above is the replacement. Deleting it
   // takes the flag read and the mount condition below with it.
   //
@@ -118,7 +118,7 @@ const UserProvider = (props: UserProviderProps) => {
     profile: state.profile,
     initialStateLoaded: state.initialStateLoaded,
     saveProfile: (profile) => dispatch(saveProfile(profile)),
-    // TODO: CLERK MIGRATION - DEVISE TECH DEBT TO REMOVE
+    // TODO(DAH-4366): CLERK MIGRATION - DEVISE TECH DEBT TO REMOVE
     // Posts to /api/v1/auth/sign_in and stores Devise headers. Only reached
     // from SignInForm, which only renders on the Devise branch of sign-in.tsx.
     signIn: async (email, password, origin) => {
@@ -140,7 +140,7 @@ const UserProvider = (props: UserProviderProps) => {
         })
         .finally(() => dispatch(stopLoading()))
     },
-    // TODO: CLERK MIGRATION - DEVISE TECH DEBT TO REMOVE
+    // TODO(DAH-4366): CLERK MIGRATION - DEVISE TECH DEBT TO REMOVE
     // Clears Devise headers; ends no Clerk session. Layout, AccountNav and
     // account.tsx branch to useAuth().signOut. A replacement must carry the
     // GTM push with it.
@@ -148,10 +148,9 @@ const UserProvider = (props: UserProviderProps) => {
       pushToDataLayer("logout", { user_id: state.profile.id, reason: "User clicked logout" })
       dispatch(userSignOut())
     },
-    // TODO: CLERK MIGRATION - DEVISE TECH DEBT TO REMOVE
+    // TODO(DAH-4366): CLERK MIGRATION - DEVISE TECH DEBT TO REMOVE
     // IdleTimeout does not branch on the flag, so under Clerk a timeout clears
     // Devise headers and redirects while the Clerk session stays live.
-    // Pre-existing; needs its own ticket.
     timeOut: () => {
       pushToDataLayer("logout", { user_id: state.profile.id, reason: "Timed out" })
       dispatch(timeOut())
