@@ -1,13 +1,14 @@
 import React from "react"
 import { render, screen } from "@testing-library/react"
-import { MemoryRouter } from "react-router"
 import { useAuth } from "@clerk/react"
+import { userEvent } from "@testing-library/user-event"
+import { MemoryRouter, useNavigate } from "react-router"
 import { ListingDetailsApply } from "../../../modules/listingDetailsAside/ListingDetailsApply"
 import { openSaleListing } from "../../data/RailsSaleListing/listing-sale-open"
 import { closedRentalListing } from "../../data/RailsRentalListing/listing-rental-closed"
 import { habitatListing } from "../../data/RailsSaleListing/listing-sale-habitat"
 import { setupUserContext } from "../../__util__/accountUtils"
-import { getAddProfilePath, getSignInPath } from "../../../util/routeUtil"
+import { getAddProfilePath, getSignInPath, localizedPath } from "../../../util/routeUtil"
 import { useFeatureFlag } from "../../../hooks/useFeatureFlag"
 import { UNLEASH_FLAG } from "../../../modules/constants"
 
@@ -15,8 +16,17 @@ jest.mock("../../../hooks/useFeatureFlag", () => ({
   useFeatureFlag: jest.fn(),
 }))
 
+jest.mock("react-router", () => ({
+  ...jest.requireActual("react-router"),
+  useNavigate: jest.fn(),
+}))
+
 describe("ListingDetailsApply", () => {
+  let mockNavigate: jest.Mock
+
   beforeEach(() => {
+    mockNavigate = jest.fn()
+    ;(useNavigate as jest.Mock).mockReturnValue(mockNavigate)
     ;(useFeatureFlag as jest.Mock).mockImplementation((flagName: string) => ({
       flagsReady: true,
       unleashFlag: flagName === UNLEASH_FLAG.FORM_ENGINE,
@@ -69,15 +79,19 @@ describe("ListingDetailsApply", () => {
       }))
     })
 
-    it("redirects signed out users to sign in", () => {
+    it("redirects signed out users to sign in", async () => {
+      const user = userEvent.setup()
       setupUserContext({ loggedIn: false })
 
       render(<ListingDetailsApply listing={openSaleListing} />)
 
-      expect(screen.getByRole("link", { name: /apply online/i })).toHaveAttribute(
-        "href",
-        getSignInPath()
-      )
+      await user.click(screen.getByRole("button", { name: /apply online/i }))
+
+      expect(mockNavigate).toHaveBeenCalledWith(getSignInPath(), {
+        state: {
+          redirectUrl: localizedPath(`listings/${openSaleListing.listingID}/apply-welcome/intro`),
+        },
+      })
     })
 
     it("redirects signed in users without a completed profile to the add profile page", () => {
