@@ -176,7 +176,6 @@ const AddPassword = (_props: { assetPaths: unknown }) => {
   const { state } = useLocation()
   const flow = state?.flow
   const isAccountSettingsFlow = state?.accountSettingsFlow === true
-  const isForgotPasswordFlow = flow === AUTH_FLOW.FORGOT_PASSWORD
   const { isLoaded, isSignedIn } = useAuth()
   const { isLoaded: userLoaded, user } = useUser()
   const { profile, initialStateLoaded } = useContext(UserContext)
@@ -222,7 +221,6 @@ const AddPassword = (_props: { assetPaths: unknown }) => {
     userLoaded,
     hasPassword,
     navigate,
-    isForgotPasswordFlow,
     isAccountSettingsFlow,
   ])
 
