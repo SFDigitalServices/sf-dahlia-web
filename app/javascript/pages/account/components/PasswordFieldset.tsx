@@ -25,9 +25,9 @@ export interface PasswordFieldsetProps {
 }
 
 export const handlePasswordServerErrors = (error: ExpandedAccountAxiosError): SetErrorArgs => {
-  const errorMessages = error.response.data?.errors?.full_messages
+  const errorMessages = error.response?.data?.errors?.full_messages
 
-  if (error.response.status === 422) {
+  if (error.response?.status === 422 && errorMessages) {
     if (errorMessages[0] === "Current password is invalid") {
       return [
         "currentPassword",
@@ -74,6 +74,21 @@ export const passwordFieldsetErrors: ErrorMessages = {
 }
 
 export const passwordSortOrder = ["currentPassword", "password"]
+
+export interface ClerkPasswordError {
+  errors?: Array<{ code?: string }>
+}
+
+export const handleClerkPasswordErrors = (error: unknown): SetErrorArgs => {
+  const code = (error as ClerkPasswordError)?.errors?.[0]?.code
+  if (code === "form_password_incorrect") {
+    return ["currentPassword", { message: "currentPassword:incorrect", shouldFocus: true }]
+  }
+  if (code?.startsWith("form_password_")) {
+    return ["password", { message: "password:complexity", shouldFocus: true }]
+  }
+  return ["password", { message: "password:server:generic", shouldFocus: true }]
+}
 
 const instructionListItem = (
   shouldShowValidationInformation: boolean,
