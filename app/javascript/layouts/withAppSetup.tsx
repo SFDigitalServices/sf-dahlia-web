@@ -3,17 +3,15 @@ import React from "react"
 import axe from "@axe-core/react"
 import ReactDOM from "react-dom"
 import { FlagProvider } from "@unleash/proxy-client-react"
-import { ClerkProvider } from "@clerk/react"
-import { useFeatureFlag } from "../hooks/useFeatureFlag"
 import IdleTimeout from "../authentication/components/IdleTimeout"
 import UserProvider from "../authentication/context/UserProvider"
+import { AuthSessionProvider } from "../authentication/session/AuthSessionProvider"
 import ListingDetailsProvider from "../contexts/listingDetails/listingDetailsProvider"
 import { ConfigProvider } from "../lib/ConfigContext"
 import ErrorBoundary, { BoundaryScope } from "../components/ErrorBoundary"
 import "@bloom-housing/ui-seeds/src/global/app-css.scss"
 import { useGTMInitializer } from "../hooks/analytics/useInitializeGTM"
 import { AppPages } from "../util/routeUtil"
-import { UNLEASH_FLAG } from "../modules/constants"
 
 interface ObjectWithAssets {
   assetPaths: unknown
@@ -41,45 +39,24 @@ const withAppSetup =
 
     useGTMInitializer(process.env.GOOGLE_TAG_MANAGER_KEY)
 
-    function ProvidersWithConditionalClerk() {
-      const { unleashFlag: clerkEnabled, flagsReady } = useFeatureFlag(
-        UNLEASH_FLAG.CLERK_AUTH,
-        false
-      )
-      if (!flagsReady) {
-        return null
-      }
-
-      const Providers = (
+    return (
+      <FlagProvider config={config}>
         <ErrorBoundary boundaryScope={BoundaryScope.page}>
           <ListingDetailsProvider>
-            {/* eslint-disable react/prop-types */}
             <ConfigProvider assetPaths={props.assetPaths}>
-              <UserProvider>
-                <IdleTimeout
-                  onTimeout={() => console.log("Logout")}
-                  useFormTimeout={configuration?.useFormTimeout}
-                  pageName={configuration?.pageName}
-                />
-                <Component {...props} />
-              </UserProvider>
+              <AuthSessionProvider>
+                <UserProvider>
+                  <IdleTimeout
+                    onTimeout={() => console.log("Logout")}
+                    useFormTimeout={configuration?.useFormTimeout}
+                    pageName={configuration?.pageName}
+                  />
+                  <Component {...props} />
+                </UserProvider>
+              </AuthSessionProvider>
             </ConfigProvider>
           </ListingDetailsProvider>
         </ErrorBoundary>
-      )
-
-      return clerkEnabled ? (
-        <ClerkProvider publishableKey={process.env.CLERK_PUBLISHABLE_KEY}>
-          {Providers}
-        </ClerkProvider>
-      ) : (
-        Providers
-      )
-    }
-
-    return (
-      <FlagProvider config={config}>
-        <ProvidersWithConditionalClerk />
       </FlagProvider>
     )
   }
