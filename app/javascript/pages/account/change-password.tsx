@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import { t } from "@bloom-housing/ui-components"
 import { Heading } from "@bloom-housing/ui-seeds"
-import { useAuth, useSession, useUser } from "@clerk/clerk-react"
+import { useAuth, useSession, useUser } from "@clerk/react"
 import React, { useContext, useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { useNavigate } from "react-router"

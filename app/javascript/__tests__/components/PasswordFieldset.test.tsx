@@ -3,6 +3,7 @@ import React from "react"
 import { render, screen } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
 import PasswordFieldset, {
+  ClerkPasswordError,
   handleClerkPasswordErrors,
   handlePasswordServerErrors,
   passwordFieldsetErrors,
@@ -162,10 +163,9 @@ describe("Password Fieldset", () => {
     })
 
     it("falls back to a generic error", () => {
-      expect(handleClerkPasswordErrors(new Error("network"))).toEqual([
-        "password",
-        { message: "password:server:generic", shouldFocus: true },
-      ])
+      expect(
+        handleClerkPasswordErrors(new Error("network") as unknown as ClerkPasswordError)
+      ).toEqual(["password", { message: "password:server:generic", shouldFocus: true }])
     })
   })
 
