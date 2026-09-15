@@ -80,7 +80,7 @@ export interface ClerkPasswordError {
 }
 
 export const handleClerkPasswordErrors = (error: unknown): SetErrorArgs => {
-  const code = (error as ClerkPasswordError).errors?.[0]?.code
+  const code = (error as ClerkPasswordError)?.errors?.[0]?.code
   if (code === "form_password_incorrect") {
     return ["currentPassword", { message: "currentPassword:incorrect", shouldFocus: true }]
   }
