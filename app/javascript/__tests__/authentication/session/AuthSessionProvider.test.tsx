@@ -1,11 +1,12 @@
 import React from "react"
-import { act, render, screen, waitFor } from "@testing-library/react"
+import { act, fireEvent, render, renderHook, screen, waitFor } from "@testing-library/react"
 import { ClerkProvider, useAuth } from "@clerk/react"
 
 import {
   AuthSessionProvider,
   useAuthSession,
 } from "../../../authentication/session/AuthSessionProvider"
+import { clearHeaders } from "../../../authentication/token"
 import { useFeatureFlag } from "../../../hooks/useFeatureFlag"
 
 jest.mock("@clerk/react", () => ({
@@ -15,6 +16,11 @@ jest.mock("@clerk/react", () => ({
 
 jest.mock("../../../hooks/useFeatureFlag", () => ({
   useFeatureFlag: jest.fn(),
+}))
+
+jest.mock("../../../authentication/token", () => ({
+  ...jest.requireActual("../../../authentication/token"),
+  clearHeaders: jest.fn(),
 }))
 
 const mockFlag = (unleashFlag: boolean, flagsReady = true) =>
@@ -88,6 +94,19 @@ describe("AuthSessionProvider", () => {
     )
   })
 
+  // TODO(DAH-4366): CLERK MIGRATION - DEVISE TECH DEBT TO REMOVE
+  it("signs out as a no-op when the flag is off, leaving Devise headers alone", async () => {
+    mockFlag(false)
+    mockClerk("token")
+
+    const { result } = renderHook(() => useAuthSession(), { wrapper: AuthSessionProvider })
+
+    await expect(result.current.signOut()).resolves.toBeUndefined()
+    // Devise still owns the session while the flag is off, so clearing its
+    // headers here would sign the user out from under themselves.
+    expect(clearHeaders).not.toHaveBeenCalled()
+  })
+
   it("provides Clerk's session when the flag is on", async () => {
     mockFlag(true)
     mockClerk("clerk-session-token")
@@ -102,7 +121,6 @@ describe("AuthSessionProvider", () => {
     )
   })
 
-  // Signed in without a token still means no usable session.
   it("reports no credentials when Clerk issues no token", async () => {
     mockFlag(true)
     mockClerk(null)
@@ -124,7 +142,6 @@ describe("AuthSessionProvider", () => {
     expect(screen.getByTestId("status").textContent).toBe("signedOut")
   })
 
-  // getToken() rejects when a refresh fails; getCredentials must not.
   it("reports no credentials when Clerk fails to issue a token", async () => {
     mockFlag(true)
     ;(useAuth as jest.Mock).mockReturnValue({
@@ -138,6 +155,45 @@ describe("AuthSessionProvider", () => {
     await waitFor(() =>
       expect(screen.getByTestId("credentials").textContent).toBe(`{"kind":"none"}`)
     )
+  })
+
+  it("clears Devise headers, then ends the Clerk session, on sign out", async () => {
+    mockFlag(true)
+    const calls: string[] = []
+    ;(clearHeaders as jest.Mock).mockImplementation(() => calls.push("clearHeaders"))
+    ;(useAuth as jest.Mock).mockReturnValue({
+      isLoaded: true,
+      isSignedIn: true,
+      getToken: jest.fn().mockResolvedValue("token"),
+      signOut: jest.fn(() => {
+        calls.push("clerkSignOut")
+        return Promise.resolve()
+      }),
+    })
+
+    const SignOutButton = () => {
+      const { signOut } = useAuthSession()
+      return (
+        <button
+          onClick={() => {
+            void signOut()
+          }}
+        >
+          Sign out
+        </button>
+      )
+    }
+    // eslint-disable-next-line @typescript-eslint/require-await
+    await act(async () => {
+      render(
+        <AuthSessionProvider>
+          <SignOutButton />
+        </AuthSessionProvider>
+      )
+    })
+    fireEvent.click(screen.getByRole("button", { name: "Sign out" }))
+
+    await waitFor(() => expect(calls).toEqual(["clearHeaders", "clerkSignOut"]))
   })
 
   it("throws when a consumer has no provider above it", () => {

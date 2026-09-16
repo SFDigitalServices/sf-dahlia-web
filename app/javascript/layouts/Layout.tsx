@@ -1,5 +1,4 @@
 import React, { useContext } from "react"
-import { useAuth } from "@clerk/react"
 import { useLocation } from "react-router"
 
 import {
@@ -15,7 +14,8 @@ import {
 import { SiteHeader, MenuLink } from "../components/SiteHeader/SiteHeader"
 import Markdown from "markdown-to-jsx"
 import UserContext from "../authentication/context/UserContext"
-import { clearHeaders, isTokenValid } from "../authentication/token"
+import { useAuthSession } from "../authentication/session/AuthSessionProvider"
+import { isTokenValid } from "../authentication/token"
 import { ConfigContext } from "../lib/ConfigContext"
 import { Link } from "@bloom-housing/ui-seeds"
 import {
@@ -315,18 +315,8 @@ const DeviseLayout = (props: LayoutProps) => {
 }
 
 const ClerkLayout = (props: LayoutProps) => {
-  const { isSignedIn, signOut } = useAuth()
-  return (
-    <LayoutContent
-      {...props}
-      signedIn={Boolean(isSignedIn)}
-      signOut={async () => {
-        // Log out Devise user
-        clearHeaders()
-        await signOut()
-      }}
-    />
-  )
+  const { status, signOut } = useAuthSession()
+  return <LayoutContent {...props} signedIn={status.kind === "signedIn"} signOut={signOut} />
 }
 
 const Layout = (props: LayoutProps) => {
