@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react"
+import { useNavigate } from "react-router"
 
 import {
   AppearanceStyleType,
@@ -78,13 +79,39 @@ const ApplyButton = ({ href }: { href: string }) => (
   </LinkButton>
 )
 
+const ApplyButtonWithLocationState = ({
+  href,
+  state,
+}: {
+  href: string
+  state: Record<string, unknown>
+}) => {
+  const navigate = useNavigate()
+
+  return (
+    <Button
+      styleType={AppearanceStyleType.primary}
+      className={"w-full"}
+      transition={true}
+      onClick={() => {
+        void navigate(href, { state })
+      }}
+    >
+      {t("label.applyOnline")}
+    </Button>
+  )
+}
+
 const ClerkApplyOnlineButton = ({ applyLink }: { applyLink: string }) => {
   const { status } = useAuthSession()
   const { profile, initialStateLoaded } = useContext(UserContext)
   const isSignedIn = status.kind === "signedIn"
 
   if (isSignedIn && profile) return <ApplyButton href={applyLink} />
-  if (status.kind === "signedOut") return <ApplyButton href={getSignInPath()} />
+  if (status.kind === "signedOut")
+    return (
+      <ApplyButtonWithLocationState href={getSignInPath()} state={{ redirectUrl: applyLink }} />
+    )
   if (isSignedIn && initialStateLoaded && !profile)
     return <ApplyButton href={getAddProfilePath()} />
 
