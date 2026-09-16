@@ -25,6 +25,7 @@ import {
   LISTING_TYPES,
   LISTING_STATUS_ACTIVE,
   LISTING_TYPE_STANDARD_LOTTERY,
+  PLUS_HOUSING_RESERVED_TYPE,
 } from "../modules/constants"
 import { RailsListing } from "../modules/listings/SharedHelpers"
 import { LANGUAGE_CONFIGS, getCustomListingType, getReservedCommunityType } from "./languageUtil"
@@ -175,6 +176,14 @@ export const isBMR = (listing: RailsRentalListing | RailsSaleListing) =>
  */
 export const isCSLP = (listing: RailsRentalListing | RailsSaleListing) =>
   listing.Program_Type === "CSLP"
+
+/**
+ * Counts the number of PLUS Housing units.
+ * @param {RailsUnit[]} units
+ * @returns {number} the number of PLUS Housing units
+ */
+export const plusHousingUnitsCount = (units?: RailsUnit[]) =>
+  units?.filter((unit) => unit.Reserved_Type === PLUS_HOUSING_RESERVED_TYPE).length ?? 0
 
 /**
  * Collect every unit summary on a listing, across both the general and reserved buckets.

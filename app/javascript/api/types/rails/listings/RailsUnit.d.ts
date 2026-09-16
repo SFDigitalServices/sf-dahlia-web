@@ -14,6 +14,7 @@ type RailsUnit = {
   Min_Occupancy?: number
   Number_of_Bathrooms?: number
   Property_Type?: string
+  Reserved_Type?: string
   Status: string
   Unit_Type: string
   Unit_Floor?: string
