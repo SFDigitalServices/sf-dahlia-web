@@ -95,6 +95,8 @@ const ChangePasswordPage = () => {
 const ChangePassword = (_props: { assetPaths: unknown }) => {
   const navigate = useNavigate()
   const { isLoaded, isSignedIn } = useAuth()
+  const { isLoaded: userLoaded, user } = useUser()
+  const userHasPassword = user?.passwordEnabled ?? false
   const { unleashFlag: clerkEnabled, flagsReady } = useFeatureFlag(UNLEASH_FLAG.CLERK_AUTH, false)
 
   useEffect(() => {
@@ -108,7 +110,12 @@ const ChangePassword = (_props: { assetPaths: unknown }) => {
       void navigate(getSignInPath())
       return
     }
-  }, [flagsReady, clerkEnabled, isLoaded, isSignedIn, navigate])
+    if (!userLoaded) return
+    if (!userHasPassword) {
+      void navigate(getMyAccountSettingsPath(), { replace: true })
+      return
+    }
+  }, [flagsReady, clerkEnabled, isLoaded, isSignedIn, navigate, userLoaded, userHasPassword])
 
   const ready = flagsReady && clerkEnabled && isLoaded && isSignedIn
 

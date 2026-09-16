@@ -64,7 +64,7 @@ describe("<ChangePassword />", () => {
     ;(useUser as jest.Mock).mockReturnValue({
       isLoaded: true,
       isSignedIn: true,
-      user: { updatePassword: mockUpdatePassword },
+      user: { passwordEnabled: true, updatePassword: mockUpdatePassword },
     })
     ;(useSession as jest.Mock).mockReturnValue({
       session: {
