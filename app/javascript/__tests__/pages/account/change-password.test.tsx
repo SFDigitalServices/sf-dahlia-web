@@ -178,4 +178,19 @@ describe("<ChangePassword />", () => {
     expect(mockUpdatePassword).not.toHaveBeenCalled()
     expect(mockNavigate).not.toHaveBeenCalled()
   })
+
+  it("redirects to settings when the user does not have a password", async () => {
+    cleanup()
+    mockNavigate.mockClear()
+    ;(useUser as jest.Mock).mockReturnValue({
+      isLoaded: true,
+      isSignedIn: true,
+      user: { passwordEnabled: false, updatePassword: mockUpdatePassword },
+    })
+    await renderAndLoadAsync(<ChangePassword assetPaths={{}} />)
+
+    await waitFor(() => {
+      expect(mockNavigate).toHaveBeenCalledWith("/account/settings", { replace: true })
+    })
+  })
 })
