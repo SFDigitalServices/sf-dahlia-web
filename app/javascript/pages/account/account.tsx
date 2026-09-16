@@ -24,7 +24,7 @@ import { withAuthentication } from "../../authentication/withAuthentication"
 import { ConfigContext } from "../../lib/ConfigContext"
 
 import ContactCard from "./components/ContactCard"
-import SuccessToast from "./components/SuccessToast"
+import Toast from "./components/Toast"
 import { MyAccount } from "./my-account"
 import styles from "./account.module.scss"
 
@@ -132,7 +132,7 @@ const AccountReadyToast = () => {
 
   if (!toast) return null
 
-  return <SuccessToast>{t("createAccount.accountReady")}</SuccessToast>
+  return <Toast variant="success">{t("createAccount.accountReady")}</Toast>
 }
 
 interface AccountProps {
