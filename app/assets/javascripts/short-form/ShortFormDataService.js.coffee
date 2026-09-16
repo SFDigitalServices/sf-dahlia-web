@@ -702,6 +702,9 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
       delete data.hasMilitaryService
     unless ListingUnitService.listingHasReservedUnitType(LS.listing, LCS.RESERVED_TYPES.DISABLED)
       delete data.hasDevelopmentalDisability
+    unless LS.listing.Custom_Listing_Type == 'Plus Housing Program'
+      delete data.plusHousingProgramParticipantAnswer
+      delete data.plusHousingProgramNumber
 
     # reset contact + neighborhood data
     resetContactFields = [
