@@ -164,7 +164,10 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
     sfApp.primaryApplicant.jobClassification = application.customEducatorJobClassificationNumber
 
     sfApp.primaryApplicant.isPlusHousingProgramParticipant = application.plusHousingProgramParticipantAnswer
-    sfApp.plusHousingProgramNumber = application.plusHousingProgramNumber
+    if application.plusHousingProgramParticipantAnswer == 'Yes'
+      sfApp.plusHousingProgramNumber = application.plusHousingProgramNumber
+    else
+      sfApp.plusHousingProgramNumber = null
 
     # add the HCBS answer to the priorities object, so that it appears with priorities in the Leasing Agent Portal
     if application.hasHomeAndCommunityBasedServices == 'Yes' && sfApp.adaPrioritiesSelected == 'None;'
@@ -426,7 +429,10 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
     data.customEducatorJobClassificationNumber = sfApp.primaryApplicant.jobClassification
 
     data.plusHousingProgramParticipantAnswer = sfApp.primaryApplicant.isPlusHousingProgramParticipant
-    data.plusHousingProgramNumber = sfApp.plusHousingProgramNumber
+    if sfApp.primaryApplicant.isPlusHousingProgramParticipant == 'Yes'
+      data.plusHousingProgramNumber = sfApp.plusHousingProgramNumber
+    else
+      data.plusHousingProgramNumber = null
 
     if !!data.adaPrioritiesSelected[ListingConstantsService.HCBS_PRIORITY_NAME]
       delete data.adaPrioritiesSelected[ListingConstantsService.HCBS_PRIORITY_NAME]
