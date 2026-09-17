@@ -1,12 +1,13 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import { Form, t } from "@bloom-housing/ui-components"
 import { Button, Card, Heading, Message } from "@bloom-housing/ui-seeds"
-import { useSignIn, useUser } from "@clerk/react"
+import { useUser } from "@clerk/react"
 import React, { useContext, useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { Navigate, useLocation, useNavigate } from "react-router"
 import UserContext from "../../authentication/context/UserContext"
 import { useAuthSession } from "../../authentication/session/AuthSessionProvider"
+import { useSignInSession } from "../../authentication/session/useSignInSession"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import AuthLayout from "../../layouts/AuthLayout"
 import withAppSetup from "../../layouts/withAppSetup"
@@ -34,7 +35,8 @@ interface AddPasswordFormValues {
 const AddPasswordPage = ({ flow }: AddPasswordPageProps) => {
   const navigate = useNavigate()
   const { isLoaded, user } = useUser()
-  const { signIn, fetchStatus: signInFetchStatus } = useSignIn()
+  // TODO(DAH-4345): useUser above converts with useAccountSession.
+  const { submitNewPassword, activateSession, isResetAttemptStale } = useSignInSession()
   const [isResettingPassword, setIsResettingPassword] = useState(false)
   const isForgotPasswordFlow = flow === AUTH_FLOW.FORGOT_PASSWORD
   const {
@@ -49,37 +51,21 @@ const AddPasswordPage = ({ flow }: AddPasswordPageProps) => {
     shouldFocusError: false,
   })
 
-  if (
-    isForgotPasswordFlow &&
-    signInFetchStatus !== "fetching" &&
-    !isResettingPassword &&
-    !signIn?.status
-  ) {
+  if (isForgotPasswordFlow && !isResettingPassword && isResetAttemptStale) {
     return <Navigate to={getForgotPasswordPath()} replace />
   }
 
   const resetPassword = async (newPassword: string) => {
-    if (!signIn) return
-    const { error: resetPasswordError } = await signIn.resetPasswordEmailCode.submitPassword({
-      password: newPassword,
-      signOutOfOtherSessions: true,
-    })
+    const { error: resetPasswordError, notReady } = await submitNewPassword(newPassword)
+    if (notReady) return
     if (resetPasswordError) {
-      console.error("Reset password error:", resetPasswordError)
-      setError("password", { message: "password:server:generic" })
-      return
-    }
-    if (signIn.status !== "complete") {
-      console.error("Reset password status error:", signIn.status)
       setError("password", { message: "password:server:generic" })
       return
     }
 
-    const { error: signInFinalizeError } = await signIn.finalize({
-      navigate: ({ decorateUrl }: { decorateUrl: (url: string) => string }) => {
-        void navigate(decorateUrl(getMyAccountPath()))
-      },
-    })
+    const { error: signInFinalizeError, notReady: finalizeNotReady } =
+      await activateSession(getMyAccountPath())
+    if (finalizeNotReady) return
     if (signInFinalizeError) {
       console.error("Reset password error:", signInFinalizeError)
       setError("password", { message: "password:server:generic" })

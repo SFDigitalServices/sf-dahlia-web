@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import { Form, t } from "@bloom-housing/ui-components"
 import { Button, Card, Heading } from "@bloom-housing/ui-seeds"
-import { useSignIn } from "@clerk/react"
 import React from "react"
 import { useForm } from "react-hook-form"
 import { useNavigate } from "react-router"
 import AuthLayout from "../layouts/AuthLayout"
+import { useSignInSession } from "./session/useSignInSession"
 import { AUTH_FLOW } from "../modules/constants"
 import EmailFieldset from "../pages/account/components/EmailFieldset"
 import GetHelp from "../pages/account/components/GetHelp"
@@ -18,28 +18,15 @@ const ForgotPasswordFlow = () => {
     handleSubmit,
     formState: { errors },
   } = useForm()
-  const { signIn, fetchStatus: signInFetchStatus } = useSignIn()
+  const { isBusy, sendPasswordResetCode } = useSignInSession()
 
   const navigate = useNavigate()
   const prefilledEmailParam = new URLSearchParams(window.location.search).get("email") ?? ""
 
   // TODO: DAH-4352 show proper error message in addition to logging to the console
   const onGetCodeSubmit = async ({ email }: { email: string }) => {
-    if (signInFetchStatus === "fetching" || !signIn) return
-
-    const { error: createError } = await signIn.create({
-      identifier: email,
-    })
-    if (createError) {
-      console.error("Forgot password error:", createError)
-      return
-    }
-
-    const { error: sendCodeError } = await signIn.resetPasswordEmailCode.sendCode()
-    if (sendCodeError) {
-      console.error("Forgot password send code error:", sendCodeError)
-      return
-    }
+    const { error } = await sendPasswordResetCode(email)
+    if (error) return
 
     void navigate(getForgotPasswordCodePath(), {
       state: { email, flow: AUTH_FLOW.FORGOT_PASSWORD },
@@ -55,12 +42,7 @@ const ForgotPasswordFlow = () => {
         <p className="field-note">{t("signIn.forgotPasswordDescription")}</p>
         <Form className={styles.form} onSubmit={handleSubmit(onGetCodeSubmit)}>
           <EmailFieldset register={register} errors={errors} defaultEmail={prefilledEmailParam} />
-          <Button
-            variant="primary"
-            size="sm"
-            type="submit"
-            disabled={signInFetchStatus === "fetching"}
-          >
+          <Button variant="primary" size="sm" type="submit" disabled={isBusy}>
             {t("createAccount.getCode")}
           </Button>
         </Form>
