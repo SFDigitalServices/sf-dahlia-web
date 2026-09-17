@@ -38,6 +38,7 @@ jest.mock("@clerk/react", () => {
     useClerk: jest.fn(),
     useSignIn: jest.fn(),
     useUser: jest.fn(),
+    useSignUp: jest.fn(),
   }
 })
 

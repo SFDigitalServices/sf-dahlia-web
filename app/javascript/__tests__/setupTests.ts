@@ -65,11 +65,14 @@ jest.mock("@clerk/react", () => {
     ...Clerk,
     ClerkProvider: ({ children }: { children: React.ReactNode }) => children,
     useAuth: jest.fn(() => ({ isLoaded: true, isSignedIn: false })),
+    useUser: jest.fn(() => ({ isLoaded: true, user: null })),
+    useSignUp: jest.fn(() => ({ fetchStatus: "idle", signUp: {} })),
   }
 })
 
 const setDefaultClerkAuth = () => {
-  const { useAuth } = jest.requireMock<typeof import("@clerk/react")>("@clerk/react")
+  const { useAuth, useUser, useSignUp } =
+    jest.requireMock<typeof import("@clerk/react")>("@clerk/react")
   if (jest.isMockFunction(useAuth)) {
     useAuth.mockReturnValue({
       isLoaded: true,
@@ -77,6 +80,12 @@ const setDefaultClerkAuth = () => {
       signOut: jest.fn(),
       getToken: jest.fn().mockResolvedValue("clerk-session-token"),
     })
+  }
+  if (jest.isMockFunction(useUser)) {
+    useUser.mockReturnValue({ isLoaded: true, isSignedIn: false, user: null })
+  }
+  if (jest.isMockFunction(useSignUp)) {
+    useSignUp.mockReturnValue({ fetchStatus: "idle", signUp: {} })
   }
 }
 
