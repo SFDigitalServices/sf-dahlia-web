@@ -7,21 +7,18 @@ import { useAuthSession } from "../../authentication/session/AuthSessionProvider
 import { bearerToken } from "../../authentication/session/authStatus"
 import { Form, DOBFieldValues, t } from "@bloom-housing/ui-components"
 import { DeepMap, FieldError, useForm } from "react-hook-form"
-import { Card, Alert, Button } from "@bloom-housing/ui-seeds"
+import { Card, Alert, Button, Heading } from "@bloom-housing/ui-seeds"
 import {
   AppPages,
   getAddPasswordPath,
   getChangePasswordPath,
+  getMyAccountContactPath,
   RedirectType,
 } from "../../util/routeUtil"
 import { User } from "../../authentication/user"
 import Layout from "../../layouts/Layout"
 import AccountLayout from "../../layouts/AccountLayout"
-import EmailFieldset, {
-  emailFieldsetErrors,
-  emailSortOrder,
-  handleEmailServerErrors,
-} from "./components/EmailFieldset"
+import EmailFieldset, { emailFieldsetErrors, emailSortOrder } from "./components/EmailFieldset"
 import FormSubmitButton from "./components/FormSubmitButton"
 import NameFieldset, {
   handleNameServerErrors,
@@ -42,7 +39,6 @@ import "./styles/account.scss"
 import sharedStyles from "./shared-styles.module.scss"
 import {
   updateNameOrDOB as apiUpdateNameOrDOB,
-  updateEmail,
   updateHousingCounselorAccess,
 } from "../../api/authApiService"
 import { FormHeader, FormSection, getDobStringFromDobObject } from "../../util/accountUtil"
@@ -56,6 +52,7 @@ import { AccountSettingsPage as MyAccountSettingsPage } from "./account-settings
 import settingsStyles from "./settings.module.scss"
 import { useLocation, useNavigate } from "react-router"
 import { CommonMessageVariant } from "@bloom-housing/ui-seeds/src/blocks/shared/CommonMessage"
+import { renderInlineMarkup } from "../../util/languageUtil"
 
 export const Banner = ({
   showBanner,
@@ -110,16 +107,13 @@ interface SectionProps {
   handleBanners?: (banner: string) => void
 }
 
-const EmailSection = ({ user, setUser }: SectionProps) => {
-  const [loading, setLoading] = useState(false)
+const EmailSection = ({ user }: SectionProps) => {
   const [emailUpdateBanner, setEmailUpdateBanner] = useState(false)
   const [emailBanner, setEmailBanner] = useState(false)
 
   const {
     register,
     formState: { errors },
-    handleSubmit,
-    setError,
   } = useForm({ mode: "onTouched" })
 
   const onChange = () => {
@@ -127,28 +121,28 @@ const EmailSection = ({ user, setUser }: SectionProps) => {
     setEmailBanner(false)
   }
 
-  const onSubmit = (data: { email: string }) => {
-    setLoading(true)
-    const { email } = data
+  //   const onSubmit = (data: { email: string }) => {
+  //     setLoading(true)
+  //     const { email } = data
 
-    updateEmail(email)
-      .then(() => {
-        const newUser = {
-          ...user,
-          email,
-        }
-        setUser(newUser)
-        setEmailBanner(true)
-      })
-      .catch((error: ExpandedAccountAxiosError) => {
-        setError(...handleEmailServerErrors(error))
-        setEmailBanner(false)
-        setEmailUpdateBanner(false)
-      })
-      .finally(() => {
-        setLoading(false)
-      })
-  }
+  //     updateEmail(email)
+  //       .then(() => {
+  //         const newUser = {
+  //           ...user,
+  //           email,
+  //         }
+  //         setUser(newUser)
+  //         setEmailBanner(true)
+  //       })
+  //       .catch((error: ExpandedAccountAxiosError) => {
+  //         setError(...handleEmailServerErrors(error))
+  //         setEmailBanner(false)
+  //         setEmailUpdateBanner(false)
+  //       })
+  //       .finally(() => {
+  //         setLoading(false)
+  //       })
+  //   }
 
   return (
     <>
@@ -170,18 +164,34 @@ const EmailSection = ({ user, setUser }: SectionProps) => {
         sortOrder={emailSortOrder}
         messageMap={(messageKey) => getErrorMessage(messageKey, emailFieldsetErrors, true)}
       />
-      <UpdateForm
-        onSubmit={handleSubmit(onSubmit)}
-        loading={loading}
-        submitLabel={t("accountSettings.saveEmailAddress")}
-      >
-        <EmailFieldset
-          register={register}
-          errors={errors}
-          defaultEmail={user?.email ?? null}
-          onChange={onChange}
-        />
-      </UpdateForm>
+      <FormSection>
+        <Heading size="md">{t("accountSettings.email.title")}</Heading>
+        <p className={settingsStyles.settingsText}>{t("accountSettings.email.description")}</p>
+        <div className={settingsStyles.settingsEmailFieldset}>
+          <EmailFieldset
+            register={register}
+            errors={errors}
+            defaultEmail={user?.email ?? null}
+            onChange={onChange}
+          />
+        </div>
+        <div className={settingsStyles.settingsButton}>
+          <Button
+            type="button"
+            variant="primary-outlined"
+            onClick={() => getMyAccountContactPath()}
+          >
+            {t("accountSettings.email.updateEmail")}
+          </Button>
+        </div>
+        <p className={settingsStyles.settingsText}>
+          {renderInlineMarkup(
+            t("accountSettings.email.subtitle", {
+              url: getMyAccountContactPath(),
+            })
+          )}
+        </p>
+      </FormSection>
     </>
   )
 }
