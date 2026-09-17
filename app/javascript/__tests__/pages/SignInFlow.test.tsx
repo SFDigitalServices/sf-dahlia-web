@@ -296,7 +296,9 @@ describe("<SignInFlow />", () => {
       expect(mockNavigate).toHaveBeenCalledWith("/account")
     })
 
-    it("shows an error and stays on sign in when housing counselor authentication fails", async () => {
+    // Access denial keeps the user signed in and redirects with ?hcAccess=0, rather than
+    // signing them out (see the commented-out `signOut()` call in SignInFlow.tsx).
+    it("signs the user in and redirects with hcAccess=0 when access is denied", async () => {
       ;(authorizeHousingCounselor as jest.Mock).mockRejectedValue(new Error("forbidden"))
 
       await renderAndLoadAsync(<SignIn assetPaths={{}} />)
@@ -305,8 +307,41 @@ describe("<SignInFlow />", () => {
       await waitFor(() => {
         expect(authorizeHousingCounselor).toHaveBeenCalledWith("jwt.token", "clerk-session-token")
       })
-      expect(mockFinalize).toHaveBeenCalled()
-      expect(mockSignOut).toHaveBeenCalled()
+      expect(mockNavigate).toHaveBeenCalledWith("/account?hcAccess=0")
+      expect(mockSignOut).not.toHaveBeenCalled()
+    })
+
+    // Regression test: the "already signed in" effect used to race onSubmit's own check, calling
+    // authorizeHousingCounselor a second time and navigating to a plain "/account" URL that
+    // clobbered the ?hcAccess=0 redirect above. It must never fire when onSubmit itself handles
+    // the token.
+    it("does not let the already-signed-in check race and override the denied-access redirect", async () => {
+      ;(authorizeHousingCounselor as jest.Mock).mockRejectedValue(new Error("forbidden"))
+
+      await renderAndLoadAsync(<SignIn assetPaths={{}} />)
+      await submitCredentials()
+
+      await waitFor(() => {
+        expect(mockNavigate).toHaveBeenCalledWith("/account?hcAccess=0")
+      })
+      expect(authorizeHousingCounselor).toHaveBeenCalledTimes(1)
+      expect(mockNavigate).not.toHaveBeenCalledWith("/account")
+    })
+
+    it("shows an error when the already-signed-in housing counselor check fails", async () => {
+      ;(authorizeHousingCounselor as jest.Mock).mockRejectedValue(new Error("forbidden"))
+      ;(useAuth as jest.Mock).mockReturnValue({
+        isLoaded: true,
+        isSignedIn: true,
+        getToken: jest.fn().mockResolvedValue("clerk-session-token"),
+        signOut: mockSignOut,
+      })
+
+      await renderAndLoadAsync(<SignIn assetPaths={{}} />)
+
+      await waitFor(() => {
+        expect(authorizeHousingCounselor).toHaveBeenCalledWith("jwt.token", "clerk-session-token")
+      })
       expect(mockNavigate).not.toHaveBeenCalledWith("/account")
       expect(screen.getByRole("heading", { name: /^sign in$/i, level: 1 })).not.toBeNull()
     })
