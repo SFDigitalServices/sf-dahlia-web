@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react"
-import { useLocation, useNavigate } from "react-router"
+import { useLocation, useNavigate, useSearchParams } from "react-router"
 import { useAuth } from "@clerk/react"
 import { Button, Heading, Tabs } from "@bloom-housing/ui-seeds"
 import { Icon, t, UniversalIconType } from "@bloom-housing/ui-components"
@@ -135,6 +135,21 @@ const AccountReadyToast = () => {
   return <Toast variant="success">{t("createAccount.accountReady")}</Toast>
 }
 
+const HousingCounselorNoAccessToast = () => {
+  const [searchParams] = useSearchParams()
+  const [toast, setToast] = useState(false)
+
+  useEffect(() => {
+    if (searchParams.get("hcAccess") === "0") {
+      setToast(true)
+    }
+  }, [searchParams])
+
+  if (!toast) return null
+
+  return <Toast variant="alert">{t("signIn.housingCounselor.noAccess")}</Toast>
+}
+
 interface AccountProps {
   assetPaths: unknown
 }
@@ -145,6 +160,7 @@ const DeviseAccount = () => {
   return (
     <Layout>
       <AccountReadyToast />
+      <HousingCounselorNoAccessToast />
       <AccountLayout>
         <div className={styles.overview}>
           <AccountOverview signOut={() => signOut?.()} user={profile} />
@@ -162,6 +178,7 @@ const ClerkAccount = () => {
   return (
     <Layout>
       <AccountReadyToast />
+      <HousingCounselorNoAccessToast />
       <AccountLayout>
         <div className={styles.overview}>
           <AccountOverview

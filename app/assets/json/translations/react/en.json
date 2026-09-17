@@ -2042,6 +2042,7 @@
   "signIn.forgotPasswordCode": "If there is an account with that email address, you will get an email with a code.",
   "signIn.forgotPasswordDescription": "Enter your email address and we’ll send you a code to sign in. After that, you can create a new password.",
   "signIn.getHelpLink": "How to sign in or find help",
+  "signIn.housingCounselor.noAccess": "You do not have access to this account.",
   "signIn.loggedOutDueToInactivity": "We care about your security. We logged you out due to inactivity. Please sign in to continue.",
   "signIn.loginRequired": "You must be signed in to see this page. Sign in to continue.",
   "signIn.loginRequired.v2": "You must be signed in to see this page. Sign in to continue.",
