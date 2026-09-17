@@ -199,7 +199,7 @@ const PasswordSection = () => {
       ) : (
         <p className="field-note">{t("accountSettings.addPasswordDescription")}</p>
       )}
-      <div className="flex justify-center pt-6">
+      <div className={settingsStyles.settingsButton}>
         <Button
           type="button"
           variant="primary-outlined"
