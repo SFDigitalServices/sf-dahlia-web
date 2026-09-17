@@ -13,6 +13,7 @@ import UserContext from "../../authentication/context/UserContext"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import {
   AppPages,
+  createPath,
   getAddPasswordPath,
   getAuthFlowPath,
   getAddProfilePath,
@@ -99,23 +100,30 @@ const EnterVerificationCodePage = ({
       return
     }
 
+    // We need to set the session token and *not* navigate away, so `getToken()` works for the
+    // housing counselor check below. This means we lose access to the `decorateUrl` utility
+    // function, so we navigate manually afterward instead of passing `navigate` to finalize().
+    await signIn.finalize()
+
+    let destination = redirectUrl
     if (housingCounselorToken) {
       const sessionToken: string | null = await getToken()
       if (!sessionToken) {
         setError("code", { message: "invalid" })
         return
       }
-      await authorizeHousingCounselor(housingCounselorToken, sessionToken)
-      console.log(
-        "TODO: Housing counselor successfully authenticated, TBD banner and applicant view"
-      )
+      try {
+        await authorizeHousingCounselor(housingCounselorToken, sessionToken)
+        console.log(
+          "TODO: Housing counselor successfully authenticated, TBD banner and applicant view"
+        )
+      } catch {
+        // Keep the user signed in, but flag that they don't have access to this account.
+        destination = createPath(redirectUrl, { hcAccess: "0" })
+      }
     }
 
-    await signIn.finalize({
-      navigate: ({ decorateUrl }: { decorateUrl: (url: string) => string }) => {
-        void navigate(decorateUrl(redirectUrl))
-      },
-    })
+    void navigate(destination)
   }
 
   const verifySignUpCode = async (code: string) => {

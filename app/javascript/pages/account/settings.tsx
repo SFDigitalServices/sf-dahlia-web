@@ -37,7 +37,7 @@ import DOBFieldset, {
 import HousingCounselorAccess, {
   housingCounselorFieldsetErrors,
 } from "./components/HousingCounselorAccess"
-import SuccessToast from "./components/SuccessToast"
+import Toast from "./components/Toast"
 import "./styles/account.scss"
 import sharedStyles from "./shared-styles.module.scss"
 import {
@@ -292,10 +292,10 @@ const HousingCounselorSection = ({ user, setUser }: SectionProps) => {
   return (
     <>
       {grantToast && (
-        <SuccessToast>{t("accountSettings.housingCounselor.toastShared")}</SuccessToast>
+        <Toast variant="success">{t("accountSettings.housingCounselor.toastShared")}</Toast>
       )}
       {revokeToast && (
-        <SuccessToast>{t("accountSettings.housingCounselor.toastStoppedSharing")}</SuccessToast>
+        <Toast variant="success">{t("accountSettings.housingCounselor.toastStoppedSharing")}</Toast>
       )}
       {!accessShared && (
         <ErrorSummaryBanner
