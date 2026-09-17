@@ -109,4 +109,64 @@ describe("<Account />", () => {
       expect(window.location.assign).toHaveBeenCalledWith("/sign-in?redirect=account")
     })
   })
+
+  describe("toasts", () => {
+    let originalLocation: Location
+
+    beforeEach(() => {
+      originalLocation = mockWindowLocation()
+      setupUserContext({ loggedIn: true })
+    })
+
+    afterEach(() => {
+      jest.restoreAllMocks()
+      restoreWindowLocation(originalLocation)
+    })
+
+    it("shows the account ready success toast when navigated to with accountReady state", async () => {
+      const WrappedComponent = withAuthentication(Account, { redirectType: RedirectType.Account })
+      await renderAndLoadAsync(<WrappedComponent assetPaths={{}} />, {
+        wrapper: ({ children }) => (
+          <MemoryRouter initialEntries={[{ pathname: "/account", state: { accountReady: true } }]}>
+            {children}
+          </MemoryRouter>
+        ),
+      })
+
+      expect(screen.getByText("Your account is ready.")).toBeInTheDocument()
+    })
+
+    it("does not show the account ready toast without accountReady state", async () => {
+      const WrappedComponent = withAuthentication(Account, { redirectType: RedirectType.Account })
+      await renderAndLoadAsync(<WrappedComponent assetPaths={{}} />, {
+        wrapper: ({ children }) => (
+          <MemoryRouter initialEntries={["/account"]}>{children}</MemoryRouter>
+        ),
+      })
+
+      expect(screen.queryByText("Your account is ready.")).toBeNull()
+    })
+
+    it("shows the housing counselor no-access toast when hcAccess=0 is in the URL", async () => {
+      const WrappedComponent = withAuthentication(Account, { redirectType: RedirectType.Account })
+      await renderAndLoadAsync(<WrappedComponent assetPaths={{}} />, {
+        wrapper: ({ children }) => (
+          <MemoryRouter initialEntries={["/account?hcAccess=0"]}>{children}</MemoryRouter>
+        ),
+      })
+
+      expect(screen.getByText("You do not have access to this account.")).toBeInTheDocument()
+    })
+
+    it("does not show the housing counselor no-access toast without hcAccess=0", async () => {
+      const WrappedComponent = withAuthentication(Account, { redirectType: RedirectType.Account })
+      await renderAndLoadAsync(<WrappedComponent assetPaths={{}} />, {
+        wrapper: ({ children }) => (
+          <MemoryRouter initialEntries={["/account"]}>{children}</MemoryRouter>
+        ),
+      })
+
+      expect(screen.queryByText("You do not have access to this account.")).toBeNull()
+    })
+  })
 })

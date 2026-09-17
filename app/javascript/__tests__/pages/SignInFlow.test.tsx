@@ -1,6 +1,6 @@
 import React from "react"
 import { useAuth, useClerk, useSignIn } from "@clerk/react"
-import { screen, waitFor, within, cleanup } from "@testing-library/react"
+import { act, screen, waitFor, within, cleanup } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
 import { useNavigate } from "react-router"
 import SignIn from "../../pages/sign-in"
@@ -326,6 +326,43 @@ describe("<SignInFlow />", () => {
       })
       expect(authorizeHousingCounselor).toHaveBeenCalledTimes(1)
       expect(mockNavigate).not.toHaveBeenCalledWith("/account")
+    })
+
+    // Covers the case where isSignedIn flips to true while onSubmit's own check is still
+    // in flight: the already-signed-in effect must bail out via the ref guard instead of
+    // starting a second, independent authorizeHousingCounselor call.
+    it("skips its own check via the ref guard if isSignedIn flips before onSubmit's check resolves", async () => {
+      let resolveAuthorize: (() => void) | undefined
+      ;(authorizeHousingCounselor as jest.Mock).mockImplementation(
+        () =>
+          new Promise<void>((resolve) => {
+            resolveAuthorize = resolve
+          })
+      )
+
+      const rendered = await renderAndLoadAsync(<SignIn assetPaths={{}} />)
+      await submitCredentials()
+
+      await waitFor(() => {
+        expect(mockFinalize).toHaveBeenCalled()
+      })
+      ;(useAuth as jest.Mock).mockReturnValue({
+        isLoaded: true,
+        isSignedIn: true,
+        getToken: jest.fn().mockResolvedValue("clerk-session-token"),
+        signOut: mockSignOut,
+      })
+      // eslint-disable-next-line @typescript-eslint/require-await
+      await act(async () => {
+        rendered.rerender(<SignIn assetPaths={{}} />)
+      })
+
+      expect(authorizeHousingCounselor).toHaveBeenCalledTimes(1)
+
+      // eslint-disable-next-line @typescript-eslint/require-await
+      await act(async () => {
+        resolveAuthorize?.()
+      })
     })
 
     it("shows an error when the already-signed-in housing counselor check fails", async () => {
