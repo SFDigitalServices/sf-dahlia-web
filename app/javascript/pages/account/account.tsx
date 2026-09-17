@@ -203,6 +203,7 @@ const Account = ({ assetPaths }: AccountProps) => {
     return (
       <>
         <AccountReadyToast />
+        <HousingCounselorNoAccessToast />
         <MyAccount assetPaths={assetPaths} />
       </>
     )
