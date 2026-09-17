@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react"
+
 import { useLocation, useNavigate, useSearchParams } from "react-router"
-import { useAuth } from "@clerk/react"
 import { Button, Heading, Tabs } from "@bloom-housing/ui-seeds"
 import { Icon, t, UniversalIconType } from "@bloom-housing/ui-components"
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons"
@@ -18,7 +18,7 @@ import {
   getSignInPath,
 } from "../../util/routeUtil"
 import UserContext from "../../authentication/context/UserContext"
-import { clearHeaders } from "../../authentication/token"
+import { useAuthSession } from "../../authentication/session/AuthSessionProvider"
 import { User } from "../../authentication/user"
 import { withAuthentication } from "../../authentication/withAuthentication"
 import { ConfigContext } from "../../lib/ConfigContext"
@@ -171,7 +171,7 @@ const DeviseAccount = () => {
 }
 
 const ClerkAccount = () => {
-  const { signOut } = useAuth()
+  const { signOut } = useAuthSession()
   const { profile } = useContext(UserContext)
   const navigate = useNavigate()
 
@@ -183,7 +183,6 @@ const ClerkAccount = () => {
         <div className={styles.overview}>
           <AccountOverview
             signOut={() => {
-              clearHeaders()
               void signOut().finally(() => {
                 void navigate(getSignInPath())
               })

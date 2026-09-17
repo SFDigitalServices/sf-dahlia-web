@@ -114,8 +114,12 @@ export const userObjectGenerator = ({
 }
 
 export const interceptUnleashFlags = () => {
-  const toggleOffNames = new Set(["temp.all.housingCounselorAccess", "temp.webapp.auth.clerk"])
-  const toggleOnNames = new Set(["temp.webapp.newAccountLayout"])
+  const toggleOffNames = new Set([
+    "temp.all.housingCounselorAccess",
+    "temp.webapp.auth.clerk",
+    "temp.webapp.newAccountLayout",
+  ])
+  const toggleOnNames = new Set([""])
   cy.intercept(
     "GET",
     "https://dahlia-feature-service-fbc319c3f542.herokuapp.com/api/frontend**",
