@@ -301,9 +301,11 @@ const SignInFlow = () => {
         {showError && (
           <div ref={alertRef} tabIndex={-1} className={styles.errorAlert}>
             <Alert fullwidth variant="alert" onClose={() => setShowError(false)}>
-              {renderInlineMarkup(
-                t("signIn.badCredentialsWithResetLink", { url: forgotPasswordPath })
-              )}
+              {view === "verificationCode"
+                ? t("signIn.badCredentials")
+                : renderInlineMarkup(
+                    t("signIn.badCredentialsWithResetLink", { url: forgotPasswordPath })
+                  )}
             </Alert>
           </div>
         )}
