@@ -138,6 +138,13 @@ describe("useSignInSession", () => {
       expect(result.error).toBe(clerkError)
       expect(signIn.emailCode.sendCode).not.toHaveBeenCalled()
     })
+
+    it("reports an error when the attempt does not ask for the code", async () => {
+      const result = await renderSession().current.sendEmailCode("a@b.com")
+
+      expect(signIn.emailCode.sendCode).toHaveBeenCalled()
+      expect(result.error).toBeTruthy()
+    })
   })
 
   describe("resendEmailCode", () => {
@@ -159,6 +166,12 @@ describe("useSignInSession", () => {
 
       expect(result.error).toBe(clerkError)
       expect(signIn.create).not.toHaveBeenCalled()
+    })
+
+    it("reports an error when the attempt no longer asks for a code", async () => {
+      const result = await renderSession().current.resendEmailCode()
+
+      expect(result.error).toBeTruthy()
     })
   })
 
@@ -183,6 +196,26 @@ describe("useSignInSession", () => {
 
       const result = await renderSession().current.verifyEmailCode("123456")
 
+      expect(result.error).toBeTruthy()
+    })
+  })
+
+  describe("sendPasswordResetCode", () => {
+    it("passes the provider's error through when the code cannot be sent", async () => {
+      signIn.resetPasswordEmailCode.sendCode.mockResolvedValue({ error: clerkError })
+
+      const result = await renderSession().current.sendPasswordResetCode("a@b.com")
+
+      expect(signIn.create).toHaveBeenCalledWith({ identifier: "a@b.com" })
+      expect(result.error).toBe(clerkError)
+    })
+  })
+
+  describe("verifyPasswordResetCode", () => {
+    it("reports an error when the attempt does not ask for a new password", async () => {
+      const result = await renderSession().current.verifyPasswordResetCode("123456")
+
+      expect(signIn.resetPasswordEmailCode.verifyCode).toHaveBeenCalledWith({ code: "123456" })
       expect(result.error).toBeTruthy()
     })
   })
