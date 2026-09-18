@@ -8,6 +8,7 @@ import { getCurrentLanguage } from "../../../util/languageUtil"
 jest.mock("@clerk/react", () => ({
   useSignUp: jest.fn(),
   useUser: jest.fn(),
+  useSession: () => ({ session: null }),
 }))
 
 jest.mock("react-router", () => ({

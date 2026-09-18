@@ -67,6 +67,7 @@ jest.mock("@clerk/react", () => {
     useAuth: jest.fn(() => ({ isLoaded: true, isSignedIn: false })),
     useUser: jest.fn(() => ({ isLoaded: true, user: null })),
     useSignUp: jest.fn(() => ({ fetchStatus: "idle", signUp: {} })),
+    useSession: () => ({ session: null }),
   }
 })
 

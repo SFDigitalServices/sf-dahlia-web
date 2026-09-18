@@ -17,6 +17,7 @@ export type SignUpSession = {
   activateSession: (redirectTo: string, navigateState?: unknown) => Promise<SignUpOutcome>
 
   setPassword: (password: string) => Promise<SignUpOutcome>
+  changePassword: (currentPassword: string, newPassword: string) => Promise<SignUpOutcome>
   hasPassword: boolean
   isAccountInitialized: boolean
 }

@@ -1,5 +1,5 @@
 import { useCallback, useMemo } from "react"
-import { useSignUp, useUser } from "@clerk/react"
+import { useSession, useSignUp, useUser } from "@clerk/react"
 import { useNavigate } from "react-router"
 
 import { getCurrentLanguage } from "../../../../util/languageUtil"
@@ -14,6 +14,7 @@ const NOT_READY: SignUpOutcome = {
 export const useClerkSignUpSession = (): SignUpSession => {
   const { signUp, fetchStatus } = useSignUp()
   const { isLoaded: isAccountInitialized, user } = useUser()
+  const { session } = useSession()
   const navigate = useNavigate()
 
   const isBusy = fetchStatus === "fetching"
@@ -122,6 +123,30 @@ export const useClerkSignUpSession = (): SignUpSession => {
     [isAccountInitialized, user]
   )
 
+  const changePassword = useCallback(
+    async (currentPassword: string, newPassword: string): Promise<SignUpOutcome> => {
+      if (!user || !session) return NOT_READY
+
+      try {
+        await session.startVerification({ level: "first_factor" })
+        await session.attemptFirstFactorVerification({
+          strategy: "password",
+          password: currentPassword,
+        })
+
+        await user.updatePassword({
+          currentPassword,
+          newPassword,
+          signOutOfOtherSessions: true,
+        })
+        return SUCCESS
+      } catch (error) {
+        return { error }
+      }
+    },
+    [user, session]
+  )
+
   return useMemo(
     (): SignUpSession => ({
       isBusy,
@@ -132,6 +157,7 @@ export const useClerkSignUpSession = (): SignUpSession => {
       verifyEmailCode,
       activateSession,
       setPassword,
+      changePassword,
     }),
     [
       isBusy,
@@ -142,6 +168,7 @@ export const useClerkSignUpSession = (): SignUpSession => {
       verifyEmailCode,
       activateSession,
       setPassword,
+      changePassword,
     ]
   )
 }
