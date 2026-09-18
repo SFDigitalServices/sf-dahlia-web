@@ -11,14 +11,16 @@
 
         radio-block-item value='Yes' user='application' name='plusHousingProgramParticipantAnswer' ng-required='true'
           | {{ 't.yes' | translate }}
-        div.form-group.margin-left--2x ng-if="isPlusHousingProgramParticipant()"
+        div.form-group.margin-left--2x ng-if="isPlusHousingProgramParticipant()" ng-class="{ error: inputInvalid('plusHousingProgramNumber')}"
           // Plus Housing Program Number text field
           label.form-label for="plusHousingProgramNumber"
             | {{ 'c9_plus_housing_program.enter_your_plus_housing_program_number' | translate }}
           p.form-note.margin-bottom--half translate="c9_plus_housing_program.look_for_your_program_number" translate-value-email-link='<a href="mailto:plushousing@sfgov.org">plushousing@sfgov.org</a>'
           input(
+            id="plusHousingProgramNumber"
             ng-model="application.plusHousingProgramNumber"
             ng-required="true"
+            ng-class="{ error: inputInvalid('plusHousingProgramNumber')}"
             name="plusHousingProgramNumber"
             type="text"
             autocomplete="off"
