@@ -84,4 +84,15 @@ RSpec.describe AuthController do
       expect(response).to render_template 'layouts/application-react'
     end
   end
+    describe '#change_password' do
+    it 'loads change password page successfully' do
+      get :change_password
+      expect(response).to be_ok
+    end
+
+    it 'renders in react by default' do
+      get :change_password
+      expect(response).to render_template 'layouts/application-react'
+    end
+  end
 end

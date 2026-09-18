@@ -17,6 +17,7 @@ import {
   getAddProfilePath,
   getForgotPasswordPath,
   getMyAccountPath,
+  getMyAccountSettingsPath,
   getSignInPath,
 } from "../../util/routeUtil"
 import styles from "./add-password.module.scss"
@@ -26,13 +27,14 @@ import "./styles/account.scss"
 
 interface AddPasswordPageProps {
   flow: AUTH_FLOW
+  isAccountSettingsFlow?: boolean
 }
 
 interface AddPasswordFormValues {
   password: string
 }
 
-const AddPasswordPage = ({ flow }: AddPasswordPageProps) => {
+const AddPasswordPage = ({ flow, isAccountSettingsFlow }: AddPasswordPageProps) => {
   const navigate = useNavigate()
   const { submitNewPassword, activateSession, isResetAttemptStale } = useSignInSession()
   const { setPassword, isAccountInitialized } = useSignUpSession()
@@ -86,7 +88,11 @@ const AddPasswordPage = ({ flow }: AddPasswordPageProps) => {
       return
     }
 
-    void navigate(getAddProfilePath())
+    if (isAccountSettingsFlow) {
+      void navigate(getMyAccountSettingsPath(), { state: { passwordChanged: true } })
+    } else {
+      void navigate(getAddProfilePath())
+    }
   }
 
   return (
@@ -97,7 +103,7 @@ const AddPasswordPage = ({ flow }: AddPasswordPageProps) => {
             ? t("createAccount.createNewPassword")
             : t("createAccount.addPassword")}
         </Heading>
-        {!isForgotPasswordFlow && (
+        {!isForgotPasswordFlow && !isAccountSettingsFlow && (
           <Message fullwidth variant="primary" className={styles.skip}>
             {t("createAccount.okayToSkipPassword")}
           </Message>
@@ -114,9 +120,11 @@ const AddPasswordPage = ({ flow }: AddPasswordPageProps) => {
           />
           <div className={styles.actions}>
             <Button variant="primary" size="sm" type="submit" disabled={!isAccountInitialized}>
-              {t("createAccount.savePassword")}
+              {isAccountSettingsFlow
+                ? t("accountSettings.addPassword")
+                : t("createAccount.savePassword")}
             </Button>
-            {!isForgotPasswordFlow && (
+            {!isForgotPasswordFlow && !isAccountSettingsFlow && (
               <Button
                 variant="primary-outlined"
                 size="sm"
@@ -128,10 +136,22 @@ const AddPasswordPage = ({ flow }: AddPasswordPageProps) => {
                 {t("createAccount.skipForNow")}
               </Button>
             )}
+            {isAccountSettingsFlow && (
+              <Button
+                size="sm"
+                variant="text"
+                className={styles.cancelButton}
+                onClick={() => {
+                  void navigate(getMyAccountSettingsPath())
+                }}
+              >
+                {t("label.cancel")}
+              </Button>
+            )}
           </div>
         </Form>
       </Card.Section>
-      <GetHelp flow={flow} />
+      {!isAccountSettingsFlow && <GetHelp flow={flow} />}
     </AuthLayout>
   )
 }
@@ -139,8 +159,8 @@ const AddPasswordPage = ({ flow }: AddPasswordPageProps) => {
 const AddPassword = (_props: { assetPaths: unknown }) => {
   const navigate = useNavigate()
   const { state } = useLocation()
-  const flow: AUTH_FLOW = state?.flow
-  const isForgotPasswordFlow = flow === AUTH_FLOW.FORGOT_PASSWORD
+  const flow = state?.flow
+  const isAccountSettingsFlow = state?.accountSettingsFlow === true
   const { status } = useAuthSession()
   const { isAccountInitialized, hasPassword } = useSignUpSession()
   const { profile, initialStateLoaded } = useContext(UserContext)
@@ -170,6 +190,7 @@ const AddPassword = (_props: { assetPaths: unknown }) => {
       void navigate(getSignInPath())
       return
     }
+    if (isAccountSettingsFlow) return
     if (!initialStateLoaded) return
     if (profile) void navigate(getMyAccountPath())
     if (!isAccountInitialized) return
@@ -183,23 +204,22 @@ const AddPassword = (_props: { assetPaths: unknown }) => {
     isAccountInitialized,
     hasPassword,
     navigate,
-    isForgotPasswordFlow,
+    isAccountSettingsFlow,
   ])
 
   const ready =
     flagsReady &&
     clerkEnabled &&
     status.kind === "signedIn" &&
-    initialStateLoaded &&
-    !profile &&
     isAccountInitialized &&
-    !hasPassword
+    !hasPassword &&
+    (isAccountSettingsFlow || (initialStateLoaded && !profile))
 
   if (!ready) {
     return null
   }
 
-  return <AddPasswordPage flow={flow} />
+  return <AddPasswordPage flow={flow} isAccountSettingsFlow={isAccountSettingsFlow} />
 }
 
 export { AddPasswordPage }
