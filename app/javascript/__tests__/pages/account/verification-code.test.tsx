@@ -1,5 +1,5 @@
 import React from "react"
-import { useSignIn, useSignUp, useAuth } from "@clerk/react"
+import { useSignIn, useSignUp, useAuth, useClerk } from "@clerk/react"
 import { t } from "@bloom-housing/ui-components"
 import { act, screen, waitFor, cleanup, fireEvent } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
@@ -27,6 +27,7 @@ jest.mock("@clerk/react", () => {
     })),
     useSignUp: jest.fn(),
     useSignIn: jest.fn(),
+    useClerk: jest.fn(),
   }
 })
 
@@ -141,6 +142,7 @@ describe("<EnterVerificationCode />", () => {
       state: { email: "test@example.com", flow: AUTH_FLOW.CREATE_ACCOUNT },
     })
     ;(useFeatureFlag as jest.Mock).mockReturnValue({ flagsReady: true, unleashFlag: true })
+    ;(useClerk as jest.Mock).mockReturnValue({ client: undefined })
     ;(useSignUp as jest.Mock).mockReturnValue({
       fetchStatus: "idle",
       signUp: mockSignUpResource,
