@@ -126,6 +126,15 @@ describe("useSignUpSession", () => {
       expect(result.error).toBe(clerkError)
       expect(signUp.create).not.toHaveBeenCalled()
     })
+
+    it("reports an error when the attempt no longer awaits the email", async () => {
+      signUp.unverifiedFields = []
+
+      const result = await renderSession().current.resendEmailCode()
+
+      expect(result.error).toBeTruthy()
+      expect(signUp.create).not.toHaveBeenCalled()
+    })
   })
 
   describe("verifyEmailCode", () => {
