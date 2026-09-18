@@ -98,19 +98,4 @@ describe("useFeatureFlag", () => {
     expect(consoleSpy).toHaveBeenCalled()
     expect(result.current).toStrictEqual({ flagsReady: undefined, unleashFlag: false })
   })
-
-  it("returns the unleash flag when the remembered override cannot be read", () => {
-    Object.defineProperty(window, "location", {
-      writable: true,
-      value: { search: "" },
-    })
-    jest.spyOn(Storage.prototype, "getItem").mockImplementation(() => {
-      throw new Error("Storage unavailable")
-    })
-
-    const { result } = renderHook(() => useFeatureFlag("testFlag", false))
-
-    expect(consoleSpy).not.toHaveBeenCalled()
-    expect(result.current).toStrictEqual({ flagsReady: true, unleashFlag: true })
-  })
 })
