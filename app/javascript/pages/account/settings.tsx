@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import React, { useContext, useEffect, useState } from "react"
-import { useUser } from "@clerk/react"
 import withAppSetup from "../../layouts/withAppSetup"
 import UserContext from "../../authentication/context/UserContext"
 import { useAuthSession } from "../../authentication/session/AuthSessionProvider"
+import { useSignUpSession } from "../../authentication/session/useSignUpSession"
 import { bearerToken } from "../../authentication/session/authStatus"
 import { Form, DOBFieldValues, t } from "@bloom-housing/ui-components"
 import { DeepMap, FieldError, useForm } from "react-hook-form"
@@ -188,8 +188,7 @@ const EmailSection = ({ user, setUser }: SectionProps) => {
 
 const PasswordSection = () => {
   const navigate = useNavigate()
-  const { user: clerkUser } = useUser()
-  const userHasPassword = clerkUser?.passwordEnabled
+  const { hasPassword: userHasPassword } = useSignUpSession()
 
   return (
     <FormSection>

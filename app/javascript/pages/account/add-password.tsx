@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import { Form, t } from "@bloom-housing/ui-components"
 import { Button, Card, Heading, Message } from "@bloom-housing/ui-seeds"
-import { useUser } from "@clerk/react"
 import React, { useContext, useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { Navigate, useLocation, useNavigate } from "react-router"
 import UserContext from "../../authentication/context/UserContext"
 import { useAuthSession } from "../../authentication/session/AuthSessionProvider"
 import { useSignInSession } from "../../authentication/session/useSignInSession"
+import { useSignUpSession } from "../../authentication/session/useSignUpSession"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import AuthLayout from "../../layouts/AuthLayout"
 import withAppSetup from "../../layouts/withAppSetup"
@@ -36,9 +36,8 @@ interface AddPasswordFormValues {
 
 const AddPasswordPage = ({ flow, isAccountSettingsFlow }: AddPasswordPageProps) => {
   const navigate = useNavigate()
-  const { isLoaded, user } = useUser()
-  // TODO(DAH-4345): useUser above converts with useAccountSession.
   const { submitNewPassword, activateSession, isResetAttemptStale } = useSignInSession()
+  const { setPassword, isAccountInitialized } = useSignUpSession()
   const [isResettingPassword, setIsResettingPassword] = useState(false)
   const isForgotPasswordFlow = flow === AUTH_FLOW.FORGOT_PASSWORD
   const {
@@ -77,23 +76,22 @@ const AddPasswordPage = ({ flow, isAccountSettingsFlow }: AddPasswordPageProps) 
 
   const onSubmit = async ({ password: newPassword }: AddPasswordFormValues) => {
     setIsResettingPassword(true)
-    if (!isLoaded) return
+    if (!isAccountInitialized) return
     if (isForgotPasswordFlow) {
       void resetPassword(newPassword)
       return
     }
 
-    try {
-      if (!user) return
-      await user.updatePassword({ newPassword })
-      if (isAccountSettingsFlow) {
-        void navigate(getMyAccountSettingsPath(), { state: { passwordChanged: true } })
-      } else {
-        void navigate(getAddProfilePath())
-      }
-    } catch (error) {
-      console.error("Add password error:", error)
+    const { error } = await setPassword(newPassword)
+    if (error) {
       setError("password", { message: "password:server:generic" })
+      return
+    }
+
+    if (isAccountSettingsFlow) {
+      void navigate(getMyAccountSettingsPath(), { state: { passwordChanged: true } })
+    } else {
+      void navigate(getAddProfilePath())
     }
   }
 
@@ -121,7 +119,7 @@ const AddPasswordPage = ({ flow, isAccountSettingsFlow }: AddPasswordPageProps) 
             )}
           />
           <div className={styles.actions}>
-            <Button variant="primary" size="sm" type="submit" disabled={!isLoaded}>
+            <Button variant="primary" size="sm" type="submit" disabled={!isAccountInitialized}>
               {isAccountSettingsFlow
                 ? t("accountSettings.addPassword")
                 : t("createAccount.savePassword")}
@@ -164,10 +162,9 @@ const AddPassword = (_props: { assetPaths: unknown }) => {
   const flow = state?.flow
   const isAccountSettingsFlow = state?.accountSettingsFlow === true
   const { status } = useAuthSession()
-  const { isLoaded: userLoaded, user } = useUser()
+  const { isAccountInitialized, hasPassword } = useSignUpSession()
   const { profile, initialStateLoaded } = useContext(UserContext)
   const { unleashFlag: clerkEnabled, flagsReady } = useFeatureFlag(UNLEASH_FLAG.CLERK_AUTH, false)
-  const hasPassword = user?.passwordEnabled
 
   // TODO: simplify and centralize auth redirects
   /**
@@ -196,7 +193,7 @@ const AddPassword = (_props: { assetPaths: unknown }) => {
     if (isAccountSettingsFlow) return
     if (!initialStateLoaded) return
     if (profile) void navigate(getMyAccountPath())
-    if (!userLoaded) return
+    if (!isAccountInitialized) return
     if (!profile && hasPassword) void navigate(getAddProfilePath())
   }, [
     flagsReady,
@@ -204,7 +201,7 @@ const AddPassword = (_props: { assetPaths: unknown }) => {
     status,
     initialStateLoaded,
     profile,
-    userLoaded,
+    isAccountInitialized,
     hasPassword,
     navigate,
     isAccountSettingsFlow,
@@ -214,7 +211,7 @@ const AddPassword = (_props: { assetPaths: unknown }) => {
     flagsReady &&
     clerkEnabled &&
     status.kind === "signedIn" &&
-    userLoaded &&
+    isAccountInitialized &&
     !hasPassword &&
     (isAccountSettingsFlow || (initialStateLoaded && !profile))
 

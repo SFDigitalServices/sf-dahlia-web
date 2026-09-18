@@ -26,8 +26,10 @@ jest.mock("@clerk/react", () => {
       getToken: jest.fn().mockResolvedValue("clerk-session-token"),
     })),
     useSignUp: jest.fn(),
+    useSession: () => ({ session: null }),
     useSignIn: jest.fn(),
     useClerk: jest.fn(),
+    useUser: jest.fn(),
   }
 })
 
