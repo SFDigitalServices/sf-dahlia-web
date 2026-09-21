@@ -110,6 +110,7 @@ interface SectionProps {
 const EmailSection = ({ user }: SectionProps) => {
   const [emailUpdateBanner, setEmailUpdateBanner] = useState(false)
   const [emailBanner, setEmailBanner] = useState(false)
+  const navigate = useNavigate()
 
   //   const {
   //     register,
@@ -143,6 +144,7 @@ const EmailSection = ({ user }: SectionProps) => {
   //         setLoading(false)
   //       })
   //   }
+  console.log(user)
 
   return (
     <>
@@ -169,10 +171,16 @@ const EmailSection = ({ user }: SectionProps) => {
         <p className={settingsStyles.settingsText}>{t("accountSettings.email.description")}</p>
         <div className={settingsStyles.settingsEmailFieldset}>
           <legend className={"fieldset-legend"}>{t("label.emailAddress")}</legend>
-          <p>{user.email}</p>
+          <p>{user?.email ?? null}</p>
         </div>
         <div className={settingsStyles.settingsButton}>
-          <Button type="button" variant="primary-outlined" onClick={() => getUpdateEmailPath()}>
+          <Button
+            type="button"
+            variant="primary-outlined"
+            onClick={() => {
+              void navigate(getUpdateEmailPath())
+            }}
+          >
             {t("accountSettings.email.updateEmail")}
           </Button>
         </div>
@@ -197,7 +205,7 @@ const PasswordSection = () => {
     <FormSection>
       <legend className={"fieldset-legend"}>{t("label.password")}</legend>
       {userHasPassword ? (
-        <span aria-hidden="true">••••</span>
+        <span aria-hidden="true">••••••••</span>
       ) : (
         <p className="field-note">{t("accountSettings.addPasswordDescription")}</p>
       )}
