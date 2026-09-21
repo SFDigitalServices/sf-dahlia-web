@@ -9,6 +9,7 @@ class User < ApplicationRecord
   validate :password_complexity
 
   validates :email, presence: true, uniqueness: { case_sensitive: false }
+  validates :clerk_user_id, uniqueness: true, allow_nil: true
 
   include DeviseTokenAuth::Concerns::User
 

@@ -60,6 +60,12 @@ export const setupUserContext = ({
   }
 
   if (loggedIn) {
+    if (jest.isMockFunction(authApiService.exchangeClerkForDeviseHeaders)) {
+      authApiService.exchangeClerkForDeviseHeaders.mockResolvedValue(undefined)
+    } else {
+      jest.spyOn(authApiService, "exchangeClerkForDeviseHeaders").mockResolvedValue(undefined)
+    }
+
     if (jest.isMockFunction(authApiService.getProfile)) {
       authApiService.getProfile.mockResolvedValue(mockProfile ?? mockProfileStub)
     } else {
