@@ -37,6 +37,7 @@ import Account from "../pages/account/account"
 import Applications from "../pages/account/applications"
 import Settings from "../pages/account/settings"
 import Contact from "../pages/account/contact"
+import UpdateEmail from "../pages/account/update-email"
 import type { INVITE_TO_X } from "../modules/constants"
 
 type InviteToUrlParams = {
@@ -87,6 +88,7 @@ const PAGE_ROUTES = [
   [Applications, "/account/applications"],
   [Settings, "/account/settings"],
   [Contact, "/account/contact"],
+  [UpdateEmail, "/update-email"],
 ] as const
 
 const INVITE_TO_PATHS = [

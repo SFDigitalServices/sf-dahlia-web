@@ -1,0 +1,10 @@
+.formActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--seeds-spacer-text);
+  margin-top: var(--seeds-spacer-content);
+}
+
+.cancelButton {
+  padding: var(--button-padding-sm) !important;
+}

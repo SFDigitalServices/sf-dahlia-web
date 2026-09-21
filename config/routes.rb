@@ -115,6 +115,7 @@ Rails.application.routes.draw do
   get '(:lang)/change-password' => 'auth#change_password', lang: /(en|es|zh|tl)/
   get '(:lang)/forgot-password' => 'auth#forgot_password', lang: /(en|es|zh|tl)/
   get '(:lang)/reset-password' => 'auth#reset_password', lang: /(en|es|zh|tl)/
+  get '(:lang)/update-email' => 'auth#update_email', lang: /(en|es|zh|tl)/
 
   get '(:lang)/housing-counselors' => 'assistance#housing_counselors', lang: /(en|es|zh|tl)/
   get '(:lang)/get-assistance' => 'assistance#get_assistance', lang: /(en|es|zh|tl)/

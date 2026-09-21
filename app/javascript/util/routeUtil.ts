@@ -114,6 +114,8 @@ export const getMyAccountApplicationsPath = localizedPathGetter("/account/applic
 export const getApplicationPath = localizedPathGetter("/applications")
 export const getMyAccountSettingsPath = localizedPathGetter("/account/settings")
 export const getMyAccountContactPath = localizedPathGetter("/account/contact")
+export const getUpdateEmailPath = localizedPathGetter("/update-email")
+
 // Rental Listing Directory pages
 export const getHelpCalculatingIncomeLink = localizedPathGetter("/income-calculator/rental/intro")
 export const getEligibilityEstimatorLink = localizedPathGetter("/eligibility-estimator/rental")
@@ -235,4 +237,5 @@ export enum AppPages {
   HowToApply = "how to apply",
   InviteTo = "invite to",
   ListingApplyForm = "listing apply form",
+  UpdateEmail = "update email",
 }

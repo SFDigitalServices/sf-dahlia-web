@@ -13,12 +13,12 @@ import {
   getAddPasswordPath,
   getChangePasswordPath,
   getMyAccountContactPath,
+  getUpdateEmailPath,
   RedirectType,
 } from "../../util/routeUtil"
 import { User } from "../../authentication/user"
 import Layout from "../../layouts/Layout"
 import AccountLayout from "../../layouts/AccountLayout"
-import EmailFieldset, { emailFieldsetErrors, emailSortOrder } from "./components/EmailFieldset"
 import FormSubmitButton from "./components/FormSubmitButton"
 import NameFieldset, {
   handleNameServerErrors,
@@ -111,15 +111,15 @@ const EmailSection = ({ user }: SectionProps) => {
   const [emailUpdateBanner, setEmailUpdateBanner] = useState(false)
   const [emailBanner, setEmailBanner] = useState(false)
 
-  const {
-    register,
-    formState: { errors },
-  } = useForm({ mode: "onTouched" })
+  //   const {
+  //     register,
+  //     formState: { errors },
+  //   } = useForm({ mode: "onTouched" })
 
-  const onChange = () => {
-    setEmailUpdateBanner(true)
-    setEmailBanner(false)
-  }
+  //   const onChange = () => {
+  //     setEmailUpdateBanner(true)
+  //     setEmailBanner(false)
+  //   }
 
   //   const onSubmit = (data: { email: string }) => {
   //     setLoading(true)
@@ -159,28 +159,20 @@ const EmailSection = ({ user }: SectionProps) => {
         message={t("accountSettings.checkYourEmail")}
         onClose={() => setEmailBanner(false)}
       />
-      <ErrorSummaryBanner
+      {/* <ErrorSummaryBanner
         errors={errors}
         sortOrder={emailSortOrder}
         messageMap={(messageKey) => getErrorMessage(messageKey, emailFieldsetErrors, true)}
-      />
+      /> */}
       <FormSection>
         <Heading size="md">{t("accountSettings.email.title")}</Heading>
         <p className={settingsStyles.settingsText}>{t("accountSettings.email.description")}</p>
         <div className={settingsStyles.settingsEmailFieldset}>
-          <EmailFieldset
-            register={register}
-            errors={errors}
-            defaultEmail={user?.email ?? null}
-            onChange={onChange}
-          />
+          <legend className={"fieldset-legend"}>{t("label.emailAddress")}</legend>
+          <p>{user.email}</p>
         </div>
         <div className={settingsStyles.settingsButton}>
-          <Button
-            type="button"
-            variant="primary-outlined"
-            onClick={() => getMyAccountContactPath()}
-          >
+          <Button type="button" variant="primary-outlined" onClick={() => getUpdateEmailPath()}>
             {t("accountSettings.email.updateEmail")}
           </Button>
         </div>
