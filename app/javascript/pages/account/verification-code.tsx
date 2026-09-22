@@ -258,11 +258,29 @@ const EnterVerificationCodePage = ({
     return true
   }
 
+  const resendUpdateEmailCode = async (): Promise<boolean> => {
+    const emailAddress = user?.emailAddresses.find(
+      (e) => e.emailAddress.toLowerCase() === email.toLowerCase()
+    )
+    if (!emailAddress) {
+      console.error("Resend update email code error: address not found")
+      return false
+    }
+
+    try {
+      await emailAddress.prepareVerification({ strategy: "email_code" })
+      return true
+    } catch (error) {
+      console.error("Resend update email code error:", error)
+      return false
+    }
+  }
+
   const resendCodeByFlow: Record<AUTH_FLOW, () => Promise<boolean>> = {
     [AUTH_FLOW.SIGN_IN]: resendSignInCode,
     [AUTH_FLOW.CREATE_ACCOUNT]: resendSignUpCode,
     [AUTH_FLOW.FORGOT_PASSWORD]: resendForgotPasswordCode,
-    [AUTH_FLOW.UPDATE_EMAIL]: resendForgotPasswordCode,
+    [AUTH_FLOW.UPDATE_EMAIL]: resendUpdateEmailCode,
   }
 
   const onResend = async () => {
