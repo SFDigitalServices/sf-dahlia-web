@@ -44,5 +44,5 @@ Rails.application.config.filter_parameters += [
   # bearer-style JWTs passed as a short query param - invite-to and
   # housing-counselor delegate links (see InviteToController,
   # Api::V1::InviteToResponseController, Api::V1::HousingCounselorController)
-  :t,
+/\At\z/
 ]
