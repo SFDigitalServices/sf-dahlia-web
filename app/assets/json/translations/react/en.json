@@ -65,6 +65,7 @@
   "accountSettings.accountSettings": "Account Settings",
   "accountSettings.addPassword": "Add password",
   "accountSettings.addPasswordDescription": "You do not have a password. You can add one if you want. Or, we can always email you a code to sign in.",
+  "accountSettings.changeEmailBanner": "Email address updated.",
   "accountSettings.changePassword": "Change password",
   "accountSettings.changePasswordBanner": "New password saved.",
   "accountSettings.checkYourEmail": "We sent you an email. Check your email and follow the link to finish changing your information.",
