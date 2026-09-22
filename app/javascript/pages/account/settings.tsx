@@ -57,8 +57,8 @@ import { renderInlineMarkup } from "../../util/languageUtil"
 type ConfirmationBannerFlag = "passwordChanged" | "emailChanged"
 
 const confirmationBannerMessages: Record<ConfirmationBannerFlag, string> = {
-  passwordChanged: t("accountSettings.changePasswordBanner"),
-  emailChanged: t("accountSettings.changeEmailBanner"),
+  passwordChanged: "accountSettings.changePasswordBanner",
+  emailChanged: "accountSettings.changeEmailBanner",
 }
 
 export const Banner = ({
@@ -114,10 +114,12 @@ interface SectionProps {
   handleBanners?: (banner: string) => void
 }
 
-const EmailSection = ({ user }: SectionProps) => {
+const EmailSection = () => {
   const [emailUpdateBanner, setEmailUpdateBanner] = useState(false)
   const [emailBanner, setEmailBanner] = useState(false)
   const navigate = useNavigate()
+  const { user } = useUser()
+  const loginEmail = user?.primaryEmailAddress?.emailAddress
 
   return (
     <>
@@ -139,7 +141,7 @@ const EmailSection = ({ user }: SectionProps) => {
         <p className={settingsStyles.settingsText}>{t("accountSettings.email.description")}</p>
         <div className={settingsStyles.settingsEmailFieldset}>
           <legend className={"fieldset-legend"}>{t("label.emailAddress")}</legend>
-          <p>{user?.email ?? null}</p>
+          <p>{loginEmail ?? null}</p>
         </div>
         <div className={settingsStyles.settingsButton}>
           <Button
@@ -537,7 +539,7 @@ const AccountSettings = ({ profile }: { profile: User }) => {
         showBanner={!!confirmationBannerMessage}
         className={settingsStyles["settingsConfirmationAlert"]}
         variant="success"
-        message={confirmationBannerMessage ?? ""}
+        message={confirmationBannerMessage ? t(confirmationBannerMessage) : ""}
         onClose={() => setConfirmationBannerMessage(null)}
       />
       {nameUpdateBanner || nameSavedBanner ? (
@@ -569,7 +571,7 @@ const AccountSettings = ({ profile }: { profile: User }) => {
       />
       <NameSection user={user} setUser={setUser} handleBanners={handleBanners} />
       <DateOfBirthSection user={user} setUser={setUser} />
-      <EmailSection user={user} setUser={setUser} />
+      <EmailSection />
       <PasswordSection />
       {showHousingCounselorSection && user && (
         <HousingCounselorSection user={user} setUser={setUser} />

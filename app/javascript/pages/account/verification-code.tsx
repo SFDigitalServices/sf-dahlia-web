@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import React, { useContext, useEffect, useState, useRef } from "react"
 import { useLocation, useNavigate } from "react-router"
-import { useAuth, useSignIn, useSignUp } from "@clerk/react"
+import { useAuth, useSignIn, useSignUp, useUser } from "@clerk/react"
 import { ExpandableContent, Form, Order, t } from "@bloom-housing/ui-components"
 import { Card, Heading, Link, Button } from "@bloom-housing/ui-seeds"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
@@ -19,6 +19,7 @@ import {
   getMyAccountPath,
   getResetPasswordPath,
   getSignInPath,
+  getMyAccountSettingsPath,
 } from "../../util/routeUtil"
 import styles from "./verification-code.module.scss"
 import { AUTH_FLOW, UNLEASH_FLAG } from "../../modules/constants"
@@ -56,6 +57,8 @@ const EnterVerificationCodePage = ({
   const [resendExpiresAt, setResendExpiresAt] = useState(() => Date.now() + RESEND_CODE_MS)
   const [resendSeconds, setResendSeconds] = useState(RESEND_CODE_MS / 1000)
   const [isResending, setIsResending] = useState(false)
+  const { user } = useUser()
+
   const {
     control,
     handleSubmit,
@@ -159,27 +162,45 @@ const EnterVerificationCodePage = ({
   }
 
   const verifyUpdateEmailCode = async (code: string) => {
-    if (signInFetchStatus === "fetching" || !signIn) return
-
-    const { error } = await signIn.resetPasswordEmailCode.verifyCode({ code })
-    if (error) {
-      console.error("Code verification error:", error)
+    if (!user) {
+      setError("code", { message: "invalid" })
+      return
+    }
+    const emailAddress = user.emailAddresses.find(
+      (e) => e.emailAddress.toLowerCase() === email.toLowerCase()
+    )
+    if (!emailAddress) {
+      setError("code", { message: "invalid" })
       return
     }
 
-    if (signIn.status !== "needs_new_password") {
-      console.error("Password reset error:", signIn.status)
-      return
-    }
+    try {
+      // TODO: DAH-4372 - Check and reverify user with first factor if needed
 
-    void navigate(getResetPasswordPath(), { state: { email, flow, code } })
+      const verifiedEmail = await emailAddress.attemptVerification({ code })
+      if (verifiedEmail.verification.status !== "verified") {
+        setError("code", { message: "invalid" })
+        return
+      }
+      if (emailAddress.verification?.status === "verified") {
+        const previousEmailAddress = user.primaryEmailAddress
+        await user.update({ primaryEmailAddressId: verifiedEmail.id })
+        if (previousEmailAddress && previousEmailAddress.id !== verifiedEmail.id) {
+          await previousEmailAddress.destroy()
+        }
+
+        void navigate(getMyAccountSettingsPath(), { state: { emailChanged: true } })
+      }
+    } catch (error) {
+      console.error("Update email verification error:", error)
+      setError("code", { message: "invalid" })
+    }
   }
 
   const verifyAuthCodeByFlow: Record<AUTH_FLOW, (code: string) => Promise<void>> = {
     [AUTH_FLOW.SIGN_IN]: verifySignInCode,
     [AUTH_FLOW.CREATE_ACCOUNT]: verifySignUpCode,
     [AUTH_FLOW.FORGOT_PASSWORD]: verifyForgotPasswordCode,
-    // TODO
     [AUTH_FLOW.UPDATE_EMAIL]: verifyUpdateEmailCode,
   }
 
@@ -357,6 +378,7 @@ const EnterVerificationCode = (_props: { assetPaths: unknown }) => {
   const { unleashFlag: clerkEnabled, flagsReady } = useFeatureFlag(UNLEASH_FLAG.CLERK_AUTH, false)
   const flow: AUTH_FLOW = state?.flow
   const fallbackPath = flow ? getAuthFlowPath(flow) : getSignInPath()
+  const isUpdateEmailFlow = flow === AUTH_FLOW.UPDATE_EMAIL
 
   // TODO: simplify and centralize auth redirects
   /**
@@ -388,8 +410,11 @@ const EnterVerificationCode = (_props: { assetPaths: unknown }) => {
       return
     }
     if (!initialStateLoaded) return
-    if (isSignedIn && profile) void navigate(getMyAccountPath())
-    if (isSignedIn && !profile) void navigate(getAddProfilePath())
+    if (!isUpdateEmailFlow) {
+      if (!initialStateLoaded) return
+      if (isSignedIn && profile) void navigate(getMyAccountPath())
+      if (isSignedIn && !profile) void navigate(getAddProfilePath())
+    }
     redirectCheckHasRunOnce.current = true
   }, [
     flagsReady,
@@ -402,9 +427,15 @@ const EnterVerificationCode = (_props: { assetPaths: unknown }) => {
     navigate,
     flow,
     fallbackPath,
+    isUpdateEmailFlow,
   ])
 
-  const ready = flagsReady && clerkEnabled && isLoaded && !isSignedIn && !!email
+  const ready =
+    flagsReady &&
+    clerkEnabled &&
+    isLoaded &&
+    (isUpdateEmailFlow ? isSignedIn : !isSignedIn) &&
+    !!email
 
   if (!ready) {
     return null
