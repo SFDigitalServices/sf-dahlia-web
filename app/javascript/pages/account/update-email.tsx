@@ -49,7 +49,7 @@ const UpdateEmailPage = () => {
 
     setLoading(true)
     try {
-      // Destroys leftover email address from an abandonded change email attempt
+      // Destroys leftover email address from an abandoned change email attempt
       const unverifiedEmailAddress = user.emailAddresses.find(
         (e) => e.emailAddress.toLowerCase() === email.toLowerCase()
       )
