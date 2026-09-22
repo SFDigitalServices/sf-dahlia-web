@@ -1,5 +1,4 @@
 import React, { useContext } from "react"
-import { useAuth } from "@clerk/react"
 import { t, Icon } from "@bloom-housing/ui-components"
 import { Heading, Tabs } from "@bloom-housing/ui-seeds"
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons"
@@ -14,7 +13,7 @@ import {
   getMyAccountContactPath,
 } from "../util/routeUtil"
 import UserContext from "../authentication/context/UserContext"
-import { clearHeaders } from "../authentication/token"
+import { useAuthSession } from "../authentication/session/AuthSessionProvider"
 import { useFeatureFlag } from "../hooks/useFeatureFlag"
 import { UNLEASH_FLAG } from "../modules/constants"
 import styles from "./AccountNav.module.scss"
@@ -100,15 +99,8 @@ const DeviseAccountNav = () => {
 }
 
 const ClerkAccountNav = () => {
-  const { signOut } = useAuth()
-  return (
-    <AccountNavLinks
-      signOut={async () => {
-        clearHeaders()
-        await signOut()
-      }}
-    />
-  )
+  const { signOut } = useAuthSession()
+  return <AccountNavLinks signOut={signOut} />
 }
 
 const AccountNav = () => {

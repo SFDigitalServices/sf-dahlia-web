@@ -29,6 +29,7 @@ import {
   isFcfsSalesListing,
   isDeadlinePassed,
   isPlusHousing,
+  plusHousingUnitsCount,
   getAllUnitSummaries,
   getOccupancyRangeByUnitType,
 } from "../../util/listingUtil"
@@ -303,6 +304,22 @@ describe("listingUtil", () => {
           Custom_Listing_Type: CUSTOM_LISTING_TYPES.PLUS_HOUSING,
         })
       ).toBe(true)
+    })
+  })
+
+  describe("plusHousingUnitsCount", () => {
+    it("should count only units reserved for Plus Housing", () => {
+      expect(
+        plusHousingUnitsCount([
+          { ...units[0], Reserved_Type: "Plus Housing" },
+          { ...units[1], Reserved_Type: "Other priority" },
+          { ...units[2], Reserved_Type: "Plus Housing" },
+        ])
+      ).toBe(2)
+    })
+
+    it("should return zero when units are unavailable", () => {
+      expect(plusHousingUnitsCount()).toBe(0)
     })
   })
 

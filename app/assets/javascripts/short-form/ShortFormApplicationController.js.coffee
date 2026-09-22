@@ -783,6 +783,9 @@ ShortFormApplicationController = (
       message = $translate.instant("error.household_income_too_high")
     $scope.eligibilityErrors = [message]
 
+  $scope.isPlusHousingProgramParticipant = ->
+    $scope.application.plusHousingProgramParticipantAnswer == 'Yes'
+
 ########## BEGIN VETERANS PREFERENCE LOGIC ##########
 
   $scope.showVeteransApplicationQuestion = ->
@@ -834,6 +837,10 @@ ShortFormApplicationController = (
     page = ShortFormNavigationService.getPostHomeAndCommunityBasedServicesPage($scope.listing)
     ShortFormNavigationService.goToApplicationPage("dahlia.short-form-application.#{page}")
 
+  $scope.goToPostPlusHousingProgramPage = ->
+    page = ShortFormNavigationService.getPostPlusHousingProgramPage($scope.listing)
+    ShortFormNavigationService.goToApplicationPage("dahlia.short-form-application.#{page}")
+
   $scope.goToDemographicsPageUnlessAutofilled = ->
     if ShortFormApplicationService.APPLICATION_AUTOFILL_IMPROVEMENTS && ShortFormApplicationService.demographicsAreAutofilled()
       ShortFormNavigationService.goToApplicationPage("dahlia.short-form-application.review-summary")
@@ -845,6 +852,9 @@ ShortFormApplicationController = (
 
   $scope.listingHasHomeAndCommunityBasedServicesUnits = ->
     ShortFormApplicationService.listingHasHomeAndCommunityBasedServicesUnits($scope.listing)
+
+  $scope.listingHasPlusHousingProgramUnits = ->
+    ShortFormApplicationService.listingHasPlusHousingProgramUnits($scope.listing)
 
   $scope.publicHousingYes = ->
     ShortFormApplicationService.resetMonthlyRentForm()

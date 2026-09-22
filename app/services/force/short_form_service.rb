@@ -64,9 +64,11 @@ module Force
         status: 'Draft',
         applicationSubmittedDate: nil,
         answeredCommunityScreening: nil,
+        plusHousingProgramNumber: nil,
         primaryApplicant: {
           isSFUSDEmployee: nil,
           jobClassification: nil,
+          isPlusHousingProgramParticipant: nil,
         },
         lotteryNumber: nil,
         name: nil,

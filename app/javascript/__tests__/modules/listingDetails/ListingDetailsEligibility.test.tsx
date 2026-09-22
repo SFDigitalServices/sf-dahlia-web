@@ -416,11 +416,16 @@ describe("ListingDetailsEligibility", () => {
       ...closedRentalListing,
       Custom_Listing_Type: CUSTOM_LISTING_TYPES.PLUS_HOUSING,
     }
+    const unitsWithPlusHousing: RailsUnit[] = [
+      { ...unitsWithOneAmi[0], Reserved_Type: "Plus Housing" },
+      { ...unitsWithOneAmi[1], Reserved_Type: "Other priority" },
+      { ...unitsWithOneAmi[0], Reserved_Type: "Plus Housing" },
+    ]
 
     const { asFragment, findByText, findByRole } = render(
       <ListingDetailsContext.Provider
         value={{
-          units: unitsWithOneAmi,
+          units: unitsWithPlusHousing,
           amiCharts: amiChartsWithOneAmi,
           fetchingUnits: false,
           fetchedUnits: true,
@@ -444,8 +449,43 @@ describe("ListingDetailsEligibility", () => {
     expect(
       await findByRole("link", { name: "Learn about the Plus Housing program" })
     ).toHaveAttribute("href", "https://www.sf.gov/reports--february-2024--plus-housing-waitlist")
-    expect(await findByText("5 Units")).toBeDefined()
+    expect(await findByText("2 Units")).toBeDefined()
     expect(asFragment()).toMatchSnapshot()
+  })
+
+  it("displays a singular unit label when there is one Plus Housing unit", async () => {
+    axios.get.mockResolvedValue({ data: { preferences: defaultPreferences } })
+
+    const plusHousingListing = {
+      ...closedRentalListing,
+      Custom_Listing_Type: CUSTOM_LISTING_TYPES.PLUS_HOUSING,
+    }
+    const unitWithPlusHousing: RailsUnit[] = [
+      { ...unitsWithOneAmi[0], Reserved_Type: "Plus Housing" },
+      { ...unitsWithOneAmi[1], Reserved_Type: "Other priority" },
+    ]
+
+    const { findByText } = render(
+      <ListingDetailsContext.Provider
+        value={{
+          units: unitWithPlusHousing,
+          amiCharts: amiChartsWithOneAmi,
+          fetchingUnits: false,
+          fetchedUnits: true,
+          fetchingAmiCharts: false,
+          fetchedAmiCharts: true,
+          fetchingAmiChartsError: undefined,
+          fetchingUnitsError: undefined,
+        }}
+      >
+        <ListingDetailsEligibility
+          listing={plusHousingListing}
+          imageSrc={"listing-eligibility.svg"}
+        />
+      </ListingDetailsContext.Provider>
+    )
+
+    expect(await findByText("1 Unit")).toBeDefined()
   })
 
   it("displays Plus Housing Program card with other priority unit cards", async () => {

@@ -1,7 +1,7 @@
 import React from "react"
-import { useAuth } from "@clerk/react"
 import { isTokenValid, parseUrlParams } from "./token"
 import UserContext from "./context/UserContext"
+import { useAuthSession } from "./session/AuthSessionProvider"
 import { getAddProfilePath, getLocalizedPath, RedirectType } from "../util/routeUtil"
 import { getCurrentLanguage } from "../util/languageUtil"
 import { useGTMDataLayer } from "../hooks/analytics/useGTMDataLayer"
@@ -56,9 +56,11 @@ export const withAuthentication = <P extends object>(
   }
 
   const ClerkAuthGate = (props: P) => {
-    const { isLoaded, isSignedIn } = useAuth()
+    const { status } = useAuthSession()
     const { profile, initialStateLoaded } = React.useContext(UserContext)
-    const loading = !isLoaded || (isSignedIn && !profile && !initialStateLoaded)
+    const isSignedIn = status.kind === "signedIn"
+    const loading =
+      status.kind === "initializing" || (isSignedIn && !profile && !initialStateLoaded)
 
     // TODO: simplify and centralize auth redirects
     React.useEffect(() => {

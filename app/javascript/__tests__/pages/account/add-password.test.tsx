@@ -272,4 +272,62 @@ describe("<AddPassword />", () => {
       consoleError.mockRestore()
     })
   })
+
+  describe("Account settings flow", () => {
+    beforeEach(async () => {
+      cleanup()
+      jest.restoreAllMocks()
+      document.title = "DAHLIA San Francisco Housing Portal"
+      setupUserContext({ loggedIn: true })
+      mockNavigate = jest.fn()
+      mockUpdatePassword = jest.fn().mockResolvedValue(undefined)
+      ;(useNavigate as jest.Mock).mockReturnValue(mockNavigate)
+      ;(useFeatureFlag as jest.Mock).mockReturnValue({ flagsReady: true, unleashFlag: true })
+      ;(useSignIn as jest.Mock).mockReturnValue({
+        isLoaded: true,
+        signIn: { resetPassword: jest.fn(), status: null },
+        setActive: jest.fn(),
+      })
+      ;(useLocation as jest.Mock).mockReturnValue({
+        state: { accountSettingsFlow: true },
+      })
+      ;(useUser as jest.Mock).mockReturnValue({
+        isLoaded: true,
+        isSignedIn: true,
+        user: { updatePassword: mockUpdatePassword, passwordEnabled: false },
+      })
+      await renderAndLoadAsync(<AddPassword assetPaths={{}} />)
+    })
+
+    it("hides the skip info banner and shows a cancel button", () => {
+      expect(screen.queryByRole("button", { name: /skip for now/i })).toBeNull()
+      expect(screen.queryByText(/it's okay to skip this step/i)).toBeNull()
+      expect(screen.queryByRole("heading", { name: /get help/i })).toBeNull()
+      expect(screen.getByRole("button", { name: /cancel/i })).not.toBeNull()
+    })
+
+    it("returns to settings when cancelled", async () => {
+      const user = userEvent.setup()
+
+      await user.click(screen.getByRole("button", { name: /cancel/i }))
+
+      expect(mockUpdatePassword).not.toHaveBeenCalled()
+      expect(mockNavigate).toHaveBeenCalledWith("/account/settings")
+    })
+
+    it("saves the password and returns to settings with the banner state", async () => {
+      const user = userEvent.setup()
+      jest.spyOn(console, "error").mockImplementation(() => {})
+
+      await user.type(screen.getByTestId("password-field"), "abcd1234")
+      await user.click(screen.getByRole("button", { name: /add password/i }))
+
+      await waitFor(() => {
+        expect(mockUpdatePassword).toHaveBeenCalledWith({ newPassword: "abcd1234" })
+      })
+      expect(mockNavigate).toHaveBeenCalledWith("/account/settings", {
+        state: { passwordChanged: true },
+      })
+    })
+  })
 })

@@ -9,8 +9,6 @@ import AccountSettingsPage from "../../../pages/account/account-settings" // esl
 import { fireEvent, screen, within, act } from "@testing-library/react"
 import { authenticatedPut } from "../../../api/apiService"
 import { mockProfileStub, setupUserContext } from "../../__util__/accountUtils"
-import { withAuthentication } from "../../../authentication/withAuthentication"
-import { RedirectType } from "../../../util/routeUtil"
 
 jest.mock("../../../api/apiService", () => ({
   authenticatedPut: jest.fn(),
@@ -26,10 +24,7 @@ describe("<AccountSettingsPage />", () => {
       originalLocation = mockWindowLocation()
       setupUserContext({ loggedIn: true })
       promise = Promise.resolve()
-      const WrappedComponent = withAuthentication(AccountSettingsPage, {
-        redirectType: RedirectType.Settings,
-      })
-      await renderAndLoadAsync(<WrappedComponent assetPaths={{}} />)
+      await renderAndLoadAsync(<AccountSettingsPage assetPaths={{}} />)
     })
 
     afterEach(() => {
@@ -703,10 +698,7 @@ describe("<AccountSettingsPage />", () => {
       originalLocation = mockWindowLocation()
       setupUserContext({ loggedIn: false })
 
-      const WrappedComponent = withAuthentication(AccountSettingsPage, {
-        redirectType: RedirectType.Settings,
-      })
-      await renderAndLoadAsync(<WrappedComponent assetPaths={{}} />)
+      await renderAndLoadAsync(<AccountSettingsPage assetPaths={{}} />)
     })
 
     afterEach(() => {
