@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import React, { useContext, useEffect, useState, useRef } from "react"
 import { useLocation, useNavigate } from "react-router"
-import { useAuth, useSignIn, useSignUp, useUser } from "@clerk/react"
+import { useSignIn, useSignUp, useUser } from "@clerk/react"
 import { ExpandableContent, Form, Order, t } from "@bloom-housing/ui-components"
 import { Card, Heading, Link, Button } from "@bloom-housing/ui-seeds"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
@@ -10,6 +10,8 @@ import { Controller, useForm } from "react-hook-form"
 import withAppSetup from "../../layouts/withAppSetup"
 import AuthLayout from "../../layouts/AuthLayout"
 import UserContext from "../../authentication/context/UserContext"
+import { useAuthSession } from "../../authentication/session/AuthSessionProvider"
+import { bearerToken } from "../../authentication/session/authStatus"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import {
   AppPages,
@@ -49,7 +51,7 @@ const EnterVerificationCodePage = ({
   const { signUp, fetchStatus: signUpFetchStatus } = useSignUp()
   const { signIn, fetchStatus: signInFetchStatus } = useSignIn()
   const isForgotPasswordFlow = flow === AUTH_FLOW.FORGOT_PASSWORD
-  const { getToken } = useAuth()
+  const { getCredentials } = useAuthSession()
   const isLoaded =
     flow === AUTH_FLOW.CREATE_ACCOUNT
       ? signUpFetchStatus !== "fetching"
@@ -103,7 +105,7 @@ const EnterVerificationCodePage = ({
     }
 
     if (housingCounselorToken) {
-      const sessionToken: string | null = await getToken()
+      const sessionToken = bearerToken(await getCredentials())
       if (!sessionToken) {
         setError("code", { message: "invalid" })
         return
@@ -260,7 +262,6 @@ const EnterVerificationCodePage = ({
     [AUTH_FLOW.SIGN_IN]: resendSignInCode,
     [AUTH_FLOW.CREATE_ACCOUNT]: resendSignUpCode,
     [AUTH_FLOW.FORGOT_PASSWORD]: resendForgotPasswordCode,
-    // TODO
     [AUTH_FLOW.UPDATE_EMAIL]: resendForgotPasswordCode,
   }
 
@@ -373,7 +374,8 @@ const EnterVerificationCode = (_props: { assetPaths: unknown }) => {
   const navigate = useNavigate()
   const { state } = useLocation() // TODO: needs a better name
   const email = state?.email
-  const { isLoaded, isSignedIn } = useAuth()
+  const { status } = useAuthSession()
+  const isSignedIn = status.kind === "signedIn"
   const { profile, initialStateLoaded } = useContext(UserContext)
   const { unleashFlag: clerkEnabled, flagsReady } = useFeatureFlag(UNLEASH_FLAG.CLERK_AUTH, false)
   const flow: AUTH_FLOW = state?.flow
@@ -401,7 +403,7 @@ const EnterVerificationCode = (_props: { assetPaths: unknown }) => {
       void navigate(getSignInPath())
       return
     }
-    if (!isLoaded) return
+    if (status.kind === "initializing") return
     if (!email || !flow) {
       void navigate(fallbackPath)
     }
@@ -419,7 +421,7 @@ const EnterVerificationCode = (_props: { assetPaths: unknown }) => {
   }, [
     flagsReady,
     clerkEnabled,
-    isLoaded,
+    status,
     isSignedIn,
     email,
     initialStateLoaded,
@@ -433,8 +435,8 @@ const EnterVerificationCode = (_props: { assetPaths: unknown }) => {
   const ready =
     flagsReady &&
     clerkEnabled &&
-    isLoaded &&
-    (isUpdateEmailFlow ? isSignedIn : !isSignedIn) &&
+    status.kind !== "initializing" &&
+    (isUpdateEmailFlow ? isSignedIn : status.kind === "signedOut") &&
     !!email
 
   if (!ready) {

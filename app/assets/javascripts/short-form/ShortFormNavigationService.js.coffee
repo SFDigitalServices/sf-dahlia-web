@@ -64,14 +64,23 @@ ShortFormNavigationService = (
       'income'
 
   Service.getPostHouseholdPrioritiesPage = (listing) ->
+    # Plus Housing Program and Home and Community Based Services should not exist on the same listing
     if ShortFormApplicationService.listingHasHomeAndCommunityBasedServicesUnits(listing)
       'home-and-community-based-services'
+    else if ShortFormApplicationService.listingHasPlusHousingProgramUnits(listing)
+      'plus-housing-program'
     else if Service.showIncomeVouchersPage(listing)
       'income-vouchers'
     else
       'income'
 
   Service.getPostHomeAndCommunityBasedServicesPage = (listing) ->
+    if Service.showIncomeVouchersPage(listing)
+      'income-vouchers'
+    else
+      'income'
+
+  Service.getPostPlusHousingProgramPage = (listing) ->
     if Service.showIncomeVouchersPage(listing)
       'income-vouchers'
     else
@@ -168,6 +177,9 @@ ShortFormNavigationService = (
     'home-and-community-based-services': {
       scopedCallbacks: [{func: 'goToPostHomeAndCommunityBasedServicesPage'}]
     }
+    'plus-housing-program': {
+      scopedCallbacks: [{func: 'goToPostPlusHousingProgramPage'}]
+    }
     # income
     'income-vouchers': {path: 'income'}
     'income':
@@ -244,6 +256,7 @@ ShortFormNavigationService = (
           'household-reserved-units-disabled'
           'household-priorities'
           'home-and-community-based-services'
+          'plus-housing-program'
         ]
       },
       {
@@ -393,6 +406,10 @@ ShortFormNavigationService = (
       when 'home-and-community-based-services'
         # to simplify navigation, let's assume home-and-community-based-services page's existence guarantees household-priorities page
         'household-priorities'
+      when 'plus-housing-program'
+        # to simplify navigation, let's assume plus-housing-program page's existence guarantees household-priorities page existence and home-and-community-based-services page non-existence
+        'household-priorities'
+
       # -- Income
       when 'income-vouchers'
         Service.getPrevPageOfIncomeVouchersPage()
@@ -489,6 +506,8 @@ ShortFormNavigationService = (
       Service.getNextReservedPageIfAvailable(Service.RESERVED_TYPES.DISABLED, 'prev')
     else if ShortFormApplicationService.listingHasHomeAndCommunityBasedServicesUnits(listing)
       'home-and-community-based-services'
+    else if ShortFormApplicationService.listingHasPlusHousingProgramUnits(listing)
+      'plus-housing-program'
     else
       'household-priorities'
 
@@ -500,6 +519,8 @@ ShortFormNavigationService = (
       'income-vouchers'
     else if ShortFormApplicationService.listingHasHomeAndCommunityBasedServicesUnits(listing)
       'home-and-community-based-services'
+    else if ShortFormApplicationService.listingHasPlusHousingProgramUnits(listing)
+      'plus-housing-program'
     else
       'household-priorities'
 

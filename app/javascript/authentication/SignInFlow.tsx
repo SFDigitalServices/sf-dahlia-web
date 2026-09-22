@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import React, { useEffect, useRef, useState } from "react"
 import { Navigate, useLocation, useNavigate } from "react-router"
-import { useAuth, useClerk, useSignIn } from "@clerk/react"
+import { useClerk, useSignIn } from "@clerk/react"
 import { Form, t } from "@bloom-housing/ui-components"
 import { Alert, Button, Card, Heading, Link, LoadingState, Message } from "@bloom-housing/ui-seeds"
 import { useForm, useWatch } from "react-hook-form"
@@ -17,6 +17,8 @@ import {
   getSignInCodePath,
 } from "../util/routeUtil"
 import { authorizeHousingCounselor } from "../api/authApiService"
+import { useAuthSession } from "./session/AuthSessionProvider"
+import { bearerToken } from "./session/authStatus"
 import { getSfGovUrl, localizedFormat, renderInlineMarkup } from "../util/languageUtil"
 import { AUTH_FLOW, UNLEASH_FLAG } from "../modules/constants"
 import { useFeatureFlag } from "../hooks/useFeatureFlag"
@@ -39,7 +41,8 @@ const SignInFlow = () => {
   const redirectUrl = state?.redirectUrl
   const postSignInRedirectUrl = redirectUrl ?? getMyAccountPath()
   const requiredLoginsDate = localizedFormat(process.env.REQUIRED_LOGINS_DATE ?? "", "LL")
-  const { isLoaded: authLoaded, isSignedIn, getToken, signOut } = useAuth()
+  const { status, getCredentials, signOut } = useAuthSession()
+  const isSignedIn = status.kind === "signedIn"
   const { signIn, fetchStatus: signInFetchStatus } = useSignIn()
   const { client } = useClerk()
   const { unleashFlag: requiredLoginsMessageEnabled } = useFeatureFlag(
@@ -82,7 +85,7 @@ const SignInFlow = () => {
     const token = getHousingCounselorToken()
     if (!token) return true
     try {
-      const sessionToken: string | null = await getToken()
+      const sessionToken = bearerToken(await getCredentials())
       if (!sessionToken) {
         setShowError(true)
         return false
@@ -127,7 +130,7 @@ const SignInFlow = () => {
       // housingCounselorChecked.current = true // not needed because we assign it in useEffect, it also violates linter rules
       const housingCounselorAccess = await checkHousingCounselorAccess()
       if (!housingCounselorAccess) {
-        signOut()
+        await signOut()
         return
       }
     }
@@ -169,14 +172,14 @@ const SignInFlow = () => {
   }
 
   useEffect(() => {
-    if (!authLoaded || !isSignedIn || housingCounselorChecked.current) return
+    if (!isSignedIn || housingCounselorChecked.current) return
     const token = getHousingCounselorToken()
     if (!token) return
 
     housingCounselorChecked.current = true
     void (async () => {
       try {
-        const sessionToken: string | null = await getToken()
+        const sessionToken = bearerToken(await getCredentials())
         if (!sessionToken) {
           setShowError(true)
           return
@@ -188,11 +191,11 @@ const SignInFlow = () => {
         setShowError(true)
       }
     })()
-  }, [authLoaded, getToken, isSignedIn, navigate])
+  }, [getCredentials, isSignedIn, navigate])
 
   // TODO: instead of relying on postSignInRedirectUrl, this component should detect
   // incomplete profiles and redirect to the add-profile page
-  if (authLoaded && isSignedIn && !getHousingCounselorToken()) {
+  if (isSignedIn && !getHousingCounselorToken()) {
     return <Navigate to={postSignInRedirectUrl} replace />
   }
 
