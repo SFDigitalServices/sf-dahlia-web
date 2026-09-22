@@ -95,6 +95,7 @@ interface EmailFieldProps {
   register: UseFormMethods["register"]
   defaultEmail?: string
   errors?: UseFormMethods["errors"]
+  submitWithEnterKey?: boolean
   onChange?: () => void
   note?: React.ReactNode
   label?: string
@@ -104,10 +105,19 @@ const EmailFieldset = ({
   register,
   errors,
   defaultEmail,
+  submitWithEnterKey,
   onChange,
   note,
   label,
 }: EmailFieldProps) => {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLElement>) => {
+    // the parent Form component from `@bloom-housing/ui-components` disables the Enter key, override it
+    if (e.key === "Enter" && submitWithEnterKey) {
+      e.preventDefault()
+      ;(e.currentTarget as HTMLElement).closest("form")?.requestSubmit()
+    }
+  }
+
   return (
     <Fieldset
       hasError={errors?.email}
@@ -138,7 +148,7 @@ const EmailFieldset = ({
         register={register}
         defaultValue={defaultEmail ?? null}
         onChange={onChange}
-        inputProps={{ required: true }}
+        inputProps={{ required: true, onKeyDown: handleKeyDown }}
       />
     </Fieldset>
   )
