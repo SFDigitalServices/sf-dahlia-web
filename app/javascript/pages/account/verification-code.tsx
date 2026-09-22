@@ -158,10 +158,29 @@ const EnterVerificationCodePage = ({
     void navigate(getResetPasswordPath(), { state: { email, flow, code } })
   }
 
+  const verifyUpdateEmailCode = async (code: string) => {
+    if (signInFetchStatus === "fetching" || !signIn) return
+
+    const { error } = await signIn.resetPasswordEmailCode.verifyCode({ code })
+    if (error) {
+      console.error("Code verification error:", error)
+      return
+    }
+
+    if (signIn.status !== "needs_new_password") {
+      console.error("Password reset error:", signIn.status)
+      return
+    }
+
+    void navigate(getResetPasswordPath(), { state: { email, flow, code } })
+  }
+
   const verifyAuthCodeByFlow: Record<AUTH_FLOW, (code: string) => Promise<void>> = {
     [AUTH_FLOW.SIGN_IN]: verifySignInCode,
     [AUTH_FLOW.CREATE_ACCOUNT]: verifySignUpCode,
     [AUTH_FLOW.FORGOT_PASSWORD]: verifyForgotPasswordCode,
+    // TODO
+    [AUTH_FLOW.UPDATE_EMAIL]: verifyUpdateEmailCode,
   }
 
   const onSubmit = async ({ code }: { code: string }) => verifyAuthCodeByFlow[flow](code)
@@ -220,6 +239,8 @@ const EnterVerificationCodePage = ({
     [AUTH_FLOW.SIGN_IN]: resendSignInCode,
     [AUTH_FLOW.CREATE_ACCOUNT]: resendSignUpCode,
     [AUTH_FLOW.FORGOT_PASSWORD]: resendForgotPasswordCode,
+    // TODO
+    [AUTH_FLOW.UPDATE_EMAIL]: resendForgotPasswordCode,
   }
 
   const onResend = async () => {

@@ -89,6 +89,7 @@ const PAGE_ROUTES = [
   [Settings, "/account/settings"],
   [Contact, "/account/contact"],
   [UpdateEmail, "/update-email"],
+  [EnterVerificationCode, "/update-email/code"],
 ] as const
 
 const INVITE_TO_PATHS = [

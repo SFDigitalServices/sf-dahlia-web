@@ -24,6 +24,21 @@ export const handleEmailServerErrors = (error: ExpandedAccountAxiosError): SetEr
   }
 }
 
+interface ClerkEmailError {
+  errors?: { code?: string }[]
+}
+
+export const handleClerkEmailErrors = (error: unknown): SetErrorArgs => {
+  const code = (error as ClerkEmailError)?.errors?.[0]?.code
+  if (code?.startsWith("form_identifier_exists")) {
+    return ["email", { message: "email:server:duplicate", shouldFocus: true }]
+  }
+  if (code?.startsWith("form_param_format_invalid")) {
+    return ["email", { message: "email:generalFormat", shouldFocus: true }]
+  }
+  return ["email", { message: "email:server:generic", shouldFocus: true }]
+}
+
 export const emailFieldsetErrors: ErrorMessages = {
   "email:missingAtSign": {
     default: "error.email.missingAtSign",
@@ -48,6 +63,10 @@ export const emailFieldsetErrors: ErrorMessages = {
   "email:server:duplicate": {
     default: "error.email.duplicate",
     abbreviated: "error.email.duplicate.abbreviated",
+  },
+  "email:sameAsCurrentEmail": {
+    default: "error.email.sameAsCurrentEmail",
+    abbreviated: "error.email.sameAsCurrentEmail.abbreviated",
   },
 }
 

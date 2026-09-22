@@ -600,6 +600,7 @@
   "error.email.missingAtSign.abbreviated": "Email missing @ symbol",
   "error.email.missingDot": "Email missing a dot ‘.’ in the domain. Enter email like: example@web.com",
   "error.email.missingDot.abbreviated": "Email missing a dot ‘.’ in the domain",
+  "error.email.sameAsCurrentEmail": "You entered the email address you already use to sign in. Check for any mistakes.",
   "error.emailAlreadyInUse": "Email is already in use.",
   "error.emailConfirmation": "Email confirmation does not match",
   "error.emailNotFound": "Email not found. Please make sure your email has an account with us and is confirmed.",
