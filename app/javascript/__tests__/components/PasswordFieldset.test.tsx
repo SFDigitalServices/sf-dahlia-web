@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import React from "react"
-import { render, screen } from "@testing-library/react"
+import { fireEvent, render, screen } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
 import PasswordFieldset, {
   ClerkPasswordError,
@@ -26,6 +26,25 @@ const WrappedPasswordFieldset = () => {
       watch={watch}
       passwordType="accountSettings"
       labelText={t("label.password")}
+    />
+  )
+}
+
+const EnterSubmitPasswordFieldset = ({ submitWithEnterKey }: { submitWithEnterKey: boolean }) => {
+  const {
+    register,
+    formState: { errors },
+    watch,
+  } = useForm({ mode: "all" })
+
+  return (
+    <PasswordFieldset
+      register={register}
+      errors={errors}
+      watch={watch}
+      passwordType="accountSettings"
+      labelText={t("label.password")}
+      submitWithEnterKey={submitWithEnterKey}
     />
   )
 }
@@ -82,6 +101,19 @@ describe("Password Fieldset", () => {
     expect(input.getAttribute("type")).toBe("text")
     await user.click(button)
     expect(input.getAttribute("type")).toBe("password")
+  })
+
+  it("submits parent form on Enter when submitWithEnterKey is enabled", () => {
+    const requestSubmit = jest.fn()
+
+    render(<EnterSubmitPasswordFieldset submitWithEnterKey />)
+    const passwordField = screen.getByLabelText(/choose a new password/i)
+    jest
+      .spyOn(passwordField, "closest")
+      .mockReturnValue({ requestSubmit } as unknown as HTMLFormElement)
+    fireEvent.keyDown(passwordField, { key: "Enter" })
+
+    expect(requestSubmit).toHaveBeenCalledTimes(1)
   })
 
   describe("handleServerErrors", () => {
