@@ -126,7 +126,7 @@ class Api::V1::AccountController < ApiController
 
     @clerk_user_id = clerk&.user_id
     if @clerk_user_id.blank?
-      render json: { error: 'Invalid Clerk session' }, status: :unauthorized
+      render json: { error: 'Missing Clerk session' }, status: :unauthorized
       return
     end
 

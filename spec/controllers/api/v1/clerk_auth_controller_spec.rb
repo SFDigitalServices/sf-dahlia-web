@@ -4,7 +4,7 @@ RSpec.describe Api::V1::ClerkAuthController, type: :controller do
   let(:clerk_user_id) { 'user_abc123' }
 
   before do
-    allow(controller).to receive(:clerk).and_return(double(user_id: clerk_user_id))
+    allow(controller).to receive(:clerk).and_return(double(user?: true, user_id: clerk_user_id))
   end
 
   describe 'POST #devise_token' do
@@ -15,7 +15,7 @@ RSpec.describe Api::V1::ClerkAuthController, type: :controller do
         'client' => 'test-client',
         'uid' => user.uid,
       }
-      allow(ClerkDeviseTokenExchangeService).to receive(:exchange!)
+      allow(ClerkDeviseTokenExchangeService).to receive(:exchange_token!)
         .with(clerk_user_id: clerk_user_id)
         .and_return({ user: user, auth_headers: auth_headers })
 
@@ -35,18 +35,18 @@ RSpec.describe Api::V1::ClerkAuthController, type: :controller do
     end
 
     it 'returns unauthorized when Clerk session is missing' do
-      allow(controller).to receive(:clerk).and_return(nil)
-      allow(ClerkDeviseTokenExchangeService).to receive(:exchange!)
+      allow(controller).to receive(:clerk).and_return(double(user?: false))
+      allow(ClerkDeviseTokenExchangeService).to receive(:exchange_token!)
 
       post :devise_token
 
       expect(response).to have_http_status(:unauthorized)
-      expect(JSON.parse(response.body)).to eq('error' => 'Invalid Clerk session')
-      expect(ClerkDeviseTokenExchangeService).not_to have_received(:exchange!)
+      expect(JSON.parse(response.body)).to eq('error' => 'Missing Clerk session')
+      expect(ClerkDeviseTokenExchangeService).not_to have_received(:exchange_token!)
     end
 
     it 'returns unprocessable entity when Clerk email is missing' do
-      allow(ClerkDeviseTokenExchangeService).to receive(:exchange!)
+      allow(ClerkDeviseTokenExchangeService).to receive(:exchange_token!)
         .and_raise(ClerkDeviseTokenExchangeService::MissingEmailError, 'User has missing email')
 
       post :devise_token
@@ -56,9 +56,9 @@ RSpec.describe Api::V1::ClerkAuthController, type: :controller do
     end
 
     it 'returns conflict when user linkage conflicts' do
-      allow(ClerkDeviseTokenExchangeService).to receive(:exchange!)
+      allow(ClerkDeviseTokenExchangeService).to receive(:exchange_token!)
         .and_raise(
-          ClerkDeviseTokenExchangeService::LinkConflictError,
+          ClerkDeviseTokenExchangeService::DeviseClerkUserConflictError,
           'Existing account is linked to a different Clerk user',
         )
 

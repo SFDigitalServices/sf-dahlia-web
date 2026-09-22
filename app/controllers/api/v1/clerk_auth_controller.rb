@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Allow Clerk users to acquire Devise headers
 class Api::V1::ClerkAuthController < ApiController
   include Clerk::Authenticatable
 
@@ -20,7 +21,7 @@ class Api::V1::ClerkAuthController < ApiController
   rescue ClerkDeviseTokenExchangeService::DeviseClerkUserConflictError => e
     render json: { error: e.message }, status: :conflict
   # handle errors caused by creating / modifying users in the database
-  rescue ActiveRecord::RecordInvalid => e
+  rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotUnique => e
     render json: { error: e.record.errors.full_messages.join(', ') },
            status: :unprocessable_entity
   end
