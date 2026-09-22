@@ -8,6 +8,14 @@ RSpec.describe Api::V1::AccountController, type: :controller do
     stub_const('JsonWebTokenService::ALGORITHM', 'HS256')
     stub_const('JsonWebTokenService::ALLOWED_ALGORITHMS', ['HS256'])
 
+    # The whole housing-counselor feature stays behind an Unleash flag in
+    # production (off by default - see spec_helper.rb); turn it on here so
+    # the delegation examples below exercise the real behavior. The
+    # flag-off behavior itself is covered under 'when the feature flag is
+    # disabled'.
+    allow(Rails.configuration.unleash).to receive(:is_enabled?)
+      .with(HousingCounselorSession::FEATURE_FLAG).and_return(true)
+
     allow(Force::AccountService).to receive(:create_or_update)
     allow(Emailer).to receive_message_chain(:account_update, :deliver_later)
     allow(DahliaBackend::MessageService).to receive(:send_housing_counselor_access)
@@ -180,6 +188,20 @@ RSpec.describe Api::V1::AccountController, type: :controller do
         expect(JSON.parse(response.body)).to eq('error' => 'forbidden')
         expect(Force::AccountService).not_to have_received(:create_or_update)
         expect(Emailer).not_to have_received(:account_update)
+      end
+
+      context 'and the feature flag is disabled' do
+        before do
+          allow(Rails.configuration.unleash).to receive(:is_enabled?)
+            .with(HousingCounselorSession::FEATURE_FLAG).and_return(false)
+        end
+
+        it 'is no longer blocked - the write proceeds as normal' do
+          put :update, params: { contact: contact_params }
+
+          expect(response).to have_http_status(:ok)
+          expect(Force::AccountService).to have_received(:create_or_update)
+        end
       end
     end
 
@@ -491,6 +513,26 @@ RSpec.describe Api::V1::AccountController, type: :controller do
           applicant_contact_id,
           { user_token_validation: true },
         )
+      end
+
+      context 'and the feature flag is disabled' do
+        before do
+          allow(Rails.configuration.unleash).to receive(:is_enabled?)
+            .with(HousingCounselorSession::FEATURE_FLAG).and_return(false)
+        end
+
+        it "returns the housing counselor's own profile, ignoring the cookie " \
+           'entirely' do
+          set_hc_session_cookie(hc_id: hc_contact_id, app_id: applicant_contact_id)
+
+          get :profile
+
+          expect(response).to have_http_status(:ok)
+          expect(Force::AccountService).to have_received(:get).with(
+            hc_contact_id,
+            { user_token_validation: true },
+          )
+        end
       end
 
       context 'and the cookie has expired but Salesforce still grants access' do

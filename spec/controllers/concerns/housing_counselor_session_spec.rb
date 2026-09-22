@@ -40,6 +40,13 @@ RSpec.describe HousingCounselorSession, type: :controller do
     stub_const('JsonWebTokenService::ALGORITHM', 'HS256')
     stub_const('JsonWebTokenService::ALLOWED_ALGORITHMS', ['HS256'])
 
+    # The whole feature stays behind an Unleash flag in production (off by
+    # default - see spec_helper.rb); turn it on here so the examples below
+    # exercise the real behavior. The flag-off behavior itself is covered
+    # under '#current_hc_session when the feature flag is disabled'.
+    allow(Rails.configuration.unleash).to receive(:is_enabled?)
+      .with(HousingCounselorSession::FEATURE_FLAG).and_return(true)
+
     routes.draw do
       get 'show' => 'api#show'
       get 'show_twice' => 'api#show_twice'
@@ -73,6 +80,19 @@ RSpec.describe HousingCounselorSession, type: :controller do
       expires_match = response.headers['Set-Cookie'].match(/expires=([^;]+)/i)
       expect(expires_match).to be_present
       expect(Time.zone.parse(expires_match[1])).to be > HousingCounselorSession::HC_SESSION_DURATION.from_now
+    end
+
+    # Regression coverage: the cookie's own expiry is a short grace window
+    # for the refresh mechanism, not a second, longer-lived session - a
+    # future edit that widens it back out (e.g. to days) should fail this.
+    it 'keeps the cookie expiry within the grace period of the JWT exp, not far ' \
+       'beyond it' do
+      post :write, params: { hc_id:, app_id: }
+
+      expires_match = response.headers['Set-Cookie'].match(/expires=([^;]+)/i)
+      expect(Time.zone.parse(expires_match[1]))
+        .to be <= (HousingCounselorSession::HC_SESSION_DURATION +
+                   HousingCounselorSession::HC_SESSION_REFRESH_GRACE_PERIOD).from_now
     end
   end
 
@@ -234,6 +254,33 @@ RSpec.describe HousingCounselorSession, type: :controller do
           expect(cookies[:hc_session]).to be_blank
         end
       end
+    end
+  end
+
+  describe '#current_hc_session when the feature flag is disabled' do
+    before do
+      allow(Rails.configuration.unleash).to receive(:is_enabled?)
+        .with(HousingCounselorSession::FEATURE_FLAG).and_return(false)
+    end
+
+    it 'returns nil without reading the cookie or calling Salesforce, even for an ' \
+       'otherwise-valid cookie' do
+      set_hc_session_cookie(hc_id:, app_id:)
+      allow(Force::HousingCounselorService).to receive(:authorize_access)
+
+      get :show, params: { signed_in_as: hc_id }
+
+      expect(JSON.parse(response.body)).to eq('session' => nil)
+      expect(Force::HousingCounselorService).not_to have_received(:authorize_access)
+    end
+
+    it 'leaves an existing cookie untouched rather than discarding it, so the ' \
+       'feature resumes cleanly if the flag is turned back on' do
+      set_hc_session_cookie(hc_id:, app_id:)
+
+      get :show, params: { signed_in_as: hc_id }
+
+      expect(cookies[:hc_session]).to be_present
     end
   end
 

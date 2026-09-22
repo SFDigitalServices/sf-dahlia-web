@@ -41,4 +41,8 @@ Rails.application.config.filter_parameters += [
   :reset_password_token,
   :confirmation_token,
   :unlock_token,
+  # bearer-style JWTs passed as a short query param - invite-to and
+  # housing-counselor delegate links (see InviteToController,
+  # Api::V1::InviteToResponseController, Api::V1::HousingCounselorController)
+  :t,
 ]

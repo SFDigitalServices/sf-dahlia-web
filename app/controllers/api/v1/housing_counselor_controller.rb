@@ -4,6 +4,7 @@ class Api::V1::HousingCounselorController < ApiController
   include Clerk::Authenticatable
   include HousingCounselorSession
 
+  before_action :require_housing_counselor_feature
   before_action :authenticate_clerk_user!
 
   def agencies
@@ -69,6 +70,14 @@ class Api::V1::HousingCounselorController < ApiController
   end
 
   private
+
+  # The whole housing-counselor-delegate-access feature stays behind
+  # FEATURE_FLAG until it's ready for production.
+  def require_housing_counselor_feature
+    return if hc_session_feature_enabled?
+
+    render json: { error: 'not_found' }, status: :not_found
+  end
 
   # current_hc_session (called from #access, above) already made a Salesforce
   # call if it found a matching-but-expired cookie to refresh - if that call

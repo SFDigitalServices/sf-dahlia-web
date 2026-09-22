@@ -9,18 +9,31 @@
 # from Clerk or from Devise (the auth mechanism itself is unrelated to
 # whether the signed-in user happens to also be a housing counselor).
 #
+# The entire feature stays behind FEATURE_FLAG (Unleash) - #current_hc_session
+# returns nil immediately, without reading the cookie or calling Salesforce,
+# whenever the flag is off, so every caller (AccountController's delegated
+# reads/writes, HousingCounselorController's own before_action gate) reverts
+# to its pre-feature behavior with a single check.
+#
 # The cookie's own browser expiry (HC_SESSION_COOKIE_DURATION) is
-# deliberately longer than the JWT's exp claim (HC_SESSION_DURATION), so
-# staleness is governed entirely by the JWT's own exp claim: an
-# expired-but-still-present cookie is sent back to the server and can be
-# transparently re-checked, rather than the browser discarding it before
-# that re-check ever gets a chance to run.
+# deliberately a little longer than the JWT's exp claim (HC_SESSION_DURATION)
+# - by HC_SESSION_REFRESH_GRACE_PERIOD, not by days - so an expired-but-still-
+# -present cookie has a real chance to be sent back to the server and
+# transparently re-checked, rather than the browser discarding it in the same
+# instant the JWT's own exp passes (which, in normal traffic, would mean the
+# re-check path this concern exists for almost never runs). Kept short on
+# purpose: this is a grace window for the refresh mechanism to engage, not a
+# second, longer-lived session - the JWT's own exp, re-verified against
+# Salesforce on every use past that point, remains the actual source of
+# truth for staleness.
 module HousingCounselorSession
   extend ActiveSupport::Concern
 
   included do
     include ActionController::Cookies
   end
+
+  FEATURE_FLAG = 'temp.all.housingCounselorAccess'
 
   # Raised by callers (see AccountController#effective_contact_id) that must
   # not silently treat "Salesforce couldn't be reached to re-verify an
@@ -39,11 +52,10 @@ module HousingCounselorSession
 
   HC_SESSION_COOKIE_NAME = :hc_session
   HC_SESSION_DURATION = 2.hours
-  # Deliberately longer than HC_SESSION_DURATION so the browser keeps
-  # sending the cookie back after the JWT's own exp has passed, letting an
-  # expired-but-present cookie reach the transparent Salesforce re-check
-  # instead of the browser silently dropping it first.
-  HC_SESSION_COOKIE_DURATION = 7.days
+  # See the file-level comment above - this is a short grace window, not a
+  # second session.
+  HC_SESSION_REFRESH_GRACE_PERIOD = 15.minutes
+  HC_SESSION_COOKIE_DURATION = HC_SESSION_DURATION + HC_SESSION_REFRESH_GRACE_PERIOD
 
   # { hc_id:, app_id: } for the current, Salesforce-authorized housing
   # counselor session, or nil if there is none. An expired cookie is
@@ -67,7 +79,17 @@ module HousingCounselorSession
   # after a failed refresh, the cookie is discarded, so the next call just
   # sees no cookie.
   def current_hc_session(expected_app_id: nil)
+    return nil unless hc_session_feature_enabled?
+
     resolve_hc_session(expected_app_id)
+  end
+
+  # Gates the entire feature behind Unleash. Public so controllers that need
+  # to reject a request outright while the flag is off (see
+  # HousingCounselorController's before_action) don't have to duplicate the
+  # flag name/lookup.
+  def hc_session_feature_enabled?
+    Rails.configuration.unleash.is_enabled?(FEATURE_FLAG)
   end
 
   # True once a Salesforce/Faraday error has prevented re-verifying an

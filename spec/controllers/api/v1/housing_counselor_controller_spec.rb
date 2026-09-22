@@ -15,6 +15,13 @@ RSpec.describe Api::V1::HousingCounselorController, type: :controller do
     stub_const('JsonWebTokenService::ALGORITHM', 'HS256')
     stub_const('JsonWebTokenService::ALLOWED_ALGORITHMS', ['HS256'])
 
+    # The whole feature stays behind an Unleash flag in production (off by
+    # default - see spec_helper.rb); turn it on here so the examples below
+    # exercise the real behavior. The flag-off behavior itself is covered
+    # under 'when the feature flag is disabled'.
+    allow(Rails.configuration.unleash).to receive(:is_enabled?)
+      .with(HousingCounselorSession::FEATURE_FLAG).and_return(true)
+
     allow(controller).to receive(:clerk).and_return(double(user_id: clerk_user_id))
     allow(ClerkService).to receive(:salesforce_contact_id)
       .with(clerk_user_id)
@@ -28,6 +35,27 @@ RSpec.describe Api::V1::HousingCounselorController, type: :controller do
 
       expect(response).to have_http_status(:ok)
       expect(JSON.parse(response.body)).to eq('agencies' => agencies)
+    end
+  end
+
+  context 'when the feature flag is disabled' do
+    before do
+      allow(Rails.configuration.unleash).to receive(:is_enabled?)
+        .with(HousingCounselorSession::FEATURE_FLAG).and_return(false)
+    end
+
+    it 'renders not_found for #agencies rather than exposing the endpoint' do
+      get :agencies
+
+      expect(response).to have_http_status(:not_found)
+      expect(Force::HousingCounselorService).not_to have_received(:agencies)
+    end
+
+    it 'renders not_found for #access rather than writing a cookie' do
+      post :access, params: { t: 'jwt.token' }
+
+      expect(response).to have_http_status(:not_found)
+      expect(cookies[:hc_session]).to be_blank
     end
   end
 
