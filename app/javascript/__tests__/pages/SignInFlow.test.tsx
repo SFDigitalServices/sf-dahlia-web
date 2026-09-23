@@ -366,6 +366,7 @@ describe("<SignInFlow />", () => {
     })
 
     it("shows an error when the already-signed-in housing counselor check fails", async () => {
+      const consoleError = jest.spyOn(console, "error").mockImplementation(() => {})
       ;(authorizeHousingCounselor as jest.Mock).mockRejectedValue(new Error("forbidden"))
       ;(useAuth as jest.Mock).mockReturnValue({
         isLoaded: true,
@@ -381,6 +382,8 @@ describe("<SignInFlow />", () => {
       })
       expect(mockNavigate).not.toHaveBeenCalledWith("/account")
       expect(screen.getByRole("heading", { name: /^sign in$/i, level: 1 })).not.toBeNull()
+      expect(consoleError).toHaveBeenCalledWith("Error authorizing housing counselor")
+      consoleError.mockRestore()
     })
 
     it("authenticates an already signed in Clerk user", async () => {

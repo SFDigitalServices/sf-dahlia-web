@@ -197,7 +197,13 @@ const SignInFlow = () => {
           setShowError(true)
           return
         }
-        await authorizeHousingCounselor(token, sessionToken)
+        try {
+          await authorizeHousingCounselor(token, sessionToken)
+        } catch {
+          console.error("Error authorizing housing counselor")
+          void navigate(createPath(getMyAccountPath(), { hcAccess: "0" }))
+          return
+        }
         console.log("TODO: Housing counselor already signed in, TBD banner and applicant view")
         void navigate(getMyAccountPath())
       } catch {
