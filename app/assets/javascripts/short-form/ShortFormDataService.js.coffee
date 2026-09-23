@@ -163,6 +163,12 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
     sfApp.primaryApplicant.isSFUSDEmployee = application.customEducatorScreeningAnswer
     sfApp.primaryApplicant.jobClassification = application.customEducatorJobClassificationNumber
 
+    sfApp.primaryApplicant.isPlusHousingProgramParticipant = application.plusHousingProgramParticipantAnswer
+    if application.plusHousingProgramParticipantAnswer == 'Yes'
+      sfApp.plusHousingProgramNumber = application.plusHousingProgramNumber
+    else
+      sfApp.plusHousingProgramNumber = null
+
     # add the HCBS answer to the priorities object, so that it appears with priorities in the Leasing Agent Portal
     if application.hasHomeAndCommunityBasedServices == 'Yes' && sfApp.adaPrioritiesSelected == 'None;'
       sfApp.adaPrioritiesSelected = ListingConstantsService.HCBS_PRIORITY_NAME + ';'
@@ -421,6 +427,12 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
     # custom educator
     data.customEducatorScreeningAnswer = sfApp.primaryApplicant.isSFUSDEmployee
     data.customEducatorJobClassificationNumber = sfApp.primaryApplicant.jobClassification
+
+    data.plusHousingProgramParticipantAnswer = sfApp.primaryApplicant.isPlusHousingProgramParticipant
+    if sfApp.primaryApplicant.isPlusHousingProgramParticipant == 'Yes'
+      data.plusHousingProgramNumber = sfApp.plusHousingProgramNumber
+    else
+      data.plusHousingProgramNumber = null
 
     if !!data.adaPrioritiesSelected[ListingConstantsService.HCBS_PRIORITY_NAME]
       delete data.adaPrioritiesSelected[ListingConstantsService.HCBS_PRIORITY_NAME]
@@ -690,6 +702,9 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
       delete data.hasMilitaryService
     unless ListingUnitService.listingHasReservedUnitType(LS.listing, LCS.RESERVED_TYPES.DISABLED)
       delete data.hasDevelopmentalDisability
+    unless LS.listing.Custom_Listing_Type == 'Plus Housing Program'
+      delete data.plusHousingProgramParticipantAnswer
+      delete data.plusHousingProgramNumber
 
     # reset contact + neighborhood data
     resetContactFields = [
