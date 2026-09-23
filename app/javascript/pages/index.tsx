@@ -36,7 +36,7 @@ const HomePage = (_props: HomePageProps) => {
       />
       <div className="homepage-extra mt-2">
         <ActionBlock
-          header={<Heading priority={2}>{t("home.findOutAboutNewListings")}</Heading>}
+          header={<Heading priority={2}>{t("welcome.newListingEmailAlert")}</Heading>}
           actions={[
             <Link
               className="button no-underline"
@@ -45,7 +45,7 @@ const HomePage = (_props: HomePageProps) => {
               newWindowTarget
               hideExternalLinkIcon
             >
-              {t("home.getEmailAlerts")}
+              {t("welcome.signUpToday")}
             </Link>,
           ]}
         />

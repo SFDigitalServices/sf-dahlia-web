@@ -340,7 +340,7 @@ exports[`GenericDirectory displays the directory no matches page with no listing
           <h2
             class=""
           >
-            Get emailed whenever a new listing is posted.
+            Find out about new listings
           </h2>
         </div>
       </div>
@@ -353,7 +353,7 @@ exports[`GenericDirectory displays the directory no matches page with no listing
           rel="noreferrer"
           target="_blank"
         >
-          Sign Up today
+          Get email alerts
         </a>
       </div>
     </div>
@@ -1168,7 +1168,7 @@ exports[`GenericDirectory displays the rental directory page with listings 1`] =
           <h2
             class=""
           >
-            Get emailed whenever a new listing is posted.
+            Find out about new listings
           </h2>
         </div>
       </div>
@@ -1181,7 +1181,7 @@ exports[`GenericDirectory displays the rental directory page with listings 1`] =
           rel="noreferrer"
           target="_blank"
         >
-          Sign Up today
+          Get email alerts
         </a>
       </div>
     </div>

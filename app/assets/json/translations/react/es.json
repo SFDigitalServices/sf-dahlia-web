@@ -629,8 +629,6 @@
   "g1Confirmation.title": "Gracias. Hemos recibido su solicitud para",
   "g1Confirmation.viewAndPrintACopy": "Ver la solicitud presentada e imprimir una copia",
   "hello": "Hola, %{name}",
-  "home.findOutAboutNewListings": "Infórmese sobre nuevos anuncios",
-  "home.getEmailAlerts": "Reciba alertas por correo electrónico",
   "housingCounselor.findAHousingCounselor": "Encuentre un consejero de vivienda",
   "housingCounselor.header": "Para obtener más ayuda, le sugerimos que hable con un consejero de vivienda para explorar sus opciones.",
   "howToApplyPage.beforeYouStartSection.eligibilityList.listItem1": "No haber sido propietario de una propiedad residencial en los últimos 3 años",
@@ -2078,9 +2076,9 @@
   "t.yes": "Sí",
   "t.you": "Usted",
   "thankYou": "Gracias",
-  "welcome.newListingEmailAlert": "Reciba un aviso por correo electrónico cuando se publiquen nuevos anuncios.",
+  "welcome.newListingEmailAlert": "Infórmese sobre nuevos anuncios",
   "welcome.seeRentalListings": "Alquilar",
   "welcome.seeSaleListings": "Comprar",
-  "welcome.signUpToday": "Regístrese hoy",
+  "welcome.signUpToday": "Reciba alertas por correo electrónico",
   "welcome.title": "Presente una solicitud para una vivienda asequible"
 }
