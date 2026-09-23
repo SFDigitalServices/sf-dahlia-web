@@ -21,6 +21,10 @@ import { DoubleSubmittedModal } from "./components/DoubleSubmittedModal"
 import { AlreadySubmittedModal } from "./components/AlreadySubmittedModal"
 import { extractModalParamsFromUrl } from "./components/util"
 import { withAuthentication } from "../../authentication/withAuthentication"
+import { useAuthSession } from "../../authentication/session/AuthSessionProvider"
+import { bearerToken } from "../../authentication/session/authStatus"
+import { useFeatureFlag } from "../../hooks/useFeatureFlag"
+import { UNLEASH_FLAG } from "../../modules/constants"
 
 export const noApplications = () => {
   return (
@@ -137,6 +141,8 @@ export const determineApplicationItemList = (
 }
 
 const MyApplications = () => {
+  const { getCredentials } = useAuthSession()
+  const { unleashFlag: clerkEnabled } = useFeatureFlag(UNLEASH_FLAG.CLERK_AUTH, false)
   const [error, setError] = React.useState<string | null>(null)
   const [loading, setLoading] = React.useState<boolean>(true)
   const [applications, setApplications] = React.useState<Application[]>([])
@@ -151,19 +157,21 @@ const MyApplications = () => {
   }
 
   const onDelete = () => {
+    setOpenDeleteModal(false)
     setLoading(true)
-    deleteApplication(deleteApp)
-      .then(() => {
+
+    void (async () => {
+      try {
+        const sessionToken = bearerToken(await getCredentials())
+        await deleteApplication(deleteApp, { clerkEnabled, sessionToken })
         const newApplications = applications.filter((application) => application.id !== deleteApp)
         setApplications(newApplications)
-      })
-      .catch((error: string) => {
-        setError(error)
-      })
-      .finally(() => {
+      } catch (error) {
+        setError(error as string)
+      } finally {
         setLoading(false)
-      })
-    setOpenDeleteModal(false)
+      }
+    })()
   }
 
   React.useEffect(() => {
@@ -181,18 +189,21 @@ const MyApplications = () => {
   }, [])
 
   React.useEffect(() => {
-    setLoading(true)
-    getApplications()
-      .then((applications) => {
-        setApplications(applications.applications)
-      })
-      .catch((error: string) => {
-        setError(error)
-      })
-      .finally(() => {
+    const loadApplications = async () => {
+      setLoading(true)
+      try {
+        const sessionToken = bearerToken(await getCredentials())
+        const { applications } = await getApplications({ clerkEnabled, sessionToken })
+        setApplications(applications)
+      } catch (error) {
+        setError(error as string)
+      } finally {
         setLoading(false)
-      })
-  }, [])
+      }
+    }
+
+    void loadApplications()
+  }, [clerkEnabled, getCredentials])
 
   return (
     <Layout>

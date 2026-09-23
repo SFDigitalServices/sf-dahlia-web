@@ -2,6 +2,11 @@
 
 # RESTful JSON API to query for short form actions
 class Api::V1::ShortFormController < ApiController
+  include Clerk::Authenticatable
+
+  # Actions still served to Devise users while the Clerk flag rolls out.
+  CLERK_OR_DEVISE_ACTIONS = %w[delete_application].freeze
+
   before_action :authenticate_user!,
                 only: %i[
                   show_application
@@ -187,6 +192,10 @@ class Api::V1::ShortFormController < ApiController
   end
 
   def send_attached_files(application_id)
+    # TODO: this breaks when the submit path becomes Clerk-authenticated. A Clerk session
+    # makes user_signed_in? true, but current_user.id is a string ("user_abc123") against
+    # an integer uploaded_files.user_id, so the lookup silently matches nothing. Uploads
+    # stay keyed by session_uid for Clerk users (upload_proof has no Clerk before_action).
     if user_signed_in?
       files = UploadedFile.where(
         user_id: current_user.id,
@@ -259,8 +268,31 @@ class Api::V1::ShortFormController < ApiController
     )
   end
 
+  # Actions that accept either credential while the Clerk flag rolls out: use the
+  # Clerk session when one is present, otherwise fall back to Devise token auth.
+  # The Clerk middleware only reads bearer tokens, so Devise requests never set one.
+  def authenticate_user!(*args)
+    return super unless CLERK_OR_DEVISE_ACTIONS.include?(action_name)
+
+    @clerk_user_id = clerk&.user_id
+    return if @clerk_user_id.present?
+
+    super
+  end
+
+  def current_user
+    return super if @clerk_user_id.blank?
+
+    @current_user ||= ClerkService::User.new(@clerk_user_id)
+  end
+
   def user_can_access?(application)
     return false if application.empty?
+
+    # Without a contact id we cannot establish ownership. Guard explicitly, since
+    # user_owns_app? compares contact ids directly and nil == nil would match any
+    # application that has no primary applicant contact id.
+    return false if user_contact_id.blank?
 
     Force::ShortFormService.user_owns_app?(user_contact_id, application)
   end
