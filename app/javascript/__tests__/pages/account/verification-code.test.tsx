@@ -1,5 +1,5 @@
 import React from "react"
-import { useSignIn, useSignUp, useAuth } from "@clerk/react"
+import { useSignIn, useSignUp, useAuth, useUser } from "@clerk/react"
 import { t } from "@bloom-housing/ui-components"
 import { act, screen, waitFor, cleanup, fireEvent } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
@@ -27,6 +27,7 @@ jest.mock("@clerk/react", () => {
     })),
     useSignUp: jest.fn(),
     useSignIn: jest.fn(),
+    useUser: jest.fn(() => ({ isLoaded: true, isSignedIn: false, user: null })),
   }
 })
 
@@ -148,6 +149,11 @@ describe("<EnterVerificationCode />", () => {
     ;(useSignIn as jest.Mock).mockReturnValue({
       fetchStatus: "idle",
       signIn: mockSignInResource,
+    })
+    ;(useUser as jest.Mock).mockReturnValue({
+      isLoaded: true,
+      isSignedIn: false,
+      user: null,
     })
     ;(getProfile as jest.Mock).mockResolvedValue(undefined)
     await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
