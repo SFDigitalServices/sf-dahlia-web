@@ -54,7 +54,12 @@ export const useClerkSignInSession = (): SignInSession => {
         return { error }
       }
 
-      await signIn.emailCode.sendCode()
+      const { error: sendCodeError } = await signIn.emailCode.sendCode()
+      if (sendCodeError) {
+        console.error("Sign in send code error:", sendCodeError)
+        return { error: sendCodeError }
+      }
+
       if (signIn.status !== "needs_first_factor") {
         console.error("Sign in code error:", signIn.status)
         return { error: new Error(`Sign in code error: ${signIn.status}`) }
