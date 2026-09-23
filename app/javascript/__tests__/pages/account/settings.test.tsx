@@ -12,6 +12,7 @@ import { mockProfileStub, setupUserContext } from "../../__util__/accountUtils"
 import { useFeatureFlag } from "../../../hooks/useFeatureFlag"
 import { useUser } from "@clerk/react"
 import { useLocation, useNavigate } from "react-router"
+import { getUpdateEmailPath } from "../../../util/routeUtil"
 
 jest.mock("../../../api/apiService", () => ({
   authenticatedPut: jest.fn(),
@@ -61,6 +62,7 @@ describe("<SettingsPage />", () => {
         isLoaded: true,
         isSignedIn: true,
         user: { passwordEnabled: true },
+        primaryEmailAddress: { emailAddress: "test@example.com" },
       })
       mockNavigate = jest.fn()
       ;(useNavigate as jest.Mock).mockReturnValue(mockNavigate)
@@ -247,7 +249,16 @@ describe("<SettingsPage />", () => {
         expect(authenticatedPut).not.toHaveBeenCalled()
       })
     })
+    describe("the email section", () => {
+      it("navigates to the update email page", async () => {
+        await act(async () => {
+          fireEvent.click(screen.getByRole("button", { name: /update email/i }))
+          await promise
+        })
 
+        expect(mockNavigate).toHaveBeenCalledWith(getUpdateEmailPath())
+      })
+    })
     describe("the password section", () => {
       it("shows a change password button when the user has a password", () => {
         expect(screen.getByRole("button", { name: "Change password" })).not.toBeNull()
