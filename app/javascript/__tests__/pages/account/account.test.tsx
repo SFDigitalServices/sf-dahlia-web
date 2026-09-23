@@ -7,14 +7,20 @@ import {
 import Account from "../../../pages/account/account"
 import React from "react"
 import { MemoryRouter } from "react-router"
-import { within, screen } from "@testing-library/react"
+import { within, screen, fireEvent, waitFor } from "@testing-library/react"
+import { useAuth } from "@clerk/react"
 import { setupUserContext } from "../../__util__/accountUtils"
-import { withAuthentication } from "../../../authentication/withAuthentication"
-import { RedirectType } from "../../../util/routeUtil"
+import { getSignInPath } from "../../../util/routeUtil"
 
 jest.mock("react-gtm-module", () => ({
   initialize: jest.fn(),
   dataLayer: jest.fn(),
+}))
+
+const mockNavigate = jest.fn()
+jest.mock("react-router", () => ({
+  ...jest.requireActual<typeof import("react-router")>("react-router"),
+  useNavigate: () => mockNavigate,
 }))
 
 jest.mock("../../../hooks/useFeatureFlag", () => ({
@@ -44,8 +50,7 @@ describe("<Account />", () => {
     beforeEach(async () => {
       originalLocation = mockWindowLocation()
       setupUserContext({ loggedIn: true })
-      const WrappedComponent = withAuthentication(Account, { redirectType: RedirectType.Account })
-      await renderAndLoadAsync(<WrappedComponent assetPaths={{}} />, {
+      await renderAndLoadAsync(<Account assetPaths={{}} />, {
         wrapper: ({ children }) => (
           <MemoryRouter initialEntries={["/account"]}>{children}</MemoryRouter>
         ),
@@ -89,6 +94,48 @@ describe("<Account />", () => {
     })
   })
 
+  describe("when the Clerk user signs out", () => {
+    let originalLocation: Location
+    let clerkSignOut: jest.Mock
+
+    beforeEach(async () => {
+      originalLocation = mockWindowLocation()
+      setupUserContext({ loggedIn: true })
+      clerkSignOut = jest.fn().mockResolvedValue(undefined)
+      ;(useAuth as jest.Mock).mockReturnValue({
+        isLoaded: true,
+        isSignedIn: true,
+        getToken: jest.fn().mockResolvedValue("clerk-session-token"),
+        signOut: clerkSignOut,
+      })
+
+      await renderAndLoadAsync(<Account assetPaths={{}} />, {
+        wrapper: ({ children }) => (
+          <MemoryRouter initialEntries={["/account"]}>{children}</MemoryRouter>
+        ),
+      })
+    })
+
+    afterEach(() => {
+      jest.restoreAllMocks()
+      restoreWindowLocation(originalLocation)
+    })
+
+    it("ends the Clerk session and routes to sign in from the account overview", async () => {
+      fireEvent.click(screen.getByRole("button", { name: "Sign out of account" }))
+
+      await waitFor(() => expect(clerkSignOut).toHaveBeenCalled())
+      await waitFor(() => expect(mockNavigate).toHaveBeenCalledWith(getSignInPath()))
+    })
+
+    it("ends the Clerk session and routes to sign in from the account nav", async () => {
+      fireEvent.click(screen.getByRole("button", { name: "Sign out" }))
+
+      await waitFor(() => expect(clerkSignOut).toHaveBeenCalled())
+      await waitFor(() => expect(window.location.href).toEqual(getSignInPath()))
+    })
+  })
+
   describe("when the user is not signed in", () => {
     let originalLocation: Location
 
@@ -96,8 +143,7 @@ describe("<Account />", () => {
       originalLocation = mockWindowLocation()
       setupUserContext({ loggedIn: false })
 
-      const WrappedComponent = withAuthentication(Account, { redirectType: RedirectType.Account })
-      await renderAndLoadAsync(<WrappedComponent assetPaths={{}} />)
+      await renderAndLoadAsync(<Account assetPaths={{}} />)
     })
 
     afterEach(() => {

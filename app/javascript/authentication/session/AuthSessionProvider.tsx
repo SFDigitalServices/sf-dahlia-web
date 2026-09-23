@@ -11,6 +11,7 @@ export type { AuthSession } from "./authStatus"
 const noSession: AuthSession = {
   status: INITIALIZING,
   getCredentials: () => Promise.resolve(NO_CREDENTIALS),
+  signOut: () => Promise.resolve(),
 }
 
 const AuthSessionContext = createContext<AuthSession | null>(null)

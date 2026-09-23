@@ -495,6 +495,9 @@ describe("<EnterVerificationCode />", () => {
 
   it("authenticates a housing counselor with Clerk after verifying the sign-in code", async () => {
     cleanup()
+    // Fake timers stop React finishing its render after submit. This test
+    // doesn't check the countdown, so real timers are fine here.
+    jest.useRealTimers()
     const mockGetToken = jest.fn().mockResolvedValue("clerk-session-token")
     ;(useAuth as jest.Mock).mockReturnValue({
       isLoaded: true,
@@ -513,7 +516,7 @@ describe("<EnterVerificationCode />", () => {
     ;(authorizeHousingCounselor as jest.Mock).mockResolvedValue(undefined)
     await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
 
-    const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime })
+    const user = userEvent.setup()
     await user.click(screen.getAllByRole("textbox")[0])
     await user.paste("123456")
     await user.click(screen.getByRole("button", { name: t("createAccount.confirmCode") }))

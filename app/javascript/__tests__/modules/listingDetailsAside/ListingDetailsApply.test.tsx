@@ -11,6 +11,7 @@ import { setupUserContext } from "../../__util__/accountUtils"
 import { getAddProfilePath, getSignInPath, localizedPath } from "../../../util/routeUtil"
 import { useFeatureFlag } from "../../../hooks/useFeatureFlag"
 import { UNLEASH_FLAG } from "../../../modules/constants"
+import { AuthSessionProvider } from "../../../authentication/session/AuthSessionProvider"
 
 jest.mock("../../../hooks/useFeatureFlag", () => ({
   useFeatureFlag: jest.fn(),
@@ -83,7 +84,7 @@ describe("ListingDetailsApply", () => {
       const user = userEvent.setup()
       setupUserContext({ loggedIn: false })
 
-      render(<ListingDetailsApply listing={openSaleListing} />)
+      render(<ListingDetailsApply listing={openSaleListing} />, { wrapper: AuthSessionProvider })
 
       await user.click(screen.getByRole("button", { name: /apply online/i }))
 
@@ -97,7 +98,7 @@ describe("ListingDetailsApply", () => {
     it("redirects signed in users without a completed profile to the add profile page", () => {
       setupUserContext({ loggedIn: true, hasProfile: false })
 
-      render(<ListingDetailsApply listing={openSaleListing} />)
+      render(<ListingDetailsApply listing={openSaleListing} />, { wrapper: AuthSessionProvider })
 
       expect(screen.getByRole("link", { name: /apply online/i })).toHaveAttribute(
         "href",
@@ -113,7 +114,7 @@ describe("ListingDetailsApply", () => {
         isSignedIn: true,
       })
 
-      render(<ListingDetailsApply listing={openSaleListing} />)
+      render(<ListingDetailsApply listing={openSaleListing} />, { wrapper: AuthSessionProvider })
 
       expect(screen.queryByRole("link", { name: /apply online/i })).toBeNull()
     })
@@ -125,7 +126,7 @@ describe("ListingDetailsApply", () => {
         isSignedIn: true,
       })
 
-      render(<ListingDetailsApply listing={openSaleListing} />)
+      render(<ListingDetailsApply listing={openSaleListing} />, { wrapper: AuthSessionProvider })
 
       expect(screen.getByRole("link", { name: /apply online/i }).getAttribute("href")).toBe(
         `/listings/${openSaleListing.listingID}/apply-welcome/intro`
@@ -139,7 +140,7 @@ describe("ListingDetailsApply", () => {
         isSignedIn: false,
       })
 
-      render(<ListingDetailsApply listing={openSaleListing} />)
+      render(<ListingDetailsApply listing={openSaleListing} />, { wrapper: AuthSessionProvider })
 
       expect(screen.queryByRole("link", { name: /apply online/i })).toBeNull()
     })
