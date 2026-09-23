@@ -202,6 +202,14 @@
             "title": "您是否為身心障礙人士，並接受由政府付費的居家支援服務？",
             "yes_i_get_this_type_of_support": "是的，我有接受這類支援服務"
         },
+        "c9_plus_housing_program": {
+            "enter_your_plus_housing_program_number": "請輸入您的 Plus Housing 計畫編號",
+            "look_for_your_program_number": "請在 Plus Housing 寄來的電子郵件中尋找您的計畫編號。找不到編號？請寄送電子郵件至：{{emailLink}}。",
+            "part_of_plus_housing_program": "Plus Housing 計畫成員",
+            "plus_housing_program_number": "Plus Housing 計畫編號",
+            "subtitle": "<a href='{{plusHousingProgramUrl}}' target='_blank'>Plus Housing 計畫</a> 是專為愛滋病毒 (HIV) 感染者/愛滋病 (AIDS) 患者設立的。Plus Housing 計畫成員享有 160 Freelon 抽籤優先權。您需要提供 Plus Housing 計畫編號。",
+            "title": "您是否是 Plus Housing 計畫的成員？"
+        },
         "choose_applicant_details": {
             "alert_message": "有關此申請及帳戶設定中的所有主要聯絡詳細資料均會根據您的選擇覆寫。",
             "continue_anon": "無帳戶繼續執行",
