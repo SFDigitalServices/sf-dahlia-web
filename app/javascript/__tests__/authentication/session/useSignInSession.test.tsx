@@ -139,6 +139,15 @@ describe("useSignInSession", () => {
       expect(signIn.emailCode.sendCode).not.toHaveBeenCalled()
     })
 
+    it("passes the provider's error through when the code cannot be sent", async () => {
+      signIn.emailCode.sendCode.mockResolvedValue({ error: clerkError })
+
+      const result = await renderSession().current.sendEmailCode("a@b.com")
+
+      expect(signIn.create).toHaveBeenCalledWith({ identifier: "a@b.com" })
+      expect(result.error).toBe(clerkError)
+    })
+
     it("reports an error when the attempt does not ask for the code", async () => {
       const result = await renderSession().current.sendEmailCode("a@b.com")
 
