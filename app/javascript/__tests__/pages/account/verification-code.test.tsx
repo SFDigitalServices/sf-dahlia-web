@@ -57,6 +57,7 @@ const expireResendVerificationCode = () => {
 describe("<EnterVerificationCode />", () => {
   let originalLocation: Location
   let mockNavigate: jest.Mock
+  let mockSignUpCreate: jest.Mock
   let mockSignUpVerifyEmailCode: jest.Mock
   let mockSignUpSendEmailCode: jest.Mock
   let mockSignUpFinalize: jest.Mock
@@ -74,6 +75,7 @@ describe("<EnterVerificationCode />", () => {
       verifyEmailCode: jest.Mock
       sendEmailCode: jest.Mock
     }
+    create: jest.Mock
     finalize: jest.Mock
   }
   let mockSignInResource: {
@@ -97,6 +99,7 @@ describe("<EnterVerificationCode />", () => {
     window.location.replace = jest.fn()
     setupUserContext({ loggedIn: false })
     mockNavigate = jest.fn()
+    mockSignUpCreate = jest.fn().mockResolvedValue({ error: undefined })
     mockSignUpVerifyEmailCode = jest.fn().mockResolvedValue({ error: undefined })
     mockSignUpSendEmailCode = jest.fn().mockResolvedValue({ error: undefined })
     mockSignUpFinalize = jest.fn().mockImplementation(async ({ navigate }) => {
@@ -120,6 +123,7 @@ describe("<EnterVerificationCode />", () => {
         verifyEmailCode: mockSignUpVerifyEmailCode,
         sendEmailCode: mockSignUpSendEmailCode,
       },
+      create: mockSignUpCreate,
       finalize: mockSignUpFinalize,
     }
     mockSignInResource = {
@@ -347,6 +351,125 @@ describe("<EnterVerificationCode />", () => {
     expect(mockSignInFinalize).toHaveBeenCalledTimes(1)
     expect(mockSignUpVerifyEmailCode).not.toHaveBeenCalled()
     expect(mockNavigate).toHaveBeenCalledWith("/account")
+  })
+
+  it("transfers from sign-in to create-an-account flow when account does not exist", async () => {
+    cleanup()
+    ;(useLocation as jest.Mock).mockReturnValue({
+      pathname: "/sign-in/code",
+      state: { email: "test@example.com", flow: AUTH_FLOW.SIGN_IN },
+    })
+    mockSignInVerifyCode.mockResolvedValue({
+      error: { errors: [{ code: "sign_up_if_missing_transfer" }] },
+    })
+    mockSignUpResource.status = "complete"
+    await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
+
+    const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime })
+    await user.click(screen.getAllByRole("textbox")[0])
+    await user.paste("123456")
+    await user.click(screen.getByRole("button", { name: t("createAccount.confirmCode") }))
+
+    await waitFor(() => {
+      expect(mockSignInVerifyCode).toHaveBeenCalledWith({ code: "123456" })
+      expect(mockSignUpCreate).toHaveBeenCalledWith({ transfer: true })
+    })
+    expect(mockSignUpFinalize).toHaveBeenCalledTimes(1)
+    expect(mockNavigate).toHaveBeenCalledWith("/add-password", {
+      state: { flow: AUTH_FLOW.CREATE_ACCOUNT },
+    })
+  })
+
+  it("does not transfer to create account when sign-up is not ready", async () => {
+    cleanup()
+    const consoleError = jest.spyOn(console, "error").mockImplementation(() => {})
+    ;(useLocation as jest.Mock).mockReturnValue({
+      pathname: "/sign-in/code",
+      state: { email: "test@example.com", flow: AUTH_FLOW.SIGN_IN },
+    })
+    ;(useSignUp as jest.Mock).mockReturnValue({
+      fetchStatus: "fetching",
+      signUp: mockSignUpResource,
+    })
+    mockSignInVerifyCode.mockResolvedValue({
+      error: { errors: [{ code: "sign_up_if_missing_transfer" }] },
+    })
+    await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
+
+    const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime })
+    await user.click(screen.getAllByRole("textbox")[0])
+    await user.paste("123456")
+    await user.click(screen.getByRole("button", { name: t("createAccount.confirmCode") }))
+
+    await waitFor(() => {
+      expect(mockSignInVerifyCode).toHaveBeenCalledWith({ code: "123456" })
+    })
+    expect(mockSignUpCreate).not.toHaveBeenCalled()
+    expect(mockSignUpFinalize).not.toHaveBeenCalled()
+    expect(consoleError).toHaveBeenCalledWith("Sign up not ready")
+
+    consoleError.mockRestore()
+  })
+
+  it("shows an invalid code error when transfer to create account fails", async () => {
+    cleanup()
+    const consoleError = jest.spyOn(console, "error").mockImplementation(() => {})
+    const createError = { errors: [{ code: "unexpected_failure" }] }
+    ;(useLocation as jest.Mock).mockReturnValue({
+      pathname: "/sign-in/code",
+      state: { email: "test@example.com", flow: AUTH_FLOW.SIGN_IN },
+    })
+    mockSignInVerifyCode.mockResolvedValue({
+      error: { errors: [{ code: "sign_up_if_missing_transfer" }] },
+    })
+    mockSignUpCreate.mockResolvedValue({ error: createError })
+    await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
+
+    const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime })
+    await user.click(screen.getAllByRole("textbox")[0])
+    await user.paste("123456")
+    await user.click(screen.getByRole("button", { name: t("createAccount.confirmCode") }))
+
+    await waitFor(() => {
+      expect(mockSignUpCreate).toHaveBeenCalledWith({ transfer: true })
+    })
+    expect(mockSignUpFinalize).not.toHaveBeenCalled()
+    expect(consoleError).toHaveBeenCalledWith("Account creation error", createError)
+    expect(mockNavigate).not.toHaveBeenCalledWith("/add-password", {
+      state: { flow: AUTH_FLOW.CREATE_ACCOUNT },
+    })
+
+    consoleError.mockRestore()
+  })
+
+  it("shows an invalid code error when transfer returns a non-complete status", async () => {
+    cleanup()
+    const consoleError = jest.spyOn(console, "error").mockImplementation(() => {})
+    ;(useLocation as jest.Mock).mockReturnValue({
+      pathname: "/sign-in/code",
+      state: { email: "test@example.com", flow: AUTH_FLOW.SIGN_IN },
+    })
+    mockSignInVerifyCode.mockResolvedValue({
+      error: { errors: [{ code: "sign_up_if_missing_transfer" }] },
+    })
+    mockSignUpResource.status = "missing_requirements"
+    await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
+
+    const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime })
+    await user.click(screen.getAllByRole("textbox")[0])
+    await user.paste("123456")
+    await user.click(screen.getByRole("button", { name: t("createAccount.confirmCode") }))
+
+    await waitFor(() => {
+      expect(mockSignUpCreate).toHaveBeenCalledWith({ transfer: true })
+    })
+    expect(mockSignUpFinalize).not.toHaveBeenCalled()
+    expect(consoleError).toHaveBeenCalledWith("Account creation error:", mockSignUpResource)
+    expect(mockNavigate).not.toHaveBeenCalledWith("/add-password", {
+      state: { flow: AUTH_FLOW.CREATE_ACCOUNT },
+    })
+
+    consoleError.mockRestore()
   })
 
   it("redirects to the apply intro after sign in when a redirect url is present", async () => {

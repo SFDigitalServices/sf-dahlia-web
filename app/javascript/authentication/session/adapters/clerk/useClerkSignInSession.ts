@@ -48,7 +48,7 @@ export const useClerkSignInSession = (): SignInSession => {
     async (email: string): Promise<SignInOutcome> => {
       if (!canStartRequest) return NOT_READY
 
-      const { error } = await signIn.create({ identifier: email })
+      const { error } = await signIn.create({ identifier: email, signUpIfMissing: true })
       if (error) {
         console.error("Sign in get code error:", error)
         return { error }
@@ -92,6 +92,10 @@ export const useClerkSignInSession = (): SignInSession => {
       if (!canStartRequest) return NOT_READY
 
       const { error } = await signIn.emailCode.verifyCode({ code })
+      // user attempted to sign in with an email not linked to an account
+      if (error?.errors?.[0]?.code === "sign_up_if_missing_transfer") {
+        return { error, needsSignUp: true }
+      }
       if (error) {
         console.error("Code verification error:", error)
         return { error }

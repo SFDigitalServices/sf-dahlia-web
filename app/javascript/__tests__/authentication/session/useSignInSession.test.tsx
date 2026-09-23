@@ -125,7 +125,7 @@ describe("useSignInSession", () => {
 
       const result = await renderSession().current.sendEmailCode("a@b.com")
 
-      expect(signIn.create).toHaveBeenCalledWith({ identifier: "a@b.com" })
+      expect(signIn.create).toHaveBeenCalledWith({ identifier: "a@b.com", signUpIfMissing: true })
       expect(signIn.emailCode.sendCode).toHaveBeenCalled()
       expect(result.error).toBeUndefined()
     })
@@ -144,7 +144,7 @@ describe("useSignInSession", () => {
 
       const result = await renderSession().current.sendEmailCode("a@b.com")
 
-      expect(signIn.create).toHaveBeenCalledWith({ identifier: "a@b.com" })
+      expect(signIn.create).toHaveBeenCalledWith({ identifier: "a@b.com", signUpIfMissing: true })
       expect(result.error).toBe(clerkError)
     })
 
