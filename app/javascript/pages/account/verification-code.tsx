@@ -89,9 +89,41 @@ const EnterVerificationCodePage = ({
 
   const editEmailHref = getAuthFlowPath(flow)
 
+  const transferToCreateAccount = async () => {
+    if (signUpFetchStatus === "fetching" || !signUp) {
+      console.error("Sign up not ready")
+      return
+    }
+    const { error } = await signUp.create({ transfer: true })
+    if (error) {
+      console.error("Account creation error", error)
+      setError("code", { message: "invalid" })
+      return
+    }
+    if (signUp.status === "complete") {
+      await signUp.finalize({
+        navigate: ({ decorateUrl }: { decorateUrl: (url: string) => string }) => {
+          void navigate(decorateUrl(getAddPasswordPath()), {
+            state: { flow: AUTH_FLOW.CREATE_ACCOUNT },
+          })
+        },
+      })
+    } else {
+      console.error("Account creation error:", signUp)
+      setError("code", { message: "invalid" })
+    }
+  }
+
   const verifySignInCode = async (code: string) => {
     if (signInFetchStatus === "fetching" || !signIn) return
     const { error } = await signIn.emailCode.verifyCode({ code })
+
+    // user attempted to sign in with an email not linked to an account
+    if (error?.errors?.[0]?.code === "sign_up_if_missing_transfer") {
+      void transferToCreateAccount()
+      return
+    }
+
     if (error) {
       console.error("Code verification error:", error)
       setError("code", { message: "invalid" })
