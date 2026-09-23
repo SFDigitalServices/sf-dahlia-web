@@ -86,6 +86,7 @@ const ChangePasswordPage = () => {
           email={profile?.email}
           labelText={t("label.password")}
           passwordType="accountSettings"
+          submitWithEnterKey
         />
       </UpdateForm>
     </AuthLayout>

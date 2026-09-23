@@ -4,7 +4,7 @@ import EmailFieldset, {
   emailFieldsetErrors,
   handleEmailServerErrors,
 } from "../../pages/account/components/EmailFieldset"
-import { render, screen } from "@testing-library/react"
+import { fireEvent, render, screen } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
 import { useForm } from "react-hook-form"
 import { t } from "@bloom-housing/ui-components"
@@ -18,12 +18,42 @@ const FieldSetWrapper = () => {
   return <EmailFieldset register={register} errors={errors} onChange={jest.fn()} />
 }
 
+const EnterSubmitWrapper = ({ submitWithEnterKey }: { submitWithEnterKey: boolean }) => {
+  const {
+    register,
+    formState: { errors },
+  } = useForm({ mode: "all" })
+
+  return (
+    <form>
+      <EmailFieldset
+        register={register}
+        errors={errors}
+        onChange={jest.fn()}
+        submitWithEnterKey={submitWithEnterKey}
+      />
+    </form>
+  )
+}
+
 describe("EmailFieldset", () => {
   it("renders first without errors", () => {
     render(<FieldSetWrapper />)
     expect(screen.queryByText(t("error.email.missingAtSign"))).toBeNull()
     expect(screen.queryByText(t("error.email.missingDot"))).toBeNull()
     expect(screen.queryByText(t("error.email.generalIncorrect"))).toBeNull()
+  })
+
+  it("submits parent form on Enter when submitWithEnterKey is enabled", () => {
+    const requestSubmitSpy = jest
+      .spyOn(HTMLFormElement.prototype, "requestSubmit")
+      .mockImplementation(() => {})
+
+    render(<EnterSubmitWrapper submitWithEnterKey />)
+    fireEvent.keyDown(screen.getByRole("textbox"), { key: "Enter" })
+
+    expect(requestSubmitSpy).toHaveBeenCalledTimes(1)
+    requestSubmitSpy.mockRestore()
   })
 
   it("renders the correct validation errors", async () => {
