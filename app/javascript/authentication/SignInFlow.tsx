@@ -18,7 +18,7 @@ import {
 import { authorizeHousingCounselor } from "../api/authApiService"
 import { useAuthSession } from "./session/AuthSessionProvider"
 import { useSignInSession } from "./session/useSignInSession"
-import { bearerToken } from "./session/authStatus"
+import { bearerToken, isAuthInitialized } from "./session/authStatus"
 import { getSfGovUrl, localizedFormat, renderInlineMarkup } from "../util/languageUtil"
 import { AUTH_FLOW, UNLEASH_FLAG } from "../modules/constants"
 import { useFeatureFlag } from "../hooks/useFeatureFlag"
@@ -60,9 +60,9 @@ const SignInFlow = () => {
 
   // Default to password sign-in, but prefer the code flow if the user last signed in via email code.
   useEffect(() => {
-    if (signInIsBusy || view !== null) return
+    if (!isAuthInitialized(status) || signInIsBusy || view !== null) return
     setView(preferredSignInMethod === "emailCode" ? "verificationCode" : "password")
-  }, [signInIsBusy, preferredSignInMethod, view])
+  }, [status, signInIsBusy, preferredSignInMethod, view])
 
   const alertRef = useRef<HTMLDivElement>(null)
   const {
