@@ -568,37 +568,6 @@ describe("<EnterVerificationCode />", () => {
     expect(mockNavigate).toHaveBeenCalledWith("/account?hcAccess=0")
   })
 
-  it("shows an invalid code error when no session token is available for the housing counselor check", async () => {
-    cleanup()
-    const mockGetToken = jest.fn().mockResolvedValue(null)
-    ;(useAuth as jest.Mock).mockReturnValue({
-      isLoaded: true,
-      isSignedIn: false,
-      getToken: mockGetToken,
-    })
-    ;(useLocation as jest.Mock).mockReturnValue({
-      pathname: "/sign-in/code",
-      state: {
-        email: "test@example.com",
-        housingCounselorToken: "jwt.token",
-        flow: AUTH_FLOW.SIGN_IN,
-      },
-    })
-    mockSignInResource.status = "complete"
-    await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
-
-    const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime })
-    await user.click(screen.getAllByRole("textbox")[0])
-    await user.paste("123456")
-    await user.click(screen.getByRole("button", { name: t("createAccount.confirmCode") }))
-
-    await waitFor(() => {
-      expect(mockSignInFinalize).toHaveBeenCalledTimes(1)
-    })
-    expect(authorizeHousingCounselor).not.toHaveBeenCalled()
-    expect(mockNavigate).not.toHaveBeenCalled()
-  })
-
   it("resends the code for sign in", async () => {
     cleanup()
     ;(useLocation as jest.Mock).mockReturnValue({

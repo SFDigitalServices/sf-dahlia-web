@@ -127,11 +127,6 @@ const EnterVerificationCodePage = ({
       return
     }
 
-    // We need to set the session token and *not* navigate away, so `getToken()` works for the
-    // housing counselor check below. This means we lose access to the `decorateUrl` utility
-    // function, so we navigate manually afterward instead of passing `navigate` to finalize().
-    await signIn.finalize()
-
     let destination = redirectUrl
     if (housingCounselorToken) {
       const sessionToken = bearerToken(await getCredentials())
