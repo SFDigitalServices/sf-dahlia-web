@@ -10,8 +10,7 @@ import { MemoryRouter } from "react-router"
 import { within, screen, fireEvent, waitFor } from "@testing-library/react"
 import { useAuth } from "@clerk/react"
 import { setupUserContext } from "../../__util__/accountUtils"
-import { withAuthentication } from "../../../authentication/withAuthentication"
-import { RedirectType, getSignInPath } from "../../../util/routeUtil"
+import { getSignInPath } from "../../../util/routeUtil"
 
 jest.mock("react-gtm-module", () => ({
   initialize: jest.fn(),
@@ -51,8 +50,7 @@ describe("<Account />", () => {
     beforeEach(async () => {
       originalLocation = mockWindowLocation()
       setupUserContext({ loggedIn: true })
-      const WrappedComponent = withAuthentication(Account, { redirectType: RedirectType.Account })
-      await renderAndLoadAsync(<WrappedComponent assetPaths={{}} />, {
+      await renderAndLoadAsync(<Account assetPaths={{}} />, {
         wrapper: ({ children }) => (
           <MemoryRouter initialEntries={["/account"]}>{children}</MemoryRouter>
         ),
@@ -111,8 +109,7 @@ describe("<Account />", () => {
         signOut: clerkSignOut,
       })
 
-      const WrappedComponent = withAuthentication(Account, { redirectType: RedirectType.Account })
-      await renderAndLoadAsync(<WrappedComponent assetPaths={{}} />, {
+      await renderAndLoadAsync(<Account assetPaths={{}} />, {
         wrapper: ({ children }) => (
           <MemoryRouter initialEntries={["/account"]}>{children}</MemoryRouter>
         ),
@@ -146,8 +143,7 @@ describe("<Account />", () => {
       originalLocation = mockWindowLocation()
       setupUserContext({ loggedIn: false })
 
-      const WrappedComponent = withAuthentication(Account, { redirectType: RedirectType.Account })
-      await renderAndLoadAsync(<WrappedComponent assetPaths={{}} />)
+      await renderAndLoadAsync(<Account assetPaths={{}} />)
     })
 
     afterEach(() => {

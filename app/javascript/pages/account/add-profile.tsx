@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import React, { useContext, useEffect, useState } from "react"
 import { useNavigate } from "react-router"
-import { useAuth } from "@clerk/react"
 import { Form, Icon, t } from "@bloom-housing/ui-components"
 import { Button, Card, Heading } from "@bloom-housing/ui-seeds"
 import { DeepMap, FieldError, FieldValues, useForm } from "react-hook-form"
@@ -144,7 +143,7 @@ const AddProfilePage = () => {
 
 const AddProfile = (_props: { assetPaths: unknown }) => {
   const navigate = useNavigate()
-  const { isLoaded, isSignedIn } = useAuth()
+  const { status } = useAuthSession()
   const { profile, initialStateLoaded } = useContext(UserContext)
   const { unleashFlag: clerkEnabled, flagsReady } = useFeatureFlag(UNLEASH_FLAG.CLERK_AUTH, false)
 
@@ -165,17 +164,17 @@ const AddProfile = (_props: { assetPaths: unknown }) => {
       void navigate(getSignInPath())
       return
     }
-    if (!isLoaded) return
-    if (!isSignedIn) {
+    if (status.kind === "initializing") return
+    if (status.kind === "signedOut") {
       void navigate(getSignInPath())
       return
     }
     if (!initialStateLoaded) return
-    if (isSignedIn && profile) void navigate(getMyAccountPath())
-  }, [flagsReady, clerkEnabled, isLoaded, isSignedIn, initialStateLoaded, profile, navigate])
+    if (profile) void navigate(getMyAccountPath())
+  }, [flagsReady, clerkEnabled, status, initialStateLoaded, profile, navigate])
 
   const ready =
-    flagsReady && clerkEnabled && isLoaded && isSignedIn && initialStateLoaded && !profile
+    flagsReady && clerkEnabled && status.kind === "signedIn" && initialStateLoaded && !profile
 
   if (!ready) {
     return null

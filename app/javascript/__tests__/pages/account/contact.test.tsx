@@ -8,8 +8,7 @@ import Contact from "../../../pages/account/contact"
 import React from "react"
 import { type RenderResult } from "@testing-library/react"
 import { mockProfileStub, setupUserContext } from "../../__util__/accountUtils"
-import { withAuthentication } from "../../../authentication/withAuthentication"
-import { getMyAccountSettingsPath, RedirectType } from "../../../util/routeUtil"
+import { getMyAccountSettingsPath } from "../../../util/routeUtil"
 
 jest.mock("react-gtm-module", () => ({
   initialize: jest.fn(),
@@ -45,8 +44,7 @@ describe("<Contact />", () => {
     beforeEach(async () => {
       originalLocation = mockWindowLocation()
       setupUserContext({ loggedIn: true })
-      const WrappedComponent = withAuthentication(Contact, { redirectType: RedirectType.Account })
-      const renderResult = await renderAndLoadAsync(<WrappedComponent assetPaths={{}} />)
+      const renderResult = await renderAndLoadAsync(<Contact assetPaths={{}} />)
       getByRole = renderResult.getByRole
       getByText = renderResult.getByText
       getByDisplayValue = renderResult.getByDisplayValue
@@ -84,8 +82,7 @@ describe("<Contact />", () => {
       originalLocation = mockWindowLocation()
       setupUserContext({ loggedIn: false })
 
-      const WrappedComponent = withAuthentication(Contact, { redirectType: RedirectType.Account })
-      await renderAndLoadAsync(<WrappedComponent assetPaths={{}} />)
+      await renderAndLoadAsync(<Contact assetPaths={{}} />)
     })
 
     afterEach(() => {

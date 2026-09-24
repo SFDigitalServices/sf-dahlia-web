@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import React, { useContext, useEffect, useState, useRef } from "react"
 import { useLocation, useNavigate } from "react-router"
-import { useAuth, useSignIn, useSignUp } from "@clerk/react"
+import { useSignIn, useSignUp } from "@clerk/react"
 import { ExpandableContent, Form, Order, t } from "@bloom-housing/ui-components"
 import { Card, Heading, Link, Button } from "@bloom-housing/ui-seeds"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
@@ -10,6 +10,8 @@ import { Controller, useForm } from "react-hook-form"
 import withAppSetup from "../../layouts/withAppSetup"
 import AuthLayout from "../../layouts/AuthLayout"
 import UserContext from "../../authentication/context/UserContext"
+import { useAuthSession } from "../../authentication/session/AuthSessionProvider"
+import { bearerToken } from "../../authentication/session/authStatus"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import {
   AppPages,
@@ -49,7 +51,7 @@ const EnterVerificationCodePage = ({
   const { signUp, fetchStatus: signUpFetchStatus } = useSignUp()
   const { signIn, fetchStatus: signInFetchStatus } = useSignIn()
   const isForgotPasswordFlow = flow === AUTH_FLOW.FORGOT_PASSWORD
-  const { getToken } = useAuth()
+  const { getCredentials } = useAuthSession()
   const isLoaded =
     flow === AUTH_FLOW.CREATE_ACCOUNT
       ? signUpFetchStatus !== "fetching"
@@ -85,9 +87,41 @@ const EnterVerificationCodePage = ({
 
   const editEmailHref = getAuthFlowPath(flow)
 
+  const transferToCreateAccount = async () => {
+    if (signUpFetchStatus === "fetching" || !signUp) {
+      console.error("Sign up not ready")
+      return
+    }
+    const { error } = await signUp.create({ transfer: true })
+    if (error) {
+      console.error("Account creation error", error)
+      setError("code", { message: "invalid" })
+      return
+    }
+    if (signUp.status === "complete") {
+      await signUp.finalize({
+        navigate: ({ decorateUrl }: { decorateUrl: (url: string) => string }) => {
+          void navigate(decorateUrl(getAddPasswordPath()), {
+            state: { flow: AUTH_FLOW.CREATE_ACCOUNT },
+          })
+        },
+      })
+    } else {
+      console.error("Account creation error:", signUp)
+      setError("code", { message: "invalid" })
+    }
+  }
+
   const verifySignInCode = async (code: string) => {
     if (signInFetchStatus === "fetching" || !signIn) return
     const { error } = await signIn.emailCode.verifyCode({ code })
+
+    // user attempted to sign in with an email not linked to an account
+    if (error?.errors?.[0]?.code === "sign_up_if_missing_transfer") {
+      void transferToCreateAccount()
+      return
+    }
+
     if (error) {
       console.error("Code verification error:", error)
       setError("code", { message: "invalid" })
@@ -107,7 +141,7 @@ const EnterVerificationCodePage = ({
 
     let destination = redirectUrl
     if (housingCounselorToken) {
-      const sessionToken: string | null = await getToken()
+      const sessionToken = bearerToken(await getCredentials())
       if (!sessionToken) {
         setError("code", { message: "invalid" })
         return
@@ -339,7 +373,8 @@ const EnterVerificationCode = (_props: { assetPaths: unknown }) => {
   const navigate = useNavigate()
   const { state } = useLocation() // TODO: needs a better name
   const email = state?.email
-  const { isLoaded, isSignedIn } = useAuth()
+  const { status } = useAuthSession()
+  const isSignedIn = status.kind === "signedIn"
   const { profile, initialStateLoaded } = useContext(UserContext)
   const { unleashFlag: clerkEnabled, flagsReady } = useFeatureFlag(UNLEASH_FLAG.CLERK_AUTH, false)
   const flow: AUTH_FLOW = state?.flow
@@ -366,7 +401,7 @@ const EnterVerificationCode = (_props: { assetPaths: unknown }) => {
       void navigate(getSignInPath())
       return
     }
-    if (!isLoaded) return
+    if (status.kind === "initializing") return
     if (!email || !flow) {
       void navigate(fallbackPath)
     }
@@ -381,7 +416,7 @@ const EnterVerificationCode = (_props: { assetPaths: unknown }) => {
   }, [
     flagsReady,
     clerkEnabled,
-    isLoaded,
+    status,
     isSignedIn,
     email,
     initialStateLoaded,
@@ -391,7 +426,7 @@ const EnterVerificationCode = (_props: { assetPaths: unknown }) => {
     fallbackPath,
   ])
 
-  const ready = flagsReady && clerkEnabled && isLoaded && !isSignedIn && !!email
+  const ready = flagsReady && clerkEnabled && status.kind === "signedOut" && !!email
 
   if (!ready) {
     return null

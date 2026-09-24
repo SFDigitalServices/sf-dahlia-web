@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import { Form, t } from "@bloom-housing/ui-components"
 import { Button, Card, Heading, Message } from "@bloom-housing/ui-seeds"
-import { useAuth, useSignIn, useUser } from "@clerk/react"
+import { useSignIn, useUser } from "@clerk/react"
 import React, { useContext, useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { Navigate, useLocation, useNavigate } from "react-router"
 import UserContext from "../../authentication/context/UserContext"
+import { useAuthSession } from "../../authentication/session/AuthSessionProvider"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import AuthLayout from "../../layouts/AuthLayout"
 import withAppSetup from "../../layouts/withAppSetup"
@@ -176,7 +177,7 @@ const AddPassword = (_props: { assetPaths: unknown }) => {
   const { state } = useLocation()
   const flow = state?.flow
   const isAccountSettingsFlow = state?.accountSettingsFlow === true
-  const { isLoaded, isSignedIn } = useAuth()
+  const { status } = useAuthSession()
   const { isLoaded: userLoaded, user } = useUser()
   const { profile, initialStateLoaded } = useContext(UserContext)
   const { unleashFlag: clerkEnabled, flagsReady } = useFeatureFlag(UNLEASH_FLAG.CLERK_AUTH, false)
@@ -201,21 +202,20 @@ const AddPassword = (_props: { assetPaths: unknown }) => {
       void navigate(getSignInPath())
       return
     }
-    if (!isLoaded) return
-    if (!isSignedIn) {
+    if (status.kind === "initializing") return
+    if (status.kind === "signedOut") {
       void navigate(getSignInPath())
       return
     }
     if (isAccountSettingsFlow) return
     if (!initialStateLoaded) return
-    if (isSignedIn && profile) void navigate(getMyAccountPath())
+    if (profile) void navigate(getMyAccountPath())
     if (!userLoaded) return
-    if (isSignedIn && !profile && hasPassword) void navigate(getAddProfilePath())
+    if (!profile && hasPassword) void navigate(getAddProfilePath())
   }, [
     flagsReady,
     clerkEnabled,
-    isLoaded,
-    isSignedIn,
+    status,
     initialStateLoaded,
     profile,
     userLoaded,
@@ -227,8 +227,7 @@ const AddPassword = (_props: { assetPaths: unknown }) => {
   const ready =
     flagsReady &&
     clerkEnabled &&
-    isLoaded &&
-    isSignedIn &&
+    status.kind === "signedIn" &&
     userLoaded &&
     !hasPassword &&
     (isAccountSettingsFlow || (initialStateLoaded && !profile))

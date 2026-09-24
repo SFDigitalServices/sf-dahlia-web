@@ -231,7 +231,10 @@ describe("<SignInFlow />", () => {
     await user.click(screen.getByRole("button", { name: /^get a code$/i }))
 
     await waitFor(() => {
-      expect(mockSignInCreate).toHaveBeenCalledWith({ identifier: "test@test.com" })
+      expect(mockSignInCreate).toHaveBeenCalledWith({
+        identifier: "test@test.com",
+        signUpIfMissing: true,
+      })
     })
     expect(mockSendCode).toHaveBeenCalledWith()
     expect(mockNavigate).toHaveBeenCalledWith("/sign-in/code", {

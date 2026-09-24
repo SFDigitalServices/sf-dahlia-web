@@ -10,6 +10,7 @@ import { getLocalizedPath, getAddProfilePath, RedirectType } from "../../util/ro
 import { getCurrentLanguage } from "../../util/languageUtil"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import TagManager from "react-gtm-module"
+import { AuthSessionProvider } from "../../authentication/session/AuthSessionProvider"
 
 // Mock the useGTMDataLayer hook
 jest.mock("react-gtm-module", () => ({
@@ -221,7 +222,8 @@ describe("withAuthentication", () => {
       const { getByText } = render(
         <UserContext.Provider value={mockContextValue}>
           <WrappedComponent />
-        </UserContext.Provider>
+        </UserContext.Provider>,
+        { wrapper: AuthSessionProvider }
       )
 
       expect(getByText("Protected Component")).toBeInTheDocument()
@@ -234,7 +236,8 @@ describe("withAuthentication", () => {
       render(
         <UserContext.Provider value={mockContextValue}>
           <WrappedComponent />
-        </UserContext.Provider>
+        </UserContext.Provider>,
+        { wrapper: AuthSessionProvider }
       )
 
       expect(window.location.assign).toHaveBeenCalledWith("/sign-in")
@@ -248,7 +251,8 @@ describe("withAuthentication", () => {
       render(
         <UserContext.Provider value={mockContextValue}>
           <WrappedComponent />
-        </UserContext.Provider>
+        </UserContext.Provider>,
+        { wrapper: AuthSessionProvider }
       )
 
       expect(window.location.assign).toHaveBeenCalledWith("/add-profile")
