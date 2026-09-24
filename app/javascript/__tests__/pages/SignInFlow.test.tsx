@@ -93,7 +93,7 @@ describe("<SignInFlow />", () => {
     mockNavigate = jest.fn()
     mockSignOut = jest.fn()
     mockSignInCreate = jest.fn().mockResolvedValue({ error: null })
-    mockSendCode = jest.fn().mockResolvedValue(undefined)
+    mockSendCode = jest.fn().mockResolvedValue({ error: null })
     mockFinalize = jest.fn().mockResolvedValue({ error: null })
     mockSignInResource = {
       status: "complete",

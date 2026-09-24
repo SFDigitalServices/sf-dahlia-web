@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import React, { useEffect, useRef, useState } from "react"
 import { Navigate, useLocation, useNavigate } from "react-router"
-import { useClerk, useSignIn } from "@clerk/react"
 import { Form, t } from "@bloom-housing/ui-components"
 import { Alert, Button, Card, Heading, Link, LoadingState, Message } from "@bloom-housing/ui-seeds"
 import { useForm, useWatch } from "react-hook-form"
@@ -18,7 +17,8 @@ import {
 } from "../util/routeUtil"
 import { authorizeHousingCounselor } from "../api/authApiService"
 import { useAuthSession } from "./session/AuthSessionProvider"
-import { bearerToken } from "./session/authStatus"
+import { useSignInSession } from "./session/useSignInSession"
+import { bearerToken, isAuthInitialized } from "./session/authStatus"
 import { getSfGovUrl, localizedFormat, renderInlineMarkup } from "../util/languageUtil"
 import { AUTH_FLOW, UNLEASH_FLAG } from "../modules/constants"
 import { useFeatureFlag } from "../hooks/useFeatureFlag"
@@ -43,8 +43,13 @@ const SignInFlow = () => {
   const requiredLoginsDate = localizedFormat(process.env.REQUIRED_LOGINS_DATE ?? "", "LL")
   const { status, getCredentials } = useAuthSession()
   const isSignedIn = status.kind === "signedIn"
-  const { signIn, fetchStatus: signInFetchStatus } = useSignIn()
-  const { client } = useClerk()
+  const {
+    isBusy: signInIsBusy,
+    preferredMethod: preferredSignInMethod,
+    signInWithPassword,
+    sendEmailCode,
+    activateSession,
+  } = useSignInSession()
   const { unleashFlag: requiredLoginsMessageEnabled } = useFeatureFlag(
     UNLEASH_FLAG.REQUIRED_LOGINS_MESSAGE,
     false
@@ -57,13 +62,9 @@ const SignInFlow = () => {
 
   // Default to password sign-in, but prefer the code flow if the user last signed in via email code.
   useEffect(() => {
-    if (signInFetchStatus === "fetching" || view !== null) return
-    if (client?.lastAuthenticationStrategy === "email_code") {
-      setView("verificationCode")
-    } else {
-      setView("password")
-    }
-  }, [signInFetchStatus, client?.lastAuthenticationStrategy, view])
+    if (!isAuthInitialized(status) || signInIsBusy || view !== null) return
+    setView(preferredSignInMethod === "emailCode" ? "verificationCode" : "password")
+  }, [status, signInIsBusy, preferredSignInMethod, view])
 
   const alertRef = useRef<HTMLDivElement>(null)
   const {
@@ -104,19 +105,12 @@ const SignInFlow = () => {
   }
 
   const onSubmit = async ({ email, password }: SignInFields) => {
-    if (signInFetchStatus === "fetching" || !signIn) return
+    if (signInIsBusy) return
     setShowError(false)
 
-    const { error } = await signIn.create({ identifier: email, password })
+    const { error, notReady } = await signInWithPassword(email, password)
+    if (notReady) return
     if (error) {
-      console.error("Sign in error:", error)
-      setShowError(true)
-      return
-    }
-    // https://clerk.com/docs/react/reference/objects/sign-in-future
-    // status may not be "complete" if we change auth strategies in our Clerk dashboard, e.g. "needs_second_factor"
-    if (signIn.status !== "complete") {
-      console.error("Sign in not complete:", signIn.status)
       setShowError(true)
       return
     }
@@ -131,8 +125,7 @@ const SignInFlow = () => {
 
     // we need to set the session token and *not* navigate away, so we have it for `checkHousingCounselorAccess()`
     // but that means we lose access to the `decorateUrl` utility function.
-    // https://clerk.com/docs/react/reference/objects/clerk#using-the-navigate-parameter
-    await signIn.finalize()
+    await activateSession()
 
     if (housingCounselorToken) {
       const housingCounselorAccess = await checkHousingCounselorAccess()
@@ -158,29 +151,24 @@ const SignInFlow = () => {
 
   // TODO: DAH-4352 show proper error message in addition to logging to the console
   const onGetCodeSubmit = async ({ email }: SignInFields) => {
-    if (signInFetchStatus === "fetching" || !signIn) return
+    if (signInIsBusy) return
 
     setShowError(false)
-    const { error } = await signIn.create({ identifier: email, signUpIfMissing: true })
+    const { error, notReady } = await sendEmailCode(email)
+    if (notReady) return
     if (error) {
-      console.error("Sign in get code error:", error)
       setShowError(true)
       return
     }
-    await signIn.emailCode.sendCode()
-    if (signIn.status === "needs_first_factor") {
-      void navigate(getSignInCodePath(), {
-        state: {
-          email,
-          housingCounselorToken: getHousingCounselorToken(),
-          flow: AUTH_FLOW.SIGN_IN,
-          ...(redirectUrl && { redirectUrl }),
-        },
-      })
-    } else {
-      console.error("Sign in code error:", signIn.status)
-      setShowError(true)
-    }
+
+    void navigate(getSignInCodePath(), {
+      state: {
+        email,
+        housingCounselorToken: getHousingCounselorToken(),
+        flow: AUTH_FLOW.SIGN_IN,
+        ...(redirectUrl && { redirectUrl }),
+      },
+    })
   }
 
   useEffect(() => {
@@ -230,7 +218,7 @@ const SignInFlow = () => {
           variant="primary"
           size="sm"
           type="submit"
-          disabled={signInFetchStatus === "fetching"}
+          disabled={signInIsBusy}
         >
           {t("createAccount.getCode")}
         </Button>
@@ -261,7 +249,7 @@ const SignInFlow = () => {
           variant="primary"
           size="sm"
           type="submit"
-          disabled={signInFetchStatus === "fetching"}
+          disabled={signInIsBusy}
         >
           {t("pageTitle.signIn")}
         </Button>

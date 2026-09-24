@@ -6,7 +6,7 @@ import { screen } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
 import { post } from "../../api/apiService"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
-import { useSignIn } from "@clerk/react"
+import { useClerk, useSignIn } from "@clerk/react"
 
 jest.mock("react-helmet-async", () => {
   return {
@@ -141,6 +141,7 @@ describe("<ForgotPassword />", () => {
   it("renders the clerk flow when the flag is enabled", async () => {
     ;(useFeatureFlag as jest.Mock).mockReturnValue({ flagsReady: true, unleashFlag: true })
     ;(useSignIn as jest.Mock).mockReturnValue({ isLoaded: true, signIn: {} })
+    ;(useClerk as jest.Mock).mockReturnValue({ client: undefined })
 
     await renderAndLoadAsync(<ForgotPassword assetPaths={{}} />)
 
