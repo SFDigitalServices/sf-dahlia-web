@@ -141,6 +141,12 @@ class Api::V1::AccountController < ApiController
     require_salesforce_contact_id! if action_name == 'update_housing_counselor'
   end
 
+  def require_salesforce_contact_id!
+    return if current_user.salesforce_contact_id.present?
+
+    render json: { error: 'Could not get Salesforce contact ID' }, status: :not_found
+  end
+
   def authenticate_clerk_or_devise_user!(*)
     clerk_user_id = clerk&.user_id
     return method(:authenticate_user!).super_method.call(*) if clerk_user_id.blank?
