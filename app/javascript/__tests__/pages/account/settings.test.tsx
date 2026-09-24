@@ -12,6 +12,7 @@ import { mockProfileStub, setupUserContext } from "../../__util__/accountUtils"
 import { useFeatureFlag } from "../../../hooks/useFeatureFlag"
 import { useUser } from "@clerk/react"
 import { useLocation, useNavigate } from "react-router"
+import { UNLEASH_FLAG } from "../../../modules/constants"
 
 jest.mock("../../../api/apiService", () => ({
   authenticatedPut: jest.fn(),
@@ -44,6 +45,22 @@ const mockAgencies = [
   { id: "123", name: "Test Agency A", shortName: "A" },
   { id: "456", name: "Test Agency B", shortName: "B" },
 ]
+
+const fillAndSubmitDevisePassword = async (currentPassword: string, newPassword?: string) => {
+  const newPasswordField = screen.getByLabelText(/choose a new password/i)
+  const passwordForm = newPasswordField.closest("form") as HTMLElement
+
+  await act(async () => {
+    fireEvent.change(screen.getByLabelText(/current password/i), {
+      target: { value: currentPassword },
+    })
+    if (newPassword !== undefined) {
+      fireEvent.change(newPasswordField, { target: { value: newPassword } })
+    }
+    fireEvent.click(within(passwordForm).getByRole("button", { name: "Save password" }))
+    await Promise.resolve()
+  })
+}
 
 describe("<SettingsPage />", () => {
   describe("when the user is signed in", () => {
@@ -989,6 +1006,81 @@ describe("<SettingsPage />", () => {
 
     it("redirects to the sign in page", () => {
       expect(window.location.assign).toHaveBeenCalledWith("/sign-in?redirect=settings")
+    })
+  })
+
+  // TODO: DAH-4262 cleanup after clerk flag is on
+  describe("the Devise password section", () => {
+    let originalLocation: Location
+
+    beforeEach(async () => {
+      document.documentElement.lang = "en"
+      originalLocation = mockWindowLocation()
+      jest.clearAllMocks()
+      ;(useFeatureFlag as jest.Mock).mockImplementation((flagName: string) => ({
+        flagsReady: true,
+        unleashFlag: flagName !== UNLEASH_FLAG.CLERK_AUTH,
+      }))
+      setupUserContext({ loggedIn: true })
+      ;(get as jest.Mock).mockResolvedValue({ data: { agencies: [] } })
+      ;(useUser as jest.Mock).mockReturnValue({
+        isLoaded: true,
+        isSignedIn: true,
+        user: { passwordEnabled: true },
+      })
+      ;(useNavigate as jest.Mock).mockReturnValue(jest.fn())
+      ;(useLocation as jest.Mock).mockReturnValue({ pathname: "/account/settings", state: null })
+      await renderAndLoadAsync(<SettingsPage assetPaths={{}} />)
+    })
+
+    afterEach(() => {
+      jest.restoreAllMocks()
+      restoreWindowLocation(originalLocation)
+    })
+
+    it("saves the password, shows the banner, and closes it", async () => {
+      ;(authenticatedPut as jest.Mock).mockResolvedValue({ data: { status: "success" } })
+
+      await fillAndSubmitDevisePassword("abcd1234", "abcd1234!")
+
+      expect(authenticatedPut).toHaveBeenCalledWith(
+        "/api/v1/auth/password",
+        expect.objectContaining({
+          current_password: "abcd1234",
+          password: "abcd1234!",
+          password_confirmation: "abcd1234!",
+        })
+      )
+      expect(screen.getByText("Your changes have been saved.")).toBeInTheDocument()
+
+      await act(async () => {
+        fireEvent.click(screen.getByLabelText("Close"))
+        await Promise.resolve()
+      })
+
+      expect(screen.queryByText("Your changes have been saved.")).toBeNull()
+    })
+
+    it("shows the server error in the error summary", async () => {
+      ;(authenticatedPut as jest.Mock).mockRejectedValueOnce({
+        response: {
+          status: 422,
+          data: { errors: { full_messages: ["Current password is invalid"] } },
+        },
+      })
+
+      await fillAndSubmitDevisePassword("abcd1234", "password1")
+
+      expect(
+        screen.getByRole("button", { name: /current password is incorrect/i })
+      ).toBeInTheDocument()
+      expect(screen.queryByText("Your changes have been saved.")).toBeNull()
+    })
+
+    it("does not call the API when the new password is empty", async () => {
+      await fillAndSubmitDevisePassword("abcd1234")
+
+      expect(authenticatedPut).not.toHaveBeenCalled()
     })
   })
 })
