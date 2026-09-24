@@ -30,8 +30,19 @@ RSpec.describe HousingCounselorSession, type: :controller do
       }
     end
 
+    def show_bang
+      session = current_hc_session!(expected_app_id: params[:expected_app_id])
+      render json: { session: }
+    rescue HousingCounselorSession::VerificationUnavailableError
+      render json: { error: 'unauthorized' }, status: :unauthorized
+    rescue HousingCounselorSession::AccessDeniedError
+      render json: { error: 'forbidden' }, status: :forbidden
+    end
+
     def current_user
-      @current_user ||= Struct.new(:salesforce_contact_id).new(params[:signed_in_as])
+      @current_user ||=
+        Struct.new(:salesforce_contact_id, :salesforce_contact_id_lookup_failed?)
+              .new(params[:signed_in_as], params[:lookup_failed].present?)
     end
   end
 
@@ -51,6 +62,7 @@ RSpec.describe HousingCounselorSession, type: :controller do
       get 'show' => 'api#show'
       get 'show_twice' => 'api#show_twice'
       get 'show_with_verification_status' => 'api#show_with_verification_status'
+      get 'show_bang' => 'api#show_bang'
       post 'write' => 'api#write'
     end
   end
@@ -134,6 +146,17 @@ RSpec.describe HousingCounselorSession, type: :controller do
         expect(cookies[:hc_session]).to be_blank
       end
 
+      # Regression coverage: a Clerk lookup failure used to be indistinguishable
+      # from a confirmed "someone else" mismatch, so the cookie was discarded
+      # and no failure was flagged - see #hc_session_verification_failed? below.
+      it 'returns nil without discarding the cookie when the signed-in user\'s own ' \
+         'contact id could not be looked up' do
+        get :show, params: { signed_in_as: nil, lookup_failed: true }
+
+        expect(JSON.parse(response.body)).to eq('session' => nil)
+        expect(cookies[:hc_session]).to be_present
+      end
+
       # Regression coverage: expected_app_id used to only be checked on the
       # expired-cookie refresh path, so a still-valid cookie for a different
       # applicant than expected_app_id was returned as-is.
@@ -193,6 +216,18 @@ RSpec.describe HousingCounselorSession, type: :controller do
         end
       end
 
+      context "and the signed-in user's own contact id could not be looked up" do
+        it 'returns nil without discarding the cookie, and never calls Salesforce' do
+          allow(Force::HousingCounselorService).to receive(:authorize_access)
+
+          get :show, params: { signed_in_as: nil, lookup_failed: true }
+
+          expect(JSON.parse(response.body)).to eq('session' => nil)
+          expect(cookies[:hc_session]).to be_present
+          expect(Force::HousingCounselorService).not_to have_received(:authorize_access)
+        end
+      end
+
       context 'and the stale cookie hcId matches the signed-in user' do
         it 're-authorizes against the applicant encoded in the stale cookie' do
           allow(Force::HousingCounselorService).to receive(:authorize_access).and_return(
@@ -243,7 +278,8 @@ RSpec.describe HousingCounselorSession, type: :controller do
           end
         end
 
-        it 'rescues a non-NotFoundError from the Salesforce re-check and discards the cookie' do
+        it 'rescues a transient error from the Salesforce re-check without discarding ' \
+           'the cookie, so a later request can retry' do
           allow(Force::HousingCounselorService).to receive(:authorize_access)
             .and_raise(Faraday::TimeoutError, 'timed out')
 
@@ -251,7 +287,25 @@ RSpec.describe HousingCounselorSession, type: :controller do
 
           expect(response).to have_http_status(:ok)
           expect(JSON.parse(response.body)).to eq('session' => nil)
-          expect(cookies[:hc_session]).to be_blank
+          expect(cookies[:hc_session]).to be_present
+        end
+
+        # Regression coverage: the cookie used to be discarded on a transient
+        # Salesforce error, so a retry after the outage cleared had no cookie
+        # left to re-verify and silently behaved as "no delegated session."
+        it 'lets a later request recover once Salesforce is reachable again' do
+          allow(Force::HousingCounselorService).to receive(:authorize_access)
+            .and_raise(Faraday::TimeoutError, 'timed out')
+          get :show, params: { signed_in_as: hc_id }
+          expect(cookies[:hc_session]).to be_present
+
+          allow(Force::HousingCounselorService).to receive(:authorize_access).and_return(
+            { applicant_contact_id: app_id, counselor_contact_id: hc_id },
+          )
+          get :show, params: { signed_in_as: hc_id }
+
+          expect(JSON.parse(response.body)).to eq('session' => { 'hc_id' => hc_id,
+                                                                 'app_id' => app_id })
         end
       end
     end
@@ -343,7 +397,7 @@ RSpec.describe HousingCounselorSession, type: :controller do
         expect(JSON.parse(response.body)).to eq(
           'session' => nil, 'verification_failed' => true, 'access_denied' => false,
         )
-        expect(cookies[:hc_session]).to be_blank
+        expect(cookies[:hc_session]).to be_present
       end
     end
   end
@@ -434,6 +488,53 @@ RSpec.describe HousingCounselorSession, type: :controller do
         expect(body['first']).to eq('hc_id' => hc_id, 'app_id' => app_id)
         expect(body['second']).to eq('hc_id' => hc_id, 'app_id' => app_id)
         expect(Force::HousingCounselorService).to have_received(:authorize_access).once
+      end
+    end
+  end
+
+  describe '#current_hc_session!' do
+    context 'when there is no cookie' do
+      it 'returns nil without raising' do
+        get :show_bang, params: { signed_in_as: hc_id }
+
+        expect(JSON.parse(response.body)).to eq('session' => nil)
+      end
+    end
+
+    context 'when the cookie is valid and not expired' do
+      before { set_hc_session_cookie(hc_id:, app_id:) }
+
+      it 'returns the session without raising' do
+        get :show_bang, params: { signed_in_as: hc_id }
+
+        expect(JSON.parse(response.body)).to eq('session' => { 'hc_id' => hc_id,
+                                                               'app_id' => app_id })
+      end
+    end
+
+    context 'when the cookie has expired and Salesforce explicitly denies access' do
+      before { set_hc_session_cookie(hc_id:, app_id:, exp: 1.hour.ago) }
+
+      it 'renders a 403 rather than falling back to the caller' do
+        allow(Force::HousingCounselorService).to receive(:authorize_access)
+          .and_return(nil)
+
+        get :show_bang, params: { signed_in_as: hc_id }
+
+        expect(response).to have_http_status(:forbidden)
+      end
+    end
+
+    context 'when the cookie has expired and Salesforce raises a transient error' do
+      before { set_hc_session_cookie(hc_id:, app_id:, exp: 1.hour.ago) }
+
+      it 'renders a 401 rather than falling back to the caller' do
+        allow(Force::HousingCounselorService).to receive(:authorize_access)
+          .and_raise(Faraday::TimeoutError, 'timed out')
+
+        get :show_bang, params: { signed_in_as: hc_id }
+
+        expect(response).to have_http_status(:unauthorized)
       end
     end
   end

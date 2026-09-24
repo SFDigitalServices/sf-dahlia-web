@@ -132,6 +132,7 @@ RSpec.describe Api::V1::AccountController, type: :controller do
         expect(response).to have_http_status(:unauthorized)
         expect(JSON.parse(response.body)).to eq('error' => 'unauthorized')
         expect(Force::ShortFormService).not_to have_received(:get_for_user)
+        expect(cookies[:hc_session]).to be_present
       end
     end
   end
@@ -244,6 +245,7 @@ RSpec.describe Api::V1::AccountController, type: :controller do
         expect(JSON.parse(response.body)).to eq('error' => 'unauthorized')
         expect(Force::AccountService).not_to have_received(:create_or_update)
         expect(Emailer).not_to have_received(:account_update)
+        expect(cookies[:hc_session]).to be_present
       end
     end
   end
@@ -290,7 +292,7 @@ RSpec.describe Api::V1::AccountController, type: :controller do
     context 'when the user has no Salesforce contact ID' do
       before do
         allow(ClerkService).to receive(:salesforce_contact_id)
-          .and_raise(StandardError, 'User has no Salesforce contact id')
+          .and_raise(ClerkService::NotFoundError, 'User has no Salesforce contact id')
         allow(Force::AccountService).to receive(:get)
       end
 
@@ -413,6 +415,7 @@ RSpec.describe Api::V1::AccountController, type: :controller do
         expect(Force::AccountService).not_to have_received(:create_or_update)
         expect(DahliaBackend::MessageService)
           .not_to have_received(:send_housing_counselor_access)
+        expect(cookies[:hc_session]).to be_present
       end
     end
   end
@@ -470,7 +473,7 @@ RSpec.describe Api::V1::AccountController, type: :controller do
     context 'when the user has no Salesforce contact ID' do
       before do
         allow(ClerkService).to receive(:salesforce_contact_id)
-          .and_raise(StandardError, 'User has no Salesforce contact id')
+          .and_raise(ClerkService::NotFoundError, 'User has no Salesforce contact id')
       end
 
       it 'returns not found' do
@@ -580,7 +583,9 @@ RSpec.describe Api::V1::AccountController, type: :controller do
       # to be silently treated the same as "no hc_session," so profile fell
       # back to showing the housing counselor their own Salesforce contact
       # instead of erroring - a silent identity mix-up. It must now render
-      # unauthorized instead of ever falling back in this case.
+      # unauthorized instead of ever falling back in this case, and it must
+      # leave the cookie in place (rather than discarding it) so a later
+      # request can retry re-verification once Salesforce recovers.
       context 'and the cookie has expired and Salesforce raises a transient error ' \
               'during the re-check' do
         it 'returns unauthorized rather than silently falling back to the ' \
@@ -596,7 +601,7 @@ RSpec.describe Api::V1::AccountController, type: :controller do
           expect(response).to have_http_status(:unauthorized)
           expect(JSON.parse(response.body)).to eq('error' => 'unauthorized')
           expect(Force::AccountService).not_to have_received(:get)
-          expect(cookies[:hc_session]).to be_blank
+          expect(cookies[:hc_session]).to be_present
         end
       end
     end
@@ -773,6 +778,7 @@ RSpec.describe Api::V1::AccountController, type: :controller do
         expect(JSON.parse(response.body)).to eq('error' => 'unauthorized')
         expect(Force::AccountService).not_to have_received(:create_or_update)
         expect(ClerkService).not_to have_received(:store_salesforce_contact_id)
+        expect(cookies[:hc_session]).to be_present
       end
     end
   end

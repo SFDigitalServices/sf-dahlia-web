@@ -84,6 +84,21 @@ module HousingCounselorSession
     resolve_hc_session(expected_app_id)
   end
 
+  # Like #current_hc_session, but raises rather than leaving the caller to
+  # check hc_session_verification_failed?/hc_session_access_denied? itself -
+  # for callers (see AccountController) that always want a "couldn't
+  # confirm" or "confirmed no" to be an exception rather than a value to
+  # branch on. Callers that need to inspect those flags directly instead
+  # (see HousingCounselorController#access) should keep using the plain,
+  # non-raising #current_hc_session.
+  def current_hc_session!(expected_app_id: nil)
+    session = current_hc_session(expected_app_id: expected_app_id)
+    raise VerificationUnavailableError if hc_session_verification_failed?
+    raise AccessDeniedError if hc_session_access_denied?
+
+    session
+  end
+
   # Gates the entire feature behind Unleash. Public so controllers that need
   # to reject a request outright while the flag is off (see
   # HousingCounselorController's before_action) don't have to duplicate the
@@ -92,11 +107,12 @@ module HousingCounselorSession
     Rails.configuration.unleash.is_enabled?(FEATURE_FLAG)
   end
 
-  # True once a Salesforce/Faraday error has prevented re-verifying an
-  # expired hc_session cookie during the current request. Distinct from
-  # current_hc_session returning nil for a legitimate reason (no cookie, or
-  # one that doesn't belong to the signed-in user) - callers that need to
-  # tell "couldn't confirm" apart from "no session" (see
+  # True once a Salesforce/Faraday error, or a failure to look up the
+  # signed-in Clerk user's own Salesforce contact id, has prevented
+  # confirming an hc_session cookie during the current request. Distinct
+  # from current_hc_session returning nil for a legitimate reason (no
+  # cookie, or one that doesn't belong to the signed-in user) - callers that
+  # need to tell "couldn't confirm" apart from "no session" (see
   # AccountController#effective_contact_id) should check this too.
   def hc_session_verification_failed?
     @hc_session_verification_failed || false
@@ -172,11 +188,9 @@ module HousingCounselorSession
     nil
   rescue Faraday::Error, Restforce::Error => e
     Rails.logger.warn(
-      'HousingCounselorSession: Salesforce re-check failed, discarding hc_session ' \
-      "cookie: #{e.message}",
+      "HousingCounselorSession: Salesforce re-check failed: #{e.message}",
     )
     @hc_session_verification_failed = true
-    discard_hc_session_cookie
     nil
   end
 
@@ -188,6 +202,16 @@ module HousingCounselorSession
 
   def hc_id_matches_current_user?(hc_id)
     return true if hc_id.present? && hc_id == current_user&.salesforce_contact_id
+
+    if current_user.respond_to?(:salesforce_contact_id_lookup_failed?) &&
+       current_user.salesforce_contact_id_lookup_failed?
+      Rails.logger.warn(
+        'HousingCounselorSession: could not verify hc_session cookie hcId against the ' \
+        "signed-in user - Clerk lookup failed (hcId=#{hc_id.inspect})",
+      )
+      @hc_session_verification_failed = true
+      return false
+    end
 
     Rails.logger.warn(
       'HousingCounselorSession: hc_session cookie hcId does not match the signed-in user ' \

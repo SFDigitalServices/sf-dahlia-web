@@ -291,7 +291,8 @@ RSpec.describe Api::V1::HousingCounselorController, type: :controller do
         end
 
         it 'returns unauthorized after a single Salesforce re-check, without letting ' \
-           'the error escape from a second, unrescued call' do
+           'the error escape from a second, unrescued call, and leaves the cookie ' \
+           'for a later retry' do
           post :access, params: { t: token }
 
           expect(response).to have_http_status(:unauthorized)
@@ -300,7 +301,7 @@ RSpec.describe Api::V1::HousingCounselorController, type: :controller do
             applicant_contact_id:,
             counselor_contact_id: contact_id,
           )
-          expect(cookies[:hc_session]).to be_blank
+          expect(cookies[:hc_session]).to be_present
         end
       end
 
