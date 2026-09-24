@@ -30,6 +30,8 @@ import PhoneFieldset, {
 import { updatePhone } from "../../api/authApiService"
 import { ErrorSummaryBanner } from "./components/ErrorSummaryBanner"
 import { ExpandedAccountAxiosError, getErrorMessage } from "./components/util"
+import { useAuthSession } from "../../authentication/session/AuthSessionProvider"
+import { bearerToken } from "../../authentication/session/authStatus"
 
 const getPhoneDefaultValues = (profile: User) => ({
   phone: profile.phone ?? "",
@@ -55,6 +57,8 @@ const ContactPhoneForm = ({
     shouldFocusError: false,
     defaultValues: getPhoneDefaultValues(profile),
   })
+  const { getCredentials } = useAuthSession()
+  const { unleashFlag: clerkEnabled } = useFeatureFlag(UNLEASH_FLAG.CLERK_AUTH, false)
   const {
     handleSubmit,
     formState: { errors, isDirty },
@@ -70,14 +74,26 @@ const ContactPhoneForm = ({
 
   const onSubmit = async (data: PhoneFormValues) => {
     setLoading(true)
+    let sessionToken: string | undefined
+
     try {
-      const updatedContact = await updatePhone({
-        ...profile,
-        phone: data.phone,
-        phoneType: data.phoneType,
-        alternatePhone: data.secondPhone,
-        alternatePhoneType: data.secondPhoneType,
-      })
+      sessionToken = clerkEnabled ? (bearerToken(await getCredentials()) ?? undefined) : undefined
+    } catch {
+      setLoading(false)
+      return
+    }
+
+    try {
+      const updatedContact = await updatePhone(
+        {
+          ...profile,
+          phone: data.phone,
+          phoneType: data.phoneType,
+          alternatePhone: data.secondPhone,
+          alternatePhoneType: data.secondPhoneType,
+        },
+        sessionToken
+      )
       saveProfile(updatedContact)
       formMethods.reset(data)
       setShowSaveBanner(true)
@@ -88,7 +104,6 @@ const ContactPhoneForm = ({
       setLoading(false)
     }
   }
-
   return (
     <>
       {showSaveBanner && (

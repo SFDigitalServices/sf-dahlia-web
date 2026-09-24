@@ -105,16 +105,20 @@ export const forgotPassword = async (email: string): Promise<string> =>
     locale: getCurrentLanguage(),
   }).then(({ data }) => data.message)
 
-export const updateNameOrDOB = async (user: User): Promise<User> => {
-  return authenticatedPut<{ contact: User }>("/api/v1/account/update", {
-    contact: contactObject(user),
-  }).then(({ data }) => data.contact)
+export const updateNameOrDOB = async (user: User, sessionToken?: string): Promise<User> => {
+  const body = { contact: contactObject(user) }
+  const request = sessionToken
+    ? put<{ contact: User }>("/api/v1/account/update", body, clerkHeaders(sessionToken))
+    : authenticatedPut<{ contact: User }>("/api/v1/account/update", body)
+  return request.then(({ data }) => data.contact)
 }
 
-export const updatePhone = async (user: User): Promise<User> => {
-  return authenticatedPut<{ contact: User }>("/api/v1/account/update", {
-    contact: contactObject(user),
-  }).then(({ data }) => data.contact)
+export const updatePhone = async (user: User, sessionToken?: string): Promise<User> => {
+  const body = { contact: contactObject(user) }
+  const request = sessionToken
+    ? put<{ contact: User }>("/api/v1/account/update", body, clerkHeaders(sessionToken))
+    : authenticatedPut<{ contact: User }>("/api/v1/account/update", body)
+  return request.then(({ data }) => data.contact)
 }
 
 export const updateEmail = async (email: string): Promise<string> =>
