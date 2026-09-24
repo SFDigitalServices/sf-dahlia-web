@@ -131,9 +131,7 @@ describe("<ApplicationsPage />", () => {
 
       it("should render no applications state", async () => {
         ;(authenticatedGet as jest.Mock).mockResolvedValue({ data: { applications: [] } })
-        const { getByText, getByRole } = await renderAndLoadAsync(
-          <ApplicationsPageWithSession />
-        )
+        const { getByText, getByRole } = await renderAndLoadAsync(<ApplicationsPageWithSession />)
         expect(
           getByText("It looks like you haven't applied to any listings yet.")
         ).toBeInTheDocument()
@@ -224,6 +222,30 @@ describe("<ApplicationsPage />", () => {
         ).not.toBeInTheDocument()
 
         expect(screen.queryByRole("button", { name: /Delete/i })).not.toBeInTheDocument()
+      })
+
+      it("should render error state when deleteApplication fails", async () => {
+        ;(authenticatedDelete as jest.Mock).mockRejectedValue(new Error("Error"))
+        await renderAndLoadAsync(
+          <>
+            <ApplicationsPageWithSession />
+            <div id="seeds-overlay-portal" />
+          </>
+        )
+
+        fireEvent.click(screen.getByRole("button", { name: /Delete/i }))
+
+        const modal = screen.getByTestId("modalMock")
+        fireEvent.click(within(modal).getByRole("button", { name: /Delete/i }))
+
+        await waitFor(() => {
+          expect(screen.queryByTestId("loading-spinner")).not.toBeInTheDocument()
+          expect(
+            screen.getByText(
+              /There was a problem loading your applications\. Try refreshing the page\./i
+            )
+          ).toBeInTheDocument()
+        })
       })
     })
 

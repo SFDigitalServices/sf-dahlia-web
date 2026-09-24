@@ -221,6 +221,30 @@ describe("<MyApplicationsPage />", () => {
 
         expect(screen.queryByRole("button", { name: /Delete/i })).not.toBeInTheDocument()
       })
+
+      it("should render error state when deleteApplication fails", async () => {
+        ;(authenticatedDelete as jest.Mock).mockRejectedValue(new Error("Error"))
+        await renderAndLoadAsync(
+          <>
+            <MyApplicationsPageWithSession />
+            <div id="seeds-overlay-portal" />
+          </>
+        )
+
+        fireEvent.click(screen.getByRole("button", { name: /Delete/i }))
+
+        const modal = screen.getByTestId("modalMock")
+        fireEvent.click(within(modal).getByRole("button", { name: /Delete/i }))
+
+        await waitFor(() => {
+          expect(screen.queryByTestId("loading-spinner")).not.toBeInTheDocument()
+          expect(
+            screen.getByText(
+              /There was a problem loading your applications\. Try refreshing the page\./i
+            )
+          ).toBeInTheDocument()
+        })
+      })
     })
 
     it("renders the correct double submit modal", async () => {
