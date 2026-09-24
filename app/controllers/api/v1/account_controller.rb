@@ -22,10 +22,14 @@ class Api::V1::AccountController < ApiController
     contact[:contactID] = current_user.salesforce_contact_id
     contact[:webAppID] = current_user.id
     salesforce_contact = Force::AccountService.create_or_update(contact.as_json)
-    if current_user.is_a?(ClerkService::User)
-      Emailer.account_update(current_user).deliver_now
-    else
-      Emailer.account_update(current_user).deliver_later
+    begin
+      if current_user.is_a?(ClerkService::User)
+        Emailer.account_update(current_user).deliver_now
+      else
+        Emailer.account_update(current_user).deliver_later
+      end
+    rescue StandardError => e
+      Sentry.capture_exception(e)
     end
     render json: { contact: salesforce_contact }
   end

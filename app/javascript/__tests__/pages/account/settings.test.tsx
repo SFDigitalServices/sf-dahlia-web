@@ -104,7 +104,7 @@ describe("<SettingsPage />", () => {
 
     describe("when the user updates their name and DOB", () => {
       it("updates Name", async () => {
-        ;(authenticatedPut as jest.Mock).mockResolvedValue({
+        ;(put as jest.Mock).mockResolvedValue({
           data: {
             contact: { ...mockProfileStub, firstName: "NewFirstName", lastName: "NewLastName" },
           },
@@ -148,14 +148,15 @@ describe("<SettingsPage />", () => {
 
         expect(screen.queryByText("Your changes have been saved.")).toBeNull()
 
-        expect(authenticatedPut).toHaveBeenCalledWith(
+        expect(put).toHaveBeenCalledWith(
           "/api/v1/account/update",
           expect.objectContaining({
             contact: expect.objectContaining({
               firstName: "NewFirstName",
               lastName: "NewLastName",
             }),
-          })
+          }),
+          { headers: { Authorization: "Bearer clerk-session-token" } }
         )
 
         expect(firstNameField.getAttribute("value")).toBe("NewFirstName")
@@ -164,7 +165,7 @@ describe("<SettingsPage />", () => {
       })
 
       it("updates DOB", async () => {
-        ;(authenticatedPut as jest.Mock).mockResolvedValue({
+        ;(put as jest.Mock).mockResolvedValue({
           data: {
             contact: {
               ...mockProfileStub,
@@ -213,13 +214,14 @@ describe("<SettingsPage />", () => {
 
         expect(screen.queryByText("Your changes have been saved.")).toBeNull()
 
-        expect(authenticatedPut).toHaveBeenCalledWith(
+        expect(put).toHaveBeenCalledWith(
           "/api/v1/account/update",
           expect.objectContaining({
             contact: expect.objectContaining({
               DOB: "2000-02-06",
             }),
-          })
+          }),
+          { headers: { Authorization: "Bearer clerk-session-token" } }
         )
       })
 
@@ -243,7 +245,7 @@ describe("<SettingsPage />", () => {
           await promise
         })
 
-        expect(authenticatedPut).not.toHaveBeenCalled()
+        expect(put).not.toHaveBeenCalled()
 
         await act(async () => {
           fireEvent.change(monthField, { target: { value: 2 } })
@@ -253,7 +255,7 @@ describe("<SettingsPage />", () => {
           await promise
         })
 
-        expect(authenticatedPut).not.toHaveBeenCalled()
+        expect(put).not.toHaveBeenCalled()
 
         await act(async () => {
           fireEvent.change(monthField, { target: { value: 2 } })
@@ -263,7 +265,7 @@ describe("<SettingsPage />", () => {
           await promise
         })
 
-        expect(authenticatedPut).not.toHaveBeenCalled()
+        expect(put).not.toHaveBeenCalled()
       })
     })
 
@@ -368,7 +370,7 @@ describe("<SettingsPage />", () => {
     })
     describe("renders the correct errors", () => {
       it("name Errors", async () => {
-        ;(authenticatedPut as jest.Mock).mockRejectedValue({
+        ;(put as jest.Mock).mockRejectedValue({
           response: {
             data: {
               errors: {
@@ -502,7 +504,7 @@ describe("<SettingsPage />", () => {
             /you must be 18 or older\. if you are under 18, email to get info on housing resources for youth/i
           )
         ).toBeNull()
-        ;(authenticatedPut as jest.Mock).mockRejectedValueOnce({
+        ;(put as jest.Mock).mockRejectedValueOnce({
           response: {
             status: 422, // Indicates that the age is too young
             data: {
@@ -521,7 +523,7 @@ describe("<SettingsPage />", () => {
         expect(
           screen.getByText(/enter a valid date of birth\. enter date like: mm dd yyyy/i)
         ).not.toBeNull()
-        ;(authenticatedPut as jest.Mock).mockRejectedValueOnce({
+        ;(put as jest.Mock).mockRejectedValueOnce({
           response: {
             status: 500, // General server error
           },

@@ -442,8 +442,12 @@ const NameSection = ({ user, setUser, handleBanners }: SectionProps) => {
     let sessionToken: string | undefined
     try {
       sessionToken = clerkEnabled ? (bearerToken(await getCredentials()) ?? undefined) : undefined
-    } catch (error) {
-      console.error("Could not get session token", error)
+    } catch {
+      setLoading(false)
+      return
+    }
+
+    if (clerkEnabled && !sessionToken) {
       setLoading(false)
       return
     }
@@ -530,6 +534,11 @@ const DateOfBirthSection = ({ user, setUser }: SectionProps) => {
     try {
       sessionToken = clerkEnabled ? (bearerToken(await getCredentials()) ?? undefined) : undefined
     } catch {
+      setLoading(false)
+      return
+    }
+
+    if (clerkEnabled && !sessionToken) {
       setLoading(false)
       return
     }
