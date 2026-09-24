@@ -201,6 +201,14 @@
             "title": "¿Tiene usted una discapacidad y recibe asistencia en su hogar pagada por el gobierno?",
             "yes_i_get_this_type_of_support": "Sí, recibo este tipo de apoyo"
         },
+        "c9_plus_housing_program": {
+            "enter_your_plus_housing_program_number": "Ingrese su número del programa Plus Housing",
+            "look_for_your_program_number": "Busque su número del programa en un correo electrónico de Plus Housing. ¿No lo tiene? Envíe un correo electrónico a {{emailLink}}.",
+            "part_of_plus_housing_program": "Parte del programa Plus Housing",
+            "plus_housing_program_number": "Número del programa Plus Housing",
+            "subtitle": "El <a href='{{plusHousingProgramUrl}}' target='_blank'>programa Plus Housing </a> es para personas que tienen VIH/SIDA. Las personas que forman parte del programa Plus Housing tienen prioridad en el sorteo de 160 Freelon. Necesita su número del programa Plus Housing.",
+            "title": "¿Forma parte del programa Plus Housing?"
+        },
         "choose_applicant_details": {
             "alert_message": "Su selección sobrescribirá todos los detalles de contacto principales en esta solicitud y en los ajustes de la cuenta.",
             "continue_anon": "Continuar sin ninguna cuenta",

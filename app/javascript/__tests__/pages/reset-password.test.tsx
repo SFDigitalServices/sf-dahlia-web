@@ -12,7 +12,7 @@ import { screen } from "@testing-library/react"
 import { authenticatedPut } from "../../api/apiService"
 import userEvent from "@testing-library/user-event"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
-import { useSignIn, useUser } from "@clerk/react"
+import { useClerk, useSignIn, useUser } from "@clerk/react"
 
 jest.mock("react-helmet-async", () => {
   return {
@@ -35,8 +35,11 @@ jest.mock("@clerk/react", () => {
     ...Clerk,
     ClerkProvider: ({ children }: { children: React.ReactNode }) => children,
     useAuth: jest.fn(() => ({ isLoaded: true, isSignedIn: false })),
+    useClerk: jest.fn(),
     useSignIn: jest.fn(),
     useUser: jest.fn(),
+    useSignUp: jest.fn(),
+    useSession: () => ({ session: null }),
   }
 })
 
@@ -49,6 +52,7 @@ describe("<ResetPassword />", () => {
       setActive: jest.fn(),
     })
     ;(useUser as jest.Mock).mockReturnValue({ isLoaded: true, user: null })
+    ;(useClerk as jest.Mock).mockReturnValue({ client: undefined })
   })
   describe("when the user is not signed in", () => {
     let originalLocation: Location

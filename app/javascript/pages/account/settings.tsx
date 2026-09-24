@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import React, { useContext, useEffect, useState } from "react"
-import { useUser } from "@clerk/react"
 import withAppSetup from "../../layouts/withAppSetup"
 import UserContext from "../../authentication/context/UserContext"
 import { useAuthSession } from "../../authentication/session/AuthSessionProvider"
+import { useSignUpSession } from "../../authentication/session/useSignUpSession"
 import { bearerToken } from "../../authentication/session/authStatus"
 import { Form, DOBFieldValues, t } from "@bloom-housing/ui-components"
 import { DeepMap, FieldError, useForm } from "react-hook-form"
@@ -34,12 +34,13 @@ import DOBFieldset, {
 import HousingCounselorAccess, {
   housingCounselorFieldsetErrors,
 } from "./components/HousingCounselorAccess"
-import SuccessToast from "./components/SuccessToast"
+import Toast from "./components/Toast"
 import "./styles/account.scss"
 import sharedStyles from "./shared-styles.module.scss"
 import {
   updateNameOrDOB as apiUpdateNameOrDOB,
   updateHousingCounselorAccess,
+  updatePassword,
 } from "../../api/authApiService"
 import { FormHeader, FormSection, getDobStringFromDobObject } from "../../util/accountUtil"
 import { AxiosError } from "axios"
@@ -60,6 +61,11 @@ const confirmationBannerMessages: Record<ConfirmationBannerFlag, string> = {
   passwordChanged: "accountSettings.changePasswordBanner",
   emailChanged: "accountSettings.changeEmailBanner",
 }
+import PasswordFieldset, {
+  handlePasswordServerErrors,
+  passwordFieldsetErrors,
+  passwordSortOrder,
+} from "./components/PasswordFieldset"
 
 export const Banner = ({
   showBanner,
@@ -166,10 +172,69 @@ const EmailSection = () => {
   )
 }
 
+// TODO: DAH-4262 Clean up Devise components when clerk flag is flipped on in prod
+const PasswordSectionDevise = ({ user, setUser }: SectionProps) => {
+  const [loading, setLoading] = useState(false)
+  const [passwordBanner, setPasswordBanner] = useState(false)
+
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+    reset,
+    watch,
+    setError,
+  } = useForm({ mode: "onTouched" })
+
+  const onSubmit = (data: { password: string; currentPassword: string }) => {
+    setLoading(true)
+    const { password, currentPassword } = data
+    updatePassword(password, currentPassword)
+      .then(() => {
+        const newUser = { ...user, password, currentPassword }
+        setUser(newUser)
+        setPasswordBanner(true)
+      })
+      .catch((error: ExpandedAccountAxiosError) => setError(...handlePasswordServerErrors(error)))
+      .finally(() => {
+        reset({}, { errors: true })
+        setLoading(false)
+      })
+  }
+  return (
+    <>
+      <Banner
+        showBanner={passwordBanner}
+        className="mt-8"
+        message={t("accountSettings.accountChangesSaved")}
+        onClose={() => setPasswordBanner(false)}
+      />
+      <ErrorSummaryBanner
+        errors={errors}
+        sortOrder={passwordSortOrder}
+        messageMap={(messageKey) => getErrorMessage(messageKey, passwordFieldsetErrors, true)}
+      />
+      <UpdateForm
+        onSubmit={handleSubmit(onSubmit)}
+        loading={loading}
+        submitLabel={t("accountSettings.savePassword")}
+      >
+        <PasswordFieldset
+          register={register}
+          errors={errors}
+          watch={watch}
+          email={user?.email}
+          labelText={t("label.password")}
+          passwordType="accountSettings"
+        />
+      </UpdateForm>
+    </>
+  )
+}
+
 const PasswordSection = () => {
   const navigate = useNavigate()
-  const { user: clerkUser } = useUser()
-  const userHasPassword = clerkUser?.passwordEnabled
+  const { hasPassword: userHasPassword } = useSignUpSession()
 
   return (
     <FormSection>
@@ -272,10 +337,10 @@ const HousingCounselorSection = ({ user, setUser }: SectionProps) => {
   return (
     <>
       {grantToast && (
-        <SuccessToast>{t("accountSettings.housingCounselor.toastShared")}</SuccessToast>
+        <Toast variant="success">{t("accountSettings.housingCounselor.toastShared")}</Toast>
       )}
       {revokeToast && (
-        <SuccessToast>{t("accountSettings.housingCounselor.toastStoppedSharing")}</SuccessToast>
+        <Toast variant="success">{t("accountSettings.housingCounselor.toastStoppedSharing")}</Toast>
       )}
       {!accessShared && (
         <ErrorSummaryBanner
@@ -573,6 +638,8 @@ const AccountSettings = ({ profile }: { profile: User }) => {
       <DateOfBirthSection user={user} setUser={setUser} />
       <EmailSection />
       <PasswordSection />
+      <EmailSection user={user} setUser={setUser} />
+      {clerkEnabled ? <PasswordSection /> : <PasswordSectionDevise user={user} setUser={setUser} />}
       {showHousingCounselorSection && user && (
         <HousingCounselorSection user={user} setUser={setUser} />
       )}
