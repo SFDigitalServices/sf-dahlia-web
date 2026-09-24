@@ -12,6 +12,7 @@ import { mockProfileStub, setupUserContext } from "../../__util__/accountUtils"
 import { useFeatureFlag } from "../../../hooks/useFeatureFlag"
 import { useUser } from "@clerk/react"
 import { useLocation, useNavigate } from "react-router"
+import { UNLEASH_FLAG } from "../../../modules/constants"
 
 jest.mock("../../../api/apiService", () => ({
   authenticatedPut: jest.fn(),
@@ -56,7 +57,7 @@ const fillAndSubmitDevisePassword = async (currentPassword: string, newPassword?
     if (newPassword !== undefined) {
       fireEvent.change(newPasswordField, { target: { value: newPassword } })
     }
-    fireEvent.click(within(passwordForm).getByRole("button", { name: "Update" }))
+    fireEvent.click(within(passwordForm).getByRole("button", { name: "Save password" }))
     await Promise.resolve()
   })
 }
@@ -1016,7 +1017,10 @@ describe("<SettingsPage />", () => {
       document.documentElement.lang = "en"
       originalLocation = mockWindowLocation()
       jest.clearAllMocks()
-      ;(useFeatureFlag as jest.Mock).mockReturnValue({ flagsReady: true, unleashFlag: false })
+      ;(useFeatureFlag as jest.Mock).mockImplementation((flagName: string) => ({
+        flagsReady: true,
+        unleashFlag: flagName !== UNLEASH_FLAG.CLERK_AUTH,
+      }))
       setupUserContext({ loggedIn: true })
       ;(get as jest.Mock).mockResolvedValue({ data: { agencies: [] } })
       ;(useUser as jest.Mock).mockReturnValue({

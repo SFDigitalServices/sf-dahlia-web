@@ -209,11 +209,6 @@ const PasswordSectionDevise = ({ user, setUser }: SectionProps) => {
   const onSubmit = (data: { password: string; currentPassword: string }) => {
     setLoading(true)
     const { password, currentPassword } = data
-    if (password === "") {
-      setLoading(false)
-      return
-    }
-
     updatePassword(password, currentPassword)
       .then(() => {
         const newUser = { ...user, password, currentPassword }
