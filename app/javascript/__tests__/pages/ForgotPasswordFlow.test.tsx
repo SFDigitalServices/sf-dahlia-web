@@ -1,5 +1,5 @@
 import React from "react"
-import { useSignIn } from "@clerk/react"
+import { useClerk, useSignIn } from "@clerk/react"
 import { screen, waitFor, within, cleanup } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
 import { useNavigate } from "react-router"
@@ -20,6 +20,7 @@ jest.mock("@clerk/react", () => {
     ClerkProvider: ({ children }: { children: React.ReactNode }) => children,
     useAuth: jest.fn(() => ({ isLoaded: true, isSignedIn: false })),
     useSignIn: jest.fn(),
+    useClerk: jest.fn(),
   }
 })
 
@@ -48,6 +49,7 @@ describe("<ForgotPasswordFlow />", () => {
     mockSignInCreate = jest.fn().mockResolvedValue({ error: null })
     mockSendResetCode = jest.fn().mockResolvedValue({ error: null })
     ;(useNavigate as jest.Mock).mockReturnValue(mockNavigate)
+    ;(useClerk as jest.Mock).mockReturnValue({ client: undefined })
     ;(useSignIn as jest.Mock).mockReturnValue({
       fetchStatus: "idle",
       signIn: {

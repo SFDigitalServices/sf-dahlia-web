@@ -1,5 +1,5 @@
 import React from "react"
-import { useSignIn, useUser } from "@clerk/react"
+import { useClerk, useSignIn, useUser } from "@clerk/react"
 import { screen, waitFor, cleanup } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
 import { useLocation, useNavigate } from "react-router"
@@ -19,6 +19,7 @@ jest.mock("@clerk/react", () => {
     ...Clerk,
     ClerkProvider: ({ children }: { children: React.ReactNode }) => children,
     useAuth: jest.fn(),
+    useClerk: jest.fn(),
     useUser: jest.fn(),
     useSignIn: jest.fn(),
   }
@@ -56,6 +57,7 @@ describe("<AddPassword />", () => {
       setActive: jest.fn(),
     })
     ;(useFeatureFlag as jest.Mock).mockReturnValue({ flagsReady: true, unleashFlag: true })
+    ;(useClerk as jest.Mock).mockReturnValue({ client: undefined })
     ;(useUser as jest.Mock).mockReturnValue({
       isLoaded: true,
       isSignedIn: true,
