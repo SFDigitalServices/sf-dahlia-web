@@ -170,8 +170,7 @@ describe("<Account />", () => {
     })
 
     it("shows the account ready success toast when navigated to with accountReady state", async () => {
-      const WrappedComponent = withAuthentication(Account, { redirectType: RedirectType.Account })
-      await renderAndLoadAsync(<WrappedComponent assetPaths={{}} />, {
+      await renderAndLoadAsync(<Account assetPaths={{}} />, {
         wrapper: ({ children }) => (
           <MemoryRouter initialEntries={[{ pathname: "/account", state: { accountReady: true } }]}>
             {children}
@@ -183,8 +182,7 @@ describe("<Account />", () => {
     })
 
     it("does not show the account ready toast without accountReady state", async () => {
-      const WrappedComponent = withAuthentication(Account, { redirectType: RedirectType.Account })
-      await renderAndLoadAsync(<WrappedComponent assetPaths={{}} />, {
+      await renderAndLoadAsync(<Account assetPaths={{}} />, {
         wrapper: ({ children }) => (
           <MemoryRouter initialEntries={["/account"]}>{children}</MemoryRouter>
         ),
@@ -194,8 +192,7 @@ describe("<Account />", () => {
     })
 
     it("shows the housing counselor no-access toast when hcAccess=0 is in the URL", async () => {
-      const WrappedComponent = withAuthentication(Account, { redirectType: RedirectType.Account })
-      await renderAndLoadAsync(<WrappedComponent assetPaths={{}} />, {
+      await renderAndLoadAsync(<Account assetPaths={{}} />, {
         wrapper: ({ children }) => (
           <MemoryRouter initialEntries={["/account?hcAccess=0"]}>{children}</MemoryRouter>
         ),
@@ -205,8 +202,7 @@ describe("<Account />", () => {
     })
 
     it("does not show the housing counselor no-access toast without hcAccess=0", async () => {
-      const WrappedComponent = withAuthentication(Account, { redirectType: RedirectType.Account })
-      await renderAndLoadAsync(<WrappedComponent assetPaths={{}} />, {
+      await renderAndLoadAsync(<Account assetPaths={{}} />, {
         wrapper: ({ children }) => (
           <MemoryRouter initialEntries={["/account"]}>{children}</MemoryRouter>
         ),
