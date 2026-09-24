@@ -192,7 +192,7 @@ const EmailSection = ({ user, setUser }: SectionProps) => {
   )
 }
 
-// TODO: Clean up Devise components when clerk flag is flipped on in prod
+// TODO: DAH-4262 Clean up Devise components when clerk flag is flipped on in prod
 const PasswordSectionDevise = ({ user, setUser }: SectionProps) => {
   const [loading, setLoading] = useState(false)
   const [passwordBanner, setPasswordBanner] = useState(false)
