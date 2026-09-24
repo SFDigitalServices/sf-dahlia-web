@@ -192,10 +192,6 @@ class Api::V1::ShortFormController < ApiController
   end
 
   def send_attached_files(application_id)
-    # TODO: this breaks when the submit path becomes Clerk-authenticated. A Clerk session
-    # makes user_signed_in? true, but current_user.id is a string ("user_abc123") against
-    # an integer uploaded_files.user_id, so the lookup silently matches nothing. Uploads
-    # stay keyed by session_uid for Clerk users (upload_proof has no Clerk before_action).
     if user_signed_in?
       files = UploadedFile.where(
         user_id: current_user.id,
@@ -289,9 +285,6 @@ class Api::V1::ShortFormController < ApiController
   def user_can_access?(application)
     return false if application.empty?
 
-    # Without a contact id we cannot establish ownership. Guard explicitly, since
-    # user_owns_app? compares contact ids directly and nil == nil would match any
-    # application that has no primary applicant contact id.
     return false if user_contact_id.blank?
 
     Force::ShortFormService.user_owns_app?(user_contact_id, application)
