@@ -7,6 +7,8 @@ export type SignInOutcome = {
    * callers that only bail on `error` stay correct; check it first to skip user-facing messaging.
    */
   notReady?: true
+  /** The email has no account; the caller should continue into sign up. */
+  needsSignUp?: true
 }
 
 export type SignInSession = {
