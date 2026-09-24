@@ -6,8 +6,14 @@ import { Card, Heading, Button } from "@bloom-housing/ui-seeds"
 import { useForm } from "react-hook-form"
 import withAppSetup from "../../layouts/withAppSetup"
 import AuthLayout from "../../layouts/AuthLayout"
+import { useSignInSession } from "../../authentication/session/useSignInSession"
 import { useSignUpSession } from "../../authentication/session/useSignUpSession"
-import { AppPages, getVerificationCodePath, getSignInPath } from "../../util/routeUtil"
+import {
+  AppPages,
+  getVerificationCodePath,
+  getSignInPath,
+  getSignInCodePath,
+} from "../../util/routeUtil"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import { AUTH_FLOW, UNLEASH_FLAG } from "../../modules/constants"
 import { CreateAccount } from "./create-account"
@@ -24,14 +30,26 @@ interface CreateAnAccountProps {
 const CreateAnAccountPage = () => {
   const navigate = useNavigate()
   const { createAccount, isBusy } = useSignUpSession()
+  const { sendEmailCode } = useSignInSession()
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<{ email: string }>({ mode: "onTouched", shouldFocusError: false })
 
+  const transferToSignIn = async (email: string) => {
+    const { error } = await sendEmailCode(email)
+    if (error) return
+
+    void navigate(getSignInCodePath(), { state: { email, flow: AUTH_FLOW.SIGN_IN } })
+  }
+
   const onSubmit = async ({ email }: { email: string }) => {
-    const { error } = await createAccount(email)
+    const { error, needsSignIn } = await createAccount(email)
+    if (needsSignIn) {
+      void transferToSignIn(email)
+      return
+    }
     if (error) return
 
     void navigate(getVerificationCodePath(), { state: { email, flow: AUTH_FLOW.CREATE_ACCOUNT } })

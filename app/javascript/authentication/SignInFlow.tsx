@@ -18,7 +18,7 @@ import {
 import { authorizeHousingCounselor } from "../api/authApiService"
 import { useAuthSession } from "./session/AuthSessionProvider"
 import { useSignInSession } from "./session/useSignInSession"
-import { bearerToken } from "./session/authStatus"
+import { bearerToken, isAuthInitialized } from "./session/authStatus"
 import { getSfGovUrl, localizedFormat, renderInlineMarkup } from "../util/languageUtil"
 import { AUTH_FLOW, UNLEASH_FLAG } from "../modules/constants"
 import { useFeatureFlag } from "../hooks/useFeatureFlag"
@@ -43,8 +43,13 @@ const SignInFlow = () => {
   const requiredLoginsDate = localizedFormat(process.env.REQUIRED_LOGINS_DATE ?? "", "LL")
   const { status, getCredentials, signOut } = useAuthSession()
   const isSignedIn = status.kind === "signedIn"
-  const { isBusy, preferredMethod, signInWithPassword, sendEmailCode, activateSession } =
-    useSignInSession()
+  const {
+    isBusy: signInIsBusy,
+    preferredMethod: preferredSignInMethod,
+    signInWithPassword,
+    sendEmailCode,
+    activateSession,
+  } = useSignInSession()
   const { unleashFlag: requiredLoginsMessageEnabled } = useFeatureFlag(
     UNLEASH_FLAG.REQUIRED_LOGINS_MESSAGE,
     false
@@ -55,9 +60,9 @@ const SignInFlow = () => {
 
   // Default to password sign-in, but prefer the code flow if the user last signed in via email code.
   useEffect(() => {
-    if (isBusy || view !== null) return
-    setView(preferredMethod === "emailCode" ? "verificationCode" : "password")
-  }, [isBusy, preferredMethod, view])
+    if (!isAuthInitialized(status) || signInIsBusy || view !== null) return
+    setView(preferredSignInMethod === "emailCode" ? "verificationCode" : "password")
+  }, [status, signInIsBusy, preferredSignInMethod, view])
 
   const alertRef = useRef<HTMLDivElement>(null)
   const {
@@ -98,7 +103,7 @@ const SignInFlow = () => {
   }
 
   const onSubmit = async ({ email, password }: SignInFields) => {
-    if (isBusy) return
+    if (signInIsBusy) return
     setShowError(false)
 
     const { error, notReady } = await signInWithPassword(email, password)
@@ -134,7 +139,7 @@ const SignInFlow = () => {
 
   // TODO: DAH-4352 show proper error message in addition to logging to the console
   const onGetCodeSubmit = async ({ email }: SignInFields) => {
-    if (isBusy) return
+    if (signInIsBusy) return
 
     setShowError(false)
     const { error, notReady } = await sendEmailCode(email)
@@ -195,7 +200,7 @@ const SignInFlow = () => {
           variant="primary"
           size="sm"
           type="submit"
-          disabled={isBusy}
+          disabled={signInIsBusy}
         >
           {t("createAccount.getCode")}
         </Button>
@@ -224,7 +229,7 @@ const SignInFlow = () => {
           variant="primary"
           size="sm"
           type="submit"
-          disabled={isBusy}
+          disabled={signInIsBusy}
         >
           {t("pageTitle.signIn")}
         </Button>

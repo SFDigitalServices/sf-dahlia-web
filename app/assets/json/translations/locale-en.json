@@ -201,6 +201,14 @@
             "title": "Do you have a disability and get support in your home paid for by the government?",
             "yes_i_get_this_type_of_support": "Yes, I get this type of support"
         },
+        "c9_plus_housing_program": {
+            "enter_your_plus_housing_program_number": "Enter your Plus Housing Program Number",
+            "look_for_your_program_number": "Look for your Program Number in an email from Plus Housing. Don't have it? Email {{emailLink}}.",
+            "part_of_plus_housing_program": "Part of Plus Housing program",
+            "plus_housing_program_number": "Plus Housing Program Number",
+            "subtitle": "The <a href='{{plusHousingProgramUrl}}' target='_blank'>Plus Housing program</a> is for people living with HIV/AIDS. Plus Housing participants get priority in the lottery for 160 Freelon. You need your Plus Housing Program Number.",
+            "title": "Are you part of the Plus Housing program?"
+        },
         "choose_applicant_details": {
             "alert_message": "All primary contact details on this application and in account settings will be overwritten by your selection.",
             "continue_anon": "Continue without an account",

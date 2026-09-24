@@ -48,13 +48,18 @@ export const useClerkSignInSession = (): SignInSession => {
     async (email: string): Promise<SignInOutcome> => {
       if (!canStartRequest) return NOT_READY
 
-      const { error } = await signIn.create({ identifier: email })
+      const { error } = await signIn.create({ identifier: email, signUpIfMissing: true })
       if (error) {
         console.error("Sign in get code error:", error)
         return { error }
       }
 
-      await signIn.emailCode.sendCode()
+      const { error: sendCodeError } = await signIn.emailCode.sendCode()
+      if (sendCodeError) {
+        console.error("Sign in send code error:", sendCodeError)
+        return { error: sendCodeError }
+      }
+
       if (signIn.status !== "needs_first_factor") {
         console.error("Sign in code error:", signIn.status)
         return { error: new Error(`Sign in code error: ${signIn.status}`) }
@@ -87,6 +92,10 @@ export const useClerkSignInSession = (): SignInSession => {
       if (!canStartRequest) return NOT_READY
 
       const { error } = await signIn.emailCode.verifyCode({ code })
+      // user attempted to sign in with an email not linked to an account
+      if (error?.errors?.[0]?.code === "sign_up_if_missing_transfer") {
+        return { error, needsSignUp: true }
+      }
       if (error) {
         console.error("Code verification error:", error)
         return { error }

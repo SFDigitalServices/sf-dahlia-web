@@ -5,6 +5,8 @@ export type SignUpOutcome = {
    * callers that only bail on `error` stay correct; check it first to skip user-facing messaging.
    */
   notReady?: true
+  /** The email already has an account; the caller should continue into sign in. */
+  needsSignIn?: true
 }
 
 export type SignUpSession = {
@@ -12,6 +14,8 @@ export type SignUpSession = {
   isBusy: boolean
 
   createAccount: (email: string) => Promise<SignUpOutcome>
+  /** Creates the account from a sign-in attempt whose email had no account. */
+  transferFromSignIn: () => Promise<SignUpOutcome>
   resendEmailCode: () => Promise<SignUpOutcome>
   verifyEmailCode: (code: string) => Promise<SignUpOutcome>
   activateSession: (redirectTo: string, navigateState?: unknown) => Promise<SignUpOutcome>

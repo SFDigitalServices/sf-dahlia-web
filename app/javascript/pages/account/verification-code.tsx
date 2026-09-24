@@ -84,11 +84,27 @@ const EnterVerificationCodePage = ({
 
   const editEmailHref = getAuthFlowPath(flow)
 
+  const transferToCreateAccount = async () => {
+    const { error, notReady } = await signUpSession.transferFromSignIn()
+    if (notReady) return
+    if (error) {
+      setError("code", { message: "invalid" })
+      return
+    }
+
+    await signUpSession.activateSession(getAddPasswordPath(), { flow: AUTH_FLOW.CREATE_ACCOUNT })
+  }
+
   const verifySignInCode = async (code: string) => {
     if (signInSession.isBusy) return
 
-    const { error, notReady } = await signInSession.verifyEmailCode(code)
+    const { error, notReady, needsSignUp } = await signInSession.verifyEmailCode(code)
     if (notReady) return
+    if (needsSignUp) {
+      void transferToCreateAccount()
+      return
+    }
+
     if (error) {
       setError("code", { message: "invalid" })
       return

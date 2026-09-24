@@ -44,6 +44,7 @@ import {
   updateNameOrDOB as apiUpdateNameOrDOB,
   updateEmail,
   updateHousingCounselorAccess,
+  updatePassword,
 } from "../../api/authApiService"
 import { FormHeader, FormSection, getDobStringFromDobObject } from "../../util/accountUtil"
 import { AxiosError } from "axios"
@@ -56,6 +57,11 @@ import { AccountSettingsPage as MyAccountSettingsPage } from "./account-settings
 import settingsStyles from "./settings.module.scss"
 import { useLocation, useNavigate } from "react-router"
 import { CommonMessageVariant } from "@bloom-housing/ui-seeds/src/blocks/shared/CommonMessage"
+import PasswordFieldset, {
+  handlePasswordServerErrors,
+  passwordFieldsetErrors,
+  passwordSortOrder,
+} from "./components/PasswordFieldset"
 
 export const Banner = ({
   showBanner,
@@ -180,6 +186,66 @@ const EmailSection = ({ user, setUser }: SectionProps) => {
           errors={errors}
           defaultEmail={user?.email ?? null}
           onChange={onChange}
+        />
+      </UpdateForm>
+    </>
+  )
+}
+
+// TODO: DAH-4262 Clean up Devise components when clerk flag is flipped on in prod
+const PasswordSectionDevise = ({ user, setUser }: SectionProps) => {
+  const [loading, setLoading] = useState(false)
+  const [passwordBanner, setPasswordBanner] = useState(false)
+
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+    reset,
+    watch,
+    setError,
+  } = useForm({ mode: "onTouched" })
+
+  const onSubmit = (data: { password: string; currentPassword: string }) => {
+    setLoading(true)
+    const { password, currentPassword } = data
+    updatePassword(password, currentPassword)
+      .then(() => {
+        const newUser = { ...user, password, currentPassword }
+        setUser(newUser)
+        setPasswordBanner(true)
+      })
+      .catch((error: ExpandedAccountAxiosError) => setError(...handlePasswordServerErrors(error)))
+      .finally(() => {
+        reset({}, { errors: true })
+        setLoading(false)
+      })
+  }
+  return (
+    <>
+      <Banner
+        showBanner={passwordBanner}
+        className="mt-8"
+        message={t("accountSettings.accountChangesSaved")}
+        onClose={() => setPasswordBanner(false)}
+      />
+      <ErrorSummaryBanner
+        errors={errors}
+        sortOrder={passwordSortOrder}
+        messageMap={(messageKey) => getErrorMessage(messageKey, passwordFieldsetErrors, true)}
+      />
+      <UpdateForm
+        onSubmit={handleSubmit(onSubmit)}
+        loading={loading}
+        submitLabel={t("accountSettings.savePassword")}
+      >
+        <PasswordFieldset
+          register={register}
+          errors={errors}
+          watch={watch}
+          email={user?.email}
+          labelText={t("label.password")}
+          passwordType="accountSettings"
         />
       </UpdateForm>
     </>
@@ -588,7 +654,7 @@ const AccountSettings = ({ profile }: { profile: User }) => {
       <NameSection user={user} setUser={setUser} handleBanners={handleBanners} />
       <DateOfBirthSection user={user} setUser={setUser} />
       <EmailSection user={user} setUser={setUser} />
-      <PasswordSection />
+      {clerkEnabled ? <PasswordSection /> : <PasswordSectionDevise user={user} setUser={setUser} />}
       {showHousingCounselorSection && user && (
         <HousingCounselorSection user={user} setUser={setUser} />
       )}

@@ -301,7 +301,7 @@
   "createAccount.createNewPassword": "Create a new password",
   "createAccount.description": "We use this information to help you fill in your application. You can update these details at any time.",
   "createAccount.didntGetEmail": "Didn't get an email?",
-  "createAccount.dobExample": "Example: April 20, 1980 is 04 20 1980.",
+  "createAccount.dobExample": "Example: April 22, 1980 is 4 22 1980.",
   "createAccount.dobNote": "We ask for date of birth to verify your age. You must be 18 or older to apply for housing.",
   "createAccount.editEmail": "Edit email",
   "createAccount.emailConfirmInstructions": "Please re-enter your email address to confirm.",
@@ -2143,9 +2143,9 @@
   "t.yes": "Yes",
   "t.you": "You",
   "thankYou": "Thank you",
-  "welcome.newListingEmailAlert": "Get emailed whenever a new listing is posted.",
+  "welcome.newListingEmailAlert": "Find out about new listings",
   "welcome.seeRentalListings": "Rent",
   "welcome.seeSaleListings": "Buy",
-  "welcome.signUpToday": "Sign Up today",
+  "welcome.signUpToday": "Get email alerts",
   "welcome.title": "Apply for affordable housing"
 }

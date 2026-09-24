@@ -32,6 +32,10 @@ export const useClerkSignUpSession = (): SignUpSession => {
         locale,
         unsafeMetadata: { locale }, // Account creation can only update public metadata
       })
+      // this condition can be true only if strict enumeration protection is *not* enabled
+      if (error?.errors?.[0]?.code === "form_identifier_exists") {
+        return { error, needsSignIn: true }
+      }
       if (error) {
         console.error("Account creation error", error)
         return { error }
@@ -51,6 +55,23 @@ export const useClerkSignUpSession = (): SignUpSession => {
     },
     [canStartRequest, signUp]
   )
+
+  const transferFromSignIn = useCallback(async (): Promise<SignUpOutcome> => {
+    if (!canStartRequest) return NOT_READY
+
+    const { error } = await signUp.create({ transfer: true })
+    if (error) {
+      console.error("Account creation error", error)
+      return { error }
+    }
+
+    if (signUp.status !== "complete") {
+      console.error("Account creation error:", signUp)
+      return { error: new Error(`Account creation error: ${signUp.status}`) }
+    }
+
+    return SUCCESS
+  }, [canStartRequest, signUp])
 
   const resendEmailCode = useCallback(async (): Promise<SignUpOutcome> => {
     if (!canStartRequest) return NOT_READY
@@ -153,6 +174,7 @@ export const useClerkSignUpSession = (): SignUpSession => {
       isAccountInitialized,
       hasPassword: Boolean(user?.passwordEnabled),
       createAccount,
+      transferFromSignIn,
       resendEmailCode,
       verifyEmailCode,
       activateSession,
@@ -164,6 +186,7 @@ export const useClerkSignUpSession = (): SignUpSession => {
       isAccountInitialized,
       user?.passwordEnabled,
       createAccount,
+      transferFromSignIn,
       resendEmailCode,
       verifyEmailCode,
       activateSession,

@@ -18,7 +18,7 @@ const ForgotPasswordFlow = () => {
     handleSubmit,
     formState: { errors },
   } = useForm()
-  const { isBusy, sendPasswordResetCode } = useSignInSession()
+  const { isBusy: signInIsBusy, sendPasswordResetCode } = useSignInSession()
 
   const navigate = useNavigate()
   const prefilledEmailParam = new URLSearchParams(window.location.search).get("email") ?? ""
@@ -42,7 +42,7 @@ const ForgotPasswordFlow = () => {
         <p className="field-note">{t("signIn.forgotPasswordDescription")}</p>
         <Form className={styles.form} onSubmit={handleSubmit(onGetCodeSubmit)}>
           <EmailFieldset register={register} errors={errors} defaultEmail={prefilledEmailParam} />
-          <Button variant="primary" size="sm" type="submit" disabled={isBusy}>
+          <Button variant="primary" size="sm" type="submit" disabled={signInIsBusy}>
             {t("createAccount.getCode")}
           </Button>
         </Form>
