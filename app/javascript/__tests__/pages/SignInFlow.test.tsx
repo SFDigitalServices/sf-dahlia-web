@@ -1,5 +1,5 @@
 import React from "react"
-import { useAuth, useClerk, useSignIn } from "@clerk/react"
+import { useClerk, useSignIn } from "@clerk/react"
 import { act, screen, waitFor, within, cleanup } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
 import { useNavigate } from "react-router"
@@ -13,12 +13,18 @@ import { setupUserContext } from "../__util__/accountUtils"
 import { AUTH_FLOW, UNLEASH_FLAG } from "../../modules/constants"
 import { authorizeHousingCounselor, getProfile } from "../../api/authApiService"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
+import { useAuthSession } from "../../authentication/session/AuthSessionProvider"
 
 jest.mock("../../hooks/useFeatureFlag", () => ({
   useFeatureFlag: jest.fn(() => ({
     flagsReady: true,
     unleashFlag: true,
   })),
+}))
+
+jest.mock("../../authentication/session/AuthSessionProvider", () => ({
+  ...jest.requireActual("../../authentication/session/AuthSessionProvider"),
+  useAuthSession: jest.fn(),
 }))
 
 jest.mock("@clerk/react", () => {
@@ -96,10 +102,17 @@ describe("<SignInFlow />", () => {
       finalize: mockFinalize,
     }
     ;(useNavigate as jest.Mock).mockReturnValue(mockNavigate)
-    ;(useAuth as jest.Mock).mockReturnValue({
-      isLoaded: true,
-      isSignedIn: false,
-      getToken: jest.fn().mockResolvedValue("clerk-session-token"),
+    ;(useAuthSession as jest.Mock).mockReturnValue({
+      status: { kind: "signedOut" },
+      getCredentials: jest.fn().mockResolvedValue({}),
+      signOut: mockSignOut,
+    })
+    ;(useAuthSession as jest.Mock).mockReturnValue({
+      status: { kind: "signedOut" },
+      getCredentials: jest.fn().mockResolvedValue({
+        kind: "bearerToken",
+        token: "clerk-session-token",
+      }),
       signOut: mockSignOut,
     })
     ;(useSignIn as jest.Mock).mockReturnValue({
@@ -243,7 +256,13 @@ describe("<SignInFlow />", () => {
   })
 
   it("redirects to the account overview when already signed in", async () => {
-    ;(useAuth as jest.Mock).mockReturnValue({ isLoaded: true, isSignedIn: true })
+    ;(useAuthSession as jest.Mock).mockReturnValue({
+      status: { kind: "signedIn" },
+      getCredentials: jest
+        .fn()
+        .mockResolvedValue({ kind: "bearerToken", token: "clerk-session-token" }),
+      signOut: mockSignOut,
+    })
 
     await renderAndLoadAsync(<SignIn assetPaths={{}} />)
 
@@ -349,10 +368,11 @@ describe("<SignInFlow />", () => {
       await waitFor(() => {
         expect(mockFinalize).toHaveBeenCalled()
       })
-      ;(useAuth as jest.Mock).mockReturnValue({
-        isLoaded: true,
-        isSignedIn: true,
-        getToken: jest.fn().mockResolvedValue("clerk-session-token"),
+      ;(useAuthSession as jest.Mock).mockReturnValue({
+        status: { kind: "signedIn" },
+        getCredentials: jest
+          .fn()
+          .mockResolvedValue({ kind: "bearerToken", token: "clerk-session-token" }),
         signOut: mockSignOut,
       })
       // eslint-disable-next-line @typescript-eslint/require-await
@@ -371,10 +391,11 @@ describe("<SignInFlow />", () => {
     it("shows an error when the already-signed-in housing counselor check fails", async () => {
       const consoleError = jest.spyOn(console, "error").mockImplementation(() => {})
       ;(authorizeHousingCounselor as jest.Mock).mockRejectedValue(new Error("forbidden"))
-      ;(useAuth as jest.Mock).mockReturnValue({
-        isLoaded: true,
-        isSignedIn: true,
-        getToken: jest.fn().mockResolvedValue("clerk-session-token"),
+      ;(useAuthSession as jest.Mock).mockReturnValue({
+        status: { kind: "signedIn" },
+        getCredentials: jest
+          .fn()
+          .mockResolvedValue({ kind: "bearerToken", token: "clerk-session-token" }),
         signOut: mockSignOut,
       })
 
@@ -390,10 +411,11 @@ describe("<SignInFlow />", () => {
     })
 
     it("authenticates an already signed in Clerk user", async () => {
-      ;(useAuth as jest.Mock).mockReturnValue({
-        isLoaded: true,
-        isSignedIn: true,
-        getToken: jest.fn().mockResolvedValue("clerk-session-token"),
+      ;(useAuthSession as jest.Mock).mockReturnValue({
+        status: { kind: "signedIn" },
+        getCredentials: jest
+          .fn()
+          .mockResolvedValue({ kind: "bearerToken", token: "clerk-session-token" }),
         signOut: mockSignOut,
       })
 

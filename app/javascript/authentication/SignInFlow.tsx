@@ -41,7 +41,7 @@ const SignInFlow = () => {
   const redirectUrl = state?.redirectUrl
   const postSignInRedirectUrl = redirectUrl ?? getMyAccountPath()
   const requiredLoginsDate = localizedFormat(process.env.REQUIRED_LOGINS_DATE ?? "", "LL")
-  const { status, getCredentials, signOut } = useAuthSession()
+  const { status, getCredentials } = useAuthSession()
   const isSignedIn = status.kind === "signedIn"
   const { signIn, fetchStatus: signInFetchStatus } = useSignIn()
   const { client } = useClerk()
@@ -184,7 +184,7 @@ const SignInFlow = () => {
   }
 
   useEffect(() => {
-    if (!isSignedIn || housingCounselorChecked.current) return
+    if (!isSignedIn || housingCounselorHandledRef.current) return
     const token = getHousingCounselorToken()
     if (!token) return
 
@@ -213,7 +213,7 @@ const SignInFlow = () => {
 
   // TODO: instead of relying on postSignInRedirectUrl, this component should detect
   // incomplete profiles and redirect to the add-profile page
-  if (isSignedIn && !getHousingCounselorToken()) {
+  if (isSignedIn && !getHousingCounselorToken() && !housingCounselorChecked) {
     return <Navigate to={postSignInRedirectUrl} replace />
   }
 
