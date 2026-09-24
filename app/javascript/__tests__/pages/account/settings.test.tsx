@@ -6,12 +6,13 @@ import {
   restoreWindowLocation,
 } from "../../__util__/renderUtils"
 import SettingsPage from "../../../pages/account/settings"
-import { fireEvent, screen, within, act } from "@testing-library/react"
+import { fireEvent, screen, act, within } from "@testing-library/react"
 import { authenticatedPut, get, put } from "../../../api/apiService"
 import { mockProfileStub, setupUserContext } from "../../__util__/accountUtils"
 import { useFeatureFlag } from "../../../hooks/useFeatureFlag"
 import { useUser } from "@clerk/react"
 import { useLocation, useNavigate } from "react-router"
+import { getUpdateEmailPath } from "../../../util/routeUtil"
 import { UNLEASH_FLAG } from "../../../modules/constants"
 
 jest.mock("../../../api/apiService", () => ({
@@ -80,6 +81,7 @@ describe("<SettingsPage />", () => {
         isLoaded: true,
         isSignedIn: true,
         user: { passwordEnabled: true },
+        primaryEmailAddress: { emailAddress: "test@example.com" },
       })
       mockNavigate = jest.fn()
       ;(useNavigate as jest.Mock).mockReturnValue(mockNavigate)
@@ -266,92 +268,20 @@ describe("<SettingsPage />", () => {
         expect(authenticatedPut).not.toHaveBeenCalled()
       })
     })
-
-    describe("when the user updates their email", () => {
-      it("updates Email", async () => {
-        ;(authenticatedPut as jest.Mock).mockResolvedValue({
-          data: {
-            status: "success",
-          },
-        })
-
-        const emailUpdateButton = screen.getByRole("button", { name: "Save email address" })
-        const group = screen.getByRole("group", {
-          name: /email/i,
-        })
-
-        const emailField = within(group).getByRole("textbox")
-
+    describe("the email section", () => {
+      it("navigates to the update email page", async () => {
         await act(async () => {
-          fireEvent.change(emailField, { target: { value: "test@test.com" } })
-          emailUpdateButton.dispatchEvent(new MouseEvent("click"))
-
-          expect(
-            screen.getByText("We will update any applications you have not submitted yet.")
-          ).not.toBeNull()
-          const closeButton = screen.getByLabelText("Close")
-          fireEvent.click(closeButton)
-
+          fireEvent.click(screen.getByRole("button", { name: /update email/i }))
           await promise
         })
 
-        expect(
-          screen.getByText(
-            "We sent you an email. Check your email and follow the link to finish changing your information."
-          )
-        ).not.toBeNull()
-
-        await act(async () => {
-          const closeButton = screen.getByLabelText("Close")
-          fireEvent.click(closeButton)
-
-          await promise
-        })
-
-        expect(
-          screen.queryByText(
-            "We sent you an email. Check your email and follow the link to finish changing your information."
-          )
-        ).toBeNull()
-
-        expect(authenticatedPut).toHaveBeenCalledWith(
-          "/api/v1/auth",
-          expect.objectContaining({
-            user: expect.objectContaining({
-              email: "test@test.com",
-            }),
-          })
-        )
-      })
-
-      it("does not update with malformed emails", async () => {
-        ;(authenticatedPut as jest.Mock).mockResolvedValue({
-          data: {
-            status: "success",
-          },
-        })
-
-        const emailUpdateButton = screen.getByRole("button", { name: "Save email address" })
-        const group = screen.getByRole("group", {
-          name: /email/i,
-        })
-
-        const emailField = within(group).getByRole("textbox")
-
-        await act(async () => {
-          fireEvent.change(emailField, { target: { value: "testtest.com" } })
-          emailUpdateButton.dispatchEvent(new MouseEvent("click"))
-          await promise
-        })
-
-        expect(authenticatedPut).not.toHaveBeenCalled()
+        expect(mockNavigate).toHaveBeenCalledWith(getUpdateEmailPath())
       })
     })
-
     describe("the password section", () => {
       it("shows a change password button when the user has a password", () => {
         expect(screen.getByRole("button", { name: "Change password" })).not.toBeNull()
-        expect(screen.getByText("••••")).not.toBeNull()
+        expect(screen.getByText("••••••••")).not.toBeNull()
         expect(screen.queryByRole("button", { name: "Add password" })).toBeNull()
       })
 
@@ -532,65 +462,6 @@ describe("<SettingsPage />", () => {
           fireEvent.change(yearField, { target: { value: 1998 } })
           fireEvent.click(dobButton)
 
-          await promise
-        })
-        expect(
-          screen.getByText(/something went wrong\. try again or check back later/i)
-        ).not.toBeNull()
-      })
-
-      it("email Errors", async () => {
-        const emailButton = screen.getByRole("button", { name: "Save email address" })
-        const group = screen.getByRole("group", {
-          name: /email/i,
-        })
-
-        const emailField = within(group).getByRole("textbox")
-
-        await act(async () => {
-          fireEvent.change(emailField, { target: { value: "testtest.com" } })
-          fireEvent.click(emailButton)
-          await promise
-        })
-
-        expect(
-          screen.getByRole("button", {
-            name: /email missing @ symbol/i,
-          })
-        ).not.toBeNull()
-
-        expect(
-          screen.getByText(/email missing @ symbol\. enter email like: example@web\.com/i)
-        ).not.toBeNull()
-        ;(authenticatedPut as jest.Mock).mockRejectedValueOnce({
-          response: {
-            status: 422, // Indicates that the email is invalid
-            data: {
-              message: "Unprocessable Entity",
-            },
-          },
-        })
-        await act(async () => {
-          fireEvent.change(emailField, { target: { value: "test@test.com" } })
-          fireEvent.click(emailButton)
-          await promise
-        })
-        expect(
-          screen.getByRole("button", {
-            name: /email entered incorrectly/i,
-          })
-        ).not.toBeNull()
-        expect(
-          screen.getByText(/email entered incorrectly\. enter email like: example@web\.com/i)
-        ).not.toBeNull()
-        ;(authenticatedPut as jest.Mock).mockRejectedValueOnce({
-          response: {
-            status: 500, // General server error
-          },
-        })
-        await act(async () => {
-          fireEvent.change(emailField, { target: { value: "test@test.com" } })
-          fireEvent.click(emailButton)
           await promise
         })
         expect(

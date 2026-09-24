@@ -7,21 +7,18 @@ import { useSignUpSession } from "../../authentication/session/useSignUpSession"
 import { bearerToken } from "../../authentication/session/authStatus"
 import { Form, DOBFieldValues, t } from "@bloom-housing/ui-components"
 import { DeepMap, FieldError, useForm } from "react-hook-form"
-import { Card, Alert, Button } from "@bloom-housing/ui-seeds"
+import { Card, Alert, Button, Heading } from "@bloom-housing/ui-seeds"
 import {
   AppPages,
   getAddPasswordPath,
   getChangePasswordPath,
+  getMyAccountContactPath,
+  getUpdateEmailPath,
   RedirectType,
 } from "../../util/routeUtil"
 import { User } from "../../authentication/user"
 import Layout from "../../layouts/Layout"
 import AccountLayout from "../../layouts/AccountLayout"
-import EmailFieldset, {
-  emailFieldsetErrors,
-  emailSortOrder,
-  handleEmailServerErrors,
-} from "./components/EmailFieldset"
 import FormSubmitButton from "./components/FormSubmitButton"
 import NameFieldset, {
   handleNameServerErrors,
@@ -42,7 +39,6 @@ import "./styles/account.scss"
 import sharedStyles from "./shared-styles.module.scss"
 import {
   updateNameOrDOB as apiUpdateNameOrDOB,
-  updateEmail,
   updateHousingCounselorAccess,
   updatePassword,
 } from "../../api/authApiService"
@@ -57,6 +53,14 @@ import { AccountSettingsPage as MyAccountSettingsPage } from "./account-settings
 import settingsStyles from "./settings.module.scss"
 import { useLocation, useNavigate } from "react-router"
 import { CommonMessageVariant } from "@bloom-housing/ui-seeds/src/blocks/shared/CommonMessage"
+import { renderInlineMarkup } from "../../util/languageUtil"
+
+type ConfirmationBannerFlag = "passwordChanged" | "emailChanged"
+
+const confirmationBannerMessages: Record<ConfirmationBannerFlag, string> = {
+  passwordChanged: "accountSettings.changePasswordBanner",
+  emailChanged: "accountSettings.changeEmailBanner",
+}
 import PasswordFieldset, {
   handlePasswordServerErrors,
   passwordFieldsetErrors,
@@ -116,45 +120,12 @@ interface SectionProps {
   handleBanners?: (banner: string) => void
 }
 
-const EmailSection = ({ user, setUser }: SectionProps) => {
-  const [loading, setLoading] = useState(false)
+const EmailSection = () => {
   const [emailUpdateBanner, setEmailUpdateBanner] = useState(false)
   const [emailBanner, setEmailBanner] = useState(false)
-
-  const {
-    register,
-    formState: { errors },
-    handleSubmit,
-    setError,
-  } = useForm({ mode: "onTouched" })
-
-  const onChange = () => {
-    setEmailUpdateBanner(true)
-    setEmailBanner(false)
-  }
-
-  const onSubmit = (data: { email: string }) => {
-    setLoading(true)
-    const { email } = data
-
-    updateEmail(email)
-      .then(() => {
-        const newUser = {
-          ...user,
-          email,
-        }
-        setUser(newUser)
-        setEmailBanner(true)
-      })
-      .catch((error: ExpandedAccountAxiosError) => {
-        setError(...handleEmailServerErrors(error))
-        setEmailBanner(false)
-        setEmailUpdateBanner(false)
-      })
-      .finally(() => {
-        setLoading(false)
-      })
-  }
+  const navigate = useNavigate()
+  const { user } = useSignUpSession()
+  const loginEmail = user?.primaryEmailAddress?.emailAddress
 
   return (
     <>
@@ -171,23 +142,32 @@ const EmailSection = ({ user, setUser }: SectionProps) => {
         message={t("accountSettings.checkYourEmail")}
         onClose={() => setEmailBanner(false)}
       />
-      <ErrorSummaryBanner
-        errors={errors}
-        sortOrder={emailSortOrder}
-        messageMap={(messageKey) => getErrorMessage(messageKey, emailFieldsetErrors, true)}
-      />
-      <UpdateForm
-        onSubmit={handleSubmit(onSubmit)}
-        loading={loading}
-        submitLabel={t("accountSettings.saveEmailAddress")}
-      >
-        <EmailFieldset
-          register={register}
-          errors={errors}
-          defaultEmail={user?.email ?? null}
-          onChange={onChange}
-        />
-      </UpdateForm>
+      <FormSection>
+        <Heading size="md">{t("accountSettings.email.title")}</Heading>
+        <p className={settingsStyles.settingsText}>{t("accountSettings.email.description")}</p>
+        <div className={settingsStyles.settingsEmailFieldset}>
+          <legend className={"fieldset-legend"}>{t("label.emailAddress")}</legend>
+          <p>{loginEmail ?? null}</p>
+        </div>
+        <div className={settingsStyles.settingsButton}>
+          <Button
+            type="button"
+            variant="primary-outlined"
+            onClick={() => {
+              void navigate(getUpdateEmailPath())
+            }}
+          >
+            {t("accountSettings.email.updateEmail")}
+          </Button>
+        </div>
+        <p className={settingsStyles.settingsText}>
+          {renderInlineMarkup(
+            t("accountSettings.email.subtitle", {
+              url: getMyAccountContactPath(),
+            })
+          )}
+        </p>
+      </FormSection>
     </>
   )
 }
@@ -260,11 +240,11 @@ const PasswordSection = () => {
     <FormSection>
       <legend className={"fieldset-legend"}>{t("label.password")}</legend>
       {userHasPassword ? (
-        <span aria-hidden="true">••••</span>
+        <span aria-hidden="true">••••••••</span>
       ) : (
         <p className="field-note">{t("accountSettings.addPasswordDescription")}</p>
       )}
-      <div className="flex justify-center pt-6">
+      <div className={settingsStyles.settingsButton}>
         <Button
           type="button"
           variant="primary-outlined"
@@ -576,9 +556,12 @@ const AccountSettings = ({ profile }: { profile: User }) => {
   const [nameSavedBanner, setNameSavedBanner] = useState(false)
   const location = useLocation()
   const navigate = useNavigate()
-  const passwordChangedNavState = location.state as { passwordChanged?: boolean } | null
-  const [passwordBanner, setPasswordBanner] = useState(
-    passwordChangedNavState?.passwordChanged === true
+  const bannerNavState = location.state as Partial<Record<ConfirmationBannerFlag, boolean>> | null
+  const confirmationBannerKey = (
+    Object.keys(confirmationBannerMessages) as ConfirmationBannerFlag[]
+  ).find((key) => bannerNavState?.[key] === true)
+  const [confirmationBannerMessage, setConfirmationBannerMessage] = useState(
+    confirmationBannerKey ? confirmationBannerMessages[confirmationBannerKey] : null
   )
 
   const handleBanners = (banner: string) => {
@@ -618,11 +601,11 @@ const AccountSettings = ({ profile }: { profile: User }) => {
   return (
     <Card className={sharedStyles.card}>
       <Banner
-        showBanner={passwordBanner}
+        showBanner={!!confirmationBannerMessage}
         className={settingsStyles["settingsConfirmationAlert"]}
         variant="success"
-        message={t("accountSettings.changePasswordBanner")}
-        onClose={() => setPasswordBanner(false)}
+        message={confirmationBannerMessage ? t(confirmationBannerMessage) : ""}
+        onClose={() => setConfirmationBannerMessage(null)}
       />
       {nameUpdateBanner || nameSavedBanner ? (
         <FormHeader
@@ -653,6 +636,8 @@ const AccountSettings = ({ profile }: { profile: User }) => {
       />
       <NameSection user={user} setUser={setUser} handleBanners={handleBanners} />
       <DateOfBirthSection user={user} setUser={setUser} />
+      <EmailSection />
+      <PasswordSection />
       <EmailSection user={user} setUser={setUser} />
       {clerkEnabled ? <PasswordSection /> : <PasswordSectionDevise user={user} setUser={setUser} />}
       {showHousingCounselorSection && user && (

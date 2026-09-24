@@ -114,6 +114,9 @@ export const getMyAccountApplicationsPath = localizedPathGetter("/account/applic
 export const getApplicationPath = localizedPathGetter("/applications")
 export const getMyAccountSettingsPath = localizedPathGetter("/account/settings")
 export const getMyAccountContactPath = localizedPathGetter("/account/contact")
+export const getUpdateEmailPath = localizedPathGetter("/update-email")
+export const getUpdateEmailCodePath = localizedPathGetter("/update-email/code")
+
 // Rental Listing Directory pages
 export const getHelpCalculatingIncomeLink = localizedPathGetter("/income-calculator/rental/intro")
 export const getEligibilityEstimatorLink = localizedPathGetter("/eligibility-estimator/rental")
@@ -185,6 +188,7 @@ export const AUTH_FLOW_PATH: Record<AUTH_FLOW, string> = {
   [AUTH_FLOW.SIGN_IN]: getSignInPath(),
   [AUTH_FLOW.CREATE_ACCOUNT]: getCreateAccountPath(),
   [AUTH_FLOW.FORGOT_PASSWORD]: getForgotPasswordPath(),
+  [AUTH_FLOW.UPDATE_EMAIL]: getUpdateEmailPath(),
 }
 
 export const getAuthFlowPath = (flow: AUTH_FLOW) => AUTH_FLOW_PATH[flow]
@@ -235,4 +239,5 @@ export enum AppPages {
   HowToApply = "how to apply",
   InviteTo = "invite to",
   ListingApplyForm = "listing apply form",
+  UpdateEmail = "update email",
 }

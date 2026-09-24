@@ -1,5 +1,5 @@
 import React from "react"
-import { useSignIn, useSignUp, useAuth, useClerk } from "@clerk/react"
+import { useSignIn, useSignUp, useAuth, useClerk, useUser } from "@clerk/react"
 import { t } from "@bloom-housing/ui-components"
 import { act, screen, waitFor, cleanup, fireEvent } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
@@ -48,6 +48,43 @@ jest.mock("../../../api/authApiService", () => ({
   authorizeHousingCounselor: jest.fn(),
   getProfile: jest.fn().mockResolvedValue(undefined),
 }))
+const updateLoginEmail = (newEmailOverrides = {}) => {
+  const previous = { id: "old", emailAddress: "test@example.com", destroy: jest.fn() }
+  const newEmail = {
+    id: "new",
+    emailAddress: "new@example.com",
+    verification: { status: "verified" },
+    attemptVerification: jest
+      .fn()
+      .mockResolvedValue({ id: "new", verification: { status: "verified" } }),
+    prepareVerification: jest.fn().mockResolvedValue(undefined),
+    ...newEmailOverrides,
+  }
+  return {
+    emailAddresses: [previous, newEmail],
+    primaryEmailAddress: previous,
+    update: jest.fn(),
+    previous,
+  }
+}
+
+const renderUpdateEmailFlow = async (user: unknown) => {
+  cleanup()
+  setupUserContext({ loggedIn: true })
+  ;(useLocation as jest.Mock).mockReturnValue({
+    pathname: "/update-email/code",
+    state: { email: "new@example.com", flow: AUTH_FLOW.UPDATE_EMAIL },
+  })
+  ;(useUser as jest.Mock).mockReturnValue({ isLoaded: true, isSignedIn: true, user })
+  await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
+}
+
+const submitCode = async () => {
+  const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime })
+  await user.click(screen.getAllByRole("textbox")[0])
+  await user.paste("123456")
+  await user.click(screen.getByRole("button", { name: t("createAccount.confirmCode") }))
+}
 const expireResendVerificationCode = () => {
   for (let remaining = 30; remaining > 0; remaining--) {
     act(() => {
@@ -163,6 +200,11 @@ describe("<EnterVerificationCode />", () => {
       fetchStatus: "idle",
       signIn: mockSignInResource,
     })
+    ;(useUser as jest.Mock).mockReturnValue({
+      isLoaded: true,
+      isSignedIn: false,
+      user: null,
+    })
     ;(getProfile as jest.Mock).mockResolvedValue(undefined)
     await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
   })
@@ -244,13 +286,9 @@ describe("<EnterVerificationCode />", () => {
   })
 
   it("verifies a valid code for create account", async () => {
-    const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime })
     mockSignUpResource.status = "complete"
 
-    await user.click(screen.getAllByRole("textbox")[0])
-    await user.paste("123456")
-    await user.click(screen.getByRole("button", { name: t("createAccount.confirmCode") }))
-
+    await submitCode()
     await waitFor(() => {
       expect(mockSignUpVerifyEmailCode).toHaveBeenCalledWith({ code: "123456" })
     })
@@ -347,11 +385,7 @@ describe("<EnterVerificationCode />", () => {
     })
     mockSignInResource.status = "complete"
     await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
-
-    const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime })
-    await user.click(screen.getAllByRole("textbox")[0])
-    await user.paste("123456")
-    await user.click(screen.getByRole("button", { name: t("createAccount.confirmCode") }))
+    await submitCode()
 
     await waitFor(() => {
       expect(mockSignInVerifyCode).toHaveBeenCalledWith({ code: "123456" })
@@ -488,11 +522,7 @@ describe("<EnterVerificationCode />", () => {
     })
     mockSignInResource.status = "complete"
     await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
-
-    const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime })
-    await user.click(screen.getAllByRole("textbox")[0])
-    await user.paste("123456")
-    await user.click(screen.getByRole("button", { name: t("createAccount.confirmCode") }))
+    await submitCode()
 
     await waitFor(() => {
       expect(mockSignInVerifyCode).toHaveBeenCalledWith({ code: "123456" })
@@ -524,7 +554,6 @@ describe("<EnterVerificationCode />", () => {
     mockSignInResource.status = "complete"
     ;(authorizeHousingCounselor as jest.Mock).mockResolvedValue(undefined)
     await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
-
     const user = userEvent.setup()
     await user.click(screen.getAllByRole("textbox")[0])
     await user.paste("123456")
@@ -610,11 +639,7 @@ describe("<EnterVerificationCode />", () => {
     })
     mockSignInResource.status = "needs_new_password"
     await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
-
-    const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime })
-    await user.click(screen.getAllByRole("textbox")[0])
-    await user.paste("123456")
-    await user.click(screen.getByRole("button", { name: t("createAccount.confirmCode") }))
+    await submitCode()
 
     await waitFor(() => {
       expect(mockResetPasswordVerifyCode).toHaveBeenCalledWith({ code: "123456" })
@@ -634,11 +659,7 @@ describe("<EnterVerificationCode />", () => {
     })
     mockResetPasswordVerifyCode.mockResolvedValue({ error: new Error("bad code") })
     await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
-
-    const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime })
-    await user.click(screen.getAllByRole("textbox")[0])
-    await user.paste("123456")
-    await user.click(screen.getByRole("button", { name: t("createAccount.confirmCode") }))
+    await submitCode()
 
     await act(async () => {
       await Promise.resolve()
@@ -727,6 +748,111 @@ describe("<EnterVerificationCode />", () => {
 
     await waitFor(() => {
       expect(mockNavigate).toHaveBeenCalledWith("/account")
+    })
+  })
+  it("verifies the update email code and swaps the primary email", async () => {
+    const user = updateLoginEmail()
+    await renderUpdateEmailFlow(user)
+    await submitCode()
+
+    await waitFor(() => {
+      expect(mockNavigate).toHaveBeenCalledWith(expect.any(String), {
+        state: { emailChanged: true },
+      })
+    })
+    expect(user.previous.destroy).toHaveBeenCalled()
+  })
+
+  it("does not update the email when there is no user", async () => {
+    await renderUpdateEmailFlow(null)
+    await submitCode()
+    await act(async () => {
+      await Promise.resolve()
+    })
+
+    expect(mockNavigate).not.toHaveBeenCalled()
+  })
+
+  it("does not update the email when the email is not found", async () => {
+    const user = { ...updateLoginEmail(), emailAddresses: [] }
+    await renderUpdateEmailFlow(user)
+    await submitCode()
+    await act(async () => {
+      await Promise.resolve()
+    })
+
+    expect(user.update).not.toHaveBeenCalled()
+    expect(mockNavigate).not.toHaveBeenCalled()
+  })
+
+  it("does not update the email when the code is not verified", async () => {
+    const user = updateLoginEmail({
+      attemptVerification: jest.fn().mockResolvedValue({ verification: { status: "unverified" } }),
+    })
+    await renderUpdateEmailFlow(user)
+    await submitCode()
+    await act(async () => {
+      await Promise.resolve()
+    })
+
+    expect(user.update).not.toHaveBeenCalled()
+    expect(mockNavigate).not.toHaveBeenCalled()
+  })
+
+  it("does not update the email when verification throws", async () => {
+    jest.spyOn(console, "error").mockImplementation(() => {})
+    await renderUpdateEmailFlow(
+      updateLoginEmail({ attemptVerification: jest.fn().mockRejectedValue(new Error("bad code")) })
+    )
+    await submitCode()
+
+    await waitFor(() => {
+      expect(console.error).toHaveBeenCalledWith(
+        "Update email verification error:",
+        expect.any(Error)
+      )
+    })
+    expect(mockNavigate).not.toHaveBeenCalled()
+  })
+
+  it("resends the update email code", async () => {
+    await renderUpdateEmailFlow(updateLoginEmail())
+    expireResendVerificationCode()
+    fireEvent.click(screen.getByRole("button", { name: t("createAccount.sendAgain") }))
+
+    await waitFor(() => {
+      expect(screen.queryByRole("button", { name: t("createAccount.sendAgain") })).toBeNull()
+    })
+  })
+
+  it("does not resend the update email code when there is no user", async () => {
+    jest.spyOn(console, "error").mockImplementation(() => {})
+    await renderUpdateEmailFlow(null)
+    expireResendVerificationCode()
+    fireEvent.click(screen.getByRole("button", { name: t("createAccount.sendAgain") }))
+
+    await waitFor(() => {
+      expect(console.error).toHaveBeenCalledWith(
+        "Resend update email code error: address not found"
+      )
+    })
+  })
+
+  it("does not resend the update email code when sending fails", async () => {
+    jest.spyOn(console, "error").mockImplementation(() => {})
+    await renderUpdateEmailFlow(
+      updateLoginEmail({
+        prepareVerification: jest.fn().mockRejectedValue(new Error("resend failed")),
+      })
+    )
+    expireResendVerificationCode()
+    fireEvent.click(screen.getByRole("button", { name: t("createAccount.sendAgain") }))
+
+    await waitFor(() => {
+      expect(console.error).toHaveBeenCalledWith(
+        "Resend update email code error:",
+        expect.any(Error)
+      )
     })
   })
 })

@@ -1,0 +1,14 @@
+.formActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--seeds-spacer-text);
+  margin-top: var(--seeds-spacer-content);
+}
+
+.cancelButton {
+  padding: var(--button-padding-sm) !important;
+}
+
+.emailFieldset {
+  padding-bottom: var(--seeds-s4);
+}
