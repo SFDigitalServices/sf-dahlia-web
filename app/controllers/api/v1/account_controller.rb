@@ -3,6 +3,7 @@
 # RESTful JSON API to retrieve data for My Account
 class Api::V1::AccountController < ApiController
   include Clerk::Authenticatable
+
   before_action :authenticate_user!, except: %i[confirm check_account]
 
   def my_applications
@@ -13,7 +14,7 @@ class Api::V1::AccountController < ApiController
   def update
     contact = account_params
 
-    if !AccountValidationService.valid_dob?(account_params[:DOB])
+    unless AccountValidationService.valid_dob?(account_params[:DOB])
       render json: { error: 'Invalid DOB' }, status: :unprocessable_entity
       return
     end
@@ -21,7 +22,15 @@ class Api::V1::AccountController < ApiController
     contact[:contactID] = current_user.salesforce_contact_id
     contact[:webAppID] = current_user.id
     salesforce_contact = Force::AccountService.create_or_update(contact.as_json)
-    Emailer.account_update(current_user).deliver_later
+    begin
+      if current_user.is_a?(ClerkService::User)
+        Emailer.account_update(current_user).deliver_now
+      else
+        Emailer.account_update(current_user).deliver_later
+      end
+    rescue StandardError => e
+      Sentry.capture_exception(e)
+    end
     render json: { contact: salesforce_contact }
   end
 
@@ -61,7 +70,8 @@ class Api::V1::AccountController < ApiController
     salesforce_contact = Force::AccountService.create_or_update(contact)
     contact_id = salesforce_contact.present? ? salesforce_contact['contactId'] : nil
     if contact_id.blank?
-      render json: { error: 'User has missing Salesforce contact ID' }, status: :bad_gateway
+      render json: { error: 'User has missing Salesforce contact ID' },
+             status: :bad_gateway
       return
     end
 
@@ -121,8 +131,10 @@ class Api::V1::AccountController < ApiController
     Force::ShortFormService.get_for_user(current_user.salesforce_contact_id)
   end
 
-  def authenticate_user!(*args)
-    return super unless %w[profile create_profile update_housing_counselor].include?(action_name)
+  def authenticate_user!(*)
+    return authenticate_clerk_or_devise_user!(*) if action_name == 'update'
+    return super unless %w[profile create_profile
+                           update_housing_counselor].include?(action_name)
 
     @clerk_user_id = clerk&.user_id
     if @clerk_user_id.blank?
@@ -130,9 +142,21 @@ class Api::V1::AccountController < ApiController
       return
     end
 
-    if action_name == 'update_housing_counselor' && current_user.salesforce_contact_id.blank?
-      render json: { error: 'Could not get Salesforce contact ID' }, status: :not_found
-    end
+    require_salesforce_contact_id! if action_name == 'update_housing_counselor'
+  end
+
+  def require_salesforce_contact_id!
+    return if current_user.salesforce_contact_id.present?
+
+    render json: { error: 'Could not get Salesforce contact ID' }, status: :not_found
+  end
+
+  def authenticate_clerk_or_devise_user!(*)
+    clerk_user_id = clerk&.user_id
+    return method(:authenticate_user!).super_method.call(*) if clerk_user_id.blank?
+
+    @clerk_user_id = clerk_user_id
+    require_salesforce_contact_id!
   end
 
   def current_user

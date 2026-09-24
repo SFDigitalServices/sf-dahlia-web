@@ -398,19 +398,22 @@ const HousingCounselorSection = ({ user, setUser }: SectionProps) => {
 
 const updateNameOrDOB = async (
   newUser: User,
-  saveProfile: (profile: User) => void,
+  sessionToken: string | undefined,
+  saveProfile: ((profile: User) => void) | undefined,
   setUser: React.Dispatch<User>,
   setLoading: React.Dispatch<boolean>,
   errorCallback: (error: AxiosError) => void,
   bannersCallback?: () => void
 ) => {
-  return apiUpdateNameOrDOB(newUser)
+  return apiUpdateNameOrDOB(newUser, sessionToken)
     .then((profile) => {
-      saveProfile(profile)
+      saveProfile?.(profile)
       setUser(newUser)
-      bannersCallback()
+      bannersCallback?.()
     })
-    .catch(errorCallback)
+    .catch((error: AxiosError) => {
+      errorCallback(error)
+    })
     .finally(() => {
       setLoading(false)
     })
@@ -419,6 +422,8 @@ const updateNameOrDOB = async (
 const NameSection = ({ user, setUser, handleBanners }: SectionProps) => {
   const [loading, setLoading] = useState(false)
   const { saveProfile } = useContext(UserContext)
+  const { getCredentials } = useAuthSession()
+  const { unleashFlag: clerkEnabled } = useFeatureFlag(UNLEASH_FLAG.CLERK_AUTH, false)
 
   const {
     register,
@@ -428,27 +433,44 @@ const NameSection = ({ user, setUser, handleBanners }: SectionProps) => {
   } = useForm({ mode: "onTouched" })
 
   const onChange = () => {
-    handleBanners("nameUpdateBanner")
+    handleBanners?.("nameUpdateBanner")
   }
 
   const onSubmit = async (data: { firstName: string; middleName: string; lastName: string }) => {
     setLoading(true)
 
+    let sessionToken: string | undefined
+    try {
+      sessionToken = clerkEnabled ? (bearerToken(await getCredentials()) ?? undefined) : undefined
+    } catch {
+      setLoading(false)
+      return
+    }
+
+    if (clerkEnabled && !sessionToken) {
+      setLoading(false)
+      return
+    }
+
     const newUser = { ...user, ...data }
 
     await updateNameOrDOB(
       newUser,
+      sessionToken,
       saveProfile,
       setUser,
       setLoading,
       (error: ExpandedAccountAxiosError) => {
-        if (error.response?.data?.errors?.firstName) {
+        const serverErrors = error.response?.data?.errors
+        if (serverErrors?.firstName) {
           setError(...handleNameServerErrors("firstName", error))
-        } else if (error.response?.data?.errors?.lastName) {
+        } else if (serverErrors?.lastName) {
           setError(...handleNameServerErrors("lastName", error))
+        } else {
+          console.error("Unhandled name update error", error)
         }
       },
-      () => handleBanners("nameSavedBanner")
+      () => handleBanners?.("nameSavedBanner")
     )
   }
 
@@ -484,6 +506,8 @@ const DateOfBirthSection = ({ user, setUser }: SectionProps) => {
   const { saveProfile } = useContext(UserContext)
   const [dobUpdateBanner, setDOBUpdateBanner] = useState(false)
   const [dobSavedBanner, setDOBSavedBanner] = useState(false)
+  const { getCredentials } = useAuthSession()
+  const { unleashFlag: clerkEnabled } = useFeatureFlag(UNLEASH_FLAG.CLERK_AUTH, false)
 
   const {
     register,
@@ -505,15 +529,28 @@ const DateOfBirthSection = ({ user, setUser }: SectionProps) => {
 
   const onSubmit = async (data: { dobObject: DOBFieldValues }) => {
     setLoading(true)
-    const { dobObject } = data
+
+    let sessionToken: string | undefined
+    try {
+      sessionToken = clerkEnabled ? (bearerToken(await getCredentials()) ?? undefined) : undefined
+    } catch {
+      setLoading(false)
+      return
+    }
+
+    if (clerkEnabled && !sessionToken) {
+      setLoading(false)
+      return
+    }
 
     const newUser = {
       ...user,
-      DOB: getDobStringFromDobObject(dobObject),
+      DOB: getDobStringFromDobObject(data.dobObject),
     }
 
     await updateNameOrDOB(
       newUser,
+      sessionToken,
       saveProfile,
       setUser,
       setLoading,
@@ -524,7 +561,6 @@ const DateOfBirthSection = ({ user, setUser }: SectionProps) => {
       () => setDOBSavedBanner(true)
     )
   }
-
   return (
     <>
       <Banner
