@@ -1007,6 +1007,8 @@ describe("<SettingsPage />", () => {
       expect(window.location.assign).toHaveBeenCalledWith("/sign-in?redirect=settings")
     })
   })
+
+  // TODO: DAH-4262 cleanup after clerk flag is on
   describe("the Devise password section", () => {
     let originalLocation: Location
 
