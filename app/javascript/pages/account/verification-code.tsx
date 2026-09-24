@@ -58,7 +58,7 @@ const EnterVerificationCodePage = ({
   const [resendExpiresAt, setResendExpiresAt] = useState(() => Date.now() + RESEND_CODE_MS)
   const [resendSeconds, setResendSeconds] = useState(RESEND_CODE_MS / 1000)
   const [isResending, setIsResending] = useState(false)
-  const { user } = useUser()
+  const { user } = useSignUpSession()
 
   const {
     control,

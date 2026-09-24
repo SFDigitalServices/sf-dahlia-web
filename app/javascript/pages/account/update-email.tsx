@@ -10,7 +10,7 @@ import {
 import { useNavigate } from "react-router"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import { AUTH_FLOW, UNLEASH_FLAG } from "../../modules/constants"
-import { useAuth, useUser } from "@clerk/react"
+import { useAuth } from "@clerk/react"
 import AuthLayout from "../../layouts/AuthLayout"
 import { Form, t } from "@bloom-housing/ui-components"
 import { Button, Card, Heading } from "@bloom-housing/ui-seeds"
@@ -23,6 +23,7 @@ import EmailFieldset, {
 } from "./components/EmailFieldset"
 import { ErrorSummaryBanner } from "./components/ErrorSummaryBanner"
 import { getErrorMessage } from "./components/util"
+import { useSignUpSession } from "../../authentication/session/useSignUpSession"
 
 const UpdateEmailPage = () => {
   const {
@@ -32,7 +33,7 @@ const UpdateEmailPage = () => {
     formState: { errors },
   } = useForm({ mode: "onSubmit", shouldFocusError: false })
   const navigate = useNavigate()
-  const { user, isLoaded } = useUser()
+  const { user, isAccountInitialized } = useSignUpSession()
   const [loading, setLoading] = useState(false)
 
   if (!user) {
@@ -91,7 +92,7 @@ const UpdateEmailPage = () => {
               note={t("accountSettings.email.newEmail.description")}
             />
           </div>
-          <Button variant="primary" size="sm" type="submit" disabled={!isLoaded}>
+          <Button variant="primary" size="sm" type="submit" disabled={!isAccountInitialized}>
             {t("createAccount.getCode")}
           </Button>
           <Button
@@ -114,7 +115,7 @@ const UpdateEmailPage = () => {
 const UpdateEmail = (_props: { assetPaths: unknown }) => {
   const navigate = useNavigate()
   const { isLoaded, isSignedIn } = useAuth()
-  const { isLoaded: userLoaded } = useUser()
+  const { isAccountInitialized } = useSignUpSession()
   const { unleashFlag: clerkEnabled, flagsReady } = useFeatureFlag(UNLEASH_FLAG.CLERK_AUTH, false)
 
   useEffect(() => {
@@ -128,8 +129,8 @@ const UpdateEmail = (_props: { assetPaths: unknown }) => {
       void navigate(getSignInPath())
       return
     }
-    if (!userLoaded) return
-  }, [flagsReady, clerkEnabled, isLoaded, isSignedIn, navigate, userLoaded])
+    if (!isAccountInitialized) return
+  }, [flagsReady, clerkEnabled, isLoaded, isSignedIn, navigate, isAccountInitialized])
 
   const ready = flagsReady && clerkEnabled && isLoaded && isSignedIn
 

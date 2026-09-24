@@ -124,7 +124,7 @@ const EmailSection = () => {
   const [emailUpdateBanner, setEmailUpdateBanner] = useState(false)
   const [emailBanner, setEmailBanner] = useState(false)
   const navigate = useNavigate()
-  const { user } = useUser()
+  const { user } = useSignUpSession()
   const loginEmail = user?.primaryEmailAddress?.emailAddress
 
   return (
