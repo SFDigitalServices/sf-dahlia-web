@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import { t } from "@bloom-housing/ui-components"
 import { Heading } from "@bloom-housing/ui-seeds"
-import { useAuth, useSession, useUser } from "@clerk/react"
 import React, { useContext, useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { useNavigate } from "react-router"
 import UserContext from "../../authentication/context/UserContext"
+import { useAuthSession } from "../../authentication/session/AuthSessionProvider"
+import { useSignUpSession } from "../../authentication/session/useSignUpSession"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import AuthLayout from "../../layouts/AuthLayout"
 import withAppSetup from "../../layouts/withAppSetup"
@@ -24,8 +25,7 @@ import "./styles/account.scss"
 const ChangePasswordPage = () => {
   const [loading, setLoading] = useState(false)
   const { profile } = useContext(UserContext)
-  const { user } = useUser()
-  const { session } = useSession()
+  const { changePassword } = useSignUpSession()
 
   const navigate = useNavigate()
   const {
@@ -40,29 +40,19 @@ const ChangePasswordPage = () => {
     setLoading(true)
     const { password, currentPassword } = data
 
-    if (password === "" || !user || !session) {
+    if (password === "") {
       setLoading(false)
       return
     }
 
-    try {
-      await session.startVerification({ level: "first_factor" })
-      await session.attemptFirstFactorVerification({
-        strategy: "password",
-        password: currentPassword,
-      })
-
-      await user.updatePassword({
-        currentPassword,
-        newPassword: password,
-        signOutOfOtherSessions: true,
-      })
-      void navigate(getMyAccountSettingsPath(), { state: { passwordChanged: true } })
-    } catch (error) {
+    const { error, notReady } = await changePassword(currentPassword, password)
+    setLoading(false)
+    if (notReady) return
+    if (error) {
       setError(...handleClerkPasswordErrors(error))
-    } finally {
-      setLoading(false)
+      return
     }
+    void navigate(getMyAccountSettingsPath(), { state: { passwordChanged: true } })
   }
   return (
     <AuthLayout title={t("accountSettings.changePassword")}>
@@ -94,9 +84,10 @@ const ChangePasswordPage = () => {
 
 const ChangePassword = (_props: { assetPaths: unknown }) => {
   const navigate = useNavigate()
-  const { isLoaded, isSignedIn } = useAuth()
-  const { isLoaded: userLoaded, user } = useUser()
-  const userHasPassword = user?.passwordEnabled ?? false
+  const { status } = useAuthSession()
+  const isLoaded = status.kind !== "initializing"
+  const isSignedIn = status.kind === "signedIn"
+  const { isAccountInitialized: userLoaded, hasPassword: userHasPassword } = useSignUpSession()
   const { unleashFlag: clerkEnabled, flagsReady } = useFeatureFlag(UNLEASH_FLAG.CLERK_AUTH, false)
 
   useEffect(() => {
