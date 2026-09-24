@@ -114,6 +114,14 @@ describe("<MyApplicationsPage />", () => {
       expect(authenticatedGet).toHaveBeenCalledWith("/api/v1/account/my-applications")
     })
 
+    it("should render error state when getApplications fails", async () => {
+      ;(authenticatedGet as jest.Mock).mockRejectedValue(new Error("Error"))
+      const { getByText } = await renderAndLoadAsync(<MyApplicationsPageWithSession />)
+      expect(
+        getByText(/There was a problem loading your applications\. Try refreshing the page\./i)
+      ).toBeInTheDocument()
+    })
+
     describe("determineApplicationItemList", () => {
       it("should render loading state", () => {
         const { getByTestId } = render(determineApplicationItemList(true, "", [], () => {}))
