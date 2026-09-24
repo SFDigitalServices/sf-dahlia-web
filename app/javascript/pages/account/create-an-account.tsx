@@ -1,19 +1,19 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import React from "react"
 import { useNavigate } from "react-router"
-import { useSignUp, useSignIn } from "@clerk/react"
 import { Form, t } from "@bloom-housing/ui-components"
 import { Card, Heading, Button } from "@bloom-housing/ui-seeds"
 import { useForm } from "react-hook-form"
 import withAppSetup from "../../layouts/withAppSetup"
 import AuthLayout from "../../layouts/AuthLayout"
+import { useSignInSession } from "../../authentication/session/useSignInSession"
+import { useSignUpSession } from "../../authentication/session/useSignUpSession"
 import {
   AppPages,
   getVerificationCodePath,
   getSignInPath,
   getSignInCodePath,
 } from "../../util/routeUtil"
-import { getCurrentLanguage } from "../../util/languageUtil"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import { AUTH_FLOW, UNLEASH_FLAG } from "../../modules/constants"
 import { CreateAccount } from "./create-account"
@@ -29,8 +29,8 @@ interface CreateAnAccountProps {
 
 const CreateAnAccountPage = () => {
   const navigate = useNavigate()
-  const { signUp, fetchStatus: signUpFetchStatus } = useSignUp()
-  const { signIn, fetchStatus: signInFetchStatus } = useSignIn()
+  const { createAccount, isBusy } = useSignUpSession()
+  const { sendEmailCode } = useSignInSession()
   const {
     register,
     handleSubmit,
@@ -38,56 +38,21 @@ const CreateAnAccountPage = () => {
   } = useForm<{ email: string }>({ mode: "onTouched", shouldFocusError: false })
 
   const transferToSignIn = async (email: string) => {
-    if (signInFetchStatus === "fetching" || !signIn) return
-    const { error: signInCreateError } = await signIn.create({ identifier: email })
-    if (signInCreateError) {
-      console.error("Transfer to sign in create error:", signInCreateError)
-      return
-    }
-    const { error: sendCodeError } = await signIn.emailCode.sendCode()
-    if (sendCodeError) {
-      console.error("Transfer to sign in send code error:", sendCodeError)
-      return
-    }
-    if (signIn.status === "needs_first_factor") {
-      void navigate(getSignInCodePath(), { state: { email, flow: AUTH_FLOW.SIGN_IN } })
-    } else {
-      console.error("Transfer to sign in status error:", signIn.status)
-    }
+    const { error } = await sendEmailCode(email)
+    if (error) return
+
+    void navigate(getSignInCodePath(), { state: { email, flow: AUTH_FLOW.SIGN_IN } })
   }
 
   const onSubmit = async ({ email }: { email: string }) => {
-    if (signUpFetchStatus === "fetching" || !signUp) return
-
-    const locale = getCurrentLanguage()
-    const { error } = await signUp.create({
-      emailAddress: email,
-      locale,
-      unsafeMetadata: { locale }, // Account creation can only update public metadata
-    })
-
-    // this condition can be true only if strict enumeration protection is *not* enabled
-    if (error?.errors?.[0]?.code === "form_identifier_exists") {
+    const { error, needsSignIn } = await createAccount(email)
+    if (needsSignIn) {
       void transferToSignIn(email)
       return
     }
+    if (error) return
 
-    if (error) {
-      console.error("Account creation error:", error)
-      return
-    }
-
-    await signUp.verifications.sendEmailCode()
-    if (
-      signUp.status === "missing_requirements" &&
-      signUp.unverifiedFields.includes("email_address") &&
-      signUp.missingFields.length === 0
-    ) {
-      void navigate(getVerificationCodePath(), { state: { email, flow: AUTH_FLOW.CREATE_ACCOUNT } })
-    } else {
-      console.error("Account creation error:", signUp)
-      return
-    }
+    void navigate(getVerificationCodePath(), { state: { email, flow: AUTH_FLOW.CREATE_ACCOUNT } })
   }
 
   return (
@@ -107,7 +72,7 @@ const CreateAnAccountPage = () => {
             variant="primary"
             size="sm"
             type="submit"
-            disabled={signUpFetchStatus === "fetching"}
+            disabled={isBusy}
           >
             {t("createAccount.getCode")}
           </Button>

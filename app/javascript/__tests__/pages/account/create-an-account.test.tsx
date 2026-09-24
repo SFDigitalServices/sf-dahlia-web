@@ -19,7 +19,10 @@ jest.mock("@clerk/react", () => {
     ClerkProvider: ({ children }: { children: React.ReactNode }) => children,
     useAuth: jest.fn(() => ({ isLoaded: true, isSignedIn: false })),
     useSignUp: jest.fn(),
+    useSession: () => ({ session: null }),
+    useUser: jest.fn(),
     useSignIn: jest.fn(),
+    useClerk: () => ({ client: undefined }),
   }
 })
 
@@ -139,7 +142,10 @@ describe("<CreateAnAccount />", () => {
     await user.click(screen.getByRole("button", { name: /get a code/i }))
 
     await waitFor(() => {
-      expect(mockSignInCreate).toHaveBeenCalledWith({ identifier: "test@example.com" })
+      expect(mockSignInCreate).toHaveBeenCalledWith({
+        identifier: "test@example.com",
+        signUpIfMissing: true,
+      })
     })
     expect(mockSignInSendCode).toHaveBeenCalledTimes(1)
     expect(mockSendEmailCode).not.toHaveBeenCalled()
@@ -163,12 +169,12 @@ describe("<CreateAnAccount />", () => {
     await user.click(screen.getByRole("button", { name: /get a code/i }))
 
     await waitFor(() => {
-      expect(mockSignInCreate).toHaveBeenCalledWith({ identifier: "test@example.com" })
+      expect(mockSignInCreate).toHaveBeenCalledWith({
+        identifier: "test@example.com",
+        signUpIfMissing: true,
+      })
     })
-    expect(consoleError).toHaveBeenCalledWith(
-      "Transfer to sign in create error:",
-      signInCreateError
-    )
+    expect(consoleError).toHaveBeenCalledWith("Sign in get code error:", signInCreateError)
     expect(mockSignInSendCode).not.toHaveBeenCalled()
     expect(mockNavigate).not.toHaveBeenCalled()
 
@@ -192,7 +198,7 @@ describe("<CreateAnAccount />", () => {
     await waitFor(() => {
       expect(mockSignInSendCode).toHaveBeenCalledTimes(1)
     })
-    expect(consoleError).toHaveBeenCalledWith("Transfer to sign in send code error:", sendCodeError)
+    expect(consoleError).toHaveBeenCalledWith("Sign in send code error:", sendCodeError)
     expect(mockNavigate).not.toHaveBeenCalled()
 
     consoleError.mockRestore()
@@ -214,7 +220,7 @@ describe("<CreateAnAccount />", () => {
     await waitFor(() => {
       expect(mockSignInSendCode).toHaveBeenCalledTimes(1)
     })
-    expect(consoleError).toHaveBeenCalledWith("Transfer to sign in status error:", "complete")
+    expect(consoleError).toHaveBeenCalledWith("Sign in code error:", "complete")
     expect(mockNavigate).not.toHaveBeenCalled()
 
     consoleError.mockRestore()

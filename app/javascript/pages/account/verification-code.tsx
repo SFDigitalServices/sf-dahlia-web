@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import React, { useContext, useEffect, useState, useRef } from "react"
 import { useLocation, useNavigate } from "react-router"
-import { useSignIn, useSignUp } from "@clerk/react"
 import { ExpandableContent, Form, Order, t } from "@bloom-housing/ui-components"
 import { Card, Heading, Link, Button } from "@bloom-housing/ui-seeds"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
@@ -11,6 +10,8 @@ import withAppSetup from "../../layouts/withAppSetup"
 import AuthLayout from "../../layouts/AuthLayout"
 import UserContext from "../../authentication/context/UserContext"
 import { useAuthSession } from "../../authentication/session/AuthSessionProvider"
+import { useSignInSession } from "../../authentication/session/useSignInSession"
+import { useSignUpSession } from "../../authentication/session/useSignUpSession"
 import { bearerToken } from "../../authentication/session/authStatus"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import {
@@ -47,14 +48,11 @@ const EnterVerificationCodePage = ({
   redirectUrl = getMyAccountPath(), // TODO: simplify and centralize auth redirects
 }: EnterVerificationCodePageProps & { housingCounselorToken?: string | null }) => {
   const navigate = useNavigate()
-  const { signUp, fetchStatus: signUpFetchStatus } = useSignUp()
-  const { signIn, fetchStatus: signInFetchStatus } = useSignIn()
+  const signInSession = useSignInSession()
+  const signUpSession = useSignUpSession()
   const isForgotPasswordFlow = flow === AUTH_FLOW.FORGOT_PASSWORD
   const { getCredentials } = useAuthSession()
-  const isLoaded =
-    flow === AUTH_FLOW.CREATE_ACCOUNT
-      ? signUpFetchStatus !== "fetching"
-      : signInFetchStatus !== "fetching"
+  const isLoaded = flow === AUTH_FLOW.CREATE_ACCOUNT ? !signUpSession.isBusy : !signInSession.isBusy
   const [resendExpiresAt, setResendExpiresAt] = useState(() => Date.now() + RESEND_CODE_MS)
   const [resendSeconds, setResendSeconds] = useState(RESEND_CODE_MS / 1000)
   const [isResending, setIsResending] = useState(false)
@@ -87,48 +85,27 @@ const EnterVerificationCodePage = ({
   const editEmailHref = getAuthFlowPath(flow)
 
   const transferToCreateAccount = async () => {
-    if (signUpFetchStatus === "fetching" || !signUp) {
-      console.error("Sign up not ready")
-      return
-    }
-    const { error } = await signUp.create({ transfer: true })
+    const { error, notReady } = await signUpSession.transferFromSignIn()
+    if (notReady) return
     if (error) {
-      console.error("Account creation error", error)
       setError("code", { message: "invalid" })
       return
     }
-    if (signUp.status === "complete") {
-      await signUp.finalize({
-        navigate: ({ decorateUrl }: { decorateUrl: (url: string) => string }) => {
-          void navigate(decorateUrl(getAddPasswordPath()), {
-            state: { flow: AUTH_FLOW.CREATE_ACCOUNT },
-          })
-        },
-      })
-    } else {
-      console.error("Account creation error:", signUp)
-      setError("code", { message: "invalid" })
-    }
+
+    await signUpSession.activateSession(getAddPasswordPath(), { flow: AUTH_FLOW.CREATE_ACCOUNT })
   }
 
   const verifySignInCode = async (code: string) => {
-    if (signInFetchStatus === "fetching" || !signIn) return
-    const { error } = await signIn.emailCode.verifyCode({ code })
+    if (signInSession.isBusy) return
 
-    // user attempted to sign in with an email not linked to an account
-    if (error?.errors?.[0]?.code === "sign_up_if_missing_transfer") {
+    const { error, notReady, needsSignUp } = await signInSession.verifyEmailCode(code)
+    if (notReady) return
+    if (needsSignUp) {
       void transferToCreateAccount()
       return
     }
 
     if (error) {
-      console.error("Code verification error:", error)
-      setError("code", { message: "invalid" })
-      return
-    }
-
-    if (signIn.status !== "complete") {
-      console.error("Sign in not complete:", signIn.status)
       setError("code", { message: "invalid" })
       return
     }
@@ -145,49 +122,23 @@ const EnterVerificationCodePage = ({
       )
     }
 
-    await signIn.finalize({
-      navigate: ({ decorateUrl }: { decorateUrl: (url: string) => string }) => {
-        void navigate(decorateUrl(redirectUrl))
-      },
-    })
+    await signInSession.activateSession(redirectUrl)
   }
 
   const verifySignUpCode = async (code: string) => {
-    if (signUpFetchStatus === "fetching" || !signUp) return
-
-    const { error } = await signUp.verifications.verifyEmailCode({ code })
+    const { error, notReady } = await signUpSession.verifyEmailCode(code)
+    if (notReady) return
     if (error) {
-      console.error("Code verification error:", error)
       setError("code", { message: "invalid" })
       return
     }
 
-    if (signUp.status !== "complete") {
-      console.error("Code verification not complete:", signUp.status)
-      setError("code", { message: "invalid" })
-      return
-    }
-
-    await signUp.finalize({
-      navigate: ({ decorateUrl }: { decorateUrl: (url: string) => string }) => {
-        void navigate(decorateUrl(getAddPasswordPath()), { state: { flow } })
-      },
-    })
+    await signUpSession.activateSession(getAddPasswordPath(), { flow })
   }
 
   const verifyForgotPasswordCode = async (code: string) => {
-    if (signInFetchStatus === "fetching" || !signIn) return
-
-    const { error } = await signIn.resetPasswordEmailCode.verifyCode({ code })
-    if (error) {
-      console.error("Code verification error:", error)
-      return
-    }
-
-    if (signIn.status !== "needs_new_password") {
-      console.error("Password reset error:", signIn.status)
-      return
-    }
+    const { error } = await signInSession.verifyPasswordResetCode(code)
+    if (error) return
 
     void navigate(getResetPasswordPath(), { state: { email, flow, code } })
   }
@@ -201,16 +152,8 @@ const EnterVerificationCodePage = ({
   const onSubmit = async ({ code }: { code: string }) => verifyAuthCodeByFlow[flow](code)
 
   const resendSignInCode = async (): Promise<boolean> => {
-    if (signInFetchStatus === "fetching" || !signIn) return false
-
-    const { error } = await signIn.emailCode.sendCode()
+    const { error } = await signInSession.resendEmailCode()
     if (error) {
-      console.error("Resend sign in code error:", error)
-      return false
-    }
-
-    if (signIn.status !== "needs_first_factor") {
-      console.error("Resend sign in code status error:", signIn.status)
       return false
     }
 
@@ -218,32 +161,17 @@ const EnterVerificationCodePage = ({
   }
 
   const resendSignUpCode = async (): Promise<boolean> => {
-    if (signUpFetchStatus === "fetching" || !signUp) return false
-
-    const { error } = await signUp.verifications.sendEmailCode()
+    const { error } = await signUpSession.resendEmailCode()
     if (error) {
-      console.error("Resend sign up code error:", error)
       return false
     }
 
-    if (
-      signUp.status === "missing_requirements" &&
-      signUp.unverifiedFields.includes("email_address") &&
-      signUp.missingFields.length === 0
-    ) {
-      return true
-    } else {
-      console.error("Resend sign up code status error:", signUp)
-      return false
-    }
+    return true
   }
 
   const resendForgotPasswordCode = async (): Promise<boolean> => {
-    if (signInFetchStatus === "fetching" || !signIn) return false
-
-    const { error } = await signIn.resetPasswordEmailCode.sendCode()
+    const { error } = await signInSession.resendPasswordResetCode()
     if (error) {
-      console.error("Resend forgot password code error:", error)
       return false
     }
 
