@@ -38,6 +38,8 @@ jest.mock("@clerk/react", () => {
     ClerkProvider: ({ children }: { children: React.ReactNode }) => children,
     useAuth: jest.fn(),
     useUser: jest.fn(),
+    useSignUp: () => ({ fetchStatus: "idle", signUp: {} }),
+    useSession: () => ({ session: null }),
   }
 })
 

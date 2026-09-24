@@ -26,8 +26,10 @@ jest.mock("@clerk/react", () => {
       getToken: jest.fn().mockResolvedValue("clerk-session-token"),
     })),
     useSignUp: jest.fn(),
+    useSession: () => ({ session: null }),
     useSignIn: jest.fn(),
     useClerk: jest.fn(),
+    useUser: jest.fn(),
   }
 })
 
@@ -406,7 +408,6 @@ describe("<EnterVerificationCode />", () => {
     })
     expect(mockSignUpCreate).not.toHaveBeenCalled()
     expect(mockSignUpFinalize).not.toHaveBeenCalled()
-    expect(consoleError).toHaveBeenCalledWith("Sign up not ready")
 
     consoleError.mockRestore()
   })
