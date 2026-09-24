@@ -88,6 +88,15 @@ export const getProfile = async (sessionToken?: string): Promise<User> =>
       )
     : authenticatedGet<UserData>("/api/v1/auth/validate_token").then((res) => res.data.data)
 
+export const exchangeClerkForDeviseHeaders = async (sessionToken: string): Promise<void> =>
+  post<{ success: boolean }>(
+    "/api/v1/clerk/devise-token",
+    undefined,
+    clerkHeaders(sessionToken)
+  ).then(({ headers }) => {
+    setAuthHeaders(headers as AuthHeaders)
+  })
+
 export const getApplications = async (): Promise<{ applications: Application[] }> =>
   authenticatedGet<{ applications: Application[] }>("/api/v1/account/my-applications").then(
     (res) => res.data

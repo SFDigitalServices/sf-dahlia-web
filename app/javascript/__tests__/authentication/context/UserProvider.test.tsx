@@ -3,12 +3,15 @@ import { act, render, screen, waitFor } from "@testing-library/react"
 import { AuthSessionProvider } from "../../../authentication/session/AuthSessionProvider"
 import UserProvider from "../../../authentication/context/UserProvider"
 import UserContext, { ContextProps } from "../../../authentication/context/UserContext"
-import { getProfile, signIn } from "../../../api/authApiService"
+import { exchangeClerkForDeviseHeaders, getProfile, signIn } from "../../../api/authApiService"
 import { isTokenValid } from "../../../authentication/token"
 import { renderAndLoadAsync } from "../../__util__/renderUtils"
 import { mockProfileStub } from "../../__util__/accountUtils"
+import { useFeatureFlag } from "../../../hooks/useFeatureFlag"
+import { UNLEASH_FLAG } from "../../../modules/constants"
 
 jest.mock("../../../api/authApiService", () => ({
+  exchangeClerkForDeviseHeaders: jest.fn(),
   getProfile: jest.fn(),
   signIn: jest.fn(),
 }))
@@ -22,7 +25,7 @@ jest.mock("../../../authentication/token", () => {
 })
 
 jest.mock("../../../hooks/useFeatureFlag", () => ({
-  useFeatureFlag: () => ({ flagsReady: true, unleashFlag: false }),
+  useFeatureFlag: jest.fn(),
 }))
 
 const mockGetItem = jest.fn()
@@ -63,8 +66,14 @@ const TestComponent = () => {
 }
 
 describe("UserProvider", () => {
+  let clerkEnabled = false
+
   beforeEach(() => {
     jest.clearAllMocks()
+    ;(useFeatureFlag as jest.Mock).mockImplementation((flag) => ({
+      flagsReady: true,
+      unleashFlag: flag === UNLEASH_FLAG.CLERK_AUTH ? clerkEnabled : false,
+    }))
   })
 
   it("should load profile on mount if access token is available", async () => {
@@ -143,5 +152,34 @@ describe("UserProvider", () => {
 
     await waitFor(() => expect(screen.getByText("Signed in as abc123")).not.toBeNull())
     expect(getProfile).toHaveBeenCalled()
+  })
+
+  it("should exchange Clerk session for Devise headers before loading profile", async () => {
+    clerkEnabled = true
+    const { useAuth } = jest.requireMock<typeof import("@clerk/react")>("@clerk/react")
+    ;(useAuth as jest.Mock).mockReturnValue({
+      isLoaded: true,
+      isSignedIn: true,
+      signOut: jest.fn(),
+      getToken: jest.fn().mockResolvedValue("clerk-session-token"),
+    })
+    ;(exchangeClerkForDeviseHeaders as jest.Mock).mockResolvedValue(undefined)
+    ;(getProfile as jest.Mock).mockResolvedValue(mockProfileStub)
+
+    render(
+      <AuthSessionProvider>
+        <UserProvider>
+          <TestComponent />
+        </UserProvider>
+      </AuthSessionProvider>
+    )
+
+    await waitFor(() =>
+      expect(exchangeClerkForDeviseHeaders).toHaveBeenCalledWith("clerk-session-token")
+    )
+    await waitFor(() => expect(getProfile).toHaveBeenCalledWith("clerk-session-token"))
+    expect((exchangeClerkForDeviseHeaders as jest.Mock).mock.invocationCallOrder[0]).toBeLessThan(
+      (getProfile as jest.Mock).mock.invocationCallOrder[0]
+    )
   })
 })

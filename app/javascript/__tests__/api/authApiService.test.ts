@@ -11,6 +11,7 @@ import {
   signIn,
   createAccount,
   getProfile,
+  exchangeClerkForDeviseHeaders,
   forgotPassword,
   updatePassword,
   getApplications,
@@ -89,6 +90,25 @@ describe("authApiService", () => {
       const url = "/api/v1/auth/validate_token"
       await getProfile()
       expect(authenticatedGet).toHaveBeenCalledWith(url)
+    })
+
+    describe("exchangeClerkForDeviseHeaders", () => {
+      it("exchanges a Clerk token and stores returned Devise headers", async () => {
+        const storageSpy = jest.spyOn(Storage.prototype, "setItem")
+
+        await exchangeClerkForDeviseHeaders("clerk-session-token")
+
+        expect(post).toHaveBeenCalledWith(
+          "/api/v1/clerk/devise-token",
+          undefined,
+          expect.objectContaining({
+            headers: expect.objectContaining({
+              Authorization: expect.any(String),
+            }),
+          })
+        )
+        expect(storageSpy).toHaveBeenCalled()
+      })
     })
 
     it("fetches Clerk profile with the session token", async () => {

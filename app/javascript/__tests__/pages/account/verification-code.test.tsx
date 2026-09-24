@@ -43,6 +43,7 @@ jest.mock("../../../hooks/useFeatureFlag", () => ({
 
 jest.mock("../../../api/authApiService", () => ({
   ...jest.requireActual("../../../api/authApiService"),
+  exchangeClerkForDeviseHeaders: jest.fn().mockResolvedValue(undefined),
   authorizeHousingCounselor: jest.fn(),
   getProfile: jest.fn().mockResolvedValue(undefined),
 }))

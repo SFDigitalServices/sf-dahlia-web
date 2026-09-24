@@ -74,6 +74,9 @@ Rails.application.routes.draw do
         get 'agencies' => 'housing_counselor#agencies'
         post 'access' => 'housing_counselor#access'
       end
+      scope '/clerk' do
+        post 'devise-token' => 'clerk_auth#devise_token'
+      end
     end
   end
 
