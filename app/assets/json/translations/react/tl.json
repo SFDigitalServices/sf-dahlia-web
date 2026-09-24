@@ -277,7 +277,7 @@
   "createAccount.createNewPassword": "Gumawa ng bagong password",
   "createAccount.description": "Ginagamit namin ang impormasyong ito upang matulungan kang punan ang iyong aplikasyon. Maaari mong i-update ang mga detalyeng ito anumang oras.",
   "createAccount.didntGetEmail": "Hindi nakatanggap ng email?",
-  "createAccount.dobExample": "Halimbawa: Ang Nobyembre 20, 1980 ay 11-20-1980.",
+  "createAccount.dobExample": "Halimbawa: Ang Abril 22, 1980 ay 4 22 1980.",
   "createAccount.dobNote": "Humihingi kami ng petsa ng kapanganakan upang ma-verify ang iyong edad. Ikaw ay dapat na 18 o mas matanda upang mag-aplay para sa pabahay.",
   "createAccount.editEmail": "I-edit ang email",
   "createAccount.emailConfirmInstructions": "Pakipasok muli ang inyong email address para makumpirma ito. ",

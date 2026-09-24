@@ -277,7 +277,7 @@
   "createAccount.createNewPassword": "Cree una contraseña nueva",
   "createAccount.description": "Utilizamos esta información para ayudarle a completar su solicitud. Puede actualizar estos detalles en cualquier momento.",
   "createAccount.didntGetEmail": "¿No recibió el correo electrónico?",
-  "createAccount.dobExample": "Ejemplo: 20 de noviembre de 1980 es 11-20-1980.",
+  "createAccount.dobExample": "Ejemplo: 22 de abril de 1980 es 4 22 1980.",
   "createAccount.dobNote": "Le pedimos su fecha de nacimiento para verificar su edad. Debes tener 18 años o más para solicitar vivienda.",
   "createAccount.editEmail": "Editar correo electrónico",
   "createAccount.emailConfirmInstructions": "Ingrese su dirección de correo electrónico nuevamente para confirmar.",
