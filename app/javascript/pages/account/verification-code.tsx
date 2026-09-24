@@ -16,6 +16,7 @@ import { bearerToken } from "../../authentication/session/authStatus"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import {
   AppPages,
+  createPath,
   getAddPasswordPath,
   getAuthFlowPath,
   getAddProfilePath,
@@ -110,19 +111,25 @@ const EnterVerificationCodePage = ({
       return
     }
 
+    let destination = redirectUrl
     if (housingCounselorToken) {
       const sessionToken = bearerToken(await getCredentials())
       if (!sessionToken) {
         setError("code", { message: "invalid" })
         return
       }
-      await authorizeHousingCounselor(housingCounselorToken, sessionToken)
-      console.log(
-        "TODO: Housing counselor successfully authenticated, TBD banner and applicant view"
-      )
+      try {
+        await authorizeHousingCounselor(housingCounselorToken, sessionToken)
+        console.log(
+          "TODO: Housing counselor successfully authenticated, TBD banner and applicant view"
+        )
+      } catch {
+        // Keep the user signed in, but flag that they don't have access to this account.
+        destination = createPath(redirectUrl, { hcAccess: "0" })
+      }
     }
 
-    await signInSession.activateSession(redirectUrl)
+    await signInSession.activateSession(destination)
   }
 
   const verifySignUpCode = async (code: string) => {

@@ -110,8 +110,14 @@ describe("<EnterVerificationCode />", () => {
     })
     mockSignInVerifyCode = jest.fn().mockResolvedValue({ error: undefined })
     mockSignInSendCode = jest.fn().mockResolvedValue({ error: undefined })
-    mockSignInFinalize = jest.fn().mockImplementation(async ({ navigate }) => {
-      await navigate({ decorateUrl: (url: string) => url })
+    // verifySignInCode calls finalize() with no args (see SignInFlow.tsx for why), then navigates
+    // manually, so this mock must not assume a `navigate` callback is always passed.
+    mockSignInFinalize = jest.fn().mockImplementation(async (params?: { navigate?: unknown }) => {
+      if (typeof params?.navigate === "function") {
+        await (params.navigate as (args: { decorateUrl: (url: string) => string }) => unknown)({
+          decorateUrl: (url: string) => url,
+        })
+      }
       return { error: undefined }
     })
     mockResetPasswordVerifyCode = jest.fn().mockResolvedValue({ error: undefined })
@@ -529,6 +535,38 @@ describe("<EnterVerificationCode />", () => {
     })
     expect(mockSignInFinalize).toHaveBeenCalledTimes(1)
     expect(mockNavigate).toHaveBeenCalledWith("/account")
+  })
+
+  it("signs the housing counselor in and redirects with hcAccess=0 when access is denied", async () => {
+    cleanup()
+    const mockGetToken = jest.fn().mockResolvedValue("clerk-session-token")
+    ;(useAuth as jest.Mock).mockReturnValue({
+      isLoaded: true,
+      isSignedIn: false,
+      getToken: mockGetToken,
+    })
+    ;(useLocation as jest.Mock).mockReturnValue({
+      pathname: "/sign-in/code",
+      state: {
+        email: "test@example.com",
+        housingCounselorToken: "jwt.token",
+        flow: AUTH_FLOW.SIGN_IN,
+      },
+    })
+    mockSignInResource.status = "complete"
+    ;(authorizeHousingCounselor as jest.Mock).mockRejectedValue(new Error("forbidden"))
+    await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
+
+    const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime })
+    await user.click(screen.getAllByRole("textbox")[0])
+    await user.paste("123456")
+    await user.click(screen.getByRole("button", { name: t("createAccount.confirmCode") }))
+
+    await waitFor(() => {
+      expect(authorizeHousingCounselor).toHaveBeenCalledWith("jwt.token", "clerk-session-token")
+    })
+    expect(mockSignInFinalize).toHaveBeenCalledTimes(1)
+    expect(mockNavigate).toHaveBeenCalledWith("/account?hcAccess=0")
   })
 
   it("resends the code for sign in", async () => {
