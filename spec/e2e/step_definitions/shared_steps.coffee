@@ -52,9 +52,6 @@ When /^I hit the Next button "([^"]*)" times?$/, (buttonClicks) ->
     Utils.Page.submit()
     i--
 
-When 'I click the Save and Finish Later button', ->
-  element(By.id('save_and_finish_later')).click()
-
 When 'I click the Start with these details button', ->
   element(By.id('start_with_autofill')).click()
 
