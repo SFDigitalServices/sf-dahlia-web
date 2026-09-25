@@ -39,6 +39,15 @@ RSpec.describe ClerkService do
       end
     end
 
+    describe 'GlobalID' do
+      it 'is located from its global id, which deliver_later needs' do
+        located = GlobalID::Locator.locate(user.to_global_id)
+
+        expect(located).to be_a(ClerkService::User)
+        expect(located.id).to eq(user_id)
+      end
+    end
+
     describe '#salesforce_contact_id' do
       it 'returns the Salesforce contact id from Clerk and memoizes it' do
         allow(ClerkService).to receive(:salesforce_contact_id)
@@ -67,6 +76,7 @@ RSpec.describe ClerkService do
     let(:email_record) do
       instance_double(
         Clerk::Models::Components::EmailAddress,
+        id: 'idn_primary',
         email_address: 'test@example.com',
       )
     end
@@ -74,6 +84,7 @@ RSpec.describe ClerkService do
       instance_double(
         Clerk::Models::Components::User,
         email_addresses: [email_record],
+        primary_email_address_id: 'idn_primary',
       )
     end
     let(:get_response) do
@@ -85,6 +96,18 @@ RSpec.describe ClerkService do
     end
 
     it 'returns the email address' do
+      expect(described_class.email_address(user_id)).to eq('test@example.com')
+    end
+
+    it 'returns the primary address while a new one awaits verification' do
+      new_record = instance_double(
+        Clerk::Models::Components::EmailAddress,
+        id: 'idn_new',
+        email_address: 'new@example.com',
+      )
+      allow(clerk_user).to receive(:email_addresses)
+        .and_return([new_record, email_record])
+
       expect(described_class.email_address(user_id)).to eq('test@example.com')
     end
 

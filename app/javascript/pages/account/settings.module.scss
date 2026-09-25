@@ -16,3 +16,19 @@
   margin: var(--seeds-s4);
   justify-self: center;
 }
+
+.emailCodeStep {
+  display: flex;
+  flex-direction: column;
+  gap: var(--seeds-spacer-content);
+}
+
+.emailCodeHeading {
+  font-weight: var(--seeds-font-weight-semibold);
+}
+
+.emailCodeActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--seeds-spacer-text);
+}
