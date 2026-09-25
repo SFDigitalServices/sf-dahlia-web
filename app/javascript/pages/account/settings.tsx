@@ -1,9 +1,11 @@
 /* eslint-disable @typescript-eslint/unbound-method */
-import React, { useContext, useEffect, useState } from "react"
+import React, { useCallback, useContext, useEffect, useState } from "react"
 import withAppSetup from "../../layouts/withAppSetup"
 import UserContext from "../../authentication/context/UserContext"
 import { useAuthSession } from "../../authentication/session/AuthSessionProvider"
 import { useSignUpSession } from "../../authentication/session/useSignUpSession"
+import { useAccountSession } from "../../authentication/session/useAccountSession"
+import { useReverificationPrompt } from "../../authentication/session/useReverificationPrompt"
 import { bearerToken } from "../../authentication/session/authStatus"
 import { Form, DOBFieldValues, t } from "@bloom-housing/ui-components"
 import { DeepMap, FieldError, useForm } from "react-hook-form"
@@ -38,9 +40,12 @@ import HousingCounselorAccess, {
   housingCounselorFieldsetErrors,
 } from "./components/HousingCounselorAccess"
 import Toast from "./components/Toast"
+import ReverifyIdentity from "./components/ReverifyIdentity"
+import VerificationCodeField from "./components/VerificationCodeField"
 import "./styles/account.scss"
 import sharedStyles from "./shared-styles.module.scss"
 import {
+  updateAccountWithClerk,
   updateNameOrDOB as apiUpdateNameOrDOB,
   updateEmail,
   updateHousingCounselorAccess,
@@ -116,7 +121,7 @@ interface SectionProps {
   handleBanners?: (banner: string) => void
 }
 
-const EmailSection = ({ user, setUser }: SectionProps) => {
+const EmailSectionDevise = ({ user, setUser }: SectionProps) => {
   const [loading, setLoading] = useState(false)
   const [emailUpdateBanner, setEmailUpdateBanner] = useState(false)
   const [emailBanner, setEmailBanner] = useState(false)
@@ -179,6 +184,191 @@ const EmailSection = ({ user, setUser }: SectionProps) => {
       <UpdateForm
         onSubmit={handleSubmit(onSubmit)}
         loading={loading}
+        submitLabel={t("accountSettings.saveEmailAddress")}
+      >
+        <EmailFieldset
+          register={register}
+          errors={errors}
+          defaultEmail={user?.email ?? null}
+          onChange={onChange}
+        />
+      </UpdateForm>
+    </>
+  )
+}
+
+type AccountUpdater = (newUser: User) => Promise<User>
+
+/** Saves the account with whichever session the user has: Clerk behind its flag, else Devise. */
+const useAccountUpdater = (): AccountUpdater => {
+  const { unleashFlag: clerkEnabled } = useFeatureFlag(UNLEASH_FLAG.CLERK_AUTH, false)
+  const { getCredentials } = useAuthSession()
+
+  return useCallback(
+    async (newUser: User) => {
+      if (!clerkEnabled) return apiUpdateNameOrDOB(newUser)
+
+      const sessionToken = bearerToken(await getCredentials())
+      if (!sessionToken) {
+        throw new Error("Missing Clerk session token")
+      }
+      return updateAccountWithClerk(newUser, sessionToken)
+    },
+    [clerkEnabled, getCredentials]
+  )
+}
+
+/**
+ * Changing the sign-in email with Clerk: the new address is verified by a code sent to it, and
+ * any step may first ask the user to confirm it's them. Both render in place of this section's
+ * form, so the rest of the settings page stays put.
+ */
+const EmailSection = ({ user, setUser }: SectionProps) => {
+  const { saveProfile } = useContext(UserContext)
+  const updateAccount = useAccountUpdater()
+  const { startEmailChange, resendEmailChangeCode, verifyEmailChange, pendingEmail } =
+    useAccountSession()
+  const reverificationPrompt = useReverificationPrompt()
+  const [step, setStep] = useState<"edit" | "verify">("edit")
+  // The reverification prompt is shared by the page, so this section shows it only while one
+  // of its own requests is waiting on it.
+  const [isWaiting, setIsWaiting] = useState(false)
+  const [verificationCode, setVerificationCode] = useState("")
+  const [codeError, setCodeError] = useState(false)
+  const [emailUpdateBanner, setEmailUpdateBanner] = useState(false)
+  const [emailSavedBanner, setEmailSavedBanner] = useState(false)
+
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+    setError,
+  } = useForm({ mode: "onTouched" })
+
+  const onChange = () => {
+    setEmailUpdateBanner(true)
+    setEmailSavedBanner(false)
+  }
+
+  const onSubmit = async ({ email }: { email: string }) => {
+    setIsWaiting(true)
+    const outcome = await startEmailChange(email)
+    setIsWaiting(false)
+    if (outcome.cancelled || outcome.notReady || outcome.unchanged) return
+    if (outcome.emailTaken) {
+      setError("email", { message: "email:server:duplicate", shouldFocus: true })
+      return
+    }
+    if (outcome.error) {
+      setError("email", { message: "email:server:generic", shouldFocus: true })
+      return
+    }
+    setVerificationCode("")
+    setCodeError(false)
+    setStep("verify")
+  }
+
+  const onVerify = async () => {
+    setIsWaiting(true)
+    const outcome = await verifyEmailChange(verificationCode)
+    if (outcome.cancelled || outcome.notReady) {
+      setIsWaiting(false)
+      return
+    }
+    if (outcome.error) {
+      setIsWaiting(false)
+      setCodeError(true)
+      return
+    }
+
+    // The server reads the email from Clerk, not from this request, so this syncs the verified
+    // address to the profile and can't save one Clerk hasn't verified.
+    const newUser = { ...user, email: pendingEmail }
+    try {
+      saveProfile(await updateAccount(newUser))
+    } catch (error) {
+      console.error("Sync email to profile error:", error)
+    }
+    setUser(newUser)
+    setIsWaiting(false)
+    setStep("edit")
+    setEmailUpdateBanner(false)
+    setEmailSavedBanner(true)
+  }
+
+  if (isWaiting && reverificationPrompt) {
+    return (
+      <FormSection>
+        <ReverifyIdentity prompt={reverificationPrompt} />
+      </FormSection>
+    )
+  }
+
+  if (step === "verify") {
+    return (
+      <FormSection>
+        <form
+          noValidate
+          className={settingsStyles["emailCodeStep"]}
+          onSubmit={(event) => {
+            event.preventDefault()
+            void onVerify()
+          }}
+        >
+          <p className={settingsStyles["emailCodeHeading"]}>{t("createAccount.checkEmail")}</p>
+          <p>
+            {t("createAccount.weSentCodeTo")} <strong>{pendingEmail}</strong>
+          </p>
+          <VerificationCodeField
+            value={verificationCode}
+            onChange={setVerificationCode}
+            error={codeError}
+          />
+          <div className={settingsStyles["emailCodeActions"]}>
+            <Button variant="primary" size="sm" type="submit" disabled={isWaiting}>
+              {t("createAccount.confirmCode")}
+            </Button>
+            <Button
+              variant="text"
+              size="sm"
+              type="button"
+              onClick={() => {
+                void resendEmailChangeCode()
+              }}
+            >
+              {t("createAccount.sendAgain")}
+            </Button>
+            <Button variant="text" size="sm" type="button" onClick={() => setStep("edit")}>
+              {t("label.cancel")}
+            </Button>
+          </div>
+        </form>
+      </FormSection>
+    )
+  }
+
+  return (
+    <>
+      <Banner
+        className="mt-8"
+        showBanner={emailUpdateBanner}
+        message={t("accountSettings.update")}
+        onClose={() => setEmailUpdateBanner(false)}
+      />
+      <Banner
+        showBanner={emailSavedBanner}
+        className="mt-8"
+        message={t("accountSettings.emailReconfirmedUpdated")}
+        onClose={() => setEmailSavedBanner(false)}
+      />
+      <ErrorSummaryBanner
+        errors={errors}
+        sortOrder={emailSortOrder}
+        messageMap={(messageKey) => getErrorMessage(messageKey, emailFieldsetErrors, true)}
+      />
+      <UpdateForm
+        onSubmit={handleSubmit(onSubmit)}
+        loading={isWaiting}
         submitLabel={t("accountSettings.saveEmailAddress")}
       >
         <EmailFieldset
@@ -397,6 +587,7 @@ const HousingCounselorSection = ({ user, setUser }: SectionProps) => {
 }
 
 const updateNameOrDOB = async (
+  updateAccount: AccountUpdater,
   newUser: User,
   saveProfile: (profile: User) => void,
   setUser: React.Dispatch<User>,
@@ -404,7 +595,7 @@ const updateNameOrDOB = async (
   errorCallback: (error: AxiosError) => void,
   bannersCallback?: () => void
 ) => {
-  return apiUpdateNameOrDOB(newUser)
+  return updateAccount(newUser)
     .then((profile) => {
       saveProfile(profile)
       setUser(newUser)
@@ -418,6 +609,7 @@ const updateNameOrDOB = async (
 
 const NameSection = ({ user, setUser, handleBanners }: SectionProps) => {
   const [loading, setLoading] = useState(false)
+  const updateAccount = useAccountUpdater()
   const { saveProfile } = useContext(UserContext)
 
   const {
@@ -437,6 +629,7 @@ const NameSection = ({ user, setUser, handleBanners }: SectionProps) => {
     const newUser = { ...user, ...data }
 
     await updateNameOrDOB(
+      updateAccount,
       newUser,
       saveProfile,
       setUser,
@@ -481,6 +674,7 @@ const NameSection = ({ user, setUser, handleBanners }: SectionProps) => {
 
 const DateOfBirthSection = ({ user, setUser }: SectionProps) => {
   const [loading, setLoading] = useState(false)
+  const updateAccount = useAccountUpdater()
   const { saveProfile } = useContext(UserContext)
   const [dobUpdateBanner, setDOBUpdateBanner] = useState(false)
   const [dobSavedBanner, setDOBSavedBanner] = useState(false)
@@ -513,6 +707,7 @@ const DateOfBirthSection = ({ user, setUser }: SectionProps) => {
     }
 
     await updateNameOrDOB(
+      updateAccount,
       newUser,
       saveProfile,
       setUser,
@@ -653,7 +848,11 @@ const AccountSettings = ({ profile }: { profile: User }) => {
       />
       <NameSection user={user} setUser={setUser} handleBanners={handleBanners} />
       <DateOfBirthSection user={user} setUser={setUser} />
-      <EmailSection user={user} setUser={setUser} />
+      {clerkEnabled ? (
+        <EmailSection user={user} setUser={setUser} />
+      ) : (
+        <EmailSectionDevise user={user} setUser={setUser} />
+      )}
       {clerkEnabled ? <PasswordSection /> : <PasswordSectionDevise user={user} setUser={setUser} />}
       {showHousingCounselorSection && user && (
         <HousingCounselorSection user={user} setUser={setUser} />

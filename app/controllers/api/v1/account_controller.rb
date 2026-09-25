@@ -5,6 +5,14 @@ class Api::V1::AccountController < ApiController
   include Clerk::Authenticatable
   before_action :authenticate_user!, except: %i[confirm check_account]
 
+  CLERK_ONLY_ACTIONS = %w[profile create_profile update_housing_counselor].freeze
+  # TODO(DAH-4366): CLERK MIGRATION - DEVISE TECH DEBT TO REMOVE
+  # Accept a Clerk session, falling back to Devise when the request has none.
+  CLERK_OR_DEVISE_ACTIONS = %w[update].freeze
+  CLERK_ACTIONS = (CLERK_ONLY_ACTIONS + CLERK_OR_DEVISE_ACTIONS).freeze
+  # Without a contact ID, Salesforce would create a second contact instead of updating.
+  CONTACT_ID_ACTIONS = %w[update update_housing_counselor].freeze
+
   def my_applications
     applications = map_listings_to_applications(current_user_applications)
     render json: { applications: }
@@ -17,6 +25,9 @@ class Api::V1::AccountController < ApiController
       render json: { error: 'Invalid DOB' }, status: :unprocessable_entity
       return
     end
+
+    # A Clerk user's email only changes in Clerk, once the new address is verified there.
+    contact[:email] = current_user.email if @clerk_user_id.present?
 
     contact[:contactID] = current_user.salesforce_contact_id
     contact[:webAppID] = current_user.id
@@ -122,17 +133,20 @@ class Api::V1::AccountController < ApiController
   end
 
   def authenticate_user!(*args)
-    return super unless %w[profile create_profile update_housing_counselor].include?(action_name)
+    return super unless CLERK_ACTIONS.include?(action_name)
 
     @clerk_user_id = clerk&.user_id
     if @clerk_user_id.blank?
+      return super if CLERK_OR_DEVISE_ACTIONS.include?(action_name)
+
       render json: { error: 'Invalid Clerk session' }, status: :unauthorized
       return
     end
 
-    if action_name == 'update_housing_counselor' && current_user.salesforce_contact_id.blank?
-      render json: { error: 'Could not get Salesforce contact ID' }, status: :not_found
-    end
+    return unless CONTACT_ID_ACTIONS.include?(action_name)
+    return if current_user.salesforce_contact_id.present?
+
+    render json: { error: 'Could not get Salesforce contact ID' }, status: :not_found
   end
 
   def current_user

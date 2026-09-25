@@ -8,6 +8,7 @@ import UserContext from "../../authentication/context/UserContext"
 import { useAuthSession } from "../../authentication/session/AuthSessionProvider"
 import { useSignInSession } from "../../authentication/session/useSignInSession"
 import { useSignUpSession } from "../../authentication/session/useSignUpSession"
+import { useReverificationPrompt } from "../../authentication/session/useReverificationPrompt"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import AuthLayout from "../../layouts/AuthLayout"
 import withAppSetup from "../../layouts/withAppSetup"
@@ -23,6 +24,7 @@ import {
 import styles from "./add-password.module.scss"
 import GetHelp from "./components/GetHelp"
 import PasswordFieldset from "./components/PasswordFieldset"
+import ReverifyIdentity from "./components/ReverifyIdentity"
 import "./styles/account.scss"
 
 interface AddPasswordPageProps {
@@ -38,6 +40,7 @@ const AddPasswordPage = ({ flow, isAccountSettingsFlow }: AddPasswordPageProps) 
   const navigate = useNavigate()
   const { submitNewPassword, activateSession, isResetAttemptStale } = useSignInSession()
   const { setPassword, isAccountInitialized } = useSignUpSession()
+  const reverificationPrompt = useReverificationPrompt()
   const [isResettingPassword, setIsResettingPassword] = useState(false)
   const isForgotPasswordFlow = flow === AUTH_FLOW.FORGOT_PASSWORD
   const {
@@ -82,7 +85,8 @@ const AddPasswordPage = ({ flow, isAccountSettingsFlow }: AddPasswordPageProps) 
       return
     }
 
-    const { error } = await setPassword(newPassword)
+    const { error, cancelled } = await setPassword(newPassword)
+    if (cancelled) return
     if (error) {
       setError("password", { message: "password:server:generic" })
       return
@@ -98,58 +102,62 @@ const AddPasswordPage = ({ flow, isAccountSettingsFlow }: AddPasswordPageProps) 
   return (
     <AuthLayout title={t("createAccount.addPassword")}>
       <Card.Section divider="flush">
-        <Heading priority={1} size="2xl">
-          {isForgotPasswordFlow
-            ? t("createAccount.createNewPassword")
-            : t("createAccount.addPassword")}
-        </Heading>
-        {!isForgotPasswordFlow && !isAccountSettingsFlow && (
-          <Message fullwidth variant="primary" className={styles.skip}>
-            {t("createAccount.okayToSkipPassword")}
-          </Message>
-        )}
-        <Form onSubmit={handleSubmit(onSubmit)}>
-          <PasswordFieldset
-            register={register}
-            errors={errors}
-            watch={watch}
-            passwordType="createAccount"
-            labelText={t(
-              isForgotPasswordFlow ? "label.newPassword" : "createAccount.choosePasswordOptional"
-            )}
-          />
-          <div className={styles.actions}>
-            <Button variant="primary" size="sm" type="submit" disabled={!isAccountInitialized}>
-              {isAccountSettingsFlow
-                ? t("accountSettings.addPassword")
-                : t("createAccount.savePassword")}
-            </Button>
-            {!isForgotPasswordFlow && !isAccountSettingsFlow && (
-              <Button
-                variant="primary-outlined"
-                size="sm"
-                type="button"
-                onClick={() => {
-                  void navigate(getAddProfilePath())
-                }}
-              >
-                {t("createAccount.skipForNow")}
+        {reverificationPrompt && <ReverifyIdentity prompt={reverificationPrompt} />}
+        {/* Hidden rather than unmounted, so the password entered is still there to retry with. */}
+        <div hidden={!!reverificationPrompt}>
+          <Heading priority={1} size="2xl">
+            {isForgotPasswordFlow
+              ? t("createAccount.createNewPassword")
+              : t("createAccount.addPassword")}
+          </Heading>
+          {!isForgotPasswordFlow && !isAccountSettingsFlow && (
+            <Message fullwidth variant="primary" className={styles.skip}>
+              {t("createAccount.okayToSkipPassword")}
+            </Message>
+          )}
+          <Form onSubmit={handleSubmit(onSubmit)}>
+            <PasswordFieldset
+              register={register}
+              errors={errors}
+              watch={watch}
+              passwordType="createAccount"
+              labelText={t(
+                isForgotPasswordFlow ? "label.newPassword" : "createAccount.choosePasswordOptional"
+              )}
+            />
+            <div className={styles.actions}>
+              <Button variant="primary" size="sm" type="submit" disabled={!isAccountInitialized}>
+                {isAccountSettingsFlow
+                  ? t("accountSettings.addPassword")
+                  : t("createAccount.savePassword")}
               </Button>
-            )}
-            {isAccountSettingsFlow && (
-              <Button
-                size="sm"
-                variant="text"
-                className={styles.cancelButton}
-                onClick={() => {
-                  void navigate(getMyAccountSettingsPath())
-                }}
-              >
-                {t("label.cancel")}
-              </Button>
-            )}
-          </div>
-        </Form>
+              {!isForgotPasswordFlow && !isAccountSettingsFlow && (
+                <Button
+                  variant="primary-outlined"
+                  size="sm"
+                  type="button"
+                  onClick={() => {
+                    void navigate(getAddProfilePath())
+                  }}
+                >
+                  {t("createAccount.skipForNow")}
+                </Button>
+              )}
+              {isAccountSettingsFlow && (
+                <Button
+                  size="sm"
+                  variant="text"
+                  className={styles.cancelButton}
+                  onClick={() => {
+                    void navigate(getMyAccountSettingsPath())
+                  }}
+                >
+                  {t("label.cancel")}
+                </Button>
+              )}
+            </div>
+          </Form>
+        </div>
       </Card.Section>
       {!isAccountSettingsFlow && <GetHelp flow={flow} />}
     </AuthLayout>

@@ -9,6 +9,8 @@ jest.mock("@clerk/react", () => ({
   useSignUp: jest.fn(),
   useUser: jest.fn(),
   useSession: () => ({ session: null }),
+  useReverification: jest.requireActual("../../__util__/fakeUseReverification")
+    .fakeUseReverification,
 }))
 
 jest.mock("react-router", () => ({

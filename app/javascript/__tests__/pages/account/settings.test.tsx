@@ -31,6 +31,13 @@ jest.mock("../../../hooks/useFeatureFlag", () => ({
   useFeatureFlag: jest.fn(() => ({ flagsReady: true, unleashFlag: true })),
 }))
 
+// Read lazily by the @clerk/react mock below; the mock- prefix lets jest.mock reference it.
+let mockSession: {
+  startVerification: jest.Mock
+  prepareFirstFactorVerification: jest.Mock
+  attemptFirstFactorVerification: jest.Mock
+} | null = null
+
 jest.mock("@clerk/react", () => {
   const Clerk = jest.requireActual("@clerk/react")
   return {
@@ -39,9 +46,90 @@ jest.mock("@clerk/react", () => {
     useAuth: jest.fn(),
     useUser: jest.fn(),
     useSignUp: () => ({ fetchStatus: "idle", signUp: {} }),
-    useSession: () => ({ session: null }),
+    useSession: () => ({ session: mockSession }),
   }
 })
+
+const CLERK_HEADERS = { headers: { Authorization: "Bearer clerk-session-token" } }
+
+// Clerk recognizes its API errors by this static kind rather than by instanceof.
+class ReverificationRequiredError extends Error {
+  static kind = "ClerkAPIResponseError"
+  errors = [{ code: "session_reverification_required" }]
+}
+
+type MockEmailAddress = {
+  id: string
+  emailAddress: string
+  prepareVerification: jest.Mock
+  attemptVerification: jest.Mock
+  destroy: jest.Mock
+}
+
+const mockEmailAddress = (id: string, emailAddress: string): MockEmailAddress => {
+  const address: MockEmailAddress = {
+    id,
+    emailAddress,
+    prepareVerification: jest.fn(),
+    attemptVerification: jest.fn(),
+    destroy: jest.fn().mockResolvedValue(undefined),
+  }
+  address.prepareVerification.mockResolvedValue(address)
+  address.attemptVerification.mockResolvedValue({
+    ...address,
+    verification: { status: "verified" },
+  })
+  return address
+}
+
+let oldAddress: MockEmailAddress
+let newAddress: MockEmailAddress
+let clerkUser: {
+  passwordEnabled: boolean
+  primaryEmailAddressId: string
+  emailAddresses: MockEmailAddress[]
+  createEmailAddress: jest.Mock
+  update: jest.Mock
+}
+
+const setupClerkEmailUser = () => {
+  oldAddress = mockEmailAddress("idn_old", "old@example.com")
+  newAddress = mockEmailAddress("idn_new", "new@example.com")
+  clerkUser = {
+    passwordEnabled: true,
+    primaryEmailAddressId: "idn_old",
+    emailAddresses: [oldAddress],
+    createEmailAddress: jest.fn().mockResolvedValue(newAddress),
+    update: jest.fn().mockResolvedValue(undefined),
+  }
+  mockSession = {
+    startVerification: jest.fn().mockResolvedValue({
+      status: "needs_first_factor",
+      supportedFirstFactors: [
+        { strategy: "email_code", emailAddressId: "idn_old", safeIdentifier: "o***@example.com" },
+      ],
+    }),
+    prepareFirstFactorVerification: jest.fn().mockResolvedValue({ status: "needs_first_factor" }),
+    attemptFirstFactorVerification: jest.fn().mockResolvedValue({ status: "complete" }),
+  }
+}
+
+const submitEmail = async (email: string) => {
+  const group = screen.getByRole("group", { name: /email/i })
+  await act(async () => {
+    fireEvent.change(within(group).getByRole("textbox"), { target: { value: email } })
+    fireEvent.click(screen.getByRole("button", { name: "Save email address" }))
+    await Promise.resolve()
+  })
+}
+
+const confirmCode = async () => {
+  await act(async () => {
+    fireEvent.change(screen.getByLabelText("1"), { target: { value: "123456" } })
+    fireEvent.click(screen.getByRole("button", { name: /confirm code/i }))
+    await Promise.resolve()
+  })
+}
 
 const mockAgencies = [
   { id: "123", name: "Test Agency A", shortName: "A" },
@@ -76,10 +164,11 @@ describe("<SettingsPage />", () => {
       ;(useFeatureFlag as jest.Mock).mockReturnValue({ flagsReady: true, unleashFlag: true })
       setupUserContext({ loggedIn: true })
       ;(get as jest.Mock).mockResolvedValue({ data: { agencies: [] } })
+      setupClerkEmailUser()
       ;(useUser as jest.Mock).mockReturnValue({
         isLoaded: true,
         isSignedIn: true,
-        user: { passwordEnabled: true },
+        user: clerkUser,
       })
       mockNavigate = jest.fn()
       ;(useNavigate as jest.Mock).mockReturnValue(mockNavigate)
@@ -104,7 +193,7 @@ describe("<SettingsPage />", () => {
 
     describe("when the user updates their name and DOB", () => {
       it("updates Name", async () => {
-        ;(authenticatedPut as jest.Mock).mockResolvedValue({
+        ;(put as jest.Mock).mockResolvedValue({
           data: {
             contact: { ...mockProfileStub, firstName: "NewFirstName", lastName: "NewLastName" },
           },
@@ -148,14 +237,15 @@ describe("<SettingsPage />", () => {
 
         expect(screen.queryByText("Your changes have been saved.")).toBeNull()
 
-        expect(authenticatedPut).toHaveBeenCalledWith(
+        expect(put).toHaveBeenCalledWith(
           "/api/v1/account/update",
           expect.objectContaining({
             contact: expect.objectContaining({
               firstName: "NewFirstName",
               lastName: "NewLastName",
             }),
-          })
+          }),
+          { headers: { Authorization: "Bearer clerk-session-token" } }
         )
 
         expect(firstNameField.getAttribute("value")).toBe("NewFirstName")
@@ -164,7 +254,7 @@ describe("<SettingsPage />", () => {
       })
 
       it("updates DOB", async () => {
-        ;(authenticatedPut as jest.Mock).mockResolvedValue({
+        ;(put as jest.Mock).mockResolvedValue({
           data: {
             contact: {
               ...mockProfileStub,
@@ -213,13 +303,14 @@ describe("<SettingsPage />", () => {
 
         expect(screen.queryByText("Your changes have been saved.")).toBeNull()
 
-        expect(authenticatedPut).toHaveBeenCalledWith(
+        expect(put).toHaveBeenCalledWith(
           "/api/v1/account/update",
           expect.objectContaining({
             contact: expect.objectContaining({
               DOB: "2000-02-06",
             }),
-          })
+          }),
+          { headers: { Authorization: "Bearer clerk-session-token" } }
         )
       })
 
@@ -243,7 +334,7 @@ describe("<SettingsPage />", () => {
           await promise
         })
 
-        expect(authenticatedPut).not.toHaveBeenCalled()
+        expect(put).not.toHaveBeenCalled()
 
         await act(async () => {
           fireEvent.change(monthField, { target: { value: 2 } })
@@ -253,7 +344,7 @@ describe("<SettingsPage />", () => {
           await promise
         })
 
-        expect(authenticatedPut).not.toHaveBeenCalled()
+        expect(put).not.toHaveBeenCalled()
 
         await act(async () => {
           fireEvent.change(monthField, { target: { value: 2 } })
@@ -263,88 +354,99 @@ describe("<SettingsPage />", () => {
           await promise
         })
 
-        expect(authenticatedPut).not.toHaveBeenCalled()
+        expect(put).not.toHaveBeenCalled()
       })
     })
 
     describe("when the user updates their email", () => {
-      it("updates Email", async () => {
-        ;(authenticatedPut as jest.Mock).mockResolvedValue({
-          data: {
-            status: "success",
-          },
+      it("verifies the new email with a code, then makes it the sign-in email", async () => {
+        ;(put as jest.Mock).mockResolvedValue({
+          data: { contact: { ...mockProfileStub, email: "new@example.com" } },
         })
 
-        const emailUpdateButton = screen.getByRole("button", { name: "Save email address" })
-        const group = screen.getByRole("group", {
-          name: /email/i,
-        })
+        await submitEmail("new@example.com")
 
-        const emailField = within(group).getByRole("textbox")
+        expect(clerkUser.createEmailAddress).toHaveBeenCalledWith({ email: "new@example.com" })
+        expect(newAddress.prepareVerification).toHaveBeenCalledWith({ strategy: "email_code" })
+        expect(screen.getByText("Check your email for a code")).not.toBeNull()
+        expect(screen.getByText("new@example.com")).not.toBeNull()
 
-        await act(async () => {
-          fireEvent.change(emailField, { target: { value: "test@test.com" } })
-          emailUpdateButton.dispatchEvent(new MouseEvent("click"))
+        await confirmCode()
 
-          expect(
-            screen.getByText("We will update any applications you have not submitted yet.")
-          ).not.toBeNull()
-          const closeButton = screen.getByLabelText("Close")
-          fireEvent.click(closeButton)
-
-          await promise
-        })
-
-        expect(
-          screen.getByText(
-            "We sent you an email. Check your email and follow the link to finish changing your information."
-          )
-        ).not.toBeNull()
-
-        await act(async () => {
-          const closeButton = screen.getByLabelText("Close")
-          fireEvent.click(closeButton)
-
-          await promise
-        })
-
-        expect(
-          screen.queryByText(
-            "We sent you an email. Check your email and follow the link to finish changing your information."
-          )
-        ).toBeNull()
-
-        expect(authenticatedPut).toHaveBeenCalledWith(
-          "/api/v1/auth",
+        expect(newAddress.attemptVerification).toHaveBeenCalledWith({ code: "123456" })
+        expect(clerkUser.update).toHaveBeenCalledWith({ primaryEmailAddressId: "idn_new" })
+        expect(oldAddress.destroy).toHaveBeenCalled()
+        expect(put).toHaveBeenCalledWith(
+          "/api/v1/account/update",
           expect.objectContaining({
-            user: expect.objectContaining({
-              email: "test@test.com",
-            }),
-          })
+            contact: expect.objectContaining({ email: "new@example.com" }),
+          }),
+          CLERK_HEADERS
         )
+        expect(
+          screen.getByText("Your email has been updated here and on any unsubmitted applications.")
+        ).not.toBeNull()
+      })
+
+      it("keeps the user on the code step when the code is wrong", async () => {
+        newAddress.attemptVerification.mockRejectedValueOnce(new Error("bad code"))
+        jest.spyOn(console, "error").mockImplementation(() => {})
+
+        await submitEmail("new@example.com")
+        await confirmCode()
+
+        expect(screen.getByText(/that code did not work/i)).not.toBeNull()
+        expect(clerkUser.update).not.toHaveBeenCalled()
+        expect(put).not.toHaveBeenCalled()
+      })
+
+      it("asks the user to confirm it's them before adding the email", async () => {
+        clerkUser.createEmailAddress.mockRejectedValueOnce(new ReverificationRequiredError())
+
+        await submitEmail("new@example.com")
+
+        expect(screen.getByRole("heading", { name: /confirm it's you/i, level: 1 })).not.toBeNull()
+        expect(screen.queryByRole("button", { name: "Save email address" })).toBeNull()
+
+        await act(async () => {
+          fireEvent.click(screen.getByRole("button", { name: /send code/i }))
+          await promise
+        })
+        await confirmCode()
+
+        expect(mockSession.attemptFirstFactorVerification).toHaveBeenCalledWith({
+          strategy: "email_code",
+          code: "123456",
+        })
+        expect(clerkUser.createEmailAddress).toHaveBeenCalledTimes(2)
+        expect(screen.getByText("Check your email for a code")).not.toBeNull()
+      })
+
+      it("returns to the email form when reverification is cancelled", async () => {
+        clerkUser.createEmailAddress.mockRejectedValueOnce(new ReverificationRequiredError())
+
+        await submitEmail("new@example.com")
+        await act(async () => {
+          fireEvent.click(screen.getByRole("button", { name: /cancel/i }))
+          await promise
+        })
+
+        expect(screen.getByRole("button", { name: "Save email address" })).not.toBeNull()
+        expect(screen.queryByText(/something went wrong/i)).toBeNull()
+        expect(clerkUser.createEmailAddress).toHaveBeenCalledTimes(1)
       })
 
       it("does not update with malformed emails", async () => {
-        ;(authenticatedPut as jest.Mock).mockResolvedValue({
-          data: {
-            status: "success",
-          },
-        })
+        await submitEmail("testtest.com")
 
-        const emailUpdateButton = screen.getByRole("button", { name: "Save email address" })
-        const group = screen.getByRole("group", {
-          name: /email/i,
-        })
+        expect(clerkUser.createEmailAddress).not.toHaveBeenCalled()
+      })
 
-        const emailField = within(group).getByRole("textbox")
+      it("does nothing when the email is already the sign-in email", async () => {
+        await submitEmail("old@example.com")
 
-        await act(async () => {
-          fireEvent.change(emailField, { target: { value: "testtest.com" } })
-          emailUpdateButton.dispatchEvent(new MouseEvent("click"))
-          await promise
-        })
-
-        expect(authenticatedPut).not.toHaveBeenCalled()
+        expect(clerkUser.createEmailAddress).not.toHaveBeenCalled()
+        expect(screen.queryByText("Check your email for a code")).toBeNull()
       })
     })
 
@@ -368,7 +470,7 @@ describe("<SettingsPage />", () => {
     })
     describe("renders the correct errors", () => {
       it("name Errors", async () => {
-        ;(authenticatedPut as jest.Mock).mockRejectedValue({
+        ;(put as jest.Mock).mockRejectedValue({
           response: {
             data: {
               errors: {
@@ -502,7 +604,7 @@ describe("<SettingsPage />", () => {
             /you must be 18 or older\. if you are under 18, email to get info on housing resources for youth/i
           )
         ).toBeNull()
-        ;(authenticatedPut as jest.Mock).mockRejectedValueOnce({
+        ;(put as jest.Mock).mockRejectedValueOnce({
           response: {
             status: 422, // Indicates that the age is too young
             data: {
@@ -521,7 +623,7 @@ describe("<SettingsPage />", () => {
         expect(
           screen.getByText(/enter a valid date of birth\. enter date like: mm dd yyyy/i)
         ).not.toBeNull()
-        ;(authenticatedPut as jest.Mock).mockRejectedValueOnce({
+        ;(put as jest.Mock).mockRejectedValueOnce({
           response: {
             status: 500, // General server error
           },
@@ -540,59 +642,30 @@ describe("<SettingsPage />", () => {
       })
 
       it("email Errors", async () => {
-        const emailButton = screen.getByRole("button", { name: "Save email address" })
-        const group = screen.getByRole("group", {
-          name: /email/i,
-        })
-
-        const emailField = within(group).getByRole("textbox")
-
-        await act(async () => {
-          fireEvent.change(emailField, { target: { value: "testtest.com" } })
-          fireEvent.click(emailButton)
-          await promise
-        })
+        await submitEmail("testtest.com")
 
         expect(
           screen.getByRole("button", {
             name: /email missing @ symbol/i,
           })
         ).not.toBeNull()
-
         expect(
           screen.getByText(/email missing @ symbol\. enter email like: example@web\.com/i)
         ).not.toBeNull()
-        ;(authenticatedPut as jest.Mock).mockRejectedValueOnce({
-          response: {
-            status: 422, // Indicates that the email is invalid
-            data: {
-              message: "Unprocessable Entity",
-            },
-          },
+
+        clerkUser.createEmailAddress.mockRejectedValueOnce({
+          errors: [{ code: "form_identifier_exists" }],
         })
-        await act(async () => {
-          fireEvent.change(emailField, { target: { value: "test@test.com" } })
-          fireEvent.click(emailButton)
-          await promise
-        })
+        await submitEmail("taken@example.com")
         expect(
           screen.getByRole("button", {
-            name: /email entered incorrectly/i,
+            name: /email is already in use/i,
           })
         ).not.toBeNull()
-        expect(
-          screen.getByText(/email entered incorrectly\. enter email like: example@web\.com/i)
-        ).not.toBeNull()
-        ;(authenticatedPut as jest.Mock).mockRejectedValueOnce({
-          response: {
-            status: 500, // General server error
-          },
-        })
-        await act(async () => {
-          fireEvent.change(emailField, { target: { value: "test@test.com" } })
-          fireEvent.click(emailButton)
-          await promise
-        })
+
+        jest.spyOn(console, "error").mockImplementation(() => {})
+        clerkUser.createEmailAddress.mockRejectedValueOnce(new Error("server error"))
+        await submitEmail("test@test.com")
         expect(
           screen.getByText(/something went wrong\. try again or check back later/i)
         ).not.toBeNull()
