@@ -77,6 +77,98 @@ describe Api::V1::ShortFormController, type: :controller do
     end
   end
 
+  describe '#delete_application' do
+    let(:clerk_user_id) { 'user_abc123' }
+    let(:contact_id) { 'contact_abc123' }
+    let(:application) do
+      {
+        'id' => 'app123',
+        'status' => 'Draft',
+        'primaryApplicant' => { 'contactId' => contact_id },
+      }
+    end
+
+    before do
+      allow(Force::ShortFormService).to receive(:get).and_return(application)
+      allow(Force::ShortFormService).to receive(:delete).and_return(success: true)
+    end
+
+    context 'with a Clerk session' do
+      before do
+        allow(controller).to receive(:clerk).and_return(double(user_id: clerk_user_id))
+        allow(ClerkService).to receive(:salesforce_contact_id)
+          .with(clerk_user_id)
+          .and_return(contact_id)
+      end
+
+      it 'deletes a draft application owned by the Clerk user' do
+        delete :delete_application, params: { id: 'app123' }
+
+        expect(response).to have_http_status(:ok)
+        expect(Force::ShortFormService).to have_received(:delete).with('app123')
+      end
+
+      it 'does not delete an application owned by another user' do
+        allow(ClerkService).to receive(:salesforce_contact_id)
+          .with(clerk_user_id)
+          .and_return('some_other_contact_id')
+
+        delete :delete_application, params: { id: 'app123' }
+
+        expect(response).to have_http_status(:unauthorized)
+        expect(Force::ShortFormService).not_to have_received(:delete)
+      end
+
+      it 'does not delete a submitted application' do
+        allow(Force::ShortFormService).to receive(:get)
+          .and_return(application.merge('status' => 'Submitted'))
+
+        delete :delete_application, params: { id: 'app123' }
+
+        expect(response).to have_http_status(:unauthorized)
+        expect(Force::ShortFormService).not_to have_received(:delete)
+      end
+
+      # ClerkService::User rescues a failed contact id lookup and returns nil, so
+      # without this guard nil would match an application with no contact id.
+      it 'does not delete when the Clerk user has no Salesforce contact id' do
+        allow(ClerkService).to receive(:salesforce_contact_id)
+          .with(clerk_user_id)
+          .and_raise(StandardError)
+        allow(Force::ShortFormService).to receive(:get)
+          .and_return(application.merge('primaryApplicant' => { 'contactId' => nil }))
+
+        delete :delete_application, params: { id: 'app123' }
+
+        expect(response).to have_http_status(:unauthorized)
+        expect(Force::ShortFormService).not_to have_received(:delete)
+      end
+    end
+
+    # TODO(DAH-4366): CLERK MIGRATION - DEVISE TECH DEBT TO REMOVE
+    # Goes with the flag, along with CLERK_OR_DEVISE_ACTIONS in the controller.
+    context 'without a Clerk session' do
+      before { allow(controller).to receive(:clerk).and_return(nil) }
+
+      it 'falls back to Devise and rejects an unauthenticated request' do
+        delete :delete_application, params: { id: 'app123' }
+
+        expect(response).to have_http_status(:unauthorized)
+        expect(Force::ShortFormService).not_to have_received(:delete)
+      end
+
+      it 'deletes a draft application owned by the Devise user' do
+        user = create(:user, salesforce_contact_id: contact_id)
+        allow(controller).to receive(:current_user).and_return(user)
+
+        delete :delete_application, params: { id: 'app123' }
+
+        expect(response).to have_http_status(:ok)
+        expect(Force::ShortFormService).to have_received(:delete).with('app123')
+      end
+    end
+  end
+
   describe '#lending_institutions' do
     it 'retrieves lending institutions' do
       expect(Force::ShortFormService).to receive(:lending_institutions)

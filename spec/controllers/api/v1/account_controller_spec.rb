@@ -9,6 +9,56 @@ RSpec.describe Api::V1::AccountController, type: :controller do
     allow(DahliaBackend::MessageService).to receive(:send_housing_counselor_access)
   end
 
+  describe 'GET #my_applications' do
+    let(:clerk_user_id) { 'user_abc123' }
+    let(:contact_id) { 'contact_abc123' }
+
+    before do
+      allow(Force::ShortFormService).to receive(:get_for_user).and_return([])
+      allow(Force::ListingService).to receive(:listings).and_return([])
+    end
+
+    context 'with a Clerk session' do
+      before do
+        allow(controller).to receive(:clerk).and_return(double(user_id: clerk_user_id))
+        allow(ClerkService).to receive(:salesforce_contact_id)
+          .with(clerk_user_id)
+          .and_return(contact_id)
+      end
+
+      it 'returns the Clerk user applications' do
+        get :my_applications
+
+        expect(response).to have_http_status(:ok)
+        expect(JSON.parse(response.body)).to eq('applications' => [])
+        expect(Force::ShortFormService).to have_received(:get_for_user).with(contact_id)
+      end
+    end
+
+    # TODO(DAH-4366): CLERK MIGRATION - DEVISE TECH DEBT TO REMOVE
+    # Goes with the flag, along with the my_applications fallback in the controller.
+    context 'without a Clerk session' do
+      before { allow(controller).to receive(:clerk).and_return(nil) }
+
+      it 'falls back to Devise and rejects an unauthenticated request' do
+        get :my_applications
+
+        expect(response).to have_http_status(:unauthorized)
+        expect(Force::ShortFormService).not_to have_received(:get_for_user)
+      end
+
+      it 'returns the Devise user applications' do
+        devise_user = create(:user, salesforce_contact_id: contact_id)
+        allow(controller).to receive(:current_user).and_return(devise_user)
+
+        get :my_applications
+
+        expect(response).to have_http_status(:ok)
+        expect(Force::ShortFormService).to have_received(:get_for_user).with(contact_id)
+      end
+    end
+  end
+
   describe 'PUT #update' do
     let(:contact_params) { { DOB: '2000-01-01' } }
 

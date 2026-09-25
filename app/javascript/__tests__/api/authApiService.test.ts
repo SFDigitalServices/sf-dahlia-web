@@ -1,4 +1,5 @@
 import {
+  apiDelete,
   authenticatedGet,
   authenticatedDelete,
   get,
@@ -26,6 +27,7 @@ import { mockProfileStub } from "../__util__/accountUtils"
 jest.mock("axios")
 
 jest.mock("../../api/apiService", () => ({
+  apiDelete: jest.fn(),
   authenticatedGet: jest.fn(),
   authenticatedDelete: jest.fn(),
   authenticatedPut: jest.fn(),
@@ -36,6 +38,7 @@ jest.mock("../../api/apiService", () => ({
 
 describe("authApiService", () => {
   beforeEach(() => {
+    ;(apiDelete as jest.Mock).mockResolvedValue({ data: { data: "test-data" } })
     ;(authenticatedGet as jest.Mock).mockResolvedValue({ data: { data: "test-data" } })
     ;(authenticatedDelete as jest.Mock).mockResolvedValue({ data: { data: "test-data" } })
     ;(authenticatedPut as jest.Mock).mockResolvedValue({ data: { data: "test-data" } })
@@ -99,11 +102,31 @@ describe("authApiService", () => {
     })
   })
 
+  // TODO(DAH-4366): CLERK MIGRATION - DEVISE TECH DEBT TO REMOVE
+  // The Devise and missing-token cases go with the flag; the Clerk case stays.
   describe("getApplications", () => {
-    it("calls apiService authenticatedGet", async () => {
-      const url = "/api/v1/account/my-applications"
-      await getApplications()
+    const url = "/api/v1/account/my-applications"
+
+    it("calls apiService authenticatedGet when Clerk is disabled", async () => {
+      await getApplications({ clerkEnabled: false })
       expect(authenticatedGet).toHaveBeenCalledWith(url)
+      expect(get).not.toHaveBeenCalled()
+    })
+
+    it("fetches with the session token when Clerk is enabled", async () => {
+      await getApplications({ clerkEnabled: true, sessionToken: "clerk-session-token" })
+      expect(get).toHaveBeenCalledWith(url, {
+        headers: { Authorization: "Bearer clerk-session-token" },
+      })
+      expect(authenticatedGet).not.toHaveBeenCalled()
+    })
+
+    it("throws rather than falling back to Devise when Clerk is enabled and the token is missing", async () => {
+      await expect(getApplications({ clerkEnabled: true })).rejects.toThrow(
+        "Missing Clerk session token"
+      )
+      expect(authenticatedGet).not.toHaveBeenCalled()
+      expect(get).not.toHaveBeenCalled()
     })
   })
 
@@ -243,12 +266,32 @@ describe("authApiService", () => {
     })
   })
 
+  // TODO(DAH-4366): CLERK MIGRATION - DEVISE TECH DEBT TO REMOVE
+  // The Devise and missing-token cases go with the flag; the Clerk case stays.
   describe("deleteApplication", () => {
-    it("calls apiService authenticatedDelete", async () => {
-      const id = "test-id"
-      const url = `/api/v1/short-form/application/${id}`
-      await deleteApplication(id)
+    const id = "test-id"
+    const url = `/api/v1/short-form/application/${id}`
+
+    it("calls apiService authenticatedDelete when Clerk is disabled", async () => {
+      await deleteApplication(id, { clerkEnabled: false })
       expect(authenticatedDelete).toHaveBeenCalledWith(url)
+      expect(apiDelete).not.toHaveBeenCalled()
+    })
+
+    it("deletes with the session token when Clerk is enabled", async () => {
+      await deleteApplication(id, { clerkEnabled: true, sessionToken: "clerk-session-token" })
+      expect(apiDelete).toHaveBeenCalledWith(url, {
+        headers: { Authorization: "Bearer clerk-session-token" },
+      })
+      expect(authenticatedDelete).not.toHaveBeenCalled()
+    })
+
+    it("throws rather than falling back to Devise when Clerk is enabled and the token is missing", async () => {
+      await expect(deleteApplication(id, { clerkEnabled: true })).rejects.toThrow(
+        "Missing Clerk session token"
+      )
+      expect(authenticatedDelete).not.toHaveBeenCalled()
+      expect(apiDelete).not.toHaveBeenCalled()
     })
   })
 })
