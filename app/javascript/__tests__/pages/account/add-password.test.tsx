@@ -1,5 +1,5 @@
 import React from "react"
-import { useClerk, useSignIn, useUser } from "@clerk/react"
+import { useClerk, useSession, useSignIn, useUser } from "@clerk/react"
 import { screen, waitFor, cleanup } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
 import { useLocation, useNavigate } from "react-router"
@@ -23,7 +23,7 @@ jest.mock("@clerk/react", () => {
     useUser: jest.fn(),
     useSignIn: jest.fn(),
     useSignUp: jest.fn(),
-    useSession: () => ({ session: null }),
+    useSession: jest.fn(() => ({ session: null })),
   }
 })
 
@@ -36,6 +36,19 @@ jest.mock("react-router", () => ({
 jest.mock("../../../hooks/useFeatureFlag", () => ({
   useFeatureFlag: jest.fn(() => ({ flagsReady: true, unleashFlag: true })),
 }))
+
+const submitPassword = async (user: ReturnType<typeof userEvent.setup>) => {
+  await user.type(screen.getByTestId("password-field"), "abcd1234")
+  await user.click(screen.getByRole("button", { name: /add password/i }))
+  await screen.findByRole("heading", { name: /confirm it's you/i, level: 1 })
+}
+
+const enterCode = async (user: ReturnType<typeof userEvent.setup>) => {
+  await user.click(screen.getByRole("button", { name: /send code/i }))
+  await user.click(await screen.findByLabelText("1"))
+  await user.paste("123456")
+  await user.click(screen.getByRole("button", { name: /confirm code/i }))
+}
 
 describe("<AddPassword />", () => {
   let originalLocation: Location
@@ -60,6 +73,7 @@ describe("<AddPassword />", () => {
     })
     ;(useFeatureFlag as jest.Mock).mockReturnValue({ flagsReady: true, unleashFlag: true })
     ;(useClerk as jest.Mock).mockReturnValue({ client: undefined })
+    ;(useSession as jest.Mock).mockReturnValue({ session: null })
     ;(useUser as jest.Mock).mockReturnValue({
       isLoaded: true,
       isSignedIn: true,
@@ -332,6 +346,121 @@ describe("<AddPassword />", () => {
       expect(mockNavigate).toHaveBeenCalledWith("/account/settings", {
         state: { passwordChanged: true },
       })
+    })
+  })
+
+  describe("Reverification", () => {
+    // Clerk recognizes its API errors by this static kind rather than by instanceof.
+    class ReverificationRequiredError extends Error {
+      static kind = "ClerkAPIResponseError"
+      errors = [{ code: "session_reverification_required" }]
+    }
+
+    let mockSession: {
+      startVerification: jest.Mock
+      prepareFirstFactorVerification: jest.Mock
+      attemptFirstFactorVerification: jest.Mock
+    }
+
+    beforeEach(async () => {
+      cleanup()
+      jest.restoreAllMocks()
+      setupUserContext({ loggedIn: true })
+      mockNavigate = jest.fn()
+      mockUpdatePassword = jest
+        .fn()
+        .mockRejectedValueOnce(new ReverificationRequiredError())
+        .mockResolvedValue(undefined)
+      mockSession = {
+        startVerification: jest.fn().mockResolvedValue({
+          status: "needs_first_factor",
+          supportedFirstFactors: [
+            { strategy: "email_code", emailAddressId: "idn_1", safeIdentifier: "j***@example.com" },
+          ],
+        }),
+        prepareFirstFactorVerification: jest.fn().mockResolvedValue({
+          status: "needs_first_factor",
+        }),
+        attemptFirstFactorVerification: jest.fn().mockResolvedValue({ status: "complete" }),
+      }
+      ;(useSession as jest.Mock).mockReturnValue({ session: mockSession })
+      ;(useNavigate as jest.Mock).mockReturnValue(mockNavigate)
+      ;(useFeatureFlag as jest.Mock).mockReturnValue({ flagsReady: true, unleashFlag: true })
+      ;(useSignIn as jest.Mock).mockReturnValue({
+        isLoaded: true,
+        signIn: { resetPassword: jest.fn(), status: null },
+        setActive: jest.fn(),
+      })
+      ;(useLocation as jest.Mock).mockReturnValue({ state: { accountSettingsFlow: true } })
+      ;(useUser as jest.Mock).mockReturnValue({
+        isLoaded: true,
+        isSignedIn: true,
+        user: { updatePassword: mockUpdatePassword, passwordEnabled: false },
+      })
+      await renderAndLoadAsync(<AddPassword assetPaths={{}} />)
+    })
+
+
+    it("asks the user to confirm it's them in place of the form", async () => {
+      const user = userEvent.setup()
+
+      await submitPassword(user)
+
+      expect(mockSession.startVerification).toHaveBeenCalledWith({ level: "first_factor" })
+      expect(screen.getByText(/j\*\*\*@example.com/)).not.toBeNull()
+      expect(screen.getByTestId("password-field")).not.toBeVisible()
+      expect(mockNavigate).not.toHaveBeenCalled()
+    })
+
+    it("retries adding the password once the emailed code is confirmed", async () => {
+      const user = userEvent.setup()
+
+      await submitPassword(user)
+      await enterCode(user)
+
+      await waitFor(() => {
+        expect(mockNavigate).toHaveBeenCalledWith("/account/settings", {
+          state: { passwordChanged: true },
+        })
+      })
+      expect(mockSession.prepareFirstFactorVerification).toHaveBeenCalledWith({
+        strategy: "email_code",
+        emailAddressId: "idn_1",
+      })
+      expect(mockSession.attemptFirstFactorVerification).toHaveBeenCalledWith({
+        strategy: "email_code",
+        code: "123456",
+      })
+      expect(mockUpdatePassword).toHaveBeenCalledTimes(2)
+    })
+
+    it("shows an error and stays on the prompt when the code is wrong", async () => {
+      const user = userEvent.setup()
+      jest.spyOn(console, "error").mockImplementation(() => {})
+      mockSession.attemptFirstFactorVerification.mockRejectedValueOnce(new Error("bad code"))
+
+      await submitPassword(user)
+      await enterCode(user)
+
+      expect(await screen.findByText(/that code did not work/i)).not.toBeNull()
+      expect(screen.getByRole("heading", { name: /confirm it's you/i })).not.toBeNull()
+      expect(mockUpdatePassword).toHaveBeenCalledTimes(1)
+      expect(mockNavigate).not.toHaveBeenCalled()
+    })
+
+    it("returns to the filled-in form without an error when cancelled", async () => {
+      const user = userEvent.setup()
+
+      await submitPassword(user)
+      await user.click(screen.getByRole("button", { name: /cancel/i }))
+
+      await waitFor(() => {
+        expect(screen.queryByRole("heading", { name: /confirm it's you/i })).toBeNull()
+      })
+      expect(screen.getByTestId("password-field")).toHaveValue("abcd1234")
+      expect(screen.queryByText(/something went wrong/i)).toBeNull()
+      expect(mockUpdatePassword).toHaveBeenCalledTimes(1)
+      expect(mockNavigate).not.toHaveBeenCalled()
     })
   })
 })

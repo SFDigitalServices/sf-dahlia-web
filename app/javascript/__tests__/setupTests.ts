@@ -59,6 +59,13 @@ jest.mock("react-helmet-async", () => {
 
 jest.mock("@axe-core/react", () => jest.fn())
 
+// Mocked beneath @clerk/react, which re-exports it, so the files that re-mock @clerk/react by
+// spreading the actual module pick this up too.
+jest.mock("@clerk/shared/react", () => ({
+  ...jest.requireActual("@clerk/shared/react"),
+  useReverification: jest.requireActual("./__util__/fakeUseReverification").fakeUseReverification,
+}))
+
 jest.mock("@clerk/react", () => {
   const Clerk = jest.requireActual("@clerk/react")
   return {

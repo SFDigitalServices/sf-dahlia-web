@@ -4,6 +4,7 @@ import { useNavigate } from "react-router"
 
 import { getCurrentLanguage } from "../../../../util/languageUtil"
 import { SignUpOutcome, SignUpSession } from "../../signUpSession"
+import { isReverificationCancelled, useClerkReverifiedAction } from "./ClerkReverificationProvider"
 
 const SUCCESS: SignUpOutcome = {}
 const NOT_READY: SignUpOutcome = {
@@ -129,19 +130,27 @@ export const useClerkSignUpSession = (): SignUpSession => {
     [signUp, navigate]
   )
 
+  // Adding a password is sensitive to Clerk, so a session older than its window pauses here
+  // until the page's reverification prompt completes, then retries.
+  const updatePasswordReverified = useClerkReverifiedAction(async (newPassword: string) => {
+    if (!user) throw NOT_READY.error
+    await user.updatePassword({ newPassword })
+  })
+
   const setPassword = useCallback(
     async (password: string): Promise<SignUpOutcome> => {
       if (!isAccountInitialized || !user) return NOT_READY
 
       try {
-        await user.updatePassword({ newPassword: password })
+        await updatePasswordReverified(password)
         return SUCCESS
       } catch (error) {
+        if (isReverificationCancelled(error)) return { error, cancelled: true }
         console.error("Add password error:", error)
         return { error }
       }
     },
-    [isAccountInitialized, user]
+    [isAccountInitialized, user, updatePasswordReverified]
   )
 
   const changePassword = useCallback(

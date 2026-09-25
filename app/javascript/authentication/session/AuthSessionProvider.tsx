@@ -5,6 +5,7 @@ import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import { UNLEASH_FLAG } from "../../modules/constants"
 import { AuthSession, INITIALIZING, NO_CREDENTIALS } from "./authStatus"
 import { useClerkAuthSession } from "./adapters/clerk/useClerkAuthSession"
+import { ClerkReverificationProvider } from "./adapters/clerk/ClerkReverificationProvider"
 
 export type { AuthSession } from "./authStatus"
 
@@ -30,7 +31,11 @@ export const useAuthSession = (): AuthSession => {
 
 const ClerkAuthSession = ({ children }: { children: React.ReactNode }) => {
   const value = useClerkAuthSession()
-  return <AuthSessionContext.Provider value={value}>{children}</AuthSessionContext.Provider>
+  return (
+    <AuthSessionContext.Provider value={value}>
+      <ClerkReverificationProvider>{children}</ClerkReverificationProvider>
+    </AuthSessionContext.Provider>
+  )
 }
 
 /**
