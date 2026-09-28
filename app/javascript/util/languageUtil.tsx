@@ -254,7 +254,11 @@ export function localizedFormat(date: string | Date, format: string): string {
 export function localizedMonthAndDay(date: string | Date): string {
   const lang = getCurrentLanguage(window.location.pathname)
   if (date)
-    return Intl.DateTimeFormat(lang, { month: "long", day: "numeric" }).format(dayjs(date).toDate())
+    return Intl.DateTimeFormat(lang, {
+      month: "long",
+      day: "numeric",
+      timeZone: "America/Los_Angeles",
+    }).format(dayjs(date).toDate())
   return ""
 }
 
