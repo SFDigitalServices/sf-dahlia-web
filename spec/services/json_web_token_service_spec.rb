@@ -97,6 +97,15 @@ RSpec.describe JsonWebTokenService do
           .to eq('appId' => 'a0o123')
       end
 
+      it 'raises InvalidTokenError for a token with no exp claim when ' \
+         'verify_expiration: true, rather than treating it as never expiring' do
+        no_exp_token = described_class.encode_token({ 'appId' => 'a0o123' })
+
+        expect { described_class.decode_token(no_exp_token, verify_expiration: true) }
+          .to raise_error(JsonWebTokenService::InvalidTokenError)
+        expect(described_class.decode_token(no_exp_token)).to eq('appId' => 'a0o123')
+      end
+
       it 'ExpiredTokenError is a kind of InvalidTokenError' do
         expect(JsonWebTokenService::ExpiredTokenError.ancestors)
           .to include(JsonWebTokenService::InvalidTokenError)

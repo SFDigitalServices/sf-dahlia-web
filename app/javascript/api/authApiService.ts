@@ -85,8 +85,8 @@ export const createProfile = async (
 export const getProfile = async (sessionToken?: string): Promise<User> =>
   sessionToken
     ? get<UserData>("/api/v1/account/profile", clerkHeaders(sessionToken)).then(
-        ({ data }: AxiosResponse<UserData>) => data.data
-      )
+      ({ data }: AxiosResponse<UserData>) => data.data
+    )
     : authenticatedGet<UserData>("/api/v1/auth/validate_token").then((res) => res.data.data)
 
 export const getApplications = async (): Promise<{ applications: Application[] }> =>
@@ -156,12 +156,14 @@ export const authorizeHousingCounselor = async (
   await post("/api/v1/housing-counselor/access", { t: token }, clerkHeaders(sessionToken))
 }
 
-// Discards the hc_session cookie. Unauthenticated - clearing it is harmless
-// regardless of Clerk auth state, which matters since this is called as
-// part of sign-out (the Clerk session may already be ending) and after a
-// normal sign-in with no delegate link.
+// Discards the hc_session cookie.
+
 export const clearHousingCounselorSession = async (): Promise<void> => {
-  await apiDelete("/api/v1/housing-counselor/access")
+  try {
+    await apiDelete("/api/v1/housing-counselor/access")
+  } catch (error) {
+    console.error("Failed to clear housing counselor session:", error)
+  }
 }
 
 export const resetPassword = async (new_password: string): Promise<string> =>

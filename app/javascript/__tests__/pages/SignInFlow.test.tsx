@@ -11,7 +11,11 @@ import {
 } from "../__util__/renderUtils"
 import { setupUserContext } from "../__util__/accountUtils"
 import { AUTH_FLOW, UNLEASH_FLAG } from "../../modules/constants"
-import { authorizeHousingCounselor, getProfile } from "../../api/authApiService"
+import {
+  authorizeHousingCounselor,
+  clearHousingCounselorSession,
+  getProfile,
+} from "../../api/authApiService"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 
 jest.mock("../../hooks/useFeatureFlag", () => ({
@@ -40,6 +44,7 @@ jest.mock("@clerk/react", () => {
 jest.mock("../../api/authApiService", () => ({
   ...jest.requireActual("../../api/authApiService"),
   authorizeHousingCounselor: jest.fn(),
+  clearHousingCounselorSession: jest.fn(),
   getProfile: jest.fn(),
 }))
 
@@ -85,6 +90,7 @@ describe("<SignInFlow />", () => {
     originalLocation = mockWindowLocation()
     setupUserContext({ loggedIn: false })
     mockNavigate = jest.fn()
+    ;(clearHousingCounselorSession as jest.Mock).mockReset().mockResolvedValue(undefined)
     mockSignOut = jest.fn()
     mockSignInCreate = jest.fn().mockResolvedValue({ error: null })
     mockSendCode = jest.fn().mockResolvedValue(undefined)
@@ -258,7 +264,23 @@ describe("<SignInFlow />", () => {
       })
     })
     expect(mockFinalize).toHaveBeenCalled()
+    expect(clearHousingCounselorSession).toHaveBeenCalled()
     expect(mockNavigate).toHaveBeenCalledWith("/account")
+  })
+
+  it("does not clear the housing counselor session on sign in when the flag is off", async () => {
+    ;(useFeatureFlag as jest.Mock).mockImplementation((flagName: string) => ({
+      flagsReady: true,
+      unleashFlag: flagName !== UNLEASH_FLAG.HOUSING_COUNSELOR_ACCESS,
+    }))
+
+    await renderAndLoadAsync(<SignIn assetPaths={{}} />)
+    await submitCredentials()
+
+    await waitFor(() => {
+      expect(mockNavigate).toHaveBeenCalledWith("/account")
+    })
+    expect(clearHousingCounselorSession).not.toHaveBeenCalled()
   })
 
   it("shows one alert and logs the details when sign in fails", async () => {

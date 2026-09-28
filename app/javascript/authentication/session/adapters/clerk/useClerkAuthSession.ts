@@ -3,11 +3,17 @@ import { useAuth } from "@clerk/react"
 
 import { clearHeaders } from "../../../token"
 import { clearHousingCounselorSession } from "../../../../api/authApiService"
+import { useFeatureFlag } from "../../../../hooks/useFeatureFlag"
+import { UNLEASH_FLAG } from "../../../../modules/constants"
 import { AuthCredentials, AuthSession, deriveClerkStatus, NO_CREDENTIALS } from "../../authStatus"
 
 /** Clerk's session, behind the neutral interface. No effects, no state. */
 export const useClerkAuthSession = (): AuthSession => {
   const { isLoaded, isSignedIn, getToken, signOut: clerkSignOut } = useAuth()
+  const { unleashFlag: housingCounselorAccessEnabled } = useFeatureFlag(
+    UNLEASH_FLAG.HOUSING_COUNSELOR_ACCESS,
+    false
+  )
 
   const getCredentials = useCallback(async (): Promise<AuthCredentials> => {
     try {
@@ -29,9 +35,11 @@ export const useClerkAuthSession = (): AuthSession => {
     // last signed in with Devise would keep sending them.
     clearHeaders()
     // A delegated hc_session should never outlive the sign-out that ends it.
-    await clearHousingCounselorSession()
+    if (housingCounselorAccessEnabled) {
+      await clearHousingCounselorSession()
+    }
     await clerkSignOut()
-  }, [clerkSignOut])
+  }, [clerkSignOut, housingCounselorAccessEnabled])
 
   return useMemo(
     (): AuthSession => ({

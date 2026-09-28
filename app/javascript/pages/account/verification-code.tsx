@@ -51,6 +51,10 @@ const EnterVerificationCodePage = ({
   const { signIn, fetchStatus: signInFetchStatus } = useSignIn()
   const isForgotPasswordFlow = flow === AUTH_FLOW.FORGOT_PASSWORD
   const { getCredentials } = useAuthSession()
+  const { unleashFlag: housingCounselorAccessEnabled } = useFeatureFlag(
+    UNLEASH_FLAG.HOUSING_COUNSELOR_ACCESS,
+    false
+  )
   const isLoaded =
     flow === AUTH_FLOW.CREATE_ACCOUNT
       ? signUpFetchStatus !== "fetching"
@@ -111,7 +115,7 @@ const EnterVerificationCodePage = ({
       console.log(
         "TODO: Housing counselor successfully authenticated, TBD banner and applicant view"
       )
-    } else {
+    } else if (housingCounselorAccessEnabled) {
       // A normal sign-in (no delegate link) should always land the user in
       // their own account, never resuming a stale delegated session from
       // earlier in this browser.

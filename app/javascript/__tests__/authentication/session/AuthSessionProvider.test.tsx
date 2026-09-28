@@ -8,6 +8,8 @@ import {
 } from "../../../authentication/session/AuthSessionProvider"
 import { clearHeaders } from "../../../authentication/token"
 import { useFeatureFlag } from "../../../hooks/useFeatureFlag"
+import { clearHousingCounselorSession } from "../../../api/authApiService"
+import { UNLEASH_FLAG } from "../../../modules/constants"
 
 jest.mock("@clerk/react", () => ({
   useAuth: jest.fn(),
@@ -16,6 +18,10 @@ jest.mock("@clerk/react", () => ({
 
 jest.mock("../../../hooks/useFeatureFlag", () => ({
   useFeatureFlag: jest.fn(),
+}))
+
+jest.mock("../../../api/authApiService", () => ({
+  clearHousingCounselorSession: jest.fn(),
 }))
 
 jest.mock("../../../authentication/token", () => ({
@@ -61,6 +67,56 @@ const renderProbe = async () => {
     )
   })
   return result
+}
+
+const SignOutButton = () => {
+  const { signOut } = useAuthSession()
+  return (
+    <button
+      onClick={() => {
+        void signOut()
+      }}
+    >
+      Sign out
+    </button>
+  )
+}
+
+// Signs out through the provider and returns the order in which the sign-out
+// side effects ran.
+const signOutAndRecordCalls = async ({ housingCounselorAccess = true } = {}) => {
+  ;(useFeatureFlag as jest.Mock).mockImplementation((flagName: string) => ({
+    flagsReady: true,
+    unleashFlag: flagName === UNLEASH_FLAG.HOUSING_COUNSELOR_ACCESS ? housingCounselorAccess : true,
+  }))
+  const calls: string[] = []
+  ;(clearHeaders as jest.Mock).mockImplementation(() => calls.push("clearHeaders"))
+  ;(clearHousingCounselorSession as jest.Mock).mockImplementation(() => {
+    calls.push("clearHousingCounselorSession")
+    return Promise.resolve()
+  })
+  ;(useAuth as jest.Mock).mockReturnValue({
+    isLoaded: true,
+    isSignedIn: true,
+    getToken: jest.fn().mockResolvedValue("token"),
+    signOut: jest.fn(() => {
+      calls.push("clerkSignOut")
+      return Promise.resolve()
+    }),
+  })
+
+  // eslint-disable-next-line @typescript-eslint/require-await
+  await act(async () => {
+    render(
+      <AuthSessionProvider>
+        <SignOutButton />
+      </AuthSessionProvider>
+    )
+  })
+  fireEvent.click(screen.getByRole("button", { name: "Sign out" }))
+
+  await waitFor(() => expect(calls).toContain("clerkSignOut"))
+  return calls
 }
 
 describe("AuthSessionProvider", () => {
@@ -157,43 +213,16 @@ describe("AuthSessionProvider", () => {
     )
   })
 
-  it("clears Devise headers, then ends the Clerk session, on sign out", async () => {
-    mockFlag(true)
-    const calls: string[] = []
-    ;(clearHeaders as jest.Mock).mockImplementation(() => calls.push("clearHeaders"))
-    ;(useAuth as jest.Mock).mockReturnValue({
-      isLoaded: true,
-      isSignedIn: true,
-      getToken: jest.fn().mockResolvedValue("token"),
-      signOut: jest.fn(() => {
-        calls.push("clerkSignOut")
-        return Promise.resolve()
-      }),
-    })
+  it("clears Devise headers and the housing counselor session, then ends the Clerk session, on sign out", async () => {
+    const calls = await signOutAndRecordCalls()
 
-    const SignOutButton = () => {
-      const { signOut } = useAuthSession()
-      return (
-        <button
-          onClick={() => {
-            void signOut()
-          }}
-        >
-          Sign out
-        </button>
-      )
-    }
-    // eslint-disable-next-line @typescript-eslint/require-await
-    await act(async () => {
-      render(
-        <AuthSessionProvider>
-          <SignOutButton />
-        </AuthSessionProvider>
-      )
-    })
-    fireEvent.click(screen.getByRole("button", { name: "Sign out" }))
+    expect(calls).toEqual(["clearHeaders", "clearHousingCounselorSession", "clerkSignOut"])
+  })
 
-    await waitFor(() => expect(calls).toEqual(["clearHeaders", "clerkSignOut"]))
+  it("does not clear the housing counselor session on sign out when the flag is off", async () => {
+    const calls = await signOutAndRecordCalls({ housingCounselorAccess: false })
+
+    expect(calls).toEqual(["clearHeaders", "clerkSignOut"])
   })
 
   it("throws when a consumer has no provider above it", () => {

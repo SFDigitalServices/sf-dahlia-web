@@ -116,7 +116,7 @@ RSpec.describe Api::V1::HousingCounselorController, type: :controller do
 
       expect(cookies[:hc_session]).to be_present
       decoded = JsonWebTokenService.decode_token(cookies[:hc_session])
-      expect(decoded).to eq('hcId' => contact_id, 'appId' => applicant_contact_id)
+      expect(decoded).to eq('typ' => 'hc_session', 'hcId' => contact_id, 'appId' => applicant_contact_id)
       expect(response.headers['Set-Cookie']).to include('HttpOnly')
     end
 
@@ -148,7 +148,7 @@ RSpec.describe Api::V1::HousingCounselorController, type: :controller do
     # survive a link click just because the click itself failed.
     it 'discards an existing hc_session cookie even when the JWT itself is invalid' do
       request.cookies['hc_session'] = JsonWebTokenService.encode_token(
-        { 'hcId' => contact_id, 'appId' => applicant_contact_id }, exp: 2.hours.from_now,
+        { 'typ' => 'hc_session', 'hcId' => contact_id, 'appId' => applicant_contact_id }, exp: 2.hours.from_now,
       )
       allow(JsonWebTokenService).to receive(:decode_token)
         .and_raise(JsonWebTokenService::InvalidTokenError, 'Invalid JWT')
@@ -180,7 +180,7 @@ RSpec.describe Api::V1::HousingCounselorController, type: :controller do
 
       def set_hc_session_cookie(hc_id:, app_id:, exp: 2.hours.from_now)
         request.cookies['hc_session'] =
-          JsonWebTokenService.encode_token({ 'hcId' => hc_id, 'appId' => app_id }, exp:)
+          JsonWebTokenService.encode_token({ 'typ' => 'hc_session', 'hcId' => hc_id, 'appId' => app_id }, exp:)
       end
 
       # Regression coverage for req 1/2: a delegate link click must never
@@ -257,7 +257,7 @@ RSpec.describe Api::V1::HousingCounselorController, type: :controller do
             counselor_contact_id: contact_id,
           )
           expect(JsonWebTokenService.decode_token(cookies[:hc_session]))
-            .to eq('hcId' => contact_id, 'appId' => applicant_contact_id)
+            .to eq('typ' => 'hc_session', 'hcId' => contact_id, 'appId' => applicant_contact_id)
         end
       end
 
@@ -365,7 +365,7 @@ RSpec.describe Api::V1::HousingCounselorController, type: :controller do
             counselor_contact_id: contact_id,
           )
           expect(JsonWebTokenService.decode_token(cookies[:hc_session]))
-            .to eq('hcId' => contact_id, 'appId' => applicant_contact_id)
+            .to eq('typ' => 'hc_session', 'hcId' => contact_id, 'appId' => applicant_contact_id)
         end
       end
     end
@@ -374,7 +374,7 @@ RSpec.describe Api::V1::HousingCounselorController, type: :controller do
   describe 'DELETE #clear_session' do
     def set_hc_session_cookie
       request.cookies['hc_session'] = JsonWebTokenService.encode_token(
-        { 'hcId' => contact_id, 'appId' => '003ABC' }, exp: 2.hours.from_now,
+        { 'typ' => 'hc_session', 'hcId' => contact_id, 'appId' => '003ABC' }, exp: 2.hours.from_now,
       )
     end
 

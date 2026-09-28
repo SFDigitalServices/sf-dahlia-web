@@ -71,8 +71,9 @@ RSpec.describe HousingCounselorSession, type: :controller do
   let(:app_id) { '003ABC' }
 
   def set_hc_session_cookie(hc_id:, app_id:, exp: 2.hours.from_now)
-    request.cookies['hc_session'] =
-      JsonWebTokenService.encode_token({ 'hcId' => hc_id, 'appId' => app_id }, exp:)
+    request.cookies['hc_session'] = JsonWebTokenService.encode_token(
+      { 'typ' => 'hc_session', 'hcId' => hc_id, 'appId' => app_id }, exp:
+    )
   end
 
   describe '#write_hc_session_cookie' do
@@ -81,7 +82,7 @@ RSpec.describe HousingCounselorSession, type: :controller do
 
       expect(cookies[:hc_session]).to be_present
       decoded = JsonWebTokenService.decode_token(cookies[:hc_session])
-      expect(decoded).to eq('hcId' => hc_id, 'appId' => app_id)
+      expect(decoded).to eq('typ' => 'hc_session', 'hcId' => hc_id, 'appId' => app_id)
       expect(response.headers['Set-Cookie']).to include('HttpOnly')
     end
 
@@ -190,6 +191,48 @@ RSpec.describe HousingCounselorSession, type: :controller do
       end
     end
 
+    # JsonWebTokenService's secret is shared with other tokens, and
+    # InviteToController signs request params for anonymous callers - a
+    # validly signed token must also be marked as an hc_session to be trusted.
+    context 'when the cookie is validly signed but not an hc_session token' do
+      it 'returns nil and discards it, even when hcId matches the signed-in user' do
+        request.cookies['hc_session'] = JsonWebTokenService.encode_token(
+          { 'hcId' => hc_id, 'appId' => app_id }, exp: 2.hours.from_now
+        )
+
+        get :show, params: { signed_in_as: hc_id }
+
+        expect(JSON.parse(response.body)).to eq('session' => nil)
+        expect(cookies[:hc_session]).to be_blank
+      end
+
+      it 'returns nil and never calls Salesforce when it has expired' do
+        allow(Force::HousingCounselorService).to receive(:authorize_access)
+        request.cookies['hc_session'] = JsonWebTokenService.encode_token(
+          { 'hcId' => hc_id, 'appId' => app_id }, exp: 1.hour.ago
+        )
+
+        get :show, params: { signed_in_as: hc_id }
+
+        expect(JSON.parse(response.body)).to eq('session' => nil)
+        expect(cookies[:hc_session]).to be_blank
+        expect(Force::HousingCounselorService).not_to have_received(:authorize_access)
+      end
+    end
+
+    context 'when the cookie has no exp claim' do
+      it 'returns nil and discards it rather than treating it as never expiring' do
+        request.cookies['hc_session'] = JsonWebTokenService.encode_token(
+          { 'typ' => 'hc_session', 'hcId' => hc_id, 'appId' => app_id },
+        )
+
+        get :show, params: { signed_in_as: hc_id }
+
+        expect(JSON.parse(response.body)).to eq('session' => nil)
+        expect(cookies[:hc_session]).to be_blank
+      end
+    end
+
     context 'when the cookie has expired' do
       before { set_hc_session_cookie(hc_id:, app_id:, exp: 1.hour.ago) }
 
@@ -260,7 +303,7 @@ RSpec.describe HousingCounselorSession, type: :controller do
 
             expect(cookies[:hc_session]).to be_present
             expect(JsonWebTokenService.decode_token(cookies[:hc_session]))
-              .to eq('hcId' => hc_id, 'appId' => app_id)
+              .to eq('typ' => 'hc_session', 'hcId' => hc_id, 'appId' => app_id)
           end
         end
 

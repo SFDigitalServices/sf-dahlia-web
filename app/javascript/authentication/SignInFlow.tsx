@@ -49,6 +49,10 @@ const SignInFlow = () => {
     UNLEASH_FLAG.REQUIRED_LOGINS_MESSAGE,
     false
   )
+  const { unleashFlag: housingCounselorAccessEnabled } = useFeatureFlag(
+    UNLEASH_FLAG.HOUSING_COUNSELOR_ACCESS,
+    false
+  )
   const [showError, setShowError] = useState(false)
   const [view, setView] = useState<SignInView | null>(null)
   const housingCounselorChecked = useRef(false)
@@ -133,7 +137,7 @@ const SignInFlow = () => {
         await signOut()
         return
       }
-    } else {
+    } else if (housingCounselorAccessEnabled) {
       // A normal sign-in (no delegate link) should always land the user in
       // their own account, never resuming a stale delegated session from
       // earlier in this browser.

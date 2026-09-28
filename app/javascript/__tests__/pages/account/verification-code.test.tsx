@@ -12,8 +12,12 @@ import {
 } from "../../__util__/renderUtils"
 import { setupUserContext } from "../../__util__/accountUtils"
 import { useFeatureFlag } from "../../../hooks/useFeatureFlag"
-import { AUTH_FLOW } from "../../../modules/constants"
-import { authorizeHousingCounselor, getProfile } from "../../../api/authApiService"
+import { AUTH_FLOW, UNLEASH_FLAG } from "../../../modules/constants"
+import {
+  authorizeHousingCounselor,
+  clearHousingCounselorSession,
+  getProfile,
+} from "../../../api/authApiService"
 
 jest.mock("@clerk/react", () => {
   const Clerk = jest.requireActual("@clerk/react")
@@ -43,6 +47,7 @@ jest.mock("../../../hooks/useFeatureFlag", () => ({
 jest.mock("../../../api/authApiService", () => ({
   ...jest.requireActual("../../../api/authApiService"),
   authorizeHousingCounselor: jest.fn(),
+  clearHousingCounselorSession: jest.fn(),
   getProfile: jest.fn().mockResolvedValue(undefined),
 }))
 const expireResendVerificationCode = () => {
@@ -141,6 +146,7 @@ describe("<EnterVerificationCode />", () => {
       state: { email: "test@example.com", flow: AUTH_FLOW.CREATE_ACCOUNT },
     })
     ;(useFeatureFlag as jest.Mock).mockReturnValue({ flagsReady: true, unleashFlag: true })
+    ;(clearHousingCounselorSession as jest.Mock).mockReset().mockResolvedValue(undefined)
     ;(useSignUp as jest.Mock).mockReturnValue({
       fetchStatus: "idle",
       signUp: mockSignUpResource,
@@ -344,7 +350,32 @@ describe("<EnterVerificationCode />", () => {
     })
     expect(mockSignInFinalize).toHaveBeenCalledTimes(1)
     expect(mockSignUpVerifyEmailCode).not.toHaveBeenCalled()
+    expect(clearHousingCounselorSession).toHaveBeenCalled()
     expect(mockNavigate).toHaveBeenCalledWith("/account")
+  })
+
+  it("does not clear the housing counselor session on sign in when the flag is off", async () => {
+    cleanup()
+    ;(useFeatureFlag as jest.Mock).mockImplementation((flagName: string) => ({
+      flagsReady: true,
+      unleashFlag: flagName !== UNLEASH_FLAG.HOUSING_COUNSELOR_ACCESS,
+    }))
+    ;(useLocation as jest.Mock).mockReturnValue({
+      pathname: "/sign-in/code",
+      state: { email: "test@example.com", flow: AUTH_FLOW.SIGN_IN },
+    })
+    mockSignInResource.status = "complete"
+    await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
+
+    const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime })
+    await user.click(screen.getAllByRole("textbox")[0])
+    await user.paste("123456")
+    await user.click(screen.getByRole("button", { name: t("createAccount.confirmCode") }))
+
+    await waitFor(() => {
+      expect(mockNavigate).toHaveBeenCalledWith("/account")
+    })
+    expect(clearHousingCounselorSession).not.toHaveBeenCalled()
   })
 
   it("redirects to the apply intro after sign in when a redirect url is present", async () => {

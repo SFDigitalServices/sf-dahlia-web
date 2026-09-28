@@ -21,7 +21,7 @@ describe Overrides::SessionsController, type: :controller do
 
   def set_hc_session_cookie
     cookies['hc_session'] = JsonWebTokenService.encode_token(
-      { 'hcId' => '003HC', 'appId' => '003ABC' }, exp: 2.hours.from_now,
+      { 'typ' => 'hc_session', 'hcId' => '003HC', 'appId' => '003ABC' }, exp: 2.hours.from_now,
     )
   end
 
