@@ -16,7 +16,7 @@ import {
   getMyAccountPath,
   getSignInCodePath,
 } from "../util/routeUtil"
-import { authorizeHousingCounselor } from "../api/authApiService"
+import { authorizeHousingCounselor, clearHousingCounselorSession } from "../api/authApiService"
 import { useAuthSession } from "./session/AuthSessionProvider"
 import { bearerToken } from "./session/authStatus"
 import { getSfGovUrl, localizedFormat, renderInlineMarkup } from "../util/languageUtil"
@@ -133,6 +133,11 @@ const SignInFlow = () => {
         await signOut()
         return
       }
+    } else {
+      // A normal sign-in (no delegate link) should always land the user in
+      // their own account, never resuming a stale delegated session from
+      // earlier in this browser.
+      await clearHousingCounselorSession()
     }
 
     void navigate(postSignInRedirectUrl)

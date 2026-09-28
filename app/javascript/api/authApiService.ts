@@ -2,6 +2,7 @@ import { AxiosResponse } from "axios"
 import { Contact, User, UserData } from "../authentication/user"
 // authenticatedGet is for Devise, Clerk authenticates its own requests
 import {
+  apiDelete,
   authenticatedDelete,
   authenticatedGet,
   authenticatedPut,
@@ -153,6 +154,14 @@ export const authorizeHousingCounselor = async (
   sessionToken: string
 ): Promise<void> => {
   await post("/api/v1/housing-counselor/access", { t: token }, clerkHeaders(sessionToken))
+}
+
+// Discards the hc_session cookie. Unauthenticated - clearing it is harmless
+// regardless of Clerk auth state, which matters since this is called as
+// part of sign-out (the Clerk session may already be ending) and after a
+// normal sign-in with no delegate link.
+export const clearHousingCounselorSession = async (): Promise<void> => {
+  await apiDelete("/api/v1/housing-counselor/access")
 }
 
 export const resetPassword = async (new_password: string): Promise<string> =>

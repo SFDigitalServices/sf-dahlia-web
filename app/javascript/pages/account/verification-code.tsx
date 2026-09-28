@@ -26,7 +26,7 @@ import styles from "./verification-code.module.scss"
 import { AUTH_FLOW, UNLEASH_FLAG } from "../../modules/constants"
 import GetHelp from "./components/GetHelp"
 import VerificationCodeField from "./components/VerificationCodeField"
-import { authorizeHousingCounselor } from "../../api/authApiService"
+import { authorizeHousingCounselor, clearHousingCounselorSession } from "../../api/authApiService"
 
 interface EnterVerificationCodePageProps {
   email: string
@@ -111,6 +111,11 @@ const EnterVerificationCodePage = ({
       console.log(
         "TODO: Housing counselor successfully authenticated, TBD banner and applicant view"
       )
+    } else {
+      // A normal sign-in (no delegate link) should always land the user in
+      // their own account, never resuming a stale delegated session from
+      // earlier in this browser.
+      await clearHousingCounselorSession()
     }
 
     await signIn.finalize({

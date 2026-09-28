@@ -142,6 +142,23 @@ RSpec.describe Api::V1::HousingCounselorController, type: :controller do
       expect(cookies[:hc_session]).to be_nil
     end
 
+    # Regression coverage for req 1: "hitting a delegation URL should always
+    # clear any current HC session" - even one that already exists and even
+    # if the link's own JWT turns out to be bad, so a stale cookie can never
+    # survive a link click just because the click itself failed.
+    it 'discards an existing hc_session cookie even when the JWT itself is invalid' do
+      request.cookies['hc_session'] = JsonWebTokenService.encode_token(
+        { 'hcId' => contact_id, 'appId' => applicant_contact_id }, exp: 2.hours.from_now,
+      )
+      allow(JsonWebTokenService).to receive(:decode_token)
+        .and_raise(JsonWebTokenService::InvalidTokenError, 'Invalid JWT')
+
+      post :access, params: { t: token }
+
+      expect(response).to have_http_status(:unauthorized)
+      expect(cookies[:hc_session]).to be_blank
+    end
+
     it 'returns forbidden when the housing counselor does not have access' do
       allow(Force::HousingCounselorService).to receive(:authorize_access).and_return(nil)
 
@@ -166,15 +183,40 @@ RSpec.describe Api::V1::HousingCounselorController, type: :controller do
           JsonWebTokenService.encode_token({ 'hcId' => hc_id, 'appId' => app_id }, exp:)
       end
 
+      # Regression coverage for req 1/2: a delegate link click must never
+      # reuse a cached hc_session, even for the same applicant it already
+      # covers - it always clears the existing cookie and re-checks
+      # Salesforce fresh, so a just-revoked grant is never masked by a
+      # still-cached cookie. (Ordinary protected-page browsing, exercised
+      # under 'when the JWT param is absent' below, keeps the reuse
+      # optimization - only an explicit link click forces a fresh check.)
       context 'when the cookie already covers the requested applicant and is not expired' do
         before { set_hc_session_cookie(hc_id: contact_id, app_id: applicant_contact_id) }
 
-        it 'returns success without calling Salesforce again' do
+        it 'still calls Salesforce fresh rather than reusing the cached cookie' do
+          allow(Force::HousingCounselorService).to receive(:authorize_access).and_return(
+            { applicant_contact_id:, counselor_contact_id: contact_id },
+          )
+
           post :access, params: { t: token }
 
           expect(response).to have_http_status(:ok)
           expect(JSON.parse(response.body)).to eq('success' => true)
-          expect(Force::HousingCounselorService).not_to have_received(:authorize_access)
+          expect(Force::HousingCounselorService).to have_received(:authorize_access).with(
+            applicant_contact_id:,
+            counselor_contact_id: contact_id,
+          )
+        end
+
+        it 'discards the cached cookie and returns forbidden, without creating a new ' \
+           'one, when access has since been revoked' do
+          allow(Force::HousingCounselorService).to receive(:authorize_access).and_return(nil)
+
+          post :access, params: { t: token }
+
+          expect(response).to have_http_status(:forbidden)
+          expect(JSON.parse(response.body)).to eq('error' => 'forbidden')
+          expect(cookies[:hc_session]).to be_blank
         end
       end
 
@@ -254,14 +296,10 @@ RSpec.describe Api::V1::HousingCounselorController, type: :controller do
         end
       end
 
-      # Regression coverage: when a `t` delegate-link param is also present
-      # (so #requested_applicant_contact_id doesn't itself consume the only
-      # current_hc_session call), an expired cookie matching that same
-      # applicant used to be re-checked once by current_hc_session's own
-      # refresh, only for #access to fall through and make an identical,
-      # redundant authorize_access call of its own - wasting a Salesforce
-      # call, and, on a transient error, risking an uncaught exception since
-      # that second call isn't wrapped by the concern's own rescue.
+      # A delegate link click discards any existing hc_session up front and
+      # always re-verifies fresh (see req 1/2 above), so this exercises
+      # exactly one Salesforce call regardless of what the now-irrelevant
+      # existing (expired) cookie said.
       context 'when a JWT param is present and the cookie has expired and access has ' \
               'since been revoked' do
         before do
@@ -290,9 +328,14 @@ RSpec.describe Api::V1::HousingCounselorController, type: :controller do
             .and_raise(Faraday::TimeoutError, 'timed out')
         end
 
+        # Unlike a protected-page revisit (AccountController, or the
+        # JWT-param-absent path below), a delegate link click always
+        # discards any existing hc_session up front, before attempting the
+        # fresh check - so there is nothing left to preserve for a retry
+        # here even though the failure is transient (see req 1).
         it 'returns unauthorized after a single Salesforce re-check, without letting ' \
-           'the error escape from a second, unrescued call, and leaves the cookie ' \
-           'for a later retry' do
+           'the error escape from a second, unrescued call, and does not leave the ' \
+           'discarded cookie behind' do
           post :access, params: { t: token }
 
           expect(response).to have_http_status(:unauthorized)
@@ -301,7 +344,7 @@ RSpec.describe Api::V1::HousingCounselorController, type: :controller do
             applicant_contact_id:,
             counselor_contact_id: contact_id,
           )
-          expect(cookies[:hc_session]).to be_present
+          expect(cookies[:hc_session]).to be_blank
         end
       end
 
@@ -325,6 +368,55 @@ RSpec.describe Api::V1::HousingCounselorController, type: :controller do
             .to eq('hcId' => contact_id, 'appId' => applicant_contact_id)
         end
       end
+    end
+  end
+
+  describe 'DELETE #clear_session' do
+    def set_hc_session_cookie
+      request.cookies['hc_session'] = JsonWebTokenService.encode_token(
+        { 'hcId' => contact_id, 'appId' => '003ABC' }, exp: 2.hours.from_now,
+      )
+    end
+
+    it 'discards an existing hc_session cookie' do
+      set_hc_session_cookie
+
+      delete :clear_session
+
+      expect(response).to have_http_status(:ok)
+      expect(JSON.parse(response.body)).to eq('success' => true)
+      expect(cookies[:hc_session]).to be_blank
+    end
+
+    it 'succeeds even when there is no existing cookie' do
+      delete :clear_session
+
+      expect(response).to have_http_status(:ok)
+      expect(JSON.parse(response.body)).to eq('success' => true)
+    end
+
+    # Called from sign-out, where the Clerk session may already be ending -
+    # and from a normal sign-in with no Clerk-authenticated request behind
+    # it yet - so this must not require Clerk auth.
+    it 'works without a Clerk session' do
+      allow(controller).to receive(:clerk).and_return(nil)
+      set_hc_session_cookie
+
+      delete :clear_session
+
+      expect(response).to have_http_status(:ok)
+      expect(cookies[:hc_session]).to be_blank
+    end
+
+    it 'works even while the feature flag is disabled' do
+      allow(Rails.configuration.unleash).to receive(:is_enabled?)
+        .with(HousingCounselorSession::FEATURE_FLAG).and_return(false)
+      set_hc_session_cookie
+
+      delete :clear_session
+
+      expect(response).to have_http_status(:ok)
+      expect(cookies[:hc_session]).to be_blank
     end
   end
 end

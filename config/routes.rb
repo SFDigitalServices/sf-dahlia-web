@@ -73,6 +73,7 @@ Rails.application.routes.draw do
       scope '/housing-counselor' do
         get 'agencies' => 'housing_counselor#agencies'
         post 'access' => 'housing_counselor#access'
+        delete 'access' => 'housing_counselor#clear_session'
       end
     end
   end

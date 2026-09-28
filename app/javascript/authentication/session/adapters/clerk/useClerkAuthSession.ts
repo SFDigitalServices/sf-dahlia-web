@@ -2,6 +2,7 @@ import { useCallback, useMemo } from "react"
 import { useAuth } from "@clerk/react"
 
 import { clearHeaders } from "../../../token"
+import { clearHousingCounselorSession } from "../../../../api/authApiService"
 import { AuthCredentials, AuthSession, deriveClerkStatus, NO_CREDENTIALS } from "../../authStatus"
 
 /** Clerk's session, behind the neutral interface. No effects, no state. */
@@ -27,6 +28,8 @@ export const useClerkAuthSession = (): AuthSession => {
     // apiService attaches stored Devise headers to every request, so a user who
     // last signed in with Devise would keep sending them.
     clearHeaders()
+    // A delegated hc_session should never outlive the sign-out that ends it.
+    await clearHousingCounselorSession()
     await clerkSignOut()
   }, [clerkSignOut])
 
