@@ -51,6 +51,11 @@ module HousingCounselorSession
   class AccessDeniedError < StandardError; end
 
   HC_SESSION_COOKIE_NAME = :hc_session
+  # Marks a JWT as minted by write_hc_session_cookie. JsonWebTokenService's
+  # secret is shared with other tokens (delegate links, invite-to links -
+  # InviteToController even signs request params for anonymous callers), so
+  # a valid signature alone doesn't prove a token is an hc_session.
+  HC_SESSION_TOKEN_TYPE = 'hc_session'
   HC_SESSION_DURATION = 2.hours
   # See the file-level comment above - this is a short grace window, not a
   # second session.
@@ -126,7 +131,7 @@ module HousingCounselorSession
 
   def write_hc_session_cookie(hc_id:, app_id:)
     token = JsonWebTokenService.encode_token(
-      { 'hcId' => hc_id, 'appId' => app_id },
+      { 'typ' => HC_SESSION_TOKEN_TYPE, 'hcId' => hc_id, 'appId' => app_id },
       exp: HC_SESSION_DURATION.from_now,
     )
     cookies[HC_SESSION_COOKIE_NAME] = {
@@ -144,7 +149,7 @@ module HousingCounselorSession
     token = cookies[HC_SESSION_COOKIE_NAME]
     return nil if token.blank?
 
-    data = JsonWebTokenService.decode_token(token, verify_expiration: true)
+    data = decode_hc_session_token(token, verify_expiration: true)
     return nil if expected_app_id && data['appId'] != expected_app_id
 
     session_if_current_user_matches(data)
@@ -161,7 +166,7 @@ module HousingCounselorSession
   # "once true" - what's no longer trusted is "still true", which is exactly
   # what authorize_access re-establishes.
   def refresh_hc_session(token, expected_app_id)
-    stale = JsonWebTokenService.decode_token(token, verify_expiration: false)
+    stale = decode_hc_session_token(token, verify_expiration: false)
     return nil if expected_app_id && stale['appId'] != expected_app_id
     return nil unless hc_id_matches_current_user?(stale['hcId'])
 
@@ -192,6 +197,18 @@ module HousingCounselorSession
     )
     @hc_session_verification_failed = true
     nil
+  end
+
+  # Raises InvalidTokenError (so callers discard the cookie) for any validly
+  # signed token that wasn't minted as an hc_session - see
+  # HC_SESSION_TOKEN_TYPE.
+  def decode_hc_session_token(token, verify_expiration:)
+    data = JsonWebTokenService.decode_token(token, verify_expiration:)
+    unless data['typ'] == HC_SESSION_TOKEN_TYPE
+      raise JsonWebTokenService::InvalidTokenError, 'Not an hc_session token'
+    end
+
+    data
   end
 
   def session_if_current_user_matches(data)

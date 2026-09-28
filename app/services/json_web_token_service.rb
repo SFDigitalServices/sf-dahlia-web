@@ -20,7 +20,10 @@ class JsonWebTokenService
   # link, invite-to links) mint tokens with no exp claim, or implement their
   # own deadline check against a field inside `data`, by design. Pass
   # verify_expiration: true for tokens (like the hc_session cookie) whose top
-  # level exp claim is the actual source of truth for staleness.
+  # level exp claim is the actual source of truth for staleness. That also
+  # requires exp to be present - the JWT gem otherwise treats a token with no
+  # exp claim as never expiring, and several of this app's tokens (signed with
+  # the same secret) have none.
   def self.decode_token(token, verify_expiration: false)
     raise InvalidTokenError, 'Token is blank' if token.blank?
     raise InvalidTokenError, 'JWT is not configured' if SECRET_KEY.blank? || ALGORITHM.blank?
@@ -32,6 +35,7 @@ class JsonWebTokenService
       {
         algorithms: ALLOWED_ALGORITHMS,
         verify_expiration:,
+        required_claims: verify_expiration ? ['exp'] : [],
       },
     )
 
