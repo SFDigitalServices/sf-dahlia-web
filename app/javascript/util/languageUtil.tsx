@@ -246,6 +246,18 @@ export function localizedFormat(date: string | Date, format: string): string {
   return ""
 }
 
+/**
+ * Localize month and day for the current language.
+ * @param date {string | Date} - date to format
+ * @returns {string} localized month and day
+ */
+export function localizedMonthAndDay(date: string | Date): string {
+  const lang = getCurrentLanguage(window.location.pathname)
+  if (date)
+    return Intl.DateTimeFormat(lang, { month: "long", day: "numeric" }).format(dayjs(date).toDate())
+  return ""
+}
+
 // Time zone is assumed to be Pacific
 export const formatTimeOfDay = (time: string) => {
   const formattedTime = dayjs(time).tz().format("h:mm")
