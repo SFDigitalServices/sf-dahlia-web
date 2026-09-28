@@ -4811,7 +4811,7 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                 <h2
                   class=""
                 >
-                  Get emailed whenever a new listing is posted.
+                  Find out about new listings
                 </h2>
               </div>
             </div>
@@ -4824,7 +4824,7 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                 rel="noreferrer"
                 target="_blank"
               >
-                Sign Up today
+                Get email alerts
                 <span
                   class="seeds-screen-reader-only"
                 >
@@ -9758,7 +9758,7 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                 <h2
                   class=""
                 >
-                  Get emailed whenever a new listing is posted.
+                  Find out about new listings
                 </h2>
               </div>
             </div>
@@ -9771,7 +9771,7 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                 rel="noreferrer"
                 target="_blank"
               >
-                Sign Up today
+                Get email alerts
                 <span
                   class="seeds-screen-reader-only"
                 >
@@ -16556,7 +16556,7 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                 <h2
                   class=""
                 >
-                  Get emailed whenever a new listing is posted.
+                  Find out about new listings
                 </h2>
               </div>
             </div>
@@ -16569,7 +16569,7 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                 rel="noreferrer"
                 target="_blank"
               >
-                Sign Up today
+                Get email alerts
                 <span
                   class="seeds-screen-reader-only"
                 >

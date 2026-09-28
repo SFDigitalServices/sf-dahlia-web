@@ -1,14 +1,19 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import React from "react"
 import { useNavigate } from "react-router"
-import { useSignUp } from "@clerk/react"
 import { Form, t } from "@bloom-housing/ui-components"
 import { Card, Heading, Button } from "@bloom-housing/ui-seeds"
 import { useForm } from "react-hook-form"
 import withAppSetup from "../../layouts/withAppSetup"
 import AuthLayout from "../../layouts/AuthLayout"
-import { AppPages, getVerificationCodePath, getSignInPath } from "../../util/routeUtil"
-import { getCurrentLanguage } from "../../util/languageUtil"
+import { useSignInSession } from "../../authentication/session/useSignInSession"
+import { useSignUpSession } from "../../authentication/session/useSignUpSession"
+import {
+  AppPages,
+  getVerificationCodePath,
+  getSignInPath,
+  getSignInCodePath,
+} from "../../util/routeUtil"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import { AUTH_FLOW, UNLEASH_FLAG } from "../../modules/constants"
 import { CreateAccount } from "./create-account"
@@ -24,38 +29,30 @@ interface CreateAnAccountProps {
 
 const CreateAnAccountPage = () => {
   const navigate = useNavigate()
-  const { signUp, fetchStatus: signUpFetchStatus } = useSignUp()
+  const { createAccount, isBusy } = useSignUpSession()
+  const { sendEmailCode } = useSignInSession()
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<{ email: string }>({ mode: "onTouched", shouldFocusError: false })
 
+  const transferToSignIn = async (email: string) => {
+    const { error } = await sendEmailCode(email)
+    if (error) return
+
+    void navigate(getSignInCodePath(), { state: { email, flow: AUTH_FLOW.SIGN_IN } })
+  }
+
   const onSubmit = async ({ email }: { email: string }) => {
-    if (signUpFetchStatus === "fetching" || !signUp) return
-
-    const locale = getCurrentLanguage()
-    const { error } = await signUp.create({
-      emailAddress: email,
-      locale,
-      unsafeMetadata: { locale }, // Account creation can only update public metadata
-    })
-    if (error) {
-      console.error("Account creation error", error)
+    const { error, needsSignIn } = await createAccount(email)
+    if (needsSignIn) {
+      void transferToSignIn(email)
       return
     }
+    if (error) return
 
-    await signUp.verifications.sendEmailCode()
-    if (
-      signUp.status === "missing_requirements" &&
-      signUp.unverifiedFields.includes("email_address") &&
-      signUp.missingFields.length === 0
-    ) {
-      void navigate(getVerificationCodePath(), { state: { email, flow: AUTH_FLOW.CREATE_ACCOUNT } })
-    } else {
-      console.error("Account creation error:", signUp)
-      return
-    }
+    void navigate(getVerificationCodePath(), { state: { email, flow: AUTH_FLOW.CREATE_ACCOUNT } })
   }
 
   return (
@@ -75,7 +72,7 @@ const CreateAnAccountPage = () => {
             variant="primary"
             size="sm"
             type="submit"
-            disabled={signUpFetchStatus === "fetching"}
+            disabled={isBusy}
           >
             {t("createAccount.getCode")}
           </Button>

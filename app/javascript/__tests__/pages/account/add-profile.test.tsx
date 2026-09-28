@@ -132,7 +132,7 @@ describe("<AddProfile />", () => {
     expect(screen.getByRole("textbox", { name: /middle name/i })).not.toBeNull()
     expect(screen.getByRole("textbox", { name: /last name/i })).not.toBeNull()
     expect(screen.getByText(/we ask for date of birth to verify your age/i)).not.toBeNull()
-    expect(screen.getByText(/example: april 20, 1980 is 04 20 1980/i)).not.toBeNull()
+    expect(screen.getByText(/example: April 22, 1980 is 4 22 1980/i)).not.toBeNull()
     expect(screen.getByRole("button", { name: /finish/i })).not.toBeNull()
     expect(screen.getByRole("heading", { name: /get help/i })).not.toBeNull()
   })

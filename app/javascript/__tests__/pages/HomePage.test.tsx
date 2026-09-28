@@ -49,13 +49,20 @@ describe("<HomePage />", () => {
       )
     })
 
-    it("renders the email sign up link", async () => {
+    it("renders the email alerts call to action", async () => {
       const { getByTestId } = await renderAndLoadAsync(<HomePage assetPaths={{}} />)
       const mainContentContainer = getByTestId("main-content-test-id")
-      const signUpLink = within(mainContentContainer).getByRole("link", {
-        name: /Sign Up today/i,
+
+      expect(
+        within(mainContentContainer).getByRole("heading", {
+          name: "Find out about new listings",
+        })
+      ).toBeInTheDocument()
+
+      const emailAlertsLink = within(mainContentContainer).getByRole("link", {
+        name: /Get email alerts/i,
       })
-      expect(signUpLink).toHaveAttribute(
+      expect(emailAlertsLink).toHaveAttribute(
         "href",
         "https://confirmsubscription.com/h/y/C3BAFCD742D47910"
       )
