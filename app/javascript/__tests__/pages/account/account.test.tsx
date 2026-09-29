@@ -161,7 +161,11 @@ describe("<Account />", () => {
 
       it("tells the sign-in page whose account was signed out of, from the account nav", async () => {
         await renderSignedIn(delegatedProfile)
-        fireEvent.click(screen.getByRole("button", { name: "Sign out" }))
+        const accountNavSignOut = screen
+          .getAllByRole("navigation", { name: "Account" })
+          .map((nav) => within(nav).queryByRole("button", { name: "Sign out" }))
+          .find(Boolean)
+        fireEvent.click(accountNavSignOut)
 
         await waitFor(() =>
           expect(mockNavigate).toHaveBeenCalledWith(getSignInPath(), signedOutState)

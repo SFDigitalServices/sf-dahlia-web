@@ -51,6 +51,16 @@
   }
 }
 
+// orange-700 rather than a lighter orange keeps white text at WCAG AA contrast
+.delegated-account-notice {
+  background-color: var(--seeds-color-orange-700);
+}
+
+.delegated-account-notice__sign-out {
+  text-decoration: underline;
+  color: inherit;
+}
+
 .feedback-link {
   text-align: left;
   @media (min-width: theme("screens.md")) {

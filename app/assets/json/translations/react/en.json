@@ -686,6 +686,7 @@
   "housingCounselor.findAHousingCounselor": "Find a Housing Counselor",
   "housingCounselor.header": "For more help, we suggest talking with a housing counselor to explore your options.",
   "housingCounselor.noAccess": "You do not have access to this account.",
+  "housingCounselor.signedInAs": "You are signed in as %{seekerName}.",
   "housingCounselor.signedInToast": "You signed into %{seekerName}'s account",
   "housingCounselor.signedOutToast": "You signed out of %{seekerName}'s account",
   "howToApplyPage.beforeYouStartSection.eligibilityList.listItem1": "Not have owned residential property in the past 3 years",
