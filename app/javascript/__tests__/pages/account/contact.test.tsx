@@ -6,7 +6,8 @@ import {
 } from "../../__util__/renderUtils"
 import Contact from "../../../pages/account/contact"
 import React from "react"
-import { type RenderResult } from "@testing-library/react"
+import { type RenderResult, screen } from "@testing-library/react"
+import userEvent from "@testing-library/user-event"
 import { mockProfileStub, setupUserContext } from "../../__util__/accountUtils"
 import { getMyAccountSettingsPath } from "../../../util/routeUtil"
 
@@ -18,6 +19,8 @@ jest.mock("react-gtm-module", () => ({
 jest.mock("../../../hooks/useFeatureFlag", () => ({
   useFeatureFlag: () => ({ flagsReady: true, unleashFlag: true }),
 }))
+
+const getPhoneInput = () => document.querySelector<HTMLInputElement>("#phone")
 
 describe("<Contact />", () => {
   beforeEach(() => {
@@ -72,6 +75,33 @@ describe("<Contact />", () => {
 
     it("displays the current phone from the user profile", () => {
       expect(getByDisplayValue(mockProfileStub.phone)).toBeInTheDocument()
+    })
+
+    describe("editing the phone number", () => {
+      it("deletes characters with backspace", async () => {
+        const user = userEvent.setup()
+        const input = getPhoneInput()
+        await user.clear(input)
+        await user.type(input, "4155")
+        expect(input).toHaveValue("415-5")
+
+        await user.keyboard("{Backspace}")
+        expect(input).toHaveValue("415")
+        await user.keyboard("{Backspace}{Backspace}")
+        expect(input).toHaveValue("4")
+      })
+
+      it("deletes characters with backspace after a validation error", async () => {
+        const user = userEvent.setup()
+        const input = getPhoneInput()
+        await user.clear(input)
+        await user.type(input, "41")
+        await user.click(getByRole("button", { name: "Save phone number" }))
+        await screen.findAllByText(/Enter a 10-digit phone number/)
+
+        await user.type(input, "5{Backspace}{Backspace}")
+        expect(input).toHaveValue("4")
+      })
     })
   })
 
