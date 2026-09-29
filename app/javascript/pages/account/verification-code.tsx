@@ -68,11 +68,6 @@ const EnterVerificationCodePage = ({
     shouldFocusError: false,
   })
 
-  const { unleashFlag: housingCounselorAccessEnabled } = useFeatureFlag(
-    UNLEASH_FLAG.HOUSING_COUNSELOR_ACCESS,
-    false
-  )
-
   // Display a live countdown each second (1000 milliseconds) remaining
   useEffect(() => {
     if (remainingResendSeconds(resendExpiresAt) <= 0) return
@@ -132,7 +127,7 @@ const EnterVerificationCodePage = ({
         // Keep the user signed in, but flag that they don't have access to this account.
         destination = createPath(redirectUrl, { hcAccess: "0" })
       }
-    } else if (housingCounselorAccessEnabled) {
+    } else {
       // A normal sign-in (no delegate link) should always land the user in
       // their own account, never resuming a stale delegated session from
       // earlier in this browser.

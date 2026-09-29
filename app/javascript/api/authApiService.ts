@@ -85,8 +85,8 @@ export const createProfile = async (
 export const getProfile = async (sessionToken?: string): Promise<User> =>
   sessionToken
     ? get<UserData>("/api/v1/account/profile", clerkHeaders(sessionToken)).then(
-        ({ data }: AxiosResponse<UserData>) => data.data
-      )
+      ({ data }: AxiosResponse<UserData>) => data.data
+    )
     : authenticatedGet<UserData>("/api/v1/auth/validate_token").then((res) => res.data.data)
 
 export const getApplications = async (): Promise<{ applications: Application[] }> =>
@@ -161,8 +161,8 @@ export const authorizeHousingCounselor = async (
 export const clearHousingCounselorSession = async (): Promise<void> => {
   try {
     await apiDelete("/api/v1/housing-counselor/access")
-  } catch (error) {
-    console.error("Failed to clear housing counselor session:", error)
+  } catch {
+    console.error("Error: Failed to clear housing counselor session")
   }
 }
 
