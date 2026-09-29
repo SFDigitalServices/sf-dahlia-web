@@ -1,4 +1,5 @@
 import {
+  apiDelete,
   authenticatedGet,
   authenticatedDelete,
   get,
@@ -20,12 +21,14 @@ import {
   getHousingCounselorAgencies,
   updateHousingCounselorAccess,
   authorizeHousingCounselor,
+  clearHousingCounselorSession,
 } from "../../api/authApiService"
 import { mockProfileStub } from "../__util__/accountUtils"
 
 jest.mock("axios")
 
 jest.mock("../../api/apiService", () => ({
+  apiDelete: jest.fn(),
   authenticatedGet: jest.fn(),
   authenticatedDelete: jest.fn(),
   authenticatedPut: jest.fn(),
@@ -181,6 +184,25 @@ describe("authApiService", () => {
         { t: "jwt.token" },
         { headers: { Authorization: "Bearer session-token" } }
       )
+    })
+  })
+
+  describe("clearHousingCounselorSession", () => {
+    it("deletes the housing counselor session", async () => {
+      ;(apiDelete as jest.Mock).mockResolvedValue({ data: { success: true } })
+      await clearHousingCounselorSession()
+      expect(apiDelete).toHaveBeenCalledWith("/api/v1/housing-counselor/access")
+    })
+
+    it("resolves rather than rejecting when the request fails, so it can't block sign in or out", async () => {
+      const consoleError = jest.spyOn(console, "error").mockImplementation(() => {})
+      const error = new Error("Network Error")
+      ;(apiDelete as jest.Mock).mockRejectedValue(error)
+
+      await expect(clearHousingCounselorSession()).resolves.toBeUndefined()
+      expect(consoleError).toHaveBeenCalledWith("Error: Failed to clear housing counselor session")
+
+      consoleError.mockRestore()
     })
   })
 

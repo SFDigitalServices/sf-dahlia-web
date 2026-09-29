@@ -2,6 +2,7 @@ import { AxiosResponse } from "axios"
 import { Contact, User, UserData } from "../authentication/user"
 // authenticatedGet is for Devise, Clerk authenticates its own requests
 import {
+  apiDelete,
   authenticatedDelete,
   authenticatedGet,
   authenticatedPut,
@@ -153,6 +154,16 @@ export const authorizeHousingCounselor = async (
   sessionToken: string
 ): Promise<void> => {
   await post("/api/v1/housing-counselor/access", { t: token }, clerkHeaders(sessionToken))
+}
+
+// Discards the hc_session cookie.
+
+export const clearHousingCounselorSession = async (): Promise<void> => {
+  try {
+    await apiDelete("/api/v1/housing-counselor/access")
+  } catch {
+    console.error("Error: Failed to clear housing counselor session")
+  }
 }
 
 export const resetPassword = async (new_password: string): Promise<string> =>
