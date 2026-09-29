@@ -15,6 +15,7 @@ import { SiteHeader, MenuLink } from "../components/SiteHeader/SiteHeader"
 import Markdown from "markdown-to-jsx"
 import UserContext from "../authentication/context/UserContext"
 import { useAuthSession } from "../authentication/session/AuthSessionProvider"
+import { useSignOutToSignIn } from "../authentication/session/useSignOutToSignIn"
 import { isTokenValid } from "../authentication/token"
 import { ConfigContext } from "../lib/ConfigContext"
 import { Link } from "@bloom-housing/ui-seeds"
@@ -81,7 +82,7 @@ const getLanguageItems = () => {
 
 const getMenuLinks = (
   signedIn: boolean,
-  signOut: () => void | Promise<void>,
+  onSignOut: () => void | Promise<void>,
   accountLayoutEnabled: boolean,
   getAssetPath: (path: string) => string,
   hideSignInAndAccount: boolean
@@ -148,9 +149,7 @@ const getMenuLinks = (
           title: accountLayoutEnabled ? t("accountLayout.nav.signOut") : t("nav.signOut"),
           iconElement: <div className="w-6" />, // Empty div to keep the icon space
           onClick: () => {
-            void Promise.resolve(signOut()).finally(() => {
-              window.location.href = getSignInPath()
-            })
+            void onSignOut()
           },
         },
       ],
@@ -166,12 +165,12 @@ const getMenuLinks = (
 
 const LayoutContent = ({
   signedIn,
-  signOut,
+  onSignOut,
   children,
   title,
   description,
   image,
-}: LayoutProps & { signedIn: boolean; signOut: () => void | Promise<void> }) => {
+}: LayoutProps & { signedIn: boolean; onSignOut: () => void | Promise<void> }) => {
   const { getAssetPath } = useContext(ConfigContext)
   const { pathname } = useLocation()
   const { unleashFlag: accountLayoutEnabled } = useFeatureFlag(UNLEASH_FLAG.ACCOUNTS_LAYOUT, false)
@@ -235,7 +234,7 @@ const LayoutContent = ({
             logoClass="translate"
             menuLinks={getMenuLinks(
               signedIn,
-              signOut,
+              onSignOut,
               accountLayoutEnabled,
               getAssetPath,
               isSignInOrCreateAccountFlow(pathname)
@@ -311,12 +310,25 @@ const LayoutContent = ({
 
 const DeviseLayout = (props: LayoutProps) => {
   const { signOut } = useContext(UserContext)
-  return <LayoutContent {...props} signedIn={isTokenValid()} signOut={() => signOut?.()} />
+  return (
+    <LayoutContent
+      {...props}
+      signedIn={isTokenValid()}
+      onSignOut={() =>
+        Promise.resolve(signOut?.()).finally(() => {
+          window.location.href = getSignInPath()
+        })
+      }
+    />
+  )
 }
 
 const ClerkLayout = (props: LayoutProps) => {
-  const { status, signOut } = useAuthSession()
-  return <LayoutContent {...props} signedIn={status.kind === "signedIn"} signOut={signOut} />
+  const { status } = useAuthSession()
+  const signOutToSignIn = useSignOutToSignIn()
+  return (
+    <LayoutContent {...props} signedIn={status.kind === "signedIn"} onSignOut={signOutToSignIn} />
+  )
 }
 
 const Layout = (props: LayoutProps) => {

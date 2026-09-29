@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react"
 
-import { useLocation, useNavigate, useSearchParams } from "react-router"
+import { useLocation, useSearchParams } from "react-router"
 import { Button, Heading, Tabs } from "@bloom-housing/ui-seeds"
 import { Icon, t, UniversalIconType } from "@bloom-housing/ui-components"
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons"
@@ -15,10 +15,9 @@ import {
   RedirectType,
   getMyAccountApplicationsPath,
   getMyAccountSettingsPath,
-  getSignInPath,
 } from "../../util/routeUtil"
 import UserContext from "../../authentication/context/UserContext"
-import { useAuthSession } from "../../authentication/session/AuthSessionProvider"
+import { useSignOutToSignIn } from "../../authentication/session/useSignOutToSignIn"
 import { fullName, User } from "../../authentication/user"
 import { withAuthentication } from "../../authentication/withAuthentication"
 import { ConfigContext } from "../../lib/ConfigContext"
@@ -192,9 +191,8 @@ const DeviseAccount = () => {
 }
 
 const ClerkAccount = () => {
-  const { signOut } = useAuthSession()
+  const signOutToSignIn = useSignOutToSignIn()
   const { profile } = useContext(UserContext)
-  const navigate = useNavigate()
 
   return (
     <Layout>
@@ -205,9 +203,7 @@ const ClerkAccount = () => {
         <div className={styles.overview}>
           <AccountOverview
             signOut={() => {
-              void signOut().finally(() => {
-                void navigate(getSignInPath())
-              })
+              void signOutToSignIn()
             }}
             user={profile}
           />
