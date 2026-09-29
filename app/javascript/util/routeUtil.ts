@@ -61,12 +61,11 @@ export const createPath = (path: string, params: { [key: string]: string | undef
   let newPath = path
   let firstAdded = false
   Object.keys(params).forEach((key) => {
-    if (params[key] && !firstAdded) {
-      newPath += `?${key}=${params[key]}`
-      firstAdded = true
-    } else if (params[key]) {
-      newPath += `&${key}=${params[key]}`
-    }
+    const value = params[key]
+    if (!value) return
+    // Values must be encoded, otherwise a "+" in an email is read back as a space
+    newPath += `${firstAdded ? "&" : "?"}${encodeURIComponent(key)}=${encodeURIComponent(value)}`
+    firstAdded = true
   })
   return newPath
 }
