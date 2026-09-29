@@ -9,7 +9,7 @@ import React from "react"
 import { MemoryRouter } from "react-router"
 import { within, screen, fireEvent, waitFor } from "@testing-library/react"
 import { useAuth } from "@clerk/react"
-import { setupUserContext } from "../../__util__/accountUtils"
+import { mockProfileStub, setupUserContext } from "../../__util__/accountUtils"
 import { getSignInPath } from "../../../util/routeUtil"
 
 jest.mock("react-gtm-module", () => ({
@@ -209,6 +209,36 @@ describe("<Account />", () => {
       })
 
       expect(screen.queryByText("You do not have access to this account.")).toBeNull()
+    })
+
+    it("shows whose account a housing counselor signed into when hcAccess=1 and the profile is delegated", async () => {
+      setupUserContext({
+        loggedIn: true,
+        mockProfile: {
+          ...mockProfileStub,
+          firstName: "Rosa",
+          lastName: "Flores",
+          isDelegated: true,
+        },
+      })
+
+      await renderAndLoadAsync(<Account assetPaths={{}} />, {
+        wrapper: ({ children }) => (
+          <MemoryRouter initialEntries={["/account?hcAccess=1"]}>{children}</MemoryRouter>
+        ),
+      })
+
+      expect(screen.getByText("You signed into Rosa Flores's account")).toBeInTheDocument()
+    })
+
+    it("does not show the signed-into toast when the profile is not delegated", async () => {
+      await renderAndLoadAsync(<Account assetPaths={{}} />, {
+        wrapper: ({ children }) => (
+          <MemoryRouter initialEntries={["/account?hcAccess=1"]}>{children}</MemoryRouter>
+        ),
+      })
+
+      expect(screen.queryByText(/You signed into/)).toBeNull()
     })
   })
 })

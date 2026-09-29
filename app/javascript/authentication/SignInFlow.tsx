@@ -19,6 +19,7 @@ import AuthLayout from "../layouts/AuthLayout"
 import EmailFieldset from "../pages/account/components/EmailFieldset"
 import PasswordFieldset from "../pages/account/components/PasswordFieldset"
 import GetHelp from "../pages/account/components/GetHelp"
+import Toast from "../pages/account/components/Toast"
 import {
   createPath,
   getCreateAccountPath,
@@ -45,6 +46,21 @@ interface SignInFields {
 type SignInView = "verificationCode" | "password"
 
 const getHousingCounselorToken = () => new URLSearchParams(window.location.search).get("t")
+
+// A full page load rather than navigate(): the profile may already have been fetched
+// and cached before the hc_session cookie existed, and must be refetched as the seeker's.
+const enterDelegatedAccount = (destination: string) => {
+  window.location.assign(createPath(destination, { hcAccess: "1" }))
+}
+
+const HousingCounselorSignedOutToast = () => {
+  const { state } = useLocation() as { state?: { housingCounselorSignedOut?: string } }
+  const seekerName = state?.housingCounselorSignedOut
+
+  if (!seekerName) return null
+
+  return <Toast variant="success">{t("housingCounselor.signedOutToast", { seekerName })}</Toast>
+}
 
 const SignInFlow = () => {
   const navigate = useNavigate()
@@ -109,9 +125,6 @@ const SignInFlow = () => {
         return false
       }
       await authorizeHousingCounselor(token, sessionToken)
-      console.log(
-        "TODO: Housing counselor successfully authenticated, TBD banner and applicant view"
-      )
       return true
     } catch {
       setShowError(true)
@@ -155,6 +168,8 @@ const SignInFlow = () => {
         return
       }
       setHousingCounselorChecked(true)
+      enterDelegatedAccount(postSignInRedirectUrl)
+      return
     }
 
     // Prevents the render-time redirect below from firing again (with a stale, query-less URL)
@@ -211,8 +226,7 @@ const SignInFlow = () => {
           void navigate(createPath(getMyAccountPath(), { hcAccess: "0" }))
           return
         }
-        console.log("TODO: Housing counselor already signed in, TBD banner and applicant view")
-        void navigate(getMyAccountPath())
+        enterDelegatedAccount(getMyAccountPath())
       } catch {
         setShowError(true)
       }
@@ -292,6 +306,7 @@ const SignInFlow = () => {
 
   return (
     <AuthLayout title={t("pageTitle.signIn")}>
+      <HousingCounselorSignedOutToast />
       <Card.Section divider="inset">
         {requiredLoginsMessageEnabled && (
           <Message fullwidth variant="primary" className={styles.requiredLoginsMessage}>

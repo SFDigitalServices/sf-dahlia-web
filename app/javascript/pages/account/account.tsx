@@ -19,7 +19,7 @@ import {
 } from "../../util/routeUtil"
 import UserContext from "../../authentication/context/UserContext"
 import { useAuthSession } from "../../authentication/session/AuthSessionProvider"
-import { User } from "../../authentication/user"
+import { fullName, User } from "../../authentication/user"
 import { withAuthentication } from "../../authentication/withAuthentication"
 import { ConfigContext } from "../../lib/ConfigContext"
 
@@ -150,6 +150,27 @@ const HousingCounselorNoAccessToast = () => {
   return <Toast variant="alert">{t("signIn.housingCounselor.noAccess")}</Toast>
 }
 
+const HousingCounselorSignedInToast = () => {
+  const [searchParams] = useSearchParams()
+  const { profile } = useContext(UserContext)
+  const [toast, setToast] = useState(false)
+
+  useEffect(() => {
+    if (searchParams.get("hcAccess") === "1") {
+      setToast(true)
+    }
+  }, [searchParams])
+
+  // Only name the seeker once the server confirms this is their delegated profile
+  if (!toast || !profile?.isDelegated) return null
+
+  return (
+    <Toast variant="success">
+      {t("housingCounselor.signedInToast", { seekerName: fullName(profile) })}
+    </Toast>
+  )
+}
+
 interface AccountProps {
   assetPaths: unknown
 }
@@ -179,6 +200,7 @@ const ClerkAccount = () => {
     <Layout>
       <AccountReadyToast />
       <HousingCounselorNoAccessToast />
+      <HousingCounselorSignedInToast />
       <AccountLayout>
         <div className={styles.overview}>
           <AccountOverview
@@ -204,6 +226,7 @@ const Account = ({ assetPaths }: AccountProps) => {
       <>
         <AccountReadyToast />
         <HousingCounselorNoAccessToast />
+        <HousingCounselorSignedInToast />
         <MyAccount assetPaths={assetPaths} />
       </>
     )
