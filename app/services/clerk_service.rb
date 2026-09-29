@@ -13,7 +13,14 @@ require 'clerk'
 # }
 class ClerkService
   class User
+    # Lets mailers take a Clerk user with deliver_later, which serializes its arguments.
+    include GlobalID::Identification
+
     attr_reader :id
+
+    def self.find(id)
+      new(id)
+    end
 
     def initialize(id)
       @id = id
@@ -42,8 +49,9 @@ class ClerkService
     user = sdk.users.get(user_id: user_id)&.user
     raise StandardError, "User #{user_id} is missing" if user.nil?
 
-    # We assume the user has only one email address for now
-    email = user.email_addresses&.first
+    # While an email change is in progress the user also has the new, unverified address.
+    primary_id = user.primary_email_address_id
+    email = user.email_addresses&.find { |address| address.id == primary_id }
     raise StandardError, "User #{user_id} has no email address" if email.blank?
 
     email.email_address

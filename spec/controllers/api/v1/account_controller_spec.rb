@@ -41,6 +41,50 @@ RSpec.describe Api::V1::AccountController, type: :controller do
     end
   end
 
+  describe 'PUT #update with a Clerk session' do
+    let(:clerk_user_id) { 'user_abc123' }
+    let(:clerk_user) do
+      instance_double(
+        ClerkService::User,
+        id: clerk_user_id,
+        email: 'verified@example.com',
+        salesforce_contact_id: '003ABC',
+      )
+    end
+    let(:contact_params) { { DOB: '2000-01-01', email: 'unverified@example.com' } }
+
+    before do
+      allow(controller).to receive(:clerk).and_return(double(user_id: clerk_user_id))
+      allow(ClerkService::User).to receive(:new)
+        .with(clerk_user_id).and_return(clerk_user)
+    end
+
+    it 'saves the email from Clerk rather than the request' do
+      put :update, params: { contact: contact_params }
+
+      expect(response).to have_http_status(:ok)
+      expect(Force::AccountService).to have_received(:create_or_update).with(
+        hash_including(
+          'email' => 'verified@example.com',
+          'contactID' => '003ABC',
+          'webAppID' => clerk_user_id,
+        ),
+      )
+      expect(Emailer).to have_received(:account_update).with(clerk_user)
+    end
+
+    context 'when the user has no Salesforce contact ID' do
+      before { allow(clerk_user).to receive(:salesforce_contact_id).and_return(nil) }
+
+      it 'returns not found without creating a contact' do
+        put :update, params: { contact: contact_params }
+
+        expect(response).to have_http_status(:not_found)
+        expect(Force::AccountService).not_to have_received(:create_or_update)
+      end
+    end
+  end
+
   describe 'PUT #update_housing_counselor' do
     let(:clerk_user_id) { 'user_abc123' }
     let(:contact_id) { user.salesforce_contact_id }

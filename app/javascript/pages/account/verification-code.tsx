@@ -2,7 +2,7 @@
 import React, { useContext, useEffect, useState, useRef } from "react"
 import { useLocation, useNavigate } from "react-router"
 import { ExpandableContent, Form, Order, t } from "@bloom-housing/ui-components"
-import { Card, Heading, Link, Button } from "@bloom-housing/ui-seeds"
+import { Alert, Card, Heading, Link, Button } from "@bloom-housing/ui-seeds"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faCheck } from "@fortawesome/free-solid-svg-icons"
 import { Controller, useForm } from "react-hook-form"
@@ -12,6 +12,9 @@ import UserContext from "../../authentication/context/UserContext"
 import { useAuthSession } from "../../authentication/session/AuthSessionProvider"
 import { useSignInSession } from "../../authentication/session/useSignInSession"
 import { useSignUpSession } from "../../authentication/session/useSignUpSession"
+import { useAccountSession } from "../../authentication/session/useAccountSession"
+import { useReverificationPrompt } from "../../authentication/session/useReverificationPrompt"
+import { useAccountUpdater } from "../../hooks/useAccountUpdater"
 import { bearerToken } from "../../authentication/session/authStatus"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import {
@@ -29,6 +32,7 @@ import styles from "./verification-code.module.scss"
 import { AUTH_FLOW, UNLEASH_FLAG } from "../../modules/constants"
 import GetHelp from "./components/GetHelp"
 import VerificationCodeField from "./components/VerificationCodeField"
+import ReverifyIdentity from "./components/ReverifyIdentity"
 import { authorizeHousingCounselor } from "../../api/authApiService"
 
 interface EnterVerificationCodePageProps {
@@ -58,7 +62,12 @@ const EnterVerificationCodePage = ({
   const [resendExpiresAt, setResendExpiresAt] = useState(() => Date.now() + RESEND_CODE_MS)
   const [resendSeconds, setResendSeconds] = useState(RESEND_CODE_MS / 1000)
   const [isResending, setIsResending] = useState(false)
-  const { user } = useSignUpSession()
+  const accountSession = useAccountSession()
+  const reverificationPrompt = useReverificationPrompt()
+  const updateAccount = useAccountUpdater()
+  const { profile, saveProfile } = useContext(UserContext)
+  // The code was accepted but a later step failed, which the code field can't describe.
+  const [serverError, setServerError] = useState(false)
 
   const {
     control,
@@ -154,39 +163,32 @@ const EnterVerificationCodePage = ({
   }
 
   const verifyUpdateEmailCode = async (code: string) => {
-    if (!user) {
-      setError("code", { message: "invalid" })
-      return
-    }
-    const emailAddress = user.emailAddresses.find(
-      (e) => e.emailAddress.toLowerCase() === email.toLowerCase()
+    const { error, cancelled, notReady, codeRejected } = await accountSession.verifyEmailChange(
+      email,
+      code
     )
-    if (!emailAddress) {
+    setServerError(false)
+    // The code is verified by now, so confirming again only needs the button.
+    if (cancelled) return
+    if (notReady || codeRejected) {
       setError("code", { message: "invalid" })
       return
     }
-
-    try {
-      // TODO: DAH-4372 - Check and reverify user with first factor if needed
-
-      const verifiedEmail = await emailAddress.attemptVerification({ code })
-      if (verifiedEmail.verification.status !== "verified") {
-        setError("code", { message: "invalid" })
-        return
-      }
-      if (emailAddress.verification?.status === "verified") {
-        const previousEmailAddress = user.primaryEmailAddress
-        await user.update({ primaryEmailAddressId: verifiedEmail.id })
-        if (previousEmailAddress && previousEmailAddress.id !== verifiedEmail.id) {
-          await previousEmailAddress.destroy()
-        }
-
-        void navigate(getMyAccountSettingsPath(), { state: { emailChanged: true } })
-      }
-    } catch (error) {
-      console.error("Update email verification error:", error)
-      setError("code", { message: "invalid" })
+    if (error) {
+      setServerError(true)
+      return
     }
+
+    // The login email has changed, so a failed sync is logged rather than reported; the server
+    // takes the email from Clerk on the next profile save too.
+    if (profile) {
+      try {
+        saveProfile(await updateAccount({ ...profile, email }))
+      } catch (syncError) {
+        console.error("Sync login email to profile error:", syncError)
+      }
+    }
+    void navigate(getMyAccountSettingsPath(), { state: { emailChanged: true } })
   }
 
   const verifyAuthCodeByFlow: Record<AUTH_FLOW, (code: string) => Promise<void>> = {
@@ -226,21 +228,8 @@ const EnterVerificationCodePage = ({
   }
 
   const resendUpdateEmailCode = async (): Promise<boolean> => {
-    const emailAddress = user?.emailAddresses.find(
-      (e) => e.emailAddress.toLowerCase() === email.toLowerCase()
-    )
-    if (!emailAddress) {
-      console.error("Resend update email code error: address not found")
-      return false
-    }
-
-    try {
-      await emailAddress.prepareVerification({ strategy: "email_code" })
-      return true
-    } catch (error) {
-      console.error("Resend update email code error:", error)
-      return false
-    }
+    const { error } = await accountSession.resendEmailChangeCode(email)
+    return !error
   }
 
   const resendCodeByFlow: Record<AUTH_FLOW, () => Promise<boolean>> = {
@@ -267,88 +256,97 @@ const EnterVerificationCodePage = ({
   return (
     <AuthLayout title={t("createAccount.enterCode")}>
       <Card.Section divider="flush">
-        <Heading priority={1} size="2xl">
-          {t("createAccount.checkEmail")}
-        </Heading>
-        <p className={styles.sentTo}>
-          {t("createAccount.weSentCodeTo")}
-          <br />
-          <span className={styles.email}>{email}</span>
-          <Link className={styles.editEmail} href={editEmailHref}>
-            {t("createAccount.editEmail")}
-          </Link>
-        </p>
-        {isForgotPasswordFlow && (
-          <p className={styles["forgotPasswordDescription"]}>{t("signIn.forgotPasswordCode")}</p>
-        )}
-        <Form onSubmit={handleSubmit(onSubmit)}>
-          <Controller
-            name="code"
-            control={control}
-            defaultValue=""
-            rules={{ validate: (code: string) => /^\d{6}$/.test(code) }}
-            render={({ value, onChange }) => (
-              <VerificationCodeField value={value} onChange={onChange} error={!!errors.code} />
-            )}
-          />
-          <Button
-            className={styles.confirmButton}
-            variant="primary"
-            size="sm"
-            type="submit"
-            disabled={!isLoaded}
-          >
-            {t("createAccount.confirmCode")}
-          </Button>
-        </Form>
-        <div className={styles.resendSection}>
-          <p className={styles.resendRow}>
-            <span>{t("createAccount.didntGetEmail")}</span>
-            <span aria-live="polite">
-              {resendSeconds > 0 ? (
-                <span className={styles.emailSent}>
-                  <FontAwesomeIcon icon={faCheck} />
-                  {t("createAccount.emailSent")}
-                </span>
-              ) : (
-                <Button
-                  className={styles.sendAgain}
-                  variant="text"
-                  size="sm"
-                  disabled={isResending}
-                  onClick={() => {
-                    void onResend()
-                  }}
-                >
-                  {t("createAccount.sendAgain")}
-                </Button>
-              )}
-            </span>
+        {reverificationPrompt && <ReverifyIdentity prompt={reverificationPrompt} />}
+        {/* Hidden rather than unmounted, so the code entered is still there to confirm with. */}
+        <div hidden={!!reverificationPrompt}>
+          <Heading priority={1} size="2xl">
+            {t("createAccount.checkEmail")}
+          </Heading>
+          <p className={styles.sentTo}>
+            {t("createAccount.weSentCodeTo")}
+            <br />
+            <span className={styles.email}>{email}</span>
+            <Link className={styles.editEmail} href={editEmailHref}>
+              {t("createAccount.editEmail")}
+            </Link>
           </p>
-          {resendSeconds > 0 && (
-            <p className={styles.resendNote}>
-              {t("createAccount.sendAgainIn", { smart_count: resendSeconds })}
-            </p>
+          {serverError && (
+            <Alert variant="alert" fullwidth className={styles.serverError}>
+              {t("error.account.genericServerError")}
+            </Alert>
           )}
+          {isForgotPasswordFlow && (
+            <p className={styles["forgotPasswordDescription"]}>{t("signIn.forgotPasswordCode")}</p>
+          )}
+          <Form onSubmit={handleSubmit(onSubmit)}>
+            <Controller
+              name="code"
+              control={control}
+              defaultValue=""
+              rules={{ validate: (code: string) => /^\d{6}$/.test(code) }}
+              render={({ value, onChange }) => (
+                <VerificationCodeField value={value} onChange={onChange} error={!!errors.code} />
+              )}
+            />
+            <Button
+              className={styles.confirmButton}
+              variant="primary"
+              size="sm"
+              type="submit"
+              disabled={!isLoaded}
+            >
+              {t("createAccount.confirmCode")}
+            </Button>
+          </Form>
+          <div className={styles.resendSection}>
+            <p className={styles.resendRow}>
+              <span>{t("createAccount.didntGetEmail")}</span>
+              <span aria-live="polite">
+                {resendSeconds > 0 ? (
+                  <span className={styles.emailSent}>
+                    <FontAwesomeIcon icon={faCheck} />
+                    {t("createAccount.emailSent")}
+                  </span>
+                ) : (
+                  <Button
+                    className={styles.sendAgain}
+                    variant="text"
+                    size="sm"
+                    disabled={isResending}
+                    onClick={() => {
+                      void onResend()
+                    }}
+                  >
+                    {t("createAccount.sendAgain")}
+                  </Button>
+                )}
+              </span>
+            </p>
+            {resendSeconds > 0 && (
+              <p className={styles.resendNote}>
+                {t("createAccount.sendAgainIn", { smart_count: resendSeconds })}
+              </p>
+            )}
+          </div>
+          <ExpandableContent
+            className={styles.howToUseCode}
+            order={Order.below}
+            strings={{
+              readMore: t("createAccount.howToUseCode"),
+              readLess: t("createAccount.howToUseCode"),
+            }}
+          >
+            <span className={styles.howToContent}>
+              <ol className={styles.howToList}>
+                <li>{t("createAccount.howTo.p1")}</li>
+                <li>{t("createAccount.howTo.p2")}</li>
+                <li>{t("createAccount.howTo.p3")}</li>
+                <li>{t("createAccount.howTo.p4")}</li>
+              </ol>
+              <p>{t("createAccount.howTo.p5")}</p>
+            </span>
+          </ExpandableContent>
         </div>
-        <ExpandableContent
-          className={styles.howToUseCode}
-          order={Order.below}
-          strings={{
-            readMore: t("createAccount.howToUseCode"),
-            readLess: t("createAccount.howToUseCode"),
-          }}
-        >
-          <span className={styles.howToContent}>
-            <ol className={styles.howToList}>
-              <li>{t("createAccount.howTo.p1")}</li>
-              <li>{t("createAccount.howTo.p2")}</li>
-              <li>{t("createAccount.howTo.p3")}</li>
-              <li>{t("createAccount.howTo.p4")}</li>
-            </ol>
-            <p>{t("createAccount.howTo.p5")}</p>
-          </span>
-        </ExpandableContent>
       </Card.Section>
       <GetHelp flow={flow} />
     </AuthLayout>

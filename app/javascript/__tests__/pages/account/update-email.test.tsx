@@ -19,6 +19,9 @@ import {
   getUpdateEmailCodePath,
 } from "../../../util/routeUtil"
 
+// Read lazily by the @clerk/react mock below; the mock- prefix lets jest.mock reference it.
+let mockSession: unknown = null
+
 jest.mock("@clerk/react", () => {
   const Clerk = jest.requireActual("@clerk/react")
   return {
@@ -26,6 +29,7 @@ jest.mock("@clerk/react", () => {
     ClerkProvider: ({ children }: { children: React.ReactNode }) => children,
     useAuth: jest.fn(),
     useUser: jest.fn(),
+    useSession: () => ({ session: mockSession }),
   }
 })
 
@@ -48,6 +52,23 @@ const makeUser = (overrides = {}) => ({
   ...overrides,
 })
 
+// Clerk recognizes its API errors by this static kind rather than by instanceof.
+class ReverificationRequiredError extends Error {
+  static kind = "ClerkAPIResponseError"
+  errors = [{ code: "session_reverification_required" }]
+}
+
+const mockReverifySession = () => ({
+  startVerification: jest.fn().mockResolvedValue({
+    status: "needs_first_factor",
+    supportedFirstFactors: [
+      { strategy: "email_code", emailAddressId: "current", safeIdentifier: "c***@example.com" },
+    ],
+  }),
+  prepareFirstFactorVerification: jest.fn().mockResolvedValue({ status: "needs_first_factor" }),
+  attemptFirstFactorVerification: jest.fn().mockResolvedValue({ status: "complete" }),
+})
+
 const renderPage = async (user: unknown = makeUser()) => {
   cleanup()
   ;(useUser as jest.Mock).mockReturnValue({ isLoaded: true, user })
@@ -65,6 +86,7 @@ describe("<UpdateEmail />", () => {
   let mockNavigate: jest.Mock
 
   beforeEach(() => {
+    mockSession = null
     document.documentElement.lang = "en"
     originalLocation = mockWindowLocation()
     setupUserContext({ loggedIn: true })
@@ -173,6 +195,7 @@ describe("<UpdateEmail />", () => {
   })
 
   it("does not navigate when creating the email fails", async () => {
+    jest.spyOn(console, "error").mockImplementation(() => {})
     const user = makeUser({
       createEmailAddress: jest.fn().mockRejectedValue(new Error("create failed")),
     })
@@ -200,5 +223,54 @@ describe("<UpdateEmail />", () => {
     })
 
     expect(user.createEmailAddress).toHaveBeenCalledTimes(1)
+  })
+
+  it("confirms it's the user in place, then adds the email and navigates", async () => {
+    mockSession = mockReverifySession()
+    const user = makeUser()
+    user.createEmailAddress
+      .mockRejectedValueOnce(new ReverificationRequiredError())
+      .mockResolvedValue({ prepareVerification: jest.fn().mockResolvedValue(undefined) })
+    await renderPage(user)
+    await submitEmail("new@example.com")
+
+    expect(
+      await screen.findByRole("heading", { name: /confirm it's you/i, level: 1 })
+    ).not.toBeNull()
+    expect(screen.queryByRole("button", { name: t("createAccount.getCode") })).toBeNull()
+    expect(mockNavigate).not.toHaveBeenCalled()
+
+    const clicker = userEvent.setup()
+    await clicker.click(screen.getByRole("button", { name: /send code/i }))
+    const confirmButton = await screen.findByRole("button", { name: /confirm code/i })
+    await clicker.click(screen.getByLabelText("1"))
+    await clicker.paste("654321")
+    await clicker.click(confirmButton)
+
+    await waitFor(() => {
+      expect(mockNavigate).toHaveBeenCalledWith(getUpdateEmailCodePath(), {
+        state: { email: "new@example.com", flow: AUTH_FLOW.UPDATE_EMAIL },
+      })
+    })
+    expect(user.createEmailAddress).toHaveBeenCalledTimes(2)
+  })
+
+  it("returns to the filled-in form when the user cancels confirming it's them", async () => {
+    mockSession = mockReverifySession()
+    const user = makeUser()
+    user.createEmailAddress.mockRejectedValueOnce(new ReverificationRequiredError())
+    await renderPage(user)
+    await submitEmail("new@example.com")
+
+    await screen.findByRole("heading", { name: /confirm it's you/i, level: 1 })
+    const clicker = userEvent.setup()
+    await clicker.click(screen.getByRole("button", { name: /cancel/i }))
+
+    await waitFor(() => {
+      expect(screen.queryByRole("heading", { name: /confirm it's you/i })).toBeNull()
+    })
+    expect(screen.getByRole("textbox")).toHaveValue("new@example.com")
+    expect(screen.queryByText(/something went wrong/i)).toBeNull()
+    expect(mockNavigate).not.toHaveBeenCalled()
   })
 })
