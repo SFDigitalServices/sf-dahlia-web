@@ -184,6 +184,12 @@ describe("<SignInFlow />", () => {
     ).toBeNull()
   })
 
+  it("does not show the must-sign-in info alert without a delegate link", async () => {
+    await renderAndLoadAsync(<SignIn assetPaths={{}} />)
+
+    expect(screen.queryByText("You must sign in to continue")).toBeNull()
+  })
+
   it("shows a loading state until Clerk loads", async () => {
     ;(useSignIn as jest.Mock).mockReturnValue({
       fetchStatus: "fetching",
@@ -327,6 +333,23 @@ describe("<SignInFlow />", () => {
       window.location.search = "?t=jwt.token"
       ;(authorizeHousingCounselor as jest.Mock).mockResolvedValue(undefined)
       ;(getProfile as jest.Mock).mockResolvedValue({ email: "test@test.com" })
+    })
+
+    it("shows the must-sign-in info alert for a delegate link", async () => {
+      await renderAndLoadAsync(<SignIn assetPaths={{}} />)
+
+      expect(screen.getByText("You must sign in to continue")).not.toBeNull()
+    })
+
+    it("hides the must-sign-in info alert when the housing counselor flag is off", async () => {
+      ;(useFeatureFlag as jest.Mock).mockImplementation((flag: string) => ({
+        flagsReady: true,
+        unleashFlag: flag !== UNLEASH_FLAG.HOUSING_COUNSELOR_ACCESS,
+      }))
+
+      await renderAndLoadAsync(<SignIn assetPaths={{}} />)
+
+      expect(screen.queryByText("You must sign in to continue")).toBeNull()
     })
 
     it("authenticates with Clerk after a successful sign in", async () => {

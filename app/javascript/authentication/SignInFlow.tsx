@@ -2,7 +2,18 @@
 import React, { useEffect, useRef, useState } from "react"
 import { Navigate, useLocation, useNavigate } from "react-router"
 import { Form, t } from "@bloom-housing/ui-components"
-import { Alert, Button, Card, Heading, Link, LoadingState, Message } from "@bloom-housing/ui-seeds"
+import {
+  Alert,
+  Button,
+  Card,
+  Heading,
+  Icon,
+  Link,
+  LoadingState,
+  Message,
+} from "@bloom-housing/ui-seeds"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faLock } from "@fortawesome/free-solid-svg-icons"
 import { useForm, useWatch } from "react-hook-form"
 import AuthLayout from "../layouts/AuthLayout"
 import EmailFieldset from "../pages/account/components/EmailFieldset"
@@ -52,6 +63,10 @@ const SignInFlow = () => {
   } = useSignInSession()
   const { unleashFlag: requiredLoginsMessageEnabled } = useFeatureFlag(
     UNLEASH_FLAG.REQUIRED_LOGINS_MESSAGE,
+    false
+  )
+  const { unleashFlag: housingCounselorAccessEnabled } = useFeatureFlag(
+    UNLEASH_FLAG.HOUSING_COUNSELOR_ACCESS,
     false
   )
   const [showError, setShowError] = useState(false)
@@ -281,6 +296,20 @@ const SignInFlow = () => {
         {requiredLoginsMessageEnabled && (
           <Message fullwidth variant="primary" className={styles.requiredLoginsMessage}>
             {renderInlineMarkup(t("signIn.requiredLoginsMessage", { url: requiredLoginsHelpUrl }))}
+          </Message>
+        )}
+        {housingCounselorAccessEnabled && getHousingCounselorToken() && (
+          <Message
+            fullwidth
+            variant="primary"
+            className={styles.mustSignInMessage}
+            customIcon={
+              <Icon size="md">
+                <FontAwesomeIcon icon={faLock} />
+              </Icon>
+            }
+          >
+            {t("signIn.mustSignInToContinue")}
           </Message>
         )}
         <Heading priority={1} size="2xl">

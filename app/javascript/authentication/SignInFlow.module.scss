@@ -36,11 +36,13 @@
 }
 
 .errorAlert,
-.requiredLoginsMessage {
+.requiredLoginsMessage,
+.mustSignInMessage {
   margin-bottom: var(--seeds-spacer-section);
 }
 
-.requiredLoginsMessage {
+.requiredLoginsMessage,
+.mustSignInMessage {
   --message-border-radius: var(--seeds-rounded);
   --message-border: 2px solid var(--seeds-color-primary-light);
   background: var(--seeds-color-primary-lighter) !important;
