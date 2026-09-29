@@ -1,7 +1,18 @@
 module Overrides
   # Overrides to DeviseTokenAuth
   class SessionsController < DeviseTokenAuth::SessionsController
+    include HousingCounselorSession
+
     wrap_parameters format: []
+
+    # A fresh sign-in should never resume a stale delegated session (the
+    # signed-in user should see their own account, not whoever they were
+    # last delegated to - see HousingCounselorSession#hc_id_matches_current_user?,
+    # which would otherwise treat a still-valid hc_session cookie as
+    # belonging to this same user and keep it live), and a sign-out should
+    # end delegation along with everything else rather than leaving it to
+    # outlive the session that granted it.
+    before_action :discard_hc_session_cookie, only: %i[create destroy]
 
     private
 
