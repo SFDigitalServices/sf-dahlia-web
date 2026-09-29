@@ -129,9 +129,21 @@ module HousingCounselorSession
     @hc_session_access_denied || false
   end
 
+  # Binds the cookie to the current Clerk session (sid) - see
+  # #issued_in_current_clerk_session?. Writes nothing without one, since
+  # delegation is Clerk-only and an unbound cookie could never be honored.
   def write_hc_session_cookie(hc_id:, app_id:)
+    sid = current_clerk_session_id
+    if sid.blank?
+      Rails.logger.warn(
+        'HousingCounselorSession: not writing hc_session cookie without a Clerk session',
+      )
+      return
+    end
+
     token = JsonWebTokenService.encode_token(
-      { 'typ' => HC_SESSION_TOKEN_TYPE, 'hcId' => hc_id, 'appId' => app_id },
+      { 'typ' => HC_SESSION_TOKEN_TYPE, 'hcId' => hc_id, 'appId' => app_id,
+        'sid' => sid },
       exp: HC_SESSION_DURATION.from_now,
     )
     cookies[HC_SESSION_COOKIE_NAME] = {
@@ -150,6 +162,7 @@ module HousingCounselorSession
     return nil if token.blank?
 
     data = decode_hc_session_token(token, verify_expiration: true)
+    return nil unless issued_in_current_clerk_session?(data)
     return nil if expected_app_id && data['appId'] != expected_app_id
 
     session_if_current_user_matches(data)
@@ -167,6 +180,7 @@ module HousingCounselorSession
   # what authorize_access re-establishes.
   def refresh_hc_session(token, expected_app_id)
     stale = decode_hc_session_token(token, verify_expiration: false)
+    return nil unless issued_in_current_clerk_session?(stale)
     return nil if expected_app_id && stale['appId'] != expected_app_id
     return nil unless hc_id_matches_current_user?(stale['hcId'])
 
@@ -209,6 +223,33 @@ module HousingCounselorSession
     end
 
     data
+  end
+
+  # An HC can only enter an applicant's account through a delegate link, so a
+  # cookie is only good for the Clerk session it was issued in: a new sign-in
+  # (new sid) must never resume it, even if sign-out/sign-in cleanup never
+  # ran. A request with no Clerk session can't say whose the cookie is, so it
+  # is ignored but left in place rather than discarded.
+  def issued_in_current_clerk_session?(data)
+    current_sid = current_clerk_session_id
+    return false if current_sid.blank?
+    return true if data['sid'] == current_sid
+
+    Rails.logger.info(
+      'HousingCounselorSession: discarding hc_session cookie from a different ' \
+      'Clerk session',
+    )
+    discard_hc_session_cookie
+    false
+  end
+
+  # Controllers without Clerk::Authenticatable (e.g.
+  # Overrides::SessionsController, which only ever discards the cookie) have
+  # no Clerk session.
+  def current_clerk_session_id
+    return nil unless respond_to?(:clerk, true)
+
+    clerk&.session&.dig('sid')
   end
 
   def session_if_current_user_matches(data)

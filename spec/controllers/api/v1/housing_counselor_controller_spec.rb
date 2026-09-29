@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Api::V1::HousingCounselorController, type: :controller do
   let(:clerk_user_id) { 'user_abc123' }
+  let(:clerk_sid) { 'sess_current' }
   let(:contact_id) { '003_counselor_id' }
   let(:agencies) do
     [
@@ -22,7 +23,8 @@ RSpec.describe Api::V1::HousingCounselorController, type: :controller do
     allow(Rails.configuration.unleash).to receive(:is_enabled?)
       .with(HousingCounselorSession::FEATURE_FLAG).and_return(true)
 
-    allow(controller).to receive(:clerk).and_return(double(user_id: clerk_user_id))
+    allow(controller).to receive(:clerk)
+      .and_return(double(user_id: clerk_user_id, session: { 'sid' => clerk_sid }))
     allow(ClerkService).to receive(:salesforce_contact_id)
       .with(clerk_user_id)
       .and_return(contact_id)
@@ -116,7 +118,9 @@ RSpec.describe Api::V1::HousingCounselorController, type: :controller do
 
       expect(cookies[:hc_session]).to be_present
       decoded = JsonWebTokenService.decode_token(cookies[:hc_session])
-      expect(decoded).to eq('typ' => 'hc_session', 'hcId' => contact_id, 'appId' => applicant_contact_id)
+      expect(decoded).to eq(
+        'typ' => 'hc_session', 'hcId' => contact_id, 'appId' => applicant_contact_id, 'sid' => clerk_sid,
+      )
       expect(response.headers['Set-Cookie']).to include('HttpOnly')
     end
 
@@ -178,9 +182,10 @@ RSpec.describe Api::V1::HousingCounselorController, type: :controller do
           .with(token).and_return('contactId' => applicant_contact_id)
       end
 
-      def set_hc_session_cookie(hc_id:, app_id:, exp: 2.hours.from_now)
-        request.cookies['hc_session'] =
-          JsonWebTokenService.encode_token({ 'typ' => 'hc_session', 'hcId' => hc_id, 'appId' => app_id }, exp:)
+      def set_hc_session_cookie(hc_id:, app_id:, exp: 2.hours.from_now, sid: clerk_sid)
+        request.cookies['hc_session'] = JsonWebTokenService.encode_token(
+          { 'typ' => 'hc_session', 'hcId' => hc_id, 'appId' => app_id, 'sid' => sid }, exp:,
+        )
       end
 
       # Regression coverage for req 1/2: a delegate link click must never
@@ -238,6 +243,21 @@ RSpec.describe Api::V1::HousingCounselorController, type: :controller do
           expect(JSON.parse(response.body)).to eq('success' => true)
           expect(Force::HousingCounselorService).not_to have_received(:authorize_access)
         end
+
+        # Regression coverage: signing out and back in (a new Clerk session)
+        # used to silently resume the previous delegation whenever the
+        # frontend's clear-on-sign-out/in call was skipped or failed. Only a
+        # delegate link can grant access in a new session.
+        it 'returns unauthorized for a still-valid cookie from a previous Clerk session' do
+          set_hc_session_cookie(hc_id: contact_id, app_id: applicant_contact_id,
+                                sid: 'sess_previous')
+
+          post :access
+
+          expect(response).to have_http_status(:unauthorized)
+          expect(Force::HousingCounselorService).not_to have_received(:authorize_access)
+          expect(cookies[:hc_session]).to be_blank
+        end
       end
 
       context 'when the cookie is for a different applicant than the one requested' do
@@ -256,8 +276,10 @@ RSpec.describe Api::V1::HousingCounselorController, type: :controller do
             applicant_contact_id:,
             counselor_contact_id: contact_id,
           )
-          expect(JsonWebTokenService.decode_token(cookies[:hc_session]))
-            .to eq('typ' => 'hc_session', 'hcId' => contact_id, 'appId' => applicant_contact_id)
+          expect(JsonWebTokenService.decode_token(cookies[:hc_session])).to eq(
+            'typ' => 'hc_session', 'hcId' => contact_id, 'appId' => applicant_contact_id,
+            'sid' => clerk_sid,
+          )
         end
       end
 
@@ -364,8 +386,10 @@ RSpec.describe Api::V1::HousingCounselorController, type: :controller do
             applicant_contact_id:,
             counselor_contact_id: contact_id,
           )
-          expect(JsonWebTokenService.decode_token(cookies[:hc_session]))
-            .to eq('typ' => 'hc_session', 'hcId' => contact_id, 'appId' => applicant_contact_id)
+          expect(JsonWebTokenService.decode_token(cookies[:hc_session])).to eq(
+            'typ' => 'hc_session', 'hcId' => contact_id, 'appId' => applicant_contact_id,
+            'sid' => clerk_sid,
+          )
         end
       end
     end

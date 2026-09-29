@@ -44,6 +44,15 @@ RSpec.describe HousingCounselorSession, type: :controller do
         Struct.new(:salesforce_contact_id, :salesforce_contact_id_lookup_failed?)
               .new(params[:signed_in_as], params[:lookup_failed].present?)
     end
+
+    # Stands in for Clerk::Authenticatable#clerk. Requests are in the
+    # 'sess_current' Clerk session unless a spec passes clerk_sid, or passes
+    # no_clerk_session to simulate a request with no Clerk session at all.
+    def clerk
+      return nil if params[:no_clerk_session].present?
+
+      Struct.new(:session).new({ 'sid' => params.fetch(:clerk_sid, 'sess_current') })
+    end
   end
 
   before do
@@ -69,21 +78,33 @@ RSpec.describe HousingCounselorSession, type: :controller do
 
   let(:hc_id) { '003_counselor_id' }
   let(:app_id) { '003ABC' }
+  let(:clerk_sid) { 'sess_current' }
 
-  def set_hc_session_cookie(hc_id:, app_id:, exp: 2.hours.from_now)
-    request.cookies['hc_session'] = JsonWebTokenService.encode_token(
-      { 'typ' => 'hc_session', 'hcId' => hc_id, 'appId' => app_id }, exp:
-    )
+  def set_hc_session_cookie(hc_id:, app_id:, exp: 2.hours.from_now, sid: clerk_sid)
+    payload = { 'typ' => 'hc_session', 'hcId' => hc_id, 'appId' => app_id }
+    payload['sid'] = sid if sid
+    request.cookies['hc_session'] = JsonWebTokenService.encode_token(payload, exp:)
   end
 
   describe '#write_hc_session_cookie' do
-    it 'sets an httponly cookie encoding the given hc and applicant contact IDs' do
+    it 'sets an httponly cookie encoding the given hc and applicant contact IDs and ' \
+       'the current Clerk session' do
       post :write, params: { hc_id:, app_id: }
 
       expect(cookies[:hc_session]).to be_present
       decoded = JsonWebTokenService.decode_token(cookies[:hc_session])
-      expect(decoded).to eq('typ' => 'hc_session', 'hcId' => hc_id, 'appId' => app_id)
+      expect(decoded).to eq(
+        'typ' => 'hc_session', 'hcId' => hc_id, 'appId' => app_id, 'sid' => clerk_sid,
+      )
       expect(response.headers['Set-Cookie']).to include('HttpOnly')
+    end
+
+    # Delegation is Clerk-only: a cookie that isn't tied to a Clerk session
+    # could never be honored, so it must not be written at all.
+    it 'writes nothing when the request has no Clerk session' do
+      post :write, params: { hc_id:, app_id:, no_clerk_session: true }
+
+      expect(cookies[:hc_session]).to be_blank
     end
 
     it 'sets a cookie expiry later than the JWT exp, so the browser still sends an ' \
@@ -298,12 +319,13 @@ RSpec.describe HousingCounselorSession, type: :controller do
                                                                    'app_id' => app_id })
           end
 
-          it 'writes a new, non-expired cookie' do
+          it 'writes a new, non-expired cookie still bound to the same Clerk session' do
             get :show, params: { signed_in_as: hc_id }
 
             expect(cookies[:hc_session]).to be_present
-            expect(JsonWebTokenService.decode_token(cookies[:hc_session]))
-              .to eq('typ' => 'hc_session', 'hcId' => hc_id, 'appId' => app_id)
+            expect(JsonWebTokenService.decode_token(cookies[:hc_session])).to eq(
+              'typ' => 'hc_session', 'hcId' => hc_id, 'appId' => app_id, 'sid' => clerk_sid,
+            )
           end
         end
 
@@ -350,6 +372,61 @@ RSpec.describe HousingCounselorSession, type: :controller do
           expect(JSON.parse(response.body)).to eq('session' => { 'hc_id' => hc_id,
                                                                  'app_id' => app_id })
         end
+      end
+    end
+  end
+
+  # An HC can only enter an applicant's account through a delegate link, so
+  # a cookie is only good for the Clerk session it was issued in. Signing in
+  # again - a new Clerk session - must never resume it, even when sign-out
+  # or sign-in cleanup didn't run.
+  describe '#current_hc_session binding to the Clerk session' do
+    context 'when the cookie was issued in a different Clerk session' do
+      before { set_hc_session_cookie(hc_id:, app_id:, sid: 'sess_previous') }
+
+      it 'returns nil and discards the cookie, even though hcId matches the ' \
+         'signed-in user' do
+        get :show, params: { signed_in_as: hc_id }
+
+        expect(JSON.parse(response.body)).to eq('session' => nil)
+        expect(cookies[:hc_session]).to be_blank
+      end
+    end
+
+    context 'when the cookie was issued in a different Clerk session and has expired' do
+      before { set_hc_session_cookie(hc_id:, app_id:, exp: 1.hour.ago, sid: 'sess_previous') }
+
+      it 'returns nil, discards the cookie, and never calls Salesforce to refresh it' do
+        allow(Force::HousingCounselorService).to receive(:authorize_access)
+
+        get :show, params: { signed_in_as: hc_id }
+
+        expect(JSON.parse(response.body)).to eq('session' => nil)
+        expect(cookies[:hc_session]).to be_blank
+        expect(Force::HousingCounselorService).not_to have_received(:authorize_access)
+      end
+    end
+
+    context 'when the cookie has no Clerk session id' do
+      before { set_hc_session_cookie(hc_id:, app_id:, sid: nil) }
+
+      it 'returns nil and discards the cookie' do
+        get :show, params: { signed_in_as: hc_id }
+
+        expect(JSON.parse(response.body)).to eq('session' => nil)
+        expect(cookies[:hc_session]).to be_blank
+      end
+    end
+
+    context 'when the request has no Clerk session' do
+      before { set_hc_session_cookie(hc_id:, app_id:) }
+
+      it 'returns nil without discarding the cookie, since it cannot tell whose ' \
+         'session the cookie belongs to' do
+        get :show, params: { signed_in_as: hc_id, no_clerk_session: true }
+
+        expect(JSON.parse(response.body)).to eq('session' => nil)
+        expect(cookies[:hc_session]).to be_present
       end
     end
   end
