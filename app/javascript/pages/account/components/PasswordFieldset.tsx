@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faCheck, faXmark } from "@fortawesome/free-solid-svg-icons"
 import { ErrorMessages } from "./ErrorSummaryBanner"
 import { ExpandedAccountAxiosError, getErrorMessage, SetErrorArgs } from "./util"
-import { getForgotPasswordPath } from "../../../util/routeUtil"
+import { createPath, getForgotPasswordPath } from "../../../util/routeUtil"
 
 const PASSWORD_VALIDATION_ERRORS = new Set([
   "Password is too short (minimum is 8 characters)",
@@ -242,7 +242,7 @@ const PasswordFieldset = ({
             className="mb-4"
           />
           <Link
-            href={`${getForgotPasswordPath()}${email ? `?email=${email}` : ""}`}
+            href={createPath(getForgotPasswordPath(), { email })}
             className="forgot-password-link"
           >
             {t("signIn.forgotPassword")}
