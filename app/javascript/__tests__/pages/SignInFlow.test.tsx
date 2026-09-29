@@ -219,6 +219,17 @@ describe("<SignInFlow />", () => {
     expect(screen.queryByRole("button", { name: /^get a code$/i })).toBeNull()
   })
 
+  it("keeps a '+' in the email carried over to the forgot password link", async () => {
+    await renderAndLoadAsync(<SignIn assetPaths={{}} />)
+    const user = userEvent.setup()
+    const emailGroup = screen.getByRole("group", { name: /email/i })
+    await user.type(within(emailGroup).getByRole("textbox"), "first+last@test.com")
+
+    const href = screen.getByRole("link", { name: /forgot password/i }).getAttribute("href")
+    expect(href).toBe("/forgot-password?email=first%2Blast%40test.com")
+    expect(new URL(href, "http://localhost").searchParams.get("email")).toBe("first+last@test.com")
+  })
+
   it("switches to the code sign in flow", async () => {
     await renderAndLoadAsync(<SignIn assetPaths={{}} />)
     await switchToVerificationCodeView()

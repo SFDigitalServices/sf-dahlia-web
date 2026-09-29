@@ -87,7 +87,7 @@ describe("<ChangePassword />", () => {
     expect(screen.getByLabelText(/choose a new password/i)).not.toBeNull()
     expect(screen.getByRole("link", { name: /forgot password/i })).toHaveAttribute(
       "href",
-      "/forgot-password?email=email@email.com"
+      "/forgot-password?email=email%40email.com"
     )
   })
 
