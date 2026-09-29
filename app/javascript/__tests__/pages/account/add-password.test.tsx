@@ -400,7 +400,6 @@ describe("<AddPassword />", () => {
       await renderAndLoadAsync(<AddPassword assetPaths={{}} />)
     })
 
-
     it("asks the user to confirm it's them in place of the form", async () => {
       const user = userEvent.setup()
 
