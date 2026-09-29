@@ -85,8 +85,8 @@ export const createProfile = async (
 export const getProfile = async (sessionToken?: string): Promise<User> =>
   sessionToken
     ? get<UserData>("/api/v1/account/profile", clerkHeaders(sessionToken)).then(
-      ({ data }: AxiosResponse<UserData>) => data.data
-    )
+        ({ data }: AxiosResponse<UserData>) => data.data
+      )
     : authenticatedGet<UserData>("/api/v1/auth/validate_token").then((res) => res.data.data)
 
 export const getApplications = async (): Promise<{ applications: Application[] }> =>

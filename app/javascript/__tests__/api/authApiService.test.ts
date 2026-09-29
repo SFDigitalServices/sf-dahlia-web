@@ -200,7 +200,7 @@ describe("authApiService", () => {
       ;(apiDelete as jest.Mock).mockRejectedValue(error)
 
       await expect(clearHousingCounselorSession()).resolves.toBeUndefined()
-      expect(consoleError).toHaveBeenCalledWith("Failed to clear housing counselor session:", error)
+      expect(consoleError).toHaveBeenCalledWith("Error: Failed to clear housing counselor session")
 
       consoleError.mockRestore()
     })

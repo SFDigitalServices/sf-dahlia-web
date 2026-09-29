@@ -372,8 +372,10 @@ describe("<EnterVerificationCode />", () => {
     expect(clearHousingCounselorSession).toHaveBeenCalled()
   })
 
-  it("does not clear the housing counselor session on sign in when the flag is off", async () => {
+  it("clears the housing counselor session on sign in even when the flag is off", async () => {
     cleanup()
+    // See "verifies a valid code for sign in" for why real timers are needed.
+    jest.useRealTimers()
     ;(useFeatureFlag as jest.Mock).mockImplementation((flagName: string) => ({
       flagsReady: true,
       unleashFlag: flagName !== UNLEASH_FLAG.HOUSING_COUNSELOR_ACCESS,
@@ -385,7 +387,7 @@ describe("<EnterVerificationCode />", () => {
     mockSignInResource.status = "complete"
     await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
 
-    const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime })
+    const user = userEvent.setup()
     await user.click(screen.getAllByRole("textbox")[0])
     await user.paste("123456")
     await user.click(screen.getByRole("button", { name: t("createAccount.confirmCode") }))
@@ -393,7 +395,7 @@ describe("<EnterVerificationCode />", () => {
     await waitFor(() => {
       expect(mockNavigate).toHaveBeenCalledWith("/account")
     })
-    expect(clearHousingCounselorSession).not.toHaveBeenCalled()
+    expect(clearHousingCounselorSession).toHaveBeenCalled()
   })
 
   it("transfers from sign-in to create-an-account flow when account does not exist", async () => {

@@ -219,10 +219,10 @@ describe("AuthSessionProvider", () => {
     expect(calls).toEqual(["clearHeaders", "clearHousingCounselorSession", "clerkSignOut"])
   })
 
-  it("does not clear the housing counselor session on sign out when the flag is off", async () => {
+  it("clears the housing counselor session on sign out even when the flag is off", async () => {
     const calls = await signOutAndRecordCalls({ housingCounselorAccess: false })
 
-    expect(calls).toEqual(["clearHeaders", "clerkSignOut"])
+    expect(calls).toEqual(["clearHeaders", "clearHousingCounselorSession", "clerkSignOut"])
   })
 
   it("throws when a consumer has no provider above it", () => {

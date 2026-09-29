@@ -290,7 +290,7 @@ describe("<SignInFlow />", () => {
     expect(mockNavigate).toHaveBeenCalledWith("/account")
   })
 
-  it("does not clear the housing counselor session on sign in when the flag is off", async () => {
+  it("clears the housing counselor session on sign in even when the flag is off", async () => {
     ;(useFeatureFlag as jest.Mock).mockImplementation((flagName: string) => ({
       flagsReady: true,
       unleashFlag: flagName !== UNLEASH_FLAG.HOUSING_COUNSELOR_ACCESS,
@@ -302,7 +302,7 @@ describe("<SignInFlow />", () => {
     await waitFor(() => {
       expect(mockNavigate).toHaveBeenCalledWith("/account")
     })
-    expect(clearHousingCounselorSession).not.toHaveBeenCalled()
+    expect(clearHousingCounselorSession).toHaveBeenCalled()
   })
 
   it("shows one alert and logs the details when sign in fails", async () => {
