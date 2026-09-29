@@ -30,7 +30,9 @@ export const useClerkAuthSession = (): AuthSession => {
     clearHeaders()
     // A delegated hc_session should never outlive the sign-out that ends it.
     await clearHousingCounselorSession()
-    await clerkSignOut()
+    // Without a callback Clerk does a full page load to its afterSignOutUrl ("/"),
+    // overriding the caller's own redirect to sign-in.
+    await clerkSignOut(() => undefined)
   }, [clerkSignOut])
 
   return useMemo(
