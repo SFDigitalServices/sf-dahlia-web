@@ -12,6 +12,7 @@ const noSession: AuthSession = {
   status: INITIALIZING,
   getCredentials: () => Promise.resolve(NO_CREDENTIALS),
   signOut: () => Promise.resolve(),
+  isSigningOut: () => false,
 }
 
 const AuthSessionContext = createContext<AuthSession | null>(null)

@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from "react"
+import { useCallback, useMemo, useRef } from "react"
 import { useAuth } from "@clerk/react"
 
 import { clearHeaders } from "../../../token"
@@ -23,7 +23,13 @@ export const useClerkAuthSession = (): AuthSession => {
     }
   }, [getToken])
 
+  // A ref, not state: it must read true synchronously once Clerk publishes the
+  // signed-out status mid-signOut, before any re-render could carry state.
+  const signingOutRef = useRef(false)
+  const isSigningOut = useCallback(() => signingOutRef.current, [])
+
   const signOut = useCallback(async (): Promise<void> => {
+    signingOutRef.current = true
     // TODO(DAH-4366): CLERK MIGRATION - DEVISE TECH DEBT TO REMOVE
     // apiService attaches stored Devise headers to every request, so a user who
     // last signed in with Devise would keep sending them.
@@ -40,7 +46,8 @@ export const useClerkAuthSession = (): AuthSession => {
       status: deriveClerkStatus({ isLoaded, isSignedIn: Boolean(isSignedIn) }),
       getCredentials,
       signOut,
+      isSigningOut,
     }),
-    [isLoaded, isSignedIn, getCredentials, signOut]
+    [isLoaded, isSignedIn, getCredentials, signOut, isSigningOut]
   )
 }
