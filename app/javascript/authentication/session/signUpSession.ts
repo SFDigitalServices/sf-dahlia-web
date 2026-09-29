@@ -1,5 +1,3 @@
-import { UserResource } from "@clerk/react/types"
-
 export type SignUpOutcome = {
   error?: unknown
   /**
@@ -14,7 +12,6 @@ export type SignUpOutcome = {
 }
 
 export type SignUpSession = {
-  user: UserResource
   /** A sign-up request is in flight. Not a readiness signal: the provider may still be loading. */
   isBusy: boolean
 

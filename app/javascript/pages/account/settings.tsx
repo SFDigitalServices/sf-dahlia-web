@@ -4,6 +4,8 @@ import withAppSetup from "../../layouts/withAppSetup"
 import UserContext from "../../authentication/context/UserContext"
 import { useAuthSession } from "../../authentication/session/AuthSessionProvider"
 import { useSignUpSession } from "../../authentication/session/useSignUpSession"
+import { useAccountSession } from "../../authentication/session/useAccountSession"
+import { AccountUpdater, useAccountUpdater } from "../../hooks/useAccountUpdater"
 import { bearerToken } from "../../authentication/session/authStatus"
 import { Form, DOBFieldValues, t } from "@bloom-housing/ui-components"
 import { DeepMap, FieldError, useForm } from "react-hook-form"
@@ -37,11 +39,7 @@ import HousingCounselorAccess, {
 import Toast from "./components/Toast"
 import "./styles/account.scss"
 import sharedStyles from "./shared-styles.module.scss"
-import {
-  updateNameOrDOB as apiUpdateNameOrDOB,
-  updateHousingCounselorAccess,
-  updatePassword,
-} from "../../api/authApiService"
+import { updateHousingCounselorAccess, updatePassword } from "../../api/authApiService"
 import { FormHeader, FormSection, getDobStringFromDobObject } from "../../util/accountUtil"
 import { AxiosError } from "axios"
 import { ErrorSummaryBanner } from "./components/ErrorSummaryBanner"
@@ -124,8 +122,7 @@ const EmailSection = () => {
   const [emailUpdateBanner, setEmailUpdateBanner] = useState(false)
   const [emailBanner, setEmailBanner] = useState(false)
   const navigate = useNavigate()
-  const { user } = useSignUpSession()
-  const loginEmail = user?.primaryEmailAddress?.emailAddress
+  const { loginEmail } = useAccountSession()
 
   return (
     <>
@@ -377,6 +374,7 @@ const HousingCounselorSection = ({ user, setUser }: SectionProps) => {
 }
 
 const updateNameOrDOB = async (
+  updateAccount: AccountUpdater,
   newUser: User,
   saveProfile: (profile: User) => void,
   setUser: React.Dispatch<User>,
@@ -384,7 +382,7 @@ const updateNameOrDOB = async (
   errorCallback: (error: AxiosError) => void,
   bannersCallback?: () => void
 ) => {
-  return apiUpdateNameOrDOB(newUser)
+  return updateAccount(newUser)
     .then((profile) => {
       saveProfile(profile)
       setUser(newUser)
@@ -398,6 +396,7 @@ const updateNameOrDOB = async (
 
 const NameSection = ({ user, setUser, handleBanners }: SectionProps) => {
   const [loading, setLoading] = useState(false)
+  const updateAccount = useAccountUpdater()
   const { saveProfile } = useContext(UserContext)
 
   const {
@@ -417,6 +416,7 @@ const NameSection = ({ user, setUser, handleBanners }: SectionProps) => {
     const newUser = { ...user, ...data }
 
     await updateNameOrDOB(
+      updateAccount,
       newUser,
       saveProfile,
       setUser,
@@ -461,6 +461,7 @@ const NameSection = ({ user, setUser, handleBanners }: SectionProps) => {
 
 const DateOfBirthSection = ({ user, setUser }: SectionProps) => {
   const [loading, setLoading] = useState(false)
+  const updateAccount = useAccountUpdater()
   const { saveProfile } = useContext(UserContext)
   const [dobUpdateBanner, setDOBUpdateBanner] = useState(false)
   const [dobSavedBanner, setDOBSavedBanner] = useState(false)
@@ -493,6 +494,7 @@ const DateOfBirthSection = ({ user, setUser }: SectionProps) => {
     }
 
     await updateNameOrDOB(
+      updateAccount,
       newUser,
       saveProfile,
       setUser,
@@ -637,8 +639,6 @@ const AccountSettings = ({ profile }: { profile: User }) => {
       <NameSection user={user} setUser={setUser} handleBanners={handleBanners} />
       <DateOfBirthSection user={user} setUser={setUser} />
       <EmailSection />
-      <PasswordSection />
-      <EmailSection user={user} setUser={setUser} />
       {clerkEnabled ? <PasswordSection /> : <PasswordSectionDevise user={user} setUser={setUser} />}
       {showHousingCounselorSection && user && (
         <HousingCounselorSection user={user} setUser={setUser} />

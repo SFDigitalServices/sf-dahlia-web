@@ -117,6 +117,13 @@ export const updatePhone = async (user: User): Promise<User> => {
   }).then(({ data }) => data.contact)
 }
 
+export const updateAccountWithClerk = async (user: User, sessionToken: string): Promise<User> =>
+  put<{ contact: User }>(
+    "/api/v1/account/update",
+    { contact: contactObject(user) },
+    clerkHeaders(sessionToken)
+  ).then(({ data }) => data.contact)
+
 export const updateEmail = async (email: string): Promise<string> =>
   authenticatedPut<{ status: string }>("/api/v1/auth", {
     user: {

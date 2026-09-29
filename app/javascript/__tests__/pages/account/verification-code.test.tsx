@@ -1,7 +1,7 @@
 import React from "react"
 import { useSignIn, useSignUp, useAuth, useClerk, useUser } from "@clerk/react"
 import { t } from "@bloom-housing/ui-components"
-import { act, screen, waitFor, cleanup, fireEvent } from "@testing-library/react"
+import { act, screen, waitFor, cleanup, fireEvent, within } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
 import { useLocation, useNavigate } from "react-router"
 import EnterVerificationCode from "../../../pages/account/verification-code"
@@ -13,7 +13,14 @@ import {
 import { setupUserContext } from "../../__util__/accountUtils"
 import { useFeatureFlag } from "../../../hooks/useFeatureFlag"
 import { AUTH_FLOW } from "../../../modules/constants"
-import { authorizeHousingCounselor, getProfile } from "../../../api/authApiService"
+import {
+  authorizeHousingCounselor,
+  getProfile,
+  updateAccountWithClerk,
+} from "../../../api/authApiService"
+
+// Read lazily by the @clerk/react mock below; the mock- prefix lets jest.mock reference it.
+let mockSession: unknown = null
 
 jest.mock("@clerk/react", () => {
   const Clerk = jest.requireActual("@clerk/react")
@@ -26,7 +33,7 @@ jest.mock("@clerk/react", () => {
       getToken: jest.fn().mockResolvedValue("clerk-session-token"),
     })),
     useSignUp: jest.fn(),
-    useSession: () => ({ session: null }),
+    useSession: () => ({ session: mockSession }),
     useSignIn: jest.fn(),
     useClerk: jest.fn(),
     useUser: jest.fn(),
@@ -47,26 +54,55 @@ jest.mock("../../../api/authApiService", () => ({
   ...jest.requireActual("../../../api/authApiService"),
   authorizeHousingCounselor: jest.fn(),
   getProfile: jest.fn().mockResolvedValue(undefined),
+  updateAccountWithClerk: jest.fn(),
 }))
+
+// Clerk recognizes its API errors by this static kind rather than by instanceof.
+class ReverificationRequiredError extends Error {
+  static kind = "ClerkAPIResponseError"
+  errors = [{ code: "session_reverification_required" }]
+}
 const updateLoginEmail = (newEmailOverrides = {}) => {
   const previous = { id: "old", emailAddress: "test@example.com", destroy: jest.fn() }
   const newEmail = {
     id: "new",
     emailAddress: "new@example.com",
-    verification: { status: "verified" },
-    attemptVerification: jest
-      .fn()
-      .mockResolvedValue({ id: "new", verification: { status: "verified" } }),
+    verification: { status: "unverified" },
+    attemptVerification: jest.fn(),
     prepareVerification: jest.fn().mockResolvedValue(undefined),
     ...newEmailOverrides,
+  }
+  if (!newEmail.attemptVerification.getMockImplementation()) {
+    // Verifying marks the address itself verified, as Clerk's resource does.
+    newEmail.attemptVerification.mockImplementation(() => {
+      newEmail.verification = { status: "verified" }
+      return Promise.resolve({ id: "new", verification: { status: "verified" } })
+    })
   }
   return {
     emailAddresses: [previous, newEmail],
     primaryEmailAddress: previous,
     update: jest.fn(),
     previous,
+    newEmail,
   }
 }
+
+// These walk the whole flow, including the reverification prompt, and run slowly alongside the
+// rest of this file under fake timers.
+const SLOW_STEP_MS = 8000
+const SLOW_TEST_MS = 20000
+
+const mockReverifySession = () => ({
+  startVerification: jest.fn().mockResolvedValue({
+    status: "needs_first_factor",
+    supportedFirstFactors: [
+      { strategy: "email_code", emailAddressId: "old", safeIdentifier: "t***@example.com" },
+    ],
+  }),
+  prepareFirstFactorVerification: jest.fn().mockResolvedValue({ status: "needs_first_factor" }),
+  attemptFirstFactorVerification: jest.fn().mockResolvedValue({ status: "complete" }),
+})
 
 const renderUpdateEmailFlow = async (user: unknown) => {
   cleanup()
@@ -132,6 +168,7 @@ describe("<EnterVerificationCode />", () => {
   }
 
   beforeEach(async () => {
+    mockSession = null
     document.documentElement.lang = "en"
     document.title = "DAHLIA San Francisco Housing Portal"
     originalLocation = mockWindowLocation()
@@ -750,7 +787,8 @@ describe("<EnterVerificationCode />", () => {
       expect(mockNavigate).toHaveBeenCalledWith("/account")
     })
   })
-  it("verifies the update email code and swaps the primary email", async () => {
+  it("verifies the update email code, swaps the primary email, and syncs the profile", async () => {
+    ;(updateAccountWithClerk as jest.Mock).mockResolvedValue({ email: "new@example.com" })
     const user = updateLoginEmail()
     await renderUpdateEmailFlow(user)
     await submitCode()
@@ -760,7 +798,123 @@ describe("<EnterVerificationCode />", () => {
         state: { emailChanged: true },
       })
     })
+    expect(user.newEmail.attemptVerification).toHaveBeenCalledWith({ code: "123456" })
+    expect(user.update).toHaveBeenCalledWith({ primaryEmailAddressId: "new" })
     expect(user.previous.destroy).toHaveBeenCalled()
+    expect(updateAccountWithClerk).toHaveBeenCalledWith(
+      expect.objectContaining({ email: "new@example.com" }),
+      "clerk-session-token"
+    )
+  })
+
+  it(
+    "asks the user to confirm it's them before making the new email their login",
+    async () => {
+      ;(updateAccountWithClerk as jest.Mock).mockResolvedValue({ email: "new@example.com" })
+      const user = updateLoginEmail()
+      user.update.mockRejectedValueOnce(new ReverificationRequiredError())
+      mockSession = mockReverifySession()
+      await renderUpdateEmailFlow(user)
+      await submitCode()
+
+      expect(
+        await screen.findByRole(
+          "heading",
+          { name: /confirm it's you/i, level: 1 },
+          { timeout: SLOW_STEP_MS }
+        )
+      ).not.toBeNull()
+      expect(mockNavigate).not.toHaveBeenCalled()
+
+      const clicker = userEvent.setup({ advanceTimers: jest.advanceTimersByTime })
+      await clicker.click(screen.getByRole("button", { name: /send code/i }))
+      // The page's own code field is hidden underneath, so target the prompt's form.
+      const confirmButton = await screen.findByRole(
+        "button",
+        { name: /confirm code/i },
+        { timeout: SLOW_STEP_MS }
+      )
+      const promptForm = confirmButton.closest("form") as HTMLElement
+      await clicker.click(within(promptForm).getByLabelText("1"))
+      await clicker.paste("654321")
+      await clicker.click(confirmButton)
+
+      await waitFor(() => {
+        expect(mockNavigate).toHaveBeenCalledWith(expect.any(String), {
+          state: { emailChanged: true },
+        })
+      })
+      expect(user.update).toHaveBeenCalledTimes(2)
+    },
+    SLOW_TEST_MS
+  )
+
+  it(
+    "keeps the verified code when the user cancels confirming it's them",
+    async () => {
+      const user = updateLoginEmail()
+      user.update.mockRejectedValueOnce(new ReverificationRequiredError())
+      mockSession = mockReverifySession()
+      await renderUpdateEmailFlow(user)
+      await submitCode()
+
+      const clicker = userEvent.setup({ advanceTimers: jest.advanceTimersByTime })
+      await clicker.click(
+        await screen.findByRole("button", { name: /cancel/i }, { timeout: SLOW_STEP_MS })
+      )
+
+      await waitFor(() => {
+        expect(screen.queryByRole("heading", { name: /confirm it's you/i })).toBeNull()
+      })
+      expect(screen.queryByText(/that code did not work/i)).toBeNull()
+      expect(mockNavigate).not.toHaveBeenCalled()
+
+      // Confirming again skips the code, which is already verified.
+      ;(updateAccountWithClerk as jest.Mock).mockResolvedValue({ email: "new@example.com" })
+      await clicker.click(screen.getByRole("button", { name: t("createAccount.confirmCode") }))
+      await waitFor(() => {
+        expect(mockNavigate).toHaveBeenCalledWith(expect.any(String), {
+          state: { emailChanged: true },
+        })
+      })
+      expect(user.newEmail.attemptVerification).toHaveBeenCalledTimes(1)
+    },
+    SLOW_TEST_MS
+  )
+
+  it(
+    "shows a general error, not a code error, when making the email primary fails",
+    async () => {
+      jest.spyOn(console, "error").mockImplementation(() => {})
+      const user = updateLoginEmail()
+      user.update.mockRejectedValueOnce(new Error("server error"))
+      await renderUpdateEmailFlow(user)
+      await submitCode()
+
+      expect(
+        await screen.findByText(/something went wrong/i, {}, { timeout: SLOW_STEP_MS })
+      ).not.toBeNull()
+      expect(screen.queryByText(/that code did not work/i)).toBeNull()
+      expect(mockNavigate).not.toHaveBeenCalled()
+    },
+    SLOW_TEST_MS
+  )
+
+  it("still finishes when syncing the profile fails", async () => {
+    jest.spyOn(console, "error").mockImplementation(() => {})
+    ;(updateAccountWithClerk as jest.Mock).mockRejectedValue(new Error("salesforce down"))
+    await renderUpdateEmailFlow(updateLoginEmail())
+    await submitCode()
+
+    await waitFor(() => {
+      expect(mockNavigate).toHaveBeenCalledWith(expect.any(String), {
+        state: { emailChanged: true },
+      })
+    })
+    expect(console.error).toHaveBeenCalledWith(
+      "Sync login email to profile error:",
+      expect.any(Error)
+    )
   })
 
   it("does not update the email when there is no user", async () => {
@@ -807,10 +961,7 @@ describe("<EnterVerificationCode />", () => {
     await submitCode()
 
     await waitFor(() => {
-      expect(console.error).toHaveBeenCalledWith(
-        "Update email verification error:",
-        expect.any(Error)
-      )
+      expect(console.error).toHaveBeenCalledWith("Email change code error:", expect.any(Error))
     })
     expect(mockNavigate).not.toHaveBeenCalled()
   })
@@ -826,16 +977,14 @@ describe("<EnterVerificationCode />", () => {
   })
 
   it("does not resend the update email code when there is no user", async () => {
-    jest.spyOn(console, "error").mockImplementation(() => {})
     await renderUpdateEmailFlow(null)
     expireResendVerificationCode()
     fireEvent.click(screen.getByRole("button", { name: t("createAccount.sendAgain") }))
-
-    await waitFor(() => {
-      expect(console.error).toHaveBeenCalledWith(
-        "Resend update email code error: address not found"
-      )
+    await act(async () => {
+      await Promise.resolve()
     })
+
+    expect(screen.getByRole("button", { name: t("createAccount.sendAgain") })).not.toBeNull()
   })
 
   it("does not resend the update email code when sending fails", async () => {
@@ -850,7 +999,7 @@ describe("<EnterVerificationCode />", () => {
 
     await waitFor(() => {
       expect(console.error).toHaveBeenCalledWith(
-        "Resend update email code error:",
+        "Resend email change code error:",
         expect.any(Error)
       )
     })
