@@ -201,6 +201,14 @@
             "title": "Mayroon ka bang kapansanan at nakakakuha ng suporta sa iyong tahanan na binayaran ng gobyerno?",
             "yes_i_get_this_type_of_support": "Oo, nakakakuha ako ng ganitong uri ng suporta"
         },
+        "c9_plus_housing_program": {
+            "enter_your_plus_housing_program_number": "Ilagay ang iyong Plus Housing Program Number",
+            "look_for_your_program_number": "Hanapin ang iyong Program Number sa email na mula sa Plus Housing. Wala ka nito? Email {{emailLink}}.",
+            "part_of_plus_housing_program": "Bahagi ng Plus Housing program",
+            "plus_housing_program_number": "Plus Housing Program Number",
+            "subtitle": "Ang <a href='{{plusHousingProgramUrl}}' target='_blank'>Plus Housing program</a> ay para sa mga taong namumuhay na may HIV/AIDS. Nakakakuha ang mga kalahok ng Plus Housing ng priyoridad sa lottery para sa 160 Freelon. Kailangan mo ang iyong Plus Housing Program Number.",
+            "title": "Ikaw ba ay bahagi ng Plus Housing program?"
+        },
         "choose_applicant_details": {
             "alert_message": "Papalitan ng mga napili ninyo ang lahat ng detalye ukol sa pangunahing kontak na nasa aplikasyong ito at nasa settings ng account. \n",
             "continue_anon": "Magpatuloy nang walang account",

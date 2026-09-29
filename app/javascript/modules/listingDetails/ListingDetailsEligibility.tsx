@@ -18,11 +18,13 @@ import {
   getOccupancyRangeByUnitType,
   isHabitatListing,
   isPluralSRO,
+  isPlusHousing,
   isRental,
   isSale,
   listingHasOnlySROUnits,
   listingHasSROUnits,
   listingHasVeteransPreference,
+  plusHousingUnitsCount,
 } from "../../util/listingUtil"
 import {
   defaultIfNotTranslated,
@@ -338,11 +340,35 @@ export const ListingDetailsEligibility = ({
           </ListSection>
         )}
 
-        {priorityUnits?.length > 0 ? (
+        {priorityUnits?.length > 0 || isPlusHousing(listing) ? (
           <ListSection
             title={t("listings.priorityUnits")}
             subtitle={t("listings.priorityUnitsDescription")}
           >
+            {isPlusHousing(listing) && (
+              <InfoCard
+                title={t("listings.customListingType.plusHousing.priorityUnits.title")}
+                subtitle={(() => {
+                  const plusHousingCount = plusHousingUnitsCount(units)
+                  return plusHousingCount === 1
+                    ? `${plusHousingCount} ${defaultIfNotTranslated(
+                        "listings.features.unit",
+                        "Unit"
+                      )}`
+                    : `${plusHousingCount} ${defaultIfNotTranslated("t.units", "Units")}`
+                })()}
+              >
+                <p className="text-sm text-gray-700">
+                  {renderInlineMarkup(
+                    t("listings.customListingType.plusHousing.priorityUnits.description", {
+                      link: getSfGovUrl(
+                        "https://www.sf.gov/reports--february-2024--plus-housing-waitlist"
+                      ),
+                    })
+                  )}
+                </p>
+              </InfoCard>
+            )}
             {priorityUnits
               .filter((unit: ReducedUnit) => {
                 return unit?.name !== "Adaptable"

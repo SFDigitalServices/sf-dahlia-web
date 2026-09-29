@@ -7,14 +7,20 @@ import {
 import Account from "../../../pages/account/account"
 import React from "react"
 import { MemoryRouter } from "react-router"
-import { within, screen } from "@testing-library/react"
+import { within, screen, fireEvent, waitFor } from "@testing-library/react"
+import { useAuth } from "@clerk/react"
 import { setupUserContext } from "../../__util__/accountUtils"
-import { withAuthentication } from "../../../authentication/withAuthentication"
-import { RedirectType } from "../../../util/routeUtil"
+import { getSignInPath } from "../../../util/routeUtil"
 
 jest.mock("react-gtm-module", () => ({
   initialize: jest.fn(),
   dataLayer: jest.fn(),
+}))
+
+const mockNavigate = jest.fn()
+jest.mock("react-router", () => ({
+  ...jest.requireActual<typeof import("react-router")>("react-router"),
+  useNavigate: () => mockNavigate,
 }))
 
 jest.mock("../../../hooks/useFeatureFlag", () => ({
@@ -44,8 +50,7 @@ describe("<Account />", () => {
     beforeEach(async () => {
       originalLocation = mockWindowLocation()
       setupUserContext({ loggedIn: true })
-      const WrappedComponent = withAuthentication(Account, { redirectType: RedirectType.Account })
-      await renderAndLoadAsync(<WrappedComponent assetPaths={{}} />, {
+      await renderAndLoadAsync(<Account assetPaths={{}} />, {
         wrapper: ({ children }) => (
           <MemoryRouter initialEntries={["/account"]}>{children}</MemoryRouter>
         ),
@@ -89,6 +94,48 @@ describe("<Account />", () => {
     })
   })
 
+  describe("when the Clerk user signs out", () => {
+    let originalLocation: Location
+    let clerkSignOut: jest.Mock
+
+    beforeEach(async () => {
+      originalLocation = mockWindowLocation()
+      setupUserContext({ loggedIn: true })
+      clerkSignOut = jest.fn().mockResolvedValue(undefined)
+      ;(useAuth as jest.Mock).mockReturnValue({
+        isLoaded: true,
+        isSignedIn: true,
+        getToken: jest.fn().mockResolvedValue("clerk-session-token"),
+        signOut: clerkSignOut,
+      })
+
+      await renderAndLoadAsync(<Account assetPaths={{}} />, {
+        wrapper: ({ children }) => (
+          <MemoryRouter initialEntries={["/account"]}>{children}</MemoryRouter>
+        ),
+      })
+    })
+
+    afterEach(() => {
+      jest.restoreAllMocks()
+      restoreWindowLocation(originalLocation)
+    })
+
+    it("ends the Clerk session and routes to sign in from the account overview", async () => {
+      fireEvent.click(screen.getByRole("button", { name: "Sign out of account" }))
+
+      await waitFor(() => expect(clerkSignOut).toHaveBeenCalled())
+      await waitFor(() => expect(mockNavigate).toHaveBeenCalledWith(getSignInPath()))
+    })
+
+    it("ends the Clerk session and routes to sign in from the account nav", async () => {
+      fireEvent.click(screen.getByRole("button", { name: "Sign out" }))
+
+      await waitFor(() => expect(clerkSignOut).toHaveBeenCalled())
+      await waitFor(() => expect(window.location.href).toEqual(getSignInPath()))
+    })
+  })
+
   describe("when the user is not signed in", () => {
     let originalLocation: Location
 
@@ -96,8 +143,7 @@ describe("<Account />", () => {
       originalLocation = mockWindowLocation()
       setupUserContext({ loggedIn: false })
 
-      const WrappedComponent = withAuthentication(Account, { redirectType: RedirectType.Account })
-      await renderAndLoadAsync(<WrappedComponent assetPaths={{}} />)
+      await renderAndLoadAsync(<Account assetPaths={{}} />)
     })
 
     afterEach(() => {
@@ -107,6 +153,62 @@ describe("<Account />", () => {
 
     it("redirects to the sign in page if the user is not signed in", () => {
       expect(window.location.assign).toHaveBeenCalledWith("/sign-in?redirect=account")
+    })
+  })
+
+  describe("toasts", () => {
+    let originalLocation: Location
+
+    beforeEach(() => {
+      originalLocation = mockWindowLocation()
+      setupUserContext({ loggedIn: true })
+    })
+
+    afterEach(() => {
+      jest.restoreAllMocks()
+      restoreWindowLocation(originalLocation)
+    })
+
+    it("shows the account ready success toast when navigated to with accountReady state", async () => {
+      await renderAndLoadAsync(<Account assetPaths={{}} />, {
+        wrapper: ({ children }) => (
+          <MemoryRouter initialEntries={[{ pathname: "/account", state: { accountReady: true } }]}>
+            {children}
+          </MemoryRouter>
+        ),
+      })
+
+      expect(screen.getByText("Your account is ready.")).toBeInTheDocument()
+    })
+
+    it("does not show the account ready toast without accountReady state", async () => {
+      await renderAndLoadAsync(<Account assetPaths={{}} />, {
+        wrapper: ({ children }) => (
+          <MemoryRouter initialEntries={["/account"]}>{children}</MemoryRouter>
+        ),
+      })
+
+      expect(screen.queryByText("Your account is ready.")).toBeNull()
+    })
+
+    it("shows the housing counselor no-access toast when hcAccess=0 is in the URL", async () => {
+      await renderAndLoadAsync(<Account assetPaths={{}} />, {
+        wrapper: ({ children }) => (
+          <MemoryRouter initialEntries={["/account?hcAccess=0"]}>{children}</MemoryRouter>
+        ),
+      })
+
+      expect(screen.getByText("You do not have access to this account.")).toBeInTheDocument()
+    })
+
+    it("does not show the housing counselor no-access toast without hcAccess=0", async () => {
+      await renderAndLoadAsync(<Account assetPaths={{}} />, {
+        wrapper: ({ children }) => (
+          <MemoryRouter initialEntries={["/account"]}>{children}</MemoryRouter>
+        ),
+      })
+
+      expect(screen.queryByText("You do not have access to this account.")).toBeNull()
     })
   })
 })

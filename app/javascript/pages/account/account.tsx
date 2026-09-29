@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react"
-import { useLocation, useNavigate } from "react-router"
-import { useAuth } from "@clerk/clerk-react"
+
+import { useLocation, useNavigate, useSearchParams } from "react-router"
 import { Button, Heading, Tabs } from "@bloom-housing/ui-seeds"
 import { Icon, t, UniversalIconType } from "@bloom-housing/ui-components"
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons"
@@ -18,13 +18,13 @@ import {
   getSignInPath,
 } from "../../util/routeUtil"
 import UserContext from "../../authentication/context/UserContext"
-import { clearHeaders } from "../../authentication/token"
+import { useAuthSession } from "../../authentication/session/AuthSessionProvider"
 import { User } from "../../authentication/user"
 import { withAuthentication } from "../../authentication/withAuthentication"
 import { ConfigContext } from "../../lib/ConfigContext"
 
 import ContactCard from "./components/ContactCard"
-import SuccessToast from "./components/SuccessToast"
+import Toast from "./components/Toast"
 import { MyAccount } from "./my-account"
 import styles from "./account.module.scss"
 
@@ -132,7 +132,22 @@ const AccountReadyToast = () => {
 
   if (!toast) return null
 
-  return <SuccessToast>{t("createAccount.accountReady")}</SuccessToast>
+  return <Toast variant="success">{t("createAccount.accountReady")}</Toast>
+}
+
+const HousingCounselorNoAccessToast = () => {
+  const [searchParams] = useSearchParams()
+  const [toast, setToast] = useState(false)
+
+  useEffect(() => {
+    if (searchParams.get("hcAccess") === "0") {
+      setToast(true)
+    }
+  }, [searchParams])
+
+  if (!toast) return null
+
+  return <Toast variant="alert">{t("signIn.housingCounselor.noAccess")}</Toast>
 }
 
 interface AccountProps {
@@ -145,6 +160,7 @@ const DeviseAccount = () => {
   return (
     <Layout>
       <AccountReadyToast />
+      <HousingCounselorNoAccessToast />
       <AccountLayout>
         <div className={styles.overview}>
           <AccountOverview signOut={() => signOut?.()} user={profile} />
@@ -155,18 +171,18 @@ const DeviseAccount = () => {
 }
 
 const ClerkAccount = () => {
-  const { signOut } = useAuth()
+  const { signOut } = useAuthSession()
   const { profile } = useContext(UserContext)
   const navigate = useNavigate()
 
   return (
     <Layout>
       <AccountReadyToast />
+      <HousingCounselorNoAccessToast />
       <AccountLayout>
         <div className={styles.overview}>
           <AccountOverview
             signOut={() => {
-              clearHeaders()
               void signOut().finally(() => {
                 void navigate(getSignInPath())
               })
@@ -187,6 +203,7 @@ const Account = ({ assetPaths }: AccountProps) => {
     return (
       <>
         <AccountReadyToast />
+        <HousingCounselorNoAccessToast />
         <MyAccount assetPaths={assetPaths} />
       </>
     )

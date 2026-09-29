@@ -28,6 +28,8 @@ import {
   preferenceNameHasVeteran,
   isFcfsSalesListing,
   isDeadlinePassed,
+  isPlusHousing,
+  plusHousingUnitsCount,
   getAllUnitSummaries,
   getOccupancyRangeByUnitType,
 } from "../../util/listingUtil"
@@ -58,6 +60,7 @@ import RailsUnit, {
 } from "../../api/types/rails/listings/RailsUnit"
 import { fcfsSaleListing } from "../data/RailsSaleListing/listing-sale-fcfs"
 import { openRentalFcfsListing } from "../data/RailsRentalListing/listing-rental-fcfs"
+import { CUSTOM_LISTING_TYPES } from "../../modules/constants"
 
 describe("listingUtil", () => {
   const OLD_ENV = process.env
@@ -286,6 +289,37 @@ describe("listingUtil", () => {
 
     it("should return true when listing is a habitat listing", () => {
       expect(isHabitatListing(habitatListing)).toBe(true)
+    })
+  })
+
+  describe("isPlusHousing", () => {
+    it("should return false when listing is not a Plus Housing listing", () => {
+      expect(isPlusHousing(closedRentalListing)).toBe(false)
+    })
+
+    it("should return true when listing is a Plus Housing listing", () => {
+      expect(
+        isPlusHousing({
+          ...closedRentalListing,
+          Custom_Listing_Type: CUSTOM_LISTING_TYPES.PLUS_HOUSING,
+        })
+      ).toBe(true)
+    })
+  })
+
+  describe("plusHousingUnitsCount", () => {
+    it("should count only units reserved for Plus Housing", () => {
+      expect(
+        plusHousingUnitsCount([
+          { ...units[0], Reserved_Type: "Plus Housing" },
+          { ...units[1], Reserved_Type: "Other priority" },
+          { ...units[2], Reserved_Type: "Plus Housing" },
+        ])
+      ).toBe(2)
+    })
+
+    it("should return zero when units are unavailable", () => {
+      expect(plusHousingUnitsCount()).toBe(0)
     })
   })
 

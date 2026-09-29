@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import React, { useEffect, useRef, useState } from "react"
-import { Navigate, useNavigate } from "react-router"
-import { useAuth, useClerk, useSignIn } from "@clerk/clerk-react"
+import { Navigate, useLocation, useNavigate } from "react-router"
 import { Form, t } from "@bloom-housing/ui-components"
 import { Alert, Button, Card, Heading, Link, LoadingState, Message } from "@bloom-housing/ui-seeds"
 import { useForm, useWatch } from "react-hook-form"
@@ -17,11 +16,15 @@ import {
   getSignInCodePath,
 } from "../util/routeUtil"
 import { authorizeHousingCounselor } from "../api/authApiService"
-import { getSfGovUrl, renderInlineMarkup } from "../util/languageUtil"
+import { useAuthSession } from "./session/AuthSessionProvider"
+import { useSignInSession } from "./session/useSignInSession"
+import { bearerToken, isAuthInitialized } from "./session/authStatus"
+import { getSfGovUrl, localizedFormat, renderInlineMarkup } from "../util/languageUtil"
 import { AUTH_FLOW, UNLEASH_FLAG } from "../modules/constants"
 import { useFeatureFlag } from "../hooks/useFeatureFlag"
 import { clearHeaders } from "./token"
 import styles from "./SignInFlow.module.scss"
+import { emailRegex } from "../util/accountUtil"
 
 interface SignInFields {
   email: string
@@ -34,25 +37,35 @@ const getHousingCounselorToken = () => new URLSearchParams(window.location.searc
 
 const SignInFlow = () => {
   const navigate = useNavigate()
-  const { isLoaded: authLoaded, isSignedIn, getToken } = useAuth()
-  const { isLoaded, signIn, setActive } = useSignIn()
-  const { client } = useClerk()
+  const { state } = useLocation() as { state?: { redirectUrl?: string } }
+  const redirectUrl = state?.redirectUrl
+  const postSignInRedirectUrl = redirectUrl ?? getMyAccountPath()
+  const requiredLoginsDate = localizedFormat(process.env.REQUIRED_LOGINS_DATE ?? "", "LL")
+  const { status, getCredentials } = useAuthSession()
+  const isSignedIn = status.kind === "signedIn"
+  const {
+    isBusy: signInIsBusy,
+    preferredMethod: preferredSignInMethod,
+    signInWithPassword,
+    sendEmailCode,
+    activateSession,
+  } = useSignInSession()
   const { unleashFlag: requiredLoginsMessageEnabled } = useFeatureFlag(
     UNLEASH_FLAG.REQUIRED_LOGINS_MESSAGE,
     false
   )
   const [showError, setShowError] = useState(false)
   const [view, setView] = useState<SignInView | null>(null)
-  const housingCounselorChecked = useRef(false)
+  const [housingCounselorChecked, setHousingCounselorChecked] = useState(false)
+  // Synchronous (unlike React state), so the effect below can never race ahead of onSubmit's own check.
+  const housingCounselorHandledRef = useRef(false)
+
   // Default to password sign-in, but prefer the code flow if the user last signed in via email code.
   useEffect(() => {
-    if (!isLoaded || view !== null) return
-    if (client?.lastAuthenticationStrategy === "email_code") {
-      setView("verificationCode")
-    } else {
-      setView("password")
-    }
-  }, [isLoaded, client?.lastAuthenticationStrategy, view])
+    if (!isAuthInitialized(status) || signInIsBusy || view !== null) return
+    setView(preferredSignInMethod === "emailCode" ? "verificationCode" : "password")
+  }, [status, signInIsBusy, preferredSignInMethod, view])
+
   const alertRef = useRef<HTMLDivElement>(null)
   const {
     register,
@@ -75,7 +88,7 @@ const SignInFlow = () => {
     const token = getHousingCounselorToken()
     if (!token) return true
     try {
-      const sessionToken = await getToken()
+      const sessionToken = bearerToken(await getCredentials())
       if (!sessionToken) {
         setShowError(true)
         return false
@@ -92,30 +105,42 @@ const SignInFlow = () => {
   }
 
   const onSubmit = async ({ email, password }: SignInFields) => {
-    if (!isLoaded || !signIn) return
+    if (signInIsBusy) return
     setShowError(false)
-    try {
-      const { status, createdSessionId } = await signIn.create({ identifier: email, password })
-      if (status !== "complete") {
-        console.error(`Sign in failed: ${status}`)
-        setShowError(true)
-        return
-      }
-      clearHeaders() // Clear headers in case of existing Devise session (while testing)
-      const housingCounselorToken = getHousingCounselorToken()
-      if (housingCounselorToken) {
-        housingCounselorChecked.current = true
-        await setActive({ session: createdSessionId })
-        if (!(await checkHousingCounselorAccess())) return
-        void navigate(getMyAccountPath())
-        return
-      }
-      // TODO: if user has not completed their profile, redirect to profile page
-      await setActive({ session: createdSessionId, redirectUrl: getMyAccountPath() })
-    } catch (error) {
-      console.error("Sign in error", error)
+
+    const { error, notReady } = await signInWithPassword(email, password)
+    if (notReady) return
+    if (error) {
       setShowError(true)
+      return
     }
+    clearHeaders() // Clear headers in case of existing Devise session (while testing)
+
+    // Set before finalize() (which flips `isSignedIn`) so the effect below never races
+    // ahead and runs its own check before onSubmit has decided the outcome.
+    const housingCounselorToken = getHousingCounselorToken()
+    if (housingCounselorToken) {
+      housingCounselorHandledRef.current = true
+    }
+
+    // we need to set the session token and *not* navigate away, so we have it for `checkHousingCounselorAccess()`
+    // but that means we lose access to the `decorateUrl` utility function.
+    await activateSession()
+
+    if (housingCounselorToken) {
+      const housingCounselorAccess = await checkHousingCounselorAccess()
+      if (!housingCounselorAccess) {
+        setHousingCounselorChecked(true)
+        void navigate(createPath(postSignInRedirectUrl, { hcAccess: "0" }))
+        return
+      }
+      setHousingCounselorChecked(true)
+    }
+
+    // Prevents the render-time redirect below from firing again (with a stale, query-less URL)
+    // during the extra render pass that happens before this component unmounts.
+    setHousingCounselorChecked(true)
+    void navigate(postSignInRedirectUrl)
   }
 
   const onError = (submitErrors: { email?: unknown; password?: unknown }) => {
@@ -124,57 +149,65 @@ const SignInFlow = () => {
     }
   }
 
+  // TODO: DAH-4352 show proper error message in addition to logging to the console
   const onGetCodeSubmit = async ({ email }: SignInFields) => {
-    if (!isLoaded || !signIn) return
+    if (signInIsBusy) return
+
     setShowError(false)
-    try {
-      const { supportedFirstFactors } = await signIn.create({ identifier: email })
-      const emailCodeFactor = (supportedFirstFactors ?? []).find(
-        (factor) => factor.strategy === "email_code"
-      )
-      if (emailCodeFactor?.strategy !== "email_code") {
-        throw new Error("Email code factor missing")
-      }
-      await signIn.prepareFirstFactor({
-        strategy: "email_code",
-        emailAddressId: emailCodeFactor.emailAddressId,
-      })
-      void navigate(getSignInCodePath(), {
-        state: { email, housingCounselorToken: getHousingCounselorToken() },
-      })
-    } catch (error) {
-      console.error("Sign in code error", error)
+    const { error, notReady } = await sendEmailCode(email)
+    if (notReady) return
+    if (error) {
       setShowError(true)
+      return
     }
+
+    void navigate(getSignInCodePath(), {
+      state: {
+        email,
+        housingCounselorToken: getHousingCounselorToken(),
+        flow: AUTH_FLOW.SIGN_IN,
+        ...(redirectUrl && { redirectUrl }),
+      },
+    })
   }
 
   useEffect(() => {
-    if (!authLoaded || !isSignedIn || housingCounselorChecked.current) return
+    if (!isSignedIn || housingCounselorHandledRef.current) return
     const token = getHousingCounselorToken()
     if (!token) return
 
-    housingCounselorChecked.current = true
+    setHousingCounselorChecked(true)
     void (async () => {
       try {
-        const sessionToken = await getToken()
+        const sessionToken = bearerToken(await getCredentials())
         if (!sessionToken) {
           setShowError(true)
           return
         }
-        await authorizeHousingCounselor(token, sessionToken)
+        try {
+          await authorizeHousingCounselor(token, sessionToken)
+        } catch {
+          console.error("Error authorizing housing counselor")
+          void navigate(createPath(getMyAccountPath(), { hcAccess: "0" }))
+          return
+        }
         console.log("TODO: Housing counselor already signed in, TBD banner and applicant view")
         void navigate(getMyAccountPath())
       } catch {
         setShowError(true)
       }
     })()
-  }, [authLoaded, getToken, isSignedIn, navigate])
+  }, [getCredentials, isSignedIn, navigate])
 
-  if (authLoaded && isSignedIn && !getHousingCounselorToken()) {
-    return <Navigate to={getMyAccountPath()} replace />
+  // TODO: instead of relying on postSignInRedirectUrl, this component should detect
+  // incomplete profiles and redirect to the add-profile page
+  if (isSignedIn && !getHousingCounselorToken() && !housingCounselorChecked) {
+    return <Navigate to={postSignInRedirectUrl} replace />
   }
 
-  const forgotPasswordPath = createPath(getForgotPasswordPath(), { email: emailField })
+  const forgotPasswordPath = createPath(getForgotPasswordPath(), {
+    email: emailField && emailRegex.test(emailField) ? emailField : "",
+  })
 
   const verificationCodeSection = (
     <>
@@ -185,7 +218,7 @@ const SignInFlow = () => {
           variant="primary"
           size="sm"
           type="submit"
-          disabled={!isLoaded}
+          disabled={signInIsBusy}
         >
           {t("createAccount.getCode")}
         </Button>
@@ -198,6 +231,8 @@ const SignInFlow = () => {
 
   const passwordSection = (
     <>
+      {/* eslint-disable-next-line react-hooks/refs -- housingCounselorHandledRef is only ever
+          read/written inside onSubmit's real event-handler execution, never during render */}
       <Form className={styles.form} onSubmit={handleSubmit(onSubmit, onError)}>
         <EmailFieldset register={register} />
         <span className={styles.forgotPassword}>
@@ -214,7 +249,7 @@ const SignInFlow = () => {
           variant="primary"
           size="sm"
           type="submit"
-          disabled={!isLoaded}
+          disabled={signInIsBusy}
         >
           {t("pageTitle.signIn")}
         </Button>
@@ -246,12 +281,24 @@ const SignInFlow = () => {
         <Heading priority={1} size="2xl">
           {t("pageTitle.signIn")}
         </Heading>
+        {redirectUrl && requiredLoginsDate && (
+          <Message variant="primary" fullwidth className={styles.requiredLoginNotice}>
+            {renderInlineMarkup(
+              t("signIn.requiredLoginNotice", {
+                date: requiredLoginsDate,
+                url: getSfGovUrl("https://www.sf.gov/get-help-with-your-dahlia-account"),
+              })
+            )}
+          </Message>
+        )}
         {showError && (
           <div ref={alertRef} tabIndex={-1} className={styles.errorAlert}>
             <Alert fullwidth variant="alert" onClose={() => setShowError(false)}>
-              {renderInlineMarkup(
-                t("signIn.badCredentialsWithResetLink", { url: forgotPasswordPath })
-              )}
+              {view === "verificationCode"
+                ? t("signIn.badCredentials")
+                : renderInlineMarkup(
+                    t("signIn.badCredentialsWithResetLink", { url: forgotPasswordPath })
+                  )}
             </Alert>
           </div>
         )}
@@ -267,6 +314,11 @@ const SignInFlow = () => {
         <Button variant="primary-outlined" size="sm" href={getCreateAccountPath()}>
           {t("signIn.createAccount")}
         </Button>
+        {redirectUrl && (
+          <Link href={redirectUrl} className={styles.continueWithoutSigningIn}>
+            {t("b1aWelcomeBack.continueWithoutSigningIn")}
+          </Link>
+        )}
       </Card.Section>
       <GetHelp flow={AUTH_FLOW.SIGN_IN} />
     </AuthLayout>

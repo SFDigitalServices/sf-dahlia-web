@@ -3,6 +3,8 @@ import React from "react"
 import { render, screen } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
 import PasswordFieldset, {
+  ClerkPasswordError,
+  handleClerkPasswordErrors,
   handlePasswordServerErrors,
   passwordFieldsetErrors,
 } from "../../pages/account/components/PasswordFieldset"
@@ -28,6 +30,15 @@ const WrappedPasswordFieldset = () => {
   )
 }
 
+jest.mock("@clerk/react/errors", () => ({
+  isClerkAPIResponseError: (error: unknown) =>
+    Array.isArray((error as { errors?: unknown })?.errors),
+}))
+
+const clerkError = (code: string) =>
+  Object.assign(new Error("Clerk error"), {
+    errors: [{ code, message: code, longMessage: code }],
+  })
 describe("Password Fieldset", () => {
   it("displays password instructions without validation", () => {
     render(<WrappedPasswordFieldset />)
@@ -134,6 +145,27 @@ describe("Password Fieldset", () => {
           shouldFocus: true,
         },
       ])
+    })
+  })
+  describe("handleClerkPasswordErrors", () => {
+    it("sets a currentPassword error when the current password is wrong", () => {
+      expect(handleClerkPasswordErrors(clerkError("form_password_incorrect"))).toEqual([
+        "currentPassword",
+        { message: "currentPassword:incorrect", shouldFocus: true },
+      ])
+    })
+
+    it("sets a complexity error for other password policy failures", () => {
+      expect(handleClerkPasswordErrors(clerkError("form_password_length_too_short"))).toEqual([
+        "password",
+        { message: "password:complexity", shouldFocus: true },
+      ])
+    })
+
+    it("falls back to a generic error", () => {
+      expect(
+        handleClerkPasswordErrors(new Error("network") as unknown as ClerkPasswordError)
+      ).toEqual(["password", { message: "password:server:generic", shouldFocus: true }])
     })
   })
 

@@ -112,6 +112,7 @@ Rails.application.routes.draw do
   get '(:lang)/create-account/code' => 'auth#enter_verification_code', lang: /(en|es|zh|tl)/
   get '(:lang)/add-password' => 'auth#add_password', lang: /(en|es|zh|tl)/
   get '(:lang)/add-profile' => 'auth#add_profile', lang: /(en|es|zh|tl)/
+  get '(:lang)/change-password' => 'auth#change_password', lang: /(en|es|zh|tl)/
   get '(:lang)/forgot-password' => 'auth#forgot_password', lang: /(en|es|zh|tl)/
   get '(:lang)/reset-password' => 'auth#reset_password', lang: /(en|es|zh|tl)/
 

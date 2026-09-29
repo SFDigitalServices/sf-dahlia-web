@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/unbound-method */
-import React, { useContext, useEffect, useState } from "react"
+import React, { useContext, useEffect, useState, useRef } from "react"
 import { useLocation, useNavigate } from "react-router"
-import { useAuth, useSignIn, useSignUp } from "@clerk/clerk-react"
 import { ExpandableContent, Form, Order, t } from "@bloom-housing/ui-components"
 import { Card, Heading, Link, Button } from "@bloom-housing/ui-seeds"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
@@ -10,13 +9,19 @@ import { Controller, useForm } from "react-hook-form"
 import withAppSetup from "../../layouts/withAppSetup"
 import AuthLayout from "../../layouts/AuthLayout"
 import UserContext from "../../authentication/context/UserContext"
+import { useAuthSession } from "../../authentication/session/AuthSessionProvider"
+import { useSignInSession } from "../../authentication/session/useSignInSession"
+import { useSignUpSession } from "../../authentication/session/useSignUpSession"
+import { bearerToken } from "../../authentication/session/authStatus"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import {
   AppPages,
+  createPath,
   getAddPasswordPath,
+  getAuthFlowPath,
   getAddProfilePath,
-  getCreateAccountPath,
   getMyAccountPath,
+  getResetPasswordPath,
   getSignInPath,
 } from "../../util/routeUtil"
 import styles from "./verification-code.module.scss"
@@ -28,6 +33,7 @@ import { authorizeHousingCounselor } from "../../api/authApiService"
 interface EnterVerificationCodePageProps {
   email: string
   flow: AUTH_FLOW
+  redirectUrl?: string
 }
 
 // The user can send a new verification code every 30 seconds
@@ -40,13 +46,14 @@ const EnterVerificationCodePage = ({
   email,
   flow,
   housingCounselorToken,
+  redirectUrl = getMyAccountPath(), // TODO: simplify and centralize auth redirects
 }: EnterVerificationCodePageProps & { housingCounselorToken?: string | null }) => {
   const navigate = useNavigate()
-  const { isLoaded: signUpLoaded, signUp, setActive: setActiveSignUp } = useSignUp()
-  const { isLoaded: signInLoaded, signIn, setActive: setActiveSignIn } = useSignIn()
-  const { getToken } = useAuth()
-  const isSignInFlow = flow === AUTH_FLOW.SIGN_IN
-  const isLoaded = isSignInFlow ? signInLoaded : signUpLoaded
+  const signInSession = useSignInSession()
+  const signUpSession = useSignUpSession()
+  const isForgotPasswordFlow = flow === AUTH_FLOW.FORGOT_PASSWORD
+  const { getCredentials } = useAuthSession()
+  const isLoaded = flow === AUTH_FLOW.CREATE_ACCOUNT ? !signUpSession.isBusy : !signInSession.isBusy
   const [resendExpiresAt, setResendExpiresAt] = useState(() => Date.now() + RESEND_CODE_MS)
   const [resendSeconds, setResendSeconds] = useState(RESEND_CODE_MS / 1000)
   const [isResending, setIsResending] = useState(false)
@@ -76,103 +83,119 @@ const EnterVerificationCodePage = ({
     return () => window.clearTimeout(timeoutId)
   }, [resendExpiresAt])
 
-  const editEmailHref = isSignInFlow ? getSignInPath() : getCreateAccountPath()
+  const editEmailHref = getAuthFlowPath(flow)
+
+  const transferToCreateAccount = async () => {
+    const { error, notReady } = await signUpSession.transferFromSignIn()
+    if (notReady) return
+    if (error) {
+      setError("code", { message: "invalid" })
+      return
+    }
+
+    await signUpSession.activateSession(getAddPasswordPath(), { flow: AUTH_FLOW.CREATE_ACCOUNT })
+  }
 
   const verifySignInCode = async (code: string) => {
-    if (!signInLoaded || !signIn) return
-    try {
-      const completeSignIn = await signIn.attemptFirstFactor({
-        strategy: "email_code",
-        code,
-      })
-      if (completeSignIn.status === "complete") {
-        if (housingCounselorToken) {
-          await setActiveSignIn({ session: completeSignIn.createdSessionId })
-          const sessionToken = await getToken()
-          if (!sessionToken) {
-            setError("code", { message: "invalid" })
-            return
-          }
-          await authorizeHousingCounselor(housingCounselorToken, sessionToken)
-          console.log(
-            "TODO: Housing counselor successfully authenticated, TBD banner and applicant view"
-          )
-          void navigate(getMyAccountPath())
-          return
-        }
-        await setActiveSignIn({
-          session: completeSignIn.createdSessionId,
-          redirectUrl: getMyAccountPath(),
-        })
-      } else {
-        console.error("Sign in failed:", completeSignIn)
-        setError("code", { message: "invalid" })
-      }
-    } catch (error) {
-      console.error("Code verification error:", error)
-      setError("code", { message: "invalid" })
+    if (signInSession.isBusy) return
+
+    const { error, notReady, needsSignUp } = await signInSession.verifyEmailCode(code)
+    if (notReady) return
+    if (needsSignUp) {
+      void transferToCreateAccount()
+      return
     }
+
+    if (error) {
+      setError("code", { message: "invalid" })
+      return
+    }
+
+    let destination = redirectUrl
+    if (housingCounselorToken) {
+      const sessionToken = bearerToken(await getCredentials())
+      if (!sessionToken) {
+        setError("code", { message: "invalid" })
+        return
+      }
+      try {
+        await authorizeHousingCounselor(housingCounselorToken, sessionToken)
+        console.log(
+          "TODO: Housing counselor successfully authenticated, TBD banner and applicant view"
+        )
+      } catch {
+        // Keep the user signed in, but flag that they don't have access to this account.
+        destination = createPath(redirectUrl, { hcAccess: "0" })
+      }
+    }
+
+    await signInSession.activateSession(destination)
   }
 
   const verifySignUpCode = async (code: string) => {
-    if (!signUpLoaded || !signUp) return
-    try {
-      const completeSignUp = await signUp.attemptEmailAddressVerification({
-        code,
-      })
-      if (completeSignUp.status === "complete") {
-        await setActiveSignUp({ session: completeSignUp.createdSessionId })
-        void navigate(getAddPasswordPath())
-      } else {
-        console.error("Account creation failed:", completeSignUp)
-        setError("code", { message: "invalid" })
-      }
-    } catch (error) {
-      console.error("Code verification error:", error)
+    const { error, notReady } = await signUpSession.verifyEmailCode(code)
+    if (notReady) return
+    if (error) {
       setError("code", { message: "invalid" })
+      return
     }
+
+    await signUpSession.activateSession(getAddPasswordPath(), { flow })
   }
 
-  const onSubmit = async ({ code }: { code: string }) =>
-    isSignInFlow ? verifySignInCode(code) : verifySignUpCode(code)
+  const verifyForgotPasswordCode = async (code: string) => {
+    const { error } = await signInSession.verifyPasswordResetCode(code)
+    if (error) return
+
+    void navigate(getResetPasswordPath(), { state: { email, flow, code } })
+  }
+
+  const verifyAuthCodeByFlow: Record<AUTH_FLOW, (code: string) => Promise<void>> = {
+    [AUTH_FLOW.SIGN_IN]: verifySignInCode,
+    [AUTH_FLOW.CREATE_ACCOUNT]: verifySignUpCode,
+    [AUTH_FLOW.FORGOT_PASSWORD]: verifyForgotPasswordCode,
+  }
+
+  const onSubmit = async ({ code }: { code: string }) => verifyAuthCodeByFlow[flow](code)
 
   const resendSignInCode = async (): Promise<boolean> => {
-    if (!signInLoaded || !signIn) return false
-    try {
-      const emailCodeFactor = signIn.supportedFirstFactors?.find(
-        (factor) => factor.strategy === "email_code"
-      )
-      if (emailCodeFactor?.strategy !== "email_code") {
-        console.error("Sign in email code factor missing")
-        return false
-      }
-      await signIn.prepareFirstFactor({
-        strategy: "email_code",
-        emailAddressId: emailCodeFactor.emailAddressId,
-      })
-      return true
-    } catch (error) {
-      console.error("Sign in code resend error", error)
+    const { error } = await signInSession.resendEmailCode()
+    if (error) {
       return false
     }
+
+    return true
   }
 
   const resendSignUpCode = async (): Promise<boolean> => {
-    if (!signUpLoaded || !signUp) return false
-    try {
-      await signUp.prepareEmailAddressVerification({ strategy: "email_code" })
-      return true
-    } catch (error) {
-      console.error("Sign up code resend error", error)
+    const { error } = await signUpSession.resendEmailCode()
+    if (error) {
       return false
     }
+
+    return true
+  }
+
+  const resendForgotPasswordCode = async (): Promise<boolean> => {
+    const { error } = await signInSession.resendPasswordResetCode()
+    if (error) {
+      return false
+    }
+
+    return true
+  }
+
+  const resendCodeByFlow: Record<AUTH_FLOW, () => Promise<boolean>> = {
+    [AUTH_FLOW.SIGN_IN]: resendSignInCode,
+    [AUTH_FLOW.CREATE_ACCOUNT]: resendSignUpCode,
+    [AUTH_FLOW.FORGOT_PASSWORD]: resendForgotPasswordCode,
   }
 
   const onResend = async () => {
     if (isResending || resendSeconds > 0) return
     setIsResending(true)
     try {
-      const sent = await (isSignInFlow ? resendSignInCode() : resendSignUpCode())
+      const sent = await resendCodeByFlow[flow]()
       if (sent) {
         setResendExpiresAt(Date.now() + RESEND_CODE_MS)
         setResendSeconds(RESEND_CODE_MS / 1000)
@@ -196,6 +219,9 @@ const EnterVerificationCodePage = ({
             {t("createAccount.editEmail")}
           </Link>
         </p>
+        {isForgotPasswordFlow && (
+          <p className={styles["forgotPasswordDescription"]}>{t("signIn.forgotPasswordCode")}</p>
+        )}
         <Form onSubmit={handleSubmit(onSubmit)}>
           <Controller
             name="code"
@@ -272,14 +298,16 @@ const EnterVerificationCodePage = ({
 
 const EnterVerificationCode = (_props: { assetPaths: unknown }) => {
   const navigate = useNavigate()
-  const { pathname, state } = useLocation()
+  const { state } = useLocation() // TODO: needs a better name
   const email = state?.email
-  const { isLoaded, isSignedIn } = useAuth()
+  const { status } = useAuthSession()
+  const isSignedIn = status.kind === "signedIn"
   const { profile, initialStateLoaded } = useContext(UserContext)
   const { unleashFlag: clerkEnabled, flagsReady } = useFeatureFlag(UNLEASH_FLAG.CLERK_AUTH, false)
-  const flow: AUTH_FLOW = pathname.includes("/sign-in/code")
-    ? AUTH_FLOW.SIGN_IN
-    : AUTH_FLOW.CREATE_ACCOUNT
+  const flow: AUTH_FLOW = state?.flow
+  const fallbackPath = flow ? getAuthFlowPath(flow) : getSignInPath()
+
+  // TODO: simplify and centralize auth redirects
   /**
    * Verification code page redirects
    * --------------------------------
@@ -291,13 +319,19 @@ const EnterVerificationCode = (_props: { assetPaths: unknown }) => {
    * If the user is signed in with a profile, redirect to my account.
    * If the user is signed in without a profile, redirect to the add profile page.
    */
+  const redirectCheckHasRunOnce = useRef(false) // only redirect when first visiting this page, otherwise it overrides navigate() calls from code submission
   useEffect(() => {
+    if (redirectCheckHasRunOnce.current) return
+
     if (!flagsReady) return
     if (!clerkEnabled) {
       void navigate(getSignInPath())
       return
     }
-    if (!isLoaded) return
+    if (status.kind === "initializing") return
+    if (!email || !flow) {
+      void navigate(fallbackPath)
+    }
     if (!isSignedIn && !email) {
       void navigate(getSignInPath())
       return
@@ -305,9 +339,21 @@ const EnterVerificationCode = (_props: { assetPaths: unknown }) => {
     if (!initialStateLoaded) return
     if (isSignedIn && profile) void navigate(getMyAccountPath())
     if (isSignedIn && !profile) void navigate(getAddProfilePath())
-  }, [flagsReady, clerkEnabled, isLoaded, isSignedIn, email, initialStateLoaded, profile, navigate])
+    redirectCheckHasRunOnce.current = true
+  }, [
+    flagsReady,
+    clerkEnabled,
+    status,
+    isSignedIn,
+    email,
+    initialStateLoaded,
+    profile,
+    navigate,
+    flow,
+    fallbackPath,
+  ])
 
-  const ready = flagsReady && clerkEnabled && isLoaded && !isSignedIn && !!email
+  const ready = flagsReady && clerkEnabled && status.kind === "signedOut" && !!email
 
   if (!ready) {
     return null
@@ -318,6 +364,7 @@ const EnterVerificationCode = (_props: { assetPaths: unknown }) => {
       email={email}
       flow={flow}
       housingCounselorToken={state?.housingCounselorToken}
+      redirectUrl={state?.redirectUrl}
     />
   )
 }

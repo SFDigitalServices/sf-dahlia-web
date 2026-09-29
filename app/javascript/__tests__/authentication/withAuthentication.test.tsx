@@ -5,11 +5,12 @@ import { mockWindowLocation, restoreWindowLocation } from "../__util__/renderUti
 import { withAuthentication } from "../../authentication/withAuthentication"
 import UserContext, { ContextProps } from "../../authentication/context/UserContext"
 import { isTokenValid, parseUrlParams } from "../../authentication/token"
-import { useAuth } from "@clerk/clerk-react"
+import { useAuth } from "@clerk/react"
 import { getLocalizedPath, getAddProfilePath, RedirectType } from "../../util/routeUtil"
 import { getCurrentLanguage } from "../../util/languageUtil"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import TagManager from "react-gtm-module"
+import { AuthSessionProvider } from "../../authentication/session/AuthSessionProvider"
 
 // Mock the useGTMDataLayer hook
 jest.mock("react-gtm-module", () => ({
@@ -221,7 +222,8 @@ describe("withAuthentication", () => {
       const { getByText } = render(
         <UserContext.Provider value={mockContextValue}>
           <WrappedComponent />
-        </UserContext.Provider>
+        </UserContext.Provider>,
+        { wrapper: AuthSessionProvider }
       )
 
       expect(getByText("Protected Component")).toBeInTheDocument()
@@ -234,7 +236,8 @@ describe("withAuthentication", () => {
       render(
         <UserContext.Provider value={mockContextValue}>
           <WrappedComponent />
-        </UserContext.Provider>
+        </UserContext.Provider>,
+        { wrapper: AuthSessionProvider }
       )
 
       expect(window.location.assign).toHaveBeenCalledWith("/sign-in")
@@ -248,7 +251,8 @@ describe("withAuthentication", () => {
       render(
         <UserContext.Provider value={mockContextValue}>
           <WrappedComponent />
-        </UserContext.Provider>
+        </UserContext.Provider>,
+        { wrapper: AuthSessionProvider }
       )
 
       expect(window.location.assign).toHaveBeenCalledWith("/add-profile")

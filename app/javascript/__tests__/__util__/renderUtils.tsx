@@ -2,7 +2,7 @@
 import React from "react"
 import { act, render, RenderOptions, RenderResult } from "@testing-library/react"
 import { t } from "@bloom-housing/ui-components"
-import { MemoryRouter } from "react-router"
+import { MemoryRouter, type InitialEntry } from "react-router"
 import crypto from "crypto"
 import { useForm, FormProvider } from "react-hook-form"
 import { FormEngineProvider } from "../../formEngine/formEngineContext"
@@ -39,7 +39,7 @@ export const restoreWindowLocation = (originalLocation: typeof window.location):
 export const renderAndLoadAsync = async (
   ui: React.ReactElement,
   options?: Omit<RenderOptions, "queries">,
-  initialEntries: string[] = ["/"]
+  initialEntries: InitialEntry[] = ["/"]
 ): Promise<RenderResult> => {
   let renderResponse: RenderResult = {} as RenderResult
   // eslint-disable-next-line @typescript-eslint/require-await

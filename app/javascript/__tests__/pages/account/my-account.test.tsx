@@ -7,8 +7,6 @@ import {
 import MyAccount from "../../../pages/account/my-account" // eslint-disable-line import/no-named-as-default
 import React from "react"
 import { setupUserContext } from "../../__util__/accountUtils"
-import { withAuthentication } from "../../../authentication/withAuthentication"
-import { RedirectType } from "../../../util/routeUtil"
 
 jest.mock("react-gtm-module", () => ({
   initialize: jest.fn(),
@@ -35,8 +33,7 @@ describe("<MyAccount />", () => {
       originalLocation = mockWindowLocation()
       setupUserContext({ loggedIn: true })
 
-      const WrappedComponent = withAuthentication(MyAccount, { redirectType: RedirectType.Account })
-      const renderResult = await renderAndLoadAsync(<WrappedComponent assetPaths={{}} />)
+      const renderResult = await renderAndLoadAsync(<MyAccount assetPaths={{}} />)
       getByTestId = renderResult.getByTestId
     })
 
@@ -76,8 +73,7 @@ describe("<MyAccount />", () => {
       originalLocation = mockWindowLocation()
       setupUserContext({ loggedIn: false })
 
-      const WrappedComponent = withAuthentication(MyAccount, { redirectType: RedirectType.Account })
-      await renderAndLoadAsync(<WrappedComponent assetPaths={{}} />)
+      await renderAndLoadAsync(<MyAccount assetPaths={{}} />)
     })
 
     afterEach(() => {

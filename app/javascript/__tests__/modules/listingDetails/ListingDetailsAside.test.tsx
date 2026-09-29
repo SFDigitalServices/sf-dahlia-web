@@ -1,11 +1,25 @@
 import React from "react"
 import { render } from "@testing-library/react"
+import { MemoryRouter } from "react-router"
 import { ListingDetailsAside } from "../../../modules/listingDetailsAside/ListingDetailsAside"
 import { closedRentalListing } from "../../data/RailsRentalListing/listing-rental-closed"
 import { openSaleListing } from "../../data/RailsSaleListing/listing-sale-open"
 import { fcfsSaleListing } from "../../data/RailsSaleListing/listing-sale-fcfs"
+import { useFeatureFlag } from "../../../hooks/useFeatureFlag"
+import { UNLEASH_FLAG } from "../../../modules/constants"
+
+jest.mock("../../../hooks/useFeatureFlag", () => ({
+  useFeatureFlag: jest.fn(),
+}))
 
 describe("ListingDetailsAside", () => {
+  beforeEach(() => {
+    ;(useFeatureFlag as jest.Mock).mockImplementation((flagName: string) => ({
+      flagsReady: true,
+      unleashFlag: flagName === UNLEASH_FLAG.FORM_ENGINE,
+    }))
+  })
+
   it("renders ListingDetailsAside component rental", () => {
     window.matchMedia = jest.fn().mockImplementation((query) => {
       return {
@@ -21,7 +35,9 @@ describe("ListingDetailsAside", () => {
     })
 
     const { asFragment } = render(
-      <ListingDetailsAside listing={closedRentalListing} imageSrc={"listing-units.svg"} />
+      <MemoryRouter>
+        <ListingDetailsAside listing={closedRentalListing} imageSrc={"listing-units.svg"} />
+      </MemoryRouter>
     )
 
     expect(asFragment()).toMatchSnapshot()
@@ -42,7 +58,9 @@ describe("ListingDetailsAside", () => {
     })
 
     const { asFragment } = render(
-      <ListingDetailsAside listing={openSaleListing} imageSrc={"listing-units.svg"} />
+      <MemoryRouter>
+        <ListingDetailsAside listing={openSaleListing} imageSrc={"listing-units.svg"} />
+      </MemoryRouter>
     )
 
     expect(asFragment()).toMatchSnapshot()
@@ -63,7 +81,9 @@ describe("ListingDetailsAside", () => {
     })
 
     const { asFragment } = render(
-      <ListingDetailsAside listing={fcfsSaleListing} imageSrc={"listing-units.svg"} />
+      <MemoryRouter>
+        <ListingDetailsAside listing={fcfsSaleListing} imageSrc={"listing-units.svg"} />
+      </MemoryRouter>
     )
 
     expect(asFragment()).toMatchSnapshot()

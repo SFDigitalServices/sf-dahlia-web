@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react"
-import { useAuth } from "@clerk/clerk-react"
+import { useNavigate } from "react-router"
 
 import {
   AppearanceStyleType,
@@ -23,11 +23,12 @@ import {
 } from "../../util/listingUtil"
 import { getSfGovUrl, renderInlineMarkup } from "../../util/languageUtil"
 import "./ListingDetailsApply.scss"
-import { getAddProfilePath, localizedPath } from "../../util/routeUtil"
+import { getAddProfilePath, getSignInPath, localizedPath } from "../../util/routeUtil"
 import { ListingState } from "../listings/ListingState"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import { UNLEASH_FLAG } from "../constants"
 import UserContext from "../../authentication/context/UserContext"
+import { useAuthSession } from "../../authentication/session/AuthSessionProvider"
 
 export interface ListingDetailsApplyProps {
   listing: RailsListing
@@ -78,13 +79,43 @@ const ApplyButton = ({ href }: { href: string }) => (
   </LinkButton>
 )
 
-const ClerkApplyOnlineButton = ({ applyLink }: { applyLink: string }) => {
-  const { isLoaded, isSignedIn } = useAuth()
-  const { profile, initialStateLoaded } = useContext(UserContext)
-  const href =
-    isLoaded && isSignedIn && initialStateLoaded && !profile ? getAddProfilePath() : applyLink
+const ApplyButtonWithLocationState = ({
+  href,
+  state,
+}: {
+  href: string
+  state: Record<string, unknown>
+}) => {
+  const navigate = useNavigate()
 
-  return <ApplyButton href={href} />
+  return (
+    <Button
+      styleType={AppearanceStyleType.primary}
+      className={"w-full"}
+      transition={true}
+      onClick={() => {
+        void navigate(href, { state })
+      }}
+    >
+      {t("label.applyOnline")}
+    </Button>
+  )
+}
+
+const ClerkApplyOnlineButton = ({ applyLink }: { applyLink: string }) => {
+  const { status } = useAuthSession()
+  const { profile, initialStateLoaded } = useContext(UserContext)
+  const isSignedIn = status.kind === "signedIn"
+
+  if (isSignedIn && profile) return <ApplyButton href={applyLink} />
+  if (status.kind === "signedOut")
+    return (
+      <ApplyButtonWithLocationState href={getSignInPath()} state={{ redirectUrl: applyLink }} />
+    )
+  if (isSignedIn && initialStateLoaded && !profile)
+    return <ApplyButton href={getAddProfilePath()} />
+
+  return null
 }
 
 /**
@@ -119,6 +150,7 @@ const StandardHowToApply = ({
   acceptingPaperApps: boolean
 }) => {
   const [paperApplicationsOpen, setPaperApplicationsOpen] = useState(false)
+
   return (
     <SidebarBlock title={t("listings.apply.howToApply")} priority={2}>
       {!isListingRental && (

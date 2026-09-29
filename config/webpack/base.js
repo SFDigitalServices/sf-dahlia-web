@@ -45,6 +45,7 @@ generatedWebpackConfig.plugins.unshift(
       FCFS_FORMASSEMBLY_URL_ZH: JSON.stringify(process.env.FCFS_FORMASSEMBLY_URL_ZH),
       FCFS_FORMASSEMBLY_URL_TL: JSON.stringify(process.env.FCFS_FORMASSEMBLY_URL_TL),
       CLERK_PUBLISHABLE_KEY: JSON.stringify(process.env.CLERK_PUBLISHABLE_KEY),
+      REQUIRED_LOGINS_DATE: JSON.stringify(process.env.REQUIRED_LOGINS_DATE),
     },
   })
 )

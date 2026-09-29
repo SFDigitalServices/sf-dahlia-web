@@ -1,5 +1,5 @@
 import React from "react"
-import { useAuth } from "@clerk/clerk-react"
+import { useAuth } from "@clerk/react"
 import { screen, waitFor, cleanup } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
 import { useNavigate } from "react-router"
@@ -14,8 +14,8 @@ import {
 import { mockProfileStub, setupUserContext } from "../../__util__/accountUtils"
 import { useFeatureFlag } from "../../../hooks/useFeatureFlag"
 
-jest.mock("@clerk/clerk-react", () => {
-  const Clerk = jest.requireActual("@clerk/clerk-react")
+jest.mock("@clerk/react", () => {
+  const Clerk = jest.requireActual("@clerk/react")
   return {
     ...Clerk,
     ClerkProvider: ({ children }: { children: React.ReactNode }) => children,
@@ -132,7 +132,7 @@ describe("<AddProfile />", () => {
     expect(screen.getByRole("textbox", { name: /middle name/i })).not.toBeNull()
     expect(screen.getByRole("textbox", { name: /last name/i })).not.toBeNull()
     expect(screen.getByText(/we ask for date of birth to verify your age/i)).not.toBeNull()
-    expect(screen.getByText(/example: april 20, 1980 is 04 20 1980/i)).not.toBeNull()
+    expect(screen.getByText(/example: April 22, 1980 is 4 22 1980/i)).not.toBeNull()
     expect(screen.getByRole("button", { name: /finish/i })).not.toBeNull()
     expect(screen.getByRole("heading", { name: /get help/i })).not.toBeNull()
   })

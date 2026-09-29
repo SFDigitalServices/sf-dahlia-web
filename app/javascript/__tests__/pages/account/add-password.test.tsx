@@ -1,8 +1,8 @@
 import React from "react"
-import { useUser } from "@clerk/clerk-react"
+import { useClerk, useSignIn, useUser } from "@clerk/react"
 import { screen, waitFor, cleanup } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
-import { useNavigate } from "react-router"
+import { useLocation, useNavigate } from "react-router"
 import AddPassword from "../../../pages/account/add-password"
 import {
   renderAndLoadAsync,
@@ -11,20 +11,26 @@ import {
 } from "../../__util__/renderUtils"
 import { setupUserContext } from "../../__util__/accountUtils"
 import { useFeatureFlag } from "../../../hooks/useFeatureFlag"
+import { AUTH_FLOW } from "../../../modules/constants"
 
-jest.mock("@clerk/clerk-react", () => {
-  const Clerk = jest.requireActual("@clerk/clerk-react")
+jest.mock("@clerk/react", () => {
+  const Clerk = jest.requireActual("@clerk/react")
   return {
     ...Clerk,
     ClerkProvider: ({ children }: { children: React.ReactNode }) => children,
     useAuth: jest.fn(),
+    useClerk: jest.fn(),
     useUser: jest.fn(),
+    useSignIn: jest.fn(),
+    useSignUp: jest.fn(),
+    useSession: () => ({ session: null }),
   }
 })
 
 jest.mock("react-router", () => ({
   ...jest.requireActual("react-router"),
   useNavigate: jest.fn(),
+  useLocation: jest.fn(),
 }))
 
 jest.mock("../../../hooks/useFeatureFlag", () => ({
@@ -44,7 +50,16 @@ describe("<AddPassword />", () => {
     mockNavigate = jest.fn()
     mockUpdatePassword = jest.fn().mockResolvedValue(undefined)
     ;(useNavigate as jest.Mock).mockReturnValue(mockNavigate)
+    ;(useLocation as jest.Mock).mockReturnValue({
+      state: { flow: AUTH_FLOW.CREATE_ACCOUNT },
+    })
+    ;(useSignIn as jest.Mock).mockReturnValue({
+      isLoaded: true,
+      signIn: { resetPassword: jest.fn(), status: null },
+      setActive: jest.fn(),
+    })
     ;(useFeatureFlag as jest.Mock).mockReturnValue({ flagsReady: true, unleashFlag: true })
+    ;(useClerk as jest.Mock).mockReturnValue({ client: undefined })
     ;(useUser as jest.Mock).mockReturnValue({
       isLoaded: true,
       isSignedIn: true,
@@ -177,6 +192,146 @@ describe("<AddPassword />", () => {
 
     await waitFor(() => {
       expect(mockNavigate).toHaveBeenCalledWith("/account")
+    })
+  })
+  describe("Reset password flow", () => {
+    let mockSubmitPassword: jest.Mock
+    let mockFinalize: jest.Mock
+    let mockSignInResource: {
+      status: string | null
+      resetPasswordEmailCode: { submitPassword: jest.Mock }
+      finalize: jest.Mock
+    }
+
+    const renderWithStatus = async (status: string | null) => {
+      cleanup()
+      mockSubmitPassword = jest.fn().mockResolvedValue({ resetPasswordError: null })
+      mockFinalize = jest.fn().mockImplementation(async ({ navigate }) => {
+        await navigate({ decorateUrl: (url: string) => url })
+        return { signInFinalizeError: null }
+      })
+      mockSignInResource = {
+        status,
+        resetPasswordEmailCode: { submitPassword: mockSubmitPassword },
+        finalize: mockFinalize,
+      }
+      ;(useLocation as jest.Mock).mockReturnValue({
+        state: { flow: AUTH_FLOW.FORGOT_PASSWORD },
+      })
+      ;(useSignIn as jest.Mock).mockReturnValue({
+        fetchStatus: "idle",
+        signIn: mockSignInResource,
+      })
+      await renderAndLoadAsync(<AddPassword assetPaths={{}} />)
+    }
+
+    it("redirects to forgot password page if reset status is stale", async () => {
+      await renderWithStatus(null)
+      expect(screen.queryByRole("button", { name: /save password/i })).toBeNull()
+    })
+
+    it("resets the password and redirects to account page", async () => {
+      await renderWithStatus("needs_new_password")
+      mockSubmitPassword.mockImplementation(() => {
+        mockSignInResource.status = "complete"
+        return Promise.resolve({ resetPasswordError: null })
+      })
+
+      const user = userEvent.setup()
+      await user.type(screen.getByTestId("password-field"), "abcd1234")
+      await user.click(screen.getByRole("button", { name: /save password/i }))
+
+      await waitFor(() => {
+        expect(mockSubmitPassword).toHaveBeenCalledWith({
+          password: "abcd1234",
+          signOutOfOtherSessions: true,
+        })
+      })
+      expect(mockFinalize).toHaveBeenCalled()
+      expect(mockNavigate).toHaveBeenCalledWith("/account")
+    })
+
+    it("logs an error when the reset does not complete", async () => {
+      await renderWithStatus("needs_new_password")
+      const consoleError = jest.spyOn(console, "error").mockImplementation(() => {})
+      mockSubmitPassword.mockResolvedValue({ resetPasswordError: null })
+
+      const user = userEvent.setup()
+      await user.type(screen.getByTestId("password-field"), "abcd1234")
+      await user.click(screen.getByRole("button", { name: /save password/i }))
+
+      await waitFor(() => {
+        expect(mockSubmitPassword).toHaveBeenCalledWith({
+          password: "abcd1234",
+          signOutOfOtherSessions: true,
+        })
+      })
+      expect(consoleError).toHaveBeenCalledWith(
+        "Reset password status error:",
+        "needs_new_password"
+      )
+      expect(mockFinalize).not.toHaveBeenCalled()
+      expect(mockNavigate).not.toHaveBeenCalledWith("/account")
+
+      consoleError.mockRestore()
+    })
+  })
+
+  describe("Account settings flow", () => {
+    beforeEach(async () => {
+      cleanup()
+      jest.restoreAllMocks()
+      document.title = "DAHLIA San Francisco Housing Portal"
+      setupUserContext({ loggedIn: true })
+      mockNavigate = jest.fn()
+      mockUpdatePassword = jest.fn().mockResolvedValue(undefined)
+      ;(useNavigate as jest.Mock).mockReturnValue(mockNavigate)
+      ;(useFeatureFlag as jest.Mock).mockReturnValue({ flagsReady: true, unleashFlag: true })
+      ;(useSignIn as jest.Mock).mockReturnValue({
+        isLoaded: true,
+        signIn: { resetPassword: jest.fn(), status: null },
+        setActive: jest.fn(),
+      })
+      ;(useLocation as jest.Mock).mockReturnValue({
+        state: { accountSettingsFlow: true },
+      })
+      ;(useUser as jest.Mock).mockReturnValue({
+        isLoaded: true,
+        isSignedIn: true,
+        user: { updatePassword: mockUpdatePassword, passwordEnabled: false },
+      })
+      await renderAndLoadAsync(<AddPassword assetPaths={{}} />)
+    })
+
+    it("hides the skip info banner and shows a cancel button", () => {
+      expect(screen.queryByRole("button", { name: /skip for now/i })).toBeNull()
+      expect(screen.queryByText(/it's okay to skip this step/i)).toBeNull()
+      expect(screen.queryByRole("heading", { name: /get help/i })).toBeNull()
+      expect(screen.getByRole("button", { name: /cancel/i })).not.toBeNull()
+    })
+
+    it("returns to settings when cancelled", async () => {
+      const user = userEvent.setup()
+
+      await user.click(screen.getByRole("button", { name: /cancel/i }))
+
+      expect(mockUpdatePassword).not.toHaveBeenCalled()
+      expect(mockNavigate).toHaveBeenCalledWith("/account/settings")
+    })
+
+    it("saves the password and returns to settings with the banner state", async () => {
+      const user = userEvent.setup()
+      jest.spyOn(console, "error").mockImplementation(() => {})
+
+      await user.type(screen.getByTestId("password-field"), "abcd1234")
+      await user.click(screen.getByRole("button", { name: /add password/i }))
+
+      await waitFor(() => {
+        expect(mockUpdatePassword).toHaveBeenCalledWith({ newPassword: "abcd1234" })
+      })
+      expect(mockNavigate).toHaveBeenCalledWith("/account/settings", {
+        state: { passwordChanged: true },
+      })
     })
   })
 })

@@ -1,3 +1,5 @@
+import { interceptUnleashFlags } from "../support/util"
+
 describe("Rental listings directory page", () => {
   beforeEach(() => {
     cy.intercept("api/v1/listings.json**", { fixture: "listings.json" }).as("listings")
@@ -52,6 +54,8 @@ describe("Rental listings directory page", () => {
   })
 
   it("does not redirect to sign in page when there is no user session", () => {
+    interceptUnleashFlags()
+
     cy.intercept("/api/v1/listings/a0W0P00000Hc7RcUAJ.json", {
       fixture: "openRentalListing.json",
     }).as("listingDetails")

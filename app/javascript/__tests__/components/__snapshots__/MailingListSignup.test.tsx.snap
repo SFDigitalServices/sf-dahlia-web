@@ -89,7 +89,7 @@ exports[`MailingListSignup displays mailing list sign up 1`] = `
         <h2
           class=""
         >
-          Get emailed whenever a new listing is posted.
+          Find out about new listings
         </h2>
       </div>
     </div>
@@ -102,7 +102,7 @@ exports[`MailingListSignup displays mailing list sign up 1`] = `
         rel="noreferrer"
         target="_blank"
       >
-        Sign Up today
+        Get email alerts
         <span
           class="seeds-screen-reader-only"
         >

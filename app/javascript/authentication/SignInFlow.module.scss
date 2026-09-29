@@ -24,6 +24,13 @@
   padding-bottom: var(--seeds-spacer-header);
 }
 
+.requiredLoginNotice {
+  --message-border-radius: var(--seeds-rounded);
+  --message-border: 2px solid var(--seeds-color-primary-light);
+  background: var(--seeds-color-primary-lighter) !important;
+  margin: var(--seeds-spacer-header) 0;
+}
+
 .createAccountDescription {
   padding-bottom: var(--seeds-spacer-content);
 }
@@ -45,4 +52,13 @@
   a {
     color: var(--seeds-color-primary-darker) !important;
   }
+}
+
+.continueWithoutSigningIn {
+  display: block;
+  margin-top: var(--seeds-spacer-content);
+}
+
+.errorAlert {
+  margin-bottom: var(--seeds-spacer-header);
 }

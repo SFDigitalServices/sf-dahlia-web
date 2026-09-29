@@ -67,7 +67,10 @@ export const CUSTOM_LISTING_TYPES = {
   EDUCATOR_THREE: "Educator 3: Waitlist - SFUSD employees & public",
   EDUCATOR_BRIGHTWELL: "Brightwell West educator building",
   DALP: "Downpayment Assistance Loan Program",
+  PLUS_HOUSING: "Plus Housing Program",
 }
+
+export const PLUS_HOUSING_RESERVED_TYPE = "Plus Housing"
 
 export const LISTING_TYPE_FIRST_COME_FIRST_SERVED = "First Come, First Served"
 export const LISTING_TYPE_STANDARD_LOTTERY = "Standard Lottery"
@@ -108,12 +111,14 @@ export const SFGOV_LINKS = [
   "https://www.sf.gov/step-by-step--buy-home-without-entering-lottery",
   "https://www.sf.gov/resource/2022/homebuyer-program-counseling-agencies",
   "https://www.sf.gov/dalp-lottery-results",
+  "https://www.sf.gov/get-help-with-your-dahlia-account",
   // Salesforce links that redirect to sf.gov pages
   "https://www.sf.gov/learn-about-certificate-preference-cop",
   "https://www.sf.gov/get-priority-housing-lottery",
   "https://www.sf.gov/learn-about-displaced-tenant-housing-preference-dthp",
   "https://www.sf.gov/get-priority-housing-lottery",
   "https://www.sf.gov/get-help-with-your-dahlia-account",
+  "https://www.sf.gov/reports--february-2024--plus-housing-waitlist",
 ]
 
 export const HOME_SF_PHONE = "415-202-5464"

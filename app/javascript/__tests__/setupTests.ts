@@ -59,17 +59,21 @@ jest.mock("react-helmet-async", () => {
 
 jest.mock("@axe-core/react", () => jest.fn())
 
-jest.mock("@clerk/clerk-react", () => {
-  const Clerk = jest.requireActual("@clerk/clerk-react")
+jest.mock("@clerk/react", () => {
+  const Clerk = jest.requireActual("@clerk/react")
   return {
     ...Clerk,
     ClerkProvider: ({ children }: { children: React.ReactNode }) => children,
     useAuth: jest.fn(() => ({ isLoaded: true, isSignedIn: false })),
+    useUser: jest.fn(() => ({ isLoaded: true, user: null })),
+    useSignUp: jest.fn(() => ({ fetchStatus: "idle", signUp: {} })),
+    useSession: () => ({ session: null }),
   }
 })
 
 const setDefaultClerkAuth = () => {
-  const { useAuth } = jest.requireMock<typeof import("@clerk/clerk-react")>("@clerk/clerk-react")
+  const { useAuth, useUser, useSignUp } =
+    jest.requireMock<typeof import("@clerk/react")>("@clerk/react")
   if (jest.isMockFunction(useAuth)) {
     useAuth.mockReturnValue({
       isLoaded: true,
@@ -77,6 +81,12 @@ const setDefaultClerkAuth = () => {
       signOut: jest.fn(),
       getToken: jest.fn().mockResolvedValue("clerk-session-token"),
     })
+  }
+  if (jest.isMockFunction(useUser)) {
+    useUser.mockReturnValue({ isLoaded: true, isSignedIn: false, user: null })
+  }
+  if (jest.isMockFunction(useSignUp)) {
+    useSignUp.mockReturnValue({ fetchStatus: "idle", signUp: {} })
   }
 }
 
