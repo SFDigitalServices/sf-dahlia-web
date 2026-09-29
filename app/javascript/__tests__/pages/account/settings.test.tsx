@@ -6,13 +6,14 @@ import {
   restoreWindowLocation,
 } from "../../__util__/renderUtils"
 import SettingsPage from "../../../pages/account/settings"
-import { fireEvent, screen, within, act } from "@testing-library/react"
+import { fireEvent, screen, within, act, waitFor } from "@testing-library/react"
 import { authenticatedPut, get, put } from "../../../api/apiService"
 import { mockProfileStub, setupUserContext } from "../../__util__/accountUtils"
 import { useFeatureFlag } from "../../../hooks/useFeatureFlag"
 import { useUser } from "@clerk/react"
 import { useLocation, useNavigate } from "react-router"
 import { UNLEASH_FLAG } from "../../../modules/constants"
+import * as authStatus from "../../../authentication/session/authStatus"
 
 jest.mock("../../../api/apiService", () => ({
   authenticatedPut: jest.fn(),
@@ -265,6 +266,34 @@ describe("<SettingsPage />", () => {
           await promise
         })
 
+        expect(put).not.toHaveBeenCalled()
+      })
+
+      it("does not update name or DOB when getting the token throws", async () => {
+        const tokenSpy = jest.spyOn(authStatus, "bearerToken").mockImplementation(() => {
+          throw new Error("no session")
+        })
+
+        await act(async () => {
+          fireEvent.click(screen.getByRole("button", { name: "Save name" }))
+          fireEvent.click(screen.getByRole("button", { name: "Save date of birth" }))
+          await Promise.resolve()
+        })
+
+        await waitFor(() => expect(tokenSpy).toHaveBeenCalledTimes(1))
+        expect(put).not.toHaveBeenCalled()
+      })
+
+      it("does not update name or DOB when there is no token", async () => {
+        const tokenSpy = jest.spyOn(authStatus, "bearerToken").mockReturnValue(null)
+
+        await act(async () => {
+          fireEvent.click(screen.getByRole("button", { name: "Save name" }))
+          fireEvent.click(screen.getByRole("button", { name: "Save date of birth" }))
+          await Promise.resolve()
+        })
+
+        await waitFor(() => expect(tokenSpy).toHaveBeenCalledTimes(1))
         expect(put).not.toHaveBeenCalled()
       })
     })
@@ -599,6 +628,35 @@ describe("<SettingsPage />", () => {
           screen.getByText(/something went wrong\. try again or check back later/i)
         ).not.toBeNull()
       })
+    })
+    it("saving name server errors", async () => {
+      const errorSpy = jest.spyOn(console, "error").mockImplementation(() => undefined)
+      ;(put as jest.Mock)
+        .mockRejectedValueOnce({
+          response: {
+            data: { errors: { lastName: ["unknown error"], full_messages: ["unknown error"] } },
+          },
+        })
+        .mockRejectedValueOnce({ response: { data: {} } })
+
+      const saveNameButton = screen.getByRole("button", { name: "Save name" })
+
+      await act(async () => {
+        fireEvent.click(saveNameButton)
+        await Promise.resolve()
+      })
+      expect(
+        (await screen.findAllByText(/something went wrong\. try again or check back later/i)).length
+      ).toBeGreaterThan(0)
+      await waitFor(() => expect(saveNameButton).not.toBeDisabled())
+
+      await act(async () => {
+        fireEvent.click(saveNameButton)
+        await Promise.resolve()
+      })
+      await waitFor(() =>
+        expect(errorSpy).toHaveBeenCalledWith("Unhandled name update error", expect.anything())
+      )
     })
   })
 

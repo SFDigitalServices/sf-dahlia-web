@@ -39,6 +39,45 @@ RSpec.describe Api::V1::AccountController, type: :controller do
         expect(Emailer).not_to have_received(:account_update)
       end
     end
+    context 'when signed in with Clerk' do
+      let(:clerk_user_id) { 'user_abc123' }
+      let(:contact_id) { '003ABC' }
+
+      before do
+        allow(controller).to receive(:current_user).and_call_original
+        allow(controller).to receive(:clerk).and_return(double(user_id: clerk_user_id))
+        allow(ClerkService).to receive(:salesforce_contact_id)
+          .with(clerk_user_id)
+          .and_return(contact_id)
+        allow(Emailer).to receive_message_chain(:account_update, :deliver_now)
+      end
+
+      it 'updates the account and emails the Clerk user' do
+        put :update, params: { contact: contact_params }
+
+        expect(response).to have_http_status(:ok)
+        expect(Force::AccountService).to have_received(:create_or_update).with(
+          hash_including('contactID' => contact_id, 'webAppID' => clerk_user_id),
+        )
+        expect(Emailer).to have_received(:account_update).with(instance_of(ClerkService::User))
+      end
+
+      context 'when sending the email fails' do
+        let(:error) { StandardError.new('email failed') }
+
+        before do
+          allow(Emailer).to receive(:account_update).and_raise(error)
+          allow(Sentry).to receive(:capture_exception)
+        end
+
+        it 'reports sentry error and responds ok' do
+          put :update, params: { contact: contact_params }
+
+          expect(response).to have_http_status(:ok)
+          expect(Sentry).to have_received(:capture_exception).with(error)
+        end
+      end
+    end
   end
 
   describe 'PUT #update_housing_counselor' do
@@ -234,7 +273,9 @@ RSpec.describe Api::V1::AccountController, type: :controller do
         DOB: '2000-01-01',
       }
     end
-    let(:salesforce_contact) { { 'contactId' => '003ABC', 'email' => 'test@example.com' } }
+    let(:salesforce_contact) do
+      { 'contactId' => '003ABC', 'email' => 'test@example.com' }
+    end
 
     before do
       allow(controller).to receive(:clerk).and_return(double(user_id: clerk_user_id))
