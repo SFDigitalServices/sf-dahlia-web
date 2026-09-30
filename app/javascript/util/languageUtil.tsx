@@ -252,18 +252,8 @@ export function localizedFormat(date: string | Date, format: string): string {
  * @returns {string} localized month and day
  */
 export function localizedMonthAndDay(date: string | Date): string {
-    const lang = getCurrentLanguage(window.location.pathname)
-    if (date && dayjs(date).isValid())
-      return Intl.DateTimeFormat(lang, {
-        month: "long",
-        day: "numeric",
-        timeZone: "America/Los_Angeles",
-      }).format(dayjs(date).toDate())
-    return ""
-  }
-
   const lang = getCurrentLanguage(window.location.pathname)
-  if (date)
+  if (date && dayjs(date).isValid())
     return Intl.DateTimeFormat(lang, {
       month: "long",
       day: "numeric",
