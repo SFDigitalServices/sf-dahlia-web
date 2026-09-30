@@ -670,7 +670,7 @@ const DahliaSiteHeader = (props: SiteHeaderProps) => {
             navbarClass === "site-header__navbar-wrapped"
               ? "site-header__base-wrapped"
               : "site-header__base-inline"
-          } ${!isDesktop ? styles["mobile-base"] : ""}`}
+          }${isDesktop ? "" : ` ${styles["mobile-base"]}`}`}
         >
           {!isDesktop && getMobileMenu()}
           {getLogo()}
