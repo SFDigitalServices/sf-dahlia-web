@@ -175,7 +175,18 @@ const EnterVerificationCodePage = ({
       const previousEmailAddress = user.primaryEmailAddress
       await user.update({ primaryEmailAddressId: verifiedEmail.id })
       if (previousEmailAddress && previousEmailAddress.id !== verifiedEmail.id) {
-        await previousEmailAddress.destroy()
+        try {
+          await previousEmailAddress.destroy()
+        } catch (error) {
+          // TODO: There is a possibility the primary email can be updated but this destroy
+          // can fail. The old address is still attached to the user in the Clerk DB and would
+          // require cleanup.
+          // https://github.com/SFDigitalServices/sf-dahlia-web/pull/3078#discussion_r4104585451
+          console.error(
+            "Update login email: failed to remove previous primary email address",
+            error
+          )
+        }
       }
       void navigate(getMyAccountSettingsPath(), { state: { emailChanged: true } })
     } catch (error) {
