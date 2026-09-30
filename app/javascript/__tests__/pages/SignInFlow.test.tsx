@@ -49,6 +49,7 @@ jest.mock("@clerk/react", () => {
 
 jest.mock("../../api/authApiService", () => ({
   ...jest.requireActual("../../api/authApiService"),
+  exchangeClerkForDeviseHeaders: jest.fn().mockResolvedValue(undefined),
   authorizeHousingCounselor: jest.fn(),
   clearHousingCounselorSession: jest.fn(),
   getProfile: jest.fn(),

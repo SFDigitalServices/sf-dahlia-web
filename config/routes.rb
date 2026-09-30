@@ -75,6 +75,9 @@ Rails.application.routes.draw do
         post 'access' => 'housing_counselor#access'
         delete 'access' => 'housing_counselor#clear_session'
       end
+      scope '/clerk' do
+        post 'devise-token' => 'clerk_auth#devise_token'
+      end
     end
   end
 

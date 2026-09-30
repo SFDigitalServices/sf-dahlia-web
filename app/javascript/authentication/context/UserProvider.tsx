@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useReducer } from "react"
 
-import { getProfile, signIn } from "../../api/authApiService"
+import { exchangeClerkForDeviseHeaders, getProfile, signIn } from "../../api/authApiService"
 import { useAuthSession } from "../session/AuthSessionProvider"
 import { bearerToken, isAuthInitialized } from "../session/authStatus"
 import { attemptToSetAuthHeadersFromURL } from "../token"
@@ -49,6 +49,10 @@ const ClerkProfile = ({
         if (!sessionToken) {
           throw new Error("Missing Clerk session token")
         }
+        // This is the first page users should visit when signing in, so
+        // it should be safe to exchange headers here.
+        // TODO: would it be better to only exchange headers when users are about to apply?
+        await exchangeClerkForDeviseHeaders(sessionToken)
         onLoaded(await getProfile(sessionToken))
       } catch {
         onLoaded(null)

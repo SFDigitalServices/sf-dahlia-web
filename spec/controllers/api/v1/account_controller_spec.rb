@@ -284,7 +284,7 @@ RSpec.describe Api::V1::AccountController, type: :controller do
         put :update_housing_counselor, params: { contact: contact_params }
 
         expect(response).to have_http_status(:unauthorized)
-        expect(JSON.parse(response.body)).to eq('error' => 'Invalid Clerk session')
+        expect(JSON.parse(response.body)).to eq('error' => 'Missing Clerk session')
         expect(Force::AccountService).not_to have_received(:create_or_update)
       end
     end
@@ -446,7 +446,7 @@ RSpec.describe Api::V1::AccountController, type: :controller do
         get :profile
 
         expect(response).to have_http_status(:unauthorized)
-        expect(JSON.parse(response.body)).to eq('error' => 'Invalid Clerk session')
+        expect(JSON.parse(response.body)).to eq('error' => 'Missing Clerk session')
         expect(Force::AccountService).not_to have_received(:get)
       end
     end
@@ -637,7 +637,7 @@ RSpec.describe Api::V1::AccountController, type: :controller do
         post :create_profile, params: { contact: contact_params }
 
         expect(response).to have_http_status(:unauthorized)
-        expect(JSON.parse(response.body)).to eq('error' => 'Invalid Clerk session')
+        expect(JSON.parse(response.body)).to eq('error' => 'Missing Clerk session')
         expect(Force::AccountService).not_to have_received(:create_or_update)
         expect(ClerkService).not_to have_received(:store_salesforce_contact_id)
       end
