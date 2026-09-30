@@ -204,54 +204,37 @@ const EmailSectionDevise = ({ user, setUser }: SectionProps) => {
 }
 
 const EmailSection = () => {
-  const [emailUpdateBanner, setEmailUpdateBanner] = useState(false)
-  const [emailBanner, setEmailBanner] = useState(false)
   const navigate = useNavigate()
   const { user } = useSignUpSession()
   const loginEmail = user?.primaryEmailAddress?.emailAddress
 
   return (
-    <>
-      <Banner
-        className="mt-8"
-        showBanner={emailUpdateBanner}
-        message={t("accountSettings.update")}
-        onClose={() => setEmailUpdateBanner(false)}
-      />
-
-      <Banner
-        showBanner={emailBanner}
-        className="mt-8"
-        message={t("accountSettings.checkYourEmail")}
-        onClose={() => setEmailBanner(false)}
-      />
-      <FormSection>
-        <Heading size="md">{t("accountSettings.email.title")}</Heading>
-        <p className={settingsStyles.settingsText}>{t("accountSettings.email.description")}</p>
-        <div className={settingsStyles.settingsEmailFieldset}>
-          <legend className={"fieldset-legend"}>{t("label.emailAddress")}</legend>
-          <p>{loginEmail ?? null}</p>
-        </div>
-        <div className={settingsStyles.settingsButton}>
-          <Button
-            type="button"
-            variant="primary-outlined"
-            onClick={() => {
-              void navigate(getUpdateEmailPath())
-            }}
-          >
-            {t("accountSettings.email.updateEmail")}
-          </Button>
-        </div>
-        <p className={settingsStyles.settingsText}>
-          {renderInlineMarkup(
-            t("accountSettings.email.subtitle", {
-              url: getMyAccountContactPath(),
-            })
-          )}
-        </p>
-      </FormSection>
-    </>
+    <FormSection>
+      <Heading size="md">{t("accountSettings.email.title")}</Heading>
+      <p className={settingsStyles.settingsText}>{t("accountSettings.email.description")}</p>
+      <div className={settingsStyles.settingsEmailFieldset}>
+        <legend className={"fieldset-legend"}>{t("label.emailAddress")}</legend>
+        <p>{loginEmail ?? null}</p>
+      </div>
+      <div className={settingsStyles.settingsButton}>
+        <Button
+          type="button"
+          variant="primary-outlined"
+          onClick={() => {
+            void navigate(getUpdateEmailPath())
+          }}
+        >
+          {t("accountSettings.email.updateEmail")}
+        </Button>
+      </div>
+      <p className={settingsStyles.settingsText}>
+        {renderInlineMarkup(
+          t("accountSettings.email.subtitle", {
+            url: getMyAccountContactPath(),
+          })
+        )}
+      </p>
+    </FormSection>
   )
 }
 

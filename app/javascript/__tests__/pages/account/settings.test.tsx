@@ -883,7 +883,7 @@ describe("<SettingsPage />", () => {
   })
 
   // TODO: DAH-4262 cleanup after clerk flag is on
-  describe("the Devise password section", () => {
+  describe("the Devise legacy sections", () => {
     let originalLocation: Location
 
     beforeEach(async () => {
@@ -954,6 +954,25 @@ describe("<SettingsPage />", () => {
       await fillAndSubmitDevisePassword("abcd1234")
 
       expect(authenticatedPut).not.toHaveBeenCalled()
+    })
+
+    it("closes the email banners", async () => {
+      ;(authenticatedPut as jest.Mock).mockResolvedValue({ data: {} })
+      const emailField = screen.getByRole("textbox", { name: /email/i })
+
+      await act(async () => {
+        fireEvent.change(emailField, { target: { value: "new@example.com" } })
+        fireEvent.click(screen.getByLabelText("Close")) // line 219
+        fireEvent.click(screen.getByRole("button", { name: /save email/i }))
+        await Promise.resolve()
+      })
+
+      await act(async () => {
+        fireEvent.click(screen.getByLabelText("Close")) // line 226
+        await Promise.resolve()
+      })
+
+      expect(screen.queryByText(/check your email/i)).toBeNull()
     })
   })
 })
