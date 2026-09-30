@@ -167,25 +167,20 @@ const EnterVerificationCodePage = ({
     }
 
     try {
-      // TODO: DAH-4372 - Check and reverify user with first factor if needed
-
       const verifiedEmail = await emailAddress.attemptVerification({ code })
       if (verifiedEmail.verification.status !== "verified") {
         setError("code", { message: "invalid" })
         return
       }
-      if (emailAddress.verification?.status === "verified") {
-        const previousEmailAddress = user.primaryEmailAddress
-        await user.update({ primaryEmailAddressId: verifiedEmail.id })
-        if (previousEmailAddress && previousEmailAddress.id !== verifiedEmail.id) {
-          await previousEmailAddress.destroy()
-        }
-
-        void navigate(getMyAccountSettingsPath(), { state: { emailChanged: true } })
+      const previousEmailAddress = user.primaryEmailAddress
+      await user.update({ primaryEmailAddressId: verifiedEmail.id })
+      if (previousEmailAddress && previousEmailAddress.id !== verifiedEmail.id) {
+        await previousEmailAddress.destroy()
       }
+      void navigate(getMyAccountSettingsPath(), { state: { emailChanged: true } })
     } catch (error) {
-      console.error("Update email verification error:", error)
-      setError("code", { message: "invalid" })
+      const isInvalidCode = error?.errors?.[0]?.code === "form_code_incorrect"
+      setError("code", { message: isInvalidCode ? "invalid" : "generic" })
     }
   }
 
