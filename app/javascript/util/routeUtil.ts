@@ -58,10 +58,12 @@ export const getNewLanguagePath = (
  * The function should take in a localized path (from one of the functions below) and a params object.
  */
 export const createPath = (path: string, params: { [key: string]: string | undefined }): string => {
-  const search = new URLSearchParams(
-    Object.entries(params).filter((entry): entry is [string, string] => !!entry[1])
-  ).toString()
-  return search ? `${path}?${search}` : path
+  const search = new URLSearchParams()
+  Object.entries(params).forEach(([key, value]) => {
+    if (value) search.append(key, value)
+  })
+  const query = search.toString()
+  return query ? `${path}?${query}` : path
 }
 
 export const getHomepagePath = localizedPathGetter("/")
