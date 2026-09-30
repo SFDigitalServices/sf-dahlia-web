@@ -10,7 +10,7 @@ export interface AuthLayoutProps {
 }
 
 const AuthLayout = ({ children, title }: AuthLayoutProps) => (
-  <Layout title={title}>
+  <Layout title={title} compactFooter>
     <section className={styles.authLayoutBackground}>
       <div className={styles.authLayoutContent}>
         <Card className={`${sharedStyles.card} ${styles.card}`}>{children}</Card>

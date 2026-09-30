@@ -28,16 +28,17 @@
   --message-border-radius: var(--seeds-rounded);
   --message-border: 2px solid var(--seeds-color-primary-light);
   background: var(--seeds-color-primary-lighter) !important;
-  margin: var(--seeds-spacer-header) 0;
 }
 
 .createAccountDescription {
   padding-bottom: var(--seeds-spacer-content);
 }
 
-.errorAlert,
-.requiredLoginsMessage {
-  margin-bottom: var(--seeds-spacer-section);
+// Messages and the error alert stack under the title with even spacing.
+.requiredLoginsMessage,
+.requiredLoginNotice,
+.errorAlert {
+  margin-bottom: var(--seeds-spacer-header);
 }
 
 .requiredLoginsMessage {
@@ -57,8 +58,4 @@
 .continueWithoutSigningIn {
   display: block;
   margin-top: var(--seeds-spacer-content);
-}
-
-.errorAlert {
-  margin-bottom: var(--seeds-spacer-header);
 }

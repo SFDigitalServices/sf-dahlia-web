@@ -278,14 +278,14 @@ const SignInFlow = () => {
   return (
     <AuthLayout title={t("pageTitle.signIn")}>
       <Card.Section divider="inset">
+        <Heading priority={1} size="2xl">
+          {t("pageTitle.signIn")}
+        </Heading>
         {requiredLoginsMessageEnabled && (
           <Message fullwidth variant="primary" className={styles.requiredLoginsMessage}>
             {renderInlineMarkup(t("signIn.requiredLoginsMessage", { url: requiredLoginsHelpUrl }))}
           </Message>
         )}
-        <Heading priority={1} size="2xl">
-          {t("pageTitle.signIn")}
-        </Heading>
         {redirectUrl && requiredLoginsDate && (
           <Message variant="primary" fullwidth className={styles.requiredLoginNotice}>
             {renderInlineMarkup(
