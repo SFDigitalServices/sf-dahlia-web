@@ -113,7 +113,7 @@ describe("Sign In integration tests", () => {
   it("should navigate to forgot password page with email prefilled", () => {
     cy.get('input[name="email"]').type("user@example.com")
     cy.contains("a", "Forgot password?").click()
-    cy.url().should("include", "/forgot-password?email=user@example.com")
+    cy.url().should("include", "/forgot-password?email=user%40example.com")
   })
 
   it("should show the correct banners", () => {
