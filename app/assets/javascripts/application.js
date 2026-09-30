@@ -47,6 +47,7 @@
 //= require raven-js/dist/raven
 //= require raven-js/dist/plugins/angular
 //= require config/angularModules.js
+//= require config/clerkAuthShim.js
 //= require config/angularRoutes.js
 //= require config/angularProviders.js
 //= require config/angularInitialize.js
