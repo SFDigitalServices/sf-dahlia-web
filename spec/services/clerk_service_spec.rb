@@ -50,15 +50,46 @@ RSpec.describe ClerkService do
         expect(ClerkService).to have_received(:salesforce_contact_id).once
       end
 
-      it 'errors when Clerk has no contact id' do
+      it 'returns nil, without flagging a lookup failure, when Clerk confirms no ' \
+         'contact id' do
         allow(ClerkService).to receive(:salesforce_contact_id)
-          .and_raise(StandardError, 'User has no Salesforce contact id')
+          .and_raise(ClerkService::NotFoundError, 'User has no Salesforce contact id')
 
         expect(user.salesforce_contact_id).to be_nil
+        expect(user.salesforce_contact_id_lookup_failed?).to be(false)
         expect(Rails.logger).to have_received(:info).with(
           "Clerk user #{user_id} has no Salesforce contact ID: " \
           'User has no Salesforce contact id',
         )
+      end
+
+      it 'returns nil and flags a lookup failure when the Clerk API call itself fails' do
+        allow(Rails.logger).to receive(:warn)
+        allow(ClerkService).to receive(:salesforce_contact_id)
+          .and_raise(StandardError, 'Clerk API unreachable')
+
+        expect(user.salesforce_contact_id).to be_nil
+        expect(user.salesforce_contact_id_lookup_failed?).to be(true)
+        expect(Rails.logger).to have_received(:warn).with(
+          "Clerk user #{user_id}: Salesforce contact ID lookup failed: " \
+          'Clerk API unreachable',
+        )
+      end
+    end
+
+    describe '#salesforce_contact_id_lookup_failed?' do
+      it 'is false before #salesforce_contact_id has been called' do
+        expect(user.salesforce_contact_id_lookup_failed?).to be(false)
+      end
+
+      it 'is false after a successful lookup' do
+        allow(ClerkService).to receive(:salesforce_contact_id)
+          .with(user_id)
+          .and_return('003ABC')
+
+        user.salesforce_contact_id
+
+        expect(user.salesforce_contact_id_lookup_failed?).to be(false)
       end
     end
   end
@@ -170,21 +201,23 @@ RSpec.describe ClerkService do
       allow(users_api).to receive(:get).and_return(nil)
 
       expect { described_class.salesforce_contact_id(user_id) }
-        .to raise_error(StandardError, "User #{user_id} is missing")
+        .to raise_error(ClerkService::NotFoundError, "User #{user_id} is missing")
     end
 
     it 'errors when private metadata has no contact id' do
       allow(clerk_user).to receive(:private_metadata).and_return({})
 
       expect { described_class.salesforce_contact_id(user_id) }
-        .to raise_error(StandardError, "User #{user_id} has no Salesforce contact id")
+        .to raise_error(ClerkService::NotFoundError,
+                        "User #{user_id} has no Salesforce contact id")
     end
 
     it 'errors when private metadata is missing' do
       allow(clerk_user).to receive(:private_metadata).and_return(nil)
 
       expect { described_class.salesforce_contact_id(user_id) }
-        .to raise_error(StandardError, "User #{user_id} has no Salesforce contact id")
+        .to raise_error(ClerkService::NotFoundError,
+                        "User #{user_id} has no Salesforce contact id")
     end
   end
 end

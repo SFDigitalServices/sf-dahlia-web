@@ -15,7 +15,7 @@ import {
   getMyAccountPath,
   getSignInCodePath,
 } from "../util/routeUtil"
-import { authorizeHousingCounselor } from "../api/authApiService"
+import { authorizeHousingCounselor, clearHousingCounselorSession } from "../api/authApiService"
 import { useAuthSession } from "./session/AuthSessionProvider"
 import { useSignInSession } from "./session/useSignInSession"
 import { bearerToken, isAuthInitialized } from "./session/authStatus"
@@ -121,6 +121,11 @@ const SignInFlow = () => {
     const housingCounselorToken = getHousingCounselorToken()
     if (housingCounselorToken) {
       housingCounselorHandledRef.current = true
+    } else {
+      // A normal sign-in (no delegate link) should always land the user in
+      // their own account, never resuming a stale delegated session from
+      // earlier in this browser.
+      await clearHousingCounselorSession()
     }
 
     // we need to set the session token and *not* navigate away, so we have it for `checkHousingCounselorAccess()`

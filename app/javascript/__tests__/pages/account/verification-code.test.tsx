@@ -12,8 +12,12 @@ import {
 } from "../../__util__/renderUtils"
 import { setupUserContext } from "../../__util__/accountUtils"
 import { useFeatureFlag } from "../../../hooks/useFeatureFlag"
-import { AUTH_FLOW } from "../../../modules/constants"
-import { authorizeHousingCounselor, getProfile } from "../../../api/authApiService"
+import { AUTH_FLOW, UNLEASH_FLAG } from "../../../modules/constants"
+import {
+  authorizeHousingCounselor,
+  clearHousingCounselorSession,
+  getProfile,
+} from "../../../api/authApiService"
 
 jest.mock("@clerk/react", () => {
   const Clerk = jest.requireActual("@clerk/react")
@@ -46,6 +50,7 @@ jest.mock("../../../hooks/useFeatureFlag", () => ({
 jest.mock("../../../api/authApiService", () => ({
   ...jest.requireActual("../../../api/authApiService"),
   authorizeHousingCounselor: jest.fn(),
+  clearHousingCounselorSession: jest.fn(),
   getProfile: jest.fn().mockResolvedValue(undefined),
 }))
 const expireResendVerificationCode = () => {
@@ -154,6 +159,7 @@ describe("<EnterVerificationCode />", () => {
       state: { email: "test@example.com", flow: AUTH_FLOW.CREATE_ACCOUNT },
     })
     ;(useFeatureFlag as jest.Mock).mockReturnValue({ flagsReady: true, unleashFlag: true })
+    ;(clearHousingCounselorSession as jest.Mock).mockReset().mockResolvedValue(undefined)
     ;(useClerk as jest.Mock).mockReturnValue({ client: undefined })
     ;(useSignUp as jest.Mock).mockReturnValue({
       fetchStatus: "idle",
@@ -341,6 +347,10 @@ describe("<EnterVerificationCode />", () => {
 
   it("verifies a valid code for sign in", async () => {
     cleanup()
+    // Fake timers stop React finishing its render after submit once the
+    // handler awaits clearing the housing counselor session. This test
+    // doesn't check the countdown, so real timers are fine here.
+    jest.useRealTimers()
     ;(useLocation as jest.Mock).mockReturnValue({
       pathname: "/sign-in/code",
       state: { email: "test@example.com", flow: AUTH_FLOW.SIGN_IN },
@@ -348,17 +358,44 @@ describe("<EnterVerificationCode />", () => {
     mockSignInResource.status = "complete"
     await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
 
-    const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime })
+    const user = userEvent.setup()
     await user.click(screen.getAllByRole("textbox")[0])
     await user.paste("123456")
     await user.click(screen.getByRole("button", { name: t("createAccount.confirmCode") }))
 
     await waitFor(() => {
-      expect(mockSignInVerifyCode).toHaveBeenCalledWith({ code: "123456" })
+      expect(mockNavigate).toHaveBeenCalledWith("/account")
     })
+    expect(mockSignInVerifyCode).toHaveBeenCalledWith({ code: "123456" })
     expect(mockSignInFinalize).toHaveBeenCalledTimes(1)
     expect(mockSignUpVerifyEmailCode).not.toHaveBeenCalled()
-    expect(mockNavigate).toHaveBeenCalledWith("/account")
+    expect(clearHousingCounselorSession).toHaveBeenCalled()
+  })
+
+  it("clears the housing counselor session on sign in even when the flag is off", async () => {
+    cleanup()
+    // See "verifies a valid code for sign in" for why real timers are needed.
+    jest.useRealTimers()
+    ;(useFeatureFlag as jest.Mock).mockImplementation((flagName: string) => ({
+      flagsReady: true,
+      unleashFlag: flagName !== UNLEASH_FLAG.HOUSING_COUNSELOR_ACCESS,
+    }))
+    ;(useLocation as jest.Mock).mockReturnValue({
+      pathname: "/sign-in/code",
+      state: { email: "test@example.com", flow: AUTH_FLOW.SIGN_IN },
+    })
+    mockSignInResource.status = "complete"
+    await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
+
+    const user = userEvent.setup()
+    await user.click(screen.getAllByRole("textbox")[0])
+    await user.paste("123456")
+    await user.click(screen.getByRole("button", { name: t("createAccount.confirmCode") }))
+
+    await waitFor(() => {
+      expect(mockNavigate).toHaveBeenCalledWith("/account")
+    })
+    expect(clearHousingCounselorSession).toHaveBeenCalled()
   })
 
   it("transfers from sign-in to create-an-account flow when account does not exist", async () => {
@@ -481,6 +518,8 @@ describe("<EnterVerificationCode />", () => {
 
   it("redirects to the apply intro after sign in when a redirect url is present", async () => {
     cleanup()
+    // See "verifies a valid code for sign in".
+    jest.useRealTimers()
     const redirectUrl = "/listings/a0W0P00000GlKfBUAV/apply-welcome/intro"
     ;(useLocation as jest.Mock).mockReturnValue({
       pathname: "/sign-in/code",
@@ -489,17 +528,17 @@ describe("<EnterVerificationCode />", () => {
     mockSignInResource.status = "complete"
     await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
 
-    const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime })
+    const user = userEvent.setup()
     await user.click(screen.getAllByRole("textbox")[0])
     await user.paste("123456")
     await user.click(screen.getByRole("button", { name: t("createAccount.confirmCode") }))
 
     await waitFor(() => {
-      expect(mockSignInVerifyCode).toHaveBeenCalledWith({ code: "123456" })
+      expect(mockNavigate).toHaveBeenCalledWith(redirectUrl)
     })
+    expect(mockSignInVerifyCode).toHaveBeenCalledWith({ code: "123456" })
     expect(mockSignInFinalize).toHaveBeenCalledTimes(1)
     expect(mockSignUpVerifyEmailCode).not.toHaveBeenCalled()
-    expect(mockNavigate).toHaveBeenCalledWith(redirectUrl)
   })
 
   it("authenticates a housing counselor with Clerk after verifying the sign-in code", async () => {
