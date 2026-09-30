@@ -52,7 +52,7 @@ export const PhoneMask = React.forwardRef<HTMLInputElement, PhoneMaskProps>(
       const separatorIndex = removedSeparatorIndex(previousValueRef.current, raw)
       if (separatorIndex !== null) {
         const { inputType } = event.nativeEvent as InputEvent
-        if (inputType === "deleteContentForward") {
+        if (inputType?.endsWith("Forward")) {
           raw = raw.slice(0, separatorIndex) + raw.slice(separatorIndex + 1)
           caret = separatorIndex
         } else {
