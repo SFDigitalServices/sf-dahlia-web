@@ -36,6 +36,11 @@ html lang="en" ng-app="dahlia" ng-strict-di="" ng-controller="SharedController"
     meta name="description" content="{{ngMeta.description}}"
     meta property="og:type" content="website"
 
+    / POC: Clerk in Angular via the $auth shim (config/clerkAuthShim.js.coffee)
+    - if ENV['CLERK_AUTH_ANGULAR'].present? && ENV['CLERK_PUBLISHABLE_KEY'].present?
+      - clerk_frontend_api = Base64.decode64(ENV['CLERK_PUBLISHABLE_KEY'].split('_', 3).last).chomp('$')
+      script async="" crossorigin="anonymous" data-clerk-publishable-key=ENV['CLERK_PUBLISHABLE_KEY'] src="https://#{clerk_frontend_api}/npm/@clerk/clerk-js@6/dist/clerk.browser.js"
+
     javascript:
       window.env = {advertiseDALP: "#{ENV['ADVERTISE_DALP']}", dalpProgramInfo: "#{ENV['DALP_PROGRAM_INFO']}", covidUpdate: "#{ENV['COVID_UPDATE']}"}
 
@@ -106,3 +111,4 @@ html lang="en" ng-app="dahlia" ng-strict-di="" ng-controller="SharedController"
       // Add react feature flags below this line
       var ACCOUNT_INFORMATION_PAGES_REACT = "#{ENV['ACCOUNT_INFORMATION_PAGES_REACT']}"
       var APPLICATION_AUTOFILL_IMPROVEMENTS = "#{ENV['APPLICATION_AUTOFILL_IMPROVEMENTS']}"
+      var CLERK_AUTH_ANGULAR = "#{ENV['CLERK_AUTH_ANGULAR']}"

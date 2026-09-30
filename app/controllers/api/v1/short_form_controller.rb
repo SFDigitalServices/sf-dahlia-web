@@ -2,14 +2,12 @@
 
 # RESTful JSON API to query for short form actions
 class Api::V1::ShortFormController < ApiController
-  include Clerk::Authenticatable
-
-  # Actions still served to Devise users while the Clerk flag rolls out.
-  CLERK_OR_DEVISE_ACTIONS = %w[delete_application].freeze
+  include ClerkOrDeviseAuth
 
   before_action :authenticate_user!,
                 only: %i[
                   show_application
+                  submit_application
                   update_application
                   delete_application
                 ]
@@ -262,24 +260,6 @@ class Api::V1::ShortFormController < ApiController
       user_id: current_user.id,
       listing_id: params[:listing_id],
     )
-  end
-
-  # Actions that accept either credential while the Clerk flag rolls out: use the
-  # Clerk session when one is present, otherwise fall back to Devise token auth.
-  # The Clerk middleware only reads bearer tokens, so Devise requests never set one.
-  def authenticate_user!(*args)
-    return super unless CLERK_OR_DEVISE_ACTIONS.include?(action_name)
-
-    @clerk_user_id = clerk&.user_id
-    return if @clerk_user_id.present?
-
-    super
-  end
-
-  def current_user
-    return super if @clerk_user_id.blank?
-
-    @current_user ||= ClerkService::User.new(@clerk_user_id)
   end
 
   def user_can_access?(application)
