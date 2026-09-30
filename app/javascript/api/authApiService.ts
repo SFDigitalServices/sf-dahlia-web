@@ -28,9 +28,21 @@ const contactObject = (user: User): Contact => ({
   housingCounselingAgencyId: user.housingCounselingAgencyId,
 })
 
-const clerkHeaders = (sessionToken: string) => ({
+export const clerkHeaders = (sessionToken: string) => ({
   headers: { Authorization: `Bearer ${sessionToken}` },
 })
+
+export type RequestAuth = {
+  clerkEnabled: boolean
+  sessionToken?: string
+}
+
+export const requireClerkHeaders = ({ sessionToken }: RequestAuth) => {
+  if (!sessionToken) {
+    throw new Error("Missing Clerk session token")
+  }
+  return clerkHeaders(sessionToken)
+}
 
 export const signIn = async (email: string, password: string): Promise<User> =>
   post<UserData>("/api/v1/auth/sign_in", {
@@ -81,12 +93,12 @@ export const createProfile = async (
     clerkHeaders(sessionToken)
   ).then(({ data }) => data)
 
-export const getProfile = async (sessionToken?: string): Promise<User> =>
-  sessionToken
-    ? get<UserData>("/api/v1/account/profile", clerkHeaders(sessionToken)).then(
-        ({ data }: AxiosResponse<UserData>) => data.data
+export const getProfile = async (auth: RequestAuth): Promise<User> =>
+  auth.clerkEnabled
+    ? get<UserData>("/api/v1/account/profile", requireClerkHeaders(auth)).then(
+        ({ data }) => data.data
       )
-    : authenticatedGet<UserData>("/api/v1/auth/validate_token").then((res) => res.data.data)
+    : authenticatedGet<UserData>("/api/v1/auth/validate_token").then(({ data }) => data.data)
 
 export const getApplications = async (): Promise<{ applications: Application[] }> =>
   authenticatedGet<{ applications: Application[] }>("/api/v1/account/my-applications").then(
@@ -105,28 +117,32 @@ export const forgotPassword = async (email: string): Promise<string> =>
     locale: getCurrentLanguage(),
   }).then(({ data }) => data.message)
 
-export const updateNameOrDOB = async (user: User, sessionToken?: string): Promise<User> => {
+export const updateNameOrDOB = async (user: User, auth: RequestAuth): Promise<User> => {
   const body = { contact: contactObject(user) }
-  const request = sessionToken
-    ? put<{ contact: User }>("/api/v1/account/update", body, clerkHeaders(sessionToken))
+  const request = auth.clerkEnabled
+    ? put<{ contact: User }>("/api/v1/account/update", body, requireClerkHeaders(auth))
     : authenticatedPut<{ contact: User }>("/api/v1/account/update", body)
   return request.then(({ data }) => data.contact)
 }
 
-export const updatePhone = async (user: User, sessionToken?: string): Promise<User> => {
+export const updatePhone = async (user: User, auth: RequestAuth): Promise<User> => {
   const body = { contact: contactObject(user) }
-  const request = sessionToken
-    ? put<{ contact: User }>("/api/v1/account/update", body, clerkHeaders(sessionToken))
+  const request = auth.clerkEnabled
+    ? put<{ contact: User }>("/api/v1/account/update", body, requireClerkHeaders(auth))
     : authenticatedPut<{ contact: User }>("/api/v1/account/update", body)
   return request.then(({ data }) => data.contact)
 }
 
-export const updateEmail = async (email: string): Promise<string> =>
-  authenticatedPut<{ status: string }>("/api/v1/auth", {
-    user: {
-      email,
-    },
-  }).then(({ data }) => data.status)
+export const updateEmail = async (user: User, auth: RequestAuth): Promise<User | string> =>
+  auth.clerkEnabled
+    ? put<{ contact: User }>(
+        "/api/v1/account/update",
+        { contact: contactObject(user) },
+        requireClerkHeaders(auth)
+      ).then(({ data }) => data.contact)
+    : authenticatedPut<{ status: string }>("/api/v1/auth", {
+        user: { email: user.email },
+      }).then(({ data }) => data.status)
 
 export const updateHousingCounselorAccess = async (
   user: User,

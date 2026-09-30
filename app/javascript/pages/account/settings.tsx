@@ -42,12 +42,12 @@ import "./styles/account.scss"
 import sharedStyles from "./shared-styles.module.scss"
 import {
   updateNameOrDOB as apiUpdateNameOrDOB,
+  RequestAuth,
   updateEmail,
   updateHousingCounselorAccess,
   updatePassword,
 } from "../../api/authApiService"
 import { FormHeader, FormSection, getDobStringFromDobObject } from "../../util/accountUtil"
-import { AxiosError } from "axios"
 import { ErrorSummaryBanner } from "./components/ErrorSummaryBanner"
 import { ExpandedAccountAxiosError, getErrorMessage } from "./components/util"
 import { withAuthentication } from "../../authentication/withAuthentication"
@@ -120,6 +120,8 @@ const EmailSection = ({ user, setUser }: SectionProps) => {
   const [loading, setLoading] = useState(false)
   const [emailUpdateBanner, setEmailUpdateBanner] = useState(false)
   const [emailBanner, setEmailBanner] = useState(false)
+  const { getCredentials } = useAuthSession()
+  const { unleashFlag: clerkEnabled } = useFeatureFlag(UNLEASH_FLAG.CLERK_AUTH, false)
 
   const {
     register,
@@ -133,16 +135,26 @@ const EmailSection = ({ user, setUser }: SectionProps) => {
     setEmailBanner(false)
   }
 
-  const onSubmit = (data: { email: string }) => {
+  const onSubmit = async (data: { email: string }) => {
     setLoading(true)
-    const { email } = data
 
-    updateEmail(email)
+    let sessionToken: string | undefined
+    try {
+      sessionToken = clerkEnabled ? bearerToken(await getCredentials()) : undefined
+    } catch {
+      setLoading(false)
+      return
+    }
+
+    if (clerkEnabled && !sessionToken) {
+      setLoading(false)
+      return
+    }
+
+    const newUser = { ...user, email: data.email }
+
+    updateEmail(newUser, { clerkEnabled, sessionToken })
       .then(() => {
-        const newUser = {
-          ...user,
-          email,
-        }
         setUser(newUser)
         setEmailBanner(true)
       })
@@ -398,20 +410,20 @@ const HousingCounselorSection = ({ user, setUser }: SectionProps) => {
 
 const updateNameOrDOB = async (
   newUser: User,
-  sessionToken: string | undefined,
+  auth: RequestAuth,
   saveProfile: ((profile: User) => void) | undefined,
   setUser: React.Dispatch<User>,
   setLoading: React.Dispatch<boolean>,
-  errorCallback: (error: AxiosError) => void,
+  errorCallback: (error: ExpandedAccountAxiosError) => void,
   bannersCallback?: () => void
 ) => {
-  return apiUpdateNameOrDOB(newUser, sessionToken)
+  return apiUpdateNameOrDOB(newUser, auth)
     .then((profile) => {
       saveProfile?.(profile)
       setUser(newUser)
       bannersCallback?.()
     })
-    .catch((error: AxiosError) => {
+    .catch((error: ExpandedAccountAxiosError) => {
       errorCallback(error)
     })
     .finally(() => {
@@ -456,7 +468,7 @@ const NameSection = ({ user, setUser, handleBanners }: SectionProps) => {
 
     await updateNameOrDOB(
       newUser,
-      sessionToken,
+      { clerkEnabled, sessionToken },
       saveProfile,
       setUser,
       setLoading,
@@ -550,7 +562,7 @@ const DateOfBirthSection = ({ user, setUser }: SectionProps) => {
 
     await updateNameOrDOB(
       newUser,
-      sessionToken,
+      { clerkEnabled, sessionToken },
       saveProfile,
       setUser,
       setLoading,

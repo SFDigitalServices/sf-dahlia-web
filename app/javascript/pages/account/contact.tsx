@@ -64,6 +64,11 @@ const ContactPhoneForm = ({
     formState: { errors, isDirty },
     setError,
   } = formMethods
+  const showGenericError = () => {
+    setError("phone", { message: "phone:server:generic", shouldFocus: true })
+    setShowSaveBanner(false)
+    setLoading(false)
+  }
 
   // Hide the "Changes saved" banner when the user makes new changes
   React.useEffect(() => {
@@ -77,9 +82,14 @@ const ContactPhoneForm = ({
     let sessionToken: string | undefined
 
     try {
-      sessionToken = clerkEnabled ? (bearerToken(await getCredentials()) ?? undefined) : undefined
+      sessionToken = clerkEnabled ? bearerToken(await getCredentials()) : undefined
     } catch {
-      setLoading(false)
+      showGenericError()
+      return
+    }
+
+    if (clerkEnabled && !sessionToken) {
+      showGenericError()
       return
     }
 
@@ -92,7 +102,7 @@ const ContactPhoneForm = ({
           alternatePhone: data.secondPhone,
           alternatePhoneType: data.secondPhoneType,
         },
-        sessionToken
+        { clerkEnabled, sessionToken }
       )
       saveProfile(updatedContact)
       formMethods.reset(data)
