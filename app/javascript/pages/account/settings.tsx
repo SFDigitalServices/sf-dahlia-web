@@ -39,6 +39,7 @@ import "./styles/account.scss"
 import sharedStyles from "./shared-styles.module.scss"
 import {
   updateNameOrDOB as apiUpdateNameOrDOB,
+  updateEmail,
   updateHousingCounselorAccess,
   updatePassword,
 } from "../../api/authApiService"
@@ -66,6 +67,11 @@ import PasswordFieldset, {
   passwordFieldsetErrors,
   passwordSortOrder,
 } from "./components/PasswordFieldset"
+import EmailFieldset, {
+  emailFieldsetErrors,
+  emailSortOrder,
+  handleEmailServerErrors,
+} from "./components/EmailFieldset"
 
 export const Banner = ({
   showBanner,
@@ -118,6 +124,83 @@ interface SectionProps {
   user: User
   setUser: React.Dispatch<User>
   handleBanners?: (banner: string) => void
+}
+
+// TODO: DAH-4262 Clean up Devise components when clerk flag is flipped on in prod
+const EmailSectionDevise = ({ user, setUser }: SectionProps) => {
+  const [loading, setLoading] = useState(false)
+  const [emailUpdateBanner, setEmailUpdateBanner] = useState(false)
+  const [emailBanner, setEmailBanner] = useState(false)
+
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+    setError,
+  } = useForm({ mode: "onTouched" })
+
+  const onChange = () => {
+    setEmailUpdateBanner(true)
+    setEmailBanner(false)
+  }
+
+  const onSubmit = (data: { email: string }) => {
+    setLoading(true)
+    const { email } = data
+
+    updateEmail(email)
+      .then(() => {
+        const newUser = {
+          ...user,
+          email,
+        }
+        setUser(newUser)
+        setEmailBanner(true)
+      })
+      .catch((error: ExpandedAccountAxiosError) => {
+        setError(...handleEmailServerErrors(error))
+        setEmailBanner(false)
+        setEmailUpdateBanner(false)
+      })
+      .finally(() => {
+        setLoading(false)
+      })
+  }
+
+  return (
+    <>
+      <Banner
+        className="mt-8"
+        showBanner={emailUpdateBanner}
+        message={t("accountSettings.update")}
+        onClose={() => setEmailUpdateBanner(false)}
+      />
+
+      <Banner
+        showBanner={emailBanner}
+        className="mt-8"
+        message={t("accountSettings.checkYourEmail")}
+        onClose={() => setEmailBanner(false)}
+      />
+      <ErrorSummaryBanner
+        errors={errors}
+        sortOrder={emailSortOrder}
+        messageMap={(messageKey) => getErrorMessage(messageKey, emailFieldsetErrors, true)}
+      />
+      <UpdateForm
+        onSubmit={handleSubmit(onSubmit)}
+        loading={loading}
+        submitLabel={t("accountSettings.saveEmailAddress")}
+      >
+        <EmailFieldset
+          register={register}
+          errors={errors}
+          defaultEmail={user?.email ?? null}
+          onChange={onChange}
+        />
+      </UpdateForm>
+    </>
+  )
 }
 
 const EmailSection = () => {
@@ -636,7 +719,7 @@ const AccountSettings = ({ profile }: { profile: User }) => {
       />
       <NameSection user={user} setUser={setUser} handleBanners={handleBanners} />
       <DateOfBirthSection user={user} setUser={setUser} />
-      <EmailSection />
+      {clerkEnabled ? <EmailSection /> : <EmailSectionDevise user={user} setUser={setUser} />}
       {clerkEnabled ? <PasswordSection /> : <PasswordSectionDevise user={user} setUser={setUser} />}
       {showHousingCounselorSection && user && (
         <HousingCounselorSection user={user} setUser={setUser} />
