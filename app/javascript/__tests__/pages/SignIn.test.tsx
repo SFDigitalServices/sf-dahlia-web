@@ -119,6 +119,14 @@ describe("<SignIn />", () => {
     ).toHaveAttribute("href", "/forgot-password?email=test")
   })
 
+  it("keeps a '+' in the email carried over to the forgot password link", async () => {
+    await renderAndLoadAsync(<SignIn assetPaths={{}} />)
+    await userEvent.type(screen.getByRole("textbox", { name: /email/i }), "first+last@test.com")
+
+    const href = screen.getByRole("link", { name: /forgot password\?/i }).getAttribute("href")
+    expect(new URL(href, "http://localhost").searchParams.get("email")).toBe("first+last@test.com")
+  })
+
   it("shows the correct error message when bad credentials are entered", async () => {
     ;(post as jest.Mock).mockRejectedValueOnce({
       response: {
