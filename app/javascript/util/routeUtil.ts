@@ -58,16 +58,10 @@ export const getNewLanguagePath = (
  * The function should take in a localized path (from one of the functions below) and a params object.
  */
 export const createPath = (path: string, params: { [key: string]: string | undefined }): string => {
-  let newPath = path
-  let firstAdded = false
-  Object.keys(params).forEach((key) => {
-    const value = params[key]
-    if (!value) return
-    // Values must be encoded, otherwise a "+" in an email is read back as a space
-    newPath += `${firstAdded ? "&" : "?"}${encodeURIComponent(key)}=${encodeURIComponent(value)}`
-    firstAdded = true
-  })
-  return newPath
+  const search = new URLSearchParams(
+    Object.entries(params).filter((entry): entry is [string, string] => !!entry[1])
+  ).toString()
+  return search ? `${path}?${search}` : path
 }
 
 export const getHomepagePath = localizedPathGetter("/")
