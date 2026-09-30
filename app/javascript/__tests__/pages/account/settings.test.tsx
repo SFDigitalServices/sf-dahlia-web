@@ -296,6 +296,49 @@ describe("<SettingsPage />", () => {
         await waitFor(() => expect(tokenSpy).toHaveBeenCalledTimes(1))
         expect(put).not.toHaveBeenCalled()
       })
+      it("does not update DOB when getting the token throws", async () => {
+        const tokenSpy = jest.spyOn(authStatus, "bearerToken").mockImplementation(() => {
+          throw new Error("no session")
+        })
+
+        await act(async () => {
+          fireEvent.change(screen.getByRole("spinbutton", { name: /month/i }), {
+            target: { value: 2 },
+          })
+          fireEvent.change(screen.getByRole("spinbutton", { name: /day/i }), {
+            target: { value: 6 },
+          })
+          fireEvent.change(screen.getByRole("spinbutton", { name: /year/i }), {
+            target: { value: 2000 },
+          })
+          fireEvent.click(screen.getByRole("button", { name: "Save date of birth" }))
+          await Promise.resolve()
+        })
+
+        await waitFor(() => expect(tokenSpy).toHaveBeenCalled())
+        expect(put).not.toHaveBeenCalled()
+      })
+
+      it("does not update DOB when there is no token", async () => {
+        const tokenSpy = jest.spyOn(authStatus, "bearerToken").mockReturnValue(null)
+
+        await act(async () => {
+          fireEvent.change(screen.getByRole("spinbutton", { name: /month/i }), {
+            target: { value: 2 },
+          })
+          fireEvent.change(screen.getByRole("spinbutton", { name: /day/i }), {
+            target: { value: 6 },
+          })
+          fireEvent.change(screen.getByRole("spinbutton", { name: /year/i }), {
+            target: { value: 2000 },
+          })
+          fireEvent.click(screen.getByRole("button", { name: "Save date of birth" }))
+          await Promise.resolve()
+        })
+
+        await waitFor(() => expect(tokenSpy).toHaveBeenCalled())
+        expect(put).not.toHaveBeenCalled()
+      })
     })
 
     describe("when the user updates their email", () => {
@@ -336,7 +379,6 @@ describe("<SettingsPage />", () => {
       })
 
       it("does not update with malformed emails", async () => {
-        expect(put).not.toHaveBeenCalled()
         const emailUpdateButton = screen.getByRole("button", { name: "Save email address" })
         const group = screen.getByRole("group", {
           name: /email/i,
@@ -350,6 +392,7 @@ describe("<SettingsPage />", () => {
           await promise
         })
 
+        expect(put).not.toHaveBeenCalled()
         expect(authenticatedPut).not.toHaveBeenCalled()
       })
       it("does not update email when getting the token throws", async () => {
