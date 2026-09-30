@@ -206,4 +206,22 @@ describe("<UpdateEmail />", () => {
 
     expect(user.createEmailAddress).toHaveBeenCalledTimes(1)
   })
+  it("does not destroy verified emails when sending a code", async () => {
+    const verified = {
+      id: "verified",
+      emailAddress: "other@example.com",
+      verification: { status: "verified" },
+      destroy: jest.fn(),
+    }
+    const unverified = { id: "unverified", emailAddress: "typo@example.com", destroy: jest.fn() }
+    const user = makeUser({ emailAddresses: [verified, unverified] })
+    await renderPage(user)
+    await submitEmail("new@example.com")
+
+    await waitFor(() => {
+      expect(mockNavigate).toHaveBeenCalled()
+    })
+    expect(verified.destroy).not.toHaveBeenCalled()
+    expect(unverified.destroy).toHaveBeenCalled()
+  })
 })

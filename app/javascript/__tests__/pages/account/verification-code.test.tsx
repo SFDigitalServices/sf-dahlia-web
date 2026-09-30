@@ -899,4 +899,24 @@ describe("<EnterVerificationCode />", () => {
       )
     })
   })
+  it("still navigates when removing the previous email fails", async () => {
+    const consoleError = jest.spyOn(console, "error").mockImplementation(() => {})
+    const user = updateLoginEmail()
+    user.previous.destroy.mockRejectedValue(new Error("destroy failed"))
+    await renderUpdateEmailFlow(user)
+    await submitCode()
+
+    await waitFor(() => {
+      expect(mockNavigate).toHaveBeenCalledWith(expect.any(String), {
+        state: { emailChanged: true },
+      })
+    })
+    expect(user.update).toHaveBeenCalledWith({ primaryEmailAddressId: "new" })
+    expect(consoleError).toHaveBeenCalledWith(
+      "Update login email: failed to remove previous primary email address",
+      expect.any(Error)
+    )
+
+    consoleError.mockRestore()
+  })
 })
