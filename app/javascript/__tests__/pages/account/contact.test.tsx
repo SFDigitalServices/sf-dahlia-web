@@ -151,8 +151,18 @@ describe("<Contact />", () => {
           email: mockProfileStub.email,
           phone: mockProfileStub.phone,
         }),
-        "test-token"
+        { clerkEnabled: true, sessionToken: "test-token" }
       )
+    })
+
+    it("does not save the phone when there is no session token", async () => {
+      ;(authStatus.bearerToken as jest.Mock).mockReturnValue(undefined)
+      getCredentials.mockResolvedValueOnce({})
+
+      fireEvent.click(getByRole("button", { name: /save/i }))
+
+      await waitFor(() => expect(authStatus.bearerToken).toHaveBeenCalled())
+      expect(updatePhoneSpy).not.toHaveBeenCalled()
     })
   })
 })
