@@ -395,13 +395,10 @@ describe("<EnterVerificationCode />", () => {
     })
     mockSignInResource.status = "complete"
     await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
-    await submitCode()
-
     const user = userEvent.setup()
     await user.click(screen.getAllByRole("textbox")[0])
     await user.paste("123456")
     await user.click(screen.getByRole("button", { name: t("createAccount.confirmCode") }))
-
     await waitFor(() => {
       expect(mockNavigate).toHaveBeenCalledWith("/account")
     })
@@ -566,8 +563,6 @@ describe("<EnterVerificationCode />", () => {
     })
     mockSignInResource.status = "complete"
     await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
-    await submitCode()
-
     const user = userEvent.setup()
     await user.click(screen.getAllByRole("textbox")[0])
     await user.paste("123456")
@@ -849,21 +844,21 @@ describe("<EnterVerificationCode />", () => {
   })
 
   it("does not update the email when verification throws", async () => {
-    jest.spyOn(console, "error").mockImplementation(() => {})
-    await renderUpdateEmailFlow(
-      updateLoginEmail({ attemptVerification: jest.fn().mockRejectedValue(new Error("bad code")) })
-    )
+    const attemptVerification = jest.fn().mockRejectedValue(new Error("bad code"))
+    const user = updateLoginEmail({ attemptVerification })
+    await renderUpdateEmailFlow(user)
     await submitCode()
 
     await waitFor(() => {
-      expect(console.error).toHaveBeenCalledWith(
-        "Update email verification error:",
-        expect.any(Error)
-      )
+      expect(attemptVerification).toHaveBeenCalledWith({ code: "123456" })
     })
+    await act(async () => {
+      await Promise.resolve()
+    })
+
+    expect(user.update).not.toHaveBeenCalled()
     expect(mockNavigate).not.toHaveBeenCalled()
   })
-
   it("resends the update email code", async () => {
     await renderUpdateEmailFlow(updateLoginEmail())
     expireResendVerificationCode()

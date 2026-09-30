@@ -1,5 +1,5 @@
 import React from "react"
-import { useAuth, useUser } from "@clerk/react"
+import { useAuth } from "@clerk/react"
 import { t } from "@bloom-housing/ui-components"
 import { act, cleanup, fireEvent, screen, waitFor } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
@@ -18,6 +18,7 @@ import {
   getSignInPath,
   getUpdateEmailCodePath,
 } from "../../../util/routeUtil"
+import { useSignUpSession } from "../../../authentication/session/useSignUpSession"
 
 jest.mock("@clerk/react", () => {
   const Clerk = jest.requireActual("@clerk/react")
@@ -38,6 +39,10 @@ jest.mock("../../../hooks/useFeatureFlag", () => ({
   useFeatureFlag: jest.fn(() => ({ flagsReady: true, unleashFlag: true })),
 }))
 
+jest.mock("../../../authentication/session/useSignUpSession", () => ({
+  useSignUpSession: jest.fn(),
+}))
+
 const makeUser = (overrides = {}) => ({
   primaryEmailAddress: { emailAddress: "current@example.com" },
   primaryEmailAddressId: "current",
@@ -50,7 +55,7 @@ const makeUser = (overrides = {}) => ({
 
 const renderPage = async (user: unknown = makeUser()) => {
   cleanup()
-  ;(useUser as jest.Mock).mockReturnValue({ isLoaded: true, user })
+  ;(useSignUpSession as jest.Mock).mockReturnValue({ user, isAccountInitialized: true })
   await renderAndLoadAsync(<UpdateEmail assetPaths={{}} />)
 }
 
@@ -111,7 +116,7 @@ describe("<UpdateEmail />", () => {
 
   it("renders nothing while the user is loading", async () => {
     cleanup()
-    ;(useUser as jest.Mock).mockReturnValue({ isLoaded: false, user: null })
+    ;(useSignUpSession as jest.Mock).mockReturnValue({ user: null, isAccountInitialized: false })
     await renderAndLoadAsync(<UpdateEmail assetPaths={{}} />)
 
     expect(screen.queryByRole("textbox")).toBeNull()
