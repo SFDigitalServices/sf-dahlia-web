@@ -50,13 +50,13 @@ const UpdateEmailPage = () => {
 
     setLoading(true)
     try {
-      // Destroys leftover email address from an abandoned change email attempt
-      const unverifiedEmailAddress = user.emailAddresses.find(
-        (e) => e.emailAddress.toLowerCase() === email.toLowerCase()
+      // Destroys all unverified non-primary email addresses from abandoned change email attempts
+      // Without this, the Clerk user can accumulate multiple unverified addresses
+      const unverifiedAddresses = user.emailAddresses.filter(
+        (email) =>
+          email.id !== user.primaryEmailAddressId && email.verification?.status !== "verified"
       )
-      if (unverifiedEmailAddress && unverifiedEmailAddress.id !== user.primaryEmailAddressId) {
-        await unverifiedEmailAddress.destroy()
-      }
+      await Promise.all(unverifiedAddresses.map((email) => email.destroy()))
 
       const emailAddress = await user.createEmailAddress({ email })
       await emailAddress.prepareVerification({ strategy: "email_code" })

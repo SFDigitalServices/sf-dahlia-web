@@ -637,8 +637,6 @@ const AccountSettings = ({ profile }: { profile: User }) => {
       <NameSection user={user} setUser={setUser} handleBanners={handleBanners} />
       <DateOfBirthSection user={user} setUser={setUser} />
       <EmailSection />
-      <PasswordSection />
-      <EmailSection user={user} setUser={setUser} />
       {clerkEnabled ? <PasswordSection /> : <PasswordSectionDevise user={user} setUser={setUser} />}
       {showHousingCounselorSection && user && (
         <HousingCounselorSection user={user} setUser={setUser} />

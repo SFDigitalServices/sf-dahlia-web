@@ -1,4 +1,6 @@
-import { UserResource } from "@clerk/react/types"
+import type { useUser } from "@clerk/react"
+
+type UserResource = NonNullable<ReturnType<typeof useUser>["user"]>
 
 export type SignUpOutcome = {
   error?: unknown
