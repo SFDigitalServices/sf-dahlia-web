@@ -217,7 +217,12 @@ const SignInFlow = () => {
   const verificationCodeSection = (
     <>
       <Form onSubmit={handleSubmit(onGetCodeSubmit)}>
-        <EmailFieldset register={register} errors={errors} note={t("signIn.codeDescription")} />
+        <EmailFieldset
+          register={register}
+          errors={errors}
+          note={t("signIn.codeDescription")}
+          submitWithEnterKey
+        />
         <Button
           className={styles.getCodeButton}
           variant="primary"
@@ -239,7 +244,7 @@ const SignInFlow = () => {
       {/* eslint-disable-next-line react-hooks/refs -- housingCounselorHandledRef is only ever
           read/written inside onSubmit's real event-handler execution, never during render */}
       <Form className={styles.form} onSubmit={handleSubmit(onSubmit, onError)}>
-        <EmailFieldset register={register} />
+        <EmailFieldset register={register} submitWithEnterKey />
         <span className={styles.forgotPassword}>
           <Link href={forgotPasswordPath}>{t("signIn.forgotPassword")}</Link>
         </span>
@@ -248,6 +253,7 @@ const SignInFlow = () => {
           watch={watch}
           labelText={t("label.password")}
           passwordType="signIn"
+          submitWithEnterKey
         />
         <Button
           className={styles.signInButton}

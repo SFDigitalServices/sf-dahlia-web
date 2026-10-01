@@ -66,6 +66,7 @@ const CreateAnAccountPage = () => {
             register={register}
             errors={errors}
             note={t("createAccount.codeDescription")}
+            submitWithEnterKey
           />
           <Button
             className={styles.getCodeButton}

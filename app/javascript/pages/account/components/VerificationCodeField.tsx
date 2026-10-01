@@ -49,6 +49,11 @@ const VerificationCodeField = ({
               maxLength: 6,
               // Remove code on backspace and move focus back
               onKeyDown: (event: React.KeyboardEvent<HTMLInputElement>) => {
+                if (event.key === "Enter") {
+                  event.preventDefault()
+                  ;(event.currentTarget as HTMLElement).closest("form")?.requestSubmit()
+                  return
+                }
                 if (event.key !== "Backspace" || !code) return
                 event.preventDefault()
                 onChange(code.slice(0, -1))
