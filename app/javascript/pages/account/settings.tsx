@@ -39,12 +39,12 @@ import "./styles/account.scss"
 import sharedStyles from "./shared-styles.module.scss"
 import {
   updateNameOrDOB as apiUpdateNameOrDOB,
+  RequestAuth,
   updateEmail,
   updateHousingCounselorAccess,
   updatePassword,
 } from "../../api/authApiService"
 import { FormHeader, FormSection, getDobStringFromDobObject } from "../../util/accountUtil"
-import { AxiosError } from "axios"
 import { ErrorSummaryBanner } from "./components/ErrorSummaryBanner"
 import { ExpandedAccountAxiosError, getErrorMessage } from "./components/util"
 import { withAuthentication } from "../../authentication/withAuthentication"
@@ -55,13 +55,6 @@ import settingsStyles from "./settings.module.scss"
 import { useLocation, useNavigate } from "react-router"
 import { CommonMessageVariant } from "@bloom-housing/ui-seeds/src/blocks/shared/CommonMessage"
 import { renderInlineMarkup } from "../../util/languageUtil"
-
-type ConfirmationBannerFlag = "passwordChanged" | "emailChanged"
-
-const confirmationBannerMessages: Record<ConfirmationBannerFlag, string> = {
-  passwordChanged: "accountSettings.changePasswordBanner",
-  emailChanged: "accountSettings.changeEmailBanner",
-}
 import PasswordFieldset, {
   handlePasswordServerErrors,
   passwordFieldsetErrors,
@@ -72,6 +65,13 @@ import EmailFieldset, {
   emailSortOrder,
   handleEmailServerErrors,
 } from "./components/EmailFieldset"
+
+type ConfirmationBannerFlag = "passwordChanged" | "emailChanged"
+
+const confirmationBannerMessages: Record<ConfirmationBannerFlag, string> = {
+  passwordChanged: "accountSettings.changePasswordBanner",
+  emailChanged: "accountSettings.changeEmailBanner",
+}
 
 export const Banner = ({
   showBanner,
@@ -146,14 +146,10 @@ const EmailSectionDevise = ({ user, setUser }: SectionProps) => {
 
   const onSubmit = (data: { email: string }) => {
     setLoading(true)
-    const { email } = data
+    const newUser = { ...user, email: data.email }
 
-    updateEmail(email)
+    updateEmail(newUser, { clerkEnabled: false })
       .then(() => {
-        const newUser = {
-          ...user,
-          email,
-        }
         setUser(newUser)
         setEmailBanner(true)
       })
@@ -444,19 +440,22 @@ const HousingCounselorSection = ({ user, setUser }: SectionProps) => {
 
 const updateNameOrDOB = async (
   newUser: User,
-  saveProfile: (profile: User) => void,
+  auth: RequestAuth,
+  saveProfile: ((profile: User) => void) | undefined,
   setUser: React.Dispatch<User>,
   setLoading: React.Dispatch<boolean>,
-  errorCallback: (error: AxiosError) => void,
+  errorCallback: (error: ExpandedAccountAxiosError) => void,
   bannersCallback?: () => void
 ) => {
-  return apiUpdateNameOrDOB(newUser)
+  return apiUpdateNameOrDOB(newUser, auth)
     .then((profile) => {
-      saveProfile(profile)
+      saveProfile?.(profile)
       setUser(newUser)
-      bannersCallback()
+      bannersCallback?.()
     })
-    .catch(errorCallback)
+    .catch((error: ExpandedAccountAxiosError) => {
+      errorCallback(error)
+    })
     .finally(() => {
       setLoading(false)
     })
@@ -465,6 +464,8 @@ const updateNameOrDOB = async (
 const NameSection = ({ user, setUser, handleBanners }: SectionProps) => {
   const [loading, setLoading] = useState(false)
   const { saveProfile } = useContext(UserContext)
+  const { getCredentials } = useAuthSession()
+  const { unleashFlag: clerkEnabled } = useFeatureFlag(UNLEASH_FLAG.CLERK_AUTH, false)
 
   const {
     register,
@@ -474,27 +475,44 @@ const NameSection = ({ user, setUser, handleBanners }: SectionProps) => {
   } = useForm({ mode: "onTouched" })
 
   const onChange = () => {
-    handleBanners("nameUpdateBanner")
+    handleBanners?.("nameUpdateBanner")
   }
 
   const onSubmit = async (data: { firstName: string; middleName: string; lastName: string }) => {
     setLoading(true)
 
+    let sessionToken: string | undefined
+    try {
+      sessionToken = clerkEnabled ? (bearerToken(await getCredentials()) ?? undefined) : undefined
+    } catch {
+      setLoading(false)
+      return
+    }
+
+    if (clerkEnabled && !sessionToken) {
+      setLoading(false)
+      return
+    }
+
     const newUser = { ...user, ...data }
 
     await updateNameOrDOB(
       newUser,
+      { clerkEnabled, sessionToken },
       saveProfile,
       setUser,
       setLoading,
       (error: ExpandedAccountAxiosError) => {
-        if (error.response?.data?.errors?.firstName) {
+        const serverErrors = error.response?.data?.errors
+        if (serverErrors?.firstName) {
           setError(...handleNameServerErrors("firstName", error))
-        } else if (error.response?.data?.errors?.lastName) {
+        } else if (serverErrors?.lastName) {
           setError(...handleNameServerErrors("lastName", error))
+        } else {
+          console.error("Unhandled name update error", error)
         }
       },
-      () => handleBanners("nameSavedBanner")
+      () => handleBanners?.("nameSavedBanner")
     )
   }
 
@@ -530,6 +548,8 @@ const DateOfBirthSection = ({ user, setUser }: SectionProps) => {
   const { saveProfile } = useContext(UserContext)
   const [dobUpdateBanner, setDOBUpdateBanner] = useState(false)
   const [dobSavedBanner, setDOBSavedBanner] = useState(false)
+  const { getCredentials } = useAuthSession()
+  const { unleashFlag: clerkEnabled } = useFeatureFlag(UNLEASH_FLAG.CLERK_AUTH, false)
 
   const {
     register,
@@ -551,15 +571,28 @@ const DateOfBirthSection = ({ user, setUser }: SectionProps) => {
 
   const onSubmit = async (data: { dobObject: DOBFieldValues }) => {
     setLoading(true)
-    const { dobObject } = data
+
+    let sessionToken: string | undefined
+    try {
+      sessionToken = clerkEnabled ? (bearerToken(await getCredentials()) ?? undefined) : undefined
+    } catch {
+      setLoading(false)
+      return
+    }
+
+    if (clerkEnabled && !sessionToken) {
+      setLoading(false)
+      return
+    }
 
     const newUser = {
       ...user,
-      DOB: getDobStringFromDobObject(dobObject),
+      DOB: getDobStringFromDobObject(data.dobObject),
     }
 
     await updateNameOrDOB(
       newUser,
+      { clerkEnabled, sessionToken },
       saveProfile,
       setUser,
       setLoading,
@@ -570,7 +603,6 @@ const DateOfBirthSection = ({ user, setUser }: SectionProps) => {
       () => setDOBSavedBanner(true)
     )
   }
-
   return (
     <>
       <Banner

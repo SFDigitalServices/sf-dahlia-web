@@ -57,7 +57,7 @@ export const deduplicateDOBErrors = (
 }
 
 export const handleDOBServerErrors = (error: ExpandedAccountAxiosError): SetErrorArgs => {
-  return error.response.status === 422
+  return error.response?.status === 422
     ? [
         "dobObject.birthYear",
         {

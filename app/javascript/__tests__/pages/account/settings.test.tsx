@@ -6,7 +6,7 @@ import {
   restoreWindowLocation,
 } from "../../__util__/renderUtils"
 import SettingsPage from "../../../pages/account/settings"
-import { fireEvent, screen, act, within } from "@testing-library/react"
+import { fireEvent, screen, within, act, waitFor } from "@testing-library/react"
 import { authenticatedPut, get, put } from "../../../api/apiService"
 import { mockProfileStub, setupUserContext } from "../../__util__/accountUtils"
 import { useFeatureFlag } from "../../../hooks/useFeatureFlag"
@@ -14,6 +14,7 @@ import { useUser } from "@clerk/react"
 import { useLocation, useNavigate } from "react-router"
 import { getUpdateEmailPath } from "../../../util/routeUtil"
 import { UNLEASH_FLAG } from "../../../modules/constants"
+import * as authStatus from "../../../authentication/session/authStatus"
 
 jest.mock("../../../api/apiService", () => ({
   authenticatedPut: jest.fn(),
@@ -106,7 +107,7 @@ describe("<SettingsPage />", () => {
 
     describe("when the user updates their name and DOB", () => {
       it("updates Name", async () => {
-        ;(authenticatedPut as jest.Mock).mockResolvedValue({
+        ;(put as jest.Mock).mockResolvedValue({
           data: {
             contact: { ...mockProfileStub, firstName: "NewFirstName", lastName: "NewLastName" },
           },
@@ -150,14 +151,15 @@ describe("<SettingsPage />", () => {
 
         expect(screen.queryByText("Your changes have been saved.")).toBeNull()
 
-        expect(authenticatedPut).toHaveBeenCalledWith(
+        expect(put).toHaveBeenCalledWith(
           "/api/v1/account/update",
           expect.objectContaining({
             contact: expect.objectContaining({
               firstName: "NewFirstName",
               lastName: "NewLastName",
             }),
-          })
+          }),
+          { headers: { Authorization: "Bearer clerk-session-token" } }
         )
 
         expect(firstNameField.getAttribute("value")).toBe("NewFirstName")
@@ -166,7 +168,7 @@ describe("<SettingsPage />", () => {
       })
 
       it("updates DOB", async () => {
-        ;(authenticatedPut as jest.Mock).mockResolvedValue({
+        ;(put as jest.Mock).mockResolvedValue({
           data: {
             contact: {
               ...mockProfileStub,
@@ -215,13 +217,14 @@ describe("<SettingsPage />", () => {
 
         expect(screen.queryByText("Your changes have been saved.")).toBeNull()
 
-        expect(authenticatedPut).toHaveBeenCalledWith(
+        expect(put).toHaveBeenCalledWith(
           "/api/v1/account/update",
           expect.objectContaining({
             contact: expect.objectContaining({
               DOB: "2000-02-06",
             }),
-          })
+          }),
+          { headers: { Authorization: "Bearer clerk-session-token" } }
         )
       })
 
@@ -245,7 +248,7 @@ describe("<SettingsPage />", () => {
           await promise
         })
 
-        expect(authenticatedPut).not.toHaveBeenCalled()
+        expect(put).not.toHaveBeenCalled()
 
         await act(async () => {
           fireEvent.change(monthField, { target: { value: 2 } })
@@ -255,7 +258,7 @@ describe("<SettingsPage />", () => {
           await promise
         })
 
-        expect(authenticatedPut).not.toHaveBeenCalled()
+        expect(put).not.toHaveBeenCalled()
 
         await act(async () => {
           fireEvent.change(monthField, { target: { value: 2 } })
@@ -265,7 +268,78 @@ describe("<SettingsPage />", () => {
           await promise
         })
 
-        expect(authenticatedPut).not.toHaveBeenCalled()
+        expect(put).not.toHaveBeenCalled()
+      })
+
+      it("does not update name or DOB when getting the token throws", async () => {
+        const tokenSpy = jest.spyOn(authStatus, "bearerToken").mockImplementation(() => {
+          throw new Error("no session")
+        })
+
+        await act(async () => {
+          fireEvent.click(screen.getByRole("button", { name: "Save name" }))
+          fireEvent.click(screen.getByRole("button", { name: "Save date of birth" }))
+          await Promise.resolve()
+        })
+
+        await waitFor(() => expect(tokenSpy).toHaveBeenCalledTimes(1))
+        expect(put).not.toHaveBeenCalled()
+      })
+
+      it("does not update name or DOB when there is no token", async () => {
+        const tokenSpy = jest.spyOn(authStatus, "bearerToken").mockReturnValue(null)
+
+        await act(async () => {
+          fireEvent.click(screen.getByRole("button", { name: "Save name" }))
+          fireEvent.click(screen.getByRole("button", { name: "Save date of birth" }))
+          await Promise.resolve()
+        })
+
+        await waitFor(() => expect(tokenSpy).toHaveBeenCalledTimes(1))
+        expect(put).not.toHaveBeenCalled()
+      })
+      it("does not update DOB when getting the token throws", async () => {
+        const tokenSpy = jest.spyOn(authStatus, "bearerToken").mockImplementation(() => {
+          throw new Error("no session")
+        })
+
+        await act(async () => {
+          fireEvent.change(screen.getByRole("spinbutton", { name: /month/i }), {
+            target: { value: 2 },
+          })
+          fireEvent.change(screen.getByRole("spinbutton", { name: /day/i }), {
+            target: { value: 6 },
+          })
+          fireEvent.change(screen.getByRole("spinbutton", { name: /year/i }), {
+            target: { value: 2000 },
+          })
+          fireEvent.click(screen.getByRole("button", { name: "Save date of birth" }))
+          await Promise.resolve()
+        })
+
+        await waitFor(() => expect(tokenSpy).toHaveBeenCalled())
+        expect(put).not.toHaveBeenCalled()
+      })
+
+      it("does not update DOB when there is no token", async () => {
+        const tokenSpy = jest.spyOn(authStatus, "bearerToken").mockReturnValue(null)
+
+        await act(async () => {
+          fireEvent.change(screen.getByRole("spinbutton", { name: /month/i }), {
+            target: { value: 2 },
+          })
+          fireEvent.change(screen.getByRole("spinbutton", { name: /day/i }), {
+            target: { value: 6 },
+          })
+          fireEvent.change(screen.getByRole("spinbutton", { name: /year/i }), {
+            target: { value: 2000 },
+          })
+          fireEvent.click(screen.getByRole("button", { name: "Save date of birth" }))
+          await Promise.resolve()
+        })
+
+        await waitFor(() => expect(tokenSpy).toHaveBeenCalled())
+        expect(put).not.toHaveBeenCalled()
       })
     })
     describe("the email section", () => {
@@ -298,7 +372,7 @@ describe("<SettingsPage />", () => {
     })
     describe("renders the correct errors", () => {
       it("name Errors", async () => {
-        ;(authenticatedPut as jest.Mock).mockRejectedValue({
+        ;(put as jest.Mock).mockRejectedValue({
           response: {
             data: {
               errors: {
@@ -432,7 +506,7 @@ describe("<SettingsPage />", () => {
             /you must be 18 or older\. if you are under 18, email to get info on housing resources for youth/i
           )
         ).toBeNull()
-        ;(authenticatedPut as jest.Mock).mockRejectedValueOnce({
+        ;(put as jest.Mock).mockRejectedValueOnce({
           response: {
             status: 422, // Indicates that the age is too young
             data: {
@@ -451,7 +525,7 @@ describe("<SettingsPage />", () => {
         expect(
           screen.getByText(/enter a valid date of birth\. enter date like: mm dd yyyy/i)
         ).not.toBeNull()
-        ;(authenticatedPut as jest.Mock).mockRejectedValueOnce({
+        ;(put as jest.Mock).mockRejectedValueOnce({
           response: {
             status: 500, // General server error
           },
@@ -468,6 +542,35 @@ describe("<SettingsPage />", () => {
           screen.getByText(/something went wrong\. try again or check back later/i)
         ).not.toBeNull()
       })
+    })
+    it("saving name server errors", async () => {
+      const errorSpy = jest.spyOn(console, "error").mockImplementation(() => undefined)
+      ;(put as jest.Mock)
+        .mockRejectedValueOnce({
+          response: {
+            data: { errors: { lastName: ["unknown error"], full_messages: ["unknown error"] } },
+          },
+        })
+        .mockRejectedValueOnce({ response: { data: {} } })
+
+      const saveNameButton = screen.getByRole("button", { name: "Save name" })
+
+      await act(async () => {
+        fireEvent.click(saveNameButton)
+        await Promise.resolve()
+      })
+      expect(
+        (await screen.findAllByText(/something went wrong\. try again or check back later/i)).length
+      ).toBeGreaterThan(0)
+      await waitFor(() => expect(saveNameButton).not.toBeDisabled())
+
+      await act(async () => {
+        fireEvent.click(saveNameButton)
+        await Promise.resolve()
+      })
+      await waitFor(() =>
+        expect(errorSpy).toHaveBeenCalledWith("Unhandled name update error", expect.anything())
+      )
     })
   })
 
@@ -973,6 +1076,24 @@ describe("<SettingsPage />", () => {
       })
 
       expect(screen.queryByText(/check your email/i)).toBeNull()
+    })
+    it("shows an error when the Devise email update fails", async () => {
+      ;(authenticatedPut as jest.Mock).mockRejectedValueOnce({ response: { status: 500 } })
+
+      await act(async () => {
+        fireEvent.change(screen.getByRole("textbox", { name: /email/i }), {
+          target: { value: "new@example.com" },
+        })
+        fireEvent.click(screen.getByRole("button", { name: /save email/i }))
+        await Promise.resolve()
+      })
+
+      expect(
+        await screen.findByText(/something went wrong\. try again or check back later/i)
+      ).toBeInTheDocument()
+      expect(authenticatedPut).toHaveBeenCalledWith("/api/v1/auth", {
+        user: { email: "new@example.com" },
+      })
     })
   })
 })
