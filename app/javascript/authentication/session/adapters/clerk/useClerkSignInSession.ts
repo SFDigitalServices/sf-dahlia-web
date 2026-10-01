@@ -2,6 +2,7 @@ import { useCallback, useMemo } from "react"
 import { useClerk, useSignIn } from "@clerk/react"
 import { useNavigate } from "react-router"
 
+import { getClerkErrorCode } from "../../../authenticationUtils"
 import { SignInOutcome, SignInSession } from "../../signInSession"
 
 const SUCCESS: SignInOutcome = {}
@@ -93,7 +94,7 @@ export const useClerkSignInSession = (): SignInSession => {
 
       const { error } = await signIn.emailCode.verifyCode({ code })
       // user attempted to sign in with an email not linked to an account
-      if (error?.errors?.[0]?.code === "sign_up_if_missing_transfer") {
+      if (getClerkErrorCode(error) === "sign_up_if_missing_transfer") {
         return { error, needsSignUp: true }
       }
       if (error) {

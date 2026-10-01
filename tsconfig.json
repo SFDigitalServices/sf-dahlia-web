@@ -9,6 +9,11 @@
     "target": "es6",
     "lib": ["es5", "es6", "es7", "es2017", "dom"],
     "moduleResolution": "node",
+    "paths": {
+      // with our older node10-style module resolution, we need to manually locate the
+      // type dependencies for some libraries
+      "@clerk/shared/*": ["./node_modules/@clerk/shared/dist/*"],
+    },
     "sourceMap": true,
     "jsx": "react",
     "noEmit": false,
