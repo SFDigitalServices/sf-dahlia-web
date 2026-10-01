@@ -171,6 +171,7 @@ export const useClerkSignUpSession = (): SignUpSession => {
 
   return useMemo(
     (): SignUpSession => ({
+      user,
       isBusy,
       isAccountInitialized,
       hasPassword: Boolean(user?.passwordEnabled),
@@ -183,9 +184,9 @@ export const useClerkSignUpSession = (): SignUpSession => {
       changePassword,
     }),
     [
+      user,
       isBusy,
       isAccountInitialized,
-      user?.passwordEnabled,
       createAccount,
       transferFromSignIn,
       resendEmailCode,

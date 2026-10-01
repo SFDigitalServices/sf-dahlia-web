@@ -2,6 +2,7 @@
 import React from "react"
 import EmailFieldset, {
   emailFieldsetErrors,
+  handleClerkEmailErrors,
   handleEmailServerErrors,
 } from "../../pages/account/components/EmailFieldset"
 import { render, screen } from "@testing-library/react"
@@ -170,6 +171,16 @@ describe("EmailFieldset", () => {
       it(`returns correct error message for ${key} with abbreviated=${abbreviated}`, () => {
         expect(getErrorMessage(key, emailFieldsetErrors, abbreviated)).toBe(t(expected))
       })
+    })
+  })
+  describe("handleClerkEmailErrors", () => {
+    it.each([
+      [{ errors: [{ code: "form_identifier_exists" }] }, "email:server:duplicate"],
+      [{ errors: [{ code: "form_param_format_invalid" }] }, "email:generalFormat"],
+      [{ errors: [{ code: "something_else" }] }, "email:server:generic"],
+      [undefined, "email:server:generic"],
+    ])("maps the error to %s", (error, message) => {
+      expect(handleClerkEmailErrors(error)).toEqual(["email", { message, shouldFocus: true }])
     })
   })
 })
