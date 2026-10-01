@@ -39,6 +39,11 @@ class AuthController < ApplicationController
     render 'reset_password'
   end
 
+  def update_email
+    @update_email_props = react_app_props
+    render 'update_email'
+  end
+
   protected
 
   def use_react_app

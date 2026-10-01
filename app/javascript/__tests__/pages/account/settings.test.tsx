@@ -12,6 +12,7 @@ import { mockProfileStub, setupUserContext } from "../../__util__/accountUtils"
 import { useFeatureFlag } from "../../../hooks/useFeatureFlag"
 import { useUser } from "@clerk/react"
 import { useLocation, useNavigate } from "react-router"
+import { getUpdateEmailPath } from "../../../util/routeUtil"
 import { UNLEASH_FLAG } from "../../../modules/constants"
 import * as authStatus from "../../../authentication/session/authStatus"
 
@@ -81,6 +82,7 @@ describe("<SettingsPage />", () => {
         isLoaded: true,
         isSignedIn: true,
         user: { passwordEnabled: true },
+        primaryEmailAddress: { emailAddress: "test@example.com" },
       })
       mockNavigate = jest.fn()
       ;(useNavigate as jest.Mock).mockReturnValue(mockNavigate)
@@ -340,102 +342,20 @@ describe("<SettingsPage />", () => {
         expect(put).not.toHaveBeenCalled()
       })
     })
-
-    describe("when the user updates their email", () => {
-      it("updates Email", async () => {
-        ;(put as jest.Mock).mockResolvedValue({
-          data: { contact: { ...mockProfileStub, email: "test@test.com" } },
-        })
-
-        const emailUpdateButton = screen.getByRole("button", { name: "Save email address" })
-        const group = screen.getByRole("group", { name: /email/i })
-        const emailField = within(group).getByRole("textbox")
-
+    describe("the email section", () => {
+      it("navigates to the update email page", async () => {
         await act(async () => {
-          fireEvent.change(emailField, { target: { value: "test@test.com" } })
-          expect(
-            screen.getByText("We will update any applications you have not submitted yet.")
-          ).not.toBeNull()
-          fireEvent.click(screen.getByLabelText("Close"))
-          fireEvent.click(emailUpdateButton)
+          fireEvent.click(screen.getByRole("button", { name: /update email/i }))
           await promise
         })
 
-        await waitFor(() =>
-          expect(put).toHaveBeenCalledWith(
-            "/api/v1/account/update",
-            expect.objectContaining({
-              contact: expect.objectContaining({ email: "test@test.com" }),
-            }),
-            { headers: { Authorization: "Bearer clerk-session-token" } }
-          )
-        )
-        expect(authenticatedPut).not.toHaveBeenCalled()
-        expect(
-          await screen.findByText(
-            "We sent you an email. Check your email and follow the link to finish changing your information."
-          )
-        ).not.toBeNull()
-      })
-
-      it("does not update with malformed emails", async () => {
-        const emailUpdateButton = screen.getByRole("button", { name: "Save email address" })
-        const group = screen.getByRole("group", {
-          name: /email/i,
-        })
-
-        const emailField = within(group).getByRole("textbox")
-
-        await act(async () => {
-          fireEvent.change(emailField, { target: { value: "testtest.com" } })
-          emailUpdateButton.dispatchEvent(new MouseEvent("click"))
-          await promise
-        })
-
-        expect(put).not.toHaveBeenCalled()
-        expect(authenticatedPut).not.toHaveBeenCalled()
-      })
-      it("does not update email when getting the token throws", async () => {
-        const tokenSpy = jest.spyOn(authStatus, "bearerToken").mockImplementation(() => {
-          throw new Error("no session")
-        })
-        const group = screen.getByRole("group", { name: /email/i })
-
-        await act(async () => {
-          fireEvent.change(within(group).getByRole("textbox"), {
-            target: { value: "test@test.com" },
-          })
-          fireEvent.click(screen.getByRole("button", { name: "Save email address" }))
-          await Promise.resolve()
-        })
-
-        await waitFor(() => expect(tokenSpy).toHaveBeenCalled())
-        expect(put).not.toHaveBeenCalled()
-        expect(authenticatedPut).not.toHaveBeenCalled()
-      })
-
-      it("does not update email when there is no token", async () => {
-        const tokenSpy = jest.spyOn(authStatus, "bearerToken").mockReturnValue(undefined)
-        const group = screen.getByRole("group", { name: /email/i })
-
-        await act(async () => {
-          fireEvent.change(within(group).getByRole("textbox"), {
-            target: { value: "test@test.com" },
-          })
-          fireEvent.click(screen.getByRole("button", { name: "Save email address" }))
-          await Promise.resolve()
-        })
-
-        await waitFor(() => expect(tokenSpy).toHaveBeenCalled())
-        expect(put).not.toHaveBeenCalled()
-        expect(authenticatedPut).not.toHaveBeenCalled()
+        expect(mockNavigate).toHaveBeenCalledWith(getUpdateEmailPath())
       })
     })
-
     describe("the password section", () => {
       it("shows a change password button when the user has a password", () => {
         expect(screen.getByRole("button", { name: "Change password" })).not.toBeNull()
-        expect(screen.getByText("••••")).not.toBeNull()
+        expect(screen.getByText("••••••••")).not.toBeNull()
         expect(screen.queryByRole("button", { name: "Add password" })).toBeNull()
       })
 
@@ -616,65 +536,6 @@ describe("<SettingsPage />", () => {
           fireEvent.change(yearField, { target: { value: 1998 } })
           fireEvent.click(dobButton)
 
-          await promise
-        })
-        expect(
-          screen.getByText(/something went wrong\. try again or check back later/i)
-        ).not.toBeNull()
-      })
-
-      it("email Errors", async () => {
-        const emailButton = screen.getByRole("button", { name: "Save email address" })
-        const group = screen.getByRole("group", {
-          name: /email/i,
-        })
-
-        const emailField = within(group).getByRole("textbox")
-
-        await act(async () => {
-          fireEvent.change(emailField, { target: { value: "testtest.com" } })
-          fireEvent.click(emailButton)
-          await promise
-        })
-
-        expect(
-          screen.getByRole("button", {
-            name: /email missing @ symbol/i,
-          })
-        ).not.toBeNull()
-
-        expect(
-          screen.getByText(/email missing @ symbol\. enter email like: example@web\.com/i)
-        ).not.toBeNull()
-        ;(put as jest.Mock).mockRejectedValueOnce({
-          response: {
-            status: 422, // Indicates that the email is invalid
-            data: {
-              message: "Unprocessable Entity",
-            },
-          },
-        })
-        await act(async () => {
-          fireEvent.change(emailField, { target: { value: "test@test.com" } })
-          fireEvent.click(emailButton)
-          await promise
-        })
-        expect(
-          screen.getByRole("button", {
-            name: /email entered incorrectly/i,
-          })
-        ).not.toBeNull()
-        expect(
-          screen.getByText(/email entered incorrectly\. enter email like: example@web\.com/i)
-        ).not.toBeNull()
-        ;(put as jest.Mock).mockRejectedValueOnce({
-          response: {
-            status: 500, // General server error
-          },
-        })
-        await act(async () => {
-          fireEvent.change(emailField, { target: { value: "test@test.com" } })
-          fireEvent.click(emailButton)
           await promise
         })
         expect(
@@ -1125,7 +986,7 @@ describe("<SettingsPage />", () => {
   })
 
   // TODO: DAH-4262 cleanup after clerk flag is on
-  describe("the Devise password section", () => {
+  describe("the Devise legacy sections", () => {
     let originalLocation: Location
 
     beforeEach(async () => {
@@ -1196,6 +1057,43 @@ describe("<SettingsPage />", () => {
       await fillAndSubmitDevisePassword("abcd1234")
 
       expect(authenticatedPut).not.toHaveBeenCalled()
+    })
+
+    it("closes the email banners", async () => {
+      ;(authenticatedPut as jest.Mock).mockResolvedValue({ data: {} })
+      const emailField = screen.getByRole("textbox", { name: /email/i })
+
+      await act(async () => {
+        fireEvent.change(emailField, { target: { value: "new@example.com" } })
+        fireEvent.click(screen.getByLabelText("Close")) // line 219
+        fireEvent.click(screen.getByRole("button", { name: /save email/i }))
+        await Promise.resolve()
+      })
+
+      await act(async () => {
+        fireEvent.click(screen.getByLabelText("Close")) // line 226
+        await Promise.resolve()
+      })
+
+      expect(screen.queryByText(/check your email/i)).toBeNull()
+    })
+    it("shows an error when the Devise email update fails", async () => {
+      ;(authenticatedPut as jest.Mock).mockRejectedValueOnce({ response: { status: 500 } })
+
+      await act(async () => {
+        fireEvent.change(screen.getByRole("textbox", { name: /email/i }), {
+          target: { value: "new@example.com" },
+        })
+        fireEvent.click(screen.getByRole("button", { name: /save email/i }))
+        await Promise.resolve()
+      })
+
+      expect(
+        await screen.findByText(/something went wrong\. try again or check back later/i)
+      ).toBeInTheDocument()
+      expect(authenticatedPut).toHaveBeenCalledWith("/api/v1/auth", {
+        user: { email: "new@example.com" },
+      })
     })
   })
 })
