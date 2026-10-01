@@ -30,6 +30,8 @@ import PhoneFieldset, {
 import { updatePhone } from "../../api/authApiService"
 import { ErrorSummaryBanner } from "./components/ErrorSummaryBanner"
 import { ExpandedAccountAxiosError, getErrorMessage } from "./components/util"
+import { useAuthSession } from "../../authentication/session/AuthSessionProvider"
+import { bearerToken } from "../../authentication/session/authStatus"
 
 const getPhoneDefaultValues = (profile: User) => ({
   phone: profile.phone ?? "",
@@ -55,11 +57,18 @@ const ContactPhoneForm = ({
     shouldFocusError: false,
     defaultValues: getPhoneDefaultValues(profile),
   })
+  const { getCredentials } = useAuthSession()
+  const { unleashFlag: clerkEnabled } = useFeatureFlag(UNLEASH_FLAG.CLERK_AUTH, false)
   const {
     handleSubmit,
     formState: { errors, isDirty },
     setError,
   } = formMethods
+  const showGenericError = () => {
+    setError("phone", { message: "phone:server:generic", shouldFocus: true })
+    setShowSaveBanner(false)
+    setLoading(false)
+  }
 
   // Hide the "Changes saved" banner when the user makes new changes
   React.useEffect(() => {
@@ -70,14 +79,31 @@ const ContactPhoneForm = ({
 
   const onSubmit = async (data: PhoneFormValues) => {
     setLoading(true)
+    let sessionToken: string | undefined
+
     try {
-      const updatedContact = await updatePhone({
-        ...profile,
-        phone: data.phone,
-        phoneType: data.phoneType,
-        alternatePhone: data.secondPhone,
-        alternatePhoneType: data.secondPhoneType,
-      })
+      sessionToken = clerkEnabled ? bearerToken(await getCredentials()) : undefined
+    } catch {
+      showGenericError()
+      return
+    }
+
+    if (clerkEnabled && !sessionToken) {
+      showGenericError()
+      return
+    }
+
+    try {
+      const updatedContact = await updatePhone(
+        {
+          ...profile,
+          phone: data.phone,
+          phoneType: data.phoneType,
+          alternatePhone: data.secondPhone,
+          alternatePhoneType: data.secondPhoneType,
+        },
+        { clerkEnabled, sessionToken }
+      )
       saveProfile(updatedContact)
       formMethods.reset(data)
       setShowSaveBanner(true)
@@ -88,7 +114,6 @@ const ContactPhoneForm = ({
       setLoading(false)
     }
   }
-
   return (
     <>
       {showSaveBanner && (
