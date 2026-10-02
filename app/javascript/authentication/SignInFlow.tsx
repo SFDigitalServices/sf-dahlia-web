@@ -15,7 +15,7 @@ import {
   getMyAccountPath,
   getSignInCodePath,
 } from "../util/routeUtil"
-import { authorizeHousingCounselor } from "../api/authApiService"
+import { authorizeHousingCounselor, clearHousingCounselorSession } from "../api/authApiService"
 import { useAuthSession } from "./session/AuthSessionProvider"
 import { useSignInSession } from "./session/useSignInSession"
 import { bearerToken, isAuthInitialized } from "./session/authStatus"
@@ -121,6 +121,11 @@ const SignInFlow = () => {
     const housingCounselorToken = getHousingCounselorToken()
     if (housingCounselorToken) {
       housingCounselorHandledRef.current = true
+    } else {
+      // A normal sign-in (no delegate link) should always land the user in
+      // their own account, never resuming a stale delegated session from
+      // earlier in this browser.
+      await clearHousingCounselorSession()
     }
 
     // we need to set the session token and *not* navigate away, so we have it for `checkHousingCounselorAccess()`
@@ -212,7 +217,12 @@ const SignInFlow = () => {
   const verificationCodeSection = (
     <>
       <Form onSubmit={handleSubmit(onGetCodeSubmit)}>
-        <EmailFieldset register={register} errors={errors} note={t("signIn.codeDescription")} />
+        <EmailFieldset
+          register={register}
+          errors={errors}
+          note={t("signIn.codeDescription")}
+          submitWithEnterKey
+        />
         <Button
           className={styles.getCodeButton}
           variant="primary"
@@ -234,7 +244,7 @@ const SignInFlow = () => {
       {/* eslint-disable-next-line react-hooks/refs -- housingCounselorHandledRef is only ever
           read/written inside onSubmit's real event-handler execution, never during render */}
       <Form className={styles.form} onSubmit={handleSubmit(onSubmit, onError)}>
-        <EmailFieldset register={register} />
+        <EmailFieldset register={register} submitWithEnterKey />
         <span className={styles.forgotPassword}>
           <Link href={forgotPasswordPath}>{t("signIn.forgotPassword")}</Link>
         </span>
@@ -243,6 +253,7 @@ const SignInFlow = () => {
           watch={watch}
           labelText={t("label.password")}
           passwordType="signIn"
+          submitWithEnterKey
         />
         <Button
           className={styles.signInButton}

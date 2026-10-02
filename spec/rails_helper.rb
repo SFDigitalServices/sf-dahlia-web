@@ -56,4 +56,9 @@ RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
   config.include Devise::TestHelpers, type: :controller
   config.extend DeviseMacros
+
+  # Rails 8 draws routes lazily when eager_load is off, and Devise.mappings is
+  # only populated once routes.rb runs - so a controller spec that reads
+  # Devise.mappings[:user] before any request has loaded routes gets nil.
+  config.before(:suite) { Rails.application.reload_routes! }
 end

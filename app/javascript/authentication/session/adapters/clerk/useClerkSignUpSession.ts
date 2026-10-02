@@ -2,6 +2,7 @@ import { useCallback, useMemo } from "react"
 import { useSession, useSignUp, useUser } from "@clerk/react"
 import { useNavigate } from "react-router"
 
+import { getClerkErrorCode } from "../../../authenticationUtils"
 import { getCurrentLanguage } from "../../../../util/languageUtil"
 import { SignUpOutcome, SignUpSession } from "../../signUpSession"
 
@@ -33,7 +34,7 @@ export const useClerkSignUpSession = (): SignUpSession => {
         unsafeMetadata: { locale }, // Account creation can only update public metadata
       })
       // this condition can be true only if strict enumeration protection is *not* enabled
-      if (error?.errors?.[0]?.code === "form_identifier_exists") {
+      if (getClerkErrorCode(error) === "form_identifier_exists") {
         return { error, needsSignIn: true }
       }
       if (error) {
@@ -170,6 +171,7 @@ export const useClerkSignUpSession = (): SignUpSession => {
 
   return useMemo(
     (): SignUpSession => ({
+      user,
       isBusy,
       isAccountInitialized,
       hasPassword: Boolean(user?.passwordEnabled),
@@ -182,9 +184,9 @@ export const useClerkSignUpSession = (): SignUpSession => {
       changePassword,
     }),
     [
+      user,
       isBusy,
       isAccountInitialized,
-      user?.passwordEnabled,
       createAccount,
       transferFromSignIn,
       resendEmailCode,
