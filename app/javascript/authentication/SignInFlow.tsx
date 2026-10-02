@@ -19,7 +19,7 @@ import { authorizeHousingCounselor, clearHousingCounselorSession } from "../api/
 import { useAuthSession } from "./session/AuthSessionProvider"
 import { useSignInSession } from "./session/useSignInSession"
 import { bearerToken, isAuthInitialized } from "./session/authStatus"
-import { getSfGovUrl, localizedFormat, renderInlineMarkup } from "../util/languageUtil"
+import { getSfGovUrl, localizedMonthAndDay, renderInlineMarkup } from "../util/languageUtil"
 import { AUTH_FLOW, UNLEASH_FLAG } from "../modules/constants"
 import { useFeatureFlag } from "../hooks/useFeatureFlag"
 import { clearHeaders } from "./token"
@@ -40,7 +40,7 @@ const SignInFlow = () => {
   const { state } = useLocation() as { state?: { redirectUrl?: string } }
   const redirectUrl = state?.redirectUrl
   const postSignInRedirectUrl = redirectUrl ?? getMyAccountPath()
-  const requiredLoginsDate = localizedFormat(process.env.REQUIRED_LOGINS_DATE ?? "", "LL")
+  const requiredLoginsDate = localizedMonthAndDay(process.env.REQUIRED_LOGINS_DATE ?? "")
   const { status, getCredentials } = useAuthSession()
   const isSignedIn = status.kind === "signedIn"
   const {
