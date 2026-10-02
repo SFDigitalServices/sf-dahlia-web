@@ -47,6 +47,7 @@ export interface LayoutProps {
   title?: string
   description?: string
   image?: string
+  compactFooter?: boolean
 }
 
 const asAlertType = (alertType: string): AlertTypes => {
@@ -171,6 +172,7 @@ const LayoutContent = ({
   title,
   description,
   image,
+  compactFooter = false,
 }: LayoutProps & { signedIn: boolean; signOut: () => void | Promise<void> }) => {
   const { getAssetPath } = useContext(ConfigContext)
   const { pathname } = useLocation()
@@ -256,34 +258,38 @@ const LayoutContent = ({
           <FooterSection>
             <img src={getAssetPath("logo-city.png")} alt="" data-testid="footer-logo-test-id" />
           </FooterSection>
-          <FooterSection small>
-            <p className="text-gray-500">
-              <Markdown>
-                {t("footer.dahliaDescription", {
-                  mohcdUrl: getSfGovUrl(
-                    "https://sf.gov/departments/mayors-office-housing-and-community-development"
-                  ),
-                })}
-              </Markdown>
-            </p>
-            <p className="text-xs mt-4 text-gray-500">
-              <Markdown>
-                {t("footer.inPartnershipWith", {
-                  sfdsUrl: getSfGovUrl(
-                    "https://sf.gov/departments/city-administrator/digital-services"
-                  ),
-                  mayorUrl: getSfGovUrl("https://sf.gov/departments/mayors-office-innovation"),
-                })}
-              </Markdown>
-            </p>
-          </FooterSection>
+          {!compactFooter && (
+            <>
+              <FooterSection small>
+                <p className="text-gray-500">
+                  <Markdown>
+                    {t("footer.dahliaDescription", {
+                      mohcdUrl: getSfGovUrl(
+                        "https://sf.gov/departments/mayors-office-housing-and-community-development"
+                      ),
+                    })}
+                  </Markdown>
+                </p>
+                <p className="text-xs mt-4 text-gray-500">
+                  <Markdown>
+                    {t("footer.inPartnershipWith", {
+                      sfdsUrl: getSfGovUrl(
+                        "https://sf.gov/departments/city-administrator/digital-services"
+                      ),
+                      mayorUrl: getSfGovUrl("https://sf.gov/departments/mayors-office-innovation"),
+                    })}
+                  </Markdown>
+                </p>
+              </FooterSection>
 
-          <FooterSection>
-            <p className="text-sm">
-              {t("footer.forListingQuestions")} <br />
-              {t("footer.forGeneralQuestions")}
-            </p>
-          </FooterSection>
+              <FooterSection>
+                <p className="text-sm">
+                  {t("footer.forListingQuestions")} <br />
+                  {t("footer.forGeneralQuestions")}
+                </p>
+              </FooterSection>
+            </>
+          )}
           <FooterNav copyright={`© ${t("footer.cityCountyOfSf")}`}>
             <Link
               className="text-gray-500 no-underline"
