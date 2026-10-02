@@ -29,6 +29,12 @@
   --message-border: 2px solid var(--seeds-color-primary-light);
   background: var(--seeds-color-primary-lighter) !important;
   margin: var(--seeds-spacer-header) 0;
+  svg {
+    color: var(--seeds-color-primary-dark) !important;
+  }
+  a {
+    color: var(--seeds-color-primary-darker) !important;
+  }
 }
 
 .createAccountDescription {
