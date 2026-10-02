@@ -56,7 +56,7 @@ export const withAuthentication = <P extends object>(
   }
 
   const ClerkAuthGate = (props: P) => {
-    const { status } = useAuthSession()
+    const { status, isSigningOut } = useAuthSession()
     const { profile, initialStateLoaded } = React.useContext(UserContext)
     const isSignedIn = status.kind === "signedIn"
     const loading =
@@ -66,13 +66,14 @@ export const withAuthentication = <P extends object>(
     React.useEffect(() => {
       if (loading) return
       if (!isSignedIn) {
-        window.location.assign(getSignInPath(redirectType))
+        // A deliberate sign-out routes itself; redirecting here would race it.
+        if (!isSigningOut()) window.location.assign(getSignInPath(redirectType))
         return
       }
       if (!profile) {
         window.location.assign(getAddProfilePath())
       }
-    }, [loading, isSignedIn, profile])
+    }, [loading, isSignedIn, isSigningOut, profile])
 
     if (loading || !isSignedIn || !profile) {
       return null
