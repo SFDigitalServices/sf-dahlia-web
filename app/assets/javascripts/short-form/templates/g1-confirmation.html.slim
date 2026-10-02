@@ -48,7 +48,7 @@
     p.form-note
       | {{ 'g1_confirmation.dont_submit_another_app_p1_dalp' | translate }}
 
-  .app-inner.inset ng-class="{ 'border-bottom': (!loggedIn() && !accountExists()) }" ng-if="!listingIsDalp()"
+  .app-inner.inset ng-if="!listingIsDalp()"
     .form-group
       h3.form-label.caps
         | {{'g1_confirmation.dont_submit_another_app_title' | translate}}
@@ -63,19 +63,6 @@
           | {{ listing.Application_Organization }}
         br
           | {{ listing.Leasing_Agent_Phone }}
-
-  div ng-show="!loggedIn() && !accountExists()"
-    .app-inner.inset
-      label.form-label.caps translate="g1_confirmation.create_account_title"
-      p.form-note translate="g1_confirmation.create_account_body"
-
-    .button-pager
-      .button-pager_row.primary
-        a.button.primary.radius#create-account ui-sref="dahlia.short-form-application.create-account"
-          | {{'create_account.create_an_account' | translate}}
-      .button-pager_row
-        button.button.button-link.button-lined.small-text-center.expand-small ui-sref="dahlia.welcome"
-          | {{'g1_confirmation.no_thanks_im_done' | translate}}
 
   .button-pager
     .button-pager_row.primary ng-if="loggedIn()"
