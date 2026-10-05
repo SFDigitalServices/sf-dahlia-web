@@ -61,10 +61,10 @@ const UpdateEmailPage = () => {
 
     // Destroys all non-primary email addresses from abandoned change email attempts
     const staleEmailAddresses = user.emailAddresses.filter(
-      (email) => email.id !== primaryEmailId && email.linkedTo.length === 0
+      (address) => address.id !== primaryEmailId && address.linkedTo.length === 0
     )
 
-    await Promise.all(staleEmailAddresses.map((email) => email.destroy()))
+    await Promise.all(staleEmailAddresses.map((address) => address.destroy()))
     const emailAddress = await user.createEmailAddress({ email })
     await emailAddress.prepareVerification({ strategy: "email_code" })
   }
@@ -100,18 +100,18 @@ const UpdateEmailPage = () => {
 
     // Contact email changed to the login email: email is already verified
     // in Clerk so no code flow needed
-    const skipVerifcationCodeFlow = isContactFlow && newEmail === loginEmail
+    const skipVerificationCodeFlow = isContactFlow && newEmail === loginEmail
 
     setLoading(true)
     try {
-      if (skipVerifcationCodeFlow) {
+      if (skipVerificationCodeFlow) {
         await saveVerifiedContactEmail(email)
       } else {
         await sendEmailCode(email)
         void navigate(getUpdateEmailCodePath(), { state: { email, flow } })
       }
     } catch (error) {
-      if (skipVerifcationCodeFlow) {
+      if (skipVerificationCodeFlow) {
         setError("email", { message: "email:server:generic", shouldFocus: true })
       } else {
         setError(...handleClerkEmailErrors(error))
