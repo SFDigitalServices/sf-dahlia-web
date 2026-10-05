@@ -4,7 +4,7 @@ import {
   mockWindowLocation,
   restoreWindowLocation,
 } from "../../__util__/renderUtils"
-import Contact from "../../../pages/account/contact"
+import { default as Contact } from "../../../pages/account/contact"
 import React from "react"
 import { fireEvent, waitFor, type RenderResult } from "@testing-library/react"
 import { mockProfileStub, setupUserContext } from "../../__util__/accountUtils"

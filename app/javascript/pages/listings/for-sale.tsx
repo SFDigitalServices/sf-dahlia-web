@@ -161,4 +161,6 @@ const SaleDirectory = () => {
   )
 }
 
+export { SaleDirectory }
+
 export default withAppSetup(SaleDirectory, { pageName: AppPages.SaleDirectory })

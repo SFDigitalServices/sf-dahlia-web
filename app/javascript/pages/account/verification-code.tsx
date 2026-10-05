@@ -449,6 +449,8 @@ const EnterVerificationCode = (_props: { assetPaths: unknown }) => {
   )
 }
 
+export { EnterVerificationCode }
+
 export default withAppSetup(EnterVerificationCode, {
   useFormTimeout: true,
   pageName: AppPages.EnterVerificationCode,

@@ -117,6 +117,8 @@ const ChangePassword = (_props: { assetPaths: unknown }) => {
   return <ChangePasswordPage />
 }
 
+export { ChangePassword }
+
 export default withAppSetup(ChangePassword, {
   useFormTimeout: true,
   pageName: AppPages.ChangePassword,

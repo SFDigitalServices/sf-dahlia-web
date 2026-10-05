@@ -101,6 +101,8 @@ const CreateAnAccount = ({ assetPaths }: CreateAnAccountProps) => {
   return <CreateAnAccountPage />
 }
 
+export { CreateAnAccount }
+
 export default withAppSetup(CreateAnAccount, {
   useFormTimeout: true,
   pageName: AppPages.CreateAccount,

@@ -53,4 +53,6 @@ const AdditionalResources = () => {
   )
 }
 
+export { AdditionalResources }
+
 export default withAppSetup(AdditionalResources, { pageName: AppPages.AdditionalResources })

@@ -36,4 +36,6 @@ const SignIn = (_props: SignInProps) => {
   )
 }
 
+export { SignIn }
+
 export default withAppSetup(SignIn, { useFormTimeout: true, pageName: AppPages.SignIn })

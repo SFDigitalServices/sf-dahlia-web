@@ -1,6 +1,6 @@
 import React from "react"
 import { cleanup, waitFor } from "@testing-library/react"
-import ListingDetail from "../../../../javascript/pages/listings/listing-detail"
+import { default as ListingDetail } from "../../../../javascript/pages/listings/listing-detail"
 import { openRentalListing } from "../../data/RailsRentalListing/listing-rental-open"
 import { habitatListing } from "../../data/RailsSaleListing/listing-sale-habitat"
 import {

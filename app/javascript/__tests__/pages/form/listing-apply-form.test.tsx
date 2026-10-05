@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import React from "react"
 import { useParams } from "react-router"
-import ListingApplyForm from "../../../pages/form/listing-apply-form"
+import { default as ListingApplyForm } from "../../../pages/form/listing-apply-form"
 import {
   renderAndLoadAsync,
   mockWindowLocation,

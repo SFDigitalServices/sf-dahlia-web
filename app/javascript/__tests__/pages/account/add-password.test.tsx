@@ -3,7 +3,7 @@ import { useClerk, useSignIn, useUser } from "@clerk/react"
 import { screen, waitFor, cleanup } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
 import { useLocation, useNavigate } from "react-router"
-import AddPassword from "../../../pages/account/add-password"
+import { default as AddPassword } from "../../../pages/account/add-password"
 import {
   renderAndLoadAsync,
   mockWindowLocation,

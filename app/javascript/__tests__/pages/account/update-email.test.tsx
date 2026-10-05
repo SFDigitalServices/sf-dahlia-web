@@ -4,7 +4,7 @@ import { t } from "@bloom-housing/ui-components"
 import { act, cleanup, fireEvent, screen, waitFor } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
 import { useNavigate } from "react-router"
-import UpdateEmail from "../../../pages/account/update-email"
+import { default as UpdateEmail } from "../../../pages/account/update-email"
 import {
   renderAndLoadAsync,
   mockWindowLocation,

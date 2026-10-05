@@ -1,6 +1,6 @@
 import React from "react"
 
-import ForgotPassword from "../../pages/forgot-password"
+import { default as ForgotPassword } from "../../pages/forgot-password"
 import { renderAndLoadAsync } from "../__util__/renderUtils"
 import { screen } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"

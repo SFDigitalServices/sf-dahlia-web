@@ -4,7 +4,7 @@ import {
   mockWindowLocation,
   restoreWindowLocation,
 } from "../../__util__/renderUtils"
-import Account from "../../../pages/account/account"
+import { default as Account } from "../../../pages/account/account"
 import React from "react"
 import { MemoryRouter } from "react-router"
 import { within, screen, fireEvent, waitFor } from "@testing-library/react"

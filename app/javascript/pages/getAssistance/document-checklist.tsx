@@ -224,4 +224,6 @@ const DocumentChecklist = () => {
   )
 }
 
+export { DocumentChecklist }
+
 export default withAppSetup(DocumentChecklist, { pageName: AppPages.DocumentChecklist })

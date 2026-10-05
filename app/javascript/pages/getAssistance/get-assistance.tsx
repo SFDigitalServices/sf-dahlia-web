@@ -137,4 +137,6 @@ const GetAssistance = () => {
   )
 }
 
+export { GetAssistance }
+
 export default withAppSetup(GetAssistance, { pageName: AppPages.GetAssistance })

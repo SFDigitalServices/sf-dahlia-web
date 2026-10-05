@@ -187,6 +187,8 @@ const Contact = () => {
   )
 }
 
+export { Contact }
+
 export default withAppSetup(withAuthentication(Contact, { redirectType: RedirectType.Account }), {
   pageName: AppPages.Contact,
 })

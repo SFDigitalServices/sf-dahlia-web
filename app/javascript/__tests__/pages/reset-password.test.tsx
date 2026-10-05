@@ -6,7 +6,7 @@ import {
   mockWindowLocation,
   restoreWindowLocation,
 } from "../__util__/renderUtils"
-import ResetPassword from "../../pages/reset-password"
+import { default as ResetPassword } from "../../pages/reset-password"
 import { setupUserContext } from "../__util__/accountUtils"
 import { screen } from "@testing-library/react"
 import { authenticatedPut } from "../../api/apiService"

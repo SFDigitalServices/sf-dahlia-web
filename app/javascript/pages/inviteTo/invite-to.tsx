@@ -193,4 +193,6 @@ const InviteToPage = ({
   return null
 }
 
+export { InviteToPage }
+
 export default withAppSetup(InviteToPage, { pageName: AppPages.InviteTo })

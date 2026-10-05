@@ -4,7 +4,7 @@ import { t } from "@bloom-housing/ui-components"
 import { act, screen, waitFor, cleanup, fireEvent } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
 import { useLocation, useNavigate } from "react-router"
-import EnterVerificationCode from "../../../pages/account/verification-code"
+import { default as EnterVerificationCode } from "../../../pages/account/verification-code"
 import {
   renderAndLoadAsync,
   mockWindowLocation,

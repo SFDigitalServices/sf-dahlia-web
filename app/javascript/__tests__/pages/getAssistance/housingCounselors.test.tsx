@@ -1,5 +1,5 @@
 import { renderAndLoadAsync } from "../../__util__/renderUtils"
-import HousingCounselors from "../../../pages/getAssistance/housing-counselors"
+import { default as HousingCounselors } from "../../../pages/getAssistance/housing-counselors"
 import React from "react"
 import { within } from "@testing-library/react"
 import { t } from "@bloom-housing/ui-components"

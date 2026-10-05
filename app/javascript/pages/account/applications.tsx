@@ -268,6 +268,8 @@ const Applications = (_props: ApplicationsProps) => {
   return <ApplicationsPage />
 }
 
+export { Applications }
+
 export default withAppSetup(
   withAuthentication(Applications, { redirectType: RedirectType.Applications }),
   {

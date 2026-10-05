@@ -75,4 +75,6 @@ const ListingApplyForm = (_: ListingApplyFormProps) => {
   )
 }
 
+export { ListingApplyForm }
+
 export default withAppSetup(ListingApplyForm, { pageName: AppPages.ListingApplyForm })

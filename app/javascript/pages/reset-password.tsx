@@ -106,6 +106,8 @@ const ResetPassword = ({ assetPaths }: ResetPasswordProps) => {
   return <AddPasswordPage flow={AUTH_FLOW.FORGOT_PASSWORD} />
 }
 
+export { ResetPassword }
+
 export default withAppSetup(ResetPassword, {
   useFormTimeout: true,
   pageName: AppPages.ResetPassword,

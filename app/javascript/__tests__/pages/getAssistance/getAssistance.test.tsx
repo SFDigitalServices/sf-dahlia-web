@@ -1,5 +1,5 @@
 import { renderAndLoadAsync } from "../../__util__/renderUtils"
-import GetAssistance from "../../../pages/getAssistance/get-assistance"
+import { default as GetAssistance } from "../../../pages/getAssistance/get-assistance"
 import React from "react"
 import { within } from "@testing-library/react"
 import { t } from "@bloom-housing/ui-components"

@@ -134,4 +134,6 @@ const RentDirectory = () => {
   )
 }
 
+export { RentDirectory }
+
 export default withAppSetup(RentDirectory, { pageName: AppPages.RentalDirectory })

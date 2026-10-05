@@ -71,6 +71,8 @@ export const createPath = (path: string, params: { [key: string]: string | undef
   return newPath
 }
 
+// TODO WIP remove all these methods, bake localizedPathGetter into navigate(...), so we can easily see the destination url where navigate() gets called
+
 export const getHomepagePath = localizedPathGetter("/")
 export const getRentalDirectoryPath = localizedPathGetter("/listings/for-rent")
 export const getSaleDirectoryPath = localizedPathGetter("/listings/for-sale")
@@ -183,6 +185,8 @@ const getRedirectUrl = (key: RedirectType): string => {
 export const getSignInRedirectUrl = (redirect: RedirectType) => {
   return getRedirectUrl(redirect || RedirectType.Account)
 }
+
+// TODO WIP assess the need for this, should it be expanded on , or removed?
 
 export const AUTH_FLOW_PATH: Record<AUTH_FLOW, string> = {
   [AUTH_FLOW.SIGN_IN]: getSignInPath(),

@@ -1,7 +1,7 @@
 import React from "react"
 import { MemoryRouter, Route, Routes } from "react-router"
 
-import SignIn from "../../pages/sign-in"
+import { default as SignIn } from "../../pages/sign-in"
 import { renderAndLoadAsync } from "../__util__/renderUtils"
 import { fireEvent, render, screen, waitFor } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"

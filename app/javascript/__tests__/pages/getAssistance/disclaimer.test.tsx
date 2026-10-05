@@ -1,5 +1,5 @@
 import { renderAndLoadAsync } from "../../__util__/renderUtils"
-import Disclaimer from "../../../pages/getAssistance/disclaimer"
+import { default as Disclaimer } from "../../../pages/getAssistance/disclaimer"
 import React from "react"
 
 describe("<Disclaimer />", () => {

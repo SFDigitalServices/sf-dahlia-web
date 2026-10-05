@@ -16,6 +16,8 @@ const ForgotPassword = () => {
   return <ForgotPasswordFlow />
 }
 
+export { ForgotPassword }
+
 export default withAppSetup(ForgotPassword, {
   useFormTimeout: true,
   pageName: AppPages.ForgotPassword,

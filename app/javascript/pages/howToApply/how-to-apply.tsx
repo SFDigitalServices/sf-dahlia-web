@@ -406,4 +406,6 @@ const HowToApply = (_props: HowToApplyProps) => {
   )
 }
 
+export { HowToApply }
+
 export default withAppSetup(HowToApply, { pageName: AppPages.HowToApply })

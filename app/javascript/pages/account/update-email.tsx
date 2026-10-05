@@ -141,6 +141,8 @@ const UpdateEmail = (_props: { assetPaths: unknown }) => {
   return <UpdateEmailPage />
 }
 
+export { UpdateEmail }
+
 export default withAppSetup(UpdateEmail, {
   useFormTimeout: true,
   pageName: AppPages.UpdateEmail,

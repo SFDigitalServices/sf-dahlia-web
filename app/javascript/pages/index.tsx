@@ -54,4 +54,6 @@ const HomePage = (_props: HomePageProps) => {
   )
 }
 
+export { HomePage }
+
 export default withAppSetup(HomePage, { pageName: AppPages.Home })

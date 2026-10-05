@@ -55,4 +55,6 @@ const Disclaimer = () => {
   )
 }
 
+export { Disclaimer }
+
 export default withAppSetup(Disclaimer, { pageName: AppPages.Disclaimer })

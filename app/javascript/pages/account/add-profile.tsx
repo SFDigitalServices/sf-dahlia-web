@@ -183,6 +183,8 @@ const AddProfile = (_props: { assetPaths: unknown }) => {
   return <AddProfilePage />
 }
 
+export { AddProfile }
+
 export default withAppSetup(AddProfile, {
   useFormTimeout: true,
   pageName: AppPages.AddProfile,

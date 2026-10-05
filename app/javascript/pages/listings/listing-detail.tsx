@@ -237,4 +237,6 @@ const ListingDetail = () => {
   )
 }
 
+export { ListingDetail }
+
 export default withAppSetup(ListingDetail, { pageName: AppPages.ListingDetail })

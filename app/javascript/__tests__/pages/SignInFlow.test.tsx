@@ -3,7 +3,7 @@ import { useClerk, useSignIn } from "@clerk/react"
 import { act, screen, waitFor, within, cleanup } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
 import { useNavigate } from "react-router"
-import SignIn from "../../pages/sign-in"
+import { default as SignIn } from "../../pages/sign-in"
 import {
   renderAndLoadAsync,
   mockWindowLocation,

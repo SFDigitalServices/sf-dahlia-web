@@ -1,6 +1,6 @@
 import { renderAndLoadAsync } from "../../__util__/renderUtils"
 import React from "react"
-import Privacy from "../../../pages/getAssistance/privacy"
+import { default as Privacy } from "../../../pages/getAssistance/privacy"
 
 describe("<Privacy />", () => {
   it("shows the correct title text", async () => {

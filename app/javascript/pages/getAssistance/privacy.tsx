@@ -144,4 +144,6 @@ const Privacy = () => {
   )
 }
 
+export { Privacy }
+
 export default withAppSetup(Privacy, { pageName: AppPages.PrivacyPolicy })

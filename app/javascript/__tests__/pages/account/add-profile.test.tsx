@@ -3,7 +3,7 @@ import { useAuth } from "@clerk/react"
 import { screen, waitFor, cleanup } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
 import { useNavigate } from "react-router"
-import AddProfile from "../../../pages/account/add-profile"
+import { default as AddProfile } from "../../../pages/account/add-profile"
 import { createProfile, getProfile } from "../../../api/authApiService"
 import { getDobStringFromDobObject } from "../../../util/accountUtil"
 import {

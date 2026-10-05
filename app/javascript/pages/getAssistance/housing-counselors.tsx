@@ -275,4 +275,6 @@ const HousingCounselors = () => {
   )
 }
 
+export { HousingCounselors }
+
 export default withAppSetup(HousingCounselors, { pageName: AppPages.HousingCounselors })
