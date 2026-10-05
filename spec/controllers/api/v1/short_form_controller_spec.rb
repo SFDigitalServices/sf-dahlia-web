@@ -57,13 +57,11 @@ describe Api::V1::ShortFormController, type: :controller do
       allow(controller).to receive(:application_params).and_return(application_params)
       allow(controller).to receive(:applicant_attrs).and_return(applicant_attrs)
       allow(Force::ShortFormService).to receive(:create_or_update).and_return(response_data)
+      allow(Force::ShortFormService).to receive(:get_for_user).and_return([])
       allow(DahliaBackend::MessageService).to receive(:send_application_confirmation)
     end
 
     it 'submits the application and sends confirmation using new message service' do
-      allow(Rails.configuration).to receive_message_chain(:unleash,
-                                                          :is_enabled?).and_return(true)
-
       # Precise expectations with arguments
       expect(Force::ShortFormService).to receive(:create_or_update)
         .with(application_params, applicant_attrs)
@@ -74,6 +72,41 @@ describe Api::V1::ShortFormController, type: :controller do
 
       post :submit_application
       expect(response).to have_http_status(:ok)
+    end
+
+    context 'with the Clerk flag on' do
+      before { allow(ClerkOrDeviseAuth).to receive(:clerk_enabled?).and_return(true) }
+
+      it 'rejects an anonymous submission' do
+        allow(controller).to receive(:clerk).and_return(nil)
+
+        post :submit_application
+
+        expect(response).to have_http_status(:unauthorized)
+        expect(Force::ShortFormService).not_to have_received(:create_or_update)
+      end
+
+      it 'rejects a Devise user without a Clerk session' do
+        allow(controller).to receive(:clerk).and_return(nil)
+        allow(controller).to receive(:warden)
+          .and_return(double(authenticate: create(:user)))
+
+        post :submit_application
+
+        expect(response).to have_http_status(:unauthorized)
+        expect(Force::ShortFormService).not_to have_received(:create_or_update)
+      end
+
+      it 'submits the application for a Clerk user' do
+        allow(controller).to receive(:clerk).and_return(double(user_id: 'user_abc123'))
+        allow(ClerkService).to receive(:salesforce_contact_id)
+          .and_return('contact_abc123')
+
+        post :submit_application
+
+        expect(response).to have_http_status(:ok)
+        expect(Force::ShortFormService).to have_received(:create_or_update)
+      end
     end
   end
 
@@ -93,8 +126,9 @@ describe Api::V1::ShortFormController, type: :controller do
       allow(Force::ShortFormService).to receive(:delete).and_return(success: true)
     end
 
-    context 'with a Clerk session' do
+    context 'with the Clerk flag on and a Clerk session' do
       before do
+        allow(ClerkOrDeviseAuth).to receive(:clerk_enabled?).and_return(true)
         allow(controller).to receive(:clerk).and_return(double(user_id: clerk_user_id))
         allow(ClerkService).to receive(:salesforce_contact_id)
           .with(clerk_user_id)
@@ -146,11 +180,18 @@ describe Api::V1::ShortFormController, type: :controller do
     end
 
     # TODO(DAH-4366): CLERK MIGRATION - DEVISE TECH DEBT TO REMOVE
-    # Goes with the flag, along with CLERK_OR_DEVISE_ACTIONS in the controller.
-    context 'without a Clerk session' do
-      before { allow(controller).to receive(:clerk).and_return(nil) }
+    # Goes with the flag, along with ClerkOrDeviseAuth.
+    context 'with the Clerk flag off' do
+      it 'ignores a Clerk session and uses Devise' do
+        allow(controller).to receive(:clerk).and_return(double(user_id: clerk_user_id))
 
-      it 'falls back to Devise and rejects an unauthenticated request' do
+        delete :delete_application, params: { id: 'app123' }
+
+        expect(response).to have_http_status(:unauthorized)
+        expect(Force::ShortFormService).not_to have_received(:delete)
+      end
+
+      it 'rejects an unauthenticated request' do
         delete :delete_application, params: { id: 'app123' }
 
         expect(response).to have_http_status(:unauthorized)

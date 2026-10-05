@@ -168,19 +168,25 @@ class Api::V1::AccountController < ApiController
 
   def authenticate_user!(*)
     return authenticate_clerk_or_devise_user!(*) if action_name == 'update'
-    return super unless %w[profile create_profile
-                           update_housing_counselor my_applications].include?(action_name)
+    return super unless clerk_only_action?
 
     @clerk_user_id = clerk&.user_id
     if @clerk_user_id.blank?
-      # my_applications accepts either credential while the Clerk flag rolls out:
-      # use the Clerk session when one is present, otherwise fall back to Devise.
-      return super if action_name == 'my_applications'
-
-      return render json: { error: 'Invalid Clerk session' }, status: :unauthorized
+      render json: { error: 'Invalid Clerk session' }, status: :unauthorized
+      return
     end
 
     require_salesforce_contact_id! if action_name == 'update_housing_counselor'
+  end
+
+  # my_applications follows the Clerk flag: Clerk only when it is on, Devise only
+  # when it is off. Never fall back - a missing Clerk token must not let stale
+  # Devise headers through.
+  # TODO(DAH-4366): CLERK MIGRATION - DEVISE TECH DEBT TO REMOVE (the flag check)
+  def clerk_only_action?
+    return ClerkOrDeviseAuth.clerk_enabled? if action_name == 'my_applications'
+
+    %w[profile create_profile update_housing_counselor].include?(action_name)
   end
 
   def require_salesforce_contact_id!
