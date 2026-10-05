@@ -597,10 +597,33 @@
             )
             return deferred.promise
         ]
+        # with the Clerk flag on, applying requires a Clerk session and a profile: send users to sign in or add-profile
+        # TODO(DAH-4366): CLERK MIGRATION - DEVISE TECH DEBT TO REMOVE (drop the flag check)
+        clerkSession: [
+          '$q', '$http', '$window', '$stateParams', 'ClerkShim', 'SharedService', 'ShortFormApplicationService',
+          ($q, $http, $window, $stateParams, ClerkShim, SharedService, ShortFormApplicationService) ->
+            return true unless $window.CLERK_AUTH_ANGULAR
+            leaveFor = (url) ->
+              $window.removeEventListener('beforeunload', ShortFormApplicationService.onExit)
+              $window.location.href = url
+              # never settle: rejecting would hit $stateChangeError, which redirects home on first load
+              $q.defer().promise
+            ClerkShim.ready().then (clerk) ->
+              # the React sign-in page, not dahlia.sign-in, which can still be the Angular (Devise) page
+              return leaveFor(SharedService.buildUrl({name: 'dahlia.sign-in'}, $stateParams)) unless clerk.session
+              # a Clerk user has no Salesforce contact (404) until they finish add-profile
+              $http.get('/api/v1/account/profile').then(
+                -> true
+                (response) ->
+                  return $q.reject(response) unless response.status == 404
+                  leaveFor(SharedService._addLanguageAndParamsToUrl($stateParams.lang, '/add-profile'))
+              )
+        ]
         application: [
           # 'listing' is part of the params so that application waits for listing (above) to resolve
-          '$q', '$stateParams', '$state', 'ShortFormApplicationService', 'AccountService', 'AutosaveService', 'AnalyticsService', 'listing'
-          ($q, $stateParams, $state, ShortFormApplicationService, AccountService, AutosaveService, AnalyticsService, listing) ->
+          # 'clerkSession' is too, so nothing loads or autosaves for a signed-out user
+          '$q', '$stateParams', '$state', 'ShortFormApplicationService', 'AccountService', 'AutosaveService', 'AnalyticsService', 'listing', 'clerkSession'
+          ($q, $stateParams, $state, ShortFormApplicationService, AccountService, AutosaveService, AnalyticsService, listing, clerkSession) ->
             deferred = $q.defer()
 
             # if the user just clicked the language switcher, don't reload the whole route

@@ -58,7 +58,7 @@
       small.lock-note ng-if="loggedIn()" ng-bind-html="translateLoggedInMessage('b2-contact')"
       small.error#applicant_email_error ng-if="inputInvalid('email')"
         | {{'error.email' | translate}}
-      .form-item.padding-bottom
+      .form-item.padding-bottom ng-if="!loggedIn()"
         .checkbox
           input#applicant_no_email name="applicant_no_email" type="checkbox" data-event="gtm-applicant-no-email" ng-model="applicant.noEmail" ng-disabled="form.applicationForm.email.$valid && !applicant.noEmail" ng-click="blankIfInvalid('email')"
           label for="applicant_no_email"
