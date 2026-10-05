@@ -134,6 +134,13 @@ export const updatePhone = async (user: User, auth: RequestAuth): Promise<User> 
   return request.then(({ data }) => data.contact)
 }
 
+export const updateContactEmail = async (user: User, auth: RequestAuth): Promise<User> =>
+  put<{ contact: User }>(
+    "/api/v1/account/update",
+    { contact: contactObject(user) },
+    requireClerkHeaders(auth)
+  ).then(({ data }) => data.contact)
+
 export const updateEmail = async (user: User, auth: RequestAuth): Promise<User | string> =>
   auth.clerkEnabled
     ? put<{ contact: User }>(

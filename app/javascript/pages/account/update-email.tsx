@@ -1,13 +1,14 @@
 /* eslint-disable @typescript-eslint/unbound-method */
-import React, { useEffect, useState } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import withAppSetup from "../../layouts/withAppSetup"
 import {
   AppPages,
+  getMyAccountContactPath,
   getMyAccountSettingsPath,
   getSignInPath,
   getUpdateEmailCodePath,
 } from "../../util/routeUtil"
-import { useNavigate } from "react-router"
+import { useLocation, useNavigate } from "react-router"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import { AUTH_FLOW, UNLEASH_FLAG } from "../../modules/constants"
 import { useAuth } from "@clerk/react"
@@ -24,6 +25,11 @@ import EmailFieldset, {
 import { ErrorSummaryBanner } from "./components/ErrorSummaryBanner"
 import { getErrorMessage } from "./components/util"
 import { useSignUpSession } from "../../authentication/session/useSignUpSession"
+import { useAuthSession } from "../../authentication/session/AuthSessionProvider"
+import UserContext from "../../authentication/context/UserContext"
+import { bearerToken } from "../../authentication/session/authStatus"
+import { updateContactEmail } from "../../api/authApiService"
+import { saveProfile } from "../../authentication/context/userActions"
 
 const UpdateEmailPage = () => {
   const {
@@ -34,38 +40,82 @@ const UpdateEmailPage = () => {
   } = useForm({ mode: "onSubmit", shouldFocusError: false })
   const navigate = useNavigate()
   const { user, isAccountInitialized } = useSignUpSession()
+  const location = useLocation()
+  const { profile } = useContext(UserContext)
+  const { getCredentials } = useAuthSession()
   const [loading, setLoading] = useState(false)
+  const flow =
+    (location.state as { flow?: AUTH_FLOW } | null)?.flow === AUTH_FLOW.UPDATE_CONTACT_EMAIL
+      ? AUTH_FLOW.UPDATE_CONTACT_EMAIL
+      : AUTH_FLOW.UPDATE_LOGIN_EMAIL
+  const isContactFlow = flow === AUTH_FLOW.UPDATE_CONTACT_EMAIL
+  const cancelReturnPath = isContactFlow ? getMyAccountContactPath() : getMyAccountSettingsPath()
 
   if (!user) {
     return null
   }
 
+  const sendEmailCode = async (email: string) => {
+    const primaryEmailId = user.primaryEmailAddressId
+    if (!primaryEmailId) throw new Error("User has no primary email address")
+
+    // Destroys all non-primary email addresses from abandoned change email attempts
+    const staleEmailAddresses = user.emailAddresses.filter(
+      (email) => email.id !== primaryEmailId && email.linkedTo.length === 0
+    )
+
+    await Promise.all(staleEmailAddresses.map((email) => email.destroy()))
+    const emailAddress = await user.createEmailAddress({ email })
+    await emailAddress.prepareVerification({ strategy: "email_code" })
+  }
+
+  // Clerk cannot send a code to an existing email address. If the contact email is
+  // changed to the current login email, which is already verified in Clerk,
+  // we skip the verification code flow and update the salesforce contact email.
+  // There are no changes made to Clerk.
+  const saveVerifiedContactEmail = async (email: string) => {
+    if (!profile) throw new Error("Missing profile")
+
+    const sessionToken = bearerToken(await getCredentials())
+    if (!sessionToken) throw new Error("Missing Clerk session token")
+
+    const updatedProfile = await updateContactEmail(
+      { ...profile, email },
+      { clerkEnabled: true, sessionToken }
+    )
+    saveProfile(updatedProfile)
+    void navigate(getMyAccountContactPath(), { state: { contactEmailChanged: true } })
+  }
+
   const onGetCodeSubmit = async ({ email }: { email: string }) => {
     if (loading) return
-    const currentLoginEmail = user.primaryEmailAddress?.emailAddress.toLowerCase()
-    if (email.trim().toLowerCase() === currentLoginEmail) {
+    const newEmail = email.toLowerCase()
+    const loginEmail = user.primaryEmailAddress?.emailAddress.toLowerCase()
+    const currentEmail = isContactFlow ? profile?.email?.toLowerCase() : loginEmail
+
+    if (newEmail === currentEmail) {
       setError("email", { message: "email:sameAsCurrentEmail", shouldFocus: true })
       return
     }
 
+    // Contact email changed to the login email: email is already verified
+    // in Clerk so no code flow needed
+    const skipVerifcationCodeFlow = isContactFlow && newEmail === loginEmail
+
     setLoading(true)
     try {
-      // Destroys all unverified non-primary email addresses from abandoned change email attempts
-      // Without this, the Clerk user can accumulate multiple unverified addresses
-      const unverifiedAddresses = user.emailAddresses.filter(
-        (email) =>
-          email.id !== user.primaryEmailAddressId && email.verification?.status !== "verified"
-      )
-      await Promise.all(unverifiedAddresses.map((email) => email.destroy()))
-
-      const emailAddress = await user.createEmailAddress({ email })
-      await emailAddress.prepareVerification({ strategy: "email_code" })
-
-      void navigate(getUpdateEmailCodePath(), {
-        state: { email, flow: AUTH_FLOW.UPDATE_EMAIL },
-      })
+      if (skipVerifcationCodeFlow) {
+        await saveVerifiedContactEmail(email)
+      } else {
+        await sendEmailCode(email)
+        void navigate(getUpdateEmailCodePath(), { state: { email, flow } })
+      }
     } catch (error) {
-      setError(...handleClerkEmailErrors(error))
+      if (skipVerifcationCodeFlow) {
+        setError("email", { message: "email:server:generic", shouldFocus: true })
+      } else {
+        setError(...handleClerkEmailErrors(error))
+      }
     } finally {
       setLoading(false)
     }
@@ -101,7 +151,7 @@ const UpdateEmailPage = () => {
             className={styles.cancelButton}
             type="button"
             onClick={() => {
-              void navigate(getMyAccountSettingsPath())
+              void navigate(cancelReturnPath)
             }}
           >
             {t("label.cancel")}

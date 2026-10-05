@@ -49,7 +49,7 @@ import { ErrorSummaryBanner } from "./components/ErrorSummaryBanner"
 import { ExpandedAccountAxiosError, getErrorMessage } from "./components/util"
 import { withAuthentication } from "../../authentication/withAuthentication"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
-import { UNLEASH_FLAG } from "../../modules/constants"
+import { AUTH_FLOW, UNLEASH_FLAG } from "../../modules/constants"
 import { AccountSettingsPage as MyAccountSettingsPage } from "./account-settings"
 import settingsStyles from "./settings.module.scss"
 import { useLocation, useNavigate } from "react-router"
@@ -217,7 +217,9 @@ const EmailSection = () => {
           type="button"
           variant="primary-outlined"
           onClick={() => {
-            void navigate(getUpdateEmailPath())
+            void navigate(getUpdateEmailPath(), {
+              state: { flow: AUTH_FLOW.UPDATE_LOGIN_EMAIL },
+            })
           }}
         >
           {t("accountSettings.email.updateEmail")}

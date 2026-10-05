@@ -204,7 +204,9 @@ const EnterVerificationCodePage = ({
     [AUTH_FLOW.SIGN_IN]: verifySignInCode,
     [AUTH_FLOW.CREATE_ACCOUNT]: verifySignUpCode,
     [AUTH_FLOW.FORGOT_PASSWORD]: verifyForgotPasswordCode,
-    [AUTH_FLOW.UPDATE_EMAIL]: verifyUpdateEmailCode,
+    [AUTH_FLOW.UPDATE_LOGIN_EMAIL]: verifyUpdateEmailCode,
+    // todo: update to contact
+    [AUTH_FLOW.UPDATE_CONTACT_EMAIL]: verifyUpdateEmailCode,
   }
 
   const onSubmit = async ({ code }: { code: string }) => verifyAuthCodeByFlow[flow](code)
@@ -258,7 +260,9 @@ const EnterVerificationCodePage = ({
     [AUTH_FLOW.SIGN_IN]: resendSignInCode,
     [AUTH_FLOW.CREATE_ACCOUNT]: resendSignUpCode,
     [AUTH_FLOW.FORGOT_PASSWORD]: resendForgotPasswordCode,
-    [AUTH_FLOW.UPDATE_EMAIL]: resendUpdateEmailCode,
+    [AUTH_FLOW.UPDATE_LOGIN_EMAIL]: resendUpdateEmailCode,
+    // todo update to contact
+    [AUTH_FLOW.UPDATE_CONTACT_EMAIL]: resendUpdateEmailCode,
   }
 
   const onResend = async () => {
@@ -376,7 +380,7 @@ const EnterVerificationCode = (_props: { assetPaths: unknown }) => {
   const { unleashFlag: clerkEnabled, flagsReady } = useFeatureFlag(UNLEASH_FLAG.CLERK_AUTH, false)
   const flow: AUTH_FLOW = state?.flow
   const fallbackPath = flow ? getAuthFlowPath(flow) : getSignInPath()
-  const isUpdateEmailFlow = flow === AUTH_FLOW.UPDATE_EMAIL
+  const isUpdateEmailFlow = flow === AUTH_FLOW.UPDATE_LOGIN_EMAIL
 
   // TODO: simplify and centralize auth redirects
   /**
