@@ -5,8 +5,6 @@ angular.module('dahlia.directives')
   templateUrl: 'short-form/directives/short-form-save-and-submit.html'
 
   link: (scope, elem, attrs) ->
-    scope.secondaryButton = attrs.secondaryButton || false
     scope.submitValue = attrs.submitValue || $translate.instant('t.next')
-    scope.hasNextButton = if attrs.nextButton == "false" then false else true
 
 ]

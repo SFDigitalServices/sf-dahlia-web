@@ -28,12 +28,6 @@ Feature: Short Form Application
         And I confirm details on the review page
         And I agree to the terms and submit
         Then I should see my lottery number on the confirmation page
-        When I click the Create Account button
-        And I create an account for "Janifer Doe" with my pre-filled application details
-        Then I should be on the login page with the email confirmation popup
-        And I have confirmed the account for "Janifer Doe"
-        And I go to the Sign In page
-        And I sign in as "Janifer Doe"
         Given I go to the welcome page of the "Senior Test Listing" application
         And I select "Filipino" as my language
         And I continue past the welcome overview
@@ -43,4 +37,3 @@ Feature: Short Form Application
         Then I should see "Filipino" selected in the translate bar language switcher
         And I go to the welcome page of the "Senior Test Listing" application
         And I select "English" as my language
-        And I sign out

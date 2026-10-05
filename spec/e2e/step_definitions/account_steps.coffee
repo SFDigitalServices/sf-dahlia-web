@@ -43,11 +43,6 @@ When /^I create an account for "([^"]*)" with my pre-filled application details$
       password: account.password
     }
 
-When 'I click the Create Account button', ->
-  createAccount = element(By.id('create-account'))
-  Utils.Page.scrollToElement(createAccount).then ->
-    createAccount.click()
-
 When 'I click the Sign In button', ->
   signIn = element(By.id('sign-in'))
   Utils.Page.scrollToElement(signIn).then ->
