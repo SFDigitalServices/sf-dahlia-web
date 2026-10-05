@@ -251,7 +251,6 @@ const EnterVerificationCodePage = ({
     } catch (error) {
       console.error("Update contact email: Salesforce update failed", error)
     }
-    // Remove the temporary address so it can't be used to sign in. Never the primary.
     if (verifiedEmail.id !== user.primaryEmailAddressId) {
       await verifiedEmail
         .destroy()
