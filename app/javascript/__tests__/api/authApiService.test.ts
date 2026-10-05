@@ -21,6 +21,9 @@ import {
   getHousingCounselorAgencies,
   updateHousingCounselorAccess,
   authorizeHousingCounselor,
+  clearHousingCounselorSession,
+  updateNameOrDOB,
+  updateEmail,
 } from "../../api/authApiService"
 import { mockProfileStub } from "../__util__/accountUtils"
 
@@ -88,17 +91,26 @@ describe("authApiService", () => {
   })
 
   describe("getProfile", () => {
-    it("calls apiService authenticatedGet", async () => {
-      const url = "/api/v1/auth/validate_token"
-      await getProfile()
-      expect(authenticatedGet).toHaveBeenCalledWith(url)
+    it("uses Devise when Clerk is disabled", async () => {
+      await getProfile({ clerkEnabled: false })
+      expect(authenticatedGet).toHaveBeenCalledWith("/api/v1/auth/validate_token")
+      expect(get).not.toHaveBeenCalled()
     })
 
-    it("fetches Clerk profile with the session token", async () => {
-      await getProfile("clerk-session-token")
+    it("fetches the Clerk profile with the session token", async () => {
+      await getProfile({ clerkEnabled: true, sessionToken: "clerk-session-token" })
       expect(get).toHaveBeenCalledWith("/api/v1/account/profile", {
         headers: { Authorization: "Bearer clerk-session-token" },
       })
+      expect(authenticatedGet).not.toHaveBeenCalled()
+    })
+
+    it("rejects without falling back to Devise when the Clerk token is missing", async () => {
+      await expect(getProfile({ clerkEnabled: true })).rejects.toThrow(
+        "Missing Clerk session token"
+      )
+      expect(get).not.toHaveBeenCalled()
+      expect(authenticatedGet).not.toHaveBeenCalled()
     })
   })
 
@@ -176,10 +188,9 @@ describe("authApiService", () => {
   })
 
   describe("updatePhone", () => {
-    it("calls apiService authenticatedPut", async () => {
-      const url = "/api/v1/account/update"
-      await updatePhone(mockProfileStub)
-      expect(authenticatedPut).toHaveBeenCalledWith(url, {
+    it("uses Devise when Clerk is disabled", async () => {
+      await updatePhone(mockProfileStub, { clerkEnabled: false })
+      expect(authenticatedPut).toHaveBeenCalledWith("/api/v1/account/update", {
         contact: {
           email: mockProfileStub.email,
           firstName: mockProfileStub.firstName,
@@ -193,6 +204,22 @@ describe("authApiService", () => {
           housingCounselingAgencyId: mockProfileStub.housingCounselingAgencyId,
         },
       })
+      expect(put).not.toHaveBeenCalled()
+    })
+
+    it("uses the Clerk session token when Clerk is enabled", async () => {
+      await updatePhone(mockProfileStub, {
+        clerkEnabled: true,
+        sessionToken: "clerk-session-token",
+      })
+      expect(put).toHaveBeenCalledWith(
+        "/api/v1/account/update",
+        expect.objectContaining({
+          contact: expect.objectContaining({ phone: mockProfileStub.phone }),
+        }),
+        { headers: { Authorization: "Bearer clerk-session-token" } }
+      )
+      expect(authenticatedPut).not.toHaveBeenCalled()
     })
   })
 
@@ -204,6 +231,25 @@ describe("authApiService", () => {
         { t: "jwt.token" },
         { headers: { Authorization: "Bearer session-token" } }
       )
+    })
+  })
+
+  describe("clearHousingCounselorSession", () => {
+    it("deletes the housing counselor session", async () => {
+      ;(apiDelete as jest.Mock).mockResolvedValue({ data: { success: true } })
+      await clearHousingCounselorSession()
+      expect(apiDelete).toHaveBeenCalledWith("/api/v1/housing-counselor/access")
+    })
+
+    it("resolves rather than rejecting when the request fails, so it can't block sign in or out", async () => {
+      const consoleError = jest.spyOn(console, "error").mockImplementation(() => {})
+      const error = new Error("Network Error")
+      ;(apiDelete as jest.Mock).mockRejectedValue(error)
+
+      await expect(clearHousingCounselorSession()).resolves.toBeUndefined()
+      expect(consoleError).toHaveBeenCalledWith("Error: Failed to clear housing counselor session")
+
+      consoleError.mockRestore()
     })
   })
 
@@ -292,6 +338,69 @@ describe("authApiService", () => {
       )
       expect(authenticatedDelete).not.toHaveBeenCalled()
       expect(apiDelete).not.toHaveBeenCalled()
+    })
+  })
+
+  describe("updateNameOrDOB", () => {
+    it("uses Devise when Clerk is disabled", async () => {
+      await updateNameOrDOB(mockProfileStub, { clerkEnabled: false })
+      expect(authenticatedPut).toHaveBeenCalledWith(
+        "/api/v1/account/update",
+        expect.objectContaining({
+          contact: expect.objectContaining({
+            firstName: mockProfileStub.firstName,
+            DOB: mockProfileStub.DOB,
+          }),
+        })
+      )
+      expect(put).not.toHaveBeenCalled()
+    })
+
+    it("uses the Clerk session token when Clerk is enabled", async () => {
+      await updateNameOrDOB(mockProfileStub, {
+        clerkEnabled: true,
+        sessionToken: "clerk-session-token",
+      })
+      expect(put).toHaveBeenCalledWith(
+        "/api/v1/account/update",
+        expect.objectContaining({
+          contact: expect.objectContaining({
+            firstName: mockProfileStub.firstName,
+            DOB: mockProfileStub.DOB,
+          }),
+        }),
+        { headers: { Authorization: "Bearer clerk-session-token" } }
+      )
+      expect(authenticatedPut).not.toHaveBeenCalled()
+    })
+  })
+
+  describe("updateEmail", () => {
+    it("uses the Devise auth endpoint when Clerk is disabled", async () => {
+      ;(authenticatedPut as jest.Mock).mockResolvedValue({ data: { status: "success" } })
+      const result = await updateEmail(mockProfileStub, { clerkEnabled: false })
+      expect(authenticatedPut).toHaveBeenCalledWith("/api/v1/auth", {
+        user: { email: mockProfileStub.email },
+      })
+      expect(put).not.toHaveBeenCalled()
+      expect(result).toBe("success")
+    })
+
+    it("updates the contact through the account endpoint when Clerk is enabled", async () => {
+      ;(put as jest.Mock).mockResolvedValue({ data: { contact: mockProfileStub } })
+      const result = await updateEmail(mockProfileStub, {
+        clerkEnabled: true,
+        sessionToken: "clerk-session-token",
+      })
+      expect(put).toHaveBeenCalledWith(
+        "/api/v1/account/update",
+        expect.objectContaining({
+          contact: expect.objectContaining({ email: mockProfileStub.email }),
+        }),
+        { headers: { Authorization: "Bearer clerk-session-token" } }
+      )
+      expect(authenticatedPut).not.toHaveBeenCalled()
+      expect(result).toEqual(mockProfileStub)
     })
   })
 })

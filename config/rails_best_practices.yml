@@ -46,6 +46,11 @@ RemoveUnusedMethodsInControllersCheck:
         "Api::V1::InviteToApplyController#index",
         "Api::V1::InviteToApplyController#record_response",
         "Api::V1::InviteToApplyController#confirmation_params",
+        "Api::V1::AccountController#my_applications",
+        "Api::V1::AccountController#update",
+        "Api::V1::AccountController#profile",
+        "Api::V1::AccountController#create_profile",
+        "Api::V1::AccountController#update_housing_counselor",
       ],
   }
 RemoveUnusedMethodsInHelpersCheck: { except_methods: [] }

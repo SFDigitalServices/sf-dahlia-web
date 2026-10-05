@@ -41,7 +41,12 @@ const ForgotPasswordFlow = () => {
         </Heading>
         <p className="field-note">{t("signIn.forgotPasswordDescription")}</p>
         <Form className={styles.form} onSubmit={handleSubmit(onGetCodeSubmit)}>
-          <EmailFieldset register={register} errors={errors} defaultEmail={prefilledEmailParam} />
+          <EmailFieldset
+            register={register}
+            errors={errors}
+            defaultEmail={prefilledEmailParam}
+            submitWithEnterKey
+          />
           <Button variant="primary" size="sm" type="submit" disabled={signInIsBusy}>
             {t("createAccount.getCode")}
           </Button>

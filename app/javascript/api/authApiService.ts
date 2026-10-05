@@ -97,12 +97,12 @@ export const createProfile = async (
     clerkHeaders(sessionToken)
   ).then(({ data }) => data)
 
-export const getProfile = async (sessionToken?: string): Promise<User> =>
-  sessionToken
-    ? get<UserData>("/api/v1/account/profile", clerkHeaders(sessionToken)).then(
-        ({ data }: AxiosResponse<UserData>) => data.data
+export const getProfile = async (auth: RequestAuth): Promise<User> =>
+  auth.clerkEnabled
+    ? get<UserData>("/api/v1/account/profile", requireClerkHeaders(auth)).then(
+        ({ data }) => data.data
       )
-    : authenticatedGet<UserData>("/api/v1/auth/validate_token").then((res) => res.data.data)
+    : authenticatedGet<UserData>("/api/v1/auth/validate_token").then(({ data }) => data.data)
 
 export const getApplications = async (
   auth: RequestAuth
@@ -127,24 +127,32 @@ export const forgotPassword = async (email: string): Promise<string> =>
     locale: getCurrentLanguage(),
   }).then(({ data }) => data.message)
 
-export const updateNameOrDOB = async (user: User): Promise<User> => {
-  return authenticatedPut<{ contact: User }>("/api/v1/account/update", {
-    contact: contactObject(user),
-  }).then(({ data }) => data.contact)
+export const updateNameOrDOB = async (user: User, auth: RequestAuth): Promise<User> => {
+  const body = { contact: contactObject(user) }
+  const request = auth.clerkEnabled
+    ? put<{ contact: User }>("/api/v1/account/update", body, requireClerkHeaders(auth))
+    : authenticatedPut<{ contact: User }>("/api/v1/account/update", body)
+  return request.then(({ data }) => data.contact)
 }
 
-export const updatePhone = async (user: User): Promise<User> => {
-  return authenticatedPut<{ contact: User }>("/api/v1/account/update", {
-    contact: contactObject(user),
-  }).then(({ data }) => data.contact)
+export const updatePhone = async (user: User, auth: RequestAuth): Promise<User> => {
+  const body = { contact: contactObject(user) }
+  const request = auth.clerkEnabled
+    ? put<{ contact: User }>("/api/v1/account/update", body, requireClerkHeaders(auth))
+    : authenticatedPut<{ contact: User }>("/api/v1/account/update", body)
+  return request.then(({ data }) => data.contact)
 }
 
-export const updateEmail = async (email: string): Promise<string> =>
-  authenticatedPut<{ status: string }>("/api/v1/auth", {
-    user: {
-      email,
-    },
-  }).then(({ data }) => data.status)
+export const updateEmail = async (user: User, auth: RequestAuth): Promise<User | string> =>
+  auth.clerkEnabled
+    ? put<{ contact: User }>(
+        "/api/v1/account/update",
+        { contact: contactObject(user) },
+        requireClerkHeaders(auth)
+      ).then(({ data }) => data.contact)
+    : authenticatedPut<{ status: string }>("/api/v1/auth", {
+        user: { email: user.email },
+      }).then(({ data }) => data.status)
 
 export const updateHousingCounselorAccess = async (
   user: User,
@@ -175,6 +183,16 @@ export const authorizeHousingCounselor = async (
   sessionToken: string
 ): Promise<void> => {
   await post("/api/v1/housing-counselor/access", { t: token }, clerkHeaders(sessionToken))
+}
+
+// Discards the hc_session cookie.
+
+export const clearHousingCounselorSession = async (): Promise<void> => {
+  try {
+    await apiDelete("/api/v1/housing-counselor/access")
+  } catch {
+    console.error("Error: Failed to clear housing counselor session")
+  }
 }
 
 export const resetPassword = async (new_password: string): Promise<string> =>

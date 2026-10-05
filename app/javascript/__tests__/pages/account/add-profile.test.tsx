@@ -159,7 +159,10 @@ describe("<AddProfile />", () => {
         "clerk-session-token"
       )
     })
-    expect(getProfile).toHaveBeenCalledWith("clerk-session-token")
+    expect(getProfile).toHaveBeenCalledWith({
+      clerkEnabled: true,
+      sessionToken: "clerk-session-token",
+    })
     expect(saveProfile).toHaveBeenCalledWith(mockProfileStub)
     expect(mockNavigate).toHaveBeenCalledWith("/account", { state: { accountReady: true } })
   })

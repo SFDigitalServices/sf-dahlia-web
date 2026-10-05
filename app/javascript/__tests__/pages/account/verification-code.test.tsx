@@ -1,5 +1,5 @@
 import React from "react"
-import { useSignIn, useSignUp, useAuth, useClerk } from "@clerk/react"
+import { useSignIn, useSignUp, useAuth, useClerk, useUser } from "@clerk/react"
 import { t } from "@bloom-housing/ui-components"
 import { act, screen, waitFor, cleanup, fireEvent } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
@@ -12,8 +12,12 @@ import {
 } from "../../__util__/renderUtils"
 import { setupUserContext } from "../../__util__/accountUtils"
 import { useFeatureFlag } from "../../../hooks/useFeatureFlag"
-import { AUTH_FLOW } from "../../../modules/constants"
-import { authorizeHousingCounselor, getProfile } from "../../../api/authApiService"
+import { AUTH_FLOW, UNLEASH_FLAG } from "../../../modules/constants"
+import {
+  authorizeHousingCounselor,
+  clearHousingCounselorSession,
+  getProfile,
+} from "../../../api/authApiService"
 
 jest.mock("@clerk/react", () => {
   const Clerk = jest.requireActual("@clerk/react")
@@ -46,8 +50,46 @@ jest.mock("../../../hooks/useFeatureFlag", () => ({
 jest.mock("../../../api/authApiService", () => ({
   ...jest.requireActual("../../../api/authApiService"),
   authorizeHousingCounselor: jest.fn(),
+  clearHousingCounselorSession: jest.fn(),
   getProfile: jest.fn().mockResolvedValue(undefined),
 }))
+const updateLoginEmail = (newEmailOverrides = {}) => {
+  const previous = { id: "old", emailAddress: "test@example.com", destroy: jest.fn() }
+  const newEmail = {
+    id: "new",
+    emailAddress: "new@example.com",
+    verification: { status: "verified" },
+    attemptVerification: jest
+      .fn()
+      .mockResolvedValue({ id: "new", verification: { status: "verified" } }),
+    prepareVerification: jest.fn().mockResolvedValue(undefined),
+    ...newEmailOverrides,
+  }
+  return {
+    emailAddresses: [previous, newEmail],
+    primaryEmailAddress: previous,
+    update: jest.fn(),
+    previous,
+  }
+}
+
+const renderUpdateEmailFlow = async (user: unknown) => {
+  cleanup()
+  setupUserContext({ loggedIn: true })
+  ;(useLocation as jest.Mock).mockReturnValue({
+    pathname: "/update-email/code",
+    state: { email: "new@example.com", flow: AUTH_FLOW.UPDATE_EMAIL },
+  })
+  ;(useUser as jest.Mock).mockReturnValue({ isLoaded: true, isSignedIn: true, user })
+  await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
+}
+
+const submitCode = async () => {
+  const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime })
+  await user.click(screen.getAllByRole("textbox")[0])
+  await user.paste("123456")
+  await user.click(screen.getByRole("button", { name: t("createAccount.confirmCode") }))
+}
 const expireResendVerificationCode = () => {
   for (let remaining = 30; remaining > 0; remaining--) {
     act(() => {
@@ -110,8 +152,14 @@ describe("<EnterVerificationCode />", () => {
     })
     mockSignInVerifyCode = jest.fn().mockResolvedValue({ error: undefined })
     mockSignInSendCode = jest.fn().mockResolvedValue({ error: undefined })
-    mockSignInFinalize = jest.fn().mockImplementation(async ({ navigate }) => {
-      await navigate({ decorateUrl: (url: string) => url })
+    // verifySignInCode calls finalize() with no args (see SignInFlow.tsx for why), then navigates
+    // manually, so this mock must not assume a `navigate` callback is always passed.
+    mockSignInFinalize = jest.fn().mockImplementation(async (params?: { navigate?: unknown }) => {
+      if (typeof params?.navigate === "function") {
+        await (params.navigate as (args: { decorateUrl: (url: string) => string }) => unknown)({
+          decorateUrl: (url: string) => url,
+        })
+      }
       return { error: undefined }
     })
     mockResetPasswordVerifyCode = jest.fn().mockResolvedValue({ error: undefined })
@@ -148,6 +196,7 @@ describe("<EnterVerificationCode />", () => {
       state: { email: "test@example.com", flow: AUTH_FLOW.CREATE_ACCOUNT },
     })
     ;(useFeatureFlag as jest.Mock).mockReturnValue({ flagsReady: true, unleashFlag: true })
+    ;(clearHousingCounselorSession as jest.Mock).mockReset().mockResolvedValue(undefined)
     ;(useClerk as jest.Mock).mockReturnValue({ client: undefined })
     ;(useSignUp as jest.Mock).mockReturnValue({
       fetchStatus: "idle",
@@ -156,6 +205,11 @@ describe("<EnterVerificationCode />", () => {
     ;(useSignIn as jest.Mock).mockReturnValue({
       fetchStatus: "idle",
       signIn: mockSignInResource,
+    })
+    ;(useUser as jest.Mock).mockReturnValue({
+      isLoaded: true,
+      isSignedIn: false,
+      user: null,
     })
     ;(getProfile as jest.Mock).mockResolvedValue(undefined)
     await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
@@ -238,13 +292,9 @@ describe("<EnterVerificationCode />", () => {
   })
 
   it("verifies a valid code for create account", async () => {
-    const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime })
     mockSignUpResource.status = "complete"
 
-    await user.click(screen.getAllByRole("textbox")[0])
-    await user.paste("123456")
-    await user.click(screen.getByRole("button", { name: t("createAccount.confirmCode") }))
-
+    await submitCode()
     await waitFor(() => {
       expect(mockSignUpVerifyEmailCode).toHaveBeenCalledWith({ code: "123456" })
     })
@@ -335,6 +385,37 @@ describe("<EnterVerificationCode />", () => {
 
   it("verifies a valid code for sign in", async () => {
     cleanup()
+    // Fake timers stop React finishing its render after submit once the
+    // handler awaits clearing the housing counselor session. This test
+    // doesn't check the countdown, so real timers are fine here.
+    jest.useRealTimers()
+    ;(useLocation as jest.Mock).mockReturnValue({
+      pathname: "/sign-in/code",
+      state: { email: "test@example.com", flow: AUTH_FLOW.SIGN_IN },
+    })
+    mockSignInResource.status = "complete"
+    await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
+    const user = userEvent.setup()
+    await user.click(screen.getAllByRole("textbox")[0])
+    await user.paste("123456")
+    await user.click(screen.getByRole("button", { name: t("createAccount.confirmCode") }))
+    await waitFor(() => {
+      expect(mockNavigate).toHaveBeenCalledWith("/account")
+    })
+    expect(mockSignInVerifyCode).toHaveBeenCalledWith({ code: "123456" })
+    expect(mockSignInFinalize).toHaveBeenCalledTimes(1)
+    expect(mockSignUpVerifyEmailCode).not.toHaveBeenCalled()
+    expect(clearHousingCounselorSession).toHaveBeenCalled()
+  })
+
+  it("clears the housing counselor session on sign in even when the flag is off", async () => {
+    cleanup()
+    // See "verifies a valid code for sign in" for why real timers are needed.
+    jest.useRealTimers()
+    ;(useFeatureFlag as jest.Mock).mockImplementation((flagName: string) => ({
+      flagsReady: true,
+      unleashFlag: flagName !== UNLEASH_FLAG.HOUSING_COUNSELOR_ACCESS,
+    }))
     ;(useLocation as jest.Mock).mockReturnValue({
       pathname: "/sign-in/code",
       state: { email: "test@example.com", flow: AUTH_FLOW.SIGN_IN },
@@ -342,17 +423,15 @@ describe("<EnterVerificationCode />", () => {
     mockSignInResource.status = "complete"
     await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
 
-    const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime })
+    const user = userEvent.setup()
     await user.click(screen.getAllByRole("textbox")[0])
     await user.paste("123456")
     await user.click(screen.getByRole("button", { name: t("createAccount.confirmCode") }))
 
     await waitFor(() => {
-      expect(mockSignInVerifyCode).toHaveBeenCalledWith({ code: "123456" })
+      expect(mockNavigate).toHaveBeenCalledWith("/account")
     })
-    expect(mockSignInFinalize).toHaveBeenCalledTimes(1)
-    expect(mockSignUpVerifyEmailCode).not.toHaveBeenCalled()
-    expect(mockNavigate).toHaveBeenCalledWith("/account")
+    expect(clearHousingCounselorSession).toHaveBeenCalled()
   })
 
   it("transfers from sign-in to create-an-account flow when account does not exist", async () => {
@@ -475,6 +554,8 @@ describe("<EnterVerificationCode />", () => {
 
   it("redirects to the apply intro after sign in when a redirect url is present", async () => {
     cleanup()
+    // See "verifies a valid code for sign in".
+    jest.useRealTimers()
     const redirectUrl = "/listings/a0W0P00000GlKfBUAV/apply-welcome/intro"
     ;(useLocation as jest.Mock).mockReturnValue({
       pathname: "/sign-in/code",
@@ -482,18 +563,17 @@ describe("<EnterVerificationCode />", () => {
     })
     mockSignInResource.status = "complete"
     await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
-
-    const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime })
+    const user = userEvent.setup()
     await user.click(screen.getAllByRole("textbox")[0])
     await user.paste("123456")
     await user.click(screen.getByRole("button", { name: t("createAccount.confirmCode") }))
 
     await waitFor(() => {
-      expect(mockSignInVerifyCode).toHaveBeenCalledWith({ code: "123456" })
+      expect(mockNavigate).toHaveBeenCalledWith(redirectUrl)
     })
+    expect(mockSignInVerifyCode).toHaveBeenCalledWith({ code: "123456" })
     expect(mockSignInFinalize).toHaveBeenCalledTimes(1)
     expect(mockSignUpVerifyEmailCode).not.toHaveBeenCalled()
-    expect(mockNavigate).toHaveBeenCalledWith(redirectUrl)
   })
 
   it("authenticates a housing counselor with Clerk after verifying the sign-in code", async () => {
@@ -518,7 +598,6 @@ describe("<EnterVerificationCode />", () => {
     mockSignInResource.status = "complete"
     ;(authorizeHousingCounselor as jest.Mock).mockResolvedValue(undefined)
     await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
-
     const user = userEvent.setup()
     await user.click(screen.getAllByRole("textbox")[0])
     await user.paste("123456")
@@ -529,6 +608,38 @@ describe("<EnterVerificationCode />", () => {
     })
     expect(mockSignInFinalize).toHaveBeenCalledTimes(1)
     expect(mockNavigate).toHaveBeenCalledWith("/account")
+  })
+
+  it("signs the housing counselor in and redirects with hcAccess=0 when access is denied", async () => {
+    cleanup()
+    const mockGetToken = jest.fn().mockResolvedValue("clerk-session-token")
+    ;(useAuth as jest.Mock).mockReturnValue({
+      isLoaded: true,
+      isSignedIn: false,
+      getToken: mockGetToken,
+    })
+    ;(useLocation as jest.Mock).mockReturnValue({
+      pathname: "/sign-in/code",
+      state: {
+        email: "test@example.com",
+        housingCounselorToken: "jwt.token",
+        flow: AUTH_FLOW.SIGN_IN,
+      },
+    })
+    mockSignInResource.status = "complete"
+    ;(authorizeHousingCounselor as jest.Mock).mockRejectedValue(new Error("forbidden"))
+    await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
+
+    const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime })
+    await user.click(screen.getAllByRole("textbox")[0])
+    await user.paste("123456")
+    await user.click(screen.getByRole("button", { name: t("createAccount.confirmCode") }))
+
+    await waitFor(() => {
+      expect(authorizeHousingCounselor).toHaveBeenCalledWith("jwt.token", "clerk-session-token")
+    })
+    expect(mockSignInFinalize).toHaveBeenCalledTimes(1)
+    expect(mockNavigate).toHaveBeenCalledWith("/account?hcAccess=0")
   })
 
   it("resends the code for sign in", async () => {
@@ -572,11 +683,7 @@ describe("<EnterVerificationCode />", () => {
     })
     mockSignInResource.status = "needs_new_password"
     await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
-
-    const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime })
-    await user.click(screen.getAllByRole("textbox")[0])
-    await user.paste("123456")
-    await user.click(screen.getByRole("button", { name: t("createAccount.confirmCode") }))
+    await submitCode()
 
     await waitFor(() => {
       expect(mockResetPasswordVerifyCode).toHaveBeenCalledWith({ code: "123456" })
@@ -596,11 +703,7 @@ describe("<EnterVerificationCode />", () => {
     })
     mockResetPasswordVerifyCode.mockResolvedValue({ error: new Error("bad code") })
     await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
-
-    const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime })
-    await user.click(screen.getAllByRole("textbox")[0])
-    await user.paste("123456")
-    await user.click(screen.getByRole("button", { name: t("createAccount.confirmCode") }))
+    await submitCode()
 
     await act(async () => {
       await Promise.resolve()
@@ -690,5 +793,130 @@ describe("<EnterVerificationCode />", () => {
     await waitFor(() => {
       expect(mockNavigate).toHaveBeenCalledWith("/account")
     })
+  })
+  it("verifies the update email code and swaps the primary email", async () => {
+    const user = updateLoginEmail()
+    await renderUpdateEmailFlow(user)
+    await submitCode()
+
+    await waitFor(() => {
+      expect(mockNavigate).toHaveBeenCalledWith(expect.any(String), {
+        state: { emailChanged: true },
+      })
+    })
+    expect(user.previous.destroy).toHaveBeenCalled()
+  })
+
+  it("does not update the email when there is no user", async () => {
+    await renderUpdateEmailFlow(null)
+    await submitCode()
+    await act(async () => {
+      await Promise.resolve()
+    })
+
+    expect(mockNavigate).not.toHaveBeenCalled()
+  })
+
+  it("does not update the email when the email is not found", async () => {
+    const user = { ...updateLoginEmail(), emailAddresses: [] }
+    await renderUpdateEmailFlow(user)
+    await submitCode()
+    await act(async () => {
+      await Promise.resolve()
+    })
+
+    expect(user.update).not.toHaveBeenCalled()
+    expect(mockNavigate).not.toHaveBeenCalled()
+  })
+
+  it("does not update the email when the code is not verified", async () => {
+    const user = updateLoginEmail({
+      attemptVerification: jest.fn().mockResolvedValue({ verification: { status: "unverified" } }),
+    })
+    await renderUpdateEmailFlow(user)
+    await submitCode()
+    await act(async () => {
+      await Promise.resolve()
+    })
+
+    expect(user.update).not.toHaveBeenCalled()
+    expect(mockNavigate).not.toHaveBeenCalled()
+  })
+
+  it("does not update the email when verification throws", async () => {
+    const attemptVerification = jest.fn().mockRejectedValue(new Error("bad code"))
+    const user = updateLoginEmail({ attemptVerification })
+    await renderUpdateEmailFlow(user)
+    await submitCode()
+
+    await waitFor(() => {
+      expect(attemptVerification).toHaveBeenCalledWith({ code: "123456" })
+    })
+    await act(async () => {
+      await Promise.resolve()
+    })
+
+    expect(user.update).not.toHaveBeenCalled()
+    expect(mockNavigate).not.toHaveBeenCalled()
+  })
+  it("resends the update email code", async () => {
+    await renderUpdateEmailFlow(updateLoginEmail())
+    expireResendVerificationCode()
+    fireEvent.click(screen.getByRole("button", { name: t("createAccount.sendAgain") }))
+
+    await waitFor(() => {
+      expect(screen.queryByRole("button", { name: t("createAccount.sendAgain") })).toBeNull()
+    })
+  })
+
+  it("does not resend the update email code when there is no user", async () => {
+    jest.spyOn(console, "error").mockImplementation(() => {})
+    await renderUpdateEmailFlow(null)
+    expireResendVerificationCode()
+    fireEvent.click(screen.getByRole("button", { name: t("createAccount.sendAgain") }))
+
+    await waitFor(() => {
+      expect(console.error).toHaveBeenCalledWith(
+        "Resend update email code error: address not found"
+      )
+    })
+  })
+
+  it("does not resend the update email code when sending fails", async () => {
+    jest.spyOn(console, "error").mockImplementation(() => {})
+    await renderUpdateEmailFlow(
+      updateLoginEmail({
+        prepareVerification: jest.fn().mockRejectedValue(new Error("resend failed")),
+      })
+    )
+    expireResendVerificationCode()
+    fireEvent.click(screen.getByRole("button", { name: t("createAccount.sendAgain") }))
+
+    await waitFor(() => {
+      expect(console.error).toHaveBeenCalledWith(
+        "Resend update email code error:",
+        expect.any(Error)
+      )
+    })
+  })
+  it("still navigates when removing the previous email fails", async () => {
+    const consoleError = jest.spyOn(console, "error").mockImplementation(() => {})
+    const user = updateLoginEmail()
+    user.previous.destroy.mockRejectedValue(new Error("destroy failed"))
+    await renderUpdateEmailFlow(user)
+    await submitCode()
+
+    await waitFor(() => {
+      expect(mockNavigate).toHaveBeenCalledWith(expect.any(String), {
+        state: { emailChanged: true },
+      })
+    })
+    expect(user.update).toHaveBeenCalledWith({ primaryEmailAddressId: "new" })
+    expect(consoleError).toHaveBeenCalledWith(
+      "Update login email: failed to remove previous primary email address",
+      expect.any(Error)
+    )
+
+    consoleError.mockRestore()
   })
 })
