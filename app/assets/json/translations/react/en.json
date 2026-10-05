@@ -79,7 +79,7 @@
   "accountSettings.housingCounselor.banner.title": "Some information is missing",
   "accountSettings.housingCounselor.checkbox": "I agree to share my account with this agency. I understand this includes the personal information in my account and applications.",
   "accountSettings.housingCounselor.checkboxError": "You must agree to continue",
-  "accountSettings.housingCounselor.description": "Do you get help from a housing counselor or case manager? You can allow them to sign in to your DAHLIA account. You can stop sharing at any time.",
+  "accountSettings.housingCounselor.description": "Do you get help from a <a target='_blank' href='%{url}'>housing counselor</a> or case manager? You can allow them to sign in to your DAHLIA account. You can stop sharing at any time.",
   "accountSettings.housingCounselor.fieldError": "Choose counseling agency",
   "accountSettings.housingCounselor.heading": "Share your account with a counseling agency (Optional)",
   "accountSettings.housingCounselor.label": "Counseling agency",

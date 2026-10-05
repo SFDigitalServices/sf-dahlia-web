@@ -9,6 +9,7 @@ import { getHousingCounselorAgencies, HousingCounselorAgency } from "../../../ap
 import { useAuthSession } from "../../../authentication/session/AuthSessionProvider"
 import { bearerToken } from "../../../authentication/session/authStatus"
 import { formatTimeOfDay, localizedFormat } from "../../../util/languageUtil"
+import { renderInlineMarkup } from "../../../util/languageUtil"
 import styles from "./HousingCounselorAccess.module.scss"
 
 export const housingCounselorFieldsetErrors: ErrorMessages = {
@@ -46,7 +47,13 @@ const ShareAccess = ({
   return (
     <LoadingState loading={!agencies}>
       <div>
-        <p className="field-note">{t("accountSettings.housingCounselor.description")}</p>
+        <p className="field-note">
+          {renderInlineMarkup(
+            t("accountSettings.housingCounselor.description", {
+              url: "https://housing.sfgov.org/housing-counselors",
+            })
+          )}
+        </p>
         <Select
           id="housingCounselingAgencyId"
           name="housingCounselingAgencyId"
