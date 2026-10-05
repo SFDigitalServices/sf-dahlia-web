@@ -28,7 +28,7 @@
   --message-border-radius: var(--seeds-rounded);
   --message-border: 2px solid var(--seeds-color-primary-light);
   background: var(--seeds-color-primary-lighter) !important;
-  margin: var(--seeds-spacer-header) 0;
+  margin: 0 0 var(--seeds-spacer-section);
   svg {
     color: var(--seeds-color-primary-dark) !important;
   }
