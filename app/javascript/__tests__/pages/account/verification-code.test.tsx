@@ -17,7 +17,11 @@ import {
   authorizeHousingCounselor,
   clearHousingCounselorSession,
   getProfile,
+  updateContactEmail,
 } from "../../../api/authApiService"
+import * as authStatus from "../../../authentication/session/authStatus"
+import { User } from "../../../authentication/user"
+import { getMyAccountContactPath, getUpdateEmailPath } from "../../../util/routeUtil"
 
 jest.mock("@clerk/react", () => {
   const Clerk = jest.requireActual("@clerk/react")
@@ -47,12 +51,6 @@ jest.mock("../../../hooks/useFeatureFlag", () => ({
   useFeatureFlag: jest.fn(() => ({ flagsReady: true, unleashFlag: true })),
 }))
 
-jest.mock("../../../api/authApiService", () => ({
-  ...jest.requireActual("../../../api/authApiService"),
-  authorizeHousingCounselor: jest.fn(),
-  clearHousingCounselorSession: jest.fn(),
-  getProfile: jest.fn().mockResolvedValue(undefined),
-}))
 const updateLoginEmail = (newEmailOverrides = {}) => {
   const previous = { id: "old", emailAddress: "test@example.com", destroy: jest.fn() }
   const newEmail = {
@@ -74,6 +72,14 @@ const updateLoginEmail = (newEmailOverrides = {}) => {
   }
 }
 
+jest.mock("../../../api/authApiService", () => ({
+  ...jest.requireActual("../../../api/authApiService"),
+  authorizeHousingCounselor: jest.fn(),
+  clearHousingCounselorSession: jest.fn(),
+  getProfile: jest.fn().mockResolvedValue(undefined),
+  updateContactEmail: jest.fn(),
+}))
+
 const renderUpdateEmailFlow = async (user: unknown) => {
   cleanup()
   setupUserContext({ loggedIn: true })
@@ -83,6 +89,33 @@ const renderUpdateEmailFlow = async (user: unknown) => {
   })
   ;(useUser as jest.Mock).mockReturnValue({ isLoaded: true, isSignedIn: true, user })
   await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
+}
+
+const renderUpdateContactEmailFlow = async (
+  user: unknown,
+  { hasProfile = true }: { hasProfile?: boolean } = {}
+) => {
+  cleanup()
+  setupUserContext({ loggedIn: true, hasProfile })
+  ;(useLocation as jest.Mock).mockReturnValue({
+    pathname: "/update-email/code",
+    state: { email: "new@example.com", flow: AUTH_FLOW.UPDATE_CONTACT_EMAIL },
+  })
+  ;(useUser as jest.Mock).mockReturnValue({ isLoaded: true, isSignedIn: true, user })
+  await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
+}
+
+const contactEmailUser = (verifiedOverrides = {}, attemptVerification?: jest.Mock) => {
+  const verified = {
+    id: "new",
+    emailAddress: "new@example.com",
+    verification: { status: "verified" },
+    destroy: jest.fn().mockResolvedValue(undefined),
+    ...verifiedOverrides,
+  }
+  const attempt = attemptVerification ?? jest.fn().mockResolvedValue(verified)
+  const user = updateLoginEmail({ attemptVerification: attempt })
+  return { user, verified, attemptVerification: attempt }
 }
 
 const submitCode = async () => {
@@ -213,6 +246,9 @@ describe("<EnterVerificationCode />", () => {
       user: null,
     })
     ;(getProfile as jest.Mock).mockResolvedValue(undefined)
+    ;(updateContactEmail as jest.Mock)
+      .mockReset()
+      .mockResolvedValue({ email: "new@example.com" } as User)
     await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
   })
 
@@ -917,5 +953,154 @@ describe("<EnterVerificationCode />", () => {
     )
 
     consoleError.mockRestore()
+  })
+  describe("contact email flow", () => {
+    let bearerTokenSpy: jest.SpyInstance | undefined
+
+    afterEach(() => {
+      bearerTokenSpy?.mockRestore()
+      bearerTokenSpy = undefined
+    })
+
+    it("saves the contact email, removes the temporary address, and never changes the login email", async () => {
+      const { user, verified } = contactEmailUser()
+      await renderUpdateContactEmailFlow(user)
+      await submitCode()
+
+      await waitFor(() => {
+        expect(mockNavigate).toHaveBeenCalledWith(getMyAccountContactPath(), {
+          state: { contactEmailChanged: true },
+        })
+      })
+      expect(updateContactEmail).toHaveBeenCalledWith(
+        expect.objectContaining({ email: "new@example.com" }),
+        { clerkEnabled: true, sessionToken: "clerk-session-token" }
+      )
+      expect(verified.destroy).toHaveBeenCalled()
+      expect(user.update).not.toHaveBeenCalled()
+      expect(user.previous.destroy).not.toHaveBeenCalled()
+    })
+
+    it.each([
+      [
+        "the Salesforce update fails",
+        () => {
+          ;(updateContactEmail as jest.Mock).mockRejectedValue(new Error("salesforce down"))
+        },
+      ],
+      [
+        "there is no session token",
+        () => {
+          bearerTokenSpy = jest.spyOn(authStatus, "bearerToken").mockReturnValue(undefined)
+        },
+      ],
+    ])("removes the temporary address and returns to the form when %s", async (_case, setup) => {
+      const consoleError = jest.spyOn(console, "error").mockImplementation(() => {})
+      setup()
+      const { user, verified } = contactEmailUser()
+      await renderUpdateContactEmailFlow(user)
+      await submitCode()
+
+      await waitFor(() => {
+        expect(mockNavigate).toHaveBeenCalledWith(getUpdateEmailPath(), {
+          state: { flow: AUTH_FLOW.UPDATE_CONTACT_EMAIL, saveFailed: true },
+        })
+      })
+      expect(verified.destroy).toHaveBeenCalled()
+      expect(consoleError).toHaveBeenCalledWith(
+        "Update contact email: Salesforce update failed",
+        expect.any(Error)
+      )
+
+      consoleError.mockRestore()
+    })
+
+    it("still navigates when removing the temporary address fails", async () => {
+      const consoleError = jest.spyOn(console, "error").mockImplementation(() => {})
+      const { user } = contactEmailUser({
+        destroy: jest.fn().mockRejectedValue(new Error("destroy failed")),
+      })
+      await renderUpdateContactEmailFlow(user)
+      await submitCode()
+
+      await waitFor(() => {
+        expect(mockNavigate).toHaveBeenCalledWith(getMyAccountContactPath(), {
+          state: { contactEmailChanged: true },
+        })
+      })
+      expect(consoleError).toHaveBeenCalledWith(
+        "Update contact email: failed to remove temporary address",
+        expect.any(Error)
+      )
+
+      consoleError.mockRestore()
+    })
+
+    it("never removes the primary address", async () => {
+      jest.useRealTimers()
+      const { user, verified } = contactEmailUser({ id: "old" })
+      await renderUpdateContactEmailFlow(user)
+
+      const userEvents = userEvent.setup()
+      await userEvents.click(screen.getAllByRole("textbox")[0])
+      await userEvents.paste("123456")
+      await userEvents.click(screen.getByRole("button", { name: t("createAccount.confirmCode") }))
+
+      await waitFor(() => {
+        expect(mockNavigate).toHaveBeenCalledWith(getMyAccountContactPath(), {
+          state: { contactEmailChanged: true },
+        })
+      })
+      expect(updateContactEmail).toHaveBeenCalled()
+      expect(verified.destroy).not.toHaveBeenCalled()
+    })
+    it.each([
+      ["a wrong code", { errors: [{ code: "form_code_incorrect" }] }],
+      ["an unexpected error", new Error("network")],
+    ])("does not save on %s", async (_case, rejection) => {
+      const { user } = contactEmailUser({}, jest.fn().mockRejectedValue(rejection))
+      await renderUpdateContactEmailFlow(user)
+      await submitCode()
+      await act(async () => {
+        await Promise.resolve()
+      })
+
+      expect(updateContactEmail).not.toHaveBeenCalled()
+      expect(mockNavigate).not.toHaveBeenCalled()
+    })
+
+    it("does not save when the code is not verified", async () => {
+      const { user, verified } = contactEmailUser({ verification: { status: "unverified" } })
+      await renderUpdateContactEmailFlow(user)
+      await submitCode()
+      await act(async () => {
+        await Promise.resolve()
+      })
+
+      expect(updateContactEmail).not.toHaveBeenCalled()
+      expect(verified.destroy).not.toHaveBeenCalled()
+      expect(mockNavigate).not.toHaveBeenCalled()
+    })
+
+    it("does not verify the code when there is no profile", async () => {
+      const { user, attemptVerification } = contactEmailUser()
+      await renderUpdateContactEmailFlow(user, { hasProfile: false })
+      await submitCode()
+      await act(async () => {
+        await Promise.resolve()
+      })
+
+      expect(attemptVerification).not.toHaveBeenCalled()
+      expect(updateContactEmail).not.toHaveBeenCalled()
+    })
+
+    it("keeps the contact flow when editing the email", async () => {
+      await renderUpdateContactEmailFlow(contactEmailUser().user)
+      fireEvent.click(screen.getByRole("button", { name: t("createAccount.editEmail") }))
+
+      expect(mockNavigate).toHaveBeenCalledWith(getUpdateEmailPath(), {
+        state: { flow: AUTH_FLOW.UPDATE_CONTACT_EMAIL },
+      })
+    })
   })
 })

@@ -214,13 +214,11 @@ const EnterVerificationCodePage = ({
     }
   }
 
-  const updateSalesforceContactEmail = async (contactEmail: string) => {
-    if (!profile) throw new Error("Missing profile")
-
+  const updateSalesforceContactEmail = async (currentProfile: User, contactEmail: string) => {
     const sessionToken = bearerToken(await getCredentials())
     if (!sessionToken) throw new Error("Missing Clerk session token")
     return updateContactEmail(
-      { ...profile, email: contactEmail },
+      { ...currentProfile, email: contactEmail },
       { clerkEnabled: true, sessionToken }
     )
   }
@@ -247,11 +245,15 @@ const EnterVerificationCodePage = ({
 
     let updatedProfile: User | null = null
     try {
-      updatedProfile = await updateSalesforceContactEmail(email)
+      updatedProfile = await updateSalesforceContactEmail(profile, email)
     } catch (error) {
       console.error("Update contact email: Salesforce update failed", error)
     }
     if (verifiedEmail.id !== user.primaryEmailAddressId) {
+      // TODO: There is a rare possibility the destroy may fail and create a stale address
+      // The address is attached to the user in the Clerk DB and would
+      // require cleanup.
+      // https://github.com/SFDigitalServices/sf-dahlia-web/pull/3078#discussion_r4104585451
       await verifiedEmail
         .destroy()
         .catch((error) =>
@@ -260,7 +262,7 @@ const EnterVerificationCodePage = ({
     }
 
     if (!updatedProfile) {
-      void navigate(getUpdateEmailPath(), { state: { flow } })
+      void navigate(getUpdateEmailPath(), { state: { flow, saveFailed: true } })
       return
     }
 

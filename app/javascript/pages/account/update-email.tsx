@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/unbound-method */
-import React, { useContext, useEffect, useState } from "react"
+import React, { useContext, useEffect, useRef, useState } from "react"
 import withAppSetup from "../../layouts/withAppSetup"
 import {
   AppPages,
@@ -51,9 +51,11 @@ const UpdateEmailPage = () => {
   const cancelReturnPath = isContactFlow ? getMyAccountContactPath() : getMyAccountSettingsPath()
 
   const salesforceSaveFailed = !!(location.state as { saveFailed?: boolean } | null)?.saveFailed
+  const saveFailedHandled = useRef(false)
 
   useEffect(() => {
-    if (!salesforceSaveFailed) return
+    if (!salesforceSaveFailed || saveFailedHandled.current) return
+    saveFailedHandled.current = true
     setError("email", { message: "email:server:generic" })
     void navigate(location.pathname, { replace: true, state: { flow } })
   }, [flow, location.pathname, navigate, salesforceSaveFailed, setError])
@@ -90,7 +92,7 @@ const UpdateEmailPage = () => {
       { ...profile, email },
       { clerkEnabled: true, sessionToken }
     )
-    saveProfile(updatedProfile)
+    saveProfile?.(updatedProfile)
     void navigate(getMyAccountContactPath(), { state: { contactEmailChanged: true } })
   }
 
@@ -101,7 +103,10 @@ const UpdateEmailPage = () => {
     const currentEmail = isContactFlow ? profile?.email?.toLowerCase() : loginEmail
 
     if (newEmail === currentEmail) {
-      setError("email", { message: "email:sameAsCurrentEmail", shouldFocus: true })
+      setError("email", {
+        message: isContactFlow ? "email:sameAsCurrentContactEmail" : "email:sameAsCurrentEmail",
+        shouldFocus: true,
+      })
       return
     }
 

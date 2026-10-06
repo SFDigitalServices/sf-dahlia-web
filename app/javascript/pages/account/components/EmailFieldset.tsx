@@ -68,6 +68,10 @@ export const emailFieldsetErrors: ErrorMessages = {
     default: "error.email.sameAsCurrentEmail",
     abbreviated: "error.email.sameAsCurrentEmail.abbreviated",
   },
+  "email:sameAsCurrentContactEmail": {
+    default: "error.email.sameAsCurrentContactEmail",
+    abbreviated: "error.email.sameAsCurrentContactEmail.abbreviated",
+  },
 }
 
 export const emailSortOrder = ["email"]
