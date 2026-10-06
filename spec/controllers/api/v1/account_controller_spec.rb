@@ -4,13 +4,18 @@ RSpec.describe Api::V1::AccountController, type: :controller do
   let(:user) { create(:user) }
   let(:clerk_sid) { 'sess_current' }
 
+  def stub_clerk(user_id:)
+    allow(controller).to receive(:clerk)
+      .and_return(double(user_id:, session: { 'sid' => clerk_sid }))
+  end
+
   before do
     # hc_session cookies are bound to the Clerk session they were issued in
     # (HousingCounselorSession#issued_in_current_clerk_session?), so the
     # delegation examples below run inside that session - including the
     # Devise-authenticated actions, which only honor a cookie when the
     # request also carries the matching Clerk session.
-    allow(controller).to receive(:clerk).and_return(double(session: { 'sid' => clerk_sid }))
+    stub_clerk(user_id: nil)
 
     stub_const('JsonWebTokenService::SECRET_KEY', 'test_secret')
     stub_const('JsonWebTokenService::ALGORITHM', 'HS256')
@@ -199,7 +204,7 @@ RSpec.describe Api::V1::AccountController, type: :controller do
 
       before do
         allow(controller).to receive(:current_user).and_call_original
-        allow(controller).to receive(:clerk).and_return(double(user_id: clerk_user_id))
+        stub_clerk(user_id: clerk_user_id)
         allow(ClerkService).to receive(:salesforce_contact_id)
           .with(clerk_user_id)
           .and_return(contact_id)
@@ -338,7 +343,7 @@ RSpec.describe Api::V1::AccountController, type: :controller do
     end
 
     before do
-      allow(controller).to receive(:clerk).and_return(double(user_id: clerk_user_id))
+      stub_clerk(user_id: clerk_user_id)
       allow(ClerkService).to receive(:salesforce_contact_id)
         .with(clerk_user_id)
         .and_return(contact_id)
@@ -426,7 +431,8 @@ RSpec.describe Api::V1::AccountController, type: :controller do
     context 'when signed in as an HC with an active hc_session cookie' do
       before do
         request.cookies['hc_session'] = JsonWebTokenService.encode_token(
-          { 'typ' => 'hc_session', 'hcId' => contact_id, 'appId' => '003XYZ' },
+          { 'typ' => 'hc_session', 'hcId' => contact_id, 'appId' => '003XYZ',
+            'sid' => clerk_sid },
           exp: 2.hours.from_now,
         )
       end
@@ -446,7 +452,8 @@ RSpec.describe Api::V1::AccountController, type: :controller do
             'legitimately revoked' do
       before do
         request.cookies['hc_session'] = JsonWebTokenService.encode_token(
-          { 'typ' => 'hc_session', 'hcId' => contact_id, 'appId' => '003XYZ' },
+          { 'typ' => 'hc_session', 'hcId' => contact_id, 'appId' => '003XYZ',
+            'sid' => clerk_sid },
           exp: 1.hour.ago,
         )
         allow(Force::HousingCounselorService).to receive(:authorize_access)
@@ -468,7 +475,8 @@ RSpec.describe Api::V1::AccountController, type: :controller do
             'transient error during the re-check' do
       before do
         request.cookies['hc_session'] = JsonWebTokenService.encode_token(
-          { 'typ' => 'hc_session', 'hcId' => contact_id, 'appId' => '003XYZ' },
+          { 'typ' => 'hc_session', 'hcId' => contact_id, 'appId' => '003XYZ',
+            'sid' => clerk_sid },
           exp: 1.hour.ago,
         )
         allow(Force::HousingCounselorService).to receive(:authorize_access)
@@ -500,7 +508,7 @@ RSpec.describe Api::V1::AccountController, type: :controller do
     end
 
     before do
-      allow(controller).to receive(:clerk).and_return(double(user_id: clerk_user_id))
+      stub_clerk(user_id: clerk_user_id)
       allow(ClerkService).to receive(:salesforce_contact_id)
         .with(clerk_user_id)
         .and_return(contact_id)
@@ -693,7 +701,7 @@ RSpec.describe Api::V1::AccountController, type: :controller do
     end
 
     before do
-      allow(controller).to receive(:clerk).and_return(double(user_id: clerk_user_id))
+      stub_clerk(user_id: clerk_user_id)
       allow(ClerkService).to receive(:email_address)
         .with(clerk_user_id)
         .and_return('test@example.com')
@@ -785,7 +793,8 @@ RSpec.describe Api::V1::AccountController, type: :controller do
           .with(clerk_user_id)
           .and_return(hc_contact_id)
         request.cookies['hc_session'] = JsonWebTokenService.encode_token(
-          { 'typ' => 'hc_session', 'hcId' => hc_contact_id, 'appId' => '003XYZ' },
+          { 'typ' => 'hc_session', 'hcId' => hc_contact_id, 'appId' => '003XYZ',
+            'sid' => clerk_sid },
           exp: 2.hours.from_now,
         )
       end
@@ -809,7 +818,8 @@ RSpec.describe Api::V1::AccountController, type: :controller do
           .with(clerk_user_id)
           .and_return(hc_contact_id)
         request.cookies['hc_session'] = JsonWebTokenService.encode_token(
-          { 'typ' => 'hc_session', 'hcId' => hc_contact_id, 'appId' => '003XYZ' },
+          { 'typ' => 'hc_session', 'hcId' => hc_contact_id, 'appId' => '003XYZ',
+            'sid' => clerk_sid },
           exp: 1.hour.ago,
         )
         allow(Force::HousingCounselorService).to receive(:authorize_access)
@@ -835,7 +845,8 @@ RSpec.describe Api::V1::AccountController, type: :controller do
           .with(clerk_user_id)
           .and_return(hc_contact_id)
         request.cookies['hc_session'] = JsonWebTokenService.encode_token(
-          { 'typ' => 'hc_session', 'hcId' => hc_contact_id, 'appId' => '003XYZ' },
+          { 'typ' => 'hc_session', 'hcId' => hc_contact_id, 'appId' => '003XYZ',
+            'sid' => clerk_sid },
           exp: 1.hour.ago,
         )
         allow(Force::HousingCounselorService).to receive(:authorize_access)
