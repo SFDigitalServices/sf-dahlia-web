@@ -51,9 +51,9 @@
   }
 }
 
-// orange-700 rather than a lighter orange keeps white text at WCAG AA contrast
 .delegated-account-notice {
-  background-color: var(--seeds-color-orange-700);
+  background-color: var(--seeds-color-yellow-500);
+  color: var(--seeds-color-black);
   text-align: right;
 }
 
