@@ -30,3 +30,8 @@
   color: var(--seeds-text-color);
   padding-top: var(--seeds-s6);
 }
+
+.settingsDescription {
+  @extend .settingsText;
+  padding-top: var(--seeds-s4);
+}

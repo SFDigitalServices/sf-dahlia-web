@@ -209,7 +209,7 @@ const EmailSection = () => {
   return (
     <FormSection>
       <Heading size="md">{t("accountSettings.email.title")}</Heading>
-      <p className={settingsStyles.settingsText}>{t("accountSettings.email.description")}</p>
+      <p className={settingsStyles.settingsDescription}>{t("accountSettings.email.description")}</p>
       <div className={settingsStyles.settingsEmailFieldset}>
         <legend className={"fieldset-legend"}>{t("label.emailAddress")}</legend>
         <p>{loginEmail ?? null}</p>
