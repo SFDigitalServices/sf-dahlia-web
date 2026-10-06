@@ -151,14 +151,19 @@ describe("<UpdateEmail />", () => {
   })
 
   it("removes a leftover unverified email, sends a code, and navigates", async () => {
-    const leftover = { id: "leftover", emailAddress: "new@example.com", destroy: jest.fn() }
+    const leftover = {
+      id: "leftover",
+      emailAddress: "new@example.com",
+      linkedTo: [],
+      destroy: jest.fn().mockResolvedValue(undefined),
+    }
     const user = makeUser({ emailAddresses: [leftover] })
     await renderPage(user)
     await submitEmail("new@example.com")
 
     await waitFor(() => {
       expect(mockNavigate).toHaveBeenCalledWith(getUpdateEmailCodePath(), {
-        state: { email: "new@example.com", flow: AUTH_FLOW.UPDATE_EMAIL },
+        state: { email: "new@example.com", flow: AUTH_FLOW.UPDATE_LOGIN_EMAIL },
       })
     })
     expect(leftover.destroy).toHaveBeenCalled()
@@ -206,22 +211,43 @@ describe("<UpdateEmail />", () => {
 
     expect(user.createEmailAddress).toHaveBeenCalledTimes(1)
   })
-  it("does not destroy verified emails when sending a code", async () => {
-    const verified = {
-      id: "verified",
-      emailAddress: "other@example.com",
+
+  it("removes stale verified addresses but never the primary or linked addresses", async () => {
+    const primary = {
+      id: "current",
+      emailAddress: "current@example.com",
       verification: { status: "verified" },
+      linkedTo: [],
       destroy: jest.fn(),
     }
-    const unverified = { id: "unverified", emailAddress: "typo@example.com", destroy: jest.fn() }
-    const user = makeUser({ emailAddresses: [verified, unverified] })
+    const staleVerified = {
+      id: "stale",
+      emailAddress: "stale@example.com",
+      verification: { status: "verified" },
+      linkedTo: [],
+      destroy: jest.fn().mockResolvedValue(undefined),
+    }
+    const linked = {
+      id: "linked",
+      emailAddress: "google@example.com",
+      verification: { status: "verified" },
+      linkedTo: [{ id: "oauth_google", type: "oauth_google" }],
+      destroy: jest.fn(),
+    }
+    const user = makeUser({
+      primaryEmailAddress: primary,
+      emailAddresses: [primary, staleVerified, linked],
+    })
     await renderPage(user)
     await submitEmail("new@example.com")
 
     await waitFor(() => {
-      expect(mockNavigate).toHaveBeenCalled()
+      expect(mockNavigate).toHaveBeenCalledWith(getUpdateEmailCodePath(), {
+        state: { email: "new@example.com", flow: AUTH_FLOW.UPDATE_LOGIN_EMAIL },
+      })
     })
-    expect(verified.destroy).not.toHaveBeenCalled()
-    expect(unverified.destroy).toHaveBeenCalled()
+    expect(staleVerified.destroy).toHaveBeenCalled()
+    expect(primary.destroy).not.toHaveBeenCalled()
+    expect(linked.destroy).not.toHaveBeenCalled()
   })
 })

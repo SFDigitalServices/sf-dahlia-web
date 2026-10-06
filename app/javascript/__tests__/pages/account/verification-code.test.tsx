@@ -66,6 +66,7 @@ const updateLoginEmail = (newEmailOverrides = {}) => {
     ...newEmailOverrides,
   }
   return {
+    primaryEmailAddressId: previous.id,
     emailAddresses: [previous, newEmail],
     primaryEmailAddress: previous,
     update: jest.fn(),
@@ -78,7 +79,7 @@ const renderUpdateEmailFlow = async (user: unknown) => {
   setupUserContext({ loggedIn: true })
   ;(useLocation as jest.Mock).mockReturnValue({
     pathname: "/update-email/code",
-    state: { email: "new@example.com", flow: AUTH_FLOW.UPDATE_EMAIL },
+    state: { email: "new@example.com", flow: AUTH_FLOW.UPDATE_LOGIN_EMAIL },
   })
   ;(useUser as jest.Mock).mockReturnValue({ isLoaded: true, isSignedIn: true, user })
   await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
@@ -227,9 +228,8 @@ describe("<EnterVerificationCode />", () => {
     ).not.toBeNull()
     expect(screen.getByText(t("createAccount.weSentCodeTo"))).not.toBeNull()
     expect(screen.getByText("test@example.com")).not.toBeNull()
-    expect(
-      screen.getByRole("link", { name: t("createAccount.editEmail") }).getAttribute("href")
-    ).toBe("/create-account")
+    fireEvent.click(screen.getByRole("button", { name: t("createAccount.editEmail") }))
+    expect(mockNavigate).toHaveBeenCalledWith("/create-account", undefined)
     expect(screen.getByRole("group", { name: t("createAccount.enterCode") })).not.toBeNull()
     expect(screen.getAllByRole("textbox")).toHaveLength(6)
     expect(screen.getByRole("button", { name: t("createAccount.confirmCode") })).not.toBeNull()
@@ -375,9 +375,8 @@ describe("<EnterVerificationCode />", () => {
     })
     await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
 
-    expect(
-      screen.getByRole("link", { name: t("createAccount.editEmail") }).getAttribute("href")
-    ).toBe("/sign-in")
+    fireEvent.click(screen.getByRole("button", { name: t("createAccount.editEmail") }))
+    expect(mockNavigate).toHaveBeenCalledWith("/sign-in", undefined)
     expect(
       screen.getByRole("link", { name: /how to sign in or find help/i }).getAttribute("href")
     ).toBe("https://www.sf.gov/sign-in-to-your-dahlia-account")

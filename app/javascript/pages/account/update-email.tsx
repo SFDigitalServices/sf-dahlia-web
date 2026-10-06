@@ -51,6 +51,14 @@ const UpdateEmailPage = () => {
   const isContactFlow = flow === AUTH_FLOW.UPDATE_CONTACT_EMAIL
   const cancelReturnPath = isContactFlow ? getMyAccountContactPath() : getMyAccountSettingsPath()
 
+  const salesforceSaveFailed = !!(location.state as { saveFailed?: boolean } | null)?.saveFailed
+
+  useEffect(() => {
+    if (!salesforceSaveFailed) return
+    setError("email", { message: "email:server:generic" })
+    void navigate(location.pathname, { replace: true, state: { flow } })
+  }, [flow, location.pathname, navigate, salesforceSaveFailed, setError])
+
   if (!user) {
     return null
   }
