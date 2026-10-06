@@ -708,6 +708,7 @@ const AccountSettings = ({ profile }: { profile: User }) => {
         message={confirmationBannerMessage ? t(confirmationBannerMessage) : ""}
         onClose={() => setConfirmationBannerMessage(null)}
       />
+      {/* TODO: DAH-4406 remove name banner header with new toast */}
       {nameUpdateBanner || nameSavedBanner ? (
         <FormHeader
           className={"border-none"}
