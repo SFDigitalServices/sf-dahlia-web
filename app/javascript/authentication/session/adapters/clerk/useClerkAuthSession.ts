@@ -25,6 +25,9 @@ export const useClerkAuthSession = (): AuthSession => {
 
   // A ref, not state: it must read true synchronously once Clerk publishes the
   // signed-out status mid-signOut, before any re-render could carry state.
+  // TODO: never reset, so after a sign-out and re-sign-in in the same tab,
+  // withAuthentication skips its redirect when that later session ends. Reset it
+  // once Clerk reports signedIn again.
   const signingOutRef = useRef(false)
   const isSigningOut = useCallback(() => signingOutRef.current, [])
 
