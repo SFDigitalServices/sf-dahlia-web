@@ -9,7 +9,7 @@ import {
   mockWindowLocation,
   restoreWindowLocation,
 } from "../../__util__/renderUtils"
-import { setupUserContext } from "../../__util__/accountUtils"
+import { mockProfileStub, setupUserContext } from "../../__util__/accountUtils"
 import { useFeatureFlag } from "../../../hooks/useFeatureFlag"
 
 jest.mock("@clerk/react", () => {
@@ -87,8 +87,20 @@ describe("<ChangePassword />", () => {
     expect(screen.getByLabelText(/choose a new password/i)).not.toBeNull()
     expect(screen.getByRole("link", { name: /forgot password/i })).toHaveAttribute(
       "href",
-      "/forgot-password?email=email@email.com"
+      "/forgot-password?email=email%40email.com"
     )
+  })
+
+  it("keeps a '+' in the account email carried over to the forgot password link", async () => {
+    cleanup()
+    setupUserContext({
+      loggedIn: true,
+      mockProfile: { ...mockProfileStub, email: "first+last@test.com" },
+    })
+    await renderAndLoadAsync(<ChangePassword assetPaths={{}} />)
+
+    const href = screen.getByRole("link", { name: /forgot password/i }).getAttribute("href")
+    expect(new URL(href, "http://localhost").searchParams.get("email")).toBe("first+last@test.com")
   })
 
   it("changes the password and returns to settings", async () => {
