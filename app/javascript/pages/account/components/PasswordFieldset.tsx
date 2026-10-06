@@ -19,6 +19,7 @@ export interface PasswordFieldsetProps {
   register: UseFormMethods["register"]
   errors?: UseFormMethods["errors"]
   watch: UseFormMethods["watch"]
+  submitWithEnterKey?: boolean
   email?: string
   passwordType: "signIn" | "createAccount" | "accountSettings" | "resetPassword"
   labelText: string
@@ -145,12 +146,25 @@ const NewPasswordInstructions = ({
 
 interface PasswordFieldProps extends Omit<FieldProps, "type" | "postInputContent" | "inputProps"> {
   passwordVisibilityDefault?: boolean
+  submitWithEnterKey?: boolean
 }
 
-const PasswordField = ({ passwordVisibilityDefault = false, ...props }: PasswordFieldProps) => {
+const PasswordField = ({
+  passwordVisibilityDefault = false,
+  submitWithEnterKey,
+  ...props
+}: PasswordFieldProps) => {
   const [showPassword, setShowPassword] = React.useState(passwordVisibilityDefault)
 
   const showPasswordId = `${props.name}-showPassword`
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLElement>) => {
+    // the parent Form component from `@bloom-housing/ui-components` disables the Enter key, override it
+    if (e.key === "Enter" && submitWithEnterKey) {
+      e.preventDefault()
+      ;(e.currentTarget as HTMLElement).closest("form")?.requestSubmit()
+    }
+  }
 
   return (
     <>
@@ -158,7 +172,12 @@ const PasswordField = ({ passwordVisibilityDefault = false, ...props }: Password
         dataTestId="password-field"
         {...props}
         type={showPassword ? "text" : "password"}
-        inputProps={{ className: "input", required: true, autoCapitalize: "none" }}
+        inputProps={{
+          className: "input",
+          required: true,
+          autoCapitalize: "none",
+          onKeyDown: handleKeyDown,
+        }}
       />
       <div className="field">
         <input
@@ -190,6 +209,7 @@ const PasswordFieldset = ({
   register,
   errors,
   watch,
+  submitWithEnterKey,
   passwordType,
   labelText,
   email,
@@ -251,6 +271,7 @@ const PasswordFieldset = ({
           getErrorMessage(errors?.password?.message as string, passwordFieldsetErrors, false)
         }
         register={register}
+        submitWithEnterKey={submitWithEnterKey}
       />
     </Fieldset>
   )

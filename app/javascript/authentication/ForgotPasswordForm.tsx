@@ -63,7 +63,12 @@ const ForgotPasswordForm = () => {
         {!emailSubmitted ? (
           <div className="form-card__group pt-0">
             <Form className="mt-10 relative" onSubmit={handleSubmit(onSubmit)}>
-              <EmailFieldset defaultEmail={emailParam} register={register} errors={errors} />
+              <EmailFieldset
+                defaultEmail={emailParam}
+                register={register}
+                errors={errors}
+                submitWithEnterKey
+              />
               <div className="text-center mt-4">
                 <Button styleType={AppearanceStyleType.primary} type="submit">
                   {t("label.sendEmail")}

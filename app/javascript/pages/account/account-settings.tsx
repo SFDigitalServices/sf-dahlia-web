@@ -113,7 +113,7 @@ const EmailSection = ({ user, setUser }: SectionProps) => {
     setLoading(true)
     const { email } = data
 
-    updateEmail(email)
+    updateEmail({ ...user, email }, { clerkEnabled: false })
       .then(() => {
         const newUser = {
           ...user,
@@ -233,7 +233,7 @@ const updateNameOrDOB = async (
   errorCallback: (error: AxiosError) => void,
   bannersCallback?: () => void
 ) => {
-  return apiUpdateNameOrDOB(newUser)
+  return apiUpdateNameOrDOB(newUser, { clerkEnabled: false })
     .then((profile) => {
       saveProfile(profile)
       setUser(newUser)
