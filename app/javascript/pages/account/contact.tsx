@@ -146,6 +146,7 @@ const ContactPhoneForm = ({
 
 const Contact = () => {
   const { unleashFlag: accountLayoutEnabled } = useFeatureFlag(UNLEASH_FLAG.ACCOUNTS_LAYOUT, false)
+  const { unleashFlag: clerkEnabled } = useFeatureFlag(UNLEASH_FLAG.CLERK_AUTH, false)
   const { getAssetPath } = useContext(ConfigContext)
   const { profile, saveProfile } = useContext(UserContext)
   const navigate = useNavigate()
@@ -178,19 +179,21 @@ const Contact = () => {
                 t("accountLayout.contact.changeLoginEmail", { href: getMyAccountSettingsPath() })
               )}
             </p>
-            <Button
-              type="button"
-              variant="primary-outlined"
-              className={styles.saveButton}
-              size="sm"
-              onClick={() => {
-                void navigate(getUpdateEmailPath(), {
-                  state: { flow: AUTH_FLOW.UPDATE_CONTACT_EMAIL },
-                })
-              }}
-            >
-              {t("accountSettings.email.updateEmail")}
-            </Button>
+            {clerkEnabled && (
+              <Button
+                type="button"
+                variant="primary-outlined"
+                className={styles.saveButton}
+                size="sm"
+                onClick={() => {
+                  void navigate(getUpdateEmailPath(), {
+                    state: { flow: AUTH_FLOW.UPDATE_CONTACT_EMAIL },
+                  })
+                }}
+              >
+                {t("accountSettings.email.updateEmail")}
+              </Button>
+            )}
           </Card.Section>
           {profile && <ContactPhoneForm profile={profile} saveProfile={saveProfile} />}
           <Card.Footer className={styles.footer}>
