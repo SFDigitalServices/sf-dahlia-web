@@ -23,6 +23,7 @@ import {
   getMyAccountPath,
   getResetPasswordPath,
   getSignInPath,
+  getMyAccountSettingsPath,
 } from "../../util/routeUtil"
 import styles from "./verification-code.module.scss"
 import { AUTH_FLOW, UNLEASH_FLAG } from "../../modules/constants"
@@ -57,6 +58,8 @@ const EnterVerificationCodePage = ({
   const [resendExpiresAt, setResendExpiresAt] = useState(() => Date.now() + RESEND_CODE_MS)
   const [resendSeconds, setResendSeconds] = useState(RESEND_CODE_MS / 1000)
   const [isResending, setIsResending] = useState(false)
+  const { user } = useSignUpSession()
+
   const {
     control,
     handleSubmit,
@@ -155,10 +158,53 @@ const EnterVerificationCodePage = ({
     void navigate(getResetPasswordPath(), { state: { email, flow, code } })
   }
 
+  const verifyUpdateEmailCode = async (code: string) => {
+    if (!user) {
+      setError("code", { message: "invalid" })
+      return
+    }
+    const emailAddress = user.emailAddresses.find(
+      (e) => e.emailAddress.toLowerCase() === email.toLowerCase()
+    )
+    if (!emailAddress) {
+      setError("code", { message: "invalid" })
+      return
+    }
+
+    try {
+      const verifiedEmail = await emailAddress.attemptVerification({ code })
+      if (verifiedEmail.verification.status !== "verified") {
+        setError("code", { message: "invalid" })
+        return
+      }
+      const previousEmailAddress = user.primaryEmailAddress
+      await user.update({ primaryEmailAddressId: verifiedEmail.id })
+      if (previousEmailAddress && previousEmailAddress.id !== verifiedEmail.id) {
+        try {
+          await previousEmailAddress.destroy()
+        } catch (error) {
+          // TODO: There is a possibility the primary email can be updated but this destroy
+          // can fail. The old address is still attached to the user in the Clerk DB and would
+          // require cleanup.
+          // https://github.com/SFDigitalServices/sf-dahlia-web/pull/3078#discussion_r4104585451
+          console.error(
+            "Update login email: failed to remove previous primary email address",
+            error
+          )
+        }
+      }
+      void navigate(getMyAccountSettingsPath(), { state: { emailChanged: true } })
+    } catch (error) {
+      const isInvalidCode = error?.errors?.[0]?.code === "form_code_incorrect"
+      setError("code", { message: isInvalidCode ? "invalid" : "generic" })
+    }
+  }
+
   const verifyAuthCodeByFlow: Record<AUTH_FLOW, (code: string) => Promise<void>> = {
     [AUTH_FLOW.SIGN_IN]: verifySignInCode,
     [AUTH_FLOW.CREATE_ACCOUNT]: verifySignUpCode,
     [AUTH_FLOW.FORGOT_PASSWORD]: verifyForgotPasswordCode,
+    [AUTH_FLOW.UPDATE_EMAIL]: verifyUpdateEmailCode,
   }
 
   const onSubmit = async ({ code }: { code: string }) => verifyAuthCodeByFlow[flow](code)
@@ -190,10 +236,29 @@ const EnterVerificationCodePage = ({
     return true
   }
 
+  const resendUpdateEmailCode = async (): Promise<boolean> => {
+    const emailAddress = user?.emailAddresses.find(
+      (e) => e.emailAddress.toLowerCase() === email.toLowerCase()
+    )
+    if (!emailAddress) {
+      console.error("Resend update email code error: address not found")
+      return false
+    }
+
+    try {
+      await emailAddress.prepareVerification({ strategy: "email_code" })
+      return true
+    } catch (error) {
+      console.error("Resend update email code error:", error)
+      return false
+    }
+  }
+
   const resendCodeByFlow: Record<AUTH_FLOW, () => Promise<boolean>> = {
     [AUTH_FLOW.SIGN_IN]: resendSignInCode,
     [AUTH_FLOW.CREATE_ACCOUNT]: resendSignUpCode,
     [AUTH_FLOW.FORGOT_PASSWORD]: resendForgotPasswordCode,
+    [AUTH_FLOW.UPDATE_EMAIL]: resendUpdateEmailCode,
   }
 
   const onResend = async () => {
@@ -311,6 +376,7 @@ const EnterVerificationCode = (_props: { assetPaths: unknown }) => {
   const { unleashFlag: clerkEnabled, flagsReady } = useFeatureFlag(UNLEASH_FLAG.CLERK_AUTH, false)
   const flow: AUTH_FLOW = state?.flow
   const fallbackPath = flow ? getAuthFlowPath(flow) : getSignInPath()
+  const isUpdateEmailFlow = flow === AUTH_FLOW.UPDATE_EMAIL
 
   // TODO: simplify and centralize auth redirects
   /**
@@ -342,8 +408,11 @@ const EnterVerificationCode = (_props: { assetPaths: unknown }) => {
       return
     }
     if (!initialStateLoaded) return
-    if (isSignedIn && profile) void navigate(getMyAccountPath())
-    if (isSignedIn && !profile) void navigate(getAddProfilePath())
+    if (!isUpdateEmailFlow) {
+      if (!initialStateLoaded) return
+      if (isSignedIn && profile) void navigate(getMyAccountPath())
+      if (isSignedIn && !profile) void navigate(getAddProfilePath())
+    }
     redirectCheckHasRunOnce.current = true
   }, [
     flagsReady,
@@ -356,9 +425,15 @@ const EnterVerificationCode = (_props: { assetPaths: unknown }) => {
     navigate,
     flow,
     fallbackPath,
+    isUpdateEmailFlow,
   ])
 
-  const ready = flagsReady && clerkEnabled && status.kind === "signedOut" && !!email
+  const ready =
+    flagsReady &&
+    clerkEnabled &&
+    status.kind !== "initializing" &&
+    (isUpdateEmailFlow ? isSignedIn : status.kind === "signedOut") &&
+    !!email
 
   if (!ready) {
     return null

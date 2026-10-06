@@ -57,7 +57,8 @@ RSpec.describe Api::V1::AccountController, type: :controller do
 
       before do
         request.cookies['hc_session'] = JsonWebTokenService.encode_token(
-          { 'typ' => 'hc_session', 'hcId' => contact_id, 'appId' => applicant_contact_id, 'sid' => clerk_sid },
+          { 'typ' => 'hc_session', 'hcId' => contact_id, 'appId' => applicant_contact_id,
+            'sid' => clerk_sid },
           exp: 2.hours.from_now,
         )
       end
@@ -89,7 +90,8 @@ RSpec.describe Api::V1::AccountController, type: :controller do
     context 'when the hc_session cookie belongs to a different signed-in user' do
       before do
         request.cookies['hc_session'] = JsonWebTokenService.encode_token(
-          { 'typ' => 'hc_session', 'hcId' => 'someone_elses_contact_id', 'appId' => '003XYZ', 'sid' => clerk_sid },
+          { 'typ' => 'hc_session', 'hcId' => 'someone_elses_contact_id',
+            'appId' => '003XYZ', 'sid' => clerk_sid },
           exp: 2.hours.from_now,
         )
       end
@@ -110,7 +112,8 @@ RSpec.describe Api::V1::AccountController, type: :controller do
 
       before do
         request.cookies['hc_session'] = JsonWebTokenService.encode_token(
-          { 'typ' => 'hc_session', 'hcId' => contact_id, 'appId' => applicant_contact_id, 'sid' => clerk_sid },
+          { 'typ' => 'hc_session', 'hcId' => contact_id, 'appId' => applicant_contact_id,
+            'sid' => clerk_sid },
           exp: 1.hour.ago,
         )
         allow(Force::HousingCounselorService).to receive(:authorize_access)
@@ -140,7 +143,8 @@ RSpec.describe Api::V1::AccountController, type: :controller do
 
       before do
         request.cookies['hc_session'] = JsonWebTokenService.encode_token(
-          { 'typ' => 'hc_session', 'hcId' => contact_id, 'appId' => applicant_contact_id, 'sid' => clerk_sid },
+          { 'typ' => 'hc_session', 'hcId' => contact_id, 'appId' => applicant_contact_id,
+            'sid' => clerk_sid },
           exp: 1.hour.ago,
         )
         allow(Force::HousingCounselorService).to receive(:authorize_access)
@@ -189,6 +193,45 @@ RSpec.describe Api::V1::AccountController, type: :controller do
         expect(Emailer).not_to have_received(:account_update)
       end
     end
+    context 'when signed in with Clerk' do
+      let(:clerk_user_id) { 'user_abc123' }
+      let(:contact_id) { '003ABC' }
+
+      before do
+        allow(controller).to receive(:current_user).and_call_original
+        allow(controller).to receive(:clerk).and_return(double(user_id: clerk_user_id))
+        allow(ClerkService).to receive(:salesforce_contact_id)
+          .with(clerk_user_id)
+          .and_return(contact_id)
+        allow(Emailer).to receive_message_chain(:account_update, :deliver_now)
+      end
+
+      it 'updates the account and emails the Clerk user' do
+        put :update, params: { contact: contact_params }
+
+        expect(response).to have_http_status(:ok)
+        expect(Force::AccountService).to have_received(:create_or_update).with(
+          hash_including('contactID' => contact_id, 'webAppID' => clerk_user_id),
+        )
+        expect(Emailer).to have_received(:account_update).with(instance_of(ClerkService::User))
+      end
+
+      context 'when sending the email fails' do
+        let(:error) { StandardError.new('email failed') }
+
+        before do
+          allow(Emailer).to receive(:account_update).and_raise(error)
+          allow(Sentry).to receive(:capture_exception)
+        end
+
+        it 'reports sentry error and responds ok' do
+          put :update, params: { contact: contact_params }
+
+          expect(response).to have_http_status(:ok)
+          expect(Sentry).to have_received(:capture_exception).with(error)
+        end
+      end
+    end
 
     # Regression coverage for a confirmed code-review finding: #update always
     # writes to current_user's own Salesforce contact, but the account
@@ -199,7 +242,8 @@ RSpec.describe Api::V1::AccountController, type: :controller do
     context 'when signed in as an HC with an active hc_session cookie' do
       before do
         request.cookies['hc_session'] = JsonWebTokenService.encode_token(
-          { 'typ' => 'hc_session', 'hcId' => user.salesforce_contact_id, 'appId' => '003XYZ', 'sid' => clerk_sid },
+          { 'typ' => 'hc_session', 'hcId' => user.salesforce_contact_id,
+            'appId' => '003XYZ', 'sid' => clerk_sid },
           exp: 2.hours.from_now,
         )
       end
@@ -232,7 +276,8 @@ RSpec.describe Api::V1::AccountController, type: :controller do
             'legitimately revoked' do
       before do
         request.cookies['hc_session'] = JsonWebTokenService.encode_token(
-          { 'typ' => 'hc_session', 'hcId' => user.salesforce_contact_id, 'appId' => '003XYZ', 'sid' => clerk_sid },
+          { 'typ' => 'hc_session', 'hcId' => user.salesforce_contact_id,
+            'appId' => '003XYZ', 'sid' => clerk_sid },
           exp: 1.hour.ago,
         )
         allow(Force::HousingCounselorService).to receive(:authorize_access)
@@ -253,7 +298,8 @@ RSpec.describe Api::V1::AccountController, type: :controller do
             'transient error during the re-check' do
       before do
         request.cookies['hc_session'] = JsonWebTokenService.encode_token(
-          { 'typ' => 'hc_session', 'hcId' => user.salesforce_contact_id, 'appId' => '003XYZ', 'sid' => clerk_sid },
+          { 'typ' => 'hc_session', 'hcId' => user.salesforce_contact_id,
+            'appId' => '003XYZ', 'sid' => clerk_sid },
           exp: 1.hour.ago,
         )
         allow(Force::HousingCounselorService).to receive(:authorize_access)
@@ -292,7 +338,7 @@ RSpec.describe Api::V1::AccountController, type: :controller do
     end
 
     before do
-      allow(controller).to receive(:clerk).and_return(double(user_id: clerk_user_id, session: { 'sid' => clerk_sid }))
+      allow(controller).to receive(:clerk).and_return(double(user_id: clerk_user_id))
       allow(ClerkService).to receive(:salesforce_contact_id)
         .with(clerk_user_id)
         .and_return(contact_id)
@@ -380,7 +426,7 @@ RSpec.describe Api::V1::AccountController, type: :controller do
     context 'when signed in as an HC with an active hc_session cookie' do
       before do
         request.cookies['hc_session'] = JsonWebTokenService.encode_token(
-          { 'typ' => 'hc_session', 'hcId' => contact_id, 'appId' => '003XYZ', 'sid' => clerk_sid },
+          { 'typ' => 'hc_session', 'hcId' => contact_id, 'appId' => '003XYZ' },
           exp: 2.hours.from_now,
         )
       end
@@ -400,7 +446,7 @@ RSpec.describe Api::V1::AccountController, type: :controller do
             'legitimately revoked' do
       before do
         request.cookies['hc_session'] = JsonWebTokenService.encode_token(
-          { 'typ' => 'hc_session', 'hcId' => contact_id, 'appId' => '003XYZ', 'sid' => clerk_sid },
+          { 'typ' => 'hc_session', 'hcId' => contact_id, 'appId' => '003XYZ' },
           exp: 1.hour.ago,
         )
         allow(Force::HousingCounselorService).to receive(:authorize_access)
@@ -422,7 +468,7 @@ RSpec.describe Api::V1::AccountController, type: :controller do
             'transient error during the re-check' do
       before do
         request.cookies['hc_session'] = JsonWebTokenService.encode_token(
-          { 'typ' => 'hc_session', 'hcId' => contact_id, 'appId' => '003XYZ', 'sid' => clerk_sid },
+          { 'typ' => 'hc_session', 'hcId' => contact_id, 'appId' => '003XYZ' },
           exp: 1.hour.ago,
         )
         allow(Force::HousingCounselorService).to receive(:authorize_access)
@@ -454,7 +500,7 @@ RSpec.describe Api::V1::AccountController, type: :controller do
     end
 
     before do
-      allow(controller).to receive(:clerk).and_return(double(user_id: clerk_user_id, session: { 'sid' => clerk_sid }))
+      allow(controller).to receive(:clerk).and_return(double(user_id: clerk_user_id))
       allow(ClerkService).to receive(:salesforce_contact_id)
         .with(clerk_user_id)
         .and_return(contact_id)
@@ -524,7 +570,10 @@ RSpec.describe Api::V1::AccountController, type: :controller do
 
       def set_hc_session_cookie(hc_id:, app_id:, exp: 2.hours.from_now)
         request.cookies['hc_session'] =
-          JsonWebTokenService.encode_token({ 'typ' => 'hc_session', 'hcId' => hc_id, 'appId' => app_id, 'sid' => clerk_sid }, exp:)
+          JsonWebTokenService.encode_token(
+            { 'typ' => 'hc_session', 'hcId' => hc_id, 'appId' => app_id,
+              'sid' => clerk_sid }, exp:
+          )
       end
 
       it 'returns the delegated applicant profile rather than the housing ' \
@@ -644,7 +693,7 @@ RSpec.describe Api::V1::AccountController, type: :controller do
     end
 
     before do
-      allow(controller).to receive(:clerk).and_return(double(user_id: clerk_user_id, session: { 'sid' => clerk_sid }))
+      allow(controller).to receive(:clerk).and_return(double(user_id: clerk_user_id))
       allow(ClerkService).to receive(:email_address)
         .with(clerk_user_id)
         .and_return('test@example.com')
@@ -736,7 +785,7 @@ RSpec.describe Api::V1::AccountController, type: :controller do
           .with(clerk_user_id)
           .and_return(hc_contact_id)
         request.cookies['hc_session'] = JsonWebTokenService.encode_token(
-          { 'typ' => 'hc_session', 'hcId' => hc_contact_id, 'appId' => '003XYZ', 'sid' => clerk_sid },
+          { 'typ' => 'hc_session', 'hcId' => hc_contact_id, 'appId' => '003XYZ' },
           exp: 2.hours.from_now,
         )
       end
@@ -760,7 +809,7 @@ RSpec.describe Api::V1::AccountController, type: :controller do
           .with(clerk_user_id)
           .and_return(hc_contact_id)
         request.cookies['hc_session'] = JsonWebTokenService.encode_token(
-          { 'typ' => 'hc_session', 'hcId' => hc_contact_id, 'appId' => '003XYZ', 'sid' => clerk_sid },
+          { 'typ' => 'hc_session', 'hcId' => hc_contact_id, 'appId' => '003XYZ' },
           exp: 1.hour.ago,
         )
         allow(Force::HousingCounselorService).to receive(:authorize_access)
@@ -786,7 +835,7 @@ RSpec.describe Api::V1::AccountController, type: :controller do
           .with(clerk_user_id)
           .and_return(hc_contact_id)
         request.cookies['hc_session'] = JsonWebTokenService.encode_token(
-          { 'typ' => 'hc_session', 'hcId' => hc_contact_id, 'appId' => '003XYZ', 'sid' => clerk_sid },
+          { 'typ' => 'hc_session', 'hcId' => hc_contact_id, 'appId' => '003XYZ' },
           exp: 1.hour.ago,
         )
         allow(Force::HousingCounselorService).to receive(:authorize_access)
