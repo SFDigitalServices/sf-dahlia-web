@@ -77,7 +77,7 @@ const AddProfilePage = () => {
           throw new Error("Missing Clerk session token")
         }
         await createProfile(contact, sessionToken)
-        const profile = await getProfile(sessionToken)
+        const profile = await getProfile({ clerkEnabled: true, sessionToken })
         saveProfile?.(profile)
         void navigate(getMyAccountPath(), { state: { accountReady: true } })
       } catch (error) {

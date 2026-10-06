@@ -24,6 +24,21 @@ export const handleEmailServerErrors = (error: ExpandedAccountAxiosError): SetEr
   }
 }
 
+interface ClerkEmailError {
+  errors?: { code?: string }[]
+}
+
+export const handleClerkEmailErrors = (error: unknown): SetErrorArgs => {
+  const code = (error as ClerkEmailError)?.errors?.[0]?.code
+  if (code?.startsWith("form_identifier_exists")) {
+    return ["email", { message: "email:server:duplicate", shouldFocus: true }]
+  }
+  if (code?.startsWith("form_param_format_invalid")) {
+    return ["email", { message: "email:generalFormat", shouldFocus: true }]
+  }
+  return ["email", { message: "email:server:generic", shouldFocus: true }]
+}
+
 export const emailFieldsetErrors: ErrorMessages = {
   "email:missingAtSign": {
     default: "error.email.missingAtSign",
@@ -48,6 +63,10 @@ export const emailFieldsetErrors: ErrorMessages = {
   "email:server:duplicate": {
     default: "error.email.duplicate",
     abbreviated: "error.email.duplicate.abbreviated",
+  },
+  "email:sameAsCurrentEmail": {
+    default: "error.email.sameAsCurrentEmail",
+    abbreviated: "error.email.sameAsCurrentEmail.abbreviated",
   },
 }
 
@@ -76,15 +95,33 @@ interface EmailFieldProps {
   register: UseFormMethods["register"]
   defaultEmail?: string
   errors?: UseFormMethods["errors"]
+  submitWithEnterKey?: boolean
   onChange?: () => void
   note?: React.ReactNode
+  label?: string
 }
 
-const EmailFieldset = ({ register, errors, defaultEmail, onChange, note }: EmailFieldProps) => {
+const EmailFieldset = ({
+  register,
+  errors,
+  defaultEmail,
+  submitWithEnterKey,
+  onChange,
+  note,
+  label,
+}: EmailFieldProps) => {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLElement>) => {
+    // the parent Form component from `@bloom-housing/ui-components` disables the Enter key, override it
+    if (e.key === "Enter" && submitWithEnterKey) {
+      e.preventDefault()
+      ;(e.currentTarget as HTMLElement).closest("form")?.requestSubmit()
+    }
+  }
+
   return (
     <Fieldset
       hasError={errors?.email}
-      label={t("label.emailAddress")}
+      label={label ?? t("label.emailAddress")}
       note={note}
       className={styles.emailFieldset}
     >
@@ -111,7 +148,7 @@ const EmailFieldset = ({ register, errors, defaultEmail, onChange, note }: Email
         register={register}
         defaultValue={defaultEmail ?? null}
         onChange={onChange}
-        inputProps={{ required: true }}
+        inputProps={{ required: true, onKeyDown: handleKeyDown }}
       />
     </Fieldset>
   )

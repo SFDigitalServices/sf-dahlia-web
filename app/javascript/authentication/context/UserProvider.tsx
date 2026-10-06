@@ -54,7 +54,7 @@ const ClerkProfile = ({
         if (!sessionToken) {
           throw new Error("Missing Clerk session token")
         }
-        onLoaded(await getProfile(sessionToken))
+        onLoaded(await getProfile({ clerkEnabled: true, sessionToken }))
       } catch {
         onLoaded(null)
       }
@@ -94,7 +94,7 @@ const UserProvider = (props: UserProviderProps) => {
 
     dispatch(startLoading())
     attemptToSetAuthHeadersFromURL()
-    getProfile()
+    getProfile({ clerkEnabled: false })
       .then((profile) => {
         dispatch(saveProfile(profile))
       })

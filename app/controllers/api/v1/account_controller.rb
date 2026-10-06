@@ -32,7 +32,15 @@ class Api::V1::AccountController < ApiController
     contact[:contactID] = current_user.salesforce_contact_id
     contact[:webAppID] = current_user.id
     salesforce_contact = Force::AccountService.create_or_update(contact.as_json)
-    Emailer.account_update(current_user).deliver_later
+    begin
+      if current_user.is_a?(ClerkService::User)
+        Emailer.account_update(current_user).deliver_now
+      else
+        Emailer.account_update(current_user).deliver_later
+      end
+    rescue StandardError => e
+      Sentry.capture_exception(e)
+    end
     render json: { contact: salesforce_contact }
   end
 
@@ -163,7 +171,8 @@ class Api::V1::AccountController < ApiController
     render json: { error: 'forbidden' }, status: :forbidden
   end
 
-  def authenticate_user!(*args)
+  def authenticate_user!(*)
+    return authenticate_clerk_or_devise_user!(*) if action_name == 'update'
     return super unless %w[profile create_profile
                            update_housing_counselor].include?(action_name)
 
@@ -173,9 +182,21 @@ class Api::V1::AccountController < ApiController
       return
     end
 
-    if action_name == 'update_housing_counselor' && current_user.salesforce_contact_id.blank?
-      render json: { error: 'Could not get Salesforce contact ID' }, status: :not_found
-    end
+    require_salesforce_contact_id! if action_name == 'update_housing_counselor'
+  end
+
+  def require_salesforce_contact_id!
+    return if current_user.salesforce_contact_id.present?
+
+    render json: { error: 'Could not get Salesforce contact ID' }, status: :not_found
+  end
+
+  def authenticate_clerk_or_devise_user!(*)
+    clerk_user_id = clerk&.user_id
+    return method(:authenticate_user!).super_method.call(*) if clerk_user_id.blank?
+
+    @clerk_user_id = clerk_user_id
+    require_salesforce_contact_id!
   end
 
   def current_user
