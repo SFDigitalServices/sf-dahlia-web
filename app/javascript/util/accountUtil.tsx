@@ -51,9 +51,11 @@ const MOBILE_SIZE = 768
 export const FormSection = ({
   className,
   children,
+  fullWidthDivider = false,
 }: {
   className?: string
   children: React.ReactNode
+  fullWidthDivider?: boolean
 }) => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth)
 
@@ -66,8 +68,10 @@ export const FormSection = ({
     return () => window.removeEventListener("resize", handleResize)
   }, [])
 
+  const dividerType = fullWidthDivider || windowWidth <= MOBILE_SIZE ? "flush" : "inset"
+
   return (
-    <Card.Section className={className} divider={windowWidth > MOBILE_SIZE ? "inset" : "flush"}>
+    <Card.Section className={className} divider={dividerType}>
       {children}
     </Card.Section>
   )

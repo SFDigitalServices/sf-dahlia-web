@@ -6,6 +6,11 @@
   }
 }
 
+.settingsHeader {
+  margin-inline: 0 !important;
+  padding-inline: var(--card-header-padding-inline) !important;
+}
+
 .settingsButton {
   display: flex;
   padding-top: var(--seeds-spacer-content);
