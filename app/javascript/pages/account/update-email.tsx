@@ -29,7 +29,6 @@ import { useAuthSession } from "../../authentication/session/AuthSessionProvider
 import UserContext from "../../authentication/context/UserContext"
 import { bearerToken } from "../../authentication/session/authStatus"
 import { updateContactEmail } from "../../api/authApiService"
-import { saveProfile } from "../../authentication/context/userActions"
 
 const UpdateEmailPage = () => {
   const {
@@ -41,7 +40,7 @@ const UpdateEmailPage = () => {
   const navigate = useNavigate()
   const { user, isAccountInitialized } = useSignUpSession()
   const location = useLocation()
-  const { profile } = useContext(UserContext)
+  const { profile, saveProfile } = useContext(UserContext)
   const { getCredentials } = useAuthSession()
   const [loading, setLoading] = useState(false)
   const flow =
