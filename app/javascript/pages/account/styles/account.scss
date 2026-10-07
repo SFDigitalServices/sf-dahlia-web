@@ -7,6 +7,15 @@
   font-weight: var(--seeds-font-weight-semibold);
 }
 
+.housing-counselor-access .fieldset-legend {
+  font-size: var(--seeds-type-heading-size-lg);
+  padding-bottom: 16px;
+}
+.housing-counselor-access .field-note {
+  font-size: var(--seeds-type-heading-size-sm);
+  color: var(--seeds-color-gray-950);
+}
+
 // field labels
 .form-fieldset > .field > .label,
 .password-fieldset > .field > .label,
@@ -16,6 +25,12 @@
   font-size: 14px;
   font-family: "Lato";
   line-height: 24px;
+}
+
+.share-access {
+  font-family: "Lato";
+  font-size: var(--seeds-type-heading-size-md);
+  padding-bottom: 16px;
 }
 
 .form-subtitle {

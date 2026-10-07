@@ -90,7 +90,7 @@
   "accountSettings.housingCounselor.placeholder": "Choose agency",
   "accountSettings.housingCounselor.revokeButton": "Stop sharing",
   "accountSettings.housingCounselor.shareButton": "Share my account",
-  "accountSettings.housingCounselor.sharedOn": "Shared on: %{sharedDate}",
+  "accountSettings.housingCounselor.sharedOn": "Shared on: %{sharedDate} at %{sharedTime} Pacific Time",
   "accountSettings.housingCounselor.sharedWith": "Your account is shared with %{agencyName}",
   "accountSettings.housingCounselor.toastShared": "You shared your account. We sent a confirmation to your email.",
   "accountSettings.housingCounselor.toastStoppedSharing": "You stopped sharing your account. We sent a confirmation to your email.",
