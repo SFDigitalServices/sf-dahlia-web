@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-# The Clerk flag picks the credential: Clerk only when it is on, Devise only when it
-# is off. Never fall back from one to the other - a missing Clerk token must not
-# let stale Devise headers through.
+# The Clerk flag picks the credential: Clerk when it is on, Devise when it is off.
+# There's no fallback between them, so a missing Clerk token doesn't let stale
+# Devise headers through.
 # TODO(DAH-4366): CLERK MIGRATION - DEVISE TECH DEBT TO REMOVE
 module ClerkOrDeviseAuth
   extend ActiveSupport::Concern

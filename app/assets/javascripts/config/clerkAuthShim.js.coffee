@@ -6,28 +6,54 @@
 clerkEnabled = -> !!window.CLERK_AUTH_ANGULAR
 
 @dahlia.factory 'ClerkShim', ['$q', ($q) ->
-  loaded = null
+  # Clerk.load() asks Clerk's servers who's signed in. Do it once and share the result;
+  # a failed load isn't kept, so the next call tries again.
+  loadPromise = null
 
   # the angular layout loads clerk.browser.js with defer, so window.Clerk is already set
   # (or the script failed) by the time Angular boots
   ready = ->
-    return loaded if loaded
     return $q.reject('Clerk failed to load') unless window.Clerk
-    # don't cache a failure, so the next call retries
-    loaded = $q.when(window.Clerk.load()).then(
-      -> window.Clerk
-      (e) ->
+    loadPromise ?= $q.when(window.Clerk.load())
+      .then(-> window.Clerk)
+      .catch (e) ->
         console.warn('[ClerkShim] Clerk load failed', e)
-        loaded = null
+        loadPromise = null
         $q.reject(e)
-    )
 
   getToken = ->
     ready().then (clerk) ->
       return null unless clerk.session
       clerk.session.getToken()
 
-  { ready, getToken }
+  # full-page navigation out of Angular, e.g. to the React sign-in page. The promise never settles:
+  # rejecting a route resolve would hit $stateChangeError, which redirects home on first load.
+  # replace drops the page being left from history, so Back doesn't land on it and redirect again.
+  leaveFor = (url, {replace} = {}) ->
+    if replace then window.location.replace(url) else window.location.href = url
+    $q.defer().promise
+
+  # set while we sign out ourselves, so the session listener below doesn't also redirect
+  { ready, getToken, leaveFor, signingOut: false }
+]
+
+# send users to sign in as soon as their Clerk session ends (expired, revoked, or signed out in
+# another tab), instead of letting autosave and submit fail silently
+@dahlia.run [
+  '$state', '$window', 'ClerkShim', 'SharedService', 'ShortFormApplicationService',
+  ($state, $window, ClerkShim, SharedService, ShortFormApplicationService) ->
+    return unless clerkEnabled()
+    ClerkShim.ready().then((clerk) ->
+      hadSession = !!clerk.session
+      clerk.addListener ({session}) ->
+        # undefined means Clerk is still loading the session; only null means signed out
+        return if session is undefined
+        lostSession = hadSession && session is null
+        hadSession = session?
+        return unless lostSession && !ClerkShim.signingOut
+        $window.removeEventListener('beforeunload', ShortFormApplicationService.onExit)
+        ClerkShim.leaveFor(SharedService.buildUrl({name: 'dahlia.sign-in'}, $state.params))
+    ).catch(angular.noop)
 ]
 
 @dahlia.config ['$provide', ($provide) ->
@@ -50,8 +76,11 @@ clerkEnabled = -> !!window.CLERK_AUTH_ANGULAR
       $delegate.invalidateTokens()
       # best effort, like React's clearHousingCounselorSession
       clearHcSession = $injector.get('$http').delete('/api/v1/housing-counselor/access').catch(angular.noop)
-      clearHcSession.then(ClerkShim.ready).then (clerk) ->
+      ClerkShim.signingOut = true
+      clearHcSession.then(ClerkShim.ready).then((clerk) ->
         clerk.signOut()
+      ).finally ->
+        ClerkShim.signingOut = false
 
     $delegate
   ]

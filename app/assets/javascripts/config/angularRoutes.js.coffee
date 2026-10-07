@@ -600,23 +600,23 @@
         # with the Clerk flag on, applying requires a Clerk session and a profile: send users to sign in or add-profile
         # TODO(DAH-4366): CLERK MIGRATION - DEVISE TECH DEBT TO REMOVE (drop the flag check)
         clerkSession: [
-          '$q', '$http', '$window', '$stateParams', 'ClerkShim', 'SharedService', 'ShortFormApplicationService',
-          ($q, $http, $window, $stateParams, ClerkShim, SharedService, ShortFormApplicationService) ->
+          '$q', '$http', '$window', '$state', '$stateParams', 'ClerkShim', 'SharedService', 'ShortFormApplicationService',
+          ($q, $http, $window, $state, $stateParams, ClerkShim, SharedService, ShortFormApplicationService) ->
             return true unless $window.CLERK_AUTH_ANGULAR
-            leaveFor = (url) ->
-              $window.removeEventListener('beforeunload', ShortFormApplicationService.onExit)
-              $window.location.href = url
-              # never settle: rejecting would hit $stateChangeError, which redirects home on first load
-              $q.defer().promise
+            # on first load this page is already in history: replace it so Back doesn't redirect again
+            firstLoad = $state.current.name == ''
             ClerkShim.ready().then (clerk) ->
-              # the React sign-in page, not dahlia.sign-in, which can still be the Angular (Devise) page
-              return leaveFor(SharedService.buildUrl({name: 'dahlia.sign-in'}, $stateParams)) unless clerk.session
+              unless clerk.session
+                $window.removeEventListener('beforeunload', ShortFormApplicationService.onExit)
+                # the React sign-in page, not dahlia.sign-in, which can still be the Angular (Devise) page
+                return ClerkShim.leaveFor(SharedService.buildUrl({name: 'dahlia.sign-in'}, $stateParams), replace: firstLoad)
               # a Clerk user has no Salesforce contact (404) until they finish add-profile
               $http.get('/api/v1/account/profile').then(
                 -> true
                 (response) ->
                   return $q.reject(response) unless response.status == 404
-                  leaveFor(SharedService._addLanguageAndParamsToUrl($stateParams.lang, '/add-profile'))
+                  $window.removeEventListener('beforeunload', ShortFormApplicationService.onExit)
+                  ClerkShim.leaveFor(SharedService._addLanguageAndParamsToUrl($stateParams.lang, '/add-profile'), replace: firstLoad)
               )
         ]
         application: [

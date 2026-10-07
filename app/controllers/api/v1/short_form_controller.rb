@@ -194,7 +194,7 @@ class Api::V1::ShortFormController < ApiController
   def send_attached_files(application_id)
     if user_signed_in?
       files = UploadedFile.where(
-        user_id: current_user.id,
+        user_id: file_owner_ids,
         listing_id: application_params[:listingID],
       )
     else
@@ -213,6 +213,19 @@ class Api::V1::ShortFormController < ApiController
       )
     end
     Force::ShortFormService.queue_file_attachments(application_id, files)
+  end
+
+  # A draft started under Devise has its files under the Devise user id: also look
+  # those up, linked to the Clerk user by Salesforce contact id.
+  # TODO(DAH-4366): CLERK MIGRATION - DEVISE TECH DEBT TO REMOVE
+  def file_owner_ids
+    return current_user.id unless current_user.is_a?(ClerkService::User)
+
+    contact_id = current_user.salesforce_contact_id
+    return current_user.id if contact_id.blank?
+
+    devise_ids = User.where(salesforce_contact_id: contact_id).pluck(:id).map(&:to_s)
+    [current_user.id, *devise_ids]
   end
 
   def attach_temp_files_to_user
