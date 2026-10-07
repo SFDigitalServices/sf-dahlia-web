@@ -1,5 +1,6 @@
 import {
   getAssistancePath,
+  getHousingCounselorsPath,
   getMyAccountSettingsPath,
   getApplicationPath,
   getMyAccountApplicationsPath,
@@ -28,6 +29,13 @@ describe("routeUtil", () => {
     it("returns the correct path for getAssistancePath", () => {
       expect(getAssistancePath("/es/sign-in")).toBe("/es/get-assistance")
       expect(getAssistancePath("")).toBe("/get-assistance")
+    })
+
+    it("returns the housing counselors directory path in the selected language", () => {
+      expect(getHousingCounselorsPath("/es/account")).toBe("/es/housing-counselors")
+      expect(getHousingCounselorsPath("/zh/account")).toBe("/zh/housing-counselors")
+      expect(getHousingCounselorsPath("/tl/account")).toBe("/tl/housing-counselors")
+      expect(getHousingCounselorsPath("/account")).toBe("/housing-counselors")
     })
 
     it("returns the correct path for getMyAccountPath", () => {

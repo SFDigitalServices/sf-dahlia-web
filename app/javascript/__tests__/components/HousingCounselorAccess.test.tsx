@@ -57,7 +57,7 @@ describe("HousingCounselorAccess", () => {
       render(<ShareAccessWrapper />, { wrapper: AuthSessionProvider })
 
       const counselorLink = await screen.findByRole("link", { name: "housing counselor" })
-      expect(counselorLink).toHaveAttribute("href", "https://housing.sfgov.org/housing-counselors")
+      expect(counselorLink).toHaveAttribute("href", "/housing-counselors")
       expect(
         screen.getByRole("group", { name: t("accountSettings.housingCounselor.heading") })
       ).toBeInTheDocument()

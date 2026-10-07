@@ -8,12 +8,8 @@ import { getErrorMessage } from "./util"
 import { getHousingCounselorAgencies, HousingCounselorAgency } from "../../../api/authApiService"
 import { useAuthSession } from "../../../authentication/session/AuthSessionProvider"
 import { bearerToken } from "../../../authentication/session/authStatus"
-import {
-  formatTimeOfDay,
-  getSfGovUrl,
-  localizedFormat,
-  renderInlineMarkup,
-} from "../../../util/languageUtil"
+import { getHousingCounselorsPath } from "../../../util/routeUtil"
+import { formatTimeOfDay, localizedFormat, renderInlineMarkup } from "../../../util/languageUtil"
 import styles from "./HousingCounselorAccess.module.scss"
 
 export const housingCounselorFieldsetErrors: ErrorMessages = {
@@ -54,7 +50,7 @@ const ShareAccess = ({
         <p className="field-note">
           {renderInlineMarkup(
             t("accountSettings.housingCounselor.description", {
-              url: getSfGovUrl("https://housing.sfgov.org/housing-counselors"),
+              url: getHousingCounselorsPath(),
             })
           )}
         </p>

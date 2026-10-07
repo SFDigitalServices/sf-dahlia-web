@@ -251,14 +251,6 @@ describe("languageUtil", () => {
         "https://sf.gov/fil/departments/mayors-office-housing-and-community-development"
       )
     })
-    it("localizes the housing counselor link", () => {
-      const counselorLink = "https://housing.sfgov.org/housing-counselors"
-
-      expect(getSfGovUrl(counselorLink, "en")).toBe(counselorLink)
-      expect(getSfGovUrl(counselorLink, "es")).toBe("https://sf.gov/es/housing-counselors")
-      expect(getSfGovUrl(counselorLink, "zh")).toBe("https://sf.gov/zh-hant/housing-counselors")
-      expect(getSfGovUrl(counselorLink, "tl")).toBe("https://sf.gov/fil/housing-counselors")
-    })
     it("returns the same url if not an sf.gov link", () => {
       const enLink = "https://housing.acgov.org"
       expect(getSfGovUrl(enLink, "https://housing.sfgov.org")).toBe(enLink)
