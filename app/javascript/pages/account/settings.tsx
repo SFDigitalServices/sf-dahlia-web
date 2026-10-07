@@ -316,7 +316,7 @@ const PasswordSection = () => {
           variant="primary-outlined"
           onClick={() => {
             void navigate(userHasPassword ? getChangePasswordPath() : getAddPasswordPath(), {
-              state: { accountSettingsFlow: true },
+              state: { flow: AUTH_FLOW.ACCOUNT_SETTINGS },
             })
           }}
         >
@@ -780,6 +780,12 @@ const Settings = (_props: SettingsProps) => {
   )
 }
 
-export default withAppSetup(withAuthentication(Settings, { redirectType: RedirectType.Settings }), {
-  pageName: AppPages.AccountSettings,
-})
+export default withAppSetup(
+  withAuthentication(Settings, {
+    redirectType: RedirectType.Settings,
+    pageName: AppPages.AccountSettings,
+  }),
+  {
+    pageName: AppPages.AccountSettings,
+  }
+)

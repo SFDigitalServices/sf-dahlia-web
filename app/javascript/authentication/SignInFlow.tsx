@@ -37,12 +37,8 @@ const getHousingCounselorToken = () => new URLSearchParams(window.location.searc
 
 const SignInFlow = () => {
   const navigate = useNavigate()
-  const { state, search } = useLocation() as {
-    state?: { redirectUrl?: string }
-    search: string
-  }
-  const redirectUrl = state?.redirectUrl
-  const postSignInRedirectUrl = redirectUrl ?? getMyAccountPath()
+  const { state: reactRouterState, search } = useLocation()
+  const returnUrl = reactRouterState?.returnUrl as string | undefined
   const requiredLoginsDate = localizedMonthAndDay(process.env.REQUIRED_LOGINS_DATE ?? "")
   const { status, getCredentials } = useAuthSession()
   const isSignedIn = status.kind === "signedIn"
@@ -154,7 +150,7 @@ const SignInFlow = () => {
       const housingCounselorAccess = await checkHousingCounselorAccess()
       if (!housingCounselorAccess) {
         setHousingCounselorChecked(true)
-        void navigate(createPath(postSignInRedirectUrl, { hcAccess: "0" }))
+        void navigate(createPath(returnUrl ?? getMyAccountPath(), { hcAccess: "0" }))
         return
       }
       setHousingCounselorChecked(true)
@@ -163,7 +159,7 @@ const SignInFlow = () => {
     // Prevents the render-time redirect below from firing again (with a stale, query-less URL)
     // during the extra render pass that happens before this component unmounts.
     setHousingCounselorChecked(true)
-    void navigate(postSignInRedirectUrl)
+    void navigate(returnUrl ?? getMyAccountPath())
   }
 
   const onError = (submitErrors: { email?: unknown; password?: unknown }) => {
@@ -188,10 +184,10 @@ const SignInFlow = () => {
     setShowError(false)
     void navigate(getSignInCodePath(), {
       state: {
-        email,
+        verificationCodeEmailAddress: email,
         housingCounselorToken: getHousingCounselorToken(),
         flow: AUTH_FLOW.SIGN_IN,
-        ...(redirectUrl && { redirectUrl }),
+        ...(returnUrl && { returnUrl }),
       },
     })
   }
@@ -224,10 +220,9 @@ const SignInFlow = () => {
     })()
   }, [getCredentials, isSignedIn, navigate])
 
-  // TODO: instead of relying on postSignInRedirectUrl, this component should detect
-  // incomplete profiles and redirect to the add-profile page
+  // TODO: use of Navigate component is discouraged
   if (isSignedIn && !getHousingCounselorToken() && !housingCounselorChecked) {
-    return <Navigate to={postSignInRedirectUrl} replace />
+    return <Navigate to={returnUrl ?? getMyAccountPath()} replace />
   }
 
   const forgotPasswordPath = createPath(getForgotPasswordPath(), {
@@ -326,7 +321,7 @@ const SignInFlow = () => {
         <Heading priority={1} size="2xl">
           {t("pageTitle.signIn")}
         </Heading>
-        {redirectUrl && requiredLoginsDate && (
+        {returnUrl && requiredLoginsDate && (
           <Message variant="primary" fullwidth className={styles.requiredLoginNotice}>
             {renderInlineMarkup(
               t("signIn.requiredLoginNotice", {
@@ -355,8 +350,8 @@ const SignInFlow = () => {
         <Button variant="primary-outlined" size="sm" href={getCreateAccountPath()}>
           {t("signIn.createAccount")}
         </Button>
-        {redirectUrl && (
-          <Link href={redirectUrl} className={styles.continueWithoutSigningIn}>
+        {returnUrl && (
+          <Link href={returnUrl} className={styles.continueWithoutSigningIn}>
             {t("b1aWelcomeBack.continueWithoutSigningIn")}
           </Link>
         )}

@@ -207,6 +207,7 @@ export const generateSubmitLink = (
   return `/${getCurrentLanguage()}/listings/${listingId}/next-steps?${submitLinkQueryStr}`
 }
 
+// TODO: consolidate with PAGE_ROUTES
 export enum AppPages {
   Home = "home",
   RentalDirectory = "for rent Listings",
