@@ -28,9 +28,8 @@ clerkEnabled = -> !!window.CLERK_AUTH_ANGULAR
 
   # full-page navigation out of Angular, e.g. to the React sign-in page. The promise never settles:
   # rejecting a route resolve would hit $stateChangeError, which redirects home on first load.
-  # replace drops the page being left from history, so Back doesn't land on it and redirect again.
-  leaveFor = (url, {replace} = {}) ->
-    if replace then window.location.replace(url) else window.location.href = url
+  leaveFor = (url) ->
+    window.location.href = url
     $q.defer().promise
 
   # set while we sign out ourselves, so the session listener below doesn't also redirect

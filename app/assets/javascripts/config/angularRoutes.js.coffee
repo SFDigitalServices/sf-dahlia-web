@@ -600,23 +600,21 @@
         # with the Clerk flag on, applying requires a Clerk session and a profile: send users to sign in or add-profile
         # TODO(DAH-4366): CLERK MIGRATION - DEVISE TECH DEBT TO REMOVE (drop the flag check)
         clerkSession: [
-          '$q', '$window', '$state', '$stateParams', 'AccountService', 'ClerkShim', 'SharedService', 'ShortFormApplicationService',
-          ($q, $window, $state, $stateParams, AccountService, ClerkShim, SharedService, ShortFormApplicationService) ->
+          '$q', '$window', '$stateParams', 'AccountService', 'ClerkShim', 'SharedService', 'ShortFormApplicationService',
+          ($q, $window, $stateParams, AccountService, ClerkShim, SharedService, ShortFormApplicationService) ->
             return true unless $window.CLERK_AUTH_ANGULAR
-            # on first load this page is already in history: replace it so Back doesn't redirect again
-            firstLoad = $state.current.name == ''
             ClerkShim.ready().then (clerk) ->
               unless clerk.session
                 $window.removeEventListener('beforeunload', ShortFormApplicationService.onExit)
                 # the React sign-in page, not dahlia.sign-in, which can still be the Angular (Devise) page
-                return ClerkShim.leaveFor(SharedService.buildUrl({name: 'dahlia.sign-in'}, $stateParams), replace: firstLoad)
+                return ClerkShim.leaveFor(SharedService.buildUrl({name: 'dahlia.sign-in'}, $stateParams))
               # a Clerk user has no Salesforce contact (404) until they finish add-profile
               AccountService.validateUser().then(
                 -> true
                 (response) ->
                   return $q.reject(response) unless response.status == 404
                   $window.removeEventListener('beforeunload', ShortFormApplicationService.onExit)
-                  ClerkShim.leaveFor(SharedService._addLanguageAndParamsToUrl($stateParams.lang, '/add-profile'), replace: firstLoad)
+                  ClerkShim.leaveFor(SharedService._addLanguageAndParamsToUrl($stateParams.lang, '/add-profile'))
               )
         ]
         application: [
