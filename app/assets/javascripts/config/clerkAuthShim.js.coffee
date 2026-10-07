@@ -78,7 +78,13 @@ clerkEnabled = -> !!window.CLERK_AUTH_ANGULAR
       clearHcSession = $injector.get('$http').delete('/api/v1/housing-counselor/access').catch(angular.noop)
       ClerkShim.signingOut = true
       clearHcSession.then(ClerkShim.ready).then((clerk) ->
-        clerk.signOut()
+        $state = $injector.get('$state')
+        ShortFormApplicationService = $injector.get('ShortFormApplicationService')
+        return clerk.signOut() unless ShortFormApplicationService.isShortFormPage($state.current)
+        # the legacy guest and create-account choices sign out but stay in the application, where
+        # the clerkSession route guard doesn't rerun: leave for sign-in instead
+        window.removeEventListener('beforeunload', ShortFormApplicationService.onExit)
+        clerk.signOut(redirectUrl: $injector.get('SharedService').buildUrl({name: 'dahlia.sign-in'}, $state.params))
       ).finally ->
         ClerkShim.signingOut = false
 
