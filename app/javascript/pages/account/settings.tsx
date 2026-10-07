@@ -7,21 +7,18 @@ import { useSignUpSession } from "../../authentication/session/useSignUpSession"
 import { bearerToken } from "../../authentication/session/authStatus"
 import { Form, DOBFieldValues, t } from "@bloom-housing/ui-components"
 import { DeepMap, FieldError, useForm } from "react-hook-form"
-import { Card, Alert, Button } from "@bloom-housing/ui-seeds"
+import { Card, Alert, Button, Heading } from "@bloom-housing/ui-seeds"
 import {
   AppPages,
   getAddPasswordPath,
   getChangePasswordPath,
+  getMyAccountContactPath,
+  getUpdateEmailPath,
   RedirectType,
 } from "../../util/routeUtil"
 import { User } from "../../authentication/user"
 import Layout from "../../layouts/Layout"
 import AccountLayout from "../../layouts/AccountLayout"
-import EmailFieldset, {
-  emailFieldsetErrors,
-  emailSortOrder,
-  handleEmailServerErrors,
-} from "./components/EmailFieldset"
 import FormSubmitButton from "./components/FormSubmitButton"
 import NameFieldset, {
   handleNameServerErrors,
@@ -57,11 +54,24 @@ import { AccountSettingsPage as MyAccountSettingsPage } from "./account-settings
 import settingsStyles from "./settings.module.scss"
 import { useLocation, useNavigate } from "react-router"
 import { CommonMessageVariant } from "@bloom-housing/ui-seeds/src/blocks/shared/CommonMessage"
+import { renderInlineMarkup } from "../../util/languageUtil"
 import PasswordFieldset, {
   handlePasswordServerErrors,
   passwordFieldsetErrors,
   passwordSortOrder,
 } from "./components/PasswordFieldset"
+import EmailFieldset, {
+  emailFieldsetErrors,
+  emailSortOrder,
+  handleEmailServerErrors,
+} from "./components/EmailFieldset"
+
+type ConfirmationBannerFlag = "passwordChanged" | "emailChanged"
+
+const confirmationBannerMessages: Record<ConfirmationBannerFlag, string> = {
+  passwordChanged: "accountSettings.changePasswordBanner",
+  emailChanged: "accountSettings.changeEmailBanner",
+}
 
 export const Banner = ({
   showBanner,
@@ -116,12 +126,11 @@ interface SectionProps {
   handleBanners?: (banner: string) => void
 }
 
-const EmailSection = ({ user, setUser }: SectionProps) => {
+// TODO: DAH-4262 Clean up Devise components when clerk flag is flipped on in prod
+const EmailSectionDevise = ({ user, setUser }: SectionProps) => {
   const [loading, setLoading] = useState(false)
   const [emailUpdateBanner, setEmailUpdateBanner] = useState(false)
   const [emailBanner, setEmailBanner] = useState(false)
-  const { getCredentials } = useAuthSession()
-  const { unleashFlag: clerkEnabled } = useFeatureFlag(UNLEASH_FLAG.CLERK_AUTH, false)
 
   const {
     register,
@@ -135,25 +144,11 @@ const EmailSection = ({ user, setUser }: SectionProps) => {
     setEmailBanner(false)
   }
 
-  const onSubmit = async (data: { email: string }) => {
+  const onSubmit = (data: { email: string }) => {
     setLoading(true)
-
-    let sessionToken: string | undefined
-    try {
-      sessionToken = clerkEnabled ? bearerToken(await getCredentials()) : undefined
-    } catch {
-      setLoading(false)
-      return
-    }
-
-    if (clerkEnabled && !sessionToken) {
-      setLoading(false)
-      return
-    }
-
     const newUser = { ...user, email: data.email }
 
-    updateEmail(newUser, { clerkEnabled, sessionToken })
+    updateEmail(newUser, { clerkEnabled: false })
       .then(() => {
         setUser(newUser)
         setEmailBanner(true)
@@ -201,6 +196,41 @@ const EmailSection = ({ user, setUser }: SectionProps) => {
         />
       </UpdateForm>
     </>
+  )
+}
+
+const EmailSection = () => {
+  const navigate = useNavigate()
+  const { user } = useSignUpSession()
+  const loginEmail = user?.primaryEmailAddress?.emailAddress
+
+  return (
+    <FormSection>
+      <Heading size="md">{t("accountSettings.email.title")}</Heading>
+      <p className={settingsStyles.settingsText}>{t("accountSettings.email.description")}</p>
+      <div className={settingsStyles.settingsEmailFieldset}>
+        <legend className={"fieldset-legend"}>{t("label.emailAddress")}</legend>
+        <p>{loginEmail ?? null}</p>
+      </div>
+      <div className={settingsStyles.settingsButton}>
+        <Button
+          type="button"
+          variant="primary-outlined"
+          onClick={() => {
+            void navigate(getUpdateEmailPath())
+          }}
+        >
+          {t("accountSettings.email.updateEmail")}
+        </Button>
+      </div>
+      <p className={settingsStyles.settingsText}>
+        {renderInlineMarkup(
+          t("accountSettings.email.subtitle", {
+            url: getMyAccountContactPath(),
+          })
+        )}
+      </p>
+    </FormSection>
   )
 }
 
@@ -272,11 +302,11 @@ const PasswordSection = () => {
     <FormSection>
       <legend className={"fieldset-legend"}>{t("label.password")}</legend>
       {userHasPassword ? (
-        <span aria-hidden="true">••••</span>
+        <span aria-hidden="true">••••••••</span>
       ) : (
         <p className="field-note">{t("accountSettings.addPasswordDescription")}</p>
       )}
-      <div className="flex justify-center pt-6">
+      <div className={settingsStyles.settingsButton}>
         <Button
           type="button"
           variant="primary-outlined"
@@ -624,9 +654,12 @@ const AccountSettings = ({ profile }: { profile: User }) => {
   const [nameSavedBanner, setNameSavedBanner] = useState(false)
   const location = useLocation()
   const navigate = useNavigate()
-  const passwordChangedNavState = location.state as { passwordChanged?: boolean } | null
-  const [passwordBanner, setPasswordBanner] = useState(
-    passwordChangedNavState?.passwordChanged === true
+  const bannerNavState = location.state as Partial<Record<ConfirmationBannerFlag, boolean>> | null
+  const confirmationBannerKey = (
+    Object.keys(confirmationBannerMessages) as ConfirmationBannerFlag[]
+  ).find((key) => bannerNavState?.[key] === true)
+  const [confirmationBannerMessage, setConfirmationBannerMessage] = useState(
+    confirmationBannerKey ? confirmationBannerMessages[confirmationBannerKey] : null
   )
 
   const handleBanners = (banner: string) => {
@@ -666,11 +699,11 @@ const AccountSettings = ({ profile }: { profile: User }) => {
   return (
     <Card className={sharedStyles.card}>
       <Banner
-        showBanner={passwordBanner}
+        showBanner={!!confirmationBannerMessage}
         className={settingsStyles["settingsConfirmationAlert"]}
         variant="success"
-        message={t("accountSettings.changePasswordBanner")}
-        onClose={() => setPasswordBanner(false)}
+        message={confirmationBannerMessage ? t(confirmationBannerMessage) : ""}
+        onClose={() => setConfirmationBannerMessage(null)}
       />
       {nameUpdateBanner || nameSavedBanner ? (
         <FormHeader
@@ -701,7 +734,7 @@ const AccountSettings = ({ profile }: { profile: User }) => {
       />
       <NameSection user={user} setUser={setUser} handleBanners={handleBanners} />
       <DateOfBirthSection user={user} setUser={setUser} />
-      <EmailSection user={user} setUser={setUser} />
+      {clerkEnabled ? <EmailSection /> : <EmailSectionDevise user={user} setUser={setUser} />}
       {clerkEnabled ? <PasswordSection /> : <PasswordSectionDevise user={user} setUser={setUser} />}
       {showHousingCounselorSection && user && (
         <HousingCounselorSection user={user} setUser={setUser} />

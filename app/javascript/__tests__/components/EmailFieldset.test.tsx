@@ -2,9 +2,10 @@
 import React from "react"
 import EmailFieldset, {
   emailFieldsetErrors,
+  handleClerkEmailErrors,
   handleEmailServerErrors,
 } from "../../pages/account/components/EmailFieldset"
-import { render, screen } from "@testing-library/react"
+import { fireEvent, render, screen } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
 import { useForm } from "react-hook-form"
 import { t } from "@bloom-housing/ui-components"
@@ -18,12 +19,42 @@ const FieldSetWrapper = () => {
   return <EmailFieldset register={register} errors={errors} onChange={jest.fn()} />
 }
 
+const EnterSubmitWrapper = ({ submitWithEnterKey }: { submitWithEnterKey: boolean }) => {
+  const {
+    register,
+    formState: { errors },
+  } = useForm({ mode: "all" })
+
+  return (
+    <form>
+      <EmailFieldset
+        register={register}
+        errors={errors}
+        onChange={jest.fn()}
+        submitWithEnterKey={submitWithEnterKey}
+      />
+    </form>
+  )
+}
+
 describe("EmailFieldset", () => {
   it("renders first without errors", () => {
     render(<FieldSetWrapper />)
     expect(screen.queryByText(t("error.email.missingAtSign"))).toBeNull()
     expect(screen.queryByText(t("error.email.missingDot"))).toBeNull()
     expect(screen.queryByText(t("error.email.generalIncorrect"))).toBeNull()
+  })
+
+  it("submits parent form on Enter when submitWithEnterKey is enabled", () => {
+    const requestSubmitSpy = jest
+      .spyOn(HTMLFormElement.prototype, "requestSubmit")
+      .mockImplementation(() => {})
+
+    render(<EnterSubmitWrapper submitWithEnterKey />)
+    fireEvent.keyDown(screen.getByRole("textbox"), { key: "Enter" })
+
+    expect(requestSubmitSpy).toHaveBeenCalledTimes(1)
+    requestSubmitSpy.mockRestore()
   })
 
   it("renders the correct validation errors", async () => {
@@ -170,6 +201,16 @@ describe("EmailFieldset", () => {
       it(`returns correct error message for ${key} with abbreviated=${abbreviated}`, () => {
         expect(getErrorMessage(key, emailFieldsetErrors, abbreviated)).toBe(t(expected))
       })
+    })
+  })
+  describe("handleClerkEmailErrors", () => {
+    it.each([
+      [{ errors: [{ code: "form_identifier_exists" }] }, "email:server:duplicate"],
+      [{ errors: [{ code: "form_param_format_invalid" }] }, "email:generalFormat"],
+      [{ errors: [{ code: "something_else" }] }, "email:server:generic"],
+      [undefined, "email:server:generic"],
+    ])("maps the error to %s", (error, message) => {
+      expect(handleClerkEmailErrors(error)).toEqual(["email", { message, shouldFocus: true }])
     })
   })
 })

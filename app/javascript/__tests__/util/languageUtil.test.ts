@@ -5,9 +5,11 @@ import {
   getReservedCommunityType,
   defaultIfNotTranslated,
   localizedFormat,
+  localizedMonthAndDay,
   getCustomListingType,
   getSfGovUrl,
 } from "../../util/languageUtil"
+import { mockWindowLocation, restoreWindowLocation } from "../__util__/renderUtils"
 
 describe("languageUtil", () => {
   describe("getRoutePrefix", () => {
@@ -204,6 +206,34 @@ describe("languageUtil", () => {
 
     it("formats date and time", () => {
       expect(localizedFormat(date, "LLL")).toBe("December 31, 2049 5:00 PM")
+    })
+  })
+
+  describe("localizedMonthAndDay", () => {
+    let originalLocation: Location
+
+    beforeEach(() => {
+      originalLocation = mockWindowLocation()
+    })
+
+    afterEach(() => {
+      restoreWindowLocation(originalLocation)
+    })
+
+    it("formats a date using the current English locale", () => {
+      Object.defineProperty(window.location, "pathname", { value: "/account" })
+
+      expect(localizedMonthAndDay("2050-01-01T12:00:00.000Z")).toBe("January 1")
+    })
+
+    it("formats a Date using the current Spanish locale", () => {
+      Object.defineProperty(window.location, "pathname", { value: "/es/account" })
+
+      expect(localizedMonthAndDay(new Date("2050-01-01T12:00:00.000Z"))).toBe("1 de enero")
+    })
+
+    it("returns an empty string when the date is empty", () => {
+      expect(localizedMonthAndDay("")).toBe("")
     })
   })
 

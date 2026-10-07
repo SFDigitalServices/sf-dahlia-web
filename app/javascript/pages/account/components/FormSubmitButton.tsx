@@ -1,5 +1,6 @@
 import { Button } from "@bloom-housing/ui-seeds"
 import React from "react"
+import styles from "./FormSubmitButton.module.scss"
 
 interface FormSubmitButtonProps {
   loading: boolean
@@ -8,7 +9,7 @@ interface FormSubmitButtonProps {
 
 const FormSubmitButton = ({ loading, label }: FormSubmitButtonProps) => {
   return (
-    <div className="flex justify-center pt-6">
+    <div className={styles["form-submit-button"]}>
       <Button loadingMessage={loading ? label : undefined} type="submit" variant="primary-outlined">
         {label}
       </Button>
