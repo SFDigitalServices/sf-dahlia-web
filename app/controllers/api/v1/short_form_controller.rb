@@ -12,7 +12,7 @@ class Api::V1::ShortFormController < ApiController
                 ]
   # Anonymous submits are only allowed while the Clerk flag is off.
   # TODO(DAH-4366): CLERK MIGRATION - DEVISE TECH DEBT TO REMOVE
-  before_action :authenticate_user!, only: :submit_application, if: :clerk_auth?
+  before_action :authenticate_submit!, only: :submit_application
 
   def validate_household
     response = Force::ShortFormService.check_household_eligibility(
@@ -140,6 +140,20 @@ class Api::V1::ShortFormController < ApiController
 
   private
 
+  def authenticate_submit!
+    return unless clerk_auth?
+
+    authenticate_user!
+    return if performed? || current_user.salesforce_contact_id.present?
+
+    # Without a contact id Salesforce would file the application unlinked from the
+    # user. Usually a Clerk outage, where retrying works. A user with no profile
+    # can't get here: the Angular route guard sends them to add-profile first.
+    # A 5xx shows the generic error alert in Angular.
+    render json: { message: 'Missing Salesforce contact ID' },
+           status: :service_unavailable
+  end
+
   def process_submit_app_response(response)
     attach_files_and_send_confirmation(response)
     return unless current_user && application_complete
@@ -216,16 +230,20 @@ class Api::V1::ShortFormController < ApiController
   end
 
   # A draft started under Devise has its files under the Devise user id: also look
-  # those up, linked to the Clerk user by Salesforce contact id.
+  # those up, linked to the Clerk user by Salesforce contact id. Loading, replacing,
+  # and submitting files must all use this, or a resumed draft hides its proofs and
+  # submits replaced ones.
   # TODO(DAH-4366): CLERK MIGRATION - DEVISE TECH DEBT TO REMOVE
   def file_owner_ids
-    return current_user.id unless current_user.is_a?(ClerkService::User)
-
-    contact_id = current_user.salesforce_contact_id
-    return current_user.id if contact_id.blank?
-
-    devise_ids = User.where(salesforce_contact_id: contact_id).pluck(:id).map(&:to_s)
-    [current_user.id, *devise_ids]
+    @file_owner_ids ||=
+      if current_user.is_a?(ClerkService::User) &&
+         current_user.salesforce_contact_id.present?
+        devise_ids = User.where(salesforce_contact_id: current_user.salesforce_contact_id)
+                         .pluck(:id).map(&:to_s)
+        [current_user.id, *devise_ids]
+      else
+        current_user.id
+      end
   end
 
   def attach_temp_files_to_user
@@ -272,7 +290,7 @@ class Api::V1::ShortFormController < ApiController
 
   def find_application_files
     @files = UploadedFile.where(
-      user_id: current_user.id,
+      user_id: file_owner_ids,
       listing_id: params[:listing_id],
     )
   end
@@ -354,7 +372,7 @@ class Api::V1::ShortFormController < ApiController
     rent_burden_type = uploaded_file_params[:rent_burden_type]
     if user_signed_in?
       file_params.delete(:session_uid)
-      file_params[:user_id] = current_user.id
+      file_params[:user_id] = file_owner_ids
     end
     uploaded_files = UploadedFile.where(file_params)
     uploaded_files = uploaded_files.send(rent_burden_type) if rent_burden_type

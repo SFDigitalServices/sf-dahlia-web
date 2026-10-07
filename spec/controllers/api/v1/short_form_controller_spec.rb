@@ -107,6 +107,16 @@ describe Api::V1::ShortFormController, type: :controller do
         expect(response).to have_http_status(:ok)
         expect(Force::ShortFormService).to have_received(:create_or_update)
       end
+
+      it 'refuses to submit when the Salesforce contact id lookup fails' do
+        allow(controller).to receive(:clerk).and_return(double(user_id: 'user_abc123'))
+        allow(ClerkService).to receive(:salesforce_contact_id).and_raise(StandardError)
+
+        post :submit_application
+
+        expect(response).to have_http_status(:service_unavailable)
+        expect(Force::ShortFormService).not_to have_received(:create_or_update)
+      end
     end
   end
 
@@ -196,6 +206,15 @@ describe Api::V1::ShortFormController, type: :controller do
 
         expect(response).to have_http_status(:unauthorized)
         expect(Force::ShortFormService).not_to have_received(:delete)
+      end
+
+      # Regression: a second before_action :authenticate_user! replaced this one,
+      # so the action ran with only user_can_access? guarding it.
+      it 'rejects an unauthenticated request before loading the application' do
+        delete :delete_application, params: { id: 'app123' }
+
+        expect(response).to have_http_status(:unauthorized)
+        expect(Force::ShortFormService).not_to have_received(:get)
       end
 
       it 'deletes a draft application owned by the Devise user' do
