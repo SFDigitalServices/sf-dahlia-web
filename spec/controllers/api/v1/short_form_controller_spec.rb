@@ -120,6 +120,64 @@ describe Api::V1::ShortFormController, type: :controller do
     end
   end
 
+  describe '#delete_proof' do
+    let(:contact_id) { 'contact_abc123' }
+    let(:devise_user) { create(:user, salesforce_contact_id: contact_id) }
+    let(:proof_params) do
+      { session_uid: 'new_session', listing_id: '123',
+        listing_preference_id: 'pref1', document_type: 'gas bill' }
+    end
+    let!(:devise_file) do
+      create(:uploaded_file, user_id: devise_user.id.to_s,
+                             listing_preference_id: 'pref1')
+    end
+    let!(:other_file) do
+      create(:uploaded_file, user_id: 'someone_else', listing_preference_id: 'pref1')
+    end
+
+    it "deletes the Devise user's proof" do
+      allow(controller).to receive(:current_user).and_return(devise_user)
+      allow(controller).to receive(:user_signed_in?).and_return(true)
+
+      delete :delete_proof, params: { uploaded_file: proof_params }
+
+      expect(UploadedFile.exists?(devise_file.id)).to be(false)
+      expect(UploadedFile.exists?(other_file.id)).to be(true)
+    end
+
+    # TODO(DAH-4366): CLERK MIGRATION - DEVISE TECH DEBT TO REMOVE
+    it 'deletes a proof uploaded under Devise for a Clerk user with the same contact' do
+      allow(ClerkOrDeviseAuth).to receive(:clerk_enabled?).and_return(true)
+      allow(controller).to receive(:clerk).and_return(double(user_id: 'user_abc123'))
+      allow(ClerkService).to receive(:salesforce_contact_id).and_return(contact_id)
+
+      delete :delete_proof, params: { uploaded_file: proof_params }
+
+      expect(UploadedFile.exists?(devise_file.id)).to be(false)
+      expect(UploadedFile.exists?(other_file.id)).to be(true)
+    end
+  end
+
+  describe '#show_listing_application_for_user' do
+    let(:contact_id) { 'contact_abc123' }
+
+    # TODO(DAH-4366): CLERK MIGRATION - DEVISE TECH DEBT TO REMOVE
+    it 'includes proofs uploaded under Devise for a Clerk user with the same contact' do
+      allow(ClerkOrDeviseAuth).to receive(:clerk_enabled?).and_return(true)
+      allow(controller).to receive(:clerk).and_return(double(user_id: 'user_abc123'))
+      allow(ClerkService).to receive(:salesforce_contact_id).and_return(contact_id)
+      allow(Force::ShortFormService).to receive(:find_listing_application).and_return({})
+      devise_user = create(:user, salesforce_contact_id: contact_id)
+      devise_file = create(:uploaded_file, user_id: devise_user.id.to_s)
+      create(:uploaded_file, user_id: 'someone_else')
+
+      get :show_listing_application_for_user, params: { listing_id: '123' }
+
+      file_ids = JSON.parse(response.body)['files'].map { |f| f['id'] }
+      expect(file_ids).to eq([devise_file.id])
+    end
+  end
+
   describe '#delete_application' do
     let(:clerk_user_id) { 'user_abc123' }
     let(:contact_id) { 'contact_abc123' }
