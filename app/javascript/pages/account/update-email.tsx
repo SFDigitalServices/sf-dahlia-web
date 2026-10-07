@@ -62,7 +62,7 @@ const UpdateEmailPage = () => {
       await emailAddress.prepareVerification({ strategy: "email_code" })
 
       void navigate(getUpdateEmailCodePath(), {
-        state: { email, flow: AUTH_FLOW.UPDATE_EMAIL },
+        state: { verificationCodeEmailAddress: email, flow: AUTH_FLOW.UPDATE_EMAIL },
       })
     } catch (error) {
       setError(...handleClerkEmailErrors(error))

@@ -216,6 +216,9 @@ const Account = ({ assetPaths }: AccountProps) => {
   return clerkEnabled ? <ClerkAccount /> : <DeviseAccount />
 }
 
-export default withAppSetup(withAuthentication(Account, { redirectType: RedirectType.Account }), {
-  pageName: AppPages.Account,
-})
+export default withAppSetup(
+  withAuthentication(Account, { redirectType: RedirectType.Account, pageName: AppPages.Account }),
+  {
+    pageName: AppPages.Account,
+  }
+)

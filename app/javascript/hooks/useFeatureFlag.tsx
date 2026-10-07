@@ -15,6 +15,8 @@ export const useFeatureFlag = (flagName: string, defaultValue: boolean) => {
 
   const unleashFlag = useFlagUnleash(flagName)
 
+  if (flagName === "temp.webapp.auth.clerk") return { flagsReady: true, unleashFlag: true } // TODO WIP revert debug
+
   const allowUrlOverride = urlWhiteList.has(flagName) || process.env.UNLEASH_ENV === "development"
   if (doesURLHaveFlag && allowUrlOverride) {
     if (flagFromUrl === "true") {

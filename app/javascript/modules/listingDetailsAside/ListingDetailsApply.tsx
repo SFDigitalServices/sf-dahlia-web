@@ -109,9 +109,7 @@ const ClerkApplyOnlineButton = ({ applyLink }: { applyLink: string }) => {
 
   if (isSignedIn && profile) return <ApplyButton href={applyLink} />
   if (status.kind === "signedOut")
-    return (
-      <ApplyButtonWithLocationState href={getSignInPath()} state={{ redirectUrl: applyLink }} />
-    )
+    return <ApplyButtonWithLocationState href={getSignInPath()} state={{ returnUrl: applyLink }} />
   if (isSignedIn && initialStateLoaded && !profile)
     return <ApplyButton href={getAddProfilePath()} />
 
