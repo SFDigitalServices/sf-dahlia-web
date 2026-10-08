@@ -57,7 +57,7 @@ RSpec.describe Api::V1::InviteToResponseController, type: :controller do
 
     it 'returns unauthorized when required token fields are missing' do
       allow(JsonWebTokenService).to receive(:decode_token).with(token).and_return(
-        decoded_token.merge('act' => nil),
+        decoded_token.merge('appId' => nil),
       )
 
       post :record_response, params: {
@@ -97,6 +97,53 @@ RSpec.describe Api::V1::InviteToResponseController, type: :controller do
       expect(DahliaBackend::MessageService).not_to have_received(:send_invite_to_response)
     end
 
+    # Given a token minted for a test/preview invite link
+    # When the client posts a response
+    # Then nothing is recorded, matching the GET path's test_link suppression
+    it 'does not record for a test link and still returns ok' do
+      allow(JsonWebTokenService).to receive(:decode_token).with(token).and_return(
+        decoded_token.merge('isTest' => true),
+      )
+
+      post :record_response, params: {
+        t: token,
+        record: valid_record_params,
+      }
+
+      expect(response).to have_http_status(:ok)
+      expect(DahliaBackend::MessageService).not_to have_received(:send_invite_to_response)
+    end
+
+    # Given a valid invite-to token
+    # When the client posts an action the next-steps pages never send
+    # Then nothing is forwarded to the backend
+    it 'returns unauthorized for an unknown action' do
+      post :record_response, params: {
+        t: token,
+        record: { action: 'yes' },
+      }
+
+      expect(response).to have_http_status(:unauthorized)
+      expect(DahliaBackend::MessageService).not_to have_received(:send_invite_to_response)
+    end
+
+    # Given a validly signed token that wasn't minted for an invite-to link
+    # When it is posted to record a response
+    # Then it is rejected
+    it 'returns unauthorized for a token with an unknown invite type' do
+      allow(JsonWebTokenService).to receive(:decode_token).with(token).and_return(
+        decoded_token.merge('type' => 'hc_session'),
+      )
+
+      post :record_response, params: {
+        t: token,
+        record: valid_record_params,
+      }
+
+      expect(response).to have_http_status(:unauthorized)
+      expect(DahliaBackend::MessageService).not_to have_received(:send_invite_to_response)
+    end
+
     it 'returns unauthorized when required record params are missing' do
       post :record_response, params: {
         t: token,
@@ -107,62 +154,50 @@ RSpec.describe Api::V1::InviteToResponseController, type: :controller do
       expect(DahliaBackend::MessageService).not_to have_received(:send_invite_to_response)
     end
 
-    # context 'with real JWT encode/decode round-trip' do
-    #   let(:roundtrip_deadline) { 2.days.from_now.to_date.to_s }
-    #   let(:roundtrip_app_id) { 'app-from-signed-token' }
-    #   let(:roundtrip_app_number) { 'APP-ROUNDTRIP-123' }
-    #   let(:roundtrip_listing_id) { 'listing-from-signed-token' }
-    #   let(:roundtrip_token_payload) do
-    #     {
-    #       type: 'I2A',
-    #       deadline: roundtrip_deadline,
-    #       appId: roundtrip_app_id,
-    #       applicationNumber: roundtrip_app_number,
-    #       listingId: roundtrip_listing_id,
-    #     }
-    #   end
-    #   let(:roundtrip_token) { JsonWebTokenService.encode_token(roundtrip_token_payload) }
+    context 'with real signed tokens' do
+      let(:page_claims) do
+        { type: 'I2I', deadline: deadline, appId: application_id, isTest: false }
+      end
 
-    #   before do
-    #     stub_const('JsonWebTokenService::SECRET_KEY', 'test_secret')
-    #     stub_const('JsonWebTokenService::ALGORITHM', 'HS256')
-    #     stub_const('JsonWebTokenService::ALLOWED_ALGORITHMS', ['HS256'])
-    #     allow(JsonWebTokenService).to receive(:decode_token).and_call_original
-    #     allow(DahliaBackend::MessageService).to receive(:send_invite_to_response)
-    #   end
+      before do
+        stub_const('JsonWebTokenService::SECRET_KEY', 'test_secret')
+        stub_const('JsonWebTokenService::ALGORITHM', 'HS256')
+        stub_const('JsonWebTokenService::ALLOWED_ALGORITHMS', ['HS256'])
+        allow(JsonWebTokenService).to receive(:decode_token).and_call_original
+      end
 
-    #   it 'uses signed claims and ignores tampered body identifiers' do
-    #     post :record_response, params: {
-    #       t: roundtrip_token,
-    #       record: {
-    #         response: 'yes',
-    #         action: 'submit',
-    #         appId: 'TAMPERED',
-    #         applicationNumber: 'TAMPERED',
-    #         listingId: 'TAMPERED',
-    #       },
-    #     }
+      # Given a next-steps page token, which InviteToController#index mints without `act`
+      #   so loading the page cannot itself record a response
+      # When the applicant clicks Schedule Appointment
+      # Then the response is recorded against the token's appId
+      it 'records the action from a next-steps page token' do
+        post :record_response, params: {
+          t: JsonWebTokenService.encode_token(page_claims.merge(purpose: 'next_steps')),
+          record: { action: 'appointment' },
+        }
 
-    #     expect(response).to have_http_status(:ok)
-    #     expect(DahliaBackend::MessageService).to have_received(:send_invite_to_response).with(
-    #       roundtrip_deadline,
-    #       roundtrip_app_id,
-    #       roundtrip_app_number,
-    #       'yes',
-    #       'submit',
-    #       roundtrip_listing_id,
-    #     )
-    #   end
+        expect(response).to have_http_status(:ok)
+        expect(DahliaBackend::MessageService).to have_received(:send_invite_to_response).with(
+          application_id,
+          'appointment',
+        )
+      end
 
-    #   it 'returns unauthorized when token is missing' do
-    #     post :record_response, params: {
-    #       record: { response: 'yes', action: 'submit' },
-    #     }
+      # Given an act-less token without the next-steps purpose, as the documents page used
+      #   to sign from raw query params for any appId (these tokens never expire)
+      # When it is posted to record a response
+      # Then it is rejected
+      it 'returns unauthorized for an act-less token not minted for next-steps' do
+        post :record_response, params: {
+          t: JsonWebTokenService.encode_token(page_claims),
+          record: { action: 'appointment' },
+        }
 
-    #     expect(response).to have_http_status(:unauthorized)
-    #     expect(DahliaBackend::MessageService).not_to have_received(:send_invite_to_response)
-    #   end
-    # end
+        expect(response).to have_http_status(:unauthorized)
+        expect(DahliaBackend::MessageService)
+          .not_to have_received(:send_invite_to_response)
+      end
+    end
   end
 
   describe '#log_human_verified' do

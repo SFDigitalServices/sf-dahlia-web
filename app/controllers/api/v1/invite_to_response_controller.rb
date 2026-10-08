@@ -9,25 +9,31 @@ class Api::V1::InviteToResponseController < ApiController
     language timezone
   ].freeze
 
+  # Mirror the frontend's INVITE_TO_X and I2X_ACTIONS. The action is client-supplied and
+  # forwarded to the backend, and the JWT secret is shared with other token types.
+  INVITE_TYPES = %w[I2A I2I].freeze
+  RECORDABLE_ACTIONS = %w[submit appointment].freeze
+
   before_action :validate_token!, only: :record_response
 
   def record_response
     record_params = params.expect(record: %i[action])
-    return unauthorized! if record_params[:action].blank?
+    return unauthorized! unless RECORDABLE_ACTIONS.include?(record_params[:action])
 
     # we must verify app id from token
-    type, _deadline, app_id, act = token_fields
-    return unauthorized! if [type, _deadline, app_id, act].any?(&:blank?)
+    type, deadline, app_id = token_fields
+    return unauthorized! unless valid_invite_claims?(type, deadline, app_id)
 
-    parsed_deadline = parse_deadline(_deadline)
-    return unauthorized! if parsed_deadline.blank?
-
-    if deadline_passed?(parsed_deadline)
+    if deadline_passed?(parse_deadline(deadline))
       Rails.logger.info('InviteToResponseController#record_response: deadline passed - not recording')
+    elsif test_link?
+      Rails.logger.info(
+        'InviteToResponseController#record_response: test link - not recording',
+      )
     else
       DahliaBackend::MessageService.send_invite_to_response(
         app_id,
-        record_params[:action]
+        record_params[:action],
       )
     end
 
@@ -98,8 +104,20 @@ class Api::V1::InviteToResponseController < ApiController
       @token_payload[:type],
       @token_payload[:deadline],
       @token_payload[:appId],
-      @token_payload[:act],
     ]
+  end
+
+  def valid_invite_claims?(type, deadline, app_id)
+    INVITE_TYPES.include?(type) && app_id.present? &&
+      parse_deadline(deadline).present? && invite_token_origin?
+  end
+
+  # Email tokens carry act; next-steps page tokens carry the purpose claim instead. An
+  # act-less token without it may have been signed from raw query params by the old
+  # documents page, and these tokens have no exp.
+  def invite_token_origin?
+    @token_payload[:act].present? ||
+      @token_payload[:purpose] == InviteToController::NEXT_STEPS_TOKEN_PURPOSE
   end
 
   def parse_deadline(deadline)
@@ -108,6 +126,10 @@ class Api::V1::InviteToResponseController < ApiController
 
   def deadline_passed?(parsed_deadline)
     parsed_deadline.to_date < Time.zone.today
+  end
+
+  def test_link?
+    ActiveModel::Type::Boolean.new.cast(@token_payload[:isTest]) == true
   end
 
   def unauthorized!
