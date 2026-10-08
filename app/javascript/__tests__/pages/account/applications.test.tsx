@@ -49,21 +49,6 @@ describe("<ApplicationsPage />", () => {
     restoreWindowLocation(originalLocation)
   })
 
-  describe("when the user is not signed in", () => {
-    beforeEach(() => {
-      setupUserContext({ loggedIn: false })
-    })
-
-    it("redirects to the sign in page", async () => {
-      const { queryByRole } = await renderAndLoadAsync(<ApplicationsPage assetPaths={{}} />)
-
-      expect(window.location.assign).toHaveBeenCalledWith("/sign-in?redirect=applications")
-      expect(
-        queryByRole("heading", { name: "Applications and lottery results", level: 1 })
-      ).toBeNull()
-    })
-  })
-
   describe("when a user is signed in", () => {
     beforeEach(() => {
       setupUserContext({ loggedIn: true })

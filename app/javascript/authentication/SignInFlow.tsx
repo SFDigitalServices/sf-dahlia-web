@@ -315,6 +315,7 @@ const SignInFlow = () => {
           {view === "verificationCode" ? verificationCodeSection : passwordSection}
         </LoadingState>
       </Card.Section>
+      {/* TODO: conditionally render based on flag requiredLoginsMessageEnabled */}
       <Card.Section divider="flush">
         <Heading priority={2} size="lg" className={styles.createAccountHeading}>
           {t("signIn.dontHaveAccount")}

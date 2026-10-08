@@ -1,5 +1,5 @@
 import React from "react"
-import { useClerk, useSignIn, useUser } from "@clerk/react"
+import { useClerk, useSignIn, useSignUp, useUser } from "@clerk/react"
 import { screen, waitFor, cleanup } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
 import { useLocation, useNavigate } from "react-router"
@@ -12,6 +12,12 @@ import {
 import { setupUserContext } from "../../__util__/accountUtils"
 import { useFeatureFlag } from "../../../hooks/useFeatureFlag"
 import { AUTH_FLOW } from "../../../modules/constants"
+
+jest.mock("../../../authentication/withAuthentication", () => ({
+  withAuthentication:
+    (Component: React.ComponentType<Record<string, unknown>>) =>
+    (props: Record<string, unknown>) => <Component {...props} />,
+}))
 
 jest.mock("@clerk/react", () => {
   const Clerk = jest.requireActual("@clerk/react")
@@ -57,6 +63,10 @@ describe("<AddPassword />", () => {
       isLoaded: true,
       signIn: { resetPassword: jest.fn(), status: null },
       setActive: jest.fn(),
+    })
+    ;(useSignUp as jest.Mock).mockReturnValue({
+      fetchStatus: "idle",
+      signUp: null,
     })
     ;(useFeatureFlag as jest.Mock).mockReturnValue({ flagsReady: true, unleashFlag: true })
     ;(useClerk as jest.Mock).mockReturnValue({ client: undefined })
@@ -146,41 +156,23 @@ describe("<AddPassword />", () => {
     })
   })
 
-  it("redirects to sign-in when the user is not signed in", async () => {
+  it("does not redirect when the user has no password and no profile", () => {
+    expect(mockNavigate).not.toHaveBeenCalled()
+    expect(screen.getByRole("heading", { name: /add a password/i, level: 1 })).not.toBeNull()
+  })
+
+  it("returns null when add-password is not ready to render", async () => {
     cleanup()
     document.title = "DAHLIA San Francisco Housing Portal"
     setupUserContext({ loggedIn: false })
     ;(useUser as jest.Mock).mockReturnValue({ isLoaded: true, isSignedIn: false, user: null })
     await renderAndLoadAsync(<AddPassword assetPaths={{}} />)
 
-    await waitFor(() => {
-      expect(mockNavigate).toHaveBeenCalledWith("/sign-in")
-    })
-  })
-
-  it("does not redirect when the user has no password and no profile", () => {
     expect(mockNavigate).not.toHaveBeenCalled()
-    expect(screen.getByRole("heading", { name: /add a password/i, level: 1 })).not.toBeNull()
-  })
+    expect(screen.queryByRole("heading", { name: /add a password/i, level: 1 })).toBeNull()
 
-  it("redirects to add-profile when the user already has a password", async () => {
     cleanup()
-    document.title = "DAHLIA San Francisco Housing Portal"
-    setupUserContext({ loggedIn: true, hasProfile: false })
-    ;(useUser as jest.Mock).mockReturnValue({
-      isLoaded: true,
-      isSignedIn: true,
-      user: { updatePassword: mockUpdatePassword, passwordEnabled: true },
-    })
-    await renderAndLoadAsync(<AddPassword assetPaths={{}} />)
-
-    await waitFor(() => {
-      expect(mockNavigate).toHaveBeenCalledWith("/add-profile")
-    })
-  })
-
-  it("redirects to account when the user has already set up their profile", async () => {
-    cleanup()
+    mockNavigate.mockClear()
     document.title = "DAHLIA San Francisco Housing Portal"
     setupUserContext({ loggedIn: true })
     ;(useUser as jest.Mock).mockReturnValue({
@@ -190,9 +182,8 @@ describe("<AddPassword />", () => {
     })
     await renderAndLoadAsync(<AddPassword assetPaths={{}} />)
 
-    await waitFor(() => {
-      expect(mockNavigate).toHaveBeenCalledWith("/account")
-    })
+    expect(mockNavigate).not.toHaveBeenCalled()
+    expect(screen.queryByRole("heading", { name: /add a password/i, level: 1 })).toBeNull()
   })
   describe("Reset password flow", () => {
     let mockSubmitPassword: jest.Mock

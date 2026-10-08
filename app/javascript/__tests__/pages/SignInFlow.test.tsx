@@ -257,7 +257,11 @@ describe("<SignInFlow />", () => {
     })
     expect(mockSendCode).toHaveBeenCalledWith()
     expect(mockNavigate).toHaveBeenCalledWith("/sign-in/code", {
-      state: { email: "test@test.com", housingCounselorToken: null, flow: AUTH_FLOW.SIGN_IN },
+      state: {
+        verificationCodeEmailAddress: "test@test.com",
+        housingCounselorToken: null,
+        flow: AUTH_FLOW.SIGN_IN,
+      },
     })
   })
 
