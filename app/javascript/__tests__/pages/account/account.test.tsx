@@ -152,7 +152,9 @@ describe("<Account />", () => {
     })
 
     it("redirects to the sign in page if the user is not signed in", () => {
-      expect(window.location.assign).toHaveBeenCalledWith("/sign-in?redirect=account")
+      expect(mockNavigate).toHaveBeenCalledWith(getSignInPath(), {
+        state: { returnUrl: "/account" },
+      })
     })
   })
 

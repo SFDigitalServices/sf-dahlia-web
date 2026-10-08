@@ -15,12 +15,17 @@ import { applicationWithOpenListing } from "../../data/RailsApplication/applicat
 import { Application } from "../../../api/types/rails/application/RailsApplication"
 import { openSaleListing } from "../../data/RailsSaleListing/listing-sale-open"
 import { setupUserContext } from "../../__util__/accountUtils"
+import { useFeatureFlag } from "../../../hooks/useFeatureFlag"
 
 jest.mock("axios")
 
 jest.mock("../../../api/apiService.ts", () => ({
   authenticatedGet: jest.fn(),
   authenticatedDelete: jest.fn(),
+}))
+
+jest.mock("../../../hooks/useFeatureFlag", () => ({
+  useFeatureFlag: jest.fn(),
 }))
 
 jest.mock("@bloom-housing/ui-seeds", () => {
@@ -39,7 +44,7 @@ jest.mock("@bloom-housing/ui-seeds", () => {
   }
 })
 
-describe("<MyApplicationsPage />", () => {
+describe("when Clerk auth is disabled", () => {
   let originalLocation: Location
 
   beforeEach(() => {
@@ -47,22 +52,25 @@ describe("<MyApplicationsPage />", () => {
     // when the html tag does not have a lang attribute
     document.documentElement.lang = "en"
     originalLocation = mockWindowLocation()
+    ;(useFeatureFlag as jest.Mock).mockReturnValue({ flagsReady: true, unleashFlag: false })
   })
 
   afterEach(() => {
     restoreWindowLocation(originalLocation)
   })
 
-  describe("when the user is not signed in", () => {
-    beforeEach(() => {
-      setupUserContext({ loggedIn: false })
-    })
+  describe("<MyApplicationsPage />", () => {
+    describe("when the user is not signed in", () => {
+      beforeEach(() => {
+        setupUserContext({ loggedIn: false })
+      })
 
-    it("redirects to the sign in page", async () => {
-      const { queryByText } = await renderAndLoadAsync(<MyApplicationsPage assetPaths={{}} />)
+      it("redirects to the sign in page", async () => {
+        const { queryByText } = await renderAndLoadAsync(<MyApplicationsPage assetPaths={{}} />)
 
-      expect(window.location.assign).toHaveBeenCalledWith("/sign-in?redirect=applications")
-      expect(queryByText("My applications")).toBeNull()
+        expect(window.location.assign).toHaveBeenCalledWith("/sign-in?redirect=applications")
+        expect(queryByText("My applications")).toBeNull()
+      })
     })
   })
 

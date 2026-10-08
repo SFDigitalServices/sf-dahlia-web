@@ -29,14 +29,17 @@ export const setupUserContext = ({
   mockProfile = mockProfileStub,
   hasProfile = loggedIn,
   hasPassword = true,
+  profileMissing = !hasProfile,
 }: {
   loggedIn: boolean
   mockProfile?: ContextProps["profile"]
   hasProfile?: boolean
   hasPassword?: boolean
+  profileMissing?: boolean
 }): ContextProps => {
   const mockContextValue: ContextProps = {
     profile: hasProfile ? mockProfile : undefined,
+    profileMissing,
     signIn: jest.fn(),
     signOut: jest.fn(),
     timeOut: jest.fn(),
