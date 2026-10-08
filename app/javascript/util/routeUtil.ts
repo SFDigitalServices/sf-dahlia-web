@@ -189,7 +189,6 @@ export const AUTH_FLOW_PATH: Record<AUTH_FLOW, string> = {
   [AUTH_FLOW.CREATE_ACCOUNT]: getCreateAccountPath(),
   [AUTH_FLOW.FORGOT_PASSWORD]: getForgotPasswordPath(),
   [AUTH_FLOW.UPDATE_EMAIL]: getUpdateEmailPath(),
-  [AUTH_FLOW.ACCOUNT_SETTINGS]: getMyAccountSettingsPath(),
 }
 
 export const getAuthFlowPath = (flow: AUTH_FLOW) => AUTH_FLOW_PATH[flow]

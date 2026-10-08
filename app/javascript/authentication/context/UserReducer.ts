@@ -14,12 +14,17 @@ type UserState = {
   loading: boolean
   initialStateLoaded: boolean
   profile?: User
+  profileMissing?: boolean // attempted to fetch profile, but it does not exist
 }
 
 const UserReducer = createReducer({ loading: false, initialStateLoaded: false } as UserState, {
   [UserAction.StartLoading]: (state) => ({ ...state, loading: true }),
   [UserAction.StopLoading]: (state) => ({ ...state, loading: false }),
   [UserAction.SaveProfile]: (state, { payload: user }) => ({ ...state, profile: user }),
+  [UserAction.SetProfileMissing]: (state, { payload: isMissing }) => ({
+    ...state,
+    profileMissing: isMissing,
+  }),
   [UserAction.UserSignOut]: () => {
     clearHeadersSignOut()
     // Clear out all existing state other than the storage type

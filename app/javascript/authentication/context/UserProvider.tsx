@@ -13,6 +13,7 @@ import {
   startLoading,
   stopLoading,
   signOutConnectionIssue,
+  setProfileMissing,
 } from "./userActions"
 import UserContext, { ContextProps } from "./UserContext"
 import UserReducer from "./UserReducer"
@@ -28,18 +29,23 @@ interface UserProviderProps {
 const ClerkProfile = ({
   hasProfile,
   onLoaded,
+  onSignedOut,
 }: {
   hasProfile: boolean
   onLoaded: (profile: User | null) => void
+  onSignedOut: () => void
 }) => {
   const { status, getCredentials } = useAuthSession()
 
   useEffect(() => {
-    if (!isAuthInitialized(status) || hasProfile) {
+    if (!isAuthInitialized(status)) {
       return
     }
     if (status.kind === "signedOut") {
-      onLoaded(null)
+      onSignedOut()
+      return
+    }
+    if (hasProfile) {
       return
     }
 
@@ -54,7 +60,7 @@ const ClerkProfile = ({
         onLoaded(null)
       }
     })()
-  }, [getCredentials, hasProfile, status, onLoaded])
+  }, [getCredentials, hasProfile, status, onLoaded, onSignedOut])
 
   return null
 }
@@ -68,13 +74,20 @@ const UserProvider = (props: UserProviderProps) => {
   const [state, dispatch] = useReducer(UserReducer, {
     loading: false,
     initialStateLoaded: false,
+    profileMissing: false,
   })
 
   const { pushToDataLayer } = useGTMDataLayerWithoutUserContext()
   const { unleashFlag: clerkEnabled, flagsReady } = useFeatureFlag(UNLEASH_FLAG.CLERK_AUTH, false)
 
   const onClerkProfileLoaded = useCallback((profile: User | null) => {
+    if (!profile) dispatch(setProfileMissing(true))
     dispatch(profile ? saveProfile(profile) : systemSignOut())
+  }, [])
+
+  const onClerkSignedOut = useCallback(() => {
+    dispatch(setProfileMissing(false))
+    dispatch(systemSignOut())
   }, [])
 
   // TODO(DAH-4366): CLERK MIGRATION - DEVISE TECH DEBT TO REMOVE
@@ -116,6 +129,7 @@ const UserProvider = (props: UserProviderProps) => {
   const contextValues: ContextProps = {
     loading: state.loading,
     profile: state.profile,
+    profileMissing: !!state.profileMissing,
     initialStateLoaded: state.initialStateLoaded,
     saveProfile: (profile) => dispatch(saveProfile(profile)),
     // TODO(DAH-4366): CLERK MIGRATION - DEVISE TECH DEBT TO REMOVE
@@ -160,7 +174,11 @@ const UserProvider = (props: UserProviderProps) => {
   return (
     <UserContext.Provider value={contextValues}>
       {flagsReady && clerkEnabled && (
-        <ClerkProfile hasProfile={!!state.profile} onLoaded={onClerkProfileLoaded} />
+        <ClerkProfile
+          hasProfile={!!state.profile}
+          onLoaded={onClerkProfileLoaded}
+          onSignedOut={onClerkSignedOut}
+        />
       )}
       {props.children}
     </UserContext.Provider>

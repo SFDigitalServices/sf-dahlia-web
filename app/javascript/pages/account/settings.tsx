@@ -49,7 +49,7 @@ import { ErrorSummaryBanner } from "./components/ErrorSummaryBanner"
 import { ExpandedAccountAxiosError, getErrorMessage } from "./components/util"
 import { withAuthentication } from "../../authentication/withAuthentication"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
-import { AUTH_FLOW, UNLEASH_FLAG } from "../../modules/constants"
+import { UNLEASH_FLAG } from "../../modules/constants"
 import { AccountSettingsPage as MyAccountSettingsPage } from "./account-settings"
 import settingsStyles from "./settings.module.scss"
 import { useLocation, useNavigate } from "react-router"
@@ -312,7 +312,7 @@ const PasswordSection = () => {
           variant="primary-outlined"
           onClick={() => {
             void navigate(userHasPassword ? getChangePasswordPath() : getAddPasswordPath(), {
-              state: { flow: AUTH_FLOW.ACCOUNT_SETTINGS },
+              state: { accountSettingsFlow: true },
             })
           }}
         >

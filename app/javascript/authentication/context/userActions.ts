@@ -6,6 +6,7 @@ export enum UserAction {
   StartLoading = "StartLoading",
   StopLoading = "StopLoading",
   SaveProfile = "SaveProfile",
+  SetProfileMissing = "SetProfileMissing",
   UserSignOut = "UserSignOut",
   SystemSignOut = "SystemSignOut",
   TimeOut = "TimeOut",
@@ -15,6 +16,7 @@ export enum UserAction {
 export const startLoading = createAction(UserAction.StartLoading)()
 export const stopLoading = createAction(UserAction.StopLoading)()
 export const saveProfile = createAction(UserAction.SaveProfile)<User>()
+export const setProfileMissing = createAction(UserAction.SetProfileMissing)<boolean>()
 export const userSignOut = createAction(UserAction.UserSignOut)()
 export const systemSignOut = createAction(UserAction.SystemSignOut)()
 export const timeOut = createAction(UserAction.TimeOut)()
