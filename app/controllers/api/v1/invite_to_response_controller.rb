@@ -9,20 +9,20 @@ class Api::V1::InviteToResponseController < ApiController
     language timezone
   ].freeze
 
-  # Mirror the frontend's INVITE_TO_X and I2X_ACTIONS. The action is client-supplied and
-  # forwarded to the backend, and the JWT secret is shared with other token types.
-  INVITE_TYPES = %w[I2A I2I].freeze
-  RECORDABLE_ACTIONS = %w[submit appointment].freeze
+  # The one action each invite type's next-steps page sends (frontend INVITE_TO_X ->
+  # I2X_ACTIONS). The action is client-supplied and forwarded to the backend, and the
+  # JWT secret is shared with other token types.
+  RECORDABLE_ACTION_BY_TYPE = { 'I2A' => 'submit', 'I2I' => 'appointment' }.freeze
 
   before_action :validate_token!, only: :record_response
 
   def record_response
     record_params = params.expect(record: %i[action])
-    return unauthorized! unless RECORDABLE_ACTIONS.include?(record_params[:action])
 
     # we must verify app id from token
     type, deadline, app_id = token_fields
     return unauthorized! unless valid_invite_claims?(type, deadline, app_id)
+    return unauthorized! unless RECORDABLE_ACTION_BY_TYPE[type] == record_params[:action]
 
     if deadline_passed?(parse_deadline(deadline))
       Rails.logger.info('InviteToResponseController#record_response: deadline passed - not recording')
@@ -108,7 +108,7 @@ class Api::V1::InviteToResponseController < ApiController
   end
 
   def valid_invite_claims?(type, deadline, app_id)
-    INVITE_TYPES.include?(type) && app_id.present? &&
+    RECORDABLE_ACTION_BY_TYPE.key?(type) && app_id.present? &&
       parse_deadline(deadline).present? && invite_token_origin?
   end
 

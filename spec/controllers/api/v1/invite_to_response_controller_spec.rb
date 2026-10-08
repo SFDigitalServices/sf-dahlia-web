@@ -127,6 +127,29 @@ RSpec.describe Api::V1::InviteToResponseController, type: :controller do
       expect(DahliaBackend::MessageService).not_to have_received(:send_invite_to_response)
     end
 
+    # Given a valid token for one invite type
+    # When the client posts the action belonging to the other invite type
+    # Then nothing is forwarded to the backend
+    {
+      'I2A' => 'appointment',
+      'I2I' => 'submit',
+    }.each do |invite_type, mismatched_action|
+      it "returns unauthorized for #{invite_type} posting #{mismatched_action}" do
+        allow(JsonWebTokenService).to receive(:decode_token).with(token).and_return(
+          decoded_token.merge('type' => invite_type),
+        )
+
+        post :record_response, params: {
+          t: token,
+          record: { action: mismatched_action },
+        }
+
+        expect(response).to have_http_status(:unauthorized)
+        expect(DahliaBackend::MessageService)
+          .not_to have_received(:send_invite_to_response)
+      end
+    end
+
     # Given a validly signed token that wasn't minted for an invite-to link
     # When it is posted to record a response
     # Then it is rejected
