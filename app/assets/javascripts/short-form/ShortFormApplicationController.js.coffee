@@ -11,6 +11,7 @@ ShortFormApplicationController = (
   AccountService,
   AddressValidationService,
   AnalyticsService,
+  ClerkShim,
   FileUploadService,
   Idle,
   inputMaxLength,
@@ -975,8 +976,24 @@ ShortFormApplicationController = (
         ShortFormNavigationService.isLoading(false)
         ShortFormNavigationService.goToApplicationPage('dahlia.short-form-application.confirmation')
         AnalyticsService.trackApplicationComplete($scope.listing.Id, AccountService.loggedInUser?.id || null)
-      ).catch( ->
+      ).catch( (response) ->
         ShortFormNavigationService.isLoading(false)
+        # TODO(DAH-4366): CLERK MIGRATION - DEVISE TECH DEBT TO REMOVE (drop the flag check)
+        # the Clerk session ended mid-application: send the user to sign in instead of failing silently
+        if $window.CLERK_AUTH_ANGULAR && response?.status == 401
+          # a 401 can also be an access error on a signed-in user's draft: only redirect if the session is gone
+          ClerkShim.initClerk().then((clerk) ->
+            return if clerk.session
+            # the app is redirecting on purpose: don't show the "leave site?" prompt or let the user stay
+            $window.removeEventListener('beforeunload', ShortFormApplicationService.onExit)
+            ClerkShim.leaveFor(SharedService.buildUrl({name: 'dahlia.sign-in'}, $state.params))
+          ).catch(angular.noop)
+        # the Clerk flag was turned on after this page loaded, so signing in is now required to apply,
+        # and this page can't sign in with Clerk: tell the user instead of failing silently
+        else if !$window.CLERK_AUTH_ANGULAR && response?.status == 401 && !AccountService.loggedIn()
+          alert($translate.instant('error.alert.sign_in_required_to_apply'))
+          $window.removeEventListener('beforeunload', ShortFormApplicationService.onExit)
+          ClerkShim.leaveFor(SharedService.buildUrl({name: 'dahlia.sign-in'}, $state.params))
       )
 
   ## Save and finish later
@@ -1263,6 +1280,7 @@ ShortFormApplicationController.$inject = [
   'AccountService',
   'AddressValidationService',
   'AnalyticsService',
+  'ClerkShim',
   'FileUploadService',
   'Idle',
   'inputMaxLength',

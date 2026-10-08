@@ -30,29 +30,40 @@ RSpec.describe Api::V1::AccountController, type: :controller do
       allow(Force::ListingService).to receive(:listings).and_return([])
     end
 
-    context 'with a Clerk session' do
-      before do
+    context 'with the Clerk flag on' do
+      before { allow(ClerkOrDeviseAuth).to receive(:clerk_enabled?).and_return(true) }
+
+      it 'returns the Clerk user applications' do
         allow(controller).to receive(:clerk).and_return(double(user_id: clerk_user_id))
         allow(ClerkService).to receive(:salesforce_contact_id)
           .with(clerk_user_id)
           .and_return(contact_id)
-      end
 
-      it 'returns the Clerk user applications' do
         get :my_applications
 
         expect(response).to have_http_status(:ok)
         expect(JSON.parse(response.body)).to eq('applications' => [])
         expect(Force::ShortFormService).to have_received(:get_for_user).with(contact_id)
       end
+
+      it 'rejects a Devise user without a Clerk session' do
+        allow(controller).to receive(:clerk).and_return(nil)
+        allow(controller).to receive(:warden)
+          .and_return(double(authenticate: create(:user, salesforce_contact_id: contact_id)))
+
+        get :my_applications
+
+        expect(response).to have_http_status(:unauthorized)
+        expect(Force::ShortFormService).not_to have_received(:get_for_user)
+      end
     end
 
     # TODO(DAH-4366): CLERK MIGRATION - DEVISE TECH DEBT TO REMOVE
-    # Goes with the flag, along with the my_applications fallback in the controller.
-    context 'without a Clerk session' do
+    # Goes with the flag, along with the my_applications flag check in the controller.
+    context 'with the Clerk flag off' do
       before { allow(controller).to receive(:clerk).and_return(nil) }
 
-      it 'falls back to Devise and rejects an unauthenticated request' do
+      it 'uses Devise and rejects an unauthenticated request' do
         get :my_applications
 
         expect(response).to have_http_status(:unauthorized)

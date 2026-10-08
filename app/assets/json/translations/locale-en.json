@@ -552,6 +552,7 @@
             "address_validation_po_box": "We need the address where you currently live. PO Boxes are not allowed.",
             "alert": {
                 "bad_request": "Oops! Looks like something went wrong. Please try again. \n\nContact sfhousing.info@sfgov.org if you're still experiencing issues.",
+                "sign_in_required_to_apply": "You now need to sign in to apply. Your application could not be submitted. Please sign in and start your application again.",
                 "timeout_please_try_again": "Oops! Looks like something went wrong. Please try again."
             },
             "alternate_contact": "Please select an alternate contact",
