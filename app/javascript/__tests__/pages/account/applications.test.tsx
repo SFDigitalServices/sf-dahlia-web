@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/unbound-method */
 /* eslint-disable react/prop-types */
 import {
   renderAndLoadAsync,

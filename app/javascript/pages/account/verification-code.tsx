@@ -56,7 +56,7 @@ const EnterVerificationCodePage = ({
   email,
   flow,
   housingCounselorToken,
-  returnUrl = getMyAccountPath(), // TODO: simplify and centralize auth redirects
+  returnUrl = getMyAccountPath(),
 }: EnterVerificationCodePageProps & { housingCounselorToken?: string | null }) => {
   const navigate = useNavigate()
   const signInSession = useSignInSession()
