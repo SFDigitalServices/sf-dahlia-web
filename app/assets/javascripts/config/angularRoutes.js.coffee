@@ -603,10 +603,9 @@
           '$q', '$window', '$stateParams', 'AccountService', 'ClerkShim', 'SharedService', 'ShortFormApplicationService',
           ($q, $window, $stateParams, AccountService, ClerkShim, SharedService, ShortFormApplicationService) ->
             return true unless $window.CLERK_AUTH_ANGULAR
-            ClerkShim.ready().then (clerk) ->
+            ClerkShim.initClerk().then (clerk) ->
               unless clerk.session
                 $window.removeEventListener('beforeunload', ShortFormApplicationService.onExit)
-                # the React sign-in page, not dahlia.sign-in, which can still be the Angular (Devise) page
                 return ClerkShim.leaveFor(SharedService.buildUrl({name: 'dahlia.sign-in'}, $stateParams))
               # a Clerk user has no Salesforce contact (404) until they finish add-profile
               AccountService.validateUser().then(

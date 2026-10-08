@@ -982,7 +982,7 @@ ShortFormApplicationController = (
         # the Clerk session ended mid-application: send the user to sign in instead of failing silently
         if $window.CLERK_AUTH_ANGULAR && response?.status == 401
           # a 401 can also be an access error on a signed-in user's draft: only redirect if the session is gone
-          ClerkShim.ready().then((clerk) ->
+          ClerkShim.initClerk().then((clerk) ->
             return if clerk.session
             # the app is redirecting on purpose: don't show the "leave site?" prompt or let the user stay
             $window.removeEventListener('beforeunload', ShortFormApplicationService.onExit)

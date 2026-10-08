@@ -12,28 +12,28 @@ clerkEnabled = -> !!window.CLERK_AUTH_ANGULAR
 
   # the angular layout loads clerk.browser.js with defer, so window.Clerk is already set
   # (or the script failed) by the time Angular boots
-  ready = ->
+  initClerk = ->
+    # called before every Clerk use (each API request, the route guard, sign-out), so callers can wait on one shared initialization
     return $q.reject('Clerk failed to load') unless window.Clerk
     loadPromise ?= $q.when(window.Clerk.load())
       .then(-> window.Clerk)
       .catch (e) ->
-        console.warn('[ClerkShim] Clerk load failed', e)
+        Raven.captureMessage('Clerk load failed (ClerkShim.initClerk)', {
+          level: 'warning', extra: { error: e?.message ? e }
+        })
         loadPromise = null
         $q.reject(e)
 
   getToken = ->
-    ready().then (clerk) ->
+    initClerk().then (clerk) ->
       return null unless clerk.session
       clerk.session.getToken()
 
-  # full-page navigation out of Angular, e.g. to the React sign-in page. The promise never settles:
-  # rejecting a route resolve would hit $stateChangeError, which redirects home on first load.
+  # full-page navigation out of Angular, e.g. to the React sign-in page
   leaveFor = (url) ->
     window.location.href = url
-    $q.defer().promise
 
-  # set while we sign out ourselves, so the session listener below doesn't also redirect
-  { ready, getToken, leaveFor, signingOut: false }
+  { initClerk, getToken, leaveFor, signingOut: false }
 ]
 
 # send users to sign in as soon as their Clerk session ends (expired, revoked, or signed out in
@@ -42,13 +42,15 @@ clerkEnabled = -> !!window.CLERK_AUTH_ANGULAR
   '$state', '$window', 'ClerkShim', 'SharedService', 'ShortFormApplicationService',
   ($state, $window, ClerkShim, SharedService, ShortFormApplicationService) ->
     return unless clerkEnabled()
-    ClerkShim.ready().then((clerk) ->
+    ClerkShim.initClerk().then((clerk) ->
       hadSession = !!clerk.session
       clerk.addListener ({session}) ->
         # undefined means Clerk is still loading the session; only null means signed out
         return if session is undefined
         lostSession = hadSession && session is null
         hadSession = session?
+        # only redirect when a signed-in user's session ended and we didn't sign them out ourselves
+        # (e.g. it expired, or they signed out from another tab)
         return unless lostSession && !ClerkShim.signingOut
         $window.removeEventListener('beforeunload', ShortFormApplicationService.onExit)
         ClerkShim.leaveFor(SharedService.buildUrl({name: 'dahlia.sign-in'}, $state.params))
@@ -62,7 +64,7 @@ clerkEnabled = -> !!window.CLERK_AUTH_ANGULAR
 
     $delegate.validateUser = (opts) ->
       return originalValidateUser.call($delegate, opts) unless clerkEnabled()
-      ClerkShim.ready().then (clerk) ->
+      ClerkShim.initClerk().then (clerk) ->
         return $q.reject(reason: 'unauthorized') unless clerk.session
         # the interceptor below adds the Clerk Bearer token
         $injector.get('$http').get('/api/v1/account/profile').then (resp) ->
@@ -76,7 +78,7 @@ clerkEnabled = -> !!window.CLERK_AUTH_ANGULAR
       # best effort, like React's clearHousingCounselorSession
       clearHcSession = $injector.get('$http').delete('/api/v1/housing-counselor/access').catch(angular.noop)
       ClerkShim.signingOut = true
-      clearHcSession.then(ClerkShim.ready).then((clerk) ->
+      clearHcSession.then(ClerkShim.initClerk).then((clerk) ->
         $state = $injector.get('$state')
         ShortFormApplicationService = $injector.get('ShortFormApplicationService')
         return clerk.signOut() unless ShortFormApplicationService.isShortFormPage($state.current)
