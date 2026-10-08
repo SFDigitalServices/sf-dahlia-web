@@ -4,22 +4,11 @@ import { isTokenValid, parseUrlParams } from "./token"
 import UserContext from "./context/UserContext"
 import { useAuthSession } from "./session/AuthSessionProvider"
 import { useSignUpSession } from "../authentication/session/useSignUpSession"
-import {
-  AppPages,
-  getAddProfilePath,
-  getLocalizedPath,
-  RedirectType,
-  getSignInPath,
-  getMyAccountPath,
-  getMyAccountContactPath,
-  getMyAccountSettingsPath,
-  getMyAccountApplicationsPath,
-  getAuthFlowPath,
-} from "../util/routeUtil"
+import { AppPages, clerkRedirectManager, getLocalizedPath, RedirectType } from "../util/routeUtil"
 import { getCurrentLanguage } from "../util/languageUtil"
 import { useGTMDataLayer } from "../hooks/analytics/useGTMDataLayer"
 import { useFeatureFlag } from "../hooks/useFeatureFlag"
-import { UNLEASH_FLAG, AUTH_FLOW } from "../modules/constants"
+import { UNLEASH_FLAG } from "../modules/constants"
 
 interface WithAuthenticationProps {
   redirectType?: RedirectType
@@ -29,131 +18,6 @@ interface WithAuthenticationProps {
 const getSignInPathWithParams = (redirectType?: RedirectType) => {
   const redirectParam = redirectType ? `?redirect=${redirectType}` : ""
   return getLocalizedPath("/sign-in", getCurrentLanguage(), redirectParam)
-}
-
-// Only handles the new Clerk auth pages
-// Does not handle Devise auth pages
-const clerkRedirectManager = (
-  pageName: AppPages,
-  {
-    isSignedIn,
-    hasProfile,
-    hasPassword,
-    authFlow,
-    verificationCodeEmailAddress,
-  }: {
-    isSignedIn: boolean
-    hasProfile: boolean
-    hasPassword: boolean
-    authFlow?: AUTH_FLOW
-    verificationCodeEmailAddress?: string
-  }
-): { redirectUrl?: string; returnUrl?: string } => {
-  let redirectUrl
-  let returnUrl
-
-  switch (pageName) {
-    // app/javascript/pages/account/account.tsx
-    case AppPages.Account:
-      if (!isSignedIn) {
-        redirectUrl = getSignInPath()
-        returnUrl = getMyAccountPath()
-        break
-      }
-      if (isSignedIn && !hasProfile) {
-        redirectUrl = getAddProfilePath()
-        break
-      }
-      break
-    //app/javascript/pages/account/contact.tsx
-    case AppPages.Contact:
-      if (!isSignedIn) {
-        redirectUrl = getSignInPath()
-        returnUrl = getMyAccountContactPath()
-        break
-      }
-      if (isSignedIn && !hasProfile) {
-        redirectUrl = getAddProfilePath()
-        break
-      }
-      break
-    // app/javascript/pages/account/settings.tsx
-    case AppPages.AccountSettings:
-      if (!isSignedIn) {
-        redirectUrl = getSignInPath()
-        returnUrl = getMyAccountSettingsPath()
-        break
-      }
-      if (isSignedIn && !hasProfile) {
-        redirectUrl = getAddProfilePath()
-        break
-      }
-      break
-    // app/javascript/pages/account/applications.tsx
-    case AppPages.Applications:
-      if (!isSignedIn) {
-        redirectUrl = getSignInPath()
-        returnUrl = getMyAccountApplicationsPath()
-        break
-      }
-      if (isSignedIn && !hasProfile) {
-        redirectUrl = getAddProfilePath()
-        break
-      }
-      break
-    // app/javascript/pages/account/add-password.tsx
-    case AppPages.AddPassword:
-      if (!isSignedIn) {
-        redirectUrl = getSignInPath()
-        break
-      }
-      if (isSignedIn && hasProfile && hasPassword) {
-        redirectUrl = getMyAccountPath()
-        break
-      }
-      if (isSignedIn && !hasProfile && hasPassword) {
-        redirectUrl = getAddProfilePath()
-        break
-      }
-      break
-    // app/javascript/pages/account/add-profile.tsx
-    case AppPages.AddProfile:
-      if (!isSignedIn) {
-        redirectUrl = getSignInPath()
-        break
-      }
-      if (isSignedIn && hasProfile) {
-        redirectUrl = getMyAccountPath()
-        break
-      }
-      break
-    // app/javascript/pages/account/verification-code.tsx
-    case AppPages.EnterVerificationCode:
-      if (!authFlow && !verificationCodeEmailAddress) {
-        redirectUrl = getSignInPath()
-        break
-      }
-      if (authFlow && !verificationCodeEmailAddress) {
-        redirectUrl = getAuthFlowPath(authFlow)
-        break
-      }
-      if (!isSignedIn && !verificationCodeEmailAddress) {
-        redirectUrl = getSignInPath()
-        break
-      }
-      if (authFlow !== AUTH_FLOW.UPDATE_EMAIL && isSignedIn && hasProfile) {
-        redirectUrl = getMyAccountPath()
-        break
-      }
-      if (authFlow !== AUTH_FLOW.UPDATE_EMAIL && isSignedIn && !hasProfile) {
-        redirectUrl = getAddProfilePath()
-        break
-      }
-      break
-    default:
-  }
-
-  return { redirectUrl, returnUrl }
 }
 
 /**
