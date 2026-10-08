@@ -162,7 +162,8 @@ const AddPassword = (_props: { assetPaths: unknown }) => {
   const navigate = useNavigate()
   const { state } = useLocation()
   const flow = state?.flow
-  const isAccountSettingsFlow = flow === AUTH_FLOW.ACCOUNT_SETTINGS
+  // TODO: adding another state key with the word 'flow' is confusing, we already have the enum AUTH_FLOW
+  const isAccountSettingsFlow = state?.accountSettingsFlow === true
   const { status } = useAuthSession()
   const { isAccountInitialized, hasPassword } = useSignUpSession()
   const { profile, initialStateLoaded } = useContext(UserContext)
