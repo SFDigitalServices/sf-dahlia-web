@@ -773,6 +773,12 @@ const Settings = (_props: SettingsProps) => {
   )
 }
 
-export default withAppSetup(withAuthentication(Settings, { redirectType: RedirectType.Settings }), {
-  pageName: AppPages.AccountSettings,
-})
+export default withAppSetup(
+  withAuthentication(Settings, {
+    redirectType: RedirectType.Settings,
+    pageName: AppPages.AccountSettings,
+  }),
+  {
+    pageName: AppPages.AccountSettings,
+  }
+)

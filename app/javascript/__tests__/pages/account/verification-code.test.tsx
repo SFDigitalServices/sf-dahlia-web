@@ -78,7 +78,7 @@ const renderUpdateEmailFlow = async (user: unknown) => {
   setupUserContext({ loggedIn: true })
   ;(useLocation as jest.Mock).mockReturnValue({
     pathname: "/update-email/code",
-    state: { email: "new@example.com", flow: AUTH_FLOW.UPDATE_EMAIL },
+    state: { verificationCodeEmailAddress: "new@example.com", flow: AUTH_FLOW.UPDATE_EMAIL },
   })
   ;(useUser as jest.Mock).mockReturnValue({ isLoaded: true, isSignedIn: true, user })
   await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
@@ -193,7 +193,7 @@ describe("<EnterVerificationCode />", () => {
     ;(useNavigate as jest.Mock).mockReturnValue(mockNavigate)
     ;(useLocation as jest.Mock).mockReturnValue({
       pathname: "/create-account/code",
-      state: { email: "test@example.com", flow: AUTH_FLOW.CREATE_ACCOUNT },
+      state: { verificationCodeEmailAddress: "test@example.com", flow: AUTH_FLOW.CREATE_ACCOUNT },
     })
     ;(useFeatureFlag as jest.Mock).mockReturnValue({ flagsReady: true, unleashFlag: true })
     ;(clearHousingCounselorSession as jest.Mock).mockReset().mockResolvedValue(undefined)
@@ -353,7 +353,7 @@ describe("<EnterVerificationCode />", () => {
     })
   })
 
-  it("redirects to sign-in when email is missing", async () => {
+  it("redirects to create account when email is missing", async () => {
     cleanup()
     document.title = "DAHLIA San Francisco Housing Portal"
     ;(useLocation as jest.Mock).mockReturnValue({
@@ -363,7 +363,9 @@ describe("<EnterVerificationCode />", () => {
     await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
 
     await waitFor(() => {
-      expect(mockNavigate).toHaveBeenCalledWith("/sign-in")
+      expect(mockNavigate).toHaveBeenCalledWith("/create-account", {
+        state: { flow: AUTH_FLOW.CREATE_ACCOUNT },
+      })
     })
   })
 
@@ -371,7 +373,7 @@ describe("<EnterVerificationCode />", () => {
     cleanup()
     ;(useLocation as jest.Mock).mockReturnValue({
       pathname: "/sign-in/code",
-      state: { email: "test@example.com", flow: AUTH_FLOW.SIGN_IN },
+      state: { verificationCodeEmailAddress: "test@example.com", flow: AUTH_FLOW.SIGN_IN },
     })
     await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
 
@@ -391,7 +393,7 @@ describe("<EnterVerificationCode />", () => {
     jest.useRealTimers()
     ;(useLocation as jest.Mock).mockReturnValue({
       pathname: "/sign-in/code",
-      state: { email: "test@example.com", flow: AUTH_FLOW.SIGN_IN },
+      state: { verificationCodeEmailAddress: "test@example.com", flow: AUTH_FLOW.SIGN_IN },
     })
     mockSignInResource.status = "complete"
     await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
@@ -418,7 +420,7 @@ describe("<EnterVerificationCode />", () => {
     }))
     ;(useLocation as jest.Mock).mockReturnValue({
       pathname: "/sign-in/code",
-      state: { email: "test@example.com", flow: AUTH_FLOW.SIGN_IN },
+      state: { verificationCodeEmailAddress: "test@example.com", flow: AUTH_FLOW.SIGN_IN },
     })
     mockSignInResource.status = "complete"
     await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
@@ -438,7 +440,7 @@ describe("<EnterVerificationCode />", () => {
     cleanup()
     ;(useLocation as jest.Mock).mockReturnValue({
       pathname: "/sign-in/code",
-      state: { email: "test@example.com", flow: AUTH_FLOW.SIGN_IN },
+      state: { verificationCodeEmailAddress: "test@example.com", flow: AUTH_FLOW.SIGN_IN },
     })
     mockSignInVerifyCode.mockResolvedValue({
       error: { errors: [{ code: "sign_up_if_missing_transfer" }] },
@@ -466,7 +468,7 @@ describe("<EnterVerificationCode />", () => {
     const consoleError = jest.spyOn(console, "error").mockImplementation(() => {})
     ;(useLocation as jest.Mock).mockReturnValue({
       pathname: "/sign-in/code",
-      state: { email: "test@example.com", flow: AUTH_FLOW.SIGN_IN },
+      state: { verificationCodeEmailAddress: "test@example.com", flow: AUTH_FLOW.SIGN_IN },
     })
     ;(useSignUp as jest.Mock).mockReturnValue({
       fetchStatus: "fetching",
@@ -497,7 +499,7 @@ describe("<EnterVerificationCode />", () => {
     const createError = { errors: [{ code: "unexpected_failure" }] }
     ;(useLocation as jest.Mock).mockReturnValue({
       pathname: "/sign-in/code",
-      state: { email: "test@example.com", flow: AUTH_FLOW.SIGN_IN },
+      state: { verificationCodeEmailAddress: "test@example.com", flow: AUTH_FLOW.SIGN_IN },
     })
     mockSignInVerifyCode.mockResolvedValue({
       error: { errors: [{ code: "sign_up_if_missing_transfer" }] },
@@ -527,7 +529,7 @@ describe("<EnterVerificationCode />", () => {
     const consoleError = jest.spyOn(console, "error").mockImplementation(() => {})
     ;(useLocation as jest.Mock).mockReturnValue({
       pathname: "/sign-in/code",
-      state: { email: "test@example.com", flow: AUTH_FLOW.SIGN_IN },
+      state: { verificationCodeEmailAddress: "test@example.com", flow: AUTH_FLOW.SIGN_IN },
     })
     mockSignInVerifyCode.mockResolvedValue({
       error: { errors: [{ code: "sign_up_if_missing_transfer" }] },
@@ -556,10 +558,14 @@ describe("<EnterVerificationCode />", () => {
     cleanup()
     // See "verifies a valid code for sign in".
     jest.useRealTimers()
-    const redirectUrl = "/listings/a0W0P00000GlKfBUAV/apply-welcome/intro"
+    const returnUrl = "/listings/a0W0P00000GlKfBUAV/apply-welcome/intro"
     ;(useLocation as jest.Mock).mockReturnValue({
       pathname: "/sign-in/code",
-      state: { email: "test@example.com", flow: AUTH_FLOW.SIGN_IN, redirectUrl },
+      state: {
+        verificationCodeEmailAddress: "test@example.com",
+        flow: AUTH_FLOW.SIGN_IN,
+        returnUrl,
+      },
     })
     mockSignInResource.status = "complete"
     await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
@@ -569,7 +575,7 @@ describe("<EnterVerificationCode />", () => {
     await user.click(screen.getByRole("button", { name: t("createAccount.confirmCode") }))
 
     await waitFor(() => {
-      expect(mockNavigate).toHaveBeenCalledWith(redirectUrl)
+      expect(mockNavigate).toHaveBeenCalledWith(returnUrl)
     })
     expect(mockSignInVerifyCode).toHaveBeenCalledWith({ code: "123456" })
     expect(mockSignInFinalize).toHaveBeenCalledTimes(1)
@@ -590,7 +596,7 @@ describe("<EnterVerificationCode />", () => {
     ;(useLocation as jest.Mock).mockReturnValue({
       pathname: "/sign-in/code",
       state: {
-        email: "test@example.com",
+        verificationCodeEmailAddress: "test@example.com",
         housingCounselorToken: "jwt.token",
         flow: AUTH_FLOW.SIGN_IN,
       },
@@ -621,7 +627,7 @@ describe("<EnterVerificationCode />", () => {
     ;(useLocation as jest.Mock).mockReturnValue({
       pathname: "/sign-in/code",
       state: {
-        email: "test@example.com",
+        verificationCodeEmailAddress: "test@example.com",
         housingCounselorToken: "jwt.token",
         flow: AUTH_FLOW.SIGN_IN,
       },
@@ -646,7 +652,7 @@ describe("<EnterVerificationCode />", () => {
     cleanup()
     ;(useLocation as jest.Mock).mockReturnValue({
       pathname: "/sign-in/code",
-      state: { email: "test@example.com", flow: AUTH_FLOW.SIGN_IN },
+      state: { verificationCodeEmailAddress: "test@example.com", flow: AUTH_FLOW.SIGN_IN },
     })
     await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
 
@@ -672,14 +678,19 @@ describe("<EnterVerificationCode />", () => {
     await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
 
     await waitFor(() => {
-      expect(mockNavigate).toHaveBeenCalledWith("/sign-in")
+      expect(mockNavigate).toHaveBeenCalledWith("/sign-in", {
+        state: { flow: AUTH_FLOW.SIGN_IN },
+      })
     })
   })
   it("verifies a valid code for forgot password", async () => {
     cleanup()
     ;(useLocation as jest.Mock).mockReturnValue({
       pathname: "/forgot-password/code",
-      state: { email: "test@example.com", flow: AUTH_FLOW.FORGOT_PASSWORD },
+      state: {
+        verificationCodeEmailAddress: "test@example.com",
+        flow: AUTH_FLOW.FORGOT_PASSWORD,
+      },
     })
     mockSignInResource.status = "needs_new_password"
     await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
@@ -699,7 +710,10 @@ describe("<EnterVerificationCode />", () => {
     jest.spyOn(console, "error").mockImplementation(() => {})
     ;(useLocation as jest.Mock).mockReturnValue({
       pathname: "/forgot-password/code",
-      state: { email: "test@example.com", flow: AUTH_FLOW.FORGOT_PASSWORD },
+      state: {
+        verificationCodeEmailAddress: "test@example.com",
+        flow: AUTH_FLOW.FORGOT_PASSWORD,
+      },
     })
     mockResetPasswordVerifyCode.mockResolvedValue({ error: new Error("bad code") })
     await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
@@ -717,7 +731,10 @@ describe("<EnterVerificationCode />", () => {
     cleanup()
     ;(useLocation as jest.Mock).mockReturnValue({
       pathname: "/forgot-password/code",
-      state: { email: "test@example.com", flow: AUTH_FLOW.FORGOT_PASSWORD },
+      state: {
+        verificationCodeEmailAddress: "test@example.com",
+        flow: AUTH_FLOW.FORGOT_PASSWORD,
+      },
     })
     await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
 
@@ -734,7 +751,10 @@ describe("<EnterVerificationCode />", () => {
     mockSignInResource.emailAddress = ""
     ;(useLocation as jest.Mock).mockReturnValue({
       pathname: "/forgot-password/code",
-      state: { email: "test@example.com", flow: AUTH_FLOW.FORGOT_PASSWORD },
+      state: {
+        verificationCodeEmailAddress: "test@example.com",
+        flow: AUTH_FLOW.FORGOT_PASSWORD,
+      },
     })
     await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
 
@@ -752,7 +772,10 @@ describe("<EnterVerificationCode />", () => {
     jest.spyOn(console, "error").mockImplementation(() => {})
     ;(useLocation as jest.Mock).mockReturnValue({
       pathname: "/forgot-password/code",
-      state: { email: "test@example.com", flow: AUTH_FLOW.FORGOT_PASSWORD },
+      state: {
+        verificationCodeEmailAddress: "test@example.com",
+        flow: AUTH_FLOW.FORGOT_PASSWORD,
+      },
     })
     mockResetPasswordSendCode.mockResolvedValue({ error: new Error("resend failed") })
     await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
@@ -773,6 +796,38 @@ describe("<EnterVerificationCode />", () => {
     ).not.toBeNull()
   })
 
+  it("does not redirect after auth transitions from signed-out to signed-in during verification", async () => {
+    cleanup()
+    let clerkSignedIn = false
+    ;(useAuth as jest.Mock).mockImplementation(() => ({
+      isLoaded: true,
+      isSignedIn: clerkSignedIn,
+      getToken: jest.fn().mockResolvedValue("clerk-session-token"),
+    }))
+    setupUserContext({ loggedIn: false })
+    ;(useLocation as jest.Mock).mockReturnValue({
+      pathname: "/sign-in/code",
+      state: { verificationCodeEmailAddress: "test@example.com", flow: AUTH_FLOW.SIGN_IN },
+    })
+
+    const renderResult = await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
+    expect(mockNavigate).not.toHaveBeenCalled()
+
+    clerkSignedIn = true
+    setupUserContext({ loggedIn: true })
+    await act(async () => {
+      renderResult.rerender(<EnterVerificationCode assetPaths={{}} />)
+      await Promise.resolve()
+    })
+
+    expect(mockNavigate).not.toHaveBeenCalledWith("/account", {
+      state: { flow: AUTH_FLOW.SIGN_IN },
+    })
+    expect(mockNavigate).not.toHaveBeenCalledWith("/add-profile", {
+      state: { flow: AUTH_FLOW.SIGN_IN },
+    })
+  })
+
   it("redirects to add-profile when the user is signed in without a profile", async () => {
     cleanup()
     document.title = "DAHLIA San Francisco Housing Portal"
@@ -780,7 +835,9 @@ describe("<EnterVerificationCode />", () => {
     await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
 
     await waitFor(() => {
-      expect(mockNavigate).toHaveBeenCalledWith("/add-profile")
+      expect(mockNavigate).toHaveBeenCalledWith("/add-profile", {
+        state: { flow: AUTH_FLOW.CREATE_ACCOUNT },
+      })
     })
   })
 
@@ -791,7 +848,9 @@ describe("<EnterVerificationCode />", () => {
     await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
 
     await waitFor(() => {
-      expect(mockNavigate).toHaveBeenCalledWith("/account")
+      expect(mockNavigate).toHaveBeenCalledWith("/account", {
+        state: { flow: AUTH_FLOW.CREATE_ACCOUNT },
+      })
     })
   })
   it("verifies the update email code and swaps the primary email", async () => {

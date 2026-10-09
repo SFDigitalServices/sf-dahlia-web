@@ -206,6 +206,7 @@ export const generateSubmitLink = (
   return `/${getCurrentLanguage()}/listings/${listingId}/next-steps?${submitLinkQueryStr}`
 }
 
+// TODO: consolidate with PAGE_ROUTES
 export enum AppPages {
   Home = "home",
   RentalDirectory = "for rent Listings",
@@ -240,4 +241,100 @@ export enum AppPages {
   InviteTo = "invite to",
   ListingApplyForm = "listing apply form",
   UpdateEmail = "update email",
+}
+
+export type ClerkRedirectManagerOptions = {
+  isSignedIn: boolean
+  hasProfile: boolean
+  hasPassword: boolean
+}
+
+// Only handles the Clerk auth pages
+// Does not handle Devise auth pages
+export const clerkRedirectManager = (
+  pageName: AppPages,
+  { isSignedIn, hasProfile, hasPassword }: ClerkRedirectManagerOptions
+): { redirectUrl?: string; returnUrl?: string } => {
+  let redirectUrl
+  let returnUrl
+
+  switch (pageName) {
+    // app/javascript/pages/account/account.tsx
+    case AppPages.Account:
+      if (!isSignedIn) {
+        redirectUrl = getSignInPath()
+        returnUrl = getMyAccountPath()
+        break
+      }
+      if (isSignedIn && !hasProfile) {
+        redirectUrl = getAddProfilePath()
+        break
+      }
+      break
+    //app/javascript/pages/account/contact.tsx
+    case AppPages.Contact:
+      if (!isSignedIn) {
+        redirectUrl = getSignInPath()
+        returnUrl = getMyAccountContactPath()
+        break
+      }
+      if (isSignedIn && !hasProfile) {
+        redirectUrl = getAddProfilePath()
+        break
+      }
+      break
+    // app/javascript/pages/account/settings.tsx
+    case AppPages.AccountSettings:
+      if (!isSignedIn) {
+        redirectUrl = getSignInPath()
+        returnUrl = getMyAccountSettingsPath()
+        break
+      }
+      if (isSignedIn && !hasProfile) {
+        redirectUrl = getAddProfilePath()
+        break
+      }
+      break
+    // app/javascript/pages/account/applications.tsx
+    case AppPages.Applications:
+      if (!isSignedIn) {
+        redirectUrl = getSignInPath()
+        returnUrl = getMyAccountApplicationsPath()
+        break
+      }
+      if (isSignedIn && !hasProfile) {
+        redirectUrl = getAddProfilePath()
+        break
+      }
+      break
+    // app/javascript/pages/account/add-password.tsx
+    case AppPages.AddPassword:
+      if (!isSignedIn) {
+        redirectUrl = getSignInPath()
+        break
+      }
+      if (isSignedIn && hasProfile && hasPassword) {
+        redirectUrl = getMyAccountPath()
+        break
+      }
+      if (isSignedIn && !hasProfile && hasPassword) {
+        redirectUrl = getAddProfilePath()
+        break
+      }
+      break
+    // app/javascript/pages/account/add-profile.tsx
+    case AppPages.AddProfile:
+      if (!isSignedIn) {
+        redirectUrl = getSignInPath()
+        break
+      }
+      if (isSignedIn && hasProfile) {
+        redirectUrl = getMyAccountPath()
+        break
+      }
+      break
+    default:
+  }
+
+  return { redirectUrl, returnUrl }
 }

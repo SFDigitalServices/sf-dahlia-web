@@ -126,7 +126,7 @@ describe("<CreateAnAccount />", () => {
 
     expect(mockSendEmailCode).toHaveBeenCalledTimes(1)
     expect(mockNavigate).toHaveBeenCalledWith("/create-account/code", {
-      state: { email: "test@example.com", flow: AUTH_FLOW.CREATE_ACCOUNT },
+      state: { verificationCodeEmailAddress: "test@example.com", flow: AUTH_FLOW.CREATE_ACCOUNT },
     })
   })
 
@@ -150,7 +150,7 @@ describe("<CreateAnAccount />", () => {
     expect(mockSignInSendCode).toHaveBeenCalledTimes(1)
     expect(mockSendEmailCode).not.toHaveBeenCalled()
     expect(mockNavigate).toHaveBeenCalledWith("/sign-in/code", {
-      state: { email: "test@example.com", flow: AUTH_FLOW.SIGN_IN },
+      state: { verificationCodeEmailAddress: "test@example.com", flow: AUTH_FLOW.SIGN_IN },
     })
   })
 

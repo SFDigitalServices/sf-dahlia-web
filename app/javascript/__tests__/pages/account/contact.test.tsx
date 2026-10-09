@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/unbound-method */
 import {
   renderAndLoadAsync,
   mockWindowLocation,
@@ -78,25 +77,6 @@ describe("<Contact />", () => {
     })
   })
 
-  describe("when the user is not signed in", () => {
-    let originalLocation: Location
-
-    beforeEach(async () => {
-      originalLocation = mockWindowLocation()
-      setupUserContext({ loggedIn: false })
-
-      await renderAndLoadAsync(<Contact assetPaths={{}} />)
-    })
-
-    afterEach(() => {
-      jest.restoreAllMocks()
-      restoreWindowLocation(originalLocation)
-    })
-
-    it("redirects to the sign in page if the user is not signed in", () => {
-      expect(window.location.assign).toHaveBeenCalledWith("/sign-in?redirect=account")
-    })
-  })
   describe("when submitting the phone form", () => {
     let getByRole: RenderResult["getByRole"]
     let originalLocation: Location

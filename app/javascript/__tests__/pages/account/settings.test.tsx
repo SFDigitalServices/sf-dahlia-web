@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/unbound-method */
 import React from "react"
 import {
   renderAndLoadAsync,
@@ -958,30 +957,6 @@ describe("<SettingsPage />", () => {
         ).toBeNull()
         expect(screen.queryByRole("button", { name: /share my account/i })).toBeNull()
       })
-    })
-  })
-
-  describe("when the user is not signed in", () => {
-    let originalLocation: Location
-
-    beforeEach(async () => {
-      originalLocation = mockWindowLocation()
-      ;(useFeatureFlag as jest.Mock).mockReturnValue({ flagsReady: true, unleashFlag: true })
-      ;(useLocation as jest.Mock).mockReturnValue({
-        pathname: "/account/settings",
-        state: null,
-      })
-      setupUserContext({ loggedIn: false })
-
-      await renderAndLoadAsync(<SettingsPage assetPaths={{}} />)
-    })
-
-    afterEach(() => {
-      restoreWindowLocation(originalLocation)
-    })
-
-    it("redirects to the sign in page", () => {
-      expect(window.location.assign).toHaveBeenCalledWith("/sign-in?redirect=settings")
     })
   })
 

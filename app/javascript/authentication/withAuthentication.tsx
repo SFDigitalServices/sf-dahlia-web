@@ -1,8 +1,10 @@
 import React from "react"
+import { useLocation, useNavigate } from "react-router"
 import { isTokenValid, parseUrlParams } from "./token"
 import UserContext from "./context/UserContext"
 import { useAuthSession } from "./session/AuthSessionProvider"
-import { getAddProfilePath, getLocalizedPath, RedirectType } from "../util/routeUtil"
+import { useSignUpSession } from "../authentication/session/useSignUpSession"
+import { AppPages, clerkRedirectManager, getLocalizedPath, RedirectType } from "../util/routeUtil"
 import { getCurrentLanguage } from "../util/languageUtil"
 import { useGTMDataLayer } from "../hooks/analytics/useGTMDataLayer"
 import { useFeatureFlag } from "../hooks/useFeatureFlag"
@@ -10,9 +12,10 @@ import { UNLEASH_FLAG } from "../modules/constants"
 
 interface WithAuthenticationProps {
   redirectType?: RedirectType
+  pageName?: AppPages
 }
 
-const getSignInPath = (redirectType?: RedirectType) => {
+const getSignInPathWithParams = (redirectType?: RedirectType) => {
   const redirectParam = redirectType ? `?redirect=${redirectType}` : ""
   return getLocalizedPath("/sign-in", getCurrentLanguage(), redirectParam)
 }
@@ -24,8 +27,16 @@ const getSignInPath = (redirectType?: RedirectType) => {
  */
 export const withAuthentication = <P extends object>(
   WrappedComponent: React.ComponentType<P>,
-  { redirectType }: WithAuthenticationProps = {}
+  { redirectType, pageName }: WithAuthenticationProps = {}
 ) => {
+  /**
+   * Auth flows with Devise:
+   *   - Rails routing, full page reloads, e.g. `window.location.assign('/...?foo=bar')
+   *   - SignInForm component handles return URL with getSignInRedirectUrl(getRedirectTypeFromURL())
+   * Auth flows with Clerk:
+   *   - React Router navigate(), SPA-like, e.g. `navigate('/...', { state: { foo: 'bar' }})
+   *   - SignInFlow component handles return URL with navigate(returnUrl)
+   */
   const DeviseAuthGate = (props: P) => {
     const { profile, loading, initialStateLoaded } = React.useContext(UserContext)
     const { pushToDataLayer } = useGTMDataLayer()
@@ -34,7 +45,7 @@ export const withAuthentication = <P extends object>(
       const params = parseUrlParams(window.location.href)
 
       if (!isTokenValid() && !loading && initialStateLoaded) {
-        window.location.assign(getSignInPath(redirectType))
+        window.location.assign(getSignInPathWithParams(redirectType))
       } else if (
         profile &&
         params.get("access-token") &&
@@ -56,27 +67,46 @@ export const withAuthentication = <P extends object>(
   }
 
   const ClerkAuthGate = (props: P) => {
+    const { state: reactRouterState } = useLocation()
+    const navigate = useNavigate()
     const { status } = useAuthSession()
-    const { profile, initialStateLoaded } = React.useContext(UserContext)
+    const { isAccountInitialized, hasPassword } = useSignUpSession()
+    const { profile, profileMissing } = React.useContext(UserContext)
     const isSignedIn = status.kind === "signedIn"
-    const loading =
-      status.kind === "initializing" || (isSignedIn && !profile && !initialStateLoaded)
+    const loadingProfile = isSignedIn && !profileMissing && !profile
+    const notReady = status.kind === "initializing" || loadingProfile
 
-    // TODO: simplify and centralize auth redirects
-    React.useEffect(() => {
-      if (loading) return
-      if (!isSignedIn) {
-        window.location.assign(getSignInPath(redirectType))
-        return
-      }
-      if (!profile) {
-        window.location.assign(getAddProfilePath())
-      }
-    }, [loading, isSignedIn, profile])
+    const redirectDecision =
+      !notReady && pageName
+        ? clerkRedirectManager(pageName, {
+            isSignedIn,
+            hasProfile: !!profile,
+            hasPassword: isAccountInitialized && hasPassword,
+          })
+        : undefined
 
-    if (loading || !isSignedIn || !profile) {
-      return null
+    // useLayoutEffect prevents UI flickering during a redirect
+    React.useLayoutEffect(() => {
+      if (!redirectDecision?.redirectUrl) return
+
+      void navigate(redirectDecision.redirectUrl, {
+        state: {
+          ...(redirectDecision.returnUrl && { returnUrl: redirectDecision.returnUrl }),
+          ...(reactRouterState?.flow && { flow: reactRouterState.flow }),
+        },
+      })
+    }, [
+      navigate,
+      reactRouterState?.flow,
+      redirectDecision?.redirectUrl,
+      redirectDecision?.returnUrl,
+    ])
+
+    if (!pageName) {
+      throw new Error("wrapped component is missing pageName param for withAuthentication")
     }
+
+    if (notReady || redirectDecision?.redirectUrl) return null
 
     return <WrappedComponent {...props} />
   }

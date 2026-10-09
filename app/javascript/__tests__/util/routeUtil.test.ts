@@ -1,4 +1,6 @@
 import {
+  AppPages,
+  clerkRedirectManager,
   getAssistancePath,
   getMyAccountSettingsPath,
   getApplicationPath,
@@ -145,5 +147,172 @@ describe("routeUtil", () => {
     it("returns the default redirect URL when no key is provided", () => {
       expect(getSignInRedirectUrl("" as RedirectType)).toBe("/account")
     })
+  })
+
+  describe("clerkRedirectManager", () => {
+    type RedirectOptions = Parameters<typeof clerkRedirectManager>[1]
+
+    const evaluate = (pageName: AppPages, overrides: Partial<RedirectOptions> = {}) =>
+      clerkRedirectManager(pageName, {
+        isSignedIn: false,
+        hasProfile: false,
+        hasPassword: false,
+        ...overrides,
+      })
+
+    const clerkRedirectCases: Array<{
+      description: string
+      pageName: AppPages
+      overrides?: Partial<RedirectOptions>
+      expectedRedirectUrl?: string
+      expectedReturnUrl?: string
+    }> = [
+      // Account page
+      {
+        description: "Account: signed out users go to sign-in with account return URL",
+        pageName: AppPages.Account,
+        expectedRedirectUrl: "/sign-in",
+        expectedReturnUrl: "/account",
+      },
+      {
+        description: "Account: signed-in users without a profile go to add-profile",
+        pageName: AppPages.Account,
+        overrides: { isSignedIn: true },
+        expectedRedirectUrl: "/add-profile",
+      },
+      {
+        description: "Account: signed-in users with a profile are allowed through",
+        pageName: AppPages.Account,
+        overrides: { isSignedIn: true, hasProfile: true },
+      },
+
+      // Contact page
+      {
+        description: "Contact: signed out users go to sign-in with contact return URL",
+        pageName: AppPages.Contact,
+        expectedRedirectUrl: "/sign-in",
+        expectedReturnUrl: "/account/contact",
+      },
+      {
+        description: "Contact: signed-in users without a profile go to add-profile",
+        pageName: AppPages.Contact,
+        overrides: { isSignedIn: true },
+        expectedRedirectUrl: "/add-profile",
+      },
+      {
+        description: "Contact: signed-in users with a profile are allowed through",
+        pageName: AppPages.Contact,
+        overrides: { isSignedIn: true, hasProfile: true },
+      },
+
+      // Account settings page
+      {
+        description: "AccountSettings: signed out users go to sign-in with settings return URL",
+        pageName: AppPages.AccountSettings,
+        expectedRedirectUrl: "/sign-in",
+        expectedReturnUrl: "/account/settings",
+      },
+      {
+        description: "AccountSettings: signed-in users without a profile go to add-profile",
+        pageName: AppPages.AccountSettings,
+        overrides: { isSignedIn: true },
+        expectedRedirectUrl: "/add-profile",
+      },
+      {
+        description: "AccountSettings: signed-in users with a profile are allowed through",
+        pageName: AppPages.AccountSettings,
+        overrides: { isSignedIn: true, hasProfile: true },
+      },
+
+      // Applications page
+      {
+        description: "Applications: signed out users go to sign-in with applications return URL",
+        pageName: AppPages.Applications,
+        expectedRedirectUrl: "/sign-in",
+        expectedReturnUrl: "/account/applications",
+      },
+      {
+        description: "Applications: signed-in users without a profile go to add-profile",
+        pageName: AppPages.Applications,
+        overrides: { isSignedIn: true },
+        expectedRedirectUrl: "/add-profile",
+      },
+      {
+        description: "Applications: signed-in users with a profile are allowed through",
+        pageName: AppPages.Applications,
+        overrides: { isSignedIn: true, hasProfile: true },
+      },
+
+      // Add-password page
+      {
+        description: "AddPassword: signed out users go to sign-in",
+        pageName: AppPages.AddPassword,
+        expectedRedirectUrl: "/sign-in",
+      },
+      {
+        description: "AddPassword: signed-in users with profile and password go to account",
+        pageName: AppPages.AddPassword,
+        overrides: { isSignedIn: true, hasProfile: true, hasPassword: true },
+        expectedRedirectUrl: "/account",
+      },
+      {
+        description:
+          "AddPassword: signed-in users without profile but with password go to add-profile",
+        pageName: AppPages.AddPassword,
+        overrides: { isSignedIn: true, hasPassword: true },
+        expectedRedirectUrl: "/add-profile",
+      },
+      {
+        description:
+          "AddPassword: signed-in users with profile and no password are allowed through",
+        pageName: AppPages.AddPassword,
+        overrides: { isSignedIn: true, hasProfile: true, hasPassword: false },
+      },
+      {
+        description:
+          "AddPassword: signed-in users without profile and without password are allowed through",
+        pageName: AppPages.AddPassword,
+        overrides: { isSignedIn: true, hasProfile: false, hasPassword: false },
+      },
+
+      // Add-profile page
+      {
+        description: "AddProfile: signed out users go to sign-in",
+        pageName: AppPages.AddProfile,
+        expectedRedirectUrl: "/sign-in",
+      },
+      {
+        description: "AddProfile: signed-in users with a profile go to account",
+        pageName: AppPages.AddProfile,
+        overrides: { isSignedIn: true, hasProfile: true },
+        expectedRedirectUrl: "/account",
+      },
+      {
+        description: "AddProfile: signed-in users without a profile are allowed through",
+        pageName: AppPages.AddProfile,
+        overrides: { isSignedIn: true, hasProfile: false },
+      },
+
+      {
+        description: "EnterVerificationCode: not handled by clerkRedirectManager",
+        pageName: AppPages.EnterVerificationCode,
+      },
+
+      // Any page not handled by clerkRedirectManager
+      {
+        description: "Unhandled pages do not redirect",
+        pageName: AppPages.Home,
+      },
+    ]
+
+    it.each(clerkRedirectCases)(
+      "$description",
+      ({ pageName, overrides = {}, expectedRedirectUrl, expectedReturnUrl }) => {
+        expect(evaluate(pageName, overrides)).toEqual({
+          redirectUrl: expectedRedirectUrl,
+          returnUrl: expectedReturnUrl,
+        })
+      }
+    )
   })
 })

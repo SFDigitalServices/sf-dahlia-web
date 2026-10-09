@@ -5,6 +5,7 @@ import { Form, Icon, t } from "@bloom-housing/ui-components"
 import { Button, Card, Heading } from "@bloom-housing/ui-seeds"
 import { DeepMap, FieldError, FieldValues, useForm } from "react-hook-form"
 import withAppSetup from "../../layouts/withAppSetup"
+import { withAuthentication } from "../../authentication/withAuthentication"
 import AuthLayout from "../../layouts/AuthLayout"
 import UserContext from "../../authentication/context/UserContext"
 import { useAuthSession } from "../../authentication/session/AuthSessionProvider"
@@ -147,31 +148,13 @@ const AddProfile = (_props: { assetPaths: unknown }) => {
   const { profile, initialStateLoaded } = useContext(UserContext)
   const { unleashFlag: clerkEnabled, flagsReady } = useFeatureFlag(UNLEASH_FLAG.CLERK_AUTH, false)
 
-  // TODO: simplify and centralize auth redirects
-  /**
-   * Add profile page redirects
-   * --------------------------------
-   * 1. Once the Unleash flags are ready:
-   * If Clerk is not enabled, redirect to sign-in.
-   * 2. Once Clerk is loaded:
-   * If the user is signed out, redirect to sign in.
-   * 3. Once the profile has loaded:
-   * If the user is signed in with a profile, redirect to my account.
-   */
   useEffect(() => {
     if (!flagsReady) return
     if (!clerkEnabled) {
       void navigate(getSignInPath())
       return
     }
-    if (status.kind === "initializing") return
-    if (status.kind === "signedOut") {
-      void navigate(getSignInPath())
-      return
-    }
-    if (!initialStateLoaded) return
-    if (profile) void navigate(getMyAccountPath())
-  }, [flagsReady, clerkEnabled, status, initialStateLoaded, profile, navigate])
+  }, [flagsReady, clerkEnabled, status, navigate])
 
   const ready =
     flagsReady && clerkEnabled && status.kind === "signedIn" && initialStateLoaded && !profile
@@ -183,7 +166,7 @@ const AddProfile = (_props: { assetPaths: unknown }) => {
   return <AddProfilePage />
 }
 
-export default withAppSetup(AddProfile, {
+export default withAppSetup(withAuthentication(AddProfile, { pageName: AppPages.AddProfile }), {
   useFormTimeout: true,
   pageName: AppPages.AddProfile,
 })
