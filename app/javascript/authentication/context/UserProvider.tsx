@@ -81,8 +81,12 @@ const UserProvider = (props: UserProviderProps) => {
   const { unleashFlag: clerkEnabled, flagsReady } = useFeatureFlag(UNLEASH_FLAG.CLERK_AUTH, false)
 
   const onClerkProfileLoaded = useCallback((profile: User | null) => {
-    if (!profile) dispatch(setProfileMissing(true))
-    dispatch(profile ? saveProfile(profile) : systemSignOut())
+    if (profile) {
+      dispatch(saveProfile(profile))
+      return
+    }
+    dispatch(systemSignOut())
+    dispatch(setProfileMissing(true))
   }, [])
 
   const onClerkSignedOut = useCallback(() => {
