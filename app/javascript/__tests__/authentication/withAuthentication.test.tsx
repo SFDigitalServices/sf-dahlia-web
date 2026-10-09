@@ -341,8 +341,6 @@ describe("withAuthentication", () => {
           isSignedIn: true,
           hasProfile: true,
           hasPassword: true,
-          authFlow: "createAccount",
-          verificationCodeEmailAddress: "test@example.com",
         })
       })
       expect(mockNavigate).toHaveBeenCalledWith("/add-profile", {

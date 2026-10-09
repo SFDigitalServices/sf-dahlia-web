@@ -349,8 +349,7 @@ describe("<EnterVerificationCode />", () => {
     await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
 
     await waitFor(() => {
-      // eslint-disable-next-line @typescript-eslint/unbound-method
-      expect(window.location.assign).toHaveBeenCalledWith("/sign-in")
+      expect(mockNavigate).toHaveBeenCalledWith("/sign-in")
     })
   })
 
@@ -795,6 +794,38 @@ describe("<EnterVerificationCode />", () => {
     expect(
       screen.getByRole("heading", { name: t("createAccount.checkEmail"), level: 1 })
     ).not.toBeNull()
+  })
+
+  it("does not redirect after auth transitions from signed-out to signed-in during verification", async () => {
+    cleanup()
+    let clerkSignedIn = false
+    ;(useAuth as jest.Mock).mockImplementation(() => ({
+      isLoaded: true,
+      isSignedIn: clerkSignedIn,
+      getToken: jest.fn().mockResolvedValue("clerk-session-token"),
+    }))
+    setupUserContext({ loggedIn: false })
+    ;(useLocation as jest.Mock).mockReturnValue({
+      pathname: "/sign-in/code",
+      state: { verificationCodeEmailAddress: "test@example.com", flow: AUTH_FLOW.SIGN_IN },
+    })
+
+    const renderResult = await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
+    expect(mockNavigate).not.toHaveBeenCalled()
+
+    clerkSignedIn = true
+    setupUserContext({ loggedIn: true })
+    await act(async () => {
+      renderResult.rerender(<EnterVerificationCode assetPaths={{}} />)
+      await Promise.resolve()
+    })
+
+    expect(mockNavigate).not.toHaveBeenCalledWith("/account", {
+      state: { flow: AUTH_FLOW.SIGN_IN },
+    })
+    expect(mockNavigate).not.toHaveBeenCalledWith("/add-profile", {
+      state: { flow: AUTH_FLOW.SIGN_IN },
+    })
   })
 
   it("redirects to add-profile when the user is signed in without a profile", async () => {

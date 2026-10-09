@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/unbound-method */
-import React, { useEffect, useState } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import { useLocation, useNavigate } from "react-router"
 import { ExpandableContent, Form, Order, t } from "@bloom-housing/ui-components"
 import { Card, Heading, Link, Button } from "@bloom-housing/ui-seeds"
@@ -7,7 +7,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faCheck } from "@fortawesome/free-solid-svg-icons"
 import { Controller, useForm } from "react-hook-form"
 import withAppSetup from "../../layouts/withAppSetup"
-import { withAuthentication } from "../../authentication/withAuthentication"
 import AuthLayout from "../../layouts/AuthLayout"
 import { useAuthSession } from "../../authentication/session/AuthSessionProvider"
 import { useSignInSession } from "../../authentication/session/useSignInSession"
@@ -16,6 +15,7 @@ import { bearerToken } from "../../authentication/session/authStatus"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import {
   AppPages,
+  getAddProfilePath,
   createPath,
   getAddPasswordPath,
   getAuthFlowPath,
@@ -26,6 +26,7 @@ import {
 } from "../../util/routeUtil"
 import styles from "./verification-code.module.scss"
 import { AUTH_FLOW, UNLEASH_FLAG } from "../../modules/constants"
+import UserContext from "../../authentication/context/UserContext"
 import GetHelp from "./components/GetHelp"
 import VerificationCodeField from "./components/VerificationCodeField"
 import { authorizeHousingCounselor, clearHousingCounselorSession } from "../../api/authApiService"
@@ -365,16 +366,31 @@ const EnterVerificationCodePage = ({
   )
 }
 
-// TODO: why do we have `EnterVerificationCode` and `EnterVerificationCodePage`?
+// TODO: this wrapper component handles auth status and redirects, we should have a better name
 const EnterVerificationCode = (_props: { assetPaths: unknown }) => {
   const navigate = useNavigate()
+  const { unleashFlag: clerkEnabled, flagsReady } = useFeatureFlag(UNLEASH_FLAG.CLERK_AUTH, false)
+
+  const { status } = useAuthSession()
+  const { profile, profileMissing } = useContext(UserContext)
+  const isSignedIn = status.kind === "signedIn"
+  const loadingProfile = isSignedIn && !profileMissing && !profile
+
   const { state: reactRouterState } = useLocation()
   const verificationCodeEmailAddress = reactRouterState?.verificationCodeEmailAddress
-  const { status } = useAuthSession()
-  const isSignedIn = status.kind === "signedIn"
-  const { unleashFlag: clerkEnabled, flagsReady } = useFeatureFlag(UNLEASH_FLAG.CLERK_AUTH, false)
-  const flow: AUTH_FLOW = reactRouterState?.flow
+  const flow: AUTH_FLOW | undefined = reactRouterState?.flow
   const isUpdateEmailFlow = flow === AUTH_FLOW.UPDATE_EMAIL
+
+  // user may transition from signedOut to signedIn on this page
+  // keep track of the initial status of the user when they first visited the page
+  const [initialSessionKind, setInitialSessionKind] = useState<"signedIn" | "signedOut" | null>(
+    null
+  )
+
+  useEffect(() => {
+    if (!flagsReady || status.kind === "initializing" || initialSessionKind) return
+    setInitialSessionKind(status.kind)
+  }, [flagsReady, status.kind, initialSessionKind])
 
   useEffect(() => {
     if (!flagsReady) return
@@ -382,12 +398,43 @@ const EnterVerificationCode = (_props: { assetPaths: unknown }) => {
       void navigate(getSignInPath())
       return
     }
-  }, [flagsReady, clerkEnabled, navigate])
+    if (status.kind === "initializing" || loadingProfile) return
+    if (!flow) {
+      void navigate(getSignInPath())
+      return
+    }
+    if (!verificationCodeEmailAddress) {
+      void navigate(getAuthFlowPath(flow), { state: { flow } })
+      return
+    }
+    const arrivedSignedIn = initialSessionKind === "signedIn"
+    if (flow !== AUTH_FLOW.UPDATE_EMAIL && arrivedSignedIn && isSignedIn && profile) {
+      void navigate(getMyAccountPath(), { state: { flow } })
+      return
+    }
+    if (flow !== AUTH_FLOW.UPDATE_EMAIL && arrivedSignedIn && isSignedIn && !profile) {
+      void navigate(getAddProfilePath(), { state: { flow } })
+      return
+    }
+  }, [
+    flagsReady,
+    clerkEnabled,
+    status.kind,
+    loadingProfile,
+    flow,
+    verificationCodeEmailAddress,
+    isSignedIn,
+    initialSessionKind,
+    profile,
+    navigate,
+  ])
 
   const ready =
     flagsReady &&
     clerkEnabled &&
     status.kind !== "initializing" &&
+    !loadingProfile &&
+    !!flow &&
     (isUpdateEmailFlow ? isSignedIn : status.kind === "signedOut") &&
     !!verificationCodeEmailAddress
 
@@ -405,10 +452,7 @@ const EnterVerificationCode = (_props: { assetPaths: unknown }) => {
   )
 }
 
-export default withAppSetup(
-  withAuthentication(EnterVerificationCode, { pageName: AppPages.EnterVerificationCode }),
-  {
-    useFormTimeout: true,
-    pageName: AppPages.EnterVerificationCode,
-  }
-)
+export default withAppSetup(EnterVerificationCode, {
+  useFormTimeout: true,
+  pageName: AppPages.EnterVerificationCode,
+})

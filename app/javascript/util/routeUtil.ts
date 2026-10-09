@@ -247,21 +247,13 @@ export type ClerkRedirectManagerOptions = {
   isSignedIn: boolean
   hasProfile: boolean
   hasPassword: boolean
-  authFlow?: AUTH_FLOW
-  verificationCodeEmailAddress?: string
 }
 
 // Only handles the Clerk auth pages
 // Does not handle Devise auth pages
 export const clerkRedirectManager = (
   pageName: AppPages,
-  {
-    isSignedIn,
-    hasProfile,
-    hasPassword,
-    authFlow,
-    verificationCodeEmailAddress,
-  }: ClerkRedirectManagerOptions
+  { isSignedIn, hasProfile, hasPassword }: ClerkRedirectManagerOptions
 ): { redirectUrl?: string; returnUrl?: string } => {
   let redirectUrl
   let returnUrl
@@ -338,25 +330,6 @@ export const clerkRedirectManager = (
       }
       if (isSignedIn && hasProfile) {
         redirectUrl = getMyAccountPath()
-        break
-      }
-      break
-    // app/javascript/pages/account/verification-code.tsx
-    case AppPages.EnterVerificationCode:
-      if (!authFlow) {
-        redirectUrl = getSignInPath()
-        break
-      }
-      if (!verificationCodeEmailAddress) {
-        redirectUrl = getAuthFlowPath(authFlow)
-        break
-      }
-      if (authFlow !== AUTH_FLOW.UPDATE_EMAIL && isSignedIn && hasProfile) {
-        redirectUrl = getMyAccountPath()
-        break
-      }
-      if (authFlow !== AUTH_FLOW.UPDATE_EMAIL && isSignedIn && !hasProfile) {
-        redirectUrl = getAddProfilePath()
         break
       }
       break

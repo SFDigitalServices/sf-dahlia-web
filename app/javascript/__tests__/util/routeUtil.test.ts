@@ -14,7 +14,6 @@ import {
   getSignInRedirectUrl,
   RedirectType,
 } from "../../util/routeUtil"
-import { AUTH_FLOW } from "../../modules/constants"
 
 describe("routeUtil", () => {
   describe("get paths", () => {
@@ -294,128 +293,9 @@ describe("routeUtil", () => {
         overrides: { isSignedIn: true, hasProfile: false },
       },
 
-      // Verification-code page
       {
-        description: "EnterVerificationCode: no flow and no email goes to sign-in",
+        description: "EnterVerificationCode: not handled by clerkRedirectManager",
         pageName: AppPages.EnterVerificationCode,
-        expectedRedirectUrl: "/sign-in",
-      },
-      {
-        description:
-          "EnterVerificationCode: create-account flow with missing email returns to create-account",
-        pageName: AppPages.EnterVerificationCode,
-        overrides: { authFlow: AUTH_FLOW.CREATE_ACCOUNT },
-        expectedRedirectUrl: "/create-account",
-      },
-      {
-        description: "EnterVerificationCode: sign-in flow with missing email returns to sign-in",
-        pageName: AppPages.EnterVerificationCode,
-        overrides: { authFlow: AUTH_FLOW.SIGN_IN },
-        expectedRedirectUrl: "/sign-in",
-      },
-      {
-        description:
-          "EnterVerificationCode: forgot-password flow with missing email returns to forgot-password",
-        pageName: AppPages.EnterVerificationCode,
-        overrides: { authFlow: AUTH_FLOW.FORGOT_PASSWORD },
-        expectedRedirectUrl: "/forgot-password",
-      },
-      {
-        description:
-          "EnterVerificationCode: update-email flow with missing email returns to update-email",
-        pageName: AppPages.EnterVerificationCode,
-        overrides: { authFlow: AUTH_FLOW.UPDATE_EMAIL },
-        expectedRedirectUrl: "/update-email",
-      },
-      {
-        description:
-          "EnterVerificationCode: non-update flow, signed in, profile exists goes to account",
-        pageName: AppPages.EnterVerificationCode,
-        overrides: {
-          isSignedIn: true,
-          hasProfile: true,
-          authFlow: AUTH_FLOW.SIGN_IN,
-          verificationCodeEmailAddress: "test@example.com",
-        },
-        expectedRedirectUrl: "/account",
-      },
-      {
-        description:
-          "EnterVerificationCode: non-update flow, signed in, profile missing goes to add-profile",
-        pageName: AppPages.EnterVerificationCode,
-        overrides: {
-          isSignedIn: true,
-          hasProfile: false,
-          authFlow: AUTH_FLOW.SIGN_IN,
-          verificationCodeEmailAddress: "test@example.com",
-        },
-        expectedRedirectUrl: "/add-profile",
-      },
-      {
-        description:
-          "EnterVerificationCode: update-email flow with email allows signed-in users through",
-        pageName: AppPages.EnterVerificationCode,
-        overrides: {
-          isSignedIn: true,
-          hasProfile: true,
-          authFlow: AUTH_FLOW.UPDATE_EMAIL,
-          verificationCodeEmailAddress: "test@example.com",
-        },
-      },
-      {
-        description:
-          "EnterVerificationCode: missing flow sends signed-out users to sign-in even with email present",
-        pageName: AppPages.EnterVerificationCode,
-        overrides: {
-          isSignedIn: false,
-          hasProfile: false,
-          verificationCodeEmailAddress: "test@example.com",
-        },
-        expectedRedirectUrl: "/sign-in",
-      },
-      {
-        description:
-          "EnterVerificationCode: missing flow sends signed-in users with profile to sign-in",
-        pageName: AppPages.EnterVerificationCode,
-        overrides: {
-          isSignedIn: true,
-          hasProfile: true,
-          verificationCodeEmailAddress: "test@example.com",
-        },
-        expectedRedirectUrl: "/sign-in",
-      },
-      {
-        description:
-          "EnterVerificationCode: missing flow sends signed-in users without profile to sign-in",
-        pageName: AppPages.EnterVerificationCode,
-        overrides: {
-          isSignedIn: true,
-          hasProfile: false,
-          verificationCodeEmailAddress: "test@example.com",
-        },
-        expectedRedirectUrl: "/sign-in",
-      },
-      {
-        description:
-          "EnterVerificationCode: update-email flow with email allows signed-in users without profile through",
-        pageName: AppPages.EnterVerificationCode,
-        overrides: {
-          isSignedIn: true,
-          hasProfile: false,
-          authFlow: AUTH_FLOW.UPDATE_EMAIL,
-          verificationCodeEmailAddress: "test@example.com",
-        },
-      },
-      {
-        description:
-          "EnterVerificationCode: signed-out users with in-progress email flow are allowed through",
-        pageName: AppPages.EnterVerificationCode,
-        overrides: {
-          isSignedIn: false,
-          hasProfile: false,
-          authFlow: AUTH_FLOW.CREATE_ACCOUNT,
-          verificationCodeEmailAddress: "test@example.com",
-        },
       },
 
       // Any page not handled by clerkRedirectManager
