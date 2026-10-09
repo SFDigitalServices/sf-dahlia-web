@@ -343,16 +343,12 @@ export const clerkRedirectManager = (
       break
     // app/javascript/pages/account/verification-code.tsx
     case AppPages.EnterVerificationCode:
-      if (!authFlow && !verificationCodeEmailAddress) {
+      if (!authFlow) {
         redirectUrl = getSignInPath()
         break
       }
-      if (authFlow && !verificationCodeEmailAddress) {
+      if (!verificationCodeEmailAddress) {
         redirectUrl = getAuthFlowPath(authFlow)
-        break
-      }
-      if (!isSignedIn && !verificationCodeEmailAddress) {
-        redirectUrl = getSignInPath()
         break
       }
       if (authFlow !== AUTH_FLOW.UPDATE_EMAIL && isSignedIn && hasProfile) {

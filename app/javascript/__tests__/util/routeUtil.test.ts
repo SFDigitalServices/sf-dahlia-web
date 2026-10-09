@@ -269,6 +269,12 @@ describe("routeUtil", () => {
         pageName: AppPages.AddPassword,
         overrides: { isSignedIn: true, hasProfile: true, hasPassword: false },
       },
+      {
+        description:
+          "AddPassword: signed-in users without profile and without password are allowed through",
+        pageName: AppPages.AddPassword,
+        overrides: { isSignedIn: true, hasProfile: false, hasPassword: false },
+      },
 
       // Add-profile page
       {
@@ -352,6 +358,50 @@ describe("routeUtil", () => {
         overrides: {
           isSignedIn: true,
           hasProfile: true,
+          authFlow: AUTH_FLOW.UPDATE_EMAIL,
+          verificationCodeEmailAddress: "test@example.com",
+        },
+      },
+      {
+        description:
+          "EnterVerificationCode: missing flow sends signed-out users to sign-in even with email present",
+        pageName: AppPages.EnterVerificationCode,
+        overrides: {
+          isSignedIn: false,
+          hasProfile: false,
+          verificationCodeEmailAddress: "test@example.com",
+        },
+        expectedRedirectUrl: "/sign-in",
+      },
+      {
+        description:
+          "EnterVerificationCode: missing flow sends signed-in users with profile to sign-in",
+        pageName: AppPages.EnterVerificationCode,
+        overrides: {
+          isSignedIn: true,
+          hasProfile: true,
+          verificationCodeEmailAddress: "test@example.com",
+        },
+        expectedRedirectUrl: "/sign-in",
+      },
+      {
+        description:
+          "EnterVerificationCode: missing flow sends signed-in users without profile to sign-in",
+        pageName: AppPages.EnterVerificationCode,
+        overrides: {
+          isSignedIn: true,
+          hasProfile: false,
+          verificationCodeEmailAddress: "test@example.com",
+        },
+        expectedRedirectUrl: "/sign-in",
+      },
+      {
+        description:
+          "EnterVerificationCode: update-email flow with email allows signed-in users without profile through",
+        pageName: AppPages.EnterVerificationCode,
+        overrides: {
+          isSignedIn: true,
+          hasProfile: false,
           authFlow: AUTH_FLOW.UPDATE_EMAIL,
           verificationCodeEmailAddress: "test@example.com",
         },

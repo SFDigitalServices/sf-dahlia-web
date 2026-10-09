@@ -76,41 +76,39 @@ export const withAuthentication = <P extends object>(
     const loadingProfile = isSignedIn && !profileMissing && !profile
     const notReady = status.kind === "initializing" || loadingProfile
 
-    React.useEffect(() => {
-      if (notReady || !pageName) return
+    const redirectDecision =
+      !notReady && pageName
+        ? clerkRedirectManager(pageName, {
+            isSignedIn,
+            hasProfile: !!profile,
+            hasPassword: isAccountInitialized && hasPassword,
+            authFlow: reactRouterState?.flow,
+            verificationCodeEmailAddress: reactRouterState?.verificationCodeEmailAddress,
+          })
+        : undefined
 
-      const { redirectUrl, returnUrl } = clerkRedirectManager(pageName, {
-        isSignedIn,
-        hasProfile: !!profile,
-        hasPassword: isAccountInitialized && hasPassword,
-        // TODO: centralize definition of the data we pass around with reactRouterState
-        authFlow: reactRouterState?.flow,
-        verificationCodeEmailAddress: reactRouterState?.verificationCodeEmailAddress,
+    // useLayoutEffect prevents UI flickering during a redirect
+    React.useLayoutEffect(() => {
+      if (!redirectDecision?.redirectUrl) return
+
+      void navigate(redirectDecision.redirectUrl, {
+        state: {
+          ...(redirectDecision.returnUrl && { returnUrl: redirectDecision.returnUrl }),
+          ...(reactRouterState?.flow && { flow: reactRouterState.flow }),
+        },
       })
-
-      if (redirectUrl)
-        void navigate(redirectUrl, {
-          state: {
-            ...(returnUrl && { returnUrl }),
-            ...(reactRouterState?.flow && { flow: reactRouterState?.flow }),
-          },
-        })
     }, [
-      notReady,
-      isSignedIn,
-      profile,
-      status,
-      isAccountInitialized,
-      hasPassword,
       navigate,
-      reactRouterState,
+      reactRouterState?.flow,
+      redirectDecision?.redirectUrl,
+      redirectDecision?.returnUrl,
     ])
 
     if (!pageName) {
       throw new Error("wrapped component is missing pageName param for withAuthentication")
     }
 
-    if (notReady) return null
+    if (notReady || redirectDecision?.redirectUrl) return null
 
     return <WrappedComponent {...props} />
   }
