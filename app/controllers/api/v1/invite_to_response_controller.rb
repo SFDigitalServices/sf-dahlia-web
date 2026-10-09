@@ -21,10 +21,11 @@ class Api::V1::InviteToResponseController < ApiController
 
     # we must verify app id from token
     type, deadline, app_id = token_fields
-    return unauthorized! unless valid_invite_claims?(type, deadline, app_id)
+    parsed_deadline = InviteToTokenClaims.parse_deadline(deadline)
+    return unauthorized! unless valid_invite_claims?(type, parsed_deadline, app_id)
     return unauthorized! unless RECORDABLE_ACTION_BY_TYPE[type] == record_params[:action]
 
-    if deadline_passed?(parse_deadline(deadline))
+    if deadline_passed?(parsed_deadline)
       Rails.logger.info('InviteToResponseController#record_response: deadline passed - not recording')
     elsif test_link?
       Rails.logger.info(
@@ -107,21 +108,9 @@ class Api::V1::InviteToResponseController < ApiController
     ]
   end
 
-  def valid_invite_claims?(type, deadline, app_id)
-    RECORDABLE_ACTION_BY_TYPE.key?(type) && app_id.present? &&
-      parse_deadline(deadline).present? && invite_token_origin?
-  end
-
-  # Email tokens carry act; next-steps page tokens carry the purpose claim instead. An
-  # act-less token without it may have been signed from raw query params by the old
-  # documents page, and these tokens have no exp.
-  def invite_token_origin?
-    @token_payload[:act].present? ||
-      @token_payload[:purpose] == InviteToController::NEXT_STEPS_TOKEN_PURPOSE
-  end
-
-  def parse_deadline(deadline)
-    Time.zone.parse(deadline.to_s)
+  def valid_invite_claims?(type, parsed_deadline, app_id)
+    RECORDABLE_ACTION_BY_TYPE.key?(type) && app_id.present? && parsed_deadline.present? &&
+      InviteToTokenClaims.trusted_origin?(@token_payload)
   end
 
   def deadline_passed?(parsed_deadline)

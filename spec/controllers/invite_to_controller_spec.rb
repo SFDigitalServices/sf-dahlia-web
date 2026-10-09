@@ -170,6 +170,41 @@ RSpec.describe InviteToController do
         )
       end
 
+      # Given an act-less token without the next-steps purpose, as the documents page used
+      #   to sign from raw query params for any appId (these tokens never expire)
+      # When the invite page renders
+      # Then no next-steps token is signed, so it can't be turned into one that
+      #   record-response accepts
+      it 'does not sign a next-steps token for an act-less token without purpose' do
+        token = 'documents_token'
+        allow(JsonWebTokenService).to receive(:decode_token).with(token).and_return(
+          decoded_payload.except('act'),
+        )
+
+        get :index, params: { id: listing_id, t: token }
+
+        expect(controller).not_to have_received(:encode_token)
+        expect(assigns(:invite_to_props)).not_to have_key(:submitPreviewLinkTokenParam)
+      end
+
+      # Given a next-steps token (signed by index, so no act)
+      # When the invite page renders again (e.g. a reload or language switch)
+      # Then the same claims are re-signed, still marked for next-steps and without act
+      it 'signs a next-steps token for a next-steps token' do
+        token = 'next_steps_token'
+        allow(JsonWebTokenService).to receive(:decode_token).with(token).and_return(
+          decoded_payload.except('act').merge('purpose' => 'next_steps'),
+        )
+
+        get :index, params: { id: listing_id, t: token }
+
+        expect(controller).to have_received(:encode_token).with(
+          { type: 'I2A', deadline: deadline, appId: application_number, isTest: false,
+            purpose: 'next_steps' },
+        )
+        expect(assigns(:invite_to_props)).to have_key(:submitPreviewLinkTokenParam)
+      end
+
       it 'redirects to the listing details page if token is blank' do
         get :index, params: { id: listing_id }
         expect(response).to redirect_to("/listings/#{listing_id}")

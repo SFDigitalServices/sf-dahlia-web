@@ -55,32 +55,31 @@ RSpec.describe Api::V1::InviteToResponseController, type: :controller do
       expect(DahliaBackend::MessageService).not_to have_received(:send_invite_to_response)
     end
 
-    it 'returns unauthorized when required token fields are missing' do
-      allow(JsonWebTokenService).to receive(:decode_token).with(token).and_return(
-        decoded_token.merge('appId' => nil),
-      )
+    # Given a signed token, or a posted action, that fails one of record-response's checks
+    # When it is posted to record a response
+    # Then it is rejected and nothing is forwarded to the backend
+    {
+      'a missing appId' => [{ 'appId' => nil }, 'submit'],
+      'an unparseable deadline' => [{ 'deadline' => 'not-a-date' }, 'submit'],
+      # Time.zone.parse raises here rather than returning nil: 401, not 500
+      'a deadline that raises on parse' => [{ 'deadline' => '2024-13-45' }, 'submit'],
+      'a type not minted for invite-to links' => [{ 'type' => 'hc_session' }, 'submit'],
+      'an action the next-steps pages never send' => [{}, 'yes'],
+      'a blank action' => [{}, ''],
+      'an I2A token posting appointment' => [{ 'type' => 'I2A' }, 'appointment'],
+      'an I2I token posting submit' => [{ 'type' => 'I2I' }, 'submit'],
+    }.each do |scenario, (claim_overrides, action)|
+      it "returns unauthorized and records nothing for #{scenario}" do
+        allow(JsonWebTokenService).to receive(:decode_token).with(token).and_return(
+          decoded_token.merge(claim_overrides),
+        )
 
-      post :record_response, params: {
-        t: token,
-        record: valid_record_params,
-      }
+        post :record_response, params: { t: token, record: { action: action } }
 
-      expect(response).to have_http_status(:unauthorized)
-      expect(DahliaBackend::MessageService).not_to have_received(:send_invite_to_response)
-    end
-
-    it 'returns unauthorized when token deadline is invalid' do
-      allow(JsonWebTokenService).to receive(:decode_token).with(token).and_return(
-        decoded_token.merge('deadline' => 'not-a-date'),
-      )
-
-      post :record_response, params: {
-        t: token,
-        record: valid_record_params,
-      }
-
-      expect(response).to have_http_status(:unauthorized)
-      expect(DahliaBackend::MessageService).not_to have_received(:send_invite_to_response)
+        expect(response).to have_http_status(:unauthorized)
+        expect(DahliaBackend::MessageService)
+          .not_to have_received(:send_invite_to_response)
+      end
     end
 
     it 'does not record for expired deadline and still returns ok' do
@@ -111,69 +110,6 @@ RSpec.describe Api::V1::InviteToResponseController, type: :controller do
       }
 
       expect(response).to have_http_status(:ok)
-      expect(DahliaBackend::MessageService).not_to have_received(:send_invite_to_response)
-    end
-
-    # Given a valid invite-to token
-    # When the client posts an action the next-steps pages never send
-    # Then nothing is forwarded to the backend
-    it 'returns unauthorized for an unknown action' do
-      post :record_response, params: {
-        t: token,
-        record: { action: 'yes' },
-      }
-
-      expect(response).to have_http_status(:unauthorized)
-      expect(DahliaBackend::MessageService).not_to have_received(:send_invite_to_response)
-    end
-
-    # Given a valid token for one invite type
-    # When the client posts the action belonging to the other invite type
-    # Then nothing is forwarded to the backend
-    {
-      'I2A' => 'appointment',
-      'I2I' => 'submit',
-    }.each do |invite_type, mismatched_action|
-      it "returns unauthorized for #{invite_type} posting #{mismatched_action}" do
-        allow(JsonWebTokenService).to receive(:decode_token).with(token).and_return(
-          decoded_token.merge('type' => invite_type),
-        )
-
-        post :record_response, params: {
-          t: token,
-          record: { action: mismatched_action },
-        }
-
-        expect(response).to have_http_status(:unauthorized)
-        expect(DahliaBackend::MessageService)
-          .not_to have_received(:send_invite_to_response)
-      end
-    end
-
-    # Given a validly signed token that wasn't minted for an invite-to link
-    # When it is posted to record a response
-    # Then it is rejected
-    it 'returns unauthorized for a token with an unknown invite type' do
-      allow(JsonWebTokenService).to receive(:decode_token).with(token).and_return(
-        decoded_token.merge('type' => 'hc_session'),
-      )
-
-      post :record_response, params: {
-        t: token,
-        record: valid_record_params,
-      }
-
-      expect(response).to have_http_status(:unauthorized)
-      expect(DahliaBackend::MessageService).not_to have_received(:send_invite_to_response)
-    end
-
-    it 'returns unauthorized when required record params are missing' do
-      post :record_response, params: {
-        t: token,
-        record: { action: '' },
-      }
-
-      expect(response).to have_http_status(:unauthorized)
       expect(DahliaBackend::MessageService).not_to have_received(:send_invite_to_response)
     end
 

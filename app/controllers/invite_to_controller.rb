@@ -3,7 +3,6 @@ class InviteToController < ApplicationController
   include InviteToEventLogging
 
   CLIENT_RECORDING_FLAG = 'temp.webapp.inviteToClientRecording'
-  NEXT_STEPS_TOKEN_PURPOSE = 'next_steps'.freeze
 
   before_action :ignore_head_requests
 
@@ -14,7 +13,7 @@ class InviteToController < ApplicationController
       return
     end
 
-    @invite_to_props = with_preview_link_token(props(decoded_params))
+    @invite_to_props = with_preview_link_token(props(decoded_params), decoded_params)
     # Get URL from application
     if decoded_params['appId'].present? || decoded_params['applicationNumber'].present?
       application = Force::ShortFormService.get(decoded_params['appId'] || decoded_params['applicationNumber'])
@@ -69,9 +68,13 @@ class InviteToController < ApplicationController
   # Only call with props built from a verified invite token: this signs its claims, so
   # signing raw query params would let anyone mint a record-response token for any appId.
   # act is dropped so loading next-steps with this token can't itself record a response.
-  def with_preview_link_token(verified_props)
-    claims = verified_props[:urlParams].except(:act)
-                                       .merge(purpose: NEXT_STEPS_TOKEN_PURPOSE)
+  # A token of untrusted origin gets nothing signed, or index would turn an old
+  # documents-page token into one record-response accepts.
+  def with_preview_link_token(verified_props, decoded_params)
+    return verified_props unless InviteToTokenClaims.trusted_origin?(decoded_params)
+
+    purpose = InviteToTokenClaims::NEXT_STEPS_PURPOSE
+    claims = verified_props[:urlParams].except(:act).merge(purpose:)
     verified_props.merge(submitPreviewLinkTokenParam: encode_token(claims))
   end
 
@@ -179,15 +182,10 @@ class InviteToController < ApplicationController
     JsonWebTokenService.encode_token(params)
   end
 
-  # Time.zone.parse returns nil for some malformed input and raises on the rest, either of
-  # which previously 500'd the page. A deadline we cannot verify counts as passed.
+  # A deadline we cannot verify counts as passed.
   def deadline_has_passed?(deadline)
-    parsed = Time.zone.parse(deadline.to_s)
-    return true if parsed.nil?
-
-    parsed.to_date < Time.zone.today
-  rescue ArgumentError, TypeError
-    true
+    parsed = InviteToTokenClaims.parse_deadline(deadline)
+    parsed.nil? || parsed.to_date < Time.zone.today
   end
 
   def language_change?
