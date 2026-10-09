@@ -261,6 +261,47 @@ describe("<SignInFlow />", () => {
     })
   })
 
+  it("sets err=code in the current URL when requesting a code fails", async () => {
+    const consoleError = jest.spyOn(console, "error").mockImplementation(() => {})
+    mockSendCode.mockResolvedValue({ error: new Error("Unable to send code") })
+    await renderAndLoadAsync(<SignIn assetPaths={{}} />)
+    const user = await switchToVerificationCodeView()
+    const emailGroup = screen.getByRole("group", { name: /email/i })
+    await user.type(within(emailGroup).getByRole("textbox"), "test@test.com")
+    await user.click(screen.getByRole("button", { name: /^get a code$/i }))
+
+    await waitFor(() => {
+      expect(mockNavigate).toHaveBeenCalledWith(
+        { search: "?err=code" },
+        { replace: true, state: null }
+      )
+    })
+    expect(mockNavigate).not.toHaveBeenCalledWith("/sign-in/code", expect.anything())
+    expect(consoleError).toHaveBeenCalledWith("Sign in send code error:", expect.any(Error))
+    consoleError.mockRestore()
+  })
+
+  it("keeps the code error alert visible when requesting another code fails", async () => {
+    const consoleError = jest.spyOn(console, "error").mockImplementation(() => {})
+    mockSendCode.mockResolvedValue({ error: new Error("Unable to send code") })
+    mockLastAuthenticationStrategy("email_code")
+
+    await renderAndLoadAsync(<SignIn assetPaths={{}} />, undefined, ["/sign-in?err=code"])
+    const user = userEvent.setup()
+    const emailGroup = screen.getByRole("group", { name: /email/i })
+    await user.type(within(emailGroup).getByRole("textbox"), "test@test.com")
+    await user.click(screen.getByRole("button", { name: /^get a code$/i }))
+
+    await waitFor(() => {
+      expect(mockNavigate).toHaveBeenCalledWith(
+        { search: "?err=code" },
+        { replace: true, state: null }
+      )
+    })
+    expect(screen.getByRole("alert")).toBeInTheDocument()
+    consoleError.mockRestore()
+  })
+
   it("redirects to the account overview when already signed in", async () => {
     ;(useAuthSession as jest.Mock).mockReturnValue({
       status: { kind: "signedIn" },
@@ -320,6 +361,18 @@ describe("<SignInFlow />", () => {
     expect(mockFinalize).not.toHaveBeenCalled()
 
     consoleError.mockRestore()
+  })
+
+  it("shows an error alert when the URL has a non-empty err parameter", async () => {
+    await renderAndLoadAsync(<SignIn assetPaths={{}} />, undefined, ["/sign-in?err=code"])
+
+    expect(screen.getByRole("alert")).toBeInTheDocument()
+  })
+
+  it("does not show an error alert when the URL err parameter is empty", async () => {
+    await renderAndLoadAsync(<SignIn assetPaths={{}} />, undefined, ["/sign-in?err="])
+
+    expect(screen.queryByRole("alert")).toBeNull()
   })
 
   describe("housing counselor access", () => {

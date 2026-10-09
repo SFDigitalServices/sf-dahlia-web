@@ -568,6 +568,7 @@
   "error.account.firstName": "Enter first name",
   "error.account.genericServerError": "Something went wrong. Try again or check back later.",
   "error.account.genericServerError.abbreviated": "Something went wrong",
+  "error.account.emailHelp": "You can also email <a href='mailto:sfhousinginfo@sfgov.org'>sfhousinginfo@sfgov.org</a> for help.",
   "error.account.lastName": "Enter last name",
   "error.account.newPasswordMissing": "Enter new password",
   "error.account.passwordComplexity": "Choose a strong password with at least 8 characters, 1 letter, and 1 number",

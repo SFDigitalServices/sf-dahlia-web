@@ -88,7 +88,7 @@ describe("<ForgotPasswordFlow />", () => {
     })
   })
 
-  it("shows an error and does not route when requesting forgot password fails", async () => {
+  it("redirects to sign in with err=code when requesting forgot password fails", async () => {
     const createError = { errors: [{ code: "resource_not_found" }] }
     jest.spyOn(console, "error").mockImplementation(() => {})
     mockSignInCreate.mockResolvedValue({ error: createError })
@@ -100,7 +100,7 @@ describe("<ForgotPasswordFlow />", () => {
     })
     expect(console.error).toHaveBeenCalledWith("Forgot password error:", createError)
     expect(mockSendResetCode).not.toHaveBeenCalled()
-    expect(mockNavigate).not.toHaveBeenCalled()
+    expect(mockNavigate).toHaveBeenCalledWith("/sign-in?err=code")
   })
 
   it("does not submit when sign-in is currently fetching", async () => {
