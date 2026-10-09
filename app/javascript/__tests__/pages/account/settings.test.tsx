@@ -697,7 +697,7 @@ describe("<SettingsPage />", () => {
       it("renders the housing counselor section on the page", async () => {
         expect(
           await screen.findByRole("group", {
-            name: /share your account with a housing counselor/i,
+            name: /share your account with a counseling agency/i,
           })
         ).toBeInTheDocument()
         expect(screen.getByRole("button", { name: /share my account/i })).toBeInTheDocument()
@@ -953,7 +953,7 @@ describe("<SettingsPage />", () => {
       it("does not render the housing counselor section", () => {
         expect(
           screen.queryByRole("group", {
-            name: /share your account with a housing counselor/i,
+            name: /share your account with a counseling agency/i,
           })
         ).toBeNull()
         expect(screen.queryByRole("button", { name: /share my account/i })).toBeNull()

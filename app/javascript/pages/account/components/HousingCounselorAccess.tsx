@@ -8,7 +8,8 @@ import { getErrorMessage } from "./util"
 import { getHousingCounselorAgencies, HousingCounselorAgency } from "../../../api/authApiService"
 import { useAuthSession } from "../../../authentication/session/AuthSessionProvider"
 import { bearerToken } from "../../../authentication/session/authStatus"
-import { formatTimeOfDay, localizedFormat } from "../../../util/languageUtil"
+import { getHousingCounselorsPath } from "../../../util/routeUtil"
+import { formatTimeOfDay, localizedFormat, renderInlineMarkup } from "../../../util/languageUtil"
 import styles from "./HousingCounselorAccess.module.scss"
 
 export const housingCounselorFieldsetErrors: ErrorMessages = {
@@ -46,7 +47,13 @@ const ShareAccess = ({
   return (
     <LoadingState loading={!agencies}>
       <div>
-        <p className="field-note">{t("accountSettings.housingCounselor.description")}</p>
+        <p className="field-note">
+          {renderInlineMarkup(
+            t("accountSettings.housingCounselor.description", {
+              url: getHousingCounselorsPath(),
+            })
+          )}
+        </p>
         <Select
           id="housingCounselingAgencyId"
           name="housingCounselingAgencyId"
@@ -72,7 +79,7 @@ const ShareAccess = ({
           controlClassName="control"
         />
         <div className={styles.hcPermissions}>
-          <p>{t("accountSettings.housingCounselor.p1")}</p>
+          <p className="share-access">{t("accountSettings.housingCounselor.p1")}</p>
           <ul className={styles.hcList}>
             <li>{t("accountSettings.housingCounselor.p2")}</li>
             <li>{t("accountSettings.housingCounselor.p3")}</li>
@@ -133,9 +140,11 @@ const RevokeAccess = ({
   return (
     <div className="field-note">
       <p className={styles.hcSharedWith}>
-        {t("accountSettings.housingCounselor.sharedWith", { agencyName: agency.name })}
+        {t("accountSettings.housingCounselor.sharedWith", {
+          agencyName: agency.shortName ? `${agency.name} (${agency.shortName})` : agency.name,
+        })}
       </p>
-      <p>
+      <p className="share-access">
         {t("accountSettings.housingCounselor.agencyCan", {
           agencyName: agency.shortName || agency.name,
         })}
@@ -147,7 +156,8 @@ const RevokeAccess = ({
       </ul>
       {lastModified &&
         t("accountSettings.housingCounselor.sharedOn", {
-          sharedDate: `${localizedFormat(lastModified, "LL")} at ${formatTimeOfDay(lastModified)}`,
+          sharedDate: localizedFormat(lastModified, "LL"),
+          sharedTime: formatTimeOfDay(lastModified),
         })}
     </div>
   )
@@ -165,7 +175,10 @@ const HousingCounselorAccess = ({
   lastModified?: string
 }) => {
   return (
-    <Fieldset label={t("accountSettings.housingCounselor.heading")}>
+    <Fieldset
+      label={t("accountSettings.housingCounselor.heading")}
+      className="housing-counselor-access"
+    >
       {housingCounselorAgencyId ? (
         <RevokeAccess
           housingCounselorAgencyId={housingCounselorAgencyId}
