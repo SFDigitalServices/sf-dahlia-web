@@ -17,7 +17,7 @@ import {
 } from "./userActions"
 import UserContext, { ContextProps } from "./UserContext"
 import UserReducer from "./UserReducer"
-import { AxiosError } from "axios"
+import { AxiosError, isAxiosError } from "axios"
 import { useGTMDataLayerWithoutUserContext } from "../../hooks/analytics/useGTMDataLayer"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import { UNLEASH_FLAG } from "../../modules/constants"
@@ -32,7 +32,7 @@ const ClerkProfile = ({
   onSignedOut,
 }: {
   hasProfile: boolean
-  onLoaded: (profile: User | null) => void
+  onLoaded: (profile: User | null, profileMissing: boolean) => void
   onSignedOut: () => void
 }) => {
   const { status, getCredentials } = useAuthSession()
@@ -55,9 +55,9 @@ const ClerkProfile = ({
         if (!sessionToken) {
           throw new Error("Missing Clerk session token")
         }
-        onLoaded(await getProfile({ clerkEnabled: true, sessionToken }))
-      } catch {
-        onLoaded(null)
+        onLoaded(await getProfile({ clerkEnabled: true, sessionToken }), false)
+      } catch (error) {
+        onLoaded(null, isAxiosError(error) && error.response?.status === 404)
       }
     })()
   }, [getCredentials, hasProfile, status, onLoaded, onSignedOut])
@@ -80,13 +80,15 @@ const UserProvider = (props: UserProviderProps) => {
   const { pushToDataLayer } = useGTMDataLayerWithoutUserContext()
   const { unleashFlag: clerkEnabled, flagsReady } = useFeatureFlag(UNLEASH_FLAG.CLERK_AUTH, false)
 
-  const onClerkProfileLoaded = useCallback((profile: User | null) => {
+  const onClerkProfileLoaded = useCallback((profile: User | null, profileMissing: boolean) => {
     if (profile) {
       dispatch(saveProfile(profile))
       return
     }
     dispatch(systemSignOut())
-    dispatch(setProfileMissing(true))
+    if (profileMissing) {
+      dispatch(setProfileMissing(true))
+    }
   }, [])
 
   const onClerkSignedOut = useCallback(() => {
