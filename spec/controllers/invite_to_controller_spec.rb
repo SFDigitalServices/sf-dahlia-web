@@ -159,6 +159,17 @@ RSpec.describe InviteToController do
         expect(assigns(:invite_to_props)).to have_key(:submitPreviewLinkTokenParam)
       end
 
+      # Given a verified invite token
+      # When the invite page renders
+      # Then the preview link token re-signs its claims without act, marked for next-steps
+      it 'signs the preview link token for next-steps without act' do
+        get :index, params: { id: listing_id, t: 'test_token' }
+        expect(controller).to have_received(:encode_token).with(
+          { type: 'I2A', deadline: deadline, appId: application_number, isTest: false,
+            purpose: 'next_steps' },
+        )
+      end
+
       it 'redirects to the listing details page if token is blank' do
         get :index, params: { id: listing_id }
         expect(response).to redirect_to("/listings/#{listing_id}")
@@ -475,6 +486,14 @@ RSpec.describe InviteToController do
 
     it 'does not call record_response' do
       expect(DahliaBackend::MessageService).not_to have_received(:send_invite_to_response)
+    end
+
+    # Given unauthenticated query params naming any appId
+    # When the documents page renders
+    # Then it signs nothing, so it can't be used to mint a record-response token
+    it 'does not sign a token from its query params' do
+      expect(controller).not_to have_received(:encode_token)
+      expect(assigns(:invite_to_props)).not_to have_key(:submitPreviewLinkTokenParam)
     end
   end
 
