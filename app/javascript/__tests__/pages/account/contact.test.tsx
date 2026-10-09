@@ -12,19 +12,32 @@ import { getMyAccountSettingsPath } from "../../../util/routeUtil"
 import * as authApiService from "../../../api/authApiService"
 import * as authSession from "../../../authentication/session/AuthSessionProvider"
 import * as authStatus from "../../../authentication/session/authStatus"
+import { useFeatureFlag } from "../../../hooks/useFeatureFlag"
 
 jest.mock("react-gtm-module", () => ({
   initialize: jest.fn(),
   dataLayer: jest.fn(),
 }))
 
+const mockNavigate = jest.fn()
+
+jest.mock("react-router", () => ({
+  ...jest.requireActual("react-router"),
+  useNavigate: () => mockNavigate,
+}))
+
 jest.mock("../../../hooks/useFeatureFlag", () => ({
-  useFeatureFlag: () => ({ flagsReady: true, unleashFlag: true }),
+  useFeatureFlag: jest.fn(),
 }))
 
 describe("<Contact />", () => {
   beforeEach(() => {
     document.documentElement.lang = "en"
+    mockNavigate.mockClear()
+    ;(useFeatureFlag as jest.Mock).mockImplementation(() => ({
+      flagsReady: true,
+      unleashFlag: true,
+    }))
     jest.spyOn(console, "error").mockImplementation(() => {})
     window.matchMedia = jest.fn().mockImplementation((query) => ({
       matches: true,

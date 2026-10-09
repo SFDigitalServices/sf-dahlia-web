@@ -2,7 +2,7 @@
 import React, { useContext, useEffect, useState, useRef } from "react"
 import { useLocation, useNavigate } from "react-router"
 import { ExpandableContent, Form, Order, t } from "@bloom-housing/ui-components"
-import { Card, Heading, Link, Button } from "@bloom-housing/ui-seeds"
+import { Card, Heading, Button } from "@bloom-housing/ui-seeds"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faCheck } from "@fortawesome/free-solid-svg-icons"
 import { Controller, useForm } from "react-hook-form"
@@ -24,12 +24,19 @@ import {
   getResetPasswordPath,
   getSignInPath,
   getMyAccountSettingsPath,
+  getMyAccountContactPath,
+  getUpdateEmailPath,
 } from "../../util/routeUtil"
 import styles from "./verification-code.module.scss"
 import { AUTH_FLOW, UNLEASH_FLAG } from "../../modules/constants"
 import GetHelp from "./components/GetHelp"
 import VerificationCodeField from "./components/VerificationCodeField"
-import { authorizeHousingCounselor, clearHousingCounselorSession } from "../../api/authApiService"
+import {
+  authorizeHousingCounselor,
+  clearHousingCounselorSession,
+  updateContactEmail,
+} from "../../api/authApiService"
+import { User } from "../../authentication/user"
 
 interface EnterVerificationCodePageProps {
   email: string
@@ -39,6 +46,9 @@ interface EnterVerificationCodePageProps {
 
 // The user can send a new verification code every 30 seconds
 const RESEND_CODE_MS = 30000
+
+const isUpdateEmailFlow = (flow?: AUTH_FLOW) =>
+  flow === AUTH_FLOW.UPDATE_LOGIN_EMAIL || flow === AUTH_FLOW.UPDATE_CONTACT_EMAIL
 
 const remainingResendSeconds = (expiresAt: number) =>
   Math.max(0, Math.ceil((expiresAt - Date.now()) / 1000))
@@ -59,6 +69,7 @@ const EnterVerificationCodePage = ({
   const [resendSeconds, setResendSeconds] = useState(RESEND_CODE_MS / 1000)
   const [isResending, setIsResending] = useState(false)
   const { user } = useSignUpSession()
+  const { profile, saveProfile } = useContext(UserContext)
 
   const {
     control,
@@ -158,15 +169,18 @@ const EnterVerificationCodePage = ({
     void navigate(getResetPasswordPath(), { state: { email, flow, code } })
   }
 
-  const verifyUpdateEmailCode = async (code: string) => {
-    if (!user) {
-      setError("code", { message: "invalid" })
-      return
-    }
-    const emailAddress = user.emailAddresses.find(
-      (e) => e.emailAddress.toLowerCase() === email.toLowerCase()
+  const findPendingEmailAddress = () => {
+    const primaryEmailId = user?.primaryEmailAddressId
+    if (!user || !primaryEmailId) return undefined
+    return user.emailAddresses.find(
+      (address) =>
+        address.id !== primaryEmailId && address.emailAddress.toLowerCase() === email.toLowerCase()
     )
-    if (!emailAddress) {
+  }
+
+  const verifyUpdateLoginEmailCode = async (code: string) => {
+    const emailAddress = findPendingEmailAddress()
+    if (!user || !emailAddress) {
       setError("code", { message: "invalid" })
       return
     }
@@ -200,11 +214,68 @@ const EnterVerificationCodePage = ({
     }
   }
 
+  const updateSalesforceContactEmail = async (currentProfile: User, contactEmail: string) => {
+    const sessionToken = bearerToken(await getCredentials())
+    if (!sessionToken) throw new Error("Missing Clerk session token")
+    return updateContactEmail(
+      { ...currentProfile, email: contactEmail },
+      { clerkEnabled: true, sessionToken }
+    )
+  }
+  // Clerk is only used to verify ownership.
+  // The address is verified, saved to Salesforce, then removed
+  const verifyUpdateContactEmailCode = async (code: string) => {
+    const emailAddress = findPendingEmailAddress()
+    if (!user || !emailAddress || !profile) {
+      setError("code", { message: "invalid" })
+      return
+    }
+
+    const verifiedEmail = await emailAddress.attemptVerification({ code }).catch((error) => {
+      const isInvalidCode = error?.errors?.[0]?.code === "form_code_incorrect"
+      setError("code", { message: isInvalidCode ? "invalid" : "generic" })
+      return null
+    })
+    if (!verifiedEmail) return
+
+    if (verifiedEmail.verification.status !== "verified") {
+      setError("code", { message: "invalid" })
+      return
+    }
+
+    let updatedProfile: User | null = null
+    try {
+      updatedProfile = await updateSalesforceContactEmail(profile, email)
+    } catch (error) {
+      console.error("Update contact email: Salesforce update failed", error)
+    }
+    if (verifiedEmail.id !== user.primaryEmailAddressId) {
+      // TODO: There is a rare possibility the destroy may fail and create a stale address
+      // The address is attached to the user in the Clerk DB and would
+      // require cleanup.
+      // https://github.com/SFDigitalServices/sf-dahlia-web/pull/3078#discussion_r4104585451
+      await verifiedEmail
+        .destroy()
+        .catch((error) =>
+          console.error("Update contact email: failed to remove temporary address", error)
+        )
+    }
+
+    if (!updatedProfile) {
+      void navigate(getUpdateEmailPath(), { state: { flow, saveFailed: true } })
+      return
+    }
+
+    saveProfile?.(updatedProfile)
+    void navigate(getMyAccountContactPath(), { state: { contactEmailChanged: true } })
+  }
+
   const verifyAuthCodeByFlow: Record<AUTH_FLOW, (code: string) => Promise<void>> = {
     [AUTH_FLOW.SIGN_IN]: verifySignInCode,
     [AUTH_FLOW.CREATE_ACCOUNT]: verifySignUpCode,
     [AUTH_FLOW.FORGOT_PASSWORD]: verifyForgotPasswordCode,
-    [AUTH_FLOW.UPDATE_EMAIL]: verifyUpdateEmailCode,
+    [AUTH_FLOW.UPDATE_LOGIN_EMAIL]: verifyUpdateLoginEmailCode,
+    [AUTH_FLOW.UPDATE_CONTACT_EMAIL]: verifyUpdateContactEmailCode,
   }
 
   const onSubmit = async ({ code }: { code: string }) => verifyAuthCodeByFlow[flow](code)
@@ -236,10 +307,9 @@ const EnterVerificationCodePage = ({
     return true
   }
 
-  const resendUpdateEmailCode = async (): Promise<boolean> => {
-    const emailAddress = user?.emailAddresses.find(
-      (e) => e.emailAddress.toLowerCase() === email.toLowerCase()
-    )
+  const resendPendingEmailCode = async (): Promise<boolean> => {
+    const emailAddress = findPendingEmailAddress()
+
     if (!emailAddress) {
       console.error("Resend update email code error: address not found")
       return false
@@ -258,7 +328,8 @@ const EnterVerificationCodePage = ({
     [AUTH_FLOW.SIGN_IN]: resendSignInCode,
     [AUTH_FLOW.CREATE_ACCOUNT]: resendSignUpCode,
     [AUTH_FLOW.FORGOT_PASSWORD]: resendForgotPasswordCode,
-    [AUTH_FLOW.UPDATE_EMAIL]: resendUpdateEmailCode,
+    [AUTH_FLOW.UPDATE_LOGIN_EMAIL]: resendPendingEmailCode,
+    [AUTH_FLOW.UPDATE_CONTACT_EMAIL]: resendPendingEmailCode,
   }
 
   const onResend = async () => {
@@ -285,9 +356,20 @@ const EnterVerificationCodePage = ({
           {t("createAccount.weSentCodeTo")}
           <br />
           <span className={styles.email}>{email}</span>
-          <Link className={styles.editEmail} href={editEmailHref}>
+          <Button
+            className={styles.editEmail}
+            variant="text"
+            size="sm"
+            type="button"
+            onClick={() => {
+              void navigate(
+                editEmailHref,
+                isUpdateEmailFlow(flow) ? { state: { flow } } : undefined
+              )
+            }}
+          >
             {t("createAccount.editEmail")}
-          </Link>
+          </Button>
         </p>
         {isForgotPasswordFlow && (
           <p className={styles["forgotPasswordDescription"]}>{t("signIn.forgotPasswordCode")}</p>
@@ -376,7 +458,7 @@ const EnterVerificationCode = (_props: { assetPaths: unknown }) => {
   const { unleashFlag: clerkEnabled, flagsReady } = useFeatureFlag(UNLEASH_FLAG.CLERK_AUTH, false)
   const flow: AUTH_FLOW = state?.flow
   const fallbackPath = flow ? getAuthFlowPath(flow) : getSignInPath()
-  const isUpdateEmailFlow = flow === AUTH_FLOW.UPDATE_EMAIL
+  const isSignedInUpdateFlow = isUpdateEmailFlow(flow)
 
   // TODO: simplify and centralize auth redirects
   /**
@@ -408,7 +490,7 @@ const EnterVerificationCode = (_props: { assetPaths: unknown }) => {
       return
     }
     if (!initialStateLoaded) return
-    if (!isUpdateEmailFlow) {
+    if (!isSignedInUpdateFlow) {
       if (!initialStateLoaded) return
       if (isSignedIn && profile) void navigate(getMyAccountPath())
       if (isSignedIn && !profile) void navigate(getAddProfilePath())
@@ -425,14 +507,14 @@ const EnterVerificationCode = (_props: { assetPaths: unknown }) => {
     navigate,
     flow,
     fallbackPath,
-    isUpdateEmailFlow,
+    isSignedInUpdateFlow,
   ])
 
   const ready =
     flagsReady &&
     clerkEnabled &&
     status.kind !== "initializing" &&
-    (isUpdateEmailFlow ? isSignedIn : status.kind === "signedOut") &&
+    (isSignedInUpdateFlow ? isSignedIn : status.kind === "signedOut") &&
     !!email
 
   if (!ready) {

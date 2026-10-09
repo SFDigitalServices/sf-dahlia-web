@@ -1,17 +1,18 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import React, { useContext, useState } from "react"
 import { Form, t } from "@bloom-housing/ui-components"
-import { Navigate } from "react-router"
+import { Navigate, useNavigate } from "react-router"
 import { Message, Link, Card, Heading, Button } from "@bloom-housing/ui-seeds"
 import Layout from "../../layouts/Layout"
 import AccountLayout from "../../layouts/AccountLayout"
 import withAppSetup from "../../layouts/withAppSetup"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
-import { UNLEASH_FLAG } from "../../modules/constants"
+import { AUTH_FLOW, UNLEASH_FLAG } from "../../modules/constants"
 import {
   AppPages,
   getMyAccountPath,
   getMyAccountSettingsPath,
+  getUpdateEmailPath,
   RedirectType,
 } from "../../util/routeUtil"
 import { withAuthentication } from "../../authentication/withAuthentication"
@@ -145,8 +146,10 @@ const ContactPhoneForm = ({
 
 const Contact = () => {
   const { unleashFlag: accountLayoutEnabled } = useFeatureFlag(UNLEASH_FLAG.ACCOUNTS_LAYOUT, false)
+  const { unleashFlag: clerkEnabled } = useFeatureFlag(UNLEASH_FLAG.CLERK_AUTH, false)
   const { getAssetPath } = useContext(ConfigContext)
   const { profile, saveProfile } = useContext(UserContext)
+  const navigate = useNavigate()
 
   if (!accountLayoutEnabled) {
     return <Navigate to={getMyAccountPath()} replace />
@@ -173,9 +176,24 @@ const Contact = () => {
             <p className={styles.email}>{profile?.email}</p>
             <p className={styles.changeEmail}>
               {renderInlineMarkup(
-                t("accountLayout.contact.changeEmail", { href: getMyAccountSettingsPath() })
+                t("accountLayout.contact.changeLoginEmail", { href: getMyAccountSettingsPath() })
               )}
             </p>
+            {clerkEnabled && (
+              <Button
+                type="button"
+                variant="primary-outlined"
+                className={styles.saveButton}
+                size="sm"
+                onClick={() => {
+                  void navigate(getUpdateEmailPath(), {
+                    state: { flow: AUTH_FLOW.UPDATE_CONTACT_EMAIL },
+                  })
+                }}
+              >
+                {t("accountSettings.email.updateEmail")}
+              </Button>
+            )}
           </Card.Section>
           {profile && <ContactPhoneForm profile={profile} saveProfile={saveProfile} />}
           <Card.Footer className={styles.footer}>

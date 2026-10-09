@@ -22,7 +22,11 @@ const HELP_BY_FLOW: Record<AUTH_FLOW, { textKey: string; href: string }> = {
     textKey: "signIn.getHelpLink",
     href: "https://www.sf.gov/sign-in-to-your-dahlia-account",
   },
-  [AUTH_FLOW.UPDATE_EMAIL]: {
+  [AUTH_FLOW.UPDATE_LOGIN_EMAIL]: {
+    textKey: "signIn.getHelpLink",
+    href: "https://www.sf.gov/sign-in-to-your-dahlia-account",
+  },
+  [AUTH_FLOW.UPDATE_CONTACT_EMAIL]: {
     textKey: "signIn.getHelpLink",
     href: "https://www.sf.gov/sign-in-to-your-dahlia-account",
   },
