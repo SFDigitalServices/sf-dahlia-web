@@ -9,7 +9,7 @@ import React from "react"
 import { MemoryRouter } from "react-router"
 import { within, screen, fireEvent, waitFor } from "@testing-library/react"
 import { useAuth } from "@clerk/react"
-import { setupUserContext } from "../../__util__/accountUtils"
+import { mockProfileStub, setupUserContext } from "../../__util__/accountUtils"
 import { getSignInPath } from "../../../util/routeUtil"
 
 jest.mock("react-gtm-module", () => ({
@@ -98,9 +98,8 @@ describe("<Account />", () => {
     let originalLocation: Location
     let clerkSignOut: jest.Mock
 
-    beforeEach(async () => {
-      originalLocation = mockWindowLocation()
-      setupUserContext({ loggedIn: true })
+    const renderSignedIn = async (profile = mockProfileStub) => {
+      setupUserContext({ loggedIn: true, mockProfile: profile })
       clerkSignOut = jest.fn().mockResolvedValue(undefined)
       ;(useAuth as jest.Mock).mockReturnValue({
         isLoaded: true,
@@ -114,6 +113,11 @@ describe("<Account />", () => {
           <MemoryRouter initialEntries={["/account"]}>{children}</MemoryRouter>
         ),
       })
+    }
+
+    beforeEach(() => {
+      originalLocation = mockWindowLocation()
+      mockNavigate.mockClear()
     })
 
     afterEach(() => {
@@ -122,6 +126,7 @@ describe("<Account />", () => {
     })
 
     it("ends the Clerk session and routes to sign in from the account overview", async () => {
+      await renderSignedIn()
       fireEvent.click(screen.getByRole("button", { name: "Sign out of account" }))
 
       await waitFor(() => expect(clerkSignOut).toHaveBeenCalled())
@@ -129,10 +134,43 @@ describe("<Account />", () => {
     })
 
     it("ends the Clerk session and routes to sign in from the account nav", async () => {
+      await renderSignedIn()
       fireEvent.click(screen.getByRole("button", { name: "Sign out" }))
 
       await waitFor(() => expect(clerkSignOut).toHaveBeenCalled())
-      await waitFor(() => expect(window.location.href).toEqual(getSignInPath()))
+      await waitFor(() => expect(mockNavigate).toHaveBeenCalledWith(getSignInPath()))
+    })
+
+    describe("as a housing counselor in a delegated account", () => {
+      const delegatedProfile = {
+        ...mockProfileStub,
+        firstName: "Rosa",
+        lastName: "Flores",
+        isDelegated: true,
+      }
+      const signedOutState = { state: { housingCounselorSignedOut: "Rosa Flores" } }
+
+      it("tells the sign-in page whose account was signed out of, from the account overview", async () => {
+        await renderSignedIn(delegatedProfile)
+        fireEvent.click(screen.getByRole("button", { name: "Sign out of account" }))
+
+        await waitFor(() =>
+          expect(mockNavigate).toHaveBeenCalledWith(getSignInPath(), signedOutState)
+        )
+      })
+
+      it("tells the sign-in page whose account was signed out of, from the account nav", async () => {
+        await renderSignedIn(delegatedProfile)
+        const accountNavSignOut = screen
+          .getAllByRole("navigation", { name: "Account" })
+          .map((nav) => within(nav).queryByRole("button", { name: "Sign out" }))
+          .find(Boolean)
+        fireEvent.click(accountNavSignOut)
+
+        await waitFor(() =>
+          expect(mockNavigate).toHaveBeenCalledWith(getSignInPath(), signedOutState)
+        )
+      })
     })
   })
 
@@ -209,6 +247,36 @@ describe("<Account />", () => {
       })
 
       expect(screen.queryByText("You do not have access to this account.")).toBeNull()
+    })
+
+    it("shows whose account a housing counselor signed into when hcAccess=1 and the profile is delegated", async () => {
+      setupUserContext({
+        loggedIn: true,
+        mockProfile: {
+          ...mockProfileStub,
+          firstName: "Rosa",
+          lastName: "Flores",
+          isDelegated: true,
+        },
+      })
+
+      await renderAndLoadAsync(<Account assetPaths={{}} />, {
+        wrapper: ({ children }) => (
+          <MemoryRouter initialEntries={["/account?hcAccess=1"]}>{children}</MemoryRouter>
+        ),
+      })
+
+      expect(screen.getByText("You signed into Rosa Flores's account")).toBeInTheDocument()
+    })
+
+    it("does not show the signed-into toast when the profile is not delegated", async () => {
+      await renderAndLoadAsync(<Account assetPaths={{}} />, {
+        wrapper: ({ children }) => (
+          <MemoryRouter initialEntries={["/account?hcAccess=1"]}>{children}</MemoryRouter>
+        ),
+      })
+
+      expect(screen.queryByText(/You signed into/)).toBeNull()
     })
   })
 })

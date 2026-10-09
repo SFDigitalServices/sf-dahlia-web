@@ -35,11 +35,16 @@ const ClerkProfile = ({
   const { status, getCredentials } = useAuthSession()
 
   useEffect(() => {
-    if (!isAuthInitialized(status) || hasProfile) {
+    if (!isAuthInitialized(status)) {
       return
     }
+    // Before the hasProfile check: a cached profile must not outlive the session,
+    // or the next sign-in in this SPA would reuse it instead of fetching.
     if (status.kind === "signedOut") {
       onLoaded(null)
+      return
+    }
+    if (hasProfile) {
       return
     }
 

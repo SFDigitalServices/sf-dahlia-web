@@ -14,7 +14,9 @@ import {
 import { SiteHeader, MenuLink } from "../components/SiteHeader/SiteHeader"
 import Markdown from "markdown-to-jsx"
 import UserContext from "../authentication/context/UserContext"
+import { fullName } from "../authentication/user"
 import { useAuthSession } from "../authentication/session/AuthSessionProvider"
+import { useSignOutToSignIn } from "../authentication/session/useSignOutToSignIn"
 import { isTokenValid } from "../authentication/token"
 import { ConfigContext } from "../lib/ConfigContext"
 import { Link } from "@bloom-housing/ui-seeds"
@@ -81,7 +83,7 @@ const getLanguageItems = () => {
 
 const getMenuLinks = (
   signedIn: boolean,
-  signOut: () => void | Promise<void>,
+  onSignOut: () => void | Promise<void>,
   accountLayoutEnabled: boolean,
   getAssetPath: (path: string) => string,
   hideSignInAndAccount: boolean
@@ -148,9 +150,7 @@ const getMenuLinks = (
           title: accountLayoutEnabled ? t("accountLayout.nav.signOut") : t("nav.signOut"),
           iconElement: <div className="w-6" />, // Empty div to keep the icon space
           onClick: () => {
-            void Promise.resolve(signOut()).finally(() => {
-              window.location.href = getSignInPath()
-            })
+            void onSignOut()
           },
         },
       ],
@@ -166,12 +166,17 @@ const getMenuLinks = (
 
 const LayoutContent = ({
   signedIn,
-  signOut,
+  onSignOut,
+  delegatedSeekerName,
   children,
   title,
   description,
   image,
-}: LayoutProps & { signedIn: boolean; signOut: () => void | Promise<void> }) => {
+}: LayoutProps & {
+  signedIn: boolean
+  onSignOut: () => void | Promise<void>
+  delegatedSeekerName?: string
+}) => {
   const { getAssetPath } = useContext(ConfigContext)
   const { pathname } = useLocation()
   const { unleashFlag: accountLayoutEnabled } = useFeatureFlag(UNLEASH_FLAG.ACCOUNTS_LAYOUT, false)
@@ -188,6 +193,21 @@ const LayoutContent = ({
           feedbackUrl: `https://airtable.com/appUW1tM8te0Lmf6q/pagyZulZJCm1V4G8D/form?prefill_Last%20visited=${encodeURIComponent(window.location.pathname)}&hide_Last%20visited=true`,
         })
       )}
+    </div>
+  )
+
+  const delegatedAccountBanner = (
+    <div className="delegated-account-notice__content">
+      {t("housingCounselor.signedInAs", { seekerName: delegatedSeekerName })}{" "}
+      <button
+        type="button"
+        className="delegated-account-notice__sign-out"
+        onClick={() => {
+          void onSignOut()
+        }}
+      >
+        {t("nav.signOut")}
+      </button>
     </div>
   )
 
@@ -225,7 +245,8 @@ const LayoutContent = ({
             languageNavLabel={t("languages.choose")}
             languages={getLanguageItems()}
             logoSrc={getAssetPath("DAHLIA-logo.svg")}
-            notice={feedbackBanner}
+            notice={delegatedSeekerName ? delegatedAccountBanner : feedbackBanner}
+            noticeClassName={delegatedSeekerName ? "delegated-account-notice" : undefined}
             noticeMobile={true}
             mobileDrawer={true}
             flattenSubMenus={true}
@@ -235,7 +256,7 @@ const LayoutContent = ({
             logoClass="translate"
             menuLinks={getMenuLinks(
               signedIn,
-              signOut,
+              onSignOut,
               accountLayoutEnabled,
               getAssetPath,
               isSignInOrCreateAccountFlow(pathname)
@@ -311,12 +332,31 @@ const LayoutContent = ({
 
 const DeviseLayout = (props: LayoutProps) => {
   const { signOut } = useContext(UserContext)
-  return <LayoutContent {...props} signedIn={isTokenValid()} signOut={() => signOut?.()} />
+  return (
+    <LayoutContent
+      {...props}
+      signedIn={isTokenValid()}
+      onSignOut={() =>
+        Promise.resolve(signOut?.()).finally(() => {
+          window.location.href = getSignInPath()
+        })
+      }
+    />
+  )
 }
 
 const ClerkLayout = (props: LayoutProps) => {
-  const { status, signOut } = useAuthSession()
-  return <LayoutContent {...props} signedIn={status.kind === "signedIn"} signOut={signOut} />
+  const { status } = useAuthSession()
+  const { profile } = useContext(UserContext)
+  const signOutToSignIn = useSignOutToSignIn()
+  return (
+    <LayoutContent
+      {...props}
+      signedIn={status.kind === "signedIn"}
+      onSignOut={signOutToSignIn}
+      delegatedSeekerName={profile?.isDelegated ? fullName(profile) : undefined}
+    />
+  )
 }
 
 const Layout = (props: LayoutProps) => {

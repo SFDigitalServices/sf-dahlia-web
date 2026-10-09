@@ -123,9 +123,7 @@ const EnterVerificationCodePage = ({
       }
       try {
         await authorizeHousingCounselor(housingCounselorToken, sessionToken)
-        console.log(
-          "TODO: Housing counselor successfully authenticated, TBD banner and applicant view"
-        )
+        destination = createPath(redirectUrl, { hcAccess: "1" })
       } catch {
         // Keep the user signed in, but flag that they don't have access to this account.
         destination = createPath(redirectUrl, { hcAccess: "0" })

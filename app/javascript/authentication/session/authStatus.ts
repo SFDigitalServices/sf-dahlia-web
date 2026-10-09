@@ -35,4 +35,5 @@ export type AuthSession = {
   status: AuthStatus
   getCredentials: () => Promise<AuthCredentials>
   signOut: () => Promise<void>
+  isSigningOut: () => boolean
 }

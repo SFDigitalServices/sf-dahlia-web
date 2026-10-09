@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/unbound-method */
 import React from "react"
 import { useClerk, useSignIn } from "@clerk/react"
 import { act, screen, waitFor, within, cleanup } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
-import { useNavigate } from "react-router"
+import { MemoryRouter, useNavigate } from "react-router"
 import SignIn from "../../pages/sign-in"
 import {
   renderAndLoadAsync,
@@ -184,6 +185,12 @@ describe("<SignInFlow />", () => {
     ).toBeNull()
   })
 
+  it("does not show the must-sign-in info alert without a delegate link", async () => {
+    await renderAndLoadAsync(<SignIn assetPaths={{}} />)
+
+    expect(screen.queryByText("You must sign in to continue")).toBeNull()
+  })
+
   it("shows a loading state until Clerk loads", async () => {
     ;(useSignIn as jest.Mock).mockReturnValue({
       fetchStatus: "fetching",
@@ -329,6 +336,23 @@ describe("<SignInFlow />", () => {
       ;(getProfile as jest.Mock).mockResolvedValue({ email: "test@test.com" })
     })
 
+    it("shows the must-sign-in info alert for a delegate link", async () => {
+      await renderAndLoadAsync(<SignIn assetPaths={{}} />)
+
+      expect(screen.getByText("You must sign in to continue")).not.toBeNull()
+    })
+
+    it("hides the must-sign-in info alert when the housing counselor flag is off", async () => {
+      ;(useFeatureFlag as jest.Mock).mockImplementation((flag: string) => ({
+        flagsReady: true,
+        unleashFlag: flag !== UNLEASH_FLAG.HOUSING_COUNSELOR_ACCESS,
+      }))
+
+      await renderAndLoadAsync(<SignIn assetPaths={{}} />)
+
+      expect(screen.queryByText("You must sign in to continue")).toBeNull()
+    })
+
     it("authenticates with Clerk after a successful sign in", async () => {
       await renderAndLoadAsync(<SignIn assetPaths={{}} />)
       await submitCredentials()
@@ -337,7 +361,9 @@ describe("<SignInFlow />", () => {
         expect(authorizeHousingCounselor).toHaveBeenCalledWith("jwt.token", "clerk-session-token")
       })
       expect(mockFinalize).toHaveBeenCalled()
-      expect(mockNavigate).toHaveBeenCalledWith("/account")
+      // A full page load, so the profile is refetched with the new hc_session cookie
+      expect(window.location.assign).toHaveBeenCalledWith("/account?hcAccess=1")
+      expect(mockNavigate).not.toHaveBeenCalledWith("/account")
     })
 
     // Access denial keeps the user signed in and redirects with ?hcAccess=0, rather than
@@ -446,7 +472,31 @@ describe("<SignInFlow />", () => {
       await waitFor(() => {
         expect(authorizeHousingCounselor).toHaveBeenCalledWith("jwt.token", "clerk-session-token")
       })
-      expect(mockNavigate).toHaveBeenCalledWith("/account")
+      expect(window.location.assign).toHaveBeenCalledWith("/account?hcAccess=1")
+    })
+  })
+
+  describe("after a housing counselor signs out of a delegated account", () => {
+    it("shows a toast naming the seeker", async () => {
+      await renderAndLoadAsync(<SignIn assetPaths={{}} />, {
+        wrapper: ({ children }) => (
+          <MemoryRouter
+            initialEntries={[
+              { pathname: "/sign-in", state: { housingCounselorSignedOut: "Rosa Flores" } },
+            ]}
+          >
+            {children}
+          </MemoryRouter>
+        ),
+      })
+
+      expect(screen.getByText("You signed out of Rosa Flores's account")).not.toBeNull()
+    })
+
+    it("shows no sign-out toast after an ordinary sign out", async () => {
+      await renderAndLoadAsync(<SignIn assetPaths={{}} />)
+
+      expect(screen.queryByText(/You signed out of/)).toBeNull()
     })
   })
 })

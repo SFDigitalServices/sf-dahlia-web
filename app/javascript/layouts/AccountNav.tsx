@@ -13,7 +13,7 @@ import {
   getMyAccountContactPath,
 } from "../util/routeUtil"
 import UserContext from "../authentication/context/UserContext"
-import { useAuthSession } from "../authentication/session/AuthSessionProvider"
+import { useSignOutToSignIn } from "../authentication/session/useSignOutToSignIn"
 import { useFeatureFlag } from "../hooks/useFeatureFlag"
 import { UNLEASH_FLAG } from "../modules/constants"
 import styles from "./AccountNav.module.scss"
@@ -25,7 +25,7 @@ const isNavActive = (localizedPath: string): boolean => {
   )
 }
 
-const AccountNavLinks = ({ signOut }: { signOut: () => void | Promise<void> }) => {
+const AccountNavLinks = ({ onSignOut }: { onSignOut: () => void | Promise<void> }) => {
   const { getAssetPath } = useContext(ConfigContext)
 
   return (
@@ -73,9 +73,7 @@ const AccountNavLinks = ({ signOut }: { signOut: () => void | Promise<void> }) =
               type="button"
               className={styles.signOutButton}
               onClick={() => {
-                void Promise.resolve(signOut()).finally(() => {
-                  window.location.href = getSignInPath()
-                })
+                void onSignOut()
               }}
             >
               <FontAwesomeIcon
@@ -95,12 +93,20 @@ const AccountNavLinks = ({ signOut }: { signOut: () => void | Promise<void> }) =
 
 const DeviseAccountNav = () => {
   const { signOut } = useContext(UserContext)
-  return <AccountNavLinks signOut={() => signOut?.()} />
+  return (
+    <AccountNavLinks
+      onSignOut={() =>
+        Promise.resolve(signOut?.()).finally(() => {
+          window.location.href = getSignInPath()
+        })
+      }
+    />
+  )
 }
 
 const ClerkAccountNav = () => {
-  const { signOut } = useAuthSession()
-  return <AccountNavLinks signOut={signOut} />
+  const signOutToSignIn = useSignOutToSignIn()
+  return <AccountNavLinks onSignOut={signOutToSignIn} />
 }
 
 const AccountNav = () => {
