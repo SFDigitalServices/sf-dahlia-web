@@ -3,6 +3,7 @@ class InviteToController < ApplicationController
   include InviteToEventLogging
 
   CLIENT_RECORDING_FLAG = 'temp.webapp.inviteToClientRecording'
+  NEXT_STEPS_TOKEN_PURPOSE = 'next_steps'.freeze
 
   before_action :ignore_head_requests
 
@@ -13,7 +14,7 @@ class InviteToController < ApplicationController
       return
     end
 
-    @invite_to_props = props(decoded_params)
+    @invite_to_props = with_preview_link_token(props(decoded_params))
     # Get URL from application
     if decoded_params['appId'].present? || decoded_params['applicationNumber'].present?
       application = Force::ShortFormService.get(decoded_params['appId'] || decoded_params['applicationNumber'])
@@ -62,8 +63,16 @@ class InviteToController < ApplicationController
       assetPaths: static_asset_paths,
       urlParams: url_params,
       clientRecordingMode: client_recording_mode,
-      submitPreviewLinkTokenParam: encode_token(url_params.except(:act)),
     }.compact
+  end
+
+  # Only call with props built from a verified invite token: this signs its claims, so
+  # signing raw query params would let anyone mint a record-response token for any appId.
+  # act is dropped so loading next-steps with this token can't itself record a response.
+  def with_preview_link_token(verified_props)
+    claims = verified_props[:urlParams].except(:act)
+                                       .merge(purpose: NEXT_STEPS_TOKEN_PURPOSE)
+    verified_props.merge(submitPreviewLinkTokenParam: encode_token(claims))
   end
 
   # 'off' = client hook inert. 'shadow' = server still records on GET, client only logs its
