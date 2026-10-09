@@ -82,8 +82,6 @@ export const withAuthentication = <P extends object>(
             isSignedIn,
             hasProfile: !!profile,
             hasPassword: isAccountInitialized && hasPassword,
-            authFlow: reactRouterState?.flow,
-            verificationCodeEmailAddress: reactRouterState?.verificationCodeEmailAddress,
           })
         : undefined
 
