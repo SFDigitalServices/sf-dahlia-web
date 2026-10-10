@@ -172,7 +172,6 @@ const SignInFlow = () => {
     }
   }
 
-  // TODO: DAH-4352 show proper error message in addition to logging to the console
   const onGetCodeSubmit = async ({ email }: SignInFields) => {
     if (signInIsBusy) return
 
