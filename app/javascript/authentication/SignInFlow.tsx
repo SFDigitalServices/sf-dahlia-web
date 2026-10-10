@@ -88,9 +88,9 @@ const SignInFlow = () => {
   }, [showError])
 
   // maps err search parameter to the error message
-  const errSearchParamCodes: Record<string, string> = {
+  const errSearchParamCodes = Object.assign(Object.create(null) as Record<string, string>, {
     code: `${t("error.account.genericServerError")} ${t("error.account.emailHelp")}`,
-  }
+  })
   const errSearchParam = new URLSearchParams(search).get("err")
   useEffect(() => {
     if (errSearchParam && errSearchParamCodes[errSearchParam]) {
