@@ -22,121 +22,173 @@ RSpec.describe Api::V1::AccountController, type: :controller do
   end
 
   describe 'GET #my_applications' do
-    let(:contact_id) { user.salesforce_contact_id }
-    let(:applications) { [{ 'listingID' => 'L1', 'status' => 'submitted' }] }
-    let(:listings) { [{ 'listingID' => 'L1', 'name' => 'Listing One' }] }
+    let(:clerk_user_id) { 'user_abc123' }
+    let(:contact_id) { 'contact_abc123' }
 
     before do
-      allow(controller).to receive(:current_user).and_return(user)
-      allow(Force::ShortFormService).to receive(:get_for_user).and_return(applications)
-      allow(Force::ListingService).to receive(:listings).and_return(listings)
+      allow(Force::ShortFormService).to receive(:get_for_user).and_return([])
+      allow(Force::ListingService).to receive(:listings).and_return([])
     end
 
-    it "returns the signed-in user's own applications when there is no hc_session " \
-       'cookie' do
-      get :my_applications
-
-      expect(response).to have_http_status(:ok)
-      expect(Force::ShortFormService).to have_received(:get_for_user).with(contact_id)
-    end
-
-    # Regression coverage: authentication for #my_applications stays Devise,
-    # unchanged - this only adds "and if that signed-in user is also a
-    # housing counselor per their hc_session cookie, use the delegated
-    # applicant's contact instead of their own."
-    context 'when signed in as a housing counselor with a valid hc_session cookie' do
-      let(:applicant_contact_id) { '003XYZ' }
-
+    context 'with a Clerk session' do
       before do
-        request.cookies['hc_session'] = JsonWebTokenService.encode_token(
-          { 'typ' => 'hc_session', 'hcId' => contact_id,
-            'appId' => applicant_contact_id },
-          exp: 2.hours.from_now,
-        )
+        allow(controller).to receive(:clerk).and_return(double(user_id: clerk_user_id))
+        allow(ClerkService).to receive(:salesforce_contact_id)
+          .with(clerk_user_id)
+          .and_return(contact_id)
       end
 
-      it "returns the delegated applicant's applications rather than the " \
-         "counselor's own" do
+      it 'returns the Clerk user applications' do
         get :my_applications
 
         expect(response).to have_http_status(:ok)
-        expect(Force::ShortFormService)
-          .to have_received(:get_for_user).with(applicant_contact_id)
+        expect(JSON.parse(response.body)).to eq('applications' => [])
+        expect(Force::ShortFormService).to have_received(:get_for_user).with(contact_id)
       end
     end
 
-    context 'when the hc_session cookie belongs to a different signed-in user' do
-      before do
-        request.cookies['hc_session'] = JsonWebTokenService.encode_token(
-          { 'typ' => 'hc_session', 'hcId' => 'someone_elses_contact_id',
-            'appId' => '003XYZ' },
-          exp: 2.hours.from_now,
-        )
+    # TODO(DAH-4366): CLERK MIGRATION - DEVISE TECH DEBT TO REMOVE
+    # Goes with the flag, along with the my_applications fallback in the controller.
+    context 'without a Clerk session' do
+      before { allow(controller).to receive(:clerk).and_return(nil) }
+
+      it 'falls back to Devise and rejects an unauthenticated request' do
+        get :my_applications
+
+        expect(response).to have_http_status(:unauthorized)
+        expect(Force::ShortFormService).not_to have_received(:get_for_user)
       end
 
-      it "ignores and discards the foreign cookie, returning the signed-in user's " \
-         'own applications' do
+      it 'returns the Devise user applications' do
+        devise_user = create(:user, salesforce_contact_id: contact_id)
+        allow(controller).to receive(:current_user).and_return(devise_user)
+
         get :my_applications
 
         expect(response).to have_http_status(:ok)
         expect(Force::ShortFormService).to have_received(:get_for_user).with(contact_id)
-        expect(cookies[:hc_session]).to be_blank
       end
     end
 
-    context 'when the hc_session cookie has expired and access has since been ' \
-            'legitimately revoked' do
-      let(:applicant_contact_id) { '003XYZ' }
+    context 'with a Devise session' do
+      before { allow(controller).to receive(:clerk).and_return(nil) }
+
+      let(:contact_id) { user.salesforce_contact_id }
+      let(:applications) { [{ 'listingID' => 'L1', 'status' => 'submitted' }] }
+      let(:listings) { [{ 'listingID' => 'L1', 'name' => 'Listing One' }] }
 
       before do
-        request.cookies['hc_session'] = JsonWebTokenService.encode_token(
-          { 'typ' => 'hc_session', 'hcId' => contact_id,
-            'appId' => applicant_contact_id },
-          exp: 1.hour.ago,
-        )
-        allow(Force::HousingCounselorService).to receive(:authorize_access)
-          .and_return(nil)
+        allow(controller).to receive(:current_user).and_return(user)
+        allow(Force::ShortFormService).to receive(:get_for_user).and_return(applications)
+        allow(Force::ListingService).to receive(:listings).and_return(listings)
       end
 
-      it "returns forbidden rather than falling back to the counselor's own " \
-         'applications' do
+      it "returns the signed-in user's own applications when there is no hc_session " \
+         'cookie' do
         get :my_applications
 
-        expect(response).to have_http_status(:forbidden)
-        expect(JSON.parse(response.body)).to eq('error' => 'forbidden')
-        expect(Force::ShortFormService).not_to have_received(:get_for_user)
-        expect(cookies[:hc_session]).to be_blank
-      end
-    end
-
-    # Regression coverage for a confirmed code-review finding: a transient
-    # Salesforce failure while refreshing an expired hc_session cookie used
-    # to be silently treated the same as "no hc_session," so this fell back
-    # to showing the housing counselor their own applications instead of
-    # erroring - a silent identity mix-up. It must return unauthorized
-    # instead of ever falling back in this case.
-    context 'when the hc_session cookie has expired and Salesforce raises a ' \
-            'transient error during the re-check' do
-      let(:applicant_contact_id) { '003XYZ' }
-
-      before do
-        request.cookies['hc_session'] = JsonWebTokenService.encode_token(
-          { 'typ' => 'hc_session', 'hcId' => contact_id,
-            'appId' => applicant_contact_id },
-          exp: 1.hour.ago,
-        )
-        allow(Force::HousingCounselorService).to receive(:authorize_access)
-          .and_raise(Faraday::TimeoutError, 'timed out')
+        expect(response).to have_http_status(:ok)
+        expect(Force::ShortFormService).to have_received(:get_for_user).with(contact_id)
       end
 
-      it 'returns unauthorized rather than silently falling back to the ' \
-         "counselor's own applications" do
-        get :my_applications
+      # Regression coverage: authentication for #my_applications stays Devise,
+      # unchanged - this only adds "and if that signed-in user is also a
+      # housing counselor per their hc_session cookie, use the delegated
+      # applicant's contact instead of their own."
+      context 'when signed in as a housing counselor with a valid hc_session cookie' do
+        let(:applicant_contact_id) { '003XYZ' }
 
-        expect(response).to have_http_status(:unauthorized)
-        expect(JSON.parse(response.body)).to eq('error' => 'unauthorized')
-        expect(Force::ShortFormService).not_to have_received(:get_for_user)
-        expect(cookies[:hc_session]).to be_present
+        before do
+          request.cookies['hc_session'] = JsonWebTokenService.encode_token(
+            { 'typ' => 'hc_session', 'hcId' => contact_id,
+              'appId' => applicant_contact_id },
+            exp: 2.hours.from_now,
+          )
+        end
+
+        it "returns the delegated applicant's applications rather than the " \
+           "counselor's own" do
+          get :my_applications
+
+          expect(response).to have_http_status(:ok)
+          expect(Force::ShortFormService)
+            .to have_received(:get_for_user).with(applicant_contact_id)
+        end
+      end
+
+      context 'when the hc_session cookie belongs to a different signed-in user' do
+        before do
+          request.cookies['hc_session'] = JsonWebTokenService.encode_token(
+            { 'typ' => 'hc_session', 'hcId' => 'someone_elses_contact_id',
+              'appId' => '003XYZ' },
+            exp: 2.hours.from_now,
+          )
+        end
+
+        it "ignores and discards the foreign cookie, returning the signed-in user's " \
+           'own applications' do
+          get :my_applications
+
+          expect(response).to have_http_status(:ok)
+          expect(Force::ShortFormService).to have_received(:get_for_user).with(contact_id)
+          expect(cookies[:hc_session]).to be_blank
+        end
+      end
+
+      context 'when the hc_session cookie has expired and access has since been ' \
+              'legitimately revoked' do
+        let(:applicant_contact_id) { '003XYZ' }
+
+        before do
+          request.cookies['hc_session'] = JsonWebTokenService.encode_token(
+            { 'typ' => 'hc_session', 'hcId' => contact_id,
+              'appId' => applicant_contact_id },
+            exp: 1.hour.ago,
+          )
+          allow(Force::HousingCounselorService).to receive(:authorize_access)
+            .and_return(nil)
+        end
+
+        it "returns forbidden rather than falling back to the counselor's own " \
+           'applications' do
+          get :my_applications
+
+          expect(response).to have_http_status(:forbidden)
+          expect(JSON.parse(response.body)).to eq('error' => 'forbidden')
+          expect(Force::ShortFormService).not_to have_received(:get_for_user)
+          expect(cookies[:hc_session]).to be_blank
+        end
+      end
+
+      # Regression coverage for a confirmed code-review finding: a transient
+      # Salesforce failure while refreshing an expired hc_session cookie used
+      # to be silently treated the same as "no hc_session," so this fell back
+      # to showing the housing counselor their own applications instead of
+      # erroring - a silent identity mix-up. It must return unauthorized
+      # instead of ever falling back in this case.
+      context 'when the hc_session cookie has expired and Salesforce raises a ' \
+              'transient error during the re-check' do
+        let(:applicant_contact_id) { '003XYZ' }
+
+        before do
+          request.cookies['hc_session'] = JsonWebTokenService.encode_token(
+            { 'typ' => 'hc_session', 'hcId' => contact_id,
+              'appId' => applicant_contact_id },
+            exp: 1.hour.ago,
+          )
+          allow(Force::HousingCounselorService).to receive(:authorize_access)
+            .and_raise(Faraday::TimeoutError, 'timed out')
+        end
+
+        it 'returns unauthorized rather than silently falling back to the ' \
+           "counselor's own applications" do
+          get :my_applications
+
+          expect(response).to have_http_status(:unauthorized)
+          expect(JSON.parse(response.body)).to eq('error' => 'unauthorized')
+          expect(Force::ShortFormService).not_to have_received(:get_for_user)
+          expect(cookies[:hc_session]).to be_present
+        end
       end
     end
   end
