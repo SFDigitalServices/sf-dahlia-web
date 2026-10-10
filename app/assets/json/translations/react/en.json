@@ -565,6 +565,7 @@
   "error.account.dobMissing.abbreviated": "Enter date of birth",
   "error.account.dobTooYoung": "You must be 18 or older. If you are under 18, email <a href='mailto:sfhousinginfo@sfgov.org'>sfhousinginfo@sfgov.org</a> to get info on housing resources for youth",
   "error.account.dobTooYoung.abbreviated": "You must be 18 or older",
+  "error.account.emailHelp": "You can also email <a href='mailto:sfhousinginfo@sfgov.org'>sfhousinginfo@sfgov.org</a> for help.",
   "error.account.firstName": "Enter first name",
   "error.account.genericServerError": "Something went wrong. Try again or check back later.",
   "error.account.genericServerError.abbreviated": "Something went wrong",

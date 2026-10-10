@@ -37,7 +37,10 @@ const getHousingCounselorToken = () => new URLSearchParams(window.location.searc
 
 const SignInFlow = () => {
   const navigate = useNavigate()
-  const { state } = useLocation() as { state?: { redirectUrl?: string } }
+  const { state, search } = useLocation() as {
+    state?: { redirectUrl?: string }
+    search: string
+  }
   const redirectUrl = state?.redirectUrl
   const postSignInRedirectUrl = redirectUrl ?? getMyAccountPath()
   const requiredLoginsDate = localizedMonthAndDay(process.env.REQUIRED_LOGINS_DATE ?? "")
@@ -83,6 +86,21 @@ const SignInFlow = () => {
       alertRef.current?.focus()
     }
   }, [showError])
+
+  // maps err search parameter to the error message
+  const errSearchParamCodes = Object.assign(Object.create(null) as Record<string, string>, {
+    code: `${t("error.account.genericServerError")} ${t("error.account.emailHelp")}`,
+  })
+  const errSearchParam = new URLSearchParams(search).get("err")
+  useEffect(() => {
+    if (errSearchParam && errSearchParamCodes[errSearchParam]) {
+      setShowError(true)
+      if (errSearchParam === "code") {
+        setView("verificationCode")
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [errSearchParam])
 
   const checkHousingCounselorAccess = async () => {
     const token = getHousingCounselorToken()
@@ -154,18 +172,20 @@ const SignInFlow = () => {
     }
   }
 
-  // TODO: DAH-4352 show proper error message in addition to logging to the console
   const onGetCodeSubmit = async ({ email }: SignInFields) => {
     if (signInIsBusy) return
 
-    setShowError(false)
     const { error, notReady } = await sendEmailCode(email)
     if (notReady) return
     if (error) {
       setShowError(true)
+      const searchParams = new URLSearchParams(search)
+      searchParams.set("err", "code")
+      void navigate({ search: `?${searchParams.toString()}` }, { replace: true, state })
       return
     }
 
+    setShowError(false)
     void navigate(getSignInCodePath(), {
       state: {
         email,
@@ -214,6 +234,14 @@ const SignInFlow = () => {
     email: emailField && emailRegex.test(emailField) ? emailField : "",
   })
 
+  const onSignInWithPasswordClick = () => {
+    const searchParams = new URLSearchParams(search)
+    searchParams.delete("err")
+    setShowError(false)
+    setView("password")
+    void navigate({ search: searchParams.toString() }, { replace: true, state })
+  }
+
   const verificationCodeSection = (
     <>
       <Form onSubmit={handleSubmit(onGetCodeSubmit)}>
@@ -233,7 +261,7 @@ const SignInFlow = () => {
           {t("createAccount.getCode")}
         </Button>
       </Form>
-      <Button variant="text" size="md" onClick={() => setView("password")}>
+      <Button variant="text" size="md" onClick={onSignInWithPasswordClick}>
         {t("signIn.passwordInstead")}
       </Button>
     </>
@@ -241,8 +269,6 @@ const SignInFlow = () => {
 
   const passwordSection = (
     <>
-      {/* eslint-disable-next-line react-hooks/refs -- housingCounselorHandledRef is only ever
-          read/written inside onSubmit's real event-handler execution, never during render */}
       <Form className={styles.form} onSubmit={handleSubmit(onSubmit, onError)}>
         <EmailFieldset register={register} submitWithEnterKey />
         <span className={styles.forgotPassword}>
@@ -281,6 +307,14 @@ const SignInFlow = () => {
 
   const requiredLoginsHelpUrl = getSfGovUrl("https://www.sf.gov/get-help-with-your-dahlia-account")
 
+  const errorMessage = () => {
+    if (errSearchParam && errSearchParamCodes[errSearchParam])
+      return renderInlineMarkup(errSearchParamCodes[errSearchParam])
+    return view === "verificationCode"
+      ? t("signIn.badCredentials")
+      : renderInlineMarkup(t("signIn.badCredentialsWithResetLink", { url: forgotPasswordPath }))
+  }
+
   return (
     <AuthLayout title={t("pageTitle.signIn")}>
       <Card.Section divider="inset">
@@ -305,11 +339,7 @@ const SignInFlow = () => {
         {showError && (
           <div ref={alertRef} tabIndex={-1} className={styles.errorAlert}>
             <Alert fullwidth variant="alert" onClose={() => setShowError(false)}>
-              {view === "verificationCode"
-                ? t("signIn.badCredentials")
-                : renderInlineMarkup(
-                    t("signIn.badCredentialsWithResetLink", { url: forgotPasswordPath })
-                  )}
+              {errorMessage()}
             </Alert>
           </div>
         )}
