@@ -405,10 +405,12 @@ describe("<SignInFlow />", () => {
     consoleError.mockRestore()
   })
 
-  it("shows an error alert when the URL has a non-empty err parameter", async () => {
+  it("shows the get-code error alert when err=code", async () => {
     await renderAndLoadAsync(<SignIn assetPaths={{}} />, undefined, ["/sign-in?err=code"])
 
-    expect(screen.getByRole("alert")).toBeInTheDocument()
+    const alert = screen.getByRole("alert")
+    expect(alert).toHaveTextContent(/something went wrong\. try again or check back later\./i)
+    expect(alert).toHaveTextContent(/you can also email sfhousinginfo@sfgov\.org for help\./i)
   })
 
   it("does not show an error alert when the URL err parameter is empty", async () => {
