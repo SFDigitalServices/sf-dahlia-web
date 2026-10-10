@@ -234,6 +234,14 @@ const SignInFlow = () => {
     email: emailField && emailRegex.test(emailField) ? emailField : "",
   })
 
+  const onSignInWithPasswordClick = () => {
+    const searchParams = new URLSearchParams(search)
+    searchParams.delete("err")
+    setShowError(false)
+    setView("password")
+    void navigate({ search: searchParams.toString() }, { replace: true, state })
+  }
+
   const verificationCodeSection = (
     <>
       <Form onSubmit={handleSubmit(onGetCodeSubmit)}>
@@ -253,7 +261,7 @@ const SignInFlow = () => {
           {t("createAccount.getCode")}
         </Button>
       </Form>
-      <Button variant="text" size="md" onClick={() => setView("password")}>
+      <Button variant="text" size="md" onClick={onSignInWithPasswordClick}>
         {t("signIn.passwordInstead")}
       </Button>
     </>

@@ -2,7 +2,7 @@ import React from "react"
 import { useClerk, useSignIn } from "@clerk/react"
 import { act, screen, waitFor, within, cleanup } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
-import { useNavigate } from "react-router"
+import { useLocation, useNavigate } from "react-router"
 import SignIn from "../../pages/sign-in"
 import {
   renderAndLoadAsync,
@@ -67,6 +67,11 @@ const switchToVerificationCodeView = async () => {
   const user = userEvent.setup()
   await user.click(screen.getByRole("button", { name: /get a one-time code to sign in/i }))
   return user
+}
+
+const LocationProbe = () => {
+  const { search, state } = useLocation()
+  return <output data-testid="location">{JSON.stringify({ search, state })}</output>
 }
 
 const submitCredentials = async (password = "abcd1234") => {
@@ -239,6 +244,43 @@ describe("<SignInFlow />", () => {
     expect(screen.getByRole("group", { name: /^password$/i })).not.toBeNull()
     expect(screen.getByRole("button", { name: /^sign in$/i })).not.toBeNull()
     expect(screen.queryByRole("button", { name: /^get a code$/i })).toBeNull()
+  })
+
+  it("clears the code error when switching to password and shows subsequent credential errors", async () => {
+    const consoleError = jest.spyOn(console, "error").mockImplementation(() => {})
+    const router = jest.requireActual<typeof import("react-router")>("react-router")
+    ;(useNavigate as jest.Mock).mockImplementation(router.useNavigate)
+    mockSignInCreate.mockResolvedValue({ error: new Error("Incorrect password") })
+    const state = { redirectUrl: "/listings/for-rent" }
+
+    await renderAndLoadAsync(
+      <>
+        <SignIn assetPaths={{}} />
+        <LocationProbe />
+      </>,
+      undefined,
+      [{ pathname: "/sign-in", search: "?err=code&t=invite-token&other=keep", state }]
+    )
+    expect(screen.getByRole("alert")).toBeInTheDocument()
+
+    const user = userEvent.setup()
+    await user.click(screen.getByRole("button", { name: /sign in with a password instead/i }))
+
+    expect(screen.queryByRole("alert")).toBeNull()
+    expect(JSON.parse(screen.getByTestId("location").textContent ?? "{}")).toEqual({
+      search: "?t=invite-token&other=keep",
+      state,
+    })
+
+    await submitCredentials("wrongPass1")
+
+    await waitFor(() => {
+      expect(screen.getByRole("alert")).toHaveTextContent(/email or password is incorrect/i)
+    })
+    expect(
+      within(screen.getByRole("alert")).getByRole("link", { name: /reset your password/i })
+    ).toBeInTheDocument()
+    consoleError.mockRestore()
   })
 
   it("navigates to the sign-in code page when requesting a code", async () => {
