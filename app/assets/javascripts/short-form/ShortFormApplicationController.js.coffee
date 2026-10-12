@@ -25,6 +25,9 @@ ShortFormApplicationController = (
 
   $scope.form = ShortFormApplicationService.form
   $scope.$state = $state
+  # with the Clerk flag on, the legacy save-and-finish-later, create-account and welcome-back sign-in are hidden
+  # TODO(DAH-4366): CLERK MIGRATION - DEVISE TECH DEBT TO REMOVE
+  $scope.clerkAuth = !!$window.CLERK_AUTH_ANGULAR
   $scope.application = ShortFormApplicationService.application
   $scope.accountApplication = ShortFormApplicationService.accountApplication
   $scope.chosenApplicationToKeep = null
@@ -1139,7 +1142,8 @@ ShortFormApplicationController = (
       ShortFormApplicationService.addSeniorEligibilityError()
       $scope.handleErrorState()
     else
-      if $scope.loggedIn()
+      # a Clerk guest can't sign in mid-application, so skip the welcome-back account check
+      if $scope.loggedIn() || $scope.clerkAuth
         ShortFormNavigationService.goToApplicationPage('dahlia.short-form-application.contact')
       else
         ShortFormNavigationService.isLoading(true)

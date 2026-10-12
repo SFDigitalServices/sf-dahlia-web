@@ -29,7 +29,9 @@
       if AccountService.loggedIn()
         content.message = $translate.instant('t.session_inactivity_logged_in')
         AnalyticsService.trackEvent('session_exp_warning_shown', {label_prefix, is_during_application_flow: isInShortForm, user_id: AccountService.loggedInUser.id, url: window.location.href})
-      else if $state.is('dahlia.short-form-application.confirmation')
+      # TODO(DAH-4366): CLERK MIGRATION - DEVISE TECH DEBT TO REMOVE
+      # a Clerk guest can't save a submitted application to an account, so they get the generic message
+      else if $state.is('dahlia.short-form-application.confirmation') && !$window.CLERK_AUTH_ANGULAR
         content.message = $translate.instant('t.session_inactivity_confirmation')
         AnalyticsService.trackEvent('session_exp_warning_shown', {label_prefix, is_during_application_flow: isInShortForm, user_id: undefined, url: window.location.href})
       else
