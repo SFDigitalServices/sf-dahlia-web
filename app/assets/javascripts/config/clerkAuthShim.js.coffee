@@ -50,8 +50,9 @@ clerkEnabled = -> !!window.CLERK_AUTH_ANGULAR
         lostSession = hadSession && session is null
         hadSession = session?
         # only redirect when a signed-in user's session ended and we didn't sign them out ourselves
-        # (e.g. it expired, or they signed out from another tab)
+        # (e.g. it expired, or they signed out from another tab), and only from application pages
         return unless lostSession && !ClerkShim.signingOut
+        return unless ShortFormApplicationService.isShortFormPage($state.current)
         $window.removeEventListener('beforeunload', ShortFormApplicationService.onExit)
         ClerkShim.leaveFor(SharedService.buildUrl({name: 'dahlia.sign-in'}, $state.params))
     ).catch(angular.noop)
