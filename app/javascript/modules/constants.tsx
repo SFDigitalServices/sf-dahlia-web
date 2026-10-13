@@ -180,7 +180,8 @@ export enum AUTH_FLOW {
   SIGN_IN = "signIn",
   CREATE_ACCOUNT = "createAccount",
   FORGOT_PASSWORD = "forgotPassword",
-  UPDATE_EMAIL = "updateEmail",
+  UPDATE_LOGIN_EMAIL = "updateLoginEmail",
+  UPDATE_CONTACT_EMAIL = "updateContactEmail",
 }
 
 export const LISTING_APPLY_FORMS_INPUT_MAX_LENGTH = {
