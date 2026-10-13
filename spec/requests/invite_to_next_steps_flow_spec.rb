@@ -92,6 +92,25 @@ describe 'Invite-to next-steps flow', type: :request do
         end
       end
 
+      # Given a next-steps link signed outside this app (e.g. the I2I confirmation email),
+      #   carrying purpose instead of act and a timestamp deadline
+      # When the applicant opens it and clicks the primary button
+      # Then the button's link is on the page, loading records nothing, and the click
+      #   records the next-steps action
+      it "records '#{action}' from a backend-signed next-steps link" do
+        token = JsonWebTokenService.encode_token(
+          { type: type, deadline: "#{deadline}T06:59:59.000Z", appId: app_id,
+            isTest: false, purpose: 'next_steps' },
+        )
+
+        expect(open_invite_page(token)).to include(link_prop => link)
+        click_primary_button(token, action)
+
+        expect(response).to be_ok
+        expect(DahliaBackend::MessageService).to have_received(:send_invite_to_response)
+          .once.with(app_id, action)
+      end
+
       # Given a test/example email link (DAH-4103)
       # When the button is clicked
       # Then the click succeeds but nothing is recorded
