@@ -81,12 +81,14 @@ describe 'Invite-to next-steps flow', type: :request do
           click_primary_button(next_steps_token, action)
 
           expect(response).to be_ok
-          expect(DahliaBackend::MessageService)
-            .to have_received(:send_invite_to_response).twice
           expect(DahliaBackend::MessageService).to have_received(:send_invite_to_response)
             .with(app_id, email_act).ordered
           expect(DahliaBackend::MessageService).to have_received(:send_invite_to_response)
             .with(app_id, action).ordered
+          # After the .ordered checks: rspec-mocks attributes each call to the first
+          # matching expectation, so an args-less one before them reads as out of order.
+          expect(DahliaBackend::MessageService)
+            .to have_received(:send_invite_to_response).twice
         end
       end
 
