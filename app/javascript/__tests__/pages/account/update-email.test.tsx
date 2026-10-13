@@ -64,10 +64,10 @@ const renderPage = async (user: unknown = makeUser()) => {
   await renderAndLoadAsync(<UpdateEmail assetPaths={{}} />)
 }
 
-const submitEmail = async (email: string) => {
+const submitEmail = async (email: string, buttonName = t("createAccount.getCode")) => {
   const user = userEvent.setup()
   await user.type(screen.getByRole("textbox"), email)
-  await user.click(screen.getByRole("button", { name: t("createAccount.getCode") }))
+  await user.click(screen.getByRole("button", { name: buttonName }))
 }
 
 const contactFlowLocation = (state: Record<string, unknown> = {}) => {
@@ -311,7 +311,7 @@ describe("<UpdateEmail />", () => {
       contactFlowLocation()
       const user = makeUser()
       await renderPage(user)
-      await submitEmail("current@example.com")
+      await submitEmail("current@example.com", t("accountLayout.contact.saveEmail"))
 
       await waitFor(() => {
         expect(mockNavigate).toHaveBeenCalledWith(getMyAccountContactPath(), {
@@ -330,7 +330,7 @@ describe("<UpdateEmail />", () => {
       updateContactEmailSpy.mockRejectedValue(new Error("salesforce down"))
       const user = makeUser()
       await renderPage(user)
-      await submitEmail("current@example.com")
+      await submitEmail("current@example.com", t("accountLayout.contact.saveEmail"))
 
       await waitFor(() => {
         expect(updateContactEmailSpy).toHaveBeenCalled()
@@ -356,7 +356,7 @@ describe("<UpdateEmail />", () => {
       contactFlowLocation()
       setup()
       await renderPage()
-      await submitEmail("current@example.com")
+      await submitEmail("current@example.com", t("accountLayout.contact.saveEmail"))
 
       await act(async () => {
         await Promise.resolve()
