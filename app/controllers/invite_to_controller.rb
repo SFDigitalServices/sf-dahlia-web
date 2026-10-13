@@ -3,6 +3,7 @@ class InviteToController < ApplicationController
   include InviteToEventLogging
 
   CLIENT_RECORDING_FLAG = 'temp.webapp.inviteToClientRecording'
+  NEXT_STEPS_TOKEN_PURPOSE = 'next_steps'.freeze
 
   before_action :ignore_head_requests
 

@@ -57,8 +57,10 @@ RSpec.describe InviteToController do
                                  .and_return('TEST_TOKEN_SECRET')
     allow(ENV).to receive(:fetch).with('JWT_ALGORITHM', nil).and_return('HS256')
     allow(controller).to receive(:static_asset_paths).and_return({ logo: 'logo.png' })
-    allow(ENV).to receive(:fetch).with('SALESFORCE_INSTANCE_URL', nil).and_return('test-salesforce-url')
-    allow(ENV).to receive(:fetch).with('SALESFORCE_API_VERSION', '61.0').and_return('61.0')
+    allow(ENV).to receive(:fetch).with('SALESFORCE_INSTANCE_URL',
+                                       nil).and_return('test-salesforce-url')
+    allow(ENV).to receive(:fetch).with('SALESFORCE_API_VERSION',
+                                       '61.0').and_return('61.0')
     allow(ENV).to receive(:fetch).with('SALESFORCE_PROXY_URI', nil).and_return(nil)
     allow(DahliaBackend::MessageService).to receive(:send_invite_to_response)
     allow(Rails.logger).to receive(:info)
@@ -67,10 +69,10 @@ RSpec.describe InviteToController do
     # Align with controller implementation (uses JsonWebTokenService, not JWT.decode directly)
     allow(JsonWebTokenService).to receive(:decode_token).with(fixed_token).and_return(decoded_payload)
     allow(JsonWebTokenService).to receive(:decode_token).with(is_test_token)
-      .and_return(decoded_payload.merge('isTest' => 'true'))
+                                                        .and_return(decoded_payload.merge('isTest' => 'true'))
     allow(JsonWebTokenService).to receive(:decode_token).with('test_token').and_return(decoded_payload)
     allow(JsonWebTokenService).to receive(:decode_token).with('invalid_test_token')
-      .and_raise(JsonWebTokenService::InvalidTokenError, 'Invalid JWT')
+                                                        .and_raise(JsonWebTokenService::InvalidTokenError, 'Invalid JWT')
     allow(Rails.configuration.unleash).to receive(:is_enabled?)
       .with('temp.webapp.inviteToClientRecording').and_return(false)
   end

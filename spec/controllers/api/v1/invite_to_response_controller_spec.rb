@@ -44,7 +44,7 @@ RSpec.describe Api::V1::InviteToResponseController, type: :controller do
 
     it 'returns unauthorized for invalid token' do
       allow(JsonWebTokenService).to receive(:decode_token).with(token)
-        .and_raise(JsonWebTokenService::InvalidTokenError, 'Invalid JWT')
+                                                          .and_raise(JsonWebTokenService::InvalidTokenError, 'Invalid JWT')
 
       post :record_response, params: {
         t: token,
