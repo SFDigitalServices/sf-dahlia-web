@@ -35,6 +35,7 @@ const UpdateEmailPage = () => {
     register,
     handleSubmit,
     setError,
+    watch,
     formState: { errors },
   } = useForm({ mode: "onSubmit", shouldFocusError: false })
   const navigate = useNavigate()
@@ -63,6 +64,9 @@ const UpdateEmailPage = () => {
   if (!user) {
     return null
   }
+  const loginEmail = user.primaryEmailAddress?.emailAddress.toLowerCase()
+  const enteredEmail = (watch("email") as string | undefined)?.toLowerCase()
+  const isSavingContactEmailAsLogin = isContactFlow && !!enteredEmail && enteredEmail === loginEmail
 
   const sendEmailCode = async (email: string) => {
     const primaryEmailId = user.primaryEmailAddressId
@@ -155,7 +159,9 @@ const UpdateEmailPage = () => {
             />
           </div>
           <Button variant="primary" size="sm" type="submit" disabled={!isAccountInitialized}>
-            {t("createAccount.getCode")}
+            {isSavingContactEmailAsLogin
+              ? t("accountLayout.contact.saveEmail")
+              : t("createAccount.getCode")}
           </Button>
           <Button
             size="sm"
