@@ -104,14 +104,16 @@ export const UpdateForm = ({
   loading,
   onSubmit,
   submitLabel,
+  fullWidthDivider,
 }: {
   children: React.ReactNode
   loading: boolean
   onSubmit?: () => unknown
   submitLabel: string
+  fullWidthDivider?: boolean
 }) => {
   return (
-    <FormSection>
+    <FormSection fullWidthDivider={fullWidthDivider}>
       <Form data-testid="update-form" onSubmit={onSubmit}>
         {children}
         <FormSubmitButton loading={loading} label={submitLabel} />
@@ -207,7 +209,7 @@ const EmailSection = () => {
   return (
     <FormSection>
       <Heading size="md">{t("accountSettings.email.title")}</Heading>
-      <p className={settingsStyles.settingsText}>{t("accountSettings.email.description")}</p>
+      <p className={settingsStyles.settingsDescription}>{t("accountSettings.email.description")}</p>
       <div className={settingsStyles.settingsEmailFieldset}>
         <legend className={"fieldset-legend"}>{t("label.emailAddress")}</legend>
         <p>{loginEmail ?? null}</p>
@@ -299,7 +301,7 @@ const PasswordSection = () => {
   const { hasPassword: userHasPassword } = useSignUpSession()
 
   return (
-    <FormSection>
+    <FormSection fullWidthDivider>
       <legend className={"fieldset-legend"}>{t("label.password")}</legend>
       {userHasPassword ? (
         <span aria-hidden="true">••••••••</span>
@@ -628,6 +630,7 @@ const DateOfBirthSection = ({ user, setUser }: SectionProps) => {
         onSubmit={handleSubmit(onSubmit)}
         loading={loading}
         submitLabel={t("accountSettings.saveDateOfBirth")}
+        fullWidthDivider
       >
         <DOBFieldset
           required
@@ -705,6 +708,7 @@ const AccountSettings = ({ profile }: { profile: User }) => {
         message={confirmationBannerMessage ? t(confirmationBannerMessage) : ""}
         onClose={() => setConfirmationBannerMessage(null)}
       />
+      {/* TODO: DAH-4406 remove name banner header with new toast */}
       {nameUpdateBanner || nameSavedBanner ? (
         <FormHeader
           className={"border-none"}
@@ -714,6 +718,7 @@ const AccountSettings = ({ profile }: { profile: User }) => {
         />
       ) : (
         <FormHeader
+          className={settingsStyles.settingsHeader}
           iconSymbol="settings"
           title={t("accountSettings.title.sentenceCase")}
           description={t("accountSettings.description")}
