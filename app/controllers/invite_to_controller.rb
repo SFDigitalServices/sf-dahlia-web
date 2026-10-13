@@ -3,7 +3,6 @@ class InviteToController < ApplicationController
   include InviteToEventLogging
 
   CLIENT_RECORDING_FLAG = 'temp.webapp.inviteToClientRecording'
-  NEXT_STEPS_TOKEN_PURPOSE = 'next_steps'.freeze
 
   before_action :ignore_head_requests
 
@@ -15,8 +14,9 @@ class InviteToController < ApplicationController
     end
 
     @invite_to_props = with_preview_link_token(props(decoded_params), decoded_params)
-    # Get URL from application
-    if decoded_params['appId'].present? || decoded_params['applicationNumber'].present?
+    # Get URL from application. An untrusted token may name any appId, so gets no links.
+    if InviteToTokenClaims.trusted_origin?(decoded_params) &&
+       (decoded_params['appId'].present? || decoded_params['applicationNumber'].present?)
       application = Force::ShortFormService.get(decoded_params['appId'] || decoded_params['applicationNumber'])
       @invite_to_props = @invite_to_props.merge(
         uploadUrl: application['uploadURL'],
