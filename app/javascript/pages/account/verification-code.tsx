@@ -181,7 +181,8 @@ const EnterVerificationCodePage = ({
   const verifyUpdateLoginEmailCode = async (code: string) => {
     const emailAddress = findPendingEmailAddress()
     if (!user || !emailAddress) {
-      setError("code", { message: "invalid" })
+      console.error("Update login email: missing required data")
+      void navigate(getUpdateEmailPath(), { state: { flow, saveFailed: true } })
       return
     }
 
@@ -209,8 +210,8 @@ const EnterVerificationCodePage = ({
       }
       void navigate(getMyAccountSettingsPath(), { state: { emailChanged: true } })
     } catch (error) {
-      const isInvalidCode = error?.errors?.[0]?.code === "form_code_incorrect"
-      setError("code", { message: isInvalidCode ? "invalid" : "generic" })
+      console.error("Update login email: verification failed", error)
+      setError("code", { message: "invalid" })
     }
   }
 
@@ -223,17 +224,20 @@ const EnterVerificationCodePage = ({
     )
   }
   // Clerk is only used to verify ownership.
-  // The address is verified, saved to Salesforce, then removed
+  // The address is verified, saved to Salesforce, then removed from Clerk
   const verifyUpdateContactEmailCode = async (code: string) => {
     const emailAddress = findPendingEmailAddress()
     if (!user || !emailAddress || !profile) {
-      setError("code", { message: "invalid" })
+      console.error("Update contact email: missing required data")
+      void navigate(getUpdateEmailPath(), { state: { flow, saveFailed: true } })
       return
     }
 
     const verifiedEmail = await emailAddress.attemptVerification({ code }).catch((error) => {
-      const isInvalidCode = error?.errors?.[0]?.code === "form_code_incorrect"
-      setError("code", { message: isInvalidCode ? "invalid" : "generic" })
+      if (error?.errors?.[0]?.code !== "form_code_incorrect") {
+        console.error("Update contact email: verification failed", error)
+      }
+      setError("code", { message: "invalid" })
       return null
     })
     if (!verifiedEmail) return

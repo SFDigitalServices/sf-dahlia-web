@@ -842,26 +842,20 @@ describe("<EnterVerificationCode />", () => {
     expect(user.previous.destroy).toHaveBeenCalled()
   })
 
-  it("does not update the email when there is no user", async () => {
-    await renderUpdateEmailFlow(null)
-    await submitCode()
-    await act(async () => {
-      await Promise.resolve()
-    })
-
-    expect(mockNavigate).not.toHaveBeenCalled()
-  })
-
-  it("does not update the email when the email is not found", async () => {
+  it("returns to the update email form when the pending email is not found", async () => {
+    const consoleError = jest.spyOn(console, "error").mockImplementation(() => {})
     const user = { ...updateLoginEmail(), emailAddresses: [] }
     await renderUpdateEmailFlow(user)
     await submitCode()
-    await act(async () => {
-      await Promise.resolve()
-    })
 
+    await waitFor(() => {
+      expect(mockNavigate).toHaveBeenCalledWith(getUpdateEmailPath(), {
+        state: { flow: AUTH_FLOW.UPDATE_LOGIN_EMAIL, saveFailed: true },
+      })
+    })
     expect(user.update).not.toHaveBeenCalled()
-    expect(mockNavigate).not.toHaveBeenCalled()
+
+    consoleError.mockRestore()
   })
 
   it("does not update the email when the code is not verified", async () => {
@@ -879,6 +873,7 @@ describe("<EnterVerificationCode />", () => {
   })
 
   it("does not update the email when verification throws", async () => {
+    const consoleError = jest.spyOn(console, "error").mockImplementation(() => {})
     const attemptVerification = jest.fn().mockRejectedValue(new Error("bad code"))
     const user = updateLoginEmail({ attemptVerification })
     await renderUpdateEmailFlow(user)
@@ -893,7 +888,10 @@ describe("<EnterVerificationCode />", () => {
 
     expect(user.update).not.toHaveBeenCalled()
     expect(mockNavigate).not.toHaveBeenCalled()
+
+    consoleError.mockRestore()
   })
+
   it("resends the update email code", async () => {
     await renderUpdateEmailFlow(updateLoginEmail())
     expireResendVerificationCode()
@@ -1058,6 +1056,7 @@ describe("<EnterVerificationCode />", () => {
       ["a wrong code", { errors: [{ code: "form_code_incorrect" }] }],
       ["an unexpected error", new Error("network")],
     ])("does not save on %s", async (_case, rejection) => {
+      const consoleError = jest.spyOn(console, "error").mockImplementation(() => {})
       const { user } = contactEmailUser({}, jest.fn().mockRejectedValue(rejection))
       await renderUpdateContactEmailFlow(user)
       await submitCode()
@@ -1067,6 +1066,8 @@ describe("<EnterVerificationCode />", () => {
 
       expect(updateContactEmail).not.toHaveBeenCalled()
       expect(mockNavigate).not.toHaveBeenCalled()
+
+      consoleError.mockRestore()
     })
 
     it("does not save when the code is not verified", async () => {
@@ -1082,16 +1083,22 @@ describe("<EnterVerificationCode />", () => {
       expect(mockNavigate).not.toHaveBeenCalled()
     })
 
-    it("does not verify the code when there is no profile", async () => {
+    it("returns to the update email form when there is no profile", async () => {
+      const consoleError = jest.spyOn(console, "error").mockImplementation(() => {})
       const { user, attemptVerification } = contactEmailUser()
       await renderUpdateContactEmailFlow(user, { hasProfile: false })
       await submitCode()
-      await act(async () => {
-        await Promise.resolve()
-      })
 
+      await waitFor(() => {
+        expect(mockNavigate).toHaveBeenCalledWith(getUpdateEmailPath(), {
+          state: { flow: AUTH_FLOW.UPDATE_CONTACT_EMAIL, saveFailed: true },
+        })
+      })
       expect(attemptVerification).not.toHaveBeenCalled()
       expect(updateContactEmail).not.toHaveBeenCalled()
+      expect(consoleError).toHaveBeenCalledWith("Update contact email: missing required data")
+
+      consoleError.mockRestore()
     })
 
     it("keeps the contact flow when editing the email", async () => {
