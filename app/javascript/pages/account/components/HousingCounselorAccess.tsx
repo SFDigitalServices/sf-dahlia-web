@@ -144,7 +144,7 @@ const RevokeAccess = ({
           agencyName: agency.shortName ? `${agency.name} (${agency.shortName})` : agency.name,
         })}
       </p>
-      <p className="share-access">
+      <p>
         {t("accountSettings.housingCounselor.agencyCan", {
           agencyName: agency.shortName || agency.name,
         })}
