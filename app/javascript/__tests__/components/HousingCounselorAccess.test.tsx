@@ -56,9 +56,8 @@ describe("HousingCounselorAccess", () => {
     it("renders the content to share access with an HC agency", async () => {
       render(<ShareAccessWrapper />, { wrapper: AuthSessionProvider })
 
-      expect(
-        await screen.findByText(t("accountSettings.housingCounselor.description"))
-      ).toBeInTheDocument()
+      const counselorLink = await screen.findByRole("link", { name: "housing counselor" })
+      expect(counselorLink).toHaveAttribute("href", "/housing-counselors")
       expect(
         screen.getByRole("group", { name: t("accountSettings.housingCounselor.heading") })
       ).toBeInTheDocument()
@@ -114,7 +113,9 @@ describe("HousingCounselorAccess", () => {
       await waitFor(() => {
         expect(
           screen.getByText(
-            t("accountSettings.housingCounselor.sharedWith", { agencyName: "Test Agency A" })
+            t("accountSettings.housingCounselor.sharedWith", {
+              agencyName: "Test Agency A (A)",
+            })
           )
         ).toBeInTheDocument()
       })
@@ -124,7 +125,8 @@ describe("HousingCounselorAccess", () => {
       expect(
         screen.getByText(
           t("accountSettings.housingCounselor.sharedOn", {
-            sharedDate: "January 1, 2020 at 12:00 AM",
+            sharedDate: "January 1, 2020",
+            sharedTime: "12:00 AM",
           })
         )
       ).toBeInTheDocument()
