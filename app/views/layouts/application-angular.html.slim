@@ -36,6 +36,16 @@ html lang="en" ng-app="dahlia" ng-strict-di="" ng-controller="SharedController"
     meta name="description" content="{{ngMeta.description}}"
     meta property="og:type" content="website"
 
+    / Clerk in Angular via the $auth shim (config/clerkAuthShim.js.coffee)
+    - clerk_auth_angular = ENV['CLERK_PUBLISHABLE_KEY'].present? && ClerkOrDeviseAuth.clerk_enabled?
+    - if clerk_auth_angular
+      - clerk_frontend_api = Base64.decode64(ENV['CLERK_PUBLISHABLE_KEY'].split('_', 3).last).chomp('$')
+      / defer, not async: deferred scripts run before DOMContentLoaded, when ng-app bootstraps,
+      / so window.Clerk exists before the shim needs it
+      / pinned to the clerk-js version @clerk/react is built against (@clerk/shared versionSelector);
+      / bump with @clerk/react in package.json
+      script defer="" crossorigin="anonymous" data-clerk-publishable-key=ENV['CLERK_PUBLISHABLE_KEY'] src="https://#{clerk_frontend_api}/npm/@clerk/clerk-js@6.31.0/dist/clerk.browser.js"
+
     javascript:
       window.env = {advertiseDALP: "#{ENV['ADVERTISE_DALP']}", dalpProgramInfo: "#{ENV['DALP_PROGRAM_INFO']}", covidUpdate: "#{ENV['COVID_UPDATE']}"}
 
@@ -106,3 +116,4 @@ html lang="en" ng-app="dahlia" ng-strict-di="" ng-controller="SharedController"
       // Add react feature flags below this line
       var ACCOUNT_INFORMATION_PAGES_REACT = "#{ENV['ACCOUNT_INFORMATION_PAGES_REACT']}"
       var APPLICATION_AUTOFILL_IMPROVEMENTS = "#{ENV['APPLICATION_AUTOFILL_IMPROVEMENTS']}"
+      var CLERK_AUTH_ANGULAR = #{clerk_auth_angular}

@@ -57,13 +57,11 @@ describe Api::V1::ShortFormController, type: :controller do
       allow(controller).to receive(:application_params).and_return(application_params)
       allow(controller).to receive(:applicant_attrs).and_return(applicant_attrs)
       allow(Force::ShortFormService).to receive(:create_or_update).and_return(response_data)
+      allow(Force::ShortFormService).to receive(:get_for_user).and_return([])
       allow(DahliaBackend::MessageService).to receive(:send_application_confirmation)
     end
 
     it 'submits the application and sends confirmation using new message service' do
-      allow(Rails.configuration).to receive_message_chain(:unleash,
-                                                          :is_enabled?).and_return(true)
-
       # Precise expectations with arguments
       expect(Force::ShortFormService).to receive(:create_or_update)
         .with(application_params, applicant_attrs)
@@ -74,6 +72,207 @@ describe Api::V1::ShortFormController, type: :controller do
 
       post :submit_application
       expect(response).to have_http_status(:ok)
+    end
+
+    context 'with the Clerk flag on' do
+      before { allow(ClerkOrDeviseAuth).to receive(:clerk_enabled?).and_return(true) }
+
+      it 'submits an anonymous application' do
+        allow(controller).to receive(:clerk).and_return(nil)
+
+        post :submit_application
+
+        expect(response).to have_http_status(:ok)
+        expect(Force::ShortFormService).to have_received(:create_or_update)
+      end
+
+      it 'submits the application for a Clerk user' do
+        allow(controller).to receive(:clerk).and_return(double(user_id: 'user_abc123'))
+        allow(ClerkService).to receive(:salesforce_contact_id)
+          .and_return('contact_abc123')
+
+        post :submit_application
+
+        expect(response).to have_http_status(:ok)
+        expect(Force::ShortFormService).to have_received(:create_or_update)
+      end
+
+      it 'refuses to submit when the Salesforce contact id lookup fails' do
+        allow(controller).to receive(:clerk).and_return(double(user_id: 'user_abc123'))
+        allow(ClerkService).to receive(:salesforce_contact_id).and_raise(StandardError)
+
+        post :submit_application
+
+        expect(response).to have_http_status(:service_unavailable)
+        expect(Force::ShortFormService).not_to have_received(:create_or_update)
+      end
+    end
+  end
+
+  describe '#delete_proof' do
+    let(:contact_id) { 'contact_abc123' }
+    let(:devise_user) { create(:user, salesforce_contact_id: contact_id) }
+    let(:proof_params) do
+      { session_uid: 'new_session', listing_id: '123',
+        listing_preference_id: 'pref1', document_type: 'gas bill' }
+    end
+    let!(:devise_file) do
+      create(:uploaded_file, user_id: devise_user.id.to_s,
+                             listing_preference_id: 'pref1')
+    end
+    let!(:other_file) do
+      create(:uploaded_file, user_id: 'someone_else', listing_preference_id: 'pref1')
+    end
+
+    it "deletes the Devise user's proof" do
+      allow(controller).to receive(:current_user).and_return(devise_user)
+      allow(controller).to receive(:user_signed_in?).and_return(true)
+
+      delete :delete_proof, params: { uploaded_file: proof_params }
+
+      expect(UploadedFile.exists?(devise_file.id)).to be(false)
+      expect(UploadedFile.exists?(other_file.id)).to be(true)
+    end
+
+    # TODO(DAH-4366): CLERK MIGRATION - DEVISE TECH DEBT TO REMOVE
+    it 'deletes a proof uploaded under Devise for a Clerk user with the same contact' do
+      allow(ClerkOrDeviseAuth).to receive(:clerk_enabled?).and_return(true)
+      allow(controller).to receive(:clerk).and_return(double(user_id: 'user_abc123'))
+      allow(ClerkService).to receive(:salesforce_contact_id).and_return(contact_id)
+
+      delete :delete_proof, params: { uploaded_file: proof_params }
+
+      expect(UploadedFile.exists?(devise_file.id)).to be(false)
+      expect(UploadedFile.exists?(other_file.id)).to be(true)
+    end
+  end
+
+  describe '#show_listing_application_for_user' do
+    let(:contact_id) { 'contact_abc123' }
+
+    # TODO(DAH-4366): CLERK MIGRATION - DEVISE TECH DEBT TO REMOVE
+    it 'includes proofs uploaded under Devise for a Clerk user with the same contact' do
+      allow(ClerkOrDeviseAuth).to receive(:clerk_enabled?).and_return(true)
+      allow(controller).to receive(:clerk).and_return(double(user_id: 'user_abc123'))
+      allow(ClerkService).to receive(:salesforce_contact_id).and_return(contact_id)
+      allow(Force::ShortFormService).to receive(:find_listing_application).and_return({})
+      devise_user = create(:user, salesforce_contact_id: contact_id)
+      devise_file = create(:uploaded_file, user_id: devise_user.id.to_s)
+      create(:uploaded_file, user_id: 'someone_else')
+
+      get :show_listing_application_for_user, params: { listing_id: '123' }
+
+      file_ids = JSON.parse(response.body)['files'].map { |f| f['id'] }
+      expect(file_ids).to eq([devise_file.id])
+    end
+  end
+
+  describe '#delete_application' do
+    let(:clerk_user_id) { 'user_abc123' }
+    let(:contact_id) { 'contact_abc123' }
+    let(:application) do
+      {
+        'id' => 'app123',
+        'status' => 'Draft',
+        'primaryApplicant' => { 'contactId' => contact_id },
+      }
+    end
+
+    before do
+      allow(Force::ShortFormService).to receive(:get).and_return(application)
+      allow(Force::ShortFormService).to receive(:delete).and_return(success: true)
+    end
+
+    context 'with the Clerk flag on and a Clerk session' do
+      before do
+        allow(ClerkOrDeviseAuth).to receive(:clerk_enabled?).and_return(true)
+        allow(controller).to receive(:clerk).and_return(double(user_id: clerk_user_id))
+        allow(ClerkService).to receive(:salesforce_contact_id)
+          .with(clerk_user_id)
+          .and_return(contact_id)
+      end
+
+      it 'deletes a draft application owned by the Clerk user' do
+        delete :delete_application, params: { id: 'app123' }
+
+        expect(response).to have_http_status(:ok)
+        expect(Force::ShortFormService).to have_received(:delete).with('app123')
+      end
+
+      it 'does not delete an application owned by another user' do
+        allow(ClerkService).to receive(:salesforce_contact_id)
+          .with(clerk_user_id)
+          .and_return('some_other_contact_id')
+
+        delete :delete_application, params: { id: 'app123' }
+
+        expect(response).to have_http_status(:unauthorized)
+        expect(Force::ShortFormService).not_to have_received(:delete)
+      end
+
+      it 'does not delete a submitted application' do
+        allow(Force::ShortFormService).to receive(:get)
+          .and_return(application.merge('status' => 'Submitted'))
+
+        delete :delete_application, params: { id: 'app123' }
+
+        expect(response).to have_http_status(:unauthorized)
+        expect(Force::ShortFormService).not_to have_received(:delete)
+      end
+
+      # ClerkService::User rescues a failed contact id lookup and returns nil, so
+      # without this guard nil would match an application with no contact id.
+      it 'does not delete when the Clerk user has no Salesforce contact id' do
+        allow(ClerkService).to receive(:salesforce_contact_id)
+          .with(clerk_user_id)
+          .and_raise(StandardError)
+        allow(Force::ShortFormService).to receive(:get)
+          .and_return(application.merge('primaryApplicant' => { 'contactId' => nil }))
+
+        delete :delete_application, params: { id: 'app123' }
+
+        expect(response).to have_http_status(:unauthorized)
+        expect(Force::ShortFormService).not_to have_received(:delete)
+      end
+    end
+
+    # TODO(DAH-4366): CLERK MIGRATION - DEVISE TECH DEBT TO REMOVE
+    # Goes with the flag, along with ClerkOrDeviseAuth.
+    context 'with the Clerk flag off' do
+      it 'ignores a Clerk session and uses Devise' do
+        allow(controller).to receive(:clerk).and_return(double(user_id: clerk_user_id))
+
+        delete :delete_application, params: { id: 'app123' }
+
+        expect(response).to have_http_status(:unauthorized)
+        expect(Force::ShortFormService).not_to have_received(:delete)
+      end
+
+      it 'rejects an unauthenticated request' do
+        delete :delete_application, params: { id: 'app123' }
+
+        expect(response).to have_http_status(:unauthorized)
+        expect(Force::ShortFormService).not_to have_received(:delete)
+      end
+
+      # Regression: a second before_action :authenticate_user! replaced this one,
+      # so the action ran with only user_can_access? guarding it.
+      it 'rejects an unauthenticated request before loading the application' do
+        delete :delete_application, params: { id: 'app123' }
+
+        expect(response).to have_http_status(:unauthorized)
+        expect(Force::ShortFormService).not_to have_received(:get)
+      end
+
+      it 'deletes a draft application owned by the Devise user' do
+        user = create(:user, salesforce_contact_id: contact_id)
+        allow(controller).to receive(:current_user).and_return(user)
+
+        delete :delete_application, params: { id: 'app123' }
+
+        expect(response).to have_http_status(:ok)
+        expect(Force::ShortFormService).to have_received(:delete).with('app123')
+      end
     end
   end
 

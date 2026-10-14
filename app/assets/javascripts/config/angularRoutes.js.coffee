@@ -9,6 +9,25 @@
     $urlMatcherFactoryProvider.caseInsensitive(true)
     $urlMatcherFactoryProvider.strictMode(false)
 
+    # with the Clerk flag on, a signed-in user needs a profile to apply: send them to add-profile.
+    # Signed-out visitors apply as guests. Used on both the apply-welcome and apply pages.
+    # TODO(DAH-4366): CLERK MIGRATION - DEVISE TECH DEBT TO REMOVE (drop the flag check)
+    clerkSessionResolve = [
+      '$q', '$window', '$stateParams', 'AccountService', 'ClerkShim', 'SharedService', 'ShortFormApplicationService',
+      ($q, $window, $stateParams, AccountService, ClerkShim, SharedService, ShortFormApplicationService) ->
+        return true unless $window.CLERK_AUTH_ANGULAR
+        ClerkShim.initClerk().then (clerk) ->
+          return true unless clerk.session
+          # a Clerk user has no Salesforce contact (404) until they finish add-profile
+          AccountService.validateUser().then(
+            -> true
+            (response) ->
+              return $q.reject(response) unless response.status == 404
+              $window.removeEventListener('beforeunload', ShortFormApplicationService.onExit)
+              ClerkShim.leaveFor(SharedService._addLanguageAndParamsToUrl($stateParams.lang, '/add-profile'))
+          )
+    ]
+
     $stateProvider
     .state('dahlia', {
       url: '/{lang:(?:en|es|tl|zh)}'
@@ -522,6 +541,7 @@
             # store the listing in ListingDataService and kick out if it's not open for applications
             ListingDataService.getListingAndCheckIfOpen($stateParams.id)
         ]
+        clerkSession: clerkSessionResolve
         $title: ['$title', '$translate', 'listing', ($title, $translate, listing) ->
           $translate('page_title.listing_application', {listing: listing.Name})
         ]
@@ -597,10 +617,12 @@
             )
             return deferred.promise
         ]
+        clerkSession: clerkSessionResolve
         application: [
           # 'listing' is part of the params so that application waits for listing (above) to resolve
-          '$q', '$stateParams', '$state', 'ShortFormApplicationService', 'AccountService', 'AutosaveService', 'AnalyticsService', 'listing'
-          ($q, $stateParams, $state, ShortFormApplicationService, AccountService, AutosaveService, AnalyticsService, listing) ->
+          # 'clerkSession' is too, so nothing loads or autosaves for a signed-in user without a profile
+          '$q', '$stateParams', '$state', 'ShortFormApplicationService', 'AccountService', 'AutosaveService', 'AnalyticsService', 'listing', 'clerkSession'
+          ($q, $stateParams, $state, ShortFormApplicationService, AccountService, AutosaveService, AnalyticsService, listing, clerkSession) ->
             deferred = $q.defer()
 
             # if the user just clicked the language switcher, don't reload the whole route
