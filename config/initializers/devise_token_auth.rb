@@ -41,6 +41,7 @@ DeviseTokenAuth.setup do |config|
   # By default, this is set to an empty array, and all redirect URLs are allowed.
   allowed_domains = [
     "https://#{ENV['HEROKU_APP_NAME']}.herokuapp.com",
+    "https://#{ENV['HEROKU_APP_DEFAULT_DOMAIN_NAME']}",
     "https://dahlia-full.herokuapp.com",
     "https://housing.sfgov.org",
     "http://localhost:3000",
