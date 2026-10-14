@@ -114,7 +114,17 @@ describe("routeUtil", () => {
       expect(result).toBe("/forgot-password?email=test%40example.com&token=12345&lang=en")
     })
 
-    it("should encode parameter values so they round-trip through URLSearchParams", () => {
+    it("should discard existing query params from the base path", () => {
+      const result = createPath("/sign-in?redirect=settings", { hcAccess: "0" })
+      expect(result).toBe("/sign-in?hcAccess=0")
+    })
+
+    it("should discard hashes from the base path", () => {
+      const result = createPath("/sign-in#section-1", { hcAccess: "0" })
+      expect(result).toBe("/sign-in?hcAccess=0")
+    })
+
+    it("should URL-encode special characters and preserve decoded parameter values", () => {
       const email = "first+last@example.com"
       const result = createPath(getForgotPasswordPath(), { email, redirect: "/a?b=c&d" })
       expect(result).toBe(
