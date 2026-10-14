@@ -236,6 +236,31 @@ describe Api::V1::ShortFormController, type: :controller do
       end
     end
 
+    context 'with the Clerk flag on and no Clerk session' do
+      before do
+        allow(ClerkOrDeviseAuth).to receive(:clerk_enabled?).and_return(true)
+        allow(controller).to receive(:clerk).and_return(nil)
+      end
+
+      it 'rejects the request' do
+        delete :delete_application, params: { id: 'app123' }
+
+        expect(response).to have_http_status(:unauthorized)
+        expect(JSON.parse(response.body)).to eq('error' => 'Invalid Clerk session')
+        expect(Force::ShortFormService).not_to have_received(:delete)
+      end
+
+      it 'does not fall back to a Devise session' do
+        allow(controller).to receive(:warden)
+          .and_return(double(authenticate: create(:user)))
+
+        delete :delete_application, params: { id: 'app123' }
+
+        expect(response).to have_http_status(:unauthorized)
+        expect(Force::ShortFormService).not_to have_received(:delete)
+      end
+    end
+
     # TODO(DAH-4366): CLERK MIGRATION - DEVISE TECH DEBT TO REMOVE
     # Goes with the flag, along with ClerkOrDeviseAuth.
     context 'with the Clerk flag off' do
