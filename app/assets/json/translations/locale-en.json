@@ -206,7 +206,7 @@
             "look_for_your_program_number": "Look for your Program Number in an email from Plus Housing. Don't have it? Email {{emailLink}}.",
             "part_of_plus_housing_program": "Part of Plus Housing program",
             "plus_housing_program_number": "Plus Housing Program Number",
-            "subtitle": "The <a href='{{plusHousingProgramUrl}}' target='_blank'>Plus Housing program</a> is for people living with HIV/AIDS. Plus Housing participants get priority in the lottery for 160 Freelon. You need your Plus Housing Program Number.",
+            "subtitle": "The <a href='{{plusHousingProgramUrl}}' target='_blank'>Plus Housing program</a> is for people living with HIV/AIDS. Plus Housing participants get priority in the lottery for {{buildingName}}. You need your Plus Housing Program Number.",
             "title": "Are you part of the Plus Housing program?"
         },
         "choose_applicant_details": {
