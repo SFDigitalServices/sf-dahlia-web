@@ -167,7 +167,7 @@ const getMenuLinks = (
 const LayoutContent = ({
   signedIn,
   onSignOut,
-  delegatedSeekerName,
+  delegatedAccount,
   children,
   title,
   description,
@@ -175,7 +175,7 @@ const LayoutContent = ({
 }: LayoutProps & {
   signedIn: boolean
   onSignOut: () => void | Promise<void>
-  delegatedSeekerName?: string
+  delegatedAccount?: { seekerName: string }
 }) => {
   const { getAssetPath } = useContext(ConfigContext)
   const { pathname } = useLocation()
@@ -198,7 +198,7 @@ const LayoutContent = ({
 
   const delegatedAccountBanner = (
     <div className="delegated-account-notice__content">
-      {t("housingCounselor.signedInAs", { seekerName: delegatedSeekerName })}{" "}
+      {t("housingCounselor.signedInAs", { seekerName: delegatedAccount?.seekerName })}{" "}
       <button
         type="button"
         className="delegated-account-notice__sign-out"
@@ -245,8 +245,8 @@ const LayoutContent = ({
             languageNavLabel={t("languages.choose")}
             languages={getLanguageItems()}
             logoSrc={getAssetPath("DAHLIA-logo.svg")}
-            notice={delegatedSeekerName ? delegatedAccountBanner : feedbackBanner}
-            noticeClassName={delegatedSeekerName ? "delegated-account-notice" : undefined}
+            notice={delegatedAccount ? delegatedAccountBanner : feedbackBanner}
+            noticeClassName={delegatedAccount ? "delegated-account-notice" : undefined}
             noticeMobile={true}
             mobileDrawer={true}
             flattenSubMenus={true}
@@ -354,7 +354,7 @@ const ClerkLayout = (props: LayoutProps) => {
       {...props}
       signedIn={status.kind === "signedIn"}
       onSignOut={signOutToSignIn}
-      delegatedSeekerName={profile?.isDelegated ? fullName(profile) : undefined}
+      delegatedAccount={profile?.isDelegated ? { seekerName: fullName(profile) } : undefined}
     />
   )
 }

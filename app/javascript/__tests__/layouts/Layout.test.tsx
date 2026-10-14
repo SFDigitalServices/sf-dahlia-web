@@ -179,5 +179,22 @@ describe("<Layout />", () => {
         await waitFor(() => expect(clearHousingCounselorSession).toHaveBeenCalled())
       })
     })
+
+    describe("while a housing counselor is in a delegated account with no name", () => {
+      beforeEach(() => {
+        setupUserContext({
+          loggedIn: true,
+          mockProfile: { ...mockProfileStub, firstName: "", lastName: "", isDelegated: true },
+        })
+      })
+
+      it("still shows the delegated banner in place of the feedback link", async () => {
+        const notice = await renderNotice()
+
+        expect(within(notice).getByText(/You are signed in as/)).not.toBeNull()
+        expect(within(notice).getByRole("button", { name: "Sign out" })).not.toBeNull()
+        expect(within(notice).queryByText(/your feedback/)).toBeNull()
+      })
+    })
   })
 })
