@@ -18,12 +18,14 @@ export const useSignOutToSignIn = () => {
     const delegatedAccountName = profile?.isDelegated ? fullName(profile) : undefined
     try {
       await signOut()
-    } finally {
-      if (delegatedAccountName) {
-        void navigate(getSignInPath(), { state: { housingCounselorSignedOut: delegatedAccountName } })
-      } else {
-        void navigate(getSignInPath())
-      }
+    } catch {
+      // Still signed in, so stay put: sign-in would redirect straight back.
+      return
+    }
+    if (delegatedAccountName) {
+      void navigate(getSignInPath(), { state: { housingCounselorSignedOut: delegatedAccountName } })
+    } else {
+      void navigate(getSignInPath())
     }
   }, [navigate, profile, signOut])
 }

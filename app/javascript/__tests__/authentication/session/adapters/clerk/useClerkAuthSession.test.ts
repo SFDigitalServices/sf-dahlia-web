@@ -65,11 +65,24 @@ describe("useClerkAuthSession", () => {
 
   describe("Given clearing the housing counselor session fails", () => {
     describe("When the user signs out", () => {
-      it("then the error propagates and the sign-out is no longer in progress", async () => {
+      it("then the Clerk session still ends", async () => {
         ;(clearHousingCounselorSession as jest.Mock).mockRejectedValue(new Error("network error"))
         const { result } = renderSignedInSession()
 
-        await expect(act(() => result.current.signOut())).rejects.toThrow("network error")
+        await act(() => result.current.signOut())
+
+        expect(clerkSignOut).toHaveBeenCalled()
+      })
+    })
+  })
+
+  describe("Given Clerk's sign-out fails", () => {
+    describe("When the user signs out", () => {
+      it("then the error propagates and the sign-out is no longer in progress", async () => {
+        clerkSignOut.mockRejectedValue(new Error("network error"))
+        const { result } = renderSignedInSession()
+
+        await expect(result.current.signOut()).rejects.toThrow("network error")
 
         expect(result.current.isSigningOut()).toBe(false)
       })

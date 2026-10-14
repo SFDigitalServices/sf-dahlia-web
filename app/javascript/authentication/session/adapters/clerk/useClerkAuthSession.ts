@@ -39,8 +39,14 @@ export const useClerkAuthSession = (): AuthSession => {
       // apiService attaches stored Devise headers to every request, so a user who
       // last signed in with Devise would keep sending them.
       clearHeaders()
-      // A delegated hc_session should never outlive the sign-out that ends it.
-      await clearHousingCounselorSession()
+      // A delegated hc_session should never outlive the sign-out that ends it. If
+      // clearing it fails, still end the Clerk session: without one the cookie grants
+      // nothing, and the next sign-in clears it.
+      try {
+        await clearHousingCounselorSession()
+      } catch {
+        // Fall through to the Clerk sign-out.
+      }
       // Without a callback Clerk does a full page load to its afterSignOutUrl ("/"),
       // overriding the caller's own redirect to sign-in.
       await clerkSignOut(() => undefined)
