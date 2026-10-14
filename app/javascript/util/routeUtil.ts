@@ -53,17 +53,19 @@ export const getNewLanguagePath = (
 }
 
 /**
- *
  * Create a new path with one or more params that may or may not be undefined.
  * The function should take in a localized path (from one of the functions below) and a params object.
+ * The function *discards* params and hashes in the path argument.
  */
 export const createPath = (path: string, params: { [key: string]: string | undefined }): string => {
+  const pathWithoutHash = path.split("#", 1)[0]
+  const basePath = pathWithoutHash.split("?", 1)[0]
   const search = new URLSearchParams()
   Object.entries(params).forEach(([key, value]) => {
     if (value) search.append(key, value)
   })
   const query = search.toString()
-  return query ? `${path}?${query}` : path
+  return query ? `${basePath}?${query}` : basePath
 }
 
 export const getHomepagePath = localizedPathGetter("/")
