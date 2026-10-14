@@ -15,12 +15,12 @@ export const useSignOutToSignIn = () => {
   const navigate = useNavigate()
 
   return useCallback(async () => {
-    const seekerName = profile?.isDelegated ? fullName(profile) : undefined
+    const delegatedAccountName = profile?.isDelegated ? fullName(profile) : undefined
     try {
       await signOut()
     } finally {
-      if (seekerName) {
-        void navigate(getSignInPath(), { state: { housingCounselorSignedOut: seekerName } })
+      if (delegatedAccountName) {
+        void navigate(getSignInPath(), { state: { housingCounselorSignedOut: delegatedAccountName } })
       } else {
         void navigate(getSignInPath())
       }
