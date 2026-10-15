@@ -14,6 +14,14 @@ const envSpecificConfig = () => {
 
 const webpackConfiguration = envSpecificConfig()
 
+// Suppress the specific Autoprefixer warning from target browsers
+webpackConfiguration.ignoreWarnings = [
+  {
+    module: /postcss-loader/,
+    message: /Autoprefixer target browsers do not need any prefixes/
+  }
+]
+
 // To debug the webpack configuration
 // 1. Uncomment debugger line below
 // 2. Run `bin/webpacker --debug-webpacker`
