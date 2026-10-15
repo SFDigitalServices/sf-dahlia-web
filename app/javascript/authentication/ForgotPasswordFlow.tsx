@@ -9,7 +9,7 @@ import { useSignInSession } from "./session/useSignInSession"
 import { AUTH_FLOW } from "../modules/constants"
 import EmailFieldset from "../pages/account/components/EmailFieldset"
 import GetHelp from "../pages/account/components/GetHelp"
-import { getForgotPasswordCodePath } from "../util/routeUtil"
+import { createPath, getForgotPasswordCodePath, getSignInPath } from "../util/routeUtil"
 import styles from "./ForgotPassword.module.scss"
 
 const ForgotPasswordFlow = () => {
@@ -23,10 +23,12 @@ const ForgotPasswordFlow = () => {
   const navigate = useNavigate()
   const prefilledEmailParam = new URLSearchParams(window.location.search).get("email") ?? ""
 
-  // TODO: DAH-4352 show proper error message in addition to logging to the console
   const onGetCodeSubmit = async ({ email }: { email: string }) => {
     const { error } = await sendPasswordResetCode(email)
-    if (error) return
+    if (error) {
+      void navigate(createPath(getSignInPath(), { err: "code" }))
+      return
+    }
 
     void navigate(getForgotPasswordCodePath(), {
       state: { email, flow: AUTH_FLOW.FORGOT_PASSWORD },
