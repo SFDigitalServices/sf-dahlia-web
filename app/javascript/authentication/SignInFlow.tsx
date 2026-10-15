@@ -2,12 +2,24 @@
 import React, { useEffect, useRef, useState } from "react"
 import { Navigate, useLocation, useNavigate } from "react-router"
 import { Form, t } from "@bloom-housing/ui-components"
-import { Alert, Button, Card, Heading, Link, LoadingState, Message } from "@bloom-housing/ui-seeds"
+import {
+  Alert,
+  Button,
+  Card,
+  Heading,
+  Icon,
+  Link,
+  LoadingState,
+  Message,
+} from "@bloom-housing/ui-seeds"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faLock } from "@fortawesome/free-solid-svg-icons"
 import { useForm, useWatch } from "react-hook-form"
 import AuthLayout from "../layouts/AuthLayout"
 import EmailFieldset from "../pages/account/components/EmailFieldset"
 import PasswordFieldset from "../pages/account/components/PasswordFieldset"
 import GetHelp from "../pages/account/components/GetHelp"
+import Toast from "../pages/account/components/Toast"
 import {
   createPath,
   getCreateAccountPath,
@@ -35,6 +47,21 @@ type SignInView = "verificationCode" | "password"
 
 const getHousingCounselorToken = () => new URLSearchParams(window.location.search).get("t")
 
+// A full page load rather than navigate(): the profile may already have been fetched
+// and cached before the hc_session cookie existed, and must be refetched as the seeker's.
+const enterDelegatedAccount = (destination: string) => {
+  window.location.assign(createPath(destination, { hcAccess: "1" }))
+}
+
+const HousingCounselorSignedOutToast = () => {
+  const { state } = useLocation() as { state?: { housingCounselorSignedOut?: string } }
+  const seekerName = state?.housingCounselorSignedOut
+
+  if (!seekerName) return null
+
+  return <Toast variant="success">{t("housingCounselor.signedOutToast", { seekerName })}</Toast>
+}
+
 const SignInFlow = () => {
   const navigate = useNavigate()
   const { state } = useLocation() as { state?: { redirectUrl?: string } }
@@ -52,6 +79,10 @@ const SignInFlow = () => {
   } = useSignInSession()
   const { unleashFlag: requiredLoginsMessageEnabled } = useFeatureFlag(
     UNLEASH_FLAG.REQUIRED_LOGINS_MESSAGE,
+    false
+  )
+  const { unleashFlag: housingCounselorAccessEnabled } = useFeatureFlag(
+    UNLEASH_FLAG.HOUSING_COUNSELOR_ACCESS,
     false
   )
   const [showError, setShowError] = useState(false)
@@ -94,9 +125,6 @@ const SignInFlow = () => {
         return false
       }
       await authorizeHousingCounselor(token, sessionToken)
-      console.log(
-        "TODO: Housing counselor successfully authenticated, TBD banner and applicant view"
-      )
       return true
     } catch {
       setShowError(true)
@@ -140,6 +168,8 @@ const SignInFlow = () => {
         return
       }
       setHousingCounselorChecked(true)
+      enterDelegatedAccount(postSignInRedirectUrl)
+      return
     }
 
     // Prevents the render-time redirect below from firing again (with a stale, query-less URL)
@@ -196,8 +226,7 @@ const SignInFlow = () => {
           void navigate(createPath(getMyAccountPath(), { hcAccess: "0" }))
           return
         }
-        console.log("TODO: Housing counselor already signed in, TBD banner and applicant view")
-        void navigate(getMyAccountPath())
+        enterDelegatedAccount(getMyAccountPath())
       } catch {
         setShowError(true)
       }
@@ -283,10 +312,25 @@ const SignInFlow = () => {
 
   return (
     <AuthLayout title={t("pageTitle.signIn")}>
+      <HousingCounselorSignedOutToast />
       <Card.Section divider="inset">
         {requiredLoginsMessageEnabled && (
           <Message fullwidth variant="primary" className={styles.requiredLoginsMessage}>
             {renderInlineMarkup(t("signIn.requiredLoginsMessage", { url: requiredLoginsHelpUrl }))}
+          </Message>
+        )}
+        {housingCounselorAccessEnabled && getHousingCounselorToken() && (
+          <Message
+            fullwidth
+            variant="primary"
+            className={styles.mustSignInMessage}
+            customIcon={
+              <Icon size="md">
+                <FontAwesomeIcon icon={faLock} />
+              </Icon>
+            }
+          >
+            {t("signIn.mustSignInToContinue")}
           </Message>
         )}
         <Heading priority={1} size="2xl">

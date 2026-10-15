@@ -51,6 +51,18 @@
   }
 }
 
+.delegated-account-notice {
+  background-color: var(--seeds-color-yellow-500);
+  color: var(--seeds-color-black);
+  text-align: right;
+}
+
+.delegated-account-notice__sign-out {
+  text-decoration: underline;
+  color: inherit;
+  white-space: nowrap;
+}
+
 .feedback-link {
   text-align: left;
   @media (min-width: theme("screens.md")) {

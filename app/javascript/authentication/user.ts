@@ -24,11 +24,15 @@ interface User extends Contact {
     birthMonth: string
     birthYear: string
   }
+  isDelegated?: boolean
 }
+
+const fullName = ({ firstName, lastName }: Contact) =>
+  [firstName, lastName].filter(Boolean).join(" ")
 
 interface UserData {
   data: User
   success: boolean
 }
 
-export { Contact, User, UserData }
+export { Contact, User, UserData, fullName }

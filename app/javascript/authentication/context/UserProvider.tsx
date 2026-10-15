@@ -35,13 +35,20 @@ const ClerkProfile = ({
   const { status, getCredentials } = useAuthSession()
 
   useEffect(() => {
-    if (!isAuthInitialized(status) || hasProfile) {
+    if (!isAuthInitialized(status)) {
       return
     }
+    // Before the hasProfile check: a cached profile must not outlive the session,
+    // or the next sign-in in this SPA would reuse it instead of fetching.
     if (status.kind === "signedOut") {
       onLoaded(null)
       return
     }
+    if (hasProfile) {
+      return
+    }
+
+    let cancelled = false
 
     void (async () => {
       try {
@@ -49,11 +56,19 @@ const ClerkProfile = ({
         if (!sessionToken) {
           throw new Error("Missing Clerk session token")
         }
-        onLoaded(await getProfile({ clerkEnabled: true, sessionToken }))
+        const profile = await getProfile({ clerkEnabled: true, sessionToken })
+        if (!cancelled) {
+          onLoaded(profile)
+        }
       } catch {
-        onLoaded(null)
+        if (!cancelled) {
+          onLoaded(null)
+        }
       }
     })()
+    return () => {
+      cancelled = true
+    }
   }, [getCredentials, hasProfile, status, onLoaded])
 
   return null

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import React from "react"
-import { render } from "@testing-library/react"
+import { fireEvent, render, waitFor } from "@testing-library/react"
 import { mockWindowLocation, restoreWindowLocation } from "../__util__/renderUtils"
 import { withAuthentication } from "../../authentication/withAuthentication"
 import UserContext, { ContextProps } from "../../authentication/context/UserContext"
@@ -10,7 +10,10 @@ import { getLocalizedPath, getAddProfilePath, RedirectType } from "../../util/ro
 import { getCurrentLanguage } from "../../util/languageUtil"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import TagManager from "react-gtm-module"
-import { AuthSessionProvider } from "../../authentication/session/AuthSessionProvider"
+import {
+  AuthSessionProvider,
+  useAuthSession,
+} from "../../authentication/session/AuthSessionProvider"
 
 // Mock the useGTMDataLayer hook
 jest.mock("react-gtm-module", () => ({
@@ -18,7 +21,12 @@ jest.mock("react-gtm-module", () => ({
   dataLayer: jest.fn(),
 }))
 
+jest.mock("../../api/authApiService", () => ({
+  clearHousingCounselorSession: jest.fn(),
+}))
+
 jest.mock("../../authentication/token", () => ({
+  clearHeaders: jest.fn(),
   isTokenValid: jest.fn(),
   parseUrlParams: jest.fn(() => ({
     get: jest.fn((_) => null),
@@ -256,6 +264,73 @@ describe("withAuthentication", () => {
       )
 
       expect(window.location.assign).toHaveBeenCalledWith("/add-profile")
+    })
+
+    describe("when a signed-in user's session ends while on the page", () => {
+      let signedIn: boolean
+      const SignOutButton = () => {
+        const { signOut } = useAuthSession()
+        return (
+          <button
+            onClick={() => {
+              void signOut()
+            }}
+          >
+            Sign out
+          </button>
+        )
+      }
+      const WrappedSignOutButton = withAuthentication(SignOutButton)
+      const renderSignedIn = () =>
+        render(
+          <UserContext.Provider value={mockContextValue}>
+            <WrappedSignOutButton />
+          </UserContext.Provider>,
+          { wrapper: AuthSessionProvider }
+        )
+
+      beforeEach(() => {
+        signedIn = true
+        ;(getLocalizedPath as jest.Mock).mockReturnValue("/sign-in")
+        ;(useAuth as jest.Mock).mockImplementation(() => ({
+          isLoaded: true,
+          isSignedIn: signedIn,
+          getToken: jest.fn(),
+          signOut: jest.fn(() => {
+            signedIn = false
+            return Promise.resolve()
+          }),
+        }))
+      })
+
+      // Regression: the gate's own hard redirect used to race the sign-out caller's
+      // navigation to sign-in, dropping the state that carries the sign-out toast.
+      it("leaves the redirect to whoever signed the user out", async () => {
+        const { getByRole, rerender } = renderSignedIn()
+
+        fireEvent.click(getByRole("button", { name: "Sign out" }))
+        await waitFor(() => expect(signedIn).toBe(false))
+        rerender(
+          <UserContext.Provider value={mockContextValue}>
+            <WrappedSignOutButton />
+          </UserContext.Provider>
+        )
+
+        expect(window.location.assign).not.toHaveBeenCalled()
+      })
+
+      it("still redirects to sign-in when the session ends some other way", () => {
+        const { rerender } = renderSignedIn()
+
+        signedIn = false
+        rerender(
+          <UserContext.Provider value={mockContextValue}>
+            <WrappedSignOutButton />
+          </UserContext.Provider>
+        )
+
+        expect(window.location.assign).toHaveBeenCalledWith("/sign-in")
+      })
     })
   })
 })
