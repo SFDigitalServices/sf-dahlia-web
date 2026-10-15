@@ -8,23 +8,37 @@ import Contact from "../../../pages/account/contact"
 import React from "react"
 import { fireEvent, waitFor, type RenderResult } from "@testing-library/react"
 import { mockProfileStub, setupUserContext } from "../../__util__/accountUtils"
-import { getMyAccountSettingsPath } from "../../../util/routeUtil"
+import { getMyAccountSettingsPath, getUpdateEmailPath } from "../../../util/routeUtil"
 import * as authApiService from "../../../api/authApiService"
 import * as authSession from "../../../authentication/session/AuthSessionProvider"
 import * as authStatus from "../../../authentication/session/authStatus"
+import { useFeatureFlag } from "../../../hooks/useFeatureFlag"
+import { AUTH_FLOW } from "../../../modules/constants"
 
 jest.mock("react-gtm-module", () => ({
   initialize: jest.fn(),
   dataLayer: jest.fn(),
 }))
 
+const mockNavigate = jest.fn()
+
+jest.mock("react-router", () => ({
+  ...jest.requireActual("react-router"),
+  useNavigate: () => mockNavigate,
+}))
+
 jest.mock("../../../hooks/useFeatureFlag", () => ({
-  useFeatureFlag: () => ({ flagsReady: true, unleashFlag: true }),
+  useFeatureFlag: jest.fn(),
 }))
 
 describe("<Contact />", () => {
   beforeEach(() => {
     document.documentElement.lang = "en"
+    mockNavigate.mockClear()
+    ;(useFeatureFlag as jest.Mock).mockImplementation(() => ({
+      flagsReady: true,
+      unleashFlag: true,
+    }))
     jest.spyOn(console, "error").mockImplementation(() => {})
     window.matchMedia = jest.fn().mockImplementation((query) => ({
       matches: true,
@@ -75,6 +89,14 @@ describe("<Contact />", () => {
 
     it("displays the current phone from the user profile", () => {
       expect(getByDisplayValue(mockProfileStub.phone)).toBeInTheDocument()
+    })
+
+    it("navigates to the update email page when the update email button is clicked", () => {
+      fireEvent.click(getByRole("button", { name: /update email/i }))
+
+      expect(mockNavigate).toHaveBeenCalledWith(getUpdateEmailPath(), {
+        state: { flow: AUTH_FLOW.UPDATE_CONTACT_EMAIL },
+      })
     })
   })
 

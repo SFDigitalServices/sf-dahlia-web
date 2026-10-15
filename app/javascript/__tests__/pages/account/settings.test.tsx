@@ -13,7 +13,7 @@ import { useFeatureFlag } from "../../../hooks/useFeatureFlag"
 import { useUser } from "@clerk/react"
 import { useLocation, useNavigate } from "react-router"
 import { getUpdateEmailPath } from "../../../util/routeUtil"
-import { UNLEASH_FLAG } from "../../../modules/constants"
+import { AUTH_FLOW, UNLEASH_FLAG } from "../../../modules/constants"
 import * as authStatus from "../../../authentication/session/authStatus"
 
 jest.mock("../../../api/apiService", () => ({
@@ -343,13 +343,15 @@ describe("<SettingsPage />", () => {
       })
     })
     describe("the email section", () => {
-      it("navigates to the update email page", async () => {
+      it("navigates to the update login email page", async () => {
         await act(async () => {
           fireEvent.click(screen.getByRole("button", { name: /update email/i }))
           await promise
         })
 
-        expect(mockNavigate).toHaveBeenCalledWith(getUpdateEmailPath())
+        expect(mockNavigate).toHaveBeenCalledWith(getUpdateEmailPath(), {
+          state: { flow: AUTH_FLOW.UPDATE_LOGIN_EMAIL },
+        })
       })
     })
     describe("the password section", () => {
@@ -697,7 +699,7 @@ describe("<SettingsPage />", () => {
       it("renders the housing counselor section on the page", async () => {
         expect(
           await screen.findByRole("group", {
-            name: /share your account with a housing counselor/i,
+            name: /share your account with a counseling agency/i,
           })
         ).toBeInTheDocument()
         expect(screen.getByRole("button", { name: /share my account/i })).toBeInTheDocument()
@@ -953,7 +955,7 @@ describe("<SettingsPage />", () => {
       it("does not render the housing counselor section", () => {
         expect(
           screen.queryByRole("group", {
-            name: /share your account with a housing counselor/i,
+            name: /share your account with a counseling agency/i,
           })
         ).toBeNull()
         expect(screen.queryByRole("button", { name: /share my account/i })).toBeNull()

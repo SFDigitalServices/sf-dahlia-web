@@ -206,7 +206,7 @@
             "look_for_your_program_number": "Hanapin ang iyong Program Number sa email na mula sa Plus Housing. Wala ka nito? Email {{emailLink}}.",
             "part_of_plus_housing_program": "Bahagi ng Plus Housing program",
             "plus_housing_program_number": "Plus Housing Program Number",
-            "subtitle": "Ang <a href='{{plusHousingProgramUrl}}' target='_blank'>Plus Housing program</a> ay para sa mga taong namumuhay na may HIV/AIDS. Nakakakuha ang mga kalahok ng Plus Housing ng priyoridad sa lottery para sa 160 Freelon. Kailangan mo ang iyong Plus Housing Program Number.",
+            "subtitle": "Ang <a href='{{plusHousingProgramUrl}}' target='_blank'>Plus Housing program</a> ay para sa mga taong namumuhay na may HIV/AIDS. Nakakakuha ang mga kalahok ng Plus Housing ng priyoridad sa lottery para sa {{buildingName}}. Kailangan mo ang iyong Plus Housing Program Number.",
             "title": "Ikaw ba ay bahagi ng Plus Housing program?"
         },
         "choose_applicant_details": {
