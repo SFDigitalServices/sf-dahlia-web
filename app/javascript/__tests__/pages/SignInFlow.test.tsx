@@ -2,7 +2,7 @@ import React from "react"
 import { useClerk, useSignIn } from "@clerk/react"
 import { act, screen, waitFor, within, cleanup } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
-import { useNavigate } from "react-router"
+import { useLocation, useNavigate } from "react-router"
 import SignIn from "../../pages/sign-in"
 import {
   renderAndLoadAsync,
@@ -67,6 +67,11 @@ const switchToVerificationCodeView = async () => {
   const user = userEvent.setup()
   await user.click(screen.getByRole("button", { name: /get a one-time code to sign in/i }))
   return user
+}
+
+const LocationProbe = () => {
+  const { search, state } = useLocation()
+  return <output data-testid="location">{JSON.stringify({ search, state })}</output>
 }
 
 const submitCredentials = async (password = "abcd1234") => {
@@ -241,6 +246,43 @@ describe("<SignInFlow />", () => {
     expect(screen.queryByRole("button", { name: /^get a code$/i })).toBeNull()
   })
 
+  it("clears the code error when switching to password and shows subsequent credential errors", async () => {
+    const consoleError = jest.spyOn(console, "error").mockImplementation(() => {})
+    const router = jest.requireActual<typeof import("react-router")>("react-router")
+    ;(useNavigate as jest.Mock).mockImplementation(router.useNavigate)
+    mockSignInCreate.mockResolvedValue({ error: new Error("Incorrect password") })
+    const state = { redirectUrl: "/listings/for-rent" }
+
+    await renderAndLoadAsync(
+      <>
+        <SignIn assetPaths={{}} />
+        <LocationProbe />
+      </>,
+      undefined,
+      [{ pathname: "/sign-in", search: "?err=code&t=invite-token&other=keep", state }]
+    )
+    expect(screen.getByRole("alert")).toBeInTheDocument()
+
+    const user = userEvent.setup()
+    await user.click(screen.getByRole("button", { name: /sign in with a password instead/i }))
+
+    expect(screen.queryByRole("alert")).toBeNull()
+    expect(JSON.parse(screen.getByTestId("location").textContent ?? "{}")).toEqual({
+      search: "?t=invite-token&other=keep",
+      state,
+    })
+
+    await submitCredentials("wrongPass1")
+
+    await waitFor(() => {
+      expect(screen.getByRole("alert")).toHaveTextContent(/email or password is incorrect/i)
+    })
+    expect(
+      within(screen.getByRole("alert")).getByRole("link", { name: /reset your password/i })
+    ).toBeInTheDocument()
+    consoleError.mockRestore()
+  })
+
   it("navigates to the sign-in code page when requesting a code", async () => {
     mockSignInResource.status = "needs_first_factor"
     await renderAndLoadAsync(<SignIn assetPaths={{}} />)
@@ -259,6 +301,47 @@ describe("<SignInFlow />", () => {
     expect(mockNavigate).toHaveBeenCalledWith("/sign-in/code", {
       state: { email: "test@test.com", housingCounselorToken: null, flow: AUTH_FLOW.SIGN_IN },
     })
+  })
+
+  it("sets err=code in the current URL when requesting a code fails", async () => {
+    const consoleError = jest.spyOn(console, "error").mockImplementation(() => {})
+    mockSendCode.mockResolvedValue({ error: new Error("Unable to send code") })
+    await renderAndLoadAsync(<SignIn assetPaths={{}} />)
+    const user = await switchToVerificationCodeView()
+    const emailGroup = screen.getByRole("group", { name: /email/i })
+    await user.type(within(emailGroup).getByRole("textbox"), "test@test.com")
+    await user.click(screen.getByRole("button", { name: /^get a code$/i }))
+
+    await waitFor(() => {
+      expect(mockNavigate).toHaveBeenCalledWith(
+        { search: "?err=code" },
+        { replace: true, state: null }
+      )
+    })
+    expect(mockNavigate).not.toHaveBeenCalledWith("/sign-in/code", expect.anything())
+    expect(consoleError).toHaveBeenCalledWith("Sign in send code error:", expect.any(Error))
+    consoleError.mockRestore()
+  })
+
+  it("keeps the code error alert visible when requesting another code fails", async () => {
+    const consoleError = jest.spyOn(console, "error").mockImplementation(() => {})
+    mockSendCode.mockResolvedValue({ error: new Error("Unable to send code") })
+    mockLastAuthenticationStrategy("email_code")
+
+    await renderAndLoadAsync(<SignIn assetPaths={{}} />, undefined, ["/sign-in?err=code"])
+    const user = userEvent.setup()
+    const emailGroup = screen.getByRole("group", { name: /email/i })
+    await user.type(within(emailGroup).getByRole("textbox"), "test@test.com")
+    await user.click(screen.getByRole("button", { name: /^get a code$/i }))
+
+    await waitFor(() => {
+      expect(mockNavigate).toHaveBeenCalledWith(
+        { search: "?err=code" },
+        { replace: true, state: null }
+      )
+    })
+    expect(screen.getByRole("alert")).toBeInTheDocument()
+    consoleError.mockRestore()
   })
 
   it("redirects to the account overview when already signed in", async () => {
@@ -320,6 +403,20 @@ describe("<SignInFlow />", () => {
     expect(mockFinalize).not.toHaveBeenCalled()
 
     consoleError.mockRestore()
+  })
+
+  it("shows the get-code error alert when err=code", async () => {
+    await renderAndLoadAsync(<SignIn assetPaths={{}} />, undefined, ["/sign-in?err=code"])
+
+    const alert = screen.getByRole("alert")
+    expect(alert).toHaveTextContent(/something went wrong\. try again or check back later\./i)
+    expect(alert).toHaveTextContent(/you can also email sfhousinginfo@sfgov\.org for help\./i)
+  })
+
+  it("does not show an error alert when the URL err parameter is empty", async () => {
+    await renderAndLoadAsync(<SignIn assetPaths={{}} />, undefined, ["/sign-in?err="])
+
+    expect(screen.queryByRole("alert")).toBeNull()
   })
 
   describe("housing counselor access", () => {
