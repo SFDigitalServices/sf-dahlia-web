@@ -25,7 +25,7 @@ ShortFormApplicationController = (
 
   $scope.form = ShortFormApplicationService.form
   $scope.$state = $state
-  # with the Clerk flag on, the legacy save-and-finish-later, create-account and welcome-back sign-in are hidden
+  # with the Clerk flag on, the legacy create-account and welcome-back sign-in are hidden, and so is save-and-finish-later for guests
   # TODO(DAH-4366): CLERK MIGRATION - DEVISE TECH DEBT TO REMOVE
   $scope.clerkAuth = !!$window.CLERK_AUTH_ANGULAR
   $scope.application = ShortFormApplicationService.application
