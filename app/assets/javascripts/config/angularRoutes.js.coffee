@@ -16,16 +16,20 @@
       '$q', '$window', '$stateParams', 'AccountService', 'ClerkShim', 'SharedService', 'ShortFormApplicationService',
       ($q, $window, $stateParams, AccountService, ClerkShim, SharedService, ShortFormApplicationService) ->
         return true unless $window.CLERK_AUTH_ANGULAR
-        ClerkShim.initClerk().then (clerk) ->
-          return true unless clerk.session
-          # a Clerk user has no Salesforce contact (404) until they finish add-profile
-          AccountService.validateUser().then(
-            -> true
-            (response) ->
-              return $q.reject(response) unless response.status == 404
-              $window.removeEventListener('beforeunload', ShortFormApplicationService.onExit)
-              ClerkShim.leaveFor(SharedService._addLanguageAndParamsToUrl($stateParams.lang, '/add-profile'))
-          )
+        ClerkShim.initClerk().then(
+          (clerk) ->
+            return true unless clerk.session
+            # a Clerk user has no Salesforce contact (404) until they finish add-profile
+            AccountService.validateUser().then(
+              -> true
+              (response) ->
+                return $q.reject(response) unless response.status == 404
+                $window.removeEventListener('beforeunload', ShortFormApplicationService.onExit)
+                ClerkShim.leaveFor(SharedService._addLanguageAndParamsToUrl($stateParams.lang, '/add-profile'))
+            )
+          # Clerk didn't load (e.g. the script was blocked), so no one can be signed in: apply as a guest
+          -> true
+        )
     ]
 
     $stateProvider

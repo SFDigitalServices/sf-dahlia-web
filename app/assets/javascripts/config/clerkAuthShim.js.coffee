@@ -25,9 +25,15 @@ clerkEnabled = -> !!window.CLERK_AUTH_ANGULAR
         $q.reject(e)
 
   getToken = ->
-    initClerk().then (clerk) ->
-      return null unless clerk.session
-      clerk.session.getToken()
+    initClerk().then(
+      (clerk) ->
+        return null unless clerk.session
+        # a signed-in user without a token must not go out as a guest
+        $q.when(clerk.session.getToken()).then (token) ->
+          token || $q.reject('Clerk token unavailable')
+      # Clerk didn't load, so there's no session to lose: carry on as a guest
+      -> null
+    )
 
   # full-page navigation out of Angular, e.g. to the React sign-in page
   leaveFor = (url) ->
@@ -106,7 +112,9 @@ clerkEnabled = -> !!window.CLERK_AUTH_ANGULAR
         (token) ->
           config.headers.Authorization = "Bearer #{token}" if token
           config
-        -> config
+        # shaped like a 503 so the global error handler in angularProviders stops the loader
+        # and shows the try-again alert
+        -> $q.reject(status: 503, config: config, data: { message: 'Clerk token unavailable' })
       )
   ]
 ]

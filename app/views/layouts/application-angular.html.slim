@@ -37,6 +37,7 @@ html lang="en" ng-app="dahlia" ng-strict-di="" ng-controller="SharedController"
     meta property="og:type" content="website"
 
     / Clerk in Angular via the $auth shim (config/clerkAuthShim.js.coffee)
+    / ClerkOrDeviseAuth.clerk_enabled? is defined in app/controllers/concerns/clerk_or_devise_auth.rb
     - clerk_auth_angular = ENV['CLERK_PUBLISHABLE_KEY'].present? && ClerkOrDeviseAuth.clerk_enabled?
     - if clerk_auth_angular
       - clerk_frontend_api = Base64.decode64(ENV['CLERK_PUBLISHABLE_KEY'].split('_', 3).last).chomp('$')
