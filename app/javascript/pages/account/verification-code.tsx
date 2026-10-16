@@ -486,20 +486,17 @@ const EnterVerificationCode = (_props: { assetPaths: unknown }) => {
       return
     }
     if (status.kind === "initializing" || loadingProfile) return
-    if (!flow) {
-      void navigate(getSignInPath())
-      return
-    }
-    if (!verificationCodeEmailAddress) {
-      void navigate(getAuthFlowPath(flow), { state: { flow } })
+    if (!verificationCodeEmailAddress || !flow) {
+      void navigate(fallbackPath)
       return
     }
     const arrivedSignedIn = initialSessionKind === "signedIn"
-    if (flow !== AUTH_FLOW.UPDATE_EMAIL && arrivedSignedIn && isSignedIn && profile) {
+    console.log({ flow })
+    if (!isSignedInUpdateFlow && arrivedSignedIn && isSignedIn && profile) {
       void navigate(getMyAccountPath(), { state: { flow } })
       return
     }
-    if (flow !== AUTH_FLOW.UPDATE_EMAIL && arrivedSignedIn && isSignedIn && !profile) {
+    if (!isSignedInUpdateFlow && arrivedSignedIn && isSignedIn && !profile) {
       void navigate(getAddProfilePath(), { state: { flow } })
       return
     }
@@ -514,6 +511,8 @@ const EnterVerificationCode = (_props: { assetPaths: unknown }) => {
     initialSessionKind,
     profile,
     navigate,
+    fallbackPath,
+    isSignedInUpdateFlow,
   ])
 
   const ready =

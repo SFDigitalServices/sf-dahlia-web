@@ -99,7 +99,10 @@ const renderUpdateContactEmailFlow = async (
   setupUserContext({ loggedIn: true, hasProfile })
   ;(useLocation as jest.Mock).mockReturnValue({
     pathname: "/update-email/code",
-    state: { email: "new@example.com", flow: AUTH_FLOW.UPDATE_CONTACT_EMAIL },
+    state: {
+      verificationCodeEmailAddress: "new@example.com",
+      flow: AUTH_FLOW.UPDATE_CONTACT_EMAIL,
+    },
   })
   ;(useUser as jest.Mock).mockReturnValue({ isLoaded: true, isSignedIn: true, user })
   await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
@@ -399,9 +402,7 @@ describe("<EnterVerificationCode />", () => {
     await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
 
     await waitFor(() => {
-      expect(mockNavigate).toHaveBeenCalledWith("/create-account", {
-        state: { flow: AUTH_FLOW.CREATE_ACCOUNT },
-      })
+      expect(mockNavigate).toHaveBeenCalledWith("/create-account")
     })
   })
 
@@ -713,9 +714,7 @@ describe("<EnterVerificationCode />", () => {
     await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
 
     await waitFor(() => {
-      expect(mockNavigate).toHaveBeenCalledWith("/sign-in", {
-        state: { flow: AUTH_FLOW.SIGN_IN },
-      })
+      expect(mockNavigate).toHaveBeenCalledWith("/sign-in")
     })
   })
   it("verifies a valid code for forgot password", async () => {

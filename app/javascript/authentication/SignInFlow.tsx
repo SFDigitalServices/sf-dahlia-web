@@ -177,7 +177,10 @@ const SignInFlow = () => {
       setShowError(true)
       const searchParams = new URLSearchParams(search)
       searchParams.set("err", "code")
-      void navigate({ search: `?${searchParams.toString()}` }, { replace: true, state })
+      void navigate(
+        { search: `?${searchParams.toString()}` },
+        { replace: true, state: reactRouterState }
+      )
       return
     }
 
@@ -234,7 +237,7 @@ const SignInFlow = () => {
     searchParams.delete("err")
     setShowError(false)
     setView("password")
-    void navigate({ search: searchParams.toString() }, { replace: true, state })
+    void navigate({ search: searchParams.toString() }, { replace: true, state: reactRouterState })
   }
 
   const verificationCodeSection = (

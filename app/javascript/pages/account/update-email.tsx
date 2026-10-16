@@ -124,7 +124,9 @@ const UpdateEmailPage = () => {
         await saveVerifiedContactEmail(email)
       } else {
         await sendEmailCode(email)
-        void navigate(getUpdateEmailCodePath(), { state: { email, flow } })
+        void navigate(getUpdateEmailCodePath(), {
+          state: { verificationCodeEmailAddress: email, flow },
+        })
       }
     } catch (error) {
       if (skipVerificationCodeFlow) {
