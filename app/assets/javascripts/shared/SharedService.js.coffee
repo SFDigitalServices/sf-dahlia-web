@@ -77,7 +77,8 @@ SharedService = ($http, $state, $window, $document) ->
       shouldRailsRoute: (isFirstLoad) -> !isFirstLoad && $window.ACCOUNT_INFORMATION_PAGES_REACT is "true"
     'dahlia.sign-in':
       buildUrl: (state, params) -> Service._addLanguageAndParamsToUrl(params.lang, "/sign-in")
-      shouldRailsRoute: (isFirstLoad) -> !isFirstLoad && $window.SIGN_IN_PAGE_REACT is "true"
+      # TODO(DAH-4366): CLERK MIGRATION - DEVISE TECH DEBT TO REMOVE (always route to React)
+      shouldRailsRoute: (isFirstLoad) -> !isFirstLoad && ($window.SIGN_IN_PAGE_REACT is "true" || !!$window.CLERK_AUTH_ANGULAR)
     'dahlia.create-account':
       buildUrl: (state, params) -> Service._addLanguageAndParamsToUrl(params.lang, "/create-account")
       shouldRailsRoute: (isFirstLoad) -> !isFirstLoad && $window.CREATE_ACCOUNT_PAGE_REACT is "true"
