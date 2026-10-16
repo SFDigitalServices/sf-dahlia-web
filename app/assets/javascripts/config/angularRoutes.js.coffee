@@ -32,6 +32,13 @@
         )
     ]
 
+    # with the Clerk flag on, the legacy account flows in the application are gone: treat their
+    # routes as unknown, so a direct visit goes home like any other bad URL
+    # TODO(DAH-4366): CLERK MIGRATION - DEVISE TECH DEBT TO REMOVE
+    legacyAccountFlowResolve = ['$q', '$window', ($q, $window) ->
+      if $window.CLERK_AUTH_ANGULAR then $q.reject(status: 404) else true
+    ]
+
     $stateProvider
     .state('dahlia', {
       url: '/{lang:(?:en|es|tl|zh)}'
@@ -216,6 +223,7 @@
           AccountService.lockCompletedFields()
       ]
       resolve:
+        legacyAccountFlow: legacyAccountFlowResolve
         $title: ['$translate', ($translate) ->
           $translate('page_title.create_account')
         ]
@@ -281,6 +289,7 @@
         AccountService.lockCompletedFields()
       ]
       resolve:
+        legacyAccountFlow: legacyAccountFlowResolve
         $title: ['$translate', ($translate) ->
           $translate('page_title.sign_in')
         ]
@@ -302,6 +311,8 @@
           # use same template as usual sign-in route
           templateUrl: 'account/templates/sign-in.html'
           controller: 'AccountController'
+      resolve:
+        legacyAccountFlow: legacyAccountFlowResolve
     })
     .state('dahlia.short-form-application.forgot-password', {
       # duplicated from above but to differentiate state for "Save and finish later"
@@ -311,6 +322,8 @@
         'container@':
           templateUrl: 'account/templates/forgot-password.html'
           controller: 'AccountController'
+      resolve:
+        legacyAccountFlow: legacyAccountFlowResolve
       onEnter: ['AccountService', (AccountService) ->
         AccountService.clearAccountMessages()
       ]
@@ -780,6 +793,8 @@
       views:
         'container':
           templateUrl: 'short-form/templates/b1a-welcome-back.html'
+      resolve:
+        legacyAccountFlow: legacyAccountFlowResolve
       onEnter: [
         '$state', 'ShortFormApplicationService', 'AccountService',
         ($state, ShortFormApplicationService, AccountService) ->
@@ -1188,6 +1203,7 @@
           templateUrl: 'short-form/templates/choose-draft.html'
           controller: 'ShortFormApplicationController'
       resolve:
+        legacyAccountFlow: legacyAccountFlowResolve
         auth: ['$auth', ($auth) ->
           $auth.validateUser()
         ]
@@ -1205,6 +1221,7 @@
           templateUrl: 'short-form/templates/choose-applicant-details.html'
           controller: 'ShortFormApplicationController'
       resolve:
+        legacyAccountFlow: legacyAccountFlowResolve
         auth: ['$auth', ($auth) ->
           $auth.validateUser()
         ]

@@ -154,6 +154,10 @@
           content.message = $translate.instant('t.are_you_sure_you_want_to_leave_confirmation')
         else if (ShortFormApplicationService.isLeavingConfirmationToSignIn(toState, fromState))
           content.message = $translate.instant('t.are_you_sure_you_want_to_leave_sign_in')
+        # TODO(DAH-4366): CLERK MIGRATION - DEVISE TECH DEBT TO REMOVE
+        # a Clerk guest has no "Save and finish later", so leave it out of the message
+        else if $window.CLERK_AUTH_ANGULAR && !AccountService.loggedIn()
+          content.message = $translate.instant('t.are_you_sure_you_want_to_leave_guest')
         else
           content.message = $translate.instant('t.are_you_sure_you_want_to_leave')
         # timeout from inactivity means that we don't need to ALSO ask for confirmation

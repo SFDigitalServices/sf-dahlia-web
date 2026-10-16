@@ -66,8 +66,6 @@ html lang="en" ng-app="dahlia" ng-strict-di="" ng-controller="SharedController"
         })(window,document,'script','dataLayer','#{ENV['GOOGLE_TAG_MANAGER_KEY']}');
 
   body id="ng-app" ng-class="hasCenterBody()" keep-scroll-position=""
-    / Angular has no Unleash client, so Rails checks the Clerk flag when it renders this page.
-    - clerk_auth_angular = Rails.configuration.unleash.is_enabled?('temp.webapp.auth.clerk')
     - if ENV['GOOGLE_TAG_MANAGER_KEY']
       noscript
         iframe height="0" src="//www.googletagmanager.com/ns.html?id=#{ENV['GOOGLE_TAG_MANAGER_KEY']}" style="display:none;visibility:hidden" width="0"
