@@ -7,6 +7,7 @@ import {
 import MyAccount from "../../../pages/account/my-account" // eslint-disable-line import/no-named-as-default
 import React from "react"
 import { setupUserContext } from "../../__util__/accountUtils"
+import { useFeatureFlag } from "../../../hooks/useFeatureFlag"
 
 jest.mock("react-gtm-module", () => ({
   initialize: jest.fn(),
@@ -14,75 +15,78 @@ jest.mock("react-gtm-module", () => ({
 }))
 
 jest.mock("../../../hooks/useFeatureFlag", () => ({
-  useFeatureFlag: () => ({ flagsReady: true, unleashFlag: true }),
+  useFeatureFlag: jest.fn(),
 }))
 
-describe("<MyAccount />", () => {
+describe("when Clerk auth is disabled", () => {
   beforeEach(() => {
     // The below line prevents @axe-core from throwing an error
     // when the html tag does not have a lang attribute
     document.documentElement.lang = "en"
+    ;(useFeatureFlag as jest.Mock).mockReturnValue({ flagsReady: true, unleashFlag: false })
   })
 
-  describe("when the user is signed in", () => {
-    let getByTestId
+  describe("<MyAccount />", () => {
+    describe("when the user is signed in", () => {
+      let getByTestId
 
-    let originalLocation: Location
+      let originalLocation: Location
 
-    beforeEach(async () => {
-      originalLocation = mockWindowLocation()
-      setupUserContext({ loggedIn: true })
+      beforeEach(async () => {
+        originalLocation = mockWindowLocation()
+        setupUserContext({ loggedIn: true })
 
-      const renderResult = await renderAndLoadAsync(<MyAccount assetPaths={{}} />)
-      getByTestId = renderResult.getByTestId
+        const renderResult = await renderAndLoadAsync(<MyAccount assetPaths={{}} />)
+        getByTestId = renderResult.getByTestId
+      })
+
+      afterEach(() => {
+        jest.restoreAllMocks()
+        restoreWindowLocation(originalLocation)
+      })
+
+      it("contains two links within the main content", () => {
+        const mainContent = getByTestId("main-content-test-id")
+
+        const links = mainContent.querySelectorAll("a")
+        expect(links).toHaveLength(2)
+      })
+
+      it("first link has title 'My Applications'", () => {
+        const mainContent = getByTestId("main-content-test-id")
+
+        const links = mainContent.querySelectorAll("a")
+        const linkHeader = links[0].querySelector("h2")
+        expect(linkHeader?.textContent).toBe("My applications")
+      })
+
+      it("second link has title 'Account Settings'", () => {
+        const mainContent = getByTestId("main-content-test-id")
+
+        const links = mainContent.querySelectorAll("a")
+        const linkHeader = links[1].querySelector("h2")
+        expect(linkHeader?.textContent).toBe("Account settings")
+      })
     })
 
-    afterEach(() => {
-      jest.restoreAllMocks()
-      restoreWindowLocation(originalLocation)
-    })
+    describe("when the user is not signed in", () => {
+      let originalLocation: Location
 
-    it("contains two links within the main content", () => {
-      const mainContent = getByTestId("main-content-test-id")
+      beforeEach(async () => {
+        originalLocation = mockWindowLocation()
+        setupUserContext({ loggedIn: false })
 
-      const links = mainContent.querySelectorAll("a")
-      expect(links).toHaveLength(2)
-    })
+        await renderAndLoadAsync(<MyAccount assetPaths={{}} />)
+      })
 
-    it("first link has title 'My Applications'", () => {
-      const mainContent = getByTestId("main-content-test-id")
+      afterEach(() => {
+        jest.restoreAllMocks()
+        restoreWindowLocation(originalLocation)
+      })
 
-      const links = mainContent.querySelectorAll("a")
-      const linkHeader = links[0].querySelector("h2")
-      expect(linkHeader?.textContent).toBe("My applications")
-    })
-
-    it("second link has title 'Account Settings'", () => {
-      const mainContent = getByTestId("main-content-test-id")
-
-      const links = mainContent.querySelectorAll("a")
-      const linkHeader = links[1].querySelector("h2")
-      expect(linkHeader?.textContent).toBe("Account settings")
-    })
-  })
-
-  describe("when the user is not signed in", () => {
-    let originalLocation: Location
-
-    beforeEach(async () => {
-      originalLocation = mockWindowLocation()
-      setupUserContext({ loggedIn: false })
-
-      await renderAndLoadAsync(<MyAccount assetPaths={{}} />)
-    })
-
-    afterEach(() => {
-      jest.restoreAllMocks()
-      restoreWindowLocation(originalLocation)
-    })
-
-    it("redirects to the sign in page if the user is not signed in", () => {
-      expect(window.location.assign).toHaveBeenCalledWith("/sign-in?redirect=account")
+      it("redirects to the sign in page if the user is not signed in", () => {
+        expect(window.location.assign).toHaveBeenCalledWith("/sign-in?redirect=account")
+      })
     })
   })
 })

@@ -11,6 +11,7 @@ import { useSignUpSession } from "../../authentication/session/useSignUpSession"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import AuthLayout from "../../layouts/AuthLayout"
 import withAppSetup from "../../layouts/withAppSetup"
+import { withAuthentication } from "../../authentication/withAuthentication"
 import { AUTH_FLOW, UNLEASH_FLAG } from "../../modules/constants"
 import {
   AppPages,
@@ -40,6 +41,7 @@ const AddPasswordPage = ({ flow, isAccountSettingsFlow }: AddPasswordPageProps) 
   const { setPassword, isAccountInitialized } = useSignUpSession()
   const [isResettingPassword, setIsResettingPassword] = useState(false)
   const isForgotPasswordFlow = flow === AUTH_FLOW.FORGOT_PASSWORD
+
   const {
     register,
     handleSubmit,
@@ -160,52 +162,20 @@ const AddPassword = (_props: { assetPaths: unknown }) => {
   const navigate = useNavigate()
   const { state } = useLocation()
   const flow = state?.flow
+  // TODO: adding another state key with the word 'flow' is confusing, we already have the enum AUTH_FLOW
   const isAccountSettingsFlow = state?.accountSettingsFlow === true
   const { status } = useAuthSession()
   const { isAccountInitialized, hasPassword } = useSignUpSession()
   const { profile, initialStateLoaded } = useContext(UserContext)
   const { unleashFlag: clerkEnabled, flagsReady } = useFeatureFlag(UNLEASH_FLAG.CLERK_AUTH, false)
 
-  // TODO: simplify and centralize auth redirects
-  /**
-   * Add password page redirects
-   * --------------------------------
-   * 1. Once the Unleash flags are ready:
-   * If Clerk is not enabled, redirect to sign-in.
-   * 2. Once Clerk is loaded:
-   * If the user is signed out, redirect to sign in.
-   * 3. Once the profile has loaded:
-   * If the user is signed in with a profile, redirect to my account.
-   * 4. Once the Clerk user has loaded:
-   * If the user already has a password, redirect to the add profile page.
-   */
   useEffect(() => {
     if (!flagsReady) return
     if (!clerkEnabled) {
       void navigate(getSignInPath())
       return
     }
-    if (status.kind === "initializing") return
-    if (status.kind === "signedOut") {
-      void navigate(getSignInPath())
-      return
-    }
-    if (isAccountSettingsFlow) return
-    if (!initialStateLoaded) return
-    if (profile) void navigate(getMyAccountPath())
-    if (!isAccountInitialized) return
-    if (!profile && hasPassword) void navigate(getAddProfilePath())
-  }, [
-    flagsReady,
-    clerkEnabled,
-    status,
-    initialStateLoaded,
-    profile,
-    isAccountInitialized,
-    hasPassword,
-    navigate,
-    isAccountSettingsFlow,
-  ])
+  }, [flagsReady, clerkEnabled, navigate])
 
   const ready =
     flagsReady &&
@@ -213,6 +183,7 @@ const AddPassword = (_props: { assetPaths: unknown }) => {
     status.kind === "signedIn" &&
     isAccountInitialized &&
     !hasPassword &&
+    // TODO: do not use React Router's state to conditionally render, the state gets lost when users refresh the page
     (isAccountSettingsFlow || (initialStateLoaded && !profile))
 
   if (!ready) {
@@ -224,7 +195,7 @@ const AddPassword = (_props: { assetPaths: unknown }) => {
 
 export { AddPasswordPage }
 
-export default withAppSetup(AddPassword, {
+export default withAppSetup(withAuthentication(AddPassword, { pageName: AppPages.AddPassword }), {
   useFormTimeout: true,
   pageName: AppPages.AddPassword,
 })
