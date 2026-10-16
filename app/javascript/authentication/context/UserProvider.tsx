@@ -56,7 +56,7 @@ const ClerkProfile = ({
           throw new Error("Missing Clerk session token")
         }
         onLoaded(await getProfile({ clerkEnabled: true, sessionToken }), false)
-        // TODO: handle other types of errors, so withAuthentication.tsx can handle protected pages properly
+        // TODO: DAH-4426 handle other types of errors, so withAuthentication.tsx can handle protected pages properly
       } catch (error) {
         onLoaded(null, isAxiosError(error) && error.response?.status === 404)
       }

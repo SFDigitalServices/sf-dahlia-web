@@ -74,10 +74,10 @@ export const withAuthentication = <P extends object>(
     const { profile, profileMissing } = React.useContext(UserContext)
     const isSignedIn = status.kind === "signedIn"
     const loadingProfile = isSignedIn && !profileMissing && !profile
-    const notReady = status.kind === "initializing" || loadingProfile
+    const ready = status.kind !== "initializing" && !loadingProfile
 
     const redirectDecision =
-      !notReady && pageName
+      ready && pageName
         ? clerkRedirectManager(pageName, {
             isSignedIn,
             hasProfile: !!profile,
@@ -106,7 +106,7 @@ export const withAuthentication = <P extends object>(
       throw new Error("wrapped component is missing pageName param for withAuthentication")
     }
 
-    if (notReady || redirectDecision?.redirectUrl) return null
+    if (!ready || redirectDecision?.redirectUrl) return null
 
     return <WrappedComponent {...props} />
   }
