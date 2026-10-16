@@ -57,8 +57,10 @@ RSpec.describe InviteToController do
                                  .and_return('TEST_TOKEN_SECRET')
     allow(ENV).to receive(:fetch).with('JWT_ALGORITHM', nil).and_return('HS256')
     allow(controller).to receive(:static_asset_paths).and_return({ logo: 'logo.png' })
-    allow(ENV).to receive(:fetch).with('SALESFORCE_INSTANCE_URL', nil).and_return('test-salesforce-url')
-    allow(ENV).to receive(:fetch).with('SALESFORCE_API_VERSION', '61.0').and_return('61.0')
+    allow(ENV).to receive(:fetch).with('SALESFORCE_INSTANCE_URL',
+                                       nil).and_return('test-salesforce-url')
+    allow(ENV).to receive(:fetch).with('SALESFORCE_API_VERSION',
+                                       '61.0').and_return('61.0')
     allow(ENV).to receive(:fetch).with('SALESFORCE_PROXY_URI', nil).and_return(nil)
     allow(DahliaBackend::MessageService).to receive(:send_invite_to_response)
     allow(Rails.logger).to receive(:info)
@@ -67,10 +69,10 @@ RSpec.describe InviteToController do
     # Align with controller implementation (uses JsonWebTokenService, not JWT.decode directly)
     allow(JsonWebTokenService).to receive(:decode_token).with(fixed_token).and_return(decoded_payload)
     allow(JsonWebTokenService).to receive(:decode_token).with(is_test_token)
-      .and_return(decoded_payload.merge('isTest' => 'true'))
+                                                        .and_return(decoded_payload.merge('isTest' => 'true'))
     allow(JsonWebTokenService).to receive(:decode_token).with('test_token').and_return(decoded_payload)
     allow(JsonWebTokenService).to receive(:decode_token).with('invalid_test_token')
-      .and_raise(JsonWebTokenService::InvalidTokenError, 'Invalid JWT')
+                                                        .and_raise(JsonWebTokenService::InvalidTokenError, 'Invalid JWT')
     allow(Rails.configuration.unleash).to receive(:is_enabled?)
       .with('temp.webapp.inviteToClientRecording').and_return(false)
   end
@@ -168,6 +170,58 @@ RSpec.describe InviteToController do
           { type: 'I2A', deadline: deadline, appId: application_number, isTest: false,
             purpose: 'next_steps' },
         )
+      end
+
+      # Given an act-less token without the next-steps purpose, as the documents page used
+      #   to sign from raw query params for any appId (these tokens never expire)
+      # When the invite page renders
+      # Then no next-steps token is signed, so it can't be turned into one that
+      #   record-response accepts
+      it 'does not sign a next-steps token for an act-less token without purpose' do
+        token = 'documents_token'
+        allow(JsonWebTokenService).to receive(:decode_token).with(token).and_return(
+          decoded_payload.except('act'),
+        )
+
+        get :index, params: { id: listing_id, t: token }
+
+        expect(controller).not_to have_received(:encode_token)
+        expect(assigns(:invite_to_props)).not_to have_key(:submitPreviewLinkTokenParam)
+      end
+
+      # Given an act-less token without the next-steps purpose, as the documents page used
+      #   to sign from raw query params for any appId
+      # When the invite page renders
+      # Then that appId's application is not looked up, so its upload and scheduling
+      #   links aren't returned
+      it 'does not return application links for an act-less token without purpose' do
+        token = 'documents_token'
+        allow(JsonWebTokenService).to receive(:decode_token).with(token).and_return(
+          decoded_payload.except('act'),
+        )
+
+        get :index, params: { id: listing_id, t: token }
+
+        expect(Force::ShortFormService).not_to have_received(:get)
+        expect(assigns(:invite_to_props)).not_to include(:uploadUrl, :schedulingUrl)
+      end
+
+      # Given a next-steps token (signed by index, so no act)
+      # When the invite page renders again (e.g. a reload or language switch)
+      # Then the same claims are re-signed, still marked for next-steps and without act
+      it 'signs a next-steps token for a next-steps token' do
+        token = 'next_steps_token'
+        allow(JsonWebTokenService).to receive(:decode_token).with(token).and_return(
+          decoded_payload.except('act').merge('purpose' => 'next_steps'),
+        )
+
+        get :index, params: { id: listing_id, t: token }
+
+        expect(controller).to have_received(:encode_token).with(
+          { type: 'I2A', deadline: deadline, appId: application_number, isTest: false,
+            purpose: 'next_steps' },
+        )
+        expect(assigns(:invite_to_props)).to have_key(:submitPreviewLinkTokenParam)
       end
 
       it 'redirects to the listing details page if token is blank' do
