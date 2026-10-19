@@ -22,7 +22,8 @@ do ->
       return
     )
 
-    beforeEach inject(($rootScope, $controller) ->
+    beforeEach inject(($rootScope, $controller, $q) ->
+      fakeAccountService.signOut.and.returnValue($q.when())
       state = jasmine.createSpyObj('$state', ['go'])
       scope = $rootScope.$new()
       $controller 'NavController',
@@ -46,6 +47,7 @@ do ->
         beforeEach ->
           spyOn(fakeShortFormApplicationService, 'isShortFormPage').and.returnValue(false)
           scope.signOut()
+          scope.$digest()
 
         it 'calls signOut from AccountService', ->
           expect(fakeAccountService.signOut).toHaveBeenCalled()

@@ -66,10 +66,12 @@
       label_prefix = if isInShortForm then "application" else undefined
       ModalService.alert(content, {nativeAlert: true})
       if AccountService.loggedIn()
-        AutosaveService.save() if ShortFormApplicationService.isShortFormPage($state.current)
         AnalyticsService.trackEvent('session_exp_warning_action', {label_prefix, is_during_application_flow: isInShortForm, user_id: AccountService.loggedInUser.id, action: "timed out and logged out", url: window.location.href})
-        AccountService.signOut()
-        $state.go('dahlia.sign-in', {timeout: true})
+        signOut = ->
+          AccountService.signOut().finally ->
+            $state.go('dahlia.sign-in', {timeout: true})
+        # save before signing out, while the user can still authenticate the request
+        if isInShortForm then AutosaveService.save().finally(signOut) else signOut()
       else if ShortFormApplicationService.isShortFormPage($state.current)
         # we don't want to show the beforeunload dialog, because it would allow the applicant to stay on the page after session expiration
         $window.removeEventListener('beforeunload', ShortFormApplicationService.onExit)

@@ -172,10 +172,12 @@ AccountService = (
     Service.setLoggedInUser({})
     ShortFormApplicationService.resetApplicationData() unless opts.preserveAppData
     AnalyticsService.trackEvent('logout', {reason: "Angular logout"})
-    $auth.signOut()
+    signOutPromise = $auth.signOut()
     # close any open modal, e.g. "Lottery Results" that may have been opened while
     # you were on My Applications
     ModalService.closeModal()
+    # with Clerk, sign-in is a full page load: callers must wait for sign-out to finish before leaving
+    signOutPromise
 
   # this gets run on init of the app in AngularConfig to check if we're logged in
   Service.validateUser = ->
