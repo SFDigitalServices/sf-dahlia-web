@@ -71,7 +71,9 @@
           AccountService.signOut().finally ->
             $state.go('dahlia.sign-in', {timeout: true})
         # save before signing out, while the user can still authenticate the request
-        if isInShortForm then AutosaveService.save().finally(signOut) else signOut()
+        # save returns nothing when autosave is turned off
+        saving = AutosaveService.save() if isInShortForm
+        if saving then saving.finally(signOut) else signOut()
       else if ShortFormApplicationService.isShortFormPage($state.current)
         # we don't want to show the beforeunload dialog, because it would allow the applicant to stay on the page after session expiration
         $window.removeEventListener('beforeunload', ShortFormApplicationService.onExit)
