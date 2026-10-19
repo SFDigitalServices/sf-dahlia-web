@@ -151,6 +151,10 @@
           alert: true
         # Boolean for Logged in Users on the confirmation page of short form to remove the leave confirmation.
         loggedInConfirmation = (AccountService.loggedIn() && fromState.name == 'dahlia.short-form-application.confirmation')
+        # TODO(DAH-4366): CLERK MIGRATION - DEVISE TECH DEBT TO REMOVE
+        # a Clerk guest can't link a submitted application to an account and loses nothing by leaving, so don't warn them
+        clerkGuestConfirmation = $window.CLERK_AUTH_ANGULAR && !AccountService.loggedIn() &&
+          ShortFormApplicationService.isLeavingConfirmation(toState, fromState)
         # Anonymous user coming from shortform and are on the confirmation page: change the leave message
         if (ShortFormApplicationService.isLeavingConfirmation(toState, fromState))
           content.message = $translate.instant('t.are_you_sure_you_want_to_leave_confirmation')
@@ -165,7 +169,7 @@
         # timeout from inactivity means that we don't need to ALSO ask for confirmation
         skipConfirm = toParams.skipConfirm || toParams.timeout
 
-        if (skipConfirm || loggedInConfirmation)
+        if (skipConfirm || loggedInConfirmation || clerkGuestConfirmation)
           # reset skipConfirm for future page actions
           toParams.skipConfirm = false
           ShortFormApplicationService.leaveAndResetShortForm(toState, toParams)

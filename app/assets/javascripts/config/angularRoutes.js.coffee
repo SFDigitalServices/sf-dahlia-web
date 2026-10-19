@@ -39,6 +39,18 @@
       if $window.CLERK_AUTH_ANGULAR then $q.reject(status: 404) else true
     ]
 
+    # with the Clerk flag on, the draft-saved email's link goes to React sign-in instead, which
+    # lands on My Account, where the draft is listed
+    # TODO(DAH-4366): CLERK MIGRATION - DEVISE TECH DEBT TO REMOVE
+    continueDraftResolve = [
+      '$q', '$window', '$stateParams', 'ClerkShim', 'SharedService',
+      ($q, $window, $stateParams, ClerkShim, SharedService) ->
+        return true unless $window.CLERK_AUTH_ANGULAR
+        ClerkShim.leaveFor(SharedService._addLanguageAndParamsToUrl($stateParams.lang, '/sign-in'))
+        # never resolve, so the legacy sign-in page doesn't render while the browser leaves
+        $q.defer().promise
+    ]
+
     $stateProvider
     .state('dahlia', {
       url: '/{lang:(?:en|es|tl|zh)}'
@@ -312,7 +324,7 @@
           templateUrl: 'account/templates/sign-in.html'
           controller: 'AccountController'
       resolve:
-        legacyAccountFlow: legacyAccountFlowResolve
+        continueDraft: continueDraftResolve
     })
     .state('dahlia.short-form-application.forgot-password', {
       # duplicated from above but to differentiate state for "Save and finish later"
