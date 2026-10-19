@@ -14,6 +14,12 @@ import {
 import { mockProfileStub, setupUserContext } from "../../__util__/accountUtils"
 import { useFeatureFlag } from "../../../hooks/useFeatureFlag"
 
+jest.mock("../../../authentication/withAuthentication", () => ({
+  withAuthentication:
+    (Component: React.ComponentType<Record<string, unknown>>) =>
+    (props: Record<string, unknown>) => <Component {...props} />,
+}))
+
 jest.mock("@clerk/react", () => {
   const Clerk = jest.requireActual("@clerk/react")
   return {
@@ -262,22 +268,6 @@ describe("<AddProfile />", () => {
     })
   })
 
-  it("redirects to sign-in when the user is not signed in", async () => {
-    cleanup()
-    document.title = "DAHLIA San Francisco Housing Portal"
-    setupUserContext({ loggedIn: false })
-    ;(useAuth as jest.Mock).mockReturnValue({
-      isLoaded: true,
-      isSignedIn: false,
-      getToken: mockGetToken,
-    })
-    await renderAndLoadAsync(<AddProfile assetPaths={{}} />)
-
-    await waitFor(() => {
-      expect(mockNavigate).toHaveBeenCalledWith("/sign-in")
-    })
-  })
-
   it("does not redirect when the user is signed in without a profile", () => {
     expect(mockNavigate).not.toHaveBeenCalled()
     expect(
@@ -285,8 +275,25 @@ describe("<AddProfile />", () => {
     ).not.toBeNull()
   })
 
-  it("redirects to account when the user has already set up their profile", async () => {
+  it("returns null when add-profile is not ready to render", async () => {
     cleanup()
+    document.title = "DAHLIA San Francisco Housing Portal"
+    const context = setupUserContext({ loggedIn: true, hasProfile: false })
+    context.initialStateLoaded = false
+    ;(useAuth as jest.Mock).mockReturnValue({
+      isLoaded: true,
+      isSignedIn: true,
+      getToken: mockGetToken,
+    })
+    await renderAndLoadAsync(<AddProfile assetPaths={{}} />)
+
+    expect(mockNavigate).not.toHaveBeenCalled()
+    expect(
+      screen.queryByRole("heading", { name: /finish setting up your account/i, level: 1 })
+    ).toBeNull()
+
+    cleanup()
+    mockNavigate.mockClear()
     document.title = "DAHLIA San Francisco Housing Portal"
     setupUserContext({ loggedIn: true })
     ;(useAuth as jest.Mock).mockReturnValue({
@@ -296,8 +303,9 @@ describe("<AddProfile />", () => {
     })
     await renderAndLoadAsync(<AddProfile assetPaths={{}} />)
 
-    await waitFor(() => {
-      expect(mockNavigate).toHaveBeenCalledWith("/account")
-    })
+    expect(mockNavigate).not.toHaveBeenCalled()
+    expect(
+      screen.queryByRole("heading", { name: /finish setting up your account/i, level: 1 })
+    ).toBeNull()
   })
 })

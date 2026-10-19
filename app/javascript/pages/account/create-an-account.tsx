@@ -41,7 +41,9 @@ const CreateAnAccountPage = () => {
     const { error } = await sendEmailCode(email)
     if (error) return
 
-    void navigate(getSignInCodePath(), { state: { email, flow: AUTH_FLOW.SIGN_IN } })
+    void navigate(getSignInCodePath(), {
+      state: { verificationCodeEmailAddress: email, flow: AUTH_FLOW.SIGN_IN },
+    })
   }
 
   const onSubmit = async ({ email }: { email: string }) => {
@@ -52,7 +54,9 @@ const CreateAnAccountPage = () => {
     }
     if (error) return
 
-    void navigate(getVerificationCodePath(), { state: { email, flow: AUTH_FLOW.CREATE_ACCOUNT } })
+    void navigate(getVerificationCodePath(), {
+      state: { verificationCodeEmailAddress: email, flow: AUTH_FLOW.CREATE_ACCOUNT },
+    })
   }
 
   return (

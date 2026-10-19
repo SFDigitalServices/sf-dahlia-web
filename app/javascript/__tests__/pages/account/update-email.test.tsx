@@ -192,7 +192,10 @@ describe("<UpdateEmail />", () => {
 
     await waitFor(() => {
       expect(mockNavigate).toHaveBeenCalledWith(getUpdateEmailCodePath(), {
-        state: { email: "new@example.com", flow: AUTH_FLOW.UPDATE_LOGIN_EMAIL },
+        state: {
+          verificationCodeEmailAddress: "new@example.com",
+          flow: AUTH_FLOW.UPDATE_LOGIN_EMAIL,
+        },
       })
     })
     expect(leftover.destroy).toHaveBeenCalled()
@@ -272,7 +275,10 @@ describe("<UpdateEmail />", () => {
 
     await waitFor(() => {
       expect(mockNavigate).toHaveBeenCalledWith(getUpdateEmailCodePath(), {
-        state: { email: "new@example.com", flow: AUTH_FLOW.UPDATE_LOGIN_EMAIL },
+        state: {
+          verificationCodeEmailAddress: "new@example.com",
+          flow: AUTH_FLOW.UPDATE_LOGIN_EMAIL,
+        },
       })
     })
     expect(staleVerified.destroy).toHaveBeenCalled()
@@ -300,7 +306,10 @@ describe("<UpdateEmail />", () => {
 
       await waitFor(() => {
         expect(mockNavigate).toHaveBeenCalledWith(getUpdateEmailCodePath(), {
-          state: { email: "new@example.com", flow: AUTH_FLOW.UPDATE_CONTACT_EMAIL },
+          state: {
+            verificationCodeEmailAddress: "new@example.com",
+            flow: AUTH_FLOW.UPDATE_CONTACT_EMAIL,
+          },
         })
       })
       expect(user.createEmailAddress).toHaveBeenCalledWith({ email: "new@example.com" })

@@ -1,16 +1,22 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import React from "react"
-import { render } from "@testing-library/react"
+import { render, waitFor } from "@testing-library/react"
+import { useLocation, useNavigate } from "react-router"
 import { mockWindowLocation, restoreWindowLocation } from "../__util__/renderUtils"
 import { withAuthentication } from "../../authentication/withAuthentication"
 import UserContext, { ContextProps } from "../../authentication/context/UserContext"
 import { isTokenValid, parseUrlParams } from "../../authentication/token"
-import { useAuth } from "@clerk/react"
-import { getLocalizedPath, getAddProfilePath, RedirectType } from "../../util/routeUtil"
+import { useAuthSession } from "../../authentication/session/AuthSessionProvider"
+import { useSignUpSession } from "../../authentication/session/useSignUpSession"
+import {
+  AppPages,
+  clerkRedirectManager,
+  getLocalizedPath,
+  RedirectType,
+} from "../../util/routeUtil"
 import { getCurrentLanguage } from "../../util/languageUtil"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import TagManager from "react-gtm-module"
-import { AuthSessionProvider } from "../../authentication/session/AuthSessionProvider"
 
 // Mock the useGTMDataLayer hook
 jest.mock("react-gtm-module", () => ({
@@ -31,22 +37,54 @@ jest.mock("../../util/languageUtil", () => ({
 }))
 
 jest.mock("../../util/routeUtil", () => ({
+  AppPages: {
+    Account: "account",
+    Applications: "applications",
+    AddPassword: "add-password",
+    AddProfile: "add-profile",
+  },
   getLocalizedPath: jest.fn((path) => path),
   getAddProfilePath: jest.fn(() => "/add-profile"),
+  getSignInPath: jest.fn(() => "/sign-in"),
+  getMyAccountPath: jest.fn(() => "/account"),
+  getMyAccountContactPath: jest.fn(() => "/account/contact"),
+  getMyAccountSettingsPath: jest.fn(() => "/account/settings"),
+  getMyAccountApplicationsPath: jest.fn(() => "/account/applications"),
+  getAuthFlowPath: jest.fn(() => "/create-account"),
+  clerkRedirectManager: jest.fn(() => ({})),
 }))
 
 jest.mock("../../hooks/useFeatureFlag", () => ({
   useFeatureFlag: jest.fn(() => ({ flagsReady: true, unleashFlag: false })),
 }))
 
+jest.mock("../../authentication/session/AuthSessionProvider", () => ({
+  useAuthSession: jest.fn(),
+}))
+
+jest.mock("../../authentication/session/useSignUpSession", () => ({
+  useSignUpSession: jest.fn(),
+}))
+
+jest.mock("react-router", () => ({
+  ...jest.requireActual("react-router"),
+  useNavigate: jest.fn(),
+  useLocation: jest.fn(() => ({ state: undefined })),
+}))
+
 describe("withAuthentication", () => {
   let mockContextValue: ContextProps
   let originalLocation: Location
+  let mockNavigate: jest.Mock
   const TestComponent = () => <div>Protected Component</div>
   const WrappedComponent = withAuthentication(TestComponent)
+  const WrappedClerkComponent = withAuthentication(TestComponent, {
+    pageName: AppPages.Account,
+  })
 
   beforeEach(() => {
     originalLocation = mockWindowLocation()
+    mockNavigate = jest.fn()
     mockContextValue = {
       profile: {
         uid: "123",
@@ -60,6 +98,7 @@ describe("withAuthentication", () => {
       timeOut: jest.fn(),
       saveProfile: jest.fn(),
       loading: false,
+      profileMissing: false,
       initialStateLoaded: true,
     }
 
@@ -68,6 +107,18 @@ describe("withAuthentication", () => {
     ;(isTokenValid as jest.Mock).mockReset()
     ;(parseUrlParams as jest.Mock).mockReset()
     ;(useFeatureFlag as jest.Mock).mockReturnValue({ flagsReady: true, unleashFlag: false })
+    ;(useNavigate as jest.Mock).mockReturnValue(mockNavigate)
+    ;(useLocation as jest.Mock).mockReturnValue({ state: undefined })
+    ;(clerkRedirectManager as jest.Mock).mockReturnValue({})
+    ;(useAuthSession as jest.Mock).mockReturnValue({
+      status: { kind: "signedIn" },
+      getCredentials: jest.fn(),
+      signOut: jest.fn(),
+    })
+    ;(useSignUpSession as jest.Mock).mockReturnValue({
+      isAccountInitialized: true,
+      hasPassword: true,
+    })
 
     // Setup default mock return values
     ;(parseUrlParams as jest.Mock).mockReturnValue({
@@ -121,6 +172,40 @@ describe("withAuthentication", () => {
 
     expect(getLocalizedPath).toHaveBeenCalledWith("/sign-in", "en", "?redirect=test-path")
     expect(window.location.assign).toHaveBeenCalledWith("/sign-in?redirect=test-path")
+  })
+
+  it("redirects account pages to sign-in with account redirect", () => {
+    ;(isTokenValid as jest.Mock).mockReturnValue(false)
+    ;(getLocalizedPath as jest.Mock).mockReturnValue("/sign-in?redirect=account")
+    const WrappedAccountRedirect = withAuthentication(TestComponent, {
+      redirectType: "account" as RedirectType,
+    })
+
+    render(
+      <UserContext.Provider value={mockContextValue}>
+        <WrappedAccountRedirect />
+      </UserContext.Provider>
+    )
+
+    expect(getLocalizedPath).toHaveBeenCalledWith("/sign-in", "en", "?redirect=account")
+    expect(window.location.assign).toHaveBeenCalledWith("/sign-in?redirect=account")
+  })
+
+  it("redirects settings pages to sign-in with settings redirect", () => {
+    ;(isTokenValid as jest.Mock).mockReturnValue(false)
+    ;(getLocalizedPath as jest.Mock).mockReturnValue("/sign-in?redirect=settings")
+    const WrappedSettingsRedirect = withAuthentication(TestComponent, {
+      redirectType: "settings" as RedirectType,
+    })
+
+    render(
+      <UserContext.Provider value={mockContextValue}>
+        <WrappedSettingsRedirect />
+      </UserContext.Provider>
+    )
+
+    expect(getLocalizedPath).toHaveBeenCalledWith("/sign-in", "en", "?redirect=settings")
+    expect(window.location.assign).toHaveBeenCalledWith("/sign-in?redirect=settings")
   })
 
   it("returns null while loading", () => {
@@ -216,46 +301,51 @@ describe("withAuthentication", () => {
       ;(useFeatureFlag as jest.Mock).mockReturnValue({ flagsReady: true, unleashFlag: true })
     })
 
-    it("renders the wrapped component when signed in with a profile", () => {
-      ;(useAuth as jest.Mock).mockReturnValue({ isLoaded: true, isSignedIn: true })
+    it("throws when the wrapped component is missing a pageName", () => {
+      expect(() =>
+        render(
+          <UserContext.Provider value={mockContextValue}>
+            <WrappedComponent />
+          </UserContext.Provider>
+        )
+      ).toThrow("wrapped component is missing pageName param for withAuthentication")
+    })
 
+    it("renders the wrapped component when signed in with a profile", () => {
       const { getByText } = render(
         <UserContext.Provider value={mockContextValue}>
-          <WrappedComponent />
-        </UserContext.Provider>,
-        { wrapper: AuthSessionProvider }
+          <WrappedClerkComponent />
+        </UserContext.Provider>
       )
 
       expect(getByText("Protected Component")).toBeInTheDocument()
     })
 
-    it("redirects to sign-in when the user is not signed in", () => {
-      ;(useAuth as jest.Mock).mockReturnValue({ isLoaded: true, isSignedIn: false })
-      ;(getLocalizedPath as jest.Mock).mockReturnValue("/sign-in")
+    it("delegates redirect decisions to clerkRedirectManager", async () => {
+      ;(useLocation as jest.Mock).mockReturnValue({
+        state: { flow: "createAccount", verificationCodeEmailAddress: "test@example.com" },
+      })
+      ;(clerkRedirectManager as jest.Mock).mockReturnValue({
+        redirectUrl: "/add-profile",
+        returnUrl: "/account",
+      })
 
       render(
         <UserContext.Provider value={mockContextValue}>
-          <WrappedComponent />
-        </UserContext.Provider>,
-        { wrapper: AuthSessionProvider }
+          <WrappedClerkComponent />
+        </UserContext.Provider>
       )
 
-      expect(window.location.assign).toHaveBeenCalledWith("/sign-in")
-    })
-
-    it("redirects to add-profile when the user is signed in without a profile", () => {
-      ;(useAuth as jest.Mock).mockReturnValue({ isLoaded: true, isSignedIn: true })
-      ;(getAddProfilePath as jest.Mock).mockReturnValue("/add-profile")
-      mockContextValue.profile = undefined
-
-      render(
-        <UserContext.Provider value={mockContextValue}>
-          <WrappedComponent />
-        </UserContext.Provider>,
-        { wrapper: AuthSessionProvider }
-      )
-
-      expect(window.location.assign).toHaveBeenCalledWith("/add-profile")
+      await waitFor(() => {
+        expect(clerkRedirectManager).toHaveBeenCalledWith(AppPages.Account, {
+          isSignedIn: true,
+          hasProfile: true,
+          hasPassword: true,
+        })
+      })
+      expect(mockNavigate).toHaveBeenCalledWith("/add-profile", {
+        state: { returnUrl: "/account", flow: "createAccount" },
+      })
     })
   })
 })

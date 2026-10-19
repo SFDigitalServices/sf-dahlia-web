@@ -52,8 +52,7 @@ module HousingCounselorSession
 
   HC_SESSION_COOKIE_NAME = :hc_session
   # Marks a JWT as minted by write_hc_session_cookie. JsonWebTokenService's
-  # secret is shared with other tokens (delegate links, invite-to links -
-  # InviteToController even signs request params for anonymous callers), so
+  # secret is shared with other tokens (delegate links and invite-to links), so
   # a valid signature alone doesn't prove a token is an hc_session.
   HC_SESSION_TOKEN_TYPE = 'hc_session'
   HC_SESSION_DURATION = 2.hours

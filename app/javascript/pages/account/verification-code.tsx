@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/unbound-method */
-import React, { useContext, useEffect, useState, useRef } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import { useLocation, useNavigate } from "react-router"
 import { ExpandableContent, Form, Order, t } from "@bloom-housing/ui-components"
 import { Card, Heading, Button } from "@bloom-housing/ui-seeds"
@@ -8,7 +8,6 @@ import { faCheck } from "@fortawesome/free-solid-svg-icons"
 import { Controller, useForm } from "react-hook-form"
 import withAppSetup from "../../layouts/withAppSetup"
 import AuthLayout from "../../layouts/AuthLayout"
-import UserContext from "../../authentication/context/UserContext"
 import { useAuthSession } from "../../authentication/session/AuthSessionProvider"
 import { useSignInSession } from "../../authentication/session/useSignInSession"
 import { useSignUpSession } from "../../authentication/session/useSignUpSession"
@@ -16,10 +15,10 @@ import { bearerToken } from "../../authentication/session/authStatus"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import {
   AppPages,
+  getAddProfilePath,
   createPath,
   getAddPasswordPath,
   getAuthFlowPath,
-  getAddProfilePath,
   getMyAccountPath,
   getResetPasswordPath,
   getSignInPath,
@@ -29,6 +28,7 @@ import {
 } from "../../util/routeUtil"
 import styles from "./verification-code.module.scss"
 import { AUTH_FLOW, UNLEASH_FLAG } from "../../modules/constants"
+import UserContext from "../../authentication/context/UserContext"
 import GetHelp from "./components/GetHelp"
 import VerificationCodeField from "./components/VerificationCodeField"
 import {
@@ -41,7 +41,7 @@ import { User } from "../../authentication/user"
 interface EnterVerificationCodePageProps {
   email: string
   flow: AUTH_FLOW
-  redirectUrl?: string
+  returnUrl?: string
 }
 
 // The user can send a new verification code every 30 seconds
@@ -57,7 +57,7 @@ const EnterVerificationCodePage = ({
   email,
   flow,
   housingCounselorToken,
-  redirectUrl = getMyAccountPath(), // TODO: simplify and centralize auth redirects
+  returnUrl = getMyAccountPath(),
 }: EnterVerificationCodePageProps & { housingCounselorToken?: string | null }) => {
   const navigate = useNavigate()
   const signInSession = useSignInSession()
@@ -125,7 +125,7 @@ const EnterVerificationCodePage = ({
       return
     }
 
-    let destination = redirectUrl
+    let destination = returnUrl
     if (housingCounselorToken) {
       const sessionToken = bearerToken(await getCredentials())
       if (!sessionToken) {
@@ -139,7 +139,7 @@ const EnterVerificationCodePage = ({
         )
       } catch {
         // Keep the user signed in, but flag that they don't have access to this account.
-        destination = createPath(redirectUrl, { hcAccess: "0" })
+        destination = createPath(returnUrl, { hcAccess: "0" })
       }
     } else {
       // A normal sign-in (no delegate link) should always land the user in
@@ -452,64 +452,65 @@ const EnterVerificationCodePage = ({
   )
 }
 
+// TODO: this wrapper component handles auth status and redirects, we should have a better name
 const EnterVerificationCode = (_props: { assetPaths: unknown }) => {
   const navigate = useNavigate()
-  const { state } = useLocation() // TODO: needs a better name
-  const email = state?.email
-  const { status } = useAuthSession()
-  const isSignedIn = status.kind === "signedIn"
-  const { profile, initialStateLoaded } = useContext(UserContext)
   const { unleashFlag: clerkEnabled, flagsReady } = useFeatureFlag(UNLEASH_FLAG.CLERK_AUTH, false)
-  const flow: AUTH_FLOW = state?.flow
+
+  const { status } = useAuthSession()
+  const { profile, profileMissing } = useContext(UserContext)
+  const isSignedIn = status.kind === "signedIn"
+  const loadingProfile = isSignedIn && !profileMissing && !profile
+
+  const { state: reactRouterState } = useLocation()
+  const verificationCodeEmailAddress = reactRouterState?.verificationCodeEmailAddress
+  const flow: AUTH_FLOW = reactRouterState?.flow
   const fallbackPath = flow ? getAuthFlowPath(flow) : getSignInPath()
   const isSignedInUpdateFlow = isUpdateEmailFlow(flow)
 
-  // TODO: simplify and centralize auth redirects
-  /**
-   * Verification code page redirects
-   * --------------------------------
-   * 1. Once the Unleash flags are ready:
-   * If Clerk is not enabled, redirect to sign-in.
-   * 2. Once Clerk is loaded:
-   * If the user is signed out without an email, redirect to sign in.
-   * 3. Once the profile has loaded:
-   * If the user is signed in with a profile, redirect to my account.
-   * If the user is signed in without a profile, redirect to the add profile page.
-   */
-  const redirectCheckHasRunOnce = useRef(false) // only redirect when first visiting this page, otherwise it overrides navigate() calls from code submission
-  useEffect(() => {
-    if (redirectCheckHasRunOnce.current) return
+  // user may transition from signedOut to signedIn on this page
+  // keep track of the initial status of the user when they first visited the page
+  const [initialSessionKind, setInitialSessionKind] = useState<"signedIn" | "signedOut" | null>(
+    null
+  )
 
+  useEffect(() => {
+    if (!flagsReady || status.kind === "initializing" || initialSessionKind) return
+    setInitialSessionKind(status.kind)
+  }, [flagsReady, status.kind, initialSessionKind])
+
+  useEffect(() => {
     if (!flagsReady) return
     if (!clerkEnabled) {
       void navigate(getSignInPath())
       return
     }
-    if (status.kind === "initializing") return
-    if (!email || !flow) {
+    if (status.kind === "initializing" || loadingProfile) return
+    if (!verificationCodeEmailAddress || !flow) {
       void navigate(fallbackPath)
-    }
-    if (!isSignedIn && !email) {
-      void navigate(getSignInPath())
       return
     }
-    if (!initialStateLoaded) return
-    if (!isSignedInUpdateFlow) {
-      if (!initialStateLoaded) return
-      if (isSignedIn && profile) void navigate(getMyAccountPath())
-      if (isSignedIn && !profile) void navigate(getAddProfilePath())
+    const arrivedSignedIn = initialSessionKind === "signedIn"
+    console.log({ flow })
+    if (!isSignedInUpdateFlow && arrivedSignedIn && isSignedIn && profile) {
+      void navigate(getMyAccountPath(), { state: { flow } })
+      return
     }
-    redirectCheckHasRunOnce.current = true
+    if (!isSignedInUpdateFlow && arrivedSignedIn && isSignedIn && !profile) {
+      void navigate(getAddProfilePath(), { state: { flow } })
+      return
+    }
   }, [
     flagsReady,
     clerkEnabled,
-    status,
+    status.kind,
+    loadingProfile,
+    flow,
+    verificationCodeEmailAddress,
     isSignedIn,
-    email,
-    initialStateLoaded,
+    initialSessionKind,
     profile,
     navigate,
-    flow,
     fallbackPath,
     isSignedInUpdateFlow,
   ])
@@ -518,8 +519,10 @@ const EnterVerificationCode = (_props: { assetPaths: unknown }) => {
     flagsReady &&
     clerkEnabled &&
     status.kind !== "initializing" &&
+    !loadingProfile &&
+    !!flow &&
     (isSignedInUpdateFlow ? isSignedIn : status.kind === "signedOut") &&
-    !!email
+    !!verificationCodeEmailAddress
 
   if (!ready) {
     return null
@@ -527,10 +530,10 @@ const EnterVerificationCode = (_props: { assetPaths: unknown }) => {
 
   return (
     <EnterVerificationCodePage
-      email={email}
+      email={verificationCodeEmailAddress}
       flow={flow}
-      housingCounselorToken={state?.housingCounselorToken}
-      redirectUrl={state?.redirectUrl}
+      housingCounselorToken={reactRouterState?.housingCounselorToken}
+      returnUrl={reactRouterState?.returnUrl}
     />
   )
 }
