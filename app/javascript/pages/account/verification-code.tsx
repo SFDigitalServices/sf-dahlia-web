@@ -75,6 +75,8 @@ const EnterVerificationCodePage = ({
     control,
     handleSubmit,
     setError,
+    setValue,
+    clearErrors,
     formState: { errors },
   } = useForm<{ code: string }>({
     mode: "onSubmit",
@@ -342,6 +344,8 @@ const EnterVerificationCodePage = ({
     try {
       const sent = await resendCodeByFlow[flow]()
       if (sent) {
+        setValue("code", "")
+        clearErrors("code")
         setResendExpiresAt(Date.now() + RESEND_CODE_MS)
         setResendSeconds(RESEND_CODE_MS / 1000)
       }

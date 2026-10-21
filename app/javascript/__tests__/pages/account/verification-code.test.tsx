@@ -359,6 +359,33 @@ describe("<EnterVerificationCode />", () => {
     expect(screen.queryByRole("button", { name: t("createAccount.sendAgain") })).toBeNull()
   })
 
+  it("clears the entered code and error when a new code is sent", async () => {
+    const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime })
+    const digits = screen.getAllByRole("textbox")
+
+    await user.click(digits[0])
+    await user.keyboard("123")
+    fireEvent.click(screen.getByRole("button", { name: t("createAccount.confirmCode") }))
+    await waitFor(() => {
+      expect(screen.getByTestId("error-message")).toHaveTextContent(
+        t("createAccount.codeInvalid.p1")
+      )
+    })
+
+    expireResendVerificationCode()
+    fireEvent.click(screen.getByRole("button", { name: t("createAccount.sendAgain") }))
+    await act(async () => {
+      await Promise.resolve()
+    })
+
+    expect(mockSignUpSendEmailCode).toHaveBeenCalledTimes(1)
+    digits.forEach((digit) => {
+      expect((digit as HTMLInputElement).value).toBe("")
+      expect(digit).not.toBeInvalid()
+    })
+    expect(screen.queryByTestId("error-message")).toBeNull()
+  })
+
   it("restores send again after the resend countdown", () => {
     expect(screen.getByText(t("createAccount.sendAgainIn", { smart_count: 30 }))).not.toBeNull()
 
@@ -813,6 +840,10 @@ describe("<EnterVerificationCode />", () => {
     })
     mockResetPasswordSendCode.mockResolvedValue({ error: new Error("resend failed") })
     await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
+    const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime })
+    const digits = screen.getAllByRole("textbox")
+    await user.click(digits[0])
+    await user.paste("123456")
 
     expireResendVerificationCode()
     fireEvent.click(screen.getByRole("button", { name: t("createAccount.sendAgain") }))
@@ -821,6 +852,8 @@ describe("<EnterVerificationCode />", () => {
     })
 
     expect(mockResetPasswordSendCode).toHaveBeenCalledTimes(1)
+    // A failed resend leaves the current code in place
+    expect(digits.map((digit) => (digit as HTMLInputElement).value).join("")).toBe("123456")
   })
 
   it("does not redirect a logged-out user who has email from an in-progress flow", () => {
