@@ -174,11 +174,6 @@ const Contact = () => {
           <Card.Section divider="inset">
             <p className={styles.contactFieldLabel}>{t("label.emailAddress")}</p>
             <p className={styles.email}>{profile?.email}</p>
-            <p className={styles.changeEmail}>
-              {renderInlineMarkup(
-                t("accountLayout.contact.changeLoginEmail", { href: getMyAccountSettingsPath() })
-              )}
-            </p>
             {clerkEnabled && (
               <Button
                 type="button"
@@ -194,6 +189,11 @@ const Contact = () => {
                 {t("accountSettings.email.updateEmail")}
               </Button>
             )}
+            <p className={styles.changeEmail}>
+              {renderInlineMarkup(
+                t("accountLayout.contact.changeLoginEmail", { href: getMyAccountSettingsPath() })
+              )}
+            </p>
           </Card.Section>
           {profile && <ContactPhoneForm profile={profile} saveProfile={saveProfile} />}
           <Card.Footer className={styles.footer}>
