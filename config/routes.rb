@@ -137,6 +137,7 @@ Rails.application.routes.draw do
   get '(:lang)/account/applications' => 'account#applications', lang: /(en|es|zh|tl)/
   get '(:lang)/account/settings' => 'account#settings', lang: /(en|es|zh|tl)/
   get '(:lang)/account/contact' => 'account#contact', lang: /(en|es|zh|tl)/
+  get '(:lang)/account/reverification' => 'account#reverification', lang: /(en|es|zh|tl)/
   # Backwards compatibility to redirect old links
   get '/my-account', to: redirect('/account')
   get '(:lang)/my-account', to: redirect('%{lang}/account'), lang: /(en|es|zh|tl)/

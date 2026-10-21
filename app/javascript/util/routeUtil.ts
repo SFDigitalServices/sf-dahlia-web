@@ -116,6 +116,7 @@ export const getMyAccountSettingsPath = localizedPathGetter("/account/settings")
 export const getMyAccountContactPath = localizedPathGetter("/account/contact")
 export const getUpdateEmailPath = localizedPathGetter("/update-email")
 export const getUpdateEmailCodePath = localizedPathGetter("/update-email/code")
+export const getReverificationPath = localizedPathGetter("/account/reverification")
 
 // Rental Listing Directory pages
 export const getHelpCalculatingIncomeLink = localizedPathGetter("/income-calculator/rental/intro")

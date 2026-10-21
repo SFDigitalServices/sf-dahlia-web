@@ -38,6 +38,7 @@ import Applications from "../pages/account/applications"
 import Settings from "../pages/account/settings"
 import Contact from "../pages/account/contact"
 import UpdateEmail from "../pages/account/update-email"
+import Reverification from "../pages/account/reverification"
 import type { INVITE_TO_X } from "../modules/constants"
 
 type InviteToUrlParams = {
@@ -92,6 +93,7 @@ const PAGE_ROUTES = [
   [Contact, "/account/contact"],
   [Applications, "/account/applications"],
   [MyApplications, "/my-applications"], // TODO: DAH-4165 remove
+  [Reverification, "/account/reverification"],
 ] as const
 
 const INVITE_TO_PATHS = [
