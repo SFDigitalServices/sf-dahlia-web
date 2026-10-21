@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React from "react"
 import { Card, Heading } from "@bloom-housing/ui-seeds"
 import { Icon, UniversalIconType } from "@bloom-housing/ui-components"
 import { DOBFieldValues } from "../pages/account/components/DOBFieldset"
@@ -46,8 +46,6 @@ export const FormHeader = ({
   )
 }
 
-const MOBILE_SIZE = 768
-
 export const FormSection = ({
   className,
   children,
@@ -57,21 +55,8 @@ export const FormSection = ({
   children: React.ReactNode
   fullWidthDivider?: boolean
 }) => {
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth)
-
-  useEffect(() => {
-    function handleResize() {
-      setWindowWidth(window.innerWidth)
-    }
-
-    window.addEventListener("resize", handleResize)
-    return () => window.removeEventListener("resize", handleResize)
-  }, [])
-
-  const dividerType = fullWidthDivider || windowWidth <= MOBILE_SIZE ? "flush" : "inset"
-
   return (
-    <Card.Section className={className} divider={dividerType}>
+    <Card.Section className={className} divider={fullWidthDivider ? "flush" : "inset"}>
       {children}
     </Card.Section>
   )
