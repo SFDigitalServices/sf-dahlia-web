@@ -408,6 +408,7 @@ const EnterVerificationCodePage = ({
                 onGetNewCode={() => {
                   void onResend()
                 }}
+                getNewCodeDisabled={isResending || resendSeconds > 0}
               />
             )}
           />

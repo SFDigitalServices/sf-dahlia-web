@@ -772,6 +772,40 @@ describe("<EnterVerificationCode />", () => {
     consoleError.mockRestore()
   })
 
+  it("disables get a new code during the resend countdown", async () => {
+    const consoleError = jest.spyOn(console, "error").mockImplementation(() => {})
+    mockSignUpVerifyEmailCode.mockResolvedValue({ error: expiredCodeError })
+
+    await pasteAndConfirmCode()
+    await expectExpiredCodeError()
+
+    expect(screen.getByRole("button", { name: t("createAccount.getNewCode") })).toBeDisabled()
+    expect(screen.getByText(t("createAccount.sendAgainIn", { smart_count: 30 }))).not.toBeNull()
+
+    expireResendVerificationCode()
+    expect(screen.getByRole("button", { name: t("createAccount.getNewCode") })).toBeEnabled()
+    consoleError.mockRestore()
+  })
+
+  it("disables get a new code while a resend is pending", async () => {
+    const consoleError = jest.spyOn(console, "error").mockImplementation(() => {})
+    mockSignUpVerifyEmailCode.mockResolvedValue({ error: expiredCodeError })
+    mockSignUpSendEmailCode.mockReturnValue(new Promise(() => {}))
+    expireResendVerificationCode()
+
+    await pasteAndConfirmCode()
+    await expectExpiredCodeError()
+
+    fireEvent.click(screen.getByRole("button", { name: t("createAccount.getNewCode") }))
+    await act(async () => {
+      await Promise.resolve()
+    })
+
+    expect(screen.getByRole("button", { name: t("createAccount.getNewCode") })).toBeDisabled()
+    expect(mockSignUpSendEmailCode).toHaveBeenCalledTimes(1)
+    consoleError.mockRestore()
+  })
+
   it("shows an expired code error for create account", async () => {
     const consoleError = jest.spyOn(console, "error").mockImplementation(() => {})
     mockSignUpVerifyEmailCode.mockResolvedValue({ error: expiredCodeError })

@@ -6,7 +6,10 @@ import styles from "./VerificationCodeField.module.scss"
 
 export type CodeErrorType = "invalid" | "expired"
 
-const codeErrorMessages: Record<CodeErrorType, (onGetNewCode?: () => void) => React.ReactNode> = {
+const codeErrorMessages: Record<
+  CodeErrorType,
+  (onGetNewCode?: () => void, getNewCodeDisabled?: boolean) => React.ReactNode
+> = {
   invalid: () => (
     <>
       {t("createAccount.codeInvalid.p1")}
@@ -14,10 +17,16 @@ const codeErrorMessages: Record<CodeErrorType, (onGetNewCode?: () => void) => Re
       {t("createAccount.codeInvalid.p2")}
     </>
   ),
-  expired: (onGetNewCode) => (
+  expired: (onGetNewCode, getNewCodeDisabled) => (
     <>
       {t("createAccount.codeExpired")}{" "}
-      <Button variant="text" size="sm" type="button" onClick={onGetNewCode}>
+      <Button
+        variant="text"
+        size="sm"
+        type="button"
+        disabled={getNewCodeDisabled}
+        onClick={onGetNewCode}
+      >
         {t("createAccount.getNewCode")}
       </Button>
     </>
@@ -30,12 +39,14 @@ const VerificationCodeField = ({
   error,
   errorType,
   onGetNewCode,
+  getNewCodeDisabled,
 }: {
   value: string
   onChange: (value: string) => void
   error?: boolean
   errorType?: CodeErrorType
   onGetNewCode?: () => void
+  getNewCodeDisabled?: boolean
 }) => {
   const renderErrorMessage = codeErrorMessages[errorType] ?? codeErrorMessages.invalid
 
@@ -92,7 +103,7 @@ const VerificationCodeField = ({
         ))}
       </div>
       <ErrorMessage id="code-error" error={error}>
-        {renderErrorMessage(onGetNewCode)}
+        {renderErrorMessage(onGetNewCode, getNewCodeDisabled)}
       </ErrorMessage>
     </Fieldset>
   )
