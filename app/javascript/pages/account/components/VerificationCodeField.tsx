@@ -1,17 +1,44 @@
 import React, { useRef } from "react"
 import { ErrorMessage, Field, t } from "@bloom-housing/ui-components"
+import { Button } from "@bloom-housing/ui-seeds"
 import Fieldset from "./Fieldset"
 import styles from "./VerificationCodeField.module.scss"
+
+export type CodeErrorType = "invalid" | "expired"
+
+const codeErrorMessages: Record<CodeErrorType, (onGetNewCode?: () => void) => React.ReactNode> = {
+  invalid: () => (
+    <>
+      {t("createAccount.codeInvalid.p1")}
+      <br />
+      {t("createAccount.codeInvalid.p2")}
+    </>
+  ),
+  expired: (onGetNewCode) => (
+    <>
+      {t("createAccount.codeExpired")}{" "}
+      <Button variant="text" size="sm" type="button" onClick={onGetNewCode}>
+        {t("createAccount.getNewCode")}
+      </Button>
+    </>
+  ),
+}
 
 const VerificationCodeField = ({
   value = "",
   onChange,
   error,
+  errorType,
+  onGetNewCode,
 }: {
   value: string
   onChange: (value: string) => void
   error?: boolean
+  errorType?: CodeErrorType
+  onGetNewCode?: () => void
 }) => {
+  const renderErrorMessage = codeErrorMessages[errorType] ?? codeErrorMessages.invalid
+
   const code = value.replace(/\D/g, "").slice(0, 6)
   const inputsRef = useRef<(HTMLInputElement | null)[]>([])
   const focusInput = (index: number) => inputsRef.current[index]?.focus()
@@ -65,9 +92,7 @@ const VerificationCodeField = ({
         ))}
       </div>
       <ErrorMessage id="code-error" error={error}>
-        {t("createAccount.codeInvalid.p1")}
-        <br />
-        {t("createAccount.codeInvalid.p2")}
+        {renderErrorMessage(onGetNewCode)}
       </ErrorMessage>
     </Fieldset>
   )
