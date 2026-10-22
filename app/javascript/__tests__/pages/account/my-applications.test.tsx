@@ -9,6 +9,7 @@ import MyApplicationsPage, {
   determineApplicationItemList,
 } from "../../../pages/account/my-applications"
 import React from "react"
+import { useAuth } from "@clerk/react"
 import { apiDelete, authenticatedGet, authenticatedDelete, get } from "../../../api/apiService"
 import { AuthSessionProvider } from "../../../authentication/session/AuthSessionProvider"
 import { useFeatureFlag } from "../../../hooks/useFeatureFlag"
@@ -297,6 +298,11 @@ describe("when Clerk auth is disabled", () => {
     beforeEach(() => {
       setClerkFlag(true)
       setupUserContext({ loggedIn: true })
+      ;(useAuth as jest.Mock).mockReturnValue({
+        isLoaded: true,
+        isSignedIn: true,
+        getToken: jest.fn().mockResolvedValue("clerk-session-token"),
+      })
       ;(get as jest.Mock).mockResolvedValue({ data: { applications: [draftApplication] } })
       ;(apiDelete as jest.Mock).mockResolvedValue({ data: {} })
     })
