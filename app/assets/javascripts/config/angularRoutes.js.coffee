@@ -26,6 +26,8 @@
                 return $q.reject(response) unless response.status == 404
                 $window.removeEventListener('beforeunload', ShortFormApplicationService.onExit)
                 ClerkShim.leaveFor(SharedService._addLanguageAndParamsToUrl($stateParams.lang, '/add-profile'))
+                # never resolve, so the application doesn't load or autosave while the browser leaves
+                $q.defer().promise
             )
           # Clerk didn't load (e.g. the script was blocked), so no one can be signed in: apply as a guest
           -> true

@@ -78,9 +78,9 @@ SharedService = ($http, $state, $window, $document) ->
     'dahlia.sign-in':
       buildUrl: (state, params) -> Service._addLanguageAndParamsToUrl(params.lang, "/sign-in")
       # TODO(DAH-4366): CLERK MIGRATION - DEVISE TECH DEBT TO REMOVE (always route to React)
-      # Sign-in is the only auth page Angular still navigates to with Clerk on (nav, sign out, timeouts,
-      # auth guard). create-account, forgot-password and reset-password are only linked from Angular
-      # pages that Clerk disables, and a direct visit is a first load that Rails already serves as React.
+      # With Clerk on, always route sign-in to React, since Angular still navigates there (nav, sign out,
+      # timeouts, auth guard). The other auth pages below don't need this: Angular only links to them
+      # from pages Clerk disables, and a direct visit is a first load that Rails already serves as React.
       shouldRailsRoute: (isFirstLoad) -> !isFirstLoad && ($window.SIGN_IN_PAGE_REACT is "true" || !!$window.CLERK_AUTH_ANGULAR)
     'dahlia.create-account':
       buildUrl: (state, params) -> Service._addLanguageAndParamsToUrl(params.lang, "/create-account")
