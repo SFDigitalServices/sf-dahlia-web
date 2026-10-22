@@ -345,6 +345,22 @@ describe("<EnterVerificationCode />", () => {
     expect(screen.queryByTestId("error-message")).toBeNull()
   })
 
+  it("does not create the account when the code is rejected", async () => {
+    const consoleError = jest.spyOn(console, "error").mockImplementation(() => {})
+    mockSignUpVerifyEmailCode.mockResolvedValue({
+      error: { errors: [{ code: "form_code_incorrect" }] },
+    })
+
+    await submitCode()
+    await waitFor(() => {
+      expect(mockSignUpVerifyEmailCode).toHaveBeenCalledWith({ code: "123456" })
+    })
+    expect(mockSignUpFinalize).not.toHaveBeenCalled()
+    expect(mockNavigate).not.toHaveBeenCalled()
+
+    consoleError.mockRestore()
+  })
+
   it("resends the code", async () => {
     expireResendVerificationCode()
 
@@ -709,6 +725,54 @@ describe("<EnterVerificationCode />", () => {
     })
     expect(mockSignInFinalize).toHaveBeenCalledTimes(1)
     expect(mockNavigate).toHaveBeenCalledWith("/account?hcAccess=0")
+  })
+
+  it("does not sign in when the code is rejected", async () => {
+    cleanup()
+    const consoleError = jest.spyOn(console, "error").mockImplementation(() => {})
+    ;(useLocation as jest.Mock).mockReturnValue({
+      pathname: "/sign-in/code",
+      state: { verificationCodeEmailAddress: "test@example.com", flow: AUTH_FLOW.SIGN_IN },
+    })
+    mockSignInVerifyCode.mockResolvedValue({
+      error: { errors: [{ code: "form_code_incorrect" }] },
+    })
+    await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
+
+    await submitCode()
+    await waitFor(() => {
+      expect(mockSignInVerifyCode).toHaveBeenCalledWith({ code: "123456" })
+    })
+    expect(mockSignInFinalize).not.toHaveBeenCalled()
+    expect(mockSignUpCreate).not.toHaveBeenCalled()
+    expect(mockNavigate).not.toHaveBeenCalled()
+
+    consoleError.mockRestore()
+  })
+
+  it("does not sign the housing counselor in when there is no session token", async () => {
+    cleanup()
+    const bearerTokenSpy = jest.spyOn(authStatus, "bearerToken").mockReturnValue(undefined)
+    ;(useLocation as jest.Mock).mockReturnValue({
+      pathname: "/sign-in/code",
+      state: {
+        verificationCodeEmailAddress: "test@example.com",
+        housingCounselorToken: "jwt.token",
+        flow: AUTH_FLOW.SIGN_IN,
+      },
+    })
+    mockSignInResource.status = "complete"
+    await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
+
+    await submitCode()
+    await waitFor(() => {
+      expect(bearerTokenSpy).toHaveBeenCalled()
+    })
+    expect(authorizeHousingCounselor).not.toHaveBeenCalled()
+    expect(mockSignInFinalize).not.toHaveBeenCalled()
+    expect(mockNavigate).not.toHaveBeenCalled()
+
+    bearerTokenSpy.mockRestore()
   })
 
   it("resends the code for sign in", async () => {
