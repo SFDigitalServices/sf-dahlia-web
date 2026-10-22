@@ -45,6 +45,19 @@ RSpec.describe Api::V1::AccountController, type: :controller do
         expect(JSON.parse(response.body)).to eq('applications' => [])
         expect(Force::ShortFormService).to have_received(:get_for_user).with(contact_id)
       end
+
+      it 'returns not found when the Clerk user has no Salesforce contact ID' do
+        allow(ClerkService).to receive(:salesforce_contact_id)
+          .with(clerk_user_id)
+          .and_raise(ClerkService::NotFoundError, 'User has no Salesforce contact id')
+
+        get :my_applications
+
+        expect(response).to have_http_status(:not_found)
+        expect(JSON.parse(response.body))
+          .to eq('error' => 'Could not get Salesforce contact ID')
+        expect(Force::ShortFormService).not_to have_received(:get_for_user)
+      end
     end
 
     # TODO(DAH-4366): CLERK MIGRATION - DEVISE TECH DEBT TO REMOVE
