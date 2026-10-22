@@ -31,7 +31,7 @@ const ForgotPasswordFlow = () => {
     }
 
     void navigate(getForgotPasswordCodePath(), {
-      state: { email, flow: AUTH_FLOW.FORGOT_PASSWORD },
+      state: { verificationCodeEmailAddress: email, flow: AUTH_FLOW.FORGOT_PASSWORD },
     })
   }
 

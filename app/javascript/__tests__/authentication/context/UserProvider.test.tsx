@@ -1,10 +1,14 @@
 import React, { useContext } from "react"
 import { act, render, screen, waitFor } from "@testing-library/react"
-import { AuthSessionProvider } from "../../../authentication/session/AuthSessionProvider"
+import {
+  AuthSessionProvider,
+  useAuthSession,
+} from "../../../authentication/session/AuthSessionProvider"
 import UserProvider from "../../../authentication/context/UserProvider"
 import UserContext, { ContextProps } from "../../../authentication/context/UserContext"
 import { getProfile, signIn } from "../../../api/authApiService"
 import { isTokenValid } from "../../../authentication/token"
+import { useFeatureFlag } from "../../../hooks/useFeatureFlag"
 import { renderAndLoadAsync } from "../../__util__/renderUtils"
 import { mockProfileStub } from "../../__util__/accountUtils"
 
@@ -21,8 +25,22 @@ jest.mock("../../../authentication/token", () => {
   }
 })
 
+jest.mock("../../../authentication/session/AuthSessionProvider", () => {
+  const actualAuthSessionModule = jest.requireActual(
+    "../../../authentication/session/AuthSessionProvider"
+  )
+  return {
+    ...actualAuthSessionModule,
+    useAuthSession: jest.fn(() => ({
+      status: { kind: "initializing" },
+      getCredentials: jest.fn().mockResolvedValue({ kind: "none" }),
+      signOut: jest.fn().mockResolvedValue(undefined),
+    })),
+  }
+})
+
 jest.mock("../../../hooks/useFeatureFlag", () => ({
-  useFeatureFlag: () => ({ flagsReady: true, unleashFlag: false }),
+  useFeatureFlag: jest.fn(() => ({ flagsReady: true, unleashFlag: false })),
 }))
 
 const mockGetItem = jest.fn()
@@ -62,9 +80,25 @@ const TestComponent = () => {
   )
 }
 
+const ProfileStateComponent = () => {
+  const { profileMissing, initialStateLoaded } = useContext(UserContext) as ContextProps
+  return (
+    <div>
+      {initialStateLoaded && <p>Initial state loaded</p>}
+      {profileMissing && <p>Profile missing</p>}
+    </div>
+  )
+}
+
 describe("UserProvider", () => {
   beforeEach(() => {
     jest.clearAllMocks()
+    ;(useFeatureFlag as jest.Mock).mockReturnValue({ flagsReady: true, unleashFlag: false })
+    ;(useAuthSession as jest.Mock).mockReturnValue({
+      status: { kind: "initializing" },
+      getCredentials: jest.fn().mockResolvedValue({ kind: "none" }),
+      signOut: jest.fn().mockResolvedValue(undefined),
+    })
   })
 
   it("should load profile on mount if access token is available", async () => {
@@ -143,5 +177,33 @@ describe("UserProvider", () => {
 
     await waitFor(() => expect(screen.getByText("Signed in as abc123")).not.toBeNull())
     expect(getProfile).toHaveBeenCalled()
+  })
+
+  it("should mark profileMissing when Clerk profile lookup returns 404", async () => {
+    ;(useFeatureFlag as jest.Mock).mockReturnValue({ flagsReady: true, unleashFlag: true })
+    ;(useAuthSession as jest.Mock).mockReturnValue({
+      status: { kind: "signedIn" },
+      getCredentials: jest.fn().mockResolvedValue({
+        kind: "bearerToken",
+        token: "clerk-session-token",
+      }),
+      signOut: jest.fn().mockResolvedValue(undefined),
+    })
+    ;(getProfile as jest.Mock).mockRejectedValue({
+      isAxiosError: true,
+      response: { status: 404 },
+    })
+
+    render(
+      <UserProvider>
+        <ProfileStateComponent />
+      </UserProvider>
+    )
+
+    await waitFor(() => expect(screen.getByText("Profile missing")).not.toBeNull())
+    expect(getProfile).toHaveBeenCalledWith({
+      clerkEnabled: true,
+      sessionToken: "clerk-session-token",
+    })
   })
 })

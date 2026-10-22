@@ -90,7 +90,7 @@ describe("ListingDetailsApply", () => {
 
       expect(mockNavigate).toHaveBeenCalledWith(getSignInPath(), {
         state: {
-          redirectUrl: localizedPath(`listings/${openSaleListing.listingID}/apply-welcome/intro`),
+          returnUrl: localizedPath(`listings/${openSaleListing.listingID}/apply-welcome/intro`),
         },
       })
     })

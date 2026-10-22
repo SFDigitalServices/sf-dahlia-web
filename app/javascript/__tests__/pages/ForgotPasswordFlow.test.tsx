@@ -84,7 +84,10 @@ describe("<ForgotPasswordFlow />", () => {
     })
     expect(mockSendResetCode).toHaveBeenCalledWith()
     expect(mockNavigate).toHaveBeenCalledWith("/forgot-password/code", {
-      state: { email: "test@example.com", flow: AUTH_FLOW.FORGOT_PASSWORD },
+      state: {
+        verificationCodeEmailAddress: "test@example.com",
+        flow: AUTH_FLOW.FORGOT_PASSWORD,
+      },
     })
   })
 
