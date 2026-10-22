@@ -6,7 +6,7 @@ class RestrictProduction
 end
 
 Rails.application.routes.draw do
-  root to: 'home#index', constraints: ->(req) { req.format == :html || req.format == '*/*' }
+  root to: 'home#index', constraints: ->(req) { [:html, '*/*'].include?(req.format) }
   mount_devise_token_auth_for(
     'User',
     at: 'api/v1/auth',
@@ -118,6 +118,7 @@ Rails.application.routes.draw do
   get '(:lang)/reset-password' => 'auth#reset_password', lang: /(en|es|zh|tl)/
   get '(:lang)/update-email' => 'auth#update_email', lang: /(en|es|zh|tl)/
   get '(:lang)/update-email/code' => 'auth#enter_verification_code', lang: /(en|es|zh|tl)/
+  get '(:lang)/reverification' => 'auth#reverification', lang: /(en|es|zh|tl)/
 
   get '(:lang)/housing-counselors' => 'assistance#housing_counselors', lang: /(en|es|zh|tl)/
   get '(:lang)/get-assistance' => 'assistance#get_assistance', lang: /(en|es|zh|tl)/
@@ -137,7 +138,6 @@ Rails.application.routes.draw do
   get '(:lang)/account/applications' => 'account#applications', lang: /(en|es|zh|tl)/
   get '(:lang)/account/settings' => 'account#settings', lang: /(en|es|zh|tl)/
   get '(:lang)/account/contact' => 'account#contact', lang: /(en|es|zh|tl)/
-  get '(:lang)/account/reverification' => 'account#reverification', lang: /(en|es|zh|tl)/
   # Backwards compatibility to redirect old links
   get '/my-account', to: redirect('/account')
   get '(:lang)/my-account', to: redirect('%{lang}/account'), lang: /(en|es|zh|tl)/
@@ -147,5 +147,5 @@ Rails.application.routes.draw do
   get '(:lang)/account-settings', to: redirect('%{lang}/account/settings'), lang: /(en|es|zh|tl)/
 
   # fallback to Angular-only controller for all un-migrated pages.
-  get '*path', to: 'angular#index', constraints: ->(req) { req.format == :html || req.format == '*/*' }
+  get '*path', to: 'angular#index', constraints: ->(req) { [:html, '*/*'].include?(req.format) }
 end

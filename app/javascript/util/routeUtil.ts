@@ -116,7 +116,7 @@ export const getMyAccountSettingsPath = localizedPathGetter("/account/settings")
 export const getMyAccountContactPath = localizedPathGetter("/account/contact")
 export const getUpdateEmailPath = localizedPathGetter("/update-email")
 export const getUpdateEmailCodePath = localizedPathGetter("/update-email/code")
-export const getReverificationPath = localizedPathGetter("/account/reverification")
+export const getReverificationPath = localizedPathGetter("/reverification")
 
 // Rental Listing Directory pages
 export const getHelpCalculatingIncomeLink = localizedPathGetter("/income-calculator/rental/intro")
@@ -191,6 +191,7 @@ export const AUTH_FLOW_PATH: Record<AUTH_FLOW, string> = {
   [AUTH_FLOW.FORGOT_PASSWORD]: getForgotPasswordPath(),
   [AUTH_FLOW.UPDATE_CONTACT_EMAIL]: getUpdateEmailPath(),
   [AUTH_FLOW.UPDATE_LOGIN_EMAIL]: getUpdateEmailPath(),
+  [AUTH_FLOW.REVERIFICATION]: getReverificationPath(),
 }
 
 export const getAuthFlowPath = (flow: AUTH_FLOW) => AUTH_FLOW_PATH[flow]
@@ -243,6 +244,7 @@ export enum AppPages {
   InviteTo = "invite to",
   ListingApplyForm = "listing apply form",
   UpdateEmail = "update email",
+  Reverification = "reverification",
 }
 
 export type ClerkRedirectManagerOptions = {

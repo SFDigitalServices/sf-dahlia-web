@@ -280,6 +280,7 @@ const EnterVerificationCodePage = ({
     [AUTH_FLOW.FORGOT_PASSWORD]: verifyForgotPasswordCode,
     [AUTH_FLOW.UPDATE_LOGIN_EMAIL]: verifyUpdateLoginEmailCode,
     [AUTH_FLOW.UPDATE_CONTACT_EMAIL]: verifyUpdateContactEmailCode,
+    [AUTH_FLOW.REVERIFICATION]: verifyUpdateContactEmailCode,
   }
 
   const onSubmit = async ({ code }: { code: string }) => verifyAuthCodeByFlow[flow](code)
@@ -334,6 +335,7 @@ const EnterVerificationCodePage = ({
     [AUTH_FLOW.FORGOT_PASSWORD]: resendForgotPasswordCode,
     [AUTH_FLOW.UPDATE_LOGIN_EMAIL]: resendPendingEmailCode,
     [AUTH_FLOW.UPDATE_CONTACT_EMAIL]: resendPendingEmailCode,
+    [AUTH_FLOW.REVERIFICATION]: resendPendingEmailCode,
   }
 
   const onResend = async () => {

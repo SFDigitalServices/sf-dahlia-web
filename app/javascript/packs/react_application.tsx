@@ -93,7 +93,7 @@ const PAGE_ROUTES = [
   [Contact, "/account/contact"],
   [Applications, "/account/applications"],
   [MyApplications, "/my-applications"], // TODO: DAH-4165 remove
-  [Reverification, "/account/reverification"],
+  [Reverification, "/reverification"],
 ] as const
 
 const INVITE_TO_PATHS = [

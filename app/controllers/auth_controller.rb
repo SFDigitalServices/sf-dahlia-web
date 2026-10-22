@@ -44,6 +44,11 @@ class AuthController < ApplicationController
     render 'update_email'
   end
 
+  def reverification
+    @reverification_props = react_app_props
+    render 'reverification'
+  end
+
   protected
 
   def use_react_app
