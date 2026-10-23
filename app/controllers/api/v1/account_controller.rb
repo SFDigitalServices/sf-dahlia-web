@@ -17,7 +17,13 @@ class Api::V1::AccountController < ApiController
                 only: %i[update create_profile update_housing_counselor]
 
   def my_applications
-    applications = map_listings_to_applications(current_user_applications)
+    contact_id = effective_contact_id.presence
+    unless contact_id
+      render json: { error: 'Could not get Salesforce contact ID' }, status: :not_found
+      return
+    end
+
+    applications = map_listings_to_applications(current_user_applications(contact_id))
     render json: { applications: }
   end
 
@@ -141,8 +147,8 @@ class Api::V1::AccountController < ApiController
   # (Devise, unchanged) - this only adds "and if that signed-in user is
   # also a housing counselor per their hc_session cookie, use the
   # delegated applicant's contact instead of their own."
-  def current_user_applications
-    Force::ShortFormService.get_for_user(effective_contact_id)
+  def current_user_applications(contact_id)
+    Force::ShortFormService.get_for_user(contact_id)
   end
 
   # The applicant contact ID a housing counselor is currently delegated
@@ -169,12 +175,15 @@ class Api::V1::AccountController < ApiController
   def authenticate_user!(*)
     return authenticate_clerk_or_devise_user!(*) if action_name == 'update'
     return super unless %w[profile create_profile
-                           update_housing_counselor].include?(action_name)
+                           update_housing_counselor my_applications].include?(action_name)
 
     @clerk_user_id = clerk&.user_id
     if @clerk_user_id.blank?
-      render json: { error: 'Invalid Clerk session' }, status: :unauthorized
-      return
+      # my_applications accepts either credential while the Clerk flag rolls out:
+      # use the Clerk session when one is present, otherwise fall back to Devise.
+      return super if action_name == 'my_applications'
+
+      return render json: { error: 'Invalid Clerk session' }, status: :unauthorized
     end
 
     require_salesforce_contact_id! if action_name == 'update_housing_counselor'
