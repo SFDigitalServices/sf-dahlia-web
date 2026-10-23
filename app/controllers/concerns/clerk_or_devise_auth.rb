@@ -11,6 +11,11 @@ module ClerkOrDeviseAuth
   CLERK_AUTH_FLAG = 'temp.webapp.auth.clerk'
 
   def self.clerk_enabled?
+    # TEMP(debug): CLERK_AUTH_FLAG_OVERRIDE=true/false forces the flag
+    # (e2e-legacy runs with Clerk off)
+    override = ENV.fetch('CLERK_AUTH_FLAG_OVERRIDE', nil)
+    return override == 'true' if %w[true false].include?(override)
+
     Rails.configuration.unleash.is_enabled?(CLERK_AUTH_FLAG)
   end
 
