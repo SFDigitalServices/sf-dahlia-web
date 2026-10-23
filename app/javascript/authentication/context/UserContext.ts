@@ -11,6 +11,7 @@ export type ContextProps = {
   // True when an API request is processing
   loading: boolean
   profile?: User
+  profileMissing?: boolean
   initialStateLoaded: boolean
 }
 
