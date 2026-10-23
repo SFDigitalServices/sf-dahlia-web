@@ -16,12 +16,12 @@ NavController = ($document, $rootScope, $scope, $state, $timeout, $translate, Ac
         message: $translate.instant('t.are_you_sure_you_want_to_leave')
       ModalService.alert(content,
         onConfirm: ->
-          AccountService.signOut()
-          $state.go('dahlia.sign-in', { signedOut: true, skipConfirm: true })
+          AccountService.signOut().finally ->
+            $state.go('dahlia.sign-in', { signedOut: true, skipConfirm: true })
       )
     else
-      AccountService.signOut()
-      $state.go('dahlia.sign-in', {signedOut: true})
+      AccountService.signOut().finally ->
+        $state.go('dahlia.sign-in', {signedOut: true})
 
   $scope.closeNavMobile = ->
     $scope.showNavMobile = false
