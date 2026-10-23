@@ -5,7 +5,7 @@
 
 clerkEnabled = -> !!window.CLERK_AUTH_ANGULAR
 
-@dahlia.factory 'ClerkShim', ['$q', ($q) ->
+@dahlia.factory 'ClerkShim', ['$q', '$browser', ($q, $browser) ->
   # Clerk.load() asks Clerk's servers who's signed in. Do it once and share the result;
   # a failed load isn't kept, so the next call tries again.
   loadPromise = null
@@ -15,7 +15,11 @@ clerkEnabled = -> !!window.CLERK_AUTH_ANGULAR
   initClerk = ->
     # called before every Clerk use (each API request, the route guard, sign-out), so callers can wait on one shared initialization
     return $q.reject('Clerk failed to load') unless window.Clerk
+    # count the load as an outstanding request, so Angular (and Protractor's waitForAngular)
+    # doesn't report the page as stable while API requests wait on Clerk
+    $browser.$$incOutstandingRequestCount() unless loadPromise
     loadPromise ?= $q.when(window.Clerk.load())
+      .finally(-> $browser.$$completeOutstandingRequest(angular.noop))
       .then(-> window.Clerk)
       .catch (e) ->
         Raven.captureMessage('Clerk load failed (ClerkShim.initClerk)', {

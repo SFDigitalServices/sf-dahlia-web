@@ -55,11 +55,16 @@ When 'I click the Sign In button', ->
 
 When 'I go to the Sign In page', ->
   signInUrl = "/sign-in"
-  Utils.Page.goTo(signInUrl)
+  Utils.Page.goToReact(signInUrl)
 
 When /^I sign in as "([^"]*)"$/, (fullName) ->
   account = Utils.Account.get(fullName)
-  AccountPages.SignIn.signIn(account.email, account.password)
+  # the Angular wait is off only on React pages (Utils.Page.goToReact)
+  browser.waitForAngularEnabled().then (angularEnabled) ->
+    if angularEnabled
+      AccountPages.SignIn.signIn(account.email, account.password)
+    else
+      AccountPages.SignIn.signInReact(account.email, account.password)
 
 When /^I sign in as "([^"]*)" with my email pre-filled$/, (fullName) ->
   account = Utils.Account.get(fullName)
@@ -77,14 +82,15 @@ When 'I sign out without saving', ->
   .then Utils.Page.confirmModal
 
 When 'I view the application from My Applications', ->
-  element(By.cssContainingText('.button', 'Go to My Applications')).click().then ->
-    element(By.cssContainingText('.button', 'View Application')).click()
+  Utils.Page.goToReact('/account/applications')
+  Utils.Page.followLink(element(By.cssContainingText('.application-item a', 'View Application')))
 
 When 'I go to My Applications', ->
-  Utils.Page.goTo('/account/applications')
+  Utils.Page.goToReact('/account/applications')
 
 When 'I click the Continue Application button', ->
-  element(By.cssContainingText('.feed-item-action a', 'Continue Application')).click()
+  Utils.Page.followLink(
+    element(By.cssContainingText('.application-item a', 'Continue Application')))
 
 When /^I delete my application for the "([^"]*)"$/, (listing) ->
   listingId = switch listing
