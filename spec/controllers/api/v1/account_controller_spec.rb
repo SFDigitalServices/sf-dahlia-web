@@ -507,6 +507,7 @@ RSpec.describe Api::V1::AccountController, type: :controller do
           'data' => salesforce_contact.merge(
             'id' => clerk_user_id,
             'uid' => 'test@example.com',
+            'isDelegated' => false,
           ),
         )
         expect(Force::AccountService).to have_received(:get).with(
@@ -566,6 +567,14 @@ RSpec.describe Api::V1::AccountController, type: :controller do
         )
       end
 
+      it 'marks the profile as delegated' do
+        set_hc_session_cookie(hc_id: hc_contact_id, app_id: applicant_contact_id)
+
+        get :profile
+
+        expect(JSON.parse(response.body)['data']['isDelegated']).to be(true)
+      end
+
       context 'and the feature flag is disabled' do
         before do
           allow(Rails.configuration.unleash).to receive(:is_enabled?)
@@ -583,6 +592,7 @@ RSpec.describe Api::V1::AccountController, type: :controller do
             hc_contact_id,
             { user_token_validation: true },
           )
+          expect(JSON.parse(response.body)['data']['isDelegated']).to be(false)
         end
       end
 

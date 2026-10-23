@@ -45,7 +45,8 @@ class Api::V1::AccountController < ApiController
   end
 
   def profile
-    contact_id = effective_contact_id.presence
+    delegated_contact_id = current_hc_session!&.dig(:app_id)
+    contact_id = (delegated_contact_id || current_user.salesforce_contact_id).presence
     contact = contact_id &&
               Force::AccountService.get(contact_id, { user_token_validation: true })
     if contact.blank?
@@ -55,7 +56,11 @@ class Api::V1::AccountController < ApiController
 
     render json: {
       success: true,
-      data: contact.merge('id' => current_user.id, 'uid' => contact['email']),
+      data: contact.merge(
+        'id' => current_user.id,
+        'uid' => contact['email'],
+        'isDelegated' => delegated_contact_id.present?,
+      ),
     }
   end
 

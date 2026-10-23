@@ -69,15 +69,16 @@ export const withAuthentication = <P extends object>(
   const ClerkAuthGate = (props: P) => {
     const { state: reactRouterState } = useLocation()
     const navigate = useNavigate()
-    const { status } = useAuthSession()
+    const { status, isSigningOut } = useAuthSession()
     const { isAccountInitialized, hasPassword } = useSignUpSession()
     const { profile, profileMissing } = React.useContext(UserContext)
     const isSignedIn = status.kind === "signedIn"
     const loadingProfile = isSignedIn && !profileMissing && !profile
     const ready = status.kind !== "initializing" && !loadingProfile
 
+    const signingOut = !isSignedIn && isSigningOut()
     const redirectDecision =
-      ready && pageName
+      ready && pageName && !signingOut
         ? clerkRedirectManager(pageName, {
             isSignedIn,
             hasProfile: !!profile,
@@ -106,7 +107,7 @@ export const withAuthentication = <P extends object>(
       throw new Error("wrapped component is missing pageName param for withAuthentication")
     }
 
-    if (!ready || redirectDecision?.redirectUrl) return null
+    if (!ready || signingOut || redirectDecision?.redirectUrl) return null
 
     return <WrappedComponent {...props} />
   }
