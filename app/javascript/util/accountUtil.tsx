@@ -81,7 +81,9 @@ export enum REVERIFICATION_FLOW {
   UPDATE_CONTACT_EMAIL = "updateContactEmail",
 }
 
-export const isReverificationFlow = (value: string | null): value is REVERIFICATION_FLOW =>
+export const isReverificationFlow = (
+  value: string | null | undefined
+): value is REVERIFICATION_FLOW =>
   !!value && Object.values(REVERIFICATION_FLOW).includes(value as REVERIFICATION_FLOW)
 
 export const reverificationDestinations: Record<
@@ -96,6 +98,7 @@ export const reverificationDestinations: Record<
     path: getUpdateEmailPath,
     state: { flow: AUTH_FLOW.UPDATE_LOGIN_EMAIL },
   },
+  // TODO: DAH:**** combine login and contact email flows
   [REVERIFICATION_FLOW.UPDATE_CONTACT_EMAIL]: {
     path: getUpdateEmailPath,
     state: { flow: AUTH_FLOW.UPDATE_CONTACT_EMAIL },
