@@ -1,18 +1,17 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import React, { useContext, useState } from "react"
 import { Form, t } from "@bloom-housing/ui-components"
-import { Navigate, useNavigate } from "react-router"
+import { Navigate } from "react-router"
 import { Message, Link, Card, Heading, Button } from "@bloom-housing/ui-seeds"
 import Layout from "../../layouts/Layout"
 import AccountLayout from "../../layouts/AccountLayout"
 import withAppSetup from "../../layouts/withAppSetup"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
-import { AUTH_FLOW, UNLEASH_FLAG } from "../../modules/constants"
+import { UNLEASH_FLAG } from "../../modules/constants"
 import {
   AppPages,
   getMyAccountPath,
   getMyAccountSettingsPath,
-  getUpdateEmailPath,
   RedirectType,
 } from "../../util/routeUtil"
 import { withAuthentication } from "../../authentication/withAuthentication"
@@ -33,6 +32,7 @@ import { ErrorSummaryBanner } from "./components/ErrorSummaryBanner"
 import { ExpandedAccountAxiosError, getErrorMessage } from "./components/util"
 import { useAuthSession } from "../../authentication/session/AuthSessionProvider"
 import { bearerToken } from "../../authentication/session/authStatus"
+import { REVERIFICATION_FLOW, useReverificationNavigation } from "../../util/accountUtil"
 
 const getPhoneDefaultValues = (profile: User) => ({
   phone: profile.phone ?? "",
@@ -149,7 +149,7 @@ const Contact = () => {
   const { unleashFlag: clerkEnabled } = useFeatureFlag(UNLEASH_FLAG.CLERK_AUTH, false)
   const { getAssetPath } = useContext(ConfigContext)
   const { profile, saveProfile } = useContext(UserContext)
-  const navigate = useNavigate()
+  const reverificationNavigation = useReverificationNavigation()
 
   if (!accountLayoutEnabled) {
     return <Navigate to={getMyAccountPath()} replace />
@@ -180,11 +180,8 @@ const Contact = () => {
                 variant="primary-outlined"
                 className={styles.saveButton}
                 size="sm"
-                onClick={() => {
-                  void navigate(getUpdateEmailPath(), {
-                    state: { flow: AUTH_FLOW.UPDATE_CONTACT_EMAIL },
-                  })
-                }}
+                // TODO: DAH-****: Merge with login email
+                onClick={() => reverificationNavigation(REVERIFICATION_FLOW.UPDATE_CONTACT_EMAIL)}
               >
                 {t("accountSettings.email.updateEmail")}
               </Button>
