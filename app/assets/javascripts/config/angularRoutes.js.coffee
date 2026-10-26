@@ -9,6 +9,50 @@
     $urlMatcherFactoryProvider.caseInsensitive(true)
     $urlMatcherFactoryProvider.strictMode(false)
 
+    # with the Clerk flag on, a signed-in user needs a profile to apply: send them to add-profile.
+    # Signed-out visitors apply as guests. Used on both the apply-welcome and apply pages.
+    # TODO(DAH-4366): CLERK MIGRATION - DEVISE TECH DEBT TO REMOVE (drop the flag check)
+    clerkSessionResolve = [
+      '$q', '$window', '$stateParams', 'AccountService', 'ClerkShim', 'SharedService', 'ShortFormApplicationService',
+      ($q, $window, $stateParams, AccountService, ClerkShim, SharedService, ShortFormApplicationService) ->
+        return true unless $window.CLERK_AUTH_ANGULAR
+        ClerkShim.initClerk().then(
+          (clerk) ->
+            return true unless clerk.session
+            # a Clerk user has no Salesforce contact (404) until they finish add-profile
+            AccountService.validateUser().then(
+              -> true
+              (response) ->
+                return $q.reject(response) unless response.status == 404
+                $window.removeEventListener('beforeunload', ShortFormApplicationService.onExit)
+                ClerkShim.leaveFor(SharedService._addLanguageAndParamsToUrl($stateParams.lang, '/add-profile'))
+                # never resolve, so the application doesn't load or autosave while the browser leaves
+                $q.defer().promise
+            )
+          # Clerk didn't load (e.g. the script was blocked), so no one can be signed in: apply as a guest
+          -> true
+        )
+    ]
+
+    # with the Clerk flag on, the legacy account flows in the application are gone: treat their
+    # routes as unknown, so a direct visit goes home like any other bad URL
+    # TODO(DAH-4366): CLERK MIGRATION - DEVISE TECH DEBT TO REMOVE
+    legacyAccountFlowResolve = ['$q', '$window', ($q, $window) ->
+      if $window.CLERK_AUTH_ANGULAR then $q.reject(status: 404) else true
+    ]
+
+    # with the Clerk flag on, the draft-saved email's link goes to React sign-in instead, which
+    # lands on My Account, where the draft is listed
+    # TODO(DAH-4366): CLERK MIGRATION - DEVISE TECH DEBT TO REMOVE
+    continueDraftResolve = [
+      '$q', '$window', '$stateParams', 'ClerkShim', 'SharedService',
+      ($q, $window, $stateParams, ClerkShim, SharedService) ->
+        return true unless $window.CLERK_AUTH_ANGULAR
+        ClerkShim.leaveFor(SharedService._addLanguageAndParamsToUrl($stateParams.lang, '/sign-in'))
+        # never resolve, so the legacy sign-in page doesn't render while the browser leaves
+        $q.defer().promise
+    ]
+
     $stateProvider
     .state('dahlia', {
       url: '/{lang:(?:en|es|tl|zh)}'
@@ -193,6 +237,7 @@
           AccountService.lockCompletedFields()
       ]
       resolve:
+        legacyAccountFlow: legacyAccountFlowResolve
         $title: ['$translate', ($translate) ->
           $translate('page_title.create_account')
         ]
@@ -258,6 +303,7 @@
         AccountService.lockCompletedFields()
       ]
       resolve:
+        legacyAccountFlow: legacyAccountFlowResolve
         $title: ['$translate', ($translate) ->
           $translate('page_title.sign_in')
         ]
@@ -279,6 +325,8 @@
           # use same template as usual sign-in route
           templateUrl: 'account/templates/sign-in.html'
           controller: 'AccountController'
+      resolve:
+        continueDraft: continueDraftResolve
     })
     .state('dahlia.short-form-application.forgot-password', {
       # duplicated from above but to differentiate state for "Save and finish later"
@@ -288,6 +336,8 @@
         'container@':
           templateUrl: 'account/templates/forgot-password.html'
           controller: 'AccountController'
+      resolve:
+        legacyAccountFlow: legacyAccountFlowResolve
       onEnter: ['AccountService', (AccountService) ->
         AccountService.clearAccountMessages()
       ]
@@ -522,6 +572,7 @@
             # store the listing in ListingDataService and kick out if it's not open for applications
             ListingDataService.getListingAndCheckIfOpen($stateParams.id)
         ]
+        clerkSession: clerkSessionResolve
         $title: ['$title', '$translate', 'listing', ($title, $translate, listing) ->
           $translate('page_title.listing_application', {listing: listing.Name})
         ]
@@ -597,10 +648,12 @@
             )
             return deferred.promise
         ]
+        clerkSession: clerkSessionResolve
         application: [
           # 'listing' is part of the params so that application waits for listing (above) to resolve
-          '$q', '$stateParams', '$state', 'ShortFormApplicationService', 'AccountService', 'AutosaveService', 'AnalyticsService', 'listing'
-          ($q, $stateParams, $state, ShortFormApplicationService, AccountService, AutosaveService, AnalyticsService, listing) ->
+          # 'clerkSession' is too, so nothing loads or autosaves for a signed-in user without a profile
+          '$q', '$stateParams', '$state', 'ShortFormApplicationService', 'AccountService', 'AutosaveService', 'AnalyticsService', 'listing', 'clerkSession'
+          ($q, $stateParams, $state, ShortFormApplicationService, AccountService, AutosaveService, AnalyticsService, listing, clerkSession) ->
             deferred = $q.defer()
 
             # if the user just clicked the language switcher, don't reload the whole route
@@ -754,6 +807,8 @@
       views:
         'container':
           templateUrl: 'short-form/templates/b1a-welcome-back.html'
+      resolve:
+        legacyAccountFlow: legacyAccountFlowResolve
       onEnter: [
         '$state', 'ShortFormApplicationService', 'AccountService',
         ($state, ShortFormApplicationService, AccountService) ->
@@ -1162,6 +1217,7 @@
           templateUrl: 'short-form/templates/choose-draft.html'
           controller: 'ShortFormApplicationController'
       resolve:
+        legacyAccountFlow: legacyAccountFlowResolve
         auth: ['$auth', ($auth) ->
           $auth.validateUser()
         ]
@@ -1179,6 +1235,7 @@
           templateUrl: 'short-form/templates/choose-applicant-details.html'
           controller: 'ShortFormApplicationController'
       resolve:
+        legacyAccountFlow: legacyAccountFlowResolve
         auth: ['$auth', ($auth) ->
           $auth.validateUser()
         ]
