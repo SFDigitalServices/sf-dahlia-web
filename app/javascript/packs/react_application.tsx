@@ -77,6 +77,7 @@ const PAGE_ROUTES = [
   [EnterVerificationCode, "/create-account/code"],
   [EnterVerificationCode, "/forgot-password/code"],
   [EnterVerificationCode, "/update-email/code"],
+  [EnterVerificationCode, "/reverification/code"],
   [SignIn, "/sign-in"],
   [ForgotPassword, "/forgot-password"],
   [ResetPassword, "/reset-password"],

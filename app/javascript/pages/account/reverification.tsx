@@ -7,7 +7,7 @@ import { useNavigate, useSearchParams } from "react-router"
 import AuthLayout from "../../layouts/AuthLayout"
 import withAppSetup from "../../layouts/withAppSetup"
 import { AUTH_FLOW } from "../../modules/constants"
-import { AppPages, getMyAccountSettingsPath, getVerificationCodePath } from "../../util/routeUtil"
+import { AppPages, getMyAccountSettingsPath, getReverificationCodePath } from "../../util/routeUtil"
 import { isReverificationFlow, reverificationDestinations } from "../../util/accountUtil"
 import EmailFieldset from "./components/EmailFieldset"
 import { useForm } from "react-hook-form"
@@ -49,7 +49,7 @@ const ReverificationPage = () => {
   }, [flow, navigate])
 
   const onSubmitCode = async () => {
-    if (!session || !flow) return
+    if (!session || !flow || !email) return
     try {
       const verification = await session.startVerification({ level: "first_factor" })
       const emailFactor = verification.supportedFirstFactors?.find(
@@ -66,9 +66,9 @@ const ReverificationPage = () => {
         strategy: "email_code",
         emailAddressId: emailFactor.emailAddressId,
       })
-      void navigate(getVerificationCodePath(), {
+      void navigate(getReverificationCodePath(), {
         state: {
-          verificationCodeEmailAddress: emailFactor.safeIdentifier ?? email,
+          verificationCodeEmailAddress: email,
           flow: AUTH_FLOW.REVERIFICATION,
           returnToAuthFlow: flow,
         },
@@ -81,8 +81,7 @@ const ReverificationPage = () => {
   }
 
   const onSubmitPassword = async ({ password }: { password: string }) => {
-    if (!session || !flow) return
-
+    if (!session || !flow || !email) return
     try {
       await session.startVerification({ level: "first_factor" })
       await session.attemptFirstFactorVerification({ strategy: "password", password })

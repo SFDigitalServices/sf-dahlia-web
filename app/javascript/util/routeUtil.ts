@@ -84,6 +84,7 @@ export const getListingDetailPath = localizedPathGetter("/listings")
 // Signing in and up pages
 export const getCreateAccountPath = localizedPathGetter("/create-account")
 export const getVerificationCodePath = localizedPathGetter("/create-account/code")
+export const getReverificationCodePath = localizedPathGetter("/reverification/code")
 export const getAddPasswordPath = localizedPathGetter("/add-password")
 export const getChangePasswordPath = localizedPathGetter("/change-password")
 export const getAddProfilePath = localizedPathGetter("/add-profile")
