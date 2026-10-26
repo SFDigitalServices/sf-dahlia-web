@@ -74,15 +74,12 @@ class Api::V1::HousingCounselorController < ApiController
   def reuse_hc_session?(applicant_contact_id)
     hc_session = current_hc_session(expected_app_id: applicant_contact_id)
     if hc_session&.dig(:app_id) == applicant_contact_id
-      Rails.logger.info(
-        'HousingCounselorController#access: ' \
-        "reusing valid hc_session for applicant contact ID=#{applicant_contact_id}",
-      )
+      Rails.logger.info('HousingCounselorController#access: reusing valid hc_session')
       render json: { success: true }
       return true
     end
 
-    render_hc_session_refresh_failure?(applicant_contact_id)
+    render_hc_session_refresh_failure?
   end
 
   # Calls Salesforce fresh and either writes a new hc_session cookie (access
@@ -91,31 +88,25 @@ class Api::V1::HousingCounselorController < ApiController
   # reaches here once current_hc_session's own check found no valid session
   # to reuse.
   def authorize_and_write_session(applicant_contact_id)
+    unless hc_session_cookie_writable?
+      Rails.logger.info('HousingCounselorController#access: no Clerk session to bind to')
+      render json: { error: 'unauthorized' }, status: :unauthorized
+      return
+    end
+
     result = Force::HousingCounselorService.authorize_access(
       applicant_contact_id:,
       counselor_contact_id: current_user.salesforce_contact_id,
     )
     unless result
-      Rails.logger.info(
-        'HousingCounselorController#access: ' \
-        "Access denied for applicant contact ID=#{applicant_contact_id} " \
-        "and housing counselor contact ID=#{current_user.salesforce_contact_id}",
-      )
+      Rails.logger.info('HousingCounselorController#access: access denied')
       render json: { error: 'forbidden' }, status: :forbidden
       return
     end
 
-    Rails.logger.info(
-      'HousingCounselorController#access: ' \
-      "Access granted for applicant contact ID=#{result[:applicant_contact_id]} " \
-      "and housing counselor contact ID=#{result[:counselor_contact_id]}",
-    )
-    unless write_hc_session_cookie(hc_id: result[:counselor_contact_id],
-                                   app_id: result[:applicant_contact_id])
-      render json: { error: 'unauthorized' }, status: :unauthorized
-      return
-    end
-
+    Rails.logger.info('HousingCounselorController#access: access granted')
+    write_hc_session_cookie(hc_id: result[:counselor_contact_id],
+                            app_id: result[:applicant_contact_id])
     render json: { success: true }
   rescue Faraday::Error, Restforce::Error => e
     Rails.logger.warn(
@@ -140,21 +131,17 @@ class Api::V1::HousingCounselorController < ApiController
   # would just repeat the same check (and, on a transient failure, risk an
   # uncaught error escaping #access instead of the clean response the first
   # call's rescue already produced). Returns true if it rendered a response.
-  def render_hc_session_refresh_failure?(applicant_contact_id)
+  def render_hc_session_refresh_failure?
     if hc_session_access_denied?
       Rails.logger.info(
-        'HousingCounselorController#access: access denied on hc_session refresh ' \
-        "for applicant contact ID=#{applicant_contact_id}",
+        'HousingCounselorController#access: access denied on hc_session refresh',
       )
       render json: { error: 'forbidden' }, status: :forbidden
       return true
     end
 
     if hc_session_verification_failed?
-      Rails.logger.info(
-        'HousingCounselorController#access: hc_session refresh failed for ' \
-        "applicant contact ID=#{applicant_contact_id}",
-      )
+      Rails.logger.info('HousingCounselorController#access: hc_session refresh failed')
       render json: { error: 'unauthorized' }, status: :unauthorized
       return true
     end

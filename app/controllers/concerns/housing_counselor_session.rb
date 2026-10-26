@@ -44,23 +44,20 @@ module HousingCounselorSession
     @hc_session_access_denied || false
   end
 
+  def hc_session_cookie_writable?
+    current_clerk_session_id.present?
+  end
+
   def write_hc_session_cookie(hc_id:, app_id:)
     clerk_session_id = current_clerk_session_id
     if clerk_session_id.blank?
       Rails.logger.warn(
         'HousingCounselorSession: not writing hc_session cookie without a Clerk session',
       )
-      return false
+      return
     end
 
-    cookies[HC_SESSION_COOKIE_NAME] = {
-      value: encode_hc_session_token(hc_id:, app_id:, clerk_session_id:),
-      httponly: true,
-      secure: Rails.env.production?,
-      same_site: :lax,
-      expires: HC_SESSION_COOKIE_DURATION,
-    }
-    true
+    store_hc_session_cookie(hc_id:, app_id:, clerk_session_id:)
   end
 
   private
@@ -82,7 +79,7 @@ module HousingCounselorSession
     stale_session = hc_session_for_request(stale_claims, expected_app_id)
     return nil unless stale_session
 
-    reauthorize_hc_session(stale_session)
+    reauthorize_hc_session(stale_session, clerk_session_id: stale_claims['sid'])
   rescue JsonWebTokenService::InvalidTokenError => e
     reject_invalid_hc_session_token(e)
   rescue Faraday::Error, Restforce::Error => e
@@ -91,7 +88,7 @@ module HousingCounselorSession
     nil
   end
 
-  def reauthorize_hc_session(stale_session)
+  def reauthorize_hc_session(stale_session, clerk_session_id:)
     result = Force::HousingCounselorService.authorize_access(
       applicant_contact_id: stale_session[:app_id],
       counselor_contact_id: stale_session[:hc_id],
@@ -102,7 +99,8 @@ module HousingCounselorSession
       hc_id: result[:counselor_contact_id],
       app_id: result[:applicant_contact_id],
     }
-    fresh_session if write_hc_session_cookie(**fresh_session)
+    store_hc_session_cookie(**fresh_session, clerk_session_id:)
+    fresh_session
   end
 
   def hc_session_for_request(claims, expected_app_id)
@@ -113,6 +111,16 @@ module HousingCounselorSession
     return nil unless hc_id_matches_current_user?(claims['hcId'])
 
     { hc_id: claims['hcId'], app_id: claims['appId'] }
+  end
+
+  def store_hc_session_cookie(hc_id:, app_id:, clerk_session_id:)
+    cookies[HC_SESSION_COOKIE_NAME] = {
+      value: encode_hc_session_token(hc_id:, app_id:, clerk_session_id:),
+      httponly: true,
+      secure: Rails.env.production?,
+      same_site: :lax,
+      expires: HC_SESSION_COOKIE_DURATION,
+    }
   end
 
   def encode_hc_session_token(hc_id:, app_id:, clerk_session_id:)

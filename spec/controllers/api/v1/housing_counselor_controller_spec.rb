@@ -125,8 +125,9 @@ RSpec.describe Api::V1::HousingCounselorController, type: :controller do
     end
 
     # Given a Clerk-authenticated counselor whose session claims carry no sid
-    # When they follow a delegate link and Salesforce grants access
-    # Then the response is unauthorized and no hc_session cookie is set
+    # When they follow a delegate link
+    # Then the response is unauthorized, Salesforce is never asked, and no
+    #   hc_session cookie is set
     it 'returns unauthorized when the cookie cannot be bound to a Clerk session' do
       allow(controller).to receive(:clerk)
         .and_return(double(user_id: clerk_user_id, session: { 'sub' => clerk_user_id }))
@@ -138,6 +139,7 @@ RSpec.describe Api::V1::HousingCounselorController, type: :controller do
 
       expect(response).to have_http_status(:unauthorized)
       expect(JSON.parse(response.body)).to eq('error' => 'unauthorized')
+      expect(Force::HousingCounselorService).not_to have_received(:authorize_access)
       expect(cookies[:hc_session]).to be_nil
     end
 
