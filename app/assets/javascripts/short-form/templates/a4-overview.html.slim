@@ -13,8 +13,12 @@ section.app-container.focus-container ng-class="{'t-zh': application.application
             | {{'a4_overview.p2b-ownership' | translate}}
           p.margin-bottom.t-bold
             | {{'a4_overview.p3b-dalp' | translate}}
-          p.margin-bottom
+          / a Clerk guest can't save and finish later
+          / TODO(DAH-4366): CLERK MIGRATION - DEVISE TECH DEBT TO REMOVE
+          p.margin-bottom ng-if="!clerkAuth || loggedIn()"
             | {{'a4_overview.p3b' | translate}}
+          p.margin-bottom ng-if="clerkAuth && !loggedIn()"
+            | {{'a4_overview.p3b_guest' | translate}}
           p.margin-bottom
             | {{'a4_overview.p4b-dalp' | translate}}
           p.margin-bottom
@@ -25,7 +29,7 @@ section.app-container.focus-container ng-class="{'t-zh': application.application
           p.margin-bottom translate="a4_overview.p2" translate-value-sref="dahlia.document-checklist" translate-compile="true"
           p.margin-bottom ng-if="(listingIsSale() && !listingIsHabitat())"
             | {{'a4_overview.p2b-ownership' | translate}}
-          p.margin-bottom
+          p.margin-bottom ng-if="!clerkAuth || loggedIn()"
             | {{'a4_overview.p3' | translate}}
           p.margin-bottom
             | {{'a4_overview.p4' | translate}}
