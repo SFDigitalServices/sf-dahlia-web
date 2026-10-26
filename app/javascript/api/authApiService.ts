@@ -33,6 +33,9 @@ export const clerkHeaders = (sessionToken: string) => ({
   headers: { Authorization: `Bearer ${sessionToken}` },
 })
 
+// TODO(DAH-4366): CLERK MIGRATION - DEVISE TECH DEBT TO REMOVE
+// The flag picks the credential, not the presence of a token: falling back when
+// a token is missing would send stale Devise headers from localStorage.
 export type RequestAuth = {
   clerkEnabled: boolean
   sessionToken?: string
@@ -101,15 +104,21 @@ export const getProfile = async (auth: RequestAuth): Promise<User> =>
       )
     : authenticatedGet<UserData>("/api/v1/auth/validate_token").then(({ data }) => data.data)
 
-export const getApplications = async (): Promise<{ applications: Application[] }> =>
-  authenticatedGet<{ applications: Application[] }>("/api/v1/account/my-applications").then(
-    (res) => res.data
-  )
+export const getApplications = async (
+  auth: RequestAuth
+): Promise<{ applications: Application[] }> => {
+  const url = "/api/v1/account/my-applications"
+  return auth.clerkEnabled
+    ? get<{ applications: Application[] }>(url, requireClerkHeaders(auth)).then((res) => res.data)
+    : authenticatedGet<{ applications: Application[] }>(url).then((res) => res.data)
+}
 
-export const deleteApplication = async (id: string) =>
-  authenticatedDelete(`/api/v1/short-form/application/${id}`).then((res) => {
-    return res.data
-  })
+export const deleteApplication = async (id: string, auth: RequestAuth) => {
+  const url = `/api/v1/short-form/application/${id}`
+  return auth.clerkEnabled
+    ? apiDelete(url, requireClerkHeaders(auth)).then((res) => res.data)
+    : authenticatedDelete(url).then((res) => res.data)
+}
 
 export const forgotPassword = async (email: string): Promise<string> =>
   post<{ message: string }>("/api/v1/auth/password", {
