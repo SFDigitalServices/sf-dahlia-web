@@ -219,6 +219,17 @@ describe("AuthSessionProvider", () => {
     expect(calls).toEqual(["clearHeaders", "clearHousingCounselorSession", "clerkSignOut"])
   })
 
+  // Regression: without a callback, Clerk does a full page load to its afterSignOutUrl ("/"),
+  // clobbering the caller's own redirect to sign-in (and any navigation state it carries).
+  it("leaves navigation after sign out to the caller", async () => {
+    await signOutAndRecordCalls()
+
+    const { signOut: clerkSignOut } = (useAuth as jest.Mock).mock.results[0].value as {
+      signOut: jest.Mock
+    }
+    expect(clerkSignOut).toHaveBeenCalledWith(expect.any(Function))
+  })
+
   it("clears the housing counselor session on sign out even when the flag is off", async () => {
     const calls = await signOutAndRecordCalls({ housingCounselorAccess: false })
 
