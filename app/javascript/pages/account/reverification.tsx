@@ -2,36 +2,41 @@
 import { Form, t } from "@bloom-housing/ui-components"
 import { Button, Card, Heading, LoadingState } from "@bloom-housing/ui-seeds"
 import { useSession } from "@clerk/react"
-import React, { useCallback, useRef, useState } from "react"
+import React, { useCallback, useState } from "react"
 import { useNavigate, useSearchParams } from "react-router"
 import AuthLayout from "../../layouts/AuthLayout"
 import withAppSetup from "../../layouts/withAppSetup"
 import { AUTH_FLOW } from "../../modules/constants"
-import { AppPages, getVerificationCodePath } from "../../util/routeUtil"
+import { AppPages, getMyAccountSettingsPath, getVerificationCodePath } from "../../util/routeUtil"
 import { isReverificationFlow, reverificationDestinations } from "../../util/accountUtil"
 import EmailFieldset from "./components/EmailFieldset"
 import { useForm } from "react-hook-form"
 import { useSignUpSession } from "../../authentication/session/useSignUpSession"
-import PasswordFieldset from "./components/PasswordFieldset"
+import PasswordFieldset, {
+  handleClerkPasswordErrors,
+  passwordFieldsetErrors,
+  passwordSortOrder,
+} from "./components/PasswordFieldset"
 import styles from "./reverification.module.scss"
+import { ErrorSummaryBanner } from "./components/ErrorSummaryBanner"
+import { getErrorMessage } from "./components/util"
 
 type ReverificationView = "verificationCode" | "password"
 
 const ReverificationPage = () => {
   const {
     register,
+    setError,
+    handleSubmit,
     watch,
+    clearErrors,
     formState: { errors },
   } = useForm({ mode: "onSubmit", shouldFocusError: false })
   const navigate = useNavigate()
   const { session } = useSession()
   const { user } = useSignUpSession()
   const [searchParams] = useSearchParams()
-  const [password, _setPassword] = useState("")
-  const [_error, setError] = useState<string | undefined>(undefined)
-  const codeSent = useRef(false)
   const [view, setView] = useState<ReverificationView | null>("verificationCode")
-
   const flowParam = searchParams.get("flow")
   const flow = isReverificationFlow(flowParam) ? flowParam : undefined
   const userHasPassword = user?.passwordEnabled ?? false
@@ -43,60 +48,61 @@ const ReverificationPage = () => {
     void navigate(destination.path(), { replace: true, state: destination.state })
   }, [flow, navigate])
 
-  const onSubmitCode = useCallback(async () => {
-    if (!session || !flow || codeSent.current) return
-    codeSent.current = true
+  const onSubmitCode = async () => {
+    if (!session || !flow) return
     try {
       const verification = await session.startVerification({ level: "first_factor" })
       const emailFactor = verification.supportedFirstFactors?.find(
         (factor) => factor.strategy === "email_code"
       )
       if (!emailFactor) {
-        setError("reverification:unavailable")
+        // TODO: DAH-4369 Log error if Clerk fails during reverification
+        console.error("Reverification: email code factor not available")
+        void navigate(getMyAccountSettingsPath(), { state: { reverificationFailed: true } })
         return
       }
+
       await session.prepareFirstFactorVerification({
         strategy: "email_code",
         emailAddressId: emailFactor.emailAddressId,
       })
       void navigate(getVerificationCodePath(), {
-        replace: true,
         state: {
           verificationCodeEmailAddress: emailFactor.safeIdentifier ?? email,
           flow: AUTH_FLOW.REVERIFICATION,
-          reverificationFlow: flow,
+          returnToAuthFlow: flow,
         },
       })
-    } catch (prepareError) {
-      console.error("Reverification: failed to send code", prepareError)
-      codeSent.current = false
-      setError("reverification:sendFailed")
+    } catch (error) {
+      // TODO: DAH-4369 Log error if Clerk fails during reverification
+      console.error("Reverification: failed to send code", error)
+      void navigate(getMyAccountSettingsPath(), { state: { reverificationFailed: true } })
     }
-  }, [session, flow, navigate, email])
+  }
 
-  const onSubmitPassword = async () => {
+  const onSubmitPassword = async ({ password }: { password: string }) => {
     if (!session || !flow) return
-    setError(undefined)
+
     try {
       await session.startVerification({ level: "first_factor" })
       await session.attemptFirstFactorVerification({ strategy: "password", password })
       goToReverificationDestination()
     } catch (error) {
       console.error("Reverification: password verification failed", error)
-      setError("reverification:passwordIncorrect")
+      setError(...handleClerkPasswordErrors(error))
     }
   }
 
   const verificationCodeSection = (
     <>
-      <Form onSubmit={onSubmitCode}>
+      <Form onSubmit={handleSubmit(onSubmitCode)}>
         <EmailFieldset
           register={register}
           errors={errors}
           defaultEmail={email}
           note={t("signIn.codeDescription")}
           disabled
-        />{" "}
+        />
         <Button variant="primary" size="sm" type="submit" className={styles["submitButton"]}>
           {t("createAccount.getCode")}
         </Button>
@@ -107,7 +113,7 @@ const ReverificationPage = () => {
           size="md"
           type="button"
           onClick={() => {
-            setError(undefined)
+            clearErrors()
             setView("password")
           }}
         >
@@ -119,7 +125,12 @@ const ReverificationPage = () => {
 
   const passwordSection = (
     <>
-      <Form onSubmit={onSubmitPassword}>
+      <ErrorSummaryBanner
+        errors={errors}
+        sortOrder={passwordSortOrder}
+        messageMap={(messageKey) => getErrorMessage(messageKey, passwordFieldsetErrors, true)}
+      />
+      <Form onSubmit={handleSubmit(onSubmitPassword)}>
         <EmailFieldset register={register} errors={errors} defaultEmail={email} disabled />
         <PasswordFieldset
           register={register}
@@ -138,6 +149,7 @@ const ReverificationPage = () => {
         size="md"
         type="button"
         onClick={() => {
+          clearErrors()
           setView("verificationCode")
         }}
       >

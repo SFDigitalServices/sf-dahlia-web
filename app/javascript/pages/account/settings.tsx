@@ -70,11 +70,12 @@ import EmailFieldset, {
   handleEmailServerErrors,
 } from "./components/EmailFieldset"
 
-type ConfirmationBannerFlag = "passwordChanged" | "emailChanged"
+type ConfirmationBannerFlag = "passwordChanged" | "emailChanged" | "reverificationFailed"
 
 const confirmationBannerMessages: Record<ConfirmationBannerFlag, string> = {
   passwordChanged: "accountSettings.changePasswordBanner",
   emailChanged: "accountSettings.changeEmailBanner",
+  reverificationFailed: "accountSettings.reverification.failed",
 }
 
 export const Banner = ({
