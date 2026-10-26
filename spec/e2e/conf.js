@@ -1,8 +1,9 @@
 var config = require('./conf-shared')
 
 config.baseUrl = 'http://localhost:3000/'
+config.directConnect = true
 // chromedriver version in package.json should match chrome version installed by .circleci/config.yml
-config.chromeDriver = '../../node_modules/chromedriver/bin/chromedriver',
+config.chromeDriver = '../../node_modules/chromedriver/bin/chromedriver'
 config.capabilities = {
   browserName: 'chrome',
   getPageTimeout: 30000,

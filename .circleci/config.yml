@@ -267,6 +267,16 @@ jobs:
       - setup-webdriver
       - start-server
       - run:
+          name: Check if Java is installed
+          command: |
+            if command -v java &> /dev/null; then
+              echo "Java is installed:"
+              java -version
+            else
+              echo "Java is NOT installed."
+              exit 1 # Fail the build if Java is required
+            fi
+      - run:
           name: Run e2e tests using test splitting
           command: |
             TESTFILES=$(circleci tests glob "spec/e2e/features/**/*.feature" | circleci tests split --split-by=timings)
