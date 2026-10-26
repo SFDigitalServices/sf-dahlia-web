@@ -41,13 +41,18 @@ const ClerkProfile = ({
     if (!isAuthInitialized(status)) {
       return
     }
+    // Before the hasProfile check: a cached profile must not outlive the session,
+    // or the next sign-in in this SPA would reuse it instead of fetching.
     if (status.kind === "signedOut") {
       onSignedOut()
       return
     }
+
     if (hasProfile) {
       return
     }
+
+    let cancelled = false
 
     void (async () => {
       try {
@@ -55,12 +60,20 @@ const ClerkProfile = ({
         if (!sessionToken) {
           throw new Error("Missing Clerk session token")
         }
-        onLoaded(await getProfile({ clerkEnabled: true, sessionToken }), false)
+        const profile = await getProfile({ clerkEnabled: true, sessionToken })
+        if (!cancelled) {
+          onLoaded(profile, false)
+        }
         // TODO: DAH-4426 handle other types of errors, so withAuthentication.tsx can handle protected pages properly
       } catch (error) {
-        onLoaded(null, isAxiosError(error) && error.response?.status === 404)
+        if (!cancelled) {
+          onLoaded(null, isAxiosError(error) && error.response?.status === 404)
+        }
       }
     })()
+    return () => {
+      cancelled = true
+    }
   }, [getCredentials, hasProfile, status, onLoaded, onSignedOut])
 
   return null

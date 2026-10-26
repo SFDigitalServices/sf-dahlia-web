@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react"
 
-import { useLocation, useNavigate, useSearchParams } from "react-router"
+import { useLocation, useSearchParams } from "react-router"
 import { Button, Heading, Tabs } from "@bloom-housing/ui-seeds"
 import { Icon, t, UniversalIconType } from "@bloom-housing/ui-components"
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons"
@@ -15,11 +15,10 @@ import {
   RedirectType,
   getMyAccountApplicationsPath,
   getMyAccountSettingsPath,
-  getSignInPath,
 } from "../../util/routeUtil"
 import UserContext from "../../authentication/context/UserContext"
-import { useAuthSession } from "../../authentication/session/AuthSessionProvider"
-import { User } from "../../authentication/user"
+import { useSignOutToSignIn } from "../../authentication/session/useSignOutToSignIn"
+import { fullName, User } from "../../authentication/user"
 import { withAuthentication } from "../../authentication/withAuthentication"
 import { ConfigContext } from "../../lib/ConfigContext"
 
@@ -150,6 +149,27 @@ const HousingCounselorNoAccessToast = () => {
   return <Toast variant="alert">{t("signIn.housingCounselor.noAccess")}</Toast>
 }
 
+const HousingCounselorSignedInToast = () => {
+  const [searchParams] = useSearchParams()
+  const { profile } = useContext(UserContext)
+  const [toast, setToast] = useState(false)
+
+  useEffect(() => {
+    if (searchParams.get("hcAccess") === "1") {
+      setToast(true)
+    }
+  }, [searchParams])
+
+  // Only name the seeker once the server confirms this is their delegated profile
+  if (!toast || !profile?.isDelegated) return null
+
+  return (
+    <Toast variant="success">
+      {t("housingCounselor.signedInToast", { seekerName: fullName(profile) })}
+    </Toast>
+  )
+}
+
 interface AccountProps {
   assetPaths: unknown
 }
@@ -171,21 +191,19 @@ const DeviseAccount = () => {
 }
 
 const ClerkAccount = () => {
-  const { signOut } = useAuthSession()
+  const signOutToSignIn = useSignOutToSignIn()
   const { profile } = useContext(UserContext)
-  const navigate = useNavigate()
 
   return (
     <Layout>
       <AccountReadyToast />
       <HousingCounselorNoAccessToast />
+      <HousingCounselorSignedInToast />
       <AccountLayout>
         <div className={styles.overview}>
           <AccountOverview
             signOut={() => {
-              void signOut().finally(() => {
-                void navigate(getSignInPath())
-              })
+              void signOutToSignIn()
             }}
             user={profile}
           />
@@ -204,6 +222,7 @@ const Account = ({ assetPaths }: AccountProps) => {
       <>
         <AccountReadyToast />
         <HousingCounselorNoAccessToast />
+        <HousingCounselorSignedInToast />
         <MyAccount assetPaths={assetPaths} />
       </>
     )
