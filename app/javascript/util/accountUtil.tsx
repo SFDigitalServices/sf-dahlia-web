@@ -81,10 +81,8 @@ export enum REVERIFICATION_FLOW {
   UPDATE_CONTACT_EMAIL = "updateContactEmail",
 }
 
-export const isReverificationFlow = (
-  value: string | null | undefined
-): value is REVERIFICATION_FLOW =>
-  !!value && Object.values(REVERIFICATION_FLOW).includes(value as REVERIFICATION_FLOW)
+export const toReverificationFlow = (value?: string | null) =>
+  Object.values(REVERIFICATION_FLOW).find((flow) => flow === (value as REVERIFICATION_FLOW))
 
 export const reverificationDestinations: Record<
   REVERIFICATION_FLOW,

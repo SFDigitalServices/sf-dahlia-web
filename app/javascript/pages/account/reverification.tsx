@@ -8,7 +8,7 @@ import AuthLayout from "../../layouts/AuthLayout"
 import withAppSetup from "../../layouts/withAppSetup"
 import { AUTH_FLOW } from "../../modules/constants"
 import { AppPages, getMyAccountSettingsPath, getReverificationCodePath } from "../../util/routeUtil"
-import { isReverificationFlow, reverificationDestinations } from "../../util/accountUtil"
+import { toReverificationFlow, reverificationDestinations } from "../../util/accountUtil"
 import EmailFieldset from "./components/EmailFieldset"
 import { useForm } from "react-hook-form"
 import { useSignUpSession } from "../../authentication/session/useSignUpSession"
@@ -37,8 +37,7 @@ const ReverificationPage = () => {
   const { user } = useSignUpSession()
   const [searchParams] = useSearchParams()
   const [view, setView] = useState<ReverificationView | null>("verificationCode")
-  const flowParam = searchParams.get("flow")
-  const flow = isReverificationFlow(flowParam) ? flowParam : undefined
+  const flow = toReverificationFlow(searchParams.get("flow"))
   const userHasPassword = user?.passwordEnabled ?? false
   const email = user?.primaryEmailAddress?.emailAddress
 

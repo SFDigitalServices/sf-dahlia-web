@@ -38,9 +38,9 @@ import {
 } from "../../api/authApiService"
 import { User } from "../../authentication/user"
 import {
-  isReverificationFlow,
   REVERIFICATION_FLOW,
   reverificationDestinations,
+  toReverificationFlow,
 } from "../../util/accountUtil"
 import { useSession } from "@clerk/react"
 
@@ -289,7 +289,8 @@ const EnterVerificationCodePage = ({
   }
 
   const verifyReverificationCode = async (code: string) => {
-    if (!session || !isReverificationFlow(returnToAuthFlow)) {
+    const returnFlow = toReverificationFlow(returnToAuthFlow)
+    if (!session || !returnFlow) {
       console.error("Reverification: missing required data")
       void navigate(getMyAccountSettingsPath())
       return
@@ -297,11 +298,11 @@ const EnterVerificationCodePage = ({
 
     try {
       await session.attemptFirstFactorVerification({ strategy: "email_code", code })
-      const destination = reverificationDestinations[returnToAuthFlow]
+      const destination = reverificationDestinations[returnFlow]
       void navigate(destination.path(), { replace: true, state: destination.state })
     } catch (error) {
       console.error("Reverification: verification failed", error)
-      setError("code", { message: "invalid" })
+      setError(CODE_FIELD, { message: "invalid" })
     }
   }
 
