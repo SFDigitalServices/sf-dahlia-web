@@ -67,7 +67,7 @@
     "webpack-cli": "^5.1.4",
     "webpack-merge": "^5.9.0",
     "webpack-sources": "^3.2.3",
-    "zod": "^4.0.17"
+    "zod": "^4.6.6"
   },
   "resolutions": {
     "react": "^19.2.8",
