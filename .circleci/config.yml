@@ -262,6 +262,9 @@ jobs:
   e2e-legacy:
     <<: *defaults
     parallelism: 4
+    # TEMP(debug): run the legacy e2e suite with Clerk off (Devise) in Rails, Angular and React
+    environment:
+      CLERK_AUTH_FLAG_OVERRIDE: "false"
     steps:
       - setup
       - setup-webdriver

@@ -15,6 +15,12 @@ export const useFeatureFlag = (flagName: string, defaultValue: boolean) => {
 
   const unleashFlag = useFlagUnleash(flagName)
 
+  // TEMP(debug): CLERK_AUTH_FLAG_OVERRIDE=true/false forces the Clerk flag, like ClerkOrDeviseAuth.clerk_enabled?
+  const clerkOverride = process.env.CLERK_AUTH_FLAG_OVERRIDE
+  if (flagName === "temp.webapp.auth.clerk" && (clerkOverride === "true" || clerkOverride === "false")) {
+    return { flagsReady: true, unleashFlag: clerkOverride === "true" }
+  }
+
   const allowUrlOverride = urlWhiteList.has(flagName) || process.env.UNLEASH_ENV === "development"
   if (doesURLHaveFlag && allowUrlOverride) {
     if (flagFromUrl === "true") {

@@ -24,7 +24,17 @@ PageUtil = {
       elem.isDisplayed()
     ).first()
   goTo: (url) ->
+    browser.waitForAngularEnabled(true)
     browser.get(url)
+  # React pages have no Angular for Protractor to wait on; goTo turns the wait back on
+  goToReact: (url) ->
+    browser.waitForAngularEnabled(false)
+    browser.get(url)
+  # open the link with goTo instead of clicking it, so the page loads with the
+  # dahlia.protractorContext mock module (conf-shared.js)
+  followLink: (link) ->
+    browser.wait(EC.presenceOf(link), 10000)
+    link.getAttribute('href').then (href) -> PageUtil.goTo(href)
   httpGet: (siteUrl) ->
     http.get(siteUrl, (response) ->
       bodyString = ''
