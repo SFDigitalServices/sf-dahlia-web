@@ -144,12 +144,28 @@ const ContactPhoneForm = ({
   )
 }
 
+const UpdateContactEmailButton = () => {
+  const reverificationNavigation = useReverificationNavigation()
+
+  return (
+    <Button
+      type="button"
+      variant="primary-outlined"
+      className={styles.saveButton}
+      size="sm"
+      // TODO: DAH-****: Merge with login email
+      onClick={() => reverificationNavigation(REVERIFICATION_FLOW.UPDATE_CONTACT_EMAIL)}
+    >
+      {t("accountSettings.email.updateEmail")}
+    </Button>
+  )
+}
+
 const Contact = () => {
   const { unleashFlag: accountLayoutEnabled } = useFeatureFlag(UNLEASH_FLAG.ACCOUNTS_LAYOUT, false)
   const { unleashFlag: clerkEnabled } = useFeatureFlag(UNLEASH_FLAG.CLERK_AUTH, false)
   const { getAssetPath } = useContext(ConfigContext)
   const { profile, saveProfile } = useContext(UserContext)
-  const reverificationNavigation = useReverificationNavigation()
 
   if (!accountLayoutEnabled) {
     return <Navigate to={getMyAccountPath()} replace />
@@ -174,18 +190,8 @@ const Contact = () => {
           <Card.Section divider="inset">
             <p className={styles.contactFieldLabel}>{t("label.emailAddress")}</p>
             <p className={styles.email}>{profile?.email}</p>
-            {clerkEnabled && (
-              <Button
-                type="button"
-                variant="primary-outlined"
-                className={styles.saveButton}
-                size="sm"
-                // TODO: DAH-****: Merge with login email
-                onClick={() => reverificationNavigation(REVERIFICATION_FLOW.UPDATE_CONTACT_EMAIL)}
-              >
-                {t("accountSettings.email.updateEmail")}
-              </Button>
-            )}
+            {/* // TODO: DAH-4262 remove flag */}
+            {clerkEnabled && <UpdateContactEmailButton />}
             <p className={styles.changeEmail}>
               {renderInlineMarkup(
                 t("accountLayout.contact.changeLoginEmail", { href: getMyAccountSettingsPath() })
