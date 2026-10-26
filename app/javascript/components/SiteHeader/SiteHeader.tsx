@@ -48,6 +48,7 @@ export interface SiteHeaderProps {
   mobileDrawer?: boolean
   mobileText?: boolean
   notice?: string | React.ReactNode
+  noticeClassName?: string
   noticeMobile?: boolean
   siteHeaderWidth?: SiteHeaderWidth
   subtitle?: string
@@ -657,7 +658,9 @@ const DahliaSiteHeader = (props: SiteHeaderProps) => {
       )}
 
       <div
-        className={`site-header__notice ${!props.noticeMobile ? `site-header__notice-hide` : ""}`}
+        className={`site-header__notice ${!props.noticeMobile ? `site-header__notice-hide` : ""}${
+          props.noticeClassName ? ` ${props.noticeClassName}` : ""
+        }`}
       >
         <div className="site-header__notice-text">{props.notice ?? ""}</div>
       </div>

@@ -6,7 +6,6 @@ import { mockWindowLocation, restoreWindowLocation } from "../__util__/renderUti
 import { withAuthentication } from "../../authentication/withAuthentication"
 import UserContext, { ContextProps } from "../../authentication/context/UserContext"
 import { isTokenValid, parseUrlParams } from "../../authentication/token"
-import { useAuthSession } from "../../authentication/session/AuthSessionProvider"
 import { useSignUpSession } from "../../authentication/session/useSignUpSession"
 import {
   AppPages,
@@ -17,6 +16,7 @@ import {
 import { getCurrentLanguage } from "../../util/languageUtil"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import TagManager from "react-gtm-module"
+import { useAuthSession } from "../../authentication/session/AuthSessionProvider"
 
 // Mock the useGTMDataLayer hook
 jest.mock("react-gtm-module", () => ({
@@ -24,7 +24,12 @@ jest.mock("react-gtm-module", () => ({
   dataLayer: jest.fn(),
 }))
 
+jest.mock("../../api/authApiService", () => ({
+  clearHousingCounselorSession: jest.fn(),
+}))
+
 jest.mock("../../authentication/token", () => ({
+  clearHeaders: jest.fn(),
   isTokenValid: jest.fn(),
   parseUrlParams: jest.fn(() => ({
     get: jest.fn((_) => null),
@@ -114,6 +119,7 @@ describe("withAuthentication", () => {
       status: { kind: "signedIn" },
       getCredentials: jest.fn(),
       signOut: jest.fn(),
+      isSigningOut: () => false,
     })
     ;(useSignUpSession as jest.Mock).mockReturnValue({
       isAccountInitialized: true,
@@ -345,6 +351,44 @@ describe("withAuthentication", () => {
       })
       expect(mockNavigate).toHaveBeenCalledWith("/add-profile", {
         state: { returnUrl: "/account", flow: "createAccount" },
+      })
+    })
+
+    describe("when a signed-in user's session ends while on the page", () => {
+      const renderSignedOut = ({ signingOut }: { signingOut: boolean }) => {
+        ;(useAuthSession as jest.Mock).mockReturnValue({
+          status: { kind: "signedOut" },
+          getCredentials: jest.fn(),
+          signOut: jest.fn(),
+          isSigningOut: () => signingOut,
+        })
+        ;(clerkRedirectManager as jest.Mock).mockReturnValue({
+          redirectUrl: "/sign-in",
+          returnUrl: "/account",
+        })
+        return render(
+          <UserContext.Provider value={{ ...mockContextValue, profile: undefined }}>
+            <WrappedClerkComponent />
+          </UserContext.Provider>
+        )
+      }
+
+      // Regression: the gate's own redirect used to race the sign-out caller's
+      // navigation to sign-in, dropping the state that carries the sign-out toast.
+      it("leaves the redirect to whoever signed the user out", () => {
+        const { queryByText } = renderSignedOut({ signingOut: true })
+
+        expect(mockNavigate).not.toHaveBeenCalled()
+        expect(queryByText("Protected Component")).toBeNull()
+      })
+
+      it("still redirects to sign-in when the session ends some other way", () => {
+        const { queryByText } = renderSignedOut({ signingOut: false })
+
+        expect(mockNavigate).toHaveBeenCalledWith("/sign-in", {
+          state: { returnUrl: "/account" },
+        })
+        expect(queryByText("Protected Component")).toBeNull()
       })
     })
   })

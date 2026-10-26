@@ -692,7 +692,7 @@ describe("<EnterVerificationCode />", () => {
       expect(authorizeHousingCounselor).toHaveBeenCalledWith("jwt.token", "clerk-session-token")
     })
     expect(mockSignInFinalize).toHaveBeenCalledTimes(1)
-    expect(mockNavigate).toHaveBeenCalledWith("/account")
+    expect(mockNavigate).toHaveBeenCalledWith("/account?hcAccess=1")
   })
 
   it("signs the housing counselor in and redirects with hcAccess=0 when access is denied", async () => {
