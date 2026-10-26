@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_02_06_234635) do
+ActiveRecord::Schema[7.2].define(version: 2026_09_29_000000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -46,7 +46,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_06_234635) do
     t.datetime "updated_at", precision: nil, null: false
     t.string "listing_id"
     t.string "document_type"
-    t.integer "user_id"
+    t.string "user_id"
     t.string "address"
     t.integer "rent_burden_type"
     t.string "rent_burden_index"

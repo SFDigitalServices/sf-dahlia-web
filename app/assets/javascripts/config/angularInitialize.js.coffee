@@ -29,7 +29,9 @@
       if AccountService.loggedIn()
         content.message = $translate.instant('t.session_inactivity_logged_in')
         AnalyticsService.trackEvent('session_exp_warning_shown', {label_prefix, is_during_application_flow: isInShortForm, user_id: AccountService.loggedInUser.id, url: window.location.href})
-      else if $state.is('dahlia.short-form-application.confirmation')
+      # TODO(DAH-4366): CLERK MIGRATION - DEVISE TECH DEBT TO REMOVE
+      # a Clerk guest can't save a submitted application to an account, so they get the generic message
+      else if $state.is('dahlia.short-form-application.confirmation') && !$window.CLERK_AUTH_ANGULAR
         content.message = $translate.instant('t.session_inactivity_confirmation')
         AnalyticsService.trackEvent('session_exp_warning_shown', {label_prefix, is_during_application_flow: isInShortForm, user_id: undefined, url: window.location.href})
       else
@@ -64,10 +66,14 @@
       label_prefix = if isInShortForm then "application" else undefined
       ModalService.alert(content, {nativeAlert: true})
       if AccountService.loggedIn()
-        AutosaveService.save() if ShortFormApplicationService.isShortFormPage($state.current)
         AnalyticsService.trackEvent('session_exp_warning_action', {label_prefix, is_during_application_flow: isInShortForm, user_id: AccountService.loggedInUser.id, action: "timed out and logged out", url: window.location.href})
-        AccountService.signOut()
-        $state.go('dahlia.sign-in', {timeout: true})
+        signOut = ->
+          AccountService.signOut().finally ->
+            $state.go('dahlia.sign-in', {timeout: true})
+        # save before signing out, while the user can still authenticate the request
+        # save returns nothing when autosave is turned off
+        saving = AutosaveService.save() if isInShortForm
+        if saving then saving.finally(signOut) else signOut()
       else if ShortFormApplicationService.isShortFormPage($state.current)
         # we don't want to show the beforeunload dialog, because it would allow the applicant to stay on the page after session expiration
         $window.removeEventListener('beforeunload', ShortFormApplicationService.onExit)
@@ -147,17 +153,25 @@
           alert: true
         # Boolean for Logged in Users on the confirmation page of short form to remove the leave confirmation.
         loggedInConfirmation = (AccountService.loggedIn() && fromState.name == 'dahlia.short-form-application.confirmation')
+        # TODO(DAH-4366): CLERK MIGRATION - DEVISE TECH DEBT TO REMOVE
+        # a Clerk guest can't link a submitted application to an account and loses nothing by leaving, so don't warn them
+        clerkGuestConfirmation = $window.CLERK_AUTH_ANGULAR && !AccountService.loggedIn() &&
+          ShortFormApplicationService.isLeavingConfirmation(toState, fromState)
         # Anonymous user coming from shortform and are on the confirmation page: change the leave message
         if (ShortFormApplicationService.isLeavingConfirmation(toState, fromState))
           content.message = $translate.instant('t.are_you_sure_you_want_to_leave_confirmation')
         else if (ShortFormApplicationService.isLeavingConfirmationToSignIn(toState, fromState))
           content.message = $translate.instant('t.are_you_sure_you_want_to_leave_sign_in')
+        # TODO(DAH-4366): CLERK MIGRATION - DEVISE TECH DEBT TO REMOVE
+        # a Clerk guest has no "Save and finish later", so leave it out of the message
+        else if $window.CLERK_AUTH_ANGULAR && !AccountService.loggedIn()
+          content.message = $translate.instant('t.are_you_sure_you_want_to_leave_guest')
         else
           content.message = $translate.instant('t.are_you_sure_you_want_to_leave')
         # timeout from inactivity means that we don't need to ALSO ask for confirmation
         skipConfirm = toParams.skipConfirm || toParams.timeout
 
-        if (skipConfirm || loggedInConfirmation)
+        if (skipConfirm || loggedInConfirmation || clerkGuestConfirmation)
           # reset skipConfirm for future page actions
           toParams.skipConfirm = false
           ShortFormApplicationService.leaveAndResetShortForm(toState, toParams)

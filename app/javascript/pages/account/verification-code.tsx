@@ -53,6 +53,7 @@ interface EnterVerificationCodePageProps {
 
 // The user can send a new verification code every 30 seconds
 const RESEND_CODE_MS = 30000
+const CODE_FIELD = "code"
 
 const isUpdateEmailFlow = (flow?: AUTH_FLOW) =>
   flow === AUTH_FLOW.UPDATE_LOGIN_EMAIL || flow === AUTH_FLOW.UPDATE_CONTACT_EMAIL
@@ -87,6 +88,8 @@ const EnterVerificationCodePage = ({
     control,
     handleSubmit,
     setError,
+    setValue,
+    clearErrors,
     formState: { errors },
   } = useForm<{ code: string }>({
     mode: "onSubmit",
@@ -115,7 +118,7 @@ const EnterVerificationCodePage = ({
     const { error, notReady } = await signUpSession.transferFromSignIn()
     if (notReady) return
     if (error) {
-      setError("code", { message: "invalid" })
+      setError(CODE_FIELD, { message: "invalid" })
       return
     }
 
@@ -133,7 +136,7 @@ const EnterVerificationCodePage = ({
     }
 
     if (error) {
-      setError("code", { message: "invalid" })
+      setError(CODE_FIELD, { message: "invalid" })
       return
     }
 
@@ -141,14 +144,12 @@ const EnterVerificationCodePage = ({
     if (housingCounselorToken) {
       const sessionToken = bearerToken(await getCredentials())
       if (!sessionToken) {
-        setError("code", { message: "invalid" })
+        setError(CODE_FIELD, { message: "invalid" })
         return
       }
       try {
         await authorizeHousingCounselor(housingCounselorToken, sessionToken)
-        console.log(
-          "TODO: Housing counselor successfully authenticated, TBD banner and applicant view"
-        )
+        destination = createPath(returnUrl, { hcAccess: "1" })
       } catch {
         // Keep the user signed in, but flag that they don't have access to this account.
         destination = createPath(returnUrl, { hcAccess: "0" })
@@ -167,7 +168,7 @@ const EnterVerificationCodePage = ({
     const { error, notReady } = await signUpSession.verifyEmailCode(code)
     if (notReady) return
     if (error) {
-      setError("code", { message: "invalid" })
+      setError(CODE_FIELD, { message: "invalid" })
       return
     }
 
@@ -201,7 +202,7 @@ const EnterVerificationCodePage = ({
     try {
       const verifiedEmail = await emailAddress.attemptVerification({ code })
       if (verifiedEmail.verification.status !== "verified") {
-        setError("code", { message: "invalid" })
+        setError(CODE_FIELD, { message: "invalid" })
         return
       }
       const previousEmailAddress = user.primaryEmailAddress
@@ -223,7 +224,7 @@ const EnterVerificationCodePage = ({
       void navigate(getMyAccountSettingsPath(), { state: { emailChanged: true } })
     } catch (error) {
       console.error("Update login email: verification failed", error)
-      setError("code", { message: "invalid" })
+      setError(CODE_FIELD, { message: "invalid" })
     }
   }
 
@@ -250,13 +251,13 @@ const EnterVerificationCodePage = ({
       if (error?.errors?.[0]?.code !== "form_code_incorrect") {
         console.error("Update contact email: verification failed", error)
       }
-      setError("code", { message: "invalid" })
+      setError(CODE_FIELD, { message: "invalid" })
       return null
     })
     if (!verifiedEmail) return
 
     if (verifiedEmail.verification.status !== "verified") {
-      setError("code", { message: "invalid" })
+      setError(CODE_FIELD, { message: "invalid" })
       return
     }
 
@@ -397,6 +398,8 @@ const EnterVerificationCodePage = ({
     try {
       const sent = await resendCodeByFlow[flow]()
       if (sent) {
+        setValue(CODE_FIELD, "")
+        clearErrors(CODE_FIELD)
         setResendExpiresAt(Date.now() + RESEND_CODE_MS)
         setResendSeconds(RESEND_CODE_MS / 1000)
       }
@@ -437,7 +440,7 @@ const EnterVerificationCodePage = ({
         )}
         <Form onSubmit={handleSubmit(onSubmit)}>
           <Controller
-            name="code"
+            name={CODE_FIELD}
             control={control}
             defaultValue=""
             rules={{ validate: (code: string) => /^\d{6}$/.test(code) }}

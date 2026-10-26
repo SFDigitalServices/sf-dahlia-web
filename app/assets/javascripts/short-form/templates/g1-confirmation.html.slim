@@ -48,7 +48,7 @@
     p.form-note
       | {{ 'g1_confirmation.dont_submit_another_app_p1_dalp' | translate }}
 
-  .app-inner.inset ng-class="{ 'border-bottom': (!loggedIn() && !accountExists()) }" ng-if="!listingIsDalp()"
+  .app-inner.inset ng-class="{ 'border-bottom': (!loggedIn() && !accountExists() && !clerkAuth) }" ng-if="!listingIsDalp()"
     .form-group
       h3.form-label.caps
         | {{'g1_confirmation.dont_submit_another_app_title' | translate}}
@@ -64,7 +64,7 @@
         br
           | {{ listing.Leasing_Agent_Phone }}
 
-  div ng-show="!loggedIn() && !accountExists()"
+  div ng-show="!loggedIn() && !accountExists() && !clerkAuth"
     .app-inner.inset
       label.form-label.caps translate="g1_confirmation.create_account_title"
       p.form-note translate="g1_confirmation.create_account_body"
