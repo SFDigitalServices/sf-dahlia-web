@@ -1,31 +1,5 @@
 # frozen_string_literal: true
 
-# Reads and refreshes the hc_session cookie so a controller can know,
-# without calling Salesforce on every request, whether the current housing
-# counselor is still authorized to act on behalf of a given applicant.
-# Include this in any controller whose #current_user responds to
-# salesforce_contact_id - the hc_session cookie's own hcId is checked
-# against whatever that returns, so this works whether current_user comes
-# from Clerk or from Devise (the auth mechanism itself is unrelated to
-# whether the signed-in user happens to also be a housing counselor).
-#
-# The entire feature stays behind FEATURE_FLAG (Unleash) - #current_hc_session
-# returns nil immediately, without reading the cookie or calling Salesforce,
-# whenever the flag is off, so every caller (AccountController's delegated
-# reads/writes, HousingCounselorController's own before_action gate) reverts
-# to its pre-feature behavior with a single check.
-#
-# The cookie's own browser expiry (HC_SESSION_COOKIE_DURATION) is
-# deliberately a little longer than the JWT's exp claim (HC_SESSION_DURATION)
-# - by HC_SESSION_REFRESH_GRACE_PERIOD, not by days - so an expired-but-still-
-# -present cookie has a real chance to be sent back to the server and
-# transparently re-checked, rather than the browser discarding it in the same
-# instant the JWT's own exp passes (which, in normal traffic, would mean the
-# re-check path this concern exists for almost never runs). Kept short on
-# purpose: this is a grace window for the refresh mechanism to engage, not a
-# second, longer-lived session - the JWT's own exp, re-verified against
-# Salesforce on every use past that point, remains the actual source of
-# truth for staleness.
 module HousingCounselorSession
   extend ActiveSupport::Concern
 
@@ -35,123 +9,58 @@ module HousingCounselorSession
 
   FEATURE_FLAG = 'temp.all.housingCounselorAccess'
 
-  # Raised by callers (see AccountController#effective_contact_id) that must
-  # not silently treat "Salesforce couldn't be reached to re-verify an
-  # expired hc_session cookie" the same as "there is no delegated session" -
-  # the two require different responses (fail closed vs. fall back).
   class VerificationUnavailableError < StandardError; end
-
-  # Raised when Salesforce was reachable and explicitly said the housing
-  # counselor no longer has access (not a housing counselor, inactive,
-  # applicant revoked/never granted access to that agency, or counselor
-  # belongs to a different agency). Distinct from VerificationUnavailableError
-  # - this is a confirmed "no", not "couldn't tell" - callers must fail
-  # explicitly rather than silently falling back to the signed-in user's own
-  # data.
   class AccessDeniedError < StandardError; end
 
   HC_SESSION_COOKIE_NAME = :hc_session
-  # Marks a JWT as minted by write_hc_session_cookie. JsonWebTokenService's
-  # secret is shared with other tokens (delegate links and invite-to links), so
-  # a valid signature alone doesn't prove a token is an hc_session.
   HC_SESSION_TOKEN_TYPE = 'hc_session'
   HC_SESSION_DURATION = 2.hours
-  # See the file-level comment above - this is a short grace window, not a
-  # second session.
   HC_SESSION_REFRESH_GRACE_PERIOD = 15.minutes
   HC_SESSION_COOKIE_DURATION = HC_SESSION_DURATION + HC_SESSION_REFRESH_GRACE_PERIOD
 
-  # { hc_id:, app_id: } for the current, Salesforce-authorized housing
-  # counselor session, or nil if there is none. An expired cookie is
-  # transparently re-checked against Salesforce and, if access is still
-  # granted, replaced with a fresh cookie; a cookie whose hcId does not match
-  # the signed-in Clerk user is rejected and discarded rather than trusted.
-  #
-  # expected_app_id, when given, scopes the lookup to a cookie whose own
-  # appId matches it - both for a still-valid cookie and for a stale one
-  # being refreshed. Without this, a cookie left over from a different
-  # applicant would be returned (or re-checked against Salesforce) for the
-  # wrong applicant.
-  #
-  # Deliberately not memoized: there is only ever one hc_session cookie, so
-  # re-decoding it on a second call is cheap local HMAC verification, not
-  # I/O, and it stays correct if a later call in the same request passes a
-  # different expected_app_id. It also can't trigger a second Salesforce
-  # call - after a successful refresh, write_hc_session_cookie's write is
-  # visible to this same request's cookie jar, so the next call sees an
-  # already-fresh, non-expired token and skips the refresh path entirely;
-  # after a failed refresh, the cookie is discarded, so the next call just
-  # sees no cookie.
   def current_hc_session(expected_app_id: nil)
     return nil unless hc_session_feature_enabled?
 
     resolve_hc_session(expected_app_id)
   end
 
-  # Like #current_hc_session, but raises rather than leaving the caller to
-  # check hc_session_verification_failed?/hc_session_access_denied? itself -
-  # for callers (see AccountController) that always want a "couldn't
-  # confirm" or "confirmed no" to be an exception rather than a value to
-  # branch on. Callers that need to inspect those flags directly instead
-  # (see HousingCounselorController#access) should keep using the plain,
-  # non-raising #current_hc_session.
   def current_hc_session!(expected_app_id: nil)
-    session = current_hc_session(expected_app_id: expected_app_id)
+    session = current_hc_session(expected_app_id:)
     raise VerificationUnavailableError if hc_session_verification_failed?
     raise AccessDeniedError if hc_session_access_denied?
 
     session
   end
 
-  # Gates the entire feature behind Unleash. Public so controllers that need
-  # to reject a request outright while the flag is off (see
-  # HousingCounselorController's before_action) don't have to duplicate the
-  # flag name/lookup.
   def hc_session_feature_enabled?
     Rails.configuration.unleash.is_enabled?(FEATURE_FLAG)
   end
 
-  # True once a Salesforce/Faraday error, or a failure to look up the
-  # signed-in Clerk user's own Salesforce contact id, has prevented
-  # confirming an hc_session cookie during the current request. Distinct
-  # from current_hc_session returning nil for a legitimate reason (no
-  # cookie, or one that doesn't belong to the signed-in user) - callers that
-  # need to tell "couldn't confirm" apart from "no session" (see
-  # AccountController#effective_contact_id) should check this too.
   def hc_session_verification_failed?
     @hc_session_verification_failed || false
   end
 
-  # True once Salesforce has explicitly denied a housing counselor's access
-  # while refreshing an expired hc_session cookie - see AccessDeniedError.
   def hc_session_access_denied?
     @hc_session_access_denied || false
   end
 
-  # Binds the cookie to the current Clerk session (sid) - see
-  # #issued_in_current_clerk_session?. Writes nothing without one, since
-  # delegation is Clerk-only and an unbound cookie could never be honored.
   def write_hc_session_cookie(hc_id:, app_id:)
-    sid = current_clerk_session_id
-    if sid.blank?
+    clerk_session_id = current_clerk_session_id
+    if clerk_session_id.blank?
       Rails.logger.warn(
         'HousingCounselorSession: not writing hc_session cookie without a Clerk session',
       )
-      return
+      return false
     end
 
-    token = JsonWebTokenService.encode_token(
-      { 'typ' => HC_SESSION_TOKEN_TYPE, 'hcId' => hc_id, 'appId' => app_id,
-        'sid' => sid },
-      exp: HC_SESSION_DURATION.from_now,
-    )
     cookies[HC_SESSION_COOKIE_NAME] = {
-      value: token,
+      value: encode_hc_session_token(hc_id:, app_id:, clerk_session_id:),
       httponly: true,
       secure: Rails.env.production?,
       same_site: :lax,
       expires: HC_SESSION_COOKIE_DURATION,
     }
+    true
   end
 
   private
@@ -160,101 +69,77 @@ module HousingCounselorSession
     token = cookies[HC_SESSION_COOKIE_NAME]
     return nil if token.blank?
 
-    data = decode_hc_session_token(token, verify_expiration: true)
-    return nil unless issued_in_current_clerk_session?(data)
-    return nil if expected_app_id && data['appId'] != expected_app_id
-
-    session_if_current_user_matches(data)
+    claims = decode_hc_session_token(token, verify_expiration: true)
+    hc_session_for_request(claims, expected_app_id)
   rescue JsonWebTokenService::ExpiredTokenError
     refresh_hc_session(token, expected_app_id)
   rescue JsonWebTokenService::InvalidTokenError => e
-    Rails.logger.warn("HousingCounselorSession: rejecting invalid hc_session cookie: #{e.message}")
-    discard_hc_session_cookie
-    nil
+    reject_invalid_hc_session_token(e)
   end
 
-  # Re-checks Salesforce for a cookie whose exp has passed. The signature is
-  # still verified by decode_token, so hcId/appId here can be trusted as
-  # "once true" - what's no longer trusted is "still true", which is exactly
-  # what authorize_access re-establishes.
   def refresh_hc_session(token, expected_app_id)
-    stale = decode_hc_session_token(token, verify_expiration: false)
-    return nil unless issued_in_current_clerk_session?(stale)
-    return nil if expected_app_id && stale['appId'] != expected_app_id
-    return nil unless hc_id_matches_current_user?(stale['hcId'])
+    stale_claims = decode_hc_session_token(token, verify_expiration: false)
+    stale_session = hc_session_for_request(stale_claims, expected_app_id)
+    return nil unless stale_session
 
-    result = Force::HousingCounselorService.authorize_access(
-      applicant_contact_id: stale['appId'],
-      counselor_contact_id: stale['hcId'],
-    )
-    unless result
-      Rails.logger.info(
-        'HousingCounselorSession: access no longer granted for applicant ' \
-        "contact ID=#{stale['appId']} and housing counselor contact ID=#{stale['hcId']}",
-      )
-      @hc_session_access_denied = true
-      discard_hc_session_cookie
-      return nil
-    end
-
-    write_hc_session_cookie(hc_id: result[:counselor_contact_id],
-                            app_id: result[:applicant_contact_id])
-    { hc_id: result[:counselor_contact_id], app_id: result[:applicant_contact_id] }
+    reauthorize_hc_session(stale_session)
   rescue JsonWebTokenService::InvalidTokenError => e
-    Rails.logger.warn("HousingCounselorSession: rejecting invalid hc_session cookie: #{e.message}")
-    discard_hc_session_cookie
-    nil
+    reject_invalid_hc_session_token(e)
   rescue Faraday::Error, Restforce::Error => e
-    Rails.logger.warn(
-      "HousingCounselorSession: Salesforce re-check failed: #{e.message}",
-    )
+    Rails.logger.warn("HousingCounselorSession: Salesforce re-check failed: #{e.message}")
     @hc_session_verification_failed = true
     nil
   end
 
-  # Raises InvalidTokenError (so callers discard the cookie) for any validly
-  # signed token that wasn't minted as an hc_session - see
-  # HC_SESSION_TOKEN_TYPE.
+  def reauthorize_hc_session(stale_session)
+    result = Force::HousingCounselorService.authorize_access(
+      applicant_contact_id: stale_session[:app_id],
+      counselor_contact_id: stale_session[:hc_id],
+    )
+    return deny_hc_session_access unless result
+
+    fresh_session = {
+      hc_id: result[:counselor_contact_id],
+      app_id: result[:applicant_contact_id],
+    }
+    fresh_session if write_hc_session_cookie(**fresh_session)
+  end
+
+  def hc_session_for_request(claims, expected_app_id)
+    clerk_session_id = current_clerk_session_id
+    return nil if clerk_session_id.blank?
+    return reject_hc_session_from_other_clerk_session if claims['sid'] != clerk_session_id
+    return nil if expected_app_id && claims['appId'] != expected_app_id
+    return nil unless hc_id_matches_current_user?(claims['hcId'])
+
+    { hc_id: claims['hcId'], app_id: claims['appId'] }
+  end
+
+  def encode_hc_session_token(hc_id:, app_id:, clerk_session_id:)
+    JsonWebTokenService.encode_token(
+      { 'typ' => HC_SESSION_TOKEN_TYPE, 'hcId' => hc_id, 'appId' => app_id,
+        'sid' => clerk_session_id },
+      exp: HC_SESSION_DURATION.from_now,
+    )
+  end
+
   def decode_hc_session_token(token, verify_expiration:)
-    data = JsonWebTokenService.decode_token(token, verify_expiration:)
-    unless data['typ'] == HC_SESSION_TOKEN_TYPE
+    claims = JsonWebTokenService.decode_token(token, verify_expiration:)
+    unless claims['typ'] == HC_SESSION_TOKEN_TYPE
       raise JsonWebTokenService::InvalidTokenError, 'Not an hc_session token'
     end
 
-    data
+    claims
   end
 
-  # An HC can only enter an applicant's account through a delegate link, so a
-  # cookie is only good for the Clerk session it was issued in: a new sign-in
-  # (new sid) must never resume it, even if sign-out/sign-in cleanup never
-  # ran. A request with no Clerk session can't say whose the cookie is, so it
-  # is ignored but left in place rather than discarded.
-  def issued_in_current_clerk_session?(data)
-    current_sid = current_clerk_session_id
-    return false if current_sid.blank?
-    return true if data['sid'] == current_sid
-
-    Rails.logger.info(
-      'HousingCounselorSession: discarding hc_session cookie from a different ' \
-      'Clerk session',
-    )
-    discard_hc_session_cookie
-    false
-  end
-
-  # Controllers without Clerk::Authenticatable (e.g.
-  # Overrides::SessionsController, which only ever discards the cookie) have
-  # no Clerk session.
   def current_clerk_session_id
-    return nil unless respond_to?(:clerk, true)
+    return nil unless clerk_authenticatable?
 
     clerk&.session&.dig('sid')
   end
 
-  def session_if_current_user_matches(data)
-    return nil unless hc_id_matches_current_user?(data['hcId'])
-
-    { hc_id: data['hcId'], app_id: data['appId'] }
+  def clerk_authenticatable?
+    respond_to?(:clerk, true)
   end
 
   def hc_id_matches_current_user?(hc_id)
@@ -263,19 +148,45 @@ module HousingCounselorSession
     if current_user.respond_to?(:salesforce_contact_id_lookup_failed?) &&
        current_user.salesforce_contact_id_lookup_failed?
       Rails.logger.warn(
-        'HousingCounselorSession: could not verify hc_session cookie hcId against the ' \
-        "signed-in user - Clerk lookup failed (hcId=#{hc_id.inspect})",
+        'HousingCounselorSession: could not verify hc_session cookie hcId - ' \
+        'Clerk lookup of the signed-in user failed',
       )
       @hc_session_verification_failed = true
       return false
     end
 
     Rails.logger.warn(
-      'HousingCounselorSession: hc_session cookie hcId does not match the signed-in user ' \
-      "(expected #{current_user&.salesforce_contact_id.inspect}, got #{hc_id.inspect})",
+      'HousingCounselorSession: discarding hc_session cookie whose hcId does not match ' \
+      'the signed-in user',
     )
     discard_hc_session_cookie
     false
+  end
+
+  def reject_hc_session_from_other_clerk_session
+    Rails.logger.info(
+      'HousingCounselorSession: discarding hc_session cookie from a different ' \
+      'Clerk session',
+    )
+    discard_hc_session_cookie
+    nil
+  end
+
+  def reject_invalid_hc_session_token(error)
+    Rails.logger.warn(
+      "HousingCounselorSession: rejecting invalid hc_session cookie: #{error.message}",
+    )
+    discard_hc_session_cookie
+    nil
+  end
+
+  def deny_hc_session_access
+    Rails.logger.info(
+      'HousingCounselorSession: Salesforce no longer grants hc_session access',
+    )
+    @hc_session_access_denied = true
+    discard_hc_session_cookie
+    nil
   end
 
   def discard_hc_session_cookie
