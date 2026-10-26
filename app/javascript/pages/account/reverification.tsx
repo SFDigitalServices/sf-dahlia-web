@@ -2,12 +2,17 @@
 import { Form, t } from "@bloom-housing/ui-components"
 import { Button, Card, Heading, LoadingState } from "@bloom-housing/ui-seeds"
 import { useSession } from "@clerk/react"
-import React, { useCallback, useState } from "react"
+import React, { useCallback, useEffect, useState } from "react"
 import { useNavigate, useSearchParams } from "react-router"
 import AuthLayout from "../../layouts/AuthLayout"
 import withAppSetup from "../../layouts/withAppSetup"
-import { AUTH_FLOW } from "../../modules/constants"
-import { AppPages, getMyAccountSettingsPath, getReverificationCodePath } from "../../util/routeUtil"
+import { AUTH_FLOW, UNLEASH_FLAG } from "../../modules/constants"
+import {
+  AppPages,
+  getMyAccountSettingsPath,
+  getReverificationCodePath,
+  getSignInPath,
+} from "../../util/routeUtil"
 import { toReverificationFlow, reverificationDestinations } from "../../util/accountUtil"
 import EmailFieldset from "./components/EmailFieldset"
 import { useForm } from "react-hook-form"
@@ -20,6 +25,8 @@ import PasswordFieldset, {
 import styles from "./reverification.module.scss"
 import { ErrorSummaryBanner } from "./components/ErrorSummaryBanner"
 import { getErrorMessage } from "./components/util"
+import { useAuthSession } from "../../authentication/session/AuthSessionProvider"
+import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 
 type ReverificationView = "verificationCode" | "password"
 
@@ -174,4 +181,36 @@ const ReverificationPage = () => {
   )
 }
 
-export default withAppSetup(ReverificationPage, { pageName: AppPages.Reverification })
+const Reverification = (_props: { assetPaths: unknown }) => {
+  const navigate = useNavigate()
+  const { status } = useAuthSession()
+  const isLoaded = status.kind !== "initializing"
+  const isSignedIn = status.kind === "signedIn"
+  const { unleashFlag: clerkEnabled, flagsReady } = useFeatureFlag(UNLEASH_FLAG.CLERK_AUTH, false)
+
+  useEffect(() => {
+    if (!flagsReady) return
+    if (!clerkEnabled) {
+      void navigate(getSignInPath())
+      return
+    }
+    if (!isLoaded) return
+    if (!isSignedIn) {
+      void navigate(getSignInPath())
+      return
+    }
+  }, [flagsReady, clerkEnabled, isLoaded, isSignedIn, navigate])
+
+  const ready = flagsReady && clerkEnabled && isLoaded && isSignedIn
+
+  if (!ready) {
+    return null
+  }
+
+  return <ReverificationPage />
+}
+
+export default withAppSetup(Reverification, {
+  useFormTimeout: true,
+  pageName: AppPages.Reverification,
+})
