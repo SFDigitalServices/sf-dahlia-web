@@ -90,7 +90,13 @@ const ReverificationPage = () => {
   const verificationCodeSection = (
     <>
       <Form onSubmit={onSubmitCode}>
-        <EmailFieldset register={register} errors={errors} note={t("signIn.codeDescription")} />
+        <EmailFieldset
+          register={register}
+          errors={errors}
+          defaultEmail={email}
+          note={t("signIn.codeDescription")}
+          disabled
+        />{" "}
         <Button variant="primary" size="sm" type="submit" className={styles["submitButton"]}>
           {t("createAccount.getCode")}
         </Button>
@@ -114,7 +120,7 @@ const ReverificationPage = () => {
   const passwordSection = (
     <>
       <Form onSubmit={onSubmitPassword}>
-        <EmailFieldset register={register} errors={errors} />
+        <EmailFieldset register={register} errors={errors} defaultEmail={email} disabled />
         <PasswordFieldset
           register={register}
           errors={errors}
