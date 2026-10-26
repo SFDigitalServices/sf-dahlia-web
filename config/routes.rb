@@ -6,7 +6,7 @@ class RestrictProduction
 end
 
 Rails.application.routes.draw do
-  root to: 'home#index', constraints: ->(req) { [:html, '*/*'].include?(req.format) }
+  root to: 'home#index', constraints: ->(req) { req.format == :html || req.format == '*/*' }
   mount_devise_token_auth_for(
     'User',
     at: 'api/v1/auth',
@@ -147,5 +147,5 @@ Rails.application.routes.draw do
   get '(:lang)/account-settings', to: redirect('%{lang}/account/settings'), lang: /(en|es|zh|tl)/
 
   # fallback to Angular-only controller for all un-migrated pages.
-  get '*path', to: 'angular#index', constraints: ->(req) { [:html, '*/*'].include?(req.format) }
+  get '*path', to: 'angular#index', constraints: ->(req) { req.format == :html || req.format == '*/*' }
 end
