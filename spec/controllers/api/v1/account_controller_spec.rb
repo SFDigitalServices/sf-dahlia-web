@@ -3,20 +3,14 @@ require 'rails_helper'
 RSpec.describe Api::V1::AccountController, type: :controller do
   let(:user) { create(:user) }
   let(:clerk_sid) { 'sess_current' }
+  let(:counselor_clerk_user_id) { 'user_counselor' }
 
   def stub_clerk(user_id:)
     allow(controller).to receive(:clerk)
-      .and_return(double(user_id:, session: { 'sid' => clerk_sid }))
+      .and_return(double(user_id:, session: { 'sub' => user_id, 'sid' => clerk_sid }))
   end
 
   before do
-    # hc_session cookies are bound to the Clerk session they were issued in
-    # (HousingCounselorSession#issued_in_current_clerk_session?), so the
-    # delegation examples below run inside that session - including the
-    # Devise-authenticated actions, which only honor a cookie when the
-    # request also carries the matching Clerk session.
-    stub_clerk(user_id: nil)
-
     stub_const('JsonWebTokenService::SECRET_KEY', 'test_secret')
     stub_const('JsonWebTokenService::ALGORITHM', 'HS256')
     stub_const('JsonWebTokenService::ALLOWED_ALGORITHMS', ['HS256'])
@@ -40,6 +34,7 @@ RSpec.describe Api::V1::AccountController, type: :controller do
     let(:listings) { [{ 'listingID' => 'L1', 'name' => 'Listing One' }] }
 
     before do
+      stub_clerk(user_id: counselor_clerk_user_id)
       allow(controller).to receive(:current_user).and_return(user)
       allow(Force::ShortFormService).to receive(:get_for_user).and_return(applications)
       allow(Force::ListingService).to receive(:listings).and_return(listings)
@@ -246,6 +241,7 @@ RSpec.describe Api::V1::AccountController, type: :controller do
     # contact with the applicant's data.
     context 'when signed in as an HC with an active hc_session cookie' do
       before do
+        stub_clerk(user_id: counselor_clerk_user_id)
         request.cookies['hc_session'] = JsonWebTokenService.encode_token(
           { 'typ' => 'hc_session', 'hcId' => user.salesforce_contact_id,
             'appId' => '003XYZ', 'sid' => clerk_sid },
@@ -280,6 +276,7 @@ RSpec.describe Api::V1::AccountController, type: :controller do
     context 'when the hc_session cookie has expired and access has since been ' \
             'legitimately revoked' do
       before do
+        stub_clerk(user_id: counselor_clerk_user_id)
         request.cookies['hc_session'] = JsonWebTokenService.encode_token(
           { 'typ' => 'hc_session', 'hcId' => user.salesforce_contact_id,
             'appId' => '003XYZ', 'sid' => clerk_sid },
@@ -302,6 +299,7 @@ RSpec.describe Api::V1::AccountController, type: :controller do
     context 'when the hc_session cookie has expired and Salesforce raises a ' \
             'transient error during the re-check' do
       before do
+        stub_clerk(user_id: counselor_clerk_user_id)
         request.cookies['hc_session'] = JsonWebTokenService.encode_token(
           { 'typ' => 'hc_session', 'hcId' => user.salesforce_contact_id,
             'appId' => '003XYZ', 'sid' => clerk_sid },

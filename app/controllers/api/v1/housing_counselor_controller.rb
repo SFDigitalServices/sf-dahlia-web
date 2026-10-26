@@ -110,7 +110,12 @@ class Api::V1::HousingCounselorController < ApiController
       "Access granted for applicant contact ID=#{result[:applicant_contact_id]} " \
       "and housing counselor contact ID=#{result[:counselor_contact_id]}",
     )
-    write_hc_session_cookie(hc_id: result[:counselor_contact_id], app_id: result[:applicant_contact_id])
+    unless write_hc_session_cookie(hc_id: result[:counselor_contact_id],
+                                   app_id: result[:applicant_contact_id])
+      render json: { error: 'unauthorized' }, status: :unauthorized
+      return
+    end
+
     render json: { success: true }
   rescue Faraday::Error, Restforce::Error => e
     Rails.logger.warn(
