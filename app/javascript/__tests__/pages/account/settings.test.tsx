@@ -5,13 +5,13 @@ import {
   restoreWindowLocation,
 } from "../../__util__/renderUtils"
 import SettingsPage from "../../../pages/account/settings"
-import { fireEvent, screen, within, act, waitFor } from "@testing-library/react"
+import { fireEvent, screen, within, act, waitFor, cleanup } from "@testing-library/react"
 import { authenticatedPut, get, put } from "../../../api/apiService"
 import { mockProfileStub, setupUserContext } from "../../__util__/accountUtils"
 import { useFeatureFlag } from "../../../hooks/useFeatureFlag"
-import { useUser } from "@clerk/react"
+import { useAuth, useUser } from "@clerk/react"
 import { useLocation, useNavigate } from "react-router"
-import { getUpdateEmailPath } from "../../../util/routeUtil"
+import { getReverificationPath, getUpdateEmailPath } from "../../../util/routeUtil"
 import { AUTH_FLOW, UNLEASH_FLAG } from "../../../modules/constants"
 import * as authStatus from "../../../authentication/session/authStatus"
 
@@ -88,6 +88,12 @@ describe("<SettingsPage />", () => {
       ;(useLocation as jest.Mock).mockReturnValue({
         pathname: "/account/settings",
         state: null,
+      })
+      ;(useAuth as jest.Mock).mockReturnValue({
+        isLoaded: true,
+        isSignedIn: true,
+        getToken: jest.fn().mockResolvedValue("clerk-session-token"),
+        has: jest.fn().mockReturnValue(true),
       })
       promise = Promise.resolve()
       await renderAndLoadAsync(<SettingsPage assetPaths={{}} />)
@@ -352,6 +358,27 @@ describe("<SettingsPage />", () => {
           state: { flow: AUTH_FLOW.UPDATE_LOGIN_EMAIL },
         })
       })
+      it("routes to reverification if session is stale", async () => {
+        cleanup()
+        mockNavigate.mockClear()
+        ;(useAuth as jest.Mock).mockReturnValue({
+          isLoaded: true,
+          isSignedIn: true,
+          getToken: jest.fn().mockResolvedValue("clerk-session-token"),
+          has: jest.fn().mockReturnValue(false),
+        })
+        await renderAndLoadAsync(<SettingsPage assetPaths={{}} />)
+
+        await act(async () => {
+          fireEvent.click(screen.getByRole("button", { name: /update email/i }))
+          await Promise.resolve()
+        })
+
+        expect(mockNavigate).toHaveBeenCalledWith({
+          pathname: getReverificationPath(),
+          search: "flow=updateLoginEmail",
+        })
+      })
     })
     describe("the password section", () => {
       it("shows a change password button when the user has a password", () => {
@@ -599,6 +626,12 @@ describe("<SettingsPage />", () => {
         pathname: "/account/settings",
         state: null,
       })
+      ;(useAuth as jest.Mock).mockReturnValue({
+        isLoaded: true,
+        isSignedIn: true,
+        getToken: jest.fn().mockResolvedValue("clerk-session-token"),
+        has: jest.fn().mockReturnValue(true),
+      })
       await renderAndLoadAsync(<SettingsPage assetPaths={{}} />)
     })
 
@@ -623,6 +656,27 @@ describe("<SettingsPage />", () => {
         state: { accountSettingsFlow: true },
       })
     })
+    it("routes add password through reverification page when the session is stale", async () => {
+      cleanup()
+      mockNavigate.mockClear()
+      ;(useAuth as jest.Mock).mockReturnValue({
+        isLoaded: true,
+        isSignedIn: true,
+        getToken: jest.fn().mockResolvedValue("clerk-session-token"),
+        has: jest.fn().mockReturnValue(false),
+      })
+      await renderAndLoadAsync(<SettingsPage assetPaths={{}} />)
+
+      await act(async () => {
+        fireEvent.click(screen.getByRole("button", { name: "Add password" }))
+        await Promise.resolve()
+      })
+
+      expect(mockNavigate).toHaveBeenCalledWith({
+        pathname: getReverificationPath(),
+        search: "flow=addPassword",
+      })
+    })
   })
 
   describe("when arriving after a password change", () => {
@@ -645,6 +699,12 @@ describe("<SettingsPage />", () => {
       ;(useLocation as jest.Mock).mockReturnValue({
         pathname: "/account/settings",
         state: { passwordChanged: true },
+      })
+      ;(useAuth as jest.Mock).mockReturnValue({
+        isLoaded: true,
+        isSignedIn: true,
+        getToken: jest.fn().mockResolvedValue("clerk-session-token"),
+        has: jest.fn().mockReturnValue(true),
       })
       await renderAndLoadAsync(<SettingsPage assetPaths={{}} />)
     })
@@ -1071,6 +1131,45 @@ describe("<SettingsPage />", () => {
       expect(authenticatedPut).toHaveBeenCalledWith("/api/v1/auth", {
         user: { email: "new@example.com" },
       })
+    })
+  })
+  describe("when arriving after a failed reverification", () => {
+    let originalLocation: Location
+    let mockNavigate: jest.Mock
+
+    beforeEach(async () => {
+      document.documentElement.lang = "en"
+      originalLocation = mockWindowLocation()
+      ;(useFeatureFlag as jest.Mock).mockReturnValue({ flagsReady: true, unleashFlag: true })
+      setupUserContext({ loggedIn: true })
+      ;(get as jest.Mock).mockResolvedValue({ data: { agencies: [] } })
+      ;(useUser as jest.Mock).mockReturnValue({
+        isLoaded: true,
+        isSignedIn: true,
+        user: { passwordEnabled: true },
+      })
+      ;(useAuth as jest.Mock).mockReturnValue({
+        isLoaded: true,
+        isSignedIn: true,
+        getToken: jest.fn().mockResolvedValue("clerk-session-token"),
+        has: jest.fn().mockReturnValue(true),
+      })
+      mockNavigate = jest.fn()
+      ;(useNavigate as jest.Mock).mockReturnValue(mockNavigate)
+      ;(useLocation as jest.Mock).mockReturnValue({
+        pathname: "/account/settings",
+        state: { reverificationFailed: true },
+      })
+      await renderAndLoadAsync(<SettingsPage assetPaths={{}} />)
+    })
+
+    afterEach(() => {
+      jest.restoreAllMocks()
+      restoreWindowLocation(originalLocation)
+    })
+
+    it("shows the failure banner", () => {
+      expect(screen.getByText("Reverification failed. Please try again.")).not.toBeNull()
     })
   })
 })
