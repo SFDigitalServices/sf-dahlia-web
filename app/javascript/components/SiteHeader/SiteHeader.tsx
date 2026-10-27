@@ -612,7 +612,10 @@ const DahliaSiteHeader = (props: SiteHeaderProps) => {
 
   const getLogo = () => {
     return (
-      <div className={`site-header__logo-container ${getLogoWidthClass()}`} id={"site-header-logo"}>
+      <div
+        className={`site-header__logo-container ${styles["mobile-header-logo"]} ${getLogoWidthClass()}`}
+        id={"site-header-logo"}
+      >
         <Link
           className={`site-header__logo ${props.logoClass ?? ""} ${
             (props.logoWidth && "site-header__custom-width") ?? ""
@@ -679,7 +682,7 @@ const DahliaSiteHeader = (props: SiteHeaderProps) => {
           {getLogo()}
           <div
             id={"site-header-links"}
-            className={`site-header__navbar-menu ${isDesktop ? navbarClass : ""}`}
+            className={`site-header__navbar-menu ${styles["mobile-header-side"]} ${isDesktop ? navbarClass : ""}`}
           >
             {isDesktop ? getDesktopHeader() : getMobileHeader()}
           </div>
