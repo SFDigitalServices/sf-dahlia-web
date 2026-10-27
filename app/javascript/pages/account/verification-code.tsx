@@ -211,7 +211,7 @@ const EnterVerificationCodePage = ({
         try {
           await previousEmailAddress.destroy()
         } catch (error) {
-          // TODO: There is a possibility the primary email can be updated but this destroy
+          // TODO: DAH-4369 There is a possibility the primary email can be updated but this destroy
           // can fail. The old address is still attached to the user in the Clerk DB and would
           // require cleanup.
           // https://github.com/SFDigitalServices/sf-dahlia-web/pull/3078#discussion_r4104585451
@@ -268,7 +268,7 @@ const EnterVerificationCodePage = ({
       console.error("Update contact email: Salesforce update failed", error)
     }
     if (verifiedEmail.id !== user.primaryEmailAddressId) {
-      // TODO: There is a rare possibility the destroy may fail and create a stale address
+      // TODO: DAH-4369 There is a rare possibility the destroy may fail and create a stale address
       // The address is attached to the user in the Clerk DB and would
       // require cleanup.
       // https://github.com/SFDigitalServices/sf-dahlia-web/pull/3078#discussion_r4104585451
