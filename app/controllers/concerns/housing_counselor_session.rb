@@ -44,6 +44,10 @@ module HousingCounselorSession
     @hc_session_access_denied || false
   end
 
+  def hc_session_unbound?
+    @hc_session_unbound || false
+  end
+
   def hc_session_cookie_writable?
     current_clerk_session_id.present?
   end
@@ -105,7 +109,7 @@ module HousingCounselorSession
 
   def hc_session_for_request(claims, expected_app_id)
     clerk_session_id = current_clerk_session_id
-    return nil if clerk_session_id.blank?
+    return mark_hc_session_unbound if clerk_session_id.blank?
     return reject_hc_session_from_other_clerk_session if claims['sid'] != clerk_session_id
     return nil if expected_app_id && claims['appId'] != expected_app_id
     return nil unless hc_id_matches_current_user?(claims['hcId'])
@@ -169,6 +173,14 @@ module HousingCounselorSession
     )
     discard_hc_session_cookie
     false
+  end
+
+  def mark_hc_session_unbound
+    Rails.logger.info(
+      'HousingCounselorSession: hc_session cookie present without a Clerk session',
+    )
+    @hc_session_unbound = true
+    nil
   end
 
   def reject_hc_session_from_other_clerk_session

@@ -5,9 +5,9 @@ RSpec.describe Api::V1::AccountController, type: :controller do
   let(:clerk_sid) { 'sess_current' }
   let(:counselor_clerk_user_id) { 'user_counselor' }
 
-  def stub_clerk(user_id:)
+  def stub_clerk(user_id:, sid: clerk_sid)
     allow(controller).to receive(:clerk)
-      .and_return(double(user_id:, session: { 'sub' => user_id, 'sid' => clerk_sid }))
+      .and_return(double(user_id:, session: { 'sub' => user_id, 'sid' => sid }.compact))
   end
 
   before do
@@ -365,6 +365,29 @@ RSpec.describe Api::V1::AccountController, type: :controller do
         expect(cookies[:hc_session]).to be_present
       end
     end
+
+    # Delegation is Clerk-only, so a write without a Clerk session can't be
+    # matched to the cookie. Fail closed: the form may hold applicant data.
+    context 'without a Clerk session but with an hc_session cookie' do
+      before do
+        allow(controller).to receive(:clerk).and_return(nil)
+        request.cookies['hc_session'] = JsonWebTokenService.encode_token(
+          { 'typ' => 'hc_session', 'hcId' => user.salesforce_contact_id,
+            'appId' => '003XYZ', 'sid' => clerk_sid },
+          exp: 2.hours.from_now,
+        )
+      end
+
+      it 'returns forbidden, does not perform the update, and keeps the cookie' do
+        put :update, params: { contact: contact_params }
+
+        expect(response).to have_http_status(:forbidden)
+        expect(JSON.parse(response.body)).to eq('error' => 'forbidden')
+        expect(Force::AccountService).not_to have_received(:create_or_update)
+        expect(Emailer).not_to have_received(:account_update)
+        expect(cookies[:hc_session]).to be_present
+      end
+    end
   end
 
   describe 'PUT #update_housing_counselor' do
@@ -532,6 +555,28 @@ RSpec.describe Api::V1::AccountController, type: :controller do
 
         expect(response).to have_http_status(:unauthorized)
         expect(JSON.parse(response.body)).to eq('error' => 'unauthorized')
+        expect(Force::AccountService).not_to have_received(:create_or_update)
+        expect(DahliaBackend::MessageService)
+          .not_to have_received(:send_housing_counselor_access)
+        expect(cookies[:hc_session]).to be_present
+      end
+    end
+
+    context 'when the Clerk session has no sid and the request carries an hc_session cookie' do
+      before do
+        stub_clerk(user_id: clerk_user_id, sid: nil)
+        request.cookies['hc_session'] = JsonWebTokenService.encode_token(
+          { 'typ' => 'hc_session', 'hcId' => contact_id, 'appId' => '003XYZ',
+            'sid' => clerk_sid },
+          exp: 2.hours.from_now,
+        )
+      end
+
+      it 'returns forbidden, does not update Salesforce, and keeps the cookie' do
+        put :update_housing_counselor, params: { contact: contact_params }
+
+        expect(response).to have_http_status(:forbidden)
+        expect(JSON.parse(response.body)).to eq('error' => 'forbidden')
         expect(Force::AccountService).not_to have_received(:create_or_update)
         expect(DahliaBackend::MessageService)
           .not_to have_received(:send_housing_counselor_access)
