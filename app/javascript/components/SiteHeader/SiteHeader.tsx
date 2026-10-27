@@ -27,6 +27,7 @@ export interface MenuLink {
   iconElement?: React.ReactNode
   iconSrc?: string
   onClick?: () => void
+  showInMobileHeader?: boolean
   subMenuLinks?: MenuLink[]
   title: string
 }
@@ -335,10 +336,7 @@ const DahliaSiteHeader = (props: SiteHeaderProps) => {
 
   const getMobileNavMenuLinks = () => props.menuLinks.filter((menuLink) => !menuLink.subMenuLinks)
 
-  const getMobileHeader = () => {
-    const accountLink = getAccountMenuLink()
-    if (!accountLink) return null
-
+  const getMobileAccountButton = (accountLink: MenuLink) => {
     const isOpen = activeMenu === accountLink.title
 
     return (
@@ -360,6 +358,26 @@ const DahliaSiteHeader = (props: SiteHeaderProps) => {
         {getAccountDropdown(accountLink, false)}
       </button>
     )
+  }
+
+  const getMobileHeaderLink = () => {
+    const headerLink = props.menuLinks.find((menuLink) => menuLink.showInMobileHeader)
+    if (!headerLink?.href) return null
+
+    return (
+      <Link
+        className={`site-header__link ${styles["mobile-account-link"]}`}
+        to={localizedPath(headerLink.href)}
+        data-testid={`${headerLink.title}-mobile`}
+      >
+        {headerLink.title}
+      </Link>
+    )
+  }
+
+  const getMobileHeader = () => {
+    const accountLink = getAccountMenuLink()
+    return accountLink ? getMobileAccountButton(accountLink) : getMobileHeaderLink()
   }
 
   const buildMobileMenuOptions = (
