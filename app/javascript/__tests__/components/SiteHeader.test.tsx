@@ -1,5 +1,5 @@
 import React from "react"
-import { render, screen } from "@testing-library/react"
+import { fireEvent, render, screen } from "@testing-library/react"
 import { MemoryRouter } from "react-router"
 import { MenuLink, SiteHeader, SiteHeaderProps } from "../../components/SiteHeader/SiteHeader"
 import { setupUserContext } from "../__util__/accountUtils"
@@ -65,6 +65,14 @@ describe("SiteHeader", () => {
           "href",
           expect.stringContaining("/sign-in")
         )
+      })
+
+      it("does not list Sign in in the Menu drawer", () => {
+        renderSiteHeader(signedOutMenuLinks, { mobileDrawer: true })
+        fireEvent.click(screen.getByRole("button", { name: "Menu" }))
+
+        expect(screen.getByText("Rent")).not.toBeNull()
+        expect(screen.getAllByText("Sign in")).toHaveLength(1)
       })
     })
 

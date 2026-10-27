@@ -334,7 +334,8 @@ const DahliaSiteHeader = (props: SiteHeaderProps) => {
 
   const getAccountMenuLink = () => props.menuLinks.find((menuLink) => menuLink.subMenuLinks)
 
-  const getMobileNavMenuLinks = () => props.menuLinks.filter((menuLink) => !menuLink.subMenuLinks)
+  const getMobileNavMenuLinks = () =>
+    props.menuLinks.filter((menuLink) => !menuLink.subMenuLinks && !menuLink.showInMobileHeader)
 
   const getMobileAccountButton = (accountLink: MenuLink) => {
     const isOpen = activeMenu === accountLink.title
