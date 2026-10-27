@@ -188,6 +188,7 @@ module HousingCounselorSession
       'HousingCounselorSession: discarding hc_session cookie from a different ' \
       'Clerk session',
     )
+    @hc_session_unbound = true
     discard_hc_session_cookie
     nil
   end

@@ -388,6 +388,29 @@ RSpec.describe Api::V1::AccountController, type: :controller do
         expect(cookies[:hc_session]).to be_present
       end
     end
+
+    # The form may have been hydrated with applicant data under the earlier
+    # Clerk session, so the write fails closed even though the cookie is discarded.
+    context 'when the hc_session cookie belongs to a different Clerk session' do
+      before do
+        stub_clerk(user_id: counselor_clerk_user_id)
+        request.cookies['hc_session'] = JsonWebTokenService.encode_token(
+          { 'typ' => 'hc_session', 'hcId' => user.salesforce_contact_id,
+            'appId' => '003XYZ', 'sid' => 'sess_other' },
+          exp: 2.hours.from_now,
+        )
+      end
+
+      it 'returns forbidden, does not perform the update, and discards the cookie' do
+        put :update, params: { contact: contact_params }
+
+        expect(response).to have_http_status(:forbidden)
+        expect(JSON.parse(response.body)).to eq('error' => 'forbidden')
+        expect(Force::AccountService).not_to have_received(:create_or_update)
+        expect(Emailer).not_to have_received(:account_update)
+        expect(cookies[:hc_session]).to be_blank
+      end
+    end
   end
 
   describe 'PUT #update_housing_counselor' do
