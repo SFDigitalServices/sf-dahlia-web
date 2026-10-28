@@ -51,6 +51,7 @@ RemoveUnusedMethodsInControllersCheck:
         "Api::V1::AccountController#profile",
         "Api::V1::AccountController#create_profile",
         "Api::V1::AccountController#update_housing_counselor",
+        "Api::V1::HousingCounselorController#access",
       ],
   }
 RemoveUnusedMethodsInHelpersCheck: { except_methods: [] }
