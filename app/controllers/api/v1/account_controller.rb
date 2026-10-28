@@ -170,9 +170,11 @@ class Api::V1::AccountController < ApiController
 
   # HC delegate access only ever grants read access to the applicant's data
   # (see #profile). Write actions must stay blocked while delegated: the
-  # account-settings form is hydrated from #profile
+  # account-settings form is hydrated from #profile. An hc_session that can't
+  # be bound to a Clerk session is treated the same way, since the form may
+  # still hold applicant data.
   def reject_write_while_delegated
-    return unless current_hc_session!
+    return unless current_hc_session! || hc_session_unbound?
 
     render json: { error: 'forbidden' }, status: :forbidden
   end
