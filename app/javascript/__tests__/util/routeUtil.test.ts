@@ -100,14 +100,14 @@ describe("routeUtil", () => {
       const path = getForgotPasswordPath()
       const params = { email: "test@example.com", token: "12345" }
       const result = createPath(path, params)
-      expect(result).toBe("/forgot-password?email=test@example.com&token=12345")
+      expect(result).toBe("/forgot-password?email=test%40example.com&token=12345")
     })
 
     it("should handle undefined parameters", () => {
       const path = getForgotPasswordPath()
       const params = { email: "test@example.com", token: undefined }
       const result = createPath(path, params)
-      expect(result).toBe("/forgot-password?email=test@example.com")
+      expect(result).toBe("/forgot-password?email=test%40example.com")
     })
 
     it("should return the original path if no parameters are provided", () => {
@@ -121,7 +121,28 @@ describe("routeUtil", () => {
       const path = getForgotPasswordPath()
       const params = { email: "test@example.com", token: "12345", lang: "en" }
       const result = createPath(path, params)
-      expect(result).toBe("/forgot-password?email=test@example.com&token=12345&lang=en")
+      expect(result).toBe("/forgot-password?email=test%40example.com&token=12345&lang=en")
+    })
+
+    it("should discard existing query params from the base path", () => {
+      const result = createPath("/sign-in?redirect=settings", { hcAccess: "0" })
+      expect(result).toBe("/sign-in?hcAccess=0")
+    })
+
+    it("should discard hashes from the base path", () => {
+      const result = createPath("/sign-in#section-1", { hcAccess: "0" })
+      expect(result).toBe("/sign-in?hcAccess=0")
+    })
+
+    it("should URL-encode special characters and preserve decoded parameter values", () => {
+      const email = "first+last@example.com"
+      const result = createPath(getForgotPasswordPath(), { email, redirect: "/a?b=c&d" })
+      expect(result).toBe(
+        "/forgot-password?email=first%2Blast%40example.com&redirect=%2Fa%3Fb%3Dc%26d"
+      )
+      const params = new URLSearchParams(result.split("?")[1])
+      expect(params.get("email")).toBe(email)
+      expect(params.get("redirect")).toBe("/a?b=c&d")
     })
 
     it("should handle empty string parameters", () => {
