@@ -231,7 +231,7 @@ describe("<Reverification />", () => {
     await renderPage()
 
     await waitFor(() => {
-      expect(mockNavigate).toHaveBeenCalledWith("/sign-in")
+      expect(mockNavigate).toHaveBeenCalledWith("/sign-in", { replace: true })
     })
   })
 
@@ -240,7 +240,15 @@ describe("<Reverification />", () => {
     await renderPage()
 
     await waitFor(() => {
-      expect(mockNavigate).toHaveBeenCalledWith("/sign-in")
+      expect(mockNavigate).toHaveBeenCalledWith("/sign-in", { replace: true })
+    })
+  })
+
+  it("redirects to settings when the flow is missing", async () => {
+    await renderPage("")
+
+    await waitFor(() => {
+      expect(mockNavigate).toHaveBeenCalledWith(getMyAccountSettingsPath(), { replace: true })
     })
   })
 })

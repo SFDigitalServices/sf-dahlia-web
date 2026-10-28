@@ -183,6 +183,8 @@ const ReverificationPage = () => {
 
 const Reverification = (_props: { assetPaths: unknown }) => {
   const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
+  const authFlow = toReverificationFlow(searchParams.get("flow"))
   const { status } = useAuthSession()
   const isLoaded = status.kind !== "initializing"
   const isSignedIn = status.kind === "signedIn"
@@ -191,15 +193,19 @@ const Reverification = (_props: { assetPaths: unknown }) => {
   useEffect(() => {
     if (!flagsReady) return
     if (!clerkEnabled) {
-      void navigate(getSignInPath())
+      void navigate(getSignInPath(), { replace: true })
       return
     }
     if (!isLoaded) return
     if (!isSignedIn) {
-      void navigate(getSignInPath())
+      void navigate(getSignInPath(), { replace: true })
       return
     }
-  }, [flagsReady, clerkEnabled, isLoaded, isSignedIn, navigate])
+    if (!authFlow) {
+      void navigate(getMyAccountSettingsPath(), { replace: true })
+      return
+    }
+  }, [flagsReady, clerkEnabled, isLoaded, isSignedIn, navigate, authFlow])
 
   const ready = flagsReady && clerkEnabled && isLoaded && isSignedIn
 
