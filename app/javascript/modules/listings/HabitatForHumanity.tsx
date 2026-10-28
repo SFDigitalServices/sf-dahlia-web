@@ -39,7 +39,7 @@ export const getHabitatContent = (listing, stackedDataFxn) => {
           {t("listings.availableUnits")}
         </Heading>
         {getHeader(t("t.units"))}
-        {stackedData.map((row, index: number) =>
+        {stackedData?.map((row, index: number) =>
           getHabitatContentRow(`${row.unitType.cellText}:`, `${row.unitType.cellSubText}`, index)
         )}
 

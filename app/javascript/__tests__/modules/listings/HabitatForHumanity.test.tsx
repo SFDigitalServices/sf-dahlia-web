@@ -12,4 +12,14 @@ describe("HabitatForHumanity", () => {
 
     expect(asFragment()).toMatchSnapshot()
   })
+
+  it("renders HabitatForHumanity component when stackedData is null", () => {
+    expect(() =>
+      render(
+        getHabitatContent(habitatListing, () => {
+          return null
+        })
+      )
+    ).not.toThrow()
+  })
 })
