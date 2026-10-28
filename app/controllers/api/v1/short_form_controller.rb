@@ -340,10 +340,18 @@ class Api::V1::ShortFormController < ApiController
   end
 
   def applicant_attrs
+    unless acting_for_applicant?
+      return { contactId: user_contact_id,
+               webAppID: current_user_id }
+    end
+
     {
       contactId: user_contact_id,
-      webAppID: current_user_id,
     }
+  end
+
+  def acting_for_applicant?
+    current_user.present? && current_hc_session!.present?
   end
 
   def user_contact_id

@@ -143,6 +143,13 @@ describe Api::V1::ShortFormController, type: :controller do
         expect(Force::ShortFormService).to have_received(:create_or_update)
           .with(anything, hash_including(contactId: applicant_contact_id))
       end
+
+      it "does not send the counselor's webAppID on the applicant's record" do
+        post :submit_application
+
+        expect(Force::ShortFormService).to have_received(:create_or_update)
+          .with(anything, hash_excluding(:webAppID))
+      end
     end
   end
 
