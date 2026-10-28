@@ -42,6 +42,9 @@ const AddPasswordPage = ({ flow, isAccountSettingsFlow }: AddPasswordPageProps) 
   const { setPassword, isAccountInitialized } = useSignUpSession()
   const [isResettingPassword, setIsResettingPassword] = useState(false)
   const isForgotPasswordFlow = flow === AUTH_FLOW.FORGOT_PASSWORD
+  const { needsReverification, redirectToReverification } = useReverificationRedirect(
+    REVERIFICATION_FLOW.ADD_PASSWORD
+  )
 
   const {
     register,
@@ -82,6 +85,11 @@ const AddPasswordPage = ({ flow, isAccountSettingsFlow }: AddPasswordPageProps) 
     if (!isAccountInitialized) return
     if (isForgotPasswordFlow) {
       void resetPassword(newPassword)
+      return
+    }
+
+    if (isAccountSettingsFlow && needsReverification) {
+      redirectToReverification()
       return
     }
 

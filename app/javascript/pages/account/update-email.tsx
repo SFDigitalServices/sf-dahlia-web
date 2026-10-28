@@ -52,6 +52,11 @@ const UpdateEmailPage = () => {
       ? AUTH_FLOW.UPDATE_CONTACT_EMAIL
       : AUTH_FLOW.UPDATE_LOGIN_EMAIL
   const isContactFlow = flow === AUTH_FLOW.UPDATE_CONTACT_EMAIL
+  const { needsReverification, redirectToReverification } = useReverificationRedirect(
+    isContactFlow
+      ? REVERIFICATION_FLOW.UPDATE_CONTACT_EMAIL
+      : REVERIFICATION_FLOW.UPDATE_LOGIN_EMAIL
+  )
   const cancelReturnPath = isContactFlow ? getMyAccountContactPath() : getMyAccountSettingsPath()
 
   const salesforceSaveFailed = !!(location.state as { saveFailed?: boolean } | null)?.saveFailed
@@ -105,6 +110,10 @@ const UpdateEmailPage = () => {
 
   const onGetCodeSubmit = async ({ email }: { email: string }) => {
     if (loading) return
+    if (needsReverification) {
+      redirectToReverification()
+      return
+    }
     const newEmail = email.toLowerCase()
     const loginEmail = user.primaryEmailAddress?.emailAddress.toLowerCase()
     const currentEmail = isContactFlow ? profile?.email?.toLowerCase() : loginEmail
