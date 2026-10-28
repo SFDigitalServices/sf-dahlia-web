@@ -3,6 +3,14 @@
 # RESTful JSON API to query for short form actions
 class Api::V1::ShortFormController < ApiController
   include ClerkOrDeviseAuth
+  include HousingCounselorSession
+
+  rescue_from HousingCounselorSession::VerificationUnavailableError do
+    render json: { error: 'unauthorized' }, status: :unauthorized
+  end
+  rescue_from HousingCounselorSession::AccessDeniedError do
+    render json: { error: 'forbidden' }, status: :forbidden
+  end
 
   before_action :authenticate_user!,
                 only: %i[
@@ -340,7 +348,7 @@ class Api::V1::ShortFormController < ApiController
 
   def user_contact_id
     if current_user
-      current_user.salesforce_contact_id
+      current_hc_session!&.dig(:app_id) || current_user.salesforce_contact_id
     elsif unconfirmed_user_with_temp_session_id
       @unconfirmed_user.salesforce_contact_id
     end

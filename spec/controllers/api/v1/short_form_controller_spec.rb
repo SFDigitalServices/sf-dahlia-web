@@ -107,6 +107,43 @@ describe Api::V1::ShortFormController, type: :controller do
         expect(Force::ShortFormService).not_to have_received(:create_or_update)
       end
     end
+
+    # Given a counselor signed in with Clerk and a valid hc_session for an applicant
+    # When the counselor submits an application
+    # Then Salesforce receives the applicant's contact id, not the counselor's
+    context 'when signed in as a housing counselor with a valid hc_session cookie' do
+      let(:counselor_contact_id) { 'contact_counselor_abc123' }
+      let(:applicant_contact_id) { 'contact_applicant_abc123' }
+      let(:clerk_sid) { 'sid_abc123' }
+
+      before do
+        stub_const('JsonWebTokenService::SECRET_KEY', 'test_secret')
+        stub_const('JsonWebTokenService::ALGORITHM', 'HS256')
+        stub_const('JsonWebTokenService::ALLOWED_ALGORITHMS', ['HS256'])
+        allow(Rails.configuration.unleash).to receive(:is_enabled?)
+          .with(HousingCounselorSession::FEATURE_FLAG).and_return(true)
+
+        allow(ClerkOrDeviseAuth).to receive(:clerk_enabled?).and_return(true)
+        allow(controller).to receive(:clerk).and_return(
+          double(user_id: 'user_counselor', session: { 'sid' => clerk_sid }),
+        )
+        allow(ClerkService).to receive(:salesforce_contact_id)
+          .and_return(counselor_contact_id)
+        allow(controller).to receive(:applicant_attrs).and_call_original
+
+        request.cookies['hc_session'] = JsonWebTokenService.encode_token(
+          { 'typ' => 'hc_session', 'hcId' => counselor_contact_id,
+            'appId' => applicant_contact_id, 'sid' => clerk_sid },
+          exp: 2.hours.from_now,
+        )
+      end
+      it "files the application under the applicant's contact id" do
+        post :submit_application
+
+        expect(Force::ShortFormService).to have_received(:create_or_update)
+          .with(anything, hash_including(contactId: applicant_contact_id))
+      end
+    end
   end
 
   describe '#delete_proof' do
