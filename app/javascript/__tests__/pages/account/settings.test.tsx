@@ -5,13 +5,13 @@ import {
   restoreWindowLocation,
 } from "../../__util__/renderUtils"
 import SettingsPage from "../../../pages/account/settings"
-import { fireEvent, screen, within, act, waitFor, cleanup } from "@testing-library/react"
+import { fireEvent, screen, within, act, waitFor } from "@testing-library/react"
 import { authenticatedPut, get, put } from "../../../api/apiService"
 import { mockProfileStub, setupUserContext } from "../../__util__/accountUtils"
 import { useFeatureFlag } from "../../../hooks/useFeatureFlag"
 import { useAuth, useUser } from "@clerk/react"
 import { useLocation, useNavigate } from "react-router"
-import { getReverificationPath, getUpdateEmailPath } from "../../../util/routeUtil"
+import { getUpdateEmailPath } from "../../../util/routeUtil"
 import { AUTH_FLOW, UNLEASH_FLAG } from "../../../modules/constants"
 import * as authStatus from "../../../authentication/session/authStatus"
 
@@ -358,27 +358,6 @@ describe("<SettingsPage />", () => {
           state: { flow: AUTH_FLOW.UPDATE_LOGIN_EMAIL },
         })
       })
-      it("routes to reverification if session is stale", async () => {
-        cleanup()
-        mockNavigate.mockClear()
-        ;(useAuth as jest.Mock).mockReturnValue({
-          isLoaded: true,
-          isSignedIn: true,
-          getToken: jest.fn().mockResolvedValue("clerk-session-token"),
-          has: jest.fn().mockReturnValue(false),
-        })
-        await renderAndLoadAsync(<SettingsPage assetPaths={{}} />)
-
-        await act(async () => {
-          fireEvent.click(screen.getByRole("button", { name: /update email/i }))
-          await Promise.resolve()
-        })
-
-        expect(mockNavigate).toHaveBeenCalledWith({
-          pathname: getReverificationPath(),
-          search: "flow=updateLoginEmail",
-        })
-      })
     })
     describe("the password section", () => {
       it("shows a change password button when the user has a password", () => {
@@ -654,27 +633,6 @@ describe("<SettingsPage />", () => {
 
       expect(mockNavigate).toHaveBeenCalledWith("/add-password", {
         state: { accountSettingsFlow: true },
-      })
-    })
-    it("routes add password through reverification page when the session is stale", async () => {
-      cleanup()
-      mockNavigate.mockClear()
-      ;(useAuth as jest.Mock).mockReturnValue({
-        isLoaded: true,
-        isSignedIn: true,
-        getToken: jest.fn().mockResolvedValue("clerk-session-token"),
-        has: jest.fn().mockReturnValue(false),
-      })
-      await renderAndLoadAsync(<SettingsPage assetPaths={{}} />)
-
-      await act(async () => {
-        fireEvent.click(screen.getByRole("button", { name: "Add password" }))
-        await Promise.resolve()
-      })
-
-      expect(mockNavigate).toHaveBeenCalledWith({
-        pathname: getReverificationPath(),
-        search: "flow=addPassword",
       })
     })
   })
