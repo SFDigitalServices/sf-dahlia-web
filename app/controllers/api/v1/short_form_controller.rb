@@ -80,7 +80,7 @@ class Api::V1::ShortFormController < ApiController
         'ShortFormController#submit_application: ' \
         "locale='#{params[:locale]}', " \
         "listingID='#{params.dig('application', 'listingID')}', " \
-        "lotteryNumber='#{response['lotteryNumber']}'"
+        "lotteryNumber='#{response['lotteryNumber']}'",
       )
       process_submit_app_response(response)
       render json: response
@@ -235,14 +235,20 @@ class Api::V1::ShortFormController < ApiController
   # TODO(DAH-4366): CLERK MIGRATION - DEVISE TECH DEBT TO REMOVE
   def file_owner_ids
     @file_owner_ids ||=
-      if current_user.is_a?(ClerkService::User) &&
-         current_user.salesforce_contact_id.present?
-        devise_ids = User.where(salesforce_contact_id: current_user.salesforce_contact_id)
-                         .pluck(:id).map(&:to_s)
+      if clerk_user_with_contact_id?
+        devise_ids = devise_user_ids_for(current_user.salesforce_contact_id)
         [current_user.id, *devise_ids]
       else
         current_user.id
       end
+  end
+
+  def clerk_user_with_contact_id?
+    current_user.is_a?(ClerkService::User) && current_user.salesforce_contact_id.present?
+  end
+
+  def devise_user_ids_for(contact_id)
+    User.where(salesforce_contact_id: contact_id).pluck(:id).map(&:to_s)
   end
 
   def attach_temp_files_to_user
@@ -252,15 +258,15 @@ class Api::V1::ShortFormController < ApiController
 
   def send_submit_app_confirmation(response)
     listing_id = application_params[:listingID]
-      Rails.logger.info(
-        'ShortFormController#send_submit_app_confirmation: ' \
-        "Sending email from messaging service for #{listing_id}",
-      )
-      DahliaBackend::MessageService.send_application_confirmation(
-        application_params,
-        response,
-        params[:locale],
-      )
+    Rails.logger.info(
+      'ShortFormController#send_submit_app_confirmation: ' \
+      "Sending email from messaging service for #{listing_id}",
+    )
+    DahliaBackend::MessageService.send_application_confirmation(
+      application_params,
+      response,
+      params[:locale],
+    )
   end
 
   def email_draft_link(response)
