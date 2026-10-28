@@ -381,32 +381,38 @@ describe("<UpdateEmail />", () => {
       expect(user.createEmailAddress).not.toHaveBeenCalled()
     })
 
-    it.each([
-      [
-        "there is no session token",
-        () => {
-          ;(authStatus.bearerToken as jest.Mock).mockReturnValue(undefined)
-        },
-      ],
-      [
-        "there is no profile",
-        () => {
-          setupUserContext({ loggedIn: true, hasProfile: false })
-        },
-      ],
-    ])("does not save when %s", async (_case, setup) => {
+    it("does not save when there is no session token", async () => {
       contactFlowLocation()
-      setup()
+      ;(authStatus.bearerToken as jest.Mock).mockReturnValue(undefined)
+
       await renderPage()
       await submitEmail("current@example.com", t("accountLayout.contact.saveEmail"))
 
-      await act(async () => {
-        await Promise.resolve()
+      await waitFor(() => {
+        expect(updateContactEmailSpy).not.toHaveBeenCalled()
       })
-      expect(updateContactEmailSpy).not.toHaveBeenCalled()
       expect(mockNavigate).not.toHaveBeenCalled()
     })
 
+    it("does not save when there is no profile", async () => {
+      contactFlowLocation()
+      setupUserContext({ loggedIn: true, hasProfile: false })
+
+      await renderPage()
+
+      await waitFor(() => {
+        expect(mockNavigate).toHaveBeenCalledWith(
+          {
+            pathname: getReverificationPath(),
+            search: "flow=updateContactEmail",
+          },
+          { replace: true }
+        )
+      })
+
+      expect(screen.queryByRole("textbox")).toBeNull()
+      expect(updateContactEmailSpy).not.toHaveBeenCalled()
+    })
     it("shows an error and clears the flag after a failed save on the code page", async () => {
       contactFlowLocation({ saveFailed: true })
       await renderPage()
