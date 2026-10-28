@@ -17,7 +17,13 @@ class Api::V1::AccountController < ApiController
                 only: %i[update create_profile update_housing_counselor]
 
   def my_applications
-    applications = map_listings_to_applications(current_user_applications)
+    contact_id = effective_contact_id.presence
+    unless contact_id
+      render json: { error: 'Could not get Salesforce contact ID' }, status: :not_found
+      return
+    end
+
+    applications = map_listings_to_applications(current_user_applications(contact_id))
     render json: { applications: }
   end
 
@@ -45,7 +51,8 @@ class Api::V1::AccountController < ApiController
   end
 
   def profile
-    contact_id = effective_contact_id.presence
+    delegated_contact_id = current_hc_session!&.dig(:app_id)
+    contact_id = (delegated_contact_id || current_user.salesforce_contact_id).presence
     contact = contact_id &&
               Force::AccountService.get(contact_id, { user_token_validation: true })
     if contact.blank?
@@ -55,7 +62,11 @@ class Api::V1::AccountController < ApiController
 
     render json: {
       success: true,
-      data: contact.merge('id' => current_user.id, 'uid' => contact['email']),
+      data: contact.merge(
+        'id' => current_user.id,
+        'uid' => contact['email'],
+        'isDelegated' => delegated_contact_id.present?,
+      ),
     }
   end
 
@@ -141,8 +152,8 @@ class Api::V1::AccountController < ApiController
   # (Devise, unchanged) - this only adds "and if that signed-in user is
   # also a housing counselor per their hc_session cookie, use the
   # delegated applicant's contact instead of their own."
-  def current_user_applications
-    Force::ShortFormService.get_for_user(effective_contact_id)
+  def current_user_applications(contact_id)
+    Force::ShortFormService.get_for_user(contact_id)
   end
 
   # The applicant contact ID a housing counselor is currently delegated
@@ -159,9 +170,11 @@ class Api::V1::AccountController < ApiController
 
   # HC delegate access only ever grants read access to the applicant's data
   # (see #profile). Write actions must stay blocked while delegated: the
-  # account-settings form is hydrated from #profile
+  # account-settings form is hydrated from #profile. An hc_session that can't
+  # be bound to a Clerk session is treated the same way, since the form may
+  # still hold applicant data.
   def reject_write_while_delegated
-    return unless current_hc_session!
+    return unless current_hc_session! || hc_session_unbound?
 
     render json: { error: 'forbidden' }, status: :forbidden
   end
@@ -169,12 +182,15 @@ class Api::V1::AccountController < ApiController
   def authenticate_user!(*)
     return authenticate_clerk_or_devise_user!(*) if action_name == 'update'
     return super unless %w[profile create_profile
-                           update_housing_counselor].include?(action_name)
+                           update_housing_counselor my_applications].include?(action_name)
 
     @clerk_user_id = clerk&.user_id
     if @clerk_user_id.blank?
-      render json: { error: 'Invalid Clerk session' }, status: :unauthorized
-      return
+      # my_applications accepts either credential while the Clerk flag rolls out:
+      # use the Clerk session when one is present, otherwise fall back to Devise.
+      return super if action_name == 'my_applications'
+
+      return render json: { error: 'Invalid Clerk session' }, status: :unauthorized
     end
 
     require_salesforce_contact_id! if action_name == 'update_housing_counselor'

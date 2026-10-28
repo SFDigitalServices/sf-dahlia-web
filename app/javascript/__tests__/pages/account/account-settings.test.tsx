@@ -230,7 +230,7 @@ describe("when Clerk auth is disabled", () => {
             screen.getByRole("link", {
               name: /forgot password\?/i,
             })
-          ).toHaveAttribute("href", "/forgot-password?email=email@email.com")
+          ).toHaveAttribute("href", "/forgot-password?email=email%40email.com")
 
           const emailField = within(group).getByRole("textbox")
 
@@ -279,7 +279,7 @@ describe("when Clerk auth is disabled", () => {
             screen.getByRole("link", {
               name: /forgot password\?/i,
             })
-          ).toHaveAttribute("href", "/forgot-password?email=test@test.com")
+          ).toHaveAttribute("href", "/forgot-password?email=test%40test.com")
         })
 
         it("does not update with malformed emails", async () => {

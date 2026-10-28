@@ -27,6 +27,7 @@ export interface MenuLink {
   iconElement?: React.ReactNode
   iconSrc?: string
   onClick?: () => void
+  showInMobileHeader?: boolean
   subMenuLinks?: MenuLink[]
   title: string
 }
@@ -48,6 +49,7 @@ export interface SiteHeaderProps {
   mobileDrawer?: boolean
   mobileText?: boolean
   notice?: string | React.ReactNode
+  noticeClassName?: string
   noticeMobile?: boolean
   siteHeaderWidth?: SiteHeaderWidth
   subtitle?: string
@@ -332,12 +334,10 @@ const DahliaSiteHeader = (props: SiteHeaderProps) => {
 
   const getAccountMenuLink = () => props.menuLinks.find((menuLink) => menuLink.subMenuLinks)
 
-  const getMobileNavMenuLinks = () => props.menuLinks.filter((menuLink) => !menuLink.subMenuLinks)
+  const getMobileNavMenuLinks = () =>
+    props.menuLinks.filter((menuLink) => !menuLink.subMenuLinks && !menuLink.showInMobileHeader)
 
-  const getMobileHeader = () => {
-    const accountLink = getAccountMenuLink()
-    if (!accountLink) return null
-
+  const getMobileAccountButton = (accountLink: MenuLink) => {
     const isOpen = activeMenu === accountLink.title
 
     return (
@@ -359,6 +359,26 @@ const DahliaSiteHeader = (props: SiteHeaderProps) => {
         {getAccountDropdown(accountLink, false)}
       </button>
     )
+  }
+
+  const getMobileHeaderLink = () => {
+    const headerLink = props.menuLinks.find((menuLink) => menuLink.showInMobileHeader)
+    if (!headerLink?.href) return null
+
+    return (
+      <Link
+        className={`site-header__link ${styles["mobile-account-link"]}`}
+        to={localizedPath(headerLink.href)}
+        data-testid={`${headerLink.title}-mobile`}
+      >
+        {headerLink.title}
+      </Link>
+    )
+  }
+
+  const getMobileHeader = () => {
+    const accountLink = getAccountMenuLink()
+    return accountLink ? getMobileAccountButton(accountLink) : getMobileHeaderLink()
   }
 
   const buildMobileMenuOptions = (
@@ -611,7 +631,10 @@ const DahliaSiteHeader = (props: SiteHeaderProps) => {
 
   const getLogo = () => {
     return (
-      <div className={`site-header__logo-container ${getLogoWidthClass()}`} id={"site-header-logo"}>
+      <div
+        className={`site-header__logo-container ${styles["mobile-header-logo"]} ${getLogoWidthClass()}`}
+        id={"site-header-logo"}
+      >
         <Link
           className={`site-header__logo ${props.logoClass ?? ""} ${
             (props.logoWidth && "site-header__custom-width") ?? ""
@@ -657,7 +680,9 @@ const DahliaSiteHeader = (props: SiteHeaderProps) => {
       )}
 
       <div
-        className={`site-header__notice ${!props.noticeMobile ? `site-header__notice-hide` : ""}`}
+        className={`site-header__notice ${!props.noticeMobile ? `site-header__notice-hide` : ""}${
+          props.noticeClassName ? ` ${props.noticeClassName}` : ""
+        }`}
       >
         <div className="site-header__notice-text">{props.notice ?? ""}</div>
       </div>
@@ -676,7 +701,7 @@ const DahliaSiteHeader = (props: SiteHeaderProps) => {
           {getLogo()}
           <div
             id={"site-header-links"}
-            className={`site-header__navbar-menu ${isDesktop ? navbarClass : ""}`}
+            className={`site-header__navbar-menu ${styles["mobile-header-side"]} ${isDesktop ? navbarClass : ""}`}
           >
             {isDesktop ? getDesktopHeader() : getMobileHeader()}
           </div>
