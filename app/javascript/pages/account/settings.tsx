@@ -10,8 +10,10 @@ import { DeepMap, FieldError, useForm } from "react-hook-form"
 import { Card, Alert, Button, Heading } from "@bloom-housing/ui-seeds"
 import {
   AppPages,
+  getAddPasswordPath,
   getChangePasswordPath,
   getMyAccountContactPath,
+  getUpdateEmailPath,
   RedirectType,
 } from "../../util/routeUtil"
 import { User } from "../../authentication/user"
@@ -42,18 +44,12 @@ import {
   updateHousingCounselorAccess,
   updatePassword,
 } from "../../api/authApiService"
-import {
-  FormHeader,
-  FormSection,
-  getDobStringFromDobObject,
-  REVERIFICATION_FLOW,
-  useReverificationNavigation,
-} from "../../util/accountUtil"
+import { FormHeader, FormSection, getDobStringFromDobObject } from "../../util/accountUtil"
 import { ErrorSummaryBanner } from "./components/ErrorSummaryBanner"
 import { ExpandedAccountAxiosError, getErrorMessage } from "./components/util"
 import { withAuthentication } from "../../authentication/withAuthentication"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
-import { UNLEASH_FLAG } from "../../modules/constants"
+import { AUTH_FLOW, UNLEASH_FLAG } from "../../modules/constants"
 import { AccountSettingsPage as MyAccountSettingsPage } from "./account-settings"
 import settingsStyles from "./settings.module.scss"
 import { useLocation, useNavigate } from "react-router"
@@ -207,7 +203,7 @@ const EmailSectionDevise = ({ user, setUser }: SectionProps) => {
 }
 
 const EmailSection = () => {
-  const reverificationNavigation = useReverificationNavigation()
+  const navigate = useNavigate()
   const { user } = useSignUpSession()
   const loginEmail = user?.primaryEmailAddress?.emailAddress
 
@@ -223,7 +219,11 @@ const EmailSection = () => {
         <Button
           type="button"
           variant="primary-outlined"
-          onClick={() => reverificationNavigation(REVERIFICATION_FLOW.UPDATE_LOGIN_EMAIL)}
+          onClick={() => {
+            void navigate(getUpdateEmailPath(), {
+              state: { flow: AUTH_FLOW.UPDATE_LOGIN_EMAIL },
+            })
+          }}
         >
           {t("accountSettings.email.updateEmail")}
         </Button>
@@ -301,7 +301,6 @@ const PasswordSectionDevise = ({ user, setUser }: SectionProps) => {
 
 const PasswordSection = () => {
   const navigate = useNavigate()
-  const reverificationNavigation = useReverificationNavigation()
   const { hasPassword: userHasPassword } = useSignUpSession()
 
   return (
@@ -317,11 +316,9 @@ const PasswordSection = () => {
           type="button"
           variant="primary-outlined"
           onClick={() => {
-            if (userHasPassword) {
-              void navigate(getChangePasswordPath(), { state: { accountSettingsFlow: true } })
-              return
-            }
-            reverificationNavigation(REVERIFICATION_FLOW.ADD_PASSWORD)
+            void navigate(userHasPassword ? getChangePasswordPath() : getAddPasswordPath(), {
+              state: { accountSettingsFlow: true },
+            })
           }}
         >
           {userHasPassword ? t("accountSettings.changePassword") : t("accountSettings.addPassword")}

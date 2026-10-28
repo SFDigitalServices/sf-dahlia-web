@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useCallback } from "react"
 import { Card, Heading } from "@bloom-housing/ui-seeds"
 import { Icon, UniversalIconType } from "@bloom-housing/ui-components"
 import { DOBFieldValues } from "../pages/account/components/DOBFieldset"
@@ -96,28 +96,27 @@ export const reverificationDestinations: Record<
     path: getUpdateEmailPath,
     state: { flow: AUTH_FLOW.UPDATE_LOGIN_EMAIL },
   },
-  // TODO: DAH:**** combine login and contact email flows
+  // TODO: DAH-4431 combine login and contact email flows
   [REVERIFICATION_FLOW.UPDATE_CONTACT_EMAIL]: {
     path: getUpdateEmailPath,
     state: { flow: AUTH_FLOW.UPDATE_CONTACT_EMAIL },
   },
 }
 
-export const useReverificationNavigation = () => {
+export const useReverificationRedirect = (flow: REVERIFICATION_FLOW) => {
   const navigate = useNavigate()
   const { has } = useAuth()
+  const needsReverification = !has?.({ reverification: "strict" })
 
-  return (flow: REVERIFICATION_FLOW) => {
-    const needsReverification = !has?.({ reverification: "strict" })
-    const reverificationDestination = reverificationDestinations[flow]
-
-    if (needsReverification) {
-      void navigate({
+  const redirectToReverification = useCallback(() => {
+    void navigate(
+      {
         pathname: getReverificationPath(),
         search: createSearchParams({ flow }).toString(),
-      })
-      return
-    }
-    void navigate(reverificationDestination.path(), { state: reverificationDestination.state })
-  }
+      },
+      { replace: true }
+    )
+  }, [flow, navigate])
+
+  return { needsReverification, redirectToReverification }
 }
