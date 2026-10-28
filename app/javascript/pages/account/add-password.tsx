@@ -26,6 +26,7 @@ import GetHelp from "./components/GetHelp"
 import PasswordFieldset from "./components/PasswordFieldset"
 import "./styles/account.scss"
 import { REVERIFICATION_FLOW, useReverificationRedirect } from "../../util/accountUtil"
+import { useAuth } from "@clerk/react"
 
 interface AddPasswordPageProps {
   flow: AUTH_FLOW
@@ -42,9 +43,8 @@ const AddPasswordPage = ({ flow, isAccountSettingsFlow }: AddPasswordPageProps) 
   const { setPassword, isAccountInitialized } = useSignUpSession()
   const [isResettingPassword, setIsResettingPassword] = useState(false)
   const isForgotPasswordFlow = flow === AUTH_FLOW.FORGOT_PASSWORD
-  const { needsReverification, redirectToReverification } = useReverificationRedirect(
-    REVERIFICATION_FLOW.ADD_PASSWORD
-  )
+  const { redirectToReverification } = useReverificationRedirect(REVERIFICATION_FLOW.ADD_PASSWORD)
+  const { has } = useAuth()
 
   const {
     register,
@@ -88,7 +88,8 @@ const AddPasswordPage = ({ flow, isAccountSettingsFlow }: AddPasswordPageProps) 
       return
     }
 
-    if (isAccountSettingsFlow && needsReverification) {
+    const needsVerification = !has?.({ reverification: "strict" })
+    if (isAccountSettingsFlow && needsVerification) {
       redirectToReverification()
       return
     }

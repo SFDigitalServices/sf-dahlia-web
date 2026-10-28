@@ -45,6 +45,7 @@ const UpdateEmailPage = () => {
   const { profile, saveProfile } = useContext(UserContext)
   const { getCredentials } = useAuthSession()
   const [loading, setLoading] = useState(false)
+  const { has } = useAuth()
   const navigationState = location.state as { flow?: AUTH_FLOW } | null
   // TODO: DAH-4431 combine login and contact email flows
   const flow =
@@ -52,7 +53,7 @@ const UpdateEmailPage = () => {
       ? AUTH_FLOW.UPDATE_CONTACT_EMAIL
       : AUTH_FLOW.UPDATE_LOGIN_EMAIL
   const isContactFlow = flow === AUTH_FLOW.UPDATE_CONTACT_EMAIL
-  const { needsReverification, redirectToReverification } = useReverificationRedirect(
+  const { redirectToReverification } = useReverificationRedirect(
     isContactFlow
       ? REVERIFICATION_FLOW.UPDATE_CONTACT_EMAIL
       : REVERIFICATION_FLOW.UPDATE_LOGIN_EMAIL
@@ -110,7 +111,9 @@ const UpdateEmailPage = () => {
 
   const onGetCodeSubmit = async ({ email }: { email: string }) => {
     if (loading) return
-    if (needsReverification) {
+
+    const needsVerification = !has?.({ reverification: "strict" })
+    if (needsVerification) {
       redirectToReverification()
       return
     }
