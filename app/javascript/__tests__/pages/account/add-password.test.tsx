@@ -337,16 +337,22 @@ describe("<AddPassword />", () => {
         state: { passwordChanged: true },
       })
     })
-    it("redirects to reverification when the session is stale", async () => {
+
+    it("redirects to reverification on submit when the session is stale", async () => {
       cleanup()
       mockNavigate.mockClear()
+      const mockHas = jest.fn().mockReturnValue(true)
       ;(useAuth as jest.Mock).mockReturnValue({
         isLoaded: true,
         isSignedIn: true,
         getToken: jest.fn().mockResolvedValue("clerk-session-token"),
-        has: jest.fn().mockReturnValue(false),
+        has: mockHas,
       })
       await renderAndLoadAsync(<AddPassword assetPaths={{}} />)
+      mockHas.mockReturnValue(false)
+      const user = userEvent.setup()
+      await user.type(screen.getByTestId("password-field"), "abcd1234")
+      await user.click(screen.getByRole("button", { name: /add password/i }))
 
       await waitFor(() => {
         expect(mockNavigate).toHaveBeenCalledWith(
@@ -354,7 +360,8 @@ describe("<AddPassword />", () => {
           { replace: true }
         )
       })
-      expect(screen.queryByRole("heading", { name: /add a password/i, level: 1 })).toBeNull()
+
+      expect(mockUpdatePassword).not.toHaveBeenCalled()
     })
   })
 })

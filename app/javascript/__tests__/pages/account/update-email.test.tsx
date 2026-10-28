@@ -440,6 +440,35 @@ describe("<UpdateEmail />", () => {
           { replace: true }
         )
       })
+      expect(screen.queryByRole("textbox")).toBeNull()
+    })
+    it("redirects to reverification when submitting an email without strict reverification", async () => {
+      contactFlowLocation()
+      const mockHas = jest.fn().mockReturnValue(true)
+      ;(useAuth as jest.Mock).mockReturnValue({
+        isLoaded: true,
+        isSignedIn: true,
+        getToken: jest.fn().mockResolvedValue("clerk-session-token"),
+        has: mockHas,
+      })
+      const user = makeUser()
+      await renderPage(user)
+
+      await userEvent.type(screen.getByRole("textbox"), "new@example.com")
+
+      mockHas.mockReturnValue(false)
+      mockHas.mockClear()
+      await userEvent.click(screen.getByRole("button", { name: t("createAccount.getCode") }))
+
+      await waitFor(() => {
+        expect(mockNavigate).toHaveBeenCalledWith(
+          { pathname: getReverificationPath(), search: "flow=updateContactEmail" },
+          { replace: true }
+        )
+      })
+      expect(mockHas).toHaveBeenCalledWith({ reverification: "strict" })
+      expect(user.createEmailAddress).not.toHaveBeenCalled()
+      expect(updateContactEmailSpy).not.toHaveBeenCalled()
     })
   })
 })
