@@ -85,7 +85,6 @@ const ReverificationPage = () => {
       void navigate(getMyAccountSettingsPath(), { state: { reverificationFailed: true } })
     }
   }
-
   const onSubmitPassword = async ({ password }: { password: string }) => {
     if (!session || !flow || !email) return
     try {
@@ -94,7 +93,8 @@ const ReverificationPage = () => {
       goToReverificationDestination()
     } catch (error) {
       console.error("Reverification: password verification failed", error)
-      setError(...handleClerkPasswordErrors(error))
+      const [field, options] = handleClerkPasswordErrors(error)
+      setError(field === "currentPassword" ? "password" : field, options)
     }
   }
 
