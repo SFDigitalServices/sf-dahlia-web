@@ -153,7 +153,7 @@ const UpdateContactEmailButton = () => {
       variant="primary-outlined"
       className={styles.saveButton}
       size="sm"
-      // TODO: DAH-****: Merge with login email
+      // TODO: DAH-4431: Merge with login email
       onClick={() => reverificationNavigation(REVERIFICATION_FLOW.UPDATE_CONTACT_EMAIL)}
     >
       {t("accountSettings.email.updateEmail")}
