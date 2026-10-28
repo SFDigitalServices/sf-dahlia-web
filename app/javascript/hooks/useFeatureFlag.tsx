@@ -16,6 +16,17 @@ export const useFeatureFlag = (flagName: string, defaultValue: boolean) => {
   const unleashFlag = useFlagUnleash(flagName)
 
   const allowUrlOverride = urlWhiteList.has(flagName) || process.env.UNLEASH_ENV === "development"
+
+  // local-only override for manual testing; must match the Rails side (ClerkOrDeviseAuth.clerk_enabled?)
+  const clerkOverride = process.env.CLERK_AUTH_FLAG_OVERRIDE
+  if (
+    flagName === "temp.webapp.auth.clerk" &&
+    process.env.UNLEASH_ENV === "development" &&
+    (clerkOverride === "true" || clerkOverride === "false")
+  ) {
+    return { flagsReady: true, unleashFlag: clerkOverride === "true" }
+  }
+
   if (doesURLHaveFlag && allowUrlOverride) {
     if (flagFromUrl === "true") {
       return { flagsReady: true, unleashFlag: true }
