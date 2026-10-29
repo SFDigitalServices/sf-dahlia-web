@@ -12,7 +12,6 @@ import {
   AppPages,
   getAddPasswordPath,
   getChangePasswordPath,
-  getMyAccountContactPath,
   getUpdateEmailPath,
   RedirectType,
 } from "../../util/routeUtil"
@@ -224,15 +223,11 @@ const EmailSection = () => {
             })
           }}
         >
-          {t("accountSettings.email.updateEmail")}
+          {t("accountSettings.changeEmail")}
         </Button>
       </div>
       <p className={settingsStyles.settingsText}>
-        {renderInlineMarkup(
-          t("accountSettings.email.subtitle", {
-            url: getMyAccountContactPath(),
-          })
-        )}
+        {renderInlineMarkup(t("accountSettings.changeEmailDescription"))}
       </p>
     </FormSection>
   )
