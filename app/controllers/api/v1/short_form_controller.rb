@@ -82,7 +82,7 @@ class Api::V1::ShortFormController < ApiController
     return if params['autosave'] == 'true' && params['initialSave'] != 'true'
 
     response =
-      Force::ShortFormService.create_or_update(application_params, applicant_attrs)
+      Force::ShortFormService.create_or_update(application_payload, applicant_attrs)
     if response.present?
       Rails.logger.info(
         'ShortFormController#submit_application: ' \
@@ -352,6 +352,12 @@ class Api::V1::ShortFormController < ApiController
 
   def acting_for_applicant?
     current_user.present? && current_hc_session!.present?
+  end
+
+  def application_payload
+    return application_params unless acting_for_applicant?
+
+    application_params.merge(submittedBy: current_user.salesforce_contact_id)
   end
 
   def user_contact_id

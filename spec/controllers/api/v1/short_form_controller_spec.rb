@@ -171,6 +171,16 @@ describe Api::V1::ShortFormController, type: :controller do
         expect(Force::ShortFormService).to have_received(:create_or_update)
           .with(anything, hash_excluding(:webAppID))
       end
+
+      # Given a counselor with a valid delegate session
+      # When the counselor submits an application
+      # Then the top-level submittedBy is the counselor's contact id
+      it 'records the counselor as submittedBy' do
+        post :submit_application
+
+        expect(Force::ShortFormService).to have_received(:create_or_update)
+          .with(hash_including(submittedBy: counselor_contact_id), anything)
+      end
     end
   end
 
