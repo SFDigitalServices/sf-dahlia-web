@@ -194,7 +194,7 @@ describe("<UpdateEmail />", () => {
       expect(mockNavigate).toHaveBeenCalledWith(getUpdateEmailCodePath(), {
         state: {
           verificationCodeEmailAddress: "new@example.com",
-          flow: AUTH_FLOW.UPDATE_LOGIN_EMAIL,
+          flow: AUTH_FLOW.UPDATE_EMAIL,
         },
       })
     })
@@ -277,7 +277,7 @@ describe("<UpdateEmail />", () => {
       expect(mockNavigate).toHaveBeenCalledWith(getUpdateEmailCodePath(), {
         state: {
           verificationCodeEmailAddress: "new@example.com",
-          flow: AUTH_FLOW.UPDATE_LOGIN_EMAIL,
+          flow: AUTH_FLOW.UPDATE_EMAIL,
         },
       })
     })

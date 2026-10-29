@@ -85,7 +85,7 @@ const renderUpdateEmailFlow = async (user: unknown) => {
   setupUserContext({ loggedIn: true })
   ;(useLocation as jest.Mock).mockReturnValue({
     pathname: "/update-email/code",
-    state: { verificationCodeEmailAddress: "new@example.com", flow: AUTH_FLOW.UPDATE_LOGIN_EMAIL },
+    state: { verificationCodeEmailAddress: "new@example.com", flow: AUTH_FLOW.UPDATE_EMAIL },
   })
   ;(useUser as jest.Mock).mockReturnValue({ isLoaded: true, isSignedIn: true, user })
   await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
@@ -1005,7 +1005,7 @@ describe("<EnterVerificationCode />", () => {
 
     await waitFor(() => {
       expect(mockNavigate).toHaveBeenCalledWith(getUpdateEmailPath(), {
-        state: { flow: AUTH_FLOW.UPDATE_LOGIN_EMAIL, saveFailed: true },
+        state: { flow: AUTH_FLOW.UPDATE_EMAIL, saveFailed: true },
       })
     })
     expect(user.update).not.toHaveBeenCalled()

@@ -1,9 +1,8 @@
 /* eslint-disable @typescript-eslint/unbound-method */
-import React, { useContext, useEffect, useRef, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import withAppSetup from "../../layouts/withAppSetup"
 import {
   AppPages,
-  getMyAccountContactPath,
   getMyAccountSettingsPath,
   getSignInPath,
   getUpdateEmailCodePath,
@@ -25,48 +24,31 @@ import EmailFieldset, {
 import { ErrorSummaryBanner } from "./components/ErrorSummaryBanner"
 import { getErrorMessage } from "./components/util"
 import { useSignUpSession } from "../../authentication/session/useSignUpSession"
-import { useAuthSession } from "../../authentication/session/AuthSessionProvider"
-import UserContext from "../../authentication/context/UserContext"
-import { bearerToken } from "../../authentication/session/authStatus"
-import { updateContactEmail } from "../../api/authApiService"
 
 const UpdateEmailPage = () => {
   const {
     register,
     handleSubmit,
     setError,
-    watch,
     formState: { errors },
   } = useForm({ mode: "onSubmit", shouldFocusError: false })
   const navigate = useNavigate()
   const { user, isAccountInitialized } = useSignUpSession()
   const location = useLocation()
-  const { profile, saveProfile } = useContext(UserContext)
-  const { getCredentials } = useAuthSession()
   const [loading, setLoading] = useState(false)
-  const flow =
-    (location.state as { flow?: AUTH_FLOW } | null)?.flow === AUTH_FLOW.UPDATE_CONTACT_EMAIL
-      ? AUTH_FLOW.UPDATE_CONTACT_EMAIL
-      : AUTH_FLOW.UPDATE_LOGIN_EMAIL
-  const isContactFlow = flow === AUTH_FLOW.UPDATE_CONTACT_EMAIL
-  const cancelReturnPath = isContactFlow ? getMyAccountContactPath() : getMyAccountSettingsPath()
-
-  const salesforceSaveFailed = !!(location.state as { saveFailed?: boolean } | null)?.saveFailed
+  const saveFailed = !!(location.state as { saveFailed?: boolean } | null)?.saveFailed
   const saveFailedHandled = useRef(false)
 
   useEffect(() => {
-    if (!salesforceSaveFailed || saveFailedHandled.current) return
+    if (!saveFailed || saveFailedHandled.current) return
     saveFailedHandled.current = true
     setError("email", { message: "email:server:generic" })
-    void navigate(location.pathname, { replace: true, state: { flow } })
-  }, [flow, location.pathname, navigate, salesforceSaveFailed, setError])
+    void navigate(location.pathname, { replace: true })
+  }, [location.pathname, navigate, saveFailed, setError])
 
   if (!user) {
     return null
   }
-  const loginEmail = user.primaryEmailAddress?.emailAddress.toLowerCase()
-  const enteredEmail = (watch("email") as string | undefined)?.toLowerCase()
-  const isSavingContactEmailAsLogin = isContactFlow && !!enteredEmail && enteredEmail === loginEmail
 
   const sendEmailCode = async (email: string) => {
     const primaryEmailId = user.primaryEmailAddressId
@@ -82,58 +64,24 @@ const UpdateEmailPage = () => {
     await emailAddress.prepareVerification({ strategy: "email_code" })
   }
 
-  // Clerk cannot send a code to an existing email address. If the contact email is
-  // changed to the current login email, which is already verified in Clerk,
-  // we skip the verification code flow and update the salesforce contact email.
-  // There are no changes made to Clerk.
-  const saveVerifiedContactEmail = async (email: string) => {
-    if (!profile) throw new Error("Missing profile")
-
-    const sessionToken = bearerToken(await getCredentials())
-    if (!sessionToken) throw new Error("Missing Clerk session token")
-
-    const updatedProfile = await updateContactEmail(
-      { ...profile, email },
-      { clerkEnabled: true, sessionToken }
-    )
-    saveProfile?.(updatedProfile)
-    void navigate(getMyAccountContactPath(), { state: { contactEmailChanged: true } })
-  }
-
   const onGetCodeSubmit = async ({ email }: { email: string }) => {
     if (loading) return
     const newEmail = email.toLowerCase()
-    const loginEmail = user.primaryEmailAddress?.emailAddress.toLowerCase()
-    const currentEmail = isContactFlow ? profile?.email?.toLowerCase() : loginEmail
+    const currentEmail = user.primaryEmailAddress?.emailAddress.toLowerCase()
 
     if (newEmail === currentEmail) {
-      setError("email", {
-        message: isContactFlow ? "email:sameAsCurrentContactEmail" : "email:sameAsCurrentEmail",
-        shouldFocus: true,
-      })
+      setError("email", { message: "email:sameAsCurrentEmail", shouldFocus: true })
       return
     }
 
-    // Contact email changed to the login email: email is already verified
-    // in Clerk so no code flow needed
-    const skipVerificationCodeFlow = isContactFlow && newEmail === loginEmail
-
     setLoading(true)
     try {
-      if (skipVerificationCodeFlow) {
-        await saveVerifiedContactEmail(email)
-      } else {
-        await sendEmailCode(email)
-        void navigate(getUpdateEmailCodePath(), {
-          state: { verificationCodeEmailAddress: email, flow },
-        })
-      }
+      await sendEmailCode(email)
+      void navigate(getUpdateEmailCodePath(), {
+        state: { verificationCodeEmailAddress: email, flow: AUTH_FLOW.UPDATE_EMAIL },
+      })
     } catch (error) {
-      if (skipVerificationCodeFlow) {
-        setError("email", { message: "email:server:generic", shouldFocus: true })
-      } else {
-        setError(...handleClerkEmailErrors(error))
-      }
+      setError(...handleClerkEmailErrors(error))
     } finally {
       setLoading(false)
     }
@@ -161,9 +109,7 @@ const UpdateEmailPage = () => {
             />
           </div>
           <Button variant="primary" size="sm" type="submit" disabled={!isAccountInitialized}>
-            {isSavingContactEmailAsLogin
-              ? t("accountLayout.contact.saveEmail")
-              : t("createAccount.getCode")}
+            {t("createAccount.getCode")}
           </Button>
           <Button
             size="sm"
@@ -171,7 +117,7 @@ const UpdateEmailPage = () => {
             className={styles.cancelButton}
             type="button"
             onClick={() => {
-              void navigate(cancelReturnPath)
+              void navigate(getMyAccountSettingsPath())
             }}
           >
             {t("label.cancel")}

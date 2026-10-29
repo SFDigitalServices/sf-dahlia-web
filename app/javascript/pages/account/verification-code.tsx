@@ -23,7 +23,6 @@ import {
   getResetPasswordPath,
   getSignInPath,
   getMyAccountSettingsPath,
-  getMyAccountContactPath,
   getUpdateEmailPath,
 } from "../../util/routeUtil"
 import styles from "./verification-code.module.scss"
@@ -48,8 +47,7 @@ interface EnterVerificationCodePageProps {
 const RESEND_CODE_MS = 30000
 const CODE_FIELD = "code"
 
-const isUpdateEmailFlow = (flow?: AUTH_FLOW) =>
-  flow === AUTH_FLOW.UPDATE_LOGIN_EMAIL || flow === AUTH_FLOW.UPDATE_CONTACT_EMAIL
+const isUpdateEmailFlow = (flow?: AUTH_FLOW) => flow === AUTH_FLOW.UPDATE_EMAIL
 
 const remainingResendSeconds = (expiresAt: number) =>
   Math.max(0, Math.ceil((expiresAt - Date.now()) / 1000))
@@ -179,10 +177,19 @@ const EnterVerificationCodePage = ({
     )
   }
 
-  const verifyUpdateLoginEmailCode = async (code: string) => {
+  const updateSalesforceEmail = async (currentProfile: User, newEmail: string) => {
+    const sessionToken = bearerToken(await getCredentials())
+    if (!sessionToken) throw new Error("Missing Clerk session token")
+    return updateContactEmail(
+      { ...currentProfile, email: newEmail },
+      { clerkEnabled: true, sessionToken }
+    )
+  }
+
+  const verifyUpdateEmailCode = async (code: string) => {
     const emailAddress = findPendingEmailAddress()
     if (!user || !emailAddress) {
-      console.error("Update login email: missing required data")
+      ;+console.error("Update email: missing required data")
       void navigate(getUpdateEmailPath(), { state: { flow, saveFailed: true } })
       return
     }
@@ -203,84 +210,35 @@ const EnterVerificationCodePage = ({
           // can fail. The old address is still attached to the user in the Clerk DB and would
           // require cleanup.
           // https://github.com/SFDigitalServices/sf-dahlia-web/pull/3078#discussion_r4104585451
-          console.error(
-            "Update login email: failed to remove previous primary email address",
-            error
-          )
+          console.error("Update email: failed to remove previous primary email address", error)
         }
       }
-      void navigate(getMyAccountSettingsPath(), { state: { emailChanged: true } })
     } catch (error) {
-      console.error("Update login email: verification failed", error)
+      console.error("Update email: verification failed", error)
       setError(CODE_FIELD, { message: "invalid" })
     }
-  }
 
-  const updateSalesforceContactEmail = async (currentProfile: User, contactEmail: string) => {
-    const sessionToken = bearerToken(await getCredentials())
-    if (!sessionToken) throw new Error("Missing Clerk session token")
-    return updateContactEmail(
-      { ...currentProfile, email: contactEmail },
-      { clerkEnabled: true, sessionToken }
-    )
-  }
-  // Clerk is only used to verify ownership.
-  // The address is verified, saved to Salesforce, then removed from Clerk
-  const verifyUpdateContactEmailCode = async (code: string) => {
-    const emailAddress = findPendingEmailAddress()
-    if (!user || !emailAddress || !profile) {
-      console.error("Update contact email: missing required data")
-      void navigate(getUpdateEmailPath(), { state: { flow, saveFailed: true } })
-      return
-    }
-
-    const verifiedEmail = await emailAddress.attemptVerification({ code }).catch((error) => {
-      if (error?.errors?.[0]?.code !== "form_code_incorrect") {
-        console.error("Update contact email: verification failed", error)
+    // The Clerk email has already changed, so a Salesforce
+    // failure is logged rather than blocking the user.
+    if (profile) {
+      try {
+        const updatedProfile = await updateSalesforceEmail(profile, email)
+        saveProfile?.(updatedProfile)
+      } catch (error) {
+        console.error("Update email: Salesforce update failed", error)
       }
-      setError(CODE_FIELD, { message: "invalid" })
-      return null
-    })
-    if (!verifiedEmail) return
-
-    if (verifiedEmail.verification.status !== "verified") {
-      setError(CODE_FIELD, { message: "invalid" })
-      return
+    } else {
+      console.error("Update email: missing profile, Salesforce not updated")
     }
 
-    let updatedProfile: User | null = null
-    try {
-      updatedProfile = await updateSalesforceContactEmail(profile, email)
-    } catch (error) {
-      console.error("Update contact email: Salesforce update failed", error)
-    }
-    if (verifiedEmail.id !== user.primaryEmailAddressId) {
-      // TODO: There is a rare possibility the destroy may fail and create a stale address
-      // The address is attached to the user in the Clerk DB and would
-      // require cleanup.
-      // https://github.com/SFDigitalServices/sf-dahlia-web/pull/3078#discussion_r4104585451
-      await verifiedEmail
-        .destroy()
-        .catch((error) =>
-          console.error("Update contact email: failed to remove temporary address", error)
-        )
-    }
-
-    if (!updatedProfile) {
-      void navigate(getUpdateEmailPath(), { state: { flow, saveFailed: true } })
-      return
-    }
-
-    saveProfile?.(updatedProfile)
-    void navigate(getMyAccountContactPath(), { state: { contactEmailChanged: true } })
+    void navigate(getMyAccountSettingsPath(), { state: { emailChanged: true } })
   }
 
   const verifyAuthCodeByFlow: Record<AUTH_FLOW, (code: string) => Promise<void>> = {
     [AUTH_FLOW.SIGN_IN]: verifySignInCode,
     [AUTH_FLOW.CREATE_ACCOUNT]: verifySignUpCode,
     [AUTH_FLOW.FORGOT_PASSWORD]: verifyForgotPasswordCode,
-    [AUTH_FLOW.UPDATE_LOGIN_EMAIL]: verifyUpdateLoginEmailCode,
-    [AUTH_FLOW.UPDATE_CONTACT_EMAIL]: verifyUpdateContactEmailCode,
+    [AUTH_FLOW.UPDATE_EMAIL]: verifyUpdateEmailCode,
   }
 
   const onSubmit = async ({ code }: { code: string }) => verifyAuthCodeByFlow[flow](code)
@@ -333,8 +291,7 @@ const EnterVerificationCodePage = ({
     [AUTH_FLOW.SIGN_IN]: resendSignInCode,
     [AUTH_FLOW.CREATE_ACCOUNT]: resendSignUpCode,
     [AUTH_FLOW.FORGOT_PASSWORD]: resendForgotPasswordCode,
-    [AUTH_FLOW.UPDATE_LOGIN_EMAIL]: resendPendingEmailCode,
-    [AUTH_FLOW.UPDATE_CONTACT_EMAIL]: resendPendingEmailCode,
+    [AUTH_FLOW.UPDATE_EMAIL]: resendPendingEmailCode,
   }
 
   const onResend = async () => {
@@ -494,7 +451,6 @@ const EnterVerificationCode = (_props: { assetPaths: unknown }) => {
       return
     }
     const arrivedSignedIn = initialSessionKind === "signedIn"
-    console.log({ flow })
     if (!isSignedInUpdateFlow && arrivedSignedIn && isSignedIn && profile) {
       void navigate(getMyAccountPath(), { state: { flow } })
       return

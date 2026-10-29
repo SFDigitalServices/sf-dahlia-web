@@ -219,7 +219,7 @@ const EmailSection = () => {
           variant="primary-outlined"
           onClick={() => {
             void navigate(getUpdateEmailPath(), {
-              state: { flow: AUTH_FLOW.UPDATE_LOGIN_EMAIL },
+              state: { flow: AUTH_FLOW.UPDATE_EMAIL },
             })
           }}
         >
