@@ -132,6 +132,27 @@ describe Api::V1::ShortFormController, type: :controller do
         expect(response).to have_http_status(:service_unavailable)
         expect(Force::ShortFormService).not_to have_received(:create_or_update)
       end
+
+      # Given an applicant signed in with Clerk, no delegate session, and the HC flag on
+      # When the applicant submits an application
+      # Then the top-level submittedBy is the applicant's own contact id
+      context 'with the housing counselor flag on and no delegate session' do
+        before do
+          allow(Rails.configuration.unleash).to receive(:is_enabled?)
+            .with(HousingCounselorSession::FEATURE_FLAG).and_return(true)
+        end
+
+        it 'records the signed-in applicant as submittedBy' do
+          allow(controller).to receive(:clerk).and_return(double(user_id: 'user_abc123'))
+          allow(ClerkService).to receive(:salesforce_contact_id)
+            .and_return('contact_abc123')
+
+          post :submit_application
+
+          expect(Force::ShortFormService).to have_received(:create_or_update)
+            .with(hash_including(submittedBy: 'contact_abc123'), anything)
+        end
+      end
     end
     # Given a counselor with an hc_session cookie and the housing counselor flag off
     # When the counselor submits an application
