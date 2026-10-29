@@ -9,7 +9,7 @@ interface GetHelpProps {
   flow: AUTH_FLOW
 }
 
-const HELP_BY_FLOW: Record<AUTH_FLOW, { textKey: string; href: string }> = {
+const HELP_BY_FLOW: Partial<Record<AUTH_FLOW, { textKey: string; href: string }>> = {
   [AUTH_FLOW.SIGN_IN]: {
     textKey: "signIn.getHelpLink",
     href: "https://www.sf.gov/sign-in-to-your-dahlia-account",
@@ -22,17 +22,13 @@ const HELP_BY_FLOW: Record<AUTH_FLOW, { textKey: string; href: string }> = {
     textKey: "signIn.getHelpLink",
     href: "https://www.sf.gov/sign-in-to-your-dahlia-account",
   },
-  [AUTH_FLOW.UPDATE_LOGIN_EMAIL]: {
-    textKey: "signIn.getHelpLink",
-    href: "https://www.sf.gov/sign-in-to-your-dahlia-account",
-  },
-  [AUTH_FLOW.UPDATE_CONTACT_EMAIL]: {
-    textKey: "signIn.getHelpLink",
-    href: "https://www.sf.gov/sign-in-to-your-dahlia-account",
-  },
 }
 
 const GetHelp = ({ flow }: GetHelpProps) => {
+  if (!HELP_BY_FLOW[flow]) {
+    return null
+  }
+
   const { textKey, href } = HELP_BY_FLOW[flow]
 
   return (

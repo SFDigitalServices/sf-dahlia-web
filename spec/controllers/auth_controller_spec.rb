@@ -107,4 +107,16 @@ RSpec.describe AuthController do
       expect(response).to render_template 'layouts/application-react'
     end
   end
+
+  describe '#reverification' do
+    it 'loads reverification page successfully' do
+      get :reverification
+      expect(response).to be_ok
+    end
+
+    it 'renders in react by default' do
+      get :reverification
+      expect(response).to render_template 'layouts/application-react'
+    end
+  end
 end

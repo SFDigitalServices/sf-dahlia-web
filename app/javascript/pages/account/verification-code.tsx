@@ -37,11 +37,18 @@ import {
   updateContactEmail,
 } from "../../api/authApiService"
 import { User } from "../../authentication/user"
+import {
+  REVERIFICATION_FLOW,
+  reverificationDestinations,
+  toReverificationFlow,
+} from "../../util/accountUtil"
+import { useSession } from "@clerk/react"
 
 interface EnterVerificationCodePageProps {
   email: string
   flow: AUTH_FLOW
   returnUrl?: string
+  returnToAuthFlow?: REVERIFICATION_FLOW
 }
 
 // The user can send a new verification code every 30 seconds
@@ -51,6 +58,9 @@ const CODE_FIELD = "code"
 const isUpdateEmailFlow = (flow?: AUTH_FLOW) =>
   flow === AUTH_FLOW.UPDATE_LOGIN_EMAIL || flow === AUTH_FLOW.UPDATE_CONTACT_EMAIL
 
+const requiresSignedInUser = (flow?: AUTH_FLOW) =>
+  isUpdateEmailFlow(flow) || flow === AUTH_FLOW.REVERIFICATION
+
 const remainingResendSeconds = (expiresAt: number) =>
   Math.max(0, Math.ceil((expiresAt - Date.now()) / 1000))
 
@@ -58,6 +68,7 @@ const EnterVerificationCodePage = ({
   email,
   flow,
   housingCounselorToken,
+  returnToAuthFlow,
   returnUrl = getMyAccountPath(),
 }: EnterVerificationCodePageProps & { housingCounselorToken?: string | null }) => {
   const navigate = useNavigate()
@@ -71,6 +82,7 @@ const EnterVerificationCodePage = ({
   const [isResending, setIsResending] = useState(false)
   const { user } = useSignUpSession()
   const { profile, saveProfile } = useContext(UserContext)
+  const { session } = useSession()
 
   const {
     control,
@@ -199,7 +211,7 @@ const EnterVerificationCodePage = ({
         try {
           await previousEmailAddress.destroy()
         } catch (error) {
-          // TODO: There is a possibility the primary email can be updated but this destroy
+          // TODO: DAH-4369 There is a possibility the primary email can be updated but this destroy
           // can fail. The old address is still attached to the user in the Clerk DB and would
           // require cleanup.
           // https://github.com/SFDigitalServices/sf-dahlia-web/pull/3078#discussion_r4104585451
@@ -216,6 +228,7 @@ const EnterVerificationCodePage = ({
     }
   }
 
+  // TODO: DAH: **** Remove contact email
   const updateSalesforceContactEmail = async (currentProfile: User, contactEmail: string) => {
     const sessionToken = bearerToken(await getCredentials())
     if (!sessionToken) throw new Error("Missing Clerk session token")
@@ -255,7 +268,7 @@ const EnterVerificationCodePage = ({
       console.error("Update contact email: Salesforce update failed", error)
     }
     if (verifiedEmail.id !== user.primaryEmailAddressId) {
-      // TODO: There is a rare possibility the destroy may fail and create a stale address
+      // TODO: DAH-4369 There is a rare possibility the destroy may fail and create a stale address
       // The address is attached to the user in the Clerk DB and would
       // require cleanup.
       // https://github.com/SFDigitalServices/sf-dahlia-web/pull/3078#discussion_r4104585451
@@ -275,12 +288,31 @@ const EnterVerificationCodePage = ({
     void navigate(getMyAccountContactPath(), { state: { contactEmailChanged: true } })
   }
 
+  const verifyReverificationCode = async (code: string) => {
+    const returnFlow = toReverificationFlow(returnToAuthFlow)
+    if (!session || !returnFlow) {
+      console.error("Reverification: missing required data")
+      void navigate(getMyAccountSettingsPath())
+      return
+    }
+
+    try {
+      await session.attemptFirstFactorVerification({ strategy: "email_code", code })
+      const destination = reverificationDestinations[returnFlow]
+      void navigate(destination.path(), { replace: true, state: destination.state })
+    } catch (error) {
+      console.error("Reverification: verification failed", error)
+      setError(CODE_FIELD, { message: "invalid" })
+    }
+  }
+
   const verifyAuthCodeByFlow: Record<AUTH_FLOW, (code: string) => Promise<void>> = {
     [AUTH_FLOW.SIGN_IN]: verifySignInCode,
     [AUTH_FLOW.CREATE_ACCOUNT]: verifySignUpCode,
     [AUTH_FLOW.FORGOT_PASSWORD]: verifyForgotPasswordCode,
     [AUTH_FLOW.UPDATE_LOGIN_EMAIL]: verifyUpdateLoginEmailCode,
     [AUTH_FLOW.UPDATE_CONTACT_EMAIL]: verifyUpdateContactEmailCode,
+    [AUTH_FLOW.REVERIFICATION]: verifyReverificationCode,
   }
 
   const onSubmit = async ({ code }: { code: string }) => verifyAuthCodeByFlow[flow](code)
@@ -329,12 +361,36 @@ const EnterVerificationCodePage = ({
     }
   }
 
+  const resendReverificationCode = async (): Promise<boolean> => {
+    if (!session) return false
+
+    try {
+      const verification = await session.startVerification({ level: "first_factor" })
+      const emailFactor = verification.supportedFirstFactors?.find(
+        (factor) => factor.strategy === "email_code"
+      )
+      if (!emailFactor) {
+        console.error("Resend reverification code error: email code factor not available")
+        return false
+      }
+      await session.prepareFirstFactorVerification({
+        strategy: "email_code",
+        emailAddressId: emailFactor.emailAddressId,
+      })
+      return true
+    } catch (error) {
+      console.error("Resend reverification code error:", error)
+      return false
+    }
+  }
+
   const resendCodeByFlow: Record<AUTH_FLOW, () => Promise<boolean>> = {
     [AUTH_FLOW.SIGN_IN]: resendSignInCode,
     [AUTH_FLOW.CREATE_ACCOUNT]: resendSignUpCode,
     [AUTH_FLOW.FORGOT_PASSWORD]: resendForgotPasswordCode,
     [AUTH_FLOW.UPDATE_LOGIN_EMAIL]: resendPendingEmailCode,
     [AUTH_FLOW.UPDATE_CONTACT_EMAIL]: resendPendingEmailCode,
+    [AUTH_FLOW.REVERIFICATION]: resendReverificationCode,
   }
 
   const onResend = async () => {
@@ -363,20 +419,22 @@ const EnterVerificationCodePage = ({
           {t("createAccount.weSentCodeTo")}
           <br />
           <span className={styles.email}>{email}</span>
-          <Button
-            className={styles.editEmail}
-            variant="text"
-            size="sm"
-            type="button"
-            onClick={() => {
-              void navigate(
-                editEmailHref,
-                isUpdateEmailFlow(flow) ? { state: { flow } } : undefined
-              )
-            }}
-          >
-            {t("createAccount.editEmail")}
-          </Button>
+          {flow !== AUTH_FLOW.REVERIFICATION && (
+            <Button
+              className={styles.editEmail}
+              variant="text"
+              size="sm"
+              type="button"
+              onClick={() => {
+                void navigate(
+                  editEmailHref,
+                  isUpdateEmailFlow(flow) ? { state: { flow } } : undefined
+                )
+              }}
+            >
+              {t("createAccount.editEmail")}
+            </Button>
+          )}
         </p>
         {isForgotPasswordFlow && (
           <p className={styles["forgotPasswordDescription"]}>{t("signIn.forgotPasswordCode")}</p>
@@ -464,13 +522,11 @@ const EnterVerificationCode = (_props: { assetPaths: unknown }) => {
   const { profile, profileMissing } = useContext(UserContext)
   const isSignedIn = status.kind === "signedIn"
   const loadingProfile = isSignedIn && !profileMissing && !profile
-
   const { state: reactRouterState } = useLocation()
   const verificationCodeEmailAddress = reactRouterState?.verificationCodeEmailAddress
   const flow: AUTH_FLOW = reactRouterState?.flow
   const fallbackPath = flow ? getAuthFlowPath(flow) : getSignInPath()
-  const isSignedInUpdateFlow = isUpdateEmailFlow(flow)
-
+  const flowRequiresSignedInUser = requiresSignedInUser(flow)
   // user may transition from signedOut to signedIn on this page
   // keep track of the initial status of the user when they first visited the page
   const [initialSessionKind, setInitialSessionKind] = useState<"signedIn" | "signedOut" | null>(
@@ -494,12 +550,11 @@ const EnterVerificationCode = (_props: { assetPaths: unknown }) => {
       return
     }
     const arrivedSignedIn = initialSessionKind === "signedIn"
-    console.log({ flow })
-    if (!isSignedInUpdateFlow && arrivedSignedIn && isSignedIn && profile) {
+    if (!flowRequiresSignedInUser && arrivedSignedIn && isSignedIn && profile) {
       void navigate(getMyAccountPath(), { state: { flow } })
       return
     }
-    if (!isSignedInUpdateFlow && arrivedSignedIn && isSignedIn && !profile) {
+    if (!flowRequiresSignedInUser && arrivedSignedIn && isSignedIn && !profile) {
       void navigate(getAddProfilePath(), { state: { flow } })
       return
     }
@@ -515,7 +570,7 @@ const EnterVerificationCode = (_props: { assetPaths: unknown }) => {
     profile,
     navigate,
     fallbackPath,
-    isSignedInUpdateFlow,
+    flowRequiresSignedInUser,
   ])
 
   const ready =
@@ -524,7 +579,7 @@ const EnterVerificationCode = (_props: { assetPaths: unknown }) => {
     status.kind !== "initializing" &&
     !loadingProfile &&
     !!flow &&
-    (isSignedInUpdateFlow ? isSignedIn : status.kind === "signedOut") &&
+    (flowRequiresSignedInUser ? isSignedIn : status.kind === "signedOut") &&
     !!verificationCodeEmailAddress
 
   if (!ready) {
@@ -535,6 +590,7 @@ const EnterVerificationCode = (_props: { assetPaths: unknown }) => {
     <EnterVerificationCodePage
       email={verificationCodeEmailAddress}
       flow={flow}
+      returnToAuthFlow={reactRouterState?.returnToAuthFlow}
       housingCounselorToken={reactRouterState?.housingCounselorToken}
       returnUrl={reactRouterState?.returnUrl}
     />

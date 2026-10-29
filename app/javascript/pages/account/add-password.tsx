@@ -25,6 +25,8 @@ import styles from "./add-password.module.scss"
 import GetHelp from "./components/GetHelp"
 import PasswordFieldset from "./components/PasswordFieldset"
 import "./styles/account.scss"
+import { REVERIFICATION_FLOW, useReverificationRedirect } from "../../util/accountUtil"
+import { useAuth } from "@clerk/react"
 
 interface AddPasswordPageProps {
   flow: AUTH_FLOW
@@ -41,6 +43,8 @@ const AddPasswordPage = ({ flow, isAccountSettingsFlow }: AddPasswordPageProps) 
   const { setPassword, isAccountInitialized } = useSignUpSession()
   const [isResettingPassword, setIsResettingPassword] = useState(false)
   const isForgotPasswordFlow = flow === AUTH_FLOW.FORGOT_PASSWORD
+  const { redirectToReverification } = useReverificationRedirect(REVERIFICATION_FLOW.ADD_PASSWORD)
+  const { has } = useAuth()
 
   const {
     register,
@@ -81,6 +85,12 @@ const AddPasswordPage = ({ flow, isAccountSettingsFlow }: AddPasswordPageProps) 
     if (!isAccountInitialized) return
     if (isForgotPasswordFlow) {
       void resetPassword(newPassword)
+      return
+    }
+
+    const needsVerification = !has?.({ reverification: "strict" })
+    if (isAccountSettingsFlow && needsVerification) {
+      redirectToReverification()
       return
     }
 
@@ -164,6 +174,11 @@ const AddPassword = (_props: { assetPaths: unknown }) => {
   const flow = state?.flow
   // TODO: adding another state key with the word 'flow' is confusing, we already have the enum AUTH_FLOW
   const isAccountSettingsFlow = state?.accountSettingsFlow === true
+  const { needsReverification, redirectToReverification } = useReverificationRedirect(
+    REVERIFICATION_FLOW.ADD_PASSWORD
+  )
+  // Prevents users arriving from sign up page needing to reverify
+  const requiresReverification = isAccountSettingsFlow && needsReverification
   const { status } = useAuthSession()
   const { isAccountInitialized, hasPassword } = useSignUpSession()
   const { profile, initialStateLoaded } = useContext(UserContext)
@@ -175,11 +190,16 @@ const AddPassword = (_props: { assetPaths: unknown }) => {
       void navigate(getSignInPath())
       return
     }
-  }, [flagsReady, clerkEnabled, navigate])
+    if (requiresReverification) {
+      redirectToReverification()
+      return
+    }
+  }, [flagsReady, clerkEnabled, navigate, requiresReverification, redirectToReverification])
 
   const ready =
     flagsReady &&
     clerkEnabled &&
+    !requiresReverification &&
     status.kind === "signedIn" &&
     isAccountInitialized &&
     !hasPassword &&

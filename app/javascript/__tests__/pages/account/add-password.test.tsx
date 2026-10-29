@@ -1,5 +1,5 @@
 import React from "react"
-import { useClerk, useSignIn, useSignUp, useUser } from "@clerk/react"
+import { useAuth, useClerk, useSignIn, useSignUp, useUser } from "@clerk/react"
 import { screen, waitFor, cleanup } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
 import { useLocation, useNavigate } from "react-router"
@@ -12,6 +12,7 @@ import {
 import { setupUserContext } from "../../__util__/accountUtils"
 import { useFeatureFlag } from "../../../hooks/useFeatureFlag"
 import { AUTH_FLOW } from "../../../modules/constants"
+import { getReverificationPath } from "../../../util/routeUtil"
 
 jest.mock("../../../authentication/withAuthentication", () => ({
   withAuthentication:
@@ -74,6 +75,12 @@ describe("<AddPassword />", () => {
       isLoaded: true,
       isSignedIn: true,
       user: { updatePassword: mockUpdatePassword, passwordEnabled: false },
+    })
+    ;(useAuth as jest.Mock).mockReturnValue({
+      isLoaded: true,
+      isSignedIn: true,
+      getToken: jest.fn().mockResolvedValue("clerk-session-token"),
+      has: jest.fn().mockReturnValue(true),
     })
     await renderAndLoadAsync(<AddPassword assetPaths={{}} />)
   })
@@ -291,6 +298,12 @@ describe("<AddPassword />", () => {
         isSignedIn: true,
         user: { updatePassword: mockUpdatePassword, passwordEnabled: false },
       })
+      ;(useAuth as jest.Mock).mockReturnValue({
+        isLoaded: true,
+        isSignedIn: true,
+        getToken: jest.fn().mockResolvedValue("clerk-session-token"),
+        has: jest.fn().mockReturnValue(true),
+      })
       await renderAndLoadAsync(<AddPassword assetPaths={{}} />)
     })
 
@@ -323,6 +336,32 @@ describe("<AddPassword />", () => {
       expect(mockNavigate).toHaveBeenCalledWith("/account/settings", {
         state: { passwordChanged: true },
       })
+    })
+
+    it("redirects to reverification on submit when the session is stale", async () => {
+      cleanup()
+      mockNavigate.mockClear()
+      const mockHas = jest.fn().mockReturnValue(true)
+      ;(useAuth as jest.Mock).mockReturnValue({
+        isLoaded: true,
+        isSignedIn: true,
+        getToken: jest.fn().mockResolvedValue("clerk-session-token"),
+        has: mockHas,
+      })
+      await renderAndLoadAsync(<AddPassword assetPaths={{}} />)
+      mockHas.mockReturnValue(false)
+      const user = userEvent.setup()
+      await user.type(screen.getByTestId("password-field"), "abcd1234")
+      await user.click(screen.getByRole("button", { name: /add password/i }))
+
+      await waitFor(() => {
+        expect(mockNavigate).toHaveBeenCalledWith(
+          { pathname: getReverificationPath(), search: "flow=addPassword" },
+          { replace: true }
+        )
+      })
+
+      expect(mockUpdatePassword).not.toHaveBeenCalled()
     })
   })
 })
