@@ -153,6 +153,51 @@ describe Api::V1::ShortFormController, type: :controller do
     end
   end
 
+  describe '#update_application' do
+    # Given a counselor with a valid hc_session for applicant A
+    # When the counselor saves a draft owned by applicant B
+    # Then the response is 401 and nothing is sent to Salesforce
+    context 'when signed in as a housing counselor with a valid hc_session cookie' do
+      include_context 'with a housing counselor session'
+
+      let(:update_params) do
+        { id: 'app123',
+          application: { id: 'app123', status: 'draft', listingID: 'listing123',
+                         primaryApplicant: { email: 'test@example.com' } } }
+      end
+
+      def draft_owned_by(contact_id)
+        { 'id' => 'app123', 'status' => 'Draft',
+          'primaryApplicant' => { 'contactId' => contact_id } }
+      end
+
+      before do
+        allow(Force::ShortFormService).to receive(:create_or_update)
+          .and_return('id' => 'app123')
+        allow(controller).to receive(:process_submit_app_response)
+      end
+
+      it "saves the delegated applicant's own draft" do
+        allow(Force::ShortFormService).to receive(:get)
+          .and_return(draft_owned_by(applicant_contact_id))
+
+        put :update_application, params: update_params
+
+        expect(response).to have_http_status(:ok), response.body
+        expect(Force::ShortFormService).to have_received(:create_or_update)
+      end
+
+      it 'rejects a draft owned by a different applicant' do
+        allow(Force::ShortFormService).to receive(:get)
+          .and_return(draft_owned_by('different_contact_123'))
+
+        put :update_application, params: update_params
+        expect(response).to have_http_status(:unauthorized)
+        expect(Force::ShortFormService).not_to have_received(:create_or_update)
+      end
+    end
+  end
+
   describe '#delete_proof' do
     let(:contact_id) { 'contact_abc123' }
     let(:devise_user) { create(:user, salesforce_contact_id: contact_id) }
