@@ -133,6 +133,24 @@ describe Api::V1::ShortFormController, type: :controller do
         expect(Force::ShortFormService).not_to have_received(:create_or_update)
       end
     end
+    # Given a counselor with an hc_session cookie and the housing counselor flag off
+    # When the counselor submits an application
+    # Then it is filed under the counselor's own contact id and webAppID
+    context 'with the Housing Counselor flag off' do
+      include_context 'with a housing counselor session'
+      before do
+        allow(Rails.configuration.unleash).to receive(:is_enabled?)
+          .with(HousingCounselorSession::FEATURE_FLAG).and_return(false)
+        allow(controller).to receive(:applicant_attrs).and_call_original
+      end
+      it 'submits the application with the counselors own contact id and webAppID' do
+        post :submit_application
+
+        expect(Force::ShortFormService).to have_received(:create_or_update)
+          .with(anything, hash_including(contactId: counselor_contact_id,
+                                         webAppID: 'user_counselor'))
+      end
+    end
 
     # Given a counselor signed in with Clerk and a valid hc_session for an applicant
     # When the counselor submits an application
