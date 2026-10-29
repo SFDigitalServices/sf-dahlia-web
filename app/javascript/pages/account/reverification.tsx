@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/unbound-method */
-import { emailRegex, Form, t } from "@bloom-housing/ui-components"
-import { Button, Card, Heading, Link, LoadingState } from "@bloom-housing/ui-seeds"
+import { Form, t } from "@bloom-housing/ui-components"
+import { Button, Card, Heading, LoadingState } from "@bloom-housing/ui-seeds"
 import { useSession } from "@clerk/react"
 import React, { useCallback, useEffect, useState } from "react"
 import { useNavigate, useSearchParams } from "react-router"
@@ -9,8 +9,6 @@ import withAppSetup from "../../layouts/withAppSetup"
 import { AUTH_FLOW, UNLEASH_FLAG } from "../../modules/constants"
 import {
   AppPages,
-  createPath,
-  getForgotPasswordPath,
   getMyAccountSettingsPath,
   getReverificationCodePath,
   getSignInPath,
@@ -49,9 +47,6 @@ const ReverificationPage = () => {
   const flow = toReverificationFlow(searchParams.get("flow"))
   const userHasPassword = user?.passwordEnabled ?? false
   const email = user?.primaryEmailAddress?.emailAddress
-  const forgotPasswordPath = createPath(getForgotPasswordPath(), {
-    email: email && emailRegex.test(email) ? email : "",
-  })
 
   const goToReverificationDestination = useCallback(() => {
     if (!flow) return
@@ -140,11 +135,8 @@ const ReverificationPage = () => {
         sortOrder={passwordSortOrder}
         messageMap={(messageKey) => getErrorMessage(messageKey, passwordFieldsetErrors, true)}
       />
-      <Form className={styles["form"]} onSubmit={handleSubmit(onSubmitPassword)}>
+      <Form onSubmit={handleSubmit(onSubmitPassword)}>
         <EmailFieldset register={register} errors={errors} defaultEmail={email} disabled />
-        <span className={styles.forgotPassword}>
-          <Link href={forgotPasswordPath}>{t("signIn.forgotPassword")}</Link>
-        </span>
         <PasswordFieldset
           register={register}
           errors={errors}

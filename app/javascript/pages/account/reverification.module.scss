@@ -1,7 +1,3 @@
-.form {
-  position: relative;
-}
-
 .reverificationHeader {
   padding-bottom: var(--seeds-s4) !important;
 }
@@ -19,10 +15,4 @@
 
 .submitButton {
   margin: var(--seeds-s4) 0 var(--seeds-s6) 0;
-}
-
-.forgotPassword {
-  position: absolute;
-  right: 0;
-  font-size: var(--seeds-font-size-sm);
 }
