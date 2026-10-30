@@ -97,7 +97,7 @@ exports[`Listing Detail renders a habitat listing 1`] = `
             class="site-header__base  site-header__base-wrapped"
           >
             <div
-              class="site-header__logo-container site-header__logo-width-med"
+              class="site-header__logo-container mobile-header-logo site-header__logo-width-med"
               id="site-header-logo"
             >
               <a
@@ -117,7 +117,7 @@ exports[`Listing Detail renders a habitat listing 1`] = `
               </a>
             </div>
             <div
-              class="site-header__navbar-menu site-header__navbar-wrapped"
+              class="site-header__navbar-menu mobile-header-side site-header__navbar-wrapped"
               id="site-header-links"
             >
               <a
@@ -5063,7 +5063,7 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
             class="site-header__base  site-header__base-wrapped"
           >
             <div
-              class="site-header__logo-container site-header__logo-width-med"
+              class="site-header__logo-container mobile-header-logo site-header__logo-width-med"
               id="site-header-logo"
             >
               <a
@@ -5083,7 +5083,7 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
               </a>
             </div>
             <div
-              class="site-header__navbar-menu site-header__navbar-wrapped"
+              class="site-header__navbar-menu mobile-header-side site-header__navbar-wrapped"
               id="site-header-links"
             >
               <a
@@ -10010,7 +10010,7 @@ exports[`Listing Detail renders an open rental listing 1`] = `
             class="site-header__base  site-header__base-wrapped"
           >
             <div
-              class="site-header__logo-container site-header__logo-width-med"
+              class="site-header__logo-container mobile-header-logo site-header__logo-width-med"
               id="site-header-logo"
             >
               <a
@@ -10030,7 +10030,7 @@ exports[`Listing Detail renders an open rental listing 1`] = `
               </a>
             </div>
             <div
-              class="site-header__navbar-menu site-header__navbar-wrapped"
+              class="site-header__navbar-menu mobile-header-side site-header__navbar-wrapped"
               id="site-header-links"
             >
               <a

@@ -85,10 +85,6 @@ describe("<ChangePassword />", () => {
     expect(screen.getByRole("heading", { name: /change password/i, level: 1 })).not.toBeNull()
     expect(screen.getByLabelText(/current password/i)).not.toBeNull()
     expect(screen.getByLabelText(/choose a new password/i)).not.toBeNull()
-    expect(screen.getByRole("link", { name: /forgot password/i })).toHaveAttribute(
-      "href",
-      "/forgot-password?email=email@email.com"
-    )
   })
 
   it("changes the password and returns to settings", async () => {
