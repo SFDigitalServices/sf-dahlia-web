@@ -65,4 +65,19 @@ describe("useSignOutToSignIn", () => {
       })
     })
   })
+
+  describe("Given an ordinary account", () => {
+    describe("When sign-out succeeds", () => {
+      it("then they go to sign-in with a sign-out toast flag", async () => {
+        signOut.mockResolvedValue(undefined)
+        const { result } = renderSignOut(mockProfileStub)
+
+        await act(() => result.current())
+
+        expect(navigate).toHaveBeenCalledWith(getSignInPath(), {
+          state: { renderSignedOutToast: true },
+        })
+      })
+    })
+  })
 })

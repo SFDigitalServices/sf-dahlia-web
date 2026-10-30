@@ -1,6 +1,5 @@
 import React, { useContext } from "react"
 import { useLocation } from "react-router"
-
 import {
   AlertBox,
   AlertTypes,
@@ -38,6 +37,7 @@ import {
 } from "../util/routeUtil"
 import MetaTags from "./MetaTags"
 import ErrorBoundary, { BoundaryScope } from "../components/ErrorBoundary"
+import Toast from "../pages/account/components/Toast"
 import { HelmetProvider } from "react-helmet-async"
 
 import "./Layout.scss"
@@ -178,8 +178,13 @@ const LayoutContent = ({
   delegatedAccount?: { seekerName: string }
 }) => {
   const { getAssetPath } = useContext(ConfigContext)
-  const { pathname } = useLocation()
+  const { pathname, state } = useLocation()
   const { unleashFlag: accountLayoutEnabled } = useFeatureFlag(UNLEASH_FLAG.ACCOUNTS_LAYOUT, false)
+  const navState = state as {
+    renderSignedInToast?: boolean
+    renderSignedOutToast?: boolean
+    renderResetPasswordToast?: boolean
+  } | null
 
   if (window.document["documentMode"]) {
     /* eslint-disable-next-line react-hooks/immutability */
@@ -233,6 +238,14 @@ const LayoutContent = ({
     </>
   )
 
+  const signedInToast = <Toast variant="success">{t("signIn.alertMessage.confirmSignIn")}</Toast>
+
+  const signedOutToast = <Toast variant="success">{t("signOut.alertMessage.confirmSignOut")}</Toast>
+
+  const resetPasswordToast = (
+    <Toast variant="success">{t("accountSettings.changePasswordBanner")}</Toast>
+  )
+
   return (
     <HelmetProvider>
       <div className="notranslate site-wrapper">
@@ -267,6 +280,10 @@ const LayoutContent = ({
             }}
             mainContentId={"main-content"}
           />
+
+          {navState?.renderSignedInToast && signedInToast}
+          {navState?.renderSignedOutToast && signedOutToast}
+          {navState?.renderResetPasswordToast && resetPasswordToast}
 
           <main data-testid="main-content-test-id" id="main-content">
             <ErrorBoundary boundaryScope={BoundaryScope.content}>{children}</ErrorBoundary>

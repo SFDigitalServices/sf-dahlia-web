@@ -66,8 +66,10 @@ const AddPasswordPage = ({ flow, isAccountSettingsFlow }: AddPasswordPageProps) 
       return
     }
 
-    const { error: signInFinalizeError, notReady: finalizeNotReady } =
-      await activateSession(getMyAccountPath())
+    const { error: signInFinalizeError, notReady: finalizeNotReady } = await activateSession(
+      getMyAccountPath(),
+      { renderResetPasswordToast: true }
+    )
     if (finalizeNotReady) return
     if (signInFinalizeError) {
       console.error("Reset password error:", signInFinalizeError)
