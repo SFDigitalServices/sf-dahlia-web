@@ -10,6 +10,10 @@ import { within, screen, fireEvent, waitFor } from "@testing-library/react"
 import { useAuth } from "@clerk/react"
 import { mockProfileStub, setupUserContext } from "../../__util__/accountUtils"
 import { getSignInPath } from "../../../util/routeUtil"
+import {
+  AUTH_TOAST_TO_RENDER,
+  consumeAuthenticationToast,
+} from "../../../authentication/authenticationUtils"
 
 jest.mock("react-gtm-module", () => ({
   initialize: jest.fn(),
@@ -29,6 +33,7 @@ jest.mock("../../../hooks/useFeatureFlag", () => ({
 describe("<Account />", () => {
   beforeEach(() => {
     document.documentElement.lang = "en"
+    window.sessionStorage.clear()
     jest.spyOn(console, "error").mockImplementation(() => {})
     window.matchMedia = jest.fn().mockImplementation((query) => ({
       matches: true,
@@ -130,6 +135,7 @@ describe("<Account />", () => {
 
       await waitFor(() => expect(clerkSignOut).toHaveBeenCalled())
       await waitFor(() => expect(mockNavigate).toHaveBeenCalledWith(getSignInPath()))
+      expect(consumeAuthenticationToast()).toBe(AUTH_TOAST_TO_RENDER.SIGNED_OUT)
     })
 
     it("ends the Clerk session and routes to sign in from the account nav", async () => {
@@ -138,6 +144,7 @@ describe("<Account />", () => {
 
       await waitFor(() => expect(clerkSignOut).toHaveBeenCalled())
       await waitFor(() => expect(mockNavigate).toHaveBeenCalledWith(getSignInPath()))
+      expect(consumeAuthenticationToast()).toBe(AUTH_TOAST_TO_RENDER.SIGNED_OUT)
     })
 
     describe("as a housing counselor in a delegated account", () => {

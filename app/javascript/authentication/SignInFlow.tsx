@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import React, { useEffect, useRef, useState } from "react"
-import { Navigate, useLocation, useNavigate } from "react-router"
+import { useLocation, useNavigate } from "react-router"
 import { Form, t } from "@bloom-housing/ui-components"
 import {
   Alert,
@@ -28,6 +28,7 @@ import {
   getSignInCodePath,
 } from "../util/routeUtil"
 import { authorizeHousingCounselor, clearHousingCounselorSession } from "../api/authApiService"
+import { AUTH_TOAST_TO_RENDER, queueAuthenticationToast } from "./authenticationUtils"
 import { useAuthSession } from "./session/AuthSessionProvider"
 import { useSignInSession } from "./session/useSignInSession"
 import { bearerToken, isAuthInitialized } from "./session/authStatus"
@@ -89,6 +90,8 @@ const SignInFlow = () => {
   const [housingCounselorChecked, setHousingCounselorChecked] = useState(false)
   // Synchronous (unlike React state), so the effect below can never race ahead of onSubmit's own check.
   const housingCounselorHandledRef = useRef(false)
+  // When navigating via password submission, prevent navigation via useEffect
+  const navigateWithPasswordSubmitRef = useRef(false)
 
   // Default to password sign-in, but prefer the code flow if the user last signed in via email code.
   useEffect(() => {
@@ -168,11 +171,12 @@ const SignInFlow = () => {
       // their own account, never resuming a stale delegated session from
       // earlier in this browser.
       await clearHousingCounselorSession()
+      navigateWithPasswordSubmitRef.current = true
     }
 
     // we need to set the session token and *not* navigate away, so we have it for `checkHousingCounselorAccess()`
     // but that means we lose access to the `decorateUrl` utility function.
-    await activateSession()
+    const { error: activateSessionError } = await activateSession()
 
     if (housingCounselorToken) {
       const housingCounselorAccess = await checkHousingCounselorAccess()
@@ -189,6 +193,7 @@ const SignInFlow = () => {
     // Prevents the render-time redirect below from firing again (with a stale, query-less URL)
     // during the extra render pass that happens before this component unmounts.
     setHousingCounselorChecked(true)
+    if (!activateSessionError) queueAuthenticationToast(AUTH_TOAST_TO_RENDER.SIGNED_IN)
     void navigate(returnUrl ?? getMyAccountPath())
   }
 
@@ -252,10 +257,16 @@ const SignInFlow = () => {
     })()
   }, [getCredentials, isSignedIn, navigate])
 
-  // TODO: use of Navigate component is discouraged
-  if (isSignedIn && !getHousingCounselorToken() && !housingCounselorChecked) {
-    return <Navigate to={returnUrl ?? getMyAccountPath()} replace />
-  }
+  const shouldRedirectToFallback =
+    isSignedIn &&
+    !getHousingCounselorToken() &&
+    !housingCounselorChecked &&
+    !navigateWithPasswordSubmitRef.current
+
+  useEffect(() => {
+    if (!shouldRedirectToFallback) return
+    void navigate(returnUrl ?? getMyAccountPath(), { replace: true })
+  }, [shouldRedirectToFallback, navigate, returnUrl])
 
   const forgotPasswordPath = createPath(getForgotPasswordPath(), {
     email: emailField && emailRegex.test(emailField) ? emailField : "",
@@ -341,6 +352,8 @@ const SignInFlow = () => {
       ? t("signIn.badCredentials")
       : renderInlineMarkup(t("signIn.badCredentialsWithResetLink", { url: forgotPasswordPath }))
   }
+
+  if (shouldRedirectToFallback) return null
 
   return (
     <AuthLayout title={t("pageTitle.signIn")}>

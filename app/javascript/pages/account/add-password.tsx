@@ -5,6 +5,7 @@ import React, { useContext, useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { Navigate, useLocation, useNavigate } from "react-router"
 import UserContext from "../../authentication/context/UserContext"
+import { AUTH_TOAST_TO_RENDER } from "../../authentication/authenticationUtils"
 import { useAuthSession } from "../../authentication/session/AuthSessionProvider"
 import { useSignInSession } from "../../authentication/session/useSignInSession"
 import { useSignUpSession } from "../../authentication/session/useSignUpSession"
@@ -66,8 +67,10 @@ const AddPasswordPage = ({ flow, isAccountSettingsFlow }: AddPasswordPageProps) 
       return
     }
 
-    const { error: signInFinalizeError, notReady: finalizeNotReady } =
-      await activateSession(getMyAccountPath())
+    const { error: signInFinalizeError, notReady: finalizeNotReady } = await activateSession(
+      getMyAccountPath(),
+      AUTH_TOAST_TO_RENDER.RESET_PASSWORD
+    )
     if (finalizeNotReady) return
     if (signInFinalizeError) {
       console.error("Reset password error:", signInFinalizeError)

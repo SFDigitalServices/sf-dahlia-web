@@ -1,3 +1,5 @@
+import type { AUTH_TOAST_TO_RENDER } from "../authenticationUtils"
+
 export type SignInMethod = "password" | "emailCode"
 
 export type SignInOutcome = {
@@ -27,5 +29,8 @@ export type SignInSession = {
   submitNewPassword: (password: string) => Promise<SignInOutcome>
   isResetAttemptStale: boolean
 
-  activateSession: (redirectTo?: string) => Promise<SignInOutcome>
+  activateSession: (
+    redirectTo?: string,
+    toastToRender?: AUTH_TOAST_TO_RENDER
+  ) => Promise<SignInOutcome>
 }

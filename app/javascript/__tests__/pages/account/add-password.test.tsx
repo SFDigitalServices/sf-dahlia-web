@@ -12,6 +12,10 @@ import {
 import { setupUserContext } from "../../__util__/accountUtils"
 import { useFeatureFlag } from "../../../hooks/useFeatureFlag"
 import { AUTH_FLOW } from "../../../modules/constants"
+import {
+  AUTH_TOAST_TO_RENDER,
+  consumeAuthenticationToast,
+} from "../../../authentication/authenticationUtils"
 
 jest.mock("../../../authentication/withAuthentication", () => ({
   withAuthentication:
@@ -51,6 +55,7 @@ describe("<AddPassword />", () => {
   beforeEach(async () => {
     document.documentElement.lang = "en"
     document.title = "DAHLIA San Francisco Housing Portal"
+    window.sessionStorage.clear()
     originalLocation = mockWindowLocation()
     setupUserContext({ loggedIn: true, hasProfile: false })
     mockNavigate = jest.fn()
@@ -240,6 +245,7 @@ describe("<AddPassword />", () => {
       })
       expect(mockFinalize).toHaveBeenCalled()
       expect(mockNavigate).toHaveBeenCalledWith("/account")
+      expect(consumeAuthenticationToast()).toBe(AUTH_TOAST_TO_RENDER.RESET_PASSWORD)
     })
 
     it("logs an error when the reset does not complete", async () => {
@@ -262,7 +268,7 @@ describe("<AddPassword />", () => {
         "needs_new_password"
       )
       expect(mockFinalize).not.toHaveBeenCalled()
-      expect(mockNavigate).not.toHaveBeenCalledWith("/account")
+      expect(mockNavigate).not.toHaveBeenCalledWith("/account", expect.anything())
 
       consoleError.mockRestore()
     })

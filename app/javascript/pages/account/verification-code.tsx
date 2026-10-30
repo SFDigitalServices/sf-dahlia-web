@@ -8,6 +8,7 @@ import { faCheck } from "@fortawesome/free-solid-svg-icons"
 import { Controller, useForm } from "react-hook-form"
 import withAppSetup from "../../layouts/withAppSetup"
 import AuthLayout from "../../layouts/AuthLayout"
+import { AUTH_TOAST_TO_RENDER } from "../../authentication/authenticationUtils"
 import { useAuthSession } from "../../authentication/session/AuthSessionProvider"
 import { useSignInSession } from "../../authentication/session/useSignInSession"
 import { useSignUpSession } from "../../authentication/session/useSignUpSession"
@@ -157,7 +158,10 @@ const EnterVerificationCodePage = ({
       await clearHousingCounselorSession()
     }
 
-    await signInSession.activateSession(destination)
+    await signInSession.activateSession(
+      destination,
+      housingCounselorToken ? undefined : AUTH_TOAST_TO_RENDER.SIGNED_IN
+    )
   }
 
   const verifySignUpCode = async (code: string) => {
@@ -514,7 +518,6 @@ const EnterVerificationCode = (_props: { assetPaths: unknown }) => {
       return
     }
     const arrivedSignedIn = initialSessionKind === "signedIn"
-    console.log({ flow })
     if (!isSignedInUpdateFlow && arrivedSignedIn && isSignedIn && profile) {
       void navigate(getMyAccountPath(), { state: { flow } })
       return

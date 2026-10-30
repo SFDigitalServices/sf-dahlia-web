@@ -20,6 +20,10 @@ import {
   updateContactEmail,
 } from "../../../api/authApiService"
 import * as authStatus from "../../../authentication/session/authStatus"
+import {
+  AUTH_TOAST_TO_RENDER,
+  consumeAuthenticationToast,
+} from "../../../authentication/authenticationUtils"
 import { User } from "../../../authentication/user"
 import { getMyAccountContactPath, getUpdateEmailPath } from "../../../util/routeUtil"
 
@@ -190,6 +194,7 @@ describe("<EnterVerificationCode />", () => {
   beforeEach(async () => {
     document.documentElement.lang = "en"
     document.title = "DAHLIA San Francisco Housing Portal"
+    window.sessionStorage.clear()
     originalLocation = mockWindowLocation()
     window.location.replace = jest.fn()
     setupUserContext({ loggedIn: false })
@@ -271,6 +276,7 @@ describe("<EnterVerificationCode />", () => {
 
   afterEach(() => {
     restoreWindowLocation(originalLocation)
+    window.sessionStorage.clear()
     cleanup()
     jest.useRealTimers()
   })
@@ -497,6 +503,7 @@ describe("<EnterVerificationCode />", () => {
     await waitFor(() => {
       expect(mockNavigate).toHaveBeenCalledWith("/account")
     })
+    expect(consumeAuthenticationToast()).toBe(AUTH_TOAST_TO_RENDER.SIGNED_IN)
     expect(mockSignInVerifyCode).toHaveBeenCalledWith({ code: "123456" })
     expect(mockSignInFinalize).toHaveBeenCalledTimes(1)
     expect(mockSignUpVerifyEmailCode).not.toHaveBeenCalled()
@@ -526,6 +533,7 @@ describe("<EnterVerificationCode />", () => {
     await waitFor(() => {
       expect(mockNavigate).toHaveBeenCalledWith("/account")
     })
+    expect(consumeAuthenticationToast()).toBe(AUTH_TOAST_TO_RENDER.SIGNED_IN)
     expect(clearHousingCounselorSession).toHaveBeenCalled()
   })
 
@@ -670,6 +678,7 @@ describe("<EnterVerificationCode />", () => {
     await waitFor(() => {
       expect(mockNavigate).toHaveBeenCalledWith(returnUrl)
     })
+    expect(consumeAuthenticationToast()).toBe(AUTH_TOAST_TO_RENDER.SIGNED_IN)
     expect(mockSignInVerifyCode).toHaveBeenCalledWith({ code: "123456" })
     expect(mockSignInFinalize).toHaveBeenCalledTimes(1)
     expect(mockSignUpVerifyEmailCode).not.toHaveBeenCalled()
