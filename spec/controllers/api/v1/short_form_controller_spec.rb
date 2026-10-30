@@ -4,6 +4,31 @@ require 'rails_helper'
 require 'support/vcr_setup'
 
 describe Api::V1::ShortFormController, type: :controller do
+  shared_context 'with a housing counselor session' do
+    let(:counselor_contact_id) { 'contact_counselor_abc123' }
+    let(:applicant_contact_id) { 'contact_applicant_abc123' }
+    let(:clerk_sid) { 'sid_abc123' }
+    before do
+      stub_const('JsonWebTokenService::SECRET_KEY', 'test_secret')
+      stub_const('JsonWebTokenService::ALGORITHM', 'HS256')
+      stub_const('JsonWebTokenService::ALLOWED_ALGORITHMS', ['HS256'])
+      allow(Rails.configuration.unleash).to receive(:is_enabled?)
+        .with(HousingCounselorSession::FEATURE_FLAG).and_return(true)
+
+      allow(ClerkOrDeviseAuth).to receive(:clerk_enabled?).and_return(true)
+      allow(controller).to receive(:clerk).and_return(
+        double(user_id: 'user_counselor', session: { 'sid' => clerk_sid }),
+      )
+      allow(ClerkService).to receive(:salesforce_contact_id)
+        .and_return(counselor_contact_id)
+
+      request.cookies['hc_session'] = JsonWebTokenService.encode_token(
+        { 'typ' => 'hc_session', 'hcId' => counselor_contact_id,
+          'appId' => applicant_contact_id, 'sid' => clerk_sid },
+        exp: 2.hours.from_now,
+      )
+    end
+  end
   describe '#submit_application' do
     let(:application_params) do
       {
@@ -56,7 +81,8 @@ describe Api::V1::ShortFormController, type: :controller do
       allow(controller).to receive(:params).and_return(params)
       allow(controller).to receive(:application_params).and_return(application_params)
       allow(controller).to receive(:applicant_attrs).and_return(applicant_attrs)
-      allow(Force::ShortFormService).to receive(:create_or_update).and_return(response_data)
+      allow(Force::ShortFormService).to receive(:create_or_update)
+        .and_return(response_data)
       allow(Force::ShortFormService).to receive(:get_for_user).and_return([])
       allow(DahliaBackend::MessageService).to receive(:send_application_confirmation)
     end
@@ -104,6 +130,154 @@ describe Api::V1::ShortFormController, type: :controller do
         post :submit_application
 
         expect(response).to have_http_status(:service_unavailable)
+        expect(Force::ShortFormService).not_to have_received(:create_or_update)
+      end
+
+      # Given an applicant signed in with Clerk, no delegate session, and the HC flag on
+      # When the applicant submits an application
+      # Then the top-level submittedBy is the applicant's own contact id
+      context 'with the housing counselor flag on and no delegate session' do
+        before do
+          allow(Rails.configuration.unleash).to receive(:is_enabled?)
+            .with(HousingCounselorSession::FEATURE_FLAG).and_return(true)
+        end
+
+        it 'records the signed-in applicant as submittedBy' do
+          allow(controller).to receive(:clerk).and_return(double(user_id: 'user_abc123'))
+          allow(ClerkService).to receive(:salesforce_contact_id)
+            .and_return('contact_abc123')
+
+          post :submit_application
+
+          expect(Force::ShortFormService).to have_received(:create_or_update)
+            .with(hash_including(submittedBy: 'contact_abc123'), anything)
+        end
+
+        # Given a guest (not signed in) and the HC flag on
+        # When the guest submits an application
+        # Then no submittedBy is sent
+        it 'does not send submittedBy for a guest' do
+          allow(controller).to receive(:clerk).and_return(nil)
+
+          post :submit_application
+
+          expect(Force::ShortFormService).to have_received(:create_or_update)
+            .with(hash_excluding(:submittedBy), anything)
+        end
+      end
+
+      # Given an applicant signed in with Clerk and the HC flag off
+      # When the applicant submits an application
+      # Then no submittedBy is sent, as before this ticket
+      context 'with the housing counselor flag off' do
+        before do
+          allow(Rails.configuration.unleash).to receive(:is_enabled?)
+            .with(HousingCounselorSession::FEATURE_FLAG).and_return(false)
+        end
+
+        it 'does not send submittedBy for a signed-in applicant' do
+          allow(controller).to receive(:clerk).and_return(double(user_id: 'user_abc123'))
+          allow(ClerkService).to receive(:salesforce_contact_id)
+            .and_return('contact_abc123')
+
+          post :submit_application
+
+          expect(Force::ShortFormService).to have_received(:create_or_update)
+            .with(hash_excluding(:submittedBy), anything)
+        end
+      end
+    end
+    # Given a counselor with an hc_session cookie and the housing counselor flag off
+    # When the counselor submits an application
+    # Then it is filed under the counselor's own contact id and webAppID
+    context 'with the Housing Counselor flag off' do
+      include_context 'with a housing counselor session'
+      before do
+        allow(Rails.configuration.unleash).to receive(:is_enabled?)
+          .with(HousingCounselorSession::FEATURE_FLAG).and_return(false)
+        allow(controller).to receive(:applicant_attrs).and_call_original
+      end
+      it 'submits the application with the counselors own contact id and webAppID' do
+        post :submit_application
+
+        expect(Force::ShortFormService).to have_received(:create_or_update)
+          .with(anything, hash_including(contactId: counselor_contact_id,
+                                         webAppID: 'user_counselor'))
+      end
+    end
+
+    # Given a counselor signed in with Clerk and a valid hc_session for an applicant
+    # When the counselor submits an application
+    # Then Salesforce receives the applicant's contact id, not the counselor's
+    context 'when signed in as a housing counselor with a valid hc_session cookie' do
+      include_context 'with a housing counselor session'
+      before { allow(controller).to receive(:applicant_attrs).and_call_original }
+      it "files the application under the applicant's contact id" do
+        post :submit_application
+
+        expect(Force::ShortFormService).to have_received(:create_or_update)
+          .with(anything, hash_including(contactId: applicant_contact_id))
+      end
+
+      it "does not send the counselor's webAppID on the applicant's record" do
+        post :submit_application
+
+        expect(Force::ShortFormService).to have_received(:create_or_update)
+          .with(anything, hash_excluding(:webAppID))
+      end
+
+      # Given a counselor with a valid delegate session
+      # When the counselor submits an application
+      # Then the top-level submittedBy is the counselor's contact id
+      it 'records the counselor as submittedBy' do
+        post :submit_application
+
+        expect(Force::ShortFormService).to have_received(:create_or_update)
+          .with(hash_including(submittedBy: counselor_contact_id), anything)
+      end
+    end
+  end
+
+  describe '#update_application' do
+    # Given a counselor with a valid hc_session for applicant A
+    # When the counselor saves a draft owned by applicant B
+    # Then the response is 401 and nothing is sent to Salesforce
+    context 'when signed in as a housing counselor with a valid hc_session cookie' do
+      include_context 'with a housing counselor session'
+
+      let(:update_params) do
+        { id: 'app123',
+          application: { id: 'app123', status: 'draft', listingID: 'listing123',
+                         primaryApplicant: { email: 'test@example.com' } } }
+      end
+
+      def draft_owned_by(contact_id)
+        { 'id' => 'app123', 'status' => 'Draft',
+          'primaryApplicant' => { 'contactId' => contact_id } }
+      end
+
+      before do
+        allow(Force::ShortFormService).to receive(:create_or_update)
+          .and_return('id' => 'app123')
+        allow(controller).to receive(:process_submit_app_response)
+      end
+
+      it "saves the delegated applicant's own draft" do
+        allow(Force::ShortFormService).to receive(:get)
+          .and_return(draft_owned_by(applicant_contact_id))
+
+        put :update_application, params: update_params
+
+        expect(response).to have_http_status(:ok), response.body
+        expect(Force::ShortFormService).to have_received(:create_or_update)
+      end
+
+      it 'rejects a draft owned by a different applicant' do
+        allow(Force::ShortFormService).to receive(:get)
+          .and_return(draft_owned_by('different_contact_123'))
+
+        put :update_application, params: update_params
+        expect(response).to have_http_status(:unauthorized)
         expect(Force::ShortFormService).not_to have_received(:create_or_update)
       end
     end
