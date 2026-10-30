@@ -152,6 +152,39 @@ describe Api::V1::ShortFormController, type: :controller do
           expect(Force::ShortFormService).to have_received(:create_or_update)
             .with(hash_including(submittedBy: 'contact_abc123'), anything)
         end
+
+        # Given a guest (not signed in) and the HC flag on
+        # When the guest submits an application
+        # Then no submittedBy is sent
+        it 'does not send submittedBy for a guest' do
+          allow(controller).to receive(:clerk).and_return(nil)
+
+          post :submit_application
+
+          expect(Force::ShortFormService).to have_received(:create_or_update)
+            .with(hash_excluding(:submittedBy), anything)
+        end
+      end
+
+      # Given an applicant signed in with Clerk and the HC flag off
+      # When the applicant submits an application
+      # Then no submittedBy is sent, as before this ticket
+      context 'with the housing counselor flag off' do
+        before do
+          allow(Rails.configuration.unleash).to receive(:is_enabled?)
+            .with(HousingCounselorSession::FEATURE_FLAG).and_return(false)
+        end
+
+        it 'does not send submittedBy for a signed-in applicant' do
+          allow(controller).to receive(:clerk).and_return(double(user_id: 'user_abc123'))
+          allow(ClerkService).to receive(:salesforce_contact_id)
+            .and_return('contact_abc123')
+
+          post :submit_application
+
+          expect(Force::ShortFormService).to have_received(:create_or_update)
+            .with(hash_excluding(:submittedBy), anything)
+        end
       end
     end
     # Given a counselor with an hc_session cookie and the housing counselor flag off
