@@ -3,6 +3,10 @@ import { act, renderHook } from "@testing-library/react"
 import { useNavigate } from "react-router"
 import { useSignOutToSignIn } from "../../../authentication/session/useSignOutToSignIn"
 import { useAuthSession } from "../../../authentication/session/AuthSessionProvider"
+import {
+  AUTH_TOAST_TO_RENDER,
+  consumeAuthenticationToast,
+} from "../../../authentication/authenticationUtils"
 import UserContext, { ContextProps } from "../../../authentication/context/UserContext"
 import { getSignInPath } from "../../../util/routeUtil"
 import { mockProfileStub } from "../../__util__/accountUtils"
@@ -29,6 +33,7 @@ const renderSignOut = (profile: ContextProps["profile"]) =>
 describe("useSignOutToSignIn", () => {
   beforeEach(() => {
     jest.clearAllMocks()
+    window.sessionStorage.clear()
     ;(useNavigate as jest.Mock).mockReturnValue(navigate)
     ;(useAuthSession as jest.Mock).mockReturnValue({ signOut })
   })
@@ -74,9 +79,8 @@ describe("useSignOutToSignIn", () => {
 
         await act(() => result.current())
 
-        expect(navigate).toHaveBeenCalledWith(getSignInPath(), {
-          state: { renderSignedOutToast: true },
-        })
+        expect(navigate).toHaveBeenCalledWith(getSignInPath())
+        expect(consumeAuthenticationToast()).toBe(AUTH_TOAST_TO_RENDER.SIGNED_OUT)
       })
     })
   })

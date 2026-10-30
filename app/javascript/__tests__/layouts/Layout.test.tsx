@@ -1,5 +1,10 @@
 import React from "react"
 import { fireEvent, waitFor, within } from "@testing-library/react"
+import {
+  AUTH_TOAST_TO_RENDER,
+  consumeAuthenticationToast,
+  queueAuthenticationToast,
+} from "../../authentication/authenticationUtils"
 import Layout from "../../layouts/Layout"
 import { AuthSessionProvider } from "../../authentication/session/AuthSessionProvider"
 import { clearHousingCounselorSession } from "../../api/authApiService"
@@ -22,6 +27,7 @@ const getHeader = (container: HTMLElement) => {
 
 describe("<Layout />", () => {
   afterEach(() => {
+    window.sessionStorage.clear()
     jest.restoreAllMocks()
   })
 
@@ -124,8 +130,9 @@ describe("<Layout />", () => {
     expect(within(header).getByTestId("Account-3")).not.toBeNull()
   })
 
-  it("shows the post-sign-in toast when sign-in state is present", async () => {
+  it("shows the post-sign-in toast when queued", async () => {
     setupUserContext({ loggedIn: true })
+    queueAuthenticationToast(AUTH_TOAST_TO_RENDER.SIGNED_IN)
 
     await renderAndLoadAsync(
       <AuthSessionProvider>
@@ -134,13 +141,15 @@ describe("<Layout />", () => {
         </Layout>
       </AuthSessionProvider>,
       undefined,
-      [{ pathname: "/account", state: { renderSignedInToast: true } }]
+      ["/account"]
     )
 
     expect(document.body).toHaveTextContent("You are signed in.")
   })
 
-  it("shows the post-sign-out toast when sign-out state is present", async () => {
+  it("shows the post-sign-out toast when queued", async () => {
+    queueAuthenticationToast(AUTH_TOAST_TO_RENDER.SIGNED_OUT)
+
     await renderAndLoadAsync(
       <AuthSessionProvider>
         <Layout>
@@ -148,14 +157,15 @@ describe("<Layout />", () => {
         </Layout>
       </AuthSessionProvider>,
       undefined,
-      [{ pathname: "/sign-in", state: { renderSignedOutToast: true } }]
+      ["/sign-in"]
     )
 
     expect(document.body).toHaveTextContent("You are signed out.")
   })
 
-  it("shows the reset-password toast when reset state is present", async () => {
+  it("shows the reset-password toast when queued", async () => {
     setupUserContext({ loggedIn: true })
+    queueAuthenticationToast(AUTH_TOAST_TO_RENDER.RESET_PASSWORD)
 
     await renderAndLoadAsync(
       <AuthSessionProvider>
@@ -164,10 +174,27 @@ describe("<Layout />", () => {
         </Layout>
       </AuthSessionProvider>,
       undefined,
-      [{ pathname: "/account", state: { renderResetPasswordToast: true } }]
+      ["/account"]
     )
 
     expect(document.body).toHaveTextContent("New password saved.")
+  })
+
+  it("consumes queued auth toast after rendering", async () => {
+    setupUserContext({ loggedIn: true })
+    queueAuthenticationToast(AUTH_TOAST_TO_RENDER.SIGNED_IN)
+
+    await renderAndLoadAsync(
+      <AuthSessionProvider>
+        <Layout>
+          <div>content</div>
+        </Layout>
+      </AuthSessionProvider>,
+      undefined,
+      ["/account"]
+    )
+
+    expect(consumeAuthenticationToast()).toBeNull()
   })
 
   describe("header notice", () => {

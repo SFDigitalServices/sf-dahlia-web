@@ -28,6 +28,7 @@ import {
   getSignInCodePath,
 } from "../util/routeUtil"
 import { authorizeHousingCounselor, clearHousingCounselorSession } from "../api/authApiService"
+import { AUTH_TOAST_TO_RENDER, queueAuthenticationToast } from "./authenticationUtils"
 import { useAuthSession } from "./session/AuthSessionProvider"
 import { useSignInSession } from "./session/useSignInSession"
 import { bearerToken, isAuthInitialized } from "./session/authStatus"
@@ -192,7 +193,8 @@ const SignInFlow = () => {
     // Prevents the render-time redirect below from firing again (with a stale, query-less URL)
     // during the extra render pass that happens before this component unmounts.
     setHousingCounselorChecked(true)
-    void navigate(returnUrl ?? getMyAccountPath(), { state: { renderSignedInToast: true } })
+    queueAuthenticationToast(AUTH_TOAST_TO_RENDER.SIGNED_IN)
+    void navigate(returnUrl ?? getMyAccountPath())
   }
 
   const onError = (submitErrors: { email?: unknown; password?: unknown }) => {

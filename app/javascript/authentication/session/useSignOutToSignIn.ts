@@ -4,6 +4,7 @@ import UserContext from "../context/UserContext"
 import { fullName } from "../user"
 import { getSignInPath } from "../../util/routeUtil"
 import { useAuthSession } from "./AuthSessionProvider"
+import { AUTH_TOAST_TO_RENDER, queueAuthenticationToast } from "../authenticationUtils"
 
 /**
  * Ends the session and routes to sign-in. A housing counselor leaving a delegated
@@ -25,7 +26,8 @@ export const useSignOutToSignIn = () => {
     if (delegatedAccountName) {
       void navigate(getSignInPath(), { state: { housingCounselorSignedOut: delegatedAccountName } })
     } else {
-      void navigate(getSignInPath(), { state: { renderSignedOutToast: true } })
+      queueAuthenticationToast(AUTH_TOAST_TO_RENDER.SIGNED_OUT)
+      void navigate(getSignInPath())
     }
   }, [navigate, profile, signOut])
 }

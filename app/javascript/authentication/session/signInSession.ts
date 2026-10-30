@@ -1,3 +1,5 @@
+import type { AUTH_TOAST_TO_RENDER } from "../authenticationUtils"
+
 export type SignInMethod = "password" | "emailCode"
 
 export type SignInOutcome = {
@@ -9,12 +11,6 @@ export type SignInOutcome = {
   notReady?: true
   /** The email has no account; the caller should continue into sign up. */
   needsSignUp?: true
-}
-
-export type SignInToastState = {
-  renderSignedInToast?: true
-  renderSignedOutToast?: true
-  renderResetPasswordToast?: true
 }
 
 export type SignInSession = {
@@ -33,5 +29,8 @@ export type SignInSession = {
   submitNewPassword: (password: string) => Promise<SignInOutcome>
   isResetAttemptStale: boolean
 
-  activateSession: (redirectTo?: string, navigateState?: SignInToastState) => Promise<SignInOutcome>
+  activateSession: (
+    redirectTo?: string,
+    toastToRender?: AUTH_TOAST_TO_RENDER
+  ) => Promise<SignInOutcome>
 }
