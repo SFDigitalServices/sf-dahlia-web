@@ -176,7 +176,7 @@ const SignInFlow = () => {
 
     // we need to set the session token and *not* navigate away, so we have it for `checkHousingCounselorAccess()`
     // but that means we lose access to the `decorateUrl` utility function.
-    await activateSession()
+    const { error: activateSessionError } = await activateSession()
 
     if (housingCounselorToken) {
       const housingCounselorAccess = await checkHousingCounselorAccess()
@@ -193,7 +193,7 @@ const SignInFlow = () => {
     // Prevents the render-time redirect below from firing again (with a stale, query-less URL)
     // during the extra render pass that happens before this component unmounts.
     setHousingCounselorChecked(true)
-    queueAuthenticationToast(AUTH_TOAST_TO_RENDER.SIGNED_IN)
+    if (!activateSessionError) queueAuthenticationToast(AUTH_TOAST_TO_RENDER.SIGNED_IN)
     void navigate(returnUrl ?? getMyAccountPath())
   }
 
