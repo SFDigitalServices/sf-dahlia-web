@@ -239,7 +239,9 @@ describe("<AddPassword />", () => {
         })
       })
       expect(mockFinalize).toHaveBeenCalled()
-      expect(mockNavigate).toHaveBeenCalledWith("/account")
+      expect(mockNavigate).toHaveBeenCalledWith("/account", {
+        state: { renderResetPasswordToast: true },
+      })
     })
 
     it("logs an error when the reset does not complete", async () => {
@@ -262,7 +264,7 @@ describe("<AddPassword />", () => {
         "needs_new_password"
       )
       expect(mockFinalize).not.toHaveBeenCalled()
-      expect(mockNavigate).not.toHaveBeenCalledWith("/account")
+      expect(mockNavigate).not.toHaveBeenCalledWith("/account", expect.anything())
 
       consoleError.mockRestore()
     })

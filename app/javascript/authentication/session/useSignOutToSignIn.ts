@@ -25,7 +25,7 @@ export const useSignOutToSignIn = () => {
     if (delegatedAccountName) {
       void navigate(getSignInPath(), { state: { housingCounselorSignedOut: delegatedAccountName } })
     } else {
-      void navigate(getSignInPath())
+      void navigate(getSignInPath(), { state: { renderSignedOutToast: true } })
     }
   }, [navigate, profile, signOut])
 }

@@ -11,6 +11,12 @@ export type SignInOutcome = {
   needsSignUp?: true
 }
 
+export type SignInToastState = {
+  renderSignedInToast?: true
+  renderSignedOutToast?: true
+  renderResetPasswordToast?: true
+}
+
 export type SignInSession = {
   /** A sign-in request is in flight. Not a readiness signal: the provider may still be loading. */
   isBusy: boolean
@@ -27,5 +33,5 @@ export type SignInSession = {
   submitNewPassword: (password: string) => Promise<SignInOutcome>
   isResetAttemptStale: boolean
 
-  activateSession: (redirectTo?: string) => Promise<SignInOutcome>
+  activateSession: (redirectTo?: string, navigateState?: SignInToastState) => Promise<SignInOutcome>
 }

@@ -149,7 +149,10 @@ const EnterVerificationCodePage = ({
       await clearHousingCounselorSession()
     }
 
-    await signInSession.activateSession(destination)
+    await signInSession.activateSession(
+      destination,
+      housingCounselorToken ? undefined : { renderSignedInToast: true }
+    )
   }
 
   const verifySignUpCode = async (code: string) => {
@@ -494,7 +497,6 @@ const EnterVerificationCode = (_props: { assetPaths: unknown }) => {
       return
     }
     const arrivedSignedIn = initialSessionKind === "signedIn"
-    console.log({ flow })
     if (!isSignedInUpdateFlow && arrivedSignedIn && isSignedIn && profile) {
       void navigate(getMyAccountPath(), { state: { flow } })
       return

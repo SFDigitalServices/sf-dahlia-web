@@ -481,7 +481,9 @@ describe("<EnterVerificationCode />", () => {
     await user.paste("123456")
     await user.click(screen.getByRole("button", { name: t("createAccount.confirmCode") }))
     await waitFor(() => {
-      expect(mockNavigate).toHaveBeenCalledWith("/account")
+      expect(mockNavigate).toHaveBeenCalledWith("/account", {
+        state: { renderSignedInToast: true },
+      })
     })
     expect(mockSignInVerifyCode).toHaveBeenCalledWith({ code: "123456" })
     expect(mockSignInFinalize).toHaveBeenCalledTimes(1)
@@ -510,7 +512,9 @@ describe("<EnterVerificationCode />", () => {
     await user.click(screen.getByRole("button", { name: t("createAccount.confirmCode") }))
 
     await waitFor(() => {
-      expect(mockNavigate).toHaveBeenCalledWith("/account")
+      expect(mockNavigate).toHaveBeenCalledWith("/account", {
+        state: { renderSignedInToast: true },
+      })
     })
     expect(clearHousingCounselorSession).toHaveBeenCalled()
   })
@@ -654,7 +658,9 @@ describe("<EnterVerificationCode />", () => {
     await user.click(screen.getByRole("button", { name: t("createAccount.confirmCode") }))
 
     await waitFor(() => {
-      expect(mockNavigate).toHaveBeenCalledWith(returnUrl)
+      expect(mockNavigate).toHaveBeenCalledWith(returnUrl, {
+        state: { renderSignedInToast: true },
+      })
     })
     expect(mockSignInVerifyCode).toHaveBeenCalledWith({ code: "123456" })
     expect(mockSignInFinalize).toHaveBeenCalledTimes(1)
