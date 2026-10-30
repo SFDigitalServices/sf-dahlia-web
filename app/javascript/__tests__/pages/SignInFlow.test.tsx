@@ -417,6 +417,24 @@ describe("<SignInFlow />", () => {
     expect(consumeAuthenticationToast()).toBe(AUTH_TOAST_TO_RENDER.SIGNED_IN)
   })
 
+  it("does not queue a toast when session activation fails", async () => {
+    mockFinalize.mockResolvedValue({ error: new Error("Unable to finalize session") })
+
+    await renderAndLoadAsync(<SignIn assetPaths={{}} />)
+    await submitCredentials()
+
+    await waitFor(() => {
+      expect(mockSignInCreate).toHaveBeenCalledWith({
+        identifier: "test@test.com",
+        password: "abcd1234",
+      })
+    })
+    expect(mockFinalize).toHaveBeenCalled()
+    expect(clearHousingCounselorSession).toHaveBeenCalled()
+    expect(mockNavigate).toHaveBeenCalledWith("/account")
+    expect(consumeAuthenticationToast()).toBeNull()
+  })
+
   it("shows one alert and logs the details when sign in fails", async () => {
     const consoleError = jest.spyOn(console, "error").mockImplementation(() => {})
     const clerkError = { errors: [{ code: "form_password_incorrect" }] }
