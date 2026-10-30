@@ -1,4 +1,4 @@
-import React, { useContext } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import { useLocation } from "react-router"
 import {
   AlertBox,
@@ -13,6 +13,10 @@ import {
 import { SiteHeader, MenuLink } from "../components/SiteHeader/SiteHeader"
 import Markdown from "markdown-to-jsx"
 import UserContext from "../authentication/context/UserContext"
+import {
+  AUTH_TOAST_TO_RENDER,
+  consumeAuthenticationToast,
+} from "../authentication/authenticationUtils"
 import { fullName } from "../authentication/user"
 import { useAuthSession } from "../authentication/session/AuthSessionProvider"
 import { useSignOutToSignIn } from "../authentication/session/useSignOutToSignIn"
@@ -179,13 +183,13 @@ const LayoutContent = ({
   delegatedAccount?: { seekerName: string }
 }) => {
   const { getAssetPath } = useContext(ConfigContext)
-  const { pathname, state } = useLocation()
+  const { pathname } = useLocation()
   const { unleashFlag: accountLayoutEnabled } = useFeatureFlag(UNLEASH_FLAG.ACCOUNTS_LAYOUT, false)
-  const navState = state as {
-    renderSignedInToast?: boolean
-    renderSignedOutToast?: boolean
-    renderResetPasswordToast?: boolean
-  } | null
+  const [toastToRender, setToastToRender] = useState<AUTH_TOAST_TO_RENDER | null>(null)
+
+  useEffect(() => {
+    setToastToRender(consumeAuthenticationToast())
+  }, [])
 
   if (window.document["documentMode"]) {
     /* eslint-disable-next-line react-hooks/immutability */
@@ -282,9 +286,9 @@ const LayoutContent = ({
             mainContentId={"main-content"}
           />
 
-          {navState?.renderSignedInToast && signedInToast}
-          {navState?.renderSignedOutToast && signedOutToast}
-          {navState?.renderResetPasswordToast && resetPasswordToast}
+          {toastToRender === AUTH_TOAST_TO_RENDER.SIGNED_IN && signedInToast}
+          {toastToRender === AUTH_TOAST_TO_RENDER.SIGNED_OUT && signedOutToast}
+          {toastToRender === AUTH_TOAST_TO_RENDER.RESET_PASSWORD && resetPasswordToast}
 
           <main data-testid="main-content-test-id" id="main-content">
             <ErrorBoundary boundaryScope={BoundaryScope.content}>{children}</ErrorBoundary>
