@@ -124,6 +124,52 @@ describe("<Layout />", () => {
     expect(within(header).getByTestId("Account-3")).not.toBeNull()
   })
 
+  it("shows the post-sign-in toast when sign-in state is present", async () => {
+    setupUserContext({ loggedIn: true })
+
+    await renderAndLoadAsync(
+      <AuthSessionProvider>
+        <Layout>
+          <div>content</div>
+        </Layout>
+      </AuthSessionProvider>,
+      undefined,
+      [{ pathname: "/account", state: { renderSignedInToast: true } }]
+    )
+
+    expect(document.body).toHaveTextContent("You are signed in.")
+  })
+
+  it("shows the post-sign-out toast when sign-out state is present", async () => {
+    await renderAndLoadAsync(
+      <AuthSessionProvider>
+        <Layout>
+          <div>content</div>
+        </Layout>
+      </AuthSessionProvider>,
+      undefined,
+      [{ pathname: "/sign-in", state: { renderSignedOutToast: true } }]
+    )
+
+    expect(document.body).toHaveTextContent("You are signed out.")
+  })
+
+  it("shows the reset-password toast when reset state is present", async () => {
+    setupUserContext({ loggedIn: true })
+
+    await renderAndLoadAsync(
+      <AuthSessionProvider>
+        <Layout>
+          <div>content</div>
+        </Layout>
+      </AuthSessionProvider>,
+      undefined,
+      [{ pathname: "/account", state: { renderResetPasswordToast: true } }]
+    )
+
+    expect(document.body).toHaveTextContent("New password saved.")
+  })
+
   describe("header notice", () => {
     const renderNotice = async () => {
       const { container } = await renderAndLoadAsync(

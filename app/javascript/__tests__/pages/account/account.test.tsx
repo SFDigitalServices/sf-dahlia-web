@@ -129,7 +129,11 @@ describe("<Account />", () => {
       fireEvent.click(screen.getByRole("button", { name: "Sign out of account" }))
 
       await waitFor(() => expect(clerkSignOut).toHaveBeenCalled())
-      await waitFor(() => expect(mockNavigate).toHaveBeenCalledWith(getSignInPath()))
+      await waitFor(() =>
+        expect(mockNavigate).toHaveBeenCalledWith(getSignInPath(), {
+          state: { renderSignedOutToast: true },
+        })
+      )
     })
 
     it("ends the Clerk session and routes to sign in from the account nav", async () => {
@@ -137,7 +141,11 @@ describe("<Account />", () => {
       fireEvent.click(screen.getByRole("button", { name: "Sign out" }))
 
       await waitFor(() => expect(clerkSignOut).toHaveBeenCalled())
-      await waitFor(() => expect(mockNavigate).toHaveBeenCalledWith(getSignInPath()))
+      await waitFor(() =>
+        expect(mockNavigate).toHaveBeenCalledWith(getSignInPath(), {
+          state: { renderSignedOutToast: true },
+        })
+      )
     })
 
     describe("as a housing counselor in a delegated account", () => {

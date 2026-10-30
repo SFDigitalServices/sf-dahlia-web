@@ -166,7 +166,10 @@ const EnterVerificationCodePage = ({
       await clearHousingCounselorSession()
     }
 
-    await signInSession.activateSession(destination)
+    await signInSession.activateSession(
+      destination,
+      housingCounselorToken ? undefined : { renderSignedInToast: true }
+    )
   }
 
   const verifySignUpCode = async (code: string) => {

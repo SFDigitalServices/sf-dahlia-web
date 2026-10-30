@@ -3,13 +3,27 @@ import { useClerk, useSignIn } from "@clerk/react"
 import { useNavigate } from "react-router"
 
 import { getClerkErrorCode } from "../../../authenticationUtils"
-import { SignInOutcome, SignInSession } from "../../signInSession"
+import { SignInOutcome, SignInSession, SignInToastState } from "../../signInSession"
 
 const SUCCESS: SignInOutcome = {}
 const NOT_READY: SignInOutcome = {
   notReady: true,
   error: new Error("Sign in session is not ready"),
 }
+
+const NAV_STATE_KEYS_WHITELIST = [
+  "renderSignedInToast",
+  "renderSignedOutToast",
+  "renderResetPasswordToast",
+] as const
+
+const filterNavigateState = (navigateState: SignInToastState): SignInToastState =>
+  NAV_STATE_KEYS_WHITELIST.reduce<SignInToastState>((filteredState, key) => {
+    if (navigateState[key]) {
+      filteredState[key] = true
+    }
+    return filteredState
+  }, {})
 
 export const useClerkSignInSession = (): SignInSession => {
   const { signIn, fetchStatus } = useSignIn()
@@ -190,7 +204,7 @@ export const useClerkSignInSession = (): SignInSession => {
   )
 
   const activateSession = useCallback(
-    async (redirectTo?: string): Promise<SignInOutcome> => {
+    async (redirectTo?: string, navigateState?: SignInToastState): Promise<SignInOutcome> => {
       if (!signIn) return NOT_READY
 
       if (!redirectTo) {
@@ -201,7 +215,12 @@ export const useClerkSignInSession = (): SignInSession => {
       const { error } = await signIn.finalize({
         // https://clerk.com/docs/react/reference/objects/clerk#using-the-navigate-parameter
         navigate: ({ decorateUrl }: { decorateUrl: (url: string) => string }) => {
-          void navigate(decorateUrl(redirectTo))
+          const url = decorateUrl(redirectTo)
+          if (navigateState === undefined) {
+            void navigate(url)
+            return
+          }
+          void navigate(url, { state: filterNavigateState(navigateState) })
         },
       })
       return error ? { error } : SUCCESS

@@ -392,7 +392,9 @@ describe("<SignInFlow />", () => {
     })
     expect(mockFinalize).toHaveBeenCalled()
     expect(clearHousingCounselorSession).toHaveBeenCalled()
-    expect(mockNavigate).toHaveBeenCalledWith("/account")
+    expect(mockNavigate).toHaveBeenCalledWith("/account", {
+      state: { renderSignedInToast: true },
+    })
   })
 
   it("clears the housing counselor session on sign in even when the flag is off", async () => {
@@ -405,7 +407,9 @@ describe("<SignInFlow />", () => {
     await submitCredentials()
 
     await waitFor(() => {
-      expect(mockNavigate).toHaveBeenCalledWith("/account")
+      expect(mockNavigate).toHaveBeenCalledWith("/account", {
+        state: { renderSignedInToast: true },
+      })
     })
     expect(clearHousingCounselorSession).toHaveBeenCalled()
   })

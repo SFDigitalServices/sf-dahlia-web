@@ -297,6 +297,39 @@ describe("useSignInSession", () => {
 
       expect(mockNavigate).toHaveBeenCalledWith("/my-account?__clerk=1")
     })
+
+    it("passes navigation state through when given a destination", async () => {
+      signIn.finalize.mockImplementation(async ({ navigate }) => {
+        await navigate({ decorateUrl: (url: string) => url })
+        return { error: null }
+      })
+
+      await renderSession().current.activateSession("/my-account", {
+        renderSignedInToast: true,
+      })
+
+      expect(mockNavigate).toHaveBeenCalledWith("/my-account", {
+        state: { renderSignedInToast: true },
+      })
+    })
+
+    it("filters out non-toast navigation state", async () => {
+      signIn.finalize.mockImplementation(async ({ navigate }) => {
+        await navigate({ decorateUrl: (url: string) => url })
+        return { error: null }
+      })
+      const invalidState = { message: "not-a-toast-flag" }
+
+      const result = await renderSession().current.activateSession(
+        "/my-account",
+        invalidState as unknown as { renderSignedInToast?: true }
+      )
+
+      expect(result.error).toBeUndefined()
+      expect(signIn.finalize).toHaveBeenCalled()
+      expect(mockNavigate).toHaveBeenCalledWith("/my-account", { state: {} })
+      expect(consoleError).not.toHaveBeenCalled()
+    })
   })
 
   it("refuses every operation before the provider is ready", async () => {
