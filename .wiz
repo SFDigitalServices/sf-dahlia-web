@@ -1,0 +1,19 @@
+ignore:
+  sensitive_data:
+    BUILTIN-514:
+      /app/assets/json/translations/react/en.json:
+        reason: FALSE_POSITIVE
+      /app/assets/json/translations/react/es.json:
+        reason: FALSE_POSITIVE
+      /app/assets/json/translations/react/tl.json:
+        reason: FALSE_POSITIVE
+      /app/assets/json/translations/react/zh.json:
+        reason: FALSE_POSITIVE
+      /app/assets/json/translations/locale-en.json:
+        reason: FALSE_POSITIVE
+      /app/assets/json/translations/locale-es.json:
+        reason: FALSE_POSITIVE
+      /app/assets/json/translations/locale-tl.json:
+        reason: FALSE_POSITIVE
+      /app/assets/json/translations/locale-zh.json:
+        reason: FALSE_POSITIVE
