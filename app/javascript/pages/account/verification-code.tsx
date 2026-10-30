@@ -30,13 +30,14 @@ import styles from "./verification-code.module.scss"
 import { AUTH_FLOW, UNLEASH_FLAG } from "../../modules/constants"
 import UserContext from "../../authentication/context/UserContext"
 import GetHelp from "./components/GetHelp"
-import VerificationCodeField from "./components/VerificationCodeField"
+import VerificationCodeField, { CodeErrorType } from "./components/VerificationCodeField"
 import {
   authorizeHousingCounselor,
   clearHousingCounselorSession,
   updateContactEmail,
 } from "../../api/authApiService"
 import { User } from "../../authentication/user"
+import { getClerkErrorCode } from "../../authentication/authenticationUtils"
 
 interface EnterVerificationCodePageProps {
   email: string
@@ -50,6 +51,13 @@ const CODE_FIELD = "code"
 
 const isUpdateEmailFlow = (flow?: AUTH_FLOW) =>
   flow === AUTH_FLOW.UPDATE_LOGIN_EMAIL || flow === AUTH_FLOW.UPDATE_CONTACT_EMAIL
+
+const codeErrorTypes: Record<string, CodeErrorType> = {
+  verification_expired: "expired",
+}
+
+const getCodeErrorType = (error: unknown): CodeErrorType =>
+  codeErrorTypes[getClerkErrorCode(error) ?? ""] ?? "invalid"
 
 const remainingResendSeconds = (expiresAt: number) =>
   Math.max(0, Math.ceil((expiresAt - Date.now()) / 1000))
@@ -124,7 +132,7 @@ const EnterVerificationCodePage = ({
     }
 
     if (error) {
-      setError(CODE_FIELD, { message: "invalid" })
+      setError(CODE_FIELD, { message: getCodeErrorType(error) })
       return
     }
 
@@ -156,7 +164,7 @@ const EnterVerificationCodePage = ({
     const { error, notReady } = await signUpSession.verifyEmailCode(code)
     if (notReady) return
     if (error) {
-      setError(CODE_FIELD, { message: "invalid" })
+      setError(CODE_FIELD, { message: getCodeErrorType(error) })
       return
     }
 
@@ -165,7 +173,10 @@ const EnterVerificationCodePage = ({
 
   const verifyForgotPasswordCode = async (code: string) => {
     const { error } = await signInSession.verifyPasswordResetCode(code)
-    if (error) return
+    if (error) {
+      setError(CODE_FIELD, { message: getCodeErrorType(error) })
+      return
+    }
 
     void navigate(getResetPasswordPath(), { state: { email, flow, code } })
   }
@@ -212,7 +223,7 @@ const EnterVerificationCodePage = ({
       void navigate(getMyAccountSettingsPath(), { state: { emailChanged: true } })
     } catch (error) {
       console.error("Update login email: verification failed", error)
-      setError(CODE_FIELD, { message: "invalid" })
+      setError(CODE_FIELD, { message: getCodeErrorType(error) })
     }
   }
 
@@ -238,7 +249,7 @@ const EnterVerificationCodePage = ({
       if (error?.errors?.[0]?.code !== "form_code_incorrect") {
         console.error("Update contact email: verification failed", error)
       }
-      setError(CODE_FIELD, { message: "invalid" })
+      setError(CODE_FIELD, { message: getCodeErrorType(error) })
       return null
     })
     if (!verifiedEmail) return
@@ -388,7 +399,16 @@ const EnterVerificationCodePage = ({
             defaultValue=""
             rules={{ validate: (code: string) => /^\d{6}$/.test(code) }}
             render={({ value, onChange }) => (
-              <VerificationCodeField value={value} onChange={onChange} error={!!errors.code} />
+              <VerificationCodeField
+                value={value}
+                onChange={onChange}
+                error={!!errors.code}
+                errorType={errors.code?.message as CodeErrorType}
+                onGetNewCode={() => {
+                  void onResend()
+                }}
+                getNewCodeDisabled={isResending || resendSeconds > 0}
+              />
             )}
           />
           <Button
