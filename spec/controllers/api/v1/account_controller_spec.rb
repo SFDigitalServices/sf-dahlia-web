@@ -22,6 +22,7 @@ RSpec.describe Api::V1::AccountController, type: :controller do
     # disabled'.
     allow(Rails.configuration.unleash).to receive(:is_enabled?)
       .with(HousingCounselorSession::FEATURE_FLAG).and_return(true)
+    allow(ClerkService).to receive(:revoke_session)
 
     allow(Force::AccountService).to receive(:create_or_update)
     allow(Emailer).to receive_message_chain(:account_update, :deliver_later)

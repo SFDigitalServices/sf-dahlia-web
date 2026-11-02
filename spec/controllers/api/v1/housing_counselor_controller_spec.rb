@@ -22,6 +22,7 @@ RSpec.describe Api::V1::HousingCounselorController, type: :controller do
     # under 'when the feature flag is disabled'.
     allow(Rails.configuration.unleash).to receive(:is_enabled?)
       .with(HousingCounselorSession::FEATURE_FLAG).and_return(true)
+    allow(ClerkService).to receive(:revoke_session)
 
     allow(controller).to receive(:clerk)
       .and_return(double(user_id: clerk_user_id, session: { 'sid' => clerk_sid }))

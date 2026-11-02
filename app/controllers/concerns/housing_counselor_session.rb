@@ -207,6 +207,7 @@ module HousingCounselorSession
     )
     @hc_session_access_denied = true
     discard_hc_session_cookie
+    ClerkService.revoke_session(current_clerk_session_id)
     nil
   end
 

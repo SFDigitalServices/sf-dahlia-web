@@ -235,6 +235,38 @@ describe Api::V1::ShortFormController, type: :controller do
         expect(Force::ShortFormService).to have_received(:create_or_update)
           .with(hash_including(submittedBy: counselor_contact_id), anything)
       end
+
+      # Given a counselor whose hc_session has expired
+      #   And Salesforce no longer grants delegation
+      # When the counselor submits an application
+      # Then nothing is submitted, hc_session is cleared,
+      #   and their Clerk session is revoked
+      context 'when Salesforce has revoked delegation' do
+        before do
+          request.cookies['hc_session'] = JsonWebTokenService.encode_token(
+            { 'typ' => 'hc_session', 'hcId' => counselor_contact_id,
+              'appId' => applicant_contact_id, 'sid' => clerk_sid },
+            exp: 1.hour.ago,
+          )
+          allow(Force::HousingCounselorService).to receive(:authorize_access)
+            .and_return(nil)
+          allow(ClerkService).to receive(:revoke_session)
+        end
+
+        it 'does not submit and clears hc_session' do
+          post :submit_application
+
+          expect(response).to have_http_status(:forbidden)
+          expect(Force::ShortFormService).not_to have_received(:create_or_update)
+          expect(cookies[:hc_session]).to be_blank
+        end
+
+        it "revokes the counselor's Clerk session" do
+          post :submit_application
+
+          expect(ClerkService).to have_received(:revoke_session).with(clerk_sid)
+        end
+      end
     end
   end
 

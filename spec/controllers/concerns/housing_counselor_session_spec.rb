@@ -66,6 +66,7 @@ RSpec.describe HousingCounselorSession, type: :controller do
     # under '#current_hc_session when the feature flag is disabled'.
     allow(Rails.configuration.unleash).to receive(:is_enabled?)
       .with(HousingCounselorSession::FEATURE_FLAG).and_return(true)
+    allow(ClerkService).to receive(:revoke_session)
 
     routes.draw do
       get 'show' => 'api#show'
@@ -340,6 +341,12 @@ RSpec.describe HousingCounselorSession, type: :controller do
 
             expect(JSON.parse(response.body)).to eq('session' => nil)
             expect(cookies[:hc_session]).to be_blank
+          end
+
+          it "revokes the counselor's current Clerk session" do
+            get :show, params: { signed_in_as: hc_id }
+
+            expect(ClerkService).to have_received(:revoke_session).with(clerk_sid)
           end
         end
 

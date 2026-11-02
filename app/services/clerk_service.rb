@@ -78,7 +78,7 @@ class ClerkService
     Rails.logger.info("Salesforce contact id stored for user #{user_id}")
   end
 
-  def self.revoke_session(_session_id)
+  def self.revoke_session(session_id)
     sdk.sessions.revoke(session_id: session_id)
   end
 
