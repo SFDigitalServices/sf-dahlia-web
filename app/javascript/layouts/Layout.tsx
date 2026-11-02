@@ -159,6 +159,7 @@ const getMenuLinks = (
     menuLinks.push({
       title: t("nav.signIn"),
       href: localizedPath("/sign-in"),
+      showInMobileHeader: true,
     })
   }
   return menuLinks

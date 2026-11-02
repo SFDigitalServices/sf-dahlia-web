@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import React from "react"
 import { Field, ErrorMessage, Select, t } from "@bloom-housing/ui-components"
-import { useFormContext, ErrorOption } from "react-hook-form"
+import { useFormContext, ErrorOption, Controller } from "react-hook-form"
 import Fieldset from "./Fieldset"
 import { PhoneMask } from "./PhoneMask"
 import { ErrorMessages } from "./ErrorSummaryBanner"
@@ -52,6 +52,7 @@ const phoneValidation = (required: boolean) => (value: string) => {
 
 const PhoneFieldset = () => {
   const {
+    control,
     register,
     formState: { errors },
     setValue,
@@ -79,16 +80,28 @@ const PhoneFieldset = () => {
         </label>
       )}
       <div className="control">
-        <PhoneMask
+        {/* use a Controller to allow PhoneMask to handle field values */}
+        <Controller
           name={name}
-          aria-label={name === "phone" ? t("accountLayout.contact.phoneLabel") : undefined}
-          aria-describedby={errors[name] ? `${name}-error` : undefined}
-          aria-invalid={!!errors[name]}
-          ref={register({ validate: phoneValidation(required) })}
-          disabled={disabled}
-          onChange={() => {
-            clearErrors(name)
-          }}
+          control={control}
+          defaultValue=""
+          rules={{ validate: phoneValidation(required) }}
+          render={({ value, onChange, onBlur, ref }) => (
+            <PhoneMask
+              name={name}
+              value={value}
+              aria-label={name === "phone" ? t("accountLayout.contact.phoneLabel") : undefined}
+              aria-describedby={errors[name] ? `${name}-error` : undefined}
+              aria-invalid={!!errors[name]}
+              ref={ref}
+              disabled={disabled}
+              onBlur={onBlur}
+              onChange={(event) => {
+                onChange(event.target.value)
+                clearErrors(name)
+              }}
+            />
+          )}
         />
       </div>
       {errors[name]?.message && (

@@ -77,6 +77,7 @@ const ChangePasswordPage = () => {
           labelText={t("label.password")}
           passwordType="accountSettings"
           submitWithEnterKey
+          forgotPasswordVisible={false}
         />
       </UpdateForm>
     </AuthLayout>

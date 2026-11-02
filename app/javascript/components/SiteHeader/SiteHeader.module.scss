@@ -2,6 +2,20 @@
   padding-left: var(--seeds-spacer-container);
 }
 
+.mobile-header-side {
+  @media (max-width: theme("screens.md")) {
+    flex: 1 1 0;
+    margin-right: var(--seeds-spacer-header);
+  }
+}
+
+.mobile-header-logo {
+  @media (max-width: theme("screens.md")) {
+    flex: 0 0 auto;
+    width: 11.3125rem;
+  }
+}
+
 .account-avatar {
   display: inline-flex;
   align-items: center;
@@ -17,6 +31,8 @@
 .mobile-menu-button {
   @media (max-width: theme("screens.md")) {
     margin-left: var(--seeds-spacer-header);
+    flex: 1 1 0;
+    justify-content: flex-start;
   }
 }
 
@@ -25,7 +41,6 @@
     align-items: center;
     height: auto;
     align-self: center;
-    margin-right: var(--seeds-spacer-header);
   }
 }
 

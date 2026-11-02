@@ -84,6 +84,16 @@ describe("<ForgotPassword />", () => {
     expect(emailInput).toHaveValue("test@test.com")
   })
 
+  it("should keep a '+' in an encoded email parameter", async () => {
+    Object.defineProperty(window, "location", {
+      configurable: true,
+      enumerable: true,
+      writable: true,
+      value: { ...window.location, search: "?email=first%2Blast%40test.com", assign: jest.fn() },
+    })
+    await renderAndLoadAsync(<ForgotPassword assetPaths={{}} />)
+    expect(screen.getByLabelText(/email/i)).toHaveValue("first+last@test.com")
+  })
   it("should handle the absence of the email parameter", async () => {
     const customLocation = {
       ...window.location,

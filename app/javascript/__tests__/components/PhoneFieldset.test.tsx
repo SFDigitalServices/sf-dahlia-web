@@ -68,6 +68,20 @@ describe("PhoneFieldset", () => {
     expect(screen.queryByText(t("accountLayout.contact.errorMissing"))).toBeNull()
   })
 
+  it("allows erasing a full phone number with backspace", async () => {
+    const user = userEvent.setup()
+    render(<FieldsetWrapper />)
+    const phoneInput = screen.getByRole("textbox")
+
+    await user.type(phoneInput, "4155550199")
+    expect(phoneInput).toHaveValue("415-555-0199")
+
+    await user.click(phoneInput)
+    await user.type(phoneInput, "{Backspace}".repeat(12))
+
+    expect(phoneInput).toHaveValue("")
+  })
+
   it("renders phone type validation error", async () => {
     const user = userEvent.setup()
     render(<FieldsetWrapper />)
