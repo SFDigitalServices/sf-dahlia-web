@@ -1492,6 +1492,9 @@
             "you": "Kayo"
         },
         "thank_you": "Salamat",
+        "topMessageBanner": {
+            "DahliaWillBeOffline20261109": "Hindi makakapag-online ang DAHLIA para sa isang update: Lunes, Nobyembre 9, 2026, mula 5 hanggang 7 pm, Oras Pasipiko. Hindi mo magagamit ang site sa panahong ito."
+        },
         "welcome": {
             "new_listing_email_alert": "Tumanggap ng email kapag may nakalistang pabahay na kapapaskil pa lamang ",
             "see_rental_listings": "Umupa",
