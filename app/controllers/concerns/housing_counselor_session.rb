@@ -32,6 +32,20 @@ module HousingCounselorSession
     session
   end
 
+  # Re-checks delegation with Salesforce even when the token is unexpired.
+  # A grant rewrites the cookie, so later current_hc_session calls in this
+  # request decode it without calling Salesforce again.
+  def reverify_hc_session!
+    return unless hc_session_feature_enabled?
+
+    token = cookies[HC_SESSION_COOKIE_NAME]
+    return if token.blank?
+
+    refresh_hc_session(token, nil)
+    raise VerificationUnavailableError if hc_session_verification_failed?
+    raise AccessDeniedError if hc_session_access_denied?
+  end
+
   def hc_session_feature_enabled?
     Rails.configuration.unleash.is_enabled?(FEATURE_FLAG)
   end

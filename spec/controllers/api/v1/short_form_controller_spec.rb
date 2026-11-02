@@ -21,6 +21,11 @@ describe Api::V1::ShortFormController, type: :controller do
       )
       allow(ClerkService).to receive(:salesforce_contact_id)
         .and_return(counselor_contact_id)
+      allow(Force::HousingCounselorService).to receive(:authorize_access).and_return(
+        applicant_contact_id: applicant_contact_id,
+        counselor_contact_id: counselor_contact_id,
+      )
+      allow(ClerkService).to receive(:revoke_session)
 
       request.cookies['hc_session'] = JsonWebTokenService.encode_token(
         { 'typ' => 'hc_session', 'hcId' => counselor_contact_id,
@@ -250,7 +255,6 @@ describe Api::V1::ShortFormController, type: :controller do
           )
           allow(Force::HousingCounselorService).to receive(:authorize_access)
             .and_return(nil)
-          allow(ClerkService).to receive(:revoke_session)
         end
 
         it 'does not submit and clears hc_session' do
@@ -264,6 +268,38 @@ describe Api::V1::ShortFormController, type: :controller do
         it "revokes the counselor's Clerk session" do
           post :submit_application
 
+          expect(ClerkService).to have_received(:revoke_session).with(clerk_sid)
+        end
+      end
+
+      # Given an unexpired hc_session and Salesforce still grants delegation
+      # When the counselor submits an application
+      # Then Salesforce is checked once and the application is submitted
+      context 'with an unexpired hc_session that Salesforce still grants' do
+        it 're-checks delegation once and submits' do
+          post :submit_application
+
+          expect(Force::HousingCounselorService).to have_received(:authorize_access).once
+          expect(Force::ShortFormService).to have_received(:create_or_update)
+        end
+      end
+
+      # Given an unexpired hc_session and Salesforce has revoked delegation
+      # When the counselor submits an application
+      # Then nothing is submitted, hc_session is cleared,
+      #   and their Clerk session is revoked
+      context 'with an unexpired hc_session that Salesforce has revoked' do
+        before do
+          allow(Force::HousingCounselorService).to receive(:authorize_access)
+            .and_return(nil)
+        end
+
+        it 'does not submit, clears hc_session, and revokes the Clerk session' do
+          post :submit_application
+
+          expect(response).to have_http_status(:forbidden)
+          expect(Force::ShortFormService).not_to have_received(:create_or_update)
+          expect(cookies[:hc_session]).to be_blank
           expect(ClerkService).to have_received(:revoke_session).with(clerk_sid)
         end
       end
