@@ -2,7 +2,7 @@
 ###################################### CONTROLLER ##########################################
 ############################################################################################
 
-SharedController = ($scope, $state, $stateParams, $window, SharedService, ExternalTranslateService) ->
+SharedController = ($scope, $state, $stateParams, $window, $translate, SharedService, ExternalTranslateService) ->
   $scope.assetPaths = SharedService.assetPaths
   $scope.housingCounselors = SharedService.housingCounselors
   $scope.alternateLanguageLinks = SharedService.alternateLanguageLinks
@@ -25,7 +25,22 @@ SharedController = ($scope, $state, $stateParams, $window, SharedService, Extern
 
   $scope.listingEmailAlertUrl = "https://confirmsubscription.com/h/y/C3BAFCD742D47910"
 
-  $scope.alertMessage = if $window.TOP_MESSAGE then _.unescape($window.TOP_MESSAGE) else ''
+  $scope.alertMessage = ''
+
+  setAlertMessage = ->
+    topMessage = if $window.TOP_MESSAGE then _.unescape($window.TOP_MESSAGE) else ''
+    return $scope.alertMessage = '' unless topMessage
+
+    $translate(topMessage).then(
+      (translatedMessage) ->
+        $scope.alertMessage = translatedMessage
+      ->
+        $scope.alertMessage = topMessage
+    )
+
+  $translate.onReady(setAlertMessage)
+
+  $scope.$on '$translateChangeSuccess', setAlertMessage
 
   $scope.hasCenterBody = () ->
     if $state.includes('dahlia.short-form-welcome') ||
@@ -52,7 +67,7 @@ SharedController = ($scope, $state, $stateParams, $window, SharedService, Extern
 ############################################################################################
 
 SharedController.$inject = [
-  '$scope', '$state', '$stateParams', '$window', 'SharedService', 'ExternalTranslateService'
+  '$scope', '$state', '$stateParams', '$window', '$translate', 'SharedService', 'ExternalTranslateService'
 ]
 
 angular
