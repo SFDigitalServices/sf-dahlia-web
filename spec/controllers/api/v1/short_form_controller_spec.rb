@@ -366,6 +366,28 @@ describe Api::V1::ShortFormController, type: :controller do
             expect(payload.as_json['submittedBy']).to eq(counselor_contact_id)
           end
       end
+
+      # Given an unexpired hc_session and Salesforce has revoked delegation
+      # When the counselor saves a draft
+      # Then the draft is neither read nor saved, hc_session is cleared,
+      #   and their Clerk session is revoked
+      context 'when Salesforce has revoked delegation' do
+        before do
+          allow(Force::ShortFormService).to receive(:get)
+          allow(Force::HousingCounselorService).to receive(:authorize_access)
+            .and_return(nil)
+        end
+
+        it 'does not read or save the draft, and logs the counselor out' do
+          put :update_application, params: update_params
+
+          expect(response).to have_http_status(:forbidden)
+          expect(Force::ShortFormService).not_to have_received(:get)
+          expect(Force::ShortFormService).not_to have_received(:create_or_update)
+          expect(cookies[:hc_session]).to be_blank
+          expect(ClerkService).to have_received(:revoke_session).with(clerk_sid)
+        end
+      end
     end
   end
 
