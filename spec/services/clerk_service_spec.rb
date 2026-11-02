@@ -178,6 +178,22 @@ RSpec.describe ClerkService do
     end
   end
 
+  describe '.revoke_session' do
+    let(:session_id) { 'sess_abc123' }
+    let(:sessions_api) { instance_double(Clerk::Sessions) }
+
+    before do
+      allow(sdk).to receive(:sessions).and_return(sessions_api)
+      allow(sessions_api).to receive(:revoke)
+    end
+
+    it 'revokes the Clerk session' do
+      described_class.revoke_session(session_id)
+
+      expect(sessions_api).to have_received(:revoke).with(session_id: session_id)
+    end
+  end
+
   describe '.salesforce_contact_id' do
     let(:clerk_user) do
       instance_double(
