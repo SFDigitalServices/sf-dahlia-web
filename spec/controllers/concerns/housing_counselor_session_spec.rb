@@ -348,6 +348,32 @@ RSpec.describe HousingCounselorSession, type: :controller do
 
             expect(ClerkService).to have_received(:revoke_session).with(clerk_sid)
           end
+
+          # Given Salesforce has revoked delegation
+          #   And Clerk errors when asked to revoke the session
+          # When the counselor makes a request
+          # Then access is still denied and the cookie is still discarded (fail closed)
+          context 'and the Clerk revoke call fails' do
+            before do
+              allow(ClerkService).to receive(:revoke_session)
+                .and_raise(StandardError, 'clerk unavailable')
+              allow(Rails.logger).to receive(:warn)
+            end
+
+            it 'still returns nil and discards the cookie' do
+              get :show, params: { signed_in_as: hc_id }
+
+              expect(JSON.parse(response.body)).to eq('session' => nil)
+              expect(cookies[:hc_session]).to be_blank
+            end
+
+            it 'logs that the Clerk session could not be revoked' do
+              get :show, params: { signed_in_as: hc_id }
+
+              expect(Rails.logger).to have_received(:warn)
+                .with(/could not revoke Clerk session/)
+            end
+          end
         end
 
         it 'rescues a transient error from the Salesforce re-check without discarding ' \

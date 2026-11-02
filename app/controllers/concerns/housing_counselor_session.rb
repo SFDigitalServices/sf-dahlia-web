@@ -207,8 +207,16 @@ module HousingCounselorSession
     )
     @hc_session_access_denied = true
     discard_hc_session_cookie
-    ClerkService.revoke_session(current_clerk_session_id)
+    revoke_clerk_session
     nil
+  end
+
+  def revoke_clerk_session
+    ClerkService.revoke_session(current_clerk_session_id)
+  rescue StandardError => e
+    Rails.logger.warn(
+      "HousingCounselorSession: could not revoke Clerk session: #{e.class}",
+    )
   end
 
   def discard_hc_session_cookie
