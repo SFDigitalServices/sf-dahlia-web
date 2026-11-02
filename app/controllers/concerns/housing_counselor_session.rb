@@ -103,6 +103,8 @@ module HousingCounselorSession
   rescue Faraday::Error, Restforce::Error => e
     Rails.logger.warn("HousingCounselorSession: Salesforce re-check failed: #{e.message}")
     @hc_session_verification_failed = true
+    discard_hc_session_cookie
+    revoke_clerk_session
     nil
   end
 

@@ -303,6 +303,26 @@ describe Api::V1::ShortFormController, type: :controller do
           expect(ClerkService).to have_received(:revoke_session).with(clerk_sid)
         end
       end
+
+      # Given an unexpired hc_session and the Salesforce re-check errors
+      # When the counselor submits an application
+      # Then nothing is submitted, hc_session is cleared,
+      #   and their Clerk session is revoked (fail closed)
+      context 'when the Salesforce re-check errors' do
+        before do
+          allow(Force::HousingCounselorService).to receive(:authorize_access)
+            .and_raise(Faraday::TimeoutError, 'timed out')
+        end
+
+        it 'does not submit and logs the counselor out' do
+          post :submit_application
+
+          expect(response).to have_http_status(:unauthorized)
+          expect(Force::ShortFormService).not_to have_received(:create_or_update)
+          expect(cookies[:hc_session]).to be_blank
+          expect(ClerkService).to have_received(:revoke_session).with(clerk_sid)
+        end
+      end
     end
   end
 

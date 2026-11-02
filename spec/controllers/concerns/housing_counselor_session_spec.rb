@@ -376,8 +376,10 @@ RSpec.describe HousingCounselorSession, type: :controller do
           end
         end
 
-        it 'rescues a transient error from the Salesforce re-check without discarding ' \
-           'the cookie, so a later request can retry' do
+        # Fail closed: an outage ends both the delegated session and the Clerk
+        # session, so there is no signed-in counselor left to fall back to.
+        it 'discards the cookie and revokes the Clerk session when the Salesforce ' \
+           're-check raises a transient error' do
           allow(Force::HousingCounselorService).to receive(:authorize_access)
             .and_raise(Faraday::TimeoutError, 'timed out')
 
@@ -385,25 +387,27 @@ RSpec.describe HousingCounselorSession, type: :controller do
 
           expect(response).to have_http_status(:ok)
           expect(JSON.parse(response.body)).to eq('session' => nil)
-          expect(cookies[:hc_session]).to be_present
+          expect(cookies[:hc_session]).to be_blank
+          expect(ClerkService).to have_received(:revoke_session).with(clerk_sid)
         end
 
-        # Regression coverage: the cookie used to be discarded on a transient
-        # Salesforce error, so a retry after the outage cleared had no cookie
-        # left to re-verify and silently behaved as "no delegated session."
-        it 'lets a later request recover once Salesforce is reachable again' do
+        # This used to keep the cookie so a later request could recover. Keeping
+        # it is no longer needed: the Clerk session is revoked as well, so the
+        # counselor signs in again and re-enters through a delegate link.
+        it 'does not restore the delegated session once Salesforce is reachable again' do
           allow(Force::HousingCounselorService).to receive(:authorize_access)
             .and_raise(Faraday::TimeoutError, 'timed out')
           get :show, params: { signed_in_as: hc_id }
-          expect(cookies[:hc_session]).to be_present
+          # Like a browser, send back only what the first response left behind.
+          request.cookies['hc_session'] = cookies[:hc_session]
 
           allow(Force::HousingCounselorService).to receive(:authorize_access).and_return(
             { applicant_contact_id: app_id, counselor_contact_id: hc_id },
           )
           get :show, params: { signed_in_as: hc_id }
 
-          expect(JSON.parse(response.body)).to eq('session' => { 'hc_id' => hc_id,
-                                                                 'app_id' => app_id })
+          expect(JSON.parse(response.body)).to eq('session' => nil)
+          expect(cookies[:hc_session]).to be_blank
         end
       end
     end
@@ -550,7 +554,7 @@ RSpec.describe HousingCounselorSession, type: :controller do
         expect(JSON.parse(response.body)).to eq(
           'session' => nil, 'verification_failed' => true, 'access_denied' => false,
         )
-        expect(cookies[:hc_session]).to be_present
+        expect(cookies[:hc_session]).to be_blank
       end
     end
   end
