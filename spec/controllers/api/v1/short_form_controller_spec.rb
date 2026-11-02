@@ -280,6 +280,24 @@ describe Api::V1::ShortFormController, type: :controller do
         expect(response).to have_http_status(:unauthorized)
         expect(Force::ShortFormService).not_to have_received(:create_or_update)
       end
+
+      # Given a counselor with a valid delegate session
+      # When the save request body includes submittedBy set to another contact id
+      # Then Salesforce receives the counselor's contact id as submittedBy
+      it 'ignores a client-sent submittedBy' do
+        allow(Force::ShortFormService).to receive(:get)
+          .and_return(draft_owned_by(applicant_contact_id))
+        spoofed_params = update_params.deep_merge(
+          application: { submittedBy: 'spoofed_contact_123' },
+        )
+
+        put :update_application, params: spoofed_params
+
+        expect(Force::ShortFormService)
+          .to have_received(:create_or_update) do |payload, _attrs|
+            expect(payload.as_json['submittedBy']).to eq(counselor_contact_id)
+          end
+      end
     end
   end
 
