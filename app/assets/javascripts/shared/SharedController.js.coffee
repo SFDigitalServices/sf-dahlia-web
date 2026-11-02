@@ -2,7 +2,7 @@
 ###################################### CONTROLLER ##########################################
 ############################################################################################
 
-SharedController = ($scope, $state, $stateParams, $window, $translate, SharedService, ExternalTranslateService) ->
+SharedController = ($scope, $rootScope, $state, $stateParams, $window, $translate, SharedService, ExternalTranslateService) ->
   $scope.assetPaths = SharedService.assetPaths
   $scope.housingCounselors = SharedService.housingCounselors
   $scope.alternateLanguageLinks = SharedService.alternateLanguageLinks
@@ -40,7 +40,10 @@ SharedController = ($scope, $state, $stateParams, $window, $translate, SharedSer
 
   $translate.onReady(setAlertMessage)
 
-  $scope.$on '$translateChangeSuccess', setAlertMessage
+  unsubscribeFromLanguageChanges = $rootScope.$on '$translateChangeSuccess', setAlertMessage
+
+  $scope.$on '$destroy', ->
+    unsubscribeFromLanguageChanges()
 
   $scope.hasCenterBody = () ->
     if $state.includes('dahlia.short-form-welcome') ||
@@ -67,7 +70,7 @@ SharedController = ($scope, $state, $stateParams, $window, $translate, SharedSer
 ############################################################################################
 
 SharedController.$inject = [
-  '$scope', '$state', '$stateParams', '$window', '$translate', 'SharedService', 'ExternalTranslateService'
+  '$scope', '$rootScope', '$state', '$stateParams', '$window', '$translate', 'SharedService', 'ExternalTranslateService'
 ]
 
 angular
