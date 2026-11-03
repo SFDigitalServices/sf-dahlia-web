@@ -12,11 +12,9 @@ module ClerkOrDeviseAuth
 
   # remote_ip lets Unleash's IP strategy turn Clerk on for allowlisted IPs only
   def self.clerk_enabled?(remote_ip)
-    # TODO: TEMP local debugging, remove before commit
     enabled = Rails.configuration.unleash.is_enabled?(
       CLERK_AUTH_FLAG, Unleash::Context.new(remote_address: remote_ip)
     )
-    Rails.logger.info("[ClerkFlag] remote_ip=#{remote_ip.inspect} enabled=#{enabled}")
     enabled
   end
 
