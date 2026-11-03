@@ -23,6 +23,7 @@ export interface PasswordFieldsetProps {
   email?: string
   passwordType: "signIn" | "createAccount" | "accountSettings" | "resetPassword"
   labelText: string
+  forgotPasswordVisible?: boolean
 }
 
 export const handlePasswordServerErrors = (error: ExpandedAccountAxiosError): SetErrorArgs => {
@@ -213,6 +214,7 @@ const PasswordFieldset = ({
   passwordType,
   labelText,
   email,
+  forgotPasswordVisible = true,
 }: PasswordFieldsetProps) => {
   // Derive the validation content directly from `watch` during render. Mirroring it into
   // state via an effect lags one keystroke behind under React 19's rendering/effect timing.
@@ -241,12 +243,14 @@ const PasswordFieldset = ({
             register={register}
             className="mb-4"
           />
-          <Link
-            href={createPath(getForgotPasswordPath(), { email })}
-            className="forgot-password-link"
-          >
-            {t("signIn.forgotPassword")}
-          </Link>
+          {forgotPasswordVisible && (
+            <Link
+              href={createPath(getForgotPasswordPath(), { email })}
+              className="forgot-password-link"
+            >
+              {t("signIn.forgotPassword")}
+            </Link>
+          )}
           <div className={`new-password-label pt-4 pb-2 ${errors.password && "text-alert"}`}>
             <label htmlFor="password">{t("label.chooseNewPassword")}</label>
           </div>

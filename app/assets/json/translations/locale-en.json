@@ -1493,6 +1493,9 @@
             "you": "You"
         },
         "thank_you": "Thank you",
+        "topMessageBanner": {
+            "DahliaWillBeOffline20261109": "DAHLIA will be offline for an update: Monday November 9, 2026 from 5 to 7 pm Pacific Time. You will not be able to use the site during this time."
+        },
         "welcome": {
             "new_listing_email_alert": "Get emailed whenever a new listing is posted.",
             "see_rental_listings": "Rent",

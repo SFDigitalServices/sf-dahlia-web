@@ -1492,6 +1492,9 @@
             "you": "Usted"
         },
         "thank_you": "Gracias",
+        "topMessageBanner": {
+            "DahliaWillBeOffline20261109": "DAHLIA no estará disponible debido a una actualización el lunes 9 de noviembre de 2026, de 5:00 a 7:00 pm (hora del Pacífico). Durante este periodo, no será posible utilizar el sitio."
+        },
         "welcome": {
             "new_listing_email_alert": "Reciba un aviso por correo electrónico cuando se publiquen nuevos anuncios.",
             "see_rental_listings": "Alquilar",
