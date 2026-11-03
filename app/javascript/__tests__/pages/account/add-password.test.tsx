@@ -363,5 +363,27 @@ describe("<AddPassword />", () => {
 
       expect(mockUpdatePassword).not.toHaveBeenCalled()
     })
+    it("redirects to reverification on mount if the session needs reverification", async () => {
+      cleanup()
+      mockNavigate.mockClear()
+      ;(useAuth as jest.Mock).mockReturnValue({
+        isLoaded: true,
+        isSignedIn: true,
+        getToken: jest.fn().mockResolvedValue("clerk-session-token"),
+        has: jest.fn().mockReturnValue(false),
+      })
+
+      await renderAndLoadAsync(<AddPassword assetPaths={{}} />)
+
+      await waitFor(() => {
+        expect(mockNavigate).toHaveBeenCalledWith(
+          { pathname: getReverificationPath(), search: "flow=addPassword" },
+          { replace: true }
+        )
+      })
+      // The page shouldn't render while reverification is required
+      expect(screen.queryByRole("button", { name: /add password/i })).toBeNull()
+      expect(mockUpdatePassword).not.toHaveBeenCalled()
+    })
   })
 })
