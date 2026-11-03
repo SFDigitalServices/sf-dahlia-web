@@ -6,10 +6,10 @@ class Api::V1::ShortFormController < ApiController
   include HousingCounselorSession
 
   rescue_from HousingCounselorSession::VerificationUnavailableError do
-    render json: { error: 'unauthorized' }, status: :unauthorized
+    render json: { error: 'hc_session_ended' }, status: :unauthorized
   end
   rescue_from HousingCounselorSession::AccessDeniedError do
-    render json: { error: 'forbidden' }, status: :forbidden
+    render json: { error: 'hc_session_ended' }, status: :forbidden
   end
 
   before_action :authenticate_user!,

@@ -261,6 +261,7 @@ describe Api::V1::ShortFormController, type: :controller do
           post :submit_application
 
           expect(response).to have_http_status(:forbidden)
+          expect(JSON.parse(response.body)).to eq('error' => 'hc_session_ended')
           expect(Force::ShortFormService).not_to have_received(:create_or_update)
           expect(cookies[:hc_session]).to be_blank
         end
@@ -298,6 +299,7 @@ describe Api::V1::ShortFormController, type: :controller do
           post :submit_application
 
           expect(response).to have_http_status(:forbidden)
+          expect(JSON.parse(response.body)).to eq('error' => 'hc_session_ended')
           expect(Force::ShortFormService).not_to have_received(:create_or_update)
           expect(cookies[:hc_session]).to be_blank
           expect(ClerkService).to have_received(:revoke_session).with(clerk_sid)
@@ -318,6 +320,7 @@ describe Api::V1::ShortFormController, type: :controller do
           post :submit_application
 
           expect(response).to have_http_status(:unauthorized)
+          expect(JSON.parse(response.body)).to eq('error' => 'hc_session_ended')
           expect(Force::ShortFormService).not_to have_received(:create_or_update)
           expect(cookies[:hc_session]).to be_blank
           expect(ClerkService).to have_received(:revoke_session).with(clerk_sid)
@@ -365,7 +368,9 @@ describe Api::V1::ShortFormController, type: :controller do
           .and_return(draft_owned_by('different_contact_123'))
 
         put :update_application, params: update_params
+
         expect(response).to have_http_status(:unauthorized)
+        expect(response.body).not_to include('hc_session_ended')
         expect(Force::ShortFormService).not_to have_received(:create_or_update)
       end
 
@@ -402,6 +407,7 @@ describe Api::V1::ShortFormController, type: :controller do
           put :update_application, params: update_params
 
           expect(response).to have_http_status(:forbidden)
+          expect(JSON.parse(response.body)).to eq('error' => 'hc_session_ended')
           expect(Force::ShortFormService).not_to have_received(:get)
           expect(Force::ShortFormService).not_to have_received(:create_or_update)
           expect(cookies[:hc_session]).to be_blank
