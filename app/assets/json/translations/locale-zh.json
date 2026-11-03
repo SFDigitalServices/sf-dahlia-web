@@ -1493,6 +1493,9 @@
             "you": "您"
         },
         "thank_you": "謝謝",
+        "topMessageBanner": {
+            "DahliaWillBeOffline20261109": "DAHLIA 將於 2026 年 11 月 9 日 (週一) 下午 5 點至 7 點 (太平洋時間) 暫時停機進行更新。在此期間，您將無法使用本網站。"
+        },
         "welcome": {
             "new_listing_email_alert": "每當發佈新的物業項目時，將以電子郵件接收通知。",
             "see_rental_listings": "租賃",
