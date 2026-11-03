@@ -1130,4 +1130,43 @@ describe("<SettingsPage />", () => {
       expect(screen.getByText("Reverification failed. Please try again.")).not.toBeNull()
     })
   })
+  describe("when arriving after a failed email change", () => {
+    let originalLocation: Location
+    let mockNavigate: jest.Mock
+
+    beforeEach(async () => {
+      document.documentElement.lang = "en"
+      originalLocation = mockWindowLocation()
+      ;(useFeatureFlag as jest.Mock).mockReturnValue({ flagsReady: true, unleashFlag: true })
+      setupUserContext({ loggedIn: true })
+      ;(get as jest.Mock).mockResolvedValue({ data: { agencies: [] } })
+      ;(useUser as jest.Mock).mockReturnValue({
+        isLoaded: true,
+        isSignedIn: true,
+        user: { passwordEnabled: true },
+      })
+      mockNavigate = jest.fn()
+      ;(useNavigate as jest.Mock).mockReturnValue(mockNavigate)
+      ;(useLocation as jest.Mock).mockReturnValue({
+        pathname: "/account/settings",
+        state: { emailChangeFailed: true },
+      })
+      await renderAndLoadAsync(<SettingsPage assetPaths={{}} />)
+    })
+
+    afterEach(() => {
+      jest.restoreAllMocks()
+      restoreWindowLocation(originalLocation)
+    })
+
+    it("shows the error banner and clears the navigation state", () => {
+      expect(
+        screen.getByText("Error updating your email. Please try again or contact us.")
+      ).not.toBeNull()
+      expect(mockNavigate).toHaveBeenCalledWith("/account/settings", {
+        replace: true,
+        state: null,
+      })
+    })
+  })
 })

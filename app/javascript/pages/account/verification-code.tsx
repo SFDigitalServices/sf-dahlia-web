@@ -95,7 +95,7 @@ const EnterVerificationCodePage = ({
     setError,
     setValue,
     clearErrors,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<{ code: string }>({
     mode: "onSubmit",
     reValidateMode: "onSubmit",
@@ -450,7 +450,8 @@ const EnterVerificationCodePage = ({
             variant="primary"
             size="sm"
             type="submit"
-            disabled={!isLoaded}
+            disabled={!isLoaded || isSubmitting}
+            loadingMessage={isSubmitting ? t("createAccount.confirmCode") : undefined}
           >
             {t("createAccount.confirmCode")}
           </Button>

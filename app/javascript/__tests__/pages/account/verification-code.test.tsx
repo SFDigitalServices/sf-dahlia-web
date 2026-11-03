@@ -1204,7 +1204,7 @@ describe("<EnterVerificationCode />", () => {
     const verified = {
       id: "new",
       verification: { status: "verified" },
-      destroy: jest.fn().mockResolvedValue(undefined),
+      destroy: jest.fn().mockRejectedValue(new Error("destroy failed")),
     }
     const user = mockUpdateEmailUser({ attemptVerification: jest.fn().mockResolvedValue(verified) })
     await renderUpdateEmailFlow(user)
@@ -1217,15 +1217,21 @@ describe("<EnterVerificationCode />", () => {
     })
     expect(user.update).not.toHaveBeenCalled()
     expect(verified.destroy).toHaveBeenCalled()
-
+    expect(consoleError).toHaveBeenCalledWith(
+      "Update email: failed to remove unused address",
+      expect.any(Error)
+    )
     consoleError.mockRestore()
   })
   it("rolls Salesforce back when the Clerk update fails", async () => {
+    ;(updateEmail as jest.Mock)
+      .mockResolvedValueOnce({ email: "new@example.com" } as User)
+      .mockRejectedValueOnce(new Error("salesforce down"))
     const consoleError = jest.spyOn(console, "error").mockImplementation(() => {})
     const verified = {
       id: "new",
       verification: { status: "verified" },
-      destroy: jest.fn().mockResolvedValue(undefined),
+      destroy: jest.fn().mockRejectedValue(new Error("destroy failed")),
     }
     const user = mockUpdateEmailUser({ attemptVerification: jest.fn().mockResolvedValue(verified) })
     user.update.mockRejectedValue(new Error("clerk down"))
@@ -1244,7 +1250,14 @@ describe("<EnterVerificationCode />", () => {
     )
     expect(verified.destroy).toHaveBeenCalled()
     expect(user.previous.destroy).not.toHaveBeenCalled()
-
+    expect(consoleError).toHaveBeenCalledWith(
+      "Update email: Salesforce rollback failed",
+      expect.any(Error)
+    )
+    expect(consoleError).toHaveBeenCalledWith(
+      "Update email: failed to remove unused address",
+      expect.any(Error)
+    )
     consoleError.mockRestore()
   })
   describe("reverification flow", () => {
@@ -1401,6 +1414,15 @@ describe("<EnterVerificationCode />", () => {
       expect(mockAttemptFirstFactor).not.toHaveBeenCalled()
 
       consoleError.mockRestore()
+    })
+  })
+  it("disables the confirm button while the email update is in progress", async () => {
+    ;(updateEmail as jest.Mock).mockReturnValue(new Promise(() => {}))
+    await renderUpdateEmailFlow(mockUpdateEmailUser())
+    await submitCode()
+
+    await waitFor(() => {
+      expect(screen.getByRole("button", { name: /confirm code/i })).toBeDisabled()
     })
   })
 })

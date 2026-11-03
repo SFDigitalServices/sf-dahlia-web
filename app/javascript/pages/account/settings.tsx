@@ -65,7 +65,11 @@ import EmailFieldset, {
   handleEmailServerErrors,
 } from "./components/EmailFieldset"
 
-type ConfirmationBannerFlag = "passwordChanged" | "emailChanged" | "reverificationFailed"
+type ConfirmationBannerFlag =
+  | "passwordChanged"
+  | "emailChanged"
+  | "reverificationFailed"
+  | "emailChangeFailed"
 
 const confirmationBannerMessages: Record<
   ConfirmationBannerFlag,
@@ -74,6 +78,7 @@ const confirmationBannerMessages: Record<
   passwordChanged: { message: "accountSettings.changePasswordBanner", variant: "success" },
   emailChanged: { message: "accountSettings.changeEmailBanner", variant: "success" },
   reverificationFailed: { message: "accountSettings.reverification.failed", variant: "alert" },
+  emailChangeFailed: { message: "error.email.updateEmailError", variant: "alert" },
 }
 
 export const Banner = ({
