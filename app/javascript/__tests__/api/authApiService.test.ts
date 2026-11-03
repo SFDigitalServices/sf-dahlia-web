@@ -24,7 +24,6 @@ import {
   clearHousingCounselorSession,
   updateNameOrDOB,
   updateEmail,
-  updateContactEmail,
 } from "../../api/authApiService"
 import { mockProfileStub } from "../__util__/accountUtils"
 
@@ -402,36 +401,6 @@ describe("authApiService", () => {
       )
       expect(authenticatedPut).not.toHaveBeenCalled()
       expect(result).toEqual(mockProfileStub)
-    })
-  })
-
-  describe("updateContactEmail", () => {
-    it("updates the Salesforce contact email with the Clerk session token", async () => {
-      const updatedContact = { ...mockProfileStub, email: "new@example.com" }
-      ;(put as jest.Mock).mockResolvedValue({ data: { contact: updatedContact } })
-
-      const result = await updateContactEmail(
-        { ...mockProfileStub, email: "new@example.com" },
-        { clerkEnabled: true, sessionToken: "clerk-session-token" }
-      )
-
-      expect(put).toHaveBeenCalledWith(
-        "/api/v1/account/update",
-        expect.objectContaining({
-          contact: expect.objectContaining({ email: "new@example.com" }),
-        }),
-        { headers: { Authorization: "Bearer clerk-session-token" } }
-      )
-      expect(authenticatedPut).not.toHaveBeenCalled()
-      expect(result).toEqual(updatedContact)
-    })
-
-    it("rejects without calling the API when the Clerk token is missing", async () => {
-      await expect(updateContactEmail(mockProfileStub, { clerkEnabled: true })).rejects.toThrow(
-        "Missing Clerk session token"
-      )
-      expect(put).not.toHaveBeenCalled()
-      expect(authenticatedPut).not.toHaveBeenCalled()
     })
   })
 })

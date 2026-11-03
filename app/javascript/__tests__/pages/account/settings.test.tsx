@@ -344,7 +344,7 @@ describe("<SettingsPage />", () => {
     describe("the email section", () => {
       it("navigates to the update login email page", async () => {
         await act(async () => {
-          fireEvent.click(screen.getByRole("button", { name: /update email/i }))
+          fireEvent.click(screen.getByRole("button", { name: /change email/i }))
           await promise
         })
 
