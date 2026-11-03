@@ -1,6 +1,6 @@
 class ClerkClient
   # Define a specific error class for your application to catch
-  class ConnectionError < StandardError; end
+  class ConnectionError < Faraday::ConnectionFailed; end
 
   TIMEOUT_MS = 20000 # 20 seconds
 
