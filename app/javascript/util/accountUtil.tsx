@@ -1,8 +1,12 @@
-import React, { useEffect, useState } from "react"
+import React, { useCallback } from "react"
 import { Card, Heading } from "@bloom-housing/ui-seeds"
 import { Icon, UniversalIconType } from "@bloom-housing/ui-components"
 import { DOBFieldValues } from "../pages/account/components/DOBFieldset"
 import sharedStyles from "../pages/account/shared-styles.module.scss"
+import { getAddPasswordPath, getReverificationPath, getUpdateEmailPath } from "./routeUtil"
+import { AUTH_FLOW } from "../modules/constants"
+import { createSearchParams, useNavigate } from "react-router"
+import { useAuth } from "@clerk/react"
 
 // We will strictly validate the email address using the following regex.
 // Devise will also validate the email address on the backend with a looser pattern.
@@ -46,8 +50,6 @@ export const FormHeader = ({
   )
 }
 
-const MOBILE_SIZE = 768
-
 export const FormSection = ({
   className,
   children,
@@ -57,21 +59,8 @@ export const FormSection = ({
   children: React.ReactNode
   fullWidthDivider?: boolean
 }) => {
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth)
-
-  useEffect(() => {
-    function handleResize() {
-      setWindowWidth(window.innerWidth)
-    }
-
-    window.addEventListener("resize", handleResize)
-    return () => window.removeEventListener("resize", handleResize)
-  }, [])
-
-  const dividerType = fullWidthDivider || windowWidth <= MOBILE_SIZE ? "flush" : "inset"
-
   return (
-    <Card.Section className={className} divider={dividerType}>
+    <Card.Section className={className} divider={fullWidthDivider ? "flush" : "inset"}>
       {children}
     </Card.Section>
   )
@@ -84,4 +73,50 @@ export const getDobStringFromDobObject = (dobObject: DOBFieldValues) => {
     Number.parseInt(dobObject.birthDay)
   )
   return date.toISOString().split("T")[0]
+}
+
+export enum REVERIFICATION_FLOW {
+  ADD_PASSWORD = "addPassword",
+  UPDATE_LOGIN_EMAIL = "updateLoginEmail",
+  UPDATE_CONTACT_EMAIL = "updateContactEmail",
+}
+
+export const toReverificationFlow = (value?: string | null) =>
+  Object.values(REVERIFICATION_FLOW).find((flow) => flow === (value as REVERIFICATION_FLOW))
+
+export const reverificationDestinations: Record<
+  REVERIFICATION_FLOW,
+  { path: () => string; state?: Record<string, unknown> }
+> = {
+  [REVERIFICATION_FLOW.ADD_PASSWORD]: {
+    path: getAddPasswordPath,
+    state: { accountSettingsFlow: true },
+  },
+  [REVERIFICATION_FLOW.UPDATE_LOGIN_EMAIL]: {
+    path: getUpdateEmailPath,
+    state: { flow: AUTH_FLOW.UPDATE_LOGIN_EMAIL },
+  },
+  // TODO: DAH-4431 combine login and contact email flows
+  [REVERIFICATION_FLOW.UPDATE_CONTACT_EMAIL]: {
+    path: getUpdateEmailPath,
+    state: { flow: AUTH_FLOW.UPDATE_CONTACT_EMAIL },
+  },
+}
+
+export const useReverificationRedirect = (flow: REVERIFICATION_FLOW) => {
+  const navigate = useNavigate()
+  const { has } = useAuth()
+  const needsReverification = !has?.({ reverification: "strict" })
+
+  const redirectToReverification = useCallback(() => {
+    void navigate(
+      {
+        pathname: getReverificationPath(),
+        search: createSearchParams({ flow }).toString(),
+      },
+      { replace: true }
+    )
+  }, [flow, navigate])
+
+  return { needsReverification, redirectToReverification }
 }

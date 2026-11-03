@@ -103,6 +103,7 @@ interface EmailFieldProps {
   onChange?: () => void
   note?: React.ReactNode
   label?: string
+  disabled?: boolean
 }
 
 const EmailFieldset = ({
@@ -113,6 +114,7 @@ const EmailFieldset = ({
   onChange,
   note,
   label,
+  disabled,
 }: EmailFieldProps) => {
   const handleKeyDown = (e: React.KeyboardEvent<HTMLElement>) => {
     // the parent Form component from `@bloom-housing/ui-components` disables the Enter key, override it
@@ -152,7 +154,7 @@ const EmailFieldset = ({
         register={register}
         defaultValue={defaultEmail ?? null}
         onChange={onChange}
-        inputProps={{ required: true, onKeyDown: handleKeyDown }}
+        inputProps={{ required: true, disabled, onKeyDown: handleKeyDown }}
       />
     </Fieldset>
   )
