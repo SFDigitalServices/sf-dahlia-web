@@ -23,7 +23,6 @@ import {
   getResetPasswordPath,
   getSignInPath,
   getMyAccountSettingsPath,
-  getUpdateEmailPath,
 } from "../../util/routeUtil"
 import styles from "./verification-code.module.scss"
 import { AUTH_FLOW, UNLEASH_FLAG } from "../../modules/constants"
@@ -33,7 +32,7 @@ import VerificationCodeField from "./components/VerificationCodeField"
 import {
   authorizeHousingCounselor,
   clearHousingCounselorSession,
-  updateContactEmail,
+  updateEmail,
 } from "../../api/authApiService"
 import { User } from "../../authentication/user"
 
@@ -177,58 +176,77 @@ const EnterVerificationCodePage = ({
     )
   }
 
-  const updateSalesforceEmail = async (currentProfile: User, newEmail: string) => {
+  const updateSalesforceEmail = async (currentProfile: User, newEmail: string): Promise<User> => {
     const sessionToken = bearerToken(await getCredentials())
     if (!sessionToken) throw new Error("Missing Clerk session token")
-    return updateContactEmail(
+    return updateEmail(
       { ...currentProfile, email: newEmail },
       { clerkEnabled: true, sessionToken }
-    )
+    ) as Promise<User>
   }
 
   const verifyUpdateEmailCode = async (code: string) => {
     const emailAddress = findPendingEmailAddress()
-    if (!user || !emailAddress) {
-      ;+console.error("Update email: missing required data")
-      void navigate(getUpdateEmailPath(), { state: { flow, saveFailed: true } })
+    if (!user || !emailAddress || !profile) {
+      console.error("Update email: missing required data")
+      void navigate(getMyAccountSettingsPath(), { state: { emailChangeFailed: true } })
+      return
+    }
+    const verifiedEmail = await emailAddress.attemptVerification({ code }).catch((error) => {
+      if (error?.errors?.[0]?.code !== "form_code_incorrect") {
+        console.error("Update email: verification failed", error)
+      }
+      return null
+    })
+    if (!verifiedEmail || verifiedEmail.verification.status !== "verified") {
+      setError(CODE_FIELD, { message: "invalid" })
       return
     }
 
+    // Updates Salesforce then Clerk. If the Clerk call fails,
+    // rollback Salesforce email with the old primary address
+    let updatedProfile: User
     try {
-      const verifiedEmail = await emailAddress.attemptVerification({ code })
-      if (verifiedEmail.verification.status !== "verified") {
-        setError(CODE_FIELD, { message: "invalid" })
-        return
-      }
-      const previousEmailAddress = user.primaryEmailAddress
-      await user.update({ primaryEmailAddressId: verifiedEmail.id })
-      if (previousEmailAddress && previousEmailAddress.id !== verifiedEmail.id) {
-        try {
-          await previousEmailAddress.destroy()
-        } catch (error) {
-          // TODO: There is a possibility the primary email can be updated but this destroy
-          // can fail. The old address is still attached to the user in the Clerk DB and would
-          // require cleanup.
-          // https://github.com/SFDigitalServices/sf-dahlia-web/pull/3078#discussion_r4104585451
-          console.error("Update email: failed to remove previous primary email address", error)
-        }
-      }
+      updatedProfile = await updateSalesforceEmail(profile, email)
     } catch (error) {
-      console.error("Update email: verification failed", error)
-      setError(CODE_FIELD, { message: "invalid" })
+      console.error("Update email: Salesforce update failed", error)
+      await verifiedEmail
+        .destroy()
+        .catch((error) => console.error("Update email: failed to remove unused address", error))
+      void navigate(getMyAccountSettingsPath(), { state: { emailChangeFailed: true } })
+      return
     }
 
-    // The Clerk email has already changed, so a Salesforce
-    // failure is logged rather than blocking the user.
-    if (profile) {
-      try {
-        const updatedProfile = await updateSalesforceEmail(profile, email)
-        saveProfile?.(updatedProfile)
-      } catch (error) {
-        console.error("Update email: Salesforce update failed", error)
+    const previousEmailAddress = user.primaryEmailAddress
+    try {
+      await user.update({ primaryEmailAddressId: verifiedEmail.id })
+    } catch (error) {
+      console.error("Update email: Clerk primary email update failed", error)
+      if (profile.email) {
+        await updateSalesforceEmail(profile, profile.email).catch((error) =>
+          console.error("Update email: Salesforce rollback failed", error)
+        )
       }
-    } else {
-      console.error("Update email: missing profile, Salesforce not updated")
+      await verifiedEmail
+        .destroy()
+        .catch((error) => console.error("Update email: failed to remove unused address", error))
+      void navigate(getMyAccountSettingsPath(), { state: { emailChangeFailed: true } })
+      return
+    }
+
+    saveProfile?.(updatedProfile)
+
+    // Remove the previous primary email from Clerk
+    if (previousEmailAddress && previousEmailAddress.id !== verifiedEmail.id) {
+      try {
+        await previousEmailAddress.destroy()
+      } catch (error) {
+        // TODO: There is a possibility the primary email can be updated but this destroy
+        // can fail. The old address is still attached to the user in the Clerk DB and would
+        // require cleanup.
+        // https://github.com/SFDigitalServices/sf-dahlia-web/pull/3078#discussion_r4104585451
+        console.error("Update email: failed to remove previous primary email address", error)
+      }
     }
 
     void navigate(getMyAccountSettingsPath(), { state: { emailChanged: true } })
