@@ -56,7 +56,7 @@ jest.mock("../../../hooks/useFeatureFlag", () => ({
   useFeatureFlag: jest.fn(() => ({ flagsReady: true, unleashFlag: true })),
 }))
 
-const updateLoginEmail = (newEmailOverrides = {}) => {
+const mockUpdateEmailUser = (newEmailOverrides = {}) => {
   const previous = { id: "old", emailAddress: "test@example.com", destroy: jest.fn() }
   const newEmail = {
     id: "new",
@@ -1063,7 +1063,7 @@ describe("<EnterVerificationCode />", () => {
     })
   })
   it("verifies the update email code and swaps the primary email", async () => {
-    const user = updateLoginEmail()
+    const user = mockUpdateEmailUser()
     await renderUpdateEmailFlow(user)
     await submitCode()
 
@@ -1077,7 +1077,7 @@ describe("<EnterVerificationCode />", () => {
 
   it("returns to the update email form when the pending email is not found", async () => {
     const consoleError = jest.spyOn(console, "error").mockImplementation(() => {})
-    const user = { ...updateLoginEmail(), emailAddresses: [] }
+    const user = { ...mockUpdateEmailUser(), emailAddresses: [] }
     await renderUpdateEmailFlow(user)
     await submitCode()
 
@@ -1092,7 +1092,7 @@ describe("<EnterVerificationCode />", () => {
   })
 
   it("does not update the email when the code is not verified", async () => {
-    const user = updateLoginEmail({
+    const user = mockUpdateEmailUser({
       attemptVerification: jest.fn().mockResolvedValue({ verification: { status: "unverified" } }),
     })
     await renderUpdateEmailFlow(user)
@@ -1108,7 +1108,7 @@ describe("<EnterVerificationCode />", () => {
   it("does not update the email when verification throws", async () => {
     const consoleError = jest.spyOn(console, "error").mockImplementation(() => {})
     const attemptVerification = jest.fn().mockRejectedValue(new Error("bad code"))
-    const user = updateLoginEmail({ attemptVerification })
+    const user = mockUpdateEmailUser({ attemptVerification })
     await renderUpdateEmailFlow(user)
     await submitCode()
 
@@ -1127,7 +1127,7 @@ describe("<EnterVerificationCode />", () => {
 
   it("shows an expired code error for update login email", async () => {
     const consoleError = jest.spyOn(console, "error").mockImplementation(() => {})
-    const user = updateLoginEmail({
+    const user = mockUpdateEmailUser({
       attemptVerification: jest.fn().mockRejectedValue(expiredCodeError),
     })
     await renderUpdateEmailFlow(user)
@@ -1139,7 +1139,7 @@ describe("<EnterVerificationCode />", () => {
   })
 
   it("resends the update email code", async () => {
-    await renderUpdateEmailFlow(updateLoginEmail())
+    await renderUpdateEmailFlow(mockUpdateEmailUser())
     expireResendVerificationCode()
     fireEvent.click(screen.getByRole("button", { name: t("createAccount.sendAgain") }))
 
@@ -1164,7 +1164,7 @@ describe("<EnterVerificationCode />", () => {
   it("does not resend the update email code when sending fails", async () => {
     jest.spyOn(console, "error").mockImplementation(() => {})
     await renderUpdateEmailFlow(
-      updateLoginEmail({
+      mockUpdateEmailUser({
         prepareVerification: jest.fn().mockRejectedValue(new Error("resend failed")),
       })
     )
@@ -1180,7 +1180,7 @@ describe("<EnterVerificationCode />", () => {
   })
   it("still navigates when removing the previous email fails", async () => {
     const consoleError = jest.spyOn(console, "error").mockImplementation(() => {})
-    const user = updateLoginEmail()
+    const user = mockUpdateEmailUser()
     user.previous.destroy.mockRejectedValue(new Error("destroy failed"))
     await renderUpdateEmailFlow(user)
     await submitCode()
@@ -1206,7 +1206,7 @@ describe("<EnterVerificationCode />", () => {
       verification: { status: "verified" },
       destroy: jest.fn().mockResolvedValue(undefined),
     }
-    const user = updateLoginEmail({ attemptVerification: jest.fn().mockResolvedValue(verified) })
+    const user = mockUpdateEmailUser({ attemptVerification: jest.fn().mockResolvedValue(verified) })
     await renderUpdateEmailFlow(user)
     await submitCode()
 
@@ -1227,7 +1227,7 @@ describe("<EnterVerificationCode />", () => {
       verification: { status: "verified" },
       destroy: jest.fn().mockResolvedValue(undefined),
     }
-    const user = updateLoginEmail({ attemptVerification: jest.fn().mockResolvedValue(verified) })
+    const user = mockUpdateEmailUser({ attemptVerification: jest.fn().mockResolvedValue(verified) })
     user.update.mockRejectedValue(new Error("clerk down"))
     await renderUpdateEmailFlow(user)
     await submitCode()
@@ -1266,7 +1266,7 @@ describe("<EnterVerificationCode />", () => {
       ;(useUser as jest.Mock).mockReturnValue({
         isLoaded: true,
         isSignedIn: true,
-        user: updateLoginEmail(),
+        user: mockUpdateEmailUser(),
       })
       await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
     }

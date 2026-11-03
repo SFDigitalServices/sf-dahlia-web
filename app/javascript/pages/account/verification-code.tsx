@@ -222,7 +222,8 @@ const EnterVerificationCodePage = ({
       setError(CODE_FIELD, { message: getCodeErrorType(error) })
       return null
     })
-    if (!verifiedEmail || verifiedEmail.verification.status !== "verified") {
+    if (!verifiedEmail) return
+    if (verifiedEmail.verification.status !== "verified") {
       setError(CODE_FIELD, { message: "invalid" })
       return
     }

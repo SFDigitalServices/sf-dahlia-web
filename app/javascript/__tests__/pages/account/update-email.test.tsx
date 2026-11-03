@@ -112,7 +112,7 @@ describe("<UpdateEmail />", () => {
 
     await waitFor(() => {
       expect(mockNavigate).toHaveBeenCalledWith(
-        { pathname: getReverificationPath(), search: "flow=updateLoginEmail" },
+        { pathname: getReverificationPath(), search: "flow=updateEmail" },
         { replace: true }
       )
     })
