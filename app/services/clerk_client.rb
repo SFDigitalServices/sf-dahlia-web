@@ -3,6 +3,7 @@ class ClerkClient
   class ConnectionError < Faraday::ConnectionFailed; end
 
   TIMEOUT_MS = 20000 # 20 seconds
+  LOGGABLE_ERROR_CODES = %w[api_key_invalid].freeze
 
   # Build a fail-fast instance of the Clerk SDK
   SDK = Clerk::SDK.new(
@@ -23,7 +24,28 @@ class ClerkClient
     Rails.logger.error("Clerk connection error: #{e.message}")
     raise ConnectionError, "Clerk API is unreachable: #{e.message}"
   rescue StandardError => e
-    Rails.logger.error("Clerk API error (#{e.class}): #{e.message}")
+    Rails.logger.error("Clerk API error (#{e.class}): #{error_diagnostics(e)}")
     raise
+  end
+
+  def self.error_diagnostics(error)
+    status = error.status_code if error.respond_to?(:status_code)
+    status ||= error.raw_response&.status if error.respond_to?(:raw_response)
+    errors = if error.respond_to?(:errors)
+               error.errors
+             elsif error.respond_to?(:body)
+               JSON.parse(error.body).fetch('errors', [])
+             else
+               []
+             end
+    codes = Array(errors).filter_map do |api_error|
+      code = api_error.code if api_error.respond_to?(:code)
+      code ||= api_error['code'] if api_error.is_a?(Hash)
+      code if LOGGABLE_ERROR_CODES.include?(code)
+    end.uniq
+
+    "status=#{status || 'unknown'}, codes=#{codes.join(',')}"
+  rescue JSON::ParserError, TypeError
+    "status=#{status || 'unknown'}, codes="
   end
 end

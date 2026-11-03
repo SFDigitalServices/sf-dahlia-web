@@ -17,16 +17,18 @@ RSpec.describe ClerkClient do
     end
 
     it 'logs and re-raises Clerk API errors' do
+      body = '{"errors":[{"code":"api_key_invalid","message":"sensitive detail"},' \
+             '{"code":"unapproved_code"}]}'
       error = Clerk::Models::Errors::APIError.new(
-        status_code: 500,
-        body: 'Internal Server Error',
+        status_code: 401,
+        body: body,
         raw_response: nil,
       )
       allow(Rails.logger).to receive(:error)
 
       expect { described_class.execute { raise error } }.to raise_error(error)
       expect(Rails.logger).to have_received(:error).with(
-        "Clerk API error (#{error.class}): #{error.message}",
+        "Clerk API error (#{error.class}): status=401, codes=api_key_invalid",
       )
     end
   end
