@@ -48,7 +48,7 @@ import { ErrorSummaryBanner } from "./components/ErrorSummaryBanner"
 import { ExpandedAccountAxiosError, getErrorMessage } from "./components/util"
 import { withAuthentication } from "../../authentication/withAuthentication"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
-import { UNLEASH_FLAG, AUTH_FLOW } from "../../modules/constants"
+import { AUTH_FLOW, UNLEASH_FLAG } from "../../modules/constants"
 import { AccountSettingsPage as MyAccountSettingsPage } from "./account-settings"
 import settingsStyles from "./settings.module.scss"
 import { useLocation, useNavigate } from "react-router"
@@ -65,11 +65,15 @@ import EmailFieldset, {
   handleEmailServerErrors,
 } from "./components/EmailFieldset"
 
-type ConfirmationBannerFlag = "passwordChanged" | "emailChanged"
+type ConfirmationBannerFlag = "passwordChanged" | "emailChanged" | "reverificationFailed"
 
-const confirmationBannerMessages: Record<ConfirmationBannerFlag, string> = {
-  passwordChanged: "accountSettings.changePasswordBanner",
-  emailChanged: "accountSettings.changeEmailBanner",
+const confirmationBannerMessages: Record<
+  ConfirmationBannerFlag,
+  { message: string; variant: CommonMessageVariant }
+> = {
+  passwordChanged: { message: "accountSettings.changePasswordBanner", variant: "success" },
+  emailChanged: { message: "accountSettings.changeEmailBanner", variant: "success" },
+  reverificationFailed: { message: "accountSettings.reverification.failed", variant: "alert" },
 }
 
 export const Banner = ({
@@ -701,8 +705,8 @@ const AccountSettings = ({ profile }: { profile: User }) => {
       <Banner
         showBanner={!!confirmationBannerMessage}
         className={settingsStyles["settingsConfirmationAlert"]}
-        variant="success"
-        message={confirmationBannerMessage ? t(confirmationBannerMessage) : ""}
+        variant={confirmationBannerMessage?.variant}
+        message={confirmationBannerMessage ? t(confirmationBannerMessage.message) : ""}
         onClose={() => setConfirmationBannerMessage(null)}
       />
       {/* TODO: DAH-4406 remove name banner header with new toast */}

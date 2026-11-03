@@ -28,18 +28,26 @@ import styles from "./verification-code.module.scss"
 import { AUTH_FLOW, UNLEASH_FLAG } from "../../modules/constants"
 import UserContext from "../../authentication/context/UserContext"
 import GetHelp from "./components/GetHelp"
-import VerificationCodeField from "./components/VerificationCodeField"
+import VerificationCodeField, { CodeErrorType } from "./components/VerificationCodeField"
 import {
   authorizeHousingCounselor,
   clearHousingCounselorSession,
   updateEmail,
 } from "../../api/authApiService"
 import { User } from "../../authentication/user"
+import {
+  REVERIFICATION_FLOW,
+  reverificationDestinations,
+  toReverificationFlow,
+} from "../../util/accountUtil"
+import { useSession } from "@clerk/react"
+import { getClerkErrorCode } from "../../authentication/authenticationUtils"
 
 interface EnterVerificationCodePageProps {
   email: string
   flow: AUTH_FLOW
   returnUrl?: string
+  returnToAuthFlow?: REVERIFICATION_FLOW
 }
 
 // The user can send a new verification code every 30 seconds
@@ -48,6 +56,16 @@ const CODE_FIELD = "code"
 
 const isUpdateEmailFlow = (flow?: AUTH_FLOW) => flow === AUTH_FLOW.UPDATE_EMAIL
 
+const requiresSignedInUser = (flow?: AUTH_FLOW) =>
+  isUpdateEmailFlow(flow) || flow === AUTH_FLOW.REVERIFICATION
+
+const codeErrorTypes: Record<string, CodeErrorType> = {
+  verification_expired: "expired",
+}
+
+const getCodeErrorType = (error: unknown): CodeErrorType =>
+  codeErrorTypes[getClerkErrorCode(error) ?? ""] ?? "invalid"
+
 const remainingResendSeconds = (expiresAt: number) =>
   Math.max(0, Math.ceil((expiresAt - Date.now()) / 1000))
 
@@ -55,6 +73,7 @@ const EnterVerificationCodePage = ({
   email,
   flow,
   housingCounselorToken,
+  returnToAuthFlow,
   returnUrl = getMyAccountPath(),
 }: EnterVerificationCodePageProps & { housingCounselorToken?: string | null }) => {
   const navigate = useNavigate()
@@ -68,6 +87,7 @@ const EnterVerificationCodePage = ({
   const [isResending, setIsResending] = useState(false)
   const { user } = useSignUpSession()
   const { profile, saveProfile } = useContext(UserContext)
+  const { session } = useSession()
 
   const {
     control,
@@ -121,7 +141,7 @@ const EnterVerificationCodePage = ({
     }
 
     if (error) {
-      setError(CODE_FIELD, { message: "invalid" })
+      setError(CODE_FIELD, { message: getCodeErrorType(error) })
       return
     }
 
@@ -153,7 +173,7 @@ const EnterVerificationCodePage = ({
     const { error, notReady } = await signUpSession.verifyEmailCode(code)
     if (notReady) return
     if (error) {
-      setError(CODE_FIELD, { message: "invalid" })
+      setError(CODE_FIELD, { message: getCodeErrorType(error) })
       return
     }
 
@@ -162,7 +182,10 @@ const EnterVerificationCodePage = ({
 
   const verifyForgotPasswordCode = async (code: string) => {
     const { error } = await signInSession.verifyPasswordResetCode(code)
-    if (error) return
+    if (error) {
+      setError(CODE_FIELD, { message: getCodeErrorType(error) })
+      return
+    }
 
     void navigate(getResetPasswordPath(), { state: { email, flow, code } })
   }
@@ -196,6 +219,7 @@ const EnterVerificationCodePage = ({
       if (error?.errors?.[0]?.code !== "form_code_incorrect") {
         console.error("Update email: verification failed", error)
       }
+      setError(CODE_FIELD, { message: getCodeErrorType(error) })
       return null
     })
     if (!verifiedEmail || verifiedEmail.verification.status !== "verified") {
@@ -252,11 +276,30 @@ const EnterVerificationCodePage = ({
     void navigate(getMyAccountSettingsPath(), { state: { emailChanged: true } })
   }
 
+  const verifyReverificationCode = async (code: string) => {
+    const returnFlow = toReverificationFlow(returnToAuthFlow)
+    if (!session || !returnFlow) {
+      console.error("Reverification: missing required data")
+      void navigate(getMyAccountSettingsPath())
+      return
+    }
+
+    try {
+      await session.attemptFirstFactorVerification({ strategy: "email_code", code })
+      const destination = reverificationDestinations[returnFlow]
+      void navigate(destination.path(), { replace: true, state: destination.state })
+    } catch (error) {
+      console.error("Reverification: verification failed", error)
+      setError(CODE_FIELD, { message: "invalid" })
+    }
+  }
+
   const verifyAuthCodeByFlow: Record<AUTH_FLOW, (code: string) => Promise<void>> = {
     [AUTH_FLOW.SIGN_IN]: verifySignInCode,
     [AUTH_FLOW.CREATE_ACCOUNT]: verifySignUpCode,
     [AUTH_FLOW.FORGOT_PASSWORD]: verifyForgotPasswordCode,
     [AUTH_FLOW.UPDATE_EMAIL]: verifyUpdateEmailCode,
+    [AUTH_FLOW.REVERIFICATION]: verifyReverificationCode,
   }
 
   const onSubmit = async ({ code }: { code: string }) => verifyAuthCodeByFlow[flow](code)
@@ -305,11 +348,35 @@ const EnterVerificationCodePage = ({
     }
   }
 
+  const resendReverificationCode = async (): Promise<boolean> => {
+    if (!session) return false
+
+    try {
+      const verification = await session.startVerification({ level: "first_factor" })
+      const emailFactor = verification.supportedFirstFactors?.find(
+        (factor) => factor.strategy === "email_code"
+      )
+      if (!emailFactor) {
+        console.error("Resend reverification code error: email code factor not available")
+        return false
+      }
+      await session.prepareFirstFactorVerification({
+        strategy: "email_code",
+        emailAddressId: emailFactor.emailAddressId,
+      })
+      return true
+    } catch (error) {
+      console.error("Resend reverification code error:", error)
+      return false
+    }
+  }
+
   const resendCodeByFlow: Record<AUTH_FLOW, () => Promise<boolean>> = {
     [AUTH_FLOW.SIGN_IN]: resendSignInCode,
     [AUTH_FLOW.CREATE_ACCOUNT]: resendSignUpCode,
     [AUTH_FLOW.FORGOT_PASSWORD]: resendForgotPasswordCode,
     [AUTH_FLOW.UPDATE_EMAIL]: resendPendingEmailCode,
+    [AUTH_FLOW.REVERIFICATION]: resendReverificationCode,
   }
 
   const onResend = async () => {
@@ -338,20 +405,22 @@ const EnterVerificationCodePage = ({
           {t("createAccount.weSentCodeTo")}
           <br />
           <span className={styles.email}>{email}</span>
-          <Button
-            className={styles.editEmail}
-            variant="text"
-            size="sm"
-            type="button"
-            onClick={() => {
-              void navigate(
-                editEmailHref,
-                isUpdateEmailFlow(flow) ? { state: { flow } } : undefined
-              )
-            }}
-          >
-            {t("createAccount.editEmail")}
-          </Button>
+          {flow !== AUTH_FLOW.REVERIFICATION && (
+            <Button
+              className={styles.editEmail}
+              variant="text"
+              size="sm"
+              type="button"
+              onClick={() => {
+                void navigate(
+                  editEmailHref,
+                  isUpdateEmailFlow(flow) ? { state: { flow } } : undefined
+                )
+              }}
+            >
+              {t("createAccount.editEmail")}
+            </Button>
+          )}
         </p>
         {isForgotPasswordFlow && (
           <p className={styles["forgotPasswordDescription"]}>{t("signIn.forgotPasswordCode")}</p>
@@ -363,7 +432,16 @@ const EnterVerificationCodePage = ({
             defaultValue=""
             rules={{ validate: (code: string) => /^\d{6}$/.test(code) }}
             render={({ value, onChange }) => (
-              <VerificationCodeField value={value} onChange={onChange} error={!!errors.code} />
+              <VerificationCodeField
+                value={value}
+                onChange={onChange}
+                error={!!errors.code}
+                errorType={errors.code?.message as CodeErrorType}
+                onGetNewCode={() => {
+                  void onResend()
+                }}
+                getNewCodeDisabled={isResending || resendSeconds > 0}
+              />
             )}
           />
           <Button
@@ -439,13 +517,11 @@ const EnterVerificationCode = (_props: { assetPaths: unknown }) => {
   const { profile, profileMissing } = useContext(UserContext)
   const isSignedIn = status.kind === "signedIn"
   const loadingProfile = isSignedIn && !profileMissing && !profile
-
   const { state: reactRouterState } = useLocation()
   const verificationCodeEmailAddress = reactRouterState?.verificationCodeEmailAddress
   const flow: AUTH_FLOW = reactRouterState?.flow
   const fallbackPath = flow ? getAuthFlowPath(flow) : getSignInPath()
-  const isSignedInUpdateFlow = isUpdateEmailFlow(flow)
-
+  const flowRequiresSignedInUser = requiresSignedInUser(flow)
   // user may transition from signedOut to signedIn on this page
   // keep track of the initial status of the user when they first visited the page
   const [initialSessionKind, setInitialSessionKind] = useState<"signedIn" | "signedOut" | null>(
@@ -469,11 +545,11 @@ const EnterVerificationCode = (_props: { assetPaths: unknown }) => {
       return
     }
     const arrivedSignedIn = initialSessionKind === "signedIn"
-    if (!isSignedInUpdateFlow && arrivedSignedIn && isSignedIn && profile) {
+    if (!flowRequiresSignedInUser && arrivedSignedIn && isSignedIn && profile) {
       void navigate(getMyAccountPath(), { state: { flow } })
       return
     }
-    if (!isSignedInUpdateFlow && arrivedSignedIn && isSignedIn && !profile) {
+    if (!flowRequiresSignedInUser && arrivedSignedIn && isSignedIn && !profile) {
       void navigate(getAddProfilePath(), { state: { flow } })
       return
     }
@@ -489,7 +565,7 @@ const EnterVerificationCode = (_props: { assetPaths: unknown }) => {
     profile,
     navigate,
     fallbackPath,
-    isSignedInUpdateFlow,
+    flowRequiresSignedInUser,
   ])
 
   const ready =
@@ -498,7 +574,7 @@ const EnterVerificationCode = (_props: { assetPaths: unknown }) => {
     status.kind !== "initializing" &&
     !loadingProfile &&
     !!flow &&
-    (isSignedInUpdateFlow ? isSignedIn : status.kind === "signedOut") &&
+    (flowRequiresSignedInUser ? isSignedIn : status.kind === "signedOut") &&
     !!verificationCodeEmailAddress
 
   if (!ready) {
@@ -509,6 +585,7 @@ const EnterVerificationCode = (_props: { assetPaths: unknown }) => {
     <EnterVerificationCodePage
       email={verificationCodeEmailAddress}
       flow={flow}
+      returnToAuthFlow={reactRouterState?.returnToAuthFlow}
       housingCounselorToken={reactRouterState?.housingCounselorToken}
       returnUrl={reactRouterState?.returnUrl}
     />

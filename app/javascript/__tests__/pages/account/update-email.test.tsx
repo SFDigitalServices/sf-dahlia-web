@@ -10,6 +10,7 @@ import { AUTH_FLOW } from "../../../modules/constants"
 import UpdateEmail from "../../../pages/account/update-email"
 import {
   getMyAccountSettingsPath,
+  getReverificationPath,
   getSignInPath,
   getUpdateEmailCodePath,
 } from "../../../util/routeUtil"
@@ -83,6 +84,7 @@ describe("<UpdateEmail />", () => {
       isLoaded: true,
       isSignedIn: true,
       getToken: jest.fn().mockResolvedValue("clerk-session-token"),
+      has: jest.fn().mockReturnValue(true),
     })
   })
 
@@ -99,8 +101,31 @@ describe("<UpdateEmail />", () => {
     expect(mockNavigate).toHaveBeenCalledWith(getSignInPath())
   })
 
+  it("redirects to reverification when the session is stale", async () => {
+    ;(useAuth as jest.Mock).mockReturnValue({
+      isLoaded: true,
+      isSignedIn: true,
+      getToken: jest.fn().mockResolvedValue("clerk-session-token"),
+      has: jest.fn().mockReturnValue(false),
+    })
+    await renderPage()
+
+    await waitFor(() => {
+      expect(mockNavigate).toHaveBeenCalledWith(
+        { pathname: getReverificationPath(), search: "flow=updateLoginEmail" },
+        { replace: true }
+      )
+    })
+    expect(screen.queryByRole("textbox")).toBeNull()
+  })
+
   it("renders nothing while flags are loading", async () => {
     ;(useFeatureFlag as jest.Mock).mockReturnValue({ flagsReady: false, unleashFlag: false })
+    ;(useAuth as jest.Mock).mockReturnValue({
+      isLoaded: false,
+      isSignedIn: false,
+      has: jest.fn().mockReturnValue(true),
+    })
     await renderPage()
 
     expect(screen.queryByRole("textbox")).toBeNull()
@@ -108,7 +133,11 @@ describe("<UpdateEmail />", () => {
   })
 
   it("renders nothing while auth is loading", async () => {
-    ;(useAuth as jest.Mock).mockReturnValue({ isLoaded: false, isSignedIn: false })
+    ;(useAuth as jest.Mock).mockReturnValue({
+      isLoaded: false,
+      isSignedIn: false,
+      has: jest.fn().mockReturnValue(true),
+    })
     await renderPage()
 
     expect(screen.queryByRole("textbox")).toBeNull()
@@ -116,7 +145,11 @@ describe("<UpdateEmail />", () => {
   })
 
   it("redirects to sign-in when signed out", async () => {
-    ;(useAuth as jest.Mock).mockReturnValue({ isLoaded: true, isSignedIn: false })
+    ;(useAuth as jest.Mock).mockReturnValue({
+      isLoaded: true,
+      isSignedIn: false,
+      has: jest.fn().mockReturnValue(true),
+    })
     await renderPage()
 
     expect(mockNavigate).toHaveBeenCalledWith(getSignInPath())

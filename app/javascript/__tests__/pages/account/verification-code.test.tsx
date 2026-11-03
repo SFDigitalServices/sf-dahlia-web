@@ -1,5 +1,5 @@
 import React from "react"
-import { useSignIn, useSignUp, useAuth, useClerk, useUser } from "@clerk/react"
+import { useSignIn, useSignUp, useAuth, useClerk, useUser, useSession } from "@clerk/react"
 import { t } from "@bloom-housing/ui-components"
 import { act, screen, waitFor, cleanup, fireEvent } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
@@ -21,7 +21,12 @@ import {
 } from "../../../api/authApiService"
 import * as authStatus from "../../../authentication/session/authStatus"
 import { User } from "../../../authentication/user"
-import { getMyAccountSettingsPath } from "../../../util/routeUtil"
+import {
+  getAddPasswordPath,
+  getMyAccountSettingsPath,
+  getUpdateEmailPath,
+} from "../../../util/routeUtil"
+import { REVERIFICATION_FLOW } from "../../../util/accountUtil"
 
 jest.mock("@clerk/react", () => {
   const Clerk = jest.requireActual("@clerk/react")
@@ -34,7 +39,7 @@ jest.mock("@clerk/react", () => {
       getToken: jest.fn().mockResolvedValue("clerk-session-token"),
     })),
     useSignUp: jest.fn(),
-    useSession: () => ({ session: null }),
+    useSession: jest.fn(),
     useSignIn: jest.fn(),
     useClerk: jest.fn(),
     useUser: jest.fn(),
@@ -97,6 +102,20 @@ const submitCode = async () => {
   await user.paste("123456")
   await user.click(screen.getByRole("button", { name: t("createAccount.confirmCode") }))
 }
+// Confirms with fireEvent; user.click doesn't show the error when an earlier test submitted a code
+const pasteAndConfirmCode = async () => {
+  const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime })
+  await user.click(screen.getAllByRole("textbox")[0])
+  await user.paste("123456")
+  fireEvent.click(screen.getByRole("button", { name: t("createAccount.confirmCode") }))
+}
+const expectExpiredCodeError = async () => {
+  await waitFor(() => {
+    expect(screen.getByTestId("error-message")).toHaveTextContent(t("createAccount.codeExpired"))
+  })
+  expect(screen.getByRole("button", { name: t("createAccount.getNewCode") })).not.toBeNull()
+}
+const expiredCodeError = { errors: [{ code: "verification_expired" }] }
 const expireResendVerificationCode = () => {
   for (let remaining = 30; remaining > 0; remaining--) {
     act(() => {
@@ -205,6 +224,7 @@ describe("<EnterVerificationCode />", () => {
     ;(useFeatureFlag as jest.Mock).mockReturnValue({ flagsReady: true, unleashFlag: true })
     ;(clearHousingCounselorSession as jest.Mock).mockReset().mockResolvedValue(undefined)
     ;(useClerk as jest.Mock).mockReturnValue({ client: undefined })
+    ;(useSession as jest.Mock).mockReturnValue({ session: null })
     ;(useSignUp as jest.Mock).mockReturnValue({
       fetchStatus: "idle",
       signUp: mockSignUpResource,
@@ -763,6 +783,77 @@ describe("<EnterVerificationCode />", () => {
     expect(screen.queryByRole("button", { name: t("createAccount.sendAgain") })).toBeNull()
   })
 
+  it("shows an expired code error for sign in and gets a new code", async () => {
+    cleanup()
+    const consoleError = jest.spyOn(console, "error").mockImplementation(() => {})
+    ;(useLocation as jest.Mock).mockReturnValue({
+      pathname: "/sign-in/code",
+      state: { verificationCodeEmailAddress: "test@example.com", flow: AUTH_FLOW.SIGN_IN },
+    })
+    mockSignInVerifyCode.mockResolvedValue({ error: expiredCodeError })
+    await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
+    expireResendVerificationCode()
+
+    await pasteAndConfirmCode()
+    await expectExpiredCodeError()
+    expect(screen.queryByText(t("createAccount.codeInvalid.p1"))).toBeNull()
+
+    fireEvent.click(screen.getByRole("button", { name: t("createAccount.getNewCode") }))
+    await act(async () => {
+      await Promise.resolve()
+    })
+
+    expect(mockSignInSendCode).toHaveBeenCalledTimes(1)
+    expect(screen.queryByTestId("error-message")).toBeNull()
+    expect(screen.getByText(t("createAccount.emailSent"))).not.toBeNull()
+    expect(screen.getByText(t("createAccount.sendAgainIn", { smart_count: 30 }))).not.toBeNull()
+    consoleError.mockRestore()
+  })
+
+  it("disables get a new code during the resend countdown", async () => {
+    const consoleError = jest.spyOn(console, "error").mockImplementation(() => {})
+    mockSignUpVerifyEmailCode.mockResolvedValue({ error: expiredCodeError })
+
+    await pasteAndConfirmCode()
+    await expectExpiredCodeError()
+
+    expect(screen.getByRole("button", { name: t("createAccount.getNewCode") })).toBeDisabled()
+    expect(screen.getByText(t("createAccount.sendAgainIn", { smart_count: 30 }))).not.toBeNull()
+
+    expireResendVerificationCode()
+    expect(screen.getByRole("button", { name: t("createAccount.getNewCode") })).toBeEnabled()
+    consoleError.mockRestore()
+  })
+
+  it("disables get a new code while a resend is pending", async () => {
+    const consoleError = jest.spyOn(console, "error").mockImplementation(() => {})
+    mockSignUpVerifyEmailCode.mockResolvedValue({ error: expiredCodeError })
+    mockSignUpSendEmailCode.mockReturnValue(new Promise(() => {}))
+    expireResendVerificationCode()
+
+    await pasteAndConfirmCode()
+    await expectExpiredCodeError()
+
+    fireEvent.click(screen.getByRole("button", { name: t("createAccount.getNewCode") }))
+    await act(async () => {
+      await Promise.resolve()
+    })
+
+    expect(screen.getByRole("button", { name: t("createAccount.getNewCode") })).toBeDisabled()
+    expect(mockSignUpSendEmailCode).toHaveBeenCalledTimes(1)
+    consoleError.mockRestore()
+  })
+
+  it("shows an expired code error for create account", async () => {
+    const consoleError = jest.spyOn(console, "error").mockImplementation(() => {})
+    mockSignUpVerifyEmailCode.mockResolvedValue({ error: expiredCodeError })
+
+    await pasteAndConfirmCode()
+    await expectExpiredCodeError()
+    expect(mockNavigate).not.toHaveBeenCalledWith("/add-password", expect.anything())
+    consoleError.mockRestore()
+  })
+
   it("redirects to sign-in when email is missing from the sign-in code page", async () => {
     cleanup()
     document.title = "DAHLIA San Francisco Housing Portal"
@@ -818,6 +909,25 @@ describe("<EnterVerificationCode />", () => {
 
     expect(mockResetPasswordVerifyCode).toHaveBeenCalledWith({ code: "123456" })
     expect(mockNavigate).not.toHaveBeenCalled()
+  })
+
+  it("shows an expired code error for forgot password", async () => {
+    cleanup()
+    const consoleError = jest.spyOn(console, "error").mockImplementation(() => {})
+    ;(useLocation as jest.Mock).mockReturnValue({
+      pathname: "/forgot-password/code",
+      state: {
+        verificationCodeEmailAddress: "test@example.com",
+        flow: AUTH_FLOW.FORGOT_PASSWORD,
+      },
+    })
+    mockResetPasswordVerifyCode.mockResolvedValue({ error: expiredCodeError })
+    await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
+
+    await pasteAndConfirmCode()
+    await expectExpiredCodeError()
+    expect(mockNavigate).not.toHaveBeenCalled()
+    consoleError.mockRestore()
   })
 
   it("resend forgot password code", async () => {
@@ -1015,6 +1125,19 @@ describe("<EnterVerificationCode />", () => {
     consoleError.mockRestore()
   })
 
+  it("shows an expired code error for update login email", async () => {
+    const consoleError = jest.spyOn(console, "error").mockImplementation(() => {})
+    const user = updateLoginEmail({
+      attemptVerification: jest.fn().mockRejectedValue(expiredCodeError),
+    })
+    await renderUpdateEmailFlow(user)
+
+    await pasteAndConfirmCode()
+    await expectExpiredCodeError()
+    expect(user.update).not.toHaveBeenCalled()
+    consoleError.mockRestore()
+  })
+
   it("resends the update email code", async () => {
     await renderUpdateEmailFlow(updateLoginEmail())
     expireResendVerificationCode()
@@ -1123,5 +1246,161 @@ describe("<EnterVerificationCode />", () => {
     expect(user.previous.destroy).not.toHaveBeenCalled()
 
     consoleError.mockRestore()
+  })
+  describe("reverification flow", () => {
+    let mockStartVerification: jest.Mock
+    let mockPrepareFirstFactor: jest.Mock
+    let mockAttemptFirstFactor: jest.Mock
+
+    const renderReverificationFlow = async (returnToAuthFlow?: REVERIFICATION_FLOW) => {
+      cleanup()
+      setupUserContext({ loggedIn: true })
+      ;(useLocation as jest.Mock).mockReturnValue({
+        pathname: "/reverification/code",
+        state: {
+          verificationCodeEmailAddress: "test@example.com",
+          flow: AUTH_FLOW.REVERIFICATION,
+          returnToAuthFlow,
+        },
+      })
+      ;(useUser as jest.Mock).mockReturnValue({
+        isLoaded: true,
+        isSignedIn: true,
+        user: updateLoginEmail(),
+      })
+      await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
+    }
+
+    beforeEach(() => {
+      mockAttemptFirstFactor = jest.fn().mockResolvedValue(undefined)
+      mockPrepareFirstFactor = jest.fn().mockResolvedValue(undefined)
+      mockStartVerification = jest.fn().mockResolvedValue({
+        supportedFirstFactors: [{ strategy: "email_code", emailAddressId: "old" }],
+      })
+      ;(useSession as jest.Mock).mockReturnValue({
+        session: {
+          startVerification: mockStartVerification,
+          prepareFirstFactorVerification: mockPrepareFirstFactor,
+          attemptFirstFactorVerification: mockAttemptFirstFactor,
+        },
+      })
+    })
+
+    it("verifies the code and continues to the add password page", async () => {
+      await renderReverificationFlow(REVERIFICATION_FLOW.ADD_PASSWORD)
+      await submitCode()
+
+      await waitFor(() => {
+        expect(mockAttemptFirstFactor).toHaveBeenCalledWith({
+          strategy: "email_code",
+          code: "123456",
+        })
+      })
+      expect(mockNavigate).toHaveBeenCalledWith(getAddPasswordPath(), {
+        replace: true,
+        state: { accountSettingsFlow: true },
+      })
+    })
+
+    it("continues to the update email page for the login email flow", async () => {
+      await renderReverificationFlow(REVERIFICATION_FLOW.UPDATE_EMAIL)
+      await submitCode()
+
+      await waitFor(() => {
+        expect(mockNavigate).toHaveBeenCalledWith(getUpdateEmailPath(), {
+          replace: true,
+          state: { flow: AUTH_FLOW.UPDATE_EMAIL },
+        })
+      })
+    })
+
+    it("returns to settings when the return flow is missing", async () => {
+      const consoleError = jest.spyOn(console, "error").mockImplementation(() => {})
+      await renderReverificationFlow(undefined)
+      await submitCode()
+
+      await waitFor(() => {
+        expect(mockNavigate).toHaveBeenCalledWith(getMyAccountSettingsPath())
+      })
+      expect(mockAttemptFirstFactor).not.toHaveBeenCalled()
+      expect(consoleError).toHaveBeenCalledWith("Reverification: missing required data")
+
+      consoleError.mockRestore()
+    })
+
+    it("shows an error when the code is rejected", async () => {
+      const consoleError = jest.spyOn(console, "error").mockImplementation(() => {})
+      mockAttemptFirstFactor.mockRejectedValue(new Error("bad code"))
+      await renderReverificationFlow(REVERIFICATION_FLOW.ADD_PASSWORD)
+      await submitCode()
+
+      await waitFor(() => {
+        expect(mockAttemptFirstFactor).toHaveBeenCalled()
+      })
+      expect(mockNavigate).not.toHaveBeenCalled()
+
+      consoleError.mockRestore()
+    })
+
+    it("resends the code", async () => {
+      await renderReverificationFlow(REVERIFICATION_FLOW.ADD_PASSWORD)
+      expireResendVerificationCode()
+      fireEvent.click(screen.getByRole("button", { name: t("createAccount.sendAgain") }))
+
+      await waitFor(() => {
+        expect(mockPrepareFirstFactor).toHaveBeenCalledWith({
+          strategy: "email_code",
+          emailAddressId: "old",
+        })
+      })
+    })
+
+    it("does not resend when the email code factor is unavailable", async () => {
+      const consoleError = jest.spyOn(console, "error").mockImplementation(() => {})
+      mockStartVerification.mockResolvedValue({ supportedFirstFactors: [] })
+      await renderReverificationFlow(REVERIFICATION_FLOW.ADD_PASSWORD)
+      expireResendVerificationCode()
+      fireEvent.click(screen.getByRole("button", { name: t("createAccount.sendAgain") }))
+
+      await waitFor(() => {
+        expect(consoleError).toHaveBeenCalledWith(
+          "Resend reverification code error: email code factor not available"
+        )
+      })
+      expect(mockPrepareFirstFactor).not.toHaveBeenCalled()
+
+      consoleError.mockRestore()
+    })
+
+    it("does not resend when sending fails", async () => {
+      const consoleError = jest.spyOn(console, "error").mockImplementation(() => {})
+      mockPrepareFirstFactor.mockRejectedValue(new Error("resend failed"))
+      await renderReverificationFlow(REVERIFICATION_FLOW.ADD_PASSWORD)
+      expireResendVerificationCode()
+      fireEvent.click(screen.getByRole("button", { name: t("createAccount.sendAgain") }))
+
+      await waitFor(() => {
+        expect(consoleError).toHaveBeenCalledWith(
+          "Resend reverification code error:",
+          expect.any(Error)
+        )
+      })
+
+      consoleError.mockRestore()
+    })
+
+    it("does not run if user is not logged in", async () => {
+      const consoleError = jest.spyOn(console, "error").mockImplementation(() => {})
+      ;(useSession as jest.Mock).mockReturnValue({ session: null })
+      await renderReverificationFlow(REVERIFICATION_FLOW.ADD_PASSWORD)
+      await submitCode()
+
+      await waitFor(() => {
+        expect(mockNavigate).toHaveBeenCalledWith(getMyAccountSettingsPath())
+      })
+      expect(mockAttemptFirstFactor).not.toHaveBeenCalled()
+
+      consoleError.mockRestore()
+    })
   })
 })

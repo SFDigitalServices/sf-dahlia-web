@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/unbound-method */
-import React, { useEffect, useRef, useState } from "react"
+import React, { useEffect, useState } from "react"
 import withAppSetup from "../../layouts/withAppSetup"
 import {
   AppPages,
@@ -7,7 +7,7 @@ import {
   getSignInPath,
   getUpdateEmailCodePath,
 } from "../../util/routeUtil"
-import { useLocation, useNavigate } from "react-router"
+import { useNavigate } from "react-router"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import { AUTH_FLOW, UNLEASH_FLAG } from "../../modules/constants"
 import { useAuth } from "@clerk/react"
@@ -24,6 +24,7 @@ import EmailFieldset, {
 import { ErrorSummaryBanner } from "./components/ErrorSummaryBanner"
 import { getErrorMessage } from "./components/util"
 import { useSignUpSession } from "../../authentication/session/useSignUpSession"
+import { REVERIFICATION_FLOW, useReverificationRedirect } from "../../util/accountUtil"
 
 const UpdateEmailPage = () => {
   const {
@@ -34,17 +35,9 @@ const UpdateEmailPage = () => {
   } = useForm({ mode: "onSubmit", shouldFocusError: false })
   const navigate = useNavigate()
   const { user, isAccountInitialized } = useSignUpSession()
-  const location = useLocation()
   const [loading, setLoading] = useState(false)
-  const saveFailed = !!(location.state as { saveFailed?: boolean } | null)?.saveFailed
-  const saveFailedHandled = useRef(false)
-
-  useEffect(() => {
-    if (!saveFailed || saveFailedHandled.current) return
-    saveFailedHandled.current = true
-    setError("email", { message: "email:server:generic" })
-    void navigate(location.pathname, { replace: true })
-  }, [location.pathname, navigate, saveFailed, setError])
+  const { has } = useAuth()
+  const { redirectToReverification } = useReverificationRedirect(REVERIFICATION_FLOW.UPDATE_EMAIL)
 
   if (!user) {
     return null
@@ -66,6 +59,12 @@ const UpdateEmailPage = () => {
 
   const onGetCodeSubmit = async ({ email }: { email: string }) => {
     if (loading) return
+
+    const needsVerification = !has?.({ reverification: "strict" })
+    if (needsVerification) {
+      redirectToReverification()
+      return
+    }
     const newEmail = email.toLowerCase()
     const currentEmail = user.primaryEmailAddress?.emailAddress.toLowerCase()
 
@@ -133,6 +132,9 @@ const UpdateEmail = (_props: { assetPaths: unknown }) => {
   const { isLoaded, isSignedIn } = useAuth()
   const { isAccountInitialized } = useSignUpSession()
   const { unleashFlag: clerkEnabled, flagsReady } = useFeatureFlag(UNLEASH_FLAG.CLERK_AUTH, false)
+  const { needsReverification, redirectToReverification } = useReverificationRedirect(
+    REVERIFICATION_FLOW.UPDATE_EMAIL
+  )
 
   useEffect(() => {
     if (!flagsReady) return
@@ -145,11 +147,23 @@ const UpdateEmail = (_props: { assetPaths: unknown }) => {
       void navigate(getSignInPath())
       return
     }
+    if (needsReverification) {
+      redirectToReverification()
+      return
+    }
     if (!isAccountInitialized) return
-  }, [flagsReady, clerkEnabled, isLoaded, isSignedIn, navigate, isAccountInitialized])
+  }, [
+    flagsReady,
+    clerkEnabled,
+    isLoaded,
+    isSignedIn,
+    navigate,
+    isAccountInitialized,
+    needsReverification,
+    redirectToReverification,
+  ])
 
-  const ready = flagsReady && clerkEnabled && isLoaded && isSignedIn
-
+  const ready = flagsReady && clerkEnabled && isLoaded && isSignedIn && !needsReverification
   if (!ready) {
     return null
   }
