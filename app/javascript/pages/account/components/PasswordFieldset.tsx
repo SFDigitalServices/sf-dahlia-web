@@ -1,7 +1,8 @@
-import { Field, FieldProps, t } from "@bloom-housing/ui-components"
+import { t } from "@bloom-housing/ui-components"
 import React from "react"
 import { UseFormMethods, Validate } from "react-hook-form"
 import Fieldset from "./Fieldset"
+import TextField, { TextFieldProps } from "./TextField"
 import { Link } from "@bloom-housing/ui-seeds"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faCheck, faXmark } from "@fortawesome/free-solid-svg-icons"
@@ -145,7 +146,7 @@ const NewPasswordInstructions = ({
   )
 }
 
-interface PasswordFieldProps extends Omit<FieldProps, "type" | "postInputContent" | "inputProps"> {
+interface PasswordFieldProps extends Omit<TextFieldProps, "type" | "inputProps"> {
   passwordVisibilityDefault?: boolean
   submitWithEnterKey?: boolean
 }
@@ -169,12 +170,11 @@ const PasswordField = ({
 
   return (
     <>
-      <Field
+      <TextField
         dataTestId="password-field"
         {...props}
         type={showPassword ? "text" : "password"}
         inputProps={{
-          className: "input",
           required: true,
           autoCapitalize: "none",
           onKeyDown: handleKeyDown,

@@ -314,7 +314,7 @@ describe("<EnterVerificationCode />", () => {
     await user.click(screen.getByRole("button", { name: t("createAccount.confirmCode") }))
 
     await waitFor(() => {
-      const error = screen.getByTestId("error-message")
+      const error = document.querySelector("#code-error")
       expect(error).toHaveTextContent(t("createAccount.codeInvalid.p1"))
       expect(error).toHaveTextContent(t("createAccount.codeInvalid.p2"))
     })
@@ -330,7 +330,7 @@ describe("<EnterVerificationCode />", () => {
     await user.keyboard("123")
     await user.tab()
 
-    expect(screen.queryByTestId("error-message")).toBeNull()
+    expect(document.querySelector("#code-error")).toBeEmptyDOMElement()
     digits.forEach((digit) => expect(digit).not.toBeInvalid())
   })
 
@@ -363,7 +363,7 @@ describe("<EnterVerificationCode />", () => {
     expect(mockNavigate).toHaveBeenCalledWith("/add-password", {
       state: { flow: AUTH_FLOW.CREATE_ACCOUNT },
     })
-    expect(screen.queryByTestId("error-message")).toBeNull()
+    expect(document.querySelector("#code-error")).toBeEmptyDOMElement()
   })
 
   it("does not create the account when the code is rejected", async () => {
@@ -399,14 +399,14 @@ describe("<EnterVerificationCode />", () => {
   it("clears the entered code and error when a new code is sent", async () => {
     const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime })
     const digits = screen.getAllByRole("textbox")
+    const error = document.querySelector("#code-error")
+    expect(error).toBeEmptyDOMElement()
 
     await user.click(digits[0])
     await user.keyboard("123")
     fireEvent.click(screen.getByRole("button", { name: t("createAccount.confirmCode") }))
     await waitFor(() => {
-      expect(screen.getByTestId("error-message")).toHaveTextContent(
-        t("createAccount.codeInvalid.p1")
-      )
+      expect(error).toHaveTextContent(t("createAccount.codeInvalid.p1"))
     })
 
     expireResendVerificationCode()
@@ -420,7 +420,8 @@ describe("<EnterVerificationCode />", () => {
       expect((digit as HTMLInputElement).value).toBe("")
       expect(digit).not.toBeInvalid()
     })
-    expect(screen.queryByTestId("error-message")).toBeNull()
+    expect(document.querySelector("#code-error")).toBe(error)
+    expect(error).toBeEmptyDOMElement()
   })
 
   it("restores send again after the resend countdown", () => {

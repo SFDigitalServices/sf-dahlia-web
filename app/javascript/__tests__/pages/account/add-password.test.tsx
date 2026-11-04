@@ -113,7 +113,7 @@ describe("<AddPassword />", () => {
       expect(mockUpdatePassword).toHaveBeenCalledWith({ newPassword: "abcd1234" })
     })
     expect(mockNavigate).toHaveBeenCalledWith("/add-profile")
-    expect(screen.queryByTestId("error-message")).toBeNull()
+    expect(document.querySelector("#password-error")).toBeEmptyDOMElement()
   })
 
   it("shows a validation error for an invalid password", async () => {
@@ -123,7 +123,7 @@ describe("<AddPassword />", () => {
     await user.click(screen.getByRole("button", { name: /save password/i }))
 
     await waitFor(() => {
-      expect(screen.getByTestId("error-message")).toHaveTextContent(
+      expect(document.querySelector("#password-error")).toHaveTextContent(
         "Choose a strong password with at least 8 characters, 1 letter, and 1 number"
       )
     })
@@ -148,7 +148,7 @@ describe("<AddPassword />", () => {
     await user.click(screen.getByRole("button", { name: /save password/i }))
 
     await waitFor(() => {
-      expect(screen.getByTestId("error-message")).not.toBeNull()
+      expect(document.querySelector("#password-error")).toHaveTextContent(/\S/)
     })
   })
 
