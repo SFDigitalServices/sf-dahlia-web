@@ -98,6 +98,7 @@ RSpec.describe ClerkClient do
       sdk = auth_request.send(:sdk)
       config = sdk.instance_variable_get(:@sdk_configuration)
 
+      expect(sdk).to equal(ClerkClient.sdk)
       expect(config.timeout).to eq(ClerkClient::TIMEOUT_MS / 1000.0)
       expect(config.retry_config).to equal(ClerkClient::RETRY_CONFIG)
       expect(config.retry_config.backoff.initial_interval).to eq(ClerkClient::INITIAL_INTERVAL)

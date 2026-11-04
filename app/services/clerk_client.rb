@@ -29,8 +29,12 @@ class ClerkClient
     retry_config: RETRY_CONFIG,
   )
 
+  def self.sdk
+    SDK
+  end
+
   def self.execute
-    yield(SDK)
+    yield(sdk)
   rescue Faraday::ConnectionFailed, Faraday::TimeoutError => e
     # Translate generic network exceptions into a namespace specific to Clerk
     Rails.logger.error("Clerk connection error: #{e.message}")

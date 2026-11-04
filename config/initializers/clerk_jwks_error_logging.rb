@@ -18,10 +18,7 @@ Clerk::Jwks.prepend(ClerkJwksErrorLogging)
 # Bound middleware JWKS requests so blocked Clerk traffic cannot stall Rails.
 module ClerkAuthBoundedRetries
   def sdk
-    Clerk::SDK.new(
-      timeout_ms: ClerkClient::TIMEOUT_MS,
-      retry_config: ClerkClient::RETRY_CONFIG,
-    )
+    ClerkClient.sdk
   end
 end
 
