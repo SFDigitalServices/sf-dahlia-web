@@ -1,5 +1,5 @@
 import React, { useRef } from "react"
-import { ErrorMessage, Field, t } from "@bloom-housing/ui-components"
+import { Field, t } from "@bloom-housing/ui-components"
 import { Button } from "@bloom-housing/ui-seeds"
 import Fieldset from "./Fieldset"
 import styles from "./VerificationCodeField.module.scss"
@@ -102,9 +102,14 @@ const VerificationCodeField = ({
           />
         ))}
       </div>
-      <ErrorMessage id="code-error" error={error}>
-        {renderErrorMessage(onGetNewCode, getNewCodeDisabled)}
-      </ErrorMessage>
+      <span
+        id="code-error"
+        className="error-message"
+        aria-live="assertive"
+        data-testid={error ? "error-message" : undefined}
+      >
+        {error && renderErrorMessage(onGetNewCode, getNewCodeDisabled)}
+      </span>
     </Fieldset>
   )
 }
