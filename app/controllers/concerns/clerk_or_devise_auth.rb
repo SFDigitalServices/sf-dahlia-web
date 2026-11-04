@@ -10,8 +10,12 @@ module ClerkOrDeviseAuth
 
   CLERK_AUTH_FLAG = 'temp.webapp.auth.clerk'
 
-  def self.clerk_enabled?
-    Rails.configuration.unleash.is_enabled?(CLERK_AUTH_FLAG)
+  # remote_ip lets Unleash's IP strategy turn Clerk on for allowlisted IPs only
+  def self.clerk_enabled?(remote_ip)
+    enabled = Rails.configuration.unleash.is_enabled?(
+      CLERK_AUTH_FLAG, Unleash::Context.new(remote_address: remote_ip)
+    )
+    enabled
   end
 
   def authenticate_user!(*)
@@ -39,7 +43,7 @@ module ClerkOrDeviseAuth
   def clerk_auth?
     return @clerk_auth if defined?(@clerk_auth)
 
-    @clerk_auth = ClerkOrDeviseAuth.clerk_enabled?
+    @clerk_auth = ClerkOrDeviseAuth.clerk_enabled?(request.remote_ip)
   end
 
   def clerk_user_id

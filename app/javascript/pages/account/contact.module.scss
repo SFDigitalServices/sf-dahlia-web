@@ -37,7 +37,7 @@
 .changeEmail {
   font-size: var(--seeds-font-size-sm);
   color: var(--seeds-color-gray-750);
-  margin-top: var(--seeds-spacer-header);
+  margin-bottom: var(--seeds-s8);
 }
 
 .phoneSection {
@@ -49,5 +49,5 @@
 }
 
 .saveButton {
-  margin-top: var(--seeds-spacer-content);
+  margin: var(--seeds-s6) 0 var(--seeds-s6) 0;
 }
