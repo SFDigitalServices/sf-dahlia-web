@@ -32,4 +32,87 @@ RSpec.describe ClerkClient do
       )
     end
   end
+
+  describe '.error_diagnostics' do
+    it 'extracts allowlisted codes from an errors accessor' do
+      api_error = double(code: 'api_key_invalid')
+      error = double(status_code: 401, errors: [api_error])
+
+      expect(described_class.error_diagnostics(error)).to eq(
+        'status=401, codes=api_key_invalid',
+      )
+    end
+
+    it 'uses an empty error list when the exception has no error details' do
+      error = double(status_code: 401)
+
+      expect(described_class.error_diagnostics(error)).to eq('status=401, codes=')
+    end
+
+    it 'handles malformed JSON error bodies' do
+      error = double(status_code: 401, body: '{')
+
+      expect(described_class.error_diagnostics(error)).to eq('status=401, codes=')
+    end
+  end
+
+  describe ClerkJwksErrorLogging do
+    it 'logs Clerk JWKS API errors before re-raising them' do
+      error = Clerk::Models::Errors::APIError.new(
+        status_code: 401,
+        body: '{"errors":[{"code":"api_key_invalid","message":"invalid key"}]}',
+        raw_response: nil,
+      )
+      allow(Rails.logger).to receive(:error)
+      allow(Rails.env).to receive(:development?).and_return(true)
+      instrumented_client = Class.new do
+        prepend ClerkJwksErrorLogging
+
+        define_method(:get_jwks) { raise error }
+      end.new
+
+      expect do
+        expect { instrumented_client.get_jwks }.to raise_error(error)
+      end.to output("Clerk JWKS API error: status=401, codes=api_key_invalid\n").to_stderr
+      expect(Rails.logger).to have_received(:error).with(
+        'Clerk JWKS API error: status=401, codes=api_key_invalid',
+      )
+    end
+
+    it 'logs blocked JWKS requests to the Rails server stderr' do
+      error = Faraday::ConnectionFailed.new('connection refused')
+      allow(Rails.logger).to receive(:error)
+      allow(Rails.env).to receive(:development?).and_return(true)
+      instrumented_client = Class.new do
+        prepend ClerkJwksErrorLogging
+
+        define_method(:get_jwks) { raise error }
+      end.new
+
+      expect do
+        expect { instrumented_client.get_jwks }.to raise_error(error)
+      end.to output(
+        "Clerk JWKS connection error (Faraday::ConnectionFailed): connection refused\n",
+      ).to_stderr
+      expect(Rails.logger).to have_received(:error).with(
+        'Clerk JWKS connection error (Faraday::ConnectionFailed): connection refused',
+      )
+    end
+  end
+
+  describe ClerkAuthBoundedRetries do
+    it 'gives middleware verification bounded timeout and retry settings' do
+      auth_request = Clerk::AuthenticateRequest.new(nil)
+      sdk = auth_request.send(:sdk)
+      config = sdk.instance_variable_get(:@sdk_configuration)
+
+      expect(config.timeout).to eq(ClerkClient::TIMEOUT_MS / 1000.0)
+      expect(config.retry_config).to equal(ClerkClient::RETRY_CONFIG)
+      expect(config.retry_config.backoff.initial_interval).to eq(ClerkClient::INITIAL_INTERVAL)
+      expect(config.retry_config.backoff.max_interval).to eq(ClerkClient::MAX_INTERVAL)
+      expect(config.retry_config.backoff.exponent).to eq(ClerkClient::EXPONENT)
+      expect(config.retry_config.backoff.max_elapsed_time).to eq(ClerkClient::MAX_ELAPSED_TIME)
+      expect(config.retry_config.retry_connection_errors).to be(false)
+    end
+  end
 end

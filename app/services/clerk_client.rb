@@ -2,22 +2,35 @@ class ClerkClient
   # Define a specific error class for your application to catch
   class ConnectionError < Faraday::ConnectionFailed; end
 
-  TIMEOUT_MS = 20000 # 20 seconds
+  # in milliseconds, applies to individual http request
+  TIMEOUT_MS = 1000
+  # Retry intervals and elapsed time are in milliseconds in clerk-sdk-ruby.
+  INITIAL_INTERVAL = 1000
+  MAX_INTERVAL = 1000
+  # Multiplier used to increase the wait time between retries.
+  EXPONENT = 1.0
+  MAX_ELAPSED_TIME = 5000
   LOGGABLE_ERROR_CODES = %w[api_key_invalid].freeze
+
+  RETRY_CONFIG = Clerk::Utils::RetryConfig.new(
+    strategy: 'backoff',
+    backoff: Clerk::Utils::BackoffStrategy.new(
+      initial_interval: INITIAL_INTERVAL,
+      max_interval: MAX_INTERVAL,
+      exponent: EXPONENT,
+      max_elapsed_time: MAX_ELAPSED_TIME,
+    ),
+    retry_connection_errors: false,
+  )
 
   # Build a fail-fast instance of the Clerk SDK
   SDK = Clerk::SDK.new(
     timeout_ms: TIMEOUT_MS,
-    retry_config: Clerk::Utils::RetryConfig.new(
-      strategy: 'backoff',
-      backoff: Clerk::Utils::BackoffStrategy.new(
-        initial_interval: 1, max_interval: 1, exponent: 1.0, max_elapsed_time: 1
-      ),
-      retry_connection_errors: false
-    )
+    retry_config: RETRY_CONFIG,
   )
 
   def self.execute
+    Rails.logger.info("ClerkClient: Entering execute block...")
     yield(SDK)
   rescue Faraday::ConnectionFailed, Faraday::TimeoutError => e
     # Translate generic network exceptions into a namespace specific to Clerk
