@@ -30,7 +30,6 @@ class ClerkClient
   )
 
   def self.execute
-    Rails.logger.info("ClerkClient: Entering execute block...")
     yield(SDK)
   rescue Faraday::ConnectionFailed, Faraday::TimeoutError => e
     # Translate generic network exceptions into a namespace specific to Clerk
