@@ -180,8 +180,7 @@ export enum AUTH_FLOW {
   SIGN_IN = "signIn",
   CREATE_ACCOUNT = "createAccount",
   FORGOT_PASSWORD = "forgotPassword",
-  UPDATE_LOGIN_EMAIL = "updateLoginEmail",
-  UPDATE_CONTACT_EMAIL = "updateContactEmail",
+  UPDATE_EMAIL = "updateEmail",
   REVERIFICATION = "reverification",
 }
 

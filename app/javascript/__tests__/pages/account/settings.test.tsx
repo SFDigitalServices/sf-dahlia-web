@@ -350,12 +350,12 @@ describe("<SettingsPage />", () => {
     describe("the email section", () => {
       it("navigates to the update login email page", async () => {
         await act(async () => {
-          fireEvent.click(screen.getByRole("button", { name: /update email/i }))
+          fireEvent.click(screen.getByRole("button", { name: /change email/i }))
           await promise
         })
 
         expect(mockNavigate).toHaveBeenCalledWith(getUpdateEmailPath(), {
-          state: { flow: AUTH_FLOW.UPDATE_LOGIN_EMAIL },
+          state: { flow: AUTH_FLOW.UPDATE_EMAIL },
         })
       })
     })
@@ -1128,6 +1128,45 @@ describe("<SettingsPage />", () => {
 
     it("shows the failure banner", () => {
       expect(screen.getByText("Reverification failed. Please try again.")).not.toBeNull()
+    })
+  })
+  describe("when arriving after a failed email change", () => {
+    let originalLocation: Location
+    let mockNavigate: jest.Mock
+
+    beforeEach(async () => {
+      document.documentElement.lang = "en"
+      originalLocation = mockWindowLocation()
+      ;(useFeatureFlag as jest.Mock).mockReturnValue({ flagsReady: true, unleashFlag: true })
+      setupUserContext({ loggedIn: true })
+      ;(get as jest.Mock).mockResolvedValue({ data: { agencies: [] } })
+      ;(useUser as jest.Mock).mockReturnValue({
+        isLoaded: true,
+        isSignedIn: true,
+        user: { passwordEnabled: true },
+      })
+      mockNavigate = jest.fn()
+      ;(useNavigate as jest.Mock).mockReturnValue(mockNavigate)
+      ;(useLocation as jest.Mock).mockReturnValue({
+        pathname: "/account/settings",
+        state: { emailChangeFailed: true },
+      })
+      await renderAndLoadAsync(<SettingsPage assetPaths={{}} />)
+    })
+
+    afterEach(() => {
+      jest.restoreAllMocks()
+      restoreWindowLocation(originalLocation)
+    })
+
+    it("shows the error banner and clears the navigation state", () => {
+      expect(
+        screen.getByText("Error updating your email. Please try again or contact us.")
+      ).not.toBeNull()
+      expect(mockNavigate).toHaveBeenCalledWith("/account/settings", {
+        replace: true,
+        state: null,
+      })
     })
   })
 })

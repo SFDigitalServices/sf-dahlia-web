@@ -12,7 +12,6 @@ import {
   AppPages,
   getAddPasswordPath,
   getChangePasswordPath,
-  getMyAccountContactPath,
   getUpdateEmailPath,
   RedirectType,
 } from "../../util/routeUtil"
@@ -66,7 +65,11 @@ import EmailFieldset, {
   handleEmailServerErrors,
 } from "./components/EmailFieldset"
 
-type ConfirmationBannerFlag = "passwordChanged" | "emailChanged" | "reverificationFailed"
+type ConfirmationBannerFlag =
+  | "passwordChanged"
+  | "emailChanged"
+  | "reverificationFailed"
+  | "emailChangeFailed"
 
 const confirmationBannerMessages: Record<
   ConfirmationBannerFlag,
@@ -75,6 +78,7 @@ const confirmationBannerMessages: Record<
   passwordChanged: { message: "accountSettings.changePasswordBanner", variant: "success" },
   emailChanged: { message: "accountSettings.changeEmailBanner", variant: "success" },
   reverificationFailed: { message: "accountSettings.reverification.failed", variant: "alert" },
+  emailChangeFailed: { message: "error.email.updateEmailError", variant: "alert" },
 }
 
 export const Banner = ({
@@ -224,19 +228,15 @@ const EmailSection = () => {
           variant="primary-outlined"
           onClick={() => {
             void navigate(getUpdateEmailPath(), {
-              state: { flow: AUTH_FLOW.UPDATE_LOGIN_EMAIL },
+              state: { flow: AUTH_FLOW.UPDATE_EMAIL },
             })
           }}
         >
-          {t("accountSettings.email.updateEmail")}
+          {t("accountSettings.changeEmail")}
         </Button>
       </div>
       <p className={settingsStyles.settingsText}>
-        {renderInlineMarkup(
-          t("accountSettings.email.subtitle", {
-            url: getMyAccountContactPath(),
-          })
-        )}
+        {renderInlineMarkup(t("accountSettings.changeEmailDescription"))}
       </p>
     </FormSection>
   )

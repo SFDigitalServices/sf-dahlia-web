@@ -614,6 +614,7 @@
   "error.email.sameAsCurrentContactEmail.abbreviated": "This is already your contact email. Check for any mistakes.",
   "error.email.sameAsCurrentEmail": "You entered the email address you already use to sign in. Check for any mistakes.",
   "error.email.sameAsCurrentEmail.abbreviated": "You entered the email address you already use to sign in.",
+  "error.email.updateEmailError": "Error updating your email. Please try again or contact us.",
   "error.emailAlreadyInUse": "Email is already in use.",
   "error.emailConfirmation": "Email confirmation does not match",
   "error.emailNotFound": "Email not found. Please make sure your email has an account with us and is confirmed.",
