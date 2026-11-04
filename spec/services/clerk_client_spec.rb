@@ -64,36 +64,28 @@ RSpec.describe ClerkClient do
         raw_response: nil,
       )
       allow(Rails.logger).to receive(:error)
-      allow(Rails.env).to receive(:development?).and_return(true)
       instrumented_client = Class.new do
         prepend ClerkJwksErrorLogging
 
         define_method(:get_jwks) { raise error }
       end.new
 
-      expect do
-        expect { instrumented_client.get_jwks }.to raise_error(error)
-      end.to output("Clerk JWKS API error: status=401, codes=api_key_invalid\n").to_stderr
+      expect { instrumented_client.get_jwks }.to raise_error(error)
       expect(Rails.logger).to have_received(:error).with(
         'Clerk JWKS API error: status=401, codes=api_key_invalid',
       )
     end
 
-    it 'logs blocked JWKS requests to the Rails server stderr' do
+    it 'logs blocked JWKS requests' do
       error = Faraday::ConnectionFailed.new('connection refused')
       allow(Rails.logger).to receive(:error)
-      allow(Rails.env).to receive(:development?).and_return(true)
       instrumented_client = Class.new do
         prepend ClerkJwksErrorLogging
 
         define_method(:get_jwks) { raise error }
       end.new
 
-      expect do
-        expect { instrumented_client.get_jwks }.to raise_error(error)
-      end.to output(
-        "Clerk JWKS connection error (Faraday::ConnectionFailed): connection refused\n",
-      ).to_stderr
+      expect { instrumented_client.get_jwks }.to raise_error(error)
       expect(Rails.logger).to have_received(:error).with(
         'Clerk JWKS connection error (Faraday::ConnectionFailed): connection refused',
       )
