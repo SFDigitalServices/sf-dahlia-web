@@ -29,6 +29,7 @@ import { useAuthSession } from "../../authentication/session/AuthSessionProvider
 import UserContext from "../../authentication/context/UserContext"
 import { bearerToken } from "../../authentication/session/authStatus"
 import { updateContactEmail } from "../../api/authApiService"
+import { REVERIFICATION_FLOW, useReverificationRedirect } from "../../util/accountUtil"
 
 const UpdateEmailPage = () => {
   const {
@@ -44,11 +45,19 @@ const UpdateEmailPage = () => {
   const { profile, saveProfile } = useContext(UserContext)
   const { getCredentials } = useAuthSession()
   const [loading, setLoading] = useState(false)
+  const { has } = useAuth()
+  const navigationState = location.state as { flow?: AUTH_FLOW } | null
+  // TODO: DAH-4431 combine login and contact email flows
   const flow =
-    (location.state as { flow?: AUTH_FLOW } | null)?.flow === AUTH_FLOW.UPDATE_CONTACT_EMAIL
+    navigationState?.flow === AUTH_FLOW.UPDATE_CONTACT_EMAIL
       ? AUTH_FLOW.UPDATE_CONTACT_EMAIL
       : AUTH_FLOW.UPDATE_LOGIN_EMAIL
   const isContactFlow = flow === AUTH_FLOW.UPDATE_CONTACT_EMAIL
+  const { redirectToReverification } = useReverificationRedirect(
+    isContactFlow
+      ? REVERIFICATION_FLOW.UPDATE_CONTACT_EMAIL
+      : REVERIFICATION_FLOW.UPDATE_LOGIN_EMAIL
+  )
   const cancelReturnPath = isContactFlow ? getMyAccountContactPath() : getMyAccountSettingsPath()
 
   const salesforceSaveFailed = !!(location.state as { saveFailed?: boolean } | null)?.saveFailed
@@ -102,6 +111,12 @@ const UpdateEmailPage = () => {
 
   const onGetCodeSubmit = async ({ email }: { email: string }) => {
     if (loading) return
+
+    const needsVerification = !has?.({ reverification: "strict" })
+    if (needsVerification) {
+      redirectToReverification()
+      return
+    }
     const newEmail = email.toLowerCase()
     const loginEmail = user.primaryEmailAddress?.emailAddress.toLowerCase()
     const currentEmail = isContactFlow ? profile?.email?.toLowerCase() : loginEmail
@@ -184,9 +199,16 @@ const UpdateEmailPage = () => {
 
 const UpdateEmail = (_props: { assetPaths: unknown }) => {
   const navigate = useNavigate()
+  const { state } = useLocation()
   const { isLoaded, isSignedIn } = useAuth()
   const { isAccountInitialized } = useSignUpSession()
   const { unleashFlag: clerkEnabled, flagsReady } = useFeatureFlag(UNLEASH_FLAG.CLERK_AUTH, false)
+  const navigationState = state as { flow?: AUTH_FLOW } | null
+  const { needsReverification, redirectToReverification } = useReverificationRedirect(
+    navigationState?.flow === AUTH_FLOW.UPDATE_CONTACT_EMAIL
+      ? REVERIFICATION_FLOW.UPDATE_CONTACT_EMAIL
+      : REVERIFICATION_FLOW.UPDATE_LOGIN_EMAIL
+  )
 
   useEffect(() => {
     if (!flagsReady) return
@@ -199,11 +221,23 @@ const UpdateEmail = (_props: { assetPaths: unknown }) => {
       void navigate(getSignInPath())
       return
     }
+    if (needsReverification) {
+      redirectToReverification()
+      return
+    }
     if (!isAccountInitialized) return
-  }, [flagsReady, clerkEnabled, isLoaded, isSignedIn, navigate, isAccountInitialized])
+  }, [
+    flagsReady,
+    clerkEnabled,
+    isLoaded,
+    isSignedIn,
+    navigate,
+    isAccountInitialized,
+    needsReverification,
+    redirectToReverification,
+  ])
 
-  const ready = flagsReady && clerkEnabled && isLoaded && isSignedIn
-
+  const ready = flagsReady && clerkEnabled && isLoaded && isSignedIn && !needsReverification
   if (!ready) {
     return null
   }
