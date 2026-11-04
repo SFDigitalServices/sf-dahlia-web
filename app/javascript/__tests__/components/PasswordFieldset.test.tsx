@@ -59,6 +59,30 @@ const clerkError = (code: string) =>
     errors: [{ code, message: code, longMessage: code }],
   })
 describe("Password Fieldset", () => {
+  it("keeps error spans mounted while error messages appear and clear", async () => {
+    const { container } = render(<WrappedPasswordFieldset />)
+    const passwordError = container.querySelector("#password-error")
+    const currentPasswordError = container.querySelector("#currentPassword-error")
+    expect(passwordError).not.toBeNull()
+    expect(currentPasswordError).not.toBeNull()
+    expect(passwordError).toBeEmptyDOMElement()
+    expect(currentPasswordError).toBeEmptyDOMElement()
+    expect(passwordError).toHaveAttribute("aria-live", "assertive")
+
+    const user = userEvent.setup()
+    const input = screen.getByLabelText(/choose a new password/i)
+    await user.type(input, "p")
+    expect(container.querySelector("#password-error")).toBe(passwordError)
+    expect(passwordError).toHaveTextContent(t("error.account.passwordComplexity.abbreviated"))
+    expect(input).toHaveAttribute("aria-invalid", "true")
+    expect(input.getAttribute("aria-describedby").split(" ")).toContain("password-error")
+
+    await user.type(input, "assword1")
+    expect(container.querySelector("#password-error")).toBe(passwordError)
+    expect(passwordError).toBeEmptyDOMElement()
+    expect(input).toHaveAttribute("aria-invalid", "false")
+  })
+
   it("displays password instructions without validation", () => {
     render(<WrappedPasswordFieldset />)
     expect(screen.getByText("Must include at least:")).not.toBeNull()
