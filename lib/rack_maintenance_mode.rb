@@ -3,8 +3,8 @@
 module Rack
   # Site-wide kill switch. When the MAINTENANCE_FLAG Unleash flag is on for a request's
   # IP, it gets a 503. Testers' IPs are excluded with a `remoteAddress NOT_IN` constraint
-  # on the flag, so a release can be tested while the site is down. If Unleash is
-  # unreachable the site stays up (use Heroku maintenance mode instead).
+  # on the flag, so a release can be tested while the site is down. Like other flags, it
+  # uses Unleash's last-known value if Unleash is down; restart dynos to clear it.
   # Must run after ActionDispatch::RemoteIp so remote_ip reflects X-Forwarded-For.
   class MaintenanceMode
     MAINTENANCE_FLAG = 'webapp.maintenance-mode'
@@ -35,18 +35,10 @@ module Rack
     private
 
     def maintenance_mode?(request)
-      return false unless unleash_healthy?
-
       context = Unleash::Context.new(remote_address: request.remote_ip)
       Rails.configuration.unleash.is_enabled?(MAINTENANCE_FLAG, context)
     rescue StandardError
       false
-    end
-
-    # if unleash fails, don't block the app from working
-    def unleash_healthy?
-      Unleash.toggle_fetcher&.etag.present? &&
-        Rails.configuration.unleash.fetcher_scheduled_executor&.retry_count&.zero?
     end
   end
 end
