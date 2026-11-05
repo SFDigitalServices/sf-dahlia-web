@@ -2055,6 +2055,7 @@
   "shortFormNav.you": "You",
   "signIn.accountAlreadyConfirmed.p1": "Sign in to continue.",
   "signIn.accountAlreadyConfirmed.title": "Account already confirmed",
+  "signIn.alertMessage.confirmSignIn": "You are signed in.",
   "signIn.badCredentials": "Invalid login credentials. Please try again.",
   "signIn.badCredentialsWithResetLink": "Email or password is incorrect. Check for mistakes and try again. <a target='_blank' href='%{url}'>Reset your password</a> if you need to.",
   "signIn.codeDescription": "Enter your email address and we'll send you a code to sign in.",

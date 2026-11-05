@@ -96,12 +96,7 @@ export const withAuthentication = <P extends object>(
           ...(reactRouterState?.flow && { flow: reactRouterState.flow }),
         },
       })
-    }, [
-      navigate,
-      reactRouterState?.flow,
-      redirectDecision?.redirectUrl,
-      redirectDecision?.returnUrl,
-    ])
+    }, [navigate, reactRouterState, redirectDecision])
 
     if (!pageName) {
       throw new Error("wrapped component is missing pageName param for withAuthentication")
