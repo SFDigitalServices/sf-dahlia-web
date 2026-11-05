@@ -5,6 +5,7 @@ require_relative 'boot'
 require 'rails/all'
 
 require_relative '../lib/rack_x_robots_tag'
+require_relative '../lib/rack_maintenance_mode'
 
 # https://github.com/clerk/clerk-sdk-ruby#rails
 ENV['CLERK_SKIP_RAILTIE'] = 'true'
@@ -56,6 +57,8 @@ module SfDahliaWeb
     ENV['NEIGHBORHOOD_BOUNDARY_SERVICE_URL'] ||= 'https://sfgis-portal.sfgov.org/svc/rest/services/dahlia/NRHP_pref/MapServer/0/query'
 
     config.middleware.use Rack::XRobotsTag
+    # before routing/auth, but after RemoteIp so the IP allowlist sees the real client IP
+    config.middleware.insert_after ActionDispatch::RemoteIp, Rack::MaintenanceMode
     # write cached robots.txt into public dir
     config.action_controller.page_cache_directory = "#{Rails.root}/public"
 
