@@ -59,7 +59,7 @@ class ClerkService
   end
 
   def self.email_address(user_id)
-    user = sdk.users.get(user_id: user_id)&.user
+    user = ClerkClient.execute { |client| client.users.get(user_id: user_id)&.user }
     raise StandardError, "User #{user_id} is missing" if user.nil?
 
     # We assume the user has only one email address for now
@@ -74,12 +74,14 @@ class ClerkService
     body = Clerk::Models::Operations::UpdateUserMetadataRequestBody.new(
       private_metadata: { 'salesforce_contact_id' => contact_id },
     )
-    sdk.users.update_metadata(user_id: user_id, body: body)
+    ClerkClient.execute do |client|
+      client.users.update_metadata(user_id: user_id, body: body)
+    end
     Rails.logger.info("Salesforce contact id stored for user #{user_id}")
   end
 
   def self.salesforce_contact_id(user_id)
-    user = sdk.users.get(user_id: user_id)&.user
+    user = ClerkClient.execute { |client| client.users.get(user_id: user_id)&.user }
     raise NotFoundError, "User #{user_id} is missing" if user.nil?
 
     contact_id = user.private_metadata&.dig('salesforce_contact_id')
@@ -89,9 +91,4 @@ class ClerkService
 
     contact_id
   end
-
-  def self.sdk
-    @sdk ||= Clerk::SDK.new
-  end
-  private_class_method :sdk
 end
