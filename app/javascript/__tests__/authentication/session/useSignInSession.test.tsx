@@ -3,6 +3,10 @@ import { useClerk, useSignIn } from "@clerk/react"
 import { useNavigate } from "react-router"
 
 import { useSignInSession } from "../../../authentication/session/useSignInSession"
+import {
+  AUTH_TOAST_TO_RENDER,
+  consumeAuthenticationToast,
+} from "../../../authentication/authenticationUtils"
 
 jest.mock("@clerk/react", () => ({
   useSignIn: jest.fn(),
@@ -56,11 +60,13 @@ describe("useSignInSession", () => {
     ;(useNavigate as jest.Mock).mockReturnValue(mockNavigate)
     mockSignIn()
     mockLastStrategy(null)
+    window.sessionStorage.clear()
     // The adapter holds the provider's error, so the logging lives there.
     consoleError = jest.spyOn(console, "error").mockImplementation(() => {})
   })
 
   afterEach(() => {
+    window.sessionStorage.clear()
     consoleError.mockRestore()
   })
 
@@ -296,6 +302,36 @@ describe("useSignInSession", () => {
       await renderSession().current.activateSession("/my-account")
 
       expect(mockNavigate).toHaveBeenCalledWith("/my-account?__clerk=1")
+    })
+
+    it("queues a toast when given a destination", async () => {
+      signIn.finalize.mockImplementation(async ({ navigate }) => {
+        await navigate({ decorateUrl: (url: string) => url })
+        return { error: null }
+      })
+
+      await renderSession().current.activateSession("/my-account", AUTH_TOAST_TO_RENDER.SIGNED_IN)
+
+      expect(mockNavigate).toHaveBeenCalledWith("/my-account")
+      expect(consumeAuthenticationToast()).toBe(AUTH_TOAST_TO_RENDER.SIGNED_IN)
+    })
+
+    it("ignores invalid toast values", async () => {
+      signIn.finalize.mockImplementation(async ({ navigate }) => {
+        await navigate({ decorateUrl: (url: string) => url })
+        return { error: null }
+      })
+
+      const result = await renderSession().current.activateSession(
+        "/my-account",
+        "not-a-toast-flag" as unknown as AUTH_TOAST_TO_RENDER
+      )
+
+      expect(result.error).toBeUndefined()
+      expect(signIn.finalize).toHaveBeenCalled()
+      expect(mockNavigate).toHaveBeenCalledWith("/my-account")
+      expect(consumeAuthenticationToast()).toBeNull()
+      expect(consoleError).not.toHaveBeenCalled()
     })
   })
 

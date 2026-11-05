@@ -77,8 +77,7 @@ export const getDobStringFromDobObject = (dobObject: DOBFieldValues) => {
 
 export enum REVERIFICATION_FLOW {
   ADD_PASSWORD = "addPassword",
-  UPDATE_LOGIN_EMAIL = "updateLoginEmail",
-  UPDATE_CONTACT_EMAIL = "updateContactEmail",
+  UPDATE_EMAIL = "updateEmail",
 }
 
 export const toReverificationFlow = (value?: string | null) =>
@@ -92,14 +91,9 @@ export const reverificationDestinations: Record<
     path: getAddPasswordPath,
     state: { accountSettingsFlow: true },
   },
-  [REVERIFICATION_FLOW.UPDATE_LOGIN_EMAIL]: {
+  [REVERIFICATION_FLOW.UPDATE_EMAIL]: {
     path: getUpdateEmailPath,
-    state: { flow: AUTH_FLOW.UPDATE_LOGIN_EMAIL },
-  },
-  // TODO: DAH-4431 combine login and contact email flows
-  [REVERIFICATION_FLOW.UPDATE_CONTACT_EMAIL]: {
-    path: getUpdateEmailPath,
-    state: { flow: AUTH_FLOW.UPDATE_CONTACT_EMAIL },
+    state: { flow: AUTH_FLOW.UPDATE_EMAIL },
   },
 }
 
