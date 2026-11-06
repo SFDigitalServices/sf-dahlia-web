@@ -32,6 +32,20 @@ module HousingCounselorSession
     session
   end
 
+  # Re-checks delegation with Salesforce even when the token is unexpired.
+  # A grant rewrites the cookie, so later current_hc_session calls in this
+  # request decode it without calling Salesforce again.
+  def reverify_hc_session!
+    return unless hc_session_feature_enabled?
+
+    token = cookies[HC_SESSION_COOKIE_NAME]
+    return if token.blank?
+
+    refresh_hc_session(token, nil)
+    raise VerificationUnavailableError if hc_session_verification_failed?
+    raise AccessDeniedError if hc_session_access_denied?
+  end
+
   def hc_session_feature_enabled?
     Rails.configuration.unleash.is_enabled?(FEATURE_FLAG)
   end
@@ -89,6 +103,8 @@ module HousingCounselorSession
   rescue Faraday::Error, Restforce::Error => e
     Rails.logger.warn("HousingCounselorSession: Salesforce re-check failed: #{e.message}")
     @hc_session_verification_failed = true
+    discard_hc_session_cookie
+    revoke_clerk_session
     nil
   end
 
@@ -207,7 +223,16 @@ module HousingCounselorSession
     )
     @hc_session_access_denied = true
     discard_hc_session_cookie
+    revoke_clerk_session
     nil
+  end
+
+  def revoke_clerk_session
+    ClerkService.revoke_session(current_clerk_session_id)
+  rescue StandardError => e
+    Rails.logger.warn(
+      "HousingCounselorSession: could not revoke Clerk session: #{e.class}",
+    )
   end
 
   def discard_hc_session_cookie
