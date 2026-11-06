@@ -348,7 +348,16 @@ class Api::V1::ShortFormController < ApiController
 
     {
       contactId: user_contact_id,
+      webAppID: applicant_web_app_id,
     }
+  end
+
+  # Salesforce blanks webAppID on the Contact when /shortForm omits it
+  def applicant_web_app_id
+    contact = Force::AccountService.get(user_contact_id)
+    raise HousingCounselorSession::VerificationUnavailableError if contact.blank?
+
+    contact['webAppID']
   end
 
   def acting_for_applicant?

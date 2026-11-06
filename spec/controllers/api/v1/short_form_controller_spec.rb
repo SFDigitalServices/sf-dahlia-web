@@ -26,6 +26,9 @@ describe Api::V1::ShortFormController, type: :controller do
         counselor_contact_id: counselor_contact_id,
       )
       allow(ClerkService).to receive(:revoke_session)
+      allow(Force::AccountService).to receive(:get)
+        .with(applicant_contact_id)
+        .and_return('webAppID' => 'user_applicant')
 
       request.cookies['hc_session'] = JsonWebTokenService.encode_token(
         { 'typ' => 'hc_session', 'hcId' => counselor_contact_id,
@@ -224,11 +227,27 @@ describe Api::V1::ShortFormController, type: :controller do
           .with(anything, hash_including(contactId: applicant_contact_id))
       end
 
-      it "does not send the counselor's webAppID on the applicant's record" do
+      # Given a counselor with a valid delegate session for an applicant
+      # When the counselor submits an application
+      # Then primaryApplicant keeps the applicant's own webAppID, not the counselor's
+      it "sends the applicant's own webAppID" do
         post :submit_application
 
         expect(Force::ShortFormService).to have_received(:create_or_update)
-          .with(anything, hash_excluding(:webAppID))
+          .with(anything, hash_including(webAppID: 'user_applicant'))
+      end
+
+      # Given a counselor with a valid delegate session
+      #   And the applicant's record can't be loaded
+      # When the counselor submits an application
+      # Then nothing is sent to Salesforce, so webAppID can't be blanked
+      it 'does not submit when the applicant record cannot be loaded' do
+        allow(Force::AccountService).to receive(:get).and_return(nil)
+
+        post :submit_application
+
+        expect(response).to have_http_status(:unauthorized)
+        expect(Force::ShortFormService).not_to have_received(:create_or_update)
       end
 
       # Given a counselor with a valid delegate session
