@@ -7,7 +7,7 @@ module Rack
   # uses Unleash's last-known value if Unleash is down; restart dynos to clear it.
   # Must run after ActionDispatch::RemoteIp so remote_ip reflects X-Forwarded-For.
   class MaintenanceMode
-    MAINTENANCE_FLAG = 'webapp.maintenance-mode'
+    MAINTENANCE_FLAG = 'perm.webapp.maintenance-mode'
     # tells crawlers the outage is temporary (so pages aren't deindexed) and when to retry
     RETRY_AFTER_SECONDS = '3600'
 
