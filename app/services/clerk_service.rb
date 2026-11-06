@@ -81,7 +81,7 @@ class ClerkService
   end
 
   def self.revoke_session(session_id)
-    sdk.sessions.revoke(session_id: session_id)
+    ClerkClient.execute { |client| client.sessions.revoke(session_id: session_id) }
   end
 
   def self.salesforce_contact_id(user_id)
