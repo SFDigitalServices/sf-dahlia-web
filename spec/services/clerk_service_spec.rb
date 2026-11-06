@@ -8,14 +8,9 @@ RSpec.describe ClerkService do
   let(:users_api) { instance_double(Clerk::Users) }
 
   before do
-    described_class.instance_variable_set(:@sdk, nil)
-    allow(Clerk::SDK).to receive(:new).and_return(sdk)
+    allow(ClerkClient).to receive(:execute) { |&block| block.call(sdk) }
     allow(sdk).to receive(:users).and_return(users_api)
     allow(Rails.logger).to receive(:info)
-  end
-
-  after do
-    described_class.instance_variable_set(:@sdk, nil)
   end
 
   describe ClerkService::User do
