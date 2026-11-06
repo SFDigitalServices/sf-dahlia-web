@@ -4,21 +4,17 @@ import { act, cleanup, fireEvent, screen, waitFor } from "@testing-library/react
 import { userEvent } from "@testing-library/user-event"
 import React from "react"
 import { useLocation, useNavigate } from "react-router"
-import * as authApiService from "../../../api/authApiService"
-import * as authStatus from "../../../authentication/session/authStatus"
 import { useSignUpSession } from "../../../authentication/session/useSignUpSession"
-import { User } from "../../../authentication/user"
 import { useFeatureFlag } from "../../../hooks/useFeatureFlag"
 import { AUTH_FLOW } from "../../../modules/constants"
 import UpdateEmail from "../../../pages/account/update-email"
 import {
-  getMyAccountContactPath,
   getMyAccountSettingsPath,
   getReverificationPath,
   getSignInPath,
   getUpdateEmailCodePath,
 } from "../../../util/routeUtil"
-import { mockProfileStub, setupUserContext } from "../../__util__/accountUtils"
+import { setupUserContext } from "../../__util__/accountUtils"
 import {
   mockWindowLocation,
   renderAndLoadAsync,
@@ -71,17 +67,9 @@ const submitEmail = async (email: string, buttonName = t("createAccount.getCode"
   await user.click(screen.getByRole("button", { name: buttonName }))
 }
 
-const contactFlowLocation = (state: Record<string, unknown> = {}) => {
-  ;(useLocation as jest.Mock).mockReturnValue({
-    pathname: "/update-email",
-    state: { flow: AUTH_FLOW.UPDATE_CONTACT_EMAIL, ...state },
-  })
-}
-
 describe("<UpdateEmail />", () => {
   let originalLocation: Location
   let mockNavigate: jest.Mock
-  let updateContactEmailSpy: jest.SpyInstance
 
   beforeEach(() => {
     document.documentElement.lang = "en"
@@ -98,11 +86,6 @@ describe("<UpdateEmail />", () => {
       getToken: jest.fn().mockResolvedValue("clerk-session-token"),
       has: jest.fn().mockReturnValue(true),
     })
-
-    jest.spyOn(authStatus, "bearerToken").mockReturnValue("test-token")
-    updateContactEmailSpy = jest
-      .spyOn(authApiService, "updateContactEmail")
-      .mockResolvedValue({ email: "current@example.com" } as User)
   })
 
   afterEach(() => {
@@ -129,7 +112,7 @@ describe("<UpdateEmail />", () => {
 
     await waitFor(() => {
       expect(mockNavigate).toHaveBeenCalledWith(
-        { pathname: getReverificationPath(), search: "flow=updateLoginEmail" },
+        { pathname: getReverificationPath(), search: "flow=updateEmail" },
         { replace: true }
       )
     })
@@ -180,16 +163,16 @@ describe("<UpdateEmail />", () => {
     expect(screen.queryByRole("textbox")).toBeNull()
   })
 
-  it.each([
-    ["account settings", null, getMyAccountSettingsPath()],
-    ["the contact page", { flow: AUTH_FLOW.UPDATE_CONTACT_EMAIL }, getMyAccountContactPath()],
-  ])("navigates back to %s on cancel", async (_page, state, expectedPath) => {
-    ;(useLocation as jest.Mock).mockReturnValue({ pathname: "/update-email", state })
-    await renderPage()
-    fireEvent.click(screen.getByRole("button", { name: t("label.cancel") }))
+  it.each([["account settings", null, getMyAccountSettingsPath()]])(
+    "navigates back to %s on cancel",
+    async (_page, state, expectedPath) => {
+      ;(useLocation as jest.Mock).mockReturnValue({ pathname: "/update-email", state })
+      await renderPage()
+      fireEvent.click(screen.getByRole("button", { name: t("label.cancel") }))
 
-    expect(mockNavigate).toHaveBeenCalledWith(expectedPath)
-  })
+      expect(mockNavigate).toHaveBeenCalledWith(expectedPath)
+    }
+  )
 
   it("shows a validation error when the email is empty", async () => {
     const user = makeUser()
@@ -227,7 +210,7 @@ describe("<UpdateEmail />", () => {
       expect(mockNavigate).toHaveBeenCalledWith(getUpdateEmailCodePath(), {
         state: {
           verificationCodeEmailAddress: "new@example.com",
-          flow: AUTH_FLOW.UPDATE_LOGIN_EMAIL,
+          flow: AUTH_FLOW.UPDATE_EMAIL,
         },
       })
     })
@@ -310,165 +293,12 @@ describe("<UpdateEmail />", () => {
       expect(mockNavigate).toHaveBeenCalledWith(getUpdateEmailCodePath(), {
         state: {
           verificationCodeEmailAddress: "new@example.com",
-          flow: AUTH_FLOW.UPDATE_LOGIN_EMAIL,
+          flow: AUTH_FLOW.UPDATE_EMAIL,
         },
       })
     })
     expect(staleVerified.destroy).toHaveBeenCalled()
     expect(primary.destroy).not.toHaveBeenCalled()
     expect(linked.destroy).not.toHaveBeenCalled()
-  })
-
-  describe("contact email flow", () => {
-    it("does nothing when the email matches the current contact email", async () => {
-      contactFlowLocation()
-      const user = makeUser()
-      await renderPage(user)
-      await submitEmail(String(mockProfileStub.email))
-
-      expect(user.createEmailAddress).not.toHaveBeenCalled()
-      expect(updateContactEmailSpy).not.toHaveBeenCalled()
-      expect(mockNavigate).not.toHaveBeenCalled()
-    })
-
-    it("sends a code for a new contact email", async () => {
-      contactFlowLocation()
-      const user = makeUser()
-      await renderPage(user)
-      await submitEmail("new@example.com")
-
-      await waitFor(() => {
-        expect(mockNavigate).toHaveBeenCalledWith(getUpdateEmailCodePath(), {
-          state: {
-            verificationCodeEmailAddress: "new@example.com",
-            flow: AUTH_FLOW.UPDATE_CONTACT_EMAIL,
-          },
-        })
-      })
-      expect(user.createEmailAddress).toHaveBeenCalledWith({ email: "new@example.com" })
-      expect(updateContactEmailSpy).not.toHaveBeenCalled()
-    })
-
-    it("saves the login email as the contact email without a code", async () => {
-      contactFlowLocation()
-      const user = makeUser()
-      await renderPage(user)
-      await submitEmail("current@example.com", t("accountLayout.contact.saveEmail"))
-
-      await waitFor(() => {
-        expect(mockNavigate).toHaveBeenCalledWith(getMyAccountContactPath(), {
-          state: { contactEmailChanged: true },
-        })
-      })
-      expect(updateContactEmailSpy).toHaveBeenCalledWith(
-        expect.objectContaining({ email: "current@example.com" }),
-        { clerkEnabled: true, sessionToken: "test-token" }
-      )
-      expect(user.createEmailAddress).not.toHaveBeenCalled()
-    })
-
-    it("shows an error when saving the login email as the contact email fails", async () => {
-      contactFlowLocation()
-      updateContactEmailSpy.mockRejectedValue(new Error("salesforce down"))
-      const user = makeUser()
-      await renderPage(user)
-      await submitEmail("current@example.com", t("accountLayout.contact.saveEmail"))
-
-      await waitFor(() => {
-        expect(updateContactEmailSpy).toHaveBeenCalled()
-      })
-      expect(mockNavigate).not.toHaveBeenCalled()
-      expect(user.createEmailAddress).not.toHaveBeenCalled()
-    })
-
-    it("does not save when there is no session token", async () => {
-      contactFlowLocation()
-      ;(authStatus.bearerToken as jest.Mock).mockReturnValue(undefined)
-
-      await renderPage()
-      await submitEmail("current@example.com", t("accountLayout.contact.saveEmail"))
-
-      await waitFor(() => {
-        expect(updateContactEmailSpy).not.toHaveBeenCalled()
-      })
-      expect(mockNavigate).not.toHaveBeenCalled()
-    })
-
-    it("does not save when there is no profile", async () => {
-      contactFlowLocation()
-      setupUserContext({ loggedIn: true, hasProfile: false })
-
-      await renderPage()
-
-      await waitFor(() => {
-        expect(mockNavigate).toHaveBeenCalledWith(
-          {
-            pathname: getReverificationPath(),
-            search: "flow=updateContactEmail",
-          },
-          { replace: true }
-        )
-      })
-
-      expect(screen.queryByRole("textbox")).toBeNull()
-      expect(updateContactEmailSpy).not.toHaveBeenCalled()
-    })
-    it("shows an error and clears the flag after a failed save on the code page", async () => {
-      contactFlowLocation({ saveFailed: true })
-      await renderPage()
-
-      await waitFor(() => {
-        expect(mockNavigate).toHaveBeenCalledWith("/update-email", {
-          replace: true,
-          state: { flow: AUTH_FLOW.UPDATE_CONTACT_EMAIL },
-        })
-      })
-    })
-    it("redirects to reverification with the contact flow when the session is stale", async () => {
-      contactFlowLocation()
-      ;(useAuth as jest.Mock).mockReturnValue({
-        isLoaded: true,
-        isSignedIn: true,
-        getToken: jest.fn().mockResolvedValue("clerk-session-token"),
-        has: jest.fn().mockReturnValue(false),
-      })
-      await renderPage()
-
-      await waitFor(() => {
-        expect(mockNavigate).toHaveBeenCalledWith(
-          { pathname: getReverificationPath(), search: "flow=updateContactEmail" },
-          { replace: true }
-        )
-      })
-      expect(screen.queryByRole("textbox")).toBeNull()
-    })
-    it("redirects to reverification when submitting an email without strict reverification", async () => {
-      contactFlowLocation()
-      const mockHas = jest.fn().mockReturnValue(true)
-      ;(useAuth as jest.Mock).mockReturnValue({
-        isLoaded: true,
-        isSignedIn: true,
-        getToken: jest.fn().mockResolvedValue("clerk-session-token"),
-        has: mockHas,
-      })
-      const user = makeUser()
-      await renderPage(user)
-
-      await userEvent.type(screen.getByRole("textbox"), "new@example.com")
-
-      mockHas.mockReturnValue(false)
-      mockHas.mockClear()
-      await userEvent.click(screen.getByRole("button", { name: t("createAccount.getCode") }))
-
-      await waitFor(() => {
-        expect(mockNavigate).toHaveBeenCalledWith(
-          { pathname: getReverificationPath(), search: "flow=updateContactEmail" },
-          { replace: true }
-        )
-      })
-      expect(mockHas).toHaveBeenCalledWith({ reverification: "strict" })
-      expect(user.createEmailAddress).not.toHaveBeenCalled()
-      expect(updateContactEmailSpy).not.toHaveBeenCalled()
-    })
   })
 })

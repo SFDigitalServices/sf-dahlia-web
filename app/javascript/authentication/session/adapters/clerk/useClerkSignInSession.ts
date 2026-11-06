@@ -2,7 +2,11 @@ import { useCallback, useMemo } from "react"
 import { useClerk, useSignIn } from "@clerk/react"
 import { useNavigate } from "react-router"
 
-import { getClerkErrorCode } from "../../../authenticationUtils"
+import {
+  getClerkErrorCode,
+  queueAuthenticationToast,
+  AUTH_TOAST_TO_RENDER,
+} from "../../../authenticationUtils"
 import { SignInOutcome, SignInSession } from "../../signInSession"
 
 const SUCCESS: SignInOutcome = {}
@@ -190,7 +194,7 @@ export const useClerkSignInSession = (): SignInSession => {
   )
 
   const activateSession = useCallback(
-    async (redirectTo?: string): Promise<SignInOutcome> => {
+    async (redirectTo?: string, toastToRender?: AUTH_TOAST_TO_RENDER): Promise<SignInOutcome> => {
       if (!signIn) return NOT_READY
 
       if (!redirectTo) {
@@ -201,7 +205,11 @@ export const useClerkSignInSession = (): SignInSession => {
       const { error } = await signIn.finalize({
         // https://clerk.com/docs/react/reference/objects/clerk#using-the-navigate-parameter
         navigate: ({ decorateUrl }: { decorateUrl: (url: string) => string }) => {
-          void navigate(decorateUrl(redirectTo))
+          const url = decorateUrl(redirectTo)
+          if (toastToRender) {
+            queueAuthenticationToast(toastToRender)
+          }
+          void navigate(url)
         },
       })
       return error ? { error } : SUCCESS

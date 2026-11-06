@@ -14,10 +14,11 @@ import { setupUserContext } from "../../__util__/accountUtils"
 import { useFeatureFlag } from "../../../hooks/useFeatureFlag"
 import { AUTH_FLOW } from "../../../modules/constants"
 import {
-  getAddPasswordPath,
   getMyAccountSettingsPath,
   getReverificationCodePath,
+  getUpdateEmailPath,
 } from "../../../util/routeUtil"
+import { REVERIFICATION_FLOW } from "../../../util/accountUtil"
 
 jest.mock("@clerk/react", () => {
   const Clerk = jest.requireActual("@clerk/react")
@@ -173,7 +174,7 @@ describe("<Reverification />", () => {
   })
 
   it("verifies with a password and continues to the destination", async () => {
-    await renderPage("updateLoginEmail", true)
+    await renderPage(REVERIFICATION_FLOW.UPDATE_EMAIL, true)
 
     await act(async () => {
       fireEvent.click(screen.getByRole("button", { name: t("signIn.passwordInstead") }))
@@ -187,13 +188,16 @@ describe("<Reverification />", () => {
 
     await user.type(passwordInput, "abcd1234")
     await user.click(screen.getByRole("button", { name: t("label.signIn") }))
-    await user.click(screen.getByRole("button", { name: t("signIn.oneTimeCode") }))
 
     await waitFor(() => {
       expect(mockAttemptFirstFactor).toHaveBeenCalledWith({
         strategy: "password",
         password: "abcd1234",
       })
+    })
+    expect(mockNavigate).toHaveBeenCalledWith(getUpdateEmailPath(), {
+      replace: true,
+      state: { flow: AUTH_FLOW.UPDATE_EMAIL },
     })
   })
 
@@ -204,7 +208,7 @@ describe("<Reverification />", () => {
         errors: [{ code: "form_password_incorrect" }],
       })
     )
-    await renderPage("updateLoginEmail", true)
+    await renderPage(REVERIFICATION_FLOW.UPDATE_EMAIL, true)
 
     await act(async () => {
       fireEvent.click(screen.getByRole("button", { name: t("signIn.passwordInstead") }))
@@ -221,8 +225,7 @@ describe("<Reverification />", () => {
     await waitFor(() => {
       expect(screen.getByRole("button", { name: /password is incorrect/i })).not.toBeNull()
     })
-    expect(mockNavigate).not.toHaveBeenCalledWith(getAddPasswordPath(), expect.anything())
-
+    expect(mockNavigate).not.toHaveBeenCalledWith(getUpdateEmailPath(), expect.anything())
     consoleError.mockRestore()
   })
 
