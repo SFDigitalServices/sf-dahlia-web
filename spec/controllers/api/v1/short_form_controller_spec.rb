@@ -440,6 +440,34 @@ describe Api::V1::ShortFormController, type: :controller do
           end
       end
 
+      # Given a counselor with a valid delegate session
+      # When the save request body sets primaryApplicant.housingCounselingAgencyId
+      #   to another agency
+      # Then Salesforce receives the applicant's stored agency id,
+      #   so a counselor can't change who has access
+      it 'ignores a client-sent housingCounselingAgencyId' do
+        allow(Force::ShortFormService).to receive(:get)
+          .and_return(draft_owned_by(applicant_contact_id))
+        # Stub the HTTP call, not create_or_update, so its real merge! runs
+        salesforce_request = instance_double(Force::Request, post: { 'id' => 'app123' })
+        allow(Force::Request).to receive(:new)
+          .with(retries: 0, timeout: 20)
+          .and_return(salesforce_request)
+        allow(Force::ShortFormService).to receive(:create_or_update).and_call_original
+        spoofed_applicant = { housingCounselingAgencyId: 'spoofed_agency_123' }
+        spoofed_params = update_params.deep_merge(
+          application: { primaryApplicant: spoofed_applicant },
+        )
+
+        put :update_application, params: spoofed_params
+
+        expect(salesforce_request).to have_received(:post) do |endpoint, body|
+          expect(endpoint).to eq('/shortForm')
+          expect(body.as_json.dig('primaryApplicant', 'housingCounselingAgencyId'))
+            .to eq(agency_id)
+        end
+      end
+
       # Given an unexpired hc_session and Salesforce has revoked delegation
       # When the counselor saves a draft
       # Then the draft is neither read nor saved, hc_session is cleared,
