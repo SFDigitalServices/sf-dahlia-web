@@ -371,7 +371,8 @@ class Api::V1::ShortFormController < ApiController
   def application_payload
     return application_params unless current_user.present? && hc_session_feature_enabled?
 
-    application_params.merge(submittedBy: current_user.salesforce_contact_id)
+    contact_id = current_user.salesforce_contact_id
+    application_params.merge(submittedBy: contact_id, submittedById: contact_id)
   end
 
   def user_contact_id

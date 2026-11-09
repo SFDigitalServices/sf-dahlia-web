@@ -4,6 +4,8 @@ require 'rails_helper'
 require 'support/vcr_setup'
 
 describe Api::V1::ShortFormController, type: :controller do
+  let(:submitted_by_keys) { %i[submittedBy submittedById] }
+
   shared_context 'with a housing counselor session' do
     let(:counselor_contact_id) { 'contact_counselor_abc123' }
     let(:applicant_contact_id) { 'contact_applicant_abc123' }
@@ -163,16 +165,30 @@ describe Api::V1::ShortFormController, type: :controller do
             .with(hash_including(submittedBy: 'contact_abc123'), anything)
         end
 
+        # Given an applicant signed in with Clerk, no delegate session, and the HC flag on
+        # When the applicant submits an application
+        # Then submittedById is the applicant's own contact id
+        it 'records the signed-in applicant as submittedById' do
+          allow(controller).to receive(:clerk).and_return(double(user_id: 'user_abc123'))
+          allow(ClerkService).to receive(:salesforce_contact_id)
+            .and_return('contact_abc123')
+
+          post :submit_application
+
+          expect(Force::ShortFormService).to have_received(:create_or_update)
+            .with(hash_including(submittedById: 'contact_abc123'), anything)
+        end
+
         # Given a guest (not signed in) and the HC flag on
         # When the guest submits an application
-        # Then no submittedBy is sent
+        # Then no submittedBy fields are sent
         it 'does not send submittedBy for a guest' do
           allow(controller).to receive(:clerk).and_return(nil)
 
           post :submit_application
 
           expect(Force::ShortFormService).to have_received(:create_or_update)
-            .with(hash_excluding(:submittedBy), anything)
+            .with(hash_excluding(*submitted_by_keys), anything)
         end
       end
 
@@ -193,7 +209,7 @@ describe Api::V1::ShortFormController, type: :controller do
           post :submit_application
 
           expect(Force::ShortFormService).to have_received(:create_or_update)
-            .with(hash_excluding(:submittedBy), anything)
+            .with(hash_excluding(*submitted_by_keys), anything)
         end
       end
     end
@@ -272,6 +288,16 @@ describe Api::V1::ShortFormController, type: :controller do
 
         expect(Force::ShortFormService).to have_received(:create_or_update)
           .with(hash_including(submittedBy: counselor_contact_id), anything)
+      end
+
+      # Given a counselor with a valid delegate session
+      # When the counselor submits an application
+      # Then the top-level submittedById is the counselor's contact id
+      it 'records the counselor as submittedById' do
+        post :submit_application
+
+        expect(Force::ShortFormService).to have_received(:create_or_update)
+          .with(hash_including(submittedById: counselor_contact_id), anything)
       end
 
       # Given a counselor whose hc_session has expired
@@ -465,6 +491,28 @@ describe Api::V1::ShortFormController, type: :controller do
           expect(endpoint).to eq('/shortForm')
           expect(body.as_json.dig('primaryApplicant', 'housingCounselingAgencyId'))
             .to eq(agency_id)
+        end
+      end
+
+      # Given a counselor with a valid delegate session
+      # When the save request body sets submittedById to another contact id
+      # Then Salesforce receives the counselor's contact id as submittedById
+      it 'ignores a client-sent submittedById' do
+        allow(Force::ShortFormService).to receive(:get)
+          .and_return(draft_owned_by(applicant_contact_id))
+        salesforce_request = instance_double(Force::Request, post: { 'id' => 'app123' })
+        allow(Force::Request).to receive(:new)
+          .with(retries: 0, timeout: 20)
+          .and_return(salesforce_request)
+        allow(Force::ShortFormService).to receive(:create_or_update).and_call_original
+        spoofed_params = update_params.deep_merge(
+          application: { submittedById: 'spoofed_contact_123' },
+        )
+
+        put :update_application, params: spoofed_params
+
+        expect(salesforce_request).to have_received(:post) do |_endpoint, body|
+          expect(body.as_json['submittedById']).to eq(counselor_contact_id)
         end
       end
 
