@@ -8,6 +8,7 @@ describe Api::V1::ShortFormController, type: :controller do
     let(:counselor_contact_id) { 'contact_counselor_abc123' }
     let(:applicant_contact_id) { 'contact_applicant_abc123' }
     let(:clerk_sid) { 'sid_abc123' }
+    let(:agency_id) { 'agency_abc123' }
     before do
       stub_const('JsonWebTokenService::SECRET_KEY', 'test_secret')
       stub_const('JsonWebTokenService::ALGORITHM', 'HS256')
@@ -28,7 +29,8 @@ describe Api::V1::ShortFormController, type: :controller do
       allow(ClerkService).to receive(:revoke_session)
       allow(Force::AccountService).to receive(:get)
         .with(applicant_contact_id)
-        .and_return('webAppID' => 'user_applicant')
+        .and_return('webAppID' => 'user_applicant',
+                    'housingCounselingAgencyId' => agency_id)
 
       request.cookies['hc_session'] = JsonWebTokenService.encode_token(
         { 'typ' => 'hc_session', 'hcId' => counselor_contact_id,
@@ -238,6 +240,18 @@ describe Api::V1::ShortFormController, type: :controller do
       end
 
       # Given a counselor with a valid delegate session
+      #   And the applicant's Contact has a housingCounselingAgencyId
+      # When the counselor submits an application
+      # Then primaryApplicant keeps that housingCounselingAgencyId,
+      #   so the submit doesn't revoke the counselor's access
+      it "keeps the applicant's housing counselor access" do
+        post :submit_application
+
+        expect(Force::ShortFormService).to have_received(:create_or_update)
+          .with(anything, hash_including(housingCounselingAgencyId: agency_id))
+      end
+
+      # Given a counselor with a valid delegate session
       #   And the applicant's record can't be loaded
       # When the counselor submits an application
       # Then nothing is sent to Salesforce, so webAppID can't be blanked
@@ -380,6 +394,21 @@ describe Api::V1::ShortFormController, type: :controller do
 
         expect(response).to have_http_status(:ok), response.body
         expect(Force::ShortFormService).to have_received(:create_or_update)
+      end
+
+      # Given a counselor with a valid delegate session
+      #   And the applicant's Contact has a housingCounselingAgencyId
+      # When the counselor saves the applicant's draft
+      # Then primaryApplicant keeps that housingCounselingAgencyId,
+      #   so the save doesn't revoke the counselor's access
+      it "keeps the applicant's housing counselor access when saving a draft" do
+        allow(Force::ShortFormService).to receive(:get)
+          .and_return(draft_owned_by(applicant_contact_id))
+
+        put :update_application, params: update_params
+
+        expect(Force::ShortFormService).to have_received(:create_or_update)
+          .with(anything, hash_including(housingCounselingAgencyId: agency_id))
       end
 
       it 'rejects a draft owned by a different applicant' do

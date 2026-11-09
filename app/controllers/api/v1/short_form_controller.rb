@@ -346,18 +346,22 @@ class Api::V1::ShortFormController < ApiController
                webAppID: current_user_id }
     end
 
+    contact = applicant_contact
     {
       contactId: user_contact_id,
-      webAppID: applicant_web_app_id,
+      webAppID: contact['webAppID'],
+      housingCounselingAgencyId: contact['housingCounselingAgencyId'],
     }
   end
 
-  # Salesforce blanks webAppID on the Contact when /shortForm omits it
-  def applicant_web_app_id
+  # Salesforce blanks Contact fields that /shortForm omits, so these are sent
+  # back from the applicant's stored Contact. Losing housingCounselingAgencyId
+  # would revoke the counselor's access on their first save.
+  def applicant_contact
     contact = Force::AccountService.get(user_contact_id)
     raise HousingCounselorSession::VerificationUnavailableError if contact.blank?
 
-    contact['webAppID']
+    contact
   end
 
   def acting_for_applicant?
