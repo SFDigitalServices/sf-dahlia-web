@@ -103,8 +103,7 @@ module HousingCounselorSession
   rescue Faraday::Error, Restforce::Error => e
     Rails.logger.warn("HousingCounselorSession: Salesforce re-check failed: #{e.message}")
     @hc_session_verification_failed = true
-    discard_hc_session_cookie
-    revoke_clerk_session
+    end_hc_session
     nil
   end
 
@@ -222,9 +221,18 @@ module HousingCounselorSession
       'HousingCounselorSession: Salesforce no longer grants hc_session access',
     )
     @hc_session_access_denied = true
+    end_hc_session
+    nil
+  end
+
+  # Logged out = hc_session cleared AND Clerk session revoked. Idempotent, so
+  # every failure path can call it without revoking twice in one request.
+  def end_hc_session
+    return if @hc_session_ended
+
+    @hc_session_ended = true
     discard_hc_session_cookie
     revoke_clerk_session
-    nil
   end
 
   def revoke_clerk_session
