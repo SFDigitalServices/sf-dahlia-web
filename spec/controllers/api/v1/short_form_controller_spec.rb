@@ -615,6 +615,87 @@ describe Api::V1::ShortFormController, type: :controller do
     end
   end
 
+  # Given a counselor with an unexpired hc_session cookie
+  #   And Salesforce has revoked delegation
+  # When the counselor deletes a draft, claims an application,
+  #   or uploads or deletes a proof
+  # Then the response is 403 hc_session_ended and nothing is read, written, or deleted
+  describe 'delegation re-check on other application writes' do
+    include_context 'with a housing counselor session'
+
+    let(:proof_params) do
+      { uploaded_file: { session_uid: 'session_abc123', listing_id: 'listing123',
+                         listing_preference_id: 'pref1', document_type: 'gas bill' } }
+    end
+
+    before do
+      allow(Force::ShortFormService).to receive(:get)
+      allow(Force::ShortFormService).to receive(:delete)
+      allow(Force::ShortFormService).to receive(:create_or_update)
+      allow(UploadedFile).to receive(:where)
+      allow(UploadedFile).to receive(:create_and_resize)
+    end
+
+    context 'when Salesforce has revoked delegation' do
+      before do
+        allow(Force::HousingCounselorService).to receive(:authorize_access)
+          .and_return(nil)
+      end
+
+      it 'does not read or delete the draft' do
+        delete :delete_application, params: { id: 'app123' }
+
+        expect(JSON.parse(response.body)).to eq('error' => 'hc_session_ended')
+        expect(response).to have_http_status(:forbidden)
+        expect(Force::ShortFormService).not_to have_received(:get)
+        expect(Force::ShortFormService).not_to have_received(:delete)
+      end
+
+      it 'does not read or claim the application' do
+        put :claim_submitted_application,
+            params: { id: 'app123', application: { id: 'app123' } }
+
+        expect(JSON.parse(response.body)).to eq('error' => 'hc_session_ended')
+        expect(response).to have_http_status(:forbidden)
+        expect(Force::ShortFormService).not_to have_received(:get)
+        expect(Force::ShortFormService).not_to have_received(:create_or_update)
+      end
+
+      it 'does not remove or upload a proof' do
+        post :upload_proof, params: proof_params
+
+        expect(JSON.parse(response.body)).to eq('error' => 'hc_session_ended')
+        expect(response).to have_http_status(:forbidden)
+        expect(UploadedFile).not_to have_received(:where)
+        expect(UploadedFile).not_to have_received(:create_and_resize)
+      end
+
+      it 'does not delete a proof' do
+        delete :delete_proof, params: proof_params
+
+        expect(JSON.parse(response.body)).to eq('error' => 'hc_session_ended')
+        expect(response).to have_http_status(:forbidden)
+        expect(UploadedFile).not_to have_received(:where)
+      end
+    end
+
+    # Control: the same request with delegation still granted goes through
+    context 'when Salesforce still grants delegation' do
+      it "deletes the applicant's own draft" do
+        applicant_draft = {
+          'id' => 'app123', 'status' => 'Draft',
+          'primaryApplicant' => { 'contactId' => applicant_contact_id }
+        }
+        allow(Force::ShortFormService).to receive(:get).and_return(applicant_draft)
+
+        delete :delete_application, params: { id: 'app123' }
+
+        expect(response).to have_http_status(:ok), response.body
+        expect(Force::ShortFormService).to have_received(:delete).with('app123')
+      end
+    end
+  end
+
   describe '#delete_proof' do
     let(:contact_id) { 'contact_abc123' }
     let(:devise_user) { create(:user, salesforce_contact_id: contact_id) }

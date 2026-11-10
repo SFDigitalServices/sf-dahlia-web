@@ -23,7 +23,10 @@ class Api::V1::ShortFormController < ApiController
   # With the Clerk flag on, a signed-in user's submit needs a Salesforce contact id.
   # TODO(DAH-4366): CLERK MIGRATION - DEVISE TECH DEBT TO REMOVE
   before_action :authenticate_submit!, only: :submit_application
-  before_action :reverify_hc_session!, only: %i[submit_application update_application]
+  before_action :reverify_hc_session!, only: %i[
+    submit_application update_application claim_submitted_application
+    delete_application upload_proof delete_proof
+  ]
 
   def validate_household
     response = Force::ShortFormService.check_household_eligibility(
