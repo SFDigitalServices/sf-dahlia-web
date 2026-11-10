@@ -34,10 +34,16 @@ describe Api::V1::ShortFormController, type: :controller do
         .and_return('webAppID' => 'user_applicant',
                     'housingCounselingAgencyId' => agency_id)
 
+      issue_hc_session_cookie
+    end
+
+    # Defaults are a valid, unexpired session bound to the current Clerk
+    # session; pass only what a test changes.
+    def issue_hc_session_cookie(sid: clerk_sid, exp: 2.hours.from_now)
       request.cookies['hc_session'] = JsonWebTokenService.encode_token(
         { 'typ' => 'hc_session', 'hcId' => counselor_contact_id,
-          'appId' => applicant_contact_id, 'sid' => clerk_sid },
-        exp: 2.hours.from_now,
+          'appId' => applicant_contact_id, 'sid' => sid },
+        exp:,
       )
     end
   end
@@ -321,11 +327,7 @@ describe Api::V1::ShortFormController, type: :controller do
       #   and their Clerk session is revoked
       context 'when Salesforce has revoked delegation' do
         before do
-          request.cookies['hc_session'] = JsonWebTokenService.encode_token(
-            { 'typ' => 'hc_session', 'hcId' => counselor_contact_id,
-              'appId' => applicant_contact_id, 'sid' => clerk_sid },
-            exp: 1.hour.ago,
-          )
+          issue_hc_session_cookie(exp: 1.hour.ago)
           allow(Force::HousingCounselorService).to receive(:authorize_access)
             .and_return(nil)
         end
@@ -352,11 +354,7 @@ describe Api::V1::ShortFormController, type: :controller do
       #   and hc_session is cleared
       context 'when the hc_session cookie is from a different Clerk session' do
         before do
-          request.cookies['hc_session'] = JsonWebTokenService.encode_token(
-            { 'typ' => 'hc_session', 'hcId' => counselor_contact_id,
-              'appId' => applicant_contact_id, 'sid' => 'sid_other_session' },
-            exp: 2.hours.from_now,
-          )
+          issue_hc_session_cookie(sid: 'sid_other_session')
         end
 
         it 'does not submit and clears hc_session' do
@@ -602,11 +600,7 @@ describe Api::V1::ShortFormController, type: :controller do
       context 'when the hc_session cookie is from a different Clerk session' do
         before do
           allow(Force::ShortFormService).to receive(:get)
-          request.cookies['hc_session'] = JsonWebTokenService.encode_token(
-            { 'typ' => 'hc_session', 'hcId' => counselor_contact_id,
-              'appId' => applicant_contact_id, 'sid' => 'sid_other_session' },
-            exp: 2.hours.from_now,
-          )
+          issue_hc_session_cookie(sid: 'sid_other_session')
         end
 
         it 'does not read or save the draft' do
