@@ -43,7 +43,7 @@ module HousingCounselorSession
 
     refresh_hc_session(token, nil)
     raise VerificationUnavailableError if hc_session_verification_failed?
-    raise AccessDeniedError if hc_session_access_denied?
+    raise AccessDeniedError if hc_session_access_denied? || hc_session_unbound?
   end
 
   def hc_session_feature_enabled?
@@ -237,7 +237,10 @@ module HousingCounselorSession
   end
 
   def revoke_clerk_session
-    ClerkService.revoke_session(current_clerk_session_id)
+    session_id = current_clerk_session_id
+    return if session_id.blank?
+
+    ClerkService.revoke_session(session_id)
   rescue StandardError => e
     Rails.logger.warn(
       "HousingCounselorSession: could not revoke Clerk session: #{e.class}",

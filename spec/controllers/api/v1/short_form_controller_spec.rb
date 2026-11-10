@@ -346,6 +346,49 @@ describe Api::V1::ShortFormController, type: :controller do
         end
       end
 
+      # Given a counselor whose hc_session cookie was issued in a different Clerk session
+      # When the counselor submits an application
+      # Then nothing is submitted, the response is 403 hc_session_ended,
+      #   and hc_session is cleared
+      context 'when the hc_session cookie is from a different Clerk session' do
+        before do
+          request.cookies['hc_session'] = JsonWebTokenService.encode_token(
+            { 'typ' => 'hc_session', 'hcId' => counselor_contact_id,
+              'appId' => applicant_contact_id, 'sid' => 'sid_other_session' },
+            exp: 2.hours.from_now,
+          )
+        end
+
+        it 'does not submit and clears hc_session' do
+          post :submit_application
+
+          expect(response).to have_http_status(:forbidden)
+          expect(JSON.parse(response.body)).to eq('error' => 'hc_session_ended')
+          expect(Force::ShortFormService).not_to have_received(:create_or_update)
+          expect(cookies[:hc_session]).to be_blank
+        end
+      end
+
+      # Given an hc_session cookie and a request with no Clerk session id
+      # When the counselor submits an application
+      # Then nothing is submitted, the response is 403 hc_session_ended,
+      #   and no Clerk revoke is attempted (there is no session to revoke)
+      context 'when the request has no Clerk session id' do
+        before do
+          allow(controller).to receive(:clerk)
+            .and_return(double(user_id: 'user_counselor', session: {}))
+        end
+
+        it 'does not submit or try to revoke a Clerk session' do
+          post :submit_application
+
+          expect(response).to have_http_status(:forbidden)
+          expect(JSON.parse(response.body)).to eq('error' => 'hc_session_ended')
+          expect(Force::ShortFormService).not_to have_received(:create_or_update)
+          expect(ClerkService).not_to have_received(:revoke_session)
+        end
+      end
+
       # Given an unexpired hc_session and Salesforce still grants delegation
       # When the counselor submits an application
       # Then Salesforce is checked once and the application is submitted
@@ -550,6 +593,29 @@ describe Api::V1::ShortFormController, type: :controller do
           expect(Force::ShortFormService).not_to have_received(:create_or_update)
           expect(cookies[:hc_session]).to be_blank
           expect(ClerkService).to have_received(:revoke_session).with(clerk_sid)
+        end
+      end
+
+      # Given a counselor whose hc_session cookie was issued in a different Clerk session
+      # When the counselor saves a draft
+      # Then the draft is neither read nor saved, and hc_session is cleared
+      context 'when the hc_session cookie is from a different Clerk session' do
+        before do
+          allow(Force::ShortFormService).to receive(:get)
+          request.cookies['hc_session'] = JsonWebTokenService.encode_token(
+            { 'typ' => 'hc_session', 'hcId' => counselor_contact_id,
+              'appId' => applicant_contact_id, 'sid' => 'sid_other_session' },
+            exp: 2.hours.from_now,
+          )
+        end
+
+        it 'does not read or save the draft' do
+          put :update_application, params: update_params
+
+          expect(response).to have_http_status(:forbidden)
+          expect(Force::ShortFormService).not_to have_received(:get)
+          expect(Force::ShortFormService).not_to have_received(:create_or_update)
+          expect(cookies[:hc_session]).to be_blank
         end
       end
     end
