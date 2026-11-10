@@ -281,6 +281,20 @@ describe Api::V1::ShortFormController, type: :controller do
       end
 
       # Given a counselor with a valid delegate session
+      #   And the applicant's record can't be loaded
+      # When the counselor submits an application
+      # Then hc_session is cleared and their Clerk session is revoked once
+      it 'ends the HC session when the applicant record cannot be loaded' do
+        allow(Force::AccountService).to receive(:get).and_return(nil)
+
+        post :submit_application
+
+        expect(JSON.parse(response.body)).to eq('error' => 'hc_session_ended')
+        expect(cookies[:hc_session]).to be_blank
+        expect(ClerkService).to have_received(:revoke_session).with(clerk_sid).once
+      end
+
+      # Given a counselor with a valid delegate session
       # When the counselor submits an application
       # Then the top-level submittedBy is the counselor's contact id
       it 'records the counselor as submittedBy' do
@@ -325,10 +339,10 @@ describe Api::V1::ShortFormController, type: :controller do
           expect(cookies[:hc_session]).to be_blank
         end
 
-        it "revokes the counselor's Clerk session" do
+        it "revokes the counselor's Clerk session once" do
           post :submit_application
 
-          expect(ClerkService).to have_received(:revoke_session).with(clerk_sid)
+          expect(ClerkService).to have_received(:revoke_session).with(clerk_sid).once
         end
       end
 
