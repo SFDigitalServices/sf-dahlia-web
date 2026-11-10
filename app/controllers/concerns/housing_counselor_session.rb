@@ -179,6 +179,7 @@ module HousingCounselorSession
         'Clerk lookup of the signed-in user failed',
       )
       @hc_session_verification_failed = true
+      end_hc_session
       return false
     end
 

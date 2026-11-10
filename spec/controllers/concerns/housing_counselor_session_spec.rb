@@ -169,15 +169,20 @@ RSpec.describe HousingCounselorSession, type: :controller do
         expect(cookies[:hc_session]).to be_blank
       end
 
-      # Regression coverage: a Clerk lookup failure used to be indistinguishable
-      # from a confirmed "someone else" mismatch, so the cookie was discarded
-      # and no failure was flagged - see #hc_session_verification_failed? below.
-      it 'returns nil without discarding the cookie when the signed-in user\'s own ' \
-         'contact id could not be looked up' do
+      # Given a valid hc_session cookie
+      #   And the Clerk lookup of the signed-in user's own contact id fails
+      # When the HC session is resolved
+      # Then the session is ended: hc_session is cleared and the Clerk session revoked
+      # The failure is still flagged (see #hc_session_verification_failed? below),
+      # so it isn't treated as a confirmed "someone else" mismatch; it now fails
+      # closed instead of keeping the cookie for a retry.
+      it 'returns nil, discards the cookie, and revokes the Clerk session when the ' \
+         "signed-in user's own contact id could not be looked up" do
         get :show, params: { signed_in_as: nil, lookup_failed: true }
 
         expect(JSON.parse(response.body)).to eq('session' => nil)
-        expect(cookies[:hc_session]).to be_present
+        expect(cookies[:hc_session]).to be_blank
+        expect(ClerkService).to have_received(:revoke_session).with(clerk_sid)
       end
 
       # Regression coverage: expected_app_id used to only be checked on the
@@ -282,13 +287,15 @@ RSpec.describe HousingCounselorSession, type: :controller do
       end
 
       context "and the signed-in user's own contact id could not be looked up" do
-        it 'returns nil without discarding the cookie, and never calls Salesforce' do
+        it 'returns nil, discards the cookie, revokes the Clerk session, and never ' \
+           'calls Salesforce' do
           allow(Force::HousingCounselorService).to receive(:authorize_access)
 
           get :show, params: { signed_in_as: nil, lookup_failed: true }
 
           expect(JSON.parse(response.body)).to eq('session' => nil)
-          expect(cookies[:hc_session]).to be_present
+          expect(cookies[:hc_session]).to be_blank
+          expect(ClerkService).to have_received(:revoke_session).with(clerk_sid)
           expect(Force::HousingCounselorService).not_to have_received(:authorize_access)
         end
       end
