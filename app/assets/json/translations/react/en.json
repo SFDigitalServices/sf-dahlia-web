@@ -1923,6 +1923,7 @@
   "nav.signIn": "Sign in",
   "nav.signOut": "Sign out",
   "nav.topMessage": "Starting on %{date}: You'll need an account to apply for apartments. <a href='%{link}'>Create one now.</a>",
+  "nav.topMessageRequiredLogin": "Starting in %{date}: You need an account to apply for housing.  If you don't already have one, <a href='%{link}'>create a DAHLIA account</a>.",
   "pageTitle.additionalResources": "More Housing Opportunities",
   "pageTitle.buy": "Buy affordable housing",
   "pageTitle.createAccount": "Create an Account",
