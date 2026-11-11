@@ -581,6 +581,7 @@
   "error.account.newPasswordMissing": "Enter new password",
   "error.account.passwordComplexity": "Choose a strong password with at least 8 characters, 1 letter, and 1 number",
   "error.account.passwordComplexity.abbreviated": "Choose a strong password",
+  "error.account.tooManyCodes": "You requested too many codes. Try again in 15 minutes.",
   "error.accountBanner.header": "Some information is missing or entered incorrectly:",
   "error.address": "Please enter an address",
   "error.addressValidation.notFound": "This address was not found. Please check the house number, street, and city entered. PO Boxes are not allowed.<br><br>If the address you entered is correct, <a href='mailto:lotteryappeal@sfgov.org?%{mailParams}'>email us at lotteryappeal@sfgov.org</a> for help.",

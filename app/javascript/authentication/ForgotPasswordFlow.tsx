@@ -10,6 +10,7 @@ import { AUTH_FLOW } from "../modules/constants"
 import EmailFieldset from "../pages/account/components/EmailFieldset"
 import GetHelp from "../pages/account/components/GetHelp"
 import { createPath, getForgotPasswordCodePath, getSignInPath } from "../util/routeUtil"
+import { AUTH_ERROR, getAuthError } from "./authenticationUtils"
 import styles from "./ForgotPassword.module.scss"
 
 const ForgotPasswordFlow = () => {
@@ -26,7 +27,11 @@ const ForgotPasswordFlow = () => {
   const onGetCodeSubmit = async ({ email }: { email: string }) => {
     const { error } = await sendPasswordResetCode(email)
     if (error) {
-      void navigate(createPath(getSignInPath(), { err: "code" }))
+      void navigate(
+        createPath(getSignInPath(), {
+          err: getAuthError(error) === AUTH_ERROR.CODE_RATE_LIMITED ? "tooManyCodes" : "code",
+        })
+      )
       return
     }
 

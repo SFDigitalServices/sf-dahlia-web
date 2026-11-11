@@ -42,7 +42,11 @@ export const useClerkSignUpSession = (): SignUpSession => {
         return { error }
       }
 
-      await signUp.verifications.sendEmailCode()
+      const { error: sendCodeError } = await signUp.verifications.sendEmailCode()
+      if (sendCodeError) {
+        console.error("Account creation send code error", sendCodeError)
+        return { error: sendCodeError }
+      }
       if (
         signUp.status !== "missing_requirements" ||
         !signUp.unverifiedFields.includes("email_address") ||

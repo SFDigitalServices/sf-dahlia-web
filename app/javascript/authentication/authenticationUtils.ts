@@ -19,6 +19,20 @@ export const getClerkErrorCode = (error: unknown): string | undefined => {
   return typeof code === "string" ? code : undefined
 }
 
+export enum AUTH_ERROR {
+  CODE_RATE_LIMITED = "codeRateLimited",
+  UNKNOWN = "unknown",
+}
+
+// Maps Clerk error codes to app-level errors. Add new Clerk codes here.
+const clerkErrorCodes = new Map<string, AUTH_ERROR>([
+  ["verification_code_rate_limit_exceeded", AUTH_ERROR.CODE_RATE_LIMITED],
+  ["verification_code_too_many_requests", AUTH_ERROR.CODE_RATE_LIMITED],
+])
+
+export const getAuthError = (error: unknown): AUTH_ERROR =>
+  clerkErrorCodes.get(getClerkErrorCode(error) ?? "") ?? AUTH_ERROR.UNKNOWN
+
 export const queueAuthenticationToast = (toastToRender: unknown): void => {
   if (!isAUTH_TOAST_TO_RENDER(toastToRender)) return
   window.sessionStorage.setItem(AUTH_TOAST_KEY, toastToRender)

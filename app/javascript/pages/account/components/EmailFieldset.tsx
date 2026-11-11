@@ -7,6 +7,7 @@ import { ErrorMessages } from "./ErrorSummaryBanner"
 import { ExpandedAccountAxiosError, getErrorMessage, SetErrorArgs } from "./util"
 import { renderInlineMarkup } from "../../../util/languageUtil"
 import styles from "./EmailFieldset.module.scss"
+import { AUTH_ERROR, getAuthError } from "../../../authentication/authenticationUtils"
 
 const validateEmail = (email: string) => {
   return emailRegex.test(email)
@@ -36,6 +37,9 @@ export const handleClerkEmailErrors = (error: unknown): SetErrorArgs => {
   if (code?.startsWith("form_param_format_invalid")) {
     return ["email", { message: "email:generalFormat", shouldFocus: true }]
   }
+  if (getAuthError(error) === AUTH_ERROR.CODE_RATE_LIMITED) {
+    return ["email", { message: "email:server:tooManyCodes", shouldFocus: true }]
+  }
   return ["email", { message: "email:server:generic", shouldFocus: true }]
 }
 
@@ -63,6 +67,10 @@ export const emailFieldsetErrors: ErrorMessages = {
   "email:server:duplicate": {
     default: "error.email.duplicate",
     abbreviated: "error.email.duplicate.abbreviated",
+  },
+  "email:server:tooManyCodes": {
+    default: "error.account.tooManyCodes",
+    abbreviated: "error.account.tooManyCodes",
   },
   "email:sameAsCurrentEmail": {
     default: "error.email.sameAsCurrentEmail",

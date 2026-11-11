@@ -51,7 +51,7 @@ describe("<CreateAnAccount />", () => {
     mockNavigate = jest.fn()
     ;(useNavigate as jest.Mock).mockReturnValue(mockNavigate)
     mockSignUpCreate = jest.fn().mockResolvedValue({ error: undefined })
-    mockSendEmailCode = jest.fn().mockResolvedValue(undefined)
+    mockSendEmailCode = jest.fn().mockResolvedValue({ error: null })
     mockSignInCreate = jest.fn().mockResolvedValue({ error: undefined })
     mockSignInSendCode = jest.fn().mockResolvedValue({ error: undefined })
     mockSignInResource = {
