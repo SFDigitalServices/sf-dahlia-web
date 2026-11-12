@@ -2,6 +2,19 @@
 ###################################### CONTROLLER ##########################################
 ############################################################################################
 
+localizeDate = (dateString, locale) ->
+  return '' unless dateString
+
+  [year, month, day] = dateString.split('-')
+  date = new Date(parseInt(year, 10), parseInt(month, 10) - 1, parseInt(day, 10))
+  return dateString if isNaN(date.getTime())
+
+  new Intl.DateTimeFormat(locale or 'en', {
+    year: 'numeric'
+    month: 'long'
+    day: 'numeric'
+  }).format(date)
+
 SharedController = ($scope, $rootScope, $state, $stateParams, $window, $translate, SharedService, ExternalTranslateService) ->
   $scope.assetPaths = SharedService.assetPaths
   $scope.housingCounselors = SharedService.housingCounselors
@@ -30,6 +43,9 @@ SharedController = ($scope, $rootScope, $state, $stateParams, $window, $translat
   setAlertMessage = ->
     topMessage = if $window.TOP_MESSAGE then _.unescape($window.TOP_MESSAGE) else ''
     return $scope.alertMessage = '' unless topMessage
+    if topMessage.indexOf('date') isnt -1 and $window.REQUIRED_LOGINS_DATE
+      topMessage = topMessage.replace(/date/g, localizeDate($window.REQUIRED_LOGINS_DATE, $translate.use()))
+    topMessage = topMessage.replace(/link/g, '<a href="/create-account">create an account</a>') if topMessage.indexOf('link') isnt -1
 
     $translate(topMessage).then(
       (translatedMessage) ->
