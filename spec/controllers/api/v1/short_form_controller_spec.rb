@@ -440,6 +440,23 @@ describe Api::V1::ShortFormController, type: :controller do
           expect(ClerkService).to have_received(:revoke_session).with(clerk_sid)
         end
       end
+
+      # Given the applicant's proof and the counselor's own proof on the same listing
+      # When the counselor submits the applicant's application
+      # Then only the applicant's proof is attached in Salesforce
+      it "attaches only the applicant's proofs" do
+        allow(Force::ShortFormService).to receive(:queue_file_attachments)
+        applicant_file =
+          create(:uploaded_file, user_id: 'user_applicant', listing_id: '12345')
+        create(:uploaded_file, user_id: 'user_counselor', listing_id: '12345')
+
+        post :submit_application
+
+        expect(Force::ShortFormService)
+          .to have_received(:queue_file_attachments) do |_application_id, files|
+            expect(files.map(&:id)).to eq([applicant_file.id])
+          end
+      end
     end
   end
 
@@ -742,6 +759,21 @@ describe Api::V1::ShortFormController, type: :controller do
 
       expect(Force::AccountService).to have_received(:get)
         .with(applicant_contact_id).once
+    end
+
+    # Given the applicant's proof and the counselor's own proof on the same listing
+    # When the counselor loads the applicant's application for that listing
+    # Then only the applicant's proof is returned
+    it "loads only the applicant's proofs" do
+      allow(Force::ShortFormService).to receive(:find_listing_application).and_return({})
+      applicant_file =
+        create(:uploaded_file, user_id: applicant_web_app_id, listing_id: 'listing123')
+      create(:uploaded_file, user_id: 'user_counselor', listing_id: 'listing123')
+
+      get :show_listing_application_for_user, params: { listing_id: 'listing123' }
+
+      file_ids = JSON.parse(response.body)['files'].map { |f| f['id'] }
+      expect(file_ids).to eq([applicant_file.id])
     end
   end
 
