@@ -257,6 +257,12 @@ class Api::V1::ShortFormController < ApiController
       end
   end
 
+  # Proofs belong to the application's owner, so a counselor's uploads are
+  # stored under the applicant they act for.
+  def file_owner_id
+    acting_for_applicant? ? applicant_contact['webAppID'] : current_user.id
+  end
+
   def clerk_user_with_contact_id?
     current_user.is_a?(ClerkService::User) && current_user.salesforce_contact_id.present?
   end
@@ -605,7 +611,7 @@ class Api::V1::ShortFormController < ApiController
       rent_burden_type: uploaded_file_params[:rent_burden_type],
       rent_burden_index: uploaded_file_params[:rent_burden_index],
     }
-    attrs[:user_id] = current_user.id if user_signed_in?
+    attrs[:user_id] = file_owner_id if user_signed_in?
     attrs
   end
 end

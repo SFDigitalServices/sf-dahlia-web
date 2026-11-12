@@ -696,6 +696,29 @@ describe Api::V1::ShortFormController, type: :controller do
     end
   end
 
+  # Given a counselor with a valid hc_session for an applicant whose Contact webAppID is W
+  # When they upload a proof
+  # Then the proof is stored under W, the same owner as the application
+  describe 'proofs while delegated' do
+    include_context 'with a housing counselor session'
+
+    let(:applicant_web_app_id) { 'user_applicant' }
+    let(:proof_params) do
+      { uploaded_file: {
+        session_uid: 'session_abc123', listing_id: 'listing123',
+        listing_preference_id: 'pref1', document_type: 'gas bill',
+        file: fixture_file_upload('./app/assets/images/logo-city.png', 'image/png')
+      } }
+    end
+
+    it 'stores an uploaded proof under the applicant, not the counselor' do
+      post :upload_proof, params: proof_params
+
+      expect(response).to have_http_status(:ok), response.body
+      expect(UploadedFile.sole.user_id).to eq(applicant_web_app_id)
+    end
+  end
+
   describe '#delete_proof' do
     let(:contact_id) { 'contact_abc123' }
     let(:devise_user) { create(:user, salesforce_contact_id: contact_id) }
