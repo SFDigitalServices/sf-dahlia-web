@@ -717,6 +717,22 @@ describe Api::V1::ShortFormController, type: :controller do
       expect(response).to have_http_status(:ok), response.body
       expect(UploadedFile.sole.user_id).to eq(applicant_web_app_id)
     end
+
+    # Given the applicant's proof and the counselor's own proof for the same preference
+    # When the counselor uploads a replacement for the applicant
+    # Then the applicant's old proof is replaced and the counselor's own is kept
+    it "replaces the applicant's proof, not the counselor's own" do
+      same_preference = { listing_id: 'listing123', listing_preference_id: 'pref1' }
+      applicant_file =
+        create(:uploaded_file, user_id: applicant_web_app_id, **same_preference)
+      counselor_file =
+        create(:uploaded_file, user_id: 'user_counselor', **same_preference)
+
+      post :upload_proof, params: proof_params
+
+      expect(UploadedFile.exists?(applicant_file.id)).to be(false)
+      expect(UploadedFile.exists?(counselor_file.id)).to be(true)
+    end
   end
 
   describe '#delete_proof' do

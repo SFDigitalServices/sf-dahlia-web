@@ -249,7 +249,9 @@ class Api::V1::ShortFormController < ApiController
   # TODO(DAH-4366): CLERK MIGRATION - DEVISE TECH DEBT TO REMOVE
   def file_owner_ids
     @file_owner_ids ||=
-      if clerk_user_with_contact_id?
+      if acting_for_applicant?
+        [applicant_contact['webAppID'], *devise_user_ids_for(user_contact_id)]
+      elsif clerk_user_with_contact_id?
         devise_ids = devise_user_ids_for(current_user.salesforce_contact_id)
         [current_user.id, *devise_ids]
       else
