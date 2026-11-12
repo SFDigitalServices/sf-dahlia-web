@@ -268,7 +268,10 @@ class Api::V1::ShortFormController < ApiController
   # The id the applicant's own uploads are stored under: their last web save
   # wrote it to the Contact.
   def applicant_web_app_id
-    applicant_contact['webAppID']
+    web_app_id = applicant_contact['webAppID']
+    return web_app_id if web_app_id.present?
+
+    raise HousingCounselorSession::VerificationUnavailableError
   end
 
   def clerk_user_with_contact_id?

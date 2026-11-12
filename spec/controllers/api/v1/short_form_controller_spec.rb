@@ -775,6 +775,24 @@ describe Api::V1::ShortFormController, type: :controller do
       file_ids = JSON.parse(response.body)['files'].map { |f| f['id'] }
       expect(file_ids).to eq([applicant_file.id])
     end
+
+    # Given an applicant whose Contact has no webAppID
+    #   And a guest's proof for the same preference
+    # When the counselor uploads a proof
+    # Then nothing is stored or deleted, and the HC session ends (fail closed)
+    it 'stores and deletes nothing when the applicant has no webAppID' do
+      allow(Force::AccountService).to receive(:get)
+        .with(applicant_contact_id)
+        .and_return('webAppID' => nil, 'housingCounselingAgencyId' => agency_id)
+      guest_file = create(:uploaded_file, user_id: nil, listing_id: 'listing123',
+                                          listing_preference_id: 'pref1')
+
+      post :upload_proof, params: proof_params
+
+      expect(response).to have_http_status(:unauthorized)
+      expect(JSON.parse(response.body)).to eq('error' => 'hc_session_ended')
+      expect(UploadedFile.pluck(:id)).to eq([guest_file.id])
+    end
   end
 
   describe '#delete_proof' do
