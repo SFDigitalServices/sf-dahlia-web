@@ -63,6 +63,41 @@ describe("<Layout />", () => {
     expect(within(header).getByText("Rent")).not.toBeNull()
   })
 
+  it("renders the top message date without a year", async () => {
+    const previousTopMessage = process.env.TOP_MESSAGE
+    const previousRequiredLoginsDate = process.env.REQUIRED_LOGINS_DATE
+    process.env.TOP_MESSAGE = "nav.topMessageRequiredLogin"
+    process.env.REQUIRED_LOGINS_DATE = "2026-12-12"
+
+    try {
+      const { container } = await renderAndLoadAsync(
+        <AuthSessionProvider>
+          <Layout>
+            <div>content</div>
+          </Layout>
+        </AuthSessionProvider>,
+        undefined,
+        ["/account"]
+      )
+      const topMessage = container.querySelector<HTMLElement>(".top-message-alert")
+
+      expect(topMessage).not.toBeNull()
+      expect(topMessage).toHaveTextContent(/Starting/)
+      expect(topMessage).not.toHaveTextContent("2026")
+    } finally {
+      if (previousTopMessage === undefined) {
+        delete process.env.TOP_MESSAGE
+      } else {
+        process.env.TOP_MESSAGE = previousTopMessage
+      }
+      if (previousRequiredLoginsDate === undefined) {
+        delete process.env.REQUIRED_LOGINS_DATE
+      } else {
+        process.env.REQUIRED_LOGINS_DATE = previousRequiredLoginsDate
+      }
+    }
+  })
+
   it("shows the account navigation header without the avatar when signed in without a profile", async () => {
     setupUserContext({ loggedIn: true, hasProfile: false })
     const { container } = await renderAndLoadAsync(

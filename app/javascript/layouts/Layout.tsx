@@ -234,7 +234,7 @@ const LayoutContent = ({
             t(process.env.TOP_MESSAGE, {
               // if TOP_MESSAGE is not a translation key, then the raw string will be rendered
               date: process.env.REQUIRED_LOGINS_DATE
-                ? localizedFormat(process.env.REQUIRED_LOGINS_DATE, "LL")
+                ? localizedFormat(process.env.REQUIRED_LOGINS_DATE, "MMMM D")
                 : "",
               link: getCreateAccountPath(),
             })
