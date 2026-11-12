@@ -8,7 +8,7 @@ import { faCheck } from "@fortawesome/free-solid-svg-icons"
 import { Controller, useForm } from "react-hook-form"
 import withAppSetup from "../../layouts/withAppSetup"
 import AuthLayout from "../../layouts/AuthLayout"
-import { AUTH_TOAST_TO_RENDER } from "../../authentication/authenticationUtils"
+import { AUTH_TOAST_TO_RENDER, getClerkErrorCode } from "../../authentication/authenticationUtils"
 import { useAuthSession } from "../../authentication/session/AuthSessionProvider"
 import { useSignInSession } from "../../authentication/session/useSignInSession"
 import { useSignUpSession } from "../../authentication/session/useSignUpSession"
@@ -42,7 +42,6 @@ import {
   toReverificationFlow,
 } from "../../util/accountUtil"
 import { useSession } from "@clerk/react"
-import { getClerkErrorCode } from "../../authentication/authenticationUtils"
 
 interface EnterVerificationCodePageProps {
   email: string

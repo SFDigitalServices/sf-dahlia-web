@@ -1304,7 +1304,8 @@
             "my_favorites": "My Favorites",
             "rent": "Rent",
             "sign_in": "Sign In",
-            "sign_out": "Sign Out"
+            "sign_out": "Sign Out",
+            "topMessageRequiredLogin": "Starting {{date}}: You need an account to apply for housing.  If you don't already have one, <a href='{{link}}'>create a DAHLIA account</a>."
         },
         "page_title": {
             "additional_resources": "More Housing Opportunities",

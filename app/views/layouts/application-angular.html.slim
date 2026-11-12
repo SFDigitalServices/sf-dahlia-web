@@ -112,6 +112,7 @@ html lang="en" ng-app="dahlia" ng-strict-di="" ng-controller="SharedController"
       var MAINTENANCE_LISTINGS = "#{ENV['MAINTENANCE_LISTINGS']}".split(',')
       var STATIC_ASSET_PATHS = #{static_asset_paths.to_json.html_safe}
       var TOP_MESSAGE = "#{ENV['TOP_MESSAGE']}"
+      var REQUIRED_LOGINS_DATE = "#{ENV['REQUIRED_LOGINS_DATE']}"
       var AUTOSAVE = "#{ENV['AUTOSAVE']}"
       var ANGULAR_EXTENDED_IDLE_TIME = "#{ENV['ANGULAR_EXTENDED_IDLE_TIME']}"
       // Add react feature flags below this line
