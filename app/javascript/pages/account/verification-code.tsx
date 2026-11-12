@@ -12,7 +12,6 @@ import {
   AUTH_TOAST_TO_RENDER,
   AUTH_ERROR,
   getAuthError,
-  getClerkErrorCode,
 } from "../../authentication/authenticationUtils"
 import { useAuthSession } from "../../authentication/session/AuthSessionProvider"
 import { useSignInSession } from "../../authentication/session/useSignInSession"
@@ -64,16 +63,18 @@ const isUpdateEmailFlow = (flow?: AUTH_FLOW) => flow === AUTH_FLOW.UPDATE_EMAIL
 const requiresSignedInUser = (flow?: AUTH_FLOW) =>
   isUpdateEmailFlow(flow) || flow === AUTH_FLOW.REVERIFICATION
 
-const codeErrorTypes: Record<string, CodeErrorType> = {
-  verification_expired: "expired",
-}
-
 type ResendResult = { sent: boolean; error?: unknown }
 
-const getCodeErrorType = (error: unknown): CodeErrorType =>
-  getAuthError(error) === AUTH_ERROR.CODE_RATE_LIMITED
-    ? "tooManyCodes"
-    : (codeErrorTypes[getClerkErrorCode(error) ?? ""] ?? "invalid")
+const getCodeErrorType = (error: unknown): CodeErrorType => {
+  switch (getAuthError(error)) {
+    case AUTH_ERROR.CODE_RATE_LIMITED:
+      return "tooManyCodes"
+    case AUTH_ERROR.CODE_EXPIRED:
+      return "expired"
+    default:
+      return "invalid"
+  }
+}
 
 const remainingResendSeconds = (expiresAt: number) =>
   Math.max(0, Math.ceil((expiresAt - Date.now()) / 1000))
@@ -228,7 +229,7 @@ const EnterVerificationCodePage = ({
       return
     }
     const verifiedEmail = await emailAddress.attemptVerification({ code }).catch((error) => {
-      if (error?.errors?.[0]?.code !== "form_code_incorrect") {
+      if (getAuthError(error) !== AUTH_ERROR.CODE_INCORRECT) {
         console.error("Update email: verification failed", error)
       }
       setError(CODE_FIELD, { message: getCodeErrorType(error) })

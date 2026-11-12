@@ -9,6 +9,7 @@ import { faCheck, faXmark } from "@fortawesome/free-solid-svg-icons"
 import { ErrorMessages } from "./ErrorSummaryBanner"
 import { ExpandedAccountAxiosError, getErrorMessage, SetErrorArgs } from "./util"
 import { createPath, getForgotPasswordPath } from "../../../util/routeUtil"
+import { AUTH_ERROR, getAuthError } from "../../../authentication/authenticationUtils"
 
 const PASSWORD_VALIDATION_ERRORS = new Set([
   "Password is too short (minimum is 8 characters)",
@@ -83,14 +84,14 @@ export interface ClerkPasswordError {
 }
 
 export const handleClerkPasswordErrors = (error: unknown): SetErrorArgs => {
-  const code = (error as ClerkPasswordError)?.errors?.[0]?.code
-  if (code === "form_password_incorrect") {
-    return ["currentPassword", { message: "currentPassword:incorrect", shouldFocus: true }]
+  switch (getAuthError(error)) {
+    case AUTH_ERROR.PASSWORD_INCORRECT:
+      return ["currentPassword", { message: "currentPassword:incorrect", shouldFocus: true }]
+    case AUTH_ERROR.PASSWORD_REJECTED:
+      return ["password", { message: "password:complexity", shouldFocus: true }]
+    default:
+      return ["password", { message: "password:server:generic", shouldFocus: true }]
   }
-  if (code?.startsWith("form_password_")) {
-    return ["password", { message: "password:complexity", shouldFocus: true }]
-  }
-  return ["password", { message: "password:server:generic", shouldFocus: true }]
 }
 
 const instructionListItem = (
