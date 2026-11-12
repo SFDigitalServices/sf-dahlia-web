@@ -250,7 +250,7 @@ class Api::V1::ShortFormController < ApiController
   def file_owner_ids
     @file_owner_ids ||=
       if acting_for_applicant?
-        [applicant_contact['webAppID'], *devise_user_ids_for(user_contact_id)]
+        [applicant_web_app_id, *devise_user_ids_for(user_contact_id)]
       elsif clerk_user_with_contact_id?
         devise_ids = devise_user_ids_for(current_user.salesforce_contact_id)
         [current_user.id, *devise_ids]
@@ -262,7 +262,13 @@ class Api::V1::ShortFormController < ApiController
   # Proofs belong to the application's owner, so a counselor's uploads are
   # stored under the applicant they act for.
   def file_owner_id
-    acting_for_applicant? ? applicant_contact['webAppID'] : current_user.id
+    acting_for_applicant? ? applicant_web_app_id : current_user.id
+  end
+
+  # The id the applicant's own uploads are stored under: their last web save
+  # wrote it to the Contact.
+  def applicant_web_app_id
+    applicant_contact['webAppID']
   end
 
   def clerk_user_with_contact_id?
