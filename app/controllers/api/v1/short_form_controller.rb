@@ -377,10 +377,10 @@ class Api::V1::ShortFormController < ApiController
   # back from the applicant's stored Contact. Losing housingCounselingAgencyId
   # would revoke the counselor's access on their first save.
   def applicant_contact
-    contact = Force::AccountService.get(user_contact_id)
-    raise HousingCounselorSession::VerificationUnavailableError if contact.blank?
+    @applicant_contact ||= Force::AccountService.get(user_contact_id)
+    return @applicant_contact if @applicant_contact.present?
 
-    contact
+    raise HousingCounselorSession::VerificationUnavailableError
   end
 
   def acting_for_applicant?

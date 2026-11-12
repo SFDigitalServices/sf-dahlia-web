@@ -733,6 +733,16 @@ describe Api::V1::ShortFormController, type: :controller do
       expect(UploadedFile.exists?(applicant_file.id)).to be(false)
       expect(UploadedFile.exists?(counselor_file.id)).to be(true)
     end
+
+    # Given a counselor with a valid hc_session
+    # When they upload a proof
+    # Then the applicant's Contact is read from Salesforce once
+    it "reads the applicant's Contact once per upload" do
+      post :upload_proof, params: proof_params
+
+      expect(Force::AccountService).to have_received(:get)
+        .with(applicant_contact_id).once
+    end
   end
 
   describe '#delete_proof' do
