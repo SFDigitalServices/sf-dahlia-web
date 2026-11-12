@@ -17,6 +17,21 @@ module HousingCounselorSession
   HC_SESSION_DURATION = 2.hours
   HC_SESSION_REFRESH_GRACE_PERIOD = 15.minutes
   HC_SESSION_COOKIE_DURATION = HC_SESSION_DURATION + HC_SESSION_REFRESH_GRACE_PERIOD
+  ENDED_CLERK_SESSION_TTL = 7.days
+
+  def self.record_ended_clerk_session(session_id)
+    Rails.cache.write(ended_clerk_session_key(session_id), true,
+                      expires_in: ENDED_CLERK_SESSION_TTL)
+  end
+
+  def self.clerk_session_ended?(session_id)
+    Rails.cache.exist?(ended_clerk_session_key(session_id))
+  end
+
+  def self.ended_clerk_session_key(session_id)
+    "hc_session:ended_clerk_session:#{Digest::SHA256.hexdigest(session_id)}"
+  end
+  private_class_method :ended_clerk_session_key
 
   def current_hc_session(expected_app_id: nil)
     return nil unless hc_session_feature_enabled?
@@ -245,6 +260,7 @@ module HousingCounselorSession
     Rails.logger.warn(
       "HousingCounselorSession: could not revoke Clerk session: #{e.class}",
     )
+    HousingCounselorSession.record_ended_clerk_session(session_id)
   end
 
   def discard_hc_session_cookie

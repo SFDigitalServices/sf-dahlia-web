@@ -338,9 +338,12 @@ RSpec.describe HousingCounselorSession, type: :controller do
         end
 
         context 'and Salesforce no longer grants access' do
+          let(:cache_store) { ActiveSupport::Cache::MemoryStore.new }
+
           before do
             allow(Force::HousingCounselorService).to receive(:authorize_access)
               .and_return(nil)
+            allow(Rails).to receive(:cache).and_return(cache_store)
           end
 
           it 'returns nil and discards the cookie' do
@@ -354,6 +357,13 @@ RSpec.describe HousingCounselorSession, type: :controller do
             get :show, params: { signed_in_as: hc_id }
 
             expect(ClerkService).to have_received(:revoke_session).with(clerk_sid)
+          end
+
+          # Control: Clerk already rejects a revoked session; nothing to remember
+          it 'does not record the Clerk session as ended when the revoke succeeds' do
+            get :show, params: { signed_in_as: hc_id }
+
+            expect(HousingCounselorSession.clerk_session_ended?(clerk_sid)).to be(false)
           end
 
           # Given Salesforce has revoked delegation
@@ -379,6 +389,14 @@ RSpec.describe HousingCounselorSession, type: :controller do
 
               expect(Rails.logger).to have_received(:warn)
                 .with(/could not revoke Clerk session/)
+            end
+
+            # Then the still-live Clerk session is recorded as ended, so a later
+            #   write from it is denied even without an hc_session cookie
+            it 'records the Clerk session as ended' do
+              get :show, params: { signed_in_as: hc_id }
+
+              expect(HousingCounselorSession.clerk_session_ended?(clerk_sid)).to be(true)
             end
           end
         end
