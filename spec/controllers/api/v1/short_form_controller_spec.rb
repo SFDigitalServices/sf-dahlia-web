@@ -155,13 +155,17 @@ describe Api::V1::ShortFormController, type: :controller do
       # When the applicant submits an application
       # Then the top-level submittedBy is the applicant's own contact id
       context 'with the housing counselor flag on and no delegate session' do
+        let(:signed_in_applicant_clerk) do
+          double(user_id: 'user_abc123', session: { 'sid' => 'sid_applicant' })
+        end
+
         before do
           allow(Rails.configuration.unleash).to receive(:is_enabled?)
             .with(HousingCounselorSession::FEATURE_FLAG).and_return(true)
         end
 
         it 'records the signed-in applicant as submittedBy' do
-          allow(controller).to receive(:clerk).and_return(double(user_id: 'user_abc123'))
+          allow(controller).to receive(:clerk).and_return(signed_in_applicant_clerk)
           allow(ClerkService).to receive(:salesforce_contact_id)
             .and_return('contact_abc123')
 
@@ -175,7 +179,7 @@ describe Api::V1::ShortFormController, type: :controller do
         # When the applicant submits an application
         # Then submittedById is the applicant's own contact id
         it 'records the signed-in applicant as submittedById' do
-          allow(controller).to receive(:clerk).and_return(double(user_id: 'user_abc123'))
+          allow(controller).to receive(:clerk).and_return(signed_in_applicant_clerk)
           allow(ClerkService).to receive(:salesforce_contact_id)
             .and_return('contact_abc123')
 
@@ -478,6 +482,55 @@ describe Api::V1::ShortFormController, type: :controller do
 
           expect(session_file.reload.user_id).to eq('user_applicant')
         end
+      end
+    end
+
+    # Given this Clerk session was ended but Clerk couldn't revoke it
+    #   And the hc_session cookie is already gone
+    # When the counselor submits an application
+    # Then nothing is filed under the counselor, and the revoke is tried again
+    context 'when the Clerk session was ended but not revoked' do
+      include_context 'with a housing counselor session'
+      let(:cache_store) { ActiveSupport::Cache::MemoryStore.new }
+
+      before do
+        allow(Rails).to receive(:cache).and_return(cache_store)
+        HousingCounselorSession.record_ended_clerk_session(clerk_sid)
+        request.cookies.delete('hc_session')
+      end
+
+      it 'does not submit, even without an hc_session cookie' do
+        post :submit_application
+
+        expect(response).to have_http_status(:forbidden)
+        expect(JSON.parse(response.body)).to eq('error' => 'hc_session_ended')
+        expect(Force::ShortFormService).not_to have_received(:create_or_update)
+      end
+
+      it 'tries to revoke the Clerk session again' do
+        post :submit_application
+
+        expect(ClerkService).to have_received(:revoke_session).with(clerk_sid)
+      end
+
+      # Control: after signing in again, the counselor has a new Clerk session
+      it 'lets a different Clerk session submit' do
+        allow(controller).to receive(:clerk).and_return(
+          double(user_id: 'user_counselor', session: { 'sid' => 'sid_new' }),
+        )
+
+        post :submit_application
+
+        expect(response).to have_http_status(:ok), response.body
+        expect(Force::ShortFormService).to have_received(:create_or_update)
+      end
+
+      it 'lets a guest with no Clerk session submit' do
+        allow(controller).to receive(:clerk).and_return(nil)
+
+        post :submit_application
+
+        expect(response).to have_http_status(:ok), response.body
       end
     end
   end

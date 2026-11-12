@@ -25,6 +25,8 @@ module HousingCounselorSession
   end
 
   def self.clerk_session_ended?(session_id)
+    return false if session_id.blank?
+
     Rails.cache.exist?(ended_clerk_session_key(session_id))
   end
 
@@ -52,6 +54,7 @@ module HousingCounselorSession
   # request decode it without calling Salesforce again.
   def reverify_hc_session!
     return unless hc_session_feature_enabled?
+    raise AccessDeniedError if current_clerk_session_ended?
 
     token = cookies[HC_SESSION_COOKIE_NAME]
     return if token.blank?
@@ -182,6 +185,10 @@ module HousingCounselorSession
 
   def clerk_authenticatable?
     respond_to?(:clerk, true)
+  end
+
+  def current_clerk_session_ended?
+    HousingCounselorSession.clerk_session_ended?(current_clerk_session_id)
   end
 
   def hc_id_matches_current_user?(hc_id)
