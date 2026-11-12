@@ -91,7 +91,6 @@ export const getForgotPasswordPath = localizedPathGetter("/forgot-password")
 export const getForgotPasswordCodePath = localizedPathGetter("/forgot-password/code")
 export const getResetPasswordPath = localizedPathGetter("/reset-password")
 
-// Auth pages besides the forgot password flow (sign in or create account)
 export const isSignInOrCreateAccountFlow = (
   currentPath: string = window.location.pathname
 ): boolean => {
@@ -102,7 +101,9 @@ export const isSignInOrCreateAccountFlow = (
     path === "/create-account" ||
     path === "/create-account/code" ||
     path === "/add-password" ||
-    path === "/add-profile"
+    path === "/add-profile" ||
+    path === "/forgot-password/code" ||
+    path === "/reset-password"
   )
 }
 
