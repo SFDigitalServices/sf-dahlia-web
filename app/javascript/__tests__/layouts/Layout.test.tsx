@@ -8,7 +8,11 @@ import {
 import Layout from "../../layouts/Layout"
 import { AuthSessionProvider } from "../../authentication/session/AuthSessionProvider"
 import { clearHousingCounselorSession } from "../../api/authApiService"
-import { renderAndLoadAsync } from "../__util__/renderUtils"
+import {
+  mockWindowLocation,
+  renderAndLoadAsync,
+  restoreWindowLocation,
+} from "../__util__/renderUtils"
 import { mockProfileStub, setupUserContext } from "../__util__/accountUtils"
 
 jest.mock("../../api/authApiService", () => ({
@@ -64,8 +68,10 @@ describe("<Layout />", () => {
   })
 
   it("renders the top message date without a year", async () => {
+    const originalLocation = mockWindowLocation()
     const previousTopMessage = process.env.TOP_MESSAGE
     const previousRequiredLoginsDate = process.env.REQUIRED_LOGINS_DATE
+    Object.defineProperty(window.location, "pathname", { value: "/es/account" })
     process.env.TOP_MESSAGE = "nav.topMessageRequiredLogin"
     process.env.REQUIRED_LOGINS_DATE = "2026-12-12"
 
@@ -77,12 +83,12 @@ describe("<Layout />", () => {
           </Layout>
         </AuthSessionProvider>,
         undefined,
-        ["/account"]
+        ["/es/account"]
       )
       const topMessage = container.querySelector<HTMLElement>(".top-message-alert")
 
       expect(topMessage).not.toBeNull()
-      expect(topMessage).toHaveTextContent(/Starting/)
+      expect(topMessage).toHaveTextContent(/\d{1,2} de diciembre/)
       expect(topMessage).not.toHaveTextContent("2026")
     } finally {
       if (previousTopMessage === undefined) {
@@ -95,6 +101,7 @@ describe("<Layout />", () => {
       } else {
         process.env.REQUIRED_LOGINS_DATE = previousRequiredLoginsDate
       }
+      restoreWindowLocation(originalLocation)
     }
   })
 
