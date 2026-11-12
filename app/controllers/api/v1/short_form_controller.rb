@@ -284,7 +284,7 @@ class Api::V1::ShortFormController < ApiController
 
   def attach_temp_files_to_user
     files = UploadedFile.where(uploaded_file_params)
-    files.update_all(user_id: current_user.id)
+    files.update_all(user_id: file_owner_id)
   end
 
   def send_submit_app_confirmation(response)

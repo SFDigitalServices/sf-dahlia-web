@@ -457,6 +457,28 @@ describe Api::V1::ShortFormController, type: :controller do
             expect(files.map(&:id)).to eq([applicant_file.id])
           end
       end
+
+      # Given a proof uploaded in this browser session
+      # When the counselor saves the applicant's draft
+      # Then the proof is owned by the applicant, not the counselor
+      context 'when saving a draft' do
+        let(:application_params) { super().merge(status: 'draft') }
+        let(:params) do
+          ActionController::Parameters.new(
+            application: application_params,
+            uploaded_file: { session_uid: 'session_abc123' },
+          )
+        end
+
+        it "gives this session's proofs to the applicant" do
+          session_file =
+            create(:uploaded_file, user_id: nil, session_uid: 'session_abc123')
+
+          post :submit_application
+
+          expect(session_file.reload.user_id).to eq('user_applicant')
+        end
+      end
     end
   end
 
