@@ -41,8 +41,6 @@ SharedController = ($scope, $rootScope, $state, $stateParams, $window, $translat
   setAlertMessage = ->
     topMessage = if $window.TOP_MESSAGE then _.unescape($window.TOP_MESSAGE) else ''
     return $scope.alertMessage = '' unless topMessage
-    localizedDate = localizeDate($window.REQUIRED_LOGINS_DATE, $translate.use())
-    console.log(localizedDate)
     interpolationValues =
       date: localizeDate($window.REQUIRED_LOGINS_DATE, $translate.use())
       link: '/create-account'
