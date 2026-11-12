@@ -43,7 +43,7 @@ SharedController = ($scope, $rootScope, $state, $stateParams, $window, $translat
     return $scope.alertMessage = '' unless topMessage
     interpolationValues =
       date: localizeDate($window.REQUIRED_LOGINS_DATE, $translate.use())
-      link: '/create-account'
+      link: SharedService.buildUrl({name: 'dahlia.create-account'}, {lang: $translate.use() or 'en'})
 
     $translate(topMessage, interpolationValues).then(
       (translatedMessage) ->
