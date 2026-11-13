@@ -3,6 +3,16 @@
 # RESTful JSON API to query for short form actions
 class Api::V1::ShortFormController < ApiController
   include ClerkOrDeviseAuth
+  include HousingCounselorSession
+
+  rescue_from HousingCounselorSession::VerificationUnavailableError do
+    end_hc_session
+    render json: { error: 'hc_session_ended' }, status: :unauthorized
+  end
+  rescue_from HousingCounselorSession::AccessDeniedError do
+    end_hc_session
+    render json: { error: 'hc_session_ended' }, status: :forbidden
+  end
 
   before_action :authenticate_user!,
                 only: %i[
@@ -10,6 +20,12 @@ class Api::V1::ShortFormController < ApiController
                   update_application
                   delete_application
                 ]
+  before_action :reverify_hc_session!, only: %i[
+    submit_application update_application claim_submitted_application
+    delete_application upload_proof delete_proof
+  ]
+  # Must run after reverify_hc_session!, so a delegated submit whose Clerk lookup
+  # fails ends the HC session instead of returning this generic 503.
   # With the Clerk flag on, a signed-in user's submit needs a Salesforce contact id.
   # TODO(DAH-4366): CLERK MIGRATION - DEVISE TECH DEBT TO REMOVE
   before_action :authenticate_submit!, only: :submit_application
@@ -74,13 +90,13 @@ class Api::V1::ShortFormController < ApiController
     return if params['autosave'] == 'true' && params['initialSave'] != 'true'
 
     response =
-      Force::ShortFormService.create_or_update(application_params, applicant_attrs)
+      Force::ShortFormService.create_or_update(application_payload, applicant_attrs)
     if response.present?
       Rails.logger.info(
         'ShortFormController#submit_application: ' \
         "locale='#{params[:locale]}', " \
         "listingID='#{params.dig('application', 'listingID')}', " \
-        "lotteryNumber='#{response['lotteryNumber']}'"
+        "lotteryNumber='#{response['lotteryNumber']}'",
       )
       process_submit_app_response(response)
       render json: response
@@ -235,32 +251,55 @@ class Api::V1::ShortFormController < ApiController
   # TODO(DAH-4366): CLERK MIGRATION - DEVISE TECH DEBT TO REMOVE
   def file_owner_ids
     @file_owner_ids ||=
-      if current_user.is_a?(ClerkService::User) &&
-         current_user.salesforce_contact_id.present?
-        devise_ids = User.where(salesforce_contact_id: current_user.salesforce_contact_id)
-                         .pluck(:id).map(&:to_s)
+      if acting_for_applicant?
+        [applicant_web_app_id, *devise_user_ids_for(user_contact_id)]
+      elsif clerk_user_with_contact_id?
+        devise_ids = devise_user_ids_for(current_user.salesforce_contact_id)
         [current_user.id, *devise_ids]
       else
         current_user.id
       end
   end
 
+  # Proofs belong to the application's owner, so a counselor's uploads are
+  # stored under the applicant they act for.
+  def file_owner_id
+    acting_for_applicant? ? applicant_web_app_id : current_user.id
+  end
+
+  # The id the applicant's own uploads are stored under: their last web save
+  # wrote it to the Contact.
+  def applicant_web_app_id
+    web_app_id = applicant_contact['webAppID']
+    return web_app_id if web_app_id.present?
+
+    raise HousingCounselorSession::VerificationUnavailableError
+  end
+
+  def clerk_user_with_contact_id?
+    current_user.is_a?(ClerkService::User) && current_user.salesforce_contact_id.present?
+  end
+
+  def devise_user_ids_for(contact_id)
+    User.where(salesforce_contact_id: contact_id).pluck(:id).map(&:to_s)
+  end
+
   def attach_temp_files_to_user
     files = UploadedFile.where(uploaded_file_params)
-    files.update_all(user_id: current_user.id)
+    files.update_all(user_id: file_owner_id)
   end
 
   def send_submit_app_confirmation(response)
     listing_id = application_params[:listingID]
-      Rails.logger.info(
-        'ShortFormController#send_submit_app_confirmation: ' \
-        "Sending email from messaging service for #{listing_id}",
-      )
-      DahliaBackend::MessageService.send_application_confirmation(
-        application_params,
-        response,
-        params[:locale],
-      )
+    Rails.logger.info(
+      'ShortFormController#send_submit_app_confirmation: ' \
+      "Sending email from messaging service for #{listing_id}",
+    )
+    DahliaBackend::MessageService.send_application_confirmation(
+      application_params,
+      response,
+      params[:locale],
+    )
   end
 
   def email_draft_link(response)
@@ -326,15 +365,43 @@ class Api::V1::ShortFormController < ApiController
   end
 
   def applicant_attrs
+    unless acting_for_applicant?
+      return { contactId: user_contact_id,
+               webAppID: current_user_id }
+    end
+
+    contact = applicant_contact
     {
       contactId: user_contact_id,
-      webAppID: current_user_id,
+      webAppID: contact['webAppID'],
+      housingCounselingAgencyId: contact['housingCounselingAgencyId'],
     }
+  end
+
+  # Salesforce blanks Contact fields that /shortForm omits, so these are sent
+  # back from the applicant's stored Contact. Losing housingCounselingAgencyId
+  # would revoke the counselor's access on their first save.
+  def applicant_contact
+    @applicant_contact ||= Force::AccountService.get(user_contact_id)
+    return @applicant_contact if @applicant_contact.present?
+
+    raise HousingCounselorSession::VerificationUnavailableError
+  end
+
+  def acting_for_applicant?
+    current_user.present? && current_hc_session!.present?
+  end
+
+  def application_payload
+    return application_params unless current_user.present? && hc_session_feature_enabled?
+
+    contact_id = current_user.salesforce_contact_id
+    application_params.merge(submittedBy: contact_id, submittedById: contact_id)
   end
 
   def user_contact_id
     if current_user
-      current_user.salesforce_contact_id
+      current_hc_session!&.dig(:app_id) || current_user.salesforce_contact_id
     elsif unconfirmed_user_with_temp_session_id
       @unconfirmed_user.salesforce_contact_id
     end
@@ -557,7 +624,7 @@ class Api::V1::ShortFormController < ApiController
       rent_burden_type: uploaded_file_params[:rent_burden_type],
       rent_burden_index: uploaded_file_params[:rent_burden_index],
     }
-    attrs[:user_id] = current_user.id if user_signed_in?
+    attrs[:user_id] = file_owner_id if user_signed_in?
     attrs
   end
 end

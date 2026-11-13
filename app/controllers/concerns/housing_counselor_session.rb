@@ -17,6 +17,23 @@ module HousingCounselorSession
   HC_SESSION_DURATION = 2.hours
   HC_SESSION_REFRESH_GRACE_PERIOD = 15.minutes
   HC_SESSION_COOKIE_DURATION = HC_SESSION_DURATION + HC_SESSION_REFRESH_GRACE_PERIOD
+  ENDED_CLERK_SESSION_TTL = 7.days
+
+  def self.record_ended_clerk_session(session_id)
+    Rails.cache.write(ended_clerk_session_key(session_id), true,
+                      expires_in: ENDED_CLERK_SESSION_TTL)
+  end
+
+  def self.clerk_session_ended?(session_id)
+    return false if session_id.blank?
+
+    Rails.cache.exist?(ended_clerk_session_key(session_id))
+  end
+
+  def self.ended_clerk_session_key(session_id)
+    "hc_session:ended_clerk_session:#{Digest::SHA256.hexdigest(session_id)}"
+  end
+  private_class_method :ended_clerk_session_key
 
   def current_hc_session(expected_app_id: nil)
     return nil unless hc_session_feature_enabled?
@@ -30,6 +47,21 @@ module HousingCounselorSession
     raise AccessDeniedError if hc_session_access_denied?
 
     session
+  end
+
+  # Re-checks delegation with Salesforce even when the token is unexpired.
+  # A grant rewrites the cookie, so later current_hc_session calls in this
+  # request decode it without calling Salesforce again.
+  def reverify_hc_session!
+    return unless hc_session_feature_enabled?
+    raise AccessDeniedError if current_clerk_session_ended?
+
+    token = cookies[HC_SESSION_COOKIE_NAME]
+    return if token.blank?
+
+    refresh_hc_session(token, nil)
+    raise VerificationUnavailableError if hc_session_verification_failed?
+    raise AccessDeniedError if hc_session_access_denied? || hc_session_unbound?
   end
 
   def hc_session_feature_enabled?
@@ -89,6 +121,7 @@ module HousingCounselorSession
   rescue Faraday::Error, Restforce::Error => e
     Rails.logger.warn("HousingCounselorSession: Salesforce re-check failed: #{e.message}")
     @hc_session_verification_failed = true
+    end_hc_session
     nil
   end
 
@@ -154,6 +187,10 @@ module HousingCounselorSession
     respond_to?(:clerk, true)
   end
 
+  def current_clerk_session_ended?
+    HousingCounselorSession.clerk_session_ended?(current_clerk_session_id)
+  end
+
   def hc_id_matches_current_user?(hc_id)
     return true if hc_id.present? && hc_id == current_user&.salesforce_contact_id
 
@@ -164,6 +201,7 @@ module HousingCounselorSession
         'Clerk lookup of the signed-in user failed',
       )
       @hc_session_verification_failed = true
+      end_hc_session
       return false
     end
 
@@ -206,8 +244,36 @@ module HousingCounselorSession
       'HousingCounselorSession: Salesforce no longer grants hc_session access',
     )
     @hc_session_access_denied = true
-    discard_hc_session_cookie
+    end_hc_session
     nil
+  end
+
+  # Logged out = hc_session cleared AND Clerk session revoked. Idempotent, so
+  # every failure path can call it without ending the session twice in one request.
+  def end_hc_session
+    return if @hc_session_ended
+
+    @hc_session_ended = true
+    discard_hc_session_cookie
+    revoke_clerk_session
+  end
+
+  def revoke_clerk_session
+    session_id = current_clerk_session_id
+    return if session_id.blank?
+    return if clerk_session_revoked?(session_id)
+
+    HousingCounselorSession.record_ended_clerk_session(session_id)
+  end
+
+  def clerk_session_revoked?(session_id)
+    ClerkService.revoke_session(session_id)
+    true
+  rescue StandardError => e
+    Rails.logger.warn(
+      "HousingCounselorSession: could not revoke Clerk session: #{e.class}",
+    )
+    false
   end
 
   def discard_hc_session_cookie

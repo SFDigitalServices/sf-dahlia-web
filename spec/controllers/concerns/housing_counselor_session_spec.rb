@@ -66,6 +66,7 @@ RSpec.describe HousingCounselorSession, type: :controller do
     # under '#current_hc_session when the feature flag is disabled'.
     allow(Rails.configuration.unleash).to receive(:is_enabled?)
       .with(HousingCounselorSession::FEATURE_FLAG).and_return(true)
+    allow(ClerkService).to receive(:revoke_session)
 
     routes.draw do
       get 'show' => 'api#show'
@@ -84,6 +85,25 @@ RSpec.describe HousingCounselorSession, type: :controller do
     payload = { 'typ' => 'hc_session', 'hcId' => hc_id, 'appId' => app_id }
     payload['sid'] = sid if sid
     request.cookies['hc_session'] = JsonWebTokenService.encode_token(payload, exp:)
+  end
+
+  describe '.record_ended_clerk_session' do
+    include ActiveSupport::Testing::TimeHelpers
+
+    let(:cache_store) { ActiveSupport::Cache::MemoryStore.new }
+
+    before { allow(Rails).to receive(:cache).and_return(cache_store) }
+
+    # Given a Clerk session whose revoke failed is recorded as ended
+    # When almost the full Clerk maximum session lifetime (7 days) has passed
+    # Then it is still recorded as ended, so the session can't outlive its deny marker
+    it 'keeps the marker for the Clerk maximum session lifetime' do
+      HousingCounselorSession.record_ended_clerk_session(clerk_sid)
+
+      travel(7.days - 1.minute)
+
+      expect(HousingCounselorSession.clerk_session_ended?(clerk_sid)).to be(true)
+    end
   end
 
   describe '#write_hc_session_cookie' do
@@ -168,15 +188,20 @@ RSpec.describe HousingCounselorSession, type: :controller do
         expect(cookies[:hc_session]).to be_blank
       end
 
-      # Regression coverage: a Clerk lookup failure used to be indistinguishable
-      # from a confirmed "someone else" mismatch, so the cookie was discarded
-      # and no failure was flagged - see #hc_session_verification_failed? below.
-      it 'returns nil without discarding the cookie when the signed-in user\'s own ' \
-         'contact id could not be looked up' do
+      # Given a valid hc_session cookie
+      #   And the Clerk lookup of the signed-in user's own contact id fails
+      # When the HC session is resolved
+      # Then the session is ended: hc_session is cleared and the Clerk session revoked
+      # The failure is still flagged (see #hc_session_verification_failed? below),
+      # so it isn't treated as a confirmed "someone else" mismatch; it now fails
+      # closed instead of keeping the cookie for a retry.
+      it 'returns nil, discards the cookie, and revokes the Clerk session when the ' \
+         "signed-in user's own contact id could not be looked up" do
         get :show, params: { signed_in_as: nil, lookup_failed: true }
 
         expect(JSON.parse(response.body)).to eq('session' => nil)
-        expect(cookies[:hc_session]).to be_present
+        expect(cookies[:hc_session]).to be_blank
+        expect(ClerkService).to have_received(:revoke_session).with(clerk_sid)
       end
 
       # Regression coverage: expected_app_id used to only be checked on the
@@ -281,13 +306,15 @@ RSpec.describe HousingCounselorSession, type: :controller do
       end
 
       context "and the signed-in user's own contact id could not be looked up" do
-        it 'returns nil without discarding the cookie, and never calls Salesforce' do
+        it 'returns nil, discards the cookie, revokes the Clerk session, and never ' \
+           'calls Salesforce' do
           allow(Force::HousingCounselorService).to receive(:authorize_access)
 
           get :show, params: { signed_in_as: nil, lookup_failed: true }
 
           expect(JSON.parse(response.body)).to eq('session' => nil)
-          expect(cookies[:hc_session]).to be_present
+          expect(cookies[:hc_session]).to be_blank
+          expect(ClerkService).to have_received(:revoke_session).with(clerk_sid)
           expect(Force::HousingCounselorService).not_to have_received(:authorize_access)
         end
       end
@@ -330,9 +357,12 @@ RSpec.describe HousingCounselorSession, type: :controller do
         end
 
         context 'and Salesforce no longer grants access' do
+          let(:cache_store) { ActiveSupport::Cache::MemoryStore.new }
+
           before do
             allow(Force::HousingCounselorService).to receive(:authorize_access)
               .and_return(nil)
+            allow(Rails).to receive(:cache).and_return(cache_store)
           end
 
           it 'returns nil and discards the cookie' do
@@ -341,10 +371,67 @@ RSpec.describe HousingCounselorSession, type: :controller do
             expect(JSON.parse(response.body)).to eq('session' => nil)
             expect(cookies[:hc_session]).to be_blank
           end
+
+          it "revokes the counselor's current Clerk session" do
+            get :show, params: { signed_in_as: hc_id }
+
+            expect(ClerkService).to have_received(:revoke_session).with(clerk_sid)
+          end
+
+          # Control: Clerk already rejects a revoked session; nothing to remember
+          it 'does not record the Clerk session as ended when the revoke succeeds' do
+            get :show, params: { signed_in_as: hc_id }
+
+            expect(HousingCounselorSession.clerk_session_ended?(clerk_sid)).to be(false)
+          end
+
+          # Given Salesforce has revoked delegation
+          #   And Clerk errors when asked to revoke the session
+          # When the counselor makes a request
+          # Then access is still denied and the cookie is still discarded (fail closed)
+          context 'and the Clerk revoke call fails' do
+            before do
+              allow(ClerkService).to receive(:revoke_session)
+                .and_raise(StandardError, 'clerk unavailable')
+              allow(Rails.logger).to receive(:warn)
+            end
+
+            it 'still returns nil and discards the cookie' do
+              get :show, params: { signed_in_as: hc_id }
+
+              expect(JSON.parse(response.body)).to eq('session' => nil)
+              expect(cookies[:hc_session]).to be_blank
+            end
+
+            it 'logs each failed attempt to revoke the Clerk session' do
+              get :show, params: { signed_in_as: hc_id }
+
+              expect(Rails.logger).to have_received(:warn)
+                .with(/could not revoke Clerk session/).once
+            end
+
+            # Then the still-live Clerk session is recorded as ended, so a later
+            #   write from it is denied even without an hc_session cookie
+            it 'records the Clerk session as ended' do
+              get :show, params: { signed_in_as: hc_id }
+
+              expect(HousingCounselorSession.clerk_session_ended?(clerk_sid)).to be(true)
+            end
+
+            # Then the revoke is tried only once; ClerkClient already retries
+            #   5xx/timeouts with backoff, so a second app-level attempt only adds latency
+            it 'tries the revoke exactly once' do
+              get :show, params: { signed_in_as: hc_id }
+
+              expect(ClerkService).to have_received(:revoke_session).with(clerk_sid).once
+            end
+          end
         end
 
-        it 'rescues a transient error from the Salesforce re-check without discarding ' \
-           'the cookie, so a later request can retry' do
+        # Fail closed: an outage ends both the delegated session and the Clerk
+        # session, so there is no signed-in counselor left to fall back to.
+        it 'discards the cookie and revokes the Clerk session when the Salesforce ' \
+           're-check raises a transient error' do
           allow(Force::HousingCounselorService).to receive(:authorize_access)
             .and_raise(Faraday::TimeoutError, 'timed out')
 
@@ -352,25 +439,27 @@ RSpec.describe HousingCounselorSession, type: :controller do
 
           expect(response).to have_http_status(:ok)
           expect(JSON.parse(response.body)).to eq('session' => nil)
-          expect(cookies[:hc_session]).to be_present
+          expect(cookies[:hc_session]).to be_blank
+          expect(ClerkService).to have_received(:revoke_session).with(clerk_sid)
         end
 
-        # Regression coverage: the cookie used to be discarded on a transient
-        # Salesforce error, so a retry after the outage cleared had no cookie
-        # left to re-verify and silently behaved as "no delegated session."
-        it 'lets a later request recover once Salesforce is reachable again' do
+        # This used to keep the cookie so a later request could recover. Keeping
+        # it is no longer needed: the Clerk session is revoked as well, so the
+        # counselor signs in again and re-enters through a delegate link.
+        it 'does not restore the delegated session once Salesforce is reachable again' do
           allow(Force::HousingCounselorService).to receive(:authorize_access)
             .and_raise(Faraday::TimeoutError, 'timed out')
           get :show, params: { signed_in_as: hc_id }
-          expect(cookies[:hc_session]).to be_present
+          # Like a browser, send back only what the first response left behind.
+          request.cookies['hc_session'] = cookies[:hc_session]
 
           allow(Force::HousingCounselorService).to receive(:authorize_access).and_return(
             { applicant_contact_id: app_id, counselor_contact_id: hc_id },
           )
           get :show, params: { signed_in_as: hc_id }
 
-          expect(JSON.parse(response.body)).to eq('session' => { 'hc_id' => hc_id,
-                                                                 'app_id' => app_id })
+          expect(JSON.parse(response.body)).to eq('session' => nil)
+          expect(cookies[:hc_session]).to be_blank
         end
       end
     end
@@ -517,7 +606,7 @@ RSpec.describe HousingCounselorSession, type: :controller do
         expect(JSON.parse(response.body)).to eq(
           'session' => nil, 'verification_failed' => true, 'access_denied' => false,
         )
-        expect(cookies[:hc_session]).to be_present
+        expect(cookies[:hc_session]).to be_blank
       end
     end
   end
