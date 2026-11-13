@@ -87,6 +87,25 @@ RSpec.describe HousingCounselorSession, type: :controller do
     request.cookies['hc_session'] = JsonWebTokenService.encode_token(payload, exp:)
   end
 
+  describe '.record_ended_clerk_session' do
+    include ActiveSupport::Testing::TimeHelpers
+
+    let(:cache_store) { ActiveSupport::Cache::MemoryStore.new }
+
+    before { allow(Rails).to receive(:cache).and_return(cache_store) }
+
+    # Given a Clerk session whose revoke failed is recorded as ended
+    # When almost the full Clerk maximum session lifetime (7 days) has passed
+    # Then it is still recorded as ended, so the session can't outlive its deny marker
+    it 'keeps the marker for the Clerk maximum session lifetime' do
+      HousingCounselorSession.record_ended_clerk_session(clerk_sid)
+
+      travel(7.days - 1.minute)
+
+      expect(HousingCounselorSession.clerk_session_ended?(clerk_sid)).to be(true)
+    end
+  end
+
   describe '#write_hc_session_cookie' do
     it 'sets an httponly cookie encoding the given hc and applicant contact IDs and ' \
        'the current Clerk session' do
