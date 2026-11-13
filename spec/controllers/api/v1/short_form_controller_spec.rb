@@ -305,6 +305,24 @@ describe Api::V1::ShortFormController, type: :controller do
       end
 
       # Given a counselor with a valid delegate session
+      #   And the Clerk lookup of the counselor's contact id fails
+      # When the counselor submits an application
+      # Then the response is 401 hc_session_ended (not the generic 503),
+      #   hc_session is cleared, their Clerk session is revoked once,
+      #   and nothing is sent to Salesforce
+      it 'ends the HC session when the counselor contact id lookup fails' do
+        allow(ClerkService).to receive(:salesforce_contact_id).and_raise(StandardError)
+
+        post :submit_application
+
+        expect(response).to have_http_status(:unauthorized)
+        expect(JSON.parse(response.body)).to eq('error' => 'hc_session_ended')
+        expect(cookies[:hc_session]).to be_blank
+        expect(ClerkService).to have_received(:revoke_session).with(clerk_sid).once
+        expect(Force::ShortFormService).not_to have_received(:create_or_update)
+      end
+
+      # Given a counselor with a valid delegate session
       # When the counselor submits an application
       # Then the top-level submittedBy is the counselor's contact id
       it 'records the counselor as submittedBy' do
