@@ -18,7 +18,6 @@ module HousingCounselorSession
   HC_SESSION_REFRESH_GRACE_PERIOD = 15.minutes
   HC_SESSION_COOKIE_DURATION = HC_SESSION_DURATION + HC_SESSION_REFRESH_GRACE_PERIOD
   ENDED_CLERK_SESSION_TTL = 7.days
-  CLERK_REVOKE_ATTEMPTS = 2
 
   def self.record_ended_clerk_session(session_id)
     Rails.cache.write(ended_clerk_session_key(session_id), true,
@@ -262,7 +261,7 @@ module HousingCounselorSession
   def revoke_clerk_session
     session_id = current_clerk_session_id
     return if session_id.blank?
-    return if CLERK_REVOKE_ATTEMPTS.times.any? { clerk_session_revoked?(session_id) }
+    return if clerk_session_revoked?(session_id)
 
     HousingCounselorSession.record_ended_clerk_session(session_id)
   end

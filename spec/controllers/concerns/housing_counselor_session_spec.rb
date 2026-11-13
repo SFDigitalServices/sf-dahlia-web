@@ -388,7 +388,7 @@ RSpec.describe HousingCounselorSession, type: :controller do
               get :show, params: { signed_in_as: hc_id }
 
               expect(Rails.logger).to have_received(:warn)
-                .with(/could not revoke Clerk session/).twice
+                .with(/could not revoke Clerk session/).once
             end
 
             # Then the still-live Clerk session is recorded as ended, so a later
@@ -399,37 +399,12 @@ RSpec.describe HousingCounselorSession, type: :controller do
               expect(HousingCounselorSession.clerk_session_ended?(clerk_sid)).to be(true)
             end
 
-            # Then the revoke is tried once more, and only once (no retry loop)
-            it 'tries the revoke exactly twice' do
+            # Then the revoke is tried only once; ClerkClient already retries
+            #   5xx/timeouts with backoff, so a second app-level attempt only adds latency
+            it 'tries the revoke exactly once' do
               get :show, params: { signed_in_as: hc_id }
 
-              expect(ClerkService).to have_received(:revoke_session).with(clerk_sid).twice
-            end
-          end
-
-          # Given Salesforce has revoked delegation
-          #   And the first Clerk revoke call fails, but the retry succeeds
-          # When the counselor makes a request
-          # Then the revoke is tried again
-          #   And the Clerk session is not recorded as ended (Clerk now rejects it)
-          context 'and only the first Clerk revoke call fails' do
-            before do
-              allow(ClerkService).to receive(:revoke_session)
-                .and_invoke(->(_sid) { raise StandardError, 'clerk blip' },
-                            ->(_sid) { true })
-              allow(Rails.logger).to receive(:warn)
-            end
-
-            it 'tries the revoke again' do
-              get :show, params: { signed_in_as: hc_id }
-
-              expect(ClerkService).to have_received(:revoke_session).with(clerk_sid).twice
-            end
-
-            it 'does not record the Clerk session as ended' do
-              get :show, params: { signed_in_as: hc_id }
-
-              expect(HousingCounselorSession.clerk_session_ended?(clerk_sid)).to be(false)
+              expect(ClerkService).to have_received(:revoke_session).with(clerk_sid).once
             end
           end
         end
