@@ -3,7 +3,8 @@ import { useClerk, useSignIn } from "@clerk/react"
 import { useNavigate } from "react-router"
 
 import {
-  getClerkErrorCode,
+  AUTH_ERROR,
+  getAuthError,
   queueAuthenticationToast,
   AUTH_TOAST_TO_RENDER,
 } from "../../../authenticationUtils"
@@ -98,7 +99,7 @@ export const useClerkSignInSession = (): SignInSession => {
 
       const { error } = await signIn.emailCode.verifyCode({ code })
       // user attempted to sign in with an email not linked to an account
-      if (getClerkErrorCode(error) === "sign_up_if_missing_transfer") {
+      if (getAuthError(error) === AUTH_ERROR.NEEDS_SIGN_UP) {
         return { error, needsSignUp: true }
       }
       if (error) {

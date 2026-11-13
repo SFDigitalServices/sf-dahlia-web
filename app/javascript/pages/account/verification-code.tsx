@@ -8,7 +8,11 @@ import { faCheck } from "@fortawesome/free-solid-svg-icons"
 import { Controller, useForm } from "react-hook-form"
 import withAppSetup from "../../layouts/withAppSetup"
 import AuthLayout from "../../layouts/AuthLayout"
-import { AUTH_TOAST_TO_RENDER } from "../../authentication/authenticationUtils"
+import {
+  AUTH_TOAST_TO_RENDER,
+  AUTH_ERROR,
+  getAuthError,
+} from "../../authentication/authenticationUtils"
 import { useAuthSession } from "../../authentication/session/AuthSessionProvider"
 import { useSignInSession } from "../../authentication/session/useSignInSession"
 import { useSignUpSession } from "../../authentication/session/useSignUpSession"
@@ -42,7 +46,6 @@ import {
   toReverificationFlow,
 } from "../../util/accountUtil"
 import { useSession } from "@clerk/react"
-import { getClerkErrorCode } from "../../authentication/authenticationUtils"
 
 interface EnterVerificationCodePageProps {
   email: string
@@ -60,12 +63,18 @@ const isUpdateEmailFlow = (flow?: AUTH_FLOW) => flow === AUTH_FLOW.UPDATE_EMAIL
 const requiresSignedInUser = (flow?: AUTH_FLOW) =>
   isUpdateEmailFlow(flow) || flow === AUTH_FLOW.REVERIFICATION
 
-const codeErrorTypes: Record<string, CodeErrorType> = {
-  verification_expired: "expired",
-}
+type ResendResult = { sent: boolean; error?: unknown }
 
-const getCodeErrorType = (error: unknown): CodeErrorType =>
-  codeErrorTypes[getClerkErrorCode(error) ?? ""] ?? "invalid"
+const getCodeErrorType = (error: unknown): CodeErrorType => {
+  switch (getAuthError(error)) {
+    case AUTH_ERROR.CODE_RATE_LIMITED:
+      return "tooManyCodes"
+    case AUTH_ERROR.CODE_EXPIRED:
+      return "expired"
+    default:
+      return "invalid"
+  }
+}
 
 const remainingResendSeconds = (expiresAt: number) =>
   Math.max(0, Math.ceil((expiresAt - Date.now()) / 1000))
@@ -220,7 +229,7 @@ const EnterVerificationCodePage = ({
       return
     }
     const verifiedEmail = await emailAddress.attemptVerification({ code }).catch((error) => {
-      if (error?.errors?.[0]?.code !== "form_code_incorrect") {
+      if (getAuthError(error) !== AUTH_ERROR.CODE_INCORRECT) {
         console.error("Update email: verification failed", error)
       }
       setError(CODE_FIELD, { message: getCodeErrorType(error) })
@@ -309,52 +318,40 @@ const EnterVerificationCodePage = ({
 
   const onSubmit = async ({ code }: { code: string }) => verifyAuthCodeByFlow[flow](code)
 
-  const resendSignInCode = async (): Promise<boolean> => {
+  const resendSignInCode = async (): Promise<ResendResult> => {
     const { error } = await signInSession.resendEmailCode()
-    if (error) {
-      return false
-    }
-
-    return true
+    return { sent: !error, error }
   }
 
-  const resendSignUpCode = async (): Promise<boolean> => {
+  const resendSignUpCode = async (): Promise<ResendResult> => {
     const { error } = await signUpSession.resendEmailCode()
-    if (error) {
-      return false
-    }
-
-    return true
+    return { sent: !error, error }
   }
 
-  const resendForgotPasswordCode = async (): Promise<boolean> => {
+  const resendForgotPasswordCode = async (): Promise<ResendResult> => {
     const { error } = await signInSession.resendPasswordResetCode()
-    if (error) {
-      return false
-    }
-
-    return true
+    return { sent: !error, error }
   }
 
-  const resendPendingEmailCode = async (): Promise<boolean> => {
+  const resendPendingEmailCode = async (): Promise<ResendResult> => {
     const emailAddress = findPendingEmailAddress()
 
     if (!emailAddress) {
       console.error("Resend update email code error: address not found")
-      return false
+      return { sent: false }
     }
 
     try {
       await emailAddress.prepareVerification({ strategy: "email_code" })
-      return true
+      return { sent: true }
     } catch (error) {
       console.error("Resend update email code error:", error)
-      return false
+      return { sent: false, error }
     }
   }
 
-  const resendReverificationCode = async (): Promise<boolean> => {
-    if (!session) return false
+  const resendReverificationCode = async (): Promise<ResendResult> => {
+    if (!session) return { sent: false }
 
     try {
       const verification = await session.startVerification({ level: "first_factor" })
@@ -363,20 +360,20 @@ const EnterVerificationCodePage = ({
       )
       if (!emailFactor) {
         console.error("Resend reverification code error: email code factor not available")
-        return false
+        return { sent: false }
       }
       await session.prepareFirstFactorVerification({
         strategy: "email_code",
         emailAddressId: emailFactor.emailAddressId,
       })
-      return true
+      return { sent: true }
     } catch (error) {
       console.error("Resend reverification code error:", error)
-      return false
+      return { sent: false, error }
     }
   }
 
-  const resendCodeByFlow: Record<AUTH_FLOW, () => Promise<boolean>> = {
+  const resendCodeByFlow: Record<AUTH_FLOW, () => Promise<ResendResult>> = {
     [AUTH_FLOW.SIGN_IN]: resendSignInCode,
     [AUTH_FLOW.CREATE_ACCOUNT]: resendSignUpCode,
     [AUTH_FLOW.FORGOT_PASSWORD]: resendForgotPasswordCode,
@@ -388,12 +385,14 @@ const EnterVerificationCodePage = ({
     if (isResending || resendSeconds > 0) return
     setIsResending(true)
     try {
-      const sent = await resendCodeByFlow[flow]()
+      const { sent, error } = await resendCodeByFlow[flow]()
       if (sent) {
         setValue(CODE_FIELD, "")
         clearErrors(CODE_FIELD)
         setResendExpiresAt(Date.now() + RESEND_CODE_MS)
         setResendSeconds(RESEND_CODE_MS / 1000)
+      } else if (getAuthError(error) === AUTH_ERROR.CODE_RATE_LIMITED) {
+        setError(CODE_FIELD, { message: getCodeErrorType(error) })
       }
     } finally {
       setIsResending(false)

@@ -7,6 +7,7 @@ import { ErrorMessages } from "./ErrorSummaryBanner"
 import { ExpandedAccountAxiosError, getErrorMessage, SetErrorArgs } from "./util"
 import { renderInlineMarkup } from "../../../util/languageUtil"
 import styles from "./EmailFieldset.module.scss"
+import { AUTH_ERROR, getAuthError } from "../../../authentication/authenticationUtils"
 
 const validateEmail = (email: string) => {
   return emailRegex.test(email)
@@ -24,19 +25,17 @@ export const handleEmailServerErrors = (error: ExpandedAccountAxiosError): SetEr
   }
 }
 
-interface ClerkEmailError {
-  errors?: { code?: string }[]
-}
-
 export const handleClerkEmailErrors = (error: unknown): SetErrorArgs => {
-  const code = (error as ClerkEmailError)?.errors?.[0]?.code
-  if (code?.startsWith("form_identifier_exists")) {
-    return ["email", { message: "email:server:duplicate", shouldFocus: true }]
+  switch (getAuthError(error)) {
+    case AUTH_ERROR.EMAIL_EXISTS:
+      return ["email", { message: "email:server:duplicate", shouldFocus: true }]
+    case AUTH_ERROR.EMAIL_INVALID_FORMAT:
+      return ["email", { message: "email:generalFormat", shouldFocus: true }]
+    case AUTH_ERROR.CODE_RATE_LIMITED:
+      return ["email", { message: "email:server:tooManyCodes", shouldFocus: true }]
+    default:
+      return ["email", { message: "email:server:generic", shouldFocus: true }]
   }
-  if (code?.startsWith("form_param_format_invalid")) {
-    return ["email", { message: "email:generalFormat", shouldFocus: true }]
-  }
-  return ["email", { message: "email:server:generic", shouldFocus: true }]
 }
 
 export const emailFieldsetErrors: ErrorMessages = {
@@ -63,6 +62,10 @@ export const emailFieldsetErrors: ErrorMessages = {
   "email:server:duplicate": {
     default: "error.email.duplicate",
     abbreviated: "error.email.duplicate.abbreviated",
+  },
+  "email:server:tooManyCodes": {
+    default: "error.account.tooManyCodes",
+    abbreviated: "error.account.tooManyCodes",
   },
   "email:sameAsCurrentEmail": {
     default: "error.email.sameAsCurrentEmail",

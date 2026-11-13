@@ -51,7 +51,7 @@ describe("<CreateAnAccount />", () => {
     mockNavigate = jest.fn()
     ;(useNavigate as jest.Mock).mockReturnValue(mockNavigate)
     mockSignUpCreate = jest.fn().mockResolvedValue({ error: undefined })
-    mockSendEmailCode = jest.fn().mockResolvedValue(undefined)
+    mockSendEmailCode = jest.fn().mockResolvedValue({ error: null })
     mockSignInCreate = jest.fn().mockResolvedValue({ error: undefined })
     mockSignInSendCode = jest.fn().mockResolvedValue({ error: undefined })
     mockSignInResource = {
@@ -128,6 +128,22 @@ describe("<CreateAnAccount />", () => {
     expect(mockNavigate).toHaveBeenCalledWith("/create-account/code", {
       state: { verificationCodeEmailAddress: "test@example.com", flow: AUTH_FLOW.CREATE_ACCOUNT },
     })
+  })
+
+  it("shows a too many codes error and stays on the page when the code is rate-limited", async () => {
+    const consoleError = jest.spyOn(console, "error").mockImplementation(() => {})
+    mockSendEmailCode.mockResolvedValueOnce({
+      error: { errors: [{ code: "verification_code_rate_limit_exceeded" }] },
+    })
+    const user = userEvent.setup()
+    const emailField = within(screen.getByRole("group", { name: /email/i })).getByRole("textbox")
+
+    await user.type(emailField, "test@example.com")
+    await user.click(screen.getByRole("button", { name: /get a code/i }))
+
+    expect(await screen.findByText(/you requested too many codes/i)).not.toBeNull()
+    expect(mockNavigate).not.toHaveBeenCalled()
+    consoleError.mockRestore()
   })
 
   it("transfers from create-an-account to sign-in flow when the account already exists", async () => {
