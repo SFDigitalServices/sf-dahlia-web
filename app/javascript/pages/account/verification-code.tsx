@@ -8,7 +8,7 @@ import { faCheck } from "@fortawesome/free-solid-svg-icons"
 import { Controller, useForm } from "react-hook-form"
 import withAppSetup from "../../layouts/withAppSetup"
 import AuthLayout from "../../layouts/AuthLayout"
-import { AUTH_TOAST_TO_RENDER } from "../../authentication/authenticationUtils"
+import { AUTH_TOAST_TO_RENDER, getClerkErrorCode } from "../../authentication/authenticationUtils"
 import { useAuthSession } from "../../authentication/session/AuthSessionProvider"
 import { useSignInSession } from "../../authentication/session/useSignInSession"
 import { useSignUpSession } from "../../authentication/session/useSignUpSession"
@@ -42,7 +42,6 @@ import {
   toReverificationFlow,
 } from "../../util/accountUtil"
 import { useSession } from "@clerk/react"
-import { getClerkErrorCode } from "../../authentication/authenticationUtils"
 
 interface EnterVerificationCodePageProps {
   email: string
@@ -131,6 +130,29 @@ const EnterVerificationCodePage = ({
     await signUpSession.activateSession(getAddPasswordPath(), { flow: AUTH_FLOW.CREATE_ACCOUNT })
   }
 
+  const housingCounselorDestination = async (delegateToken: string) => {
+    const sessionToken = bearerToken(await getCredentials())
+    if (!sessionToken) return createPath(returnUrl, { hcAccess: "0" })
+    try {
+      await authorizeHousingCounselor(delegateToken, sessionToken)
+      return createPath(returnUrl, { hcAccess: "1" })
+    } catch {
+      // Keep the user signed in, but flag that they don't have access to this account.
+      return createPath(returnUrl, { hcAccess: "0" })
+    }
+  }
+
+  const enterAsHousingCounselor = async (delegateToken: string) => {
+    // Finish sign-in without navigating first: the delegate check needs the new session's token.
+    const { error, notReady } = await signInSession.activateSession()
+    if (notReady) return
+    if (error) {
+      setError(CODE_FIELD, { message: "invalid" })
+      return
+    }
+    void navigate(await housingCounselorDestination(delegateToken))
+  }
+
   const verifySignInCode = async (code: string) => {
     if (signInSession.isBusy) return
 
@@ -146,31 +168,16 @@ const EnterVerificationCodePage = ({
       return
     }
 
-    let destination = returnUrl
     if (housingCounselorToken) {
-      const sessionToken = bearerToken(await getCredentials())
-      if (!sessionToken) {
-        setError(CODE_FIELD, { message: "invalid" })
-        return
-      }
-      try {
-        await authorizeHousingCounselor(housingCounselorToken, sessionToken)
-        destination = createPath(returnUrl, { hcAccess: "1" })
-      } catch {
-        // Keep the user signed in, but flag that they don't have access to this account.
-        destination = createPath(returnUrl, { hcAccess: "0" })
-      }
-    } else {
-      // A normal sign-in (no delegate link) should always land the user in
-      // their own account, never resuming a stale delegated session from
-      // earlier in this browser.
-      await clearHousingCounselorSession()
+      await enterAsHousingCounselor(housingCounselorToken)
+      return
     }
 
-    await signInSession.activateSession(
-      destination,
-      housingCounselorToken ? undefined : AUTH_TOAST_TO_RENDER.SIGNED_IN
-    )
+    // A normal sign-in (no delegate link) should always land the user in
+    // their own account, never resuming a stale delegated session from
+    // earlier in this browser.
+    await clearHousingCounselorSession()
+    await signInSession.activateSession(returnUrl, AUTH_TOAST_TO_RENDER.SIGNED_IN)
   }
 
   const verifySignUpCode = async (code: string) => {
