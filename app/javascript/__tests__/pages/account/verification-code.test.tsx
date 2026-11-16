@@ -732,6 +732,54 @@ describe("<EnterVerificationCode />", () => {
     expect(mockSignInFinalize).toHaveBeenCalledTimes(1)
   })
 
+  it.each([
+    [
+      "a server error",
+      Object.assign(new Error("Request failed with status code 500"), {
+        response: { status: 500 },
+      }),
+    ],
+    ["a network error", new Error("Network Error")],
+  ])(
+    "signs the housing counselor in to their own account when the delegate check fails with %s",
+    async (_description: string, delegateCheckError: Error) => {
+      cleanup()
+      // Fake timers stop React finishing its render after submit. This test
+      // doesn't check the countdown, so real timers are fine here.
+      jest.useRealTimers()
+      ;(useAuth as jest.Mock).mockReturnValue({
+        isLoaded: true,
+        isSignedIn: false,
+        getToken: mockTokenAvailableAfterSignIn(),
+      })
+      ;(useLocation as jest.Mock).mockReturnValue({
+        pathname: "/sign-in/code",
+        state: {
+          verificationCodeEmailAddress: "test@example.com",
+          housingCounselorToken: "jwt.token",
+          flow: AUTH_FLOW.SIGN_IN,
+        },
+      })
+      mockSignInResource.status = "complete"
+      ;(authorizeHousingCounselor as jest.Mock).mockRejectedValue(delegateCheckError)
+      await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
+
+      const user = userEvent.setup()
+      await user.click(screen.getAllByRole("textbox")[0])
+      await user.paste("123456")
+      await user.click(screen.getByRole("button", { name: t("createAccount.confirmCode") }))
+
+      await waitFor(() => {
+        expect(mockNavigate).toHaveBeenCalledWith("/account?hcAccess=0")
+      })
+      expect(authorizeHousingCounselor).toHaveBeenCalledWith("jwt.token", "clerk-session-token")
+      expect(mockSignInFinalize).toHaveBeenCalledTimes(1)
+      expect(screen.queryByTestId("error-message")?.textContent ?? "").not.toContain(
+        t("createAccount.codeInvalid.p1")
+      )
+    }
+  )
+
   it("does not sign in when the code is rejected", async () => {
     cleanup()
     const consoleError = jest.spyOn(console, "error").mockImplementation(() => {})
