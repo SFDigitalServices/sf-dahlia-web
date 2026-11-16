@@ -29,6 +29,7 @@ import PhoneFieldset, {
 } from "./components/PhoneFieldset"
 import { updatePhone } from "../../api/authApiService"
 import { ErrorSummaryBanner } from "./components/ErrorSummaryBanner"
+import Toast from "./components/Toast"
 import { ExpandedAccountAxiosError, getErrorMessage } from "./components/util"
 import { useAuthSession } from "../../authentication/session/AuthSessionProvider"
 import { bearerToken } from "../../authentication/session/authStatus"
@@ -78,6 +79,7 @@ const ContactPhoneForm = ({
   }, [isDirty])
 
   const onSubmit = async (data: PhoneFormValues) => {
+    setShowSaveBanner(false)
     setLoading(true)
     let sessionToken: string | undefined
 
@@ -116,9 +118,7 @@ const ContactPhoneForm = ({
   }
   return (
     <>
-      {showSaveBanner && (
-        <Message variant="success">{t("accountLayout.contact.changesSaved")}</Message>
-      )}
+      {showSaveBanner && <Toast variant="success">{t("accountLayout.contact.changesSaved")}</Toast>}
       <ErrorSummaryBanner
         errors={errors}
         messageMap={(messageKey) => getErrorMessage(messageKey, phoneFieldsetErrors, true)}
