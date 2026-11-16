@@ -755,6 +755,35 @@ describe("<EnterVerificationCode />", () => {
     consoleError.mockRestore()
   })
 
+  it("shows the invalid code error and skips the delegate check when a housing counselor's code is rejected", async () => {
+    cleanup()
+    const consoleError = jest.spyOn(console, "error").mockImplementation(() => {})
+    ;(useLocation as jest.Mock).mockReturnValue({
+      pathname: "/sign-in/code",
+      state: {
+        verificationCodeEmailAddress: "test@example.com",
+        housingCounselorToken: "jwt.token",
+        flow: AUTH_FLOW.SIGN_IN,
+      },
+    })
+    mockSignInVerifyCode.mockResolvedValue({
+      error: { errors: [{ code: "form_code_incorrect" }] },
+    })
+    await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
+
+    await pasteAndConfirmCode()
+    await waitFor(() => {
+      expect(screen.getByTestId("error-message")).toHaveTextContent(
+        t("createAccount.codeInvalid.p1")
+      )
+    })
+    expect(mockSignInFinalize).not.toHaveBeenCalled()
+    expect(authorizeHousingCounselor).not.toHaveBeenCalled()
+    expect(mockNavigate).not.toHaveBeenCalled()
+
+    consoleError.mockRestore()
+  })
+
   it("signs the housing counselor in to their own account when there is no session token after sign-in", async () => {
     cleanup()
     const bearerTokenSpy = jest.spyOn(authStatus, "bearerToken").mockReturnValue(undefined)
