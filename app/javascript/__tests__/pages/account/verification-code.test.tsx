@@ -691,9 +691,12 @@ describe("<EnterVerificationCode />", () => {
     await user.paste("123456")
     await user.click(screen.getByRole("button", { name: t("createAccount.confirmCode") }))
 
+    // A full page load, so the profile is refetched with the new hc_session cookie
     await waitFor(() => {
-      expect(mockNavigate).toHaveBeenCalledWith("/account?hcAccess=1")
+      // eslint-disable-next-line @typescript-eslint/unbound-method -- asserting on a jest mock
+      expect(window.location.assign).toHaveBeenCalledWith("/account?hcAccess=1")
     })
+    expect(mockNavigate).not.toHaveBeenCalled()
     expect(authorizeHousingCounselor).toHaveBeenCalledWith("jwt.token", "clerk-session-token")
     expect(mockSignInFinalize).toHaveBeenCalledTimes(1)
   })

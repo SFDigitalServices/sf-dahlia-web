@@ -8,7 +8,11 @@ import { faCheck } from "@fortawesome/free-solid-svg-icons"
 import { Controller, useForm } from "react-hook-form"
 import withAppSetup from "../../layouts/withAppSetup"
 import AuthLayout from "../../layouts/AuthLayout"
-import { AUTH_TOAST_TO_RENDER, getClerkErrorCode } from "../../authentication/authenticationUtils"
+import {
+  AUTH_TOAST_TO_RENDER,
+  enterDelegatedAccount,
+  getClerkErrorCode,
+} from "../../authentication/authenticationUtils"
 import { useAuthSession } from "../../authentication/session/AuthSessionProvider"
 import { useSignInSession } from "../../authentication/session/useSignInSession"
 import { useSignUpSession } from "../../authentication/session/useSignUpSession"
@@ -130,15 +134,14 @@ const EnterVerificationCodePage = ({
     await signUpSession.activateSession(getAddPasswordPath(), { flow: AUTH_FLOW.CREATE_ACCOUNT })
   }
 
-  const housingCounselorDestination = async (delegateToken: string) => {
+  const isHousingCounselorAuthorized = async (delegateToken: string) => {
     const sessionToken = bearerToken(await getCredentials())
-    if (!sessionToken) return createPath(returnUrl, { hcAccess: "0" })
+    if (!sessionToken) return false
     try {
       await authorizeHousingCounselor(delegateToken, sessionToken)
-      return createPath(returnUrl, { hcAccess: "1" })
+      return true
     } catch {
-      // Keep the user signed in, but flag that they don't have access to this account.
-      return createPath(returnUrl, { hcAccess: "0" })
+      return false
     }
   }
 
@@ -150,7 +153,12 @@ const EnterVerificationCodePage = ({
       setError(CODE_FIELD, { message: "invalid" })
       return
     }
-    void navigate(await housingCounselorDestination(delegateToken))
+    if (await isHousingCounselorAuthorized(delegateToken)) {
+      enterDelegatedAccount(returnUrl)
+      return
+    }
+    // Keep the user signed in, but flag that they don't have access to this account.
+    void navigate(createPath(returnUrl, { hcAccess: "0" }))
   }
 
   const verifySignInCode = async (code: string) => {
