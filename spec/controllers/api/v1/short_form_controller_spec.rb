@@ -493,6 +493,53 @@ describe Api::V1::ShortFormController, type: :controller do
         end
       end
 
+      # A rejected cookie must not let the write fall back to the counselor's own
+      # identity while it carries the applicant's form data.
+      context 'when the hc_session cookie is rejected' do
+        before do
+          # If the write fell back to the counselor, their own Contact lookup succeeds,
+          # so a failure here shows the fallback rather than a missing stub.
+          allow(Force::AccountService).to receive(:get)
+            .with(counselor_contact_id)
+            .and_return('housingCounselingAgencyId' => nil)
+        end
+
+        # Given a counselor whose hc_session cookie isn't a valid token
+        #   (bad signature, malformed, or signed with a rotated secret)
+        # When the counselor submits an application
+        # Then nothing is submitted, the response is 403 hc_session_ended,
+        #   and hc_session is cleared
+        it 'does not submit when the cookie is not a valid token' do
+          request.cookies['hc_session'] = 'not-a-valid-token'
+
+          post :submit_application
+
+          expect(response).to have_http_status(:forbidden)
+          expect(JSON.parse(response.body)).to eq('error' => 'hc_session_ended')
+          expect(Force::ShortFormService).not_to have_received(:create_or_update)
+          expect(cookies[:hc_session]).to be_blank
+        end
+
+        # Given a counselor whose hc_session cookie names a different counselor
+        # When the counselor submits an application
+        # Then nothing is submitted, the response is 403 hc_session_ended,
+        #   and hc_session is cleared
+        it 'does not submit when the cookie names a different counselor' do
+          request.cookies['hc_session'] = JsonWebTokenService.encode_token(
+            { 'typ' => 'hc_session', 'hcId' => 'contact_other_counselor',
+              'appId' => applicant_contact_id, 'sid' => clerk_sid },
+            exp: 2.hours.from_now,
+          )
+
+          post :submit_application
+
+          expect(response).to have_http_status(:forbidden)
+          expect(JSON.parse(response.body)).to eq('error' => 'hc_session_ended')
+          expect(Force::ShortFormService).not_to have_received(:create_or_update)
+          expect(cookies[:hc_session]).to be_blank
+        end
+      end
+
       # Given an unexpired hc_session and Salesforce still grants delegation
       # When the counselor submits an application
       # Then Salesforce is checked once and the application is submitted
@@ -871,6 +918,22 @@ describe Api::V1::ShortFormController, type: :controller do
         expect(JSON.parse(response.body)).to eq('error' => 'hc_session_ended')
         expect(response).to have_http_status(:forbidden)
         expect(UploadedFile).not_to have_received(:where)
+      end
+    end
+
+    # Given a counselor whose hc_session cookie isn't a valid token
+    # When the counselor uploads a proof
+    # Then no proof is removed or stored, under the counselor or anyone else
+    context 'when the hc_session cookie is not a valid token' do
+      before { request.cookies['hc_session'] = 'not-a-valid-token' }
+
+      it 'does not remove or upload a proof' do
+        post :upload_proof, params: proof_params
+
+        expect(JSON.parse(response.body)).to eq('error' => 'hc_session_ended')
+        expect(response).to have_http_status(:forbidden)
+        expect(UploadedFile).not_to have_received(:where)
+        expect(UploadedFile).not_to have_received(:create_and_resize)
       end
     end
 

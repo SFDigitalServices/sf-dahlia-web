@@ -59,9 +59,12 @@ module HousingCounselorSession
     token = cookies[HC_SESSION_COOKIE_NAME]
     return if token.blank?
 
-    refresh_hc_session(token, nil)
+    hc_session = refresh_hc_session(token, nil)
     raise VerificationUnavailableError if hc_session_verification_failed?
-    raise AccessDeniedError if hc_session_access_denied? || hc_session_unbound?
+    # A cookie that was sent but didn't resolve to a session (invalid, another
+    # counselor's, unbound, or revoked) must not let the write fall back to the
+    # counselor's own identity.
+    raise AccessDeniedError unless hc_session
   end
 
   def hc_session_feature_enabled?
