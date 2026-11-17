@@ -96,7 +96,7 @@ const validateNumber = (required: boolean, value: string, maxValue: number, erro
   return Number.parseInt(value) > 0 && Number.parseInt(value) <= maxValue ? true : errorKey
 }
 
-const validateAge = (month: string, day: string, year: string) => {
+const validateAge = ({ month, day, year }: { month: string; day: string; year: string }) => {
   if (year.length < 4) return "dob:invalid"
   const enteredDate = dayjs(`${month}/${day}/${year}`, "M/D/YYYY")
   const minDate = dayjs("1/1/1900", "M/D/YYYY")
@@ -165,7 +165,7 @@ const DateField = ({
     birthYear: {
       label: t("label.dobYear"),
       validation: (value: string) => {
-        if (value?.length) return validateAge(birthDay, birthMonth, value)
+        if (value?.length) return validateAge({ month: birthMonth, day: birthDay, year: value })
         return true
       },
       required: required ? "dob:missing" : undefined,
