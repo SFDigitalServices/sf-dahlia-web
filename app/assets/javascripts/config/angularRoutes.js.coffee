@@ -199,6 +199,22 @@
     ##########################
     # TODO: refactor "my account" pages to be under the same namespace/controller
     ############
+    .state('dahlia.create-account', {
+      url: '/create-account'
+      views:
+        'container@':
+          templateUrl: 'account/templates/create-account.html'
+          controller: 'AccountController'
+      onEnter: ['AccountService', (AccountService) ->
+        AccountService.clearAccountMessages()
+        AccountService.resetUserAuth()
+        AccountService.unlockFields()
+      ]
+      resolve:
+        $title: ['$translate', ($translate) ->
+          $translate('page_title.create_account')
+        ]
+    })
     .state('dahlia.short-form-application.create-account', {
       # duplicated from above but to differentiate state for "Save and finish later"
       # will be accessed at '/listings/{id}/apply/create-account'
