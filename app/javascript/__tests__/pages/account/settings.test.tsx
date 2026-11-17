@@ -139,7 +139,7 @@ describe("<SettingsPage />", () => {
           await promise
         })
 
-        expect(screen.getByText("Your changes have been saved.")).not.toBeNull()
+        expect(screen.getByText("Name updated.")).toBeInTheDocument()
 
         await act(async () => {
           const closeButton = screen.getByLabelText("Close")
@@ -154,7 +154,7 @@ describe("<SettingsPage />", () => {
           )
         ).toBeNull()
 
-        expect(screen.queryByText("Your changes have been saved.")).toBeNull()
+        expect(screen.getByText("Name updated.")).toBeInTheDocument()
 
         expect(put).toHaveBeenCalledWith(
           "/api/v1/account/update",
@@ -212,7 +212,7 @@ describe("<SettingsPage />", () => {
         expect(
           screen.queryByText("We will update any applications you have not submitted yet.")
         ).toBeNull()
-        expect(screen.getByText("Your changes have been saved.")).not.toBeNull()
+        expect(screen.getByText("Date of birth updated.")).toBeInTheDocument()
 
         await act(async () => {
           const closeButton = screen.getByLabelText("Close")
@@ -220,7 +220,7 @@ describe("<SettingsPage />", () => {
           await promise
         })
 
-        expect(screen.queryByText("Your changes have been saved.")).toBeNull()
+        expect(screen.getByText("Date of birth updated.")).not.toBeVisible()
 
         expect(put).toHaveBeenCalledWith(
           "/api/v1/account/update",
@@ -686,7 +686,7 @@ describe("<SettingsPage />", () => {
         await Promise.resolve()
       })
 
-      expect(screen.queryByText("New password saved.")).toBeNull()
+      expect(screen.getByText("New password saved.")).not.toBeVisible()
     })
   })
 
