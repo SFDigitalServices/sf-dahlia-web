@@ -350,6 +350,23 @@ describe Api::V1::ShortFormController, type: :controller do
       end
 
       # Given a counselor with a valid delegate session
+      #   And the applicant's Contact has no webAppID
+      # When the counselor submits an application
+      # Then the response is 401 hc_session_ended and nothing is sent to Salesforce,
+      #   rather than saving the application and then failing on its proofs
+      it "does not submit when the applicant's Contact has no webAppID" do
+        allow(Force::AccountService).to receive(:get)
+          .with(applicant_contact_id)
+          .and_return('webAppID' => nil, 'housingCounselingAgencyId' => agency_id)
+
+        post :submit_application
+
+        expect(response).to have_http_status(:unauthorized)
+        expect(JSON.parse(response.body)).to eq('error' => 'hc_session_ended')
+        expect(Force::ShortFormService).not_to have_received(:create_or_update)
+      end
+
+      # Given a counselor with a valid delegate session
       #   And the applicant's Contact has a housingCounselingAgencyId
       # When the counselor submits an application
       # Then primaryApplicant keeps that housingCounselingAgencyId,

@@ -379,7 +379,7 @@ class Api::V1::ShortFormController < ApiController
     contact = applicant_contact
     {
       contactId: user_contact_id,
-      webAppID: contact['webAppID'],
+      webAppID: applicant_web_app_id,
       housingCounselingAgencyId: contact['housingCounselingAgencyId'],
     }
   end
