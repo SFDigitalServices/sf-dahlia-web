@@ -200,6 +200,73 @@ describe Api::V1::ShortFormController, type: :controller do
           expect(Force::ShortFormService).to have_received(:create_or_update)
             .with(hash_excluding(*submitted_by_keys), anything)
         end
+
+        # Salesforce blanks Contact fields that /shortForm omits, so an applicant's
+        # own save must send back the agency they shared.
+        context "when sending the applicant's housing counselor agency" do
+          before do
+            allow(controller).to receive(:applicant_attrs).and_call_original
+            allow(ClerkService).to receive(:salesforce_contact_id)
+              .and_return('contact_abc123')
+          end
+
+          # Given a signed-in applicant whose Contact has a housing counselor agency
+          # When they submit their own application
+          # Then the stored agency is sent back, so saving doesn't revoke it
+          it "sends the applicant's stored agency with their own save" do
+            allow(controller).to receive(:clerk).and_return(signed_in_applicant_clerk)
+            allow(Force::AccountService).to receive(:get)
+              .with('contact_abc123')
+              .and_return('housingCounselingAgencyId' => 'agency_own123')
+
+            post :submit_application
+
+            expect(Force::ShortFormService).to have_received(:create_or_update)
+              .with(anything, hash_including(housingCounselingAgencyId: 'agency_own123'))
+          end
+
+          # Given a guest (not signed in)
+          # When the guest submits an application
+          # Then no Contact is looked up and no agency is sent
+          it 'does not look up an agency for a guest' do
+            allow(controller).to receive(:clerk).and_return(nil)
+            allow(Force::AccountService).to receive(:get)
+
+            post :submit_application
+
+            expect(Force::AccountService).not_to have_received(:get)
+            expect(Force::ShortFormService).to have_received(:create_or_update)
+              .with(anything, hash_excluding(:housingCounselingAgencyId))
+          end
+
+          # Given a signed-in applicant whose Contact can't be read from Salesforce
+          # When they submit their own application
+          # Then the save fails with a retryable 503 and nothing is sent to Salesforce,
+          #   rather than saving without the agency and silently revoking it
+          it 'refuses to save when the applicant Contact is missing' do
+            allow(controller).to receive(:clerk).and_return(signed_in_applicant_clerk)
+            allow(Force::AccountService).to receive(:get)
+              .with('contact_abc123')
+              .and_return(nil)
+
+            post :submit_application
+
+            expect(response).to have_http_status(:service_unavailable)
+            expect(Force::ShortFormService).not_to have_received(:create_or_update)
+          end
+
+          it 'refuses to save when the applicant Contact lookup errors' do
+            allow(controller).to receive(:clerk).and_return(signed_in_applicant_clerk)
+            allow(Force::AccountService).to receive(:get)
+              .with('contact_abc123')
+              .and_raise(StandardError)
+
+            post :submit_application
+
+            expect(response).to have_http_status(:service_unavailable)
+            expect(Force::ShortFormService).not_to have_received(:create_or_update)
+          end
+        end
       end
 
       # Given an applicant signed in with Clerk and the HC flag off
@@ -220,6 +287,23 @@ describe Api::V1::ShortFormController, type: :controller do
 
           expect(Force::ShortFormService).to have_received(:create_or_update)
             .with(hash_excluding(*submitted_by_keys), anything)
+        end
+
+        # Given the HC flag is off, so no applicant can have shared an agency
+        # When a signed-in applicant submits an application
+        # Then no extra Contact lookup is made and no agency is sent
+        it 'does not look up an agency for a signed-in applicant' do
+          allow(controller).to receive(:applicant_attrs).and_call_original
+          allow(controller).to receive(:clerk).and_return(double(user_id: 'user_abc123'))
+          allow(ClerkService).to receive(:salesforce_contact_id)
+            .and_return('contact_abc123')
+          allow(Force::AccountService).to receive(:get)
+
+          post :submit_application
+
+          expect(Force::AccountService).not_to have_received(:get)
+          expect(Force::ShortFormService).to have_received(:create_or_update)
+            .with(anything, hash_excluding(:housingCounselingAgencyId))
         end
       end
     end

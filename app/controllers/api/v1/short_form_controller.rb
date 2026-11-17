@@ -5,6 +5,8 @@ class Api::V1::ShortFormController < ApiController
   include ClerkOrDeviseAuth
   include HousingCounselorSession
 
+  class ApplicantContactUnavailableError < StandardError; end
+
   rescue_from HousingCounselorSession::VerificationUnavailableError do
     end_hc_session
     render json: { error: 'hc_session_ended' }, status: :unauthorized
@@ -365,17 +367,28 @@ class Api::V1::ShortFormController < ApiController
   end
 
   def applicant_attrs
-    unless acting_for_applicant?
-      return { contactId: user_contact_id,
-               webAppID: current_user_id }
-    end
+    return delegated_applicant_attrs if acting_for_applicant?
 
+    attrs = { contactId: user_contact_id, webAppID: current_user_id }
+    return attrs unless current_user.present? && hc_session_feature_enabled?
+
+    attrs.merge(housingCounselingAgencyId: own_contact['housingCounselingAgencyId'])
+  end
+
+  def delegated_applicant_attrs
     contact = applicant_contact
     {
       contactId: user_contact_id,
       webAppID: contact['webAppID'],
       housingCounselingAgencyId: contact['housingCounselingAgencyId'],
     }
+  end
+
+  def own_contact
+    contact = Force::AccountService.get(user_contact_id)
+    return contact if contact.present?
+
+    raise ApplicantContactUnavailableError
   end
 
   # Salesforce blanks Contact fields that /shortForm omits, so these are sent
