@@ -6,14 +6,20 @@ import "./Toast.scss"
 interface ToastProps {
   children: React.ReactNode
   variant?: CommonMessageVariant
+  className?: string
 }
 
 type SeedsToastComponent = React.ComponentType<{
   variant: CommonMessageVariant
+  className?: string
   children?: React.ReactNode
 }>
 
-const Toast = ({ children, variant = "success" }: ToastProps) =>
-  React.createElement(SeedsToast as unknown as SeedsToastComponent, { variant }, children)
+const Toast = ({ children, variant = "success", className }: ToastProps) =>
+  React.createElement(
+    SeedsToast as unknown as SeedsToastComponent,
+    { variant, className },
+    children
+  )
 
 export default Toast

@@ -1,3 +1,15 @@
 #seeds-toast-stack {
   inset-block-start: var(--seeds-s32);
+
+  &:has(> .accountToast) {
+    @media (max-width: theme("screens.sm")) {
+      width: 100%;
+    }
+  }
+}
+
+.seeds-common-message.seeds-toast.accountToast {
+  @media (max-width: 640px) {
+    max-width: none;
+  }
 }

@@ -407,10 +407,14 @@ const HousingCounselorSection = ({ user, setUser }: SectionProps) => {
   return (
     <>
       {grantToast && (
-        <Toast variant="success">{t("accountSettings.housingCounselor.toastShared")}</Toast>
+        <Toast variant="success" className={"accountToast"}>
+          {t("accountSettings.housingCounselor.toastShared")}
+        </Toast>
       )}
       {revokeToast && (
-        <Toast variant="success">{t("accountSettings.housingCounselor.toastStoppedSharing")}</Toast>
+        <Toast variant="success" className={"accountToast"}>
+          {t("accountSettings.housingCounselor.toastStoppedSharing")}
+        </Toast>
       )}
       {!accessShared && (
         <ErrorSummaryBanner
@@ -488,6 +492,7 @@ const NameSection = ({ user, setUser, handleBanners }: SectionProps) => {
 
   const onSubmit = async (data: { firstName: string; middleName: string; lastName: string }) => {
     setLoading(true)
+    if (clerkEnabled) handleBanners?.("clearSaved")
 
     let sessionToken: string | undefined
     try {
@@ -579,6 +584,7 @@ const DateOfBirthSection = ({ user, setUser }: SectionProps) => {
 
   const onSubmit = async (data: { dobObject: DOBFieldValues }) => {
     setLoading(true)
+    if (clerkEnabled) setDOBSavedBanner(false)
 
     let sessionToken: string | undefined
     try {
@@ -619,12 +625,20 @@ const DateOfBirthSection = ({ user, setUser }: SectionProps) => {
         message={t("accountSettings.update")}
         onClose={() => setDOBUpdateBanner(false)}
       />
-      <Banner
-        showBanner={dobSavedBanner}
-        className="mt-8"
-        message={t("accountSettings.accountChangesSaved")}
-        onClose={() => setDOBSavedBanner(false)}
-      />
+      {clerkEnabled ? (
+        dobSavedBanner && (
+          <Toast variant="success" className={"accountToast"}>
+            {t("accountSettings.changeDOBBanner")}
+          </Toast>
+        )
+      ) : (
+        <Banner
+          showBanner={dobSavedBanner}
+          className="mt-8"
+          message={t("accountSettings.accountChangesSaved")}
+          onClose={() => setDOBSavedBanner(false)}
+        />
+      )}
       {errors && errors?.dobObject && (
         <ErrorSummaryBanner
           sortOrder={dobSortOrder}
@@ -667,10 +681,10 @@ const AccountSettings = ({ profile }: { profile: User }) => {
   const confirmationBannerKey = (
     Object.keys(confirmationBannerMessages) as ConfirmationBannerFlag[]
   ).find((key) => bannerNavState?.[key] === true)
-  const [confirmationBannerMessage, setConfirmationBannerMessage] = useState(
+  const [confirmationBannerMessage] = useState(
     confirmationBannerKey ? confirmationBannerMessages[confirmationBannerKey] : null
   )
-
+  const showNameBanners = nameUpdateBanner || (!clerkEnabled && nameSavedBanner)
   const handleBanners = (banner: string) => {
     switch (banner) {
       case "nameUpdateBanner":
@@ -679,6 +693,9 @@ const AccountSettings = ({ profile }: { profile: User }) => {
         break
       case "nameSavedBanner":
         setNameSavedBanner(true)
+        break
+      case "clearSaved":
+        setNameSavedBanner(false)
         break
     }
   }
@@ -707,42 +724,39 @@ const AccountSettings = ({ profile }: { profile: User }) => {
 
   return (
     <Card className={sharedStyles.card}>
-      <Banner
-        showBanner={!!confirmationBannerMessage}
-        className={settingsStyles["settingsConfirmationAlert"]}
-        variant={confirmationBannerMessage?.variant}
-        message={confirmationBannerMessage ? t(confirmationBannerMessage.message) : ""}
-        onClose={() => setConfirmationBannerMessage(null)}
-      />
-      {/* TODO: DAH-4406 remove name banner header with new toast */}
-      {nameUpdateBanner || nameSavedBanner ? (
-        <FormHeader
-          className={"border-none"}
-          iconSymbol="settings"
-          title={t("accountSettings.title.sentenceCase")}
-          description={t("accountSettings.description")}
-        />
-      ) : (
-        <FormHeader
-          className={settingsStyles.settingsHeader}
-          iconSymbol="settings"
-          title={t("accountSettings.title.sentenceCase")}
-          description={t("accountSettings.description")}
-        />
+      {confirmationBannerMessage && (
+        <Toast variant={confirmationBannerMessage.variant} className={"accountToast"}>
+          {t(confirmationBannerMessage.message)}
+        </Toast>
       )}
+      <FormHeader
+        className={showNameBanners ? "border-none" : settingsStyles.settingsHeader}
+        iconSymbol="settings"
+        title={t("accountSettings.title.sentenceCase")}
+        description={t("accountSettings.description")}
+      />
       <Banner
         showBanner={nameUpdateBanner}
         message={t("accountSettings.update")}
         fullWidth
         onClose={() => setNameUpdateBanner(false)}
       />
-      <Banner
-        showBanner={nameSavedBanner}
-        className="mt-8"
-        message={t("accountSettings.accountChangesSaved")}
-        fullWidth
-        onClose={() => setNameSavedBanner(false)}
-      />
+      {/* TODO: DAH-4262 Clean up Devise banners */}
+      {clerkEnabled ? (
+        nameSavedBanner && (
+          <Toast variant="success" className={"accountToast"}>
+            {t("accountSettings.changeNameBanner")}
+          </Toast>
+        )
+      ) : (
+        <Banner
+          showBanner={nameSavedBanner}
+          className="mt-8"
+          message={t("accountSettings.accountChangesSaved")}
+          fullWidth
+          onClose={() => setNameSavedBanner(false)}
+        />
+      )}
       <NameSection user={user} setUser={setUser} handleBanners={handleBanners} />
       <DateOfBirthSection user={user} setUser={setUser} />
       {clerkEnabled ? <EmailSection /> : <EmailSectionDevise user={user} setUser={setUser} />}
