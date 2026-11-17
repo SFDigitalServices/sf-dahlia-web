@@ -427,10 +427,11 @@ const EnterVerificationCodePage = ({
             </Button>
           )}
         </p>
+        <div className={styles.codeExpiration}>{t("createAccount.enterCode.expiration")}</div>
         {isForgotPasswordFlow && (
-          <p className={styles["forgotPasswordDescription"]}>{t("signIn.forgotPasswordCode")}</p>
+          <p className={styles.forgotPasswordDescription}>{t("signIn.forgotPasswordCode")}</p>
         )}
-        <Form onSubmit={handleSubmit(onSubmit)}>
+        <Form onSubmit={handleSubmit(onSubmit)} className={styles.codeField}>
           <Controller
             name={CODE_FIELD}
             control={control}
