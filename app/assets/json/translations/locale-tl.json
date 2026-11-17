@@ -1305,7 +1305,8 @@
             "my_favorites": "Ang Aking mga Paborito ",
             "rent": "Umupa",
             "sign_in": "Mag-sign In ",
-            "sign_out": "Mag-sign Out "
+            "sign_out": "Mag-sign Out ",
+            "top_message_required_login": "Simula {{date}}: Kailangan mo ng account upang mag-apply para sa pabahay. Kung wala ka pa nito, <a target='_self' href='{{link}}'>gumawa ng DAHLIA account</a>."
         },
         "page_title": {
             "additional_resources": "Iba pang mga Oportunidad para sa Pabahay",

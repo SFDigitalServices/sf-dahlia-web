@@ -1305,7 +1305,8 @@
             "my_favorites": "Mis Favoritos",
             "rent": "Alquilar",
             "sign_in": "Inicie sesión",
-            "sign_out": "Cierre sesión"
+            "sign_out": "Cierre sesión",
+            "top_message_required_login": "A partir del {{date}}: Necesita una cuenta para solicitar vivienda. Si aún no tiene una, <a target='_self' href='{{link}}'>cree una cuenta en DAHLIA</a>."
         },
         "page_title": {
             "additional_resources": "Más oportunidades de vivienda",
