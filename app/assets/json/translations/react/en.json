@@ -52,6 +52,7 @@
   "accountLayout.contact.errorType": "Choose type of phone number",
   "accountLayout.contact.phoneLabel": "Phone number",
   "accountLayout.contact.phoneTypeLabel": "Type of phone number",
+  "accountLayout.contact.phoneUpdated": "Phone number updated",
   "accountLayout.contact.saveEmail": "Save email",
   "accountLayout.contact.savePhone": "Save phone number",
   "accountLayout.contact.subtitle": "We use this info to contact you about your application. Make sure it’s up to date.",

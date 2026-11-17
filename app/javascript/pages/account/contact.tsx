@@ -118,7 +118,7 @@ const ContactPhoneForm = ({
   }
   return (
     <>
-      {showSaveBanner && <Toast variant="success">{t("accountLayout.contact.changesSaved")}</Toast>}
+      {showSaveBanner && <Toast variant="success">{t("accountLayout.contact.phoneUpdated")}</Toast>}
       <ErrorSummaryBanner
         errors={errors}
         messageMap={(messageKey) => getErrorMessage(messageKey, phoneFieldsetErrors, true)}
