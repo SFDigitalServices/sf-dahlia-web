@@ -378,11 +378,13 @@ RSpec.describe HousingCounselorSession, type: :controller do
             expect(ClerkService).to have_received(:revoke_session).with(clerk_sid)
           end
 
-          # Control: Clerk already rejects a revoked session; nothing to remember
-          it 'does not record the Clerk session as ended when the revoke succeeds' do
+          # Then the Clerk session is recorded as ended even though the revoke succeeded,
+          #   because its session token is verified locally and still passes our auth
+          #   until it expires; the marker blocks writes in that window
+          it 'records the Clerk session as ended when the revoke succeeds' do
             get :show, params: { signed_in_as: hc_id }
 
-            expect(HousingCounselorSession.clerk_session_ended?(clerk_sid)).to be(false)
+            expect(HousingCounselorSession.clerk_session_ended?(clerk_sid)).to be(true)
           end
 
           # Given Salesforce has revoked delegation

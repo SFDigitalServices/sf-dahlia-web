@@ -587,11 +587,12 @@ describe Api::V1::ShortFormController, type: :controller do
       end
     end
 
-    # Given this Clerk session was ended but Clerk couldn't revoke it
+    # Given this Clerk session was recorded as ended (whether or not Clerk revoked it,
+    #   its session token still passes our auth until it expires)
     #   And the hc_session cookie is already gone
     # When the counselor submits an application
     # Then nothing is filed under the counselor, and the revoke is tried again
-    context 'when the Clerk session was ended but not revoked' do
+    context 'when the Clerk session was recorded as ended' do
       include_context 'with a housing counselor session'
       let(:cache_store) { ActiveSupport::Cache::MemoryStore.new }
 

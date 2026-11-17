@@ -261,8 +261,10 @@ module HousingCounselorSession
   def revoke_clerk_session
     session_id = current_clerk_session_id
     return if session_id.blank?
-    return if clerk_session_revoked?(session_id)
 
+    clerk_session_revoked?(session_id)
+    # Session tokens are verified locally and stay valid until they expire, even
+    # after a successful revoke, so writes from this session are blocked either way.
     HousingCounselorSession.record_ended_clerk_session(session_id)
   end
 
