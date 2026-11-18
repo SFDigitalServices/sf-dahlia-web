@@ -37,4 +37,19 @@ describe 'Invite-to routes', type: :routing do
         .to route_to('invite_to#documents', id: listing_id, **lang_param)
     end
   end
+
+  # Given a POST to the deprecated invite-to-apply record-response endpoint
+  # When Rails resolves the route
+  # Then it is not routable, so InviteToResponseController is never reached
+  it 'does not route POST /api/v1/invite-to-apply/record-response' do
+    expect(post: '/api/v1/invite-to-apply/record-response').not_to be_routable
+  end
+
+  # Given a POST to the next-steps record-response endpoint
+  # When Rails resolves the route
+  # Then it still reaches InviteToResponseController
+  it 'routes POST /api/v1/next-steps/record-response to invite_to_response#record_response' do
+    expect(post: '/api/v1/next-steps/record-response')
+      .to route_to('api/v1/invite_to_response#record_response')
+  end
 end
