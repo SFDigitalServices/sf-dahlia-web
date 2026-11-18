@@ -4,7 +4,7 @@ import { Button } from "@bloom-housing/ui-seeds"
 import Fieldset from "./Fieldset"
 import styles from "./VerificationCodeField.module.scss"
 
-export type CodeErrorType = "invalid" | "expired"
+export type CodeErrorType = "invalid" | "expired" | "tooManyCodes"
 
 const codeErrorMessages: Record<
   CodeErrorType,
@@ -31,6 +31,7 @@ const codeErrorMessages: Record<
       </Button>
     </>
   ),
+  tooManyCodes: () => t("error.account.tooManyCodes"),
 }
 
 const VerificationCodeField = ({

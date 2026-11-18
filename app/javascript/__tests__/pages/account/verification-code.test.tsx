@@ -369,6 +369,22 @@ describe("<EnterVerificationCode />", () => {
     expect(screen.queryByRole("button", { name: t("createAccount.sendAgain") })).toBeNull()
   })
 
+  it("shows a too many codes error when resend is rate-limited", async () => {
+    const consoleError = jest.spyOn(console, "error").mockImplementation(() => {})
+    mockSignUpSendEmailCode.mockResolvedValueOnce({
+      error: { errors: [{ code: "verification_code_too_many_requests" }] },
+    })
+    expireResendVerificationCode()
+
+    fireEvent.click(screen.getByRole("button", { name: t("createAccount.sendAgain") }))
+    await act(async () => {
+      await Promise.resolve()
+    })
+
+    expect(document.querySelector("#code-error")).toHaveTextContent(t("error.account.tooManyCodes"))
+    consoleError.mockRestore()
+  })
+
   it("clears the entered code and error when a new code is sent", async () => {
     const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime })
     const digits = screen.getAllByRole("textbox")

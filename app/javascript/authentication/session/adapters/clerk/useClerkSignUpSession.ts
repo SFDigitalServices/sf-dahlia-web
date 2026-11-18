@@ -2,7 +2,7 @@ import { useCallback, useMemo } from "react"
 import { useSession, useSignUp, useUser } from "@clerk/react"
 import { useNavigate } from "react-router"
 
-import { getClerkErrorCode } from "../../../authenticationUtils"
+import { AUTH_ERROR, getAuthError } from "../../../authenticationUtils"
 import { getCurrentLanguage } from "../../../../util/languageUtil"
 import { SignUpOutcome, SignUpSession } from "../../signUpSession"
 
@@ -34,7 +34,7 @@ export const useClerkSignUpSession = (): SignUpSession => {
         unsafeMetadata: { locale }, // Account creation can only update public metadata
       })
       // this condition can be true only if strict enumeration protection is *not* enabled
-      if (getClerkErrorCode(error) === "form_identifier_exists") {
+      if (getAuthError(error) === AUTH_ERROR.EMAIL_EXISTS) {
         return { error, needsSignIn: true }
       }
       if (error) {
@@ -42,7 +42,11 @@ export const useClerkSignUpSession = (): SignUpSession => {
         return { error }
       }
 
-      await signUp.verifications.sendEmailCode()
+      const { error: sendCodeError } = await signUp.verifications.sendEmailCode()
+      if (sendCodeError) {
+        console.error("Account creation send code error", sendCodeError)
+        return { error: sendCodeError }
+      }
       if (
         signUp.status !== "missing_requirements" ||
         !signUp.unverifiedFields.includes("email_address") ||

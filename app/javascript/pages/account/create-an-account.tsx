@@ -17,7 +17,7 @@ import {
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import { AUTH_FLOW, UNLEASH_FLAG } from "../../modules/constants"
 import { CreateAccount } from "./create-account"
-import EmailFieldset from "./components/EmailFieldset"
+import EmailFieldset, { handleClerkEmailErrors } from "./components/EmailFieldset"
 import GetHelp from "./components/GetHelp"
 import "./create-account.scss"
 import "./styles/account.scss"
@@ -34,12 +34,16 @@ const CreateAnAccountPage = () => {
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors },
   } = useForm<{ email: string }>({ mode: "onTouched", shouldFocusError: false })
 
   const transferToSignIn = async (email: string) => {
     const { error } = await sendEmailCode(email)
-    if (error) return
+    if (error) {
+      setError("email", handleClerkEmailErrors(error)[1])
+      return
+    }
 
     void navigate(getSignInCodePath(), {
       state: { verificationCodeEmailAddress: email, flow: AUTH_FLOW.SIGN_IN },
@@ -52,7 +56,10 @@ const CreateAnAccountPage = () => {
       void transferToSignIn(email)
       return
     }
-    if (error) return
+    if (error) {
+      setError("email", handleClerkEmailErrors(error)[1])
+      return
+    }
 
     void navigate(getVerificationCodePath(), {
       state: { verificationCodeEmailAddress: email, flow: AUTH_FLOW.CREATE_ACCOUNT },

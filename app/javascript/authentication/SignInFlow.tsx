@@ -28,7 +28,12 @@ import {
   getSignInCodePath,
 } from "../util/routeUtil"
 import { authorizeHousingCounselor, clearHousingCounselorSession } from "../api/authApiService"
-import { AUTH_TOAST_TO_RENDER, queueAuthenticationToast } from "./authenticationUtils"
+import {
+  AUTH_TOAST_TO_RENDER,
+  AUTH_ERROR,
+  getAuthError,
+  queueAuthenticationToast,
+} from "./authenticationUtils"
 import { useAuthSession } from "./session/AuthSessionProvider"
 import { useSignInSession } from "./session/useSignInSession"
 import { bearerToken, isAuthInitialized } from "./session/authStatus"
@@ -120,12 +125,13 @@ const SignInFlow = () => {
   // maps err search parameter to the error message
   const errSearchParamCodes = Object.assign(Object.create(null) as Record<string, string>, {
     code: `${t("error.account.genericServerError")} ${t("error.account.emailHelp")}`,
+    tooManyCodes: t("error.account.tooManyCodes"),
   })
   const errSearchParam = new URLSearchParams(search).get("err")
   useEffect(() => {
     if (errSearchParam && errSearchParamCodes[errSearchParam]) {
       setShowError(true)
-      if (errSearchParam === "code") {
+      if (errSearchParam === "code" || errSearchParam === "tooManyCodes") {
         setView("verificationCode")
       }
     }
@@ -211,7 +217,10 @@ const SignInFlow = () => {
     if (error) {
       setShowError(true)
       const searchParams = new URLSearchParams(search)
-      searchParams.set("err", "code")
+      searchParams.set(
+        "err",
+        getAuthError(error) === AUTH_ERROR.CODE_RATE_LIMITED ? "tooManyCodes" : "code"
+      )
       void navigate(
         { search: `?${searchParams.toString()}` },
         { replace: true, state: reactRouterState }

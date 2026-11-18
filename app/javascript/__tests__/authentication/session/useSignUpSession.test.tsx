@@ -108,6 +108,14 @@ describe("useSignUpSession", () => {
 
       expect(result.error).toBeTruthy()
     })
+
+    it("reports an error when the first code fails to send", async () => {
+      signUp.verifications.sendEmailCode.mockResolvedValue({ error: clerkError })
+
+      const result = await renderSession().current.createAccount("a@b.com")
+
+      expect(result.error).toBe(clerkError)
+    })
   })
 
   describe("resendEmailCode", () => {
