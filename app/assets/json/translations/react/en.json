@@ -322,6 +322,7 @@
   "createAccount.emailNote": "We only use your email to contact you about an application you submitted or to help you reset your password.",
   "createAccount.emailSent": "Email sent",
   "createAccount.enterCode": "Enter code",
+  "createAccount.enterCode.expiration": "Your code will expire 10 minutes after it is sent.",
   "createAccount.finish": "Finish",
   "createAccount.finishSettingUp": "Finish setting up your account",
   "createAccount.getCode": "Get a code",
