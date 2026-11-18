@@ -1,4 +1,5 @@
 AngularPage = require('../angular-page').AngularPage
+EC = protractor.ExpectedConditions
 
 class Name extends AngularPage
   constructor: ->
@@ -36,6 +37,7 @@ class Name extends AngularPage
       day = opts.day || @defaults.dob_day
       year = opts.year || @defaults.dob_year
 
+    browser.wait(EC.presenceOf(@firstName), 10000)
     @firstName.clear().sendKeys(firstName)
     @middleName.clear().sendKeys(middleName) if middleName
     @lastName.clear().sendKeys(lastName)
