@@ -537,7 +537,11 @@ describe("<EnterVerificationCode />", () => {
 
     await waitFor(() => {
       expect(mockSignInVerifyCode).toHaveBeenCalledWith({ code: "123456" })
-      expect(mockSignUpCreate).toHaveBeenCalledWith({ transfer: true })
+      expect(mockSignUpCreate).toHaveBeenCalledWith({
+        transfer: true,
+        locale: "en",
+        unsafeMetadata: { locale: "en" },
+      })
     })
     expect(mockSignUpFinalize).toHaveBeenCalledTimes(1)
     expect(mockNavigate).toHaveBeenCalledWith("/add-password", {
@@ -595,7 +599,11 @@ describe("<EnterVerificationCode />", () => {
     await user.click(screen.getByRole("button", { name: t("createAccount.confirmCode") }))
 
     await waitFor(() => {
-      expect(mockSignUpCreate).toHaveBeenCalledWith({ transfer: true })
+      expect(mockSignUpCreate).toHaveBeenCalledWith({
+        transfer: true,
+        locale: "en",
+        unsafeMetadata: { locale: "en" },
+      })
     })
     expect(mockSignUpFinalize).not.toHaveBeenCalled()
     expect(consoleError).toHaveBeenCalledWith("Account creation error", createError)
@@ -625,7 +633,11 @@ describe("<EnterVerificationCode />", () => {
     await user.click(screen.getByRole("button", { name: t("createAccount.confirmCode") }))
 
     await waitFor(() => {
-      expect(mockSignUpCreate).toHaveBeenCalledWith({ transfer: true })
+      expect(mockSignUpCreate).toHaveBeenCalledWith({
+        transfer: true,
+        locale: "en",
+        unsafeMetadata: { locale: "en" },
+      })
     })
     expect(mockSignUpFinalize).not.toHaveBeenCalled()
     expect(consoleError).toHaveBeenCalledWith("Account creation error:", mockSignUpResource)

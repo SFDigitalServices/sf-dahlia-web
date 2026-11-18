@@ -30,8 +30,8 @@ export const useClerkSignUpSession = (): SignUpSession => {
       const locale = getCurrentLanguage()
       const { error } = await signUp.create({
         emailAddress: email,
-        locale,
-        unsafeMetadata: { locale }, // Account creation can only update public metadata
+        locale, // this locale does not get saved to the created user
+        unsafeMetadata: { locale }, // client-side SDK can only write arbitrary data to `unsafeMetadata`
       })
       // this condition can be true only if strict enumeration protection is *not* enabled
       if (getClerkErrorCode(error) === "form_identifier_exists") {
@@ -60,7 +60,12 @@ export const useClerkSignUpSession = (): SignUpSession => {
   const transferFromSignIn = useCallback(async (): Promise<SignUpOutcome> => {
     if (!canStartRequest) return NOT_READY
 
-    const { error } = await signUp.create({ transfer: true })
+    const locale = getCurrentLanguage()
+    const { error } = await signUp.create({
+      transfer: true,
+      locale, // this locale does not get saved to the created user
+      unsafeMetadata: { locale }, // client-side SDK can only write arbitrary data to `unsafeMetadata`
+    })
     if (error) {
       console.error("Account creation error", error)
       return { error }
