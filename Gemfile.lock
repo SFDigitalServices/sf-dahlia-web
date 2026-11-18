@@ -139,7 +139,7 @@ GEM
     crack (1.0.1)
       bigdecimal
       rexml
-    crass (1.0.7)
+    crass (1.0.8)
     dalli (4.2.0)
       logger
     database_cleaner (2.1.0)
@@ -479,7 +479,7 @@ GEM
     puma (7.2.1)
       nio4r (~> 2.0)
     racc (1.8.1)
-    rack (2.2.23)
+    rack (2.2.25)
     rack-cors (1.0.6)
       rack (>= 1.6.0)
     rack-proxy (0.7.7)
@@ -487,7 +487,7 @@ GEM
     rack-rewrite (1.5.1)
     rack-session (1.0.2)
       rack (< 3)
-    rack-test (2.2.0)
+    rack-test (2.3.0)
       rack (>= 1.3)
     rackup (1.0.1)
       rack (< 3)
