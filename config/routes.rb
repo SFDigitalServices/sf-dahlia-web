@@ -129,6 +129,8 @@ Rails.application.routes.draw do
 
   get '(:lang)/listings/:id/next-steps' => 'invite_to#index', as: :next_steps, lang: /(en|es|zh|tl)/
   get '(:lang)/listings/:id/next-steps/documents' => 'invite_to#documents', lang: /(en|es|zh|tl)/
+  # Retired I2A pilot links (DAH-4045): explicit 404 instead of the Angular catch-all.
+  get '(:lang)/listings/:id/invite-to-apply(/documents)' => 'not_found#show', lang: /(en|es|zh|tl)/
 
   # Account pages
   get '(:lang)/account' => 'account#account', lang: /(en|es|zh|tl)/
