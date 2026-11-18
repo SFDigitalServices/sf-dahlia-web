@@ -41,15 +41,13 @@
 
 .overviewSection {
   display: flex;
-  flex-direction: row;
   align-items: center;
   padding: var(--seeds-spacer-section);
 
   :global(.tabs-tab-link) {
     display: flex;
-    flex-direction: row;
     align-items: center;
-    width: 100%;
+    flex: 1;
   }
 
   // 769px = screens.md + 1px (see comment above)
