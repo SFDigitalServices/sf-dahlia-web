@@ -37,8 +37,6 @@ Rails.application.routes.draw do
           get 'eligibility' => 'listings#eligibility'
         end
       end
-      # Deprecated I2A pilot - remove in DAH-4045
-      post 'invite-to-apply/record-response' => 'invite_to_response#record_response'
       post 'next-steps/record-response' => 'invite_to_response#record_response'
       post 'next-steps/log-human-verified' => 'invite_to_response#log_human_verified'
       scope '/short-form' do
@@ -131,9 +129,8 @@ Rails.application.routes.draw do
 
   get '(:lang)/listings/:id/next-steps' => 'invite_to#index', as: :next_steps, lang: /(en|es|zh|tl)/
   get '(:lang)/listings/:id/next-steps/documents' => 'invite_to#documents', lang: /(en|es|zh|tl)/
-  # Deprecated I2A pilot - remove in DAH-4045
-  get '(:lang)/listings/:id/invite-to-apply' => 'invite_to#index', as: :invite_to_apply, lang: /(en|es|zh|tl)/
-  get '(:lang)/listings/:id/invite-to-apply/documents' => 'invite_to#documents', lang: /(en|es|zh|tl)/
+  # Retired I2A pilot links (DAH-4045): explicit 404 instead of the Angular catch-all.
+  get '(:lang)/listings/:id/invite-to-apply(/documents)' => 'not_found#show', lang: /(en|es|zh|tl)/
 
   # Account pages
   get '(:lang)/account' => 'account#account', lang: /(en|es|zh|tl)/
