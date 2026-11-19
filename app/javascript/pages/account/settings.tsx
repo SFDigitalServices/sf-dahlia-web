@@ -407,12 +407,12 @@ const HousingCounselorSection = ({ user, setUser }: SectionProps) => {
   return (
     <>
       {grantToast && (
-        <Toast variant="success" className={"accountToast"}>
+        <Toast variant="success" className="accountToast">
           {t("accountSettings.housingCounselor.toastShared")}
         </Toast>
       )}
       {revokeToast && (
-        <Toast variant="success" className={"accountToast"}>
+        <Toast variant="success" className="accountToast">
           {t("accountSettings.housingCounselor.toastStoppedSharing")}
         </Toast>
       )}
@@ -627,7 +627,7 @@ const DateOfBirthSection = ({ user, setUser }: SectionProps) => {
       />
       {clerkEnabled ? (
         dobSavedBanner && (
-          <Toast variant="success" className={"accountToast"}>
+          <Toast variant="success" className="accountToast">
             {t("accountSettings.changeDOBBanner")}
           </Toast>
         )
@@ -725,7 +725,7 @@ const AccountSettings = ({ profile }: { profile: User }) => {
   return (
     <Card className={sharedStyles.card}>
       {confirmationBannerMessage && (
-        <Toast variant={confirmationBannerMessage.variant} className={"accountToast"}>
+        <Toast variant={confirmationBannerMessage.variant} className="accountToast">
           {t(confirmationBannerMessage.message)}
         </Toast>
       )}
@@ -744,7 +744,7 @@ const AccountSettings = ({ profile }: { profile: User }) => {
       {/* TODO: DAH-4262 Clean up Devise banners */}
       {clerkEnabled ? (
         nameSavedBanner && (
-          <Toast variant="success" className={"accountToast"}>
+          <Toast variant="success" className="accountToast">
             {t("accountSettings.changeNameBanner")}
           </Toast>
         )
