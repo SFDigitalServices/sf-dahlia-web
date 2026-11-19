@@ -1,3 +1,5 @@
+import { createPath } from "../util/routeUtil"
+
 interface ClerkErrorWithCodes {
   errors?: Array<{ code?: unknown }>
 }
@@ -30,4 +32,10 @@ export const consumeAuthenticationToast = (): AUTH_TOAST_TO_RENDER | null => {
 
   window.sessionStorage.removeItem(AUTH_TOAST_KEY)
   return isAUTH_TOAST_TO_RENDER(toastToRender) ? toastToRender : null
+}
+
+// A full page load rather than navigate(): the profile may already have been fetched
+// and cached before the hc_session cookie existed, and must be refetched as the seeker's.
+export const enterDelegatedAccount = (destination: string): void => {
+  window.location.assign(createPath(destination, { hcAccess: "1" }))
 }
