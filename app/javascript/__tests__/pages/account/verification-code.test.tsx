@@ -166,6 +166,12 @@ describe("<EnterVerificationCode />", () => {
     finalize: jest.Mock
   }
 
+  // Real Clerk has no session token until sign-in is finalized.
+  const mockTokenAvailableAfterSignIn = () =>
+    jest.fn(() =>
+      Promise.resolve(mockSignInFinalize.mock.calls.length > 0 ? "clerk-session-token" : null)
+    )
+
   beforeEach(async () => {
     document.documentElement.lang = "en"
     document.title = "DAHLIA San Francisco Housing Portal"
@@ -664,11 +670,10 @@ describe("<EnterVerificationCode />", () => {
     // Fake timers stop React finishing its render after submit. This test
     // doesn't check the countdown, so real timers are fine here.
     jest.useRealTimers()
-    const mockGetToken = jest.fn().mockResolvedValue("clerk-session-token")
     ;(useAuth as jest.Mock).mockReturnValue({
       isLoaded: true,
       isSignedIn: false,
-      getToken: mockGetToken,
+      getToken: mockTokenAvailableAfterSignIn(),
     })
     ;(useLocation as jest.Mock).mockReturnValue({
       pathname: "/sign-in/code",
@@ -686,20 +691,25 @@ describe("<EnterVerificationCode />", () => {
     await user.paste("123456")
     await user.click(screen.getByRole("button", { name: t("createAccount.confirmCode") }))
 
+    // A full page load, so the profile is refetched with the new hc_session cookie
     await waitFor(() => {
-      expect(authorizeHousingCounselor).toHaveBeenCalledWith("jwt.token", "clerk-session-token")
+      // eslint-disable-next-line @typescript-eslint/unbound-method -- asserting on a jest mock
+      expect(window.location.assign).toHaveBeenCalledWith("/account?hcAccess=1")
     })
+    expect(mockNavigate).not.toHaveBeenCalled()
+    expect(authorizeHousingCounselor).toHaveBeenCalledWith("jwt.token", "clerk-session-token")
     expect(mockSignInFinalize).toHaveBeenCalledTimes(1)
-    expect(mockNavigate).toHaveBeenCalledWith("/account?hcAccess=1")
   })
 
   it("signs the housing counselor in and redirects with hcAccess=0 when access is denied", async () => {
     cleanup()
-    const mockGetToken = jest.fn().mockResolvedValue("clerk-session-token")
+    // Fake timers stop React finishing its render after submit. This test
+    // doesn't check the countdown, so real timers are fine here.
+    jest.useRealTimers()
     ;(useAuth as jest.Mock).mockReturnValue({
       isLoaded: true,
       isSignedIn: false,
-      getToken: mockGetToken,
+      getToken: mockTokenAvailableAfterSignIn(),
     })
     ;(useLocation as jest.Mock).mockReturnValue({
       pathname: "/sign-in/code",
@@ -713,17 +723,65 @@ describe("<EnterVerificationCode />", () => {
     ;(authorizeHousingCounselor as jest.Mock).mockRejectedValue(new Error("forbidden"))
     await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
 
-    const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime })
+    const user = userEvent.setup()
     await user.click(screen.getAllByRole("textbox")[0])
     await user.paste("123456")
     await user.click(screen.getByRole("button", { name: t("createAccount.confirmCode") }))
 
     await waitFor(() => {
-      expect(authorizeHousingCounselor).toHaveBeenCalledWith("jwt.token", "clerk-session-token")
+      expect(mockNavigate).toHaveBeenCalledWith("/account?hcAccess=0")
     })
+    expect(authorizeHousingCounselor).toHaveBeenCalledWith("jwt.token", "clerk-session-token")
     expect(mockSignInFinalize).toHaveBeenCalledTimes(1)
-    expect(mockNavigate).toHaveBeenCalledWith("/account?hcAccess=0")
   })
+
+  it.each([
+    [
+      "a server error",
+      Object.assign(new Error("Request failed with status code 500"), {
+        response: { status: 500 },
+      }),
+    ],
+    ["a network error", new Error("Network Error")],
+  ])(
+    "signs the housing counselor in to their own account when the delegate check fails with %s",
+    async (_description: string, delegateCheckError: Error) => {
+      cleanup()
+      // Fake timers stop React finishing its render after submit. This test
+      // doesn't check the countdown, so real timers are fine here.
+      jest.useRealTimers()
+      ;(useAuth as jest.Mock).mockReturnValue({
+        isLoaded: true,
+        isSignedIn: false,
+        getToken: mockTokenAvailableAfterSignIn(),
+      })
+      ;(useLocation as jest.Mock).mockReturnValue({
+        pathname: "/sign-in/code",
+        state: {
+          verificationCodeEmailAddress: "test@example.com",
+          housingCounselorToken: "jwt.token",
+          flow: AUTH_FLOW.SIGN_IN,
+        },
+      })
+      mockSignInResource.status = "complete"
+      ;(authorizeHousingCounselor as jest.Mock).mockRejectedValue(delegateCheckError)
+      await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
+
+      const user = userEvent.setup()
+      await user.click(screen.getAllByRole("textbox")[0])
+      await user.paste("123456")
+      await user.click(screen.getByRole("button", { name: t("createAccount.confirmCode") }))
+
+      await waitFor(() => {
+        expect(mockNavigate).toHaveBeenCalledWith("/account?hcAccess=0")
+      })
+      expect(authorizeHousingCounselor).toHaveBeenCalledWith("jwt.token", "clerk-session-token")
+      expect(mockSignInFinalize).toHaveBeenCalledTimes(1)
+      expect(screen.queryByTestId("error-message")?.textContent ?? "").not.toContain(
+        t("createAccount.codeInvalid.p1")
+      )
+    }
+  )
 
   it("does not sign in when the code is rejected", async () => {
     cleanup()
@@ -748,7 +806,36 @@ describe("<EnterVerificationCode />", () => {
     consoleError.mockRestore()
   })
 
-  it("does not sign the housing counselor in when there is no session token", async () => {
+  it("shows the invalid code error and skips the delegate check when a housing counselor's code is rejected", async () => {
+    cleanup()
+    const consoleError = jest.spyOn(console, "error").mockImplementation(() => {})
+    ;(useLocation as jest.Mock).mockReturnValue({
+      pathname: "/sign-in/code",
+      state: {
+        verificationCodeEmailAddress: "test@example.com",
+        housingCounselorToken: "jwt.token",
+        flow: AUTH_FLOW.SIGN_IN,
+      },
+    })
+    mockSignInVerifyCode.mockResolvedValue({
+      error: { errors: [{ code: "form_code_incorrect" }] },
+    })
+    await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
+
+    await pasteAndConfirmCode()
+    await waitFor(() => {
+      expect(screen.getByTestId("error-message")).toHaveTextContent(
+        t("createAccount.codeInvalid.p1")
+      )
+    })
+    expect(mockSignInFinalize).not.toHaveBeenCalled()
+    expect(authorizeHousingCounselor).not.toHaveBeenCalled()
+    expect(mockNavigate).not.toHaveBeenCalled()
+
+    consoleError.mockRestore()
+  })
+
+  it("signs the housing counselor in to their own account when there is no session token after sign-in", async () => {
     cleanup()
     const bearerTokenSpy = jest.spyOn(authStatus, "bearerToken").mockReturnValue(undefined)
     ;(useLocation as jest.Mock).mockReturnValue({
@@ -764,11 +851,10 @@ describe("<EnterVerificationCode />", () => {
 
     await submitCode()
     await waitFor(() => {
-      expect(bearerTokenSpy).toHaveBeenCalled()
+      expect(mockNavigate).toHaveBeenCalledWith("/account?hcAccess=0")
     })
+    expect(mockSignInFinalize).toHaveBeenCalledTimes(1)
     expect(authorizeHousingCounselor).not.toHaveBeenCalled()
-    expect(mockSignInFinalize).not.toHaveBeenCalled()
-    expect(mockNavigate).not.toHaveBeenCalled()
 
     bearerTokenSpy.mockRestore()
   })

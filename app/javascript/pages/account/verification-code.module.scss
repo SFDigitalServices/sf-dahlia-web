@@ -1,6 +1,6 @@
 .sentTo {
   font-size: var(--seeds-font-size-sm);
-  margin-bottom: var(--seeds-spacer-content);
+  margin-bottom: var(--seeds-s2);
 }
 
 .email {
@@ -11,12 +11,20 @@
   margin-left: var(--seeds-spacer-text);
 }
 
+.codeExpiration {
+  margin-bottom: var(--seeds-s2);
+  font-family: var(--seeds-font-alt-sans);
+  font-size: var(--seeds-font-size-sm);
+  font-weight: var(--seeds-font-weight-regular);
+}
+
 .codeField {
   font-weight: var(--seeds-font-weight-semibold);
+  margin-top: var(--seeds-s6);
 }
 
 .confirmButton {
-  margin: var(--seeds-spacer-content) 0;
+  margin: 0 0 var(--seeds-spacer-content) 0;
 }
 
 .resendSection {
@@ -69,5 +77,5 @@
 }
 
 .forgotPasswordDescription {
-  margin-bottom: var(--seeds-spacer-header);
+  font-size: var(--seeds-font-size-sm);
 }

@@ -28,7 +28,11 @@ import {
   getSignInCodePath,
 } from "../util/routeUtil"
 import { authorizeHousingCounselor, clearHousingCounselorSession } from "../api/authApiService"
-import { AUTH_TOAST_TO_RENDER, queueAuthenticationToast } from "./authenticationUtils"
+import {
+  AUTH_TOAST_TO_RENDER,
+  enterDelegatedAccount,
+  queueAuthenticationToast,
+} from "./authenticationUtils"
 import { useAuthSession } from "./session/AuthSessionProvider"
 import { useSignInSession } from "./session/useSignInSession"
 import { bearerToken, isAuthInitialized } from "./session/authStatus"
@@ -47,12 +51,6 @@ interface SignInFields {
 type SignInView = "verificationCode" | "password"
 
 const getHousingCounselorToken = () => new URLSearchParams(window.location.search).get("t")
-
-// A full page load rather than navigate(): the profile may already have been fetched
-// and cached before the hc_session cookie existed, and must be refetched as the seeker's.
-const enterDelegatedAccount = (destination: string) => {
-  window.location.assign(createPath(destination, { hcAccess: "1" }))
-}
 
 const HousingCounselorSignedOutToast = () => {
   const { state } = useLocation() as { state?: { housingCounselorSignedOut?: string } }
