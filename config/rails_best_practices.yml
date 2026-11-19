@@ -52,6 +52,11 @@ RemoveUnusedMethodsInControllersCheck:
         "Api::V1::AccountController#create_profile",
         "Api::V1::AccountController#update_housing_counselor",
         "Api::V1::HousingCounselorController#access",
+        "Api::V1::ShortFormController#validate_household",
+        "Api::V1::ShortFormController#upload_proof",
+        "Api::V1::ShortFormController#delete_proof",
+        "Api::V1::ShortFormController#show_listing_application_for_user",
+        "Api::V1::ShortFormController#claim_submitted_application",
       ],
   }
 RemoveUnusedMethodsInHelpersCheck: { except_methods: [] }
