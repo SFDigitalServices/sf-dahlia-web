@@ -2,6 +2,17 @@
 ###################################### CONTROLLER ##########################################
 ############################################################################################
 
+localizeDate = (dateString, locale) ->
+  return '' unless dateString
+
+  date = moment(dateString, ['YYYY-MM-DD', 'MMMM D, YYYY', 'MMMM D'], true)
+  return dateString unless date.isValid()
+
+  new Intl.DateTimeFormat(locale or 'en', {
+    month: 'long'
+    day: 'numeric'
+  }).format(date.toDate())
+
 SharedController = ($scope, $rootScope, $state, $stateParams, $window, $translate, SharedService, ExternalTranslateService) ->
   $scope.assetPaths = SharedService.assetPaths
   $scope.housingCounselors = SharedService.housingCounselors
@@ -30,8 +41,11 @@ SharedController = ($scope, $rootScope, $state, $stateParams, $window, $translat
   setAlertMessage = ->
     topMessage = if $window.TOP_MESSAGE then _.unescape($window.TOP_MESSAGE) else ''
     return $scope.alertMessage = '' unless topMessage
+    interpolationValues =
+      date: localizeDate($window.REQUIRED_LOGINS_DATE, $translate.use())
+      link: SharedService.buildUrl({name: 'dahlia.create-account'}, {lang: $translate.use() or 'en'})
 
-    $translate(topMessage).then(
+    $translate(topMessage, interpolationValues).then(
       (translatedMessage) ->
         $scope.alertMessage = translatedMessage
       ->

@@ -1306,7 +1306,8 @@
             "my_favorites": "我的最愛",
             "rent": "租賃",
             "sign_in": "登入",
-            "sign_out": "登出"
+            "sign_out": "登出",
+            "top_message_required_login": "從 {{date}} 起：您必須要有帳戶才能申請住房。如果您還沒有帳戶，請<a target='_self' href='{{link}}'>建立 DAHLIA 帳戶</a>。"
         },
         "page_title": {
             "additional_resources": "更多住房機會",

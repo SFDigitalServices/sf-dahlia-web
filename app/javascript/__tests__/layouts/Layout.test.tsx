@@ -8,7 +8,11 @@ import {
 import Layout from "../../layouts/Layout"
 import { AuthSessionProvider } from "../../authentication/session/AuthSessionProvider"
 import { clearHousingCounselorSession } from "../../api/authApiService"
-import { renderAndLoadAsync } from "../__util__/renderUtils"
+import {
+  mockWindowLocation,
+  renderAndLoadAsync,
+  restoreWindowLocation,
+} from "../__util__/renderUtils"
 import { mockProfileStub, setupUserContext } from "../__util__/accountUtils"
 
 jest.mock("../../api/authApiService", () => ({
@@ -61,6 +65,44 @@ describe("<Layout />", () => {
 
     expect(within(header).queryByText("Sign in")).toBeNull()
     expect(within(header).getByText("Rent")).not.toBeNull()
+  })
+
+  it("renders the top message date without a year", async () => {
+    const originalLocation = mockWindowLocation()
+    const previousTopMessage = process.env.TOP_MESSAGE
+    const previousRequiredLoginsDate = process.env.REQUIRED_LOGINS_DATE
+    Object.defineProperty(window.location, "pathname", { value: "/es/account" })
+    process.env.TOP_MESSAGE = "nav.topMessageRequiredLogin"
+    process.env.REQUIRED_LOGINS_DATE = "2026-12-12"
+
+    try {
+      const { container } = await renderAndLoadAsync(
+        <AuthSessionProvider>
+          <Layout>
+            <div>content</div>
+          </Layout>
+        </AuthSessionProvider>,
+        undefined,
+        ["/es/account"]
+      )
+      const topMessage = container.querySelector<HTMLElement>(".top-message-alert")
+
+      expect(topMessage).not.toBeNull()
+      expect(topMessage).toHaveTextContent(/\d{1,2} de diciembre/)
+      expect(topMessage).not.toHaveTextContent("2026")
+    } finally {
+      if (previousTopMessage === undefined) {
+        delete process.env.TOP_MESSAGE
+      } else {
+        process.env.TOP_MESSAGE = previousTopMessage
+      }
+      if (previousRequiredLoginsDate === undefined) {
+        delete process.env.REQUIRED_LOGINS_DATE
+      } else {
+        process.env.REQUIRED_LOGINS_DATE = previousRequiredLoginsDate
+      }
+      restoreWindowLocation(originalLocation)
+    }
   })
 
   it("shows the account navigation header without the avatar when signed in without a profile", async () => {
