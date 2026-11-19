@@ -1923,6 +1923,7 @@
   "nav.researchFeedback": "請<a target='_blank' href='%{researchUrl}'>註冊</a>以提供您對於市府網站的意見",
   "nav.signIn": "登入",
   "nav.signOut": "登出",
+  "nav.topMessageRequiredLogin": "從 %{date} 起：您必須要有帳戶才能申請住房。如果您還沒有帳戶，請<a href='%{link}'>建立 DAHLIA 帳戶</a>。",
   "pageTitle.additionalResources": "更多住房機會",
   "pageTitle.buy": "購買可負擔房屋",
   "pageTitle.createAccount": "建立帳戶",

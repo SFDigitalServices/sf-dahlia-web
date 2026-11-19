@@ -1,13 +1,14 @@
 { When, Then } = require('cucumber')
+EC = protractor.ExpectedConditions
 
 When /^I select "([^"]*)" as my language$/, (language) ->
-  switch language
-    when "Filipino"
-      element(By.id('submit-tl')).click()
-    when "Spanish"
-      element(By.id('submit-es')).click()
-    when "English"
-      element(By.id('submit-en')).click()
+  buttonId = switch language
+    when "Filipino" then 'submit-tl'
+    when "Spanish" then 'submit-es'
+    when "English" then 'submit-en'
+  languageButton = element(By.id(buttonId))
+  browser.wait(EC.presenceOf(languageButton), 10000)
+  languageButton.click()
 
 Then /^I should see "([^"]*)" selected in the translate bar language switcher$/, (language) ->
   activeLang = element(By.cssContainingText('.translate-bar li a.active', language))

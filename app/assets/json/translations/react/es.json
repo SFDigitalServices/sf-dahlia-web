@@ -1923,6 +1923,7 @@
   "nav.researchFeedback": "<a target='_blank' href='%{researchUrl}'>Regístrese</a> para darnos su opinión sobre los sitios web de la Ciudad.",
   "nav.signIn": "Inicie sesión",
   "nav.signOut": "Cierre sesión",
+  "nav.topMessageRequiredLogin": "A partir del %{date}: Necesitas una cuenta para solicitar vivienda. Si aún no tienes una, <a href='%{link}'>crea una cuenta en DAHLIA</a>.",
   "pageTitle.additionalResources": "Más oportunidades de vivienda",
   "pageTitle.buy": "Compre una vivienda asequible",
   "pageTitle.createAccount": "Crear una cuenta",
