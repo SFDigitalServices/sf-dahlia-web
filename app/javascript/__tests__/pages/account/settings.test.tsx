@@ -139,7 +139,7 @@ describe("<SettingsPage />", () => {
           await promise
         })
 
-        expect(screen.getByText("Your changes have been saved.")).not.toBeNull()
+        expect(screen.getByText("Name updated.")).toBeInTheDocument()
 
         await act(async () => {
           const closeButton = screen.getByLabelText("Close")
@@ -154,7 +154,7 @@ describe("<SettingsPage />", () => {
           )
         ).toBeNull()
 
-        expect(screen.queryByText("Your changes have been saved.")).toBeNull()
+        expect(screen.getByText("Name updated.")).not.toBeVisible()
 
         expect(put).toHaveBeenCalledWith(
           "/api/v1/account/update",
@@ -212,7 +212,7 @@ describe("<SettingsPage />", () => {
         expect(
           screen.queryByText("We will update any applications you have not submitted yet.")
         ).toBeNull()
-        expect(screen.getByText("Your changes have been saved.")).not.toBeNull()
+        expect(screen.getByText("Date of birth updated.")).toBeInTheDocument()
 
         await act(async () => {
           const closeButton = screen.getByLabelText("Close")
@@ -220,7 +220,7 @@ describe("<SettingsPage />", () => {
           await promise
         })
 
-        expect(screen.queryByText("Your changes have been saved.")).toBeNull()
+        expect(screen.getByText("Date of birth updated.")).not.toBeVisible()
 
         expect(put).toHaveBeenCalledWith(
           "/api/v1/account/update",
@@ -686,7 +686,7 @@ describe("<SettingsPage />", () => {
         await Promise.resolve()
       })
 
-      expect(screen.queryByText("New password saved.")).toBeNull()
+      expect(screen.getByText("New password saved.")).not.toBeVisible()
     })
   })
 
@@ -1089,6 +1089,45 @@ describe("<SettingsPage />", () => {
       expect(authenticatedPut).toHaveBeenCalledWith("/api/v1/auth", {
         user: { email: "new@example.com" },
       })
+    })
+
+    it("saves name and date of birth and closes the saved banners", async () => {
+      const response = { data: { contact: { ...mockProfileStub, DOB: "2000-02-06" } } }
+      ;(put as jest.Mock).mockResolvedValue(response)
+      ;(authenticatedPut as jest.Mock).mockResolvedValue(response)
+
+      // Name
+      await act(async () => {
+        fireEvent.click(screen.getByRole("button", { name: "Save name" }))
+        await Promise.resolve()
+      })
+
+      const nameSaved = await screen.findByText("Your changes have been saved.")
+      await act(async () => {
+        fireEvent.click(within(nameSaved.parentElement).getByLabelText("Close"))
+        await Promise.resolve()
+      })
+      expect(screen.queryByText("Your changes have been saved.")).toBeNull()
+
+      // Date of birth
+      await act(async () => {
+        fireEvent.change(screen.getByRole("spinbutton", { name: /month/i }), {
+          target: { value: 2 },
+        })
+        fireEvent.change(screen.getByRole("spinbutton", { name: /day/i }), { target: { value: 6 } })
+        fireEvent.change(screen.getByRole("spinbutton", { name: /year/i }), {
+          target: { value: 2000 },
+        })
+        fireEvent.click(screen.getByRole("button", { name: "Save date of birth" }))
+        await Promise.resolve()
+      })
+
+      const dobSaved = await screen.findByText("Your changes have been saved.")
+      await act(async () => {
+        fireEvent.click(within(dobSaved.parentElement).getByLabelText("Close"))
+        await Promise.resolve()
+      })
+      expect(screen.queryByText("Your changes have been saved.")).toBeNull()
     })
   })
   describe("when arriving after a failed reverification", () => {
