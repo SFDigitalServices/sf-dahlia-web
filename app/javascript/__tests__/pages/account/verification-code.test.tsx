@@ -549,6 +549,38 @@ describe("<EnterVerificationCode />", () => {
     })
   })
 
+  it("transfers from sign-in to create-an-account flow using a non-English locale", async () => {
+    cleanup()
+    Object.defineProperty(window.location, "pathname", { value: "/es/sign-in/code" })
+    ;(useLocation as jest.Mock).mockReturnValue({
+      pathname: "/es/sign-in/code",
+      state: { verificationCodeEmailAddress: "test@example.com", flow: AUTH_FLOW.SIGN_IN },
+    })
+    mockSignInVerifyCode.mockResolvedValue({
+      error: { errors: [{ code: "sign_up_if_missing_transfer" }] },
+    })
+    mockSignUpResource.status = "complete"
+    await renderAndLoadAsync(<EnterVerificationCode assetPaths={{}} />)
+
+    const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime })
+    await user.click(screen.getAllByRole("textbox")[0])
+    await user.paste("123456")
+    await user.click(screen.getByRole("button", { name: t("createAccount.confirmCode") }))
+
+    await waitFor(() => {
+      expect(mockSignInVerifyCode).toHaveBeenCalledWith({ code: "123456" })
+      expect(mockSignUpCreate).toHaveBeenCalledWith({
+        transfer: true,
+        locale: "es",
+        unsafeMetadata: { locale: "es" },
+      })
+    })
+    expect(mockSignUpFinalize).toHaveBeenCalledTimes(1)
+    expect(mockNavigate).toHaveBeenCalledWith("/es/add-password", {
+      state: { flow: AUTH_FLOW.CREATE_ACCOUNT },
+    })
+  })
+
   it("does not transfer to create account when sign-up is not ready", async () => {
     cleanup()
     const consoleError = jest.spyOn(console, "error").mockImplementation(() => {})
