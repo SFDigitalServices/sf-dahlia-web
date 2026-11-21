@@ -112,15 +112,13 @@ module DahliaBackend
       listing = fetch_listing(listing_id)
       return nil unless listing
 
-      formatted_date = format_lottery_date(listing.Lottery_Date)
-
       {
         email: email,
         listingId: listing_id,
         lotteryNumber: application_response&.[]('lotteryNumber').to_s,
         listingName: listing.Name.to_s,
         isRental: listing.RecordType.Name == 'Rental',
-        lotteryDate: formatted_date,
+        lotteryDate: listing.Lottery_Date.presence.to_s,
         leasingAgent: {
           name: listing.Leasing_Agent_Name.to_s,
           email: listing.Leasing_Agent_Email.to_s,
@@ -172,21 +170,8 @@ module DahliaBackend
       nil
     end
 
-    def format_lottery_date(lottery_date)
-      return '' unless lottery_date.present?
-
-      Time.zone.parse(lottery_date).strftime('%Y-%m-%d')
-    rescue StandardError => e
-      log_warn("Error parsing date: #{e.message}")
-      lottery_date.to_s
-    end
-
     def log_info(message)
       Rails.logger.info("[DahliaBackend::MessageService:log_info] #{message}")
-    end
-
-    def log_warn(message)
-      Rails.logger.warn("[DahliaBackend::MessageService:log_warn] #{message}")
     end
 
     def log_error(message, error)
