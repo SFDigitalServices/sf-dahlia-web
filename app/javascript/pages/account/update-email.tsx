@@ -9,6 +9,7 @@ import {
 } from "../../util/routeUtil"
 import { useNavigate } from "react-router"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
+import { useOwnEmailLockedForHousingCounselor } from "../../hooks/useOwnEmailLockedForHousingCounselor"
 import { AUTH_FLOW, UNLEASH_FLAG } from "../../modules/constants"
 import { useAuth } from "@clerk/react"
 import AuthLayout from "../../layouts/AuthLayout"
@@ -135,6 +136,7 @@ const UpdateEmail = (_props: { assetPaths: unknown }) => {
   const { needsReverification, redirectToReverification } = useReverificationRedirect(
     REVERIFICATION_FLOW.UPDATE_EMAIL
   )
+  const emailLocked = useOwnEmailLockedForHousingCounselor()
 
   useEffect(() => {
     if (!flagsReady) return
@@ -145,6 +147,10 @@ const UpdateEmail = (_props: { assetPaths: unknown }) => {
     if (!isLoaded) return
     if (!isSignedIn) {
       void navigate(getSignInPath())
+      return
+    }
+    if (emailLocked) {
+      void navigate(getMyAccountSettingsPath())
       return
     }
     if (needsReverification) {
@@ -159,11 +165,13 @@ const UpdateEmail = (_props: { assetPaths: unknown }) => {
     isSignedIn,
     navigate,
     isAccountInitialized,
+    emailLocked,
     needsReverification,
     redirectToReverification,
   ])
 
-  const ready = flagsReady && clerkEnabled && isLoaded && isSignedIn && !needsReverification
+  const ready =
+    flagsReady && clerkEnabled && isLoaded && isSignedIn && !emailLocked && !needsReverification
   if (!ready) {
     return null
   }
