@@ -79,6 +79,7 @@ const SignInFlow = () => {
     UNLEASH_FLAG.REQUIRED_LOGINS_MESSAGE,
     false
   )
+  const { unleashFlag: requiredLoginsEnabled } = useFeatureFlag(UNLEASH_FLAG.REQUIRED_LOGINS, false)
   const { unleashFlag: housingCounselorAccessEnabled } = useFeatureFlag(
     UNLEASH_FLAG.HOUSING_COUNSELOR_ACCESS,
     false
@@ -409,7 +410,7 @@ const SignInFlow = () => {
         <Button variant="primary-outlined" size="sm" href={getCreateAccountPath()}>
           {t("signIn.createAccount")}
         </Button>
-        {returnUrl && (
+        {returnUrl && !requiredLoginsEnabled && (
           <Link href={returnUrl} className={styles.continueWithoutSigningIn}>
             {t("b1aWelcomeBack.continueWithoutSigningIn")}
           </Link>
