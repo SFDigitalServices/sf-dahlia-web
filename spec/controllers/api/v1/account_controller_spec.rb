@@ -327,6 +327,43 @@ RSpec.describe Api::V1::AccountController, type: :controller do
           expect(Force::AccountService).to have_received(:create_or_update)
         end
 
+        # Fails closed through ApiController's catch-all: the save never happens.
+        # The response body (error class and message) is the pre-existing
+        # render_err behavior, tracked separately (DAH-4230 follow-up ticket 10).
+        context 'when a lookup the email rule depends on fails' do
+          let(:personal_email_change) { contact_params.merge(email: 'personal@example.com') }
+
+          before { allow(Sentry).to receive(:capture_exception) }
+
+          # Given a housing counselor signed in as themselves
+          #   And Salesforce times out while checking whether they are a counselor
+          # When they try to change their email
+          # Then the change is refused and Salesforce is not updated
+          it 'refuses the change when the counselor lookup times out' do
+            allow(Force::HousingCounselorService).to receive(:housing_counselor?)
+              .and_raise(Faraday::TimeoutError)
+
+            put :update, params: { contact: personal_email_change }
+
+            expect(response).to have_http_status(:gateway_timeout)
+            expect(Force::AccountService).not_to have_received(:create_or_update)
+          end
+
+          # Given a housing counselor signed in as themselves
+          #   And Clerk can't be reached to read their sign-in email
+          # When they try to change their email
+          # Then the change is refused and Salesforce is not updated
+          it 'refuses the change when Clerk is unreachable' do
+            allow(ClerkService).to receive(:email_address)
+              .and_raise(ClerkClient::ConnectionError, 'Clerk API is unreachable')
+
+            put :update, params: { contact: personal_email_change }
+
+            expect(response).to have_http_status(:gateway_timeout)
+            expect(Force::AccountService).not_to have_received(:create_or_update)
+          end
+        end
+
         context 'and the housing counselor flag is off' do
           before do
             allow(Rails.configuration.unleash).to receive(:is_enabled?)
