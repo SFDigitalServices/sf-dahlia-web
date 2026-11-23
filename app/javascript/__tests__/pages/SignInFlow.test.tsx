@@ -208,9 +208,10 @@ describe("<SignInFlow />", () => {
       expect(screen.getByRole("link", { name: /^create account$/i })).not.toBeNull()
     })
 
-    // Given the required-login flag is off and I am signed out
+    // Given the required-login flag is off, the required-logins message flag is on,
+    //   and I am signed out
     // When I arrive at sign-in from "Apply Online"
-    // Then "Continue without signing in" takes me back to the application
+    // Then the message is shown and "Continue without signing in" takes me back to the application
     it("shows 'Continue without signing in' when the required logins flag is off", async () => {
       ;(useFeatureFlag as jest.Mock).mockImplementation((flagName: string) => ({
         flagsReady: true,
@@ -219,9 +220,26 @@ describe("<SignInFlow />", () => {
 
       await renderAndLoadAsync(<SignIn assetPaths={{}} />, undefined, applyEntry)
 
+      expect(screen.getByText(/you need to sign in to apply on DAHLIA/i)).not.toBeNull()
       expect(
         screen.getByRole("link", { name: /continue without signing in/i }).getAttribute("href")
       ).toBe("/listings/test/apply")
+    })
+
+    // Given the required-login flag is on, the required-logins message flag is off,
+    //   and I am signed out
+    // When I arrive at sign-in from "Apply Online"
+    // Then neither the message nor "Continue without signing in" is shown
+    it("hides 'Continue without signing in' independently of the required logins message flag", async () => {
+      ;(useFeatureFlag as jest.Mock).mockImplementation((flagName: string) => ({
+        flagsReady: true,
+        unleashFlag: flagName !== UNLEASH_FLAG.REQUIRED_LOGINS_MESSAGE,
+      }))
+
+      await renderAndLoadAsync(<SignIn assetPaths={{}} />, undefined, applyEntry)
+
+      expect(screen.queryByText(/you need to sign in to apply on DAHLIA/i)).toBeNull()
+      expect(screen.queryByRole("link", { name: /continue without signing in/i })).toBeNull()
     })
   })
 
