@@ -304,6 +304,69 @@ RSpec.describe Api::V1::AccountController, type: :controller do
           expect(response).to have_http_status(:forbidden)
           expect(Force::AccountService).not_to have_received(:create_or_update)
         end
+
+        # Given the housing counselor flag is on
+        #   And a housing counselor signed in as themselves
+        # When they save their name, phone, or date of birth (email unchanged in the request)
+        # Then the save succeeds, without asking Salesforce whether they are a counselor
+        it 'saves other settings when the email is unchanged' do
+          put :update, params: { contact: contact_params.merge(email: sign_in_email) }
+
+          expect(response).to have_http_status(:ok)
+          expect(Force::AccountService).to have_received(:create_or_update)
+          expect(Force::HousingCounselorService).not_to have_received(:housing_counselor?)
+        end
+
+        # Given a housing counselor signed in as themselves
+        # When the request's email differs from their sign-in email only in capitalization
+        # Then it is treated as unchanged and the save succeeds
+        it 'treats an email differing only in capitalization as unchanged' do
+          put :update, params: { contact: contact_params.merge(email: sign_in_email.upcase) }
+
+          expect(response).to have_http_status(:ok)
+          expect(Force::AccountService).to have_received(:create_or_update)
+        end
+
+        context 'and the housing counselor flag is off' do
+          before do
+            allow(Rails.configuration.unleash).to receive(:is_enabled?)
+              .with(HousingCounselorSession::FEATURE_FLAG).and_return(false)
+          end
+
+          # Given the housing counselor flag is off
+          #   And a housing counselor signed in as themselves
+          # When they change their email
+          # Then it works as today, and no counselor-status lookup is made
+          it 'lets them change their email without looking up counselor status' do
+            put :update, params: { contact: contact_params.merge(email: 'personal@example.com') }
+
+            expect(response).to have_http_status(:ok)
+            expect(Force::AccountService).to have_received(:create_or_update)
+            expect(Force::HousingCounselorService).not_to have_received(:housing_counselor?)
+          end
+        end
+      end
+
+      # Given the housing counselor flag is on
+      #   And an applicant who is not a housing counselor
+      # When they change their email
+      # Then it works as today
+      context 'when the signed-in user is not a housing counselor' do
+        before do
+          allow(ClerkService).to receive(:email_address)
+            .with(clerk_user_id)
+            .and_return('applicant@example.com')
+          allow(Force::HousingCounselorService).to receive(:housing_counselor?)
+            .with(contact_id)
+            .and_return(false)
+        end
+
+        it 'lets them change their email' do
+          put :update, params: { contact: contact_params.merge(email: 'new@example.com') }
+
+          expect(response).to have_http_status(:ok)
+          expect(Force::AccountService).to have_received(:create_or_update)
+        end
       end
     end
 
