@@ -80,6 +80,10 @@ class ClerkService
     Rails.logger.info("Salesforce contact id stored for user #{user_id}")
   end
 
+  def self.revoke_session(session_id)
+    ClerkClient.execute { |client| client.sessions.revoke(session_id: session_id) }
+  end
+
   def self.salesforce_contact_id(user_id)
     user = ClerkClient.execute { |client| client.users.get(user_id: user_id)&.user }
     raise NotFoundError, "User #{user_id} is missing" if user.nil?
