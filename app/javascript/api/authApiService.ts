@@ -14,7 +14,11 @@ import { AuthHeaders, setAuthHeaders } from "../authentication/token"
 import { Application } from "./types/rails/application/RailsApplication"
 import { getCurrentLanguage, getRoutePrefix, LanguagePrefix } from "../util/languageUtil"
 import { getResetPasswordPath } from "../util/routeUtil"
-import { housingCounselorAgencies, updateHousingCounselor } from "./apiEndpoints"
+import {
+  housingCounselorAgencies,
+  housingCounselorStatus,
+  updateHousingCounselor,
+} from "./apiEndpoints"
 
 const contactObject = (user: User): Contact => ({
   email: user.email,
@@ -177,6 +181,12 @@ export const getHousingCounselorAgencies = async (
     housingCounselorAgencies(),
     clerkHeaders(sessionToken)
   ).then(({ data }) => data.agencies)
+
+// Display only: the server enforces the counselor email rule on its own.
+export const getHousingCounselorStatus = async (sessionToken: string): Promise<boolean> =>
+  get<{ isHousingCounselor?: unknown }>(housingCounselorStatus(), clerkHeaders(sessionToken)).then(
+    ({ data }) => data.isHousingCounselor === true
+  )
 
 export const authorizeHousingCounselor = async (
   token: string,
