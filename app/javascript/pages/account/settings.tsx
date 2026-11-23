@@ -7,7 +7,7 @@ import { useSignUpSession } from "../../authentication/session/useSignUpSession"
 import { bearerToken } from "../../authentication/session/authStatus"
 import { Form, DOBFieldValues, t } from "@bloom-housing/ui-components"
 import { DeepMap, FieldError, useForm } from "react-hook-form"
-import { Card, Alert, Button, Heading } from "@bloom-housing/ui-seeds"
+import { Card, Alert, Button, Heading, Message } from "@bloom-housing/ui-seeds"
 import {
   AppPages,
   getAddPasswordPath,
@@ -37,6 +37,7 @@ import Toast from "./components/Toast"
 import "./styles/account.scss"
 import sharedStyles from "./shared-styles.module.scss"
 import {
+  getHousingCounselorStatus,
   updateNameOrDOB as apiUpdateNameOrDOB,
   RequestAuth,
   updateEmail,
@@ -209,15 +210,54 @@ const EmailSectionDevise = ({ user, setUser }: SectionProps) => {
   )
 }
 
+// DAH-4320: display only; the server refuses a counselor's own email change on its own.
+const useOwnEmailLockedForHousingCounselor = () => {
+  const { profile } = useContext(UserContext)
+  const { getCredentials } = useAuthSession()
+  const { unleashFlag: housingCounselorAccessEnabled } = useFeatureFlag(
+    UNLEASH_FLAG.HOUSING_COUNSELOR_ACCESS,
+    false
+  )
+  const actingAsThemselves = Boolean(profile) && !profile.isDelegated
+  const [locked, setLocked] = useState(false)
+
+  useEffect(() => {
+    if (!housingCounselorAccessEnabled || !actingAsThemselves) return
+    void (async () => {
+      const sessionToken = bearerToken(await getCredentials())
+      if (!sessionToken) return
+      try {
+        setLocked(await getHousingCounselorStatus(sessionToken))
+      } catch {
+        // Leave the section as usual; the server still enforces the rule.
+      }
+    })()
+  }, [housingCounselorAccessEnabled, actingAsThemselves, getCredentials])
+
+  return locked
+}
+
+const HousingCounselorEmailMessage = () => (
+  <Message className={settingsStyles.settingsDescription}>
+    <p>{t("accountSettings.email.housingCounselor.intro")}</p>
+    <ol className="list-decimal pl-6">
+      <li>{t("accountSettings.email.housingCounselor.step1")}</li>
+      <li>{renderInlineMarkup(t("accountSettings.email.housingCounselor.step2"))}</li>
+    </ol>
+  </Message>
+)
+
 const EmailSection = () => {
   const navigate = useNavigate()
   const { user } = useSignUpSession()
   const loginEmail = user?.primaryEmailAddress?.emailAddress
+  const emailLocked = useOwnEmailLockedForHousingCounselor()
 
   return (
     <FormSection>
       <Heading size="md">{t("accountSettings.email.title")}</Heading>
       <p className={settingsStyles.settingsDescription}>{t("accountSettings.email.description")}</p>
+      {emailLocked && <HousingCounselorEmailMessage />}
       <div className={settingsStyles.settingsEmailFieldset}>
         <legend className={"fieldset-legend"}>{t("label.emailAddress")}</legend>
         <p>{loginEmail ?? null}</p>
@@ -226,6 +266,7 @@ const EmailSection = () => {
         <Button
           type="button"
           variant="primary-outlined"
+          disabled={emailLocked}
           onClick={() => {
             void navigate(getUpdateEmailPath(), {
               state: { flow: AUTH_FLOW.UPDATE_EMAIL },
