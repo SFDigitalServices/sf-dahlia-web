@@ -35,3 +35,9 @@
   @extend .settingsText;
   padding-top: var(--seeds-s4);
 }
+
+.settingsOrderedList {
+  list-style: decimal;
+  padding-left: var(--seeds-s5);
+  margin: 0;
+}

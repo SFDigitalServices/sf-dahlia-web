@@ -213,7 +213,7 @@ const EmailSectionDevise = ({ user, setUser }: SectionProps) => {
 const HousingCounselorEmailMessage = () => (
   <Message className={settingsStyles.settingsDescription}>
     <p>{t("accountSettings.email.housingCounselor.intro")}</p>
-    <ol className="list-decimal pl-6">
+    <ol className={settingsStyles.settingsOrderedList}>
       <li>{t("accountSettings.email.housingCounselor.step1")}</li>
       <li>{renderInlineMarkup(t("accountSettings.email.housingCounselor.step2"))}</li>
     </ol>
