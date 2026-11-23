@@ -22,6 +22,7 @@ RSpec.describe Api::V1::AccountController, type: :controller do
     # disabled'.
     allow(Rails.configuration.unleash).to receive(:is_enabled?)
       .with(HousingCounselorSession::FEATURE_FLAG).and_return(true)
+    allow(ClerkService).to receive(:revoke_session)
 
     allow(Force::AccountService).to receive(:create_or_update)
     allow(Emailer).to receive_message_chain(:account_update, :deliver_later)
@@ -158,7 +159,8 @@ RSpec.describe Api::V1::AccountController, type: :controller do
           expect(response).to have_http_status(:unauthorized)
           expect(JSON.parse(response.body)).to eq('error' => 'unauthorized')
           expect(Force::ShortFormService).not_to have_received(:get_for_user)
-          expect(cookies[:hc_session]).to be_present
+          expect(cookies[:hc_session]).to be_blank
+          expect(ClerkService).to have_received(:revoke_session).with(clerk_sid)
         end
       end
     end
@@ -362,7 +364,8 @@ RSpec.describe Api::V1::AccountController, type: :controller do
         expect(JSON.parse(response.body)).to eq('error' => 'unauthorized')
         expect(Force::AccountService).not_to have_received(:create_or_update)
         expect(Emailer).not_to have_received(:account_update)
-        expect(cookies[:hc_session]).to be_present
+        expect(cookies[:hc_session]).to be_blank
+        expect(ClerkService).to have_received(:revoke_session).with(clerk_sid)
       end
     end
 
@@ -581,7 +584,8 @@ RSpec.describe Api::V1::AccountController, type: :controller do
         expect(Force::AccountService).not_to have_received(:create_or_update)
         expect(DahliaBackend::MessageService)
           .not_to have_received(:send_housing_counselor_access)
-        expect(cookies[:hc_session]).to be_present
+        expect(cookies[:hc_session]).to be_blank
+        expect(ClerkService).to have_received(:revoke_session).with(clerk_sid)
       end
     end
 
@@ -784,9 +788,9 @@ RSpec.describe Api::V1::AccountController, type: :controller do
       # to be silently treated the same as "no hc_session," so profile fell
       # back to showing the housing counselor their own Salesforce contact
       # instead of erroring - a silent identity mix-up. It must now render
-      # unauthorized instead of ever falling back in this case, and it must
-      # leave the cookie in place (rather than discarding it) so a later
-      # request can retry re-verification once Salesforce recovers.
+      # unauthorized instead of ever falling back in this case. It fails closed:
+      # the cookie is discarded and the Clerk session revoked, so there is no
+      # signed-in counselor left to fall back to on a later request.
       context 'and the cookie has expired and Salesforce raises a transient error ' \
               'during the re-check' do
         it 'returns unauthorized rather than silently falling back to the ' \
@@ -802,7 +806,8 @@ RSpec.describe Api::V1::AccountController, type: :controller do
           expect(response).to have_http_status(:unauthorized)
           expect(JSON.parse(response.body)).to eq('error' => 'unauthorized')
           expect(Force::AccountService).not_to have_received(:get)
-          expect(cookies[:hc_session]).to be_present
+          expect(cookies[:hc_session]).to be_blank
+          expect(ClerkService).to have_received(:revoke_session).with(clerk_sid)
         end
       end
     end
@@ -982,7 +987,8 @@ RSpec.describe Api::V1::AccountController, type: :controller do
         expect(JSON.parse(response.body)).to eq('error' => 'unauthorized')
         expect(Force::AccountService).not_to have_received(:create_or_update)
         expect(ClerkService).not_to have_received(:store_salesforce_contact_id)
-        expect(cookies[:hc_session]).to be_present
+        expect(cookies[:hc_session]).to be_blank
+        expect(ClerkService).to have_received(:revoke_session).with(clerk_sid)
       end
     end
   end
