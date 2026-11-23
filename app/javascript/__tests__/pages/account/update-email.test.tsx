@@ -6,6 +6,7 @@ import React from "react"
 import { useLocation, useNavigate } from "react-router"
 import { useSignUpSession } from "../../../authentication/session/useSignUpSession"
 import { useFeatureFlag } from "../../../hooks/useFeatureFlag"
+import { useOwnEmailLockedForHousingCounselor } from "../../../hooks/useOwnEmailLockedForHousingCounselor"
 import { AUTH_FLOW } from "../../../modules/constants"
 import UpdateEmail from "../../../pages/account/update-email"
 import {
@@ -45,6 +46,10 @@ jest.mock("../../../authentication/session/useSignUpSession", () => ({
   useSignUpSession: jest.fn(),
 }))
 
+jest.mock("../../../hooks/useOwnEmailLockedForHousingCounselor", () => ({
+  useOwnEmailLockedForHousingCounselor: jest.fn(),
+}))
+
 const makeUser = (overrides = {}) => ({
   primaryEmailAddress: { emailAddress: "current@example.com" },
   primaryEmailAddressId: "current",
@@ -79,6 +84,7 @@ describe("<UpdateEmail />", () => {
     ;(useNavigate as jest.Mock).mockReturnValue(mockNavigate)
     ;(useLocation as jest.Mock).mockReturnValue({ pathname: "/update-email", state: null })
     ;(useFeatureFlag as jest.Mock).mockReturnValue({ flagsReady: true, unleashFlag: true })
+    ;(useOwnEmailLockedForHousingCounselor as jest.Mock).mockReturnValue(false)
     // Same object every call, so getToken keeps one identity across renders
     ;(useAuth as jest.Mock).mockReturnValue({
       isLoaded: true,
@@ -92,6 +98,30 @@ describe("<UpdateEmail />", () => {
     jest.restoreAllMocks()
     restoreWindowLocation(originalLocation)
     cleanup()
+  })
+
+  // DAH-4320
+  // Given the HC flag is on and a housing counselor signed in as themselves
+  // When they go straight to the update-email page
+  // Then they are sent back to account settings, and no verification code is sent
+  describe("when a housing counselor signed in as themselves opens the page", () => {
+    beforeEach(() => {
+      ;(useOwnEmailLockedForHousingCounselor as jest.Mock).mockReturnValue(true)
+    })
+
+    it("sends them back to account settings", async () => {
+      await renderPage()
+
+      expect(mockNavigate).toHaveBeenCalledWith(getMyAccountSettingsPath())
+    })
+
+    it("does not show the form, so no verification code can be requested", async () => {
+      const user = makeUser()
+      await renderPage(user)
+
+      expect(screen.queryByRole("textbox")).not.toBeInTheDocument()
+      expect(user.createEmailAddress).not.toHaveBeenCalled()
+    })
   })
 
   it("redirects to sign-in when clerk is disabled", async () => {
