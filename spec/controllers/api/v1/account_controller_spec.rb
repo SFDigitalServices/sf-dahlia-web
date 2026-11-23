@@ -279,6 +279,32 @@ RSpec.describe Api::V1::AccountController, type: :controller do
           expect(Sentry).to have_received(:capture_exception).with(error)
         end
       end
+
+      # DAH-4320: for security, a housing counselor can't move their own
+      # account to another (e.g. personal) email address.
+      context 'when the signed-in user is a housing counselor acting as themselves' do
+        let(:sign_in_email) { 'counselor@agency.example' }
+
+        before do
+          allow(ClerkService).to receive(:email_address)
+            .with(clerk_user_id)
+            .and_return(sign_in_email)
+          allow(Force::HousingCounselorService).to receive(:housing_counselor?)
+            .with(contact_id)
+            .and_return(true)
+        end
+
+        # Given the housing counselor flag is on
+        #   And a housing counselor signed in as themselves
+        # When a request to change their email reaches the server
+        # Then it is refused (403) and Salesforce is not updated
+        it 'refuses an email change and does not update Salesforce' do
+          put :update, params: { contact: contact_params.merge(email: 'personal@example.com') }
+
+          expect(response).to have_http_status(:forbidden)
+          expect(Force::AccountService).not_to have_received(:create_or_update)
+        end
+      end
     end
 
     # Regression coverage for a confirmed code-review finding: #update always
