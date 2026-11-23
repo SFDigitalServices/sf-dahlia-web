@@ -124,6 +124,15 @@ class Api::V1::AccountController < ApiController
     render json: { contact: salesforce_contact }
   end
 
+  def housing_counselor_status
+    unless hc_session_feature_enabled?
+      render json: { error: 'not_found' }, status: :not_found
+      return
+    end
+
+    render json: { isHousingCounselor: signed_in_as_housing_counselor? }
+  end
+
   def check_account
     if User.find_by_email(params[:email]&.downcase)
       render json: { account_exists: true }
@@ -200,8 +209,8 @@ class Api::V1::AccountController < ApiController
 
   def authenticate_user!(*)
     return authenticate_clerk_or_devise_user!(*) if action_name == 'update'
-    return super unless %w[profile create_profile
-                           update_housing_counselor my_applications].include?(action_name)
+    return super unless %w[profile create_profile update_housing_counselor
+                           housing_counselor_status my_applications].include?(action_name)
 
     @clerk_user_id = clerk&.user_id
     if @clerk_user_id.blank?

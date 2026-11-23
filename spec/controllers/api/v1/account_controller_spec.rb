@@ -284,6 +284,7 @@ RSpec.describe Api::V1::AccountController, type: :controller do
       # account to another (e.g. personal) email address.
       context 'when the signed-in user is a housing counselor acting as themselves' do
         let(:sign_in_email) { 'counselor@agency.example' }
+        let(:email_change_params) { contact_params.merge(email: 'personal@example.com') }
 
         before do
           allow(ClerkService).to receive(:email_address)
@@ -299,7 +300,7 @@ RSpec.describe Api::V1::AccountController, type: :controller do
         # When a request to change their email reaches the server
         # Then it is refused (403) and Salesforce is not updated
         it 'refuses an email change and does not update Salesforce' do
-          put :update, params: { contact: contact_params.merge(email: 'personal@example.com') }
+          put :update, params: { contact: email_change_params }
 
           expect(response).to have_http_status(:forbidden)
           expect(Force::AccountService).not_to have_received(:create_or_update)
@@ -307,7 +308,7 @@ RSpec.describe Api::V1::AccountController, type: :controller do
 
         # Given the housing counselor flag is on
         #   And a housing counselor signed in as themselves
-        # When they save their name, phone, or date of birth (email unchanged in the request)
+        # When they save their name, phone, or date of birth (email unchanged)
         # Then the save succeeds, without asking Salesforce whether they are a counselor
         it 'saves other settings when the email is unchanged' do
           put :update, params: { contact: contact_params.merge(email: sign_in_email) }
@@ -321,7 +322,8 @@ RSpec.describe Api::V1::AccountController, type: :controller do
         # When the request's email differs from their sign-in email only in capitalization
         # Then it is treated as unchanged and the save succeeds
         it 'treats an email differing only in capitalization as unchanged' do
-          put :update, params: { contact: contact_params.merge(email: sign_in_email.upcase) }
+          put :update,
+              params: { contact: contact_params.merge(email: sign_in_email.upcase) }
 
           expect(response).to have_http_status(:ok)
           expect(Force::AccountService).to have_received(:create_or_update)
@@ -331,8 +333,6 @@ RSpec.describe Api::V1::AccountController, type: :controller do
         # The response body (error class and message) is the pre-existing
         # render_err behavior, tracked separately (DAH-4230 follow-up ticket 10).
         context 'when a lookup the email rule depends on fails' do
-          let(:personal_email_change) { contact_params.merge(email: 'personal@example.com') }
-
           before { allow(Sentry).to receive(:capture_exception) }
 
           # Given a housing counselor signed in as themselves
@@ -343,7 +343,7 @@ RSpec.describe Api::V1::AccountController, type: :controller do
             allow(Force::HousingCounselorService).to receive(:housing_counselor?)
               .and_raise(Faraday::TimeoutError)
 
-            put :update, params: { contact: personal_email_change }
+            put :update, params: { contact: email_change_params }
 
             expect(response).to have_http_status(:gateway_timeout)
             expect(Force::AccountService).not_to have_received(:create_or_update)
@@ -357,7 +357,7 @@ RSpec.describe Api::V1::AccountController, type: :controller do
             allow(ClerkService).to receive(:email_address)
               .and_raise(ClerkClient::ConnectionError, 'Clerk API is unreachable')
 
-            put :update, params: { contact: personal_email_change }
+            put :update, params: { contact: email_change_params }
 
             expect(response).to have_http_status(:gateway_timeout)
             expect(Force::AccountService).not_to have_received(:create_or_update)
@@ -375,11 +375,12 @@ RSpec.describe Api::V1::AccountController, type: :controller do
           # When they change their email
           # Then it works as today, and no counselor-status lookup is made
           it 'lets them change their email without looking up counselor status' do
-            put :update, params: { contact: contact_params.merge(email: 'personal@example.com') }
+            put :update, params: { contact: email_change_params }
 
             expect(response).to have_http_status(:ok)
             expect(Force::AccountService).to have_received(:create_or_update)
-            expect(Force::HousingCounselorService).not_to have_received(:housing_counselor?)
+            expect(Force::HousingCounselorService)
+              .not_to have_received(:housing_counselor?)
           end
         end
       end
@@ -734,6 +735,80 @@ RSpec.describe Api::V1::AccountController, type: :controller do
         expect(DahliaBackend::MessageService)
           .not_to have_received(:send_housing_counselor_access)
         expect(cookies[:hc_session]).to be_present
+      end
+    end
+  end
+
+  # DAH-4320: tells the account settings page whether to lock the email section.
+  # Display only - the update endpoint enforces the rule on its own.
+  describe 'GET #housing_counselor_status' do
+    let(:clerk_user_id) { 'user_abc123' }
+    let(:contact_id) { '003ABC' }
+
+    before do
+      stub_clerk(user_id: clerk_user_id)
+      allow(ClerkService).to receive(:salesforce_contact_id)
+        .with(clerk_user_id)
+        .and_return(contact_id)
+      allow(Force::HousingCounselorService).to receive(:housing_counselor?)
+        .with(contact_id)
+        .and_return(true)
+    end
+
+    # Given the housing counselor flag is on
+    #   And a housing counselor signed in with Clerk
+    # When the page asks for their counselor status
+    # Then it says they are a housing counselor
+    it 'reports a housing counselor' do
+      get :housing_counselor_status
+
+      expect(response).to have_http_status(:ok)
+      expect(JSON.parse(response.body)).to eq('isHousingCounselor' => true)
+    end
+
+    # Given the housing counselor flag is on
+    #   And an applicant who is not a housing counselor
+    # When the page asks for their counselor status
+    # Then it says they are not a housing counselor
+    it 'reports a user who is not a housing counselor' do
+      allow(Force::HousingCounselorService).to receive(:housing_counselor?)
+        .with(contact_id)
+        .and_return(false)
+
+      get :housing_counselor_status
+
+      expect(response).to have_http_status(:ok)
+      expect(JSON.parse(response.body)).to eq('isHousingCounselor' => false)
+    end
+
+    # Given the housing counselor flag is off
+    # When the page asks for counselor status
+    # Then it gets not found, and no Salesforce lookup is made
+    context 'when the housing counselor flag is off' do
+      before do
+        allow(Rails.configuration.unleash).to receive(:is_enabled?)
+          .with(HousingCounselorSession::FEATURE_FLAG).and_return(false)
+      end
+
+      it 'returns not found without looking up counselor status' do
+        get :housing_counselor_status
+
+        expect(response).to have_http_status(:not_found)
+        expect(Force::HousingCounselorService).not_to have_received(:housing_counselor?)
+      end
+    end
+
+    # Given no Clerk session
+    # When counselor status is requested
+    # Then it is unauthorized, and no Salesforce lookup is made
+    context 'when Clerk session is missing' do
+      before { allow(controller).to receive(:clerk).and_return(nil) }
+
+      it 'returns unauthorized without looking up counselor status' do
+        get :housing_counselor_status
+
+        expect(response).to have_http_status(:unauthorized)
+        expect(Force::HousingCounselorService).not_to have_received(:housing_counselor?)
       end
     end
   end
