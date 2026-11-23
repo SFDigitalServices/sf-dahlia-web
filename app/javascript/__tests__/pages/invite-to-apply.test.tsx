@@ -98,6 +98,7 @@ describe("Invite to Apply", () => {
   afterEach(() => {
     // Restore console.error after each test
     jest.restoreAllMocks()
+    window.history.pushState({}, "", "/")
   })
   describe("Invite to Apply - user responses (deadline passed, withdrawn, contact me later)", () => {
     it("renders deadline passed card", async () => {
@@ -346,6 +347,29 @@ describe("Invite to Apply", () => {
           })
         )
       ).toBeInTheDocument()
+    })
+
+    // Given an applicant on the I2A next-steps page (Spanish)
+    // When the page renders the documents link
+    // Then it points to the next-steps documents route, not the deprecated invite-to-apply one
+    it("links to the next-steps documents page in the current language", async () => {
+      window.history.pushState({}, "", `/es/listings/${mockListing.Id}/next-steps`)
+
+      await renderWithContext(
+        <InviteToPage
+          assetPaths={"/"}
+          urlParams={{
+            type: INVITE_TO_X.APPLY,
+            deadline: mockFutureDeadline,
+            act: "yes",
+          }}
+        />
+      )
+
+      expect(screen.getByRole("link", { name: "Check what documents you need" })).toHaveAttribute(
+        "href",
+        `/es/listings/${mockListing.Id}/next-steps/documents`
+      )
     })
 
     it("renders documents list page", async () => {

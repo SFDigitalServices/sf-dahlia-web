@@ -97,12 +97,7 @@ const PAGE_ROUTES = [
   [Reverification, "/reverification"],
 ] as const
 
-const INVITE_TO_PATHS = [
-  "/listings/:id/next-steps",
-  "/listings/:id/next-steps/documents",
-  "/listings/:id/invite-to-apply",
-  "/listings/:id/invite-to-apply/documents",
-] as const
+const INVITE_TO_PATHS = ["/listings/:id/next-steps", "/listings/:id/next-steps/documents"] as const
 
 // Register /en/path in addition to /path for English localization
 const localizedPaths = (path: string): string[] => [
