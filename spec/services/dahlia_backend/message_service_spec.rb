@@ -194,6 +194,16 @@ RSpec.describe DahliaBackend::MessageService do
 
         service.send_application_confirmation(application_params, application_response)
       end
+
+      it 'sends an empty lottery date when the listing date is an empty string' do
+        listing_data['Lottery_Date'] = ''
+
+        expect(client).to receive(:post).with('/messages/application-submission', hash_including(
+                                                                                    lotteryDate: '',
+                                                                                  ))
+
+        service.send_application_confirmation(application_params, application_response)
+      end
     end
 
     context 'with invalid lottery date format' do
