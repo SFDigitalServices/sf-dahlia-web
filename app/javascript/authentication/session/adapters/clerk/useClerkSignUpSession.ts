@@ -23,16 +23,23 @@ export const useClerkSignUpSession = (): SignUpSession => {
   // Clerk types signUp as always present, but the calls below dereference it.
   const canStartRequest = !isBusy && !!signUp
 
+  const createSignUpWithLocale = useCallback(
+    async (createParams: { emailAddress: string } | { transfer: true }) => {
+      const locale = getCurrentLanguage()
+      return signUp.create({
+        ...createParams,
+        locale, // this locale does not get saved to the created user
+        unsafeMetadata: { locale }, // client-side SDK can only write arbitrary data to `unsafeMetadata`
+      })
+    },
+    [signUp]
+  )
+
   const createAccount = useCallback(
     async (email: string): Promise<SignUpOutcome> => {
       if (!canStartRequest) return NOT_READY
 
-      const locale = getCurrentLanguage()
-      const { error } = await signUp.create({
-        emailAddress: email,
-        locale,
-        unsafeMetadata: { locale }, // Account creation can only update public metadata
-      })
+      const { error } = await createSignUpWithLocale({ emailAddress: email })
       // this condition can be true only if strict enumeration protection is *not* enabled
       if (getClerkErrorCode(error) === "form_identifier_exists") {
         return { error, needsSignIn: true }
@@ -54,13 +61,13 @@ export const useClerkSignUpSession = (): SignUpSession => {
 
       return SUCCESS
     },
-    [canStartRequest, signUp]
+    [canStartRequest, signUp, createSignUpWithLocale]
   )
 
   const transferFromSignIn = useCallback(async (): Promise<SignUpOutcome> => {
     if (!canStartRequest) return NOT_READY
 
-    const { error } = await signUp.create({ transfer: true })
+    const { error } = await createSignUpWithLocale({ transfer: true })
     if (error) {
       console.error("Account creation error", error)
       return { error }
@@ -72,7 +79,7 @@ export const useClerkSignUpSession = (): SignUpSession => {
     }
 
     return SUCCESS
-  }, [canStartRequest, signUp])
+  }, [canStartRequest, signUp, createSignUpWithLocale])
 
   const resendEmailCode = useCallback(async (): Promise<SignUpOutcome> => {
     if (!canStartRequest) return NOT_READY
