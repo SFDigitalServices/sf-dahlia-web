@@ -182,7 +182,7 @@ export const getHousingCounselorAgencies = async (
     clerkHeaders(sessionToken)
   ).then(({ data }) => data.agencies)
 
-// Display only: the server enforces the counselor email rule on its own.
+// Display only: Rails refuses a counselor's Salesforce email change itself.
 export const getHousingCounselorStatus = async (sessionToken: string): Promise<boolean> =>
   get<{ isHousingCounselor?: unknown }>(housingCounselorStatus(), clerkHeaders(sessionToken)).then(
     ({ data }) => data.isHousingCounselor === true

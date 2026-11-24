@@ -11,4 +11,4 @@ export const lotteryRanking = (listingId, lotteryId) =>
 export const amiCharts = (queryParams: string) => `/api/v1/listings/ami.json?${queryParams}`
 export const housingCounselorAgencies = () => `/api/v1/housing-counselor/agencies`
 export const updateHousingCounselor = () => `/api/v1/account/update-housing-counselor`
-export const housingCounselorStatus = () => `/api/v1/account/housing-counselor-status`
+export const housingCounselorStatus = () => `/api/v1/housing-counselor/status`

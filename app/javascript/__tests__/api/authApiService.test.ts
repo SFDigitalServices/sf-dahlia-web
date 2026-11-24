@@ -273,7 +273,7 @@ describe("authApiService", () => {
     it("calls apiService get with a session token and returns the counselor status", async () => {
       ;(get as jest.Mock).mockResolvedValue({ data: { isHousingCounselor: true } })
       const result = await getHousingCounselorStatus("session-token")
-      expect(get).toHaveBeenCalledWith("/api/v1/account/housing-counselor-status", {
+      expect(get).toHaveBeenCalledWith("/api/v1/housing-counselor/status", {
         headers: { Authorization: "Bearer session-token" },
       })
       expect(result).toBe(true)

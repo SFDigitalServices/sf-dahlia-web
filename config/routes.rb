@@ -63,7 +63,6 @@ Rails.application.routes.draw do
         get 'my-applications' => 'account#my_applications'
         put 'update' => 'account#update'
         put 'update-housing-counselor' => 'account#update_housing_counselor'
-        get 'housing-counselor-status' => 'account#housing_counselor_status'
         get 'confirm' => 'account#confirm'
         get 'check-account' => 'account#check_account'
         get 'profile' => 'account#profile'
@@ -71,6 +70,7 @@ Rails.application.routes.draw do
       end
       scope '/housing-counselor' do
         get 'agencies' => 'housing_counselor#agencies'
+        get 'status' => 'housing_counselor#status'
         post 'access' => 'housing_counselor#access'
         delete 'access' => 'housing_counselor#clear_session'
       end

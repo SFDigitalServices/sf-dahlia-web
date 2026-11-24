@@ -988,7 +988,7 @@ describe("<SettingsPage />", () => {
   // TODO: DAH-4262 cleanup after clerk flag is on
   // DAH-4320: a housing counselor signed in as themselves can't change their own email.
   describe("the email section for a housing counselor", () => {
-    const statusUrl = "/api/v1/account/housing-counselor-status"
+    const statusUrl = "/api/v1/housing-counselor/status"
     let originalLocation: Location
 
     const renderSettings = async ({
