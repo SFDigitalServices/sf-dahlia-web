@@ -13,6 +13,7 @@
         # This is set up to universally capture HTTP errors, particularly 503 or 504, when a bad request / timeout occurred.
         # It will pop up an alert and stop the spinning loader and re-enable short form inputs so that the user can try again.
         responseError: (error) ->
+          $injector.get('HcSessionEndedService').handle(error)
           if error.status >= 500
             $injector.invoke [
               '$http', 'bsLoadingOverlayService', 'ShortFormNavigationService', '$state',
