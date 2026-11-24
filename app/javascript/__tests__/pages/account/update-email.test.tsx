@@ -84,7 +84,10 @@ describe("<UpdateEmail />", () => {
     ;(useNavigate as jest.Mock).mockReturnValue(mockNavigate)
     ;(useLocation as jest.Mock).mockReturnValue({ pathname: "/update-email", state: null })
     ;(useFeatureFlag as jest.Mock).mockReturnValue({ flagsReady: true, unleashFlag: true })
-    ;(useOwnEmailLockedForHousingCounselor as jest.Mock).mockReturnValue(false)
+    ;(useOwnEmailLockedForHousingCounselor as jest.Mock).mockReturnValue({
+      emailLocked: false,
+      emailLockKnown: true,
+    })
     // Same object every call, so getToken keeps one identity across renders
     ;(useAuth as jest.Mock).mockReturnValue({
       isLoaded: true,
@@ -106,7 +109,10 @@ describe("<UpdateEmail />", () => {
   // Then they are sent back to account settings, and no verification code is sent
   describe("when a housing counselor signed in as themselves opens the page", () => {
     beforeEach(() => {
-      ;(useOwnEmailLockedForHousingCounselor as jest.Mock).mockReturnValue(true)
+      ;(useOwnEmailLockedForHousingCounselor as jest.Mock).mockReturnValue({
+        emailLocked: true,
+        emailLockKnown: true,
+      })
     })
 
     it("sends them back to account settings", async () => {
@@ -121,6 +127,38 @@ describe("<UpdateEmail />", () => {
 
       expect(screen.queryByRole("textbox")).not.toBeInTheDocument()
       expect(user.createEmailAddress).not.toHaveBeenCalled()
+    })
+  })
+
+  // Given the counselor check hasn't finished yet
+  // When the page renders
+  // Then the form stays hidden and nothing redirects until the answer is known
+  describe("while the housing counselor check is still loading", () => {
+    beforeEach(() => {
+      ;(useOwnEmailLockedForHousingCounselor as jest.Mock).mockReturnValue({
+        emailLocked: false,
+        emailLockKnown: false,
+      })
+    })
+
+    it("does not show the form", async () => {
+      const user = makeUser()
+      await renderPage(user)
+
+      expect(screen.queryByRole("textbox")).not.toBeInTheDocument()
+      expect(user.createEmailAddress).not.toHaveBeenCalled()
+    })
+
+    it("does not send a stale session to reverification yet", async () => {
+      ;(useAuth as jest.Mock).mockReturnValue({
+        isLoaded: true,
+        isSignedIn: true,
+        getToken: jest.fn().mockResolvedValue("clerk-session-token"),
+        has: jest.fn().mockReturnValue(false),
+      })
+      await renderPage()
+
+      expect(mockNavigate).not.toHaveBeenCalled()
     })
   })
 

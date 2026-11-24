@@ -136,7 +136,7 @@ const UpdateEmail = (_props: { assetPaths: unknown }) => {
   const { needsReverification, redirectToReverification } = useReverificationRedirect(
     REVERIFICATION_FLOW.UPDATE_EMAIL
   )
-  const emailLocked = useOwnEmailLockedForHousingCounselor()
+  const { emailLocked, emailLockKnown } = useOwnEmailLockedForHousingCounselor()
 
   useEffect(() => {
     if (!flagsReady) return
@@ -149,6 +149,9 @@ const UpdateEmail = (_props: { assetPaths: unknown }) => {
       void navigate(getSignInPath())
       return
     }
+    // Wait for the counselor check, so no code is requested and no reverification
+    // happens before we know this user may change their email here.
+    if (!emailLockKnown) return
     if (emailLocked) {
       void navigate(getMyAccountSettingsPath())
       return
@@ -165,13 +168,20 @@ const UpdateEmail = (_props: { assetPaths: unknown }) => {
     isSignedIn,
     navigate,
     isAccountInitialized,
+    emailLockKnown,
     emailLocked,
     needsReverification,
     redirectToReverification,
   ])
 
   const ready =
-    flagsReady && clerkEnabled && isLoaded && isSignedIn && !emailLocked && !needsReverification
+    flagsReady &&
+    clerkEnabled &&
+    isLoaded &&
+    isSignedIn &&
+    emailLockKnown &&
+    !emailLocked &&
+    !needsReverification
   if (!ready) {
     return null
   }

@@ -6,29 +6,69 @@ import { bearerToken } from "../authentication/session/authStatus"
 import { UNLEASH_FLAG } from "../modules/constants"
 import { useFeatureFlag } from "./useFeatureFlag"
 
-// DAH-4320: display only; the server refuses a counselor's own email change on its own.
-export const useOwnEmailLockedForHousingCounselor = () => {
-  const { profile } = useContext(UserContext)
+export type OwnEmailLock = { emailLocked: boolean; emailLockKnown: boolean }
+
+const UNKNOWN: OwnEmailLock = { emailLocked: false, emailLockKnown: false }
+const UNLOCKED: OwnEmailLock = { emailLocked: false, emailLockKnown: true }
+
+type LockConditions = {
+  flagsReady: boolean
+  housingCounselorAccessEnabled: boolean
+  profileLoaded: boolean
+  actingAsThemselves: boolean
+}
+
+// Decides without a network request when it can; null means "ask Salesforce".
+// Order matters: while flags or the profile load, their values read as "off"/"no
+// profile", which would otherwise look like "unlocked".
+const lockWithoutLookup = ({
+  flagsReady,
+  housingCounselorAccessEnabled,
+  profileLoaded,
+  actingAsThemselves,
+}: LockConditions): OwnEmailLock | null => {
+  if (!flagsReady) return UNKNOWN
+  if (!housingCounselorAccessEnabled) return UNLOCKED
+  if (!profileLoaded) return UNKNOWN
+  if (!actingAsThemselves) return UNLOCKED
+  return null
+}
+
+// DAH-4320: display only. Rails refuses a counselor's Salesforce email change itself.
+export const useOwnEmailLockedForHousingCounselor = (): OwnEmailLock => {
+  const { profile, initialStateLoaded } = useContext(UserContext)
   const { getCredentials } = useAuthSession()
-  const { unleashFlag: housingCounselorAccessEnabled } = useFeatureFlag(
+  const { unleashFlag: housingCounselorAccessEnabled, flagsReady } = useFeatureFlag(
     UNLEASH_FLAG.HOUSING_COUNSELOR_ACCESS,
     false
   )
-  const actingAsThemselves = Boolean(profile) && !profile.isDelegated
-  const [locked, setLocked] = useState(false)
+  const decided = lockWithoutLookup({
+    flagsReady,
+    housingCounselorAccessEnabled,
+    profileLoaded: Boolean(initialStateLoaded),
+    actingAsThemselves: Boolean(profile) && !profile?.isDelegated,
+  })
+  const needsLookup = decided === null
+  const [lookup, setLookup] = useState<OwnEmailLock>(UNKNOWN)
 
   useEffect(() => {
-    if (!housingCounselorAccessEnabled || !actingAsThemselves) return
+    if (!needsLookup) return
+    let superseded = false
     void (async () => {
-      const sessionToken = bearerToken(await getCredentials())
-      if (!sessionToken) return
+      let locked = false
       try {
-        setLocked(await getHousingCounselorStatus(sessionToken))
+        const sessionToken = bearerToken(await getCredentials())
+        if (sessionToken) locked = await getHousingCounselorStatus(sessionToken)
       } catch {
-        // Leave the section as usual; the server still enforces the rule.
+        // An unknown status shows the usual section; Rails still refuses the change.
       }
+      if (!superseded) setLookup({ emailLocked: locked, emailLockKnown: true })
     })()
-  }, [housingCounselorAccessEnabled, actingAsThemselves, getCredentials])
+    return () => {
+      superseded = true
+      setLookup(UNKNOWN)
+    }
+  }, [needsLookup, getCredentials])
 
-  return locked
+  return decided ?? lookup
 }

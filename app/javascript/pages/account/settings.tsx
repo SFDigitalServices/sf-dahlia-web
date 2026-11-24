@@ -224,7 +224,7 @@ const EmailSection = () => {
   const navigate = useNavigate()
   const { user } = useSignUpSession()
   const loginEmail = user?.primaryEmailAddress?.emailAddress
-  const emailLocked = useOwnEmailLockedForHousingCounselor()
+  const { emailLocked } = useOwnEmailLockedForHousingCounselor()
 
   return (
     <FormSection>
