@@ -65,9 +65,12 @@ const fillAndSubmitDevisePassword = async (currentPassword: string, newPassword?
   })
 }
 
+const contactEmailNote = /also use this email address to contact you/i
+
 const expectUsualEmailSection = () => {
   expect(screen.getByRole("button", { name: /change email/i })).toBeEnabled()
   expect(screen.queryByText(/as a housing counselor, you must/i)).not.toBeInTheDocument()
+  expect(screen.getByText(contactEmailNote)).toBeInTheDocument()
 }
 
 describe("<SettingsPage />", () => {
@@ -1048,6 +1051,7 @@ describe("<SettingsPage />", () => {
         "href",
         "mailto:sfhousinginfo@sfgov.org"
       )
+      expect(screen.queryByText(contactEmailNote)).not.toBeInTheDocument()
     })
 
     it("disables changing email for a counselor signed in as themselves", async () => {

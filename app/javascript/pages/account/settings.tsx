@@ -249,9 +249,11 @@ const EmailSection = () => {
           {t("accountSettings.changeEmail")}
         </Button>
       </div>
-      <p className={settingsStyles.settingsText}>
-        {renderInlineMarkup(t("accountSettings.changeEmailDescription"))}
-      </p>
+      {!emailLocked && (
+        <p className={settingsStyles.settingsText}>
+          {renderInlineMarkup(t("accountSettings.changeEmailDescription"))}
+        </p>
+      )}
     </FormSection>
   )
 }
