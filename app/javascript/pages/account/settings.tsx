@@ -211,7 +211,7 @@ const EmailSectionDevise = ({ user, setUser }: SectionProps) => {
 }
 
 const HousingCounselorEmailMessage = () => (
-  <Message className={settingsStyles.settingsDescription}>
+  <Message fullwidth variant="primary" className={settingsStyles.settingsHousingCounselorMessage}>
     <p>{t("accountSettings.email.housingCounselor.intro")}</p>
     <ol className={settingsStyles.settingsOrderedList}>
       <li>{t("accountSettings.email.housingCounselor.step1")}</li>

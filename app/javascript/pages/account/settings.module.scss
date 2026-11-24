@@ -41,3 +41,24 @@
   padding-left: var(--seeds-s5);
   margin: 0;
 }
+
+// Same info-box treatment as SignInFlow's `.requiredLoginsMessage` and add-password's `.skip`.
+.settingsHousingCounselorMessage {
+  --message-border-radius: var(--seeds-rounded);
+  --message-border: 2px solid var(--seeds-color-primary-light);
+  background: var(--seeds-color-primary-lighter) !important;
+  justify-content: flex-start;
+  line-height: var(--seeds-line-height-5);
+  margin-top: var(--seeds-s4);
+  svg {
+    color: var(--seeds-color-primary-dark) !important;
+  }
+  a {
+    color: var(--seeds-color-primary-darker) !important;
+  }
+}
+
+// ui-seeds keeps `cursor: pointer` on disabled buttons.
+.settingsButton button[disabled] {
+  cursor: not-allowed;
+}
