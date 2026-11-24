@@ -45,7 +45,9 @@ export const useOwnEmailLockedForHousingCounselor = (): OwnEmailLock => {
   const decided = lockWithoutLookup({
     flagsReady,
     housingCounselorAccessEnabled,
-    profileLoaded: Boolean(initialStateLoaded),
+    // UserProvider never sets initialStateLoaded when a profile loads, only when it gives up
+    // (signed out, missing, or failed), so either one means the profile has settled.
+    profileLoaded: Boolean(profile) || Boolean(initialStateLoaded),
     actingAsThemselves: Boolean(profile) && !profile?.isDelegated,
   })
   const needsLookup = decided === null

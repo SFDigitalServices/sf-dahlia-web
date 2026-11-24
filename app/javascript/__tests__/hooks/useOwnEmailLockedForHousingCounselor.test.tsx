@@ -49,7 +49,9 @@ describe("useOwnEmailLockedForHousingCounselor", () => {
     })
 
   beforeEach(() => {
-    context = { profile: { ...mockProfileStub, isDelegated: false }, initialStateLoaded: true }
+    // The real signed-in shape: UserProvider saves the Clerk profile without ever setting
+    // initialStateLoaded (only its sign-out actions do).
+    context = { profile: { ...mockProfileStub, isDelegated: false }, initialStateLoaded: false }
     getCredentials.mockResolvedValue({ kind: "bearerToken", token: "clerk-session-token" })
     ;(useAuthSession as jest.Mock).mockReturnValue({ getCredentials })
     ;(getHousingCounselorStatus as jest.Mock).mockResolvedValue(true)
@@ -78,6 +80,21 @@ describe("useOwnEmailLockedForHousingCounselor", () => {
     context = { profile: undefined, initialStateLoaded: false }
 
     expect(renderLockHook().result.current).toEqual(UNKNOWN)
+  })
+
+  // Regression (review app): a loaded profile with initialStateLoaded still false left the
+  // hook unknown forever, so update-email rendered nothing and counselors weren't locked.
+  it("looks up a signed-in user whose profile loaded", async () => {
+    const { result } = renderLockHook()
+
+    await waitFor(() => expect(result.current).toEqual(LOCKED))
+  })
+
+  it("is unlocked without a lookup when the profile failed to load", () => {
+    context = { profile: undefined, initialStateLoaded: true, profileMissing: true }
+
+    expect(renderLockHook().result.current).toEqual(UNLOCKED)
+    expect(getHousingCounselorStatus).not.toHaveBeenCalled()
   })
 
   it("is unlocked without a lookup for a counselor acting for an applicant", () => {
