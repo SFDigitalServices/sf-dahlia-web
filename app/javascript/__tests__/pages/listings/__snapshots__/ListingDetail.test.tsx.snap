@@ -1386,13 +1386,7 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                             <p
                               class="primary-lighter-markup-link"
                             >
-                              Go to a 
-                              <a
-                                href="https://habitatgsf.org/amber-drive-sf/"
-                                target="_blank"
-                              >
-                                Habitat for Humanity information session
-                              </a>
+                              Go to a Habitat for Humanity information session
                             </p>
                           </li>
                           <li
@@ -1406,13 +1400,7 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                             <p
                               class="primary-lighter-markup-link"
                             >
-                              Meet the 
-                              <a
-                                href="https://www.sf.gov/sites/default/files/2024-08/Inclusionary%20Affordable%20Housing%20Monitoring%20and%20Procedures%20Manual%20Final%207.25.24.pdf"
-                                target="_blank"
-                              >
-                                income requirements
-                              </a>
+                              Meet the income requirements above
                             </p>
                           </li>
                         </ol>
@@ -1609,13 +1597,7 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                           <p
                             class="primary-lighter-markup-link"
                           >
-                            Go to a 
-                            <a
-                              href="https://habitatgsf.org/amber-drive-sf/"
-                              target="_blank"
-                            >
-                              Habitat for Humanity information session
-                            </a>
+                            Go to a Habitat for Humanity information session
                           </p>
                         </li>
                         <li
@@ -1629,13 +1611,7 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                           <p
                             class="primary-lighter-markup-link"
                           >
-                            Meet the 
-                            <a
-                              href="https://www.sf.gov/sites/default/files/2024-08/Inclusionary%20Affordable%20Housing%20Monitoring%20and%20Procedures%20Manual%20Final%207.25.24.pdf"
-                              target="_blank"
-                            >
-                              income requirements
-                            </a>
+                            Meet the income requirements above
                           </p>
                         </li>
                       </ol>
@@ -1871,13 +1847,7 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                           <p
                             class="primary-lighter-markup-link"
                           >
-                            Go to a 
-                            <a
-                              href="https://habitatgsf.org/amber-drive-sf/"
-                              target="_blank"
-                            >
-                              Habitat for Humanity information session
-                            </a>
+                            Go to a Habitat for Humanity information session
                           </p>
                         </li>
                         <li
@@ -1891,13 +1861,7 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                           <p
                             class="primary-lighter-markup-link"
                           >
-                            Meet the 
-                            <a
-                              href="https://www.sf.gov/sites/default/files/2024-08/Inclusionary%20Affordable%20Housing%20Monitoring%20and%20Procedures%20Manual%20Final%207.25.24.pdf"
-                              target="_blank"
-                            >
-                              income requirements
-                            </a>
+                            Meet the income requirements above
                           </p>
                         </li>
                       </ol>
@@ -3961,13 +3925,7 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                           <p
                             class="primary-lighter-markup-link"
                           >
-                            Go to a 
-                            <a
-                              href="https://habitatgsf.org/amber-drive-sf/"
-                              target="_blank"
-                            >
-                              Habitat for Humanity information session
-                            </a>
+                            Go to a Habitat for Humanity information session
                           </p>
                         </li>
                         <li
@@ -3981,13 +3939,7 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                           <p
                             class="primary-lighter-markup-link"
                           >
-                            Meet the 
-                            <a
-                              href="https://www.sf.gov/sites/default/files/2024-08/Inclusionary%20Affordable%20Housing%20Monitoring%20and%20Procedures%20Manual%20Final%207.25.24.pdf"
-                              target="_blank"
-                            >
-                              income requirements
-                            </a>
+                            Meet the income requirements above
                           </p>
                         </li>
                       </ol>
