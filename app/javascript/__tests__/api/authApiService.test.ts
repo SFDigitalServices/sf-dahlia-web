@@ -19,6 +19,7 @@ import {
   resetPassword,
   updatePhone,
   getHousingCounselorAgencies,
+  getHousingCounselorStatus,
   updateHousingCounselorAccess,
   authorizeHousingCounselor,
   clearHousingCounselorSession,
@@ -266,6 +267,25 @@ describe("authApiService", () => {
       })
       expect(result).toEqual(agencies)
     })
+  })
+
+  describe("getHousingCounselorStatus", () => {
+    it("calls apiService get with a session token and returns the counselor status", async () => {
+      ;(get as jest.Mock).mockResolvedValue({ data: { isHousingCounselor: true } })
+      const result = await getHousingCounselorStatus("session-token")
+      expect(get).toHaveBeenCalledWith("/api/v1/housing-counselor/status", {
+        headers: { Authorization: "Bearer session-token" },
+      })
+      expect(result).toBe(true)
+    })
+
+    it.each([{}, { isHousingCounselor: "true" }, { isHousingCounselor: null }])(
+      "returns false unless the server says exactly true (%p)",
+      async (data) => {
+        ;(get as jest.Mock).mockResolvedValue({ data })
+        expect(await getHousingCounselorStatus("session-token")).toBe(false)
+      }
+    )
   })
 
   describe("updateHousingCounselorAccess", () => {

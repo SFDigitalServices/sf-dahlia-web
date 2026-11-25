@@ -7,7 +7,7 @@ import { useSignUpSession } from "../../authentication/session/useSignUpSession"
 import { bearerToken } from "../../authentication/session/authStatus"
 import { Form, DOBFieldValues, t } from "@bloom-housing/ui-components"
 import { DeepMap, FieldError, useForm } from "react-hook-form"
-import { Card, Alert, Button, Heading } from "@bloom-housing/ui-seeds"
+import { Card, Alert, Button, Heading, Message } from "@bloom-housing/ui-seeds"
 import {
   AppPages,
   getAddPasswordPath,
@@ -48,6 +48,7 @@ import { ErrorSummaryBanner } from "./components/ErrorSummaryBanner"
 import { ExpandedAccountAxiosError, getErrorMessage } from "./components/util"
 import { withAuthentication } from "../../authentication/withAuthentication"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
+import { useOwnEmailLockedForHousingCounselor } from "../../hooks/useOwnEmailLockedForHousingCounselor"
 import { AUTH_FLOW, UNLEASH_FLAG } from "../../modules/constants"
 import { AccountSettingsPage as MyAccountSettingsPage } from "./account-settings"
 import settingsStyles from "./settings.module.scss"
@@ -209,15 +210,27 @@ const EmailSectionDevise = ({ user, setUser }: SectionProps) => {
   )
 }
 
+const HousingCounselorEmailMessage = () => (
+  <Message fullwidth variant="primary" className={settingsStyles.settingsHousingCounselorMessage}>
+    <p>{t("accountSettings.email.housingCounselor.intro")}</p>
+    <ol className={settingsStyles.settingsOrderedList}>
+      <li>{t("accountSettings.email.housingCounselor.step1")}</li>
+      <li>{renderInlineMarkup(t("accountSettings.email.housingCounselor.step2"))}</li>
+    </ol>
+  </Message>
+)
+
 const EmailSection = () => {
   const navigate = useNavigate()
   const { user } = useSignUpSession()
   const loginEmail = user?.primaryEmailAddress?.emailAddress
+  const { emailLocked } = useOwnEmailLockedForHousingCounselor()
 
   return (
     <FormSection>
       <Heading size="md">{t("accountSettings.email.title")}</Heading>
       <p className={settingsStyles.settingsDescription}>{t("accountSettings.email.description")}</p>
+      {emailLocked && <HousingCounselorEmailMessage />}
       <div className={settingsStyles.settingsEmailFieldset}>
         <legend className={"fieldset-legend"}>{t("label.emailAddress")}</legend>
         <p>{loginEmail ?? null}</p>
@@ -226,6 +239,7 @@ const EmailSection = () => {
         <Button
           type="button"
           variant="primary-outlined"
+          disabled={emailLocked}
           onClick={() => {
             void navigate(getUpdateEmailPath(), {
               state: { flow: AUTH_FLOW.UPDATE_EMAIL },
@@ -235,9 +249,11 @@ const EmailSection = () => {
           {t("accountSettings.changeEmail")}
         </Button>
       </div>
-      <p className={settingsStyles.settingsText}>
-        {renderInlineMarkup(t("accountSettings.changeEmailDescription"))}
-      </p>
+      {!emailLocked && (
+        <p className={settingsStyles.settingsText}>
+          {renderInlineMarkup(t("accountSettings.changeEmailDescription"))}
+        </p>
+      )}
     </FormSection>
   )
 }

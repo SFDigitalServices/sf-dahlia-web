@@ -65,6 +65,14 @@ const fillAndSubmitDevisePassword = async (currentPassword: string, newPassword?
   })
 }
 
+const contactEmailNote = /also use this email address to contact you/i
+
+const expectUsualEmailSection = () => {
+  expect(screen.getByRole("button", { name: /change email/i })).toBeEnabled()
+  expect(screen.queryByText(/as a housing counselor, you must/i)).not.toBeInTheDocument()
+  expect(screen.getByText(contactEmailNote)).toBeInTheDocument()
+}
+
 describe("<SettingsPage />", () => {
   describe("when the user is signed in", () => {
     let promise
@@ -981,6 +989,118 @@ describe("<SettingsPage />", () => {
   })
 
   // TODO: DAH-4262 cleanup after clerk flag is on
+  // DAH-4320: a housing counselor signed in as themselves can't change their own email.
+  describe("the email section for a housing counselor", () => {
+    const statusUrl = "/api/v1/housing-counselor/status"
+    let originalLocation: Location
+
+    const renderSettings = async ({
+      isHousingCounselor = true,
+      isDelegated = false,
+      hcFlagEnabled = true,
+      statusRequestFails = false,
+    } = {}) => {
+      document.documentElement.lang = "en"
+      originalLocation = mockWindowLocation()
+      ;(useFeatureFlag as jest.Mock).mockImplementation((flagName: string) => ({
+        flagsReady: true,
+        unleashFlag: flagName === UNLEASH_FLAG.HOUSING_COUNSELOR_ACCESS ? hcFlagEnabled : true,
+      }))
+      setupUserContext({ loggedIn: true, mockProfile: { ...mockProfileStub, isDelegated } })
+      ;(get as jest.Mock).mockImplementation((url: string) => {
+        if (url !== statusUrl) return Promise.resolve({ data: { agencies: [] } })
+        return statusRequestFails
+          ? Promise.reject(new Error("Network Error"))
+          : Promise.resolve({ data: { isHousingCounselor } })
+      })
+      ;(useUser as jest.Mock).mockReturnValue({
+        isLoaded: true,
+        isSignedIn: true,
+        user: { passwordEnabled: true },
+        primaryEmailAddress: { emailAddress: "test@example.com" },
+      })
+      ;(useNavigate as jest.Mock).mockReturnValue(jest.fn())
+      ;(useLocation as jest.Mock).mockReturnValue({ pathname: "/account/settings", state: null })
+      ;(useAuth as jest.Mock).mockReturnValue({
+        isLoaded: true,
+        isSignedIn: true,
+        getToken: jest.fn().mockResolvedValue("clerk-session-token"),
+        has: jest.fn().mockReturnValue(true),
+      })
+      await renderAndLoadAsync(<SettingsPage assetPaths={{}} />)
+    }
+
+    const statusRequested = () =>
+      (get as jest.Mock).mock.calls.some(([url]: [string]) => url === statusUrl)
+
+    afterEach(() => {
+      jest.restoreAllMocks()
+      restoreWindowLocation(originalLocation)
+    })
+
+    it("tells a counselor signed in as themselves how to change their email", async () => {
+      await renderSettings()
+
+      expect(
+        await screen.findByText(/to change your email address as a housing counselor, you must:/i)
+      ).toBeInTheDocument()
+      expect(
+        screen.getByText(/create a dahlia account with your new email address/i)
+      ).toBeInTheDocument()
+      expect(screen.getByRole("link", { name: "sfhousinginfo@sfgov.org" })).toHaveAttribute(
+        "href",
+        "mailto:sfhousinginfo@sfgov.org"
+      )
+      expect(screen.queryByText(contactEmailNote)).not.toBeInTheDocument()
+    })
+
+    it("disables changing email for a counselor signed in as themselves", async () => {
+      await renderSettings()
+
+      await waitFor(() =>
+        expect(screen.getByRole("button", { name: /change email/i })).toBeDisabled()
+      )
+    })
+
+    it("asks for the counselor status with the Clerk session token", async () => {
+      await renderSettings()
+
+      await waitFor(() =>
+        expect(get).toHaveBeenCalledWith(statusUrl, {
+          headers: { Authorization: "Bearer clerk-session-token" },
+        })
+      )
+    })
+
+    it("shows the usual email section to a counselor acting for an applicant", async () => {
+      await renderSettings({ isDelegated: true })
+
+      expectUsualEmailSection()
+      expect(statusRequested()).toBe(false)
+    })
+
+    it("shows the usual email section to someone who is not a counselor", async () => {
+      await renderSettings({ isHousingCounselor: false })
+
+      await waitFor(() => expect(statusRequested()).toBe(true))
+      expectUsualEmailSection()
+    })
+
+    it("shows the usual email section when the feature flag is off", async () => {
+      await renderSettings({ hcFlagEnabled: false })
+
+      expectUsualEmailSection()
+      expect(statusRequested()).toBe(false)
+    })
+
+    it("shows the usual email section when the status request fails", async () => {
+      await renderSettings({ statusRequestFails: true })
+
+      await waitFor(() => expect(statusRequested()).toBe(true))
+      expectUsualEmailSection()
+    })
+  })
+
   describe("the Devise legacy sections", () => {
     let originalLocation: Location
 

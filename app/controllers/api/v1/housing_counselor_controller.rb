@@ -16,6 +16,14 @@ class Api::V1::HousingCounselorController < ApiController
     render json: { agencies: Force::HousingCounselorService.agencies }
   end
 
+  # DAH-4320: tells the settings page whether to lock the email section. Display
+  # only; AccountController refuses a counselor's email change itself.
+  def status
+    contact_id = current_user.salesforce_contact_id
+    counselor = Force::HousingCounselorService.housing_counselor?(contact_id)
+    render json: { isHousingCounselor: counselor }
+  end
+
   # Authenticate housing counselor access to an applicant contact ID, either
   # from the delegate-link JWT in ?t= or, when that's absent (e.g. the HC
   # revisits a protected page without the link), from an existing hc_session

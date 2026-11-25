@@ -279,6 +279,156 @@ RSpec.describe Api::V1::AccountController, type: :controller do
           expect(Sentry).to have_received(:capture_exception).with(error)
         end
       end
+
+      # DAH-4320: for security, a housing counselor can't move their own
+      # account to another (e.g. personal) email address.
+      context 'when the signed-in user is a housing counselor acting as themselves' do
+        let(:stored_email) { 'counselor@agency.example' }
+        let(:email_change_params) { contact_params.merge(email: 'personal@example.com') }
+
+        before do
+          allow(Force::AccountService).to receive(:get)
+            .with(contact_id)
+            .and_return('email' => stored_email)
+          allow(Force::HousingCounselorService).to receive(:housing_counselor?)
+            .with(contact_id)
+            .and_return(true)
+        end
+
+        # Given the housing counselor flag is on
+        #   And a housing counselor signed in as themselves
+        # When a request to change their email reaches the server
+        # Then it is refused (403) and Salesforce is not updated
+        it 'refuses an email change and does not update Salesforce' do
+          put :update, params: { contact: email_change_params }
+
+          expect(response).to have_http_status(:forbidden)
+          expect(Force::AccountService).not_to have_received(:create_or_update)
+        end
+
+        # Given the housing counselor flag is on
+        #   And a housing counselor signed in as themselves
+        # When they save their name, phone, or date of birth (email unchanged)
+        # Then the save succeeds, without asking Salesforce whether they are a counselor
+        it 'saves other settings when the email is unchanged' do
+          put :update, params: { contact: contact_params.merge(email: stored_email) }
+
+          expect(response).to have_http_status(:ok)
+          expect(Force::AccountService).to have_received(:create_or_update)
+          expect(Force::HousingCounselorService).not_to have_received(:housing_counselor?)
+        end
+
+        # Given a housing counselor signed in as themselves
+        # When the request's email differs from their stored email only in capitalization
+        # Then it is treated as unchanged and the save succeeds
+        it 'treats an email differing only in capitalization as unchanged' do
+          put :update,
+              params: { contact: contact_params.merge(email: stored_email.upcase) }
+
+          expect(response).to have_http_status(:ok)
+          expect(Force::AccountService).to have_received(:create_or_update)
+        end
+
+        # Given a housing counselor whose Clerk sign-in email differs from their
+        #   Salesforce email (drift, or a second address mid-change in Clerk)
+        # When they save settings with their Salesforce email
+        # Then it saves: the rule compares with the Salesforce email it would overwrite
+        it 'compares with the stored Salesforce email, not the Clerk sign-in email' do
+          allow(ClerkService).to receive(:email_address).and_return('other@agency.example')
+
+          put :update, params: { contact: contact_params.merge(email: stored_email) }
+
+          expect(response).to have_http_status(:ok)
+          expect(Force::AccountService).to have_received(:create_or_update)
+        end
+
+        # Given a housing counselor signed in as themselves
+        # When a request tries to blank out their email
+        # Then it is refused like any other email change
+        it 'refuses a blank email' do
+          put :update, params: { contact: contact_params.merge(email: '') }
+
+          expect(response).to have_http_status(:forbidden)
+          expect(Force::AccountService).not_to have_received(:create_or_update)
+        end
+
+        # Fails closed through ApiController's catch-all: the save never happens.
+        # The response body (error class and message) is the pre-existing
+        # render_err behavior, tracked separately (DAH-4230 follow-up ticket 10).
+        context 'when a lookup the email rule depends on fails' do
+          before { allow(Sentry).to receive(:capture_exception) }
+
+          # Given a housing counselor signed in as themselves
+          #   And Salesforce times out while checking whether they are a counselor
+          # When they try to change their email
+          # Then the change is refused and Salesforce is not updated
+          it 'refuses the change when the counselor lookup times out' do
+            allow(Force::HousingCounselorService).to receive(:housing_counselor?)
+              .and_raise(Faraday::TimeoutError)
+
+            put :update, params: { contact: email_change_params }
+
+            expect(response).to have_http_status(:gateway_timeout)
+            expect(Force::AccountService).not_to have_received(:create_or_update)
+          end
+
+          # Given a housing counselor signed in as themselves
+          #   And Salesforce times out while reading their stored email
+          # When they try to change their email
+          # Then the change is refused and Salesforce is not updated
+          it 'refuses the change when the stored email lookup times out' do
+            allow(Force::AccountService).to receive(:get).and_raise(Faraday::TimeoutError)
+
+            put :update, params: { contact: email_change_params }
+
+            expect(response).to have_http_status(:gateway_timeout)
+            expect(Force::AccountService).not_to have_received(:create_or_update)
+          end
+        end
+
+        context 'and the housing counselor flag is off' do
+          before do
+            allow(Rails.configuration.unleash).to receive(:is_enabled?)
+              .with(HousingCounselorSession::FEATURE_FLAG).and_return(false)
+          end
+
+          # Given the housing counselor flag is off
+          #   And a housing counselor signed in as themselves
+          # When they change their email
+          # Then it works as today, and no extra Salesforce lookup is made
+          it 'lets them change their email without any extra lookup' do
+            put :update, params: { contact: email_change_params }
+
+            expect(response).to have_http_status(:ok)
+            expect(Force::AccountService).to have_received(:create_or_update)
+            expect(Force::AccountService).not_to have_received(:get)
+            expect(Force::HousingCounselorService)
+              .not_to have_received(:housing_counselor?)
+          end
+        end
+      end
+
+      # Given the housing counselor flag is on
+      #   And an applicant who is not a housing counselor
+      # When they change their email
+      # Then it works as today
+      context 'when the signed-in user is not a housing counselor' do
+        before do
+          allow(Force::AccountService).to receive(:get)
+            .with(contact_id)
+            .and_return('email' => 'applicant@example.com')
+          allow(Force::HousingCounselorService).to receive(:housing_counselor?)
+            .with(contact_id)
+            .and_return(false)
+        end
+
+        it 'lets them change their email' do
+          put :update, params: { contact: contact_params.merge(email: 'new@example.com') }
+
+          expect(response).to have_http_status(:ok)
+          expect(Force::AccountService).to have_received(:create_or_update)
+        end
+      end
     end
 
     # Regression coverage for a confirmed code-review finding: #update always
@@ -441,6 +591,35 @@ RSpec.describe Api::V1::AccountController, type: :controller do
         .with(clerk_user_id)
         .and_return(contact_id)
       allow(Force::AccountService).to receive(:create_or_update).and_return(salesforce_contact)
+      # The DAH-4320 email rule also guards this action; by default the email is
+      # unchanged and the user isn't a counselor.
+      allow(Force::AccountService).to receive(:get)
+        .and_return('email' => contact_params[:email])
+      allow(Force::HousingCounselorService).to receive(:housing_counselor?).and_return(false)
+    end
+
+    # DAH-4320: this action accepts the same contact fields as #update, so it must not
+    # become a way around the email rule.
+    # Given the housing counselor flag is on
+    #   And a housing counselor signed in as themselves
+    # When they send a different email with an agency-access change
+    # Then it is refused, Salesforce is not updated, and no access emails are sent
+    context 'when a housing counselor acting as themselves sends a different email' do
+      before do
+        allow(Force::HousingCounselorService).to receive(:housing_counselor?)
+          .with(contact_id)
+          .and_return(true)
+      end
+
+      it 'refuses the save and sends no access emails' do
+        put :update_housing_counselor,
+            params: { contact: contact_params.merge(email: 'personal@example.com') }
+
+        expect(response).to have_http_status(:forbidden)
+        expect(Force::AccountService).not_to have_received(:create_or_update)
+        expect(DahliaBackend::MessageService)
+          .not_to have_received(:send_housing_counselor_access)
+      end
     end
 
     context 'when Clerk session is missing' do

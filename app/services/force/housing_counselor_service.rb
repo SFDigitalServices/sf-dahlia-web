@@ -34,6 +34,13 @@ module Force
       nil
     end
 
+    def self.housing_counselor?(contact_id)
+      return false if contact_id.blank?
+
+      counselor = fetch_housing_counselor(contact_id)
+      counselor.present? && counselor['isHousingCounselor'] == true
+    end
+
     def self.fetch_housing_counselor(counselor_contact_id)
       result = Request.new.get("/housingCounselingAgencies/#{counselor_contact_id}")
       find_counselor(result, counselor_contact_id)

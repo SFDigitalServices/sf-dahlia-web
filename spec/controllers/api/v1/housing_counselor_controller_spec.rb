@@ -41,6 +41,55 @@ RSpec.describe Api::V1::HousingCounselorController, type: :controller do
     end
   end
 
+  # DAH-4320: tells the account settings page whether to lock the email section.
+  # Display only; AccountController refuses a counselor's email change itself.
+  describe 'GET #status' do
+    before do
+      allow(Force::HousingCounselorService).to receive(:housing_counselor?)
+        .with(contact_id)
+        .and_return(true)
+    end
+
+    # Given the housing counselor flag is on
+    #   And a housing counselor signed in with Clerk
+    # When the page asks for their counselor status
+    # Then it says they are a housing counselor
+    it 'reports a housing counselor' do
+      get :status
+
+      expect(response).to have_http_status(:ok)
+      expect(JSON.parse(response.body)).to eq('isHousingCounselor' => true)
+    end
+
+    # Given an applicant who is not a housing counselor
+    # When the page asks for their counselor status
+    # Then it says they are not a housing counselor
+    it 'reports a user who is not a housing counselor' do
+      allow(Force::HousingCounselorService).to receive(:housing_counselor?)
+        .with(contact_id)
+        .and_return(false)
+
+      get :status
+
+      expect(response).to have_http_status(:ok)
+      expect(JSON.parse(response.body)).to eq('isHousingCounselor' => false)
+    end
+
+    # Given no Clerk session
+    # When counselor status is requested
+    # Then it is unauthorized, and no Salesforce lookup is made
+    context 'when Clerk session is missing' do
+      before { allow(controller).to receive(:clerk).and_return(nil) }
+
+      it 'returns unauthorized without looking up counselor status' do
+        get :status
+
+        expect(response).to have_http_status(:unauthorized)
+        expect(Force::HousingCounselorService).not_to have_received(:housing_counselor?)
+      end
+    end
+  end
+
   context 'when the feature flag is disabled' do
     before do
       allow(Rails.configuration.unleash).to receive(:is_enabled?)
@@ -52,6 +101,15 @@ RSpec.describe Api::V1::HousingCounselorController, type: :controller do
 
       expect(response).to have_http_status(:not_found)
       expect(Force::HousingCounselorService).not_to have_received(:agencies)
+    end
+
+    it 'renders not_found for #status without looking up counselor status' do
+      allow(Force::HousingCounselorService).to receive(:housing_counselor?)
+
+      get :status
+
+      expect(response).to have_http_status(:not_found)
+      expect(Force::HousingCounselorService).not_to have_received(:housing_counselor?)
     end
 
     it 'renders not_found for #access rather than writing a cookie' do

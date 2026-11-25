@@ -15,6 +15,7 @@ class Api::V1::AccountController < ApiController
   before_action :authenticate_user!, except: %i[confirm check_account]
   before_action :reject_write_while_delegated,
                 only: %i[update create_profile update_housing_counselor]
+  before_action :reject_housing_counselor_email_change, only: %i[update update_housing_counselor]
 
   def my_applications
     contact_id = effective_contact_id.presence
@@ -177,6 +178,32 @@ class Api::V1::AccountController < ApiController
     return unless current_hc_session! || hc_session_unbound?
 
     render json: { error: 'forbidden' }, status: :forbidden
+  end
+
+  def reject_housing_counselor_email_change
+    return unless hc_session_feature_enabled?
+    return unless changes_stored_email?
+    return unless signed_in_as_housing_counselor?
+
+    render json: { error: 'forbidden' }, status: :forbidden
+  end
+
+  # Every settings save sends the email, so only a value that differs from the stored
+  # Salesforce email (the record this request overwrites) is a change. A blank value
+  # counts, since it would clear the email.
+  def changes_stored_email?
+    return false unless account_params.key?(:email)
+    return false if current_user.salesforce_contact_id.blank?
+
+    !account_params[:email].to_s.casecmp?(stored_contact_email.to_s)
+  end
+
+  def stored_contact_email
+    Force::AccountService.get(current_user.salesforce_contact_id)&.dig('email')
+  end
+
+  def signed_in_as_housing_counselor?
+    Force::HousingCounselorService.housing_counselor?(current_user.salesforce_contact_id)
   end
 
   def authenticate_user!(*)
