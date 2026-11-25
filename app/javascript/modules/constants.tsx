@@ -173,6 +173,7 @@ export const UNLEASH_FLAG = {
   FORM_ENGINE: "perm.webapp.formEngine",
   FORM_ENGINE_DEBUG: "perm.webapp.formEngine.debug",
   HOUSING_COUNSELOR_ACCESS: "temp.all.housingCounselorAccess",
+  REQUIRED_LOGINS: "temp.webapp.requiredLogins",
   REQUIRED_LOGINS_MESSAGE: "temp.webapp.requiredLoginsMessage",
 }
 
