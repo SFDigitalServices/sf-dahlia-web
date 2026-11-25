@@ -136,8 +136,23 @@ const ApplyOnlineButton = ({ listingId }: { listingId: string }) => {
   return <ApplyButton href={applyLink} />
 }
 
-const habitatEligibilityRequirementsUrl = (buildingSelectionCriteriaUrl?: string) =>
-  buildingSelectionCriteriaUrl || "https://habitatgsf.org/amber-drive-sf/"
+const HABITAT_FALLBACK_URL = "https://habitatgsf.org/amber-drive-sf/"
+
+const isHttpUrl = (urlString: string) => {
+  try {
+    const url = new URL(urlString)
+    return url.protocol === "http:" || url.protocol === "https:"
+  } catch {
+    return false
+  }
+}
+
+const habitatEligibilityRequirementsUrl = (buildingSelectionCriteriaUrl?: string) => {
+  if (!buildingSelectionCriteriaUrl) return HABITAT_FALLBACK_URL
+  return isHttpUrl(buildingSelectionCriteriaUrl)
+    ? buildingSelectionCriteriaUrl
+    : HABITAT_FALLBACK_URL
+}
 
 const StandardHowToApply = ({
   listingId,
