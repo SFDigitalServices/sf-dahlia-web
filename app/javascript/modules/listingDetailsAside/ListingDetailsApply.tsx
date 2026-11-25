@@ -137,7 +137,7 @@ const ApplyOnlineButton = ({ listingId }: { listingId: string }) => {
 }
 
 const habitatEligibilityRequirementsUrl = (buildingSelectionCriteriaUrl?: string) =>
-  buildingSelectionCriteriaUrl ?? "https://habitatgsf.org/amber-drive-sf/"
+  buildingSelectionCriteriaUrl || "https://habitatgsf.org/amber-drive-sf/"
 
 const StandardHowToApply = ({
   listingId,

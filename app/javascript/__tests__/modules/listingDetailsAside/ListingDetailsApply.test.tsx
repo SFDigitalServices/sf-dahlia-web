@@ -95,6 +95,27 @@ describe("ListingDetailsApply", () => {
         buildingSelectionCriteriaUrl
       )
     })
+    // Given a Habitat listing whose Building Selection Criteria URL is blank ("")
+    // When I view the listing's "How to apply" section
+    // Then "eligibility requirements" links to the current Habitat URL
+    it("links to the fallback URL when Building Selection Criteria URL is blank", () => {
+      const openHabitatListing = {
+        ...habitatListing,
+        Application_Due_Date: "2032-12-02T01:00:00.000+0000",
+        Building_Selection_Criteria: "",
+      }
+
+      render(
+        <MemoryRouter>
+          <ListingDetailsApply listing={openHabitatListing} />
+        </MemoryRouter>
+      )
+
+      expect(screen.getByRole("link", { name: "eligibility requirements" })).toHaveAttribute(
+        "href",
+        "https://habitatgsf.org/amber-drive-sf/"
+      )
+    })
   })
 
   describe("when Clerk auth is enabled", () => {
