@@ -95,44 +95,10 @@ exports[`ListingDetailsHabitat displays habitat info when habitat listing 1`] = 
     >
       Income Range
     </h4>
-    <p>
-      To be eligible for a Habitat for Humanity Greater San Francisco home in this listing, your household income needs to be between 76% and 100% Area Median Income (AMI) as listed below.
-    </p>
     <p
-      class="mt-4"
+      class="mb-4"
     >
-      For income calculations, household size includes everyone (all ages) living in the unit.
-    </p>
-    <div
-      class="mt-4"
-    >
-      <p
-        class="primary-lighter-markup-link"
-      >
-        People in your household may need 
-        <a
-          href="https://sf.gov/information/special-calculations-household-income"
-          target="_blank"
-        >
-          special income calculations
-        </a>
-         if they:
-      </p>
-    </div>
-    <ul
-      class="list-disc ml-6"
-    >
-      <li>
-        Are full-time students (but not the primary applicant).
-      </li>
-      <li>
-        Receive non-taxable income (non-taxable income might include SSI, SSDI, child support payments, and worker’s compensation benefits).
-      </li>
-    </ul>
-    <p
-      class="mt-4"
-    >
-      Your income must be in this range:
+      To qualify, your income must be in this range:
     </p>
   </div>
 </DocumentFragment>

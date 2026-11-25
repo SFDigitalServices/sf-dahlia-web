@@ -1,7 +1,7 @@
 import React from "react"
 import { RailsListing } from "../listings/SharedHelpers"
 import { Heading, t } from "@bloom-housing/ui-components"
-import { getSfGovUrl, renderMarkup } from "../../util/languageUtil"
+import { renderMarkup } from "../../util/languageUtil"
 import { isHabitatListing } from "../../util/listingUtil"
 
 export interface ListingDetailsHabitatProps {
@@ -53,20 +53,7 @@ export const ListingDetailsHabitat = ({ listing }: ListingDetailsHabitatProps) =
       <Heading className="mt-8" priority={4} styleType="underlineWeighted">
         {t("listings.habitat.incomeRange.title")}
       </Heading>
-      <p>{t("listings.habitat.incomeRange.p1")}</p>
-      <p className="mt-4">{t("listings.habitat.incomeRange.p2")}</p>
-      <div className="mt-4">
-        {renderMarkup(
-          t("listings.incomeExceptions.intro", {
-            url: getSfGovUrl("https://sf.gov/information/special-calculations-household-income"),
-          })
-        )}
-      </div>
-      <ul className="list-disc ml-6">
-        <li>{t("listings.incomeExceptions.students")}</li>
-        <li>{t("listings.incomeExceptions.nontaxable")}</li>
-      </ul>
-      <p className="mt-4">{t("listings.habitat.incomeRange.p4")}</p>
+      <p className="mb-4">{t("listings.habitat.incomeRange.p4.v2")}</p>
       {/* The parent component ListingDetail uses conditional renders to make sure the income range appears right after this text */}
       {/* Income range is rendered by ListingDetailsPricingTable */}
     </div>
