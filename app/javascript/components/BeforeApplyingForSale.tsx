@@ -1,6 +1,7 @@
 import React from "react"
 import { Heading, ListSection, t } from "@bloom-housing/ui-components"
 import { getSfGovUrl, renderInlineMarkup, renderMarkup } from "../util/languageUtil"
+import { habitatEligibilityRequirementsUrl } from "../util/listingUtil"
 
 export enum BeforeApplyingType {
   DIRECTORY,
@@ -12,8 +13,12 @@ export interface BeforeApplyingForSaleProps {
    * Header will display differently depending on type
    */
   beforeApplyingType: BeforeApplyingType
+  buildingSelectionCriteriaUrl?: string
 }
-export const BeforeApplyingForSale = ({ beforeApplyingType }: BeforeApplyingForSaleProps) => {
+export const BeforeApplyingForSale = ({
+  beforeApplyingType,
+  buildingSelectionCriteriaUrl,
+}: BeforeApplyingForSaleProps) => {
   const listClassNames = ["numbered-list", "my-5"]
   let listItems, requirements
 
@@ -29,7 +34,7 @@ export const BeforeApplyingForSale = ({ beforeApplyingType }: BeforeApplyingForS
   if (beforeApplyingType === BeforeApplyingType.LISTING_DETAILS_HABITAT) {
     requirements = renderMarkup(
       `${t("saleDirectory.beforeApplying.readFullList", {
-        url: "https://habitatgsf.org/amber-drive-sf/",
+        url: habitatEligibilityRequirementsUrl(buildingSelectionCriteriaUrl),
       })}`
     )
 

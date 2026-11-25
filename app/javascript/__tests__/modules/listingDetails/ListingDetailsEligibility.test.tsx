@@ -526,4 +526,41 @@ describe("ListingDetailsEligibility", () => {
     expect(await findByText(t("listings.Mobility impairments.title"))).toBeDefined()
     expect(asFragment()).toMatchSnapshot()
   })
+
+  // Given a Habitat listing with a Building Selection Criteria URL
+  // When I view the listing's Eligibility section
+  // Then "our full list of requirements" links to that URL
+  it("links the Habitat full list of requirements to the listing's Building Selection Criteria URL", async () => {
+    axios.get.mockResolvedValue({ data: { preferences: defaultPreferences } })
+    const buildingSelectionCriteriaUrl = "https://example.org/building-selection-criteria"
+    const habitatListingWithCriteria = {
+      ...habitatListing,
+      Building_Selection_Criteria: buildingSelectionCriteriaUrl,
+    }
+
+    const { findByRole } = render(
+      <ListingDetailsContext.Provider
+        value={{
+          units: unitsWithOneAmi,
+          amiCharts: amiChartsWithOneAmi,
+          fetchingUnits: false,
+          fetchedUnits: true,
+          fetchingAmiCharts: false,
+          fetchedAmiCharts: true,
+          fetchingAmiChartsError: undefined,
+          fetchingUnitsError: undefined,
+        }}
+      >
+        <ListingDetailsEligibility
+          listing={habitatListingWithCriteria}
+          imageSrc={"listing-eligibility.svg"}
+        />
+      </ListingDetailsContext.Provider>
+    )
+
+    expect(await findByRole("link", { name: "our full list of requirements" })).toHaveAttribute(
+      "href",
+      buildingSelectionCriteriaUrl
+    )
+  })
 })
