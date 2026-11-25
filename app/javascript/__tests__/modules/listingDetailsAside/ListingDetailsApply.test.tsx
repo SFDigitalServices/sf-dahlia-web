@@ -138,6 +138,27 @@ describe("ListingDetailsApply", () => {
         "https://habitatgsf.org/amber-drive-sf/"
       )
     })
+
+    // Given a non-Habitat sale listing with a Building Selection Criteria URL
+    // When I view the listing's "How to apply" section
+    // Then "eligibility requirements" still links to the sf.gov eligibility page
+    it("keeps the sf.gov eligibility link for non-Habitat sale listings", () => {
+      const saleListingWithCriteria = {
+        ...openSaleListing,
+        Building_Selection_Criteria: "https://example.org/building-selection-criteria",
+      }
+
+      render(
+        <MemoryRouter>
+          <ListingDetailsApply listing={saleListingWithCriteria} />
+        </MemoryRouter>
+      )
+
+      expect(screen.getByRole("link", { name: "eligibility requirements" })).toHaveAttribute(
+        "href",
+        "https://sf.gov/determine-if-you-can-buy-affordable-housing-program"
+      )
+    })
   })
 
   describe("when Clerk auth is enabled", () => {
