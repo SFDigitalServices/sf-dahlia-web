@@ -867,3 +867,21 @@ export const isDeadlinePassed = (deadline: string) => {
 export const filterAvailableUnits = (units: RailsUnit[]): RailsUnit[] => {
   return units.filter((unit) => unit.Status === "Available")
 }
+
+const HABITAT_FALLBACK_URL = "https://habitatgsf.org/amber-drive-sf/"
+
+const isHttpUrl = (urlString: string) => {
+  try {
+    const url = new URL(urlString)
+    return url.protocol === "http:" || url.protocol === "https:"
+  } catch {
+    return false
+  }
+}
+
+export const habitatEligibilityRequirementsUrl = (buildingSelectionCriteriaUrl?: string) => {
+  if (!buildingSelectionCriteriaUrl) return HABITAT_FALLBACK_URL
+  return isHttpUrl(buildingSelectionCriteriaUrl)
+    ? buildingSelectionCriteriaUrl
+    : HABITAT_FALLBACK_URL
+}
