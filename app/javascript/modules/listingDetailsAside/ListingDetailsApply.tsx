@@ -136,16 +136,21 @@ const ApplyOnlineButton = ({ listingId }: { listingId: string }) => {
   return <ApplyButton href={applyLink} />
 }
 
+const habitatEligibilityRequirementsUrl = (buildingSelectionCriteriaUrl?: string) =>
+  buildingSelectionCriteriaUrl ?? "https://habitatgsf.org/amber-drive-sf/"
+
 const StandardHowToApply = ({
   listingId,
   isListingRental,
   isHabitatListing,
   acceptingPaperApps,
+  buildingSelectionCriteriaUrl,
 }: {
   listingId: string
   isListingRental: boolean
   isHabitatListing: boolean
   acceptingPaperApps: boolean
+  buildingSelectionCriteriaUrl?: string
 }) => {
   const [paperApplicationsOpen, setPaperApplicationsOpen] = useState(false)
 
@@ -157,7 +162,7 @@ const StandardHowToApply = ({
             {renderInlineMarkup(
               t("listings.apply.fulfillEligibilityRequirements", {
                 url: isHabitatListing
-                  ? "https://habitatgsf.org/amber-drive-sf/"
+                  ? habitatEligibilityRequirementsUrl(buildingSelectionCriteriaUrl)
                   : getSfGovUrl(
                       "https://sf.gov/determine-if-you-can-buy-affordable-housing-program"
                     ),
@@ -238,6 +243,7 @@ export const ListingDetailsApply = ({ listing }: ListingDetailsApplyProps) => {
       isListingRental={isListingRental}
       isHabitatListing={isHabitatListing(listing)}
       acceptingPaperApps={acceptingPaperApps}
+      buildingSelectionCriteriaUrl={listing.Building_Selection_Criteria}
     />
   )
 

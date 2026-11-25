@@ -72,6 +72,31 @@ describe("ListingDetailsApply", () => {
     }
   )
 
+  describe("Habitat eligibility requirements link", () => {
+    // Given a Habitat listing with a Building Selection Criteria URL
+    // When I view the listing's "How to apply" section
+    // Then "eligibility requirements" links to that URL, with the text unchanged
+    it("links to the Building Selection Criteria URL when staff provide one", () => {
+      const buildingSelectionCriteriaUrl = "https://example.org/building-selection-criteria"
+      const openHabitatListing = {
+        ...habitatListing,
+        Application_Due_Date: "2032-12-02T01:00:00.000+0000",
+        Building_Selection_Criteria: buildingSelectionCriteriaUrl,
+      }
+
+      render(
+        <MemoryRouter>
+          <ListingDetailsApply listing={openHabitatListing} />
+        </MemoryRouter>
+      )
+
+      expect(screen.getByRole("link", { name: "eligibility requirements" })).toHaveAttribute(
+        "href",
+        buildingSelectionCriteriaUrl
+      )
+    })
+  })
+
   describe("when Clerk auth is enabled", () => {
     beforeEach(() => {
       ;(useFeatureFlag as jest.Mock).mockImplementation((flagName: string) => ({
