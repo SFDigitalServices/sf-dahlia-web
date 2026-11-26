@@ -22,6 +22,12 @@ jest.mock("react-router", () => ({
   useNavigate: jest.fn(),
 }))
 
+const openHabitatListingWith = (buildingSelectionCriteria: string) => ({
+  ...habitatListing,
+  Application_Due_Date: "2032-12-02T01:00:00.000+0000",
+  Building_Selection_Criteria: buildingSelectionCriteria,
+})
+
 describe("ListingDetailsApply", () => {
   let mockNavigate: jest.Mock
 
@@ -71,6 +77,65 @@ describe("ListingDetailsApply", () => {
       expect(asFragment()).toMatchSnapshot()
     }
   )
+
+  describe("Habitat eligibility requirements link", () => {
+    const renderEligibilityRequirementsLink = (
+      listing: React.ComponentProps<typeof ListingDetailsApply>["listing"]
+    ) => {
+      render(
+        <MemoryRouter>
+          <ListingDetailsApply listing={listing} />
+        </MemoryRouter>
+      )
+      return screen.getByRole("link", { name: "eligibility requirements" })
+    }
+
+    // Given a Habitat listing with a Building Selection Criteria URL
+    // When I view the listing's "How to apply" section
+    // Then "eligibility requirements" links to that URL, with the text unchanged
+    it("links to the Building Selection Criteria URL when staff provide one", () => {
+      const buildingSelectionCriteriaUrl = "https://example.org/building-selection-criteria"
+
+      const link = renderEligibilityRequirementsLink(
+        openHabitatListingWith(buildingSelectionCriteriaUrl)
+      )
+
+      expect(link).toHaveAttribute("href", buildingSelectionCriteriaUrl)
+    })
+
+    // Given a Habitat listing whose Building Selection Criteria URL is blank ("")
+    // When I view the listing's "How to apply" section
+    // Then "eligibility requirements" links to the current Habitat URL
+    it("links to the fallback URL when Building Selection Criteria URL is blank", () => {
+      const link = renderEligibilityRequirementsLink(openHabitatListingWith(""))
+
+      expect(link).toHaveAttribute("href", "https://habitatgsf.org/amber-drive-sf/")
+    })
+
+    // Given a Habitat listing whose Building Selection Criteria URL is not http(s)
+    // When I view the listing's "How to apply" section
+    // Then "eligibility requirements" links to the current Habitat URL, never the unsafe value
+    it("links to the fallback URL when Building Selection Criteria URL is not http(s)", () => {
+      const link = renderEligibilityRequirementsLink(openHabitatListingWith("javascript:alert(1)"))
+
+      expect(link).toHaveAttribute("href", "https://habitatgsf.org/amber-drive-sf/")
+    })
+
+    // Given a non-Habitat sale listing with a Building Selection Criteria URL
+    // When I view the listing's "How to apply" section
+    // Then "eligibility requirements" still links to the sf.gov eligibility page
+    it("keeps the sf.gov eligibility link for non-Habitat sale listings", () => {
+      const link = renderEligibilityRequirementsLink({
+        ...openSaleListing,
+        Building_Selection_Criteria: "https://example.org/building-selection-criteria",
+      })
+
+      expect(link).toHaveAttribute(
+        "href",
+        "https://sf.gov/determine-if-you-can-buy-affordable-housing-program"
+      )
+    })
+  })
 
   describe("when Clerk auth is enabled", () => {
     beforeEach(() => {

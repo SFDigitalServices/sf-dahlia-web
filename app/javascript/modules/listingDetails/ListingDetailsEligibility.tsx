@@ -136,6 +136,7 @@ export const ListingDetailsEligibility = ({
                 ? BeforeApplyingType.LISTING_DETAILS_HABITAT
                 : BeforeApplyingType.LISTING_DETAILS
             }
+            buildingSelectionCriteriaUrl={listing.Building_Selection_Criteria}
           />
         )}
         {isEducatorOne(listing) && (
