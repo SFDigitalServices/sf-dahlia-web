@@ -43,7 +43,6 @@ RSpec.describe DahliaBackend::MessageService do
 
   before do
     allow(Rails.logger).to receive(:info)
-    allow(Rails.logger).to receive(:warn)
     allow(Rails.logger).to receive(:error)
     allow(Force::ListingService).to receive(:listing).and_return(listing_data)
   end
@@ -86,9 +85,11 @@ RSpec.describe DahliaBackend::MessageService do
         service.send_application_confirmation(application_params, application_response)
       end
 
-      it 'formats the lottery date correctly' do
+      it 'preserves the lottery timestamp when sending the confirmation' do
+        listing_data['Lottery_Date'] = '2027-04-30T18:00:00.000+0000'
+
         expect(client).to receive(:post).with('/messages/application-submission', hash_including(
-                                                                                    lotteryDate: '2024-12-31',
+                                                                                    lotteryDate: '2027-04-30T18:00:00.000+0000',
                                                                                   ))
 
         service.send_application_confirmation(application_params, application_response)
@@ -193,6 +194,16 @@ RSpec.describe DahliaBackend::MessageService do
 
         service.send_application_confirmation(application_params, application_response)
       end
+
+      it 'sends an empty lottery date when the listing date is an empty string' do
+        listing_data['Lottery_Date'] = ''
+
+        expect(client).to receive(:post).with('/messages/application-submission', hash_including(
+                                                                                    lotteryDate: '',
+                                                                                  ))
+
+        service.send_application_confirmation(application_params, application_response)
+      end
     end
 
     context 'with invalid lottery date format' do
@@ -201,7 +212,7 @@ RSpec.describe DahliaBackend::MessageService do
         allow(client).to receive(:post).and_return({ success: true })
       end
 
-      it 'uses original date string when parsing fails' do
+      it 'passes the original date string through without parsing' do
         expect(client).to receive(:post).with('/messages/application-submission', hash_including(
                                                                                     lotteryDate: 'invalid-date',
                                                                                   ))
